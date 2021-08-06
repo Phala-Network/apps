@@ -1,0 +1,16 @@
+{
+  "name": "phala-apps",
+  "version": "0.0.1",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Phala-Network/apps.git"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Phala-Network/apps/issues"
+  },
+  "homepage": "https://github.com/Phala-Network/apps#readme"
+}
