@@ -11,6 +11,8 @@ coverage
 # production
 build
 dist
+esm
+.pnpm-debug.log
 tsconfig.tsbuildinfo
 
 # misc
