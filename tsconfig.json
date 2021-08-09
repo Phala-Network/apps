@@ -15,6 +15,7 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
+    "baseUrl": ".",
     "paths": {
       "@phala/app/*": ["packages/app/src/*"],
       "@phala/app": ["packages/app/src"],
@@ -31,5 +32,5 @@
     }
   },
   "exclude": ["build/**/*", "**/build/**/*", "dist/**/*", "**/dist/**/*"],
-  "include": ["src"]
+  "include": ["packages"]
 }

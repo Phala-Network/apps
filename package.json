@@ -12,5 +12,8 @@
   "bugs": {
     "url": "https://github.com/Phala-Network/apps/issues"
   },
-  "homepage": "https://github.com/Phala-Network/apps#readme"
+  "homepage": "https://github.com/Phala-Network/apps#readme",
+  "dependencies": {
+    "typescript": "^4.3.5"
+  }
 }
