@@ -1,5 +1,5 @@
 {
-  "name": "@phala/apps-assets",
+  "name": "@phala/app-assets",
   "version": "0.0.1",
   "type": "module",
   "scripts": {

@@ -15,22 +15,16 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "baseUrl": ".",
     "paths": {
-      "@phala/app/*": ["packages/app/src/*"],
-      "@phala/app": ["packages/app/src"],
-      "@phala/app-assets/*": ["packages/app-assets/src/*"],
-      "@phala/app-assets": ["packages/app-assets/src"],
-      "@phala/app-bridge/*": ["packages/app-bridge/src/*"],
-      "@phala/app-bridge": ["packages/app-bridge/src"],
-      "@phala/app-config/*": ["packages/app-config/src/*"],
-      "@phala/app-config": ["packages/app-config/src"],
-      "@phala/react-components/*": ["packages/react-components/src/*"],
-      "@phala/react-components": ["packages/react-components/src"],
-      "@phala/utils/*": ["packages/utils/src/*"],
-      "@phala/utils": ["packages/utils/src"]
+      "@phala/app": ["./packages/app"],
+      "@phala/app-assets": ["./packages/app-assets"],
+      "@phala/app-bridge": ["./packages/app-bridge"],
+      "@phala/app-config": ["./packages/app-config"],
+      "@phala/react-components": ["./packages/react-components"],
+      "@phala/utils": ["./packages/utils"],
+      "@phala/libs/*": ["./packages/libs/*"]
     }
   },
   "exclude": ["build/**/*", "**/build/**/*", "dist/**/*", "**/dist/**/*"],
-  "include": ["packages"]
+  "include": ["packages/**/*"]
 }

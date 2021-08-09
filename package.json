@@ -1,6 +1,7 @@
 {
   "name": "phala-apps",
   "version": "0.0.1",
+  "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -15,5 +16,8 @@
   "homepage": "https://github.com/Phala-Network/apps#readme",
   "dependencies": {
     "typescript": "^4.3.5"
-  }
+  },
+  "workspaces": [
+    "packages/*"
+  ]
 }
