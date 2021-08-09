@@ -1,7 +1,9 @@
 {
   "name": "@phala/libs",
-  "version": "1.0.0",
+  "version": "0.0.1",
+  "sideEffects": false,
   "dependencies": {
+    "@phala/app-config": "*",
     "@phala/typedefs": "^0.2.10",
     "@polkadot/api": "^5.4.1",
     "@polkadot/extension-dapp": "^0.39.2",
@@ -14,5 +16,12 @@
     "react-query": "^3.19.2",
     "styletron-engine-atomic": "^1.4.8",
     "uuid": "^8.3.2"
+  },
+  "scripts": {
+    "start": "tsc --watch",
+    "build": "tsc",
+    "test": "tsc --noEmit",
+    "lint": "type-coverage",
+    "prepublishOnly": "run-s lint build"
   }
 }

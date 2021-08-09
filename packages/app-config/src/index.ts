@@ -1,8 +1,10 @@
+import { dev, khala } from '@phala/typedefs'
 import {
   EthereumNetworkOptions,
   SubstrateNetworkOptions,
-} from '@phala/libs/src/configuration'
-import { dev, khala } from '@phala/typedefs'
+} from './configuration'
+
+export * from './configuration'
 
 export const ethereums: Record<number, EthereumNetworkOptions> = {
   42: {

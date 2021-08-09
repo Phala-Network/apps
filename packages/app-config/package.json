@@ -1,8 +1,19 @@
 {
   "name": "@phala/app-config",
   "version": "0.0.1",
-  "main": "src/index.ts",
+  "sideEffects": false,
+  "main": "esm/index.js",
+  "module": "esm/index.js",
+  "types": "esm/index.d.ts",
   "dependencies": {
+    "@phala/libs": "*",
     "@phala/typedefs": "^0.2.10"
+  },
+  "scripts": {
+    "start": "tsc --watch",
+    "build": "tsc",
+    "test": "tsc --noEmit",
+    "lint": "type-coverage",
+    "prepublishOnly": "run-s lint build"
   }
 }

@@ -1,4 +1,4 @@
-import { substrates } from '@phala/app-config'
+import { SubstrateNetworkOptions, substrates } from '@phala/app-config'
 import {
   createContext,
   PropsWithChildren,
@@ -6,7 +6,6 @@ import {
   useEffect,
   useState,
 } from 'react'
-import { SubstrateNetworkOptions } from '../../configuration'
 
 interface INetworkContext {
   /**

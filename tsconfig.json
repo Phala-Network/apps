@@ -14,17 +14,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx",
-    "paths": {
-      "@phala/app": ["./packages/app"],
-      "@phala/app-assets": ["./packages/app-assets"],
-      "@phala/app-bridge": ["./packages/app-bridge"],
-      "@phala/app-config": ["./packages/app-config"],
-      "@phala/react-components": ["./packages/react-components"],
-      "@phala/utils": ["./packages/utils"],
-      "@phala/libs/*": ["./packages/libs/*"]
-    }
+    "jsx": "react-jsx"
   },
-  "exclude": ["build/**/*", "**/build/**/*", "dist/**/*", "**/dist/**/*"],
-  "include": ["packages/**/*"]
+  "exclude": ["build/**/*", "**/build/**/*", "dist/**/*", "**/dist/**/*"]
 }
