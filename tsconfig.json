@@ -1,0 +1,35 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "paths": {
+      "@phala/app/*": ["packages/app/src/*"],
+      "@phala/app": ["packages/app/src"],
+      "@phala/app-assets/*": ["packages/app-assets/src/*"],
+      "@phala/app-assets": ["packages/app-assets/src"],
+      "@phala/app-bridge/*": ["packages/app-bridge/src/*"],
+      "@phala/app-bridge": ["packages/app-bridge/src"],
+      "@phala/app-config/*": ["packages/app-config/src/*"],
+      "@phala/app-config": ["packages/app-config/src"],
+      "@phala/react-components/*": ["packages/react-components/src/*"],
+      "@phala/react-components": ["packages/react-components/src"],
+      "@phala/utils/*": ["packages/utils/src/*"],
+      "@phala/utils": ["packages/utils/src"]
+    }
+  },
+  "exclude": ["build/**/*", "**/build/**/*", "dist/**/*", "**/dist/**/*"],
+  "include": ["src"]
+}
