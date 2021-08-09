@@ -3,7 +3,12 @@
   "version": "0.0.1",
   "main": "index.js",
   "scripts": {
-    "develop": "gatsby develop"
+    "build": "gatsby build",
+    "develop": "gatsby develop",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
+    "start": "npm run develop",
+    "serve": "gatsby serve",
+    "clean": "gatsby clean"
   },
   "dependencies": {
     "gatsby": "^3.11.0",
