@@ -1,4 +1,4 @@
-import { useErc20BalanceQuery } from '@phala/libs'
+import { useErc20BalanceQuery } from '@phala/react-libs'
 import { Decimal } from 'decimal.js'
 import { ethers } from 'ethers'
 import { useMemo } from 'react'

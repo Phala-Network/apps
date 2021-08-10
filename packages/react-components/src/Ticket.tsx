@@ -1,6 +1,6 @@
+import { abridgeString } from '@phala/utils'
 import React, { ComponentProps, useEffect } from 'react'
 import styled from 'styled-components'
-import abridgeString from '../utils/abridgeString'
 
 type Props = {
   no?: string

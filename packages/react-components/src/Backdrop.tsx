@@ -1,6 +1,6 @@
+import { useCurrentState } from '@phala/react-hooks'
 import React, { MouseEvent, useCallback } from 'react'
 import styled from 'styled-components'
-import useCurrentState from '../hooks/useCurrentState'
 
 const Wrap = styled.div`
   position: fixed;
@@ -59,9 +59,8 @@ const Backdrop: React.FC<Props> = ({
   visible = false,
   ...props
 }) => {
-  const [, setIsContentMouseDown, IsContentMouseDownRef] = useCurrentState(
-    false
-  )
+  const [, setIsContentMouseDown, IsContentMouseDownRef] =
+    useCurrentState(false)
   const clickHandler = (event: MouseEvent<HTMLElement>) => {
     if (IsContentMouseDownRef.current) return
     onClick && onClick(event)

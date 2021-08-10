@@ -1,7 +1,7 @@
+import { useClickAway } from '@phala/react-hooks'
 import RcInputNumber from 'rc-input-number'
 import React, { useRef, useState } from 'react'
 import styled from 'styled-components'
-import useClickAway from '../hooks/useClickAway'
 
 type InputType = {
   type?: 'text' | 'number'

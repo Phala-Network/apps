@@ -1,4 +1,4 @@
-import { useApiPromise } from '@phala/libs'
+import { useApiPromise } from '@phala/react-libs'
 import type { DeriveBalancesAll } from '@polkadot/api-derive/types'
 import { useEffect, useState } from 'react'
 

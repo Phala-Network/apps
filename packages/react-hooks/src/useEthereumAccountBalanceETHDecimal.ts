@@ -1,4 +1,4 @@
-import { useEthersNetworkQuery } from '@phala/libs/esm/ethereum/queries/useEthersNetworkQuery'
+import { useEthersNetworkQuery } from '@phala/react-libs'
 import { captureException } from '@sentry/react'
 import { Decimal } from 'decimal.js'
 import { ethers } from 'ethers'

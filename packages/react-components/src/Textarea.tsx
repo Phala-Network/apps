@@ -1,6 +1,6 @@
+import { useClickAway } from '@phala/react-hooks'
 import React, { ComponentProps, useRef } from 'react'
 import styled from 'styled-components'
-import useClickAway from '../hooks/useClickAway'
 
 const Wrapper = styled.div<{
   active: boolean

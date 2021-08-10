@@ -43,7 +43,8 @@ const ButtonWrap = styled.button<ButtonProps>`
     border-color: transparent;
   }
 
-  ${({ type, theme }) => {
+  /* FIXME */
+  ${({ type, theme }): any => {
     if (type === 'primary') {
       return css`
         background: ${theme.colors.phala};

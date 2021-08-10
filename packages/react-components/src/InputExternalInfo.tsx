@@ -1,7 +1,7 @@
+import { useSSR } from '@phala/react-hooks'
 import { Decimal } from 'decimal.js'
 import React, { ComponentProps } from 'react'
 import styled from 'styled-components'
-import useSSR from '../hooks/useSSR'
 import BalanceLabel from './BalanceLabel'
 
 const Label = styled.span`

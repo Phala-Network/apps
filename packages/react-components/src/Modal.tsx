@@ -1,8 +1,8 @@
+import { usePortal } from '@phala/react-hooks'
 import React, { createElement } from 'react'
 import { createPortal } from 'react-dom'
 import { down } from 'styled-breakpoints'
 import styled from 'styled-components'
-import usePortal from '../hooks/usePortal'
 import Backdrop from './Backdrop'
 
 export type ModalProps = {

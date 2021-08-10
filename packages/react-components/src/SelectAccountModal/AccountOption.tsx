@@ -1,6 +1,6 @@
+import { Account } from '@phala/app-types'
 import React from 'react'
 import styled from 'styled-components'
-import { Account } from '../../types/normal'
 
 type Props = {
   name?: string
