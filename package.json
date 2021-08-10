@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "build": "pnpm run build --filter ./packages/app",
+    "build:lib": "pnpm run build --filter ./packages/app-config",
     "preinstall": "npx only-allow pnpm"
   },
   "repository": {

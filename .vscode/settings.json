@@ -1,5 +1,5 @@
 {
   "typescript.preferences.importModuleSpecifierEnding": "minimal",
   "typescript.preferences.importModuleSpecifier": "project-relative",
-  "cSpell.words": ["ethereums", "styletron"]
+  "cSpell.words": ["ethereums", "pnpm", "preinstall", "styletron"]
 }

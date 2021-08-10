@@ -1,6 +1,6 @@
+import { ethereums } from '@phala/app-config'
 import { Contract, ethers } from 'ethers'
 import { useMemo } from 'react'
-import { ethereums } from '../../../config'
 import { useEthers } from '../contexts/useEthers'
 import { useEthersNetworkQuery } from '../queries/useEthersNetworkQuery'
 import abi from './Erc20HandlerAbi.json'

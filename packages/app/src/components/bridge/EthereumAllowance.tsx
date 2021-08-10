@@ -1,6 +1,6 @@
+import { ethereums } from '@phala/app-config'
 import { ethers } from 'ethers'
 import React, { cloneElement, FC, useEffect, useMemo, useState } from 'react'
-import { ethereums } from '../../config'
 import { useEthers } from '../../libs/ethereum/contexts/useEthers'
 import { useErc20Contract } from '../../libs/ethereum/erc20/useErc20Contract'
 import { useErc20AssetHandlerAllowanceQuery } from '../../libs/ethereum/queries/useErc20AllowanceQuery'

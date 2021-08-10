@@ -1,7 +1,7 @@
+import { ethereums } from '@phala/app-config'
 import { BigNumber } from 'ethers'
 import { useQuery, UseQueryResult } from 'react-query'
 import { v4 as uuidv4 } from 'uuid'
-import { ethereums } from '../../../config'
 import { useErc20Contract } from '../erc20/useErc20Contract'
 import { useEthersNetworkQuery } from './useEthersNetworkQuery'
 

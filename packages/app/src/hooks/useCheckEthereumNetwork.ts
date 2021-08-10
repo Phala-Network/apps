@@ -1,4 +1,4 @@
-import { ethereums } from '../config'
+import { ethereums } from '@phala/app-config'
 import { useEthers } from '../libs/ethereum/contexts/useEthers'
 import { isDev } from '../utils/isDev'
 import { isTest } from '../utils/isTest'
