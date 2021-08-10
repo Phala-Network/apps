@@ -62,7 +62,7 @@ export const waitSignAndSend = ({
               } else {
                 reject(
                   new SimpleExtrinsicFailedError(
-                    error?.toString() ?? toString.call(error)
+                    error?.toString() ?? String.toString.call(error)
                   )
                 )
               }
