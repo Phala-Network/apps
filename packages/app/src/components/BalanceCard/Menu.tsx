@@ -1,12 +1,12 @@
 import { navigate } from 'gatsby'
 import { forwardRef, useState } from 'react'
-import { up, down } from 'styled-breakpoints'
+import { down, up } from 'styled-breakpoints'
 import styled from 'styled-components'
+import ActionArrow from '../../icons/action_arrow.svg'
 import BridgeModal from '../BridgeModal'
 import ClaimModal from '../ClaimModal'
 import ConvertModal from '../ConvertModal'
 import TransferModal from '../TransferModal'
-import ActionArrow from '../../icons/action_arrow.svg'
 
 const MenuWrap = styled.div<{ active: boolean }>`
   position: absolute;

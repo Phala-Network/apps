@@ -1,17 +1,16 @@
 import React from 'react'
 import styled from 'styled-components'
+import Address from '../Address'
 import AmountInfo from '../AmountInfo'
 import Button from '../Button'
 import Copy from '../Copy'
 import InfoTitle from '../InfoTitle'
 import InputExternalInfo from '../InputExternalInfo'
 import { ModalAction, ModalActions } from '../Modal'
-import QRCode from '../QRCode'
 import Spacer from '../Spacer'
-import Address from '../Address'
 import { StepProps } from './BridgeProcess'
-import FormLayout from './FormLayout'
 import FormItem from './FormItem'
+import FormLayout from './FormLayout'
 
 type Props = {
   onNext: () => void
@@ -67,9 +66,6 @@ const ResultStep: React.FC<Props> = (props) => {
                 </AddressInfoBlackPanel>
               </div>
               <Spacer x={0.6}></Spacer>
-              <QRCode
-                style={{ width: 88, display: 'block' }}
-                value={address}></QRCode>
             </AddressOfAmountInfo>
           </AmountInfo>
         </FormItem>
