@@ -1,6 +1,5 @@
-import { ethereums } from '@phala/app-config'
+import { EthereumNetworkOptions, ethereums } from '@phala/app-config'
 import { useMemo } from 'react'
-import { EthereumNetworkOptions } from '../../configuration'
 import { useEthersNetworkQuery } from './useEthersNetworkQuery'
 
 type UseEthereumNetworkOptionsResult = {

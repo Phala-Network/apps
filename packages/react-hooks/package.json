@@ -1,6 +1,29 @@
 {
-  "name": "react-hooks",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js"
+  "name": "@phala/react-hooks",
+  "version": "0.0.1",
+  "sideEffects": false,
+  "main": "esm/index.js",
+  "module": "esm/index.js",
+  "types": "esm/index.d.ts",
+  "scripts": {
+    "develop": "tsc --watch",
+    "start": "tsc --watch",
+    "build": "tsc",
+    "test": "tsc --noEmit",
+    "lint": "type-coverage",
+    "prepublishOnly": "run-s lint build"
+  },
+  "dependencies": {
+    "@phala/app-config": "workspace:*",
+    "@phala/react-libs": "workspace:*",
+    "@phala/utils": "workspace:*",
+    "@polkadot/api": "^5.4.1",
+    "@polkadot/api-derive": "^5.4.1",
+    "@sentry/react": "^6.11.0",
+    "axios": "^0.21.1",
+    "decimal.js": "^10.3.1",
+    "ethers": "^5.4.4",
+    "react-query": "^3.19.4",
+    "vconsole": "^3.9.1"
+  }
 }

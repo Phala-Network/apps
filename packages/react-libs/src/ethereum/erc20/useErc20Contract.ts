@@ -1,7 +1,7 @@
+import { ethereums } from '@phala/app-config'
 import { Contract, ethers } from 'ethers'
 import { useMemo } from 'react'
 import { v4 as uuidv4 } from 'uuid'
-import { ethereums } from '../../../config'
 import { useEthers } from '../contexts/useEthers'
 import { useEthersNetworkQuery } from '../queries/useEthersNetworkQuery'
 

@@ -2,7 +2,7 @@
   "compilerOptions": {
     "incremental": true,
     "composite": true,
-    "lib": ["ES2018"],
+    "lib": ["dom", "ES2018"],
     "target": "ES2018",
     "module": "ES2020",
     "moduleResolution": "node",
@@ -21,5 +21,11 @@
     "allowSyntheticDefaultImports": true,
     "jsx": "react-jsx"
   },
-  "references": [{ "path": "packages/app-config" }]
+  "references": [
+    { "path": "packages/app-config" },
+    { "path": "packages/react-libs" },
+    { "path": "packages/utils" },
+    { "path": "packages/react-hooks" },
+    { "path": "packages/react-components" }
+  ]
 }

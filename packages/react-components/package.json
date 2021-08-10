@@ -1,13 +1,21 @@
 {
   "name": "@phala/react-components",
   "version": "0.0.1",
-  "main": "index.ts",
-  "type": "module",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "sideEffects": false,
+  "main": "esm/index.js",
+  "module": "esm/index.js",
+  "types": "esm/index.d.ts",
   "dependencies": {
     "@types/styled-components": "^5.1.12",
+    "styled-breakpoints": "^10.0.1",
     "styled-components": "^5.3.0"
+  },
+  "scripts": {
+    "develop": "tsc --watch",
+    "start": "tsc --watch",
+    "build": "tsc",
+    "test": "tsc --noEmit",
+    "lint": "type-coverage",
+    "prepublishOnly": "run-s lint build"
   }
 }

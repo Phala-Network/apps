@@ -18,7 +18,7 @@ import { isTest } from './utils/isTest'
 const WrapApp: React.FC = ({ children }) => {
   const client = useRef(new QueryClient())
   const defaultNetwork =
-    process.env.GATSBY_DEFAULT_NETWORK ||
+    process.env['GATSBY_DEFAULT_NETWORK'] ||
     (isDev() || isTest() ? 'poc4-dev' : 'khala')
 
   // eslint-disable-next-line no-console

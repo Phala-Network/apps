@@ -6,10 +6,11 @@
   "module": "esm/index.js",
   "types": "esm/index.d.ts",
   "dependencies": {
-    "@phala/libs": "*",
-    "@phala/typedefs": "^0.2.10"
+    "@phala/typedefs": "^0.2.10",
+    "@types/node": "^16.4.13"
   },
   "scripts": {
+    "develop": "tsc --watch",
     "start": "tsc --watch",
     "build": "tsc",
     "test": "tsc --noEmit",

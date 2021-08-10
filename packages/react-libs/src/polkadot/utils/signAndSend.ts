@@ -3,7 +3,7 @@ import { AddressOrPair, SubmittableExtrinsic } from '@polkadot/api/types'
 import {
   DispatchError,
   ExtrinsicStatus,
-  Hash,
+  Hash
 } from '@polkadot/types/interfaces'
 import { ISubmittableResult, Signer } from '@polkadot/types/types'
 
@@ -62,7 +62,7 @@ export const waitSignAndSend = ({
               } else {
                 reject(
                   new SimpleExtrinsicFailedError(
-                    error?.toString() ?? toString.call(error)
+                    error?.toString() ?? String.toString.call(error)
                   )
                 )
               }

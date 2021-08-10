@@ -9,13 +9,5 @@
     "sourceMap": true,
     "esModuleInterop": false
   },
-  "include": ["src/**/*", "src/**/*.json"],
-  "references": [
-    {
-      "path": "../app-config"
-    },
-    {
-      "path": "../libs"
-    }
-  ]
+  "include": ["src/**/*"]
 }

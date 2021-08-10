@@ -27,6 +27,7 @@ export const transfer = async ({
     .web3FromAddress
 
   const signer = (await web3FromAddress(sender)).signer
+  // @ts-ignore
   const extrinsic = api.tx.bridgeTransfer.transferNative(
     amount,
     recipient,

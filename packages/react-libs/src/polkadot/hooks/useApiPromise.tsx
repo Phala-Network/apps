@@ -6,7 +6,7 @@ import {
   ReactElement,
   useContext,
   useEffect,
-  useState,
+  useState
 } from 'react'
 import { useNetworkContext } from './useSubstrateNetwork'
 
@@ -69,6 +69,7 @@ export const ApiPromiseProvider = ({
 
     setState('init')
 
+    // @ts-ignore
     enableApiPromise(endpoint, registryTypes)
       .then((api) => {
         setApi(api)
