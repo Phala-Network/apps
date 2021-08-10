@@ -9,6 +9,7 @@ module.exports = {
     DEV_SSR: false,
   },
   plugins: [
+    `gatsby-plugin-pnpm`,
     'local-plugin-layout', // Move IntlProvider outside of the layout component
     {
       resolve: `gatsby-plugin-intl`,
@@ -39,8 +40,7 @@ module.exports = {
     {
       resolve: '@sentry/gatsby',
       options: {
-        dsn:
-          'https://ba6cd9ff61544ca6a96f3ca1d90445f2@o812739.ingest.sentry.io/5879132',
+        dsn: 'https://ba6cd9ff61544ca6a96f3ca1d90445f2@o812739.ingest.sentry.io/5879132',
         sampleRate: 1,
       },
     },
