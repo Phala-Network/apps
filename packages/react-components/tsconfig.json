@@ -9,5 +9,12 @@
     "sourceMap": true,
     "esModuleInterop": false
   },
-  "include": ["src/**/*", "src/**/*.json"]
+  "include": ["src/**/*", "src/**/*.json"],
+  "references": [
+    { "path": "../app-config" },
+    { "path": "../app-types" },
+    { "path": "../react-libs" },
+    { "path": "../utils" },
+    { "path": "../react-hooks" }
+  ]
 }

@@ -8,5 +8,6 @@
     "sourceMap": true,
     "esModuleInterop": false
   },
-  "include": ["src/**/*", "src/**/*.json"]
+  "include": ["src/**/*", "src/**/*.json"],
+  "references": [{ "path": "../app-config" }]
 }
