@@ -18,9 +18,9 @@ importers:
 
   packages/app:
     specifiers:
-      '@phala/app-config': workspace:^0.0.1
-      '@phala/app-types': workspace:^0.0.1
-      '@phala/react-components': workspace:^0.0.1
+      '@phala/app-config': workspace:*
+      '@phala/app-types': workspace:*
+      '@phala/react-components': workspace:*
       '@phala/typedefs': ^0.2.11
       '@polkadot/api': ^4.17.1
       '@polkadot/extension-dapp': ^0.38.8
@@ -233,7 +233,7 @@ importers:
       '@polkadot/api': ^5.4.1
       '@polkadot/extension-dapp': ^0.39.2
       '@polkadot/extension-inject': ^0.39.2
-      '@polkadot/types': ^5.4.1
+      '@polkadot/types': ^4.17.1
       '@polkadot/util-crypto': ^7.1.1
       '@types/node': ^16.4.13
       '@types/styletron-engine-atomic': ^1.1.1
@@ -250,7 +250,7 @@ importers:
       '@polkadot/api': 5.4.1
       '@polkadot/extension-dapp': 0.39.2_@polkadot+api@5.4.1
       '@polkadot/extension-inject': 0.39.2_@polkadot+api@5.4.1
-      '@polkadot/types': 5.4.1
+      '@polkadot/types': 4.17.1
       '@polkadot/util-crypto': 7.1.1
       '@types/node': 16.4.13
       '@types/styletron-engine-atomic': 1.1.1
@@ -6297,7 +6297,7 @@ packages:
   /@types/tunnel/0.0.1:
     resolution: {integrity: sha512-AOqu6bQu5MSWwYvehMXLukFHnupHrpZ8nvgae5Ggie9UwzDR1CCwoXgSSWNZJuyOlCdfdsWMA5F2LlmvyoTv8A==}
     dependencies:
-      '@types/node': 14.17.9
+      '@types/node': 16.4.13
     dev: false
 
   /@types/uglify-js/3.13.1:

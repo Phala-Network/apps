@@ -1,4 +1,22 @@
 {
   "extends": "../../tsconfig.json",
-  "include": ["src/**/*", "src/**/*.json"]
+  "compilerOptions": {
+    "target": "ES6",
+    "module": "CommonJS",
+    "rootDir": "./src",
+    "composite": true,
+    "strict": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "references": [
+    { "path": "../app-config" },
+    { "path": "../app-types" },
+    { "path": "../react-libs" },
+    { "path": "../utils" },
+    { "path": "../react-hooks" },
+    { "path": "../react-components" }
+  ]
 }

@@ -11,7 +11,7 @@
     "@polkadot/api": "^5.4.1",
     "@polkadot/extension-dapp": "^0.39.2",
     "@polkadot/extension-inject": "^0.39.2",
-    "@polkadot/types": "^5.4.1",
+    "@polkadot/types": "^4.17.1",
     "@polkadot/util-crypto": "^7.1.1",
     "@types/node": "^16.4.13",
     "@types/styletron-engine-atomic": "^1.1.1",

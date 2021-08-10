@@ -1,11 +1,10 @@
+import { Alert, Spacer } from '@phala/react-components'
 import React from 'react'
 import styled from 'styled-components'
 import { TransactionInfo } from '../../../types/normal'
 import { isDev } from '../../../utils/isDev'
 import { isTest } from '../../../utils/isTest'
-import Alert from '../../Alert'
 import BaseInfo from '../../bridge/SubmitStep/BaseInfo'
-import Spacer from '../../Spacer'
 
 type Props = {
   transactionInfo: TransactionInfo

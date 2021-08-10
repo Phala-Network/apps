@@ -1,3 +1,4 @@
+import { Alert } from '@phala/react-components'
 import { u8aToHex } from '@polkadot/util'
 import { decodeAddress } from '@polkadot/util-crypto'
 import { ethers } from 'ethers'
@@ -12,7 +13,6 @@ import { useTransactionReceiptQuery } from '../../../libs/ethereum/queries/useTr
 import { TransactionInfoItem } from '../../../types/normal'
 import { isDev } from '../../../utils/isDev'
 import { isTest } from '../../../utils/isTest'
-import Alert from '../../Alert'
 import Button from '../../Button'
 import { ModalAction, ModalActions } from '../../Modal'
 import Spacer from '../../Spacer'
@@ -42,10 +42,8 @@ const SubmitStepToKhala: React.FC<Props> = (props) => {
     from: TransactionInfoItem
     to: TransactionInfoItem
   }>()
-  const {
-    isLoading: isReceiptLoading,
-    data: receipt,
-  } = useTransactionReceiptQuery(currentTransactionInfo?.hash)
+  const { isLoading: isReceiptLoading, data: receipt } =
+    useTransactionReceiptQuery(currentTransactionInfo?.hash)
   const { refetch } = useErc20BalanceQuery(accountFrom)
 
   let link = ''
