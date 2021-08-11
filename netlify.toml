@@ -1,4 +1,5 @@
 [build]
     command = "./scripts/netlify-deploy.sh"
 [build.environment]
+    NPM_FLAGS="--prefix=./scripts/app/"
     NODE_VERSION="14"
