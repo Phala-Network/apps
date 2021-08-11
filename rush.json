@@ -4,7 +4,7 @@
   "pnpmVersion": "6.7.1",
   "pnpmOptions": {
     "pnpmStore": "local",
-    "strictPeerDependencies": true,
+    "strictPeerDependencies": false,
     "resolutionStrategy": "fast",
     "preventManualShrinkwrapChanges": true,
     "useWorkspaces": true

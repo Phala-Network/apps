@@ -18,5 +18,8 @@
     "@polkadot/util-crypto": "^6.11.1",
     "@types/node": "^16.4.13",
     "decimal.js": "^10.3.1"
+  },
+  "peerDependencies": {
+    "react": "^17.0.0"
   }
 }

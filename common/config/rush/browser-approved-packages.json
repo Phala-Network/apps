@@ -1,0 +1,226 @@
+// DO NOT ADD COMMENTS IN THIS FILE.  They will be lost when the Rush tool resaves it.
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/approved-packages.schema.json",
+  "packages": [
+    {
+      "name": "@babel/core",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "@phala/app-config",
+      "allowedCategories": [ "libraries", "production" ]
+    },
+    {
+      "name": "@phala/app-types",
+      "allowedCategories": [ "libraries", "production" ]
+    },
+    {
+      "name": "@phala/react-components",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "@phala/react-hooks",
+      "allowedCategories": [ "libraries" ]
+    },
+    {
+      "name": "@phala/react-libs",
+      "allowedCategories": [ "libraries" ]
+    },
+    {
+      "name": "@phala/typedefs",
+      "allowedCategories": [ "libraries", "production" ]
+    },
+    {
+      "name": "@phala/utils",
+      "allowedCategories": [ "libraries" ]
+    },
+    {
+      "name": "@sentry/gatsby",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "@sentry/react",
+      "allowedCategories": [ "libraries", "production" ]
+    },
+    {
+      "name": "@sentry/tracing",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "axios",
+      "allowedCategories": [ "libraries", "production" ]
+    },
+    {
+      "name": "babel-loader",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "babel-plugin-styled-components",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "babel-preset-gatsby",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "bn.js",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "core-js",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "csstype",
+      "allowedCategories": [ "libraries" ]
+    },
+    {
+      "name": "currency.js",
+      "allowedCategories": [ "libraries", "production" ]
+    },
+    {
+      "name": "decimal.js",
+      "allowedCategories": [ "libraries", "production" ]
+    },
+    {
+      "name": "ethers",
+      "allowedCategories": [ "libraries", "production" ]
+    },
+    {
+      "name": "gatsby",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "gatsby-plugin-google-gtag",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "gatsby-plugin-intl",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "gatsby-plugin-pnpm",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "gatsby-plugin-react-helmet",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "gatsby-plugin-react-svg",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "gatsby-plugin-styled-components",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "gatsby-plugin-typescript",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "jotai",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "luxon",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "node-polyfill-webpack-plugin",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "rc-input-number",
+      "allowedCategories": [ "libraries", "production" ]
+    },
+    {
+      "name": "rc-tooltip",
+      "allowedCategories": [ "libraries", "production" ]
+    },
+    {
+      "name": "react",
+      "allowedCategories": [ "libraries", "production" ]
+    },
+    {
+      "name": "react-dom",
+      "allowedCategories": [ "libraries", "production" ]
+    },
+    {
+      "name": "react-error-boundary",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "react-form",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "react-helmet",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "react-is",
+      "allowedCategories": [ "libraries", "production" ]
+    },
+    {
+      "name": "react-query",
+      "allowedCategories": [ "libraries", "production" ]
+    },
+    {
+      "name": "react-scripts",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "react-table",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "react-toastify",
+      "allowedCategories": [ "libraries", "production" ]
+    },
+    {
+      "name": "react-use",
+      "allowedCategories": [ "libraries", "production" ]
+    },
+    {
+      "name": "styled-breakpoints",
+      "allowedCategories": [ "libraries", "production" ]
+    },
+    {
+      "name": "styled-components",
+      "allowedCategories": [ "libraries", "production" ]
+    },
+    {
+      "name": "styletron-engine-atomic",
+      "allowedCategories": [ "libraries" ]
+    },
+    {
+      "name": "svg-react-loader",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "typescript",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "uuid",
+      "allowedCategories": [ "libraries", "production" ]
+    },
+    {
+      "name": "vconsole",
+      "allowedCategories": [ "libraries", "production" ]
+    },
+    {
+      "name": "web-vitals",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "web3modal",
+      "allowedCategories": [ "libraries", "production" ]
+    },
+    {
+      "name": "webpack",
+      "allowedCategories": [ "production" ]
+    }
+  ]
+}

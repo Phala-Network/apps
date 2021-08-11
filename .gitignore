@@ -26,3 +26,10 @@ yarn-error.log*
 
 storybook-static
 public
+
+common/deploy/
+common/temp/
+common/autoinstallers/*/.npmrc
+**/.rush/temp/
+temp
+*.log
