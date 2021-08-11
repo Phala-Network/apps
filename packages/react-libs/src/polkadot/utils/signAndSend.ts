@@ -3,7 +3,7 @@ import { AddressOrPair, SubmittableExtrinsic } from '@polkadot/api/types'
 import {
   DispatchError,
   ExtrinsicStatus,
-  Hash
+  Hash,
 } from '@polkadot/types/interfaces'
 import { ISubmittableResult, Signer } from '@polkadot/types/types'
 
@@ -56,9 +56,9 @@ export const waitSignAndSend = ({
                 const decoded = api.registry.findMetaError(
                   (error as DispatchError).asModule
                 )
-                const { docs, method, section } = decoded
+                const { documentation, method, section } = decoded
 
-                reject(new ExtrinsicFailedError(section, method, docs))
+                reject(new ExtrinsicFailedError(section, method, documentation))
               } else {
                 reject(
                   new SimpleExtrinsicFailedError(
