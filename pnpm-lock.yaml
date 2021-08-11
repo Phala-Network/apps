@@ -31,7 +31,7 @@ importers:
       '@sentry/gatsby': ^6.11.0
       '@sentry/react': ^6.11.0
       '@sentry/tracing': ^6.11.0
-      '@types/node': ^12.20.19
+      '@types/node': ^16.4.13
       '@types/react': ^17.0.16
       '@types/react-dom': ^17.0.9
       '@types/react-helmet': ^6.1.2
@@ -93,7 +93,7 @@ importers:
       '@sentry/gatsby': 6.11.0_gatsby@3.11.1+react@17.0.2
       '@sentry/react': 6.11.0_react@17.0.2
       '@sentry/tracing': 6.11.0
-      '@types/node': 12.20.19
+      '@types/node': 16.4.13
       '@types/react': 17.0.16
       '@types/react-dom': 17.0.9
       '@types/react-helmet': 6.1.2
@@ -110,7 +110,7 @@ importers:
       currency.js: 2.0.4
       decimal.js: 10.3.1
       ethers: 5.4.4
-      gatsby: 3.11.1_5dd65f2471affee418f69ace691e2c4c
+      gatsby: 3.11.1_c59e156565745313c12417314e7d8751
       gatsby-plugin-google-gtag: 3.11.0_1394c15e9e8aebe4211f49297b0e5cf2
       gatsby-plugin-intl: 0.3.3_gatsby@3.11.1+react@17.0.2
       gatsby-plugin-pnpm: 1.2.8_gatsby@3.11.1
@@ -150,7 +150,7 @@ importers:
 
   packages/app-config:
     specifiers:
-      '@phala/typedefs': ^0.2.10
+      '@phala/typedefs': ^0.2.11
       '@types/node': ^16.4.13
     dependencies:
       '@phala/typedefs': 0.2.13
@@ -169,7 +169,7 @@ importers:
       '@phala/react-hooks': workspace:*
       '@phala/react-libs': workspace:*
       '@phala/utils': workspace:*
-      '@polkadot/util': ^7.1.1
+      '@polkadot/util': ^6.11.1
       '@types/styled-components': ^5.1.12
       csstype: ^3.0.8
       currency.js: ^2.0.4
@@ -187,7 +187,7 @@ importers:
       '@phala/react-hooks': link:../react-hooks
       '@phala/react-libs': link:../react-libs
       '@phala/utils': link:../utils
-      '@polkadot/util': 7.1.1
+      '@polkadot/util': 6.11.1
       '@types/styled-components': 5.1.12
       csstype: 3.0.8
       currency.js: 2.0.4
@@ -229,10 +229,10 @@ importers:
   packages/react-libs:
     specifiers:
       '@phala/app-config': workspace:*
-      '@phala/typedefs': ^0.2.10
+      '@phala/typedefs': ^0.2.11
       '@polkadot/api': ^4.17.1
-      '@polkadot/extension-dapp': ^0.39.2
-      '@polkadot/extension-inject': ^0.39.2
+      '@polkadot/extension-dapp': ^0.38.8
+      '@polkadot/extension-inject': ^0.38.2
       '@polkadot/types': ^4.17.1
       '@polkadot/util-crypto': ^6.11.1
       '@types/node': ^16.4.13
@@ -247,8 +247,8 @@ importers:
     dependencies:
       '@phala/app-config': link:../app-config
       '@phala/typedefs': 0.2.13
-      '@polkadot/extension-dapp': 0.39.2_@polkadot+api@4.17.1
-      '@polkadot/extension-inject': 0.39.2_@polkadot+api@4.17.1
+      '@polkadot/extension-dapp': 0.38.8_@polkadot+api@4.17.1
+      '@polkadot/extension-inject': 0.38.8_@polkadot+api@4.17.1
       '@types/node': 16.4.13
       '@types/styletron-engine-atomic': 1.1.1
       '@types/uuid': 8.3.1
@@ -265,13 +265,13 @@ importers:
 
   packages/utils:
     specifiers:
-      '@polkadot/util': ^7.1.1
-      '@polkadot/util-crypto': ^7.1.1
+      '@polkadot/util': ^6.11.1
+      '@polkadot/util-crypto': ^6.11.1
       '@types/node': ^16.4.13
       decimal.js: ^10.3.1
     dependencies:
-      '@polkadot/util': 7.1.1
-      '@polkadot/util-crypto': 7.1.1
+      '@polkadot/util': 6.11.1
+      '@polkadot/util-crypto': 6.11.1
       '@types/node': 16.4.13
       decimal.js: 10.3.1
 
@@ -4375,7 +4375,7 @@ packages:
       value-or-promise: 1.0.6
     dev: false
 
-  /@graphql-tools/url-loader/6.10.1_d855ff7c8d6dce64ee9fd9a62693fd2e:
+  /@graphql-tools/url-loader/6.10.1_6d6b6a2828faa6179c1d7febefcd9179:
     resolution: {integrity: sha512-DSDrbhQIv7fheQ60pfDpGD256ixUQIR6Hhf9Z5bRjVkXOCvO5XrkwoWLiU7iHL81GB1r0Ba31bf+sl+D4nyyfw==}
     peerDependencies:
       graphql: ^14.0.0 || ^15.0.0
@@ -4394,7 +4394,7 @@ packages:
       is-promise: 4.0.0
       isomorphic-ws: 4.0.1_ws@7.4.5
       lodash: 4.17.21
-      meros: 1.1.4_@types+node@12.20.19
+      meros: 1.1.4_@types+node@16.4.13
       subscriptions-transport-ws: 0.9.19_graphql@15.5.1
       sync-fetch: 0.3.0
       tslib: 2.2.0
@@ -5096,29 +5096,8 @@ packages:
       '@polkadot/util-crypto': 6.11.1
     dev: false
 
-  /@polkadot/extension-dapp/0.39.2_@polkadot+api@4.17.1:
-    resolution: {integrity: sha512-8070uXUx/1pry9Lm2kS+3+kJjLUCLookmpYlHlguuQnQMcTuI76iClQzTQp1G6kqCROVx5g7GUHou/fxrdnaAw==}
-    peerDependencies:
-      '@polkadot/api': '*'
-    dependencies:
-      '@babel/runtime': 7.14.8
-      '@polkadot/api': 4.17.1
-      '@polkadot/extension-inject': 0.39.2_@polkadot+api@4.17.1
-      '@polkadot/util': 7.1.1
-      '@polkadot/util-crypto': 7.1.1
-    dev: false
-
   /@polkadot/extension-inject/0.38.8_@polkadot+api@4.17.1:
     resolution: {integrity: sha512-TMkifhCvnDYFxpGgZSwn5XIxCPVjozb7506rHWUP+lCeXq2hjTMKoEYKAUFXo2xnQPJTyqO3/8XPPkKAfPJe/w==}
-    peerDependencies:
-      '@polkadot/api': '*'
-    dependencies:
-      '@babel/runtime': 7.14.8
-      '@polkadot/api': 4.17.1
-    dev: false
-
-  /@polkadot/extension-inject/0.39.2_@polkadot+api@4.17.1:
-    resolution: {integrity: sha512-50kkzSawmiAaVjduMjD4dSKtLaWzwN7U6LgQLNgG4uTalpPMm5sPAvGLW2TxKAo36CkJ/xBaDLebkliZgyuFNA==}
     peerDependencies:
       '@polkadot/api': '*'
     dependencies:
@@ -5574,7 +5553,7 @@ packages:
     dependencies:
       '@sentry/react': 6.11.0_react@17.0.2
       '@sentry/tracing': 6.11.0
-      gatsby: 3.11.1_5dd65f2471affee418f69ace691e2c4c
+      gatsby: 3.11.1_c59e156565745313c12417314e7d8751
     transitivePeerDependencies:
       - react
     dev: false
@@ -7438,7 +7417,7 @@ packages:
       gatsby: ^3.0.0-next.0
     dependencies:
       '@babel/core': 7.15.0
-      gatsby: 3.11.1_5dd65f2471affee418f69ace691e2c4c
+      gatsby: 3.11.1_c59e156565745313c12417314e7d8751
     dev: false
 
   /babel-plugin-styled-components/1.13.2_styled-components@5.3.0:
@@ -10178,7 +10157,7 @@ packages:
       string-natural-compare: 3.0.1
     dev: false
 
-  /eslint-plugin-graphql/4.0.0_443ae0ec46578346db45326befec474c:
+  /eslint-plugin-graphql/4.0.0_867a45dd3e3341c84223dd40cbb0b957:
     resolution: {integrity: sha512-d5tQm24YkVvCEk29ZR5ScsgXqAGCjKlMS8lx3mS7FS/EKsWbkvXQImpvic03EpMIvNTBW5e+2xnHzXB/VHNZJw==}
     engines: {node: '>=10.0'}
     peerDependencies:
@@ -10186,7 +10165,7 @@ packages:
     dependencies:
       '@babel/runtime': 7.14.8
       graphql: 15.5.1
-      graphql-config: 3.4.1_443ae0ec46578346db45326befec474c
+      graphql-config: 3.4.1_867a45dd3e3341c84223dd40cbb0b957
       lodash.flatten: 4.4.0
       lodash.without: 4.4.0
     transitivePeerDependencies:
@@ -11281,7 +11260,7 @@ packages:
       react-dom: ^16.9.0 || ^17.0.0
     dependencies:
       '@babel/runtime': 7.14.8
-      gatsby: 3.11.1_5dd65f2471affee418f69ace691e2c4c
+      gatsby: 3.11.1_c59e156565745313c12417314e7d8751
       minimatch: 3.0.4
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
@@ -11296,7 +11275,7 @@ packages:
       '@formatjs/intl-pluralrules': 1.5.9
       '@formatjs/intl-relativetimeformat': 4.5.16
       browser-lang: 0.1.0
-      gatsby: 3.11.1_5dd65f2471affee418f69ace691e2c4c
+      gatsby: 3.11.1_c59e156565745313c12417314e7d8751
       intl: 1.2.5
       react-intl: 3.12.1_react@17.0.2
     transitivePeerDependencies:
@@ -11313,7 +11292,7 @@ packages:
       '@sindresorhus/slugify': 1.1.2
       chokidar: 3.5.2
       fs-exists-cached: 1.0.0
-      gatsby: 3.11.1_5dd65f2471affee418f69ace691e2c4c
+      gatsby: 3.11.1_c59e156565745313c12417314e7d8751
       gatsby-core-utils: 2.11.0
       gatsby-page-utils: 1.11.0
       gatsby-telemetry: 2.11.0
@@ -11328,7 +11307,7 @@ packages:
     peerDependencies:
       gatsby: ~2.x.x || ~3.x.x
     dependencies:
-      gatsby: 3.11.1_5dd65f2471affee418f69ace691e2c4c
+      gatsby: 3.11.1_c59e156565745313c12417314e7d8751
       lodash.get: 4.4.2
       lodash.uniq: 4.5.0
     dev: false
@@ -11341,7 +11320,7 @@ packages:
       react-helmet: ^5.1.3 || ^6.0.0
     dependencies:
       '@babel/runtime': 7.14.8
-      gatsby: 3.11.1_5dd65f2471affee418f69ace691e2c4c
+      gatsby: 3.11.1_c59e156565745313c12417314e7d8751
       react-helmet: 6.1.0_react@17.0.2
     dev: false
 
@@ -11350,7 +11329,7 @@ packages:
     peerDependencies:
       gatsby: ^3.0.0 || ^2.0.0
     dependencies:
-      gatsby: 3.11.1_5dd65f2471affee418f69ace691e2c4c
+      gatsby: 3.11.1_c59e156565745313c12417314e7d8751
       svg-react-loader: 0.4.6
     dev: false
 
@@ -11366,7 +11345,7 @@ packages:
     dependencies:
       '@babel/runtime': 7.14.8
       babel-plugin-styled-components: 1.13.2_styled-components@5.3.0
-      gatsby: 3.11.1_5dd65f2471affee418f69ace691e2c4c
+      gatsby: 3.11.1_c59e156565745313c12417314e7d8751
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
       styled-components: 5.3.0_react-dom@17.0.2+react@17.0.2
@@ -11385,7 +11364,7 @@ packages:
       '@babel/preset-typescript': 7.15.0_@babel+core@7.15.0
       '@babel/runtime': 7.14.8
       babel-plugin-remove-graphql-queries: 3.11.0_@babel+core@7.15.0+gatsby@3.11.1
-      gatsby: 3.11.1_5dd65f2471affee418f69ace691e2c4c
+      gatsby: 3.11.1_c59e156565745313c12417314e7d8751
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -11396,7 +11375,7 @@ packages:
     peerDependencies:
       gatsby: ^3.0.0-next.0
     dependencies:
-      gatsby: 3.11.1_5dd65f2471affee418f69ace691e2c4c
+      gatsby: 3.11.1_c59e156565745313c12417314e7d8751
       joi: 17.4.2
     dev: false
 
@@ -11511,7 +11490,7 @@ packages:
       - supports-color
     dev: false
 
-  /gatsby/3.11.1_5dd65f2471affee418f69ace691e2c4c:
+  /gatsby/3.11.1_c59e156565745313c12417314e7d8751:
     resolution: {integrity: sha512-KDMdMBrqPiS50CNjlhOdEZLz2PWewgDNbjnfSTYCxxFifTdi09wbNynnbAQ879nbhRTd0tGsNv6YGRsVEIbSQA==}
     engines: {node: '>=12.13.0'}
     hasBin: true
@@ -11569,7 +11548,7 @@ packages:
       eslint: 7.32.0
       eslint-config-react-app: 6.0.0_85b74fbbab332a898b8358b2f8cb64e7
       eslint-plugin-flowtype: 5.9.0_eslint@7.32.0
-      eslint-plugin-graphql: 4.0.0_443ae0ec46578346db45326befec474c
+      eslint-plugin-graphql: 4.0.0_867a45dd3e3341c84223dd40cbb0b957
       eslint-plugin-import: 2.24.0_eslint@7.32.0
       eslint-plugin-jsx-a11y: 6.4.1_eslint@7.32.0
       eslint-plugin-react: 7.24.0_eslint@7.32.0
@@ -11989,7 +11968,7 @@ packages:
       object-path: 0.11.5
     dev: false
 
-  /graphql-config/3.4.1_443ae0ec46578346db45326befec474c:
+  /graphql-config/3.4.1_867a45dd3e3341c84223dd40cbb0b957:
     resolution: {integrity: sha512-g9WyK4JZl1Ko++FSyE5Ir2g66njfxGzrDDhBOwnkoWf/t3TnnZG6BBkWP+pkqVJ5pqMJGPKHNrbew8jRxStjhw==}
     engines: {node: '>= 10.0.0'}
     peerDependencies:
@@ -12000,7 +11979,7 @@ packages:
       '@graphql-tools/json-file-loader': 6.2.6_graphql@15.5.1
       '@graphql-tools/load': 6.2.8_graphql@15.5.1
       '@graphql-tools/merge': 6.2.14_graphql@15.5.1
-      '@graphql-tools/url-loader': 6.10.1_d855ff7c8d6dce64ee9fd9a62693fd2e
+      '@graphql-tools/url-loader': 6.10.1_6d6b6a2828faa6179c1d7febefcd9179
       '@graphql-tools/utils': 7.10.0_graphql@15.5.1
       cosmiconfig: 7.0.0
       cosmiconfig-toml-loader: 1.0.0
@@ -14691,7 +14670,7 @@ packages:
     engines: {node: '>= 8'}
     dev: false
 
-  /meros/1.1.4_@types+node@12.20.19:
+  /meros/1.1.4_@types+node@16.4.13:
     resolution: {integrity: sha512-E9ZXfK9iQfG9s73ars9qvvvbSIkJZF5yOo9j4tcwM5tN8mUKfj/EKN5PzOr3ZH0y5wL7dLAHw3RVEfpQV9Q7VQ==}
     engines: {node: '>=12'}
     peerDependencies:
@@ -14700,7 +14679,7 @@ packages:
       '@types/node':
         optional: true
     dependencies:
-      '@types/node': 12.20.19
+      '@types/node': 16.4.13
     dev: false
 
   /methods/1.1.2:

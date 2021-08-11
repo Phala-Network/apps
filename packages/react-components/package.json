@@ -11,7 +11,7 @@
     "@phala/react-hooks": "workspace:*",
     "@phala/react-libs": "workspace:*",
     "@phala/utils": "workspace:*",
-    "@polkadot/util": "^7.1.1",
+    "@polkadot/util": "^6.11.1",
     "@types/styled-components": "^5.1.12",
     "csstype": "^3.0.8",
     "currency.js": "^2.0.4",

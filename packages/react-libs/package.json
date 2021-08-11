@@ -7,9 +7,9 @@
   "types": "esm/index.d.ts",
   "dependencies": {
     "@phala/app-config": "workspace:*",
-    "@phala/typedefs": "^0.2.10",
-    "@polkadot/extension-dapp": "^0.39.2",
-    "@polkadot/extension-inject": "^0.39.2",
+    "@phala/typedefs": "^0.2.11",
+    "@polkadot/extension-dapp": "^0.38.8",
+    "@polkadot/extension-inject": "^0.38.2",
     "@types/node": "^16.4.13",
     "@types/styletron-engine-atomic": "^1.1.1",
     "@types/uuid": "^8.3.1",
