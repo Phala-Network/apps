@@ -3,8 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "build": "rush build",
-    "develop": "rush build --to-except app -v && run-p develop:*",
+    "build": "run-s build:*",
+    "develop": "run-p develop:*",
     "develop:app-config": "pnpm run develop --filter ./packages/app-config",
     "develop:app-types": "pnpm run develop --filter ./packages/app-types",
     "develop:utils": "pnpm run develop --filter ./packages/utils",
@@ -12,6 +12,13 @@
     "develop:react-hooks": "pnpm run develop --filter ./packages/react-hooks",
     "develop:react-components": "pnpm run develop --filter ./packages/react-components",
     "develop:app": "cd ./packages/app && npm run develop",
+    "build:app-config": "pnpm run build --filter ./packages/app-config",
+    "build:app-types": "pnpm run build --filter ./packages/app-types",
+    "build:utils": "pnpm run build --filter ./packages/utils",
+    "build:react-libs": "pnpm run build --filter ./packages/react-libs",
+    "build:react-hooks": "pnpm run build --filter ./packages/react-hooks",
+    "build:react-components": "pnpm run build --filter ./packages/react-components",
+    "build:app": "cd ./packages/app && npm run build",
     "preinstall": "npx only-allow pnpm"
   },
   "repository": {
@@ -24,7 +31,6 @@
   },
   "homepage": "https://github.com/Phala-Network/apps#readme",
   "dependencies": {
-    "@microsoft/rush": "^5.50.0",
     "@types/node": "^16.4.13",
     "@types/react": "^17.0.16",
     "npm-run-all": "^4.1.5",

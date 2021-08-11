@@ -1,6 +1,5 @@
 #!/bin/bash
 set -xeuo pipefail
 test "$CI" = true || exit 1
-npm install -g @microsoft/rush
-rush update
-rush build
+npx pnpm install -r --store-dir=node_modules/.pnpm-store
+npx pnpm run build
