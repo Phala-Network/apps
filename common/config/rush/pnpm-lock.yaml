@@ -23,7 +23,7 @@ importers:
       '@sentry/react': ^6.11.0
       '@sentry/tracing': ^6.11.0
       '@types/node': ^16.4.13
-      '@types/react': ^17.0.17
+      '@types/react': ^17.0.16
       '@types/react-dom': ^17.0.9
       '@types/react-helmet': ^6.1.2
       '@types/react-table': ^7.7.2
@@ -90,7 +90,7 @@ importers:
       '@sentry/react': 6.11.0_react@17.0.2
       '@sentry/tracing': 6.11.0
       '@types/node': 16.4.13
-      '@types/react': 17.0.17
+      '@types/react': 17.0.16
       '@types/react-dom': 17.0.9
       '@types/react-helmet': 6.1.2
       '@types/react-table': 7.7.2
@@ -162,7 +162,7 @@ importers:
       '@phala/utils': workspace:*
       '@polkadot/util': ^6.11.1
       '@types/bn.js': ^4.11.6
-      '@types/react': ^17.0.17
+      '@types/react': ^17.0.16
       '@types/react-dom': ^17.0.9
       '@types/styled-components': ^5.1.12
       csstype: ^3.0.8
@@ -186,7 +186,7 @@ importers:
       '@phala/utils': link:../utils
       '@polkadot/util': 6.11.1
       '@types/bn.js': 4.11.6
-      '@types/react': 17.0.17
+      '@types/react': 17.0.16
       '@types/react-dom': 17.0.9
       '@types/styled-components': 5.1.12
       csstype: 3.0.8
@@ -212,7 +212,7 @@ importers:
       '@polkadot/api-derive': ^4.17.1
       '@polkadot/types': ^4.17.1
       '@sentry/react': ^6.11.0
-      '@types/react': ^17.0.17
+      '@types/react': ^17.0.16
       axios: ^0.21.1
       decimal.js: ^10.3.1
       ethers: ^5.4.4
@@ -227,7 +227,7 @@ importers:
       '@polkadot/api-derive': 4.17.1
       '@polkadot/types': 4.17.1
       '@sentry/react': 6.11.0_react@17.0.2
-      '@types/react': 17.0.17
+      '@types/react': 17.0.16
       axios: 0.21.1
       decimal.js: 10.3.1
       ethers: 5.4.4
@@ -246,7 +246,7 @@ importers:
       '@polkadot/util-crypto': ^6.11.1
       '@types/bn.js': ^4.11.6
       '@types/node': ^16.4.13
-      '@types/react': ^17.0.17
+      '@types/react': ^17.0.16
       '@types/styletron-engine-atomic': ^1.1.1
       '@types/uuid': ^8.3.1
       bn.js: ^5.2.0
@@ -267,7 +267,7 @@ importers:
       '@polkadot/util-crypto': 6.11.1
       '@types/bn.js': 4.11.6
       '@types/node': 16.4.13
-      '@types/react': 17.0.17
+      '@types/react': 17.0.16
       '@types/styletron-engine-atomic': 1.1.1
       '@types/uuid': 8.3.1
       bn.js: 5.2.0
@@ -5765,7 +5765,7 @@ packages:
         integrity: sha512-iMIqiko6ooLrTh1joXodJK5X9xeEALT1kM5G3ZLhD3hszxBdIEd5C75U834D9mLcINgD4OyZf5uQXjkuYydWvA==,
       }
     dependencies:
-      '@types/react': 17.0.17
+      '@types/react': 17.0.16
       hoist-non-react-statics: 3.3.2
     dev: false
 
@@ -5957,7 +5957,7 @@ packages:
         integrity: sha512-N6rqQqTTAV/zKLfK3iq9Ww3wqCEhTZvsilhl0zI09zETdVq1QGmJH6+/xnj8AFUWIrle2Cqo+PGM/Ltr1vBb9w==,
       }
     dependencies:
-      '@types/react': 17.0.17
+      '@types/react': 17.0.16
     dev: false
 
   /@types/react-dom/17.0.9:
@@ -5966,7 +5966,7 @@ packages:
         integrity: sha512-wIvGxLfgpVDSAMH5utdL9Ngm5Owu0VsGmldro3ORLXV8CShrL8awVj06NuEXFQ5xyaYfdca7Sgbk/50Ri1GdPg==,
       }
     dependencies:
-      '@types/react': 17.0.17
+      '@types/react': 17.0.16
     dev: false
 
   /@types/react-helmet/6.1.2:
@@ -5975,7 +5975,7 @@ packages:
         integrity: sha512-dcfAZNlWb5JYFbO9CGfrPWLJAyFcT6UeR3u35eBbv8liY2Rg4K7fM1G5+HnwVgot+C+kVwXAZ8pLEn2jsMfTDg==,
       }
     dependencies:
-      '@types/react': 17.0.17
+      '@types/react': 17.0.16
     dev: false
 
   /@types/react-table/7.7.2:
@@ -5984,10 +5984,10 @@ packages:
         integrity: sha512-NwB78t3YV5pZ1NK3m2vylb/d0DKVyWH4y4GMCtlE4tg2n5ENM4ejzKnT46YKuqG2cPjWc+PIxuRVMd5OYX1z4A==,
       }
     dependencies:
-      '@types/react': 17.0.17
+      '@types/react': 17.0.16
     dev: false
 
-  /@types/react/17.0.17:
+  /@types/react/17.0.16:
     resolution:
       {
         integrity: sha512-nrfi7I13cAmrd0wje8czYpf5SFbryczCtPzFc6ijqvdjKcyA3tCvGxwchOUlxb2ucBPuJ9Y3oUqKrRqZvrz0lw==,
@@ -6045,7 +6045,7 @@ packages:
       }
     dependencies:
       '@types/hoist-non-react-statics': 3.3.1
-      '@types/react': 17.0.17
+      '@types/react': 17.0.16
       csstype: 3.0.8
     dev: false
 
@@ -6064,7 +6064,7 @@ packages:
         integrity: sha512-mNM8WrFrCYWXNxudjdMMeHZmGdXLfVF/fQmj1Qnz7E99niL2d7IcQubbx731FX3YEVGoF9Au1J6uBkPoEzqypw==,
       }
     dependencies:
-      '@types/react': 17.0.17
+      '@types/react': 17.0.16
       '@types/styletron-standard': 2.0.2
     dev: false
 
