@@ -1,3 +1,4 @@
+import { isDev, isTest } from '@phala/utils'
 import { Provider as JotaiProvider } from 'jotai'
 import React, { useRef } from 'react'
 import { QueryClient, QueryClientProvider } from 'react-query'
@@ -12,8 +13,6 @@ import { Web3Provider as PolkadotWeb3Provider } from './libs/polkadot/hooks/useW
 import './ReactToastify.css'
 import theme from './theme'
 import './tooltip.css'
-import { isDev } from './utils/isDev'
-import { isTest } from './utils/isTest'
 
 const WrapApp: React.FC = ({ children }) => {
   const client = useRef(new QueryClient())

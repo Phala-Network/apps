@@ -18,6 +18,7 @@
     "resolveJsonModule": true,
     "stripInternal": true,
     "esModuleInterop": true,
+    "preserveWatchOutput": true,
     "allowSyntheticDefaultImports": true,
     "jsx": "react-jsx"
   },

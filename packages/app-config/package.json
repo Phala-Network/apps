@@ -10,8 +10,8 @@
     "@types/node": "^16.4.13"
   },
   "scripts": {
-    "develop": "tsc --watch",
-    "start": "tsc --watch",
+    "develop": "tsc --watch --preserveWatchOutput",
+    "start": "tsc --watch --preserveWatchOutput",
     "build": "tsc",
     "test": "tsc --noEmit",
     "lint": "type-coverage",

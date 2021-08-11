@@ -22,7 +22,9 @@ importers:
       '@phala/app-config': workspace:*
       '@phala/app-types': workspace:*
       '@phala/react-components': workspace:*
+      '@phala/react-hooks': workspace:^0.0.1
       '@phala/typedefs': ^0.2.11
+      '@phala/utils': workspace:*
       '@polkadot/api': ^4.17.1
       '@polkadot/extension-dapp': ^0.38.8
       '@polkadot/types': ^4.17.1
@@ -87,7 +89,9 @@ importers:
       '@phala/app-config': link:../app-config
       '@phala/app-types': link:../app-types
       '@phala/react-components': link:../react-components
+      '@phala/react-hooks': link:../react-hooks
       '@phala/typedefs': 0.2.13
+      '@phala/utils': link:../utils
       '@polkadot/api': 4.17.1
       '@polkadot/extension-dapp': 0.38.8_@polkadot+api@4.17.1
       '@polkadot/types': 4.17.1
