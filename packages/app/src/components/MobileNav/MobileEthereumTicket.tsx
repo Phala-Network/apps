@@ -1,9 +1,9 @@
+import { abridgeString } from '@phala/utils'
+import { useAtom } from 'jotai'
 import { useState } from 'react'
 import styled from 'styled-components'
-import { useAtom } from 'jotai'
 import ethereumAccountAtom from '../../atoms/ethereumAccountAtom'
 import EthereumIcon from '../../icons/ethereum.svg'
-import abridgeString from '../../utils/abridgeString'
 import ConnectButton from './ConnectButton'
 import EmptyAccountModal from './EmptyAccountModal'
 
@@ -25,9 +25,8 @@ const Wrapper = styled.div`
 const MobileEthereumTicket: React.FC = () => {
   const [ethereumAccount] = useAtom(ethereumAccountAtom)
   const address = ethereumAccount?.address
-  const [emptyAccountModalVisible, setEmptyAccountModalVisible] = useState(
-    false
-  )
+  const [emptyAccountModalVisible, setEmptyAccountModalVisible] =
+    useState(false)
 
   return (
     <Wrapper>

@@ -1,3 +1,4 @@
+import { validateAddress } from '@phala/utils'
 import { Decimal } from 'decimal.js'
 import { useAtom } from 'jotai'
 import React, { useEffect, useState } from 'react'
@@ -9,7 +10,6 @@ import polkadotAccountAtom from '../../../atoms/polkadotAccountAtom'
 import useEthereumAccountBalanceDecimal from '../../../hooks/useEthereumAccountBalanceDecimal'
 import usePolkadotAccountBalanceDecimal from '../../../hooks/usePolkadotAccountBalanceDecimal'
 import { voidFn } from '../../../types/normal'
-import validateAddress from '../../../utils/validateAddress'
 import Button from '../../Button'
 import ErrorText from '../../ErrorText'
 import Input from '../../Input'
@@ -64,10 +64,8 @@ const InputDataStep: React.FC<Props> = (props) => {
 
   const [addressValid, setAddressValid] = useState(false)
 
-  const [
-    tradeTypeSelectValue,
-    setTradeTypeSelectValue,
-  ] = useState<TradeTypeSelectValue>(DEFAULT_VALUE)
+  const [tradeTypeSelectValue, setTradeTypeSelectValue] =
+    useState<TradeTypeSelectValue>(DEFAULT_VALUE)
 
   const isFromEthereum = tradeTypeSelectValue.from.network === 'ethereum'
   const currentAddress = isFromEthereum

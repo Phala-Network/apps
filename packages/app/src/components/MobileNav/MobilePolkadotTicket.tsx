@@ -1,10 +1,10 @@
+import { abridgeString } from '@phala/utils'
 import { useAtom } from 'jotai'
 import React, { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import polkadotAccountAtom from '../../atoms/polkadotAccountAtom'
 import KhalaIcon from '../../icons/khala.svg'
 import { useWeb3 } from '../../libs/polkadot/hooks/useWeb3'
-import abridgeString from '../../utils/abridgeString'
 import PolkadotAccountModal from '../PolkadotAccountModal'
 import ConnectButton from './ConnectButton'
 import EmptyAccountModal from './EmptyAccountModal'
@@ -27,9 +27,8 @@ const MobilePolkadotTicket: React.FC = () => {
   const { accounts } = useWeb3()
   const [polkadotAccount, setPolkadotAccount] = useAtom(polkadotAccountAtom)
   const [accountModalVisible, setAccountModalVisible] = useState(false)
-  const [emptyAccountModalVisible, setEmptyAccountModalVisible] = useState(
-    false
-  )
+  const [emptyAccountModalVisible, setEmptyAccountModalVisible] =
+    useState(false)
 
   // FIXME: move this hook to a separate file
   useEffect(() => {

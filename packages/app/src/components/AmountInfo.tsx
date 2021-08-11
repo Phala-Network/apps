@@ -1,6 +1,6 @@
+import { toFixed } from '@phala/utils'
 import React, { ComponentProps } from 'react'
 import styled from 'styled-components'
-import toFixed from '../utils/toFixed'
 import Tag from './Tag'
 
 const AmountInfoWrap = styled.div`
