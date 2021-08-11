@@ -33,3 +33,4 @@ common/autoinstallers/*/.npmrc
 **/.rush/temp/
 temp
 *.log
+.rush

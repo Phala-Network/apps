@@ -64,7 +64,7 @@
     },
     {
       "name": "bn.js",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": [ "libraries", "production" ]
     },
     {
       "name": "core-js",

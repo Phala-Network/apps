@@ -25,6 +25,8 @@
     "ethers": "^5.4.4",
     "react-query": "^3.19.4",
     "vconsole": "^3.9.1",
-    "react": "^17.0.0"
+    "react": "^17.0.0",
+    "@types/react": "^17.0.16",
+    "@polkadot/types": "^4.17.1"
   }
 }
