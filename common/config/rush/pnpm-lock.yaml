@@ -11,7 +11,9 @@ importers:
       '@phala/app-config': workspace:*
       '@phala/app-types': workspace:*
       '@phala/react-components': workspace:*
+      '@phala/react-hooks': workspace:*
       '@phala/typedefs': ^0.2.11
+      '@phala/utils': workspace:*
       '@polkadot/api': ^4.17.1
       '@polkadot/extension-dapp': ^0.38.8
       '@polkadot/types': ^4.17.1
@@ -76,7 +78,9 @@ importers:
       '@phala/app-config': link:../app-config
       '@phala/app-types': link:../app-types
       '@phala/react-components': link:../react-components
+      '@phala/react-hooks': link:../react-hooks
       '@phala/typedefs': 0.2.13
+      '@phala/utils': link:../utils
       '@polkadot/api': 4.17.1
       '@polkadot/extension-dapp': 0.38.8_@polkadot+api@4.17.1
       '@polkadot/types': 4.17.1
@@ -234,9 +238,6 @@ importers:
       '@types/uuid': ^8.3.1
       decimal.js: ^10.3.1
       ethers: ^5.4.4
-      react: ^17.0.0
-      react-dom: ^17.0.0
-      react-is: ^16.13.1
       react-query: ^3.19.4
       styletron-engine-atomic: ^1.4.8
       uuid: ^8.3.2
@@ -254,13 +255,10 @@ importers:
       '@types/uuid': 8.3.1
       decimal.js: 10.3.1
       ethers: 5.4.4
-      react: 17.0.2
-      react-dom: 17.0.2_react@17.0.2
-      react-is: 16.13.1
-      react-query: 3.19.4_react-dom@17.0.2+react@17.0.2
+      react-query: 3.19.4
       styletron-engine-atomic: 1.4.8
       uuid: 8.3.2
-      web3modal: 1.9.4_react-is@16.13.1
+      web3modal: 1.9.4
 
   ../../packages/utils:
     specifiers:
@@ -16005,6 +16003,23 @@ packages:
     resolution: {integrity: sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==}
     dev: false
 
+  /react-query/3.19.4:
+    resolution: {integrity: sha512-/jQXoYv2IqWnYx665M1da/M6EFaaSDtP8jVqcCFk3vhpJsNYYwFG9vPjqIUv/GRpKp4qzk+qwTkJfF/bHeBuZQ==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0
+      react-dom: '*'
+      react-native: '*'
+    peerDependenciesMeta:
+      react-dom:
+        optional: true
+      react-native:
+        optional: true
+    dependencies:
+      '@babel/runtime': 7.14.8
+      broadcast-channel: 3.7.0
+      match-sorter: 6.3.0
+    dev: false
+
   /react-query/3.19.4_react-dom@17.0.2+react@17.0.2:
     resolution: {integrity: sha512-/jQXoYv2IqWnYx665M1da/M6EFaaSDtP8jVqcCFk3vhpJsNYYwFG9vPjqIUv/GRpKp4qzk+qwTkJfF/bHeBuZQ==}
     peerDependencies:
@@ -17824,6 +17839,28 @@ packages:
       supports-color: 5.5.0
     dev: false
 
+  /styled-components/5.3.0_react-dom@16.14.0+react@16.14.0:
+    resolution: {integrity: sha512-bPJKwZCHjJPf/hwTJl6TbkSZg/3evha+XPEizrZUGb535jLImwDUdjTNxXqjjaASt2M4qO4AVfoHJNe3XB/tpQ==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      react: '>= 16.8.0'
+      react-dom: '>= 16.8.0'
+      react-is: '>= 16.8.0'
+    dependencies:
+      '@babel/helper-module-imports': 7.14.5
+      '@babel/traverse': 7.15.0_supports-color@5.5.0
+      '@emotion/is-prop-valid': 0.8.8
+      '@emotion/stylis': 0.8.5
+      '@emotion/unitless': 0.7.5
+      babel-plugin-styled-components: 1.13.2_styled-components@5.3.0
+      css-to-react-native: 3.0.0
+      hoist-non-react-statics: 3.3.2
+      react: 16.14.0
+      react-dom: 16.14.0_react@16.14.0
+      shallowequal: 1.1.0
+      supports-color: 5.5.0
+    dev: false
+
   /stylehacks/4.0.3:
     resolution: {integrity: sha512-7GlLk9JwlElY4Y6a/rmbH2MhVlTyVmiJd1PfTCqFaIBEGMYNsrO/v3SeGTdhBThLg4Z+NbOk/qFMwCa+J+3p/g==}
     engines: {node: '>=6.9.0'}
@@ -19029,6 +19066,19 @@ packages:
 
   /web-vitals/1.1.2:
     resolution: {integrity: sha512-PFMKIY+bRSXlMxVAQ+m2aw9c/ioUYfDgrYot0YUa+/xa0sakubWhSDyxAKwzymvXVdF4CZI71g06W+mqhzu6ig==}
+    dev: false
+
+  /web3modal/1.9.4:
+    resolution: {integrity: sha512-hnbdbOjkntVFcFliXT9whb8rMk8FJ+dkQIyZlDxTnQ3pHnGTEMNCsWetA6j7CTQd5xwzdq1lYgcswXeFmSf/mA==}
+    dependencies:
+      detect-browser: 5.2.0
+      prop-types: 15.7.2
+      react: 16.14.0
+      react-dom: 16.14.0_react@16.14.0
+      styled-components: 5.3.0_react-dom@16.14.0+react@16.14.0
+      tslib: 1.14.1
+    transitivePeerDependencies:
+      - react-is
     dev: false
 
   /web3modal/1.9.4_react-is@16.13.1:

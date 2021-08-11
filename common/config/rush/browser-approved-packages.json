@@ -20,7 +20,7 @@
     },
     {
       "name": "@phala/react-hooks",
-      "allowedCategories": [ "libraries" ]
+      "allowedCategories": [ "libraries", "production" ]
     },
     {
       "name": "@phala/react-libs",
@@ -32,7 +32,7 @@
     },
     {
       "name": "@phala/utils",
-      "allowedCategories": [ "libraries" ]
+      "allowedCategories": [ "libraries", "production" ]
     },
     {
       "name": "@sentry/gatsby",
