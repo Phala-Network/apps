@@ -64,7 +64,6 @@ importers:
       gatsby-plugin-typescript: ^3.11.0
       luxon: ^1.28.0
       node-polyfill-webpack-plugin: ^1.1.4
-      rc-input-number: ^7.3.0
       rc-tooltip: ^5.1.1
       react: ^17.0.0
       react-dom: ^17.0.0
@@ -132,7 +131,6 @@ importers:
       gatsby-plugin-typescript: 3.11.0_gatsby@3.11.1
       luxon: 1.28.0
       node-polyfill-webpack-plugin: 1.1.4_webpack@5.50.0
-      rc-input-number: 7.3.0_react-dom@17.0.2+react@17.0.2
       rc-tooltip: 5.1.1_react-dom@17.0.2+react@17.0.2
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2

@@ -1,4 +1,4 @@
-import { Spacer } from '@phala/react-components'
+import { Input, Spacer } from '@phala/react-components'
 import * as Sentry from '@sentry/react'
 import axios from 'axios'
 import React, { useState } from 'react'
@@ -6,7 +6,6 @@ import { toast } from 'react-toastify'
 import styled from 'styled-components'
 import Button from '../../../Button'
 import ErrorText from '../../../ErrorText'
-import Input from '../../../Input'
 import Modal, { ModalAction, ModalActions, ModalProps } from '../../../Modal'
 import Textarea from '../../../Textarea'
 

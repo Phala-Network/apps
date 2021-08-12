@@ -2,7 +2,7 @@ import {
   useEthereumAccountAtom,
   usePolkadotAccountAtom,
 } from '@phala/app-store'
-import { Spacer } from '@phala/react-components'
+import { Input, InputNumber, Spacer } from '@phala/react-components'
 import { validateAddress } from '@phala/utils'
 import { Decimal } from 'decimal.js'
 import React, { useEffect, useState } from 'react'
@@ -14,10 +14,8 @@ import usePolkadotAccountBalanceDecimal from '../../../hooks/usePolkadotAccountB
 import { voidFn } from '../../../types/normal'
 import Button from '../../Button'
 import ErrorText from '../../ErrorText'
-import Input from '../../Input'
 import InputAction from '../../InputAction'
 import InputExternalInfo from '../../InputExternalInfo'
-import InputNumber from '../../InputNumber'
 import useToast from '../../MobileToast/useToast'
 import { ModalAction, ModalActions } from '../../Modal'
 import TradeTypeSelect, { TradeTypeSelectValue } from '../../TradeTypeSelect'

@@ -1,3 +1,4 @@
+import { WhiteCard } from '@phala/react-components'
 import React, { useState } from 'react'
 import { Helmet } from 'react-helmet'
 import { down } from 'styled-breakpoints'
@@ -5,7 +6,6 @@ import styled from 'styled-components'
 import InputDataStep, { InputDataStepResult } from '../../bridge/InputDataStep'
 import SubmitStepModal from '../../bridge/SubmitStep/SubmitStepModal'
 import Transactions from '../../transactions/Transactions'
-import WhiteCard from '../../WhiteCard'
 
 const RightContent = styled.div`
   display: grid;
