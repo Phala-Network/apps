@@ -168,6 +168,14 @@ importers:
       '@polkadot/types': 4.17.1
       '@types/node': 16.4.13
 
+  packages/app-store:
+    specifiers:
+      '@phala/app-types': workspace:^0.0.1
+      jotai: ^1.3.0
+    dependencies:
+      '@phala/app-types': link:../app-types
+      jotai: 1.3.0
+
   packages/app-types:
     specifiers: {}
 
@@ -13664,6 +13672,35 @@ packages:
       '@sideway/address': 4.1.2
       '@sideway/formula': 3.0.0
       '@sideway/pinpoint': 2.0.0
+    dev: false
+
+  /jotai/1.3.0:
+    resolution: {integrity: sha512-Qw0MUsx+y5ljGcLwppZp1Q9YuyEC4jutqWdR4A8Yvb9fvRYnXXy55WxXIESxHjQ+rWgnvx4eEL/xzUz5O4PfVQ==}
+    engines: {node: '>=12'}
+    peerDependencies:
+      '@urql/core': '*'
+      immer: '*'
+      optics-ts: '*'
+      react: '>=16.8'
+      react-query: '*'
+      valtio: '*'
+      wonka: '*'
+      xstate: '*'
+    peerDependenciesMeta:
+      '@urql/core':
+        optional: true
+      immer:
+        optional: true
+      optics-ts:
+        optional: true
+      react-query:
+        optional: true
+      valtio:
+        optional: true
+      wonka:
+        optional: true
+      xstate:
+        optional: true
     dev: false
 
   /jotai/1.3.0_react-query@3.19.4+react@17.0.2:

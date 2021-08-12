@@ -23,6 +23,7 @@
   "references": [
     { "path": "packages/app-config" },
     { "path": "packages/app-types" },
+    { "path": "packages/app-store" },
     { "path": "packages/react-libs" },
     { "path": "packages/utils" },
     { "path": "packages/react-hooks" },
