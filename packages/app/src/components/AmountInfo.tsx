@@ -1,7 +1,7 @@
+import { Tag } from '@phala/react-components'
 import { toFixed } from '@phala/utils'
 import React, { ComponentProps } from 'react'
 import styled from 'styled-components'
-import Tag from './Tag'
 
 const AmountInfoWrap = styled.div`
   background: #ececec;

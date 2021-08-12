@@ -1,6 +1,6 @@
+import { Spacer } from '@phala/react-components'
 import React from 'react'
 import styled from 'styled-components'
-import Spacer from '../Spacer'
 import Icons from './Icons'
 import Links from './Links'
 import Logo from './Logo'

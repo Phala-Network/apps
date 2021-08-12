@@ -1,7 +1,6 @@
+import { Spacer } from '@phala/react-components'
 import React, { ComponentProps } from 'react'
 import styled from 'styled-components'
-import { voidFn } from '../../types/normal'
-import Spacer from '../Spacer'
 
 /* #region  style */
 const TransactionsHeaderRoot = styled.div`
@@ -33,7 +32,7 @@ const Title = styled.div`
 /* #region  props */
 type Props = ComponentProps<typeof TransactionsHeaderRoot> & {
   active: boolean
-  onClickHeader: voidFn
+  onClickHeader(): void
 }
 /* #endregion */
 

@@ -1,3 +1,4 @@
+import { Spacer } from '@phala/react-components'
 import * as Sentry from '@sentry/react'
 import axios from 'axios'
 import React, { useState } from 'react'
@@ -7,7 +8,6 @@ import Button from '../../../Button'
 import ErrorText from '../../../ErrorText'
 import Input from '../../../Input'
 import Modal, { ModalAction, ModalActions, ModalProps } from '../../../Modal'
-import Spacer from '../../../Spacer'
 import Textarea from '../../../Textarea'
 
 const Description = styled.p`
@@ -74,8 +74,7 @@ const FeedbackModal: React.FC<ModalProps> = (props) => {
         data: bodyFormData,
         params: {
           eventId,
-          dsn:
-            'https://ba6cd9ff61544ca6a96f3ca1d90445f2@o812739.ingest.sentry.io/5879132',
+          dsn: 'https://ba6cd9ff61544ca6a96f3ca1d90445f2@o812739.ingest.sentry.io/5879132',
         },
       })
     } catch (e) {

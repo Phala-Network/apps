@@ -1,9 +1,9 @@
+import { Center } from '@phala/react-components'
 import React from 'react'
 import styled from 'styled-components'
 import scrollbar from '../../style/scrollbar'
 import { Account } from '../../types/normal'
 import Button from '../Button'
-import Center from '../Center'
 import Modal from '../Modal'
 import AccountOption from './AccountOption'
 

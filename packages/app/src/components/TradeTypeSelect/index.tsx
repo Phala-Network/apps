@@ -1,5 +1,5 @@
+import { Spacer } from '@phala/react-components'
 import React from 'react'
-import Spacer from '../Spacer'
 import DEFAULT_VALUE from './DEFAULT_VALUE'
 import ExchangeIcon from './ExchangeIcon'
 import From from './From'
