@@ -1,5 +1,5 @@
 import { usePolkadotAccountAtom } from '@phala/app-store'
-import { Alert, Button } from '@phala/react-components'
+import { Alert, Button, Modal } from '@phala/react-components'
 import { BN } from '@polkadot/util'
 import React, { useCallback, useState } from 'react'
 import { toast } from 'react-toastify'
@@ -9,7 +9,6 @@ import { vest } from '../libs/polkadot/extrinsics/vest'
 import { useApiPromise } from '../libs/polkadot/hooks/useApiPromise'
 import { useDecimalJsTokenDecimalMultiplier } from '../libs/polkadot/useTokenDecimals'
 import { bnToDecimal } from '../libs/polkadot/utils/balances'
-import Modal from './Modal'
 
 type Props = {
   visible: boolean

@@ -1,8 +1,7 @@
-import { Button, InputNumber, Spacer } from '@phala/react-components'
+import { Button, InputNumber, Modal, Spacer } from '@phala/react-components'
 import React from 'react'
 import InputAction from './InputAction'
 import InputExternalInfo from './InputExternalInfo'
-import Modal from './Modal'
 
 type Props = {
   visible: boolean

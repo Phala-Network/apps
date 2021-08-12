@@ -1,7 +1,6 @@
-import { Button } from '@phala/react-components'
+import { Button, Modal } from '@phala/react-components'
 import React from 'react'
 import styled from 'styled-components'
-import Modal from './Modal'
 
 type Props = {
   visible: boolean

@@ -1,5 +1,11 @@
 import { useTransactionsInfoAtom } from '@phala/app-store'
-import { Alert, Button, Spacer } from '@phala/react-components'
+import {
+  Alert,
+  Button,
+  ModalAction,
+  ModalActions,
+  Spacer,
+} from '@phala/react-components'
 import { isDev, isTest } from '@phala/utils'
 import { u8aToHex } from '@polkadot/util'
 import { decodeAddress } from '@polkadot/util-crypto'
@@ -11,7 +17,6 @@ import { useErc20Deposit } from '../../../libs/ethereum/bridge/deposit'
 import { useErc20BalanceQuery } from '../../../libs/ethereum/queries/useErc20BalanceQuery'
 import { useTransactionReceiptQuery } from '../../../libs/ethereum/queries/useTransactionReceiptQuery'
 import { TransactionInfoItem } from '../../../types/normal'
-import { ModalAction, ModalActions } from '../../Modal'
 import { StepProps } from '../BridgeProcess'
 import useTransactionInfo from '../hooks/useTransactionInfo'
 import BaseInfo from './BaseInfo'

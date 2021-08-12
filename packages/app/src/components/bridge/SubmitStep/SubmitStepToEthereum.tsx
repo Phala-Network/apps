@@ -1,5 +1,11 @@
 import { useTransactionsInfoAtom } from '@phala/app-store'
-import { Alert, Button, Spacer } from '@phala/react-components'
+import {
+  Alert,
+  Button,
+  ModalAction,
+  ModalActions,
+  Spacer,
+} from '@phala/react-components'
 import { ExtrinsicStatus, Hash } from '@polkadot/types/interfaces'
 import { Decimal } from 'decimal.js'
 import { getAddress } from 'ethers/lib/utils'
@@ -9,7 +15,6 @@ import { useTransferSubmit } from '../../../libs/polkadot/extrinsics/bridgeTrans
 import { useApiPromise } from '../../../libs/polkadot/hooks/useApiPromise'
 import { useDecimalJsTokenDecimalMultiplier } from '../../../libs/polkadot/useTokenDecimals'
 import { decimalToBalance } from '../../../libs/polkadot/utils/balances'
-import { ModalAction, ModalActions } from '../../Modal'
 import { StepProps } from '../BridgeProcess'
 import useTransactionInfo from '../hooks/useTransactionInfo'
 import BaseInfo from './BaseInfo'

@@ -1,6 +1,5 @@
-import { Button } from '@phala/react-components'
+import { Button, Modal } from '@phala/react-components'
 import styled from 'styled-components'
-import Modal from '../Modal'
 
 const Content = styled.div`
   color: #848484;

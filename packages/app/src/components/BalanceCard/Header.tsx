@@ -1,6 +1,6 @@
+import { BlockStripe } from '@phala/react-components'
 import { ComponentProps, FC } from 'react'
 import styled from 'styled-components'
-import BlockStripe from '../BlockStripe'
 
 export const Header = styled.div`
   font-family: Lato;

@@ -1,8 +1,8 @@
+import { Backdrop } from '@phala/react-components'
 import React, { useState } from 'react'
 import { down } from 'styled-breakpoints'
 import styled from 'styled-components'
 import scrollbar from '../../style/scrollbar'
-import Backdrop from '../Backdrop'
 import SelectIcon from './SelectIcon'
 
 const SelectBodyWrap = styled.div`

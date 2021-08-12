@@ -1,10 +1,16 @@
-import { Address, Button, Copy, Spacer } from '@phala/react-components'
+import {
+  Address,
+  AmountInfo,
+  Button,
+  Copy,
+  InfoTitle,
+  ModalAction,
+  ModalActions,
+  Spacer,
+} from '@phala/react-components'
 import React from 'react'
 import styled from 'styled-components'
-import AmountInfo from '../AmountInfo'
-import InfoTitle from '../InfoTitle'
 import InputExternalInfo from '../InputExternalInfo'
-import { ModalAction, ModalActions } from '../Modal'
 import { StepProps } from './BridgeProcess'
 import FormItem from './FormItem'
 import FormLayout from './FormLayout'

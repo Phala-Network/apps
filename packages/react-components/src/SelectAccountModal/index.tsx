@@ -3,7 +3,7 @@ import React from 'react'
 import styled from 'styled-components'
 import Button from '../Button'
 import Center from '../Center'
-import Modal from '../Modal'
+import { Modal } from '../Modal'
 import scrollbar from '../scrollbar'
 import AccountOption from './AccountOption'
 

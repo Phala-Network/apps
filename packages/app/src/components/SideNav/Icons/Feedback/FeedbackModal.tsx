@@ -1,12 +1,19 @@
-import { Button, Input, Spacer } from '@phala/react-components'
+import {
+  Button,
+  ErrorText,
+  Input,
+  Modal,
+  ModalAction,
+  ModalActions,
+  ModalProps,
+  Spacer,
+  Textarea,
+} from '@phala/react-components'
 import * as Sentry from '@sentry/react'
 import axios from 'axios'
 import React, { useState } from 'react'
 import { toast } from 'react-toastify'
 import styled from 'styled-components'
-import ErrorText from '../../../ErrorText'
-import Modal, { ModalAction, ModalActions, ModalProps } from '../../../Modal'
-import Textarea from '../../../Textarea'
 
 const Description = styled.p`
   font-family: Lato;
