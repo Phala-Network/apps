@@ -1,8 +1,7 @@
-import { useAtom } from 'jotai'
+import { useEthereumAccountAtom } from '@phala/app-store'
 import React, { useState } from 'react'
 import { toast } from 'react-toastify'
 import styled from 'styled-components'
-import ethereumAccountAtom from '../../atoms/ethereumAccountAtom'
 import { useCheckEthereumNetwork } from '../../hooks/useCheckEthereumNetwork'
 import useEthereumAccountBalanceETHDecimal from '../../hooks/useEthereumAccountBalanceETHDecimal'
 import BalanceLabel from '../BalanceLabel'
@@ -27,13 +26,11 @@ const TicketName = styled(_TicketName)`
 `
 
 const EthereumTicket: React.FC = () => {
-  const [ethereumAccount] = useAtom(ethereumAccountAtom)
-  const {
-    value: ethereumAccountBalanceETHDecimal,
-  } = useEthereumAccountBalanceETHDecimal()
-  const [selectAccountModalViable, setSelectAccountModalViable] = useState(
-    false
-  )
+  const [ethereumAccount] = useEthereumAccountAtom()
+  const { value: ethereumAccountBalanceETHDecimal } =
+    useEthereumAccountBalanceETHDecimal()
+  const [selectAccountModalViable, setSelectAccountModalViable] =
+    useState(false)
   const isTheCurrentNetworkCorrect = useCheckEthereumNetwork()
 
   const openAccountSelectModal = () => {

@@ -1,8 +1,7 @@
-import { useAtom } from 'jotai'
+import { useTransactionsInfoAtom } from '@phala/app-store'
 import React, { useRef, useState } from 'react'
 import { down } from 'styled-breakpoints'
 import styled from 'styled-components'
-import transactionsInfoAtom from '../../atoms/transactionsInfoAtom'
 import useClickAway from '../../hooks/useClickAway'
 import Backdrop from '../Backdrop'
 import ClearButton from './ClearButton'
@@ -42,7 +41,7 @@ const TransactionsRoot = styled.div`
 const Transactions: React.FC = () => {
   const [active, setActive] = useState(false)
   const rootRef = useRef(null)
-  const [transactionsInfo, setTransactionsInfo] = useAtom(transactionsInfoAtom)
+  const [transactionsInfo, setTransactionsInfo] = useTransactionsInfoAtom()
 
   useClickAway(rootRef, () => {
     setActive(false)

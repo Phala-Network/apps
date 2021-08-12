@@ -1,7 +1,6 @@
-import { useAtom } from 'jotai'
+import { usePolkadotAccountAtom } from '@phala/app-store'
 import React, { useState } from 'react'
 import styled, { useTheme } from 'styled-components'
-import polkadotAccountAtom from '../../atoms/polkadotAccountAtom'
 import usePolkadotAccountBalanceDecimal from '../../hooks/usePolkadotAccountBalanceDecimal'
 import BalanceLabel from '../BalanceLabel'
 import PolkadotAccountModal from '../PolkadotAccountModal'
@@ -27,10 +26,9 @@ const TicketName = styled(_TicketName)`
 
 const PolkadotTicket: React.FC = () => {
   const theme = useTheme()
-  const [polkadotAccount] = useAtom(polkadotAccountAtom)
-  const [selectAccountModalViable, setSelectAccountModalViable] = useState(
-    false
-  )
+  const [polkadotAccount] = usePolkadotAccountAtom()
+  const [selectAccountModalViable, setSelectAccountModalViable] =
+    useState(false)
   const polkadotAccountBalanceDecimal = usePolkadotAccountBalanceDecimal()
   const openAccountSelectModal = () => setSelectAccountModalViable(true)
 

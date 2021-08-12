@@ -1,13 +1,12 @@
+import { useTransactionsInfoAtom } from '@phala/app-store'
 import { Alert } from '@phala/react-components'
 import { isDev, isTest } from '@phala/utils'
 import { u8aToHex } from '@polkadot/util'
 import { decodeAddress } from '@polkadot/util-crypto'
 import { ethers } from 'ethers'
-import { useAtom } from 'jotai'
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { SubmitStepProps } from '.'
-import transactionsInfoAtom from '../../../atoms/transactionsInfoAtom'
 import { useErc20Deposit } from '../../../libs/ethereum/bridge/deposit'
 import { useErc20BalanceQuery } from '../../../libs/ethereum/queries/useErc20BalanceQuery'
 import { useTransactionReceiptQuery } from '../../../libs/ethereum/queries/useTransactionReceiptQuery'
@@ -28,7 +27,7 @@ type Props = SubmitStepProps & StepProps
 
 const SubmitStepToKhala: React.FC<Props> = (props) => {
   const [transactionsInfoSuccess, setTransactionsInfoSuccess] = useState(false)
-  const [transactionsInfo, setTransactionsInfo] = useAtom(transactionsInfoAtom)
+  const [transactionsInfo, setTransactionsInfo] = useTransactionsInfoAtom()
   const { onSubmit, onPrev, onSuccess, layout, data } = props
   const { from, to, amount: amountFromPrevStep } = data || {}
   const { account: accountFrom } = from || {}

@@ -1,12 +1,11 @@
-import { useAtom } from 'jotai'
-import { useEffect, useState } from 'react'
+import { usePolkadotAccountAtom } from '@phala/app-store'
 import type { DeriveBalancesAll } from '@polkadot/api-derive/types'
-import polkadotAccountAtom from '../atoms/polkadotAccountAtom'
-import { useApiPromise } from '../libs/polkadot/hooks/useApiPromise'
 import { VoidFn } from '@polkadot/api/types'
+import { useEffect, useState } from 'react'
+import { useApiPromise } from '../libs/polkadot/hooks/useApiPromise'
 
 const useAllBalances = (): DeriveBalancesAll | undefined => {
-  const [polkadotAccount] = useAtom(polkadotAccountAtom)
+  const [polkadotAccount] = usePolkadotAccountAtom()
   const address = polkadotAccount?.address
   const { api } = useApiPromise()
   const [allBalances, setAllBalances] = useState<DeriveBalancesAll>()

@@ -1,11 +1,10 @@
+import { usePolkadotAccountAtom } from '@phala/app-store'
 import { Decimal } from 'decimal.js'
-import { useAtom } from 'jotai'
 import { useMemo } from 'react'
-import polkadotAccountAtom from '../atoms/polkadotAccountAtom'
 import { useBalance } from './useBalance'
 
 export default function usePolkadotAccountBalanceDecimal(): Decimal {
-  const [polkadotAccount] = useAtom(polkadotAccountAtom)
+  const [polkadotAccount] = usePolkadotAccountAtom()
 
   const polkadotAccountBalance = useBalance(polkadotAccount?.address)
 

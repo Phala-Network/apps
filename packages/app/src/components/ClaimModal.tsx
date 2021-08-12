@@ -1,10 +1,9 @@
+import { usePolkadotAccountAtom } from '@phala/app-store'
 import { Alert } from '@phala/react-components'
 import { BN } from '@polkadot/util'
-import { useAtom } from 'jotai'
 import React, { useCallback, useState } from 'react'
 import { toast } from 'react-toastify'
 import styled from 'styled-components'
-import polkadotAccountAtom from '../atoms/polkadotAccountAtom'
 import useAllBalances from '../hooks/useAllBalances'
 import { vest } from '../libs/polkadot/extrinsics/vest'
 import { useApiPromise } from '../libs/polkadot/hooks/useApiPromise'
@@ -40,7 +39,7 @@ const ClaimModal: React.FC<Props> = ({ visible, onClose }) => {
   const [loading, setLoading] = useState(false)
   const allBalances = useAllBalances()
   const { api } = useApiPromise()
-  const polkadotAccount = useAtom(polkadotAccountAtom)[0]?.address
+  const polkadotAccount = usePolkadotAccountAtom()[0]?.address
   const decimals = useDecimalJsTokenDecimalMultiplier(api)
   const { vestingLocked, vestedClaimable, vestedBalance } = allBalances || {}
 

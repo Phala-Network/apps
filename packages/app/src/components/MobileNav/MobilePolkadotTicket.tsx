@@ -1,8 +1,7 @@
+import { usePolkadotAccountAtom } from '@phala/app-store'
 import { abridgeString } from '@phala/utils'
-import { useAtom } from 'jotai'
 import React, { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
-import polkadotAccountAtom from '../../atoms/polkadotAccountAtom'
 import KhalaIcon from '../../icons/khala.svg'
 import { useWeb3 } from '../../libs/polkadot/hooks/useWeb3'
 import PolkadotAccountModal from '../PolkadotAccountModal'
@@ -25,7 +24,7 @@ const Account = styled.div`
 
 const MobilePolkadotTicket: React.FC = () => {
   const { accounts } = useWeb3()
-  const [polkadotAccount, setPolkadotAccount] = useAtom(polkadotAccountAtom)
+  const [polkadotAccount, setPolkadotAccount] = usePolkadotAccountAtom()
   const [accountModalVisible, setAccountModalVisible] = useState(false)
   const [emptyAccountModalVisible, setEmptyAccountModalVisible] =
     useState(false)

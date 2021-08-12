@@ -1,6 +1,5 @@
-import { useAtom } from 'jotai'
+import { useEthereumAccountAtom } from '@phala/app-store'
 import React, { useEffect, useMemo } from 'react'
-import ethereumAccountAtom from '../atoms/ethereumAccountAtom'
 import useSSR from '../hooks/useSSR'
 import { useEthers } from '../libs/ethereum/contexts/useEthers'
 import { useAccountsQuery } from '../libs/ethereum/queries/useAccountsQuery'
@@ -18,7 +17,7 @@ const EthereumAccountModal: React.FC<Props> = (props) => {
   const { data: accounts = [] } = useAccountsQuery()
   const { readystate: readyState } = useEthers()
   const isReady = readyState === 'connected'
-  const [ethereumAccount, setEthereumAccount] = useAtom(ethereumAccountAtom)
+  const [ethereumAccount, setEthereumAccount] = useEthereumAccountAtom()
   const accountsIsEmpty = accounts.length === 0
   const ethereumAccounts = useMemo(
     () =>
@@ -30,13 +29,14 @@ const EthereumAccountModal: React.FC<Props> = (props) => {
   const { isServer } = useSSR()
 
   useEffect(() => {
-    if (accounts.length === 0 || !isReady || accountsIsEmpty) {
+    const [account] = accounts
+    if (!accounts || !isReady || accountsIsEmpty) {
       return
     }
 
     setEthereumAccount({
-      name: accounts[0],
-      address: accounts[0],
+      name: account,
+      address: account || '',
     })
   }, [accounts])
 

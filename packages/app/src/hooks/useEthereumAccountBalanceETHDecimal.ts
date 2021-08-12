@@ -1,9 +1,8 @@
+import { useEthereumAccountAtom } from '@phala/app-store'
 import { captureException } from '@sentry/react'
 import { Decimal } from 'decimal.js'
 import { ethers } from 'ethers'
-import { useAtom } from 'jotai'
 import { useEffect, useState } from 'react'
-import ethereumAccountAtom from '../atoms/ethereumAccountAtom'
 import { useEthersNetworkQuery } from '../libs/ethereum/queries/useEthersNetworkQuery'
 
 let flag = 0
@@ -13,7 +12,7 @@ export default function useEthereumAccountBalanceETHDecimal(): {
   error: Error | null | undefined
 } {
   const [balanceDecimal, setBalanceDecimal] = useState<Decimal>(new Decimal(-1))
-  const [ethereumAccount] = useAtom(ethereumAccountAtom)
+  const [ethereumAccount] = useEthereumAccountAtom()
   const { data: network } = useEthersNetworkQuery()
   const [error, setError] = useState<Error | null | undefined>()
   const address = ethereumAccount?.address

@@ -1,7 +1,8 @@
-import { useAtom } from 'jotai'
+import {
+  useEthereumAccountAtom,
+  usePolkadotAccountAtom,
+} from '@phala/app-store'
 import React, { useState } from 'react'
-import ethereumAccountAtom from '../../../atoms/ethereumAccountAtom'
-import polkadotAccountAtom from '../../../atoms/polkadotAccountAtom'
 import { voidFn } from '../../../types/normal'
 import Button from '../../Button'
 import EthereumAccountModal from '../../EthereumAccountModal'
@@ -15,14 +16,12 @@ type Props = {
 const ActionButton: React.FC<Props> = (props) => {
   const { onClick, isFromEthereum } = props
 
-  const [polkadotAccount] = useAtom(polkadotAccountAtom)
-  const [ethereumAccount] = useAtom(ethereumAccountAtom)
-  const [ethereumAccountModalViable, setEthereumAccountModalViable] = useState(
-    false
-  )
-  const [polkadotAccountModalViable, setPolkadotAccountModalViable] = useState(
-    false
-  )
+  const [polkadotAccount] = usePolkadotAccountAtom()
+  const [ethereumAccount] = useEthereumAccountAtom()
+  const [ethereumAccountModalViable, setEthereumAccountModalViable] =
+    useState(false)
+  const [polkadotAccountModalViable, setPolkadotAccountModalViable] =
+    useState(false)
 
   let render = (
     <Button type="primary" onClick={onClick}>

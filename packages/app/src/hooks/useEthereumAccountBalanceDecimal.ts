@@ -1,12 +1,11 @@
+import { useEthereumAccountAtom } from '@phala/app-store'
 import { Decimal } from 'decimal.js'
 import { ethers } from 'ethers'
-import { useAtom } from 'jotai'
 import { useMemo } from 'react'
-import ethereumAccountAtom from '../atoms/ethereumAccountAtom'
 import { useErc20BalanceQuery } from '../libs/ethereum/queries/useErc20BalanceQuery'
 
 export default function useEthereumAccountBalanceDecimal(): Decimal {
-  const [ethereumAccount] = useAtom(ethereumAccountAtom)
+  const [ethereumAccount] = useEthereumAccountAtom()
   const ethereumAccountAddress = ethereumAccount?.address
   const { data: ethereumAccountBalance } = useErc20BalanceQuery(
     ethereumAccountAddress

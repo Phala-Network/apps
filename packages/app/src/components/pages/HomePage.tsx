@@ -1,14 +1,15 @@
+import {
+  useEthereumAccountAtom,
+  usePolkadotAccountAtom,
+} from '@phala/app-store'
 import { toFixed } from '@phala/utils'
 import { Decimal } from 'decimal.js'
 import { ethers } from 'ethers'
-import { useAtom } from 'jotai'
 import React, { useMemo } from 'react'
 import { Helmet } from 'react-helmet'
 import { up } from 'styled-breakpoints'
 import { useBreakpoint } from 'styled-breakpoints/react-styled'
 import styled from 'styled-components'
-import ethereumAccountAtom from '../../atoms/ethereumAccountAtom'
-import polkadotAccountAtom from '../../atoms/polkadotAccountAtom'
 import { useBalance } from '../../hooks/useBalance'
 import usePHAPrice from '../../hooks/usePHAPrice'
 import EthereumIcon from '../../icons/ethereum.svg'
@@ -36,8 +37,8 @@ const ContentWrapper = styled.div`
 const HomePage: React.FC = () => {
   const md = useBreakpoint(up('md'))
   const PHAPrice = usePHAPrice()
-  const [polkadotAccount] = useAtom(polkadotAccountAtom)
-  const [ethereumAccount] = useAtom(ethereumAccountAtom)
+  const [polkadotAccount] = usePolkadotAccountAtom()
+  const [ethereumAccount] = useEthereumAccountAtom()
   const polkadotAccountAddress = polkadotAccount?.address
   const ethereumAccountAddress = ethereumAccount?.address
   const polkadotAccountBalance = useBalance(polkadotAccountAddress)

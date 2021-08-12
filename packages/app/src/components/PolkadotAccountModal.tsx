@@ -1,6 +1,5 @@
-import { useAtom } from 'jotai'
+import { usePolkadotAccountAtom } from '@phala/app-store'
 import React, { useMemo } from 'react'
-import polkadotAccountAtom from '../atoms/polkadotAccountAtom'
 import useSSR from '../hooks/useSSR'
 import { useApiPromise } from '../libs/polkadot/hooks/useApiPromise'
 import { useWeb3 } from '../libs/polkadot/hooks/useWeb3'
@@ -25,7 +24,7 @@ const PolkadotAccountModal: React.FC<Props> = (props) => {
   const { api } = useApiPromise()
   const normalizeAddress = useAddressNormalizer(api)
   const { isServer } = useSSR()
-  const [polkadotAccount, setPolkadotAccount] = useAtom(polkadotAccountAtom)
+  const [polkadotAccount, setPolkadotAccount] = usePolkadotAccountAtom()
   const polkadotAccounts = useMemo(
     () =>
       accounts.map((item) => ({

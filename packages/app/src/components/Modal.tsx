@@ -1,7 +1,7 @@
 import React, { createElement } from 'react'
 import { createPortal } from 'react-dom'
 import { down } from 'styled-breakpoints'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import usePortal from '../hooks/usePortal'
 import Backdrop from './Backdrop'
 
@@ -60,10 +60,20 @@ const Title = styled.div`
   margin-bottom: 16px;
 `
 
-export const ModalAction = styled.div`
+export const ModalAction = styled.div<{ full?: boolean }>`
   & + & {
     margin-left: 7px;
   }
+
+  ${(props) =>
+    props.full &&
+    css`
+      flex: 1;
+
+      & > * {
+        width: 100%;
+      }
+    `}
 `
 
 export const ModalActions = styled.div`

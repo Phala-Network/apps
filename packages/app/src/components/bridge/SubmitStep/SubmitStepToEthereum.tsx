@@ -1,11 +1,10 @@
+import { useTransactionsInfoAtom } from '@phala/app-store'
 import { Alert } from '@phala/react-components'
 import { ExtrinsicStatus, Hash } from '@polkadot/types/interfaces'
 import { Decimal } from 'decimal.js'
 import { getAddress } from 'ethers/lib/utils'
-import { useAtom } from 'jotai'
 import React, { useEffect, useMemo, useState } from 'react'
 import { SubmitStepProps } from '.'
-import transactionsInfoAtom from '../../../atoms/transactionsInfoAtom'
 import { useTransferSubmit } from '../../../libs/polkadot/extrinsics/bridgeTransfer'
 import { useApiPromise } from '../../../libs/polkadot/hooks/useApiPromise'
 import { useDecimalJsTokenDecimalMultiplier } from '../../../libs/polkadot/useTokenDecimals'
@@ -25,7 +24,7 @@ const SubmitStepToEthereum: React.FC<Props> = (props) => {
   const { from, to, amount: amountFromPrevStep } = data || {}
   const { account: accountFrom } = from || {}
   const { account: accountTo } = to || {}
-  const [transactionsInfo, setTransactionsInfo] = useAtom(transactionsInfoAtom)
+  const [transactionsInfo, setTransactionsInfo] = useTransactionsInfoAtom()
   const { api } = useApiPromise()
   const decimals = useDecimalJsTokenDecimalMultiplier(api)
   const transferSubmit = useTransferSubmit(42)

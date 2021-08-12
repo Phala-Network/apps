@@ -1,12 +1,13 @@
+import {
+  useEthereumAccountAtom,
+  usePolkadotAccountAtom,
+} from '@phala/app-store'
 import { validateAddress } from '@phala/utils'
 import { Decimal } from 'decimal.js'
-import { useAtom } from 'jotai'
 import React, { useEffect, useState } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
 import { down } from 'styled-breakpoints'
 import { useBreakpoint } from 'styled-breakpoints/react-styled'
-import ethereumAccountAtom from '../../../atoms/ethereumAccountAtom'
-import polkadotAccountAtom from '../../../atoms/polkadotAccountAtom'
 import useEthereumAccountBalanceDecimal from '../../../hooks/useEthereumAccountBalanceDecimal'
 import usePolkadotAccountBalanceDecimal from '../../../hooks/usePolkadotAccountBalanceDecimal'
 import { voidFn } from '../../../types/normal'
@@ -52,9 +53,9 @@ const InputDataStep: React.FC<Props> = (props) => {
   const { layout, onNext, onCancel } = props
   const [amountInput, setAmountInput] = useState<number>()
   const [recipient, setRecipient] = useState<string>('')
-  const [polkadotAccount] = useAtom(polkadotAccountAtom)
+  const [polkadotAccount] = usePolkadotAccountAtom()
   const polkadotAccountAddress = polkadotAccount?.address
-  const [ethereumAccount] = useAtom(ethereumAccountAtom)
+  const [ethereumAccount] = useEthereumAccountAtom()
   const ethereumAccountAddress = ethereumAccount?.address
   const [errorString, setErrorString] = useState('')
   const { toast } = useToast()
