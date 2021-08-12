@@ -1,8 +1,8 @@
 import { usePolkadotAccountAtom } from '@phala/app-store'
+import { BalanceLabel } from '@phala/react-components'
 import React, { useState } from 'react'
 import styled, { useTheme } from 'styled-components'
 import usePolkadotAccountBalanceDecimal from '../../hooks/usePolkadotAccountBalanceDecimal'
-import BalanceLabel from '../BalanceLabel'
 import PolkadotAccountModal from '../PolkadotAccountModal'
 import Ticket, {
   DefaultStatus,

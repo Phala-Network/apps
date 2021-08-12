@@ -15,10 +15,10 @@ import usePHAPrice from '../../../hooks/usePHAPrice'
 import EthereumIcon from '../../../icons/ethereum.svg'
 import KhalaIcon from '../../../icons/khala.svg'
 import { useErc20BalanceQuery } from '../../../libs/ethereum/queries/useErc20BalanceQuery'
-import BalanceCard from '../../BalanceCard'
-import { BlackHeader } from '../../BalanceCard/Header'
-import Category from '../../Category'
-import ComingSoonBox from '../../ComingSoonBox'
+import BalanceCard from './BalanceCard'
+import { BlackHeader } from './BalanceCard/Header'
+import Category from './Category'
+import ComingSoonBox from './ComingSoonBox'
 
 const COMING_SOON_CATEGORIES: string[] = ['Parachain Assets', 'Bridge Assets']
 

@@ -6,6 +6,7 @@ import {
   Button,
   ErrorText,
   Input,
+  InputExternalInfo,
   InputNumber,
   ModalAction,
   ModalActions,
@@ -21,7 +22,6 @@ import useEthereumAccountBalanceDecimal from '../../../hooks/useEthereumAccountB
 import usePolkadotAccountBalanceDecimal from '../../../hooks/usePolkadotAccountBalanceDecimal'
 import { voidFn } from '../../../types/normal'
 import InputAction from '../../InputAction'
-import InputExternalInfo from '../../InputExternalInfo'
 import useToast from '../../MobileToast/useToast'
 import TradeTypeSelect, { TradeTypeSelectValue } from '../../TradeTypeSelect'
 import DEFAULT_VALUE from '../../TradeTypeSelect/DEFAULT_VALUE'

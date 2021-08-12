@@ -4,13 +4,13 @@ import {
   Button,
   Copy,
   InfoTitle,
+  InputExternalInfo,
   ModalAction,
   ModalActions,
   Spacer,
 } from '@phala/react-components'
 import React from 'react'
 import styled from 'styled-components'
-import InputExternalInfo from '../InputExternalInfo'
 import { StepProps } from './BridgeProcess'
 import FormItem from './FormItem'
 import FormLayout from './FormLayout'
