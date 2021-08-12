@@ -1,5 +1,5 @@
+import { Provider as AppStoreProvider } from '@phala/app-store'
 import { isDev, isTest } from '@phala/utils'
-import { Provider as JotaiProvider } from 'jotai'
 import React, { useRef } from 'react'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { ThemeProvider } from 'styled-components'
@@ -28,7 +28,7 @@ const WrapApp: React.FC = ({ children }) => {
       <MobileToastContextProvider>
         <QueryClientProvider client={client.current}>
           <EthereumWeb3Provider>
-            <JotaiProvider>
+            <AppStoreProvider>
               <EthersProvider>
                 <NetworkContextProvider defaultNetwork={defaultNetwork}>
                   <ApiPromiseProvider>
@@ -38,7 +38,7 @@ const WrapApp: React.FC = ({ children }) => {
                   </ApiPromiseProvider>
                 </NetworkContextProvider>
               </EthersProvider>
-            </JotaiProvider>
+            </AppStoreProvider>
           </EthereumWeb3Provider>
         </QueryClientProvider>
       </MobileToastContextProvider>
