@@ -1,6 +1,6 @@
+import { Button } from '@phala/react-components'
 import React from 'react'
 import { TransactionInfo } from '../../../types/normal'
-import Button from '../../Button'
 import Modal, { ModalActions } from '../../Modal'
 import ResultStepToKhala from './ResultStepToKhala'
 

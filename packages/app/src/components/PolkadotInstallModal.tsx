@@ -1,6 +1,6 @@
+import { Button } from '@phala/react-components'
 import React from 'react'
 import styled from 'styled-components'
-import Button from './Button'
 import Modal from './Modal'
 
 type Props = {

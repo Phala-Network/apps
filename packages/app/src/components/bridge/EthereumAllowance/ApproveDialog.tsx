@@ -1,11 +1,11 @@
 import { ethereums } from '@phala/app-config'
+import { Button } from '@phala/react-components'
 import { ethers } from 'ethers'
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { useEthers } from '../../../libs/ethereum/contexts/useEthers'
 import { useErc20Contract } from '../../../libs/ethereum/erc20/useErc20Contract'
 import { useTransactionReceiptQuery } from '../../../libs/ethereum/queries/useTransactionReceiptQuery'
-import Button from '../../Button'
 import Modal, { ModalAction, ModalActions } from '../../Modal'
 
 type Props = {

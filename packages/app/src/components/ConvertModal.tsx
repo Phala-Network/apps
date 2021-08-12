@@ -1,6 +1,5 @@
-import { InputNumber, Spacer } from '@phala/react-components'
+import { Button, InputNumber, Spacer } from '@phala/react-components'
 import React from 'react'
-import Button from './Button'
 import InputAction from './InputAction'
 import InputExternalInfo from './InputExternalInfo'
 import Modal from './Modal'

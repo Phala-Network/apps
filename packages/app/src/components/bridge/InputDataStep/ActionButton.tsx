@@ -2,9 +2,9 @@ import {
   useEthereumAccountAtom,
   usePolkadotAccountAtom,
 } from '@phala/app-store'
+import { Button } from '@phala/react-components'
 import React, { useState } from 'react'
 import { voidFn } from '../../../types/normal'
-import Button from '../../Button'
 import EthereumAccountModal from '../../EthereumAccountModal'
 import PolkadotAccountModal from '../../PolkadotAccountModal'
 
