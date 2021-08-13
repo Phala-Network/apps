@@ -6,8 +6,8 @@ import MobilePolkadotTicker from './MobilePolkadotTicket'
 import PhalaIcon from '../../icons/phala_icon.svg'
 import background from './mobile_nav_background.png'
 import Links from './Links'
-import useSSR from '../../hooks/useSSR'
 import MobileEthereumTicket from './MobileEthereumTicket'
+import { useSSR } from '@phala/react-hooks'
 
 const Wrapper = styled.div`
   display: flex;

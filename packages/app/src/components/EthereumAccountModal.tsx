@@ -1,6 +1,6 @@
 import { useEthereumAccountAtom } from '@phala/app-store'
+import { useSSR } from '@phala/react-hooks'
 import React, { useEffect, useMemo } from 'react'
-import useSSR from '../hooks/useSSR'
 import { useEthers } from '../libs/ethereum/contexts/useEthers'
 import { useAccountsQuery } from '../libs/ethereum/queries/useAccountsQuery'
 import { Account, voidFn } from '../types/normal'

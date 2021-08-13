@@ -1,6 +1,6 @@
 import { usePolkadotAccountAtom } from '@phala/app-store'
+import { useSSR } from '@phala/react-hooks'
 import React, { useMemo } from 'react'
-import useSSR from '../hooks/useSSR'
 import { useApiPromise } from '../libs/polkadot/hooks/useApiPromise'
 import { useWeb3 } from '../libs/polkadot/hooks/useWeb3'
 import { useAddressNormalizer } from '../libs/polkadot/useAddressNormalizer'
