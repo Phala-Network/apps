@@ -51,7 +51,6 @@ importers:
       babel-preset-gatsby: ^1.11.0
       bn.js: ^5.2.0
       core-js: ^3.16.1
-      currency.js: ^2.0.4
       decimal.js: ^10.3.1
       ethers: ^5.4.4
       gatsby: ^3.11.1
@@ -62,7 +61,6 @@ importers:
       gatsby-plugin-react-svg: ^3.0.1
       gatsby-plugin-styled-components: ^4.11.0
       gatsby-plugin-typescript: ^3.11.0
-      luxon: ^1.28.0
       node-polyfill-webpack-plugin: ^1.1.4
       rc-tooltip: ^5.1.1
       react: ^17.0.0
@@ -72,7 +70,6 @@ importers:
       react-is: ^16.13.1
       react-query: ^3.19.4
       react-scripts: 4.0.3
-      react-table: ^7.7.0
       react-toastify: ^7.0.4
       react-use: ^17.2.4
       styled-breakpoints: ^10.0.1
@@ -80,7 +77,6 @@ importers:
       svg-react-loader: ^0.4.6
       typescript: ^4.3.5
       uuid: ^8.3.2
-      vconsole: ^3.9.1
       web-vitals: ^1.1.2
       web3modal: ^1.9.4
       webpack: ^5.50.0
@@ -118,7 +114,6 @@ importers:
       babel-preset-gatsby: 1.11.0_316884d558d8020ec24a910653bf0161
       bn.js: 5.2.0
       core-js: 3.16.1
-      currency.js: 2.0.4
       decimal.js: 10.3.1
       ethers: 5.4.4
       gatsby: 3.11.1_c59e156565745313c12417314e7d8751
@@ -129,7 +124,6 @@ importers:
       gatsby-plugin-react-svg: 3.0.1_gatsby@3.11.1
       gatsby-plugin-styled-components: 4.11.0_f97383a68687e9e8b894c86c2668f7a4
       gatsby-plugin-typescript: 3.11.0_gatsby@3.11.1
-      luxon: 1.28.0
       node-polyfill-webpack-plugin: 1.1.4_webpack@5.50.0
       rc-tooltip: 5.1.1_react-dom@17.0.2+react@17.0.2
       react: 17.0.2
@@ -139,7 +133,6 @@ importers:
       react-is: 16.13.1
       react-query: 3.19.4_react-dom@17.0.2+react@17.0.2
       react-scripts: 4.0.3_react@17.0.2+typescript@4.3.5
-      react-table: 7.7.0_react@17.0.2
       react-toastify: 7.0.4_react-dom@17.0.2+react@17.0.2
       react-use: 17.2.4_react-dom@17.0.2+react@17.0.2
       styled-breakpoints: 10.0.1_0f2c6d876d4155327b8883a6dc1fe17e
@@ -147,7 +140,6 @@ importers:
       svg-react-loader: 0.4.6
       typescript: 4.3.5
       uuid: 8.3.2
-      vconsole: 3.9.1
       web-vitals: 1.1.2
       web3modal: 1.9.4_react-is@16.13.1
       webpack: 5.50.0
@@ -14487,10 +14479,6 @@ packages:
       es5-ext: 0.10.53
     dev: false
 
-  /luxon/1.28.0:
-    resolution: {integrity: sha512-TfTiyvZhwBYM/7QdAVDh+7dBTBA29v4ik0Ce9zda3Mnf8on1S5KJI8P2jKFZ8+5C0jhmr0KwJEO/Wdpm0VeWJQ==}
-    dev: false
-
   /magic-string/0.25.7:
     resolution: {integrity: sha512-4CrMT5DOHTDk4HYDlzmwu4FVCcIYI8gauveasrdCu2IKIFOJ3f0v/8MDGJCDL9oD2ppz/Av1b0Nj345H9M+XIA==}
     dependencies:
@@ -18265,14 +18253,6 @@ packages:
     resolution: {integrity: sha512-2FoTQzRNTncBVtnzxFOk2mCpcfxQpenBMbk5kSVBg5UcPqV9fRbgY2zhb7GTWWOlpFmAxhClBDlIq8Rsubz1yQ==}
     peerDependencies:
       react: ^16.3.0 || ^17.0.0
-    dependencies:
-      react: 17.0.2
-    dev: false
-
-  /react-table/7.7.0_react@17.0.2:
-    resolution: {integrity: sha512-jBlj70iBwOTvvImsU9t01LjFjy4sXEtclBovl3mTiqjz23Reu0DKnRza4zlLtOPACx6j2/7MrQIthIK1Wi+LIA==}
-    peerDependencies:
-      react: ^16.8.3 || ^17.0.0-0
     dependencies:
       react: 17.0.2
     dev: false
