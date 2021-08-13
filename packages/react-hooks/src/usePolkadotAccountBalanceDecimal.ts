@@ -3,7 +3,7 @@ import { useMemo } from 'react'
 import useBalance from './useBalance'
 
 export default function usePolkadotAccountBalanceDecimal(
-  address: string
+  address?: string
 ): Decimal {
   const polkadotAccountBalance = useBalance(address)
 

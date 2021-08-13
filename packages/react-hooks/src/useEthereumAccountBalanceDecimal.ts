@@ -4,7 +4,7 @@ import { ethers } from 'ethers'
 import { useMemo } from 'react'
 
 export default function useEthereumAccountBalanceDecimal(
-  ethereumAccountAddress: string
+  ethereumAccountAddress?: string
 ): Decimal {
   const { data: ethereumAccountBalance } = useErc20BalanceQuery(
     ethereumAccountAddress

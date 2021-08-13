@@ -12,14 +12,16 @@ import {
   ModalActions,
   Spacer,
 } from '@phala/react-components'
+import {
+  useEthereumAccountBalanceDecimal,
+  usePolkadotAccountBalanceDecimal,
+} from '@phala/react-hooks'
 import { validateAddress } from '@phala/utils'
 import { Decimal } from 'decimal.js'
 import React, { useEffect, useState } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
 import { down } from 'styled-breakpoints'
 import { useBreakpoint } from 'styled-breakpoints/react-styled'
-import useEthereumAccountBalanceDecimal from '../../../hooks/useEthereumAccountBalanceDecimal'
-import usePolkadotAccountBalanceDecimal from '../../../hooks/usePolkadotAccountBalanceDecimal'
 import { voidFn } from '../../../types/normal'
 import InputAction from '../../InputAction'
 import useToast from '../../MobileToast/useToast'
@@ -63,8 +65,12 @@ const InputDataStep: React.FC<Props> = (props) => {
   const [errorString, setErrorString] = useState('')
   const { toast } = useToast()
 
-  const ethereumAccountBalanceDecimal = useEthereumAccountBalanceDecimal()
-  const polkadotAccountBalanceDecimal = usePolkadotAccountBalanceDecimal()
+  const ethereumAccountBalanceDecimal = useEthereumAccountBalanceDecimal(
+    ethereumAccountAddress
+  )
+  const polkadotAccountBalanceDecimal = usePolkadotAccountBalanceDecimal(
+    polkadotAccountAddress
+  )
 
   const [addressValid, setAddressValid] = useState(false)
 

@@ -1,8 +1,8 @@
 import { usePolkadotAccountAtom } from '@phala/app-store'
 import { BalanceLabel } from '@phala/react-components'
+import { usePolkadotAccountBalanceDecimal } from '@phala/react-hooks'
 import React, { useState } from 'react'
 import styled, { useTheme } from 'styled-components'
-import usePolkadotAccountBalanceDecimal from '../../hooks/usePolkadotAccountBalanceDecimal'
 import PolkadotAccountModal from '../PolkadotAccountModal'
 import Ticket, {
   DefaultStatus,
@@ -29,7 +29,9 @@ const PolkadotTicket: React.FC = () => {
   const [polkadotAccount] = usePolkadotAccountAtom()
   const [selectAccountModalViable, setSelectAccountModalViable] =
     useState(false)
-  const polkadotAccountBalanceDecimal = usePolkadotAccountBalanceDecimal()
+  const polkadotAccountBalanceDecimal = usePolkadotAccountBalanceDecimal(
+    polkadotAccount?.address
+  )
   const openAccountSelectModal = () => setSelectAccountModalViable(true)
 
   return (
