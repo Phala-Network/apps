@@ -238,7 +238,6 @@ importers:
       decimal.js: ^10.3.1
       ethers: ^5.4.4
       react: ^17.0.0
-      react-query: ^3.19.4
       vconsole: ^3.9.1
     dependencies:
       '@phala/app-config': link:../app-config
@@ -253,7 +252,6 @@ importers:
       decimal.js: 10.3.1
       ethers: 5.4.4
       react: 17.0.2
-      react-query: 3.19.4_react@17.0.2
       vconsole: 3.9.1
 
   packages/react-libs:
@@ -6827,7 +6825,7 @@ packages:
   /axios/0.21.1:
     resolution: {integrity: sha512-dKQiRHxGD9PPRIUNIWvZhPTPpl1rf/OxTYKsqKUDjBwYylTvV7SjSHJb9ratfyzM6wCdLCOYLzs73qpg5c4iGA==}
     dependencies:
-      follow-redirects: 1.14.1_debug@3.2.7
+      follow-redirects: 1.14.1
     transitivePeerDependencies:
       - debug
     dev: false
@@ -10824,6 +10822,16 @@ packages:
     dependencies:
       inherits: 2.0.4
       readable-stream: 2.3.7
+    dev: false
+
+  /follow-redirects/1.14.1:
+    resolution: {integrity: sha512-HWqDgT7ZEkqRzBvc2s64vSZ/hfOceEol3ac/7tKwzuvEyWx3/4UegXh5oBOIotkGsObyk3xznnSRVADBgWSQVg==}
+    engines: {node: '>=4.0'}
+    peerDependencies:
+      debug: '*'
+    peerDependenciesMeta:
+      debug:
+        optional: true
     dev: false
 
   /follow-redirects/1.14.1_debug@3.2.7:
