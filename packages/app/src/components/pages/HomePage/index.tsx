@@ -2,6 +2,7 @@ import {
   useEthereumAccountAtom,
   usePolkadotAccountAtom,
 } from '@phala/app-store'
+import { usePHAPrice } from '@phala/react-hooks'
 import { toFixed } from '@phala/utils'
 import { Decimal } from 'decimal.js'
 import { ethers } from 'ethers'
@@ -11,7 +12,6 @@ import { up } from 'styled-breakpoints'
 import { useBreakpoint } from 'styled-breakpoints/react-styled'
 import styled from 'styled-components'
 import { useBalance } from '../../../hooks/useBalance'
-import usePHAPrice from '../../../hooks/usePHAPrice'
 import EthereumIcon from '../../../icons/ethereum.svg'
 import KhalaIcon from '../../../icons/khala.svg'
 import { useErc20BalanceQuery } from '../../../libs/ethereum/queries/useErc20BalanceQuery'
