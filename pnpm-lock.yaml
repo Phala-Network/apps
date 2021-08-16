@@ -21,7 +21,7 @@ importers:
       '@phala/react-components': workspace:*
       '@phala/react-hooks': workspace:*
       '@phala/react-libs': workspace:*
-      '@phala/typedefs': ^0.2.11
+      '@phala/typedefs': ^0.2.14
       '@phala/utils': workspace:*
       '@polkadot/api': ^4.17.1
       '@polkadot/api-derive': ^5.4.1
@@ -150,7 +150,7 @@ importers:
 
   packages/app-config:
     specifiers:
-      '@phala/typedefs': ^0.2.11
+      '@phala/typedefs': ^0.2.14
       '@polkadot/types': ^4.17.1
       '@types/node': ^16.4.13
     dependencies:

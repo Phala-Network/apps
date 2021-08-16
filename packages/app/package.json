@@ -18,7 +18,7 @@
     "@phala/react-components": "workspace:*",
     "@phala/react-hooks": "workspace:*",
     "@phala/react-libs": "workspace:*",
-    "@phala/typedefs": "^0.2.11",
+    "@phala/typedefs": "^0.2.14",
     "@phala/utils": "workspace:*",
     "@polkadot/api": "^4.17.1",
     "@polkadot/api-derive": "^5.4.1",

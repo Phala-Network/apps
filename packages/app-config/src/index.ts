@@ -3,8 +3,10 @@ import {
   EthereumNetworkOptions,
   SubstrateNetworkOptions,
 } from './configuration'
-
-export * from './configuration'
+export type {
+  EthereumNetworkOptions,
+  SubstrateNetworkOptions,
+} from './configuration'
 
 export const ethereums: Record<number, EthereumNetworkOptions> = {
   42: {
