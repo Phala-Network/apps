@@ -1,5 +1,4 @@
 import { useApiPromise } from '@phala/react-libs'
-import { VoidFn } from '@polkadot/api/types'
 import type { AccountId, Balance } from '@polkadot/types/interfaces'
 import { useEffect, useState } from 'react'
 
@@ -15,7 +14,7 @@ export default function useBalance(
       return
     }
 
-    let unsubscribe: VoidFn
+    let unsubscribe: () => void
 
     api.query.system
       .account(address, ({ data: { free } }) => {

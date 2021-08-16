@@ -1,8 +1,8 @@
+import { Account } from '@phala/app-types'
 import { Button, Center, Modal } from '@phala/react-components'
 import React from 'react'
 import styled from 'styled-components'
 import scrollbar from '../../style/scrollbar'
-import { Account } from '../../types/normal'
 import AccountOption from './AccountOption'
 
 export type SelectAccountModalProps = {

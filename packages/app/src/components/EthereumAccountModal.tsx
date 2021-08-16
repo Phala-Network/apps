@@ -4,13 +4,13 @@ import { useSSR } from '@phala/react-hooks'
 import React, { useEffect, useMemo } from 'react'
 import { useEthers } from '../libs/ethereum/contexts/useEthers'
 import { useAccountsQuery } from '../libs/ethereum/queries/useAccountsQuery'
-import { Account, voidFn } from '../types/normal'
+import { Account } from '../types/normal'
 import EthereumInstallModal from './EthereumInstallModal'
 import SelectAccountModal from './SelectAccountModal'
 
 type Props = {
   visible: boolean
-  onClose: voidFn
+  onClose(): void
 }
 
 const EthereumAccountModal: React.FC<Props> = (props) => {

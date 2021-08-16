@@ -23,7 +23,6 @@ import React, { useEffect, useState } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
 import { down } from 'styled-breakpoints'
 import { useBreakpoint } from 'styled-breakpoints/react-styled'
-import { voidFn } from '../../../types/normal'
 import useToast from '../../MobileToast/useToast'
 import TradeTypeSelect, { TradeTypeSelectValue } from '../../TradeTypeSelect'
 import DEFAULT_VALUE from '../../TradeTypeSelect/DEFAULT_VALUE'
@@ -50,7 +49,7 @@ export type InputDataStepResult = {
 
 type Props = {
   onNext: (data: InputDataStepResult) => void
-  onCancel?: voidFn
+  onCancel?(): void
 } & StepProps
 
 const InputDataStep: React.FC<Props> = (props) => {
