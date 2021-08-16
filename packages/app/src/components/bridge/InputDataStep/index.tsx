@@ -6,6 +6,7 @@ import {
   Button,
   ErrorText,
   Input,
+  InputAction,
   InputExternalInfo,
   InputNumber,
   ModalAction,
@@ -23,7 +24,6 @@ import { ErrorBoundary } from 'react-error-boundary'
 import { down } from 'styled-breakpoints'
 import { useBreakpoint } from 'styled-breakpoints/react-styled'
 import { voidFn } from '../../../types/normal'
-import InputAction from '../../InputAction'
 import useToast from '../../MobileToast/useToast'
 import TradeTypeSelect, { TradeTypeSelectValue } from '../../TradeTypeSelect'
 import DEFAULT_VALUE from '../../TradeTypeSelect/DEFAULT_VALUE'
