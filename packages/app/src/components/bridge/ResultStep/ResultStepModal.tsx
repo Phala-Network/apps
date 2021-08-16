@@ -1,6 +1,6 @@
+import { TransactionInfo } from '@phala/app-types'
 import { Button, Modal, ModalActions } from '@phala/react-components'
 import React from 'react'
-import { TransactionInfo } from '../../../types/normal'
 import ResultStepToKhala from './ResultStepToKhala'
 
 type Props = {

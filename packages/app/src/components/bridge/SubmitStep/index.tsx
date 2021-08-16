@@ -1,5 +1,5 @@
+import { TransactionInfo } from '@phala/app-types'
 import React from 'react'
-import { TransactionInfo } from '../../../types/normal'
 import { StepProps } from '../BridgeProcess'
 import { InputDataStepResult } from '../InputDataStep'
 import SubmitStepToEthereum from './SubmitStepToEthereum'

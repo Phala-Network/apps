@@ -1,5 +1,5 @@
+import { TransactionInfo } from '@phala/app-types'
 import { Dispatch, SetStateAction, useEffect, useState } from 'react'
-import { TransactionInfo } from '../../../types/normal'
 import { InputDataStepResult } from '../InputDataStep'
 
 interface useTransactionInfoReturn {

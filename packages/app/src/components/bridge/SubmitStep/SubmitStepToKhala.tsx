@@ -1,4 +1,5 @@
 import { useTransactionsInfoAtom } from '@phala/app-store'
+import { TransactionInfoItem } from '@phala/app-types'
 import {
   Alert,
   Button,
@@ -16,7 +17,6 @@ import { ethers } from 'ethers'
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { SubmitStepProps } from '.'
-import { TransactionInfoItem } from '../../../types/normal'
 import { StepProps } from '../BridgeProcess'
 import useTransactionInfo from '../hooks/useTransactionInfo'
 import BaseInfo from './BaseInfo'
