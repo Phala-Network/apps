@@ -2,7 +2,6 @@ import { Backdrop } from '@phala/react-components'
 import React, { useState } from 'react'
 import { down } from 'styled-breakpoints'
 import styled from 'styled-components'
-import scrollbar from '../../style/scrollbar'
 import SelectIcon from './SelectIcon'
 
 const SelectBodyWrap = styled.div`
@@ -29,7 +28,19 @@ const SelectBody = styled.div`
   display: grid;
   grid-gap: 20px;
 
-  ${scrollbar}
+  ::-webkit-scrollbar {
+    width: 3px;
+    background-color: #ececec;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    border-radius: 0;
+    background-color: #000000;
+  }
 `
 
 const Value = styled.div`

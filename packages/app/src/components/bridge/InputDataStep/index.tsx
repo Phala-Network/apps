@@ -24,13 +24,13 @@ import { ErrorBoundary } from 'react-error-boundary'
 import { down } from 'styled-breakpoints'
 import { useBreakpoint } from 'styled-breakpoints/react-styled'
 import useToast from '../../MobileToast/useToast'
-import TradeTypeSelect, { TradeTypeSelectValue } from '../../TradeTypeSelect'
-import DEFAULT_VALUE from '../../TradeTypeSelect/DEFAULT_VALUE'
 import { StepProps } from '../BridgeProcess'
 import EthereumAllowance from '../EthereumAllowance'
 import FormItem from '../FormItem'
 import FormLayout from '../FormLayout'
 import ActionButton from './ActionButton'
+import TradeTypeSelect, { TradeTypeSelectValue } from './TradeTypeSelect'
+import DEFAULT_VALUE from './TradeTypeSelect/DEFAULT_VALUE'
 
 export type InputDataStepResult = {
   from: {
