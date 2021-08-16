@@ -3,17 +3,10 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "develop": "run-s \"build:!(app)\" && run-p develop:*",
-    "develop:app-config": "pnpm run develop --filter ./packages/app-config",
-    "develop:app-types": "pnpm run develop --filter ./packages/app-types",
-    "develop:app-store": "pnpm run develop --filter ./packages/app-store",
-    "develop:utils": "pnpm run develop --filter ./packages/utils",
-    "develop:react-libs": "pnpm run develop --filter ./packages/react-libs",
-    "develop:react-hooks": "pnpm run develop --filter ./packages/react-hooks",
-    "develop:react-components": "pnpm run develop --filter ./packages/react-components",
-    "develop:app": "cd ./packages/app && npm run develop",
-    "build": "pnpm recursive --filter ./packages run build",
+    "build": "pnpm run build:deps && pnpm run build:app",
+    "build:deps": "pnpm recursive --filter ./packages --filter !./packages/app run build",
     "build:app": "cd ./packages/app && npm run build",
+    "develop": "pnpm run build:deps && pnpm --parallel --filter ./packages run develop",
     "preinstall": "npx only-allow pnpm"
   },
   "repository": {
