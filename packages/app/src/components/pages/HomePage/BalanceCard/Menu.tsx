@@ -6,7 +6,7 @@ import ActionArrow from '../../../../icons/action_arrow.svg'
 import BridgeModal from '../../../BridgeModal'
 import ClaimModal from '../../../ClaimModal'
 import ConvertModal from '../../../ConvertModal'
-import TransferModal from '../../../TransferModal'
+import TransferModal from './TransferModal'
 
 const MenuWrap = styled.div<{ active: boolean }>`
   position: absolute;

@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import MobileToast, { MobileToastProps } from './MobileToast'
+import { MobileToast, MobileToastProps } from './MobileToast'
 import { MobileToastContext } from './MobileToastContext'
 
-const MobileToastContextProvider: React.FC = (props) => {
+export const MobileToastContextProvider: React.FC = (props) => {
   const { children } = props
   const [toasts, setToasts] = useState<MobileToastProps[]>([])
 
@@ -19,5 +19,3 @@ const MobileToastContextProvider: React.FC = (props) => {
     </MobileToastContext.Provider>
   )
 }
-
-export default MobileToastContextProvider

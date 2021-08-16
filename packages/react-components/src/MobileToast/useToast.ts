@@ -4,6 +4,6 @@ import {
   MobileToastContextValue,
 } from './MobileToastContext'
 
-export default function useToast(): MobileToastContextValue {
+export function useToast(): MobileToastContextValue {
   return useContext(MobileToastContext)
 }

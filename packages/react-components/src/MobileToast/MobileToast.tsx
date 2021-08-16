@@ -7,7 +7,7 @@ export interface MobileToastProps {
   text?: string
 }
 
-const MobileToast = forwardRef<HTMLDivElement, MobileToastProps>(
+export const MobileToast = forwardRef<HTMLDivElement, MobileToastProps>(
   (props, ref) => {
     const { text } = props
     const [visitable, setVisitable] = useState(true)
@@ -28,5 +28,3 @@ const MobileToast = forwardRef<HTMLDivElement, MobileToastProps>(
     )
   }
 )
-
-export default MobileToast

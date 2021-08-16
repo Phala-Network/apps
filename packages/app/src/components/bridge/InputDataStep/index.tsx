@@ -12,6 +12,7 @@ import {
   ModalAction,
   ModalActions,
   Spacer,
+  useToast,
 } from '@phala/react-components'
 import {
   useEthereumAccountBalanceDecimal,
@@ -23,7 +24,6 @@ import React, { useEffect, useState } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
 import { down } from 'styled-breakpoints'
 import { useBreakpoint } from 'styled-breakpoints/react-styled'
-import useToast from '../../MobileToast/useToast'
 import { StepProps } from '../BridgeProcess'
 import EthereumAllowance from '../EthereumAllowance'
 import FormItem from '../FormItem'
