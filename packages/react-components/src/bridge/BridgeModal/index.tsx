@@ -1,6 +1,6 @@
-import { Modal } from '@phala/react-components'
 import React from 'react'
-import BridgeProcess from '../bridge/BridgeProcess'
+import { Modal } from '../..'
+import BridgeProcess from '../BridgeProcess'
 
 type Props = {
   visible: boolean

@@ -3,6 +3,16 @@ import {
   usePolkadotAccountAtom,
 } from '@phala/app-store'
 import {
+  useEthereumAccountBalanceDecimal,
+  usePolkadotAccountBalanceDecimal,
+} from '@phala/react-hooks'
+import { validateAddress } from '@phala/utils'
+import { Decimal } from 'decimal.js'
+import React, { useEffect, useState } from 'react'
+import { ErrorBoundary } from 'react-error-boundary'
+import { down } from 'styled-breakpoints'
+import { useBreakpoint } from 'styled-breakpoints/react-styled'
+import {
   Button,
   ErrorText,
   Input,
@@ -13,17 +23,7 @@ import {
   ModalActions,
   Spacer,
   useToast,
-} from '@phala/react-components'
-import {
-  useEthereumAccountBalanceDecimal,
-  usePolkadotAccountBalanceDecimal,
-} from '@phala/react-hooks'
-import { validateAddress } from '@phala/utils'
-import { Decimal } from 'decimal.js'
-import React, { useEffect, useState } from 'react'
-import { ErrorBoundary } from 'react-error-boundary'
-import { down } from 'styled-breakpoints'
-import { useBreakpoint } from 'styled-breakpoints/react-styled'
+} from '../..'
 import { StepProps } from '../BridgeProcess'
 import EthereumAllowance from '../EthereumAllowance'
 import FormItem from '../FormItem'

@@ -1,10 +1,13 @@
-import { WhiteCard } from '@phala/react-components'
+import {
+  InputDataStep,
+  InputDataStepResult,
+  SubmitStepModal,
+  WhiteCard,
+} from '@phala/react-components'
 import React, { useState } from 'react'
 import { Helmet } from 'react-helmet'
 import { down } from 'styled-breakpoints'
 import styled from 'styled-components'
-import InputDataStep, { InputDataStepResult } from '../../bridge/InputDataStep'
-import SubmitStepModal from '../../bridge/SubmitStep/SubmitStepModal'
 import Transactions from './transactions/Transactions'
 
 const RightContent = styled.div`

@@ -8,7 +8,7 @@ import {
   ModalAction,
   ModalActions,
   Spacer,
-} from '@phala/react-components'
+} from '..'
 import React from 'react'
 import styled from 'styled-components'
 import { StepProps } from './BridgeProcess'

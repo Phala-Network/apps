@@ -1,7 +1,7 @@
 import { TransactionInfo } from '@phala/app-types'
-import { Modal } from '@phala/react-components'
 import React, { Dispatch, SetStateAction, useState } from 'react'
 import SubmitStep from '.'
+import { Modal } from '../..'
 import { InputDataStepResult } from '../InputDataStep'
 import ResultStepModal from '../ResultStep/ResultStepModal'
 

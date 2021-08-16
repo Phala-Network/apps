@@ -1,12 +1,5 @@
 import { useTransactionsInfoAtom } from '@phala/app-store'
 import { TransactionInfoItem } from '@phala/app-types'
-import {
-  Alert,
-  Button,
-  ModalAction,
-  ModalActions,
-  Spacer,
-} from '@phala/react-components'
 import { useErc20Deposit } from '@phala/react-libs/esm/ethereum/bridge/deposit'
 import { useErc20BalanceQuery } from '@phala/react-libs/esm/ethereum/queries/useErc20BalanceQuery'
 import { useTransactionReceiptQuery } from '@phala/react-libs/esm/ethereum/queries/useTransactionReceiptQuery'
@@ -17,6 +10,7 @@ import { ethers } from 'ethers'
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { SubmitStepProps } from '.'
+import { Alert, Button, ModalAction, ModalActions, Spacer } from '../..'
 import { StepProps } from '../BridgeProcess'
 import useTransactionInfo from '../hooks/useTransactionInfo'
 import BaseInfo from './BaseInfo'

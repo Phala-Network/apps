@@ -1,7 +1,7 @@
 import { TransactionInfo } from '@phala/app-types'
+import { ResultStepModal } from '@phala/react-components'
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import ResultStepModal from '../../../../bridge/ResultStep/ResultStepModal'
 import ArrowIcon from './ArrowIcon'
 import ItemInfoBlock from './ItemInfoBlock'
 import JumpIcon from './JumpIcon'

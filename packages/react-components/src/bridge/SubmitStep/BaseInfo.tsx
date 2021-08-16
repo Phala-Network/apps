@@ -1,5 +1,5 @@
 import { TransactionInfo } from '@phala/app-types'
-import { Address, AmountInfo, InfoTitle, Spacer } from '@phala/react-components'
+import { Address, AmountInfo, InfoTitle, Spacer } from '../..'
 import React from 'react'
 import { StepProps } from '../BridgeProcess'
 import FormItem from '../FormItem'

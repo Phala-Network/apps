@@ -2,12 +2,8 @@ import {
   useEthereumAccountAtom,
   usePolkadotAccountAtom,
 } from '@phala/app-store'
-import {
-  Button,
-  EthereumAccountModal,
-  PolkadotAccountModal,
-} from '@phala/react-components'
 import React, { useState } from 'react'
+import { Button, EthereumAccountModal, PolkadotAccountModal } from '../..'
 
 type Props = {
   onClick(): void
