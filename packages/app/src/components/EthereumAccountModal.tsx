@@ -1,10 +1,10 @@
 import { useEthereumAccountAtom } from '@phala/app-store'
+import { AlertModal } from '@phala/react-components'
 import { useSSR } from '@phala/react-hooks'
 import React, { useEffect, useMemo } from 'react'
 import { useEthers } from '../libs/ethereum/contexts/useEthers'
 import { useAccountsQuery } from '../libs/ethereum/queries/useAccountsQuery'
 import { Account, voidFn } from '../types/normal'
-import AlertModal from './AlertModal'
 import EthereumInstallModal from './EthereumInstallModal'
 import SelectAccountModal from './SelectAccountModal'
 

@@ -1,10 +1,10 @@
 import { usePolkadotAccountAtom } from '@phala/app-store'
+import { AlertModal } from '@phala/react-components'
 import { useSSR } from '@phala/react-hooks'
 import React, { useMemo } from 'react'
 import { useApiPromise } from '../libs/polkadot/hooks/useApiPromise'
 import { useWeb3 } from '../libs/polkadot/hooks/useWeb3'
 import { useAddressNormalizer } from '../libs/polkadot/useAddressNormalizer'
-import AlertModal from './AlertModal'
 import PolkadotInstallModal from './PolkadotInstallModal'
 import SelectAccountModal from './SelectAccountModal'
 
