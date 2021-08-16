@@ -12,7 +12,5 @@ export default function formatCurrency(value: number | string): string {
   const n = 3
   const re = '\\d(?=(\\d{' + 3 + '})+' + (n > 0 ? '\\.' : '$') + ')'
 
-  console.log(string)
-
   return string.replace(new RegExp(re, 'g'), '$&,')
 }
