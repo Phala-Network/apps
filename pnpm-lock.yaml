@@ -15,6 +15,7 @@ importers:
   packages/app:
     specifiers:
       '@babel/core': ^7.15.0
+      '@phala/app-bridge': workspace:^0.0.1
       '@phala/app-config': workspace:*
       '@phala/app-store': workspace:*
       '@phala/app-types': workspace:*
@@ -79,6 +80,7 @@ importers:
       webpack: ^5.50.0
     dependencies:
       '@babel/core': 7.15.0
+      '@phala/app-bridge': link:../app-bridge
       '@phala/app-config': link:../app-config
       '@phala/app-store': link:../app-store
       '@phala/app-types': link:../app-types
@@ -146,7 +148,20 @@ importers:
     specifiers: {}
 
   packages/app-bridge:
-    specifiers: {}
+    specifiers:
+      '@phala/app-store': workspace:^0.0.1
+      '@phala/app-types': workspace:^0.0.1
+      '@phala/react-components': workspace:^0.0.1
+      '@phala/react-hooks': workspace:^0.0.1
+      '@phala/utils': workspace:^0.0.1
+      styled-breakpoints: ^10.0.1
+    dependencies:
+      '@phala/app-store': link:../app-store
+      '@phala/app-types': link:../app-types
+      '@phala/react-components': link:../react-components
+      '@phala/react-hooks': link:../react-hooks
+      '@phala/utils': link:../utils
+      styled-breakpoints: 10.0.1
 
   packages/app-config:
     specifiers:
@@ -17883,6 +17898,21 @@ packages:
     resolution: {integrity: sha512-CzFnRRXhzWIdItT3OmF8SQfWyahHhjq3HwcMNCNLn+N7klOOqPjMeG/4JSu77D7ypZdGvSzvkrbyeTMizz2VrA==}
     dependencies:
       inline-style-parser: 0.1.1
+    dev: false
+
+  /styled-breakpoints/10.0.1:
+    resolution: {integrity: sha512-J1YiOAZlcA0ZtQ6Tm/O4iEoO2FBJ61PNLJPCjWKVKErqVldnxMcVR89Jm67eMQH/o9Rtq1Mzm5UhWdzljq0ARQ==}
+    peerDependencies:
+      '@emotion/react': ^11.0.0
+      react: ^17.x.x
+      styled-components: ^5.0.0
+    peerDependenciesMeta:
+      '@emotion/react':
+        optional: true
+      react:
+        optional: true
+      styled-components:
+        optional: true
     dev: false
 
   /styled-breakpoints/10.0.1_0f2c6d876d4155327b8883a6dc1fe17e:

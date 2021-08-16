@@ -1,6 +1,6 @@
 import { down } from 'styled-breakpoints'
 import styled from 'styled-components'
-import scrollbar from '../../../../../style/scrollbar'
+import scrollbar from './scrollbar'
 import TransactionsListItem, {
   TransactionsListItemProps,
 } from './TransactionsListItem'

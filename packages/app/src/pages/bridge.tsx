@@ -1,1 +1,1 @@
-export { default as default } from '../components/pages/BridgePage'
+export { default as default } from '@phala/app-bridge'

@@ -1,5 +1,25 @@
 {
   "name": "@phala/app-bridge",
   "version": "0.0.1",
-  "type": "module"
+  "type": "module",
+  "sideEffects": false,
+  "main": "esm/index.js",
+  "module": "esm/index.js",
+  "types": "esm/index.d.ts",
+  "scripts": {
+    "develop": "tsc --watch",
+    "start": "tsc --watch",
+    "build": "tsc",
+    "test": "tsc --noEmit",
+    "lint": "type-coverage",
+    "prepublishOnly": "run-s lint build"
+  },
+  "dependencies": {
+    "@phala/app-store": "workspace:^0.0.1",
+    "@phala/app-types": "workspace:^0.0.1",
+    "@phala/react-components": "workspace:^0.0.1",
+    "@phala/react-hooks": "workspace:^0.0.1",
+    "@phala/utils": "workspace:^0.0.1",
+    "styled-breakpoints": "^10.0.1"
+  }
 }
