@@ -4,14 +4,14 @@ importers:
 
   .:
     specifiers:
-      '@types/node': ^16.6.0
-      '@types/react': ^17.0.17
+      '@types/node': ^16.6.1
+      '@types/react': ^17.0.18
       lerna: ^4.0.0
       npm-run-all: ^4.1.5
       typescript: ^4.3.5
     dependencies:
-      '@types/node': 16.6.0
-      '@types/react': 17.0.17
+      '@types/node': 16.6.1
+      '@types/react': 17.0.18
       lerna: 4.0.0
       npm-run-all: 4.1.5
       typescript: 4.3.5
@@ -24,7 +24,7 @@ importers:
       '@phala/app-types': workspace:*
       '@phala/react-components': workspace:*
       '@phala/react-hooks': workspace:*
-      '@phala/react-libs': workspace:^0.0.1
+      '@phala/react-libs': workspace:*
       '@phala/typedefs': ^0.2.11
       '@phala/utils': workspace:*
       '@polkadot/api': ^4.17.1
@@ -5694,6 +5694,10 @@ packages:
     resolution: {integrity: sha512-OyiZPohMMjZEYqcVo/UJ04GyAxXOJEZO/FpzyXxcH4r/ArrVoXHf4MbUrkLp0Tz7/p1mMKpo5zJ6ZHl8XBNthQ==}
     dev: false
 
+  /@types/node/16.6.1:
+    resolution: {integrity: sha512-Sr7BhXEAer9xyGuCN3Ek9eg9xPviCF2gfu9kTfuU2HkTVAMYSDeX40fvpmo72n5nansg3nsBjuQBrsS28r+NUw==}
+    dev: false
+
   /@types/node/8.10.66:
     resolution: {integrity: sha512-tktOkFUA4kXx2hhhrB8bIFb5TbwzS4uOhKEmwiD+NoiL0qtP2OQ9mFldbgD4dV1djrlBYP6eBuQZiWjuHUpqFw==}
     dev: false
@@ -5744,6 +5748,14 @@ packages:
 
   /@types/react/17.0.17:
     resolution: {integrity: sha512-nrfi7I13cAmrd0wje8czYpf5SFbryczCtPzFc6ijqvdjKcyA3tCvGxwchOUlxb2ucBPuJ9Y3oUqKrRqZvrz0lw==}
+    dependencies:
+      '@types/prop-types': 15.7.4
+      '@types/scheduler': 0.16.2
+      csstype: 3.0.8
+    dev: false
+
+  /@types/react/17.0.18:
+    resolution: {integrity: sha512-YTLgu7oS5zvSqq49X5Iue5oAbVGhgPc5Au29SJC4VeE17V6gASoOxVkUDy9pXFMRFxCWCD9fLeweNFizo3UzOg==}
     dependencies:
       '@types/prop-types': 15.7.4
       '@types/scheduler': 0.16.2
