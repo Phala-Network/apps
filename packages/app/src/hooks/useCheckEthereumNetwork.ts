@@ -1,6 +1,6 @@
 import { ethereums } from '@phala/app-config'
+import { useEthers } from '@phala/react-libs/esm/ethereum/contexts/useEthers'
 import { isDev, isTest } from '@phala/utils'
-import { useEthers } from '../libs/ethereum/contexts/useEthers'
 
 export function useCheckEthereumNetwork(): boolean {
   const { provider } = useEthers()

@@ -1,6 +1,6 @@
+import { useErc20AssetHandlerAllowanceQuery } from '@phala/react-libs/esm/ethereum/queries/useErc20AllowanceQuery'
 import { ethers } from 'ethers'
 import React, { cloneElement, FC, useMemo, useState } from 'react'
-import { useErc20AssetHandlerAllowanceQuery } from '../../../libs/ethereum/queries/useErc20AllowanceQuery'
 import ApproveDialog from './ApproveDialog'
 
 type Props = {

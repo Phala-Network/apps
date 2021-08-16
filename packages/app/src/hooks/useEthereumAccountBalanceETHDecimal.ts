@@ -1,9 +1,9 @@
 import { useEthereumAccountAtom } from '@phala/app-store'
+import { useEthersNetworkQuery } from '@phala/react-libs'
 import { captureException } from '@sentry/react'
 import { Decimal } from 'decimal.js'
 import { ethers } from 'ethers'
 import { useEffect, useState } from 'react'
-import { useEthersNetworkQuery } from '../libs/ethereum/queries/useEthersNetworkQuery'
 
 let flag = 0
 

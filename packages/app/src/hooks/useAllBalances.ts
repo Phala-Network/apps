@@ -1,7 +1,7 @@
 import { usePolkadotAccountAtom } from '@phala/app-store'
+import { useApiPromise } from '@phala/react-libs/esm/polkadot/hooks/useApiPromise'
 import type { DeriveBalancesAll } from '@polkadot/api-derive/types'
 import { useEffect, useState } from 'react'
-import { useApiPromise } from '../libs/polkadot/hooks/useApiPromise'
 
 const useAllBalances = (): DeriveBalancesAll | undefined => {
   const [polkadotAccount] = usePolkadotAccountAtom()
