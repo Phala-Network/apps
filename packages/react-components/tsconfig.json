@@ -13,6 +13,7 @@
   "references": [
     { "path": "../app-config" },
     { "path": "../app-types" },
+    { "path": "../app-store" },
     { "path": "../react-libs" },
     { "path": "../utils" },
     { "path": "../react-hooks" }

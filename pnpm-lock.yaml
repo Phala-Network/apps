@@ -175,6 +175,7 @@ importers:
   packages/react-components:
     specifiers:
       '@phala/app-config': workspace:*
+      '@phala/app-store': workspace:^0.0.1
       '@phala/app-types': workspace:*
       '@phala/react-hooks': workspace:*
       '@phala/react-libs': workspace:*
@@ -199,6 +200,7 @@ importers:
       styled-components: ^5.3.0
     dependencies:
       '@phala/app-config': link:../app-config
+      '@phala/app-store': link:../app-store
       '@phala/app-types': link:../app-types
       '@phala/react-hooks': link:../react-hooks
       '@phala/react-libs': link:../react-libs

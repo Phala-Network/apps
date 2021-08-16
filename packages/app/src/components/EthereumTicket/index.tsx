@@ -1,11 +1,10 @@
 import { useEthereumAccountAtom } from '@phala/app-store'
-import { BalanceLabel } from '@phala/react-components'
+import { BalanceLabel, EthereumAccountModal } from '@phala/react-components'
 import React, { useState } from 'react'
 import { toast } from 'react-toastify'
 import styled from 'styled-components'
 import { useCheckEthereumNetwork } from '../../hooks/useCheckEthereumNetwork'
 import useEthereumAccountBalanceETHDecimal from '../../hooks/useEthereumAccountBalanceETHDecimal'
-import EthereumAccountModal from '../EthereumAccountModal'
 import Ticket, {
   DefaultStatus,
   DefaultStatusIcon,

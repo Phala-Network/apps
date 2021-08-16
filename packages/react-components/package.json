@@ -7,6 +7,7 @@
   "types": "esm/index.d.ts",
   "dependencies": {
     "@phala/app-config": "workspace:*",
+    "@phala/app-store": "workspace:^0.0.1",
     "@phala/app-types": "workspace:*",
     "@phala/react-hooks": "workspace:*",
     "@phala/react-libs": "workspace:*",

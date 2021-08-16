@@ -1,10 +1,10 @@
 import { usePolkadotAccountAtom } from '@phala/app-store'
+import { PolkadotAccountModal } from '@phala/react-components'
 import { useWeb3 } from '@phala/react-libs/esm/polkadot/hooks/useWeb3'
 import { abridgeString } from '@phala/utils'
 import React, { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import KhalaIcon from '../../icons/khala.svg'
-import PolkadotAccountModal from '../PolkadotAccountModal'
 import ConnectButton from './ConnectButton'
 import EmptyAccountModal from './EmptyAccountModal'
 
@@ -32,6 +32,7 @@ const MobilePolkadotTicket: React.FC = () => {
   // FIXME: move this hook to a separate file
   useEffect(() => {
     if (
+      accounts[0] &&
       accounts.length &&
       !accounts?.find(({ address }) => address === polkadotAccount?.address)
     ) {
