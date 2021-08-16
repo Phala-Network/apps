@@ -18,31 +18,14 @@
     "esModuleInterop": true,
     "preserveWatchOutput": true,
     "allowSyntheticDefaultImports": true,
-    "jsx": "react-jsx",
-    "baseUrl": ".",
-    "paths": {
-      "@phala/config": ["./packages/app-config/src"],
-      "@phala/config/*": ["./packages/app-config/src/*"],
-      "@phala/types": ["./packages/app-types/src"],
-      "@phala/types/*": ["./packages/app-types/src/*"],
-      "@phala/store": ["./packages/app-store/src"],
-      "@phala/store/*": ["./packages/app-store/src/*"],
-      "@phala/utils": ["./packages/utils/src"],
-      "@phala/utils/*": ["./packages/utils/src/*"],
-      "@phala/react-libs": ["./packages/react-libs/src"],
-      "@phala/react-libs/*": ["./packages/react-libs/src/*"],
-      "@phala/react-hooks": ["./packages/react-hooks/src"],
-      "@phala/react-hooks/*": ["./packages/react-hooks/src/*"],
-      "@phala/react-components": ["./packages/react-components/src"],
-      "@phala/react-components/*": ["./packages/react-components/src/*"]
-    }
+    "jsx": "react-jsx"
   },
   "references": [
     { "path": "packages/app-config" },
     { "path": "packages/app-types" },
     { "path": "packages/app-store" },
-    { "path": "packages/react-libs" },
     { "path": "packages/utils" },
+    { "path": "packages/react-libs" },
     { "path": "packages/react-hooks" },
     { "path": "packages/react-components" }
   ]

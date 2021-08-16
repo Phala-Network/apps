@@ -24,7 +24,7 @@
     "web3modal": "^1.9.4",
     "react": "^17.0.0",
     "bn.js": "^5.2.0",
-    "@types/react": "^17.0.16",
+    "@types/react": "^17.0.18",
     "@types/bn.js": "^4.11.6"
   },
   "scripts": {
