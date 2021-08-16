@@ -5,8 +5,10 @@
   "scripts": {
     "build": "pnpm run build:deps && pnpm run build:app",
     "build:deps": "pnpm recursive --filter ./packages --filter !./packages/app run build",
-    "build:app": "cd ./packages/app && npm run build",
-    "develop": "pnpm run build:deps && pnpm --parallel --filter ./packages run develop",
+    "build:app": "cd ./packages/app && pnpm run build",
+    "develop": "pnpm run build:deps && pnpm run develop:deps & pnpm run develop:app",
+    "develop:deps": "pnpm --parallel --filter ./packages  --filter !./packages/app run develop",
+    "develop:app": "cd ./packages/app && pnpm run develop",
     "preinstall": "npx only-allow pnpm"
   },
   "repository": {

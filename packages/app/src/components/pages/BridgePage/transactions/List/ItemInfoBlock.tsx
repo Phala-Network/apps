@@ -1,7 +1,7 @@
 import { abridgeString } from '@phala/utils'
 import React from 'react'
 import styled from 'styled-components'
-import { TransactionInfoItem } from '../../../types/normal'
+import { TransactionInfoItem } from '../../../../../types/normal'
 
 export type ItemInfoBlockProps = TransactionInfoItem
 

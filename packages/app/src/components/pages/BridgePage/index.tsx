@@ -5,7 +5,7 @@ import { down } from 'styled-breakpoints'
 import styled from 'styled-components'
 import InputDataStep, { InputDataStepResult } from '../../bridge/InputDataStep'
 import SubmitStepModal from '../../bridge/SubmitStep/SubmitStepModal'
-import Transactions from '../../transactions/Transactions'
+import Transactions from './transactions/Transactions'
 
 const RightContent = styled.div`
   display: grid;
