@@ -22,10 +22,11 @@
     "@phala/utils": "workspace:^0.0.1",
     "@polkadot/api-derive": "^5.5.1",
     "@polkadot/util": "^6.11.1",
+    "@types/react": "^17.0.18",
     "axios": "^0.21.1",
     "decimal.js": "^10.3.1",
     "ethers": "^5.4.4",
-    "react-query": "^3.19.4",
+    "react": "^17.0.0",
     "react-toastify": "^7.0.4",
     "react-use": "^17.2.4",
     "styled-breakpoints": "^10.0.1"
