@@ -38,6 +38,7 @@
     "start": "tsc --watch",
     "build": "tsc",
     "test": "tsc --noEmit",
+    "clean": "tsc --clean",
     "lint": "type-coverage",
     "prepublishOnly": "run-s lint build"
   }
