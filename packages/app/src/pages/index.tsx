@@ -1,1 +1,1 @@
-export { default as default } from '../components/pages/HomePage'
+export { default as default } from '@phala/app-assets'

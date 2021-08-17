@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import DollarIcon from '../../../../icons/dollar.svg'
+import { DollarIcon } from '../Icons/DollarIcon'
 
 type Props = {
   themeType: 'black' | 'white'

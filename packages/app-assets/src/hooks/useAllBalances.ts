@@ -14,6 +14,8 @@ const useAllBalances = (): DeriveBalancesAll | undefined => {
     if (api && address) {
       api.derive.balances
         .all(address, (result) => {
+          // FIXME: confused
+          // @ts-ignore
           setAllBalances(result)
         })
         .then((_unsub) => (unsub = _unsub))

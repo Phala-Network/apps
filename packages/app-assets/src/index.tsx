@@ -12,13 +12,13 @@ import { Helmet } from 'react-helmet'
 import { up } from 'styled-breakpoints'
 import { useBreakpoint } from 'styled-breakpoints/react-styled'
 import styled from 'styled-components'
-import usePHAPrice from '../../../hooks/usePHAPrice'
-import EthereumIcon from '../../../icons/ethereum.svg'
-import KhalaIcon from '../../../icons/khala.svg'
-import BalanceCard from './BalanceCard'
-import { BlackHeader } from './BalanceCard/Header'
-import Category from './Category'
-import ComingSoonBox from './ComingSoonBox'
+import BalanceCard from './components/BalanceCard'
+import { BlackHeader } from './components/BalanceCard/Header'
+import Category from './components/Category'
+import ComingSoonBox from './components/ComingSoonBox'
+import { EthereumIcon } from './components/Icons/EthereumIcon'
+import { KhalaIcon } from './components/Icons/KhalaIcon'
+import usePHAPrice from './hooks/usePHAPrice'
 
 const COMING_SOON_CATEGORIES: string[] = ['Parachain Assets', 'Bridge Assets']
 
@@ -62,6 +62,7 @@ const HomePage: React.FC = () => {
       18
     )
     if (value) return new Decimal(value)
+    return
   }, [ethereumAccountBalance])
 
   const totalBalanceNumber = useMemo<Decimal | undefined>(() => {
@@ -70,6 +71,7 @@ const HomePage: React.FC = () => {
       ethereumAccountBalanceNumber,
     ].filter((v) => v !== undefined) as Decimal[]
     if (numbers.length) return Decimal.sum(...numbers)
+    return
   }, [polkadotAccountBalanceNumber, ethereumAccountBalanceNumber])
 
   return (

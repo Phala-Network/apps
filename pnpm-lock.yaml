@@ -15,6 +15,7 @@ importers:
   packages/app:
     specifiers:
       '@babel/core': ^7.15.0
+      '@phala/app-assets': workspace:^0.0.1
       '@phala/app-bridge': workspace:^0.0.1
       '@phala/app-config': workspace:*
       '@phala/app-store': workspace:*
@@ -80,6 +81,7 @@ importers:
       webpack: ^5.50.0
     dependencies:
       '@babel/core': 7.15.0
+      '@phala/app-assets': link:../app-assets
       '@phala/app-bridge': link:../app-bridge
       '@phala/app-config': link:../app-config
       '@phala/app-store': link:../app-store
@@ -145,7 +147,36 @@ importers:
       webpack: 5.50.0
 
   packages/app-assets:
-    specifiers: {}
+    specifiers:
+      '@phala/app-store': workspace:^0.0.1
+      '@phala/react-components': workspace:^0.0.1
+      '@phala/react-hooks': workspace:^0.0.1
+      '@phala/react-libs': workspace:^0.0.1
+      '@phala/utils': workspace:^0.0.1
+      '@polkadot/api-derive': ^5.5.1
+      '@polkadot/util': ^6.11.1
+      axios: ^0.21.1
+      decimal.js: ^10.3.1
+      ethers: ^5.4.4
+      react-query: ^3.19.4
+      react-toastify: ^7.0.4
+      react-use: ^17.2.4
+      styled-breakpoints: ^10.0.1
+    dependencies:
+      '@phala/app-store': link:../app-store
+      '@phala/react-components': link:../react-components
+      '@phala/react-hooks': link:../react-hooks
+      '@phala/react-libs': link:../react-libs
+      '@phala/utils': link:../utils
+      '@polkadot/api-derive': 5.5.1
+      '@polkadot/util': 6.11.1
+      axios: 0.21.1
+      decimal.js: 10.3.1
+      ethers: 5.4.4
+      react-query: 3.19.6
+      react-toastify: 7.0.4
+      react-use: 17.2.4
+      styled-breakpoints: 10.0.1
 
   packages/app-bridge:
     specifiers:
@@ -5843,7 +5874,7 @@ packages:
   /axios/0.21.1:
     resolution: {integrity: sha512-dKQiRHxGD9PPRIUNIWvZhPTPpl1rf/OxTYKsqKUDjBwYylTvV7SjSHJb9ratfyzM6wCdLCOYLzs73qpg5c4iGA==}
     dependencies:
-      follow-redirects: 1.14.1_debug@3.2.7
+      follow-redirects: 1.14.1
     transitivePeerDependencies:
       - debug
     dev: false
@@ -9588,6 +9619,16 @@ packages:
     dependencies:
       inherits: 2.0.4
       readable-stream: 2.3.7
+    dev: false
+
+  /follow-redirects/1.14.1:
+    resolution: {integrity: sha512-HWqDgT7ZEkqRzBvc2s64vSZ/hfOceEol3ac/7tKwzuvEyWx3/4UegXh5oBOIotkGsObyk3xznnSRVADBgWSQVg==}
+    engines: {node: '>=4.0'}
+    peerDependencies:
+      debug: '*'
+    peerDependenciesMeta:
+      debug:
+        optional: true
     dev: false
 
   /follow-redirects/1.14.1_debug@3.2.7:
@@ -13554,6 +13595,22 @@ packages:
     resolution: {integrity: sha512-8ZtvEnA2c5aYCZYd1cvgdnU6cqwixRoYg70xPLWUws5ORTa/lnw+u4amixRS/Ac5U5mQVgp9pnlSUnbNWFaWZQ==}
     dev: false
 
+  /nano-css/5.3.4:
+    resolution: {integrity: sha512-wfcviJB6NOxDIDfr7RFn/GlaN7I/Bhe4d39ZRCJ3xvZX60LVe2qZ+rDqM49nm4YT81gAjzS+ZklhKP/Gnfnubg==}
+    peerDependencies:
+      react: '*'
+      react-dom: '*'
+    dependencies:
+      css-tree: 1.1.3
+      csstype: 3.0.8
+      fastest-stable-stringify: 2.0.2
+      inline-style-prefixer: 6.0.0
+      rtl-css-js: 1.14.1
+      sourcemap-codec: 1.4.8
+      stacktrace-js: 2.0.2
+      stylis: 4.0.10
+    dev: false
+
   /nano-css/5.3.4_react-dom@17.0.2+react@17.0.2:
     resolution: {integrity: sha512-wfcviJB6NOxDIDfr7RFn/GlaN7I/Bhe4d39ZRCJ3xvZX60LVe2qZ+rDqM49nm4YT81gAjzS+ZklhKP/Gnfnubg==}
     peerDependencies:
@@ -16153,6 +16210,23 @@ packages:
     resolution: {integrity: sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==}
     dev: false
 
+  /react-query/3.19.6:
+    resolution: {integrity: sha512-21WfvDgBXvPzJtG4gAxi0h6ipOUNPKZGR3vZJ17m/kHGbj9g6rPblc0lG4sY5oVLpM05LP+BdDt/IYfy0IIKmg==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0
+      react-dom: '*'
+      react-native: '*'
+    peerDependenciesMeta:
+      react-dom:
+        optional: true
+      react-native:
+        optional: true
+    dependencies:
+      '@babel/runtime': 7.15.3
+      broadcast-channel: 3.7.0
+      match-sorter: 6.3.0
+    dev: false
+
   /react-query/3.19.6_react-dom@17.0.2+react@17.0.2:
     resolution: {integrity: sha512-21WfvDgBXvPzJtG4gAxi0h6ipOUNPKZGR3vZJ17m/kHGbj9g6rPblc0lG4sY5oVLpM05LP+BdDt/IYfy0IIKmg==}
     peerDependencies:
@@ -16299,6 +16373,15 @@ packages:
       react: 17.0.2
     dev: false
 
+  /react-toastify/7.0.4:
+    resolution: {integrity: sha512-Rol7+Cn39hZp5hQ/k6CbMNE2CKYV9E5OQdC/hBLtIQU2xz7DdAm7xil4NITQTHR6zEbE5RVFbpgSwTD7xRGLeQ==}
+    peerDependencies:
+      react: '>=16'
+      react-dom: '>=16'
+    dependencies:
+      clsx: 1.1.1
+    dev: false
+
   /react-toastify/7.0.4_react-dom@17.0.2+react@17.0.2:
     resolution: {integrity: sha512-Rol7+Cn39hZp5hQ/k6CbMNE2CKYV9E5OQdC/hBLtIQU2xz7DdAm7xil4NITQTHR6zEbE5RVFbpgSwTD7xRGLeQ==}
     peerDependencies:
@@ -16317,6 +16400,37 @@ packages:
       tslib: '*'
     dependencies:
       react: 17.0.2
+      tslib: 2.3.1
+    dev: false
+
+  /react-universal-interface/0.6.2_tslib@2.3.1:
+    resolution: {integrity: sha512-dg8yXdcQmvgR13RIlZbTRQOoUrDciFVoSBZILwjE2LFISxZZ8loVJKAkuzswl5js8BHda79bIb2b84ehU8IjXw==}
+    peerDependencies:
+      react: '*'
+      tslib: '*'
+    dependencies:
+      tslib: 2.3.1
+    dev: false
+
+  /react-use/17.2.4:
+    resolution: {integrity: sha512-vQGpsAM0F5UIlshw5UI8ULGPS4yn5rm7/qvn3T1Gnkrz7YRMEEMh+ynKcmRloOyiIeLvKWiQjMiwRGtdbgs5qQ==}
+    peerDependencies:
+      react: ^16.8.0  || ^17.0.0
+      react-dom: ^16.8.0  || ^17.0.0
+    dependencies:
+      '@types/js-cookie': 2.2.7
+      '@xobotyi/scrollbar-width': 1.9.5
+      copy-to-clipboard: 3.3.1
+      fast-deep-equal: 3.1.3
+      fast-shallow-equal: 1.0.0
+      js-cookie: 2.2.1
+      nano-css: 5.3.4
+      react-universal-interface: 0.6.2_tslib@2.3.1
+      resize-observer-polyfill: 1.5.1
+      screenfull: 5.1.0
+      set-harmonic-interval: 1.0.1
+      throttle-debounce: 3.0.1
+      ts-easing: 0.2.0
       tslib: 2.3.1
     dev: false
 

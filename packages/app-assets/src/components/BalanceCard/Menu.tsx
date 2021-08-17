@@ -1,11 +1,10 @@
 import { BridgeModal } from '@phala/react-components'
-import { navigate } from 'gatsby'
 import { forwardRef, useState } from 'react'
 import { down, up } from 'styled-breakpoints'
 import styled from 'styled-components'
-import ActionArrow from '../../../../icons/action_arrow.svg'
-import ClaimModal from '../../../ClaimModal'
-import ConvertModal from '../../../ConvertModal'
+import ClaimModal from '../ClaimModal'
+import ConvertModal from '../ConvertModal'
+import { ActionArrowIcon } from '../Icons/ActionArrowIcon'
 import TransferModal from './TransferModal'
 
 const MenuWrap = styled.div<{ active: boolean }>`
@@ -130,7 +129,9 @@ const Menu = forwardRef<HTMLDivElement, Props>((props, ref) => {
           )}
           {!disableBridge && (
             // TODO: specify bridge target in url query
-            <Button onClick={() => navigate('/')} active={active}>
+            <Button
+              onClick={() => (window.location.href = '/')}
+              active={active}>
               <span>Bridge</span>
               <ButtonBottomBorder active={active}></ButtonBottomBorder>
             </Button>
@@ -155,7 +156,7 @@ const Menu = forwardRef<HTMLDivElement, Props>((props, ref) => {
       <MobileActions>
         {!disableClaim && (
           <MobileAction onClick={() => setClaimModalVisible(true)}>
-            Claim<ActionArrow></ActionArrow>
+            Claim<ActionArrowIcon></ActionArrowIcon>
           </MobileAction>
         )}
       </MobileActions>
