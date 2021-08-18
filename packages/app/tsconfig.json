@@ -14,7 +14,7 @@
   "references": [
     { "path": "../app-config" },
     { "path": "../app-types" },
-    { "path": "../app-asserts" },
+    { "path": "../app-assets" },
     { "path": "../app-bridge" },
     { "path": "../utils" },
     { "path": "../react-libs" },
