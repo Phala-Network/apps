@@ -26,6 +26,6 @@
     "lint": "type-coverage",
     "codegen": "gulp codegen",
     "build": "tsc",
-    "prepublish": "gulp prepublish"
+    "prepublish": "pnpm run codegen"
   }
 }
