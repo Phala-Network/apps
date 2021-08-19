@@ -189,6 +189,8 @@ importers:
       '@phala/react-components': workspace:^0.0.1
       '@phala/react-hooks': workspace:^0.0.1
       '@phala/utils': workspace:^0.0.1
+      graphql: ^15.5.1
+      graphql-request: ^3.5.0
       styled-breakpoints: ^10.0.1
     dependencies:
       '@phala/app-store': link:../app-store
@@ -196,6 +198,8 @@ importers:
       '@phala/react-components': link:../react-components
       '@phala/react-hooks': link:../react-hooks
       '@phala/utils': link:../utils
+      graphql: 15.5.1
+      graphql-request: 3.5.0_graphql@15.5.1
       styled-breakpoints: 10.0.1
 
   packages/app-config:
@@ -10658,6 +10662,17 @@ packages:
     dependencies:
       express: 4.17.1
       graphql-playground-html: 1.6.29
+    dev: false
+
+  /graphql-request/3.5.0_graphql@15.5.1:
+    resolution: {integrity: sha512-Io89QpfU4rqiMbqM/KwMBzKaDLOppi8FU8sEccCE4JqCgz95W9Q8bvxQ4NfPALLSMvg9nafgg8AkYRmgKSlukA==}
+    peerDependencies:
+      graphql: 14.x || 15.x
+    dependencies:
+      cross-fetch: 3.1.4
+      extract-files: 9.0.0
+      form-data: 3.0.1
+      graphql: 15.5.1
     dev: false
 
   /graphql-subscriptions/1.2.1_graphql@15.5.1:
