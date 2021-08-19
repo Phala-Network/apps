@@ -20,8 +20,6 @@
     "@phala/react-components": "workspace:^0.0.1",
     "@phala/react-hooks": "workspace:^0.0.1",
     "@phala/utils": "workspace:^0.0.1",
-    "graphql": "^15.5.1",
-    "graphql-request": "^3.5.0",
     "styled-breakpoints": "^10.0.1"
   }
 }
