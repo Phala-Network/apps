@@ -1,0 +1,11 @@
+query depositRecordsByDepositor($depositor: Bytes, $first: Int, $skip: Int) {
+    depositRecords(where: { depositor: $depositor }, orderBy: nonce, orderDirection: desc, first: $first, skip: $skip) {
+        amount
+        depositor
+        destinationChainId
+        destinationRecipient
+        nonce
+        resourceId
+        transaction
+    }
+}

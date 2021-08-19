@@ -1,0 +1,68 @@
+scalar BigInt @String
+scalar Bytes @String
+
+type DepositRecord @entity {
+    id: ID!
+    transaction: Bytes!
+
+    amount: BigInt!
+    depositor: Bytes!
+    destinationChainId: Int!
+    destinationRecipient: Bytes!
+    nonce: BigInt!
+    resourceId: Bytes!
+}
+
+enum ProposalStatus {
+    Inactive
+    Active
+    Passed
+    Executed
+    Cancelled
+}
+
+type Proposal @entity {
+    id: ID!
+
+    depositNonce: BigInt!
+    executedAt: Bytes
+    originChainId: Int!
+    resourceId: Bytes!
+    status: ProposalStatus!
+}
+
+input DepositRecord_filter {
+    depositor: Bytes
+    destinationChainId: Int
+    nonce: BigInt
+}
+
+enum DepositRecord_orderBy {
+    id
+    transaction
+    amount
+    depositor
+    destinationChainId
+    destinationRecipient
+    nonce
+    resourceId
+}
+
+enum OrderDirection {
+    asc
+    desc
+}
+
+type RootQuery {
+    depositRecords(
+        first: Int
+        orderBy: DepositRecord_orderBy
+        orderDirection: OrderDirection
+        skip: Int
+        where: DepositRecord_filter
+    ): [DepositRecord!]!
+}
+
+schema {
+    query: RootQuery
+}

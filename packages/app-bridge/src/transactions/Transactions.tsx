@@ -1,6 +1,7 @@
 import { useTransactionsInfoAtom } from '@phala/app-store'
 import { Backdrop } from '@phala/react-components'
 import { useClickAway } from '@phala/react-hooks'
+import { useEthereumGraphQL } from '@phala/react-libs'
 import React, { useRef, useState } from 'react'
 import { down } from 'styled-breakpoints'
 import styled from 'styled-components'
@@ -42,6 +43,9 @@ const Transactions: React.FC = () => {
   const [active, setActive] = useState(false)
   const rootRef = useRef(null)
   const [transactionsInfo, setTransactionsInfo] = useTransactionsInfoAtom()
+  const { client } = useEthereumGraphQL()
+
+  console.log('client', client)
 
   useClickAway(rootRef, () => {
     setActive(false)

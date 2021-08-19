@@ -1,0 +1,15 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "jsx": "preserve",
+    "rootDir": ".",
+    "outDir": "dist",
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "esModuleInterop": true,
+    "module": "commonjs"
+  },
+  "exclude": ["dist/**/*"],
+  "include": ["ethereum/**/*.ts", "substrate/**/*.ts"]
+}

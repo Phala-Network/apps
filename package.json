@@ -9,7 +9,8 @@
     "develop": "pnpm run build:deps && run-p develop:deps develop:app",
     "develop:deps": "pnpm --parallel --filter ./packages  --filter !./packages/app run develop",
     "develop:app": "cd ./packages/app && pnpm run develop",
-    "preinstall": "npx only-allow pnpm"
+    "preinstall": "npx only-allow pnpm",
+    "prepublish": "pnpm run build:deps"
   },
   "repository": {
     "type": "git",
