@@ -27,7 +27,7 @@ const WrapApp: React.FC = ({ children }) => {
       ethereumGraphEndpoint={ethereums['1']?.graph.endpoint || ''}>
       <ThemeProvider theme={theme}>
         <MobileToastContextProvider>
-          <QueryClientProvider contextSharing={true} k client={client.current}>
+          <QueryClientProvider contextSharing={true} client={client.current}>
             <AppStoreProvider>{children}</AppStoreProvider>
           </QueryClientProvider>
         </MobileToastContextProvider>
