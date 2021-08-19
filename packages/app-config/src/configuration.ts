@@ -25,6 +25,10 @@ export interface EthereumNetworkOptions {
    * Configured remote chain Ids
    */
   peerChainIds: Record<number | string, number>
+
+  graph: {
+    endpoint: string
+  }
 }
 
 export type EthereumNetworks = Record<number, EthereumNetworkOptions>

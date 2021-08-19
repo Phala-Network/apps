@@ -18,6 +18,9 @@ export const ethereums: Record<number, EthereumNetworkOptions> = {
     peerChainIds: {
       'poc4-dev': 1,
     },
+    graph: {
+      endpoint: 'https://graphs-api.phala.network/subgraphs/name/chainbridge',
+    },
   },
   1: {
     bridge: '0xC84456ecA286194A201F844993C220150Cf22C63',
@@ -27,6 +30,9 @@ export const ethereums: Record<number, EthereumNetworkOptions> = {
       '0x00000000000000000000000000000063a7e2be78898ba83824b0c0cc8dfb6001',
     peerChainIds: {
       khala: 1,
+    },
+    graph: {
+      endpoint: 'https://graphs-api.phala.network/subgraphs/name/chainbridge',
     },
   },
 }
