@@ -25,7 +25,7 @@
     "test": "tsc --noEmit",
     "lint": "type-coverage",
     "codegen": "gulp codegen",
-    "build": "tsc --build --clean",
+    "build": "tsc --build",
     "prepublish": "pnpm run codegen"
   }
 }

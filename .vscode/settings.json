@@ -1,5 +1,14 @@
 {
   "typescript.preferences.importModuleSpecifierEnding": "minimal",
   "typescript.preferences.importModuleSpecifier": "project-relative",
-  "cSpell.words": ["ethereums", "pnpm", "preinstall", "styletron"]
+  "cSpell.words": [
+    "chainbridge",
+    "codegen",
+    "ethereums",
+    "pnpm",
+    "preinstall",
+    "styletron",
+    "typedefs",
+    "uuidv"
+  ]
 }

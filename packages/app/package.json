@@ -67,7 +67,6 @@
     "react-query": "^3.19.6",
     "react-scripts": "4.0.3",
     "react-toastify": "^7.0.4",
-    "react-use": "^17.2.4",
     "styled-breakpoints": "^10.0.1",
     "styled-components": "^5.3.0",
     "svg-react-loader": "^0.4.6",

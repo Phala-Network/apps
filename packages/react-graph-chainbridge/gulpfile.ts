@@ -6,9 +6,9 @@ import { resolve } from 'path'
 export const codegen = async (): Promise<void> => {
   await generate({
     generates: {
-      './ethereum/interfaces/graph.ts': {
-        documents: resolve(__dirname, 'ethereum', 'documents.graphql'),
-        schema: resolve(__dirname, 'ethereum', 'schema.graphql'),
+      './src/ethereum/interfaces/index.ts': {
+        documents: resolve(__dirname, 'src/ethereum', 'documents.graphql'),
+        schema: resolve(__dirname, 'src/ethereum', 'schema.graphql'),
         config: {
           scalars: {
             BigInt: 'string',
@@ -22,9 +22,9 @@ export const codegen = async (): Promise<void> => {
           'typescript-graphql-request',
         ],
       },
-      './substrate/interfaces/graph.ts': {
-        documents: resolve(__dirname, 'substrate', 'documents.graphql'),
-        schema: resolve(__dirname, 'substrate', 'schema.graphql'),
+      './src/substrate/interfaces/index.ts': {
+        documents: resolve(__dirname, 'src/substrate', 'documents.graphql'),
+        schema: resolve(__dirname, 'src/substrate', 'schema.graphql'),
         config: {
           scalars: {
             BigFloat: 'string',
