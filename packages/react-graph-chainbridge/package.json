@@ -4,17 +4,20 @@
   "dependencies": {
     "graphql": "^15.5.1",
     "graphql-request": "^3.5.0",
-    "graphql-tag": "^2.12.5",
+    "graphql-tag": "^2.12.5"
+  },
+  "peerDependencies": {
     "react-query": "^3.19.0"
   },
   "devDependencies": {
-    "@types/gulp": "^4.0.9",
     "@graphql-codegen/cli": "^2.0.1",
     "@graphql-codegen/typescript": "^2.0.0",
     "@graphql-codegen/typescript-graphql-request": "^4.0.0",
     "@graphql-codegen/typescript-operations": "^2.0.1",
+    "@types/gulp": "^4.0.9",
     "execa": "^5.1.1",
     "gulp": "^4.0.2",
+    "react-query": "^3.19.6",
     "ts-node": "^10.2.1"
   },
   "main": "dist/index.js",

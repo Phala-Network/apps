@@ -1,5 +1,6 @@
 import { useTransactionsInfoAtom } from '@phala/app-store'
 import { Backdrop } from '@phala/react-components'
+import { useDepositRecordsByDepositorQuery } from '@phala/react-graph-chainbridge'
 import { useClickAway } from '@phala/react-hooks'
 import { useEthereumGraphQL } from '@phala/react-libs'
 import React, { useRef, useState } from 'react'
@@ -45,14 +46,14 @@ const Transactions: React.FC = () => {
   const [transactionsInfo, setTransactionsInfo] = useTransactionsInfoAtom()
   const { client } = useEthereumGraphQL()
 
-  // const { data, error } = useDepositRecordsByDepositorQuery(
-  //   depositor,
-  //   10,
-  //   0,
-  //   client
-  // )
+  const result = useDepositRecordsByDepositorQuery(
+    '0x775946638c9341a48ccf65e46b73367d0aba2616',
+    10,
+    0,
+    client
+  )?.then(console.log)
 
-  console.log('client', client)
+  console.log('client', client, result)
 
   useClickAway(rootRef, () => {
     setActive(false)
