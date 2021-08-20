@@ -6,13 +6,12 @@ import { decimalToBalance } from '@phala/react-libs/esm/polkadot/utils/balances'
 import { ExtrinsicStatus, Hash } from '@polkadot/types/interfaces'
 import { Decimal } from 'decimal.js'
 import { getAddress } from 'ethers/lib/utils'
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import { SubmitStepProps } from '.'
 import { Alert, Button, ModalAction, ModalActions, Spacer } from '../..'
 import { StepProps } from '../BridgeProcess'
 import useTransactionInfo from '../hooks/useTransactionInfo'
 import BaseInfo from './BaseInfo'
-import Progress from './Progress'
 
 type Props = SubmitStepProps & StepProps
 
@@ -30,37 +29,6 @@ const SubmitStepToEthereum: React.FC<Props> = (props) => {
   const [extrinsicStatus, setExtrinsicStatus] = useState<ExtrinsicStatus[]>([])
   const [progressIndex, setProgressIndex] = useState(-1)
   const { transactionInfo } = useTransactionInfo(data)
-  const [progress, setProgress] = useState<{ status: string; text: string }[]>(
-    []
-  )
-
-  useEffect(() => {
-    const p = [
-      {
-        text: 'Transaction Send',
-        status: 'success',
-      },
-      {
-        text: 'Ethereum Confirmed',
-        status: 'success',
-      },
-      {
-        text: 'Relayer Confirmed',
-        status: 'none',
-      },
-      {
-        text: 'Khala Confirmed',
-        status: 'none',
-      },
-    ].map((item, index) => {
-      return {
-        ...item,
-        status: index <= progressIndex ? 'success' : 'none',
-      }
-    })
-
-    setProgress(p)
-  }, [progressIndex])
 
   const amount = useMemo(() => {
     if (!amountFromPrevStep || !api || !decimals) return
@@ -123,8 +91,6 @@ const SubmitStepToEthereum: React.FC<Props> = (props) => {
       <Alert>
         {progressIndex === -1 &&
           'Please be patient as the transaction may take a few minutes. You can follow each step of the transaction here once you confirm it!'}
-
-        {progressIndex >= 0 && <Progress data={progress}></Progress>}
       </Alert>
 
       {submittedHash && (

@@ -1,10 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 
-type Props = {
-  data: any[]
-}
-
 const Root = styled.div`
   padding-left: 30px;
   display: grid;
@@ -28,33 +24,37 @@ const ProgressItem = styled.div`
 const DATA = [
   {
     text: 'Transaction Send',
-    status: 'none',
   },
   {
     text: 'Ethereum Confirmed',
-    status: 'none',
   },
   {
     text: 'Relayer Confirmed',
-    status: 'none',
   },
   {
     text: 'Khala Confirmed',
-    status: 'none',
   },
 ]
 
-const Progress: React.FC<Props> = (props) => {
-  const data = props.data || DATA
+export interface ProgressProps {
+  data: {
+    text: string
+  }[]
+  progressIndex: number
+}
+
+const Progress: React.FC<ProgressProps> = (props) => {
+  const { data, progressIndex = -1 } = props
+  const items = data || DATA
 
   return (
     <Root>
-      {data.map((item) => (
+      {items.map((item, index) => (
         <ProgressItem key={item.text}>
           <svg
             style={{
               margin: '0 8px',
-              opacity: item.status === 'success' ? 1 : 0,
+              opacity: progressIndex >= index ? 1 : 0,
             }}
             width="10"
             height="8"
