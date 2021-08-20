@@ -1,4 +1,5 @@
 import { TransactionRecord } from '@phala/app-types'
+import { ResultStepModal } from '@phala/react-components'
 import { useProposalEventsByDepositNonceQuery } from '@phala/react-graph-chainbridge'
 import {
   balanceToDecimal,
@@ -47,13 +48,12 @@ const TransactionsListItem: React.FC<TransactionsListItemProps> = (props) => {
   const { amount, destinationRecipient, nonce, resourceId, depositor } = record
   const { client } = useSubstrateGraphQL()
   const { multiplier } = useDecimalMultiplier()
-
   const { data: events } = useProposalEventsByDepositNonceQuery(
     0,
     nonce,
     client
   )
-  const [, setModalVisible] = useState(false)
+  const [modalVisible, setModalVisible] = useState(false)
   const parsedNonce = parseInt(nonce)
 
   const recipient = useMemo(() => {
@@ -72,10 +72,6 @@ const TransactionsListItem: React.FC<TransactionsListItemProps> = (props) => {
     resourceId,
   })
 
-  // const onSubmit = () => {
-  //   setModalVisible(false)
-  // }
-
   const status = useMemo(() => {
     if (events?.execution !== undefined) {
       return 'executed'
@@ -83,6 +79,8 @@ const TransactionsListItem: React.FC<TransactionsListItemProps> = (props) => {
 
     return 'pending'
   }, [events, proposal])
+
+  const hash = events?.approval?.approvalExtrinsic
 
   const convertedAmount = useMemo(
     () =>
@@ -92,6 +90,12 @@ const TransactionsListItem: React.FC<TransactionsListItemProps> = (props) => {
   )
 
   if (!record) return null
+
+  const onSubmit = () => {
+    if (hash) {
+      setModalVisible(false)
+    }
+  }
 
   return (
     <>
@@ -115,11 +119,14 @@ const TransactionsListItem: React.FC<TransactionsListItemProps> = (props) => {
         <Line />
       </ItemRoot>
 
-      {/* <ResultStepModal
-        transactionInfo={{}}
+      <ResultStepModal
+        transactionInfo={{
+          ...record,
+          hash,
+        }}
         onClose={onSubmit}
         visible={modalVisible}
-      /> */}
+      />
     </>
   )
 }

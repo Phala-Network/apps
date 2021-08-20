@@ -23,4 +23,5 @@ export type TransactionRecord = {
   nonce: string
   resourceId: string
   transaction: string
+  hash?: string
 }
