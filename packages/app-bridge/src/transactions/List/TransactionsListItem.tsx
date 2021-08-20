@@ -2,7 +2,6 @@ import { TransactionRecord } from '@phala/app-types'
 import { useProposalEventsByDepositNonceQuery } from '@phala/react-graph-chainbridge'
 import {
   balanceToDecimal,
-  useApiPromise,
   useBridgeProposalQuery,
   useDecimalMultiplier,
   useSubstrateGraphQL,
@@ -55,12 +54,6 @@ const TransactionsListItem: React.FC<TransactionsListItemProps> = (props) => {
     client
   )
   const [, setModalVisible] = useState(false)
-  const { api } = useApiPromise()
-
-  console.log('api', api)
-
-  console.log('ethereum?.chainBridge.chainId, nonce, client', 0, nonce, client)
-
   const parsedNonce = parseInt(nonce)
 
   const recipient = useMemo(() => {
@@ -71,8 +64,6 @@ const TransactionsListItem: React.FC<TransactionsListItemProps> = (props) => {
     }
   }, [destinationRecipient])
 
-  console.log('recipient', recipient, events)
-
   const { data: proposal } = useBridgeProposalQuery({
     amount: new BN(amount),
     depositNonce: parsedNonce,
@@ -80,8 +71,6 @@ const TransactionsListItem: React.FC<TransactionsListItemProps> = (props) => {
     recipient,
     resourceId,
   })
-
-  console.log('proposal', proposal)
 
   // const onSubmit = () => {
   //   setModalVisible(false)
