@@ -38,7 +38,6 @@ export const useBridgeProposalQuery = ({
       api === undefined,
     ],
     async () => {
-      console.log('check', amount, api, multiplier, originChainId)
       if (
         amount === undefined ||
         api === undefined ||

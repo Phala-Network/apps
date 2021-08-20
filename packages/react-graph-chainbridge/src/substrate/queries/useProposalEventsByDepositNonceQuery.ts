@@ -45,7 +45,6 @@ export const useProposalEventsByDepositNonceQuery = (
         originChainId,
       })
 
-      console.log('result;;l,', result)
       return {
         approval: result?.chainBridgeProposalApprovals?.nodes?.[0],
         execution: result?.chainBridgeProposalExecutions?.nodes?.[0],
