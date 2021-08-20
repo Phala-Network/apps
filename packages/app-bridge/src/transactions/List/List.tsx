@@ -1,12 +1,11 @@
+import { TransactionRecords } from '@phala/app-types'
 import { down } from 'styled-breakpoints'
 import styled from 'styled-components'
 import scrollbar from './scrollbar'
-import TransactionsListItem, {
-  TransactionsListItemProps,
-} from './TransactionsListItem'
+import TransactionsListItem from './TransactionsListItem'
 
 type Props = {
-  transactions: TransactionsListItemProps[]
+  records: TransactionRecords
 }
 
 const TransactionsListRoot = styled.div`
@@ -30,18 +29,12 @@ const TransactionsListRoot = styled.div`
 `
 
 const TransactionsList: React.FC<Props> = (props) => {
-  const { transactions } = props
+  const { records } = props
 
   return (
     <TransactionsListRoot>
-      {transactions.map(({ transactionInfo, status }, index) => {
-        return (
-          <TransactionsListItem
-            status={status}
-            transactionInfo={transactionInfo}
-            key={index}
-          />
-        )
+      {records.map((record, index) => {
+        return <TransactionsListItem record={record} key={index} />
       })}
     </TransactionsListRoot>
   )

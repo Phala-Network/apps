@@ -8,5 +8,14 @@
     "sourceMap": true,
     "esModuleInterop": false
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*"],
+  "references": [
+    { "path": "../app-config" },
+    { "path": "../app-types" },
+    { "path": "../app-assets" },
+    { "path": "../utils" },
+    { "path": "../react-libs" },
+    { "path": "../react-hooks" },
+    { "path": "../react-components" }
+  ]
 }

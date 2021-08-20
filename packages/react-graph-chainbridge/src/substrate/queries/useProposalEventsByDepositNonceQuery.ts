@@ -34,10 +34,18 @@ export const useProposalEventsByDepositNonceQuery = (
         return
       }
 
+      console.log(
+        '        depositNonce, originChainId',
+        depositNonce,
+        originChainId
+      )
+
       const result = await sdk?.getChainBridgeProposalEventsByDepositNonce({
         depositNonce,
         originChainId,
       })
+
+      console.log('result;;l,', result)
       return {
         approval: result?.chainBridgeProposalApprovals?.nodes?.[0],
         execution: result?.chainBridgeProposalExecutions?.nodes?.[0],

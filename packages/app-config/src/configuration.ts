@@ -48,6 +48,10 @@ export interface SubstrateNetworkOptions {
    * Type definitions of connected Substrate chain
    */
   typedefs: RegistryTypes
+
+  graph?: {
+    endpoint: string
+  }
 }
 
 export type SubstrateNetwork = Record<string, SubstrateNetworkOptions>

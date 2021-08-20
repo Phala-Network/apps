@@ -1,12 +1,11 @@
-import { useTransactionsInfoAtom } from '@phala/app-store'
+import { TransactionRecords } from '@phala/app-types'
 import { Backdrop } from '@phala/react-components'
 import { useDepositRecordsByDepositorQuery } from '@phala/react-graph-chainbridge'
 import { useClickAway } from '@phala/react-hooks'
 import { useEthereumGraphQL } from '@phala/react-libs'
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { down } from 'styled-breakpoints'
 import styled from 'styled-components'
-import ClearButton from './ClearButton'
 import TransactionsHeader from './Header'
 import TransactionsList from './List/List'
 
@@ -43,25 +42,26 @@ const TransactionsRoot = styled.div`
 const Transactions: React.FC = () => {
   const [active, setActive] = useState(false)
   const rootRef = useRef(null)
-  const [transactionsInfo, setTransactionsInfo] = useTransactionsInfoAtom()
   const { client } = useEthereumGraphQL()
+  const [records, setRecords] = useState<TransactionRecords>([])
 
   const depositor = '0x775946638c9341a48ccf65e46b73367d0aba2616'
 
-  const { data, error } = useDepositRecordsByDepositorQuery(
-    depositor,
-    10,
-    0,
-    client
-  )
+  const { data } = useDepositRecordsByDepositorQuery(depositor, 10, 0, client)
 
-  console.log('client', client, data, error)
+  console.log('data', data)
+
+  useEffect(() => {
+    if (data?.depositRecords) {
+      setRecords(data?.depositRecords as TransactionRecords)
+    }
+  }, [data])
 
   useClickAway(rootRef, () => {
     setActive(false)
   })
 
-  if (transactionsInfo?.length === 0) {
+  if (records?.length === 0) {
     return null
   }
 
@@ -76,17 +76,10 @@ const Transactions: React.FC = () => {
 
         {active && (
           <>
-            <ClearButton onClick={() => setTransactionsInfo([])}>
+            {/* <ClearButton onClick={() => setTransactionsInfo([])}>
               Clear
-            </ClearButton>
-            <TransactionsList
-              transactions={transactionsInfo.map((transactionInfo) => {
-                return {
-                  transactionInfo,
-                  status: 'success',
-                }
-              })}
-            />
+            </ClearButton> */}
+            <TransactionsList records={records} />
           </>
         )}
       </TransactionsRoot>

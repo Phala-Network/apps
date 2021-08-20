@@ -50,4 +50,15 @@ export const substrates: Record<string, SubstrateNetworkOptions> = {
     },
     typedefs: khala,
   },
+  'khala-pc-test': {
+    // chainId: 1,
+    graph: {
+      endpoint: 'https://chainbridge-substrate-graph-testing.phala.works/',
+    },
+    peerChainIds: {
+      1: 0,
+    },
+    endpoint: 'wss://pc-test-2.phala.network/khala/ws',
+    typedefs: khalaDev,
+  },
 }

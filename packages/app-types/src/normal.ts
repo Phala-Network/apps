@@ -12,3 +12,15 @@ export type TransactionInfo = {
   to: TransactionInfoItem
   hash?: string
 }
+
+export type TransactionRecords = TransactionRecord[]
+
+export type TransactionRecord = {
+  amount: string
+  depositor?: string
+  destinationChainId?: number
+  destinationRecipient: string
+  nonce: string
+  resourceId: string
+  transaction: string
+}

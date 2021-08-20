@@ -23,6 +23,7 @@ const WrapApp: React.FC = ({ children }) => {
 
   return (
     <LibProvider
+      substrateGraphEndpoint="https://chainbridge-substrate-graph-testing.phala.works/"
       defaultNetwork={defaultNetwork}
       ethereumGraphEndpoint={ethereums['1']?.graph.endpoint || ''}>
       <ThemeProvider theme={theme}>
