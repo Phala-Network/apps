@@ -1,11 +1,12 @@
-import { TransactionRecord } from '@phala/app-types'
+import { TransactionInfo } from '@phala/app-types'
 import { isDev, isTest } from '@phala/utils'
 import React from 'react'
 import styled from 'styled-components'
 import { Alert, Spacer } from '../..'
+import BaseInfo from '../../bridge/SubmitStep/BaseInfo'
 
 type Props = {
-  transactionInfo: TransactionRecord
+  transactionInfo: TransactionInfo
 }
 
 const Link = styled.a`
@@ -26,7 +27,7 @@ const ResultStepToKhala: React.FC<Props> = (props) => {
 
   return (
     <>
-      {/* <BaseInfo layout={'block'} data={transactionInfo} /> */}
+      <BaseInfo layout={'block'} data={transactionInfo} />
 
       <Spacer></Spacer>
 

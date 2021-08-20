@@ -82,12 +82,13 @@ const TransactionsListItem: React.FC<TransactionsListItemProps> = (props) => {
 
   const hash = events?.approval?.approvalExtrinsic
 
-  const convertedAmount = useMemo(
-    () =>
-      multiplier !== undefined &&
-      balanceToDecimal(new BN(amount), multiplier).toString(),
-    [amount, multiplier]
-  )
+  const convertedAmount = useMemo(() => {
+    if (multiplier !== undefined) {
+      return balanceToDecimal(new BN(amount), multiplier).toString()
+    } else {
+      return '0'
+    }
+  }, [amount, multiplier])
 
   if (!record) return null
 
@@ -103,14 +104,14 @@ const TransactionsListItem: React.FC<TransactionsListItemProps> = (props) => {
         <Status status={status} />
 
         <ItemInfoBlock
-          network="eth"
+          network="Ethereum"
           amount={convertedAmount || ''}
           address={depositor || ''}></ItemInfoBlock>
 
         <ArrowIcon />
 
         <ItemInfoBlock
-          network="pol"
+          network="Khala"
           amount={convertedAmount || ''}
           address={destinationRecipient}></ItemInfoBlock>
 
@@ -121,7 +122,18 @@ const TransactionsListItem: React.FC<TransactionsListItemProps> = (props) => {
 
       <ResultStepModal
         transactionInfo={{
-          ...record,
+          from: {
+            address: depositor || '',
+            amount: parseFloat(convertedAmount),
+            type: 'PHA',
+            network: 'Ethereum',
+          },
+          to: {
+            address: destinationRecipient,
+            amount: parseFloat(convertedAmount),
+            type: 'PHA',
+            network: 'Khala',
+          },
           hash,
         }}
         onClose={onSubmit}
