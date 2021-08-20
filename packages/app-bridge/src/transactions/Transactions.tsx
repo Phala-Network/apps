@@ -46,14 +46,16 @@ const Transactions: React.FC = () => {
   const [transactionsInfo, setTransactionsInfo] = useTransactionsInfoAtom()
   const { client } = useEthereumGraphQL()
 
-  const result = useDepositRecordsByDepositorQuery(
-    '0x775946638c9341a48ccf65e46b73367d0aba2616',
+  const depositor = '0x775946638c9341a48ccf65e46b73367d0aba2616'
+
+  const { data, error } = useDepositRecordsByDepositorQuery(
+    depositor,
     10,
     0,
     client
-  )?.then(console.log)
+  )
 
-  console.log('client', client, result)
+  console.log('client', client, data, error)
 
   useClickAway(rootRef, () => {
     setActive(false)

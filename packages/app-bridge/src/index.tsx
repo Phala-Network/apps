@@ -6,10 +6,12 @@ import {
 } from '@phala/react-components'
 import React, { useState } from 'react'
 import { Helmet } from 'react-helmet'
+import { QueryClient, QueryClientProvider } from 'react-query'
 import { down } from 'styled-breakpoints'
 import styled from 'styled-components'
 import Transactions from './transactions/Transactions'
 
+const queryClient = new QueryClient()
 const RightContent = styled.div`
   display: grid;
   grid-gap: 30px;
@@ -40,21 +42,23 @@ const BridgePage: React.FC = () => {
       <Helmet>
         <title>Phala App</title>
       </Helmet>
-      <RightContent>
-        {/* TODO: need a message api */}
-        {/* <Announcement></Announcement> */}
-        <WhiteCard>
-          <InputDataStep layout={'flex'} onNext={showSubmitModal} />
+      <QueryClientProvider contextSharing={true} client={queryClient}>
+        <RightContent>
+          {/* TODO: need a message api */}
+          {/* <Announcement></Announcement> */}
+          <WhiteCard>
+            <InputDataStep layout={'flex'} onNext={showSubmitModal} />
 
-          <SubmitStepModal
-            setModalVisible={setModalVisible}
-            visible={modalVisible}
-            submitData={submitData}
-          />
-        </WhiteCard>
+            <SubmitStepModal
+              setModalVisible={setModalVisible}
+              visible={modalVisible}
+              submitData={submitData}
+            />
+          </WhiteCard>
 
-        <Transactions />
-      </RightContent>
+          <Transactions />
+        </RightContent>
+      </QueryClientProvider>
     </>
   )
 }

@@ -189,6 +189,7 @@ importers:
       '@phala/react-hooks': workspace:^0.0.1
       '@phala/react-libs': workspace:^0.0.1
       '@phala/utils': workspace:^0.0.1
+      react-query: ^3.19.6
       styled-breakpoints: ^10.0.1
     dependencies:
       '@phala/app-store': link:../app-store
@@ -199,6 +200,8 @@ importers:
       '@phala/react-libs': link:../react-libs
       '@phala/utils': link:../utils
       styled-breakpoints: 10.0.1
+    devDependencies:
+      react-query: 3.19.6
 
   packages/app-config:
     specifiers:

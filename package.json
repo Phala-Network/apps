@@ -6,7 +6,7 @@
     "build": "pnpm run build:deps && pnpm run build:app",
     "build:deps": "pnpm recursive --filter ./packages --filter !./packages/app run build",
     "build:app": "cd ./packages/app && pnpm run build",
-    "develop": "pnpm run build:deps && run-p develop:deps develop:app",
+    "develop": "pnpm run build:deps && run-p develop:*",
     "develop:deps": "pnpm --parallel --filter ./packages  --filter !./packages/app run develop",
     "develop:app": "cd ./packages/app && pnpm run develop",
     "preinstall": "npx only-allow pnpm"
