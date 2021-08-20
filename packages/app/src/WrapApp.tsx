@@ -1,4 +1,3 @@
-import { ethereums } from '@phala/app-config'
 import { Provider as AppStoreProvider } from '@phala/app-store'
 import { MobileToastContextProvider } from '@phala/react-components'
 import { Provider as LibProvider } from '@phala/react-libs'
@@ -24,8 +23,10 @@ const WrapApp: React.FC = ({ children }) => {
   return (
     <LibProvider
       substrateGraphEndpoint="https://chainbridge-substrate-graph-testing.phala.works/"
-      defaultNetwork={defaultNetwork}
-      ethereumGraphEndpoint={ethereums['1']?.graph.endpoint || ''}>
+      defaultNetwork={'khala'}
+      ethereumGraphEndpoint={
+        'https://graphs-api.phala.network/subgraphs/name/chainbridge'
+      }>
       <ThemeProvider theme={theme}>
         <MobileToastContextProvider>
           <QueryClientProvider contextSharing={true} client={client.current}>

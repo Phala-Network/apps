@@ -6,7 +6,7 @@ import {
   ReactElement,
   useContext,
   useEffect,
-  useState
+  useState,
 } from 'react'
 import { useNetworkContext } from './useSubstrateNetwork'
 
