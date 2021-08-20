@@ -1,8 +1,10 @@
 import { TransactionRecord } from '@phala/app-types'
 import { useProposalEventsByDepositNonceQuery } from '@phala/react-graph-chainbridge'
 import {
+  balanceToDecimal,
   useApiPromise,
   useBridgeProposalQuery,
+  useDecimalMultiplier,
   useSubstrateGraphQL,
 } from '@phala/react-libs'
 import { BN, hexToU8a } from '@polkadot/util'
@@ -10,6 +12,7 @@ import { encodeAddress } from '@polkadot/util-crypto'
 import React, { useMemo, useState } from 'react'
 import styled from 'styled-components'
 import ArrowIcon from './ArrowIcon'
+import ItemInfoBlock from './ItemInfoBlock'
 import JumpIcon from './JumpIcon'
 import Status from './Status'
 
@@ -42,8 +45,9 @@ const Line = styled.div`
 
 const TransactionsListItem: React.FC<TransactionsListItemProps> = (props) => {
   const { record } = props
-  const { amount, destinationRecipient, nonce, resourceId } = record
+  const { amount, destinationRecipient, nonce, resourceId, depositor } = record
   const { client } = useSubstrateGraphQL()
+  const { multiplier } = useDecimalMultiplier()
 
   const { data: events } = useProposalEventsByDepositNonceQuery(
     0,
@@ -83,6 +87,21 @@ const TransactionsListItem: React.FC<TransactionsListItemProps> = (props) => {
   //   setModalVisible(false)
   // }
 
+  const status = useMemo(() => {
+    if (events?.execution !== undefined) {
+      return 'executed'
+    }
+
+    return 'pending'
+  }, [events, proposal])
+
+  const convertedAmount = useMemo(
+    () =>
+      multiplier !== undefined &&
+      balanceToDecimal(new BN(amount), multiplier).toString(),
+    [amount, multiplier]
+  )
+
   if (!record) return null
 
   return (
@@ -90,11 +109,17 @@ const TransactionsListItem: React.FC<TransactionsListItemProps> = (props) => {
       <ItemRoot onClick={() => setModalVisible(true)}>
         <Status status={status} />
 
-        {/* <ItemInfoBlock {...transactionInfo.from}></ItemInfoBlock> */}
+        <ItemInfoBlock
+          network="eth"
+          amount={convertedAmount || ''}
+          address={depositor || ''}></ItemInfoBlock>
 
         <ArrowIcon />
 
-        {/* <ItemInfoBlock {...transactionInfo.to}></ItemInfoBlock> */}
+        <ItemInfoBlock
+          network="pol"
+          amount={convertedAmount || ''}
+          address={destinationRecipient}></ItemInfoBlock>
 
         <JumpIcon />
 

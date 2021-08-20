@@ -8,12 +8,10 @@ const TransactionStatusRoot = styled.div`
   justify-content: center;
   width: 41px;
   height: 41px;
-  /* TODO: just hide it */
-  opacity: 0;
 `
 
 type Props = {
-  status: string
+  status: 'pending' | 'executed'
 }
 
 const TransactionStatus: React.FC<Props> = (props) => {
@@ -37,7 +35,7 @@ const TransactionStatus: React.FC<Props> = (props) => {
         </svg>
       )}
 
-      {status === 'success' && (
+      {status === 'executed' && (
         <svg
           width="10"
           height="7"

@@ -1,9 +1,12 @@
-import { TransactionInfoItem } from '@phala/app-types'
 import { abridgeString } from '@phala/utils'
 import React from 'react'
 import styled from 'styled-components'
 
-export type ItemInfoBlockProps = TransactionInfoItem
+export type ItemInfoBlockProps = {
+  address: string
+  amount: string
+  network: string
+}
 
 const ItemInfoBlockRoot = styled.div`
   font-family: PT Mono;
@@ -33,7 +36,7 @@ const ItemInfoBlock: React.FC<ItemInfoBlockProps> = (props) => {
         <NetworkName>{network}</NetworkName>: {abridgeString(address)}
       </div>
       <div>
-        {amount?.toString()} <B>PHA</B>
+        {amount} <B>PHA</B>
       </div>
     </ItemInfoBlockRoot>
   )

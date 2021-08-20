@@ -2,7 +2,7 @@ import { TransactionRecords } from '@phala/app-types'
 import { Backdrop } from '@phala/react-components'
 import { useDepositRecordsByDepositorQuery } from '@phala/react-graph-chainbridge'
 import { useClickAway } from '@phala/react-hooks'
-import { useApiPromise, useEthereumGraphQL } from '@phala/react-libs'
+import { useEthereumGraphQL } from '@phala/react-libs'
 import React, { useEffect, useRef, useState } from 'react'
 import { down } from 'styled-breakpoints'
 import styled from 'styled-components'
@@ -44,18 +44,21 @@ const Transactions: React.FC = () => {
   const rootRef = useRef(null)
   const { client } = useEthereumGraphQL()
   const [records, setRecords] = useState<TransactionRecords>([])
-  const { api } = useApiPromise()
-  console.log('api', api)
-
+  // const depositor = '0x766d4b6fd707c45518eb49878142a88378a7443c'
   const depositor = '0x775946638c9341a48ccf65e46b73367d0aba2616'
 
   const { data } = useDepositRecordsByDepositorQuery(depositor, 10, 0, client)
 
-  console.log('data', client, data)
-
   useEffect(() => {
     if (data?.depositRecords) {
-      setRecords(data?.depositRecords as TransactionRecords)
+      const transactionRecords = data?.depositRecords.map((item) => {
+        return {
+          ...item,
+          depositor,
+        }
+      })
+
+      setRecords(transactionRecords)
     }
   }, [data])
 
