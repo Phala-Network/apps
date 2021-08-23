@@ -5,3 +5,16 @@
 ## Description
 
 [Github Link](https://github.com/Phala-Network/apps)
+
+## Development
+
+```
+pnpm install
+pnpm run develop
+```
+
+## Build
+
+```
+pnpm run build
+```
