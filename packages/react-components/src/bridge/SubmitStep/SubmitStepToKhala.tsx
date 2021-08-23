@@ -3,22 +3,16 @@ import { TransactionInfoItem } from '@phala/app-types'
 import { useErc20Deposit } from '@phala/react-libs/esm/ethereum/bridge/deposit'
 import { useErc20BalanceQuery } from '@phala/react-libs/esm/ethereum/queries/useErc20BalanceQuery'
 import { useTransactionReceiptQuery } from '@phala/react-libs/esm/ethereum/queries/useTransactionReceiptQuery'
-import { isDev, isTest } from '@phala/utils'
 import { u8aToHex } from '@polkadot/util'
 import { decodeAddress } from '@polkadot/util-crypto'
 import { ethers } from 'ethers'
 import React, { useEffect, useState } from 'react'
-import styled from 'styled-components'
 import { SubmitStepProps } from '.'
 import { Alert, Button, ModalAction, ModalActions, Spacer } from '../..'
 import { StepProps } from '../BridgeProcess'
+import { EthereumProgress } from '../EthereumProgress'
 import useTransactionInfo from '../hooks/useTransactionInfo'
 import BaseInfo from './BaseInfo'
-
-const Link = styled.a`
-  text-decoration: underline;
-  color: black;
-`
 
 type Props = SubmitStepProps & StepProps
 
@@ -40,16 +34,6 @@ const SubmitStepToKhala: React.FC<Props> = (props) => {
   const { isLoading: isReceiptLoading, data: receipt } =
     useTransactionReceiptQuery(currentTransactionInfo?.hash)
   const { refetch } = useErc20BalanceQuery(accountFrom)
-
-  let link = ''
-
-  if (currentTransactionInfo?.hash) {
-    if (isTest() || isDev()) {
-      link = `https://kovan.etherscan.io/tx/${currentTransactionInfo.hash}`
-    } else {
-      link = `https://etherscan.io/tx/${currentTransactionInfo.hash}`
-    }
-  }
 
   const submit = async () => {
     setSubmitting(true)
@@ -91,16 +75,11 @@ const SubmitStepToKhala: React.FC<Props> = (props) => {
 
       <Spacer></Spacer>
 
-      {link ? (
-        <Alert>
-          <div>
-            <Link href={link} target="_blank">
-              Ethereum transaction
-            </Link>{' '}
-            is broadcasting, please check your Khala’s PHA balance later. It may
-            take 2~10 minutes.
-          </div>
-        </Alert>
+      {currentTransactionInfo?.hash ? (
+        <EthereumProgress
+          transactionHash={currentTransactionInfo?.hash}
+          progressIndex={2}
+        />
       ) : (
         <Alert>
           Please be patient as the transaction may take a few minutes.

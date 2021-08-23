@@ -10,7 +10,6 @@ import React, { useMemo, useState } from 'react'
 import { SubmitStepProps } from '.'
 import { Alert, Button, ModalAction, ModalActions, Spacer } from '../..'
 import { StepProps } from '../BridgeProcess'
-import { EthereumProgress } from '../EthereumProgress'
 import useTransactionInfo from '../hooks/useTransactionInfo'
 import BaseInfo from './BaseInfo'
 
@@ -92,13 +91,6 @@ const SubmitStepToEthereum: React.FC<Props> = (props) => {
       <Alert>
         {progressIndex === -1 &&
           'Please be patient as the transaction may take a few minutes. You can follow each step of the transaction here once you confirm it!'}
-
-        {progressIndex >= 0 && (
-          <EthereumProgress
-            transactionHash={submittedHash?.toString()}
-            progressIndex={progressIndex}
-          />
-        )}
       </Alert>
 
       {submittedHash && (
