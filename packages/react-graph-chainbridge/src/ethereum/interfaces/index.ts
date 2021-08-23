@@ -31,6 +31,7 @@ export type DepositRecord = {
 };
 
 export type DepositRecord_Filter = {
+  transaction?: Maybe<Scalars['Bytes']>;
   depositor?: Maybe<Scalars['Bytes']>;
   destinationChainId?: Maybe<Scalars['Int']>;
   nonce?: Maybe<Scalars['BigInt']>;
@@ -93,6 +94,13 @@ export type DepositRecordsByDepositorQueryVariables = Exact<{
 
 export type DepositRecordsByDepositorQuery = { __typename?: 'RootQuery', depositRecords: Array<{ __typename?: 'DepositRecord', amount: string, depositor: string, destinationChainId: number, destinationRecipient: string, nonce: string, resourceId: string, transaction: string }> };
 
+export type GetDepositRecordByHashQueryVariables = Exact<{
+  hash?: Maybe<Scalars['Bytes']>;
+}>;
+
+
+export type GetDepositRecordByHashQuery = { __typename?: 'RootQuery', depositRecords: Array<{ __typename?: 'DepositRecord', transaction: string, amount: string, depositor: string, destinationChainId: number, destinationRecipient: string, nonce: string, resourceId: string }> };
+
 
 export const DepositRecordsByDepositorDocument = gql`
     query depositRecordsByDepositor($depositor: Bytes, $first: Int, $skip: Int) {
@@ -113,6 +121,19 @@ export const DepositRecordsByDepositorDocument = gql`
   }
 }
     `;
+export const GetDepositRecordByHashDocument = gql`
+    query getDepositRecordByHash($hash: Bytes) {
+  depositRecords(where: {transaction: $hash}) {
+    transaction
+    amount
+    depositor
+    destinationChainId
+    destinationRecipient
+    nonce
+    resourceId
+  }
+}
+    `;
 
 export type SdkFunctionWrapper = <T>(action: (requestHeaders?:Record<string, string>) => Promise<T>, operationName: string) => Promise<T>;
 
@@ -123,6 +144,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
   return {
     depositRecordsByDepositor(variables?: DepositRecordsByDepositorQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<DepositRecordsByDepositorQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<DepositRecordsByDepositorQuery>(DepositRecordsByDepositorDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'depositRecordsByDepositor');
+    },
+    getDepositRecordByHash(variables?: GetDepositRecordByHashQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GetDepositRecordByHashQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetDepositRecordByHashQuery>(GetDepositRecordByHashDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getDepositRecordByHash');
     }
   };
 }

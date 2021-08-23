@@ -1,23 +1,40 @@
-query getChainBridgeProposalEventsByDepositNonce($originChainId: Int!, $depositNonce: BigFloat!) {
-    chainBridgeProposalApprovals(
-        filter: { and: [{ depositNonce: { equalTo: $depositNonce }, originChainId: { equalTo: $originChainId } }] }
-    ) {
-        nodes {
-            depositNonce
-            originChainId
-            approvalBlockHeight
-            approvalExtrinsic
-            signer
+query getChainBridgeProposalEventsByDepositNonce(
+  $originChainId: Int!
+  $depositNonce: BigFloat!
+) {
+  chainBridgeProposalApprovals(
+    filter: {
+      and: [
+        {
+          depositNonce: { equalTo: $depositNonce }
+          originChainId: { equalTo: $originChainId }
         }
+      ]
     }
+  ) {
+    nodes {
+      depositNonce
+      originChainId
+      approvalBlockHeight
+      approvalExtrinsic
+      signer
+    }
+  }
 
-    chainBridgeProposalExecutions(
-        filter: { and: [{ depositNonce: { equalTo: $depositNonce }, originChainId: { equalTo: $originChainId } }] }
-    ) {
-        nodes {
-            depositNonce
-            originChainId
-            signer
+  chainBridgeProposalExecutions(
+    filter: {
+      and: [
+        {
+          depositNonce: { equalTo: $depositNonce }
+          originChainId: { equalTo: $originChainId }
         }
+      ]
     }
+  ) {
+    nodes {
+      depositNonce
+      originChainId
+      signer
+    }
+  }
 }
