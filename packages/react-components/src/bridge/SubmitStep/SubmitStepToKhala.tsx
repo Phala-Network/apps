@@ -31,8 +31,9 @@ const SubmitStepToKhala: React.FC<Props> = (props) => {
     from: TransactionInfoItem
     to: TransactionInfoItem
   }>()
+  const currentTransactionHash = currentTransactionInfo?.hash
   const { isLoading: isReceiptLoading, data: receipt } =
-    useTransactionReceiptQuery(currentTransactionInfo?.hash)
+    useTransactionReceiptQuery(currentTransactionHash)
   const { refetch } = useErc20BalanceQuery(accountFrom)
 
   const submit = async () => {
@@ -75,9 +76,9 @@ const SubmitStepToKhala: React.FC<Props> = (props) => {
 
       <Spacer></Spacer>
 
-      {currentTransactionInfo?.hash ? (
+      {currentTransactionHash ? (
         <EthereumProgress
-          transactionHash={currentTransactionInfo?.hash}
+          transactionHash={currentTransactionHash}
           progressIndex={2}
         />
       ) : (
