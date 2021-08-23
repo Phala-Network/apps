@@ -3,7 +3,6 @@ import React, { Dispatch, SetStateAction, useState } from 'react'
 import SubmitStep from '.'
 import { Modal } from '../..'
 import { InputDataStepResult } from '../InputDataStep'
-import ResultStepModal from '../ResultStep/ResultStepModal'
 
 type Props = {
   visible: boolean
@@ -13,8 +12,8 @@ type Props = {
 
 const SubmitStepModal: React.FC<Props> = (props) => {
   const { visible, submitData, setModalVisible } = props
-  const [transactionInfo, setTransactionInfo] = useState<TransactionInfo>()
-  const [resultStepModalVisible, setResultStepModalVisible] = useState(false)
+  const [, setTransactionInfo] = useState<TransactionInfo>()
+  const [, setResultStepModalVisible] = useState(false)
 
   if (!submitData) return null
 
@@ -32,11 +31,11 @@ const SubmitStepModal: React.FC<Props> = (props) => {
         />
       </Modal>
 
-      <ResultStepModal
+      {/* <ResultStepModal
         onClose={() => setResultStepModalVisible(false)}
         visible={resultStepModalVisible}
         transactionInfo={transactionInfo}
-      />
+      /> */}
     </>
   )
 }
