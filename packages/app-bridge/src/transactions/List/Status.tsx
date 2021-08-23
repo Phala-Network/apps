@@ -11,7 +11,7 @@ const TransactionStatusRoot = styled.div`
 `
 
 type Props = {
-  status: 'pending' | 'executed'
+  status: 'pending' | 'executed' | 'none'
 }
 
 const TransactionStatus: React.FC<Props> = (props) => {
@@ -19,6 +19,7 @@ const TransactionStatus: React.FC<Props> = (props) => {
 
   return (
     <TransactionStatusRoot>
+      {status === 'none' && <div />}
       {status === 'pending' && (
         <svg
           width="6"
