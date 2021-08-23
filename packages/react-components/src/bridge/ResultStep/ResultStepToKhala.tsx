@@ -1,29 +1,61 @@
-import { TransactionInfo } from '@phala/app-types'
+import { TransactionInfo, TransactionRecord } from '@phala/app-types'
+import { useBridgePhalaRecordInfo } from '@phala/react-libs'
 import { isDev, isTest } from '@phala/utils'
-import React from 'react'
-import styled from 'styled-components'
+import React, { useMemo } from 'react'
 import { Alert, Spacer } from '../..'
 import BaseInfo from '../../bridge/SubmitStep/BaseInfo'
+import Progress from '../Progress'
 
 type Props = {
   transactionInfo: TransactionInfo
+  record: TransactionRecord
 }
 
-const Link = styled.a`
-  text-decoration: underline;
-  color: black;
-`
-
 const ResultStepToKhala: React.FC<Props> = (props) => {
-  const { transactionInfo } = props
+  const { transactionInfo, record } = props
+
+  const { events, proposal, hash } = useBridgePhalaRecordInfo(record)
+
+  const progressIndex = useMemo(() => {
+    if (events?.execution !== undefined) {
+      return 4
+    }
+
+    if (
+      events?.approval !== undefined ||
+      proposal?.unwrapOr(undefined)?.status?.isApproved === true
+    ) {
+      return 3
+    }
+
+    return 2
+  }, [events, proposal])
 
   let link = ''
 
-  if (isTest() || isDev()) {
-    link = `https://kovan.etherscan.io/tx/${transactionInfo.hash}`
-  } else {
-    link = `https://etherscan.io/tx/${transactionInfo.hash}`
+  if (hash) {
+    if (isTest() || isDev()) {
+      link = `https://kovan.etherscan.io/tx/${hash}`
+    } else {
+      link = `https://etherscan.io/tx/${hash}`
+    }
   }
+
+  const steps = [
+    {
+      text: 'Transaction Send',
+    },
+    {
+      text: 'Ethereum Confirmed',
+      link,
+    },
+    {
+      text: 'Relayer Confirmed',
+    },
+    {
+      text: 'Khala Confirmed',
+    },
+  ]
 
   return (
     <>
@@ -32,13 +64,7 @@ const ResultStepToKhala: React.FC<Props> = (props) => {
       <Spacer></Spacer>
 
       <Alert>
-        <div>
-          <Link href={link} target="_blank">
-            Ethereum transaction
-          </Link>{' '}
-          is broadcasting, please check your Khala’s PHA balance later. It may
-          take 2~10 minutes.
-        </div>
+        <Progress steps={steps} progressIndex={progressIndex}></Progress>
       </Alert>
     </>
   )

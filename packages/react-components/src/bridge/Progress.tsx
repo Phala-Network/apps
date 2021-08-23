@@ -2,7 +2,6 @@ import React from 'react'
 import styled from 'styled-components'
 
 const Root = styled.div`
-  padding-left: 30px;
   display: grid;
   grid-auto-flow: column;
   grid-template-columns: repeat(2, 1fr);
@@ -21,6 +20,11 @@ const ProgressItem = styled.div`
   align-items: center;
 `
 
+const Link = styled.a`
+  text-decoration: underline;
+  color: black;
+`
+
 const DATA = [
   {
     text: 'Transaction Send',
@@ -37,15 +41,16 @@ const DATA = [
 ]
 
 export interface ProgressProps {
-  data: {
+  steps: {
     text: string
+    link?: string
   }[]
   progressIndex: number
 }
 
 const Progress: React.FC<ProgressProps> = (props) => {
-  const { data, progressIndex = -1 } = props
-  const items = data || DATA
+  const { steps, progressIndex = -1 } = props
+  const items = steps || DATA
 
   return (
     <Root>
@@ -68,7 +73,13 @@ const Progress: React.FC<ProgressProps> = (props) => {
               fill="#494949"
             />
           </svg>
-          {item.text}
+          {item.link ? (
+            <Link href={item.link} target="_blank">
+              {item.text}
+            </Link>
+          ) : (
+            item.text
+          )}
         </ProgressItem>
       ))}
     </Root>
