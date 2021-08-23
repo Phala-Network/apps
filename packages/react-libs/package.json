@@ -7,6 +7,7 @@
   "types": "esm/index.d.ts",
   "dependencies": {
     "@phala/app-config": "workspace:*",
+    "@phala/react-graph-chainbridge": "workspace:^0.0.1",
     "@phala/typedefs": "^0.2.11",
     "@phala/utils": "workspace:*",
     "@polkadot/api": "^4.17.1",

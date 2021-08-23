@@ -1,14 +1,6 @@
 import { TransactionRecord } from '@phala/app-types'
 import { ResultStepModal } from '@phala/react-components'
-import { useProposalEventsByDepositNonceQuery } from '@phala/react-graph-chainbridge'
-import {
-  balanceToDecimal,
-  useBridgeProposalQuery,
-  useDecimalMultiplier,
-  useSubstrateGraphQL,
-} from '@phala/react-libs'
-import { BN, hexToU8a } from '@polkadot/util'
-import { encodeAddress } from '@polkadot/util-crypto'
+import { useBridgePhalaRecordInfo } from '@phala/react-libs'
 import React, { useMemo, useState } from 'react'
 import styled from 'styled-components'
 import ArrowIcon from './ArrowIcon'
@@ -45,32 +37,10 @@ const Line = styled.div`
 
 const TransactionsListItem: React.FC<TransactionsListItemProps> = (props) => {
   const { record } = props
-  const { amount, destinationRecipient, nonce, resourceId, depositor } = record
-  const { client } = useSubstrateGraphQL()
-  const { multiplier } = useDecimalMultiplier()
-  const { data: events } = useProposalEventsByDepositNonceQuery(
-    0,
-    nonce,
-    client
-  )
+  const { depositor } = record
   const [modalVisible, setModalVisible] = useState(false)
-  const parsedNonce = parseInt(nonce)
-
-  const recipient = useMemo(() => {
-    try {
-      return encodeAddress(hexToU8a(destinationRecipient))
-    } catch {
-      return undefined
-    }
-  }, [destinationRecipient])
-
-  const { data: proposal } = useBridgeProposalQuery({
-    amount: new BN(amount),
-    depositNonce: parsedNonce,
-    originChainId: 0,
-    recipient,
-    resourceId,
-  })
+  const { events, proposal, hash, convertedAmount, destinationRecipient } =
+    useBridgePhalaRecordInfo(record)
 
   const status = useMemo(() => {
     if (events?.execution !== undefined) {
@@ -80,22 +50,10 @@ const TransactionsListItem: React.FC<TransactionsListItemProps> = (props) => {
     return 'pending'
   }, [events, proposal])
 
-  const hash = events?.approval?.approvalExtrinsic
-
-  const convertedAmount = useMemo(() => {
-    if (multiplier !== undefined) {
-      return balanceToDecimal(new BN(amount), multiplier).toString()
-    } else {
-      return '0'
-    }
-  }, [amount, multiplier])
-
   if (!record) return null
 
   const onSubmit = () => {
-    if (hash) {
-      setModalVisible(false)
-    }
+    setModalVisible(false)
   }
 
   return (
@@ -121,6 +79,7 @@ const TransactionsListItem: React.FC<TransactionsListItemProps> = (props) => {
       </ItemRoot>
 
       <ResultStepModal
+        record={record}
         transactionInfo={{
           from: {
             address: depositor || '',

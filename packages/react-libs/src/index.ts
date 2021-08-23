@@ -1,3 +1,4 @@
+export { useBridgePhalaRecordInfo } from './chainbridge/phala/useBridgePhalaRecordInfo'
 export { useBridgeProposalQuery } from './chainbridge/phala/useBridgeProposalQuery'
 export { useEthers } from './ethereum/contexts/useEthers'
 export { useEthereumGraphQL } from './ethereum/GraphQLClientContext'

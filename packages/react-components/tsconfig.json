@@ -16,6 +16,7 @@
     { "path": "../app-store" },
     { "path": "../react-libs" },
     { "path": "../utils" },
-    { "path": "../react-hooks" }
+    { "path": "../react-hooks" },
+    { "path": "../react-graph-chainbridge" }
   ]
 }

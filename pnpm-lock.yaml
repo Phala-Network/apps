@@ -238,6 +238,7 @@ importers:
       '@phala/app-config': workspace:*
       '@phala/app-store': workspace:^0.0.1
       '@phala/app-types': workspace:*
+      '@phala/react-graph-chainbridge': workspace:^0.0.1
       '@phala/react-hooks': workspace:*
       '@phala/react-libs': workspace:*
       '@phala/utils': workspace:*
@@ -264,6 +265,7 @@ importers:
       '@phala/app-config': link:../app-config
       '@phala/app-store': link:../app-store
       '@phala/app-types': link:../app-types
+      '@phala/react-graph-chainbridge': link:../react-graph-chainbridge
       '@phala/react-hooks': link:../react-hooks
       '@phala/react-libs': link:../react-libs
       '@phala/utils': link:../utils
@@ -349,6 +351,7 @@ importers:
   packages/react-libs:
     specifiers:
       '@phala/app-config': workspace:*
+      '@phala/react-graph-chainbridge': workspace:^0.0.1
       '@phala/typedefs': ^0.2.11
       '@phala/utils': workspace:*
       '@polkadot/api': ^4.17.1
@@ -374,6 +377,7 @@ importers:
       web3modal: ^1.9.4
     dependencies:
       '@phala/app-config': link:../app-config
+      '@phala/react-graph-chainbridge': link:../react-graph-chainbridge
       '@phala/typedefs': 0.2.15
       '@phala/utils': link:../utils
       '@polkadot/api': 4.17.1
