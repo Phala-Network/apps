@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import InputDataStep from './InputDataStep'
-import ResultStep from './ResultStep'
 import SubmitStep from './SubmitStep'
 
 export type StepProps = {
@@ -14,7 +13,6 @@ type Props = {
 const BridgeProcess: React.FC<Props> = (props) => {
   const { layout = 'block' } = props
   const [step, setStep] = useState(0)
-  const { onDone } = props
 
   const next = () => {
     setStep((prev) => prev + 1)
@@ -31,9 +29,6 @@ const BridgeProcess: React.FC<Props> = (props) => {
       )}
       {step === 1 && (
         <SubmitStep layout={layout} onSubmit={next} onPrev={prev}></SubmitStep>
-      )}
-      {step === 2 && (
-        <ResultStep layout={layout} onNext={() => onDone?.()}></ResultStep>
       )}
     </>
   )

@@ -1,3 +1,5 @@
+import React from 'react'
+import styled from 'styled-components'
 import {
   Address,
   AmountInfo,
@@ -9,8 +11,6 @@ import {
   ModalActions,
   Spacer,
 } from '..'
-import React from 'react'
-import styled from 'styled-components'
 import { StepProps } from './BridgeProcess'
 import FormItem from './FormItem'
 import FormLayout from './FormLayout'
@@ -90,7 +90,7 @@ const ResultStep: React.FC<Props> = (props) => {
       </FormLayout>
 
       <ModalActions>
-        <ModalAction>
+        <ModalAction full>
           <Button type="primary" onClick={onNext}>
             Done
           </Button>

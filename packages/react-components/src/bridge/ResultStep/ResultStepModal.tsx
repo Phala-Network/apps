@@ -1,6 +1,6 @@
 import { TransactionInfo, TransactionRecord } from '@phala/app-types'
 import React from 'react'
-import { Button, Modal, ModalActions } from '../..'
+import { Button, Modal, ModalAction, ModalActions } from '../..'
 import ResultStepToKhala from './ResultStepToKhala'
 
 type Props = {
@@ -24,9 +24,11 @@ const TransactionDetailModal: React.FC<Props> = (props) => {
         transactionInfo={transactionInfo}></ResultStepToKhala>
 
       <ModalActions>
-        <Button type="primary" onClick={onClose}>
-          Done
-        </Button>
+        <ModalAction full>
+          <Button type="primary" onClick={onClose}>
+            Done
+          </Button>
+        </ModalAction>
       </ModalActions>
     </Modal>
   )
