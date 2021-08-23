@@ -3,7 +3,6 @@ import { useTransferSubmit } from '@phala/react-libs/esm/polkadot/extrinsics/bri
 import { useApiPromise } from '@phala/react-libs/esm/polkadot/hooks/useApiPromise'
 import { useDecimalJsTokenDecimalMultiplier } from '@phala/react-libs/esm/polkadot/useTokenDecimals'
 import { decimalToBalance } from '@phala/react-libs/esm/polkadot/utils/balances'
-import { isDev, isTest } from '@phala/utils'
 import { ExtrinsicStatus, Hash } from '@polkadot/types/interfaces'
 import { Decimal } from 'decimal.js'
 import { getAddress } from 'ethers/lib/utils'
@@ -11,8 +10,8 @@ import React, { useMemo, useState } from 'react'
 import { SubmitStepProps } from '.'
 import { Alert, Button, ModalAction, ModalActions, Spacer } from '../..'
 import { StepProps } from '../BridgeProcess'
+import { EthereumProgress } from '../EthereumProgress'
 import useTransactionInfo from '../hooks/useTransactionInfo'
-import Progress from '../Progress'
 import BaseInfo from './BaseInfo'
 
 type Props = SubmitStepProps & StepProps
@@ -84,32 +83,6 @@ const SubmitStepToEthereum: React.FC<Props> = (props) => {
     }
   }
 
-  let link = ''
-
-  if (submittedHash) {
-    if (isTest() || isDev()) {
-      link = `https://kovan.etherscan.io/tx/${submittedHash}`
-    } else {
-      link = `https://etherscan.io/tx/${submittedHash}`
-    }
-  }
-
-  const steps = [
-    {
-      text: 'Transaction Send',
-    },
-    {
-      text: 'Ethereum Confirmed',
-      link,
-    },
-    {
-      text: 'Relayer Confirmed',
-    },
-    {
-      text: 'Khala Confirmed',
-    },
-  ]
-
   return (
     <>
       <BaseInfo layout={layout} data={transactionInfo} />
@@ -121,7 +94,10 @@ const SubmitStepToEthereum: React.FC<Props> = (props) => {
           'Please be patient as the transaction may take a few minutes. You can follow each step of the transaction here once you confirm it!'}
 
         {progressIndex >= 0 && (
-          <Progress steps={steps} progressIndex={progressIndex}></Progress>
+          <EthereumProgress
+            transactionHash={submittedHash?.toString()}
+            progressIndex={progressIndex}
+          />
         )}
       </Alert>
 

@@ -1,10 +1,9 @@
 import { TransactionInfo, TransactionRecord } from '@phala/app-types'
 import { useBridgePhalaRecordInfo } from '@phala/react-libs'
-import { isDev, isTest } from '@phala/utils'
 import React, { useMemo } from 'react'
 import { Alert, Spacer } from '../..'
 import BaseInfo from '../../bridge/SubmitStep/BaseInfo'
-import Progress from '../Progress'
+import { EthereumProgress } from '../EthereumProgress'
 
 type Props = {
   transactionInfo: TransactionInfo
@@ -30,32 +29,6 @@ const ResultStepToKhala: React.FC<Props> = (props) => {
     return 2
   }, [events, proposal])
 
-  let link = ''
-
-  if (transaction) {
-    if (isTest() || isDev()) {
-      link = `https://kovan.etherscan.io/tx/${transaction}`
-    } else {
-      link = `https://etherscan.io/tx/${transaction}`
-    }
-  }
-
-  const steps = [
-    {
-      text: 'Transaction Send',
-    },
-    {
-      text: 'Ethereum Confirmed',
-      link,
-    },
-    {
-      text: 'Relayer Confirmed',
-    },
-    {
-      text: 'Khala Confirmed',
-    },
-  ]
-
   return (
     <>
       <BaseInfo layout={'block'} data={transactionInfo} />
@@ -63,7 +36,10 @@ const ResultStepToKhala: React.FC<Props> = (props) => {
       <Spacer></Spacer>
 
       <Alert>
-        <Progress steps={steps} progressIndex={progressIndex}></Progress>
+        <EthereumProgress
+          transactionHash={transaction}
+          progressIndex={progressIndex}
+        />
       </Alert>
     </>
   )
