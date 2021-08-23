@@ -13,9 +13,8 @@ type Props = {
 
 const ResultStepToKhala: React.FC<Props> = (props) => {
   const { transactionInfo, record } = props
-
-  const { events, proposal, hash } = useBridgePhalaRecordInfo(record)
-
+  const { transaction } = record
+  const { events, proposal } = useBridgePhalaRecordInfo(record)
   const progressIndex = useMemo(() => {
     if (events?.execution !== undefined) {
       return 4
@@ -33,11 +32,11 @@ const ResultStepToKhala: React.FC<Props> = (props) => {
 
   let link = ''
 
-  if (hash) {
+  if (transaction) {
     if (isTest() || isDev()) {
-      link = `https://kovan.etherscan.io/tx/${hash}`
+      link = `https://kovan.etherscan.io/tx/${transaction}`
     } else {
-      link = `https://etherscan.io/tx/${hash}`
+      link = `https://etherscan.io/tx/${transaction}`
     }
   }
 
