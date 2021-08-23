@@ -23,7 +23,7 @@ const WrapApp: React.FC = ({ children }) => {
   return (
     <LibProvider
       substrateGraphEndpoint="https://chainbridge-substrate-graph-testing.phala.works/"
-      defaultNetwork={'khala'}
+      defaultNetwork={defaultNetwork}
       ethereumGraphEndpoint={
         'https://graphs-api.phala.network/subgraphs/name/chainbridge'
       }>
