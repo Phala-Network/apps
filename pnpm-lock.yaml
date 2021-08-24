@@ -4,12 +4,12 @@ importers:
 
   .:
     specifiers:
-      '@types/node': ^16.6.2
+      '@types/node': ^16.7.1
       '@types/react': ^17.0.19
       npm-run-all: ^4.1.5
       typescript: 4.3.5
     dependencies:
-      '@types/node': 16.6.2
+      '@types/node': 16.7.1
       '@types/react': 17.0.19
       npm-run-all: 4.1.5
       typescript: 4.3.5
@@ -5336,6 +5336,10 @@ packages:
 
   /@types/node/16.6.2:
     resolution: {integrity: sha512-LSw8TZt12ZudbpHc6EkIyDM3nHVWKYrAvGy6EAJfNfjusbwnThqjqxUKKRwuV3iWYeW/LYMzNgaq3MaLffQ2xA==}
+
+  /@types/node/16.7.1:
+    resolution: {integrity: sha512-ncRdc45SoYJ2H4eWU9ReDfp3vtFqDYhjOsKlFFUDEn8V1Bgr2RjYal8YT5byfadWIRluhPFU6JiDOl0H6Sl87A==}
+    dev: false
 
   /@types/node/8.10.66:
     resolution: {integrity: sha512-tktOkFUA4kXx2hhhrB8bIFb5TbwzS4uOhKEmwiD+NoiL0qtP2OQ9mFldbgD4dV1djrlBYP6eBuQZiWjuHUpqFw==}
