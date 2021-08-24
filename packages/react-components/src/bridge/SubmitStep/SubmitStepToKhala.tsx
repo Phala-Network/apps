@@ -1,5 +1,6 @@
 import { useTransactionsInfoAtom } from '@phala/app-store'
 import { TransactionInfoItem } from '@phala/app-types'
+import { useDepositRecordByHash } from '@phala/react-graph-chainbridge'
 import { useErc20Deposit } from '@phala/react-libs/esm/ethereum/bridge/deposit'
 import { useErc20BalanceQuery } from '@phala/react-libs/esm/ethereum/queries/useErc20BalanceQuery'
 import { useTransactionReceiptQuery } from '@phala/react-libs/esm/ethereum/queries/useTransactionReceiptQuery'
@@ -70,6 +71,10 @@ const SubmitStepToKhala: React.FC<Props> = (props) => {
     }
   }, [receipt, setSubmitting, setTransactionsInfoSuccess, refetch])
 
+  const { data: record } = useDepositRecordByHash(currentTransactionHash)
+
+  console.log('record', record)
+
   return (
     <>
       <BaseInfo layout={layout} data={transactionInfo} />
@@ -77,10 +82,12 @@ const SubmitStepToKhala: React.FC<Props> = (props) => {
       <Spacer></Spacer>
 
       {currentTransactionHash ? (
-        <EthereumProgress
-          transactionHash={currentTransactionHash}
-          progressIndex={2}
-        />
+        <Alert>
+          <EthereumProgress
+            transactionHash={currentTransactionHash}
+            progressIndex={2}
+          />
+        </Alert>
       ) : (
         <Alert>
           Please be patient as the transaction may take a few minutes.

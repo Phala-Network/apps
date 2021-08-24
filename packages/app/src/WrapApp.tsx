@@ -20,13 +20,14 @@ const WrapApp: React.FC = ({ children }) => {
   // eslint-disable-next-line no-console
   console.info('defaultNetwork', defaultNetwork)
 
+  const config = {
+    substrateGraphEndpoint: 'https://subquery-api.phala.network',
+    ethereumGraphEndpoint:
+      'https://graphs-api.phala.network/subgraphs/name/chainbridge',
+  }
+
   return (
-    <LibProvider
-      substrateGraphEndpoint="https://chainbridge-substrate-graph-testing.phala.works/"
-      defaultNetwork={defaultNetwork}
-      ethereumGraphEndpoint={
-        'https://graphs-api.phala.network/subgraphs/name/chainbridge'
-      }>
+    <LibProvider defaultNetwork={defaultNetwork} {...config}>
       <ThemeProvider theme={theme}>
         <MobileToastContextProvider>
           <QueryClientProvider contextSharing={true} client={client.current}>
