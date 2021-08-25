@@ -49,8 +49,6 @@ const Transactions: React.FC = () => {
 
   const { data } = useDepositRecordsByDepositorQuery(depositor, 10, 0, client)
 
-  console.log('data', data)
-
   useEffect(() => {
     if (data?.depositRecords) {
       const transactionRecords = data?.depositRecords.map((item) => {

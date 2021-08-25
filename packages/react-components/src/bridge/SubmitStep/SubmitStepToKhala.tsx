@@ -78,7 +78,7 @@ const SubmitStepToKhala: React.FC<Props> = (props) => {
     client
   )
 
-  console.log('record', record)
+  console.log('record', record?.depositRecords)
 
   return (
     <>
