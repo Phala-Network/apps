@@ -22,6 +22,7 @@ importers:
       '@phala/app-config': workspace:*
       '@phala/app-store': workspace:*
       '@phala/app-types': workspace:*
+      '@phala/react-cms': workspace:^0.0.1
       '@phala/react-components': workspace:*
       '@phala/react-hooks': workspace:*
       '@phala/react-libs': workspace:*
@@ -87,6 +88,7 @@ importers:
       '@phala/app-config': link:../app-config
       '@phala/app-store': link:../app-store
       '@phala/app-types': link:../app-types
+      '@phala/react-cms': link:../react-cms
       '@phala/react-components': link:../react-components
       '@phala/react-hooks': link:../react-hooks
       '@phala/react-libs': link:../react-libs
@@ -232,6 +234,14 @@ importers:
 
   packages/app/plugins/local-plugin-layout:
     specifiers: {}
+
+  packages/react-cms:
+    specifiers:
+      '@phala/react-cms': workspace:^0.0.1
+      graphql-request: ^3.5.0
+    dependencies:
+      '@phala/react-cms': 'link:'
+      graphql-request: 3.5.0
 
   packages/react-components:
     specifiers:
@@ -11716,6 +11726,16 @@ packages:
     dependencies:
       express: 4.17.1
       graphql-playground-html: 1.6.29
+    dev: false
+
+  /graphql-request/3.5.0:
+    resolution: {integrity: sha512-Io89QpfU4rqiMbqM/KwMBzKaDLOppi8FU8sEccCE4JqCgz95W9Q8bvxQ4NfPALLSMvg9nafgg8AkYRmgKSlukA==}
+    peerDependencies:
+      graphql: 14.x || 15.x
+    dependencies:
+      cross-fetch: 3.1.4
+      extract-files: 9.0.0
+      form-data: 3.0.1
     dev: false
 
   /graphql-request/3.5.0_graphql@15.5.1:

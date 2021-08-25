@@ -8,7 +8,7 @@ import { useTransactionReceiptQuery } from '@phala/react-libs/esm/ethereum/queri
 import { u8aToHex } from '@polkadot/util'
 import { decodeAddress } from '@polkadot/util-crypto'
 import { ethers } from 'ethers'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { SubmitStepProps } from '.'
 import { Alert, Button, ModalAction, ModalActions, Spacer } from '../..'
 import { StepProps } from '../BridgeProcess'
@@ -78,7 +78,17 @@ const SubmitStepToKhala: React.FC<Props> = (props) => {
     client
   )
 
-  console.log('record', record?.depositRecords)
+  const progressIndex = useMemo(() => {
+    if (isSubmitting) {
+      return 1
+    } else if (isReceiptLoading) {
+      return 2
+    } else if (transactionsInfoSuccess) {
+      return 3
+    }
+
+    return -1
+  }, [record?.depositRecords])
 
   return (
     <>
@@ -90,7 +100,7 @@ const SubmitStepToKhala: React.FC<Props> = (props) => {
         <Alert>
           <EthereumProgress
             transactionHash={currentTransactionHash}
-            progressIndex={2}
+            progressIndex={progressIndex}
           />
         </Alert>
       ) : (

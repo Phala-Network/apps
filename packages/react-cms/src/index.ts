@@ -1,0 +1,1 @@
+export { getCMSLog } from './getCMSLog'

@@ -1,7 +1,9 @@
 import { Provider as AppStoreProvider } from '@phala/app-store'
+import { getCMSLog } from '@phala/react-cms'
 import { MobileToastContextProvider } from '@phala/react-components'
 import { Provider as LibProvider } from '@phala/react-libs'
 import { isDev, isTest } from '@phala/utils'
+import * as Sentry from '@sentry/react'
 import React, { useRef } from 'react'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { ThemeProvider } from 'styled-components'
@@ -21,22 +23,16 @@ const WrapApp: React.FC = ({ children }) => {
   console.info('defaultNetwork', defaultNetwork)
 
   const productionConfig = {
+    defaultNetwork,
     substrateGraphEndpoint: 'https://subquery-api.phala.network',
     ethereumGraphEndpoint:
       'https://graphs-api.phala.network/subgraphs/name/chainbridge',
   }
 
-  const developmentConfig = {
-    substrateGraphEndpoint:
-      'https://chainbridge-substrate-graph-testing.phala.works',
-    ethereumGraphEndpoint:
-      'https://chainbridge-ethereum-graph-testing.phala.works/subgraphs/name/chainbridge',
-  }
+  getCMSLog().catch((e) => Sentry.captureException(e))
 
-  https: return (
-    <LibProvider
-      defaultNetwork={defaultNetwork}
-      {...(defaultNetwork === 'khala' ? productionConfig : developmentConfig)}>
+  return (
+    <LibProvider {...productionConfig}>
       <ThemeProvider theme={theme}>
         <MobileToastContextProvider>
           <QueryClientProvider contextSharing={true} client={client.current}>
