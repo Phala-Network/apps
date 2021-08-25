@@ -4,7 +4,7 @@ import { MobileToastContextProvider } from '@phala/react-components'
 import { Provider as LibProvider } from '@phala/react-libs'
 import { isDev, isTest } from '@phala/utils'
 import * as Sentry from '@sentry/react'
-import React, { useRef } from 'react'
+import React, { useLayoutEffect, useRef } from 'react'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { ThemeProvider } from 'styled-components'
 import './fonts.css'
@@ -29,7 +29,9 @@ const WrapApp: React.FC = ({ children }) => {
       'https://graphs-api.phala.network/subgraphs/name/chainbridge',
   }
 
-  getCMSLog().catch((e) => Sentry.captureException(e))
+  useLayoutEffect(() => {
+    getCMSLog().catch((e) => Sentry.captureException(e))
+  }, [])
 
   return (
     <LibProvider {...productionConfig}>
