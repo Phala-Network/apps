@@ -19,7 +19,12 @@ export type useBridgePhalaRecordInfoRecord = {
 export const useBridgePhalaRecordInfo = (
   record: useBridgePhalaRecordInfoRecord
 ) => {
-  const { amount, destinationRecipient, nonce, resourceId } = record
+  const {
+    amount = '',
+    destinationRecipient = '',
+    nonce = '',
+    resourceId = '',
+  } = record ?? {}
   const { client } = useSubstrateGraphQL()
   const { multiplier } = useDecimalMultiplier()
   const { data: events } = useProposalEventsByDepositNonceQuery(

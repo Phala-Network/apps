@@ -20,8 +20,10 @@
     "react-query": "^3.19.6",
     "ts-node": "^10.2.1"
   },
+  "sideEffects": false,
   "main": "dist/index.js",
-  "typings": "dist/index.d.ts",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "develop": "tsc --watch",
     "start": "tsc --watch",

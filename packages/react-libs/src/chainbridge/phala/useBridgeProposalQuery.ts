@@ -39,6 +39,7 @@ export const useBridgeProposalQuery = ({
     ],
     async () => {
       if (
+        !!recipient ||
         amount === undefined ||
         api === undefined ||
         multiplier === undefined ||
