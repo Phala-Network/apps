@@ -1,3 +1,4 @@
+import { useEthereumAccountAtom } from '@phala/app-store'
 import { TransactionRecords } from '@phala/app-types'
 import { Backdrop } from '@phala/react-components'
 import { useDepositRecordsByDepositorQuery } from '@phala/react-graph-chainbridge'
@@ -44,12 +45,14 @@ const Transactions: React.FC = () => {
   const rootRef = useRef(null)
   const { client } = useEthereumGraphQL()
   const [records, setRecords] = useState<TransactionRecords>([])
+  const [ethereumAccount] = useEthereumAccountAtom()
+  const depositor = ethereumAccount?.address || ''
+
+  // NOTE: for test purposes
   // const depositor = '0x766d4b6fd707c45518eb49878142a88378a7443c'
-  const depositor = '0x775946638c9341a48ccf65e46b73367d0aba2616'
+  // const depositor = '0x775946638c9341a48ccf65e46b73367d0aba2616'
 
   const { data } = useDepositRecordsByDepositorQuery(depositor, 10, 0, client)
-
-  console.log('data', data)
 
   useEffect(() => {
     if (data?.depositRecords) {

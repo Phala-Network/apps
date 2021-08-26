@@ -32,8 +32,9 @@ const SubmitStepToKhala: React.FC<Props> = (props) => {
     to: TransactionInfoItem
   }>()
   const currentTransactionHash = currentTransactionInfo?.hash
-  const { isLoading: isReceiptLoading, data: receipt } =
-    useTransactionReceiptQuery(currentTransactionHash)
+  const { isLoading: isReceiptLoading } = useTransactionReceiptQuery(
+    currentTransactionHash
+  )
   const { refetch } = useErc20BalanceQuery(accountFrom)
 
   const submit = async () => {
@@ -63,12 +64,17 @@ const SubmitStepToKhala: React.FC<Props> = (props) => {
   }
 
   useEffect(() => {
-    if (receipt && receipt?.confirmations > 0) {
+    if (currentTransactionHash) {
       refetch()
       setTransactionsInfoSuccess(true)
       setSubmitting(false)
     }
-  }, [receipt, setSubmitting, setTransactionsInfoSuccess, refetch])
+  }, [
+    currentTransactionHash,
+    setSubmitting,
+    setTransactionsInfoSuccess,
+    refetch,
+  ])
 
   return (
     <>

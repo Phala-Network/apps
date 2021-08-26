@@ -22,7 +22,7 @@ export const useDepositRecordsByDepositorQuery = (
     async () =>
       await sdk?.depositRecordsByDepositor({ depositor, first, skip }),
     {
-      enabled: depositor !== undefined,
+      enabled: !!depositor,
     }
   )
 }

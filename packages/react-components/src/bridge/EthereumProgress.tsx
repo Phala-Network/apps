@@ -45,16 +45,20 @@ export const EthereumProgress: React.FC<EthereumProgressParams> = (props) => {
   const progressIndex = useMemo(() => {
     if (events?.execution !== undefined) {
       return 3
-    } else if (
+    }
+
+    if (
       events?.approval !== undefined ||
       proposal?.unwrapOr(undefined)?.status?.isApproved === true
     ) {
       return 2
-    } else if (transactionHash) {
-      return 1
-    } else {
-      return -1
     }
+
+    if (transactionHash) {
+      return 1
+    }
+
+    return -1
   }, [events, proposal, transactionHash, record])
 
   return <Progress steps={steps} progressIndex={progressIndex}></Progress>
