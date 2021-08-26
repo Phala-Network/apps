@@ -7,6 +7,7 @@ import { u8aToHex } from '@polkadot/util'
 import { decodeAddress } from '@polkadot/util-crypto'
 import { ethers } from 'ethers'
 import React, { useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
 import { SubmitStepProps } from '.'
 import { Alert, Button, ModalAction, ModalActions, Spacer } from '../..'
 import { StepProps } from '../BridgeProcess'
@@ -60,6 +61,8 @@ const SubmitStepToKhala: React.FC<Props> = (props) => {
       setTransactionsInfo([newTransactionInfo, ...transactionsInfo])
     } catch (error) {
       console.error(error)
+      toast(error.message)
+      setSubmitting(false)
     }
   }
 

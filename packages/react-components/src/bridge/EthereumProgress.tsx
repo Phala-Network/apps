@@ -1,6 +1,5 @@
 import { useDepositRecordByHash } from '@phala/react-graph-chainbridge'
 import { useBridgePhalaRecordInfo, useEthereumGraphQL } from '@phala/react-libs'
-import { isDev, isTest } from '@phala/utils'
 import { useMemo } from 'react'
 import Progress from './Progress'
 
@@ -12,11 +11,11 @@ export const EthereumProgress: React.FC<EthereumProgressParams> = (props) => {
   let link = ''
 
   if (transactionHash) {
-    if (isTest() || isDev()) {
-      link = `https://kovan.etherscan.io/tx/${transactionHash}`
-    } else {
-      link = `https://etherscan.io/tx/${transactionHash}`
-    }
+    // if (isTest() || isDev()) {
+    //   link = `https://kovan.etherscan.io/tx/${transactionHash}`
+    // } else {
+    link = `https://etherscan.io/tx/${transactionHash}`
+    // }
   }
 
   const steps = [
