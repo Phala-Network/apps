@@ -1,12 +1,14 @@
+import { useDepositRecordByHash } from '@phala/react-graph-chainbridge'
+import { useBridgePhalaRecordInfo, useEthereumGraphQL } from '@phala/react-libs'
 import { isDev, isTest } from '@phala/utils'
+import { useMemo } from 'react'
 import Progress from './Progress'
 
 type EthereumProgressParams = {
   transactionHash?: string
-  progressIndex: number
 }
-export const EthereumProgress = (params: EthereumProgressParams) => {
-  const { transactionHash, progressIndex } = params
+export const EthereumProgress: React.FC<EthereumProgressParams> = (props) => {
+  const { transactionHash } = props
   let link = ''
 
   if (transactionHash) {
@@ -33,5 +35,33 @@ export const EthereumProgress = (params: EthereumProgressParams) => {
     },
   ]
 
-  return <Progress steps={steps} progressIndex={progressIndex}></Progress>
+  const { client } = useEthereumGraphQL()
+  const { data: record } = useDepositRecordByHash(transactionHash, client)
+
+  const { events, proposal /*, hash */ } = useBridgePhalaRecordInfo(
+    record?.depositRecords?.[0]!
+  )
+
+  const progressIndex = useMemo(() => {
+    if (transactionHash) {
+      return 1
+    }
+
+    if (events?.execution !== undefined) {
+      return 3
+    }
+
+    if (
+      events?.approval !== undefined ||
+      proposal?.unwrapOr(undefined)?.status?.isApproved === true
+    ) {
+      return 2
+    }
+
+    return -1
+  }, [events, proposal, transactionHash])
+
+  console.log('progressIndex', progressIndex)
+
+  return <Progress steps={steps} progressIndex={3}></Progress>
 }

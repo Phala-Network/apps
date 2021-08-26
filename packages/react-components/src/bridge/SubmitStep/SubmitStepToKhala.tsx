@@ -1,14 +1,12 @@
 import { useTransactionsInfoAtom } from '@phala/app-store'
 import { TransactionInfoItem } from '@phala/app-types'
-import { useDepositRecordByHash } from '@phala/react-graph-chainbridge'
-import { useEthereumGraphQL } from '@phala/react-libs'
 import { useErc20Deposit } from '@phala/react-libs/esm/ethereum/bridge/deposit'
 import { useErc20BalanceQuery } from '@phala/react-libs/esm/ethereum/queries/useErc20BalanceQuery'
 import { useTransactionReceiptQuery } from '@phala/react-libs/esm/ethereum/queries/useTransactionReceiptQuery'
 import { u8aToHex } from '@polkadot/util'
 import { decodeAddress } from '@polkadot/util-crypto'
 import { ethers } from 'ethers'
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { SubmitStepProps } from '.'
 import { Alert, Button, ModalAction, ModalActions, Spacer } from '../..'
 import { StepProps } from '../BridgeProcess'
@@ -72,24 +70,6 @@ const SubmitStepToKhala: React.FC<Props> = (props) => {
     }
   }, [receipt, setSubmitting, setTransactionsInfoSuccess, refetch])
 
-  const { client } = useEthereumGraphQL()
-  const { data: record } = useDepositRecordByHash(
-    currentTransactionHash,
-    client
-  )
-
-  const progressIndex = useMemo(() => {
-    if (isSubmitting) {
-      return 1
-    } else if (isReceiptLoading) {
-      return 2
-    } else if (transactionsInfoSuccess) {
-      return 3
-    }
-
-    return -1
-  }, [record?.depositRecords])
-
   return (
     <>
       <BaseInfo layout={layout} data={transactionInfo} />
@@ -98,10 +78,7 @@ const SubmitStepToKhala: React.FC<Props> = (props) => {
 
       {currentTransactionHash ? (
         <Alert>
-          <EthereumProgress
-            transactionHash={currentTransactionHash}
-            progressIndex={progressIndex}
-          />
+          <EthereumProgress transactionHash={currentTransactionHash} />
         </Alert>
       ) : (
         <Alert>

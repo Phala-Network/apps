@@ -25,21 +25,6 @@ const Link = styled.a`
   color: black;
 `
 
-const DATA = [
-  {
-    text: 'Transaction Send',
-  },
-  {
-    text: 'Ethereum Confirmed',
-  },
-  {
-    text: 'Relayer Confirmed',
-  },
-  {
-    text: 'Khala Confirmed',
-  },
-]
-
 export interface ProgressProps {
   steps: {
     text: string
@@ -50,7 +35,7 @@ export interface ProgressProps {
 
 const Progress: React.FC<ProgressProps> = (props) => {
   const { steps, progressIndex = -1 } = props
-  const items = steps || DATA
+  const items = steps || []
 
   return (
     <Root>

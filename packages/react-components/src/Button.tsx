@@ -65,7 +65,7 @@ const Loading = styled.div`
   right: 0;
   background-image: url('/loading.gif');
   background-repeat: no-repeat;
-  background-size: auto 32px;
+  background-size: auto 28px;
   background-position: center center;
   background-color: #d1ff52;
 `
