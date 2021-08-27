@@ -37,6 +37,7 @@ const Root = styled.div`
 
 export interface FloatModalProps {
   title?: string
+  children?: React.ReactNode
 }
 
 export const FloatModal = forwardRef<HTMLDivElement, FloatModalProps>(
