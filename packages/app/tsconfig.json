@@ -8,18 +8,18 @@
     "strict": true,
     "moduleResolution": "node",
     "esModuleInterop": true,
-    "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
   },
   "references": [
-    { "path": "../app-config" },
-    { "path": "../app-types" },
-    { "path": "../app-assets" },
-    { "path": "../app-bridge" },
-    { "path": "../utils" },
-    { "path": "../react-libs" },
-    { "path": "../react-hooks" },
-    { "path": "../react-components" },
-    { "path": "../react-cms" }
+    {"path": "../app-config"},
+    {"path": "../app-types"},
+    {"path": "../app-assets"},
+    {"path": "../app-bridge"},
+    {"path": "../app-console"},
+    {"path": "../utils"},
+    {"path": "../react-libs"},
+    {"path": "../react-hooks"},
+    {"path": "../react-components"},
+    {"path": "../react-cms"}
   ]
 }
