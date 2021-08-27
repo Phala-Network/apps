@@ -60,8 +60,11 @@ const SubmitStepToKhala: React.FC<Props> = (props) => {
 
       setTransactionsInfo([newTransactionInfo, ...transactionsInfo])
     } catch (error) {
-      console.error(error)
-      toast(error.message)
+      if (error instanceof Error) {
+        console.error(error)
+        toast(error.message)
+      }
+
       setSubmitting(false)
     }
   }

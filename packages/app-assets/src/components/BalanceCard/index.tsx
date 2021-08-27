@@ -1,11 +1,11 @@
 import { toFixed } from '@phala/utils'
 import Decimal from 'decimal.js'
 import React, { useMemo, useRef } from 'react'
-import { useHoverDirty } from 'react-use'
 import { down } from 'styled-breakpoints'
 import styled, { css } from 'styled-components'
 import Dollar from './Dollar'
 import Menu, { MenuProps } from './Menu'
+import useHoverDirty from './useHoverDirty'
 
 type Props = {
   themeType: 'black' | 'white'

@@ -28,7 +28,6 @@
     "ethers": "^5.4.4",
     "react": "^17.0.0",
     "react-toastify": "^7.0.4",
-    "react-use": "^17.2.4",
     "styled-breakpoints": "^10.0.1"
   }
 }
