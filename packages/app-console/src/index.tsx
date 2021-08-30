@@ -13,7 +13,7 @@ const Wrapper = styled.div`
 const Block = styled.div`
   background-color: #fff;
   padding: 30px;
-  margin-top: 40px;
+  margin: 40px 0;
 `
 
 const Console: React.FC = () => {

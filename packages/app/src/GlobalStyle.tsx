@@ -8,6 +8,13 @@ const GlobalStyle = createGlobalStyle`
     background: #ECECEC;
     -webkit-tap-highlight-color: transparent;
   }
+
+  button {
+    background: none;
+    border: none;
+    padding: 0;
+    outline: none;
+  }
 `
 
 export default GlobalStyle

@@ -1,25 +1,18 @@
 import React, {useEffect, useState} from 'react'
 import styled from 'styled-components'
 
-const Wrap = styled.div`
-  font-size: 12px;
-  height: 14px;
-  display: flex;
-  align-items: center;
-  color: transparent;
-  padding: 8px 16px;
-  display: block;
+const Wrap = styled.div<{top: number}>`
+  height: 40px;
   border: 1px solid transparent;
-  cursor: pointer;
-  max-width: 120px;
-  text-decoration: none;
+  width: 100%;
   border: 1px solid ${(props) => props.theme.colors.phala};
   box-shadow: 4px 4px 0px ${(props) => props.theme.colors.phala};
 
-  width: 100%;
   position: absolute;
-  transition: all 0.2s linear;
-  transform: translate3d(0, 0, 0);
+  top: 0;
+  left: 0;
+  transition: transform 0.2s linear;
+  transform: translate3d(0, ${(props) => `${props.top}px`}, 0);
 `
 
 const ActiveOutline: React.FC = () => {
@@ -48,7 +41,7 @@ const ActiveOutline: React.FC = () => {
     return () => clearInterval(id)
   }, [])
 
-  return <Wrap className="ActiveOutline" style={{top}}></Wrap>
+  return <Wrap className="ActiveOutline" top={top}></Wrap>
 }
 
 export default ActiveOutline

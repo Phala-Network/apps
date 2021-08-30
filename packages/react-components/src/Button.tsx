@@ -28,15 +28,14 @@ const ButtonWrap = styled.button<ButtonProps>`
   border-style: solid;
   border-color: transparent;
   border-radius: ${(props) => (props.shape === 'round' ? 56 : 0)}px;
-  color: ${({disabled}) => (disabled ? 'rgba(32, 32, 32, 0.3)' : '#494949')};
+  color: #494949;
+  &:disabled {
+    color: rgba(32, 32, 32, 0.3);
+  }
 
-  ${({disabled}) =>
-    !disabled &&
-    css`
-      &:hover {
-        border-color: #494949;
-      }
-    `}
+  &:not(:disabled):hover {
+    border-color: #494949;
+  }
 
   &:active {
     background: #ececec;
