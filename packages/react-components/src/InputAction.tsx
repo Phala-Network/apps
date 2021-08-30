@@ -8,11 +8,11 @@ export default styled.button`
   padding: 6px 12px;
   border: none;
   height: 26px;
-  background: #d4d4d4;
+  line-height: 26px;
+  background: #ffffff;
   border-radius: 50px;
   cursor: pointer;
-
-  color: #494949;
+  color: #202020;
 
   &:hover {
     background: ${(props) => props.theme.colors.phala};
