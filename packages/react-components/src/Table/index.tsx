@@ -19,6 +19,7 @@ const Placeholder = styled.div`
 
 const Styles = styled.div`
   table {
+    font-size: 14px;
     border-spacing: 0;
     border: none;
     width: 100%;
@@ -35,7 +36,6 @@ const Styles = styled.div`
 
     th {
       font-weight: bold;
-      font-size: 12px;
       line-height: 14px;
       color: #202020;
       border-bottom: 1px solid #dddddd;
@@ -46,7 +46,6 @@ const Styles = styled.div`
     td {
       margin: 0;
       padding: 0.8rem;
-      font-size: 12px;
       white-space: nowrap;
 
       :last-child {

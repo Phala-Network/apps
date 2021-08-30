@@ -40,6 +40,7 @@ importers:
       '@phala/app-bridge': workspace:^0.0.1
       '@phala/app-config': workspace:*
       '@phala/app-console': workspace:^0.0.1
+      '@phala/app-stakepad': workspace:^0.0.1
       '@phala/app-store': workspace:*
       '@phala/app-types': workspace:*
       '@phala/react-cms': workspace:^0.0.1
@@ -109,6 +110,7 @@ importers:
       '@phala/app-bridge': link:../app-bridge
       '@phala/app-config': link:../app-config
       '@phala/app-console': link:../app-console
+      '@phala/app-stakepad': link:../app-stakepad
       '@phala/app-store': link:../app-store
       '@phala/app-types': link:../app-types
       '@phala/react-cms': link:../react-cms
@@ -287,6 +289,38 @@ importers:
       react-toastify: 7.0.4_react@17.0.2
       styled-breakpoints: 10.0.1_8c4c2c5ce15fefb0151c6a5afd60853f
       styled-components: 5.3.1_react@17.0.2
+
+  packages/app-stakepad:
+    specifiers:
+      '@phala/app-store': workspace:^0.0.1
+      '@phala/react-components': workspace:^0.0.1
+      '@phala/react-hooks': workspace:^0.0.1
+      '@phala/react-libs': workspace:^0.0.1
+      '@phala/utils': workspace:^0.0.1
+      '@polkadot/api': ^4.17.1
+      '@polkadot/api-derive': ^5.5.1
+      '@polkadot/extension-dapp': ^0.38.8
+      '@polkadot/util': ^6.11.1
+      '@types/react': ^17.0.19
+      date-fns: ^2.23.0
+      decimal.js: ^10.3.1
+      ethers: ^5.4.4
+      jotai: ^1.3.0
+    dependencies:
+      '@phala/app-store': link:../app-store
+      '@phala/react-components': link:../react-components
+      '@phala/react-hooks': link:../react-hooks
+      '@phala/react-libs': link:../react-libs
+      '@phala/utils': link:../utils
+      '@polkadot/api': 4.17.1
+      '@polkadot/api-derive': 5.6.1
+      '@polkadot/extension-dapp': 0.38.8_@polkadot+api@4.17.1
+      '@polkadot/util': 6.11.1
+      '@types/react': 17.0.19
+      date-fns: 2.23.0
+      decimal.js: 10.3.1
+      ethers: 5.4.5
+      jotai: 1.3.1
 
   packages/app-store:
     specifiers:
