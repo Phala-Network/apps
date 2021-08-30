@@ -187,6 +187,7 @@ importers:
       '@phala/react-components': workspace:^0.0.1
       '@phala/react-graph-chainbridge': workspace:^0.0.1
       '@phala/react-hooks': workspace:^0.0.1
+      '@phala/react-i18n': workspace:^0.0.1
       '@phala/react-libs': workspace:^0.0.1
       '@phala/utils': workspace:^0.0.1
       '@polkadot/util': ^6.11.1
@@ -200,6 +201,7 @@ importers:
       '@phala/react-components': link:../react-components
       '@phala/react-graph-chainbridge': link:../react-graph-chainbridge
       '@phala/react-hooks': link:../react-hooks
+      '@phala/react-i18n': link:../react-i18n
       '@phala/utils': link:../utils
       '@polkadot/util': 6.11.1
       '@polkadot/util-crypto': 6.11.1
