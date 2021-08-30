@@ -12,8 +12,8 @@ const Root = styled.div`
   right: 48px;
   bottom: 48px;
   transform: translate3d(0, 0, 0);
-  background: #ffffff;
-  border: 1px solid #000000;
+  background: #000000;
+  color: white;
   box-sizing: border-box;
   z-index: 1000;
   transition: all 0.2s ease;
@@ -28,6 +28,8 @@ const Root = styled.div`
     width: 420px;
     height: 191px;
     box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.3);
+    background: white;
+    color: black;
 
     ${down('sm')} {
       width: 100vw;

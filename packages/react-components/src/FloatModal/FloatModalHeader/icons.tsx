@@ -20,11 +20,11 @@ export const InactiveIcon = () => {
       width="9"
       height="10"
       viewBox="0 0 9 10"
-      fill="none"
+      fill="white"
       xmlns="http://www.w3.org/2000/svg">
       <path
         d="M9 0.654111L0 0.5L0.154109 9.5H2.11955L2.11955 2.61955L9 2.61955V0.654111Z"
-        fill="black"
+        fill="white"
       />
     </svg>
   )

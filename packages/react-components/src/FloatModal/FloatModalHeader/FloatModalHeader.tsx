@@ -3,14 +3,14 @@ import styled from 'styled-components'
 import Spacer from '../../Spacer'
 import { ActiveIcon, InactiveIcon } from './icons'
 
-/* #region  style */
-const FloatModalHeaderRoot = styled.div`
+const FloatModalHeaderRoot = styled.div<{ active: boolean }>`
   display: flex;
   flex-direction: row;
   align-items: center;
   flex-wrap: wrap;
   padding: 8px 16px;
-  background: #ffffff;
+  background: ${(props) => (props.active ? 'white' : 'black')};
+  color: ${(props) => (props.active ? 'black' : 'white')};
   z-index: 1;
   cursor: pointer;
   width: fit-content;
@@ -21,27 +21,23 @@ const FloatModalHeaderRoot = styled.div`
 `
 
 const Title = styled.div`
-  color: #000000;
   font-family: Lato;
   font-style: normal;
   font-weight: bold;
   font-size: 18px;
   line-height: 22px;
 `
-/* #endregion */
 
-/* #region  props */
 type Props = ComponentProps<typeof FloatModalHeaderRoot> & {
   active: boolean
   onClickHeader(): void
 }
-/* #endregion */
 
 export const FloatModalHeader: React.FC<Props> = (props) => {
   const { onClickHeader, active, children, ...others } = props
 
   return (
-    <FloatModalHeaderRoot onClick={onClickHeader} {...others}>
+    <FloatModalHeaderRoot active={active} onClick={onClickHeader} {...others}>
       {active ? <ActiveIcon /> : <InactiveIcon />}
 
       <Spacer x={0.6}></Spacer>
