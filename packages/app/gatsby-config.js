@@ -20,6 +20,7 @@ module.exports = {
           '@phala/app-store': rp('../app-store/src'),
           '@phala/app-assets': rp('../app-assets/src'),
           '@phala/app-bridge': rp('../app-bridge/src'),
+          '@phala/app-console': rp('../app-console/src'),
           '@phala/app-store': rp('../app-store/src'),
           '@phala/app-types': rp('../app-types/src'),
           '@phala/react-cms': rp('../react-cms/src'),
