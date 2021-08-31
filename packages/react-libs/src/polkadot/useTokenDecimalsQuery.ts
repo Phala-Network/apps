@@ -1,7 +1,7 @@
-import { ApiPromise } from '@polkadot/api'
-import { Decimal } from 'decimal.js'
-import { useMemo } from 'react'
-import { useApiPromise } from '..'
+import {ApiPromise} from '@polkadot/api'
+import {Decimal} from 'decimal.js'
+import {useMemo} from 'react'
+import {useApiPromise} from '..'
 
 function getTokenDecimals(api: ApiPromise): number | undefined {
   const tokenDecimals = api.registry.chainDecimals
@@ -9,7 +9,7 @@ function getTokenDecimals(api: ApiPromise): number | undefined {
 }
 
 export const useTokenDecimals = (): number | undefined => {
-  const { api } = useApiPromise()
+  const {api} = useApiPromise()
   return useMemo(
     () => (api !== undefined ? getTokenDecimals(api) : undefined),
     [api]

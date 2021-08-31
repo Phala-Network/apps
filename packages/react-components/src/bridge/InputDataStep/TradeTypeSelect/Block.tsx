@@ -1,7 +1,7 @@
 import styled from 'styled-components'
-import React, { ComponentProps } from 'react'
+import React, {ComponentProps} from 'react'
 import Select from './Select'
-import { Target } from '.'
+import {Target} from '.'
 
 const BlockWrap = styled.div`
   padding: 16px;
@@ -37,7 +37,7 @@ type Props = {
 } & ComponentProps<typeof BlockWrap>
 
 const Block: React.FC<Props> = (props) => {
-  const { title, value, disableSelect } = props
+  const {title, value, disableSelect} = props
 
   return (
     <BlockWrap>
@@ -46,7 +46,8 @@ const Block: React.FC<Props> = (props) => {
         disable={disableSelect}
         color={value.color}
         icon={value.icon}
-        value={value.network}></Select>
+        value={value.network}
+      ></Select>
       <Divider></Divider>
       <Select disable={disableSelect} value={value.type}></Select>
     </BlockWrap>

@@ -1,8 +1,8 @@
-import { TransactionInfo, TransactionRecord } from '@phala/app-types'
+import {TransactionInfo, TransactionRecord} from '@phala/app-types'
 import React from 'react'
-import { Alert, Spacer } from '../..'
+import {Alert, Spacer} from '../..'
 import BaseInfo from '../../bridge/SubmitStep/BaseInfo'
-import { EthereumProgress } from '../EthereumProgress'
+import {EthereumProgress} from '../EthereumProgress'
 
 type Props = {
   transactionInfo: TransactionInfo
@@ -10,8 +10,8 @@ type Props = {
 }
 
 const ResultStepToKhala: React.FC<Props> = (props) => {
-  const { transactionInfo, record } = props
-  const { transaction } = record
+  const {transactionInfo, record} = props
+  const {transaction} = record
 
   return (
     <>

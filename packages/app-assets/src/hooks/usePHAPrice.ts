@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { useEffect, useState } from 'react'
+import {useEffect, useState} from 'react'
 
 type PHAPriceResponse = {
   price: number
@@ -14,7 +14,7 @@ const usePHAPrice = (): number => {
       .get<PHAPriceResponse>(
         'https://crowdloan-api.phala.network/coin_market_charts/PHA'
       )
-      .then(({ data }) => {
+      .then(({data}) => {
         if (data) {
           setPrice(data.price)
         }

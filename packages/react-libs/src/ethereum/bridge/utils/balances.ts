@@ -1,5 +1,5 @@
-import { Decimal } from 'decimal.js'
-import { BigNumber } from 'ethers'
+import {Decimal} from 'decimal.js'
+import {BigNumber} from 'ethers'
 
 export function bigNumberToDecimal(
   amount?: BigNumber,

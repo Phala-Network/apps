@@ -1,5 +1,5 @@
-import { createContext } from 'react'
-import { MobileToastProps } from './MobileToast'
+import {createContext} from 'react'
+import {MobileToastProps} from './MobileToast'
 
 export interface MobileToastContextValue {
   toasts: MobileToastProps[]

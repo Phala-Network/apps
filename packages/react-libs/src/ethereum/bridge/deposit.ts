@@ -1,11 +1,11 @@
-import { BigNumber, ethers } from 'ethers'
-import { isHexString } from 'ethers/lib/utils'
-import { useMemo } from 'react'
-import { useNetworkContext } from '../../polkadot/hooks/useSubstrateNetwork'
-import { useEthers } from '../contexts/useEthers'
-import { useEthereumNetworkOptions } from '../queries/useEthereumNetworkOptions'
-import { useEthersNetworkQuery } from '../queries/useEthersNetworkQuery'
-import { useBridgeContract } from './useBridgeContract'
+import {BigNumber, ethers} from 'ethers'
+import {isHexString} from 'ethers/lib/utils'
+import {useMemo} from 'react'
+import {useNetworkContext} from '../../polkadot/hooks/useSubstrateNetwork'
+import {useEthers} from '../contexts/useEthers'
+import {useEthereumNetworkOptions} from '../queries/useEthereumNetworkOptions'
+import {useEthersNetworkQuery} from '../queries/useEthersNetworkQuery'
+import {useBridgeContract} from './useBridgeContract'
 
 type DepositSubmitFn = (
   amount: BigNumber,
@@ -18,11 +18,11 @@ type DepositSubmitFn = (
 export const useErc20Deposit = (
   sender?: string
 ): DepositSubmitFn | undefined => {
-  const { contract } = useBridgeContract()
-  const { network: substrateName } = useNetworkContext()
-  const { options: config } = useEthereumNetworkOptions()
-  const { data: network } = useEthersNetworkQuery()
-  const { provider } = useEthers()
+  const {contract} = useBridgeContract()
+  const {network: substrateName} = useNetworkContext()
+  const {options: config} = useEthereumNetworkOptions()
+  const {data: network} = useEthersNetworkQuery()
+  const {provider} = useEthers()
 
   const bridge = useMemo(() => {
     return contract !== undefined && provider !== undefined

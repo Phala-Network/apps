@@ -1,4 +1,4 @@
-import { abridgeString } from '@phala/utils'
+import {abridgeString} from '@phala/utils'
 import React from 'react'
 import styled from 'styled-components'
 
@@ -28,7 +28,7 @@ const NetworkName = styled.span`
 `
 
 const ItemInfoBlock: React.FC<ItemInfoBlockProps> = (props) => {
-  const { address, amount, network, ...others } = props
+  const {address, amount, network, ...others} = props
 
   return (
     <ItemInfoBlockRoot {...others}>

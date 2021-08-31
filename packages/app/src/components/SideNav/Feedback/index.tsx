@@ -2,7 +2,7 @@ import React from 'react'
 import FeedbackModal from './FeedbackModal'
 
 const Feedback: React.FC = (props) => {
-  const { children } = props
+  const {children} = props
   const [visible, setVisible] = React.useState(false)
 
   return (
@@ -10,7 +10,8 @@ const Feedback: React.FC = (props) => {
       <span
         onClick={() => {
           setVisible(!visible)
-        }}>
+        }}
+      >
         {children}
       </span>
 

@@ -1,8 +1,8 @@
-import { useEthersNetworkQuery } from '@phala/react-libs'
-import { captureException } from '@sentry/react'
-import { Decimal } from 'decimal.js'
-import { ethers } from 'ethers'
-import { useEffect, useState } from 'react'
+import {useEthersNetworkQuery} from '@phala/react-libs'
+import {captureException} from '@sentry/react'
+import {Decimal} from 'decimal.js'
+import {ethers} from 'ethers'
+import {useEffect, useState} from 'react'
 
 let flag = 0
 
@@ -11,7 +11,7 @@ export default function useEthereumAccountBalanceETHDecimal(address: string): {
   error: Error | null | undefined
 } {
   const [balanceDecimal, setBalanceDecimal] = useState<Decimal>(new Decimal(-1))
-  const { data: network } = useEthersNetworkQuery()
+  const {data: network} = useEthersNetworkQuery()
   const [error, setError] = useState<Error | null | undefined>()
 
   const handleError = (error: Error) => {

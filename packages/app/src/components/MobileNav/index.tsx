@@ -1,13 +1,13 @@
 import React from 'react'
 import styled from 'styled-components'
-import { up } from 'styled-breakpoints'
-import { useLocation } from '@reach/router'
+import {up} from 'styled-breakpoints'
+import {useLocation} from '@reach/router'
 import MobilePolkadotTicker from './MobilePolkadotTicket'
 import PhalaIcon from '../../icons/phala_icon.svg'
 import background from './mobile_nav_background.png'
 import Links from './Links'
 import MobileEthereumTicket from './MobileEthereumTicket'
-import { useSSR } from '@phala/react-hooks'
+import {useSSR} from '@phala/react-hooks'
 
 const Wrapper = styled.div`
   display: flex;
@@ -27,8 +27,8 @@ const Wrapper = styled.div`
 `
 
 const MobileNav: React.FC = () => {
-  const { isBrowser } = useSSR()
-  const { pathname } = useLocation()
+  const {isBrowser} = useSSR()
+  const {pathname} = useLocation()
 
   return (
     <Wrapper>

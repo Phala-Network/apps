@@ -1,4 +1,4 @@
-import React, { SVGProps } from 'react'
+import React, {SVGProps} from 'react'
 
 const Icon: React.FC<SVGProps<SVGSVGElement>> = (props) => {
   return (
@@ -8,7 +8,8 @@ const Icon: React.FC<SVGProps<SVGSVGElement>> = (props) => {
       viewBox="0 0 19 19"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      {...props}>
+      {...props}
+    >
       <path
         fillRule="evenodd"
         clipRule="evenodd"

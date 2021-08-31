@@ -1,4 +1,4 @@
-import { RegistryTypes } from '@polkadot/types/types'
+import {RegistryTypes} from '@polkadot/types/types'
 
 export interface EthereumNetworkOptions {
   /**

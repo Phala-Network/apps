@@ -1,4 +1,4 @@
-import { validateAddress } from '@polkadot/util-crypto'
+import {validateAddress} from '@polkadot/util-crypto'
 
 export default function (address: string): boolean {
   try {

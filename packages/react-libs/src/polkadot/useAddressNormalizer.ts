@@ -1,6 +1,6 @@
-import { ApiPromise } from '@polkadot/api'
-import { encodeAddress } from '@polkadot/util-crypto'
-import { useMemo } from 'react'
+import {ApiPromise} from '@polkadot/api'
+import {encodeAddress} from '@polkadot/util-crypto'
+import {useMemo} from 'react'
 
 export const useAddressNormalizer = (
   api?: ApiPromise

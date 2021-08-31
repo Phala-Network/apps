@@ -1,9 +1,9 @@
-import { useEthereumAccountAtom } from '@phala/app-store'
-import { BalanceLabel, EthereumAccountModal } from '@phala/react-components'
-import React, { useState } from 'react'
-import { toast } from 'react-toastify'
+import {useEthereumAccountAtom} from '@phala/app-store'
+import {BalanceLabel, EthereumAccountModal} from '@phala/react-components'
+import React, {useState} from 'react'
+import {toast} from 'react-toastify'
 import styled from 'styled-components'
-import { useCheckEthereumNetwork } from '../../hooks/useCheckEthereumNetwork'
+import {useCheckEthereumNetwork} from '../../hooks/useCheckEthereumNetwork'
 import useEthereumAccountBalanceETHDecimal from '../../hooks/useEthereumAccountBalanceETHDecimal'
 import Ticket, {
   DefaultStatus,
@@ -26,7 +26,7 @@ const TicketName = styled(_TicketName)`
 
 const EthereumTicket: React.FC = () => {
   const [ethereumAccount] = useEthereumAccountAtom()
-  const { value: ethereumAccountBalanceETHDecimal } =
+  const {value: ethereumAccountBalanceETHDecimal} =
     useEthereumAccountBalanceETHDecimal()
   const [selectAccountModalViable, setSelectAccountModalViable] =
     useState(false)
@@ -57,7 +57,8 @@ const EthereumTicket: React.FC = () => {
               </DefaultStatusIcon>
               <DefaultStatusName>Connet METAMASK</DefaultStatusName>
             </DefaultStatus>
-          }></Ticket>
+          }
+        ></Ticket>
       ) : (
         <Ticket
           onClick={openAccountSelectModal}

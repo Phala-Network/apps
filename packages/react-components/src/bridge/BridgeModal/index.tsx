@@ -1,5 +1,5 @@
 import React from 'react'
-import { Modal } from '../..'
+import {Modal} from '../..'
 import BridgeProcess from '../BridgeProcess'
 
 type Props = {
@@ -8,7 +8,7 @@ type Props = {
 }
 
 const BridgeModal: React.FC<Props> = (props) => {
-  const { visible, onClose } = props
+  const {visible, onClose} = props
 
   return (
     <Modal visible={visible} title="Bridge Modal">

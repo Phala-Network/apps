@@ -1,47 +1,51 @@
 scalar BigFloat
 
 type Query {
-    chainBridgeProposalApprovals(filter: ChainBridgeProposalEventFilter): ChainBridgeProposalApprovalsConnection
-    chainBridgeProposalExecutions(filter: ChainBridgeProposalEventFilter): ChainBridgeProposalExecutionsConnection
+  chainBridgeProposalApprovals(
+    filter: ChainBridgeProposalEventFilter
+  ): ChainBridgeProposalApprovalsConnection
+  chainBridgeProposalExecutions(
+    filter: ChainBridgeProposalEventFilter
+  ): ChainBridgeProposalExecutionsConnection
 }
 
 input ChainBridgeProposalEventFilter {
-    depositNonce: BigFloatFilter
-    originChainId: IntFilter
+  depositNonce: BigFloatFilter
+  originChainId: IntFilter
 
-    and: [ChainBridgeProposalEventFilter!]
+  and: [ChainBridgeProposalEventFilter!]
 }
 
 type ChainBridgeProposalApproval {
-    id: String!
-    depositNonce: BigFloat!
-    originChainId: Int!
-    approvalBlockHeight: BigFloat!
-    approvalExtrinsic: String!
-    signer: String!
+  id: String!
+  depositNonce: BigFloat!
+  originChainId: Int!
+  approvalBlockHeight: BigFloat!
+  approvalExtrinsic: String!
+  signer: String!
 }
 
 type ChainBridgeProposalApprovalsConnection {
-    nodes: [ChainBridgeProposalApproval]!
-    totalCount: Int!
+  nodes: [ChainBridgeProposalApproval]!
+  totalCount: Int!
 }
 
 type ChainBridgeProposalExecution {
-    id: String!
-    depositNonce: BigFloat!
-    originChainId: Int!
-    signer: String!
+  id: String!
+  depositNonce: BigFloat!
+  originChainId: Int!
+  signer: String!
 }
 
 type ChainBridgeProposalExecutionsConnection {
-    nodes: [ChainBridgeProposalExecution]!
-    totalCount: Int!
+  nodes: [ChainBridgeProposalExecution]!
+  totalCount: Int!
 }
 
 input BigFloatFilter {
-    equalTo: BigFloat
+  equalTo: BigFloat
 }
 
 input IntFilter {
-    equalTo: Int
+  equalTo: Int
 }

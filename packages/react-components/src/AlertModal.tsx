@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import Button from './Button'
-import { Modal } from './Modal'
+import {Modal} from './Modal'
 
 type Props = {
   content: React.ReactNode
@@ -25,7 +25,7 @@ const AlertModal: React.FC<Props> = (props) => {
   return (
     <Modal {...props} title="Alert">
       <Content>{props.content}</Content>
-      <Button style={{ width: '100%' }} onClick={() => props.onClose?.()}>
+      <Button style={{width: '100%'}} onClick={() => props.onClose?.()}>
         Cancel
       </Button>
     </Modal>

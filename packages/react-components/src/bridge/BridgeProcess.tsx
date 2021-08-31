@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, {useState} from 'react'
 import InputDataStep from './InputDataStep'
 import SubmitStep from './SubmitStep'
 
@@ -11,7 +11,7 @@ type Props = {
 } & StepProps
 
 const BridgeProcess: React.FC<Props> = (props) => {
-  const { layout = 'block' } = props
+  const {layout = 'block'} = props
   const [step, setStep] = useState(0)
 
   const next = () => {

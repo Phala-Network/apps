@@ -1,5 +1,5 @@
 import React from 'react'
-import { down, up } from 'styled-breakpoints'
+import {down, up} from 'styled-breakpoints'
 import styled from 'styled-components'
 import MobileNav from './MobileNav'
 import SideNav from './SideNav'
@@ -24,7 +24,7 @@ const Sider = styled.div`
 `
 
 const BaseLayout: React.FC = (props) => {
-  const { children } = props
+  const {children} = props
 
   return (
     <HomePageWrap>

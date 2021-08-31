@@ -1,6 +1,6 @@
-import { useEthereumAccountAtom } from '@phala/app-store'
-import { abridgeString } from '@phala/utils'
-import { useState } from 'react'
+import {useEthereumAccountAtom} from '@phala/app-store'
+import {abridgeString} from '@phala/utils'
+import {useState} from 'react'
 import styled from 'styled-components'
 import EthereumIcon from '../../icons/ethereum.svg'
 import ConnectButton from './ConnectButton'
@@ -36,12 +36,14 @@ const MobileEthereumTicket: React.FC = () => {
         </Account>
       ) : (
         <ConnectButton
-          onClick={() => setEmptyAccountModalVisible(true)}></ConnectButton>
+          onClick={() => setEmptyAccountModalVisible(true)}
+        ></ConnectButton>
       )}
 
       <EmptyAccountModal
         visible={emptyAccountModalVisible}
-        onClose={() => setEmptyAccountModalVisible(false)}></EmptyAccountModal>
+        onClose={() => setEmptyAccountModalVisible(false)}
+      ></EmptyAccountModal>
     </Wrapper>
   )
 }

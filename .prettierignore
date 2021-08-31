@@ -9,3 +9,4 @@ public
 env.config.js
 env.development.config.js
 next.config.js
+pnpm-lock.yaml

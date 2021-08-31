@@ -1,13 +1,13 @@
-import { ethereums } from '@phala/app-config'
+import {ethereums} from '@phala/app-config'
 import {
   useErc20Contract,
   useEthers,
   useTransactionReceiptQuery,
 } from '@phala/react-libs'
-import { ethers } from 'ethers'
-import React, { useEffect, useState } from 'react'
+import {ethers} from 'ethers'
+import React, {useEffect, useState} from 'react'
 import styled from 'styled-components'
-import { Button, Modal, ModalAction, ModalActions } from '../..'
+import {Button, Modal, ModalAction, ModalActions} from '../..'
 
 type Props = {
   visible: boolean
@@ -24,12 +24,12 @@ const Content = styled.div`
 `
 
 const ApproveDialog: React.FC<Props> = (props) => {
-  const { visible, onClose } = props
-  const { contract } = useErc20Contract()
-  const { provider, signer } = useEthers()
+  const {visible, onClose} = props
+  const {contract} = useErc20Contract()
+  const {provider, signer} = useEthers()
   const [isSubmitting, setSubmitting] = useState<boolean>(false)
   const [approveHash, setApproveHash] = useState('')
-  const { data: receipt } = useTransactionReceiptQuery(approveHash)
+  const {data: receipt} = useTransactionReceiptQuery(approveHash)
 
   const startApprove = async () => {
     try {

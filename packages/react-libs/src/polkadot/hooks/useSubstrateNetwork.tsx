@@ -1,4 +1,4 @@
-import { SubstrateNetworkOptions, substrates } from '@phala/app-config'
+import {SubstrateNetworkOptions, substrates} from '@phala/app-config'
 import {
   createContext,
   PropsWithChildren,
@@ -24,12 +24,12 @@ interface INetworkContext {
   setNetwork: (id: string) => void
 }
 
-const NetworkContext = createContext<INetworkContext>({ setNetwork: () => {} })
+const NetworkContext = createContext<INetworkContext>({setNetwork: () => {}})
 
 export const NetworkContextProvider = ({
   children,
   defaultNetwork,
-}: PropsWithChildren<{ defaultNetwork: string }>): JSX.Element => {
+}: PropsWithChildren<{defaultNetwork: string}>): JSX.Element => {
   const [network, setNetwork] = useState<string>(defaultNetwork)
 
   if (substrates[defaultNetwork] === undefined) {

@@ -1,9 +1,6 @@
-import {
-  useEthereumAccountAtom,
-  usePolkadotAccountAtom,
-} from '@phala/app-store'
-import React, { useState } from 'react'
-import { Button, EthereumAccountModal, PolkadotAccountModal } from '../..'
+import {useEthereumAccountAtom, usePolkadotAccountAtom} from '@phala/app-store'
+import React, {useState} from 'react'
+import {Button, EthereumAccountModal, PolkadotAccountModal} from '../..'
 
 type Props = {
   onClick(): void
@@ -11,7 +8,7 @@ type Props = {
 }
 
 const ActionButton: React.FC<Props> = (props) => {
-  const { onClick, isFromEthereum } = props
+  const {onClick, isFromEthereum} = props
 
   const [polkadotAccount] = usePolkadotAccountAtom()
   const [ethereumAccount] = useEthereumAccountAtom()
@@ -31,7 +28,8 @@ const ActionButton: React.FC<Props> = (props) => {
       <>
         <Button
           onClick={() => setPolkadotAccountModalViable(true)}
-          type="primary">{`Connect Polkadot{.js}`}</Button>
+          type="primary"
+        >{`Connect Polkadot{.js}`}</Button>
 
         <PolkadotAccountModal
           onClose={() => setPolkadotAccountModalViable(false)}
@@ -46,7 +44,8 @@ const ActionButton: React.FC<Props> = (props) => {
       <>
         <Button
           onClick={() => setEthereumAccountModalViable(true)}
-          type="primary">
+          type="primary"
+        >
           Connet METAMASK
         </Button>
 

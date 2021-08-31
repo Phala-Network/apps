@@ -1,5 +1,5 @@
 import currency from 'currency.js'
-import { Decimal } from 'decimal.js'
+import {Decimal} from 'decimal.js'
 import React from 'react'
 
 type Props = {
@@ -19,7 +19,7 @@ function trim(value: string): string {
 }
 
 const BalanceLabel: React.FC<Props> = (props) => {
-  const { precision = 4, value, type = '' } = props
+  const {precision = 4, value, type = ''} = props
   const zero = new Decimal(0)
 
   let balanceDisplay = ''
@@ -28,7 +28,7 @@ const BalanceLabel: React.FC<Props> = (props) => {
     balanceDisplay = '...'
   } else {
     // 1,000.0000
-    balanceDisplay = currency(value.toString(), { symbol: '', precision })
+    balanceDisplay = currency(value.toString(), {symbol: '', precision})
       .format()
       .toString()
 

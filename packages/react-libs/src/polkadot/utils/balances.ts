@@ -1,7 +1,7 @@
-import { ApiPromise } from '@polkadot/api'
-import { Balance } from '@polkadot/types/interfaces'
+import {ApiPromise} from '@polkadot/api'
+import {Balance} from '@polkadot/types/interfaces'
 import BN from 'bn.js'
-import { Decimal } from 'decimal.js'
+import {Decimal} from 'decimal.js'
 
 export function decimalToBN(decimal: Decimal, tokenDecimals: Decimal): BN
 export function decimalToBN(

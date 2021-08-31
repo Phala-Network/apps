@@ -1,9 +1,9 @@
-import { ethereums } from '@phala/app-config'
-import { Contract, ethers } from 'ethers'
-import { useMemo } from 'react'
-import { v4 as uuidv4 } from 'uuid'
-import { useEthers } from '../contexts/useEthers'
-import { useEthersNetworkQuery } from '../queries/useEthersNetworkQuery'
+import {ethereums} from '@phala/app-config'
+import {Contract, ethers} from 'ethers'
+import {useMemo} from 'react'
+import {v4 as uuidv4} from 'uuid'
+import {useEthers} from '../contexts/useEthers'
+import {useEthersNetworkQuery} from '../queries/useEthersNetworkQuery'
 
 export const BridgeInterface = [
   'event Deposit(uint8 destinationChainID, bytes32 resourceID, uint64 depositNonce)',
@@ -12,9 +12,9 @@ export const BridgeInterface = [
 
 export const useBridgeContract = (
   addressOrName?: string
-): { contract?: Contract; instance?: string } => {
-  const { signer } = useEthers()
-  const { data: network } = useEthersNetworkQuery()
+): {contract?: Contract; instance?: string} => {
+  const {signer} = useEthers()
+  const {data: network} = useEthersNetworkQuery()
   const chainId = network?.chainId
 
   return useMemo(() => {

@@ -1,6 +1,6 @@
 const NodePolyfillPlugin = require('node-polyfill-webpack-plugin')
 
-exports.onCreateBabelConfig = ({ actions }) => {
+exports.onCreateBabelConfig = ({actions}) => {
   actions.setBabelPreset({
     name: 'babel-preset-gatsby',
     options: {
@@ -9,7 +9,7 @@ exports.onCreateBabelConfig = ({ actions }) => {
   })
 }
 
-exports.onCreateWebpackConfig = ({ getConfig, actions }) => {
+exports.onCreateWebpackConfig = ({getConfig, actions}) => {
   if (getConfig().mode === 'production') {
     actions.setWebpackConfig({
       devtool: false,

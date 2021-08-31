@@ -1,4 +1,4 @@
-import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types'
+import {InjectedAccountWithMeta} from '@polkadot/extension-inject/types'
 import {
   createContext,
   PropsWithChildren,
@@ -7,7 +7,7 @@ import {
   useEffect,
   useState,
 } from 'react'
-import { useApiPromise } from './useApiPromise'
+import {useApiPromise} from './useApiPromise'
 
 export type Readystate = 'disabled' | 'enabling' | 'ready' | 'failed'
 
@@ -36,16 +36,16 @@ const importPolkadotExtensionDapp = () =>
 export const Web3Provider = ({
   children,
   originName,
-}: PropsWithChildren<{ originName: string }>): ReactElement => {
+}: PropsWithChildren<{originName: string}>): ReactElement => {
   const [accounts, setAccounts] = useState<InjectedAccountWithMeta[]>([])
   const [readystate, setReadystate] = useState<Readystate>('disabled')
   const [enabled, setEnabled] = useState<boolean>(false)
 
-  const { api } = useApiPromise()
+  const {api} = useApiPromise()
 
   useEffect(() => {
     importPolkadotExtensionDapp()
-      .then(({ web3Enable, isWeb3Injected }) => {
+      .then(({web3Enable, isWeb3Injected}) => {
         setReadystate('enabling')
 
         logDebug('@polkadot/extension-dapp imported', isWeb3Injected)
@@ -73,7 +73,7 @@ export const Web3Provider = ({
     if (!api || readystate !== 'ready') return
 
     const unsub = importPolkadotExtensionDapp()
-      .then(async ({ web3AccountsSubscribe }) => {
+      .then(async ({web3AccountsSubscribe}) => {
         const unsub = await web3AccountsSubscribe(
           (accounts) => {
             setAccounts(accounts)
@@ -82,7 +82,7 @@ export const Web3Provider = ({
               accounts.map((account) => account.address).join(', ')
             )
           },
-          { ss58Format: api.registry.chainSS58 }
+          {ss58Format: api.registry.chainSS58}
         )
         logDebug('Subscribed to account injection updates')
         return unsub
@@ -104,7 +104,7 @@ export const Web3Provider = ({
       })
 
     importPolkadotExtensionDapp()
-      .then(async ({ web3Accounts }) => {
+      .then(async ({web3Accounts}) => {
         const accounts = await web3Accounts({
           ss58Format: api?.registry.chainSS58,
         })
@@ -125,7 +125,7 @@ export const Web3Provider = ({
   }, [api, readystate])
 
   return (
-    <Web3Context.Provider value={{ accounts, readystate, enabled }}>
+    <Web3Context.Provider value={{accounts, readystate, enabled}}>
       {children}
     </Web3Context.Provider>
   )

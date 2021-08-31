@@ -1,8 +1,8 @@
-import { BigNumber } from 'ethers'
-import { useQuery, UseQueryResult } from 'react-query'
-import { v4 as uuidv4 } from 'uuid'
-import { useErc20HandlerInterface } from '../bridge/useErc20HandlerContract'
-import { useEthersNetworkQuery } from './useEthersNetworkQuery'
+import {BigNumber} from 'ethers'
+import {useQuery, UseQueryResult} from 'react-query'
+import {v4 as uuidv4} from 'uuid'
+import {useErc20HandlerInterface} from '../bridge/useErc20HandlerContract'
+import {useEthersNetworkQuery} from './useEthersNetworkQuery'
 
 interface DepositHandlerContract {
   getDepositRecord: (nonce: number, destChainId: number) => Promise<unknown[]>
@@ -23,8 +23,8 @@ export const useDepositRecordQuery = (
   destChainId?: number,
   nonce?: number
 ): UseQueryResult<DepositRecord> => {
-  const { contract: handler } = useErc20HandlerInterface()
-  const { data: network } = useEthersNetworkQuery()
+  const {contract: handler} = useErc20HandlerInterface()
+  const {data: network} = useEthersNetworkQuery()
 
   return useQuery(
     [DepositRecordQueryKey, destChainId, nonce, network?.chainId],
@@ -37,10 +37,9 @@ export const useDepositRecordQuery = (
         return
       }
 
-      const result = await ((handler as unknown) as DepositHandlerContract).getDepositRecord(
-        nonce,
-        destChainId
-      )
+      const result = await (
+        handler as unknown as DepositHandlerContract
+      ).getDepositRecord(nonce, destChainId)
 
       return result !== undefined
         ? {

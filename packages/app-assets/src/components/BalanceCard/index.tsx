@@ -1,10 +1,10 @@
-import { toFixed } from '@phala/utils'
+import {toFixed} from '@phala/utils'
 import Decimal from 'decimal.js'
-import React, { useMemo, useRef } from 'react'
-import { down } from 'styled-breakpoints'
-import styled, { css } from 'styled-components'
+import React, {useMemo, useRef} from 'react'
+import {down} from 'styled-breakpoints'
+import styled, {css} from 'styled-components'
 import Dollar from './Dollar'
-import Menu, { MenuProps } from './Menu'
+import Menu, {MenuProps} from './Menu'
 import useHoverDirty from './useHoverDirty'
 
 type Props = {
@@ -14,7 +14,7 @@ type Props = {
   dollar?: Decimal | number
 } & MenuProps
 
-const Wrap = styled.div<{ active: boolean }>`
+const Wrap = styled.div<{active: boolean}>`
   width: 144px;
   height: 128px;
   padding: 8px;
@@ -118,7 +118,8 @@ const BalanceCard: React.FC<Props> = (props) => {
           disableTransfer={disableTransfer}
           disableBridge={disableBridge}
           disableConvert={disableConvert}
-          disableClaim={disableClaim}></Menu>
+          disableClaim={disableClaim}
+        ></Menu>
       </Wrap>
     </Background>
   )

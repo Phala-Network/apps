@@ -1,1 +1,1 @@
-export { getCMSLog } from './getCMSLog'
+export {getCMSLog} from './getCMSLog'

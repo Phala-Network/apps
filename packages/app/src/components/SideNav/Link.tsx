@@ -1,7 +1,7 @@
 import styled from 'styled-components'
-import { Link as GatsbyLink } from 'gatsby-plugin-intl'
+import {Link as GatsbyLink} from 'gatsby-plugin-intl'
 
-const Link = styled(GatsbyLink).attrs({ activeClassName: 'active' })`
+const Link = styled(GatsbyLink).attrs({activeClassName: 'active'})`
   font-family: Lato;
   font-style: normal;
   font-weight: bold;

@@ -1,5 +1,5 @@
-import { useCurrentState } from '@phala/react-hooks'
-import React, { MouseEvent, useCallback } from 'react'
+import {useCurrentState} from '@phala/react-hooks'
+import React, {MouseEvent, useCallback} from 'react'
 import styled from 'styled-components'
 
 const Wrap = styled.div`
@@ -83,12 +83,14 @@ const Backdrop: React.FC<Props> = ({
       className="backdrop"
       onClick={clickHandler}
       onMouseUp={mouseUpHandler}
-      {...props}>
+      {...props}
+    >
       <Layer></Layer>
       <Content
         onClick={childrenClickHandler}
         className="content"
-        onMouseDown={() => setIsContentMouseDown(true)}>
+        onMouseDown={() => setIsContentMouseDown(true)}
+      >
         {children}
       </Content>
     </Wrap>

@@ -14,7 +14,7 @@ type Props = {
 }
 
 const ConvertModal: React.FC<Props> = (props) => {
-  const { visible, onClose } = props
+  const {visible, onClose} = props
 
   return (
     <Modal
@@ -27,16 +27,18 @@ const ConvertModal: React.FC<Props> = (props) => {
           Cancel
         </Button>,
       ]}
-      title="Convert to pPHA">
+      title="Convert to pPHA"
+    >
       <InputNumber
         size="large"
         placeholder="Amount (PHA)"
-        after={<InputAction>MAX</InputAction>}></InputNumber>
+        after={<InputAction>MAX</InputAction>}
+      ></InputNumber>
 
       <Spacer y={0.2}></Spacer>
 
       <InputExternalInfo
-        style={{ textAlign: 'right' }}
+        style={{textAlign: 'right'}}
         {...{
           label: 'Balance',
           value: 1234.56789,

@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { DollarIcon } from '../Icons/DollarIcon'
+import {DollarIcon} from '../Icons/DollarIcon'
 
 type Props = {
   themeType: 'black' | 'white'
@@ -24,7 +24,7 @@ const DollarWrap = styled.div`
   }
 `
 
-const Icon = styled.div<{ themeType: 'black' | 'white' }>`
+const Icon = styled.div<{themeType: 'black' | 'white'}>`
   width: 18px;
   height: 18px;
   background-color: ${(props) =>
@@ -39,7 +39,7 @@ const Balance = styled.div`
 `
 
 const Dollar: React.FC<Props> = (props) => {
-  const { children, themeType } = props
+  const {children, themeType} = props
 
   return (
     <DollarWrap className={themeType}>

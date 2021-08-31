@@ -1,4 +1,4 @@
-import { Spacer } from '@phala/react-components'
+import {Spacer} from '@phala/react-components'
 import React from 'react'
 import styled from 'styled-components'
 import EthereumTicket from './EthereumTicket'

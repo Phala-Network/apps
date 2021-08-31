@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import {useEffect, useState} from 'react'
 import useSSR from './useSSR'
 
 const createElement = (id: string): HTMLElement => {
@@ -12,7 +12,7 @@ const usePortal = (
   getContainer?: () => HTMLElement | null
 ): HTMLElement | null => {
   const id = selectId
-  const { isBrowser } = useSSR()
+  const {isBrowser} = useSSR()
   const [elSnapshot, setElSnapshot] = useState<HTMLElement | null>(
     isBrowser ? createElement(id) : null
   )

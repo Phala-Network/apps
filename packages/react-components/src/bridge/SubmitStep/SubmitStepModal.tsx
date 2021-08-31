@@ -1,8 +1,8 @@
-import { TransactionInfo } from '@phala/app-types'
-import React, { Dispatch, SetStateAction, useState } from 'react'
+import {TransactionInfo} from '@phala/app-types'
+import React, {Dispatch, SetStateAction, useState} from 'react'
 import SubmitStep from '.'
-import { Modal } from '../..'
-import { InputDataStepResult } from '../InputDataStep'
+import {Modal} from '../..'
+import {InputDataStepResult} from '../InputDataStep'
 
 type Props = {
   visible: boolean
@@ -11,7 +11,7 @@ type Props = {
 }
 
 const SubmitStepModal: React.FC<Props> = (props) => {
-  const { visible, submitData, setModalVisible } = props
+  const {visible, submitData, setModalVisible} = props
   const [, setTransactionInfo] = useState<TransactionInfo>()
   const [, setResultStepModalVisible] = useState(false)
 

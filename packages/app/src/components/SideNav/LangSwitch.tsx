@@ -1,5 +1,5 @@
-import { changeLocale, IntlContext } from 'gatsby-plugin-intl'
-import React, { useContext } from 'react'
+import {changeLocale, IntlContext} from 'gatsby-plugin-intl'
+import React, {useContext} from 'react'
 import styled from 'styled-components'
 
 const Text = styled.div`
@@ -17,7 +17,7 @@ const Lang = styled.span`
 `
 
 const LangSwitch: React.FC = () => {
-  const { locale } = useContext(IntlContext)
+  const {locale} = useContext(IntlContext)
   const langSwitch =
     locale === 'en' ? (
       <Lang onClick={() => changeLocale('zh')}>中文(中国)</Lang>

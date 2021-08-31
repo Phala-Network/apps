@@ -1,1 +1,1 @@
-export { Provider } from 'jotai'
+export {Provider} from 'jotai'

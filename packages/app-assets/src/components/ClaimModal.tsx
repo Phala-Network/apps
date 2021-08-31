@@ -1,14 +1,14 @@
-import { usePolkadotAccountAtom } from '@phala/app-store'
-import { Alert, Button, Modal } from '@phala/react-components'
+import {usePolkadotAccountAtom} from '@phala/app-store'
+import {Alert, Button, Modal} from '@phala/react-components'
 import {
   bnToDecimal,
   useApiPromise,
   useDecimalJsTokenDecimalMultiplier,
   vest,
 } from '@phala/react-libs'
-import { BN } from '@polkadot/util'
-import React, { useCallback, useState } from 'react'
-import { toast } from 'react-toastify'
+import {BN} from '@polkadot/util'
+import React, {useCallback, useState} from 'react'
+import {toast} from 'react-toastify'
 import styled from 'styled-components'
 import useAllBalances from '../hooks/useAllBalances'
 
@@ -35,13 +35,13 @@ const Info = styled.div`
   }
 `
 
-const ClaimModal: React.FC<Props> = ({ visible, onClose }) => {
+const ClaimModal: React.FC<Props> = ({visible, onClose}) => {
   const [loading, setLoading] = useState(false)
   const allBalances = useAllBalances()
-  const { api } = useApiPromise()
+  const {api} = useApiPromise()
   const polkadotAccount = usePolkadotAccountAtom()[0]?.address
   const decimals = useDecimalJsTokenDecimalMultiplier(api)
-  const { vestingLocked, vestedClaimable, vestedBalance } = allBalances || {}
+  const {vestingLocked, vestedClaimable, vestedBalance} = allBalances || {}
 
   const format = useCallback<(bn: BN | undefined) => string>(
     (bn) => {
@@ -56,7 +56,7 @@ const ClaimModal: React.FC<Props> = ({ visible, onClose }) => {
   const confirm = useCallback(() => {
     if (api && polkadotAccount) {
       setLoading(true)
-      vest({ api, sender: polkadotAccount })
+      vest({api, sender: polkadotAccount})
         .then(() => {
           toast('Success')
           onClose()
@@ -84,10 +84,12 @@ const ClaimModal: React.FC<Props> = ({ visible, onClose }) => {
           disabled={loading || !canClaim}
           onClick={confirm}
           key="confirm"
-          type="primary">
+          type="primary"
+        >
           {loading ? 'Confirming' : 'Confirm'}
         </Button>,
-      ]}>
+      ]}
+    >
       <Text>
         You have unlocked{' '}
         {format(vestedClaimable && vestedBalance?.sub(vestedClaimable))} PHA,

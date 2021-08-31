@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { up, down } from 'styled-breakpoints'
+import {up, down} from 'styled-breakpoints'
 
 const Point = styled.div`
   width: 12px;
@@ -64,7 +64,7 @@ type Props = {
 }
 
 const Category: React.FC<Props> = (props) => {
-  const { children, title, description } = props
+  const {children, title, description} = props
 
   return (
     <CategoryWrap>

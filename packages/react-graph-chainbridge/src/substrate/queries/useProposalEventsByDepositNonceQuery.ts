@@ -1,7 +1,7 @@
-import { GraphQLClient } from 'graphql-request'
-import { useMemo } from 'react'
-import { useQuery, UseQueryResult } from 'react-query'
-import { v4 as uuidv4 } from 'uuid'
+import {GraphQLClient} from 'graphql-request'
+import {useMemo} from 'react'
+import {useQuery, UseQueryResult} from 'react-query'
+import {v4 as uuidv4} from 'uuid'
 import {
   ChainBridgeProposalApproval,
   ChainBridgeProposalExecution,

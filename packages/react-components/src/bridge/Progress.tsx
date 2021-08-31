@@ -34,7 +34,7 @@ export interface ProgressProps {
 }
 
 const Progress: React.FC<ProgressProps> = (props) => {
-  const { steps, progressIndex = -1 } = props
+  const {steps, progressIndex = -1} = props
   const items = steps || []
 
   return (
@@ -50,7 +50,8 @@ const Progress: React.FC<ProgressProps> = (props) => {
             height="8"
             viewBox="0 0 10 8"
             fill="none"
-            xmlns="http://www.w3.org/2000/svg">
+            xmlns="http://www.w3.org/2000/svg"
+          >
             <path
               fillRule="evenodd"
               clipRule="evenodd"

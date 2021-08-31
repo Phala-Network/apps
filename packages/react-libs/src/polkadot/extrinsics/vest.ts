@@ -1,6 +1,6 @@
-import { ApiPromise } from '@polkadot/api'
-import { ExtrinsicStatus, Hash } from '@polkadot/types/interfaces'
-import { waitSignAndSend } from '../utils/signAndSend'
+import {ApiPromise} from '@polkadot/api'
+import {ExtrinsicStatus, Hash} from '@polkadot/types/interfaces'
+import {waitSignAndSend} from '../utils/signAndSend'
 
 interface VestProps {
   api: ApiPromise

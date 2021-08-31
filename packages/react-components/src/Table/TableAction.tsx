@@ -28,7 +28,7 @@ const Styles = styled.div`
 `
 
 const TableAction: React.FC<Props> = (props) => {
-  const { children } = props
+  const {children} = props
 
   return <Styles>{children}</Styles>
 }

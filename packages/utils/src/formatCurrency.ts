@@ -1,4 +1,4 @@
-import { isNumber } from '@polkadot/util'
+import {isNumber} from '@polkadot/util'
 
 export default function formatCurrency(value: number | string): string {
   let string

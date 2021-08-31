@@ -1,7 +1,7 @@
-import { TransactionRecord } from '@phala/app-types'
-import { ResultStepModal } from '@phala/react-components'
-import { useBridgePhalaRecordInfo } from '@phala/react-libs'
-import React, { useMemo, useState } from 'react'
+import {TransactionRecord} from '@phala/app-types'
+import {ResultStepModal} from '@phala/react-components'
+import {useBridgePhalaRecordInfo} from '@phala/react-libs'
+import React, {useMemo, useState} from 'react'
 import styled from 'styled-components'
 import ArrowIcon from './ArrowIcon'
 import ItemInfoBlock from './ItemInfoBlock'
@@ -36,10 +36,10 @@ const Line = styled.div`
 `
 
 const TransactionsListItem: React.FC<TransactionsListItemProps> = (props) => {
-  const { record } = props
-  const { depositor } = record
+  const {record} = props
+  const {depositor} = record
   const [modalVisible, setModalVisible] = useState(false)
-  const { events, proposal, hash, convertedAmount, destinationRecipient } =
+  const {events, proposal, hash, convertedAmount, destinationRecipient} =
     useBridgePhalaRecordInfo(record)
 
   const status = useMemo(() => {
@@ -64,14 +64,16 @@ const TransactionsListItem: React.FC<TransactionsListItemProps> = (props) => {
         <ItemInfoBlock
           network="Ethereum"
           amount={convertedAmount || ''}
-          address={depositor || ''}></ItemInfoBlock>
+          address={depositor || ''}
+        ></ItemInfoBlock>
 
         <ArrowIcon />
 
         <ItemInfoBlock
           network="Khala"
           amount={convertedAmount || ''}
-          address={destinationRecipient}></ItemInfoBlock>
+          address={destinationRecipient}
+        ></ItemInfoBlock>
 
         <JumpIcon />
 

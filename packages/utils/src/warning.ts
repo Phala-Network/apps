@@ -1,4 +1,4 @@
-const warningStack: { [key: string]: boolean } = {}
+const warningStack: {[key: string]: boolean} = {}
 
 const warning = (message: string, component?: string) => {
   const tag = component ? ` [${component}]` : ' '

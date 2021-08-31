@@ -1,5 +1,5 @@
-import { TransactionRecords } from '@phala/app-types'
-import { down } from 'styled-breakpoints'
+import {TransactionRecords} from '@phala/app-types'
+import {down} from 'styled-breakpoints'
 import styled from 'styled-components'
 import scrollbar from './scrollbar'
 import TransactionsListItem from './TransactionsListItem'
@@ -29,7 +29,7 @@ const TransactionsListRoot = styled.div`
 `
 
 const TransactionsList: React.FC<Props> = (props) => {
-  const { records } = props
+  const {records} = props
 
   return (
     <TransactionsListRoot>

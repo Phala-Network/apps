@@ -1,7 +1,7 @@
-import { ethers, Signer } from 'ethers'
-import { createContext, PropsWithChildren, useContext, useMemo } from 'react'
-import { v4 as uuidv4 } from 'uuid'
-import { Readystate, useWeb3 } from './useWeb3'
+import {ethers, Signer} from 'ethers'
+import {createContext, PropsWithChildren, useContext, useMemo} from 'react'
+import {v4 as uuidv4} from 'uuid'
+import {Readystate, useWeb3} from './useWeb3'
 
 type ExternalProvider = ethers.providers.ExternalProvider
 type Web3Provider = ethers.providers.Web3Provider
@@ -20,7 +20,7 @@ const EthersContext = createContext<IEthersContext>({
 export const EthersProvider = ({
   children,
 }: PropsWithChildren<unknown>): JSX.Element => {
-  const { provider: externalProvider, readystate } = useWeb3()
+  const {provider: externalProvider, readystate} = useWeb3()
 
   const provider = useMemo(
     () =>
@@ -40,7 +40,7 @@ export const EthersProvider = ({
   // TODO: use ethers.fallbackprovider as provider
 
   return (
-    <EthersContext.Provider value={{ instance, provider, readystate, signer }}>
+    <EthersContext.Provider value={{instance, provider, readystate, signer}}>
       {children}
     </EthersContext.Provider>
   )

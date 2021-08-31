@@ -1,5 +1,5 @@
-import { useClickAway } from '@phala/react-hooks'
-import React, { ComponentProps, useRef } from 'react'
+import {useClickAway} from '@phala/react-hooks'
+import React, {ComponentProps, useRef} from 'react'
 import styled from 'styled-components'
 
 const Wrapper = styled.div<{
@@ -41,7 +41,7 @@ type Props = {
 } & Omit<ComponentProps<'textarea'>, 'onChange'>
 
 const Textarea: React.FC<Props> = (props) => {
-  const { onChange, ...otherProps } = props
+  const {onChange, ...otherProps} = props
   const [active, setActive] = React.useState(false)
   const ref = useRef<HTMLTextAreaElement>(null)
 
@@ -56,7 +56,8 @@ const Textarea: React.FC<Props> = (props) => {
         onChange={(e) => onChange?.(e.target.value)}
         ref={ref}
         onClick={() => setActive(true)}
-        onBlur={() => setActive(false)}></textarea>
+        onBlur={() => setActive(false)}
+      ></textarea>
     </Wrapper>
   )
 }

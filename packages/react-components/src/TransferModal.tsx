@@ -3,7 +3,7 @@ import Button from './Button'
 import InputAction from './InputAction'
 import InputExternalInfo from './InputExternalInfo'
 import InputNumber from './InputNumber'
-import { Modal } from './Modal'
+import {Modal} from './Modal'
 import Spacer from './Spacer'
 
 type Props = {
@@ -12,7 +12,7 @@ type Props = {
 }
 
 const TransferModal: React.FC<Props> = (props) => {
-  const { visible, onClose } = props
+  const {visible, onClose} = props
 
   return (
     <Modal
@@ -25,22 +25,25 @@ const TransferModal: React.FC<Props> = (props) => {
           Cancel
         </Button>,
       ]}
-      title="Transfer Modal">
+      title="Transfer Modal"
+    >
       <Spacer></Spacer>
       <InputNumber
         size="large"
         placeholder="Address"
-        after={<InputAction>MY ADDRESS</InputAction>}></InputNumber>
+        after={<InputAction>MY ADDRESS</InputAction>}
+      ></InputNumber>
       <Spacer></Spacer>
       <InputNumber
         size="large"
         placeholder="Amount (PHA)"
-        after={<InputAction>MAX</InputAction>}></InputNumber>
+        after={<InputAction>MAX</InputAction>}
+      ></InputNumber>
 
       <Spacer y={0.2}></Spacer>
 
       <InputExternalInfo
-        style={{ textAlign: 'right' }}
+        style={{textAlign: 'right'}}
         {...{
           label: 'Balance',
           value: 1234.56789,

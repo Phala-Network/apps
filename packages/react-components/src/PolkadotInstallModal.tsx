@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import Button from './Button'
-import { Modal } from './Modal'
+import {Modal} from './Modal'
 
 type Props = {
   visible: boolean
@@ -26,11 +26,12 @@ const PolkadotInstallModal: React.FC<Props> = (props) => {
       <Content>{`No Polkadot{.js} extension found, please install it first.`}</Content>
       <Button
         type="primary"
-        style={{ width: '100%' }}
+        style={{width: '100%'}}
         onClick={() => {
           window.open('https://polkadot.js.org/extension/')
           props.onClose()
-        }}>
+        }}
+      >
         Install
       </Button>
     </Modal>

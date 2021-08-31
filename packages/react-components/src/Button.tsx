@@ -1,5 +1,5 @@
 import React from 'react'
-import styled, { css } from 'styled-components'
+import styled, {css} from 'styled-components'
 
 type ButtonProps = {
   type?: 'normal' | 'primary'
@@ -28,9 +28,9 @@ const ButtonWrap = styled.button<ButtonProps>`
   border-style: solid;
   border-color: transparent;
   border-radius: ${(props) => (props.shape === 'round' ? 56 : 0)}px;
-  color: ${({ disabled }) => (disabled ? 'rgba(32, 32, 32, 0.3)' : '#494949')};
+  color: ${({disabled}) => (disabled ? 'rgba(32, 32, 32, 0.3)' : '#494949')};
 
-  ${({ disabled }) =>
+  ${({disabled}) =>
     !disabled &&
     css`
       &:hover {
@@ -44,7 +44,7 @@ const ButtonWrap = styled.button<ButtonProps>`
   }
 
   /* FIXME */
-  ${({ type, theme }): any => {
+  ${({type, theme}): any => {
     if (type === 'primary') {
       return css`
         background: ${theme.colors.phala};
@@ -85,7 +85,8 @@ const Button: React.FC<Props> = (props) => {
       type={type}
       disabled={loading || disabled}
       shape={shape}
-      {...others}>
+      {...others}
+    >
       {children}
 
       {loading && <Loading></Loading>}

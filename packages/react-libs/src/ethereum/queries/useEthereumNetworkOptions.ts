@@ -1,6 +1,6 @@
-import { EthereumNetworkOptions, ethereums } from '@phala/app-config'
-import { useMemo } from 'react'
-import { useEthersNetworkQuery } from './useEthersNetworkQuery'
+import {EthereumNetworkOptions, ethereums} from '@phala/app-config'
+import {useMemo} from 'react'
+import {useEthersNetworkQuery} from './useEthersNetworkQuery'
 
 type UseEthereumNetworkOptionsResult = {
   // TODO: use type guard?
@@ -34,7 +34,7 @@ class NetworkUndefinedError extends Error {
 export const useEthereumNetworkOptions = (
   chainId?: number
 ): UseEthereumNetworkOptionsResult => {
-  const { data: network } = useEthersNetworkQuery()
+  const {data: network} = useEthersNetworkQuery()
   chainId = chainId ?? network?.chainId
   return useMemo<UseEthereumNetworkOptionsResult>(() => {
     if (typeof chainId !== 'number') {
@@ -46,7 +46,7 @@ export const useEthereumNetworkOptions = (
     const result = ethereums[chainId]
 
     if (result !== undefined) {
-      return { options: result }
+      return {options: result}
     } else {
       return {
         error: new NetworkUndefinedError(

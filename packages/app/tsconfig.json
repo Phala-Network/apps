@@ -15,7 +15,6 @@
     {"path": "../app-console"},
     {"path": "../app-assets"},
     {"path": "../app-bridge"},
-    {"path": "../app-console"},
     {"path": "../utils"},
     {"path": "../react-libs"},
     {"path": "../react-hooks"},

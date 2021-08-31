@@ -1,5 +1,5 @@
-import { abridgeString } from '@phala/utils'
-import React, { ComponentProps, useEffect } from 'react'
+import {abridgeString} from '@phala/utils'
+import React, {ComponentProps, useEffect} from 'react'
 import styled from 'styled-components'
 
 type Props = {
@@ -64,7 +64,7 @@ export const TicketName = styled.div`
 `
 
 const Ticket: React.FC<Props> = (props) => {
-  const { no, bottomContent, name, cover, ...others } = props
+  const {no, bottomContent, name, cover, ...others} = props
   const [isActive, setIsActive] = React.useState(false)
 
   useEffect(() => {
@@ -83,9 +83,7 @@ const Ticket: React.FC<Props> = (props) => {
             <No2> {abridgeString(no)}</No2>
 
             {bottomContent ? (
-              <div style={{ marginTop: 4, display: 'flex' }}>
-                {bottomContent}
-              </div>
+              <div style={{marginTop: 4, display: 'flex'}}>{bottomContent}</div>
             ) : null}
           </>
         ) : (

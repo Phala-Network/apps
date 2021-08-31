@@ -1,4 +1,4 @@
-import { Account } from '@phala/app-types'
+import {Account} from '@phala/app-types'
 import React from 'react'
 import styled from 'styled-components'
 
@@ -55,7 +55,8 @@ const icon = (
     height="7"
     viewBox="0 0 10 7"
     fill="none"
-    xmlns="http://www.w3.org/2000/svg">
+    xmlns="http://www.w3.org/2000/svg"
+  >
     <path
       fillRule="evenodd"
       clipRule="evenodd"
@@ -66,12 +67,13 @@ const icon = (
 )
 
 const AccountOption: React.FC<Props> = (props) => {
-  const { name = '', address, active = false, onClick } = props
+  const {name = '', address, active = false, onClick} = props
 
   return (
     <AccountOptionWithStyle
       className={active ? 'active' : ''}
-      onClick={() => onClick({ name, address })}>
+      onClick={() => onClick({name, address})}
+    >
       <div>
         {name && <Name>{name}</Name>}
         {address && <Address>{address}</Address>}

@@ -1,6 +1,6 @@
-import { useSSR } from '@phala/react-hooks'
-import { Property } from 'csstype'
-import React, { useMemo } from 'react'
+import {useSSR} from '@phala/react-hooks'
+import {Property} from 'csstype'
+import React, {useMemo} from 'react'
 import styled from 'styled-components'
 
 export type BlockStripeProps = {
@@ -49,7 +49,7 @@ const BlockStripe: React.FC<BlockStripeProps> = (props) => {
     ...others
   } = props
 
-  const { isServer } = useSSR()
+  const {isServer} = useSSR()
 
   const data = useMemo(
     () => new Array(row * column).fill(0).map(Math.random),

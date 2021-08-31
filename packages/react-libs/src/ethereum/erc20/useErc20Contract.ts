@@ -1,9 +1,9 @@
-import { ethereums } from '@phala/app-config'
-import { Contract, ethers } from 'ethers'
-import { useMemo } from 'react'
-import { v4 as uuidv4 } from 'uuid'
-import { useEthers } from '../contexts/useEthers'
-import { useEthersNetworkQuery } from '../queries/useEthersNetworkQuery'
+import {ethereums} from '@phala/app-config'
+import {Contract, ethers} from 'ethers'
+import {useMemo} from 'react'
+import {v4 as uuidv4} from 'uuid'
+import {useEthers} from '../contexts/useEthers'
+import {useEthersNetworkQuery} from '../queries/useEthersNetworkQuery'
 
 const contractInterface = [
   'function allowance(address owner, address spender) external view returns (uint256)',
@@ -13,9 +13,9 @@ const contractInterface = [
 
 export const useErc20Contract = (
   addressOrName?: string
-): { contract?: Contract; instance?: string } => {
-  const { signer } = useEthers()
-  const { data: network } = useEthersNetworkQuery()
+): {contract?: Contract; instance?: string} => {
+  const {signer} = useEthers()
+  const {data: network} = useEthersNetworkQuery()
   const chainId = network?.chainId
 
   return useMemo(() => {

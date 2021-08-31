@@ -1,15 +1,15 @@
-import { ethereums } from '@phala/app-config'
-import { Contract, ethers } from 'ethers'
-import { useMemo } from 'react'
-import { useEthers } from '../contexts/useEthers'
-import { useEthersNetworkQuery } from '../queries/useEthersNetworkQuery'
+import {ethereums} from '@phala/app-config'
+import {Contract, ethers} from 'ethers'
+import {useMemo} from 'react'
+import {useEthers} from '../contexts/useEthers'
+import {useEthersNetworkQuery} from '../queries/useEthersNetworkQuery'
 import abi from './Erc20HandlerAbi.json'
 
 export const useErc20HandlerInterface = (
   addressOrName?: string
-): { contract?: Contract; instance?: string } => {
-  const { signer } = useEthers()
-  const { data: network } = useEthersNetworkQuery()
+): {contract?: Contract; instance?: string} => {
+  const {signer} = useEthers()
+  const {data: network} = useEthersNetworkQuery()
   const chainId = network?.chainId
 
   return useMemo(() => {
