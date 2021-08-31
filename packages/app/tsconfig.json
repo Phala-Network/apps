@@ -3,7 +3,6 @@
   "compilerOptions": {
     "target": "ES6",
     "module": "CommonJS",
-    "rootDir": "./src",
     "composite": true,
     "strict": true,
     "moduleResolution": "node",

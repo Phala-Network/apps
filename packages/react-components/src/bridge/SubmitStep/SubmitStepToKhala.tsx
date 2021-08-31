@@ -1,8 +1,10 @@
 import { useTransactionsInfoAtom } from '@phala/app-store'
 import { TransactionInfoItem } from '@phala/app-types'
-import { useErc20Deposit } from '@phala/react-libs/esm/ethereum/bridge/deposit'
-import { useErc20BalanceQuery } from '@phala/react-libs/esm/ethereum/queries/useErc20BalanceQuery'
-import { useTransactionReceiptQuery } from '@phala/react-libs/esm/ethereum/queries/useTransactionReceiptQuery'
+import {
+  useErc20BalanceQuery,
+  useErc20Deposit,
+  useTransactionReceiptQuery,
+} from '@phala/react-libs'
 import { u8aToHex } from '@polkadot/util'
 import { decodeAddress } from '@polkadot/util-crypto'
 import { ethers } from 'ethers'

@@ -1,5 +1,14 @@
 const NodePolyfillPlugin = require('node-polyfill-webpack-plugin')
 
+exports.onCreateBabelConfig = ({ actions }) => {
+  actions.setBabelPreset({
+    name: 'babel-preset-gatsby',
+    options: {
+      reactRuntime: 'automatic',
+    },
+  })
+}
+
 exports.onCreateWebpackConfig = ({ getConfig, actions }) => {
   if (getConfig().mode === 'production') {
     actions.setWebpackConfig({

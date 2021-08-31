@@ -1,4 +1,4 @@
-import { useErc20AssetHandlerAllowanceQuery } from '@phala/react-libs/esm/ethereum/queries/useErc20AllowanceQuery'
+import { useErc20AssetHandlerAllowanceQuery } from '@phala/react-libs'
 import { ethers } from 'ethers'
 import React, { cloneElement, FC, useMemo, useState } from 'react'
 import ApproveDialog from './ApproveDialog'
