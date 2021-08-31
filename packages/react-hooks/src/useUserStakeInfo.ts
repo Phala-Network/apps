@@ -11,7 +11,6 @@ type UserStakeInfoJson = {
 }
 
 export type UserStakeInfo = {
-  pid: number
   user: string
   locked: Decimal
   shares: Decimal
@@ -19,12 +18,8 @@ export type UserStakeInfo = {
   rewardDebt: Decimal
 }
 
-const transformJson = (
-  json: UserStakeInfoJson,
-  pid: number
-): UserStakeInfo => ({
+const transformJson = (json: UserStakeInfoJson): UserStakeInfo => ({
   ...json,
-  pid,
   locked: new Decimal(json.locked),
   shares: new Decimal(json.shares),
   availableRewards: new Decimal(json.availableRewards),
@@ -33,15 +28,15 @@ const transformJson = (
 
 function useUserStakeInfo(
   address?: string
-): UseQueryResult<UserStakeInfo[] | null>
+): UseQueryResult<Record<number, UserStakeInfo> | null>
 function useUserStakeInfo(
-  address?: string,
-  pid?: number
+  address: string | undefined,
+  pid: number
 ): UseQueryResult<UserStakeInfo | null>
 function useUserStakeInfo(
   address?: string,
   pid?: number
-): UseQueryResult<UserStakeInfo | UserStakeInfo[] | null> {
+): UseQueryResult<UserStakeInfo | Record<number, UserStakeInfo> | null> {
   const {api, initialized} = useApiPromise()
 
   return useQuery(['poolStaker', initialized, pid, address], async () => {
@@ -59,14 +54,16 @@ function useUserStakeInfo(
     const entries = await api.query.phalaStakePool?.poolStakers?.entries()
     if (!entries) return null
 
-    return entries
-      .filter((entry) => (entry[0].toHuman() as string[][])[0]?.[1] === address)
-      .map((entry) =>
-        transformJson(
-          entry[1].toJSON() as UserStakeInfoJson,
-          Number((entry[0].toHuman() as string[][])[0]?.[0])
+    return Object.fromEntries(
+      entries
+        .filter(
+          (entry) => (entry[0].toHuman() as string[][])[0]?.[1] === address
         )
-      )
+        .map((entry) => [
+          Number((entry[0].toHuman() as string[][])[0]?.[0]),
+          transformJson(entry[1].toJSON() as UserStakeInfoJson),
+        ])
+    )
   })
 }
 

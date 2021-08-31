@@ -7,7 +7,7 @@ import {StakePoolModalProps} from '.'
 import useFormat from '../../hooks/useFormat'
 import useGracePeriod from '../../hooks/useGracePeriod'
 import useModalVisible from '../../hooks/useModalVisible'
-import usePoolStakerInfo from '../../hooks/usePoolStakerInfo'
+import useSelfUserStakeInfo from '../../hooks/useSelfUserStakeInfo'
 import {StakePool} from '@phala/react-hooks'
 import {Label, Value} from '../ActionModal'
 
@@ -25,7 +25,7 @@ const StakeInfoModal = (props: StakePoolModalProps): JSX.Element => {
   const {open} = useModalVisible()
   const {stakePool, onClose} = props
   const format = useFormat()
-  const {data: poolStakerInfo, isLoading} = usePoolStakerInfo(stakePool.pid)
+  const {data: userStakeInfo, isLoading} = useSelfUserStakeInfo(stakePool.pid)
   const {data: gracePeriod} = useGracePeriod()
   const withdrawQueueColumns = useMemo<Column<WithdrawQueue>[]>(
     () => [
@@ -101,11 +101,11 @@ const StakeInfoModal = (props: StakePoolModalProps): JSX.Element => {
       <Line>
         <div>
           <Label>Your Locked</Label>
-          <Value>{format(poolStakerInfo?.locked)}</Value>
+          <Value>{format(userStakeInfo?.locked)}</Value>
         </div>
         <div>
           <Label>Your Shares</Label>
-          <Value>{format(poolStakerInfo?.shares)}</Value>
+          <Value>{format(userStakeInfo?.shares)}</Value>
         </div>
       </Line>
     </Modal>

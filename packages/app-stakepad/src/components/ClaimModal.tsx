@@ -1,11 +1,10 @@
 import {Input} from '@phala/react-components'
 import {useApiPromise} from '@phala/react-libs'
 import {useCallback, useMemo, useState} from 'react'
-import {StakePoolModalProps} from '.'
-import useFormat from '../../hooks/useFormat'
-import useSelfUserStakeInfo from '../../hooks/useSelfUserStakeInfo'
-import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
-import ActionModal, {Label, Value} from '../ActionModal'
+import useFormat from '../hooks/useFormat'
+import useSelfUserStakeInfo from '../hooks/useSelfUserStakeInfo'
+import useWaitSignAndSend from '../hooks/useWaitSignAndSend'
+import ActionModal, {Label, Value} from './ActionModal'
 
 const ClaimModal = (props: StakePoolModalProps): JSX.Element => {
   const {onClose, stakePool} = props

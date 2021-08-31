@@ -1,24 +1,23 @@
 import {useMemo} from 'react'
 import {Column} from 'react-table'
 import styled from 'styled-components'
-import {Table} from '@phala/react-components'
 import {usePolkadotAccountAtom} from '@phala/app-store'
+import {Table} from '@phala/react-components'
 import {StakePool, useStakePools, useUserStakeInfo} from '@phala/react-hooks'
 import useFormat from '../hooks/useFormat'
 
 const Wrapper = styled.div``
 
 const MyStakeTable = (): JSX.Element => {
-  const [polkadotAccount] = usePolkadotAccountAtom()
   const format = useFormat()
+  const [polkadotAccount] = usePolkadotAccountAtom()
   const {data: stakePools, isFetching: isFetchingStakePools} = useStakePools()
   const {data: userStakeInfo, isFetching: isFetchingUserStakeInfo} =
     useUserStakeInfo(polkadotAccount?.address)
 
   const myStake = useMemo<StakePool[]>(() => {
     if (!stakePools || !userStakeInfo) return []
-    const pids = userStakeInfo.map((info) => info.pid)
-    return stakePools.filter((pool) => pids.includes(pool.pid))
+    return stakePools.filter((pool) => userStakeInfo[pool.pid])
   }, [stakePools, userStakeInfo])
 
   const columns = useMemo<Column<StakePool>[]>(
