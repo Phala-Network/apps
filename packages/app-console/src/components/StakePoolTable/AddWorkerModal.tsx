@@ -1,10 +1,12 @@
-import {useCallback, useState} from 'react'
-import {useApiPromise} from '@phala/react-libs/esm/polkadot/hooks/useApiPromise'
-import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
-import ActionModal, {Value, Label} from '../ActionModal'
-import {useDecimalJsTokenDecimalMultiplier} from '@phala/react-libs/esm/polkadot/useTokenDecimals'
 import {Input} from '@phala/react-components'
+import {
+  useApiPromise,
+  useDecimalJsTokenDecimalMultiplier,
+} from '@phala/react-libs'
+import {useCallback, useState} from 'react'
 import {StakePoolModalProps} from '.'
+import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
+import ActionModal, {Label, Value} from '../ActionModal'
 
 const AddWorkerModal = (props: StakePoolModalProps): JSX.Element => {
   const {onClose, stakePool} = props

@@ -1,12 +1,14 @@
-import {useCallback, useState} from 'react'
-import {useApiPromise} from '@phala/react-libs/esm/polkadot/hooks/useApiPromise'
 import {InputNumber} from '@phala/react-components'
-import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
-import ActionModal, {Value, Label} from '../ActionModal'
+import {
+  useApiPromise,
+  useDecimalJsTokenDecimalMultiplier,
+} from '@phala/react-libs'
 import Decimal from 'decimal.js'
-import {useDecimalJsTokenDecimalMultiplier} from '@phala/react-libs/esm/polkadot/useTokenDecimals'
+import {useCallback, useState} from 'react'
 import {StakePoolModalProps} from '.'
 import usePoolStakerInfo from '../../hooks/usePoolStakerInfo'
+import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
+import ActionModal, {Label, Value} from '../ActionModal'
 
 const WithdrawModal = (props: StakePoolModalProps): JSX.Element => {
   const {onClose, stakePool} = props

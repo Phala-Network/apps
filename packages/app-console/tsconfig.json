@@ -8,5 +8,12 @@
     "sourceMap": true,
     "esModuleInterop": false
   },
-  "include": ["src/**/*", "../../typings"]
+  "include": ["src/**/*", "../../typings"],
+  "references": [
+    {"path": "../app-store"},
+    {"path": "../utils"},
+    {"path": "../react-libs"},
+    {"path": "../react-hooks"},
+    {"path": "../react-components"}
+  ]
 }

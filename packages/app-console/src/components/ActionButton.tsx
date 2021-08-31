@@ -1,4 +1,4 @@
-import Button from '@phala/react-components/esm/Button'
+import {Button} from '@phala/react-components'
 import styled from 'styled-components'
 
 const ActionButton = styled(Button).attrs({size: 'small'})`

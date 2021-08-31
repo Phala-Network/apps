@@ -1,7 +1,7 @@
 import Decimal from 'decimal.js'
 import {useQuery, UseQueryResult} from 'react-query'
 import {usePolkadotAccountAtom} from '@phala/app-store'
-import {useApiPromise} from '@phala/react-libs/esm/polkadot/hooks/useApiPromise'
+import {useApiPromise} from '@phala/react-libs'
 
 type PoolStakerInfoJson = {
   user: string

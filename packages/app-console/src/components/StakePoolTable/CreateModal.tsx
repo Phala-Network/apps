@@ -1,8 +1,8 @@
+import {useApiPromise} from '@phala/react-libs'
 import {useCallback} from 'react'
-import {useApiPromise} from '@phala/react-libs/esm/polkadot/hooks/useApiPromise'
+import useStakePools from '../../hooks/useStakePools'
 import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
 import ActionModal from '../ActionModal'
-import useStakePools from '../../hooks/useStakePools'
 
 const CreateModal = (props: {onClose: () => void}): JSX.Element => {
   const {refetch} = useStakePools()

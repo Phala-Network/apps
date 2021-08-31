@@ -1,16 +1,16 @@
+import {usePolkadotAccountAtom} from '@phala/app-store'
+import {isDev, toFixed} from '@phala/utils'
 import {useMemo, useState} from 'react'
 import {Column} from 'react-table'
-import {usePolkadotAccountAtom} from '@phala/app-store'
-import ConsoleTable from '../ConsoleTable'
+import useFormat from '../../hooks/useFormat'
+import useModalVisible, {ModalKey} from '../../hooks/useModalVisible'
 import useStakePools from '../../hooks/useStakePools'
 import useWorkers, {Worker} from '../../hooks/useWorkers'
-import WorkerActions from './WorkerActions'
-import useFormat from '../../hooks/useFormat'
-import {isDev, toFixed} from '@phala/utils'
+import ConsoleTable from '../ConsoleTable'
+import RemoveModal from './RemoveModal'
 import StartModal from './StartModal'
 import StopModal from './StopModal'
-import RemoveModal from './RemoveModal'
-import useModalVisible, {ModalKey} from '../../hooks/useModalVisible'
+import WorkerActions from './WorkerActions'
 
 export type WorkerModalProps = {worker: Worker; onClose: () => void}
 

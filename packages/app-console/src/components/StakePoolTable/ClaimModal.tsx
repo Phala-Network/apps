@@ -1,11 +1,11 @@
-import {useCallback, useState, useMemo} from 'react'
-import {useApiPromise} from '@phala/react-libs/esm/polkadot/hooks/useApiPromise'
-import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
-import ActionModal, {Value, Label} from '../ActionModal'
 import {Input} from '@phala/react-components'
-import usePoolStakerInfo from '../../hooks/usePoolStakerInfo'
+import {useApiPromise} from '@phala/react-libs'
+import {useCallback, useMemo, useState} from 'react'
 import {StakePoolModalProps} from '.'
 import useFormat from '../../hooks/useFormat'
+import usePoolStakerInfo from '../../hooks/usePoolStakerInfo'
+import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
+import ActionModal, {Label, Value} from '../ActionModal'
 
 const ClaimModal = (props: StakePoolModalProps): JSX.Element => {
   const {onClose, stakePool} = props

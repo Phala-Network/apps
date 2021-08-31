@@ -1,6 +1,6 @@
+import {useApiPromise} from '@phala/react-libs'
 import Decimal from 'decimal.js'
-import {useQuery} from 'react-query'
-import {useApiPromise} from '@phala/react-libs/esm/polkadot/hooks/useApiPromise'
+import {useQuery, UseQueryResult} from 'react-query'
 
 type TokenomicParameters = {
   phaRate: Decimal
@@ -19,8 +19,12 @@ type TokenomicParameters = {
   kappa: Decimal
 }
 
-const useTokenomicParameters = () => {
+export default function useTokenomicParameters(): UseQueryResult<
+  TokenomicParameters | undefined,
+  unknown
+> {
   const {api, initialized} = useApiPromise()
+
   return useQuery(['tokenomicParameters', initialized], () =>
     api?.query.phalaMining
       ?.tokenomicParameters?.()
@@ -39,5 +43,3 @@ const useTokenomicParameters = () => {
       )
   )
 }
-
-export default useTokenomicParameters

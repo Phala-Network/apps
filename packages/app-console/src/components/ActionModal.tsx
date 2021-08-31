@@ -1,6 +1,6 @@
-import styled from 'styled-components'
 import {Button, Modal, ModalProps} from '@phala/react-components'
 import {useCallback, useState} from 'react'
+import styled from 'styled-components'
 
 type ActionModalProps = Omit<ModalProps, 'actions' | 'visible'> & {
   subtitle?: string

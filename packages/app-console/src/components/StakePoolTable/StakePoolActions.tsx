@@ -1,6 +1,6 @@
+import useModalVisible, {ModalKey} from '../../hooks/useModalVisible'
 import {StakePool} from '../../hooks/useStakePools'
 import ActionButton from '../ActionButton'
-import useModalVisible, {ModalKey} from '../../hooks/useModalVisible'
 
 const buttonEntries: [ModalKey, string][] = [
   ['stakeInfo', 'Stake Info'],

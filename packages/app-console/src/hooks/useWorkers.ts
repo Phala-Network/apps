@@ -1,6 +1,6 @@
-import {useQuery, UseQueryResult} from 'react-query'
+import {useApiPromise} from '@phala/react-libs'
 import Decimal from 'decimal.js'
-import {useApiPromise} from '@phala/react-libs/esm/polkadot/hooks/useApiPromise'
+import {useQuery, UseQueryResult} from 'react-query'
 
 type WorkerJSON = {
   confidenceLevel: 1 | 2 | 3 | 4 | 5

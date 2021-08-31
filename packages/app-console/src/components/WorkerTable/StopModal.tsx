@@ -1,8 +1,8 @@
+import {useApiPromise} from '@phala/react-libs'
 import {useCallback} from 'react'
 import {WorkerModalProps} from '.'
-import {useApiPromise} from '@phala/react-libs/esm/polkadot/hooks/useApiPromise'
 import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
-import ActionModal, {Value, Label} from '../ActionModal'
+import ActionModal, {Label, Value} from '../ActionModal'
 
 const StopModal = (props: WorkerModalProps): JSX.Element => {
   const {worker, onClose} = props

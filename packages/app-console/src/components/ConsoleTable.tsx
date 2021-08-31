@@ -1,5 +1,5 @@
-import styled from 'styled-components'
 import {Table, TableProps} from '@phala/react-components'
+import styled from 'styled-components'
 
 const TableWrapper = styled.div``
 

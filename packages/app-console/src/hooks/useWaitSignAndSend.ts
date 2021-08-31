@@ -1,9 +1,8 @@
-import {ISubmittableResult} from '@polkadot/types/types'
+import {usePolkadotAccountAtom} from '@phala/app-store'
+import {useApiPromise, waitSignAndSend} from '@phala/react-libs'
 import {SubmittableExtrinsic} from '@polkadot/api/types'
 import {ExtrinsicStatus} from '@polkadot/types/interfaces'
-import {usePolkadotAccountAtom} from '@phala/app-store'
-import {useApiPromise} from '@phala/react-libs/esm/polkadot/hooks/useApiPromise'
-import {waitSignAndSend} from '@phala/react-libs/esm/polkadot/utils/signAndSend'
+import {ISubmittableResult} from '@polkadot/types/types'
 import {toast} from 'react-toastify'
 
 // Temporary abstraction for console due to time limit

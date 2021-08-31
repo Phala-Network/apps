@@ -1,10 +1,10 @@
-import {useCallback, useState} from 'react'
-import {useApiPromise} from '@phala/react-libs/esm/polkadot/hooks/useApiPromise'
 import {InputNumber} from '@phala/react-components'
+import {useApiPromise} from '@phala/react-libs'
+import Decimal from 'decimal.js'
+import {useCallback, useState} from 'react'
+import {StakePoolModalProps} from '.'
 import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
 import ActionModal, {Label, Value} from '../ActionModal'
-import Decimal from 'decimal.js'
-import {StakePoolModalProps} from '.'
 
 const SetPayoutPrefModal = (props: StakePoolModalProps): JSX.Element => {
   const {onClose, stakePool} = props

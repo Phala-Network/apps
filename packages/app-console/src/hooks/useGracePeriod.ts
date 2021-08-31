@@ -1,7 +1,10 @@
-import {useQuery} from 'react-query'
-import {useApiPromise} from '@phala/react-libs/esm/polkadot/hooks/useApiPromise'
+import {useApiPromise} from '@phala/react-libs'
+import {useQuery, UseQueryResult} from 'react-query'
 
-const useGracePeriod = () => {
+export default function useGracePeriod(): UseQueryResult<
+  number | null,
+  unknown
+> {
   const {api, initialized} = useApiPromise()
   return useQuery<number | null>(
     ['gracePeriod', initialized],
@@ -9,5 +12,3 @@ const useGracePeriod = () => {
     {refetchOnMount: false}
   )
 }
-
-export default useGracePeriod

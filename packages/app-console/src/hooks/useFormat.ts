@@ -1,8 +1,10 @@
-import {useCallback} from 'react'
-import Decimal from 'decimal.js'
-import {useApiPromise} from '@phala/react-libs/esm/polkadot/hooks/useApiPromise'
-import {useDecimalJsTokenDecimalMultiplier} from '@phala/react-libs/esm/polkadot/useTokenDecimals'
+import {
+  useApiPromise,
+  useDecimalJsTokenDecimalMultiplier,
+} from '@phala/react-libs'
 import {toFixed} from '@phala/utils'
+import Decimal from 'decimal.js'
+import {useCallback} from 'react'
 
 type Format = (value: Decimal | number | undefined | null) => string
 

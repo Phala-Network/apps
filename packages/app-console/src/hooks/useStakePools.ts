@@ -1,8 +1,8 @@
-import {useQuery, UseQueryResult} from 'react-query'
-import Decimal from 'decimal.js'
-import {useApiPromise} from '@phala/react-libs/esm/polkadot/hooks/useApiPromise'
 import {usePolkadotAccountAtom} from '@phala/app-store'
+import {useApiPromise} from '@phala/react-libs'
 import {isDev} from '@phala/utils'
+import Decimal from 'decimal.js'
+import {useQuery, UseQueryResult} from 'react-query'
 
 type StakePoolJSON = {
   cap: string | null
