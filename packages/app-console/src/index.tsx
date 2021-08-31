@@ -4,7 +4,6 @@ import StakePoolTable from './components/StakePoolTable'
 import WorkerTable from './components/WorkerTable'
 
 const Wrapper = styled.div`
-  font-family: Lato;
   flex: 1;
   overflow-x: auto;
   margin: 0 30px;
@@ -12,8 +11,8 @@ const Wrapper = styled.div`
 
 const Block = styled.div`
   background-color: #fff;
-  padding: 30px;
-  margin: 40px 0;
+  padding: 20px;
+  margin: 30px 0;
 `
 
 const Console: React.FC = () => {

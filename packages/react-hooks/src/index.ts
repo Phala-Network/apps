@@ -11,3 +11,7 @@ export {default as usePolkadotAccountBalanceDecimal} from './usePolkadotAccountB
 export {default as usePortal} from './usePortal'
 export {default as useSSR} from './useSSR'
 export {default as useVconsole} from './useVconsole'
+export {default as useStakePools} from './useStakePools'
+export * from './useStakePools'
+export {default as useUserStakeInfo} from './useUserStakeInfo'
+export * from './useStakePools'

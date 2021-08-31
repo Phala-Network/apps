@@ -1,9 +1,10 @@
 import React from 'react'
-import styled, {css} from 'styled-components'
+import styled from 'styled-components'
 
 type ButtonProps = {
-  type?: 'normal' | 'primary'
+  type?: 'normal' | 'primary' | 'plain'
   shape?: 'round' | 'circle'
+  size?: 'normal' | 'small'
   loading?: boolean
   disabled?: boolean
 }
@@ -15,20 +16,26 @@ const ButtonWrap = styled.button<ButtonProps>`
   align-items: center;
   display: flex;
   font-family: Lato;
-  font-size: 16px;
+  font-size: ${({size}) => (size === 'small' ? '12px' : '16px')};
   font-style: normal;
   font-weight: bold;
-  height: 56px;
+  height: ${({size}) => (size === 'small' ? '32px' : '56px')};
   justify-content: center;
   line-height: 19px;
   order: 1;
-  padding: 10px 24px 11px;
+  padding: ${({size}) => (size === 'small' ? '0 12px' : '0 24px')};
   text-align: center;
   border-width: 3px;
   border-style: solid;
   border-color: transparent;
   border-radius: ${(props) => (props.shape === 'round' ? 56 : 0)}px;
   color: #494949;
+  background: ${({type, theme}) => {
+    if (type === 'plain') return 'none'
+    if (type === 'primary') return theme.colors.phala
+    return '#ececec'
+  }};
+
   &:disabled {
     color: rgba(32, 32, 32, 0.3);
   }
@@ -41,19 +48,6 @@ const ButtonWrap = styled.button<ButtonProps>`
     background: #ececec;
     border-color: transparent;
   }
-
-  /* FIXME */
-  ${({type, theme}): any => {
-    if (type === 'primary') {
-      return css`
-        background: ${theme.colors.phala};
-      `
-    } else if (type === 'normal') {
-      return css`
-        background: #ececec;
-      `
-    }
-  }}
 `
 
 const Loading = styled.div`

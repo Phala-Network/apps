@@ -4,7 +4,7 @@ import {useMemo, useState} from 'react'
 import {Column} from 'react-table'
 import useFormat from '../../hooks/useFormat'
 import useModalVisible, {ModalKey} from '../../hooks/useModalVisible'
-import useStakePools from '../../hooks/useStakePools'
+import useSelfStakePools from '../../hooks/useSelfStakePools'
 import useWorkers, {Worker} from '../../hooks/useWorkers'
 import ConsoleTable from '../ConsoleTable'
 import RemoveModal from './RemoveModal'
@@ -23,7 +23,7 @@ const modalEntries: [ModalKey, (props: WorkerModalProps) => JSX.Element][] = [
 const WorkerTable = (): JSX.Element => {
   const {close, modalVisible} = useModalVisible()
   const [polkadotAccount] = usePolkadotAccountAtom()
-  const {data} = useStakePools()
+  const {data} = useSelfStakePools()
   const workerList = useMemo<{pubkey: string; pid: number}[]>(() => {
     if (data?.length) {
       return data

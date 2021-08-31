@@ -9,11 +9,8 @@ const GlobalStyle = createGlobalStyle`
     -webkit-tap-highlight-color: transparent;
   }
 
-  button {
-    background: none;
-    border: none;
-    padding: 0;
-    outline: none;
+  a {
+    text-decoration: none;
   }
 `
 

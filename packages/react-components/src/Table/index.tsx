@@ -19,7 +19,7 @@ const Placeholder = styled.div`
 
 const Styles = styled.div`
   table {
-    font-size: 14px;
+    font-size: 12px;
     border-spacing: 0;
     border: none;
     width: 100%;
@@ -39,13 +39,13 @@ const Styles = styled.div`
       line-height: 14px;
       color: #202020;
       border-bottom: 1px solid #dddddd;
-      padding: 0.8rem;
+      padding: 0.625rem;
       text-align: left;
     }
 
     td {
       margin: 0;
-      padding: 0.8rem;
+      padding: 0.625rem;
       white-space: nowrap;
 
       :last-child {
@@ -128,9 +128,9 @@ const Table = <D extends Record<string, unknown>>(
             </tbody>
           )}
         </table>
-        {props.isLoading ? (
+        {props.data.length ? null : props.isLoading ? (
           <Placeholder>Loading…</Placeholder>
-        ) : props.data.length ? null : (
+        ) : (
           <Placeholder>No Data</Placeholder>
         )}
       </TableWrapper>

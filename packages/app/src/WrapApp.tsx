@@ -7,6 +7,7 @@ import {isDev, isTest} from '@phala/utils'
 import * as Sentry from '@sentry/react'
 import React, {useLayoutEffect, useRef} from 'react'
 import {QueryClient, QueryClientProvider} from 'react-query'
+import {ReactQueryDevtools} from 'react-query/devtools'
 import {ThemeProvider} from 'styled-components'
 import './fonts.css'
 import theme from './theme'
@@ -22,7 +23,7 @@ const WrapApp: React.FC = ({children}) => {
   console.info('defaultNetwork', defaultNetwork)
 
   const productionConfig = {
-    defaultNetwork: 'khala',
+    defaultNetwork,
     substrateGraphEndpoint: 'https://subquery-api.phala.network',
     ethereumGraphEndpoint:
       'https://graphs-api.phala.network/subgraphs/name/chainbridge',
@@ -39,6 +40,7 @@ const WrapApp: React.FC = ({children}) => {
           <MobileToastContextProvider>
             <QueryClientProvider contextSharing={true} client={client.current}>
               <AppStoreProvider>{children}</AppStoreProvider>
+              <ReactQueryDevtools />
             </QueryClientProvider>
           </MobileToastContextProvider>
         </ThemeProvider>

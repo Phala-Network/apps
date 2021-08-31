@@ -8,7 +8,7 @@ import useFormat from '../../hooks/useFormat'
 import useGracePeriod from '../../hooks/useGracePeriod'
 import useModalVisible from '../../hooks/useModalVisible'
 import usePoolStakerInfo from '../../hooks/usePoolStakerInfo'
-import {StakePool} from '../../hooks/useStakePools'
+import {StakePool} from '@phala/react-hooks'
 import {Label, Value} from '../ActionModal'
 
 const Line = styled.div`

@@ -10,8 +10,9 @@ const TableHeader = styled.div`
 `
 
 const TableTitle = styled.div`
-  font-size: 18px;
+  font-size: 22px;
   font-weight: bold;
+  padding: 10px;
 `
 const ConsoleTable = <D extends Record<string, unknown>>({
   title,
