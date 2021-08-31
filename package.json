@@ -7,7 +7,8 @@
     "build:deps": "pnpm recursive --filter ./packages --filter !./packages/app run build",
     "develop": "cd ./packages/app && pnpm run develop",
     "develop:deps": "pnpm --parallel --filter ./packages  --filter !./packages/app run develop",
-    "preinstall": "npx only-allow pnpm"
+    "preinstall": "npx only-allow pnpm",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "repository": {
     "type": "git",
