@@ -1,7 +1,7 @@
-import { TransactionInfo } from '@phala/app-types'
+import {TransactionInfo} from '@phala/app-types'
 import React from 'react'
-import { StepProps } from '../BridgeProcess'
-import { InputDataStepResult } from '../InputDataStep'
+import {StepProps} from '../BridgeProcess'
+import {InputDataStepResult} from '../InputDataStep'
 import SubmitStepToEthereum from './SubmitStepToEthereum'
 import SubmitStepToKhala from './SubmitStepToKhala'
 
@@ -13,7 +13,7 @@ export type SubmitStepProps = {
 } & StepProps
 
 const SubmitStep: React.FC<SubmitStepProps> = (props) => {
-  const { data } = props
+  const {data} = props
 
   if (data?.to.network === 'ethereum') {
     return <SubmitStepToEthereum layout="block" {...props} />

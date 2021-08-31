@@ -11,8 +11,8 @@ import {
 } from '@phala/react-components'
 import * as Sentry from '@sentry/react'
 import axios from 'axios'
-import React, { useState } from 'react'
-import { toast } from 'react-toastify'
+import React, {useState} from 'react'
+import {toast} from 'react-toastify'
 import styled from 'styled-components'
 
 const Description = styled.p`
@@ -102,7 +102,8 @@ const FeedbackModal: React.FC<ModalProps> = (props) => {
         onChange={setName}
         name="name"
         size="large"
-        placeholder="Name"></Input>
+        placeholder="Name"
+      ></Input>
 
       <Spacer></Spacer>
 
@@ -110,7 +111,8 @@ const FeedbackModal: React.FC<ModalProps> = (props) => {
         onChange={setEmail}
         name="email"
         size="large"
-        placeholder="Email"></Input>
+        placeholder="Email"
+      ></Input>
 
       <Spacer></Spacer>
 
@@ -118,7 +120,8 @@ const FeedbackModal: React.FC<ModalProps> = (props) => {
         onChange={setComments}
         name="description"
         rows={6}
-        placeholder="What Happened?"></Textarea>
+        placeholder="What Happened?"
+      ></Textarea>
 
       <ModalActions>
         <ModalAction>
@@ -131,7 +134,7 @@ const FeedbackModal: React.FC<ModalProps> = (props) => {
         </ModalAction>
       </ModalActions>
 
-      <ErrorText style={{ textAlign: 'right' }}>{error}</ErrorText>
+      <ErrorText style={{textAlign: 'right'}}>{error}</ErrorText>
     </Modal>
   )
 }

@@ -1,13 +1,13 @@
-import { BridgeModal } from '@phala/react-components'
-import { forwardRef, useState } from 'react'
-import { down, up } from 'styled-breakpoints'
+import {BridgeModal} from '@phala/react-components'
+import {forwardRef, useState} from 'react'
+import {down, up} from 'styled-breakpoints'
 import styled from 'styled-components'
 import ClaimModal from '../ClaimModal'
 import ConvertModal from '../ConvertModal'
-import { ActionArrowIcon } from '../Icons/ActionArrowIcon'
+import {ActionArrowIcon} from '../Icons/ActionArrowIcon'
 import TransferModal from './TransferModal'
 
-const MenuWrap = styled.div<{ active: boolean }>`
+const MenuWrap = styled.div<{active: boolean}>`
   position: absolute;
   border: 3px solid #202020;
   box-sizing: border-box;
@@ -25,7 +25,7 @@ const MenuWrap = styled.div<{ active: boolean }>`
   }
 `
 
-const Buttons = styled.div<{ active: boolean }>`
+const Buttons = styled.div<{active: boolean}>`
   padding: 0 8px;
   position: absolute;
   top: -11px;
@@ -40,7 +40,7 @@ const Buttons = styled.div<{ active: boolean }>`
   }
 `
 
-const Button = styled.div<{ active: boolean }>`
+const Button = styled.div<{active: boolean}>`
   font-family: Lato;
   font-style: normal;
   font-weight: bold;
@@ -56,7 +56,7 @@ const Button = styled.div<{ active: boolean }>`
   }
 `
 
-const ButtonBottomBorder = styled.div<{ active: boolean }>`
+const ButtonBottomBorder = styled.div<{active: boolean}>`
   margin-top: 1px;
   width: ${(props) => (props.active ? '100%' : 0)};
   height: 1px;
@@ -122,7 +122,8 @@ const Menu = forwardRef<HTMLDivElement, Props>((props, ref) => {
           {!disableTransfer && (
             <Button
               onClick={() => setVisibleTransferModal(true)}
-              active={active}>
+              active={active}
+            >
               <span>Transfer</span>
               <ButtonBottomBorder active={active}></ButtonBottomBorder>
             </Button>
@@ -131,7 +132,8 @@ const Menu = forwardRef<HTMLDivElement, Props>((props, ref) => {
             // TODO: specify bridge target in url query
             <Button
               onClick={() => (window.location.href = '/')}
-              active={active}>
+              active={active}
+            >
               <span>Bridge</span>
               <ButtonBottomBorder active={active}></ButtonBottomBorder>
             </Button>
@@ -139,7 +141,8 @@ const Menu = forwardRef<HTMLDivElement, Props>((props, ref) => {
           {!disableConvert && (
             <Button
               onClick={() => setVisibleConvertModal(true)}
-              active={active}>
+              active={active}
+            >
               <span>Convert</span>
               <ButtonBottomBorder active={active}></ButtonBottomBorder>
             </Button>
@@ -163,22 +166,26 @@ const Menu = forwardRef<HTMLDivElement, Props>((props, ref) => {
 
       <ConvertModal
         visible={visibleConvertModal}
-        onClose={() => setVisibleConvertModal(false)}></ConvertModal>
+        onClose={() => setVisibleConvertModal(false)}
+      ></ConvertModal>
 
       <TransferModal
         visible={visibleTransferModal}
-        onClose={() => setVisibleTransferModal(false)}></TransferModal>
+        onClose={() => setVisibleTransferModal(false)}
+      ></TransferModal>
 
       <BridgeModal
         visible={visibleBridge}
-        onClose={() => setVisibleBridge(false)}></BridgeModal>
+        onClose={() => setVisibleBridge(false)}
+      ></BridgeModal>
 
       {/* FIXME: hooks running should be prevented when modal is invisible */}
       {/* FIXME: modal should be load asynchronously */}
       {claimModalVisible && (
         <ClaimModal
           visible={true}
-          onClose={() => setClaimModalVisible(false)}></ClaimModal>
+          onClose={() => setClaimModalVisible(false)}
+        ></ClaimModal>
       )}
     </>
   )

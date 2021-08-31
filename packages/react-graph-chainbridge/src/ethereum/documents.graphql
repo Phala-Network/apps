@@ -1,6 +1,6 @@
 query depositRecordsByDepositor($depositor: Bytes, $first: Int, $skip: Int) {
   depositRecords(
-    where: { depositor: $depositor }
+    where: {depositor: $depositor}
     orderBy: nonce
     orderDirection: desc
     first: $first
@@ -17,7 +17,7 @@ query depositRecordsByDepositor($depositor: Bytes, $first: Int, $skip: Int) {
 }
 
 query getDepositRecordByHash($hash: Bytes) {
-  depositRecords(where: { transaction: $hash }) {
+  depositRecords(where: {transaction: $hash}) {
     transaction
     amount
     depositor

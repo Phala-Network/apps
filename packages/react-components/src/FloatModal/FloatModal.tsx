@@ -1,9 +1,9 @@
-import { useClickAway } from '@phala/react-hooks'
-import { forwardRef, useRef, useState } from 'react'
-import { down } from 'styled-breakpoints'
+import {useClickAway} from '@phala/react-hooks'
+import {forwardRef, useRef, useState} from 'react'
+import {down} from 'styled-breakpoints'
 import styled from 'styled-components'
 import Backdrop from '../Backdrop'
-import { FloatModalHeader } from './FloatModalHeader'
+import {FloatModalHeader} from './FloatModalHeader'
 
 const Root = styled.div`
   position: fixed;
@@ -44,7 +44,7 @@ export interface FloatModalProps {
 
 export const FloatModal = forwardRef<HTMLDivElement, FloatModalProps>(
   (props) => {
-    const { title, children } = props
+    const {title, children} = props
     const [active, setActive] = useState(false)
     const rootRef = useRef(null)
 
@@ -58,7 +58,8 @@ export const FloatModal = forwardRef<HTMLDivElement, FloatModalProps>(
         <Root ref={rootRef} className={active ? 'active' : ''}>
           <FloatModalHeader
             active={active}
-            onClickHeader={() => setActive((prev) => !prev)}>
+            onClickHeader={() => setActive((prev) => !prev)}
+          >
             {title}
           </FloatModalHeader>
 

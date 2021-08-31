@@ -1,9 +1,9 @@
-import { ApiPromise } from '@polkadot/api'
-import { BalanceOf, ExtrinsicStatus, Hash } from '@polkadot/types/interfaces'
-import { useMemo } from 'react'
-import { useApiPromise } from '../hooks/useApiPromise'
-import { useNetworkContext } from '../hooks/useSubstrateNetwork'
-import { waitSignAndSend } from '../utils/signAndSend'
+import {ApiPromise} from '@polkadot/api'
+import {BalanceOf, ExtrinsicStatus, Hash} from '@polkadot/types/interfaces'
+import {useMemo} from 'react'
+import {useApiPromise} from '../hooks/useApiPromise'
+import {useNetworkContext} from '../hooks/useSubstrateNetwork'
+import {waitSignAndSend} from '../utils/signAndSend'
 
 interface TransferProps {
   amount: BalanceOf
@@ -57,8 +57,8 @@ type TransferSubmit = (
 export const useTransferSubmit = (
   ethereumChainId?: number
 ): TransferSubmit | undefined => {
-  const { api } = useApiPromise()
-  const { options } = useNetworkContext()
+  const {api} = useApiPromise()
+  const {options} = useNetworkContext()
 
   const destChainId = options?.peerChainIds[ethereumChainId as number] as
     | number

@@ -1,1 +1,1 @@
-export { FloatModalHeader } from './FloatModalHeader'
+export {FloatModalHeader} from './FloatModalHeader'

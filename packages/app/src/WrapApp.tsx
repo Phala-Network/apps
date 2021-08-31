@@ -1,18 +1,18 @@
-import { Provider as AppStoreProvider } from '@phala/app-store'
-import { getCMSLog } from '@phala/react-cms'
-import { MobileToastContextProvider } from '@phala/react-components'
-import { Provider as LibProvider } from '@phala/react-libs'
-import { isDev, isTest } from '@phala/utils'
+import {Provider as AppStoreProvider} from '@phala/app-store'
+import {getCMSLog} from '@phala/react-cms'
+import {MobileToastContextProvider} from '@phala/react-components'
+import {Provider as LibProvider} from '@phala/react-libs'
+import {isDev, isTest} from '@phala/utils'
 import * as Sentry from '@sentry/react'
-import React, { useLayoutEffect, useRef } from 'react'
-import { QueryClient, QueryClientProvider } from 'react-query'
-import { ThemeProvider } from 'styled-components'
+import React, {useLayoutEffect, useRef} from 'react'
+import {QueryClient, QueryClientProvider} from 'react-query'
+import {ThemeProvider} from 'styled-components'
 import './fonts.css'
 import './ReactToastify.css'
 import theme from './theme'
 import './tooltip.css'
 
-const WrapApp: React.FC = ({ children }) => {
+const WrapApp: React.FC = ({children}) => {
   const client = useRef(new QueryClient())
 
   const defaultNetwork =

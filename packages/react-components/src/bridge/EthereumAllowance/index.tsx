@@ -1,6 +1,6 @@
-import { useErc20AssetHandlerAllowanceQuery } from '@phala/react-libs'
-import { ethers } from 'ethers'
-import React, { cloneElement, FC, useMemo, useState } from 'react'
+import {useErc20AssetHandlerAllowanceQuery} from '@phala/react-libs'
+import {ethers} from 'ethers'
+import React, {cloneElement, FC, useMemo, useState} from 'react'
 import ApproveDialog from './ApproveDialog'
 
 type Props = {
@@ -10,8 +10,8 @@ type Props = {
 }
 
 const EthereumAllowance: FC<Props> = (props: Props) => {
-  const { account, placeholder, children } = props
-  const { data: allowance } = useErc20AssetHandlerAllowanceQuery(account)
+  const {account, placeholder, children} = props
+  const {data: allowance} = useErc20AssetHandlerAllowanceQuery(account)
   const [modalVisible, setModalVisible] = useState(false)
 
   const allowanceText = useMemo(
@@ -28,7 +28,8 @@ const EthereumAllowance: FC<Props> = (props: Props) => {
       })}
       <ApproveDialog
         visible={modalVisible}
-        onClose={() => setModalVisible(false)}></ApproveDialog>
+        onClose={() => setModalVisible(false)}
+      ></ApproveDialog>
     </>
   )
 }

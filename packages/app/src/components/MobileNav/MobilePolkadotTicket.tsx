@@ -1,8 +1,8 @@
-import { usePolkadotAccountAtom } from '@phala/app-store'
-import { PolkadotAccountModal } from '@phala/react-components'
-import { usePolkadotWeb3 } from '@phala/react-libs'
-import { abridgeString } from '@phala/utils'
-import React, { useCallback, useEffect, useState } from 'react'
+import {usePolkadotAccountAtom} from '@phala/app-store'
+import {PolkadotAccountModal} from '@phala/react-components'
+import {usePolkadotWeb3} from '@phala/react-libs'
+import {abridgeString} from '@phala/utils'
+import React, {useCallback, useEffect, useState} from 'react'
 import styled from 'styled-components'
 import KhalaIcon from '../../icons/khala.svg'
 import ConnectButton from './ConnectButton'
@@ -23,7 +23,7 @@ const Account = styled.div`
 `
 
 const MobilePolkadotTicket: React.FC = () => {
-  const { accounts } = usePolkadotWeb3()
+  const {accounts} = usePolkadotWeb3()
   const [polkadotAccount, setPolkadotAccount] = usePolkadotAccountAtom()
   const [accountModalVisible, setAccountModalVisible] = useState(false)
   const [emptyAccountModalVisible, setEmptyAccountModalVisible] =
@@ -34,7 +34,7 @@ const MobilePolkadotTicket: React.FC = () => {
     if (
       accounts[0] &&
       accounts.length &&
-      !accounts?.find(({ address }) => address === polkadotAccount?.address)
+      !accounts?.find(({address}) => address === polkadotAccount?.address)
     ) {
       const account = accounts[0]
       setPolkadotAccount({
@@ -65,11 +65,13 @@ const MobilePolkadotTicket: React.FC = () => {
 
       <PolkadotAccountModal
         visible={accountModalVisible}
-        onClose={() => setAccountModalVisible(false)}></PolkadotAccountModal>
+        onClose={() => setAccountModalVisible(false)}
+      ></PolkadotAccountModal>
 
       <EmptyAccountModal
         visible={emptyAccountModalVisible}
-        onClose={() => setEmptyAccountModalVisible(false)}></EmptyAccountModal>
+        onClose={() => setEmptyAccountModalVisible(false)}
+      ></EmptyAccountModal>
     </Wrapper>
   )
 }

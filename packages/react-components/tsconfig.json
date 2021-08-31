@@ -9,14 +9,14 @@
     "sourceMap": true,
     "esModuleInterop": false
   },
-  "include": ["src/**/*", "src/**/*.json"],
+  "include": ["src/**/*", "src/**/*.json", "../../typings"],
   "references": [
-    { "path": "../app-config" },
-    { "path": "../app-types" },
-    { "path": "../app-store" },
-    { "path": "../react-libs" },
-    { "path": "../utils" },
-    { "path": "../react-hooks" },
-    { "path": "../react-graph-chainbridge" }
+    {"path": "../app-config"},
+    {"path": "../app-types"},
+    {"path": "../app-store"},
+    {"path": "../react-libs"},
+    {"path": "../utils"},
+    {"path": "../react-hooks"},
+    {"path": "../react-graph-chainbridge"}
   ]
 }

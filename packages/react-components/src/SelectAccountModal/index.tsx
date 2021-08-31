@@ -1,9 +1,9 @@
-import { Account } from '@phala/app-types'
+import {Account} from '@phala/app-types'
 import React from 'react'
 import styled from 'styled-components'
 import Button from '../Button'
 import Center from '../Center'
-import { Modal } from '../Modal'
+import {Modal} from '../Modal'
 import scrollbar from '../scrollbar'
 import AccountOption from './AccountOption'
 
@@ -26,14 +26,15 @@ const Content = styled.div`
 `
 
 const SelectAccountModal: React.FC<SelectAccountModalProps> = (props) => {
-  const { visible, currentAccount, accounts, onClose, onSelect } = props
+  const {visible, currentAccount, accounts, onClose, onSelect} = props
 
   return (
     <Modal
       onClose={onClose}
       visible={visible}
-      title={<Center>Select An Account</Center>}>
-      <Content style={{ paddingRight: accounts.length > 2 ? 20 : 0 }}>
+      title={<Center>Select An Account</Center>}
+    >
+      <Content style={{paddingRight: accounts.length > 2 ? 20 : 0}}>
         {accounts.map((item) => (
           <AccountOption
             key={item.address}
@@ -42,10 +43,11 @@ const SelectAccountModal: React.FC<SelectAccountModalProps> = (props) => {
               onSelect(account)
               onClose()
             }}
-            {...item}></AccountOption>
+            {...item}
+          ></AccountOption>
         ))}
       </Content>
-      <Button style={{ width: '100%' }} onClick={onClose}>
+      <Button style={{width: '100%'}} onClick={onClose}>
         Cancel
       </Button>
     </Modal>

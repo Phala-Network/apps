@@ -18,7 +18,7 @@ const Root = styled.div`
 `
 
 const Alert: React.FC = (props) => {
-  const { children, ...rest } = props
+  const {children, ...rest} = props
 
   return (
     <Root {...rest}>

@@ -1,8 +1,8 @@
-import { usePortal } from '@phala/react-hooks'
-import React, { createElement } from 'react'
-import { createPortal } from 'react-dom'
-import { down } from 'styled-breakpoints'
-import styled, { css } from 'styled-components'
+import {usePortal} from '@phala/react-hooks'
+import React, {createElement} from 'react'
+import {createPortal} from 'react-dom'
+import {down} from 'styled-breakpoints'
+import styled, {css} from 'styled-components'
 import Backdrop from './Backdrop'
 
 export type ModalProps = {
@@ -60,7 +60,7 @@ const Title = styled.div`
   margin-bottom: 16px;
 `
 
-export const ModalAction = styled.div<{ full?: boolean }>`
+export const ModalAction = styled.div<{full?: boolean}>`
   & + & {
     margin-left: 7px;
   }
@@ -84,14 +84,7 @@ export const ModalActions = styled.div`
 `
 
 export const Modal: React.FC<ModalProps> = (props) => {
-  const {
-    children,
-    title,
-    visible = false,
-    onClose,
-    bodyStyle,
-    actions,
-  } = props
+  const {children, title, visible = false, onClose, bodyStyle, actions} = props
   const portal = usePortal('modal')
 
   if (!portal) return null

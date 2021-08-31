@@ -1,19 +1,19 @@
-import { useTransactionsInfoAtom } from '@phala/app-store'
-import { TransactionInfoItem } from '@phala/app-types'
+import {useTransactionsInfoAtom} from '@phala/app-store'
+import {TransactionInfoItem} from '@phala/app-types'
 import {
   useErc20BalanceQuery,
   useErc20Deposit,
   useTransactionReceiptQuery,
 } from '@phala/react-libs'
-import { u8aToHex } from '@polkadot/util'
-import { decodeAddress } from '@polkadot/util-crypto'
-import { ethers } from 'ethers'
-import React, { useEffect, useState } from 'react'
-import { toast } from 'react-toastify'
-import { SubmitStepProps } from '.'
-import { Alert, Button, ModalAction, ModalActions, Spacer } from '../..'
-import { StepProps } from '../BridgeProcess'
-import { EthereumProgress } from '../EthereumProgress'
+import {u8aToHex} from '@polkadot/util'
+import {decodeAddress} from '@polkadot/util-crypto'
+import {ethers} from 'ethers'
+import React, {useEffect, useState} from 'react'
+import {toast} from 'react-toastify'
+import {SubmitStepProps} from '.'
+import {Alert, Button, ModalAction, ModalActions, Spacer} from '../..'
+import {StepProps} from '../BridgeProcess'
+import {EthereumProgress} from '../EthereumProgress'
 import useTransactionInfo from '../hooks/useTransactionInfo'
 import BaseInfo from './BaseInfo'
 
@@ -22,23 +22,23 @@ type Props = SubmitStepProps & StepProps
 const SubmitStepToKhala: React.FC<Props> = (props) => {
   const [transactionsInfoSuccess, setTransactionsInfoSuccess] = useState(false)
   const [transactionsInfo, setTransactionsInfo] = useTransactionsInfoAtom()
-  const { onSubmit, onPrev, onSuccess, layout, data } = props
-  const { from, to, amount: amountFromPrevStep } = data || {}
-  const { account: accountFrom } = from || {}
-  const { account: accountTo } = to || {}
+  const {onSubmit, onPrev, onSuccess, layout, data} = props
+  const {from, to, amount: amountFromPrevStep} = data || {}
+  const {account: accountFrom} = from || {}
+  const {account: accountTo} = to || {}
   const submitDeposit = useErc20Deposit(accountFrom)
   const [isSubmitting, setSubmitting] = useState<boolean>(false)
-  const { transactionInfo } = useTransactionInfo(data)
+  const {transactionInfo} = useTransactionInfo(data)
   const [currentTransactionInfo, setCurrentTransactionInfo] = useState<{
     hash: string | undefined
     from: TransactionInfoItem
     to: TransactionInfoItem
   }>()
   const currentTransactionHash = currentTransactionInfo?.hash
-  const { isLoading: isReceiptLoading } = useTransactionReceiptQuery(
+  const {isLoading: isReceiptLoading} = useTransactionReceiptQuery(
     currentTransactionHash
   )
-  const { refetch } = useErc20BalanceQuery(accountFrom)
+  const {refetch} = useErc20BalanceQuery(accountFrom)
 
   const submit = async () => {
     setSubmitting(true)

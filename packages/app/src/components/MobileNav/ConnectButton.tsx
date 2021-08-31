@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-const ConnectButton = styled.div.attrs({ children: 'Connect Wallet' })`
+const ConnectButton = styled.div.attrs({children: 'Connect Wallet'})`
   font-family: PT Mono;
   font-size: 8px;
   padding: 7px 8px;

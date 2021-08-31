@@ -46,7 +46,7 @@ const useClipboard = (
     copyText(el, text)
   }
 
-  return { copy }
+  return {copy}
 }
 
 export default useClipboard

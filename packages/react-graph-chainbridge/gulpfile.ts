@@ -1,7 +1,7 @@
-import { generate } from '@graphql-codegen/cli'
+import {generate} from '@graphql-codegen/cli'
 import execa from 'execa'
-import { series } from 'gulp'
-import { resolve } from 'path'
+import {series} from 'gulp'
+import {resolve} from 'path'
 
 export const codegen = async (): Promise<void> => {
   await generate({
@@ -42,7 +42,7 @@ export const codegen = async (): Promise<void> => {
 }
 
 export const typescript = async (): Promise<void> => {
-  await execa('npx', ['tsc', '--build'], { cwd: __dirname, stdio: 'inherit' })
+  await execa('npx', ['tsc', '--build'], {cwd: __dirname, stdio: 'inherit'})
 }
 
 export const prepublish = series(codegen, typescript)

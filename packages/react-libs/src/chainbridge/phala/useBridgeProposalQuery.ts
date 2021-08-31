@@ -1,12 +1,12 @@
-import { Option } from '@polkadot/types'
-import { AccountId, Balance } from '@polkadot/types/interfaces'
-import { hexToU8a } from '@polkadot/util'
-import { decodeAddress } from '@polkadot/util-crypto'
+import {Option} from '@polkadot/types'
+import {AccountId, Balance} from '@polkadot/types/interfaces'
+import {hexToU8a} from '@polkadot/util'
+import {decodeAddress} from '@polkadot/util-crypto'
 import BN from 'bn.js'
-import { useQuery, UseQueryResult } from 'react-query'
-import { v4 as uuidv4 } from 'uuid'
-import { useApiPromise } from '../..'
-import { useDecimalMultiplier } from '../../polkadot/useTokenDecimalsQuery'
+import {useQuery, UseQueryResult} from 'react-query'
+import {v4 as uuidv4} from 'uuid'
+import {useApiPromise} from '../..'
+import {useDecimalMultiplier} from '../../polkadot/useTokenDecimalsQuery'
 
 const BridgeVoteQueryKey = uuidv4()
 
@@ -23,8 +23,8 @@ export const useBridgeProposalQuery = ({
   resourceId?: string
   originChainId?: number
 }): UseQueryResult<Option<any>> => {
-  const { api } = useApiPromise()
-  const { multiplier } = useDecimalMultiplier()
+  const {api} = useApiPromise()
+  const {multiplier} = useDecimalMultiplier()
 
   return useQuery(
     [

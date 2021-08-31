@@ -1,8 +1,8 @@
-import { GraphQLClient } from 'graphql-request'
-import { useMemo } from 'react'
-import { useQuery, UseQueryResult } from 'react-query'
-import { v4 as uuidv4 } from 'uuid'
-import { GetDepositRecordByHashQuery, getSdk } from '../interfaces'
+import {GraphQLClient} from 'graphql-request'
+import {useMemo} from 'react'
+import {useQuery, UseQueryResult} from 'react-query'
+import {v4 as uuidv4} from 'uuid'
+import {GetDepositRecordByHashQuery, getSdk} from '../interfaces'
 
 const key = uuidv4()
 
@@ -17,7 +17,7 @@ export const useDepositRecordByHash = (
 
   return useQuery(
     [key, hash, client],
-    async () => await sdk?.getDepositRecordByHash({ hash }),
+    async () => await sdk?.getDepositRecordByHash({hash}),
     {
       enabled: hash !== undefined,
     }

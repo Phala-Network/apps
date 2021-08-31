@@ -6,7 +6,8 @@ export const KhalaIcon = (props: React.SVGProps<SVGSVGElement>) => {
       viewBox="0 0 32 32"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      {...props}>
+      {...props}
+    >
       <path
         d="M12.9445 9.33301H9.33337V22.6663H12.9445V9.33301Z"
         fill="currentColor"

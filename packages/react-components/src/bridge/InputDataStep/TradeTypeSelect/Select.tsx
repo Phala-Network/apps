@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
-import { down } from 'styled-breakpoints'
+import React, {useState} from 'react'
+import {down} from 'styled-breakpoints'
 import styled from 'styled-components'
-import { Backdrop } from '../../..'
+import {Backdrop} from '../../..'
 import SelectIcon from './SelectIcon'
 
 const SelectBodyWrap = styled.div`
@@ -95,12 +95,12 @@ type Props = {
 }
 
 const Select: React.FC<Props> = (props) => {
-  const { color, icon, onChange, selectItems = [], value, disable } = props
+  const {color, icon, onChange, selectItems = [], value, disable} = props
   const [visible, setVisible] = useState(false)
 
   return (
     <SelectWrap>
-      <Value style={{ color }} onClick={() => !disable && setVisible(true)}>
+      <Value style={{color}} onClick={() => !disable && setVisible(true)}>
         {icon}
         <span>{value || 'Select'}</span>
         {!disable && <SelectIcon></SelectIcon>}
@@ -118,7 +118,8 @@ const Select: React.FC<Props> = (props) => {
                     onChange?.(item)
                     setVisible(false)
                   }}
-                  key={item}>
+                  key={item}
+                >
                   {item}
                 </SelectItem>
               )

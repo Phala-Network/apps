@@ -1,12 +1,12 @@
-import { FC, useRef } from 'react'
-import { QueryClient, QueryClientProvider } from 'react-query'
-import { EthersProvider } from './ethereum/contexts/useEthers'
-import { Web3Provider as EthereumWeb3Provider } from './ethereum/contexts/useWeb3'
-import { EthereumGraphQLProvider } from './ethereum/GraphQLClientContext'
-import { SubstrateGraphQLProvider } from './polkadot/GraphQLClientContext'
-import { ApiPromiseProvider } from './polkadot/hooks/useApiPromise'
-import { NetworkContextProvider } from './polkadot/hooks/useSubstrateNetwork'
-import { Web3Provider as PolkadotWeb3Provider } from './polkadot/hooks/useWeb3'
+import {FC, useRef} from 'react'
+import {QueryClient, QueryClientProvider} from 'react-query'
+import {EthersProvider} from './ethereum/contexts/useEthers'
+import {Web3Provider as EthereumWeb3Provider} from './ethereum/contexts/useWeb3'
+import {EthereumGraphQLProvider} from './ethereum/GraphQLClientContext'
+import {SubstrateGraphQLProvider} from './polkadot/GraphQLClientContext'
+import {ApiPromiseProvider} from './polkadot/hooks/useApiPromise'
+import {NetworkContextProvider} from './polkadot/hooks/useSubstrateNetwork'
+import {Web3Provider as PolkadotWeb3Provider} from './polkadot/hooks/useWeb3'
 
 export interface ProviderProps {
   ethereumGraphEndpoint: string

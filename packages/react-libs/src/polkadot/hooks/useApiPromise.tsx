@@ -1,5 +1,5 @@
-import { ApiPromise, WsProvider } from '@polkadot/api'
-import { RegistryTypes } from '@polkadot/types/types'
+import {ApiPromise, WsProvider} from '@polkadot/api'
+import {RegistryTypes} from '@polkadot/types/types'
 import {
   createContext,
   PropsWithChildren,
@@ -8,7 +8,7 @@ import {
   useEffect,
   useState,
 } from 'react'
-import { useNetworkContext } from './useSubstrateNetwork'
+import {useNetworkContext} from './useSubstrateNetwork'
 
 type Readystate = 'unavailable' | 'init' | 'ready' | 'failed'
 
@@ -30,11 +30,11 @@ const enableApiPromise = async (
   endpoint: string,
   types: RegistryTypes
 ): Promise<ApiPromise> => {
-  const { cryptoWaitReady } = await import('@polkadot/util-crypto')
+  const {cryptoWaitReady} = await import('@polkadot/util-crypto')
   await cryptoWaitReady()
   logDebug('Polkadot crypto is ready')
 
-  const { ApiPromise } = await import('@polkadot/api')
+  const {ApiPromise} = await import('@polkadot/api')
   const api = await ApiPromise.create({
     provider: new WsProvider(endpoint),
     types,
@@ -52,7 +52,7 @@ export const ApiPromiseProvider = ({
   const [api, setApi] = useState<ApiPromise>()
   const [readystate, setState] = useState<Readystate>('unavailable')
 
-  const { options } = useNetworkContext()
+  const {options} = useNetworkContext()
   const endpoint = options?.endpoint
   const registryTypes = options?.typedefs
 
@@ -81,7 +81,7 @@ export const ApiPromiseProvider = ({
       })
   }, [endpoint, readystate, registryTypes])
 
-  const value = { api, readystate, initialized: readystate === 'ready' }
+  const value = {api, readystate, initialized: readystate === 'ready'}
 
   return (
     <ApiPromiseContext.Provider value={value}>

@@ -1,5 +1,5 @@
-import { Decimal } from 'decimal.js'
-import { useMemo } from 'react'
+import {Decimal} from 'decimal.js'
+import {useMemo} from 'react'
 import useBalance from './useBalance'
 
 export default function usePolkadotAccountBalanceDecimal(

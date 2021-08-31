@@ -6,8 +6,8 @@ query getChainBridgeProposalEventsByDepositNonce(
     filter: {
       and: [
         {
-          depositNonce: { equalTo: $depositNonce }
-          originChainId: { equalTo: $originChainId }
+          depositNonce: {equalTo: $depositNonce}
+          originChainId: {equalTo: $originChainId}
         }
       ]
     }
@@ -25,8 +25,8 @@ query getChainBridgeProposalEventsByDepositNonce(
     filter: {
       and: [
         {
-          depositNonce: { equalTo: $depositNonce }
-          originChainId: { equalTo: $originChainId }
+          depositNonce: {equalTo: $depositNonce}
+          originChainId: {equalTo: $originChainId}
         }
       ]
     }

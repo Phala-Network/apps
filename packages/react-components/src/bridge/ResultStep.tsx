@@ -11,7 +11,7 @@ import {
   ModalActions,
   Spacer,
 } from '..'
-import { StepProps } from './BridgeProcess'
+import {StepProps} from './BridgeProcess'
 import FormItem from './FormItem'
 import FormLayout from './FormLayout'
 
@@ -48,7 +48,7 @@ const Tip = styled.div`
 `
 
 const ResultStep: React.FC<Props> = (props) => {
-  const { onNext, layout } = props
+  const {onNext, layout} = props
   const address = 'DaqqGMuj31iFen9zdHxrqebvXhp2bt8rDJge3X3hQuAMkBr'
 
   return (
@@ -56,9 +56,7 @@ const ResultStep: React.FC<Props> = (props) => {
       <FormLayout layout={layout}>
         <FormItem>
           <InfoTitle>From</InfoTitle>
-          <AmountInfo
-            style={{ backgroundColor: '#FFC786' }}
-            amount={12345.67891}>
+          <AmountInfo style={{backgroundColor: '#FFC786'}} amount={12345.67891}>
             <AddressOfAmountInfo>
               <div>
                 <Tip>Please recharge to the following address</Tip>
@@ -81,7 +79,7 @@ const ResultStep: React.FC<Props> = (props) => {
             <Address>{address}</Address>
           </AmountInfo>
           <InputExternalInfo
-            style={{ textAlign: 'right' }}
+            style={{textAlign: 'right'}}
             label="Balance"
             value={1234.56789}
             type={'PHA'}

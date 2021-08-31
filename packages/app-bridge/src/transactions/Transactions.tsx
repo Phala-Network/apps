@@ -1,13 +1,13 @@
-import { useEthereumAccountAtom } from '@phala/app-store'
-import { TransactionRecords } from '@phala/app-types'
-import { FloatModal } from '@phala/react-components'
-import { useDepositRecordsByDepositorQuery } from '@phala/react-graph-chainbridge'
-import { useEthereumGraphQL } from '@phala/react-libs'
-import React, { useEffect, useState } from 'react'
+import {useEthereumAccountAtom} from '@phala/app-store'
+import {TransactionRecords} from '@phala/app-types'
+import {FloatModal} from '@phala/react-components'
+import {useDepositRecordsByDepositorQuery} from '@phala/react-graph-chainbridge'
+import {useEthereumGraphQL} from '@phala/react-libs'
+import React, {useEffect, useState} from 'react'
 import TransactionsList from './List/List'
 
 const Transactions: React.FC = () => {
-  const { client } = useEthereumGraphQL()
+  const {client} = useEthereumGraphQL()
   const [records, setRecords] = useState<TransactionRecords>([])
   const [ethereumAccount] = useEthereumAccountAtom()
   const depositor = ethereumAccount?.address || ''
@@ -16,7 +16,7 @@ const Transactions: React.FC = () => {
   // const depositor = '0x766d4b6fd707c45518eb49878142a88378a7443c'
   // const depositor = '0x775946638c9341a48ccf65e46b73367d0aba2616'
 
-  const { data } = useDepositRecordsByDepositorQuery(depositor, 10, 0, client)
+  const {data} = useDepositRecordsByDepositorQuery(depositor, 10, 0, client)
 
   useEffect(() => {
     if (data?.depositRecords) {

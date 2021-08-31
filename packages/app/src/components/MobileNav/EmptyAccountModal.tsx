@@ -1,4 +1,4 @@
-import { Button, Modal } from '@phala/react-components'
+import {Button, Modal} from '@phala/react-components'
 import styled from 'styled-components'
 
 const Content = styled.div`
@@ -15,7 +15,7 @@ const ConfirmButton = styled(Button)`
 const EmptyAccountModal: React.FC<{
   visible: boolean
   onClose: () => void
-}> = ({ visible, onClose }) => {
+}> = ({visible, onClose}) => {
   return (
     <Modal visible={visible} title="Alert">
       <Content>

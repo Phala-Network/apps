@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, {useEffect, useState} from 'react'
 import styled from 'styled-components'
 
 const Wrap = styled.div`
@@ -48,7 +48,7 @@ const ActiveOutline: React.FC = () => {
     return () => clearInterval(id)
   }, [])
 
-  return <Wrap className="ActiveOutline" style={{ top }}></Wrap>
+  return <Wrap className="ActiveOutline" style={{top}}></Wrap>
 }
 
 export default ActiveOutline

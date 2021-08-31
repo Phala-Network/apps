@@ -1,5 +1,5 @@
 import React from 'react'
-import { Target } from '.'
+import {Target} from '.'
 import Block from './Block'
 
 type Props = {

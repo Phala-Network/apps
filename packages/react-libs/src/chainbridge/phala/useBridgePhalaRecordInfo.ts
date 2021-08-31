@@ -1,7 +1,7 @@
-import { useProposalEventsByDepositNonceQuery } from '@phala/react-graph-chainbridge'
-import { BN, hexToU8a } from '@polkadot/util'
-import { encodeAddress } from '@polkadot/util-crypto'
-import { useMemo } from 'react'
+import {useProposalEventsByDepositNonceQuery} from '@phala/react-graph-chainbridge'
+import {BN, hexToU8a} from '@polkadot/util'
+import {encodeAddress} from '@polkadot/util-crypto'
+import {useMemo} from 'react'
 import {
   balanceToDecimal,
   useBridgeProposalQuery,
@@ -25,13 +25,9 @@ export const useBridgePhalaRecordInfo = (
     nonce = '',
     resourceId = '',
   } = record ?? {}
-  const { client } = useSubstrateGraphQL()
-  const { multiplier } = useDecimalMultiplier()
-  const { data: events } = useProposalEventsByDepositNonceQuery(
-    0,
-    nonce,
-    client
-  )
+  const {client} = useSubstrateGraphQL()
+  const {multiplier} = useDecimalMultiplier()
+  const {data: events} = useProposalEventsByDepositNonceQuery(0, nonce, client)
   const parsedNonce = parseInt(nonce)
 
   const recipient = useMemo(() => {
@@ -42,7 +38,7 @@ export const useBridgePhalaRecordInfo = (
     }
   }, [destinationRecipient])
 
-  const { data: proposal } = useBridgeProposalQuery({
+  const {data: proposal} = useBridgeProposalQuery({
     amount: new BN(amount),
     depositNonce: parsedNonce,
     originChainId: 0,

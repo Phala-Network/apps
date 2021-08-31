@@ -7,23 +7,18 @@
     "strict": true,
     "moduleResolution": "node",
     "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "rootDir": "../",
-    "paths": {
-      "@phala/react-i18n": ["../react-i18n/src"],
-      "@phala/react-i18n/*": ["../react-i18n/src/*"]
-    }
+    "forceConsistentCasingInFileNames": true
   },
   "references": [
-    { "path": "../app-config" },
-    { "path": "../app-types" },
-    { "path": "../app-assets" },
-    { "path": "../app-bridge" },
-    { "path": "../utils" },
-    { "path": "../react-libs" },
-    { "path": "../react-hooks" },
-    { "path": "../react-components" },
-    { "path": "../react-cms" }
+    {"path": "../app-config"},
+    {"path": "../app-types"},
+    {"path": "../app-console"},
+    {"path": "../app-assets"},
+    {"path": "../app-bridge"},
+    {"path": "../utils"},
+    {"path": "../react-libs"},
+    {"path": "../react-hooks"},
+    {"path": "../react-components"},
+    {"path": "../react-cms"}
   ]
 }

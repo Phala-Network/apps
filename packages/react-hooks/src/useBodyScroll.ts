@@ -57,7 +57,7 @@ const useBodyScroll = (
       if (!isIosWithCustom()) {
         elRef.current.style.overflow = 'hidden'
       } else {
-        document.addEventListener('touchmove', touchHandler, { passive: false })
+        document.addEventListener('touchmove', touchHandler, {passive: false})
       }
       elementStack.set(elRef.current, {
         last: lastOverflow,

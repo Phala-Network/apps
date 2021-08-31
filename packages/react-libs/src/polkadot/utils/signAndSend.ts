@@ -1,11 +1,7 @@
-import { ApiPromise } from '@polkadot/api'
-import { AddressOrPair, SubmittableExtrinsic } from '@polkadot/api/types'
-import {
-  DispatchError,
-  ExtrinsicStatus,
-  Hash,
-} from '@polkadot/types/interfaces'
-import { ISubmittableResult, Signer } from '@polkadot/types/types'
+import {ApiPromise} from '@polkadot/api'
+import {AddressOrPair, SubmittableExtrinsic} from '@polkadot/api/types'
+import {DispatchError, ExtrinsicStatus, Hash} from '@polkadot/types/interfaces'
+import {ISubmittableResult, Signer} from '@polkadot/types/types'
 
 interface SignAndSendProps {
   account: AddressOrPair
@@ -39,9 +35,9 @@ export const waitSignAndSend = ({
 }: SignAndSendProps): Promise<Hash> => {
   const extrinsicResultPromise = new Promise<Hash>((resolve, reject) => {
     extrinsic
-      .signAndSend(account, { signer }, ({ events, status }) => {
+      .signAndSend(account, {signer}, ({events, status}) => {
         if (status.isFinalized) {
-          const failures = events.filter(({ event }) => {
+          const failures = events.filter(({event}) => {
             return api.events.system.ExtrinsicFailed.is(event)
           })
 
@@ -56,7 +52,7 @@ export const waitSignAndSend = ({
                 const decoded = api.registry.findMetaError(
                   (error as DispatchError).asModule
                 )
-                const { documentation, method, section } = decoded
+                const {documentation, method, section} = decoded
 
                 reject(new ExtrinsicFailedError(section, method, documentation))
               } else {

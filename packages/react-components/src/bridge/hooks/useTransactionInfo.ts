@@ -1,6 +1,6 @@
-import { TransactionInfo } from '@phala/app-types'
-import { Dispatch, SetStateAction, useEffect, useState } from 'react'
-import { InputDataStepResult } from '../InputDataStep'
+import {TransactionInfo} from '@phala/app-types'
+import {Dispatch, SetStateAction, useEffect, useState} from 'react'
+import {InputDataStepResult} from '../InputDataStep'
 
 interface useTransactionInfoReturn {
   transactionInfo: TransactionInfo
@@ -28,7 +28,7 @@ export default function useTransactionInfo(
   })
 
   useEffect(() => {
-    const { from, to, amount: amountFromPrevStep } = data || {}
+    const {from, to, amount: amountFromPrevStep} = data || {}
 
     setTransactionInfo({
       to: {
@@ -47,8 +47,8 @@ export default function useTransactionInfo(
   }, [data])
 
   const setHash = (hash: string) => {
-    setTransactionInfo({ ...transactionInfo, hash })
+    setTransactionInfo({...transactionInfo, hash})
   }
 
-  return { transactionInfo, setTransactionInfo, setHash }
+  return {transactionInfo, setTransactionInfo, setHash}
 }

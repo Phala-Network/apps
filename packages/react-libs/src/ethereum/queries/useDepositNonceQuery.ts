@@ -1,18 +1,18 @@
-import { BigNumber } from 'ethers'
-import { useMemo } from 'react'
-import { useQuery, UseQueryResult } from 'react-query'
-import { v4 as uuidv4 } from 'uuid'
-import { useBridgeContract } from '../bridge/useBridgeContract'
-import { useEthereumNetworkOptions } from './useEthereumNetworkOptions'
-import { useTransactionReceiptQuery } from './useTransactionReceiptQuery'
+import {BigNumber} from 'ethers'
+import {useMemo} from 'react'
+import {useQuery, UseQueryResult} from 'react-query'
+import {v4 as uuidv4} from 'uuid'
+import {useBridgeContract} from '../bridge/useBridgeContract'
+import {useEthereumNetworkOptions} from './useEthereumNetworkOptions'
+import {useTransactionReceiptQuery} from './useTransactionReceiptQuery'
 
 const DepositNonceQueryKey = uuidv4()
 
 export const useDepositNonceQuery = (hash?: string): UseQueryResult<number> => {
-  const { contract: bridge } = useBridgeContract()
-  const { options: ethereum } = useEthereumNetworkOptions()
+  const {contract: bridge} = useBridgeContract()
+  const {options: ethereum} = useEthereumNetworkOptions()
 
-  const { data: receipt } = useTransactionReceiptQuery(hash)
+  const {data: receipt} = useTransactionReceiptQuery(hash)
 
   const depositEventFilter = useMemo(() => {
     return bridge?.filters['Deposit']?.(null, null, null).topics?.[0]

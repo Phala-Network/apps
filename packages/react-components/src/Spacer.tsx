@@ -35,7 +35,8 @@ const Spacer: React.FC<SpacerProps> = ({
         marginTop: top,
       }}
       className={className}
-      {...props}></span>
+      {...props}
+    ></span>
   )
 }
 

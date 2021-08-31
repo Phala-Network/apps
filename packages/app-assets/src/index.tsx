@@ -1,23 +1,20 @@
-import {
-  useEthereumAccountAtom,
-  usePolkadotAccountAtom,
-} from '@phala/app-store'
-import { useBalance } from '@phala/react-hooks'
-import { useErc20BalanceQuery } from '@phala/react-libs'
-import { toFixed } from '@phala/utils'
-import { Decimal } from 'decimal.js'
-import { ethers } from 'ethers'
-import React, { useMemo } from 'react'
-import { Helmet } from 'react-helmet'
-import { up } from 'styled-breakpoints'
-import { useBreakpoint } from 'styled-breakpoints/react-styled'
+import {useEthereumAccountAtom, usePolkadotAccountAtom} from '@phala/app-store'
+import {useBalance} from '@phala/react-hooks'
+import {useErc20BalanceQuery} from '@phala/react-libs'
+import {toFixed} from '@phala/utils'
+import {Decimal} from 'decimal.js'
+import {ethers} from 'ethers'
+import React, {useMemo} from 'react'
+import {Helmet} from 'react-helmet'
+import {up} from 'styled-breakpoints'
+import {useBreakpoint} from 'styled-breakpoints/react-styled'
 import styled from 'styled-components'
 import BalanceCard from './components/BalanceCard'
-import { BlackHeader } from './components/BalanceCard/Header'
+import {BlackHeader} from './components/BalanceCard/Header'
 import Category from './components/Category'
 import ComingSoonBox from './components/ComingSoonBox'
-import { EthereumIcon } from './components/Icons/EthereumIcon'
-import { KhalaIcon } from './components/Icons/KhalaIcon'
+import {EthereumIcon} from './components/Icons/EthereumIcon'
+import {KhalaIcon} from './components/Icons/KhalaIcon'
 import usePHAPrice from './hooks/usePHAPrice'
 
 const COMING_SOON_CATEGORIES: string[] = ['Parachain Assets', 'Bridge Assets']
@@ -42,7 +39,7 @@ const HomePage: React.FC = () => {
   const polkadotAccountAddress = polkadotAccount?.address
   const ethereumAccountAddress = ethereumAccount?.address
   const polkadotAccountBalance = useBalance(polkadotAccountAddress)
-  const { data: ethereumAccountBalance } = useErc20BalanceQuery(
+  const {data: ethereumAccountBalance} = useErc20BalanceQuery(
     ethereumAccountAddress
   )
 
@@ -88,7 +85,8 @@ const HomePage: React.FC = () => {
           title="Phala"
           description={`Total: ${
             totalBalanceNumber ? toFixed(totalBalanceNumber, 4) : '-'
-          } PHA`}>
+          } PHA`}
+        >
           {/* FIXME: balance can be preset with name and icon */}
 
           <BalanceCard
@@ -103,7 +101,8 @@ const HomePage: React.FC = () => {
             disableTransfer
             disableBridge
             disableConvert
-            dollar={polkadotAccountBalanceNumber?.mul(PHAPrice)}></BalanceCard>
+            dollar={polkadotAccountBalanceNumber?.mul(PHAPrice)}
+          ></BalanceCard>
 
           {md && (
             <BalanceCard
@@ -119,15 +118,14 @@ const HomePage: React.FC = () => {
               disableBridge
               disableConvert
               disableClaim
-              dollar={ethereumAccountBalanceNumber?.mul(
-                PHAPrice
-              )}></BalanceCard>
+              dollar={ethereumAccountBalanceNumber?.mul(PHAPrice)}
+            ></BalanceCard>
           )}
         </Category>
         {COMING_SOON_CATEGORIES.map((category) => (
           <Category title={category} key={category}>
             <ComingSoonBox>
-              <div style={{ fontWeight: 'bold' }}>{category}</div>
+              <div style={{fontWeight: 'bold'}}>{category}</div>
               <div>Coming Soon</div>
             </ComingSoonBox>
           </Category>

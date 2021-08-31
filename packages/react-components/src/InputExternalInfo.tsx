@@ -1,6 +1,6 @@
-import { useSSR } from '@phala/react-hooks'
-import { Decimal } from 'decimal.js'
-import React, { ComponentProps } from 'react'
+import {useSSR} from '@phala/react-hooks'
+import {Decimal} from 'decimal.js'
+import React, {ComponentProps} from 'react'
 import styled from 'styled-components'
 import BalanceLabel from './BalanceLabel'
 
@@ -40,13 +40,13 @@ type Props = {
 } & ComponentProps<'div'>
 
 const InputExternalInfo: React.FC<Props> = (props) => {
-  const { label, value, type, ...others } = props
-  const { isServer } = useSSR()
+  const {label, value, type, ...others} = props
+  const {isServer} = useSSR()
 
   if (isServer) return null
 
   return (
-    <div style={{ textAlign: 'right' }} {...others}>
+    <div style={{textAlign: 'right'}} {...others}>
       {label && <Label>{label}: </Label>}
       {value && (
         <Value>

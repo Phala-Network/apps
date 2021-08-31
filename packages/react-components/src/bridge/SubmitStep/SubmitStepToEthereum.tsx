@@ -1,36 +1,36 @@
-import { useTransactionsInfoAtom } from '@phala/app-store'
+import {useTransactionsInfoAtom} from '@phala/app-store'
 import {
   decimalToBalance,
   useApiPromise,
   useDecimalJsTokenDecimalMultiplier,
   useTransferSubmit,
 } from '@phala/react-libs'
-import { ExtrinsicStatus, Hash } from '@polkadot/types/interfaces'
-import { Decimal } from 'decimal.js'
-import { getAddress } from 'ethers/lib/utils'
-import React, { useMemo, useState } from 'react'
-import { SubmitStepProps } from '.'
-import { Alert, Button, ModalAction, ModalActions, Spacer } from '../..'
-import { StepProps } from '../BridgeProcess'
+import {ExtrinsicStatus, Hash} from '@polkadot/types/interfaces'
+import {Decimal} from 'decimal.js'
+import {getAddress} from 'ethers/lib/utils'
+import React, {useMemo, useState} from 'react'
+import {SubmitStepProps} from '.'
+import {Alert, Button, ModalAction, ModalActions, Spacer} from '../..'
+import {StepProps} from '../BridgeProcess'
 import useTransactionInfo from '../hooks/useTransactionInfo'
 import BaseInfo from './BaseInfo'
 
 type Props = SubmitStepProps & StepProps
 
 const SubmitStepToEthereum: React.FC<Props> = (props) => {
-  const { onSubmit, onPrev, onSuccess, layout, data } = props
-  const { from, to, amount: amountFromPrevStep } = data || {}
-  const { account: accountFrom } = from || {}
-  const { account: accountTo } = to || {}
+  const {onSubmit, onPrev, onSuccess, layout, data} = props
+  const {from, to, amount: amountFromPrevStep} = data || {}
+  const {account: accountFrom} = from || {}
+  const {account: accountTo} = to || {}
   const [transactionsInfo, setTransactionsInfo] = useTransactionsInfoAtom()
-  const { api } = useApiPromise()
+  const {api} = useApiPromise()
   const decimals = useDecimalJsTokenDecimalMultiplier(api)
   const transferSubmit = useTransferSubmit(42)
   const [submittedHash, setSubmittedHash] = useState<Hash>()
   const [isSubmitting, setSubmitting] = useState<boolean>(false)
   const [extrinsicStatus, setExtrinsicStatus] = useState<ExtrinsicStatus[]>([])
   const [progressIndex, setProgressIndex] = useState(-1)
-  const { transactionInfo } = useTransactionInfo(data)
+  const {transactionInfo} = useTransactionInfo(data)
 
   const amount = useMemo(() => {
     if (!amountFromPrevStep || !api || !decimals) return

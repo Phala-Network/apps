@@ -1,8 +1,8 @@
-import { gql, request } from 'graphql-request'
+import {gql, request} from 'graphql-request'
 
 const query = gql`
   {
-    log(where: { id: "cksrc9kjkbsna0b398xe591ap" }) {
+    log(where: {id: "cksrc9kjkbsna0b398xe591ap"}) {
       dt
     }
   }

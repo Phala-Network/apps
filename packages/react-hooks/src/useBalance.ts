@@ -1,11 +1,11 @@
-import { useApiPromise } from '@phala/react-libs'
-import type { AccountId, Balance } from '@polkadot/types/interfaces'
-import { useEffect, useState } from 'react'
+import {useApiPromise} from '@phala/react-libs'
+import type {AccountId, Balance} from '@polkadot/types/interfaces'
+import {useEffect, useState} from 'react'
 
 export default function useBalance(
   address?: string | AccountId | Uint8Array
 ): Balance | undefined {
-  const { api, readystate } = useApiPromise()
+  const {api, readystate} = useApiPromise()
   const [balance, setBalance] = useState<Balance>()
   const initialized = readystate === 'ready'
 
@@ -17,7 +17,7 @@ export default function useBalance(
     let unsubscribe: () => void
 
     api.query.system
-      .account(address, ({ data: { free } }) => {
+      .account(address, ({data: {free}}) => {
         // FIXME
         // @ts-ignore
         setBalance(free)

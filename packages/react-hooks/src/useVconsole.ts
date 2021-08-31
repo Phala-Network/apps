@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import {useEffect} from 'react'
 import VConsole from 'vconsole'
 
 export default function useVconsole(): void {

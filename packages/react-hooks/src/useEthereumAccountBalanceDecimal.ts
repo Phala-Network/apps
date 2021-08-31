@@ -1,12 +1,12 @@
-import { useErc20BalanceQuery } from '@phala/react-libs'
-import { Decimal } from 'decimal.js'
-import { ethers } from 'ethers'
-import { useMemo } from 'react'
+import {useErc20BalanceQuery} from '@phala/react-libs'
+import {Decimal} from 'decimal.js'
+import {ethers} from 'ethers'
+import {useMemo} from 'react'
 
 export default function useEthereumAccountBalanceDecimal(
   ethereumAccountAddress?: string
 ): Decimal {
-  const { data: ethereumAccountBalance } = useErc20BalanceQuery(
+  const {data: ethereumAccountBalance} = useErc20BalanceQuery(
     ethereumAccountAddress
   )
 

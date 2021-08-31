@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { down } from 'styled-breakpoints'
+import {down} from 'styled-breakpoints'
 
 const ComingSoonBox = styled.div`
   user-select: none;

@@ -4,7 +4,7 @@ import Link from './Link'
 
 const Links: React.FC = () => {
   return (
-    <div id="navLinks" style={{ position: 'relative', paddingTop: 1 }}>
+    <div id="navLinks" style={{position: 'relative', paddingTop: 1}}>
       <ActiveOutline />
 
       <Link to="/">Assets</Link>

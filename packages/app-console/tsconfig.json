@@ -1,0 +1,19 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "esm",
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "esModuleInterop": false
+  },
+  "include": ["src/**/*", "../../typings"],
+  "references": [
+    {"path": "../app-store"},
+    {"path": "../utils"},
+    {"path": "../react-libs"},
+    {"path": "../react-hooks"},
+    {"path": "../react-components"}
+  ]
+}

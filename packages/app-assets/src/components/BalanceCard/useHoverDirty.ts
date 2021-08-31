@@ -1,4 +1,4 @@
-import { RefObject, useEffect, useState } from 'react'
+import {RefObject, useEffect, useState} from 'react'
 
 export function on<T extends Window | Document | HTMLElement | EventTarget>(
   obj: T | null,
@@ -44,7 +44,7 @@ const useHoverDirty = (ref: RefObject<Element>, enabled: boolean = true) => {
     }
 
     // fixes react-hooks/exhaustive-deps warning about stale ref elements
-    const { current } = ref
+    const {current} = ref
 
     return () => {
       if (enabled && current) {

@@ -1,6 +1,6 @@
-import { forwardRef, useEffect, useState } from 'react'
+import {forwardRef, useEffect, useState} from 'react'
 import Icon from './Icon'
-import { Root, Text } from './styled'
+import {Root, Text} from './styled'
 
 export interface MobileToastProps {
   duration?: number
@@ -9,7 +9,7 @@ export interface MobileToastProps {
 
 export const MobileToast = forwardRef<HTMLDivElement, MobileToastProps>(
   (props, ref) => {
-    const { text } = props
+    const {text} = props
     const [visitable, setVisitable] = useState(true)
 
     useEffect(() => {

@@ -9,5 +9,5 @@
     "esModuleInterop": false
   },
   "include": ["src/**/*"],
-  "references": [{ "path": "../react-libs" }]
+  "references": [{"path": "../react-libs"}]
 }

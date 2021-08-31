@@ -1,17 +1,14 @@
-import {
-  useEthereumAccountAtom,
-  usePolkadotAccountAtom,
-} from '@phala/app-store'
+import {useEthereumAccountAtom, usePolkadotAccountAtom} from '@phala/app-store'
 import {
   useEthereumAccountBalanceDecimal,
   usePolkadotAccountBalanceDecimal,
 } from '@phala/react-hooks'
-import { validateAddress } from '@phala/utils'
-import { Decimal } from 'decimal.js'
-import React, { useEffect, useState } from 'react'
-import { ErrorBoundary } from 'react-error-boundary'
-import { down } from 'styled-breakpoints'
-import { useBreakpoint } from 'styled-breakpoints/react-styled'
+import {validateAddress} from '@phala/utils'
+import {Decimal} from 'decimal.js'
+import React, {useEffect, useState} from 'react'
+import {ErrorBoundary} from 'react-error-boundary'
+import {down} from 'styled-breakpoints'
+import {useBreakpoint} from 'styled-breakpoints/react-styled'
 import {
   Button,
   ErrorText,
@@ -24,12 +21,12 @@ import {
   Spacer,
   useToast,
 } from '../..'
-import { StepProps } from '../BridgeProcess'
+import {StepProps} from '../BridgeProcess'
 import EthereumAllowance from '../EthereumAllowance'
 import FormItem from '../FormItem'
 import FormLayout from '../FormLayout'
 import ActionButton from './ActionButton'
-import TradeTypeSelect, { TradeTypeSelectValue } from './TradeTypeSelect'
+import TradeTypeSelect, {TradeTypeSelectValue} from './TradeTypeSelect'
 import DEFAULT_VALUE from './TradeTypeSelect/DEFAULT_VALUE'
 
 export type InputDataStepResult = {
@@ -54,7 +51,7 @@ type Props = {
 
 const InputDataStep: React.FC<Props> = (props) => {
   const isMobile = useBreakpoint(down('sm'))
-  const { layout, onNext, onCancel } = props
+  const {layout, onNext, onCancel} = props
   const [amountInput, setAmountInput] = useState<number>()
   const [recipient, setRecipient] = useState<string>('')
   const [polkadotAccount] = usePolkadotAccountAtom()
@@ -62,7 +59,7 @@ const InputDataStep: React.FC<Props> = (props) => {
   const [ethereumAccount] = useEthereumAccountAtom()
   const ethereumAccountAddress = ethereumAccount?.address
   const [errorString, setErrorString] = useState('')
-  const { toast } = useToast()
+  const {toast} = useToast()
 
   const ethereumAccountBalanceDecimal = useEthereumAccountBalanceDecimal(
     ethereumAccountAddress
@@ -168,7 +165,7 @@ const InputDataStep: React.FC<Props> = (props) => {
 
   return (
     <>
-      <div style={{ height: 26 }}>
+      <div style={{height: 26}}>
         <InputExternalInfo
           label={'Balance'}
           type={'PHA'}
@@ -234,7 +231,8 @@ const InputDataStep: React.FC<Props> = (props) => {
             <ErrorBoundary fallbackRender={() => null}>
               <EthereumAllowance
                 placeholder={<Button type="primary">Approve</Button>}
-                account={ethereumAccount.address}>
+                account={ethereumAccount.address}
+              >
                 <Button type="primary" onClick={submit}>
                   Next
                 </Button>
@@ -245,12 +243,13 @@ const InputDataStep: React.FC<Props> = (props) => {
           {!isFromEthereum && (
             <ActionButton
               isFromEthereum={isFromEthereum}
-              onClick={submit}></ActionButton>
+              onClick={submit}
+            ></ActionButton>
           )}
         </ModalAction>
       </ModalActions>
 
-      <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+      <div style={{display: 'flex', justifyContent: 'flex-end'}}>
         <ErrorText>{errorString}</ErrorText>
       </div>
     </>

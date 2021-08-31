@@ -1,5 +1,5 @@
 import React from 'react'
-import { Spacer } from '../../..'
+import {Spacer} from '../../..'
 import DEFAULT_VALUE from './DEFAULT_VALUE'
 import ExchangeIcon from './ExchangeIcon'
 import From from './From'

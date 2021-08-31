@@ -85,7 +85,7 @@ export const Web3Provider = ({
   }, [provider])
 
   return (
-    <Web3Context.Provider value={{ accounts, provider, readystate }}>
+    <Web3Context.Provider value={{accounts, provider, readystate}}>
       {children}
     </Web3Context.Provider>
   )

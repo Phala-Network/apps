@@ -1,4 +1,4 @@
-export type Account = { name?: string; address: string }
+export type Account = {name?: string; address: string}
 
 export type TransactionInfoItem = {
   address: string

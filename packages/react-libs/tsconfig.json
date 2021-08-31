@@ -9,5 +9,5 @@
     "esModuleInterop": false
   },
   "include": ["src/**/*", "src/**/*.json"],
-  "references": [{ "path": "../app-config" }, { "path": "../utils" }]
+  "references": [{"path": "../app-config"}, {"path": "../utils"}]
 }

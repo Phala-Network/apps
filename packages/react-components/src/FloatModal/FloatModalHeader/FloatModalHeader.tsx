@@ -1,9 +1,9 @@
-import React, { ComponentProps } from 'react'
+import React, {ComponentProps} from 'react'
 import styled from 'styled-components'
 import Spacer from '../../Spacer'
-import { ActiveIcon, InactiveIcon } from './icons'
+import {ActiveIcon, InactiveIcon} from './icons'
 
-const FloatModalHeaderRoot = styled.div<{ active: boolean }>`
+const FloatModalHeaderRoot = styled.div<{active: boolean}>`
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -34,7 +34,7 @@ type Props = ComponentProps<typeof FloatModalHeaderRoot> & {
 }
 
 export const FloatModalHeader: React.FC<Props> = (props) => {
-  const { onClickHeader, active, children, ...others } = props
+  const {onClickHeader, active, children, ...others} = props
 
   return (
     <FloatModalHeaderRoot active={active} onClick={onClickHeader} {...others}>
