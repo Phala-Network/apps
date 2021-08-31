@@ -56,6 +56,7 @@ importers:
       decimal.js: ^10.3.1
       ethers: ^5.4.5
       gatsby: ^3.12.0
+      gatsby-plugin-alias-imports: ^1.0.5
       gatsby-plugin-google-gtag: ^3.12.0
       gatsby-plugin-intl: ^0.3.3
       gatsby-plugin-pnpm: ^1.2.8
@@ -122,6 +123,7 @@ importers:
       decimal.js: 10.3.1
       ethers: 5.4.5
       gatsby: 3.12.0_5ad37f6fef0b9fcf4c657ddac350ba85
+      gatsby-plugin-alias-imports: 1.0.5_gatsby@3.12.0
       gatsby-plugin-google-gtag: 3.12.0_5326fc0eecd91cf6dfbc9fefd1d6cf0d
       gatsby-plugin-intl: 0.3.3_gatsby@3.12.0+react@17.0.2
       gatsby-plugin-pnpm: 1.2.8_gatsby@3.12.0
@@ -355,6 +357,9 @@ importers:
       ethers: 5.4.5
       react: 17.0.2
       vconsole: 3.9.1
+
+  packages/react-i18n:
+    specifiers: {}
 
   packages/react-libs:
     specifiers:
@@ -6563,7 +6568,7 @@ packages:
   /axios/0.21.1:
     resolution: {integrity: sha512-dKQiRHxGD9PPRIUNIWvZhPTPpl1rf/OxTYKsqKUDjBwYylTvV7SjSHJb9ratfyzM6wCdLCOYLzs73qpg5c4iGA==}
     dependencies:
-      follow-redirects: 1.14.2
+      follow-redirects: 1.14.2_debug@3.2.7
     transitivePeerDependencies:
       - debug
     dev: false
@@ -10554,16 +10559,6 @@ packages:
       inherits: 2.0.4
       readable-stream: 2.3.7
 
-  /follow-redirects/1.14.2:
-    resolution: {integrity: sha512-yLR6WaE2lbF0x4K2qE2p9PEXKLDjUjnR/xmjS3wHAYxtlsI9MLLBJUZirAHKzUZDGLxje7w/cXR49WOUo4rbsA==}
-    engines: {node: '>=4.0'}
-    peerDependencies:
-      debug: '*'
-    peerDependenciesMeta:
-      debug:
-        optional: true
-    dev: false
-
   /follow-redirects/1.14.2_debug@3.2.7:
     resolution: {integrity: sha512-yLR6WaE2lbF0x4K2qE2p9PEXKLDjUjnR/xmjS3wHAYxtlsI9MLLBJUZirAHKzUZDGLxje7w/cXR49WOUo4rbsA==}
     engines: {node: '>=4.0'}
@@ -10863,6 +10858,15 @@ packages:
       glob: 7.1.7
       lodash: 4.17.21
       micromatch: 4.0.4
+    dev: false
+
+  /gatsby-plugin-alias-imports/1.0.5_gatsby@3.12.0:
+    resolution: {integrity: sha512-q58JrSjuVNh4NApamqElR0zqwm55FOb9vFAVb2i2ftPRu0uYzWJkbOz2IN3vSw7a+5PmGzX7VL8XDFXlNHrMNA==}
+    peerDependencies:
+      gatsby: '>2.0.0'
+    dependencies:
+      '@babel/runtime': 7.15.3
+      gatsby: 3.12.0_5ad37f6fef0b9fcf4c657ddac350ba85
     dev: false
 
   /gatsby-plugin-google-gtag/3.12.0_5326fc0eecd91cf6dfbc9fefd1d6cf0d:

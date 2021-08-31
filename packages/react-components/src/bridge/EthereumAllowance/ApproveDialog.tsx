@@ -1,7 +1,9 @@
 import { ethereums } from '@phala/app-config'
-import { useEthers } from '@phala/react-libs/esm/ethereum/contexts/useEthers'
-import { useErc20Contract } from '@phala/react-libs/esm/ethereum/erc20/useErc20Contract'
-import { useTransactionReceiptQuery } from '@phala/react-libs/esm/ethereum/queries/useTransactionReceiptQuery'
+import {
+  useErc20Contract,
+  useEthers,
+  useTransactionReceiptQuery,
+} from '@phala/react-libs'
 import { ethers } from 'ethers'
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'

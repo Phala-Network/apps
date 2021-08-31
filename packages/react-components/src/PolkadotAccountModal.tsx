@@ -1,8 +1,10 @@
 import { usePolkadotAccountAtom } from '@phala/app-store'
 import { useSSR } from '@phala/react-hooks'
-import { useApiPromise } from '@phala/react-libs'
-import { useWeb3 } from '@phala/react-libs/esm/polkadot/hooks/useWeb3'
-import { useAddressNormalizer } from '@phala/react-libs/esm/polkadot/useAddressNormalizer'
+import {
+  useAddressNormalizer,
+  useApiPromise,
+  usePolkadotWeb3,
+} from '@phala/react-libs'
 import React, { useMemo } from 'react'
 import AlertModal from './AlertModal'
 import PolkadotInstallModal from './PolkadotInstallModal'
@@ -20,7 +22,7 @@ export function web3IsInjected(): boolean {
 }
 
 const PolkadotAccountModal: React.FC<Props> = (props) => {
-  const { accounts, enabled } = useWeb3()
+  const { accounts, enabled } = usePolkadotWeb3()
   const { api } = useApiPromise()
   const normalizeAddress = useAddressNormalizer(api)
   const { isServer } = useSSR()

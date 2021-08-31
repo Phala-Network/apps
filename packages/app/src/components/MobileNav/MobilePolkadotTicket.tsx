@@ -1,6 +1,6 @@
 import { usePolkadotAccountAtom } from '@phala/app-store'
 import { PolkadotAccountModal } from '@phala/react-components'
-import { useWeb3 } from '@phala/react-libs/esm/polkadot/hooks/useWeb3'
+import { usePolkadotWeb3 } from '@phala/react-libs'
 import { abridgeString } from '@phala/utils'
 import React, { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
@@ -23,7 +23,7 @@ const Account = styled.div`
 `
 
 const MobilePolkadotTicket: React.FC = () => {
-  const { accounts } = useWeb3()
+  const { accounts } = usePolkadotWeb3()
   const [polkadotAccount, setPolkadotAccount] = usePolkadotAccountAtom()
   const [accountModalVisible, setAccountModalVisible] = useState(false)
   const [emptyAccountModalVisible, setEmptyAccountModalVisible] =

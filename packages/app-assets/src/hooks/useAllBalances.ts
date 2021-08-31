@@ -1,5 +1,5 @@
 import { usePolkadotAccountAtom } from '@phala/app-store'
-import { useApiPromise } from '@phala/react-libs/esm/polkadot/hooks/useApiPromise'
+import { useApiPromise } from '@phala/react-libs'
 import type { DeriveBalancesAll } from '@polkadot/api-derive/types'
 import { useEffect, useState } from 'react'
 

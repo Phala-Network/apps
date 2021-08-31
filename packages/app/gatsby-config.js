@@ -3,12 +3,37 @@
  *
  * See: https://www.gatsbyjs.com/docs/gatsby-config/
  */
+const path = require('path')
+const resolvePath = (pathString) => path.resolve(__dirname, pathString)
+const rp = resolvePath
 
 module.exports = {
   flags: {
     DEV_SSR: false,
   },
   plugins: [
+    {
+      resolve: `gatsby-plugin-alias-imports`,
+      options: {
+        alias: {
+          '@phala/app-config': rp('../app-config/src'),
+          '@phala/app-store': rp('../app-store/src'),
+          '@phala/app-assets': rp('../app-assets/src'),
+          '@phala/app-bridge': rp('../app-bridge/src'),
+          '@phala/app-store': rp('../app-store/src'),
+          '@phala/app-types': rp('../app-types/src'),
+          '@phala/react-cms': rp('../react-cms/src'),
+          '@phala/react-components': rp('../react-components/src'),
+          '@phala/react-graph-chainbridge': rp(
+            '../react-graph-chainbridge/src'
+          ),
+          '@phala/react-hooks': rp('../react-hooks/src'),
+          '@phala/react-i18n': rp('../react-i18n/src'),
+          '@phala/react-libs': rp('../react-libs/src'),
+          '@phala/utils': rp('../utils/src'),
+        },
+      },
+    },
     `gatsby-plugin-pnpm`,
     'local-plugin-layout', // Move IntlProvider outside of the layout component
     {

@@ -3,13 +3,17 @@
   "compilerOptions": {
     "target": "ES6",
     "module": "CommonJS",
-    "rootDir": "./src",
     "composite": true,
     "strict": true,
     "moduleResolution": "node",
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "rootDir": "../",
+    "paths": {
+      "@phala/react-i18n": ["../react-i18n/src"],
+      "@phala/react-i18n/*": ["../react-i18n/src/*"]
+    }
   },
   "references": [
     { "path": "../app-config" },
