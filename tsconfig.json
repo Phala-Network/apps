@@ -1,5 +1,4 @@
 {
-  "include": ["./packages/**/*.ts", "./packages/**/*.tsx"],
   "compilerOptions": {
     "incremental": true,
     "composite": true,
