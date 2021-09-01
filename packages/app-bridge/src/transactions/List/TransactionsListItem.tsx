@@ -39,7 +39,7 @@ const TransactionsListItem: React.FC<TransactionsListItemProps> = (props) => {
   const {record} = props
   const {depositor} = record
   const [modalVisible, setModalVisible] = useState(false)
-  const {events, proposal, hash, convertedAmount, destinationRecipient} =
+  const {events, hash, convertedAmount, destinationRecipient} =
     useBridgePhalaRecordInfo(record)
 
   const status = useMemo(() => {
@@ -48,7 +48,7 @@ const TransactionsListItem: React.FC<TransactionsListItemProps> = (props) => {
     }
 
     return 'pending'
-  }, [events, proposal])
+  }, [events])
 
   if (!record) return null
 

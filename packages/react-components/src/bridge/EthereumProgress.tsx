@@ -58,7 +58,7 @@ export const EthereumProgress: React.FC<EthereumProgressParams> = (props) => {
     }
 
     return -1
-  }, [events, proposal, transactionHash, record])
+  }, [events, proposal, transactionHash])
 
   return <Progress steps={steps} progressIndex={progressIndex}></Progress>
 }
