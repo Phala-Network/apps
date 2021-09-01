@@ -1,5 +1,6 @@
 import {useApiPromise} from '@phala/react-libs'
 import type {DeriveBalancesAll} from '@polkadot/api-derive/types'
+import {VoidFn} from '@polkadot/api/types'
 import {useEffect, useState} from 'react'
 
 const useAllBalances = (address: string): DeriveBalancesAll | undefined => {
@@ -7,7 +8,7 @@ const useAllBalances = (address: string): DeriveBalancesAll | undefined => {
   const [allBalances, setAllBalances] = useState<DeriveBalancesAll>()
 
   useEffect(() => {
-    let unsub: Function
+    let unsub: VoidFn
     if (api && address) {
       api.derive.balances
         .all(address, (result) => {

@@ -23,6 +23,7 @@ const ApiPromiseContext = createContext<IApiPromiseContext>({
   initialized: false,
 })
 
+// eslint-disable-next-line no-console
 const logDebug = console.debug.bind(console, '[ApiPromiseContext]')
 const logError = console.error.bind(console, '[ApiPromiseContext]')
 
@@ -69,7 +70,6 @@ export const ApiPromiseProvider = ({
 
     setState('init')
 
-    // @ts-ignore
     enableApiPromise(endpoint, registryTypes)
       .then((api) => {
         setApi(api)

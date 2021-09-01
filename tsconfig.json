@@ -27,7 +27,6 @@
     {"path": "./packages/app-store"},
     {"path": "./packages/utils"},
     {"path": "./packages/react-libs"},
-    {"path": "./packages/react-i18n"},
     {"path": "./packages/react-hooks"},
     {"path": "./packages/react-components"},
     {"path": "./packages/react-cms"}

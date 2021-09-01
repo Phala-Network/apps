@@ -1,5 +1,5 @@
+import {TableOptions, usePagination, useSortBy, useTable} from 'react-table'
 import styled from 'styled-components'
-import {usePagination, useSortBy, useTable, TableOptions} from 'react-table'
 import TablePagination from './TablePagination'
 import TableSorter from './TableSorter'
 
@@ -92,8 +92,10 @@ const Table = <D extends Record<string, unknown>>(
         <table {...getTableProps()}>
           <thead>
             {headerGroups.map((headerGroup) => (
+              // eslint-disable-next-line react/jsx-key
               <tr {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map((column) => (
+                  // eslint-disable-next-line react/jsx-key
                   <th {...column.getHeaderProps(column.getSortByToggleProps())}>
                     <TableSorter
                       canSort={column.canSort}
@@ -113,9 +115,11 @@ const Table = <D extends Record<string, unknown>>(
               {page.map((row) => {
                 prepareRow(row)
                 return (
+                  // eslint-disable-next-line react/jsx-key
                   <tr {...row.getRowProps()}>
                     {row.cells.map((cell) => {
                       return (
+                        // eslint-disable-next-line react/jsx-key
                         <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
                       )
                     })}
