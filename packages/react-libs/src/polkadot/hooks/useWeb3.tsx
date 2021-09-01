@@ -23,8 +23,10 @@ const Web3Context = createContext<IWeb3Context>({
   enabled: false,
 })
 
+// eslint-disable-next-line no-console
 const logDebug = console.debug.bind(console, '[Web3Context]')
 const logError = console.error.bind(console, '[Web3Context]')
+// eslint-disable-next-line no-console
 const logInfo = console.info.bind(console, '[Web3Context]')
 
 const importPolkadotExtensionDapp = () =>

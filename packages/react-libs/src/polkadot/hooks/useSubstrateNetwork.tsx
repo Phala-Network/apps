@@ -24,7 +24,7 @@ interface INetworkContext {
   setNetwork: (id: string) => void
 }
 
-const NetworkContext = createContext<INetworkContext>({setNetwork: () => {}})
+const NetworkContext = createContext<INetworkContext>({setNetwork: () => null})
 
 export const NetworkContextProvider = ({
   children,

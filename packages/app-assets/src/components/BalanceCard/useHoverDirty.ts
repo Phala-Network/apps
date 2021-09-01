@@ -2,7 +2,9 @@ import {RefObject, useEffect, useState} from 'react'
 
 export function on<T extends Window | Document | HTMLElement | EventTarget>(
   obj: T | null,
-  ...args: Parameters<T['addEventListener']> | [string, Function | null, ...any]
+  ...args:
+    | Parameters<T['addEventListener']>
+    | [string, () => void | null, ...any]
 ): void {
   if (obj && obj.addEventListener) {
     obj.addEventListener(
@@ -15,7 +17,7 @@ export function off<T extends Window | Document | HTMLElement | EventTarget>(
   obj: T | null,
   ...args:
     | Parameters<T['removeEventListener']>
-    | [string, Function | null, ...any]
+    | [string, () => void | null, ...any]
 ): void {
   if (obj && obj.removeEventListener) {
     obj.removeEventListener(
@@ -25,7 +27,7 @@ export function off<T extends Window | Document | HTMLElement | EventTarget>(
 }
 
 // kudos: https://usehooks.com/
-const useHoverDirty = (ref: RefObject<Element>, enabled: boolean = true) => {
+const useHoverDirty = (ref: RefObject<Element>, enabled = true) => {
   if (process.env.NODE_ENV === 'development') {
     if (typeof ref !== 'object' || typeof ref.current === 'undefined') {
       console.error('useHoverDirty expects a single ref argument.')

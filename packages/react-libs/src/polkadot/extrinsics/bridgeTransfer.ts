@@ -27,12 +27,16 @@ export const transfer = async ({
     .web3FromAddress
 
   const signer = (await web3FromAddress(sender)).signer
-  // @ts-ignore
-  const extrinsic = api.tx.bridgeTransfer.transferNative(
+
+  const extrinsic = api.tx?.bridgeTransfer?.transferNative?.(
     amount,
     recipient,
     destChainId
   )
+
+  if (!extrinsic) {
+    throw new Error('bridgeTransfer.transferNative not available')
+  }
 
   return await waitSignAndSend({
     account: sender,

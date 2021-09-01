@@ -77,7 +77,11 @@ const SideNav: React.FC = () => {
 
       <Footer>
         {LINKS.map((link) => {
-          return <ExternalLink target="_blank">{link.name}</ExternalLink>
+          return (
+            <ExternalLink key={link.name} target="_blank">
+              {link.name}
+            </ExternalLink>
+          )
         })}
 
         <Feedback>

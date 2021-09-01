@@ -29,7 +29,7 @@ const Transactions: React.FC = () => {
 
       setRecords(transactionRecords)
     }
-  }, [data])
+  }, [data, depositor])
 
   if (records?.length === 0) {
     return null

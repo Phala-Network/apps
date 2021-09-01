@@ -18,8 +18,6 @@ export default function useBalance(
 
     api.query.system
       .account(address, ({data: {free}}) => {
-        // FIXME
-        // @ts-ignore
         setBalance(free)
       })
       .then((_unsubscribe) => (unsubscribe = _unsubscribe))

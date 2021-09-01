@@ -78,5 +78,5 @@ export const useErc20Deposit = (
         payload
       ) as Promise<ethers.providers.TransactionResponse>)
     }
-  }, [bridge, config, network, sender])
+  }, [bridge, config, network, sender, substrateName])
 }

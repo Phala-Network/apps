@@ -1,8 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 
-type Props = {}
-
 const Styles = styled.div`
   display: inline-block;
   height: 12px;
@@ -27,7 +25,7 @@ const Styles = styled.div`
   }
 `
 
-const TableAction: React.FC<Props> = (props) => {
+const TableAction: React.FC = (props) => {
   const {children} = props
 
   return <Styles>{children}</Styles>

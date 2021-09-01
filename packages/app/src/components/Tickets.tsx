@@ -4,8 +4,6 @@ import styled from 'styled-components'
 import EthereumTicket from './EthereumTicket'
 import PolkadotTicket from './PolkadotTicket'
 
-type Props = {}
-
 const TicketsRoot = styled.div`
   padding: 60px;
 `
@@ -16,7 +14,7 @@ const TicketsInner = styled.div`
   z-index: 0;
 `
 
-const Tickets: React.FC<Props> = () => {
+const Tickets: React.FC = () => {
   return (
     <TicketsRoot>
       <TicketsInner>

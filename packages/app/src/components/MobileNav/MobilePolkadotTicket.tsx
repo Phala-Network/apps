@@ -42,7 +42,7 @@ const MobilePolkadotTicket: React.FC = () => {
         address: account.address,
       })
     }
-  }, [accounts, polkadotAccount])
+  }, [accounts, polkadotAccount, setPolkadotAccount])
 
   const onClick = useCallback(() => {
     if (accounts.length) {

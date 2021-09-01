@@ -9,5 +9,9 @@
     "esModuleInterop": false
   },
   "include": ["src/**/*", "src/**/*.json"],
-  "references": [{"path": "../app-config"}, {"path": "../utils"}]
+  "references": [
+    {"path": "../react-graph-chainbridge"},
+    {"path": "../app-config"},
+    {"path": "../utils"}
+  ]
 }
