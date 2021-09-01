@@ -1,5 +1,6 @@
 {
   "name": "@phala/react-i18n",
+  "version": "0.0.1",
   "type": "module",
   "sideEffects": false,
   "main": "esm/index.js",

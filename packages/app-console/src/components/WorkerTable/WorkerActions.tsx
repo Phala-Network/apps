@@ -1,5 +1,5 @@
 import useModalVisible, {ModalKey} from '../../hooks/useModalVisible'
-import {Worker} from '../../hooks/useWorkers'
+import {Worker} from '@phala/react-hooks'
 import ActionButton from '../ActionButton'
 
 const buttonEntries: [ModalKey, string][] = [

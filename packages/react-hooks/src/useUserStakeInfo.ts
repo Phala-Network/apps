@@ -46,7 +46,7 @@ function useUserStakeInfo(
       const userStakeInfo = await api.query.phalaStakePool
         ?.poolStakers?.([pid, address])
         .then((value) => value.toJSON() as UserStakeInfoJson)
-        .then((json) => json && transformJson(json, pid))
+        .then((json) => json && transformJson(json))
 
       return userStakeInfo ?? null
     }

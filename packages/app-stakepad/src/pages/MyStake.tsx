@@ -2,6 +2,7 @@ import {Link} from 'gatsby-plugin-intl'
 import styled from 'styled-components'
 import {Button} from '@phala/react-components'
 import MyStakeTable from '../components/MyStakeTable'
+import {Helmet} from 'react-helmet'
 
 const Wrapper = styled.div`
   overflow-x: auto;
@@ -17,6 +18,9 @@ const Block = styled.div`
 const MyState = () => {
   return (
     <Wrapper>
+      <Helmet>
+        <title>My Stake</title>
+      </Helmet>
       <Link to="/stakepad/">
         <Button>Back</Button>
       </Link>
