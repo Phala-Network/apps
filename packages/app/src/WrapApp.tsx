@@ -1,6 +1,7 @@
 import {Provider as AppStoreProvider} from '@phala/app-store'
 import {getCMSLog} from '@phala/react-cms'
 import {MobileToastContextProvider} from '@phala/react-components'
+import {I18nextProvider} from '@phala/react-i18n'
 import {Provider as LibProvider} from '@phala/react-libs'
 import {isDev, isTest} from '@phala/utils'
 import * as Sentry from '@sentry/react'
@@ -34,15 +35,17 @@ const WrapApp: React.FC = ({children}) => {
   }, [])
 
   return (
-    <LibProvider {...productionConfig}>
-      <ThemeProvider theme={theme}>
-        <MobileToastContextProvider>
-          <QueryClientProvider contextSharing={true} client={client.current}>
-            <AppStoreProvider>{children}</AppStoreProvider>
-          </QueryClientProvider>
-        </MobileToastContextProvider>
-      </ThemeProvider>
-    </LibProvider>
+    <I18nextProvider>
+      <LibProvider {...productionConfig}>
+        <ThemeProvider theme={theme}>
+          <MobileToastContextProvider>
+            <QueryClientProvider contextSharing={true} client={client.current}>
+              <AppStoreProvider>{children}</AppStoreProvider>
+            </QueryClientProvider>
+          </MobileToastContextProvider>
+        </ThemeProvider>
+      </LibProvider>
+    </I18nextProvider>
   )
 }
 

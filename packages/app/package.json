@@ -21,6 +21,7 @@
     "@phala/react-cms": "workspace:^0.0.1",
     "@phala/react-components": "workspace:*",
     "@phala/react-hooks": "workspace:*",
+    "@phala/react-i18n": "workspace:^0.0.1",
     "@phala/react-libs": "workspace:*",
     "@phala/typedefs": "^0.2.16",
     "@phala/utils": "workspace:*",

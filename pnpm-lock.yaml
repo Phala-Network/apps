@@ -43,6 +43,7 @@ importers:
       '@phala/react-cms': workspace:^0.0.1
       '@phala/react-components': workspace:*
       '@phala/react-hooks': workspace:*
+      '@phala/react-i18n': workspace:^0.0.1
       '@phala/react-libs': workspace:*
       '@phala/typedefs': ^0.2.16
       '@phala/utils': workspace:*
@@ -111,6 +112,7 @@ importers:
       '@phala/react-cms': link:../react-cms
       '@phala/react-components': link:../react-components
       '@phala/react-hooks': link:../react-hooks
+      '@phala/react-i18n': link:../react-i18n
       '@phala/react-libs': link:../react-libs
       '@phala/typedefs': 0.2.16
       '@phala/utils': link:../utils
@@ -427,10 +429,12 @@ importers:
   packages/react-i18n:
     specifiers:
       i18next: ^20.5.0
+      i18next-browser-languagedetector: ^6.1.2
       react: ^17.0.2
       react-i18next: ^11.11.4
     dependencies:
       i18next: 20.5.0
+      i18next-browser-languagedetector: 6.1.2
       react-i18next: 11.11.4_i18next@20.5.0+react@17.0.2
     devDependencies:
       react: 17.0.2
@@ -6612,7 +6616,7 @@ packages:
   /axios/0.21.1:
     resolution: {integrity: sha512-dKQiRHxGD9PPRIUNIWvZhPTPpl1rf/OxTYKsqKUDjBwYylTvV7SjSHJb9ratfyzM6wCdLCOYLzs73qpg5c4iGA==}
     dependencies:
-      follow-redirects: 1.14.2
+      follow-redirects: 1.14.2_debug@3.2.7
     transitivePeerDependencies:
       - debug
     dev: false
@@ -10606,16 +10610,6 @@ packages:
       inherits: 2.0.4
       readable-stream: 2.3.7
 
-  /follow-redirects/1.14.2:
-    resolution: {integrity: sha512-yLR6WaE2lbF0x4K2qE2p9PEXKLDjUjnR/xmjS3wHAYxtlsI9MLLBJUZirAHKzUZDGLxje7w/cXR49WOUo4rbsA==}
-    engines: {node: '>=4.0'}
-    peerDependencies:
-      debug: '*'
-    peerDependenciesMeta:
-      debug:
-        optional: true
-    dev: false
-
   /follow-redirects/1.14.2_debug@3.2.7:
     resolution: {integrity: sha512-yLR6WaE2lbF0x4K2qE2p9PEXKLDjUjnR/xmjS3wHAYxtlsI9MLLBJUZirAHKzUZDGLxje7w/cXR49WOUo4rbsA==}
     engines: {node: '>=4.0'}
@@ -12242,6 +12236,12 @@ packages:
 
   /hyphenate-style-name/1.0.4:
     resolution: {integrity: sha512-ygGZLjmXfPHj+ZWh6LwbC37l43MhfztxetbFCoYTM2VjkIUpeHgSNn7QIyVFj7YQ1Wl9Cbw5sholVJPzWvC2MQ==}
+    dev: false
+
+  /i18next-browser-languagedetector/6.1.2:
+    resolution: {integrity: sha512-YDzIGHhMRvr7M+c8B3EQUKyiMBhfqox4o1qkFvt4QXuu5V2cxf74+NCr+VEkUuU0y+RwcupA238eeolW1Yn80g==}
+    dependencies:
+      '@babel/runtime': 7.15.3
     dev: false
 
   /i18next/20.5.0:

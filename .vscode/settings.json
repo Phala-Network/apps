@@ -8,6 +8,7 @@
     "ethereums",
     "extrinsics",
     "hexlify",
+    "languagedetector",
     "onstatus",
     "pnpm",
     "preinstall",

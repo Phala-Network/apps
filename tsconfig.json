@@ -29,6 +29,7 @@
     {"path": "./packages/react-libs"},
     {"path": "./packages/react-hooks"},
     {"path": "./packages/react-components"},
-    {"path": "./packages/react-cms"}
+    {"path": "./packages/react-cms"},
+    {"path": "./packages/react-i18n"}
   ]
 }
