@@ -17,7 +17,7 @@ export type useBridgePhalaRecordInfoRecord = {
 }
 
 export const useBridgePhalaRecordInfo = (
-  record: useBridgePhalaRecordInfoRecord
+  record?: useBridgePhalaRecordInfoRecord
 ) => {
   const {
     amount = '',

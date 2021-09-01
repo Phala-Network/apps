@@ -38,7 +38,7 @@ export const EthereumProgress: React.FC<EthereumProgressParams> = (props) => {
   const {data: record} = useDepositRecordByHash(transactionHash, client)
 
   const {events, proposal /*, hash */} = useBridgePhalaRecordInfo(
-    record?.depositRecords?.[0]!
+    record?.depositRecords?.[0]
   )
 
   const progressIndex = useMemo(() => {
