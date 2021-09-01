@@ -4,11 +4,19 @@
   "cSpell.words": [
     "chainbridge",
     "codegen",
+    "csstype",
     "ethereums",
+    "extrinsics",
+    "hexlify",
+    "onstatus",
     "pnpm",
     "preinstall",
+    "readystate",
     "styletron",
+    "toastify",
+    "tranfer",
     "typedefs",
+    "unsub",
     "uuidv"
   ],
   "typescript.tsdk": "node_modules/typescript/lib"
