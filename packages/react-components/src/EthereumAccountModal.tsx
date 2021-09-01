@@ -37,7 +37,7 @@ const EthereumAccountModal: React.FC<Props> = (props) => {
       name: account,
       address: account || '',
     })
-  }, [accounts])
+  }, [accounts, isReady, accountsIsEmpty, setEthereumAccount])
 
   if (isServer) return null
 
