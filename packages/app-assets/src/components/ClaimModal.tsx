@@ -1,5 +1,6 @@
 import {usePolkadotAccountAtom} from '@phala/app-store'
 import {Alert, Button, Modal} from '@phala/react-components'
+import {useAllBalances} from '@phala/react-hooks'
 import {
   bnToDecimal,
   useApiPromise,
@@ -10,7 +11,6 @@ import {BN} from '@polkadot/util'
 import React, {useCallback, useState} from 'react'
 import {toast} from 'react-toastify'
 import styled from 'styled-components'
-import useAllBalances from '../hooks/useAllBalances'
 
 type Props = {
   visible: boolean
@@ -37,9 +37,9 @@ const Info = styled.div`
 
 const ClaimModal: React.FC<Props> = ({visible, onClose}) => {
   const [loading, setLoading] = useState(false)
-  const allBalances = useAllBalances()
   const {api} = useApiPromise()
   const polkadotAccount = usePolkadotAccountAtom()[0]?.address
+  const allBalances = useAllBalances(polkadotAccount)
   const decimals = useDecimalJsTokenDecimalMultiplier(api)
   const {vestingLocked, vestedClaimable, vestedBalance} = allBalances || {}
 
