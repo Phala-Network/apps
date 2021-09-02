@@ -1,7 +1,6 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "typeRoots": ["node_modules/@types"],
     "rootDir": "src",
     "outDir": "esm",
     "declaration": true,
@@ -9,5 +8,5 @@
     "sourceMap": true,
     "esModuleInterop": false
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*.ts"]
 }
