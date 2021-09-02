@@ -9,9 +9,7 @@ import React, {useLayoutEffect, useRef} from 'react'
 import {QueryClient, QueryClientProvider} from 'react-query'
 import {ThemeProvider} from 'styled-components'
 import './fonts.css'
-import './ReactToastify.css'
 import theme from './theme'
-import './tooltip.css'
 
 const WrapApp: React.FC = ({children}) => {
   const client = useRef(new QueryClient())
