@@ -45,7 +45,9 @@ export default function useEthereumAccountBalanceETHDecimal(): {
           handleError(error)
         })
     } catch (error) {
-      handleError(error)
+      if (error instanceof Error) {
+        handleError(error)
+      }
     }
   }, [address, network])
 

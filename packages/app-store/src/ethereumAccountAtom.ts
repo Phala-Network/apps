@@ -3,4 +3,6 @@ import {atom, useAtom} from 'jotai'
 
 export const ethereumAccountAtom = atom<Account | undefined>(undefined)
 
-export const useEthereumAccountAtom = () => useAtom(ethereumAccountAtom)
+export function useEthereumAccountAtom() {
+  return useAtom(ethereumAccountAtom)
+}
