@@ -35,59 +35,79 @@ type MinerJSON = {
 }
 
 export type Worker = WorkerJSON & {
-  miner: Miner
-  pid: number
+  miner: Miner | null
   stake: Decimal | null
 }
 
 type Miner = Omit<MinerJSON, 'v' | 've'> & {v: Decimal; ve: Decimal}
 
-const useWorkers: (
-  workerList: {pubkey: string; pid: number}[]
-) => UseQueryResult<Worker[] | null> = (workerList) => {
+const useWorkers = (pubkeyList?: string[]): UseQueryResult<Worker[] | null> => {
   const {api, initialized} = useApiPromise()
-  const workerPubkeyList = workerList.map(({pubkey}) => pubkey)
   return useQuery(
-    ['workers', initialized, workerPubkeyList],
+    ['workers', initialized, pubkeyList],
     async () => {
       if (!api) return null
-      const [workers = [], bindings = []] = await Promise.all([
+      const keyList =
+        pubkeyList ||
+        (await api.query.phalaRegistry?.workers?.keys())?.map(
+          (key) => key.args[0]?.toJSON() as string
+        ) ||
+        []
+
+      const [workers = [], workerBindings = []] = await Promise.all([
         api.query.phalaRegistry?.workers
-          ?.multi(workerPubkeyList)
+          ?.multi(keyList)
           .then((res) => res.map((x) => x.toJSON() as WorkerJSON)),
         api.query.phalaMining?.workerBindings
-          ?.multi(workerPubkeyList)
+          ?.multi(keyList)
           .then((res) => res.map((x) => x.toJSON() as string)),
       ])
 
-      const [miners = [], stakes = []] = await Promise.all([
-        api.query.phalaMining?.miners?.multi(bindings).then((res) =>
-          res.map((x): Miner => {
-            const json = x.toJSON() as MinerJSON
+      const bindings = [...new Set(workerBindings.filter(Boolean))]
 
-            return {
-              ...json,
-              v: new Decimal(json.v).div(new Decimal(2).pow(64)),
-              ve: new Decimal(json.ve).div(new Decimal(2).pow(64)),
-            }
-          })
+      const [miners = {}, stakes = {}] = await Promise.all([
+        api.query.phalaMining?.miners?.multi(bindings).then((res) =>
+          Object.fromEntries(
+            res.map((x, index): [string, Miner] => {
+              const json = x.toJSON() as MinerJSON
+
+              return [
+                bindings[index] as string,
+                {
+                  ...json,
+                  v: new Decimal(json.v).div(new Decimal(2).pow(64)),
+                  ve: new Decimal(json.ve).div(new Decimal(2).pow(64)),
+                },
+              ]
+            })
+          )
         ),
         api.query.phalaMining?.stakes?.multi(bindings).then((res) =>
-          res.map((x) => {
-            const value = x.toJSON()
-            if (typeof value === 'string') return new Decimal(value)
-            return value
-          })
+          Object.fromEntries(
+            res.map((x, index) => {
+              const value = x.toJSON()
+              return [
+                bindings[index] as string,
+                typeof value === 'number' || typeof value === 'string'
+                  ? new Decimal(value)
+                  : null,
+              ]
+            })
+          )
         ),
       ])
 
-      return workerList
-        .map((worker, index) => ({
-          ...worker,
-          ...workers[index],
-          miner: miners[index],
-          stake: stakes[index],
-        }))
+      return workers
+        .map((worker, index) => {
+          const binding = workerBindings[index]
+          const miner = binding ? miners[binding] : null
+          const stake = binding ? stakes[binding] : null
+          return {
+            ...worker,
+            miner,
+            stake,
+          }
+        })
         .sort((a, b) => {
           return b.miner?.v.greaterThanOrEqualTo(a.miner?.v || 0) ? 1 : -1
         })

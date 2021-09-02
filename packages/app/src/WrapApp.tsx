@@ -23,7 +23,7 @@ const WrapApp: React.FC = ({children}) => {
   console.info('defaultNetwork', defaultNetwork)
 
   const productionConfig = {
-    defaultNetwork: 'para1',
+    defaultNetwork,
     substrateGraphEndpoint: 'https://subquery-api.phala.network',
     ethereumGraphEndpoint:
       'https://graphs-api.phala.network/subgraphs/name/chainbridge',

@@ -22,7 +22,7 @@ export type StakePool = {
   freeStake: Decimal
   owner: string
   ownerReward: Decimal
-  payoutCommission: number | null
+  payoutCommission: Decimal
   pid: number
   releasingStake: Decimal
   rewardAcc: Decimal
@@ -60,6 +60,7 @@ const useStakePools = (
             cap: json.cap === null ? null : new Decimal(json.cap),
             freeStake: new Decimal(json.freeStake),
             ownerReward: new Decimal(json.ownerReward),
+            payoutCommission: new Decimal(json.payoutCommission || 0),
             releasingStake: new Decimal(json.releasingStake),
             rewardAcc: new Decimal(json.rewardAcc).div(new Decimal(2).pow(64)),
             totalShares: new Decimal(json.totalShares),

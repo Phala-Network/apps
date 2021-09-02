@@ -1,4 +1,10 @@
-import {TableOptions, usePagination, useSortBy, useTable} from 'react-table'
+import {
+  TableOptions,
+  useFilters,
+  usePagination,
+  useSortBy,
+  useTable,
+} from 'react-table'
 import styled from 'styled-components'
 import TablePagination from './TablePagination'
 import TableSorter from './TableSorter'
@@ -80,7 +86,7 @@ const Table = <D extends Record<string, unknown>>(
       initialState: {pageIndex: 0, ...props.initialState},
       ...props,
     },
-
+    useFilters,
     useSortBy,
     usePagination
   )

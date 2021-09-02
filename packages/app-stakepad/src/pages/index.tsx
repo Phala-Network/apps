@@ -12,9 +12,13 @@ const Wrapper = styled.div`
 
 const Banner = styled.div`
   display: flex;
+  justify-content: flex-end;
+  background-color: #fff;
+  padding: 10px;
 `
 
 const Block = styled.div`
+  margin-top: 20px;
   padding: 20px;
   background: #fff;
 `

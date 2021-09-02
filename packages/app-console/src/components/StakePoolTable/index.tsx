@@ -51,9 +51,7 @@ const StakePoolTable = (): JSX.Element => {
       {
         Header: 'Commission',
         accessor: (stakePool) =>
-          typeof stakePool.payoutCommission === 'number'
-            ? `${toFixed(stakePool.payoutCommission / 10 ** 4, 2)}%`
-            : '0',
+          `${toFixed(stakePool.payoutCommission.div(10 ** 4), 2)}%`,
       },
       {
         Header: 'Cap',

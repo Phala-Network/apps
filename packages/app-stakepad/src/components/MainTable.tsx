@@ -3,17 +3,20 @@ import {Column} from 'react-table'
 import styled from 'styled-components'
 import {Table} from '@phala/react-components'
 import {StakePool, useStakePools} from '@phala/react-hooks'
+import {toFixed} from '@phala/utils'
 import ContributeModal from './ContributeModal'
 import ActionButton from './ActionButton'
 import useFormat from '../hooks/useFormat'
 import useModalVisible from '../hooks/useModalVisible'
+import useGetARP from '../hooks/useGetAPR'
 
 const Wrapper = styled.div``
 
 const MainTable = (): JSX.Element => {
+  const getAPR = useGetARP()
   const [pid, setPid] = useState<number | null>(null)
   const format = useFormat()
-  const {data, isFetching} = useStakePools()
+  const {data, isFetching, refetch} = useStakePools()
   const {modalVisible, open, close} = useModalVisible()
   const activeStakePool = useMemo<StakePool | null>(
     () =>
@@ -25,6 +28,13 @@ const MainTable = (): JSX.Element => {
   const columns = useMemo<Column<StakePool>[]>(
     () => [
       {Header: 'pid', accessor: 'pid'},
+      {
+        Header: 'APR',
+        accessor: (stakePool) => {
+          const APR = getAPR(stakePool)
+          return APR ? `${toFixed(APR.mul(100), 2)}%` : '-'
+        },
+      },
       {
         Header: 'Total Stake',
         accessor: (stakePool) => format(stakePool.totalStake),
@@ -44,6 +54,7 @@ const MainTable = (): JSX.Element => {
       },
       {
         Header: 'Actions',
+        disableSortBy: true,
         accessor: (stakePool) => (
           <>
             <ActionButton
@@ -59,7 +70,7 @@ const MainTable = (): JSX.Element => {
         ),
       },
     ],
-    [format, open]
+    [format, open, getAPR]
   )
 
   return (
@@ -67,6 +78,7 @@ const MainTable = (): JSX.Element => {
       <Table
         initialState={{pageSize: 20}}
         data={data || []}
+        autoResetPage={false}
         isLoading={isFetching}
         columns={columns}
       ></Table>
@@ -74,7 +86,10 @@ const MainTable = (): JSX.Element => {
       {modalVisible.contribute && activeStakePool && (
         <ContributeModal
           stakePool={activeStakePool}
-          onClose={() => close('contribute')}
+          onClose={() => {
+            close('contribute')
+            refetch()
+          }}
         ></ContributeModal>
       )}
     </Wrapper>

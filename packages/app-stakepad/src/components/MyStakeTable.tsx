@@ -5,7 +5,9 @@ import styled from 'styled-components'
 import {usePolkadotAccountAtom} from '@phala/app-store'
 import {Table} from '@phala/react-components'
 import {StakePool, useStakePools, useUserStakeInfo} from '@phala/react-hooks'
+import {toFixed} from '@phala/utils'
 import useFormat from '../hooks/useFormat'
+import useGetARP from '../hooks/useGetAPR'
 import useModalVisible, {ModalKey} from '../hooks/useModalVisible'
 import ActionButton from './ActionButton'
 import ClaimModal from './ClaimModal'
@@ -28,6 +30,7 @@ const buttonEntries: [ModalKey, string][] = [
 ]
 
 const MyStakeTable = (): JSX.Element => {
+  const getAPR = useGetARP()
   const [pid, setPid] = useState<number | null>(null)
   const format = useFormat()
   const [polkadotAccount] = usePolkadotAccountAtom()
@@ -59,6 +62,13 @@ const MyStakeTable = (): JSX.Element => {
   const columns = useMemo<Column<StakePool>[]>(
     () => [
       {Header: 'pid', accessor: 'pid'},
+      {
+        Header: 'APR',
+        accessor: (stakePool) => {
+          const APR = getAPR(stakePool)
+          return APR ? `${toFixed(APR.mul(100), 2)}%` : '-'
+        },
+      },
       {
         Header: 'Free Stake',
         accessor: (stakePool) => format(stakePool.freeStake),
@@ -117,6 +127,7 @@ const MyStakeTable = (): JSX.Element => {
       },
       {
         Header: 'Actions',
+        disableSortBy: true,
         accessor: (stakePool) => {
           return buttonEntries.map(([modalKey, text]) => (
             <ActionButton
@@ -133,7 +144,7 @@ const MyStakeTable = (): JSX.Element => {
         },
       },
     ],
-    [format, userStakeInfo, polkadotAccount?.address, open]
+    [format, userStakeInfo, polkadotAccount?.address, open, getAPR]
   )
 
   return (
@@ -141,6 +152,7 @@ const MyStakeTable = (): JSX.Element => {
       <Table
         initialState={{pageSize: 20}}
         data={myStake || []}
+        autoResetPage={false}
         isLoading={isFetchingStakePools || isFetchingUserStakeInfo}
         columns={columns}
       ></Table>

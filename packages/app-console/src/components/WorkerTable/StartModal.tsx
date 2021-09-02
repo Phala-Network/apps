@@ -6,10 +6,10 @@ import {
 import Decimal from 'decimal.js'
 import {useCallback, useMemo, useState} from 'react'
 import styled from 'styled-components'
+import {useTokenomicParameters} from '@phala/react-hooks'
 import {WorkerModalProps} from '.'
 import useFormat from '../../hooks/useFormat'
 import useSelfStakePools from '../../hooks/useSelfStakePools'
-import useTokenomicParameters from '../../hooks/useTokenomicParameters'
 import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
 import ActionModal, {Label, Value} from '../ActionModal'
 
