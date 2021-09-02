@@ -1,3 +1,4 @@
+import {useTranslation} from '@phala/react-i18n'
 import React from 'react'
 import styled from 'styled-components'
 import Feedback from './Feedback'
@@ -67,6 +68,8 @@ const LINKS = [
 ]
 
 const SideNav: React.FC = () => {
+  const {t} = useTranslation()
+
   return (
     <SideNavWrap>
       <Header>
@@ -85,7 +88,7 @@ const SideNav: React.FC = () => {
         })}
 
         <Feedback>
-          <ExternalLink>Feedback</ExternalLink>
+          <ExternalLink>{t('feedback')}</ExternalLink>
         </Feedback>
       </Footer>
     </SideNavWrap>

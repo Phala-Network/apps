@@ -9,6 +9,7 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true
   },
+  "include": ["./src/**/*.ts", "./src/**/*.tsx"],
   "references": [
     {"path": "../app-config"},
     {"path": "../app-types"},
@@ -19,6 +20,7 @@
     {"path": "../react-libs"},
     {"path": "../react-hooks"},
     {"path": "../react-components"},
+    {"path": "../react-i18n"},
     {"path": "../react-cms"}
   ]
 }
