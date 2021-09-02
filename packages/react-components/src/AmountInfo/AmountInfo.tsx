@@ -3,13 +3,13 @@ import React, {ComponentProps} from 'react'
 import Tag from '../Tag'
 import {Amount, AmountInfoWrap, Divider, Header, Type} from './styledComponents'
 
-type Props = {
+export type AmountInfoProps = {
   amount?: number | string
   type?: string
   network?: string
 } & ComponentProps<typeof AmountInfoWrap>
 
-const AmountInfo: React.FC<Props> = (props) => {
+export const AmountInfo: React.FC<AmountInfoProps> = (props) => {
   const {children, amount, type, network, ...others} = props
 
   return (
@@ -30,5 +30,3 @@ const AmountInfo: React.FC<Props> = (props) => {
     </AmountInfoWrap>
   )
 }
-
-export default AmountInfo

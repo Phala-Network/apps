@@ -1,7 +1,7 @@
 export {default as Address} from './Address'
 export {default as Alert} from './Alert'
 export {default as AlertModal} from './AlertModal'
-export {default as AmountInfo} from './AmountInfo'
+export * from './AmountInfo'
 export {default as Announcement} from './Announcement'
 export {default as Backdrop} from './Backdrop'
 export {default as BalanceLabel} from './BalanceLabel'
