@@ -53,11 +53,11 @@ const LINKS = [
     link: 'https://phala.network',
   },
   {
-    name: 'Wiki.phala.network',
+    name: 'Wiki',
     link: 'https://wiki.phala.network',
   },
   {
-    name: 'Phala Community',
+    name: 'Forum',
     link: 'https://forum.phala.network/t/topic/2450/2',
   },
   {
