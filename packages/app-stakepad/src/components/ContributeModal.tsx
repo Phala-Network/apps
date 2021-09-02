@@ -3,25 +3,26 @@ import {
   useApiPromise,
   useDecimalJsTokenDecimalMultiplier,
 } from '@phala/react-libs'
+import {usePolkadotAccountAtom} from '@phala/app-store'
 import Decimal from 'decimal.js'
 import {useCallback, useState} from 'react'
-import {StakePoolModalProps} from '.'
-import useSelfUserStakeInfo from '../../hooks/useSelfUserStakeInfo'
-import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
-import ActionModal, {Label, Value} from '../ActionModal'
+import {useUserStakeInfo} from '@phala/react-hooks'
+import useWaitSignAndSend from '../hooks/useWaitSignAndSend'
+import ActionModal, {Label, Value} from './ActionModal'
 
-const WithdrawModal = (props: StakePoolModalProps): JSX.Element => {
+const ContributeModal = (props: StakePoolModalProps): JSX.Element => {
+  const [polkadotAccount] = usePolkadotAccountAtom()
   const {onClose, stakePool} = props
   const {api} = useApiPromise()
   const waitSignAndSend = useWaitSignAndSend()
   const decimals = useDecimalJsTokenDecimalMultiplier(api)
   const [amount, setAmount] = useState<number | undefined>()
-  const {refetch} = useSelfUserStakeInfo(stakePool.pid)
+  const {refetch} = useUserStakeInfo(polkadotAccount?.address, stakePool.pid)
 
   const onConfirm = useCallback(async () => {
     if (api && decimals && amount) {
       return waitSignAndSend(
-        api.tx.phalaStakePool?.withdraw?.(
+        api.tx.phalaStakePool?.contribute?.(
           stakePool.pid,
           new Decimal(amount).mul(decimals).toString()
         )
@@ -42,12 +43,13 @@ const WithdrawModal = (props: StakePoolModalProps): JSX.Element => {
         onClose()
       }}
       onConfirm={onConfirm}
-      title="Withdraw"
+      title="Contribute"
+      subtitle="Contribute some stake to a pool"
       disabled={!amount}
     >
       <Label>pid</Label>
       <Value>{stakePool.pid}</Value>
-      <Label>Shares</Label>
+      <Label>Amount</Label>
       <InputNumber
         type="number"
         placeholder="Amount"
@@ -59,4 +61,4 @@ const WithdrawModal = (props: StakePoolModalProps): JSX.Element => {
   )
 }
 
-export default WithdrawModal
+export default ContributeModal

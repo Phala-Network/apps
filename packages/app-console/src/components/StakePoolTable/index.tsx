@@ -2,9 +2,10 @@ import {Button} from '@phala/react-components'
 import {toFixed} from '@phala/utils'
 import {useMemo, useState} from 'react'
 import {Column} from 'react-table'
+import {StakePool} from '@phala/react-hooks'
 import useFormat from '../../hooks/useFormat'
 import useModalVisible, {ModalKey} from '../../hooks/useModalVisible'
-import useStakePools, {StakePool} from '../../hooks/useStakePools'
+import useSelfStakePools from '../../hooks/useSelfStakePools'
 import ConsoleTable from '../ConsoleTable'
 import AddWorkerModal from './AddWorkerModal'
 import ClaimModal from './ClaimModal'
@@ -32,7 +33,7 @@ const modalEntries: [ModalKey, (props: StakePoolModalProps) => JSX.Element][] =
 const StakePoolTable = (): JSX.Element => {
   const {modalVisible, open, close, visibleCount} = useModalVisible()
   const [selectedPid, setSelectedPid] = useState<number | null>(null)
-  const {data, refetch, isLoading} = useStakePools()
+  const {data, refetch, isLoading} = useSelfStakePools()
   const format = useFormat()
 
   const selectedStakePool = useMemo<StakePool | null>(
@@ -50,9 +51,7 @@ const StakePoolTable = (): JSX.Element => {
       {
         Header: 'Commission',
         accessor: (stakePool) =>
-          typeof stakePool.payoutCommission === 'number'
-            ? `${toFixed(stakePool.payoutCommission / 10 ** 4, 2)}%`
-            : '0',
+          `${toFixed(stakePool.payoutCommission.div(10 ** 4), 2)}%`,
       },
       {
         Header: 'Cap',

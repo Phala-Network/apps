@@ -6,12 +6,12 @@ importers:
     specifiers:
       '@types/node': ^16.7.8
       '@types/react': ^17.0.19
-      '@typescript-eslint/eslint-plugin': ^4.29.3
-      '@typescript-eslint/parser': ^4.29.3
+      '@typescript-eslint/eslint-plugin': ^4.30.0
+      '@typescript-eslint/parser': ^4.30.0
       eslint: ^7.32.0
       eslint-config-prettier: ^8.3.0
-      eslint-plugin-prettier: ^3.4.1
-      eslint-plugin-react: ^7.24.0
+      eslint-plugin-prettier: ^4.0.0
+      eslint-plugin-react: ^7.25.1
       eslint-plugin-react-hooks: ^4.2.0
       npm-run-all: ^4.1.5
       prettier: ^2.3.2
@@ -27,7 +27,7 @@ importers:
       '@typescript-eslint/parser': 4.30.0_eslint@7.32.0+typescript@4.4.2
       eslint: 7.32.0
       eslint-config-prettier: 8.3.0_eslint@7.32.0
-      eslint-plugin-prettier: 3.4.1_5a48a349ffec60f5257b5f148f5199c3
+      eslint-plugin-prettier: 4.0.0_5a48a349ffec60f5257b5f148f5199c3
       eslint-plugin-react: 7.25.1_eslint@7.32.0
       eslint-plugin-react-hooks: 4.2.0_eslint@7.32.0
       prettier: 2.3.2
@@ -40,6 +40,7 @@ importers:
       '@phala/app-bridge': workspace:^0.0.1
       '@phala/app-config': workspace:*
       '@phala/app-console': workspace:^0.0.1
+      '@phala/app-stakepad': workspace:^0.0.1
       '@phala/app-store': workspace:*
       '@phala/app-types': workspace:*
       '@phala/react-cms': workspace:^0.0.1
@@ -109,6 +110,7 @@ importers:
       '@phala/app-bridge': link:../app-bridge
       '@phala/app-config': link:../app-config
       '@phala/app-console': link:../app-console
+      '@phala/app-stakepad': link:../app-stakepad
       '@phala/app-store': link:../app-store
       '@phala/app-types': link:../app-types
       '@phala/react-cms': link:../react-cms
@@ -288,6 +290,38 @@ importers:
       styled-breakpoints: 10.0.1_8c4c2c5ce15fefb0151c6a5afd60853f
       styled-components: 5.3.1_react@17.0.2
 
+  packages/app-stakepad:
+    specifiers:
+      '@phala/app-store': workspace:^0.0.1
+      '@phala/react-components': workspace:^0.0.1
+      '@phala/react-hooks': workspace:^0.0.1
+      '@phala/react-libs': workspace:^0.0.1
+      '@phala/utils': workspace:^0.0.1
+      '@polkadot/api': ^4.17.1
+      '@polkadot/api-derive': ^5.5.1
+      '@polkadot/extension-dapp': ^0.38.8
+      '@polkadot/util': ^6.11.1
+      '@types/react': ^17.0.19
+      date-fns: ^2.23.0
+      decimal.js: ^10.3.1
+      ethers: ^5.4.4
+      jotai: ^1.3.0
+    dependencies:
+      '@phala/app-store': link:../app-store
+      '@phala/react-components': link:../react-components
+      '@phala/react-hooks': link:../react-hooks
+      '@phala/react-libs': link:../react-libs
+      '@phala/utils': link:../utils
+      '@polkadot/api': 4.17.1
+      '@polkadot/api-derive': 5.7.1
+      '@polkadot/extension-dapp': 0.38.8_@polkadot+api@4.17.1
+      '@polkadot/util': 6.11.1
+      '@types/react': 17.0.19
+      date-fns: 2.23.0
+      decimal.js: 10.3.1
+      ethers: 5.4.6
+      jotai: 1.3.2
+
   packages/app-store:
     specifiers:
       '@phala/app-types': workspace:^0.0.1
@@ -412,6 +446,7 @@ importers:
       decimal.js: ^10.3.1
       ethers: ^5.4.4
       react: ^17.0.0
+      react-query: ^3.21.1
       vconsole: ^3.9.1
     dependencies:
       '@phala/app-config': link:../app-config
@@ -426,6 +461,7 @@ importers:
       decimal.js: 10.3.1
       ethers: 5.4.6
       react: 17.0.2
+      react-query: 3.21.1_react@17.0.2
       vconsole: 3.9.1
 
   packages/react-i18n:
@@ -6618,7 +6654,7 @@ packages:
   /axios/0.21.1:
     resolution: {integrity: sha512-dKQiRHxGD9PPRIUNIWvZhPTPpl1rf/OxTYKsqKUDjBwYylTvV7SjSHJb9ratfyzM6wCdLCOYLzs73qpg5c4iGA==}
     dependencies:
-      follow-redirects: 1.14.2_debug@3.2.7
+      follow-redirects: 1.14.2
     transitivePeerDependencies:
       - debug
     dev: false
@@ -9813,13 +9849,13 @@ packages:
       language-tags: 1.0.5
     dev: false
 
-  /eslint-plugin-prettier/3.4.1_5a48a349ffec60f5257b5f148f5199c3:
-    resolution: {integrity: sha512-htg25EUYUeIhKHXjOinK4BgCcDwtLHjqaxCDsMy5nbnUMkKFvIhMVCp+5GFUXQ4Nr8lBsPqtGAqBenbpFqAA2g==}
+  /eslint-plugin-prettier/4.0.0_5a48a349ffec60f5257b5f148f5199c3:
+    resolution: {integrity: sha512-98MqmCJ7vJodoQK359bqQWaxOE0CS8paAz/GgjaZLyex4TTk3g9HugoO89EqWCrFiOqn9EVvcoo7gZzONCWVwQ==}
     engines: {node: '>=6.0.0'}
     peerDependencies:
-      eslint: '>=5.0.0'
+      eslint: '>=7.28.0'
       eslint-config-prettier: '*'
-      prettier: '>=1.13.0'
+      prettier: '>=2.0.0'
     peerDependenciesMeta:
       eslint-config-prettier:
         optional: true
@@ -10611,6 +10647,16 @@ packages:
     dependencies:
       inherits: 2.0.4
       readable-stream: 2.3.7
+
+  /follow-redirects/1.14.2:
+    resolution: {integrity: sha512-yLR6WaE2lbF0x4K2qE2p9PEXKLDjUjnR/xmjS3wHAYxtlsI9MLLBJUZirAHKzUZDGLxje7w/cXR49WOUo4rbsA==}
+    engines: {node: '>=4.0'}
+    peerDependencies:
+      debug: '*'
+    peerDependenciesMeta:
+      debug:
+        optional: true
+    dev: false
 
   /follow-redirects/1.14.2_debug@3.2.7:
     resolution: {integrity: sha512-yLR6WaE2lbF0x4K2qE2p9PEXKLDjUjnR/xmjS3wHAYxtlsI9MLLBJUZirAHKzUZDGLxje7w/cXR49WOUo4rbsA==}

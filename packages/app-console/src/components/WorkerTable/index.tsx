@@ -1,11 +1,11 @@
 import {usePolkadotAccountAtom} from '@phala/app-store'
-import {isDev, toFixed} from '@phala/utils'
+import {toFixed} from '@phala/utils'
 import {useMemo, useState} from 'react'
 import {Column} from 'react-table'
 import useFormat from '../../hooks/useFormat'
 import useModalVisible, {ModalKey} from '../../hooks/useModalVisible'
-import useStakePools from '../../hooks/useStakePools'
-import useWorkers, {Worker} from '../../hooks/useWorkers'
+import useSelfStakePools from '../../hooks/useSelfStakePools'
+import {useWorkers, Worker} from '@phala/react-hooks'
 import ConsoleTable from '../ConsoleTable'
 import RemoveModal from './RemoveModal'
 import StartModal from './StartModal'
@@ -13,6 +13,8 @@ import StopModal from './StopModal'
 import WorkerActions from './WorkerActions'
 
 export type WorkerModalProps = {worker: Worker; onClose: () => void}
+
+type TableItem = Worker & {pid: number}
 
 const modalEntries: [ModalKey, (props: WorkerModalProps) => JSX.Element][] = [
   ['start', StartModal],
@@ -23,18 +25,30 @@ const modalEntries: [ModalKey, (props: WorkerModalProps) => JSX.Element][] = [
 const WorkerTable = (): JSX.Element => {
   const {close, modalVisible} = useModalVisible()
   const [polkadotAccount] = usePolkadotAccountAtom()
-  const {data} = useStakePools()
+  const {data} = useSelfStakePools()
   const workerList = useMemo<{pubkey: string; pid: number}[]>(() => {
     if (data?.length) {
       return data
-        .filter(({owner}) => isDev() || owner === polkadotAccount?.address)
+        .filter(({owner}) => owner === polkadotAccount?.address)
         .map(({workers, pid}) => workers.map((pubkey) => ({pid, pubkey})))
         .flat()
     }
     return []
   }, [data, polkadotAccount?.address])
 
-  const {data: workersData, refetch, isLoading} = useWorkers(workerList)
+  const {
+    data: workersData,
+    refetch,
+    isLoading,
+  } = useWorkers(workerList.map(({pubkey}) => pubkey))
+
+  const tableData = useMemo<TableItem[]>(() => {
+    if (!workersData) return []
+    return workerList.map((worker, index) =>
+      Object.assign(worker, workersData[index])
+    )
+  }, [workersData, workerList])
+
   const format = useFormat()
 
   const [selectedPubkey, setSelectedPubkey] = useState<string | null>(null)
@@ -47,24 +61,28 @@ const WorkerTable = (): JSX.Element => {
     [workersData, selectedPubkey]
   )
 
-  const columns = useMemo<Column<Worker>[]>(
+  const columns = useMemo<Column<TableItem>[]>(
     () => [
       {Header: 'WorkerPublicKey', accessor: 'pubkey', disableSortBy: true},
       {Header: 'pid', accessor: 'pid'},
       {
         Header: 'Ve',
         accessor: (worker) =>
-          worker.miner.state === 'Ready' ? '-' : toFixed(worker.miner.ve),
+          worker.miner?.state === 'Ready' || !worker.miner?.ve
+            ? '-'
+            : toFixed(worker.miner.ve),
       },
       {
         Header: 'V',
         accessor: (worker) =>
-          worker.miner.state === 'Ready' ? '-' : toFixed(worker.miner.v),
+          worker.miner?.state === 'Ready' || !worker.miner?.v
+            ? '-'
+            : toFixed(worker.miner.v),
       },
       {
         Header: 'P',
         accessor: (worker) =>
-          worker.miner.state === 'Ready'
+          worker.miner?.state === 'Ready' || !worker.miner?.benchmark.pInstant
             ? '-'
             : worker.miner.benchmark.pInstant,
       },
@@ -80,7 +98,7 @@ const WorkerTable = (): JSX.Element => {
       },
       {
         Header: 'Minted',
-        accessor: (worker) => format(worker.miner.stats.totalReward),
+        accessor: (worker) => format(worker.miner?.stats.totalReward),
       },
       {
         Header: 'Stake',
@@ -105,7 +123,7 @@ const WorkerTable = (): JSX.Element => {
         isLoading={isLoading}
         title="Worker"
         columns={columns}
-        data={workersData || []}
+        data={tableData}
       ></ConsoleTable>
 
       {selectedWorker &&

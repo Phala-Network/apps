@@ -6,10 +6,10 @@ import {
 import Decimal from 'decimal.js'
 import {useCallback, useMemo, useState} from 'react'
 import styled from 'styled-components'
+import {useTokenomicParameters} from '@phala/react-hooks'
 import {WorkerModalProps} from '.'
 import useFormat from '../../hooks/useFormat'
-import useStakePools from '../../hooks/useStakePools'
-import useTokenomicParameters from '../../hooks/useTokenomicParameters'
+import useSelfStakePools from '../../hooks/useSelfStakePools'
 import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
 import ActionModal, {Label, Value} from '../ActionModal'
 
@@ -26,7 +26,7 @@ const StartModal = (props: WorkerModalProps): JSX.Element => {
   const decimals = useDecimalJsTokenDecimalMultiplier(api)
   const [amount, setAmount] = useState<number | undefined>()
   const {data: tokenomicParameters} = useTokenomicParameters()
-  const {data: stakePools} = useStakePools()
+  const {data: stakePools} = useSelfStakePools()
   const poolFreeStake = useMemo<string>(() => {
     if (!stakePools) return '-'
     const stakePool = stakePools.find((pool) => pool.pid === worker.pid)
