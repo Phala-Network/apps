@@ -1,6 +1,6 @@
 export * from './Address'
 export * from './Alert'
-export {default as AlertModal} from './AlertModal'
+export * from './AlertModal'
 export * from './AmountInfo'
 export {default as Announcement} from './Announcement'
 export * from './Backdrop'
