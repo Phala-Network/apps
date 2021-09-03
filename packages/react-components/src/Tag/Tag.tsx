@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-const Tag = styled.span`
+export const Tag = styled.span`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -12,5 +12,3 @@ const Tag = styled.span`
   border-radius: 3px;
   font-size: 10px;
 `
-
-export default Tag
