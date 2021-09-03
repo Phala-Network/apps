@@ -1,7 +1,7 @@
 import {useSSR} from '@phala/react-hooks'
 import {Property} from 'csstype'
 import React, {useMemo} from 'react'
-import styled from 'styled-components'
+import {Inner, Root} from './styledComponents'
 
 export type BlockStripeProps = {
   color?: Property.BackgroundColor
@@ -14,28 +14,11 @@ export type BlockStripeProps = {
   blockStyle?: React.CSSProperties
 }
 
-type RootProps = Required<
+export type RootProps = Required<
   Pick<BlockStripeProps, 'column' | 'row' | 'blockSize'>
 >
 
-const Root = styled.div<RootProps>`
-  position: relative;
-  width: ${(props) => props.blockSize * props.column}px;
-  height: ${(props) => props.blockSize * props.row}px;
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: ${(props) => (props.column > props.row ? 'column' : 'row')};
-`
-
-const Inner = styled.div`
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  right: 0;
-`
-
-const BlockStripe: React.FC<BlockStripeProps> = (props) => {
+export const BlockStripe: React.FC<BlockStripeProps> = (props) => {
   const {
     children,
     row = 8,
@@ -80,5 +63,3 @@ const BlockStripe: React.FC<BlockStripeProps> = (props) => {
     </Root>
   )
 }
-
-export default BlockStripe
