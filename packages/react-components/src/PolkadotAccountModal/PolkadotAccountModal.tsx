@@ -6,9 +6,9 @@ import {
   usePolkadotWeb3,
 } from '@phala/react-libs'
 import React, {useMemo} from 'react'
-import {AlertModal} from './AlertModal'
-import PolkadotInstallModal from './PolkadotInstallModal'
-import SelectAccountModal from './SelectAccountModal'
+import {AlertModal} from '../AlertModal'
+import {PolkadotInstallModal} from '../PolkadotInstallModal'
+import {SelectAccountModal} from '../SelectAccountModal'
 
 type Props = {
   visible: boolean
@@ -21,7 +21,7 @@ export function web3IsInjected(): boolean {
   return window?.injectedWeb3 && Object.keys(window?.injectedWeb3).length !== 0
 }
 
-const PolkadotAccountModal: React.FC<Props> = (props) => {
+export const PolkadotAccountModal: React.FC<Props> = (props) => {
   const {accounts, enabled} = usePolkadotWeb3()
   const {api} = useApiPromise()
   const normalizeAddress = useAddressNormalizer(api)
@@ -69,5 +69,3 @@ const PolkadotAccountModal: React.FC<Props> = (props) => {
     />
   )
 }
-
-export default PolkadotAccountModal

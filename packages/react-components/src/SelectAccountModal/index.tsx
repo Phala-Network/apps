@@ -25,7 +25,9 @@ const Content = styled.div`
   ${scrollbar}
 `
 
-const SelectAccountModal: React.FC<SelectAccountModalProps> = (props) => {
+export const SelectAccountModal: React.FC<SelectAccountModalProps> = (
+  props
+) => {
   const {visible, currentAccount, accounts, onClose, onSelect} = props
 
   return (
@@ -53,5 +55,3 @@ const SelectAccountModal: React.FC<SelectAccountModalProps> = (props) => {
     </Modal>
   )
 }
-
-export default SelectAccountModal

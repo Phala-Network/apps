@@ -5,7 +5,7 @@ import {useAccountsQuery, useEthers} from '@phala/react-libs'
 import React, {useEffect, useMemo} from 'react'
 import {AlertModal} from '../AlertModal'
 import {EthereumInstallModal} from '../EthereumInstallModal'
-import SelectAccountModal from '../SelectAccountModal'
+import {SelectAccountModal} from '../SelectAccountModal'
 
 type Props = {
   visible: boolean
