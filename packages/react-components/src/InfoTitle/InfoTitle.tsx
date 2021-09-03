@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-const InfoTitle = styled.div`
+export const InfoTitle = styled.div`
   font-family: Lato;
   font-style: normal;
   font-weight: bold;
@@ -10,5 +10,3 @@ const InfoTitle = styled.div`
   opacity: 0.3;
   margin: 8px 0;
 `
-
-export default InfoTitle
