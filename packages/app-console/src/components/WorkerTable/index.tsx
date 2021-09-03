@@ -12,9 +12,9 @@ import StartModal from './StartModal'
 import StopModal from './StopModal'
 import WorkerActions from './WorkerActions'
 
-export type WorkerModalProps = {worker: Worker; onClose: () => void}
-
 type TableItem = Worker & {pid: number}
+
+export type WorkerModalProps = {worker: TableItem; onClose: () => void}
 
 const modalEntries: [ModalKey, (props: WorkerModalProps) => JSX.Element][] = [
   ['start', StartModal],
@@ -52,13 +52,13 @@ const WorkerTable = (): JSX.Element => {
   const format = useFormat()
 
   const [selectedPubkey, setSelectedPubkey] = useState<string | null>(null)
-  const selectedWorker = useMemo<Worker | null>(
+  const selectedWorker = useMemo<TableItem | null>(
     () =>
-      (workersData &&
+      (tableData &&
         selectedPubkey !== null &&
-        workersData.find(({pubkey}) => pubkey === selectedPubkey)) ||
+        tableData.find(({pubkey}) => pubkey === selectedPubkey)) ||
       null,
-    [workersData, selectedPubkey]
+    [tableData, selectedPubkey]
   )
 
   const columns = useMemo<Column<TableItem>[]>(
