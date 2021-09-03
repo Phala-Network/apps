@@ -1,6 +1,6 @@
 import React from 'react'
 import {Button} from './Button'
-import InputAction from './InputAction'
+import {InputAction} from './InputAction'
 import InputExternalInfo from './InputExternalInfo'
 import InputNumber from './InputNumber'
 import {Modal} from './Modal'
