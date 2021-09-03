@@ -1,25 +1,12 @@
 import {useClipboard} from '@phala/react-hooks'
 import React from 'react'
-import styled from 'styled-components'
+import {CopyIcon} from './styledComponets'
 
 type Props = {
   value: string
 }
 
-const CopyIcon = styled.svg`
-  fill: white;
-  cursor: pointer;
-
-  &:active {
-    opacity: 0.8;
-  }
-
-  &:hover {
-    fill: ${(props) => props.theme.colors.phala};
-  }
-`
-
-const Copy: React.FC<Props> = (props) => {
+export const Copy: React.FC<Props> = (props) => {
   const {value} = props
 
   const {copy} = useClipboard()
@@ -43,5 +30,3 @@ const Copy: React.FC<Props> = (props) => {
     </CopyIcon>
   )
 }
-
-export default Copy
