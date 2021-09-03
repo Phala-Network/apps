@@ -3,7 +3,7 @@ import React, {createElement} from 'react'
 import {createPortal} from 'react-dom'
 import {down} from 'styled-breakpoints'
 import styled, {css} from 'styled-components'
-import Backdrop from './Backdrop'
+import {Backdrop} from './Backdrop'
 
 export type ModalProps = {
   visible: boolean

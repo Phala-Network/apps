@@ -15,7 +15,7 @@ export const getMargin = (num: number): string => {
   return `calc(${num * 15.25}pt + 1px * ${num - 1})`
 }
 
-const Spacer: React.FC<SpacerProps> = ({
+export const Spacer: React.FC<SpacerProps> = ({
   x = 1,
   y = 1,
   inline = false,
@@ -39,5 +39,3 @@ const Spacer: React.FC<SpacerProps> = ({
     ></span>
   )
 }
-
-export default React.memo(Spacer)

@@ -4,7 +4,7 @@ import {InputAction} from './InputAction'
 import {InputExternalInfo} from './InputExternalInfo'
 import InputNumber from './InputNumber'
 import {Modal} from './Modal'
-import Spacer from './Spacer'
+import {Spacer} from './Spacer'
 
 type Props = {
   visible: boolean
