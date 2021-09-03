@@ -89,7 +89,7 @@ const WorkerTable = (): JSX.Element => {
       {
         Header: 'state',
         accessor: (worker) => {
-          const {state} = worker.miner
+          const state = worker.miner?.state
           if (state === 'MiningIdle') return 'Mining'
           if (state === 'MiningUnresponsive') return 'Unresponsive'
           if (state === 'MiningCoolingDown') return 'CoolingDown'
