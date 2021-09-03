@@ -1,19 +1,7 @@
-import {usePortal} from '@phala/react-hooks'
-import React, {createElement} from 'react'
-import {createPortal} from 'react-dom'
 import {down} from 'styled-breakpoints'
 import styled, {css} from 'styled-components'
-import {Backdrop} from './Backdrop'
 
-export type ModalProps = {
-  visible: boolean
-  onClose?: () => void
-  title?: React.ReactNode
-  bodyStyle?: React.CSSProperties
-  actions?: React.ReactNode[]
-}
-
-const Wrap = styled.div`
+export const Wrap = styled.div`
   position: fixed;
   left: 0;
   bottom: 0;
@@ -24,7 +12,7 @@ const Wrap = styled.div`
   justify-content: center;
 `
 
-const Content = styled.div`
+export const Content = styled.div`
   width: 480px;
   background: #ffffff;
   box-shadow: 16px 16px 0px rgba(0, 0, 0, 0.2);
@@ -47,7 +35,7 @@ const Content = styled.div`
   }
 `
 
-const Title = styled.div`
+export const Title = styled.div`
   height: 48px;
   font-family: Lato;
   font-style: normal;
@@ -82,30 +70,3 @@ export const ModalActions = styled.div`
   align-items: center;
   justify-content: flex-end;
 `
-
-export const Modal: React.FC<ModalProps> = (props) => {
-  const {children, title, visible = false, onClose, bodyStyle, actions} = props
-  const portal = usePortal('modal')
-
-  if (!portal) return null
-
-  return createPortal(
-    <Backdrop onClick={onClose} visible={visible}>
-      <Wrap>
-        <Content style={bodyStyle}>
-          {title && <Title>{title}</Title>}
-          {children}
-
-          {actions && actions?.length > 0 && (
-            <ModalActions>
-              {actions?.map((item) => {
-                return createElement(ModalAction, null, item)
-              })}
-            </ModalActions>
-          )}
-        </Content>
-      </Wrap>
-    </Backdrop>,
-    portal
-  )
-}
