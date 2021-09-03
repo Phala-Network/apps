@@ -1,11 +1,11 @@
 import {usePolkadotAccountAtom} from '@phala/app-store'
+import {useWorkers, Worker} from '@phala/react-hooks'
 import {toFixed} from '@phala/utils'
 import {useMemo, useState} from 'react'
 import {Column} from 'react-table'
 import useFormat from '../../hooks/useFormat'
 import useModalVisible, {ModalKey} from '../../hooks/useModalVisible'
 import useSelfStakePools from '../../hooks/useSelfStakePools'
-import {useWorkers, Worker} from '@phala/react-hooks'
 import ConsoleTable from '../ConsoleTable'
 import RemoveModal from './RemoveModal'
 import StartModal from './StartModal'
@@ -89,7 +89,7 @@ const WorkerTable = (): JSX.Element => {
       {
         Header: 'state',
         accessor: (worker) => {
-          const {state} = worker.miner
+          const state = worker.miner?.state
           if (state === 'MiningIdle') return 'Mining'
           if (state === 'MiningUnresponsive') return 'Unresponsive'
           if (state === 'MiningCoolingDown') return 'CoolingDown'

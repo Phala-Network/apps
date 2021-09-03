@@ -1,6 +1,6 @@
 import {toFixed} from '@phala/utils'
 import React, {ComponentProps} from 'react'
-import Tag from '../Tag'
+import {Tag} from '../Tag'
 import {Amount, AmountInfoWrap, Divider, Header, Type} from './styledComponents'
 
 export type AmountInfoProps = {

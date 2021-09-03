@@ -1,0 +1,1 @@
+export {PolkadotInstallModal} from './PolkadotInstallModal'

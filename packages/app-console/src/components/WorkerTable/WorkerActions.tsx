@@ -1,5 +1,5 @@
-import useModalVisible, {ModalKey} from '../../hooks/useModalVisible'
 import {Worker} from '@phala/react-hooks'
+import useModalVisible, {ModalKey} from '../../hooks/useModalVisible'
 import ActionButton from '../ActionButton'
 
 const buttonEntries: [ModalKey, string][] = [
@@ -16,9 +16,7 @@ const WorkerActions = ({
   setPubkey: (pubkey: string | null) => void
 }): JSX.Element => {
   const {open} = useModalVisible()
-  const {
-    miner: {state},
-  } = worker
+  const state = worker.miner?.state
 
   return (
     <>
