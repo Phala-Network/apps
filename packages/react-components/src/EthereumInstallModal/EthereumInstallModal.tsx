@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
-import {Button} from './Button'
-import {Modal} from './Modal'
+import {Button} from '../Button'
+import {Modal} from '../Modal'
 
 type Props = {
   visible: boolean
@@ -20,7 +20,7 @@ const Content = styled.div`
   margin-bottom: 28px;
 `
 
-const EthereumInstallModal: React.FC<Props> = (props) => {
+export const EthereumInstallModal: React.FC<Props> = (props) => {
   return (
     <Modal {...props} title="Alert">
       <Content>{`No metamask extension found, please install it first.`}</Content>
@@ -37,5 +37,3 @@ const EthereumInstallModal: React.FC<Props> = (props) => {
     </Modal>
   )
 }
-
-export default EthereumInstallModal
