@@ -6,7 +6,7 @@ import {
   usePolkadotWeb3,
 } from '@phala/react-libs'
 import React, {useMemo} from 'react'
-import AlertModal from './AlertModal'
+import {AlertModal} from './AlertModal'
 import PolkadotInstallModal from './PolkadotInstallModal'
 import SelectAccountModal from './SelectAccountModal'
 

@@ -3,7 +3,7 @@ import {Account} from '@phala/app-types'
 import {useSSR} from '@phala/react-hooks'
 import {useAccountsQuery, useEthers} from '@phala/react-libs'
 import React, {useEffect, useMemo} from 'react'
-import AlertModal from './AlertModal'
+import {AlertModal} from './AlertModal'
 import EthereumInstallModal from './EthereumInstallModal'
 import SelectAccountModal from './SelectAccountModal'
 

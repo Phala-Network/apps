@@ -2,7 +2,7 @@ import {useClickAway} from '@phala/react-hooks'
 import {forwardRef, useRef, useState} from 'react'
 import {down} from 'styled-breakpoints'
 import styled from 'styled-components'
-import Backdrop from '../Backdrop'
+import {Backdrop} from '../Backdrop'
 import {FloatModalHeader} from './FloatModalHeader'
 
 const Root = styled.div`

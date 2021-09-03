@@ -1,6 +1,6 @@
 import React, {ComponentProps} from 'react'
 import styled from 'styled-components'
-import Spacer from '../../Spacer'
+import {Spacer} from '../../Spacer'
 import {ActiveIcon, InactiveIcon} from './icons'
 
 const FloatModalHeaderRoot = styled.div<{active: boolean}>`
