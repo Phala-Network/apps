@@ -1,17 +1,7 @@
-import React from 'react'
 import styled from 'styled-components'
+import {ButtonProps} from './Button'
 
-type ButtonProps = {
-  type?: 'normal' | 'primary' | 'plain'
-  shape?: 'round' | 'circle'
-  size?: 'normal' | 'small'
-  loading?: boolean
-  disabled?: boolean
-}
-
-type Props = ButtonProps & React.ComponentProps<typeof ButtonWrap>
-
-const ButtonWrap = styled.button<ButtonProps>`
+export const ButtonWrap = styled.button<ButtonProps>`
   position: relative;
   align-items: center;
   display: flex;
@@ -50,7 +40,7 @@ const ButtonWrap = styled.button<ButtonProps>`
   }
 `
 
-const Loading = styled.div`
+export const Loading = styled.div`
   position: absolute;
   left: 0;
   top: 0;
@@ -62,29 +52,3 @@ const Loading = styled.div`
   background-position: center center;
   background-color: #d1ff52;
 `
-
-const Button: React.FC<Props> = (props) => {
-  const {
-    loading = false,
-    children,
-    type = 'normal',
-    shape,
-    disabled,
-    ...others
-  } = props
-
-  return (
-    <ButtonWrap
-      type={type}
-      disabled={loading || disabled}
-      shape={shape}
-      {...others}
-    >
-      {children}
-
-      {loading && <Loading></Loading>}
-    </ButtonWrap>
-  )
-}
-
-export default Button
