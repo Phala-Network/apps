@@ -1,4 +1,3 @@
-import {usePolkadotAccountAtom} from '@phala/app-store'
 import {useWorkers, Worker} from '@phala/react-hooks'
 import {toFixed} from '@phala/utils'
 import {useMemo, useState} from 'react'
@@ -24,30 +23,30 @@ const modalEntries: [ModalKey, (props: WorkerModalProps) => JSX.Element][] = [
 
 const WorkerTable = (): JSX.Element => {
   const {close, modalVisible} = useModalVisible()
-  const [polkadotAccount] = usePolkadotAccountAtom()
   const {data} = useSelfStakePools()
-  const workerList = useMemo<{pubkey: string; pid: number}[]>(() => {
+  const workersPidMap = useMemo<Record<string, number>>(() => {
     if (data?.length) {
-      return data
-        .filter(({owner}) => owner === polkadotAccount?.address)
-        .map(({workers, pid}) => workers.map((pubkey) => ({pid, pubkey})))
-        .flat()
+      return Object.fromEntries(
+        data
+          .map(({workers, pid}) => workers.map((pubkey) => [pubkey, pid]))
+          .flat()
+      )
     }
-    return []
-  }, [data, polkadotAccount?.address])
+    return {}
+  }, [data])
 
   const {
     data: workersData,
     refetch,
     isLoading,
-  } = useWorkers(workerList.map(({pubkey}) => pubkey))
+  } = useWorkers(Object.keys(workersPidMap))
 
   const tableData = useMemo<TableItem[]>(() => {
     if (!workersData) return []
-    return workerList.map((worker, index) =>
-      Object.assign(worker, workersData[index])
+    return workersData.map((worker) =>
+      Object.assign(worker, {pid: workersPidMap[worker.pubkey] as number})
     )
-  }, [workersData, workerList])
+  }, [workersData, workersPidMap])
 
   const format = useFormat()
 
