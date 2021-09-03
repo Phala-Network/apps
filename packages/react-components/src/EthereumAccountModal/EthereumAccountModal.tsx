@@ -3,16 +3,16 @@ import {Account} from '@phala/app-types'
 import {useSSR} from '@phala/react-hooks'
 import {useAccountsQuery, useEthers} from '@phala/react-libs'
 import React, {useEffect, useMemo} from 'react'
-import {AlertModal} from './AlertModal'
-import EthereumInstallModal from './EthereumInstallModal'
-import SelectAccountModal from './SelectAccountModal'
+import {AlertModal} from '../AlertModal'
+import {EthereumInstallModal} from '../EthereumInstallModal'
+import SelectAccountModal from '../SelectAccountModal'
 
 type Props = {
   visible: boolean
   onClose(): void
 }
 
-const EthereumAccountModal: React.FC<Props> = (props) => {
+export const EthereumAccountModal: React.FC<Props> = (props) => {
   const {data: accounts = []} = useAccountsQuery()
   const {readystate: readyState} = useEthers()
   const isReady = readyState === 'connected'
@@ -72,5 +72,3 @@ const EthereumAccountModal: React.FC<Props> = (props) => {
     />
   )
 }
-
-export default EthereumAccountModal
