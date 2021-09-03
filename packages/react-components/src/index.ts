@@ -1,5 +1,5 @@
-export {default as Address} from './Address'
-export {default as Alert} from './Alert'
+export * from './Address'
+export * from './Alert'
 export {default as AlertModal} from './AlertModal'
 export * from './AmountInfo'
 export {default as Announcement} from './Announcement'
