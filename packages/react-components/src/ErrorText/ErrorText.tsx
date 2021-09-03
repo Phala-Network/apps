@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-const ErrorText = styled.p`
+export const ErrorText = styled.p`
   font-family: Lato;
   font-style: normal;
   font-weight: bold;
@@ -10,5 +10,3 @@ const ErrorText = styled.p`
   padding: 0;
   margin: 6px 0 0 0;
 `
-
-export default ErrorText
