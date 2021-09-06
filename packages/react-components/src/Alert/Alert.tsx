@@ -17,7 +17,7 @@ const Root = styled.div`
   align-items: center;
 `
 
-const Alert: React.FC = (props) => {
+export const Alert: React.FC = (props) => {
   const {children, ...rest} = props
 
   return (
@@ -27,5 +27,3 @@ const Alert: React.FC = (props) => {
     </Root>
   )
 }
-
-export default Alert

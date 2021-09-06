@@ -1,8 +1,8 @@
 import {Account} from '@phala/app-types'
 import React from 'react'
 import styled from 'styled-components'
-import Button from '../Button'
-import Center from '../Center'
+import {Button} from '../Button'
+import {Center} from '../Center'
 import {Modal} from '../Modal'
 import scrollbar from '../scrollbar'
 import AccountOption from './AccountOption'
@@ -25,7 +25,9 @@ const Content = styled.div`
   ${scrollbar}
 `
 
-const SelectAccountModal: React.FC<SelectAccountModalProps> = (props) => {
+export const SelectAccountModal: React.FC<SelectAccountModalProps> = (
+  props
+) => {
   const {visible, currentAccount, accounts, onClose, onSelect} = props
 
   return (
@@ -53,5 +55,3 @@ const SelectAccountModal: React.FC<SelectAccountModalProps> = (props) => {
     </Modal>
   )
 }
-
-export default SelectAccountModal
