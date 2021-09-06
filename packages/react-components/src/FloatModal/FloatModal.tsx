@@ -1,5 +1,5 @@
 import {useClickAway} from '@phala/react-hooks'
-import {forwardRef, useRef, useState} from 'react'
+import {FC, useEffect, useRef, useState} from 'react'
 import {down} from 'styled-breakpoints'
 import styled from 'styled-components'
 import {Backdrop} from '../Backdrop'
@@ -40,32 +40,35 @@ const Root = styled.div`
 export interface FloatModalProps {
   title?: string
   children?: React.ReactNode
+  onActive?(value: boolean): void
 }
 
-export const FloatModal = forwardRef<HTMLDivElement, FloatModalProps>(
-  (props) => {
-    const {title, children} = props
-    const [active, setActive] = useState(false)
-    const rootRef = useRef(null)
+export const FloatModal: FC<FloatModalProps> = (props) => {
+  const {title, onActive, children} = props
+  const [active, setActive] = useState(false)
+  const rootRef = useRef(null)
 
-    useClickAway(rootRef, () => {
-      setActive(false)
-    })
+  useClickAway(rootRef, () => {
+    setActive(false)
+  })
 
-    return (
-      <>
-        <Backdrop visible={active} />
-        <Root ref={rootRef} className={active ? 'active' : ''}>
-          <FloatModalHeader
-            active={active}
-            onClickHeader={() => setActive((prev) => !prev)}
-          >
-            {title}
-          </FloatModalHeader>
+  useEffect(() => {
+    onActive?.(active)
+  }, [onActive, active])
 
-          {active && children}
-        </Root>
-      </>
-    )
-  }
-)
+  return (
+    <>
+      <Backdrop visible={active} />
+      <Root ref={rootRef} className={active ? 'active' : ''}>
+        <FloatModalHeader
+          active={active}
+          onClickHeader={() => setActive((prev) => !prev)}
+        >
+          {title}
+        </FloatModalHeader>
+
+        {active && children}
+      </Root>
+    </>
+  )
+}
