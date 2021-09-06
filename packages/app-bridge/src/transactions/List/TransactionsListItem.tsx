@@ -1,3 +1,4 @@
+import {clickEvent} from '@phala/app-analytics'
 import {TransactionRecord} from '@phala/app-types'
 import {ResultStepModal} from '@phala/react-components'
 import {useBridgePhalaRecordInfo} from '@phala/react-libs'
@@ -56,9 +57,14 @@ const TransactionsListItem: React.FC<TransactionsListItemProps> = (props) => {
     setModalVisible(false)
   }
 
+  const openModal = () => {
+    setModalVisible(true)
+    clickEvent('open transaction detail modal')
+  }
+
   return (
     <>
-      <ItemRoot onClick={() => setModalVisible(true)}>
+      <ItemRoot onClick={openModal}>
         <Status status={status} />
 
         <ItemInfoBlock
