@@ -209,6 +209,7 @@ importers:
 
   packages/app-bridge:
     specifiers:
+      '@phala/app-analytics': workspace:^0.0.1
       '@phala/app-store': workspace:^0.0.1
       '@phala/app-types': workspace:^0.0.1
       '@phala/react-components': workspace:^0.0.1
@@ -223,6 +224,7 @@ importers:
       react-query: ^3.19.6
       styled-breakpoints: ^10.0.1
     dependencies:
+      '@phala/app-analytics': link:../app-analytics
       '@phala/app-store': link:../app-store
       '@phala/app-types': link:../app-types
       '@phala/react-components': link:../react-components
