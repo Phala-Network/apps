@@ -1,6 +1,9 @@
+import {useEffect} from 'react'
 import {
+  Filters,
   TableOptions,
   useFilters,
+  useGlobalFilter,
   usePagination,
   useSortBy,
   useTable,
@@ -63,11 +66,25 @@ const Styles = styled.div`
 
 export type TableProps<D extends Record<string, unknown>> = TableOptions<D> & {
   isLoading?: boolean
+  globalFilterValue?: any
+  filters?: Filters<D>
 }
 
 export const Table = <D extends Record<string, unknown>>(
   props: TableProps<D>
 ): JSX.Element => {
+  const {isLoading, globalFilterValue, filters, ...restProps} = props
+  const table = useTable(
+    {
+      initialState: {pageIndex: 0, ...props.initialState},
+      ...restProps,
+    },
+    useFilters,
+    useGlobalFilter,
+    useSortBy,
+    usePagination
+  )
+
   const {
     getTableProps,
     getTableBodyProps,
@@ -81,15 +98,20 @@ export const Table = <D extends Record<string, unknown>>(
     previousPage,
     state: {pageIndex},
     pageCount,
-  } = useTable(
-    {
-      initialState: {pageIndex: 0, ...props.initialState},
-      ...props,
-    },
-    useFilters,
-    useSortBy,
-    usePagination
-  )
+    setAllFilters,
+    setGlobalFilter,
+  } = table
+
+  useEffect(() => {
+    if (filters) {
+      console.log(filters)
+      setAllFilters(filters)
+    }
+  }, [filters, setAllFilters])
+
+  useEffect(() => {
+    setGlobalFilter(globalFilterValue)
+  }, [globalFilterValue, setGlobalFilter])
 
   return (
     <Styles>
@@ -134,7 +156,8 @@ export const Table = <D extends Record<string, unknown>>(
             </tbody>
           )}
         </table>
-        {props.data.length ? null : props.isLoading ? (
+
+        {props.data.length ? null : isLoading ? (
           <Placeholder>Loading…</Placeholder>
         ) : (
           <Placeholder>No Data</Placeholder>
