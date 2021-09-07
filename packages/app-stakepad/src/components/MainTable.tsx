@@ -122,7 +122,7 @@ const MainTable = (): JSX.Element => {
             globalFilterValue: boolean
           ) => {
             return globalFilterValue
-              ? rows.filter((row) => row.original.workers.length > 1)
+              ? rows.filter((row) => row.original.workers.length > 0)
               : rows
           },
           []
