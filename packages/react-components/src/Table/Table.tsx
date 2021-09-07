@@ -104,7 +104,6 @@ export const Table = <D extends Record<string, unknown>>(
 
   useEffect(() => {
     if (filters) {
-      console.log(filters)
       setAllFilters(filters)
     }
   }, [filters, setAllFilters])
