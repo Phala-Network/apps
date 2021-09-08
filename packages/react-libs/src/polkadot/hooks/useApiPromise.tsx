@@ -58,16 +58,12 @@ export const ApiPromiseProvider = ({
   const registryTypes = options?.typedefs
 
   useEffect(() => {
-    if (typeof window === 'undefined' || readystate !== 'unavailable') {
-      // do not enable during server side rendering
-      return
-    }
-
     if (endpoint === undefined || registryTypes === undefined) {
       // do nothing while no network is selected
       return
     }
 
+    setApi(undefined)
     setState('init')
 
     enableApiPromise(endpoint, registryTypes)
@@ -79,9 +75,9 @@ export const ApiPromiseProvider = ({
         logError('Failed to enable Polkadot API:', reason)
         setState('failed')
       })
-  }, [endpoint, readystate, registryTypes])
+  }, [endpoint, registryTypes])
 
-  const value = {api, readystate, initialized: readystate === 'ready'}
+  const value = {api, readystate, initialized: readystate === 'ready', endpoint}
 
   return (
     <ApiPromiseContext.Provider value={value}>

@@ -35,10 +35,10 @@ export type StakePool = {
 const useStakePools = (
   address?: string
 ): UseQueryResult<StakePool[] | null> => {
-  const {api, initialized} = useApiPromise()
+  const {api, endpoint} = useApiPromise()
 
   return useQuery(
-    ['stakePools', initialized, address],
+    ['stakePools', endpoint, address],
     async () => {
       if (!api) return null
       let stakePools = await api.query.phalaStakePool?.stakePools

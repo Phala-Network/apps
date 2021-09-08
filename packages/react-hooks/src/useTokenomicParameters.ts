@@ -23,9 +23,9 @@ export default function useTokenomicParameters(): UseQueryResult<
   TokenomicParameters | undefined,
   unknown
 > {
-  const {api, initialized} = useApiPromise()
+  const {api, endpoint} = useApiPromise()
 
-  return useQuery(['tokenomicParameters', initialized], () =>
+  return useQuery(['tokenomicParameters', endpoint], () =>
     api?.query.phalaMining
       ?.tokenomicParameters?.()
       .then(

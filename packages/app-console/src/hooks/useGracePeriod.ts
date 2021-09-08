@@ -5,9 +5,9 @@ export default function useGracePeriod(): UseQueryResult<
   number | null,
   unknown
 > {
-  const {api, initialized} = useApiPromise()
+  const {api, endpoint} = useApiPromise()
   return useQuery<number | null>(
-    ['gracePeriod', initialized],
+    ['gracePeriod', endpoint],
     () => (api?.consts.phalaStakePool?.gracePeriod?.toJSON() as number) ?? null,
     {refetchOnMount: false}
   )

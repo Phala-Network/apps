@@ -10,9 +10,11 @@ import {QueryClient, QueryClientProvider} from 'react-query'
 import {ReactQueryDevtools} from 'react-query/devtools'
 import {ThemeProvider} from 'styled-components'
 import './fonts.css'
+import useCustomEndpoint from './hooks/useCustomEndpoint'
 import theme from './theme'
 
 const WrapApp: React.FC = ({children}) => {
+  const customEndpoint = useCustomEndpoint()
   const client = useRef(new QueryClient())
 
   const defaultNetwork =
@@ -27,6 +29,7 @@ const WrapApp: React.FC = ({children}) => {
     substrateGraphEndpoint: 'https://subquery-api.phala.network',
     ethereumGraphEndpoint:
       'https://graphs-api.phala.network/subgraphs/name/chainbridge',
+    customEndpoint,
   }
 
   useLayoutEffect(() => {

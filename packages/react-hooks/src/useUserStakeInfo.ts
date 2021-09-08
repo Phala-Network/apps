@@ -37,9 +37,9 @@ function useUserStakeInfo(
   address?: string,
   pid?: number
 ): UseQueryResult<UserStakeInfo | Record<number, UserStakeInfo> | null> {
-  const {api, initialized} = useApiPromise()
+  const {api, endpoint} = useApiPromise()
 
-  return useQuery(['poolStaker', initialized, pid, address], async () => {
+  return useQuery(['poolStaker', endpoint, pid, address], async () => {
     if (!api || !address) return null
 
     if (typeof pid === 'number') {

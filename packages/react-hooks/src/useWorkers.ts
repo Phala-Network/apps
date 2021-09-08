@@ -42,9 +42,9 @@ export type Worker = WorkerJSON & {
 type Miner = Omit<MinerJSON, 'v' | 've'> & {v: Decimal; ve: Decimal}
 
 const useWorkers = (pubkeyList?: string[]): UseQueryResult<Worker[] | null> => {
-  const {api, initialized} = useApiPromise()
+  const {api, endpoint} = useApiPromise()
   return useQuery(
-    ['workers', initialized, pubkeyList],
+    ['workers', endpoint, pubkeyList],
     async () => {
       if (!api) return null
       const keyList =
