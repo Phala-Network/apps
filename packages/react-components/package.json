@@ -40,7 +40,8 @@
     "clean": "tsc --clean",
     "lint": "type-coverage",
     "prepublishOnly": "run-s lint build",
-    "storybook": "start-storybook -p 6006"
+    "start-storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "devDependencies": {
     "@babel/core": "^7.15.0",
