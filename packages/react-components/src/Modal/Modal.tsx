@@ -1,5 +1,5 @@
 import {usePortal} from '@phala/react-hooks'
-import React, {createElement} from 'react'
+import React from 'react'
 import {createPortal} from 'react-dom'
 import {Backdrop} from '../Backdrop'
 import {
@@ -33,9 +33,9 @@ export const Modal: React.FC<ModalProps> = (props) => {
 
           {actions && actions?.length > 0 && (
             <ModalActions>
-              {actions?.map((item) => {
-                return createElement(ModalAction, null, item)
-              })}
+              {actions?.map((item, index) => (
+                <ModalAction key={index}>{item}</ModalAction>
+              ))}
             </ModalActions>
           )}
         </Content>
