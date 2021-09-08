@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "build": "cd ./packages/app && pnpm run build",
+    "build:storybook": "cd ./packages/react-components && pnpm run build-storybook",
     "build:deps": "pnpm recursive --filter ./packages --filter !./packages/app run build",
     "develop": "cd ./packages/app && pnpm run develop",
     "develop:deps": "pnpm --parallel --filter ./packages  --filter !./packages/app run develop",
