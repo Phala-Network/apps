@@ -15,7 +15,7 @@
     "prepublishOnly": "run-s lint build"
   },
   "dependencies": {
-    "i18next": "^20.5.0",
+    "i18next": "^20.6.0",
     "i18next-browser-languagedetector": "^6.1.2",
     "react-i18next": "^11.11.4"
   },

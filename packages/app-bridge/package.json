@@ -30,7 +30,7 @@
   },
   "devDependencies": {
     "@phala/react-libs": "workspace:^0.0.1",
-    "react-query": "^3.19.6"
+    "react-query": "^3.22.0"
   },
   "peerDependencies": {
     "@phala/react-libs": "workspace:^0.0.1",

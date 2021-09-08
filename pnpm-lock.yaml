@@ -4,10 +4,10 @@ importers:
 
   .:
     specifiers:
-      '@types/node': ^16.7.8
-      '@types/react': ^17.0.19
-      '@typescript-eslint/eslint-plugin': ^4.30.0
-      '@typescript-eslint/parser': ^4.30.0
+      '@types/node': ^16.7.13
+      '@types/react': ^17.0.20
+      '@typescript-eslint/eslint-plugin': ^4.31.0
+      '@typescript-eslint/parser': ^4.31.0
       eslint: ^7.32.0
       eslint-config-prettier: ^8.3.0
       eslint-plugin-prettier: ^4.0.0
@@ -35,7 +35,7 @@ importers:
 
   packages/app:
     specifiers:
-      '@babel/core': ^7.15.0
+      '@babel/core': ^7.15.5
       '@phala/app-assets': workspace:^0.0.1
       '@phala/app-bridge': workspace:^0.0.1
       '@phala/app-config': workspace:*
@@ -48,44 +48,44 @@ importers:
       '@phala/react-hooks': workspace:*
       '@phala/react-i18n': workspace:^0.0.1
       '@phala/react-libs': workspace:*
-      '@phala/typedefs': ^0.2.22
+      '@phala/typedefs': ^0.2.23
       '@phala/utils': workspace:*
       '@polkadot/api': ^4.17.1
-      '@polkadot/api-derive': ^5.7.1
+      '@polkadot/api-derive': ^5.8.3
       '@polkadot/extension-dapp': ^0.38.8
       '@polkadot/types': ^4.17.1
       '@polkadot/ui-keyring': ^0.84.3
       '@polkadot/util': ^6.11.1
       '@polkadot/util-crypto': ^6.11.1
-      '@sentry/gatsby': ^6.11.0
-      '@sentry/react': ^6.11.0
-      '@sentry/tracing': ^6.11.0
-      '@types/node': ^16.7.8
-      '@types/react': ^17.0.19
+      '@sentry/gatsby': ^6.12.0
+      '@sentry/react': ^6.12.0
+      '@sentry/tracing': ^6.12.0
+      '@types/node': ^16.7.13
+      '@types/react': ^17.0.20
       '@types/react-dom': ^17.0.9
       '@types/react-helmet': ^6.1.2
       '@types/react-table': ^7.7.2
-      '@types/styled-components': ^5.1.13
+      '@types/styled-components': ^5.1.14
       '@types/styletron-engine-atomic': ^1.1.1
       '@types/styletron-react': ^5.0.3
       '@types/uuid': ^8.3.1
-      axios: ^0.21.1
+      axios: ^0.21.4
       babel-loader: 8.1.0
       babel-plugin-styled-components: ^1.13.2
-      babel-preset-gatsby: ^1.12.0
+      babel-preset-gatsby: ^1.13.0
       bn.js: ^5.2.0
-      core-js: ^3.16.4
+      core-js: ^3.17.2
       decimal.js: ^10.3.1
       ethers: ^5.4.6
-      gatsby: ^3.12.1
+      gatsby: ^3.13.0
       gatsby-plugin-alias-imports: ^1.0.5
-      gatsby-plugin-google-gtag: ^3.12.0
+      gatsby-plugin-google-gtag: ^3.13.0
       gatsby-plugin-intl: ^0.3.3
       gatsby-plugin-pnpm: ^1.2.8
-      gatsby-plugin-react-helmet: ^4.12.0
+      gatsby-plugin-react-helmet: ^4.13.0
       gatsby-plugin-react-svg: ^3.0.1
-      gatsby-plugin-styled-components: ^4.12.0
-      gatsby-plugin-typescript: ^3.12.0
+      gatsby-plugin-styled-components: ^4.13.0
+      gatsby-plugin-typescript: ^3.13.0
       node-polyfill-webpack-plugin: ^1.1.4
       rc-tooltip: ^5.1.1
       react: ^17.0.2
@@ -93,7 +93,7 @@ importers:
       react-error-boundary: ^3.1.3
       react-helmet: ^6.1.0
       react-is: ^16.13.1
-      react-query: ^3.21.1
+      react-query: ^3.22.0
       react-scripts: 4.0.3
       react-toastify: ^7.0.4
       styled-breakpoints: ^10.0.1
@@ -103,7 +103,7 @@ importers:
       uuid: ^8.3.2
       web-vitals: ^1.1.2
       web3modal: ^1.9.4
-      webpack: ^5.51.1
+      webpack: ^5.52.0
     dependencies:
       '@babel/core': 7.15.5
       '@phala/app-assets': link:../app-assets
@@ -185,13 +185,13 @@ importers:
       '@phala/react-hooks': workspace:^0.0.1
       '@phala/react-libs': workspace:^0.0.1
       '@phala/utils': workspace:^0.0.1
-      '@polkadot/api-derive': ^5.5.1
+      '@polkadot/api-derive': ^5.8.3
       '@polkadot/util': ^6.11.1
-      '@types/react': ^17.0.19
-      axios: ^0.21.1
+      '@types/react': ^17.0.20
+      axios: ^0.21.4
       decimal.js: ^10.3.1
-      ethers: ^5.4.4
-      react: ^17.0.0
+      ethers: ^5.4.6
+      react: ^17.0.2
       react-toastify: ^7.0.4
       styled-breakpoints: ^10.0.1
     dependencies:
@@ -224,7 +224,7 @@ importers:
       '@polkadot/util': ^6.11.1
       '@polkadot/util-crypto': ^6.11.1
       bn.js: ^5.2.0
-      react-query: ^3.19.6
+      react-query: ^3.22.0
       styled-breakpoints: ^10.0.1
     dependencies:
       '@phala/app-analytics': link:../app-analytics
@@ -245,9 +245,9 @@ importers:
 
   packages/app-config:
     specifiers:
-      '@phala/typedefs': ^0.2.22
+      '@phala/typedefs': ^0.2.23
       '@polkadot/types': ^4.17.1
-      '@types/node': ^16.4.13
+      '@types/node': ^16.7.13
     dependencies:
       '@phala/typedefs': 0.2.23
       '@polkadot/types': 4.17.1
@@ -261,19 +261,19 @@ importers:
       '@phala/react-libs': workspace:^0.0.1
       '@phala/utils': workspace:^0.0.1
       '@polkadot/api': ^4.17.1
-      '@polkadot/api-derive': ^5.5.1
+      '@polkadot/api-derive': ^5.8.3
       '@polkadot/extension-dapp': ^0.38.8
       '@polkadot/util': ^6.11.1
-      '@types/react': ^17.0.19
+      '@types/react': ^17.0.20
       date-fns: ^2.23.0
       decimal.js: ^10.3.1
-      ethers: ^5.4.4
-      jotai: ^1.3.0
-      react: ^17.0.0
-      react-query: ^3.21.0
+      ethers: ^5.4.6
+      jotai: ^1.3.2
+      react: ^17.0.2
+      react-query: ^3.22.0
       react-toastify: ^7.0.4
       styled-breakpoints: ^10.0.1
-      styled-components: ^5.3.0
+      styled-components: ^5.3.1
     dependencies:
       '@phala/app-store': link:../app-store
       '@phala/react-components': link:../react-components
@@ -303,14 +303,14 @@ importers:
       '@phala/react-libs': workspace:^0.0.1
       '@phala/utils': workspace:^0.0.1
       '@polkadot/api': ^4.17.1
-      '@polkadot/api-derive': ^5.5.1
+      '@polkadot/api-derive': ^5.8.3
       '@polkadot/extension-dapp': ^0.38.8
       '@polkadot/util': ^6.11.1
-      '@types/react': ^17.0.19
+      '@types/react': ^17.0.20
       date-fns: ^2.23.0
       decimal.js: ^10.3.1
-      ethers: ^5.4.4
-      jotai: ^1.3.0
+      ethers: ^5.4.6
+      jotai: ^1.3.2
     dependencies:
       '@phala/app-store': link:../app-store
       '@phala/react-components': link:../react-components
@@ -330,7 +330,7 @@ importers:
   packages/app-store:
     specifiers:
       '@phala/app-types': workspace:^0.0.1
-      jotai: ^1.3.0
+      jotai: ^1.3.2
     dependencies:
       '@phala/app-types': link:../app-types
       jotai: 1.3.2
@@ -368,16 +368,16 @@ importers:
       '@storybook/preset-create-react-app': ^3.2.0
       '@storybook/react': ^6.3.8
       '@storybook/theming': ^6.3.8
-      '@types/node': ^16.6.0
-      '@types/react': ^17.0.19
+      '@types/node': ^16.7.13
+      '@types/react': ^17.0.20
       '@types/react-dom': ^17.0.9
       '@types/react-table': ^7.7.2
-      '@types/styled-components': ^5.1.12
+      '@types/styled-components': ^5.1.14
       babel-loader: 8.1.0
       csstype: ^3.0.8
       currency.js: ^2.0.4
       decimal.js: ^10.3.1
-      ethers: ^5.4.4
+      ethers: ^5.4.6
       rc-input-number: ^7.3.0
       rc-tooltip: ^5.1.1
       react: ^17.0.2
@@ -387,7 +387,7 @@ importers:
       react-table: ^7.7.0
       react-toastify: ^7.0.4
       styled-breakpoints: ^10.0.1
-      styled-components: ^5.3.0
+      styled-components: ^5.3.1
       webpack: 4.44.2
     dependencies:
       '@phala/app-config': link:../app-config
@@ -434,17 +434,17 @@ importers:
 
   packages/react-graph-chainbridge:
     specifiers:
-      '@graphql-codegen/cli': ^2.0.1
-      '@graphql-codegen/typescript': ^2.0.0
-      '@graphql-codegen/typescript-graphql-request': ^4.0.0
-      '@graphql-codegen/typescript-operations': ^2.0.1
+      '@graphql-codegen/cli': ^2.2.0
+      '@graphql-codegen/typescript': ^2.2.1
+      '@graphql-codegen/typescript-graphql-request': ^4.1.3
+      '@graphql-codegen/typescript-operations': ^2.1.3
       '@types/gulp': ^4.0.9
       execa: ^5.1.1
-      graphql: ^15.5.1
+      graphql: ^15.5.3
       graphql-request: ^3.5.0
       graphql-tag: ^2.12.5
       gulp: ^4.0.2
-      react-query: ^3.19.6
+      react-query: ^3.22.0
       ts-node: ^10.2.1
     dependencies:
       graphql: 15.5.3
@@ -469,13 +469,13 @@ importers:
       '@polkadot/api': ^4.17.1
       '@polkadot/api-derive': ^4.17.1
       '@polkadot/types': ^4.17.1
-      '@sentry/react': ^6.11.0
-      '@types/react': ^17.0.19
-      axios: ^0.21.1
+      '@sentry/react': ^6.12.0
+      '@types/react': ^17.0.20
+      axios: ^0.21.4
       decimal.js: ^10.3.1
-      ethers: ^5.4.4
-      react: ^17.0.0
-      react-query: ^3.21.1
+      ethers: ^5.4.6
+      react: ^17.0.2
+      react-query: ^3.22.0
       vconsole: ^3.9.1
     dependencies:
       '@phala/app-config': link:../app-config
@@ -495,7 +495,7 @@ importers:
 
   packages/react-i18n:
     specifiers:
-      i18next: ^20.5.0
+      i18next: ^20.6.0
       i18next-browser-languagedetector: ^6.1.2
       react: ^17.0.2
       react-i18next: ^11.11.4
@@ -510,26 +510,26 @@ importers:
     specifiers:
       '@phala/app-config': workspace:*
       '@phala/react-graph-chainbridge': workspace:^0.0.1
-      '@phala/typedefs': ^0.2.22
+      '@phala/typedefs': ^0.2.23
       '@phala/utils': workspace:*
       '@polkadot/api': ^4.17.1
       '@polkadot/extension-dapp': ^0.38.8
-      '@polkadot/extension-inject': ^0.38.2
+      '@polkadot/extension-inject': ^0.38.8
       '@polkadot/types': ^4.17.1
       '@polkadot/util': ^6.11.1
       '@polkadot/util-crypto': ^6.11.1
       '@types/bn.js': ^4.11.6
-      '@types/node': ^16.4.13
-      '@types/react': ^17.0.19
+      '@types/node': ^16.7.13
+      '@types/react': ^17.0.20
       '@types/styletron-engine-atomic': ^1.1.1
       '@types/uuid': ^8.3.1
       bn.js: ^5.2.0
       decimal.js: ^10.3.1
-      ethers: ^5.4.4
-      graphql: ^15.5.1
+      ethers: ^5.4.6
+      graphql: ^15.5.3
       graphql-request: ^3.5.0
-      react: ^17.0.0
-      react-query: ^3.19.4
+      react: ^17.0.2
+      react-query: ^3.22.0
       styletron-engine-atomic: ^1.4.8
       uuid: ^8.3.2
       web3modal: ^1.9.4
@@ -564,7 +564,7 @@ importers:
     specifiers:
       '@polkadot/util': ^6.11.1
       '@polkadot/util-crypto': ^6.11.1
-      '@types/node': ^16.4.13
+      '@types/node': ^16.7.13
       decimal.js: ^10.3.1
     dependencies:
       '@polkadot/util': 6.11.1
@@ -7348,7 +7348,7 @@ packages:
       glob: 7.1.7
       is-glob: 4.0.1
       lodash: 4.17.21
-      semver: 7.3.5
+      semver: 7.3.2
       tsutils: 3.21.0_typescript@4.4.2
       typescript: 4.4.2
     transitivePeerDependencies:
@@ -7996,7 +7996,7 @@ packages:
     dependencies:
       call-bind: 1.0.2
       define-properties: 1.1.3
-      es-abstract: 1.18.5
+      es-abstract: 1.18.6
       get-intrinsic: 1.1.1
       is-string: 1.0.7
 
@@ -8053,7 +8053,7 @@ packages:
     dependencies:
       call-bind: 1.0.2
       define-properties: 1.1.3
-      es-abstract: 1.18.5
+      es-abstract: 1.18.6
 
   /array.prototype.flatmap/1.2.4:
     resolution: {integrity: sha512-r9Z0zYoxqHz60vvQbWEdXIEtCwHF0yxaWfno9qzXeNHvfyl3BZqygmGzb84dsubyaXLH4husF+NFgMSdpZhk2Q==}
@@ -8061,7 +8061,7 @@ packages:
     dependencies:
       call-bind: 1.0.2
       define-properties: 1.1.3
-      es-abstract: 1.18.5
+      es-abstract: 1.18.6
       function-bind: 1.1.1
 
   /array.prototype.map/1.0.3:
@@ -8070,7 +8070,7 @@ packages:
     dependencies:
       call-bind: 1.0.2
       define-properties: 1.1.3
-      es-abstract: 1.18.5
+      es-abstract: 1.18.6
       es-array-method-boxes-properly: 1.0.0
       is-string: 1.0.7
     dev: true
@@ -11341,14 +11341,15 @@ packages:
     dependencies:
       stackframe: 1.2.0
 
-  /es-abstract/1.18.5:
-    resolution: {integrity: sha512-DDggyJLoS91CkJjgauM5c0yZMjiD1uK3KcaCeAmffGwZ+ODWzOkPN4QwRbsK5DOFf06fywmyLci3ZD8jLGhVYA==}
+  /es-abstract/1.18.6:
+    resolution: {integrity: sha512-kAeIT4cku5eNLNuUKhlmtuk1/TRZvQoYccn6TO0cSVdf1kzB0T7+dYuVK9MWM7l+/53W2Q8M7N2c6MQvhXFcUQ==}
     engines: {node: '>= 0.4'}
     dependencies:
       call-bind: 1.0.2
       es-to-primitive: 1.2.1
       function-bind: 1.1.1
       get-intrinsic: 1.1.1
+      get-symbol-description: 1.0.0
       has: 1.0.3
       has-symbols: 1.0.2
       internal-slot: 1.0.3
@@ -12725,7 +12726,7 @@ packages:
     dependencies:
       call-bind: 1.0.2
       define-properties: 1.1.3
-      es-abstract: 1.18.5
+      es-abstract: 1.18.6
       functions-have-names: 1.2.2
     dev: true
 
@@ -13351,7 +13352,6 @@ packages:
     dependencies:
       call-bind: 1.0.2
       get-intrinsic: 1.1.1
-    dev: true
 
   /get-value/2.0.6:
     resolution: {integrity: sha1-3BXKHGcjh8p2vTesCjlbogQqLCg=}
@@ -15060,7 +15060,7 @@ packages:
     dependencies:
       available-typed-arrays: 1.0.5
       call-bind: 1.0.2
-      es-abstract: 1.18.5
+      es-abstract: 1.18.6
       foreach: 2.0.5
       has-tostringtag: 1.0.0
     dev: false
@@ -17597,7 +17597,7 @@ packages:
     dependencies:
       call-bind: 1.0.2
       define-properties: 1.1.3
-      es-abstract: 1.18.5
+      es-abstract: 1.18.6
 
   /object.fromentries/2.0.4:
     resolution: {integrity: sha512-EsFBshs5RUUpQEY1D4q/m59kMfz4YJvxuNCJcv/jWwOJr34EaVnG11ZrZa0UHB3wnzV1wx8m58T4hQL8IuNXlQ==}
@@ -17605,7 +17605,7 @@ packages:
     dependencies:
       call-bind: 1.0.2
       define-properties: 1.1.3
-      es-abstract: 1.18.5
+      es-abstract: 1.18.6
       has: 1.0.3
 
   /object.getownpropertydescriptors/2.1.2:
@@ -17614,7 +17614,7 @@ packages:
     dependencies:
       call-bind: 1.0.2
       define-properties: 1.1.3
-      es-abstract: 1.18.5
+      es-abstract: 1.18.6
 
   /object.map/1.0.1:
     resolution: {integrity: sha1-z4Plncj8wK1fQlDh94s7gb2AHTc=}
@@ -17644,7 +17644,7 @@ packages:
     dependencies:
       call-bind: 1.0.2
       define-properties: 1.1.3
-      es-abstract: 1.18.5
+      es-abstract: 1.18.6
 
   /objectorarray/1.0.5:
     resolution: {integrity: sha512-eJJDYkhJFFbBBAxeh8xW+weHlkI28n2ZdQV/J/DNfWfSKlGEf2xcfAbZTv3riEXHAhL9SVOTs2pRmXiSTf78xg==}
@@ -19444,7 +19444,7 @@ packages:
       array.prototype.map: 1.0.3
       call-bind: 1.0.2
       define-properties: 1.1.3
-      es-abstract: 1.18.5
+      es-abstract: 1.18.6
       get-intrinsic: 1.1.1
       iterate-value: 1.0.2
     dev: true
@@ -19454,7 +19454,7 @@ packages:
     engines: {node: '>= 0.4'}
     dependencies:
       define-properties: 1.1.3
-      es-abstract: 1.18.5
+      es-abstract: 1.18.6
       function-bind: 1.1.1
     dev: true
 
@@ -21842,7 +21842,7 @@ packages:
     dependencies:
       call-bind: 1.0.2
       define-properties: 1.1.3
-      es-abstract: 1.18.5
+      es-abstract: 1.18.6
       get-intrinsic: 1.1.1
       has-symbols: 1.0.2
       internal-slot: 1.0.3
@@ -21855,7 +21855,7 @@ packages:
     dependencies:
       call-bind: 1.0.2
       define-properties: 1.1.3
-      es-abstract: 1.18.5
+      es-abstract: 1.18.6
 
   /string.prototype.padstart/3.1.2:
     resolution: {integrity: sha512-HDpngIP3pd0DeazrfqzuBrQZa+D2arKWquEHfGt5LzVjd+roLC3cjqVI0X8foaZz5rrrhcu8oJAQamW8on9dqw==}
@@ -21863,7 +21863,7 @@ packages:
     dependencies:
       call-bind: 1.0.2
       define-properties: 1.1.3
-      es-abstract: 1.18.5
+      es-abstract: 1.18.6
     dev: true
 
   /string.prototype.trimend/1.0.4:
@@ -23361,7 +23361,7 @@ packages:
     resolution: {integrity: sha512-g9JpC/3He3bm38zsLupWryXHoEcS22YHthuPQSJdMy6KNrzIRzWqcsHzD/WUnqe45whVou4VIsPew37DoXWNrA==}
     dependencies:
       define-properties: 1.1.3
-      es-abstract: 1.18.5
+      es-abstract: 1.18.6
       has-symbols: 1.0.2
       object.getownpropertydescriptors: 2.1.2
     dev: false
@@ -23963,7 +23963,7 @@ packages:
     dependencies:
       available-typed-arrays: 1.0.5
       call-bind: 1.0.2
-      es-abstract: 1.18.5
+      es-abstract: 1.18.6
       foreach: 2.0.5
       has-tostringtag: 1.0.0
       is-typed-array: 1.1.8
