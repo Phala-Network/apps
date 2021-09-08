@@ -16,7 +16,7 @@
   "dependencies": {
     "@polkadot/util": "^6.11.1",
     "@polkadot/util-crypto": "^6.11.1",
-    "@types/node": "^16.4.13",
+    "@types/node": "^16.7.13",
     "decimal.js": "^10.3.1"
   },
   "peerDependencies": {

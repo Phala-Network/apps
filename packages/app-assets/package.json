@@ -20,13 +20,13 @@
     "@phala/react-hooks": "workspace:^0.0.1",
     "@phala/react-libs": "workspace:^0.0.1",
     "@phala/utils": "workspace:^0.0.1",
-    "@polkadot/api-derive": "^5.5.1",
+    "@polkadot/api-derive": "^5.8.3",
     "@polkadot/util": "^6.11.1",
-    "@types/react": "^17.0.19",
-    "axios": "^0.21.1",
+    "@types/react": "^17.0.20",
+    "axios": "^0.21.4",
     "decimal.js": "^10.3.1",
-    "ethers": "^5.4.4",
-    "react": "^17.0.0",
+    "ethers": "^5.4.6",
+    "react": "^17.0.2",
     "react-toastify": "^7.0.4",
     "styled-breakpoints": "^10.0.1"
   }
