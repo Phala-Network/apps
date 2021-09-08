@@ -30,7 +30,10 @@ const StakeInfoModal = (props: StakePoolModalProps): JSX.Element => {
   const withdrawQueueColumns = useMemo<Column<WithdrawQueue>[]>(
     () => [
       {Header: 'Staker', accessor: 'user'},
-      {Header: 'Shares', accessor: (queue) => format(queue.shares)},
+      {
+        Header: 'Shares',
+        accessor: (queue) => format(queue.shares, {unit: null}),
+      },
       {
         Header: 'Countdown',
         accessor: (queue) => {
@@ -71,7 +74,7 @@ const StakeInfoModal = (props: StakePoolModalProps): JSX.Element => {
       <Line>
         <div>
           <Label>Total Shares</Label>
-          <Value>{format(stakePool.totalShares)}</Value>
+          <Value>{format(stakePool.totalShares, {unit: null})}</Value>
         </div>
         <div>
           <Label>Total Stake</Label>
@@ -105,7 +108,7 @@ const StakeInfoModal = (props: StakePoolModalProps): JSX.Element => {
         </div>
         <div>
           <Label>Your Shares</Label>
-          <Value>{format(userStakeInfo?.shares)}</Value>
+          <Value>{format(userStakeInfo?.shares, {unit: null})}</Value>
         </div>
       </Line>
     </Modal>

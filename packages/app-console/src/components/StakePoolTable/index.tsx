@@ -63,10 +63,6 @@ const StakePoolTable = (): JSX.Element => {
         accessor: (stakePool) => format(stakePool.ownerReward),
       },
       {
-        Header: 'Total Shares',
-        accessor: (stakePool) => format(stakePool.totalShares),
-      },
-      {
         Header: 'Total Stake',
         accessor: (stakePool) => format(stakePool.totalStake),
       },
