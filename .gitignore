@@ -34,3 +34,4 @@ common/autoinstallers/*/.npmrc
 temp
 *.log
 .rush
+.eslintcache

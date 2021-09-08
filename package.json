@@ -9,7 +9,8 @@
     "develop": "cd ./packages/app && pnpm run develop",
     "develop:deps": "pnpm --parallel --filter ./packages  --filter !./packages/app run develop",
     "preinstall": "npx only-allow pnpm",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
@@ -34,7 +35,12 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.25.1",
     "eslint-plugin-react-hooks": "^4.2.0",
+    "husky": "^7.0.2",
+    "lint-staged": "^11.1.2",
     "prettier": "^2.3.2",
     "ts-node": "^10.2.1"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": "eslint --cache --fix"
   }
 }

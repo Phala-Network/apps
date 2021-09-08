@@ -35,16 +35,18 @@ const Text = styled.span`
 type Props = PropsWithChildren<{
   checked?: boolean
   onChange?: (checked: boolean) => void
+  disabled?: boolean
 }>
 
 export const Checkbox = (props: Props): JSX.Element => {
-  const {checked, onChange} = props
+  const {checked, onChange, disabled = false} = props
 
   return (
     <Label>
       <Controller>
         <Input
           onChange={(e) => onChange?.(e.target.checked)}
+          disabled={disabled}
           {...(typeof checked === 'boolean' && {checked})}
         />
         <svg
