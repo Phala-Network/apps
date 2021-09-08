@@ -1,3 +1,4 @@
+import {clickEvent} from '@phala/app-analytics'
 import {useEthereumAccountAtom} from '@phala/app-store'
 import {TransactionRecords} from '@phala/app-types'
 import {FloatModal} from '@phala/react-components'
@@ -31,12 +32,16 @@ const Transactions: React.FC = () => {
     }
   }, [data, depositor])
 
+  function onActive(active: boolean) {
+    clickEvent('transactions float modal', {active})
+  }
+
   if (records?.length === 0) {
     return null
   }
 
   return (
-    <FloatModal title="Transactions Panel">
+    <FloatModal title="Transactions Panel" onActive={onActive}>
       {/* 
         <ClearButton onClick={() => setTransactionsInfo([])}>
           Clear

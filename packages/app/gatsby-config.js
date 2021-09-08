@@ -16,11 +16,12 @@ module.exports = {
       resolve: `gatsby-plugin-alias-imports`,
       options: {
         alias: {
-          '@phala/app-config': rp('../app-config/src'),
-          '@phala/app-store': rp('../app-store/src'),
+          '@phala/app-analytics': rp('../app-analytics/src'),
           '@phala/app-assets': rp('../app-assets/src'),
           '@phala/app-bridge': rp('../app-bridge/src'),
+          '@phala/app-config': rp('../app-config/src'),
           '@phala/app-console': rp('../app-console/src'),
+          '@phala/app-store': rp('../app-store/src'),
           '@phala/app-types': rp('../app-types/src'),
           '@phala/react-cms': rp('../react-cms/src'),
           '@phala/react-components': rp('../react-components/src'),
