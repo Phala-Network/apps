@@ -16,7 +16,7 @@ const WrapApp: React.FC = ({children}) => {
 
   const defaultNetwork =
     process.env['GATSBY_DEFAULT_NETWORK'] ||
-    (isDev() || isTest() ? 'poc4-dev' : 'khala')
+    (isDev() || isTest() ? 'khala-pc-test' : 'khala')
 
   // eslint-disable-next-line no-console
   console.info('defaultNetwork', defaultNetwork)
