@@ -15,7 +15,6 @@ import logo from './logo.png'
 const TicketName = styled(_TicketName)`
   background: ${(props) => props.theme.colors.khala};
   letter-spacing: 0;
-
   font-family: Lato;
   font-style: normal;
   font-weight: bold;
