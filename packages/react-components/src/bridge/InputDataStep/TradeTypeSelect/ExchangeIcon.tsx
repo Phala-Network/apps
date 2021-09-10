@@ -14,8 +14,6 @@ const Icon = styled.div`
   border-radius: 22px;
   position: relative;
   cursor: pointer;
-  /* FIXME: just hide it */
-  display: none;
 
   svg {
     transition: transform 0.2s;
