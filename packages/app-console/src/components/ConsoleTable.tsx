@@ -1,18 +1,24 @@
 import {Table, TableProps} from '@phala/react-components'
 import styled from 'styled-components'
 
-const TableWrapper = styled.div``
+const TableWrapper = styled.div`
+  tbody {
+    td:not(:last-child) {
+      font-family: PT Mono, monospace;
+    }
+  }
+`
 
 const TableHeader = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
   margin-bottom: 20px;
 `
 
 const TableTitle = styled.div`
-  font-size: 22px;
+  font-size: 16px;
   font-weight: bold;
-  padding: 10px;
 `
 const ConsoleTable = <D extends Record<string, unknown>>({
   title,

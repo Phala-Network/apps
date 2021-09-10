@@ -9,7 +9,7 @@ import ConsoleTable from '../ConsoleTable'
 import RemoveModal from './RemoveModal'
 import StartModal from './StartModal'
 import StopModal from './StopModal'
-import WorkerActions from './WorkerActions'
+import ItemMenu from '../ItemMenu'
 
 type TableItem = Worker & {pid: number}
 
@@ -22,7 +22,7 @@ const modalEntries: [ModalKey, (props: WorkerModalProps) => JSX.Element][] = [
 ]
 
 const WorkerTable = (): JSX.Element => {
-  const {close, modalVisible} = useModalVisible()
+  const {open, close, modalVisible} = useModalVisible()
   const {data} = useSelfStakePools()
   const workersPidMap = useMemo<Record<string, number>>(() => {
     if (data?.length) {
@@ -104,17 +104,36 @@ const WorkerTable = (): JSX.Element => {
         accessor: (worker) => format(worker.stake),
       },
       {
-        Header: 'Actions',
-        accessor: (worker) => (
-          <WorkerActions
-            setPubkey={setSelectedPubkey}
-            worker={worker}
-          ></WorkerActions>
-        ),
+        id: 'actions',
+        accessor: (worker) => {
+          const state = worker.miner?.state
+          return (
+            <ItemMenu
+              items={[
+                {key: 'start', item: 'Start', disabled: state !== 'Ready'},
+                {
+                  key: 'stop',
+                  item: 'Stop',
+                  disabled:
+                    state !== 'MiningIdle' && state !== 'MiningUnresponsive',
+                },
+                {
+                  key: 'remove',
+                  item: 'Remove',
+                  disabled: state !== 'Ready' && state !== 'MiningCoolingDown',
+                },
+              ]}
+              onSelect={(key) => {
+                open(key as ModalKey)
+                setSelectedPubkey(worker.pubkey)
+              }}
+            ></ItemMenu>
+          )
+        },
         disableSortBy: true,
       },
     ],
-    [format]
+    [format, open]
   )
   return (
     <>
