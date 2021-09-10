@@ -1,6 +1,7 @@
 import {usePolkadotAccountAtom} from '@phala/app-store'
 import {BalanceLabel, PolkadotAccountModal} from '@phala/react-components'
 import {useBalance} from '@phala/react-hooks'
+import {formatPolkadotBalance} from '@phala/utils'
 import Decimal from 'decimal.js'
 import React, {useState} from 'react'
 import styled, {useTheme} from 'styled-components'
@@ -31,22 +32,7 @@ const PolkadotTicket: React.FC = () => {
   const openAccountSelectModal = () => setSelectAccountModalViable(true)
   const balance = useBalance(polkadotAccount?.address)
 
-  let value = 0
-  let name = 'PHA'
-
-  // format balance use polkadot's decimals
-  if (balance) {
-    const result = balance?.toHuman()?.toString()?.split?.(' ')
-
-    value = parseFloat(result[0] || '0')
-    name = result[1] || 'PHA'
-
-    // dont show kPHA value
-    if (name === 'kPHA') {
-      value *= 1000
-      name = 'PHA'
-    }
-  }
+  const [value, unit] = formatPolkadotBalance(balance?.toString() || '0')
 
   return (
     <>
@@ -71,7 +57,7 @@ const PolkadotTicket: React.FC = () => {
           bottomContent={
             <>
               <BalanceLabel value={new Decimal(value)} />
-              <TicketCurrency>{name}</TicketCurrency>
+              <TicketCurrency>{unit}</TicketCurrency>
             </>
           }
         />
