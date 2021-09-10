@@ -3,7 +3,7 @@ import {useApiPromise} from '@phala/react-libs'
 import {useCallback, useMemo, useState} from 'react'
 import {StakePoolModalProps} from '.'
 import useFormat from '../../hooks/useFormat'
-import usePoolStakerInfo from '../../hooks/usePoolStakerInfo'
+import useSelfUserStakeInfo from '../../hooks/useSelfUserStakeInfo'
 import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
 import ActionModal, {Label, Value} from '../ActionModal'
 
@@ -13,16 +13,16 @@ const ClaimModal = (props: StakePoolModalProps): JSX.Element => {
   const format = useFormat()
   const waitSignAndSend = useWaitSignAndSend()
   const [address, setAddress] = useState<string>('')
-  const {data: poolStakerInfo} = usePoolStakerInfo(stakePool.pid)
+  const {data: userStakeInfo} = useSelfUserStakeInfo(stakePool.pid)
 
   const rewards = useMemo<string>(() => {
-    if (!poolStakerInfo) return '-'
+    if (!userStakeInfo) return '-'
     const {ownerReward, rewardAcc} = stakePool
-    const {shares, availableRewards, rewardDebt} = poolStakerInfo
+    const {shares, availableRewards, rewardDebt} = userStakeInfo
     const pendingRewards = shares.mul(rewardAcc).sub(rewardDebt)
 
     return format(ownerReward.add(pendingRewards).add(availableRewards))
-  }, [stakePool, poolStakerInfo, format])
+  }, [stakePool, userStakeInfo, format])
 
   const onConfirm = useCallback(async () => {
     if (api && address) {

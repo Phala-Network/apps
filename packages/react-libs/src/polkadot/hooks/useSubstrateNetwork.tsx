@@ -1,3 +1,4 @@
+import {useCallback} from 'react'
 import {SubstrateNetworkOptions, substrates} from '@phala/app-config'
 import {
   createContext,
@@ -29,28 +30,37 @@ const NetworkContext = createContext<INetworkContext>({setNetwork: () => null})
 export const NetworkContextProvider = ({
   children,
   defaultNetwork,
-}: PropsWithChildren<{defaultNetwork: string}>): JSX.Element => {
+  customEndpoint,
+}: PropsWithChildren<{
+  defaultNetwork: string
+  customEndpoint?: string
+}>): JSX.Element => {
   const [network, setNetwork] = useState<string>(defaultNetwork)
 
   if (substrates[defaultNetwork] === undefined) {
     throw new Error(`Default network ${defaultNetwork} is not configured`)
   }
 
-  const handleSetNetwork = (id: string) => {
+  const handleSetNetwork = useCallback((id: string) => {
     if (substrates[id] === undefined) {
       throw new Error(`Network ${id} is not configured`)
     }
 
     setNetwork(id)
-  }
+  }, [])
 
   useEffect(() => {
     setNetwork(defaultNetwork)
   }, [defaultNetwork])
 
+  const options = substrates[network] as SubstrateNetworkOptions
+  if (customEndpoint) {
+    options.endpoint = customEndpoint
+  }
+
   const value = {
     network,
-    options: substrates[network] as SubstrateNetworkOptions,
+    options,
     setNetwork: handleSetNetwork,
   }
 

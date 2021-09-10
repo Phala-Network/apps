@@ -14,6 +14,7 @@ const Button = styled.button`
   border: none;
   background-color: transparent;
   cursor: pointer;
+  padding: 10px;
 
   &:disabled,
   &[disabled] {
@@ -26,10 +27,10 @@ const PaginationWrap = styled.div`
   font-family: Lato;
   font-style: normal;
   font-weight: bold;
-  font-size: 10px;
-  line-height: 12px;
-  color: #000000;
-  text-align: right;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 `
 
 const TablePagination: React.FC<Props> = (props) => {

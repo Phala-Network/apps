@@ -1,5 +1,5 @@
 import useModalVisible, {ModalKey} from '../../hooks/useModalVisible'
-import {StakePool} from '../../hooks/useStakePools'
+import {StakePool} from '@phala/react-hooks'
 import ActionButton from '../ActionButton'
 
 const buttonEntries: [ModalKey, string][] = [

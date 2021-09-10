@@ -1,11 +1,11 @@
 import {useApiPromise} from '@phala/react-libs'
 import {useCallback} from 'react'
-import useStakePools from '../../hooks/useStakePools'
+import useSelfStakePools from '../../hooks/useSelfStakePools'
 import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
 import ActionModal from '../ActionModal'
 
 const CreateModal = (props: {onClose: () => void}): JSX.Element => {
-  const {refetch} = useStakePools()
+  const {refetch} = useSelfStakePools()
   const waitSignAndSend = useWaitSignAndSend()
   const {api} = useApiPromise()
   const onConfirm = useCallback(async () => {

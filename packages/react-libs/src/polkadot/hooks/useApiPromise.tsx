@@ -7,6 +7,7 @@ import {
   useContext,
   useEffect,
   useState,
+  useRef,
 } from 'react'
 import {useNetworkContext} from './useSubstrateNetwork'
 
@@ -41,6 +42,7 @@ const enableApiPromise = async (
     types,
   })
   logDebug('WebSocket API is ready:', api.runtimeVersion)
+  api
 
   await api.isReady
 
@@ -50,38 +52,50 @@ const enableApiPromise = async (
 export const ApiPromiseProvider = ({
   children,
 }: PropsWithChildren<unknown>): ReactElement => {
+  const waitEnable = useRef<Promise<ApiPromise | void>>()
   const [api, setApi] = useState<ApiPromise>()
   const [readystate, setState] = useState<Readystate>('unavailable')
-
   const {options} = useNetworkContext()
   const endpoint = options?.endpoint
   const registryTypes = options?.typedefs
+  const [activeEndpoint, setActiveEndpoint] = useState<string | undefined>()
 
   useEffect(() => {
-    if (typeof window === 'undefined' || readystate !== 'unavailable') {
-      // do not enable during server side rendering
-      return
-    }
-
     if (endpoint === undefined || registryTypes === undefined) {
       // do nothing while no network is selected
       return
     }
 
+    setApi(undefined)
     setState('init')
 
-    enableApiPromise(endpoint, registryTypes)
-      .then((api) => {
-        setApi(api)
-        setState('ready')
-      })
-      .catch((reason) => {
-        logError('Failed to enable Polkadot API:', reason)
-        setState('failed')
-      })
-  }, [endpoint, readystate, registryTypes])
+    const updateApi = async () => {
+      if (waitEnable.current) {
+        const prevApi = await waitEnable.current
+        prevApi?.disconnect()
+      }
+      waitEnable.current = enableApiPromise(endpoint, registryTypes)
+        .then((api) => {
+          setApi(api)
+          setActiveEndpoint(endpoint)
+          setState('ready')
+          return api
+        })
+        .catch((reason) => {
+          logError('Failed to enable Polkadot API:', reason)
+          setState('failed')
+        })
+    }
 
-  const value = {api, readystate, initialized: readystate === 'ready'}
+    updateApi()
+  }, [endpoint, registryTypes])
+
+  const value = {
+    api,
+    readystate,
+    initialized: readystate === 'ready',
+    endpoint: activeEndpoint,
+  }
 
   return (
     <ApiPromiseContext.Provider value={value}>

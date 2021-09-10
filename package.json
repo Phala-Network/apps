@@ -4,11 +4,13 @@
   "private": true,
   "scripts": {
     "build": "cd ./packages/app && pnpm run build",
+    "build:storybook": "cd ./packages/react-components && pnpm run build-storybook",
     "build:deps": "pnpm recursive --filter ./packages --filter !./packages/app run build",
     "develop": "cd ./packages/app && pnpm run develop",
     "develop:deps": "pnpm --parallel --filter ./packages  --filter !./packages/app run develop",
     "preinstall": "npx only-allow pnpm",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
@@ -20,20 +22,25 @@
   },
   "homepage": "https://github.com/Phala-Network/apps#readme",
   "dependencies": {
-    "@types/node": "^16.7.8",
-    "@types/react": "^17.0.19",
+    "@types/node": "^16.7.13",
+    "@types/react": "^17.0.20",
     "npm-run-all": "^4.1.5",
     "typescript": "4.4.2"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^4.29.3",
-    "@typescript-eslint/parser": "^4.29.3",
+    "@typescript-eslint/eslint-plugin": "^4.31.0",
+    "@typescript-eslint/parser": "^4.31.0",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-prettier": "^3.4.1",
-    "eslint-plugin-react": "^7.24.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-react": "^7.25.1",
     "eslint-plugin-react-hooks": "^4.2.0",
+    "husky": "^7.0.2",
+    "lint-staged": "^11.1.2",
     "prettier": "^2.3.2",
     "ts-node": "^10.2.1"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": "eslint --cache --fix"
   }
 }

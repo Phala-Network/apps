@@ -7,25 +7,29 @@ import {isDev, isTest} from '@phala/utils'
 import * as Sentry from '@sentry/react'
 import React, {useLayoutEffect, useRef} from 'react'
 import {QueryClient, QueryClientProvider} from 'react-query'
+import {ReactQueryDevtools} from 'react-query/devtools'
 import {ThemeProvider} from 'styled-components'
 import './fonts.css'
+import useCustomEndpoint from './hooks/useCustomEndpoint'
 import theme from './theme'
 
 const WrapApp: React.FC = ({children}) => {
+  const customEndpoint = useCustomEndpoint()
   const client = useRef(new QueryClient())
 
   const defaultNetwork =
     process.env['GATSBY_DEFAULT_NETWORK'] ||
-    (isDev() || isTest() ? 'poc4-dev' : 'khala')
+    (isDev() || isTest() ? 'khala-pc-test' : 'khala')
 
   // eslint-disable-next-line no-console
   console.info('defaultNetwork', defaultNetwork)
 
   const productionConfig = {
-    defaultNetwork: 'khala',
+    defaultNetwork,
     substrateGraphEndpoint: 'https://subquery-api.phala.network',
     ethereumGraphEndpoint:
       'https://graphs-api.phala.network/subgraphs/name/chainbridge',
+    customEndpoint,
   }
 
   useLayoutEffect(() => {
@@ -39,6 +43,7 @@ const WrapApp: React.FC = ({children}) => {
           <MobileToastContextProvider>
             <QueryClientProvider contextSharing={true} client={client.current}>
               <AppStoreProvider>{children}</AppStoreProvider>
+              <ReactQueryDevtools />
             </QueryClientProvider>
           </MobileToastContextProvider>
         </ThemeProvider>

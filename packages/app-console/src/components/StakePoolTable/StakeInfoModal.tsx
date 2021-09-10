@@ -7,8 +7,8 @@ import {StakePoolModalProps} from '.'
 import useFormat from '../../hooks/useFormat'
 import useGracePeriod from '../../hooks/useGracePeriod'
 import useModalVisible from '../../hooks/useModalVisible'
-import usePoolStakerInfo from '../../hooks/usePoolStakerInfo'
-import {StakePool} from '../../hooks/useStakePools'
+import useSelfUserStakeInfo from '../../hooks/useSelfUserStakeInfo'
+import {StakePool} from '@phala/react-hooks'
 import {Label, Value} from '../ActionModal'
 
 const Line = styled.div`
@@ -25,12 +25,15 @@ const StakeInfoModal = (props: StakePoolModalProps): JSX.Element => {
   const {open} = useModalVisible()
   const {stakePool, onClose} = props
   const format = useFormat()
-  const {data: poolStakerInfo, isLoading} = usePoolStakerInfo(stakePool.pid)
+  const {data: userStakeInfo, isLoading} = useSelfUserStakeInfo(stakePool.pid)
   const {data: gracePeriod} = useGracePeriod()
   const withdrawQueueColumns = useMemo<Column<WithdrawQueue>[]>(
     () => [
       {Header: 'Staker', accessor: 'user'},
-      {Header: 'Shares', accessor: (queue) => format(queue.shares)},
+      {
+        Header: 'Shares',
+        accessor: (queue) => format(queue.shares, {unit: null}),
+      },
       {
         Header: 'Countdown',
         accessor: (queue) => {
@@ -71,7 +74,7 @@ const StakeInfoModal = (props: StakePoolModalProps): JSX.Element => {
       <Line>
         <div>
           <Label>Total Shares</Label>
-          <Value>{format(stakePool.totalShares)}</Value>
+          <Value>{format(stakePool.totalShares, {unit: null})}</Value>
         </div>
         <div>
           <Label>Total Stake</Label>
@@ -101,11 +104,11 @@ const StakeInfoModal = (props: StakePoolModalProps): JSX.Element => {
       <Line>
         <div>
           <Label>Your Locked</Label>
-          <Value>{format(poolStakerInfo?.locked)}</Value>
+          <Value>{format(userStakeInfo?.locked)}</Value>
         </div>
         <div>
           <Label>Your Shares</Label>
-          <Value>{format(poolStakerInfo?.shares)}</Value>
+          <Value>{format(userStakeInfo?.shares, {unit: null})}</Value>
         </div>
       </Line>
     </Modal>

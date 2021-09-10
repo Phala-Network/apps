@@ -6,7 +6,7 @@ import {
 import Decimal from 'decimal.js'
 import {useCallback, useState} from 'react'
 import {StakePoolModalProps} from '.'
-import usePoolStakerInfo from '../../hooks/usePoolStakerInfo'
+import useSelfUserStakeInfo from '../../hooks/useSelfUserStakeInfo'
 import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
 import ActionModal, {Label, Value} from '../ActionModal'
 
@@ -16,7 +16,7 @@ const WithdrawModal = (props: StakePoolModalProps): JSX.Element => {
   const waitSignAndSend = useWaitSignAndSend()
   const decimals = useDecimalJsTokenDecimalMultiplier(api)
   const [amount, setAmount] = useState<number | undefined>()
-  const {refetch} = usePoolStakerInfo(stakePool.pid)
+  const {refetch} = useSelfUserStakeInfo(stakePool.pid)
 
   const onConfirm = useCallback(async () => {
     if (api && decimals && amount) {

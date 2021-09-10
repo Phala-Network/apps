@@ -11,7 +11,6 @@ const StopModal = (props: WorkerModalProps): JSX.Element => {
 
   const onConfirm = useCallback(async () => {
     if (api) {
-      api.tx.phalaStakePool?.stopMining?.()
       return waitSignAndSend(
         api.tx.phalaStakePool?.stopMining?.(worker.pid, worker.pubkey)
       )

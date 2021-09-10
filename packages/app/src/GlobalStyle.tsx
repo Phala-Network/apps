@@ -8,6 +8,10 @@ const GlobalStyle = createGlobalStyle`
     background: #ECECEC;
     -webkit-tap-highlight-color: transparent;
   }
+
+  a {
+    text-decoration: none;
+  }
 `
 
 export default GlobalStyle

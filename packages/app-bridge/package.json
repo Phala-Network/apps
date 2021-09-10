@@ -15,6 +15,7 @@
     "prepublishOnly": "run-s lint build"
   },
   "dependencies": {
+    "@phala/app-analytics": "workspace:^0.0.1",
     "@phala/app-store": "workspace:^0.0.1",
     "@phala/app-types": "workspace:^0.0.1",
     "@phala/react-components": "workspace:^0.0.1",
@@ -29,7 +30,7 @@
   },
   "devDependencies": {
     "@phala/react-libs": "workspace:^0.0.1",
-    "react-query": "^3.19.6"
+    "react-query": "^3.22.0"
   },
   "peerDependencies": {
     "@phala/react-libs": "workspace:^0.0.1",
