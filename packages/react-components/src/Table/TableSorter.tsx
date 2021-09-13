@@ -9,10 +9,16 @@ type Props = {
 }
 
 const Styles = styled.span<{status: string; canSort: boolean}>`
-  display: flex;
-  align-items: center;
   cursor: ${(props) => (props.canSort ? 'pointer' : 'default')};
   white-space: nowrap;
+  position: relative;
+
+  svg {
+    position: absolute;
+    left: -12px;
+    top: 50%;
+    margin-top: -4px;
+  }
 `
 
 const TableSorter: React.FC<Props> = (props) => {

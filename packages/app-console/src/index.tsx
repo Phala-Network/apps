@@ -6,13 +6,16 @@ import WorkerTable from './components/WorkerTable'
 const Wrapper = styled.div`
   flex: 1;
   overflow-x: auto;
-  margin: 0 30px;
+  margin: 48px 30px;
 `
 
 const Block = styled.div`
   background-color: #fff;
-  padding: 20px;
-  margin: 30px 0;
+  padding: 16px 32px;
+
+  & + & {
+    margin-top: 16px;
+  }
 `
 
 const Console: React.FC = () => {

@@ -1,4 +1,5 @@
 import {Button} from '@phala/react-components'
+import styled from 'styled-components'
 import {toFixed} from '@phala/utils'
 import {useMemo, useState} from 'react'
 import {Column} from 'react-table'
@@ -14,8 +15,18 @@ import CreateModal from './CreateModal'
 import SetCapModal from './SetCapModal'
 import SetPayoutPrefModal from './SetPayoutPrefModal'
 import StakeInfoModal from './StakeInfoModal'
-import StakePoolActions from './StakePoolActions'
 import WithdrawModal from './WithdrawModal'
+import ItemMenu from '../ItemMenu'
+
+const Actions = styled.div`
+  align-items: center;
+  display: flex;
+`
+const DetailButton = styled.span`
+  text-decoration: underline;
+  cursor: pointer;
+  font-weight: bold;
+`
 
 export type StakePoolModalProps = {onClose: () => void; stakePool: StakePool}
 
@@ -47,7 +58,12 @@ const StakePoolTable = (): JSX.Element => {
 
   const columns = useMemo<Column<StakePool>[]>(
     () => [
-      {Header: 'pid', accessor: 'pid'},
+      {
+        Header: 'pid',
+        accessor: (stakePool) => (
+          <span style={{fontWeight: 'bold'}}>{stakePool.pid}</span>
+        ),
+      },
       {
         Header: 'Commission',
         accessor: (stakePool) =>
@@ -75,14 +91,35 @@ const StakePoolTable = (): JSX.Element => {
         accessor: (stakePool) => format(stakePool.releasingStake),
       },
       {
-        Header: 'Actions',
+        id: 'actions',
         accessor: (stakePool) => (
-          <StakePoolActions setPid={setSelectedPid} stakePool={stakePool} />
+          <Actions>
+            <DetailButton
+              onClick={() => {
+                setSelectedPid(stakePool.pid)
+                open('stakeInfo')
+              }}
+            >
+              Stake Info
+            </DetailButton>
+            <ItemMenu
+              items={[
+                {key: 'addWorker', item: 'Add Worker'},
+                {key: 'setCap', item: 'Set Cap'},
+                {key: 'claim', item: 'Claim'},
+                {key: 'setPayoutPref', item: 'Set Payout Pref'},
+              ]}
+              onSelect={(key) => {
+                setSelectedPid(stakePool.pid)
+                open(key as ModalKey)
+              }}
+            ></ItemMenu>
+          </Actions>
         ),
         disableSortBy: true,
       },
     ],
-    [format]
+    [format, open]
   )
   return (
     <>
@@ -90,6 +127,7 @@ const StakePoolTable = (): JSX.Element => {
         title="Stakepool"
         header={
           <Button
+            type="primary"
             size="small"
             style={{marginLeft: 10}}
             onClick={() => open('create')}

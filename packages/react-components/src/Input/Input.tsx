@@ -10,6 +10,7 @@ type InputType = {
   before?: React.ReactNode
   after?: React.ReactNode
   width?: number
+  height?: number
   placeholder?: string
   onChange?: (value: string) => void
 }
@@ -20,13 +21,14 @@ export const Input: React.FC<InputProps> = (props) => {
   const {
     size,
     width = 60,
+    height: heightProp,
     textAlign = 'left',
     type = 'text',
     onChange = () => null,
     ...others
   } = props
 
-  const height = React.useMemo(() => size, [size]) === 'large' ? 56 : 28
+  const height = heightProp || (size === 'large' ? 56 : 28)
   const [active, setActive] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
   useClickAway(ref, () => {

@@ -6,9 +6,9 @@ import {Provider as LibProvider} from '@phala/react-libs'
 import {isDev, isTest} from '@phala/utils'
 import * as Sentry from '@sentry/react'
 import React, {useLayoutEffect, useRef} from 'react'
-import {QueryClient, QueryClientProvider} from 'react-query'
-import {ReactQueryDevtools} from 'react-query/devtools'
 import {ThemeProvider} from 'styled-components'
+import {QueryClientProvider, QueryClient} from 'react-query'
+import {ReactQueryDevtools} from 'react-query/devtools'
 import './fonts.css'
 import useCustomEndpoint from './hooks/useCustomEndpoint'
 import theme from './theme'
@@ -39,14 +39,14 @@ const WrapApp: React.FC = ({children}) => {
   return (
     <I18nextProvider>
       <LibProvider {...productionConfig}>
-        <ThemeProvider theme={theme}>
-          <MobileToastContextProvider>
-            <QueryClientProvider contextSharing={true} client={client.current}>
+        <QueryClientProvider contextSharing={true} client={client.current}>
+          <ThemeProvider theme={theme}>
+            <MobileToastContextProvider>
               <AppStoreProvider>{children}</AppStoreProvider>
-              <ReactQueryDevtools />
-            </QueryClientProvider>
-          </MobileToastContextProvider>
-        </ThemeProvider>
+            </MobileToastContextProvider>
+          </ThemeProvider>
+          <ReactQueryDevtools />
+        </QueryClientProvider>
       </LibProvider>
     </I18nextProvider>
   )
