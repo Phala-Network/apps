@@ -17,9 +17,9 @@ const Links: React.FC = () => {
       <Link to="/">Assets</Link>
       <Link to="/bridge/">Bridge</Link>
       {(isDev() || isTest()) && <Link to="/stakepad/">Stakepad</Link>}
-      <Link to="/analytics/">Analytics</Link>
       <Divider></Divider>
       {(isDev() || isTest()) && <Link to="/console/">Console</Link>}
+      <Link to="/analytics/">Analytics</Link>
 
       {/* <Link to="/darkpool">Darkpool</Link> */}
       {/* <Link to="/tokens">Tokens</Link> */}
