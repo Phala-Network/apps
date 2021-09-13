@@ -5,14 +5,17 @@ import {I18nextProvider} from '@phala/react-i18n'
 import {Provider as LibProvider} from '@phala/react-libs'
 import {isDev, isTest} from '@phala/utils'
 import * as Sentry from '@sentry/react'
-import React, {useLayoutEffect} from 'react'
+import React, {useLayoutEffect, useRef} from 'react'
 import {ThemeProvider} from 'styled-components'
+import {QueryClientProvider, QueryClient} from 'react-query'
+import {ReactQueryDevtools} from 'react-query/devtools'
 import './fonts.css'
 import useCustomEndpoint from './hooks/useCustomEndpoint'
 import theme from './theme'
 
 const WrapApp: React.FC = ({children}) => {
   const customEndpoint = useCustomEndpoint()
+  const client = useRef(new QueryClient())
 
   const defaultNetwork =
     process.env['GATSBY_DEFAULT_NETWORK'] ||
@@ -36,11 +39,14 @@ const WrapApp: React.FC = ({children}) => {
   return (
     <I18nextProvider>
       <LibProvider {...productionConfig}>
-        <ThemeProvider theme={theme}>
-          <MobileToastContextProvider>
-            <AppStoreProvider>{children}</AppStoreProvider>
-          </MobileToastContextProvider>
-        </ThemeProvider>
+        <QueryClientProvider contextSharing={true} client={client.current}>
+          <ThemeProvider theme={theme}>
+            <MobileToastContextProvider>
+              <AppStoreProvider>{children}</AppStoreProvider>
+            </MobileToastContextProvider>
+          </ThemeProvider>
+          <ReactQueryDevtools />
+        </QueryClientProvider>
       </LibProvider>
     </I18nextProvider>
   )

@@ -100,7 +100,7 @@ const StakePoolTable = (): JSX.Element => {
                 open('stakeInfo')
               }}
             >
-              Details
+              Stake Info
             </DetailButton>
             <ItemMenu
               items={[

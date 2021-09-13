@@ -473,7 +473,6 @@ importers:
       decimal.js: ^10.3.1
       ethers: ^5.4.6
       react: ^17.0.2
-      react-query: ^3.23.2
       vconsole: ^3.9.1
     dependencies:
       '@phala/app-config': link:../app-config
@@ -488,7 +487,6 @@ importers:
       decimal.js: 10.3.1
       ethers: 5.4.6
       react: 17.0.2
-      react-query: 3.23.2_react@17.0.2
       vconsole: 3.9.1
 
   packages/react-i18n:

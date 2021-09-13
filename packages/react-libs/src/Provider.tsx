@@ -1,6 +1,5 @@
 import {FC, useRef} from 'react'
 import {QueryClient, QueryClientProvider} from 'react-query'
-import {ReactQueryDevtools} from 'react-query/devtools'
 import {EthersProvider} from './ethereum/contexts/useEthers'
 import {Web3Provider as EthereumWeb3Provider} from './ethereum/contexts/useWeb3'
 import {EthereumGraphQLProvider} from './ethereum/GraphQLClientContext'
@@ -46,7 +45,6 @@ export const Provider: FC<ProviderProps> = (props) => {
           </EthereumWeb3Provider>
         </EthereumGraphQLProvider>
       </SubstrateGraphQLProvider>
-      <ReactQueryDevtools />
     </QueryClientProvider>
   )
 }
