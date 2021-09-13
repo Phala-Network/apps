@@ -50,13 +50,13 @@ const Styles = styled.div`
       line-height: 14px;
       color: #202020;
       border-bottom: 1px solid #dddddd;
-      padding: 12px 8px;
+      padding: 12px 12px;
       text-align: left;
     }
 
     td {
       margin: 0;
-      padding: 6px 8px;
+      padding: 6px 12px;
       white-space: nowrap;
 
       :last-child {
