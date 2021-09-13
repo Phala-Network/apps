@@ -40,10 +40,12 @@ importers:
   packages/app:
     specifiers:
       '@babel/core': ^7.15.5
+      '@phala/app-analytics': workspace:^0.0.1
       '@phala/app-assets': workspace:^0.0.1
       '@phala/app-bridge': workspace:^0.0.1
       '@phala/app-config': workspace:*
       '@phala/app-console': workspace:^0.0.1
+      '@phala/app-data-analytics': workspace:^0.0.1
       '@phala/app-stakepad': workspace:^0.0.1
       '@phala/app-store': workspace:*
       '@phala/app-types': workspace:*
@@ -110,10 +112,12 @@ importers:
       webpack: ^5.52.0
     dependencies:
       '@babel/core': 7.15.5
+      '@phala/app-analytics': link:../app-analytics
       '@phala/app-assets': link:../app-assets
       '@phala/app-bridge': link:../app-bridge
       '@phala/app-config': link:../app-config
       '@phala/app-console': link:../app-console
+      '@phala/app-data-analytics': link:../app-data-analytics
       '@phala/app-stakepad': link:../app-stakepad
       '@phala/app-store': link:../app-store
       '@phala/app-types': link:../app-types
@@ -214,7 +218,7 @@ importers:
 
   packages/app-bridge:
     specifiers:
-      '@phala/app-analytics': workspace:^0.0.1
+      '@phala/app-data-analytics': workspace:^0.0.1
       '@phala/app-store': workspace:^0.0.1
       '@phala/app-types': workspace:^0.0.1
       '@phala/react-components': workspace:^0.0.1
@@ -229,7 +233,7 @@ importers:
       react-query: ^3.22.0
       styled-breakpoints: ^10.0.1
     dependencies:
-      '@phala/app-analytics': link:../app-analytics
+      '@phala/app-data-analytics': link:../app-data-analytics
       '@phala/app-store': link:../app-store
       '@phala/app-types': link:../app-types
       '@phala/react-components': link:../react-components
@@ -294,6 +298,9 @@ importers:
       react-query: 3.22.0_react@17.0.2
       styled-breakpoints: 10.0.1_8c4c2c5ce15fefb0151c6a5afd60853f
       styled-components: 5.3.1_react@17.0.2
+
+  packages/app-data-analytics:
+    specifiers: {}
 
   packages/app-stakepad:
     specifiers:

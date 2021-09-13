@@ -12,10 +12,12 @@
   },
   "dependencies": {
     "@babel/core": "^7.15.5",
+    "@phala/app-analytics": "workspace:^0.0.1",
     "@phala/app-assets": "workspace:^0.0.1",
     "@phala/app-bridge": "workspace:^0.0.1",
     "@phala/app-config": "workspace:*",
     "@phala/app-console": "workspace:^0.0.1",
+    "@phala/app-data-analytics": "workspace:^0.0.1",
     "@phala/app-stakepad": "workspace:^0.0.1",
     "@phala/app-store": "workspace:*",
     "@phala/app-types": "workspace:*",

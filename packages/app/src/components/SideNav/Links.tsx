@@ -1,5 +1,5 @@
+import {isDev, isTest} from '@phala/utils'
 import React from 'react'
-import {isTest, isDev} from '@phala/utils'
 import ActiveOutline from './ActiveOutline'
 import Link from './Link'
 
@@ -12,7 +12,7 @@ const Links: React.FC = () => {
       <Link to="/bridge/">Bridge</Link>
       {(isDev() || isTest()) && <Link to="/console/">Console</Link>}
       {(isDev() || isTest()) && <Link to="/stakepad/">Stakepad</Link>}
-
+      <Link to="/analytics/">Analytics</Link>
       {/* <Link to="/darkpool">Darkpool</Link> */}
       {/* <Link to="/tokens">Tokens</Link> */}
       {/* <Link to="/transactions">Transactions</Link> */}
