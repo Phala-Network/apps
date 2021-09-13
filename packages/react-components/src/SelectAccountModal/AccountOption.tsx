@@ -1,6 +1,7 @@
 import {Account} from '@phala/app-types'
 import React from 'react'
 import styled from 'styled-components'
+import {Copy} from '../Copy'
 
 type Props = {
   name?: string
@@ -75,7 +76,12 @@ const AccountOption: React.FC<Props> = (props) => {
       onClick={() => onClick({name, address})}
     >
       <div>
-        {name && <Name>{name}</Name>}
+        {name && (
+          <Name>
+            {name}
+            <Copy style={{marginLeft: 3}} value={address}></Copy>
+          </Name>
+        )}
         {address && <Address>{address}</Address>}
       </div>
       {active ? icon : null}

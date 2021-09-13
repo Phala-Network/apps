@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const CopyIcon = styled.svg`
-  fill: white;
+  fill: black;
   cursor: pointer;
 
   &:active {
