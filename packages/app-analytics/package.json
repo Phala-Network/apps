@@ -17,7 +17,8 @@
   "dependencies": {
     "echarts": "^5.2.0",
     "echarts-for-react": "^3.0.1",
-    "react-helmet": "^6.1.0"
+    "react-helmet": "^6.1.0",
+    "styled-breakpoints": "^10.0.1"
   },
   "devDependencies": {
     "styled-components": "^5.3.1"

@@ -188,11 +188,13 @@ importers:
       echarts: ^5.2.0
       echarts-for-react: ^3.0.1
       react-helmet: ^6.1.0
+      styled-breakpoints: ^10.0.1
       styled-components: ^5.3.1
     dependencies:
       echarts: 5.2.0
       echarts-for-react: 3.0.1_echarts@5.2.0
       react-helmet: 6.1.0
+      styled-breakpoints: 10.0.1_styled-components@5.3.1
     devDependencies:
       styled-components: 5.3.1
 
@@ -22206,6 +22208,23 @@ packages:
         optional: true
     dependencies:
       react: 17.0.2
+    dev: false
+
+  /styled-breakpoints/10.0.1_styled-components@5.3.1:
+    resolution: {integrity: sha512-J1YiOAZlcA0ZtQ6Tm/O4iEoO2FBJ61PNLJPCjWKVKErqVldnxMcVR89Jm67eMQH/o9Rtq1Mzm5UhWdzljq0ARQ==}
+    peerDependencies:
+      '@emotion/react': ^11.0.0
+      react: ^17.x.x
+      styled-components: ^5.0.0
+    peerDependenciesMeta:
+      '@emotion/react':
+        optional: true
+      react:
+        optional: true
+      styled-components:
+        optional: true
+    dependencies:
+      styled-components: 5.3.1
     dev: false
 
   /styled-components/5.3.1:
