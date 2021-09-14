@@ -412,7 +412,7 @@ const chartOptions = {
   },
   bmap: {
     center: [104.114129, 37.550339],
-    zoom: 5,
+    zoom: 1,
     roam: true,
     mapStyle: {
       styleJson: [
