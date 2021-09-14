@@ -31,14 +31,24 @@ const getWorkerShare = (worker: Worker) => {
 const useGetARP = () => {
   const {data: tokenomicParameters} = useTokenomicParameters()
   const {data: allWorkers} = useWorkers()
-  const miningIdleWorkersShare = useMemo<Record<string, Decimal> | null>(() => {
+  const miningIdleWorkersEntry = useMemo<Record<string, Worker> | null>(() => {
     if (!allWorkers) return null
     return Object.fromEntries(
       allWorkers
         .filter((worker) => worker.miner?.state === 'MiningIdle')
-        .map((worker) => [worker.pubkey, getWorkerShare(worker)])
+        .map((worker) => [worker.pubkey, worker])
     )
   }, [allWorkers])
+
+  const miningIdleWorkersShare = useMemo<Record<string, Decimal> | null>(() => {
+    if (!miningIdleWorkersEntry) return null
+    return Object.fromEntries(
+      Object.entries(miningIdleWorkersEntry).map(([pubkey, worker]) => [
+        pubkey,
+        getWorkerShare(worker),
+      ])
+    )
+  }, [miningIdleWorkersEntry])
 
   const totalShare = useMemo<Decimal | null>(() => {
     if (!miningIdleWorkersShare) return null
@@ -54,6 +64,7 @@ const useGetARP = () => {
 
       if (
         !tokenomicParameters ||
+        !miningIdleWorkersEntry ||
         !miningIdleWorkersShare ||
         !totalShare ||
         totalStake.isZero()
@@ -62,15 +73,20 @@ const useGetARP = () => {
       }
       const {budgetPerBlock, treasuryRatio} = tokenomicParameters
 
-      const rewardRatio = workers.reduce((acc, cur) => {
-        const share = miningIdleWorkersShare[cur]
-        if (!share) return acc
-        return acc.add(share.div(totalShare))
+      const rewardPerBlock = workers.reduce((acc, pubkey) => {
+        const worker = miningIdleWorkersEntry[pubkey]
+        if (!worker) return acc
+
+        const share = miningIdleWorkersShare[pubkey] as Decimal
+        const workerReward = share.div(totalShare).mul(budgetPerBlock)
+        const v = worker.miner?.v as Decimal
+        const maxReward = v.mul(0.0002).div((60 * 60 * 1000) / BLOCK_TIME)
+
+        return acc.add(Decimal.min(workerReward, maxReward))
       }, new Decimal(0))
 
-      return budgetPerBlock
+      return rewardPerBlock
         .mul(treasuryRatio.negated().add(1))
-        .mul(rewardRatio)
         .mul(
           payoutCommission
             .div(10 ** 6)
@@ -80,7 +96,12 @@ const useGetARP = () => {
         .mul(ONE_YEAR / BLOCK_TIME)
         .div(totalStake.div(10 ** 12))
     },
-    [tokenomicParameters, miningIdleWorkersShare, totalShare]
+    [
+      tokenomicParameters,
+      miningIdleWorkersShare,
+      miningIdleWorkersEntry,
+      totalShare,
+    ]
   )
 }
 
