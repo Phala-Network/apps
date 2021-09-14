@@ -28,6 +28,9 @@
     "react": "^17.0.2",
     "vconsole": "^3.9.1"
   },
+  "devDependencies": {
+    "react-query": "^3.23.2"
+  },
   "peerDependencies": {
     "react-query": "^3.23.2"
   }

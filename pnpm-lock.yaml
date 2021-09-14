@@ -52,7 +52,7 @@ importers:
       '@phala/react-hooks': workspace:*
       '@phala/react-i18n': workspace:^0.0.1
       '@phala/react-libs': workspace:*
-      '@phala/typedefs': ^0.2.23
+      '@phala/typedefs': ^0.2.24
       '@phala/utils': workspace:*
       '@polkadot/api': ^4.17.1
       '@polkadot/api-derive': ^5.8.3
@@ -122,7 +122,7 @@ importers:
       '@phala/react-hooks': link:../react-hooks
       '@phala/react-i18n': link:../react-i18n
       '@phala/react-libs': link:../react-libs
-      '@phala/typedefs': 0.2.23
+      '@phala/typedefs': 0.2.24
       '@phala/utils': link:../utils
       '@polkadot/api': 4.17.1
       '@polkadot/api-derive': 5.8.3
@@ -247,11 +247,11 @@ importers:
 
   packages/app-config:
     specifiers:
-      '@phala/typedefs': ^0.2.23
+      '@phala/typedefs': ^0.2.24
       '@polkadot/types': ^4.17.1
       '@types/node': ^16.7.13
     dependencies:
-      '@phala/typedefs': 0.2.23
+      '@phala/typedefs': 0.2.24
       '@polkadot/types': 4.17.1
       '@types/node': 16.7.13
 
@@ -473,6 +473,7 @@ importers:
       decimal.js: ^10.3.1
       ethers: ^5.4.6
       react: ^17.0.2
+      react-query: ^3.23.2
       vconsole: ^3.9.1
     dependencies:
       '@phala/app-config': link:../app-config
@@ -488,6 +489,8 @@ importers:
       ethers: 5.4.6
       react: 17.0.2
       vconsole: 3.9.1
+    devDependencies:
+      react-query: 3.23.2_react@17.0.2
 
   packages/react-i18n:
     specifiers:
@@ -506,7 +509,7 @@ importers:
     specifiers:
       '@phala/app-config': workspace:*
       '@phala/react-graph-chainbridge': workspace:^0.0.1
-      '@phala/typedefs': ^0.2.23
+      '@phala/typedefs': ^0.2.24
       '@phala/utils': workspace:*
       '@polkadot/api': ^4.17.1
       '@polkadot/extension-dapp': ^0.38.8
@@ -532,7 +535,7 @@ importers:
     dependencies:
       '@phala/app-config': link:../app-config
       '@phala/react-graph-chainbridge': link:../react-graph-chainbridge
-      '@phala/typedefs': 0.2.23
+      '@phala/typedefs': 0.2.24
       '@phala/utils': link:../utils
       '@polkadot/api': 4.17.1
       '@polkadot/extension-dapp': 0.38.8_@polkadot+api@4.17.1
@@ -4624,8 +4627,8 @@ packages:
       mkdirp: 1.0.4
       rimraf: 3.0.2
 
-  /@phala/typedefs/0.2.23:
-    resolution: {integrity: sha512-xpoSQwdgYSWlwECkItFnS0ax+ZDc8Hmsd3YwK7h9x0ZT9hrgFIbip4c0vqAmnDbqL1lPnEN5opzl6pjRc0XH1w==}
+  /@phala/typedefs/0.2.24:
+    resolution: {integrity: sha512-vlc1US3oKVVzohJlUkxTCzjYN743RVbR0eg1nqdLC2swyqKprfgcmIVJxtEfQM4gwH5W3r5xr7HM3pWRXpdM/w==}
     dependencies:
       '@polkadot/types': 5.8.3
     dev: false
@@ -20203,7 +20206,6 @@ packages:
       broadcast-channel: 3.7.0
       match-sorter: 6.3.0
       react: 17.0.2
-    dev: false
 
   /react-refresh/0.8.3:
     resolution: {integrity: sha512-X8jZHc7nCMjaCqoU+V2I0cOhNW+QMBwSUkeXnTi8IPe6zaRWfn60ZzvFDZqWPfmSJfjub7dDW1SP0jaHWLu/hg==}

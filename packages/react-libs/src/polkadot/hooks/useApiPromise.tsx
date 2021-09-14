@@ -17,6 +17,7 @@ interface IApiPromiseContext {
   api?: ApiPromise
   readystate: Readystate
   initialized: boolean
+  endpoint?: string
 }
 
 const ApiPromiseContext = createContext<IApiPromiseContext>({

@@ -6,7 +6,7 @@
   "module": "esm/index.js",
   "types": "esm/index.d.ts",
   "dependencies": {
-    "@phala/typedefs": "^0.2.23",
+    "@phala/typedefs": "^0.2.24",
     "@polkadot/types": "^4.17.1",
     "@types/node": "^16.7.13"
   },
