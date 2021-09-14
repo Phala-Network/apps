@@ -4,6 +4,7 @@ import styled from 'styled-components'
 const Root = styled.div`
   background-color: black;
   padding: 12px;
+  flex: 1;
 `
 
 export type BlackCardProps = ComponentProps<typeof Root>

@@ -1,7 +1,7 @@
 import ReactECharts from 'echarts-for-react'
 import React, {useEffect, useMemo} from 'react'
 
-export const Chart: React.FC = () => {
+export const Chart2: React.FC = () => {
   const [campaignData, setCampaignData] = React.useState<any>({})
 
   useEffect(() => {

@@ -1,6 +1,5 @@
 import styled from 'styled-components'
-import {BlackCard} from './components/BlackCard'
-import Chart from './components/Chart'
+import {BlackCard, Chart, Chart2} from './components'
 
 const Root = styled.div`
   width: 100%;
@@ -12,9 +11,15 @@ export const AppAnalytics = () => {
   return (
     <Root>
       <h2>Chart</h2>
-      <BlackCard>
-        <Chart></Chart>
-      </BlackCard>
+
+      <div style={{display: 'flex', gap: 12}}>
+        <BlackCard>
+          <Chart></Chart>
+        </BlackCard>
+        <BlackCard>
+          <Chart2></Chart2>
+        </BlackCard>
+      </div>
     </Root>
   )
 }
