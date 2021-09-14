@@ -187,10 +187,12 @@ importers:
     specifiers:
       echarts: ^5.2.0
       echarts-for-react: ^3.0.1
+      react-helmet: ^6.1.0
       styled-components: ^5.3.1
     dependencies:
       echarts: 5.2.0
       echarts-for-react: 3.0.1_echarts@5.2.0
+      react-helmet: 6.1.0
     devDependencies:
       styled-components: 5.3.1
 
@@ -20089,6 +20091,17 @@ packages:
       shallowequal: 1.1.0
     dev: true
 
+  /react-helmet/6.1.0:
+    resolution: {integrity: sha512-4uMzEY9nlDlgxr61NL3XbKRy1hEkXmKNXhjbAIOVw5vcFrsdYbH2FEwcNyWvWinl103nXgzYNlns9ca+8kFiWw==}
+    peerDependencies:
+      react: '>=16.3.0'
+    dependencies:
+      object-assign: 4.1.1
+      prop-types: 15.7.2
+      react-fast-compare: 3.2.0
+      react-side-effect: 2.1.1
+    dev: false
+
   /react-helmet/6.1.0_react@17.0.2:
     resolution: {integrity: sha512-4uMzEY9nlDlgxr61NL3XbKRy1hEkXmKNXhjbAIOVw5vcFrsdYbH2FEwcNyWvWinl103nXgzYNlns9ca+8kFiWw==}
     peerDependencies:
@@ -20330,6 +20343,12 @@ packages:
       - webpack-command
       - webpack-hot-middleware
       - webpack-plugin-serve
+    dev: false
+
+  /react-side-effect/2.1.1:
+    resolution: {integrity: sha512-2FoTQzRNTncBVtnzxFOk2mCpcfxQpenBMbk5kSVBg5UcPqV9fRbgY2zhb7GTWWOlpFmAxhClBDlIq8Rsubz1yQ==}
+    peerDependencies:
+      react: ^16.3.0 || ^17.0.0
     dev: false
 
   /react-side-effect/2.1.1_react@17.0.2:
