@@ -81,7 +81,8 @@ const WorkerTable = (): JSX.Element => {
       {
         Header: 'P',
         accessor: (worker) =>
-          worker.miner?.state === 'Ready' || !worker.miner?.benchmark.pInstant
+          worker.miner?.state === 'Ready' ||
+          typeof worker.miner?.benchmark.pInstant !== 'number'
             ? '-'
             : worker.miner.benchmark.pInstant,
       },
