@@ -14,7 +14,13 @@ import ClaimModal from './ClaimModal'
 import ContributeModal from './ContributeModal'
 import WithdrawModal from './WithdrawModal'
 
-const Wrapper = styled.div``
+const Wrapper = styled.div`
+  tbody {
+    td:not(:last-child) {
+      font-family: PT Mono, monospace;
+    }
+  }
+`
 
 const modalEntries: [ModalKey, (props: StakePoolModalProps) => JSX.Element][] =
   [
@@ -165,7 +171,14 @@ const MyDelegateTable = (): JSX.Element => {
         },
       },
     ],
-    [format, userStakeInfo, polkadotAccount?.address, open, getAPR]
+    [
+      format,
+      userStakeInfo,
+      polkadotAccount?.address,
+      open,
+      getAPR,
+      getProportion,
+    ]
   )
 
   return (
@@ -174,6 +187,7 @@ const MyDelegateTable = (): JSX.Element => {
         initialState={{pageSize: 20}}
         data={myDelegate || []}
         autoResetPage={false}
+        autoResetSortBy={false}
         isLoading={isFetchingStakePools || isFetchingUserStakeInfo}
         columns={columns}
       ></Table>

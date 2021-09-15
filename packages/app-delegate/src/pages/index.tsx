@@ -1,20 +1,12 @@
 import {Helmet} from 'react-helmet'
-import {Link} from 'gatsby-plugin-intl'
 import styled from 'styled-components'
 import MainTable from '../components/MainTable'
-import {Button} from '@phala/react-components'
+import Banner from '../components/Banner'
 
 const Wrapper = styled.div`
   overflow-x: auto;
   margin: 30px;
   flex: 1;
-`
-
-const Banner = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  background-color: #fff;
-  padding: 10px;
 `
 
 const Block = styled.div`
@@ -31,11 +23,7 @@ const Delegate = (): JSX.Element => {
       </Helmet>
 
       <Wrapper>
-        <Banner>
-          <Link to="/delegate/my-delegate/">
-            <Button>My Delegate</Button>
-          </Link>
-        </Banner>
+        <Banner></Banner>
 
         <Block>
           <MainTable></MainTable>

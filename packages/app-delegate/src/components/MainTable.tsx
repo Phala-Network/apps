@@ -11,7 +11,13 @@ import useFormat from '../hooks/useFormat'
 import useModalVisible from '../hooks/useModalVisible'
 import useGetARP from '../hooks/useGetAPR'
 
-const Wrapper = styled.div``
+const Wrapper = styled.div`
+  tbody {
+    td:not(:last-child) {
+      font-family: PT Mono, monospace;
+    }
+  }
+`
 const Filter = styled.div`
   display: flex;
   margin-bottom: 20px;
@@ -111,7 +117,7 @@ const MainTable = (): JSX.Element => {
         ),
       },
     ],
-    [format, open, getAPR]
+    [format, open, getAPR, getProportion]
   )
 
   return (
@@ -127,6 +133,7 @@ const MainTable = (): JSX.Element => {
       </Filter>
 
       <Table
+        autoResetSortBy={false}
         autoResetFilters={false}
         autoResetGlobalFilter={false}
         initialState={{pageSize: 20}}
