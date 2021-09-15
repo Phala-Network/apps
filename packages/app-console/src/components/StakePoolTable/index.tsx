@@ -65,6 +65,10 @@ const StakePoolTable = (): JSX.Element => {
         ),
       },
       {
+        Header: 'Worker',
+        accessor: (stakePool) => stakePool.workers.length,
+      },
+      {
         Header: 'Commission',
         accessor: (stakePool) =>
           `${toFixed(stakePool.payoutCommission.div(10 ** 4), 2)}%`,

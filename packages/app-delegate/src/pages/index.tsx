@@ -23,17 +23,17 @@ const Block = styled.div`
   background: #fff;
 `
 
-const Stakepad = (): JSX.Element => {
+const Delegate = (): JSX.Element => {
   return (
     <>
       <Helmet>
-        <title>Stakepad</title>
+        <title>Delegate</title>
       </Helmet>
 
       <Wrapper>
         <Banner>
-          <Link to="/stakepad/my-stake/">
-            <Button>My Stake</Button>
+          <Link to="/delegate/my-delegate/">
+            <Button>My Delegate</Button>
           </Link>
         </Banner>
 
@@ -45,5 +45,5 @@ const Stakepad = (): JSX.Element => {
   )
 }
 
-export {default as MyStake} from './MyStake'
-export default Stakepad
+export {default as MyDelegate} from './MyDelegate'
+export default Delegate

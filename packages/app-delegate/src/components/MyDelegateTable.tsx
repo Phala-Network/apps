@@ -29,8 +29,8 @@ const buttonEntries: [ModalKey, string][] = [
   ['withdraw', 'Withdraw'],
 ]
 
-const MyStakeTable = (): JSX.Element => {
-  const getAPR = useGetARP()
+const MyDelegateTable = (): JSX.Element => {
+  const {getAPR, getProportion} = useGetARP()
   const [pid, setPid] = useState<number | null>(null)
   const format = useFormat()
   const [polkadotAccount] = usePolkadotAccountAtom()
@@ -54,7 +54,7 @@ const MyStakeTable = (): JSX.Element => {
     [stakePools, pid]
   )
 
-  const myStake = useMemo<StakePool[]>(() => {
+  const myDelegate = useMemo<StakePool[]>(() => {
     if (!stakePools || !userStakeInfo) return []
     return stakePools.filter((pool) => userStakeInfo[pool.pid])
   }, [stakePools, userStakeInfo])
@@ -62,6 +62,25 @@ const MyStakeTable = (): JSX.Element => {
   const columns = useMemo<Column<StakePool>[]>(
     () => [
       {Header: 'pid', accessor: 'pid'},
+      {
+        Header: 'Worker',
+        accessor: (stakePool) => stakePool.workers.length,
+      },
+      {
+        Header: 'Commission',
+        accessor: (stakePool) =>
+          `${toFixed(stakePool.payoutCommission.div(10 ** 4), 2)}%`,
+      },
+      {
+        Header: 'Proportion',
+        accessor: (stakePool) => {
+          const proportion = getProportion(stakePool)
+          if (proportion) {
+            return `${toFixed(proportion.mul(100), 2)}%`
+          }
+          return '-'
+        },
+      },
       {
         Header: 'APR',
         accessor: (stakePool) => {
@@ -153,7 +172,7 @@ const MyStakeTable = (): JSX.Element => {
     <Wrapper>
       <Table
         initialState={{pageSize: 20}}
-        data={myStake || []}
+        data={myDelegate || []}
         autoResetPage={false}
         isLoading={isFetchingStakePools || isFetchingUserStakeInfo}
         columns={columns}
@@ -178,4 +197,4 @@ const MyStakeTable = (): JSX.Element => {
   )
 }
 
-export default MyStakeTable
+export default MyDelegateTable

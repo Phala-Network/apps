@@ -1,5 +1,5 @@
 {
-  "name": "@phala/app-stakepad",
+  "name": "@phala/app-delegate",
   "version": "0.0.1",
   "type": "module",
   "main": "src/index.tsx",

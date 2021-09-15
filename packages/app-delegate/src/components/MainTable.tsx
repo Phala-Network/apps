@@ -28,7 +28,7 @@ const Filter = styled.div`
 `
 
 const MainTable = (): JSX.Element => {
-  const getAPR = useGetARP()
+  const {getAPR, getProportion} = useGetARP()
   const [filterPid, setFilterPid] = useState<string>('')
   const [showPoolWithWorkers, setShowPoolWithWorkers] = useState<boolean>(false)
   const [pid, setPid] = useState<number | null>(null)
@@ -47,6 +47,25 @@ const MainTable = (): JSX.Element => {
       {
         Header: 'pid',
         accessor: 'pid',
+      },
+      {
+        Header: 'Worker',
+        accessor: (stakePool) => stakePool.workers.length,
+      },
+      {
+        Header: 'Commission',
+        accessor: (stakePool) =>
+          `${toFixed(stakePool.payoutCommission.div(10 ** 4), 2)}%`,
+      },
+      {
+        Header: 'Proportion',
+        accessor: (stakePool) => {
+          const proportion = getProportion(stakePool)
+          if (proportion) {
+            return `${toFixed(proportion.mul(100), 2)}%`
+          }
+          return '-'
+        },
       },
       {
         Header: 'APR',

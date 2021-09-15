@@ -44,7 +44,7 @@ importers:
       '@phala/app-bridge': workspace:^0.0.1
       '@phala/app-config': workspace:*
       '@phala/app-console': workspace:^0.0.1
-      '@phala/app-stakepad': workspace:^0.0.1
+      '@phala/app-delegate': workspace:^0.0.1
       '@phala/app-store': workspace:*
       '@phala/app-types': workspace:*
       '@phala/react-cms': workspace:^0.0.1
@@ -114,7 +114,7 @@ importers:
       '@phala/app-bridge': link:../app-bridge
       '@phala/app-config': link:../app-config
       '@phala/app-console': link:../app-console
-      '@phala/app-stakepad': link:../app-stakepad
+      '@phala/app-delegate': link:../app-delegate
       '@phala/app-store': link:../app-store
       '@phala/app-types': link:../app-types
       '@phala/react-cms': link:../react-cms
@@ -289,7 +289,7 @@ importers:
       jotai: 1.3.2
       styled-breakpoints: 10.0.1
 
-  packages/app-stakepad:
+  packages/app-delegate:
     specifiers:
       '@phala/app-store': workspace:^0.0.1
       '@phala/react-components': workspace:^0.0.1

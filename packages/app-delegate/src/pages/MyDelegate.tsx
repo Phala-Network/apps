@@ -1,7 +1,7 @@
 import {Link} from 'gatsby-plugin-intl'
 import styled from 'styled-components'
 import {Button} from '@phala/react-components'
-import MyStakeTable from '../components/MyStakeTable'
+import MyDelegateTable from '../components/MyDelegateTable'
 import {Helmet} from 'react-helmet'
 
 const Wrapper = styled.div`
@@ -19,13 +19,13 @@ const MyState = () => {
   return (
     <Wrapper>
       <Helmet>
-        <title>My Stake</title>
+        <title>My Delegate</title>
       </Helmet>
-      <Link to="/stakepad/">
+      <Link to="/delegate/">
         <Button>Back</Button>
       </Link>
       <Block>
-        <MyStakeTable />
+        <MyDelegateTable />
       </Block>
     </Wrapper>
   )

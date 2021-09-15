@@ -58,7 +58,23 @@ const useGetARP = () => {
     )
   }, [miningIdleWorkersShare])
 
-  return useCallback(
+  const getProportion = useCallback(
+    (stakePool: StakePool): Decimal | null => {
+      const {workers, totalStake} = stakePool
+      if (!miningIdleWorkersShare || !totalShare || totalStake.isZero()) {
+        return null
+      }
+
+      return workers.reduce((acc, cur) => {
+        const share = miningIdleWorkersShare[cur]
+        if (!share) return acc
+        return acc.add(share.div(totalShare))
+      }, new Decimal(0))
+    },
+    [miningIdleWorkersShare, totalShare]
+  )
+
+  const getAPR = useCallback(
     (stakePool: StakePool): Decimal | null => {
       const {workers, payoutCommission, totalStake} = stakePool
 
@@ -103,6 +119,11 @@ const useGetARP = () => {
       totalShare,
     ]
   )
+
+  return {
+    getAPR,
+    getProportion,
+  }
 }
 
 export default useGetARP
