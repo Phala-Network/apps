@@ -68,9 +68,11 @@ const MainTable = (): JSX.Element => {
         accessor: (stakePool) => format(stakePool.releasingStake),
       },
       {
-        Header: 'Cap',
+        Header: 'Cap Gap',
         accessor: (stakePool) =>
-          stakePool.cap === null ? '∞' : format(stakePool.cap),
+          stakePool.cap === null
+            ? '∞'
+            : format(stakePool.cap.sub(stakePool.totalStake)),
       },
       {
         Header: 'Actions',

@@ -70,9 +70,11 @@ const StakePoolTable = (): JSX.Element => {
           `${toFixed(stakePool.payoutCommission.div(10 ** 4), 2)}%`,
       },
       {
-        Header: 'Cap',
+        Header: 'Cap Gap',
         accessor: (stakePool) =>
-          stakePool.cap === null ? '∞' : format(stakePool.cap),
+          stakePool.cap === null
+            ? '∞'
+            : format(stakePool.cap.sub(stakePool.totalStake)),
       },
       {
         Header: 'Owner Reward',
