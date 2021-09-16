@@ -55,17 +55,22 @@ const MainTable = (): JSX.Element => {
         Header: 'pid',
         accessor: 'pid',
       },
-      !isMobile && {
-        Header: 'Worker',
-        accessor: (stakePool) => stakePool.workers.length,
+      {
+        Header: 'APR',
+        accessor: (stakePool) => {
+          const APR = getAPR(stakePool)
+          return APR ? `${toFixed(APR.mul(100), 2)}%` : '-'
+        },
       },
-      !isMobile && {
-        Header: 'Commission',
+      {
+        Header: 'Cap Gap',
         accessor: (stakePool) =>
-          `${toFixed(stakePool.payoutCommission.div(10 ** 4), 2)}%`,
+          stakePool.cap === null
+            ? '∞'
+            : format(stakePool.cap.sub(stakePool.totalStake)),
       },
       !isMobile && {
-        Header: 'Proportion',
+        Header: 'Reward Proportion',
         accessor: (stakePool) => {
           const proportion = getProportion(stakePool)
           if (proportion) {
@@ -74,31 +79,26 @@ const MainTable = (): JSX.Element => {
           return '-'
         },
       },
-      {
-        Header: 'APR',
-        accessor: (stakePool) => {
-          const APR = getAPR(stakePool)
-          return APR ? `${toFixed(APR.mul(100), 2)}%` : '-'
-        },
+      !isMobile && {
+        Header: 'Commission',
+        accessor: (stakePool) =>
+          `${toFixed(stakePool.payoutCommission.div(10 ** 4), 2)}%`,
       },
       !isMobile && {
-        Header: 'Total Stake',
+        Header: 'Delegated',
         accessor: (stakePool) => format(stakePool.totalStake),
       },
       !isMobile && {
-        Header: 'Free Stake',
+        Header: 'Free Delegation',
         accessor: (stakePool) => format(stakePool.freeStake),
       },
       !isMobile && {
         Header: 'Releasing Stake',
         accessor: (stakePool) => format(stakePool.releasingStake),
       },
-      {
-        Header: 'Cap Gap',
-        accessor: (stakePool) =>
-          stakePool.cap === null
-            ? '∞'
-            : format(stakePool.cap.sub(stakePool.totalStake)),
+      !isMobile && {
+        Header: 'Worker',
+        accessor: (stakePool) => stakePool.workers.length,
       },
       {
         Header: 'Actions',
