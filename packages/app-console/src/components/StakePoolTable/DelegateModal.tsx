@@ -42,7 +42,7 @@ const DelegateModal = (props: StakePoolModalProps): JSX.Element => {
   const onConfirm = useCallback(async () => {
     if (api && decimals && amount) {
       return waitSignAndSend(
-        api.tx.phalaStakePool?.delegate?.(
+        api.tx.phalaStakePool?.contribute?.(
           stakePool.pid,
           new Decimal(amount).mul(decimals).toString()
         )
