@@ -10,7 +10,7 @@ import useSelfStakePools from '../../hooks/useSelfStakePools'
 import ConsoleTable from '../ConsoleTable'
 import AddWorkerModal from './AddWorkerModal'
 import ClaimModal from './ClaimModal'
-import ContributeModal from './ContributeModal'
+import DelegateModal from './DelegateModal'
 import CreateModal from './CreateModal'
 import SetCapModal from './SetCapModal'
 import SetPayoutPrefModal from './SetPayoutPrefModal'
@@ -33,7 +33,7 @@ export type StakePoolModalProps = {onClose: () => void; stakePool: StakePool}
 const modalEntries: [ModalKey, (props: StakePoolModalProps) => JSX.Element][] =
   [
     ['claim', ClaimModal],
-    ['contribute', ContributeModal],
+    ['delegate', DelegateModal],
     ['addWorker', AddWorkerModal],
     ['setCap', SetCapModal],
     ['setPayoutPref', SetPayoutPrefModal],

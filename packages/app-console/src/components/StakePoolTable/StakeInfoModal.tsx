@@ -60,8 +60,8 @@ const StakeInfoModal = (props: StakePoolModalProps): JSX.Element => {
       onClose={onClose}
       title={`#${stakePool.pid} Stakepool Info`}
       actions={[
-        <Button key="contribute" onClick={() => open('contribute')}>
-          Contribute
+        <Button key="delegate" onClick={() => open('delegate')}>
+          Delegate
         </Button>,
         <Button key="withdraw" onClick={() => open('withdraw')}>
           Withdraw

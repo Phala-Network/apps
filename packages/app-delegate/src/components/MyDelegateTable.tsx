@@ -16,7 +16,7 @@ import useGetARP from '../hooks/useGetAPR'
 import useModalVisible, {ModalKey} from '../hooks/useModalVisible'
 import ItemMenu from './ItemMenu'
 import ClaimModal from './ClaimModal'
-import ContributeModal from './ContributeModal'
+import DelegateModal from './DelegateModal'
 import WithdrawModal from './WithdrawModal'
 
 const Wrapper = styled.div`
@@ -30,7 +30,7 @@ const Wrapper = styled.div`
 const modalEntries: [ModalKey, (props: StakePoolModalProps) => JSX.Element][] =
   [
     ['claim', ClaimModal],
-    ['contribute', ContributeModal],
+    ['delegate', DelegateModal],
     ['withdraw', WithdrawModal],
   ]
 
@@ -160,7 +160,7 @@ const MyDelegateTable = (): JSX.Element => {
             <ItemMenu
               items={[
                 {key: 'claim', item: 'Claim'},
-                {key: 'contribute', item: 'Contribute'},
+                {key: 'delegate', item: 'Delegate'},
                 {key: 'withdraw', item: 'Withdraw'},
               ]}
               onSelect={(key) => {

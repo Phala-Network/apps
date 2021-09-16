@@ -5,7 +5,7 @@ const initialState = {
   // Stakepool
   addWorker: false,
   claim: false,
-  contribute: false,
+  delegate: false,
   create: false,
   setCap: false,
   setPayoutPref: false,

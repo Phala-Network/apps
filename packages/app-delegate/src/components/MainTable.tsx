@@ -5,7 +5,7 @@ import {Input, Table, Checkbox} from '@phala/react-components'
 import {StakePool, useStakePools, useIsMobile} from '@phala/react-hooks'
 import {toFixed} from '@phala/utils'
 import {Row} from 'react-table'
-import ContributeModal from './ContributeModal'
+import DelegateModal from './DelegateModal'
 import ActionButton from './ActionButton'
 import useFormat from '../hooks/useFormat'
 import useModalVisible from '../hooks/useModalVisible'
@@ -109,10 +109,10 @@ const MainTable = (): JSX.Element => {
               size="small"
               onClick={() => {
                 setPid(stakePool.pid)
-                open('contribute')
+                open('delegate')
               }}
             >
-              Contribute
+              Delegate
             </ActionButton>
           </>
         ),
@@ -158,14 +158,14 @@ const MainTable = (): JSX.Element => {
         )}
       ></Table>
 
-      {modalVisible.contribute && activeStakePool && (
-        <ContributeModal
+      {modalVisible.delegate && activeStakePool && (
+        <DelegateModal
           stakePool={activeStakePool}
           onClose={() => {
-            close('contribute')
+            close('delegate')
             refetch()
           }}
-        ></ContributeModal>
+        ></DelegateModal>
       )}
     </Wrapper>
   )

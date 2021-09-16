@@ -4,7 +4,7 @@ import {useCallback, useMemo} from 'react'
 const initialState = {
   // Stakepool
   claim: false,
-  contribute: false,
+  delegate: false,
   withdraw: false,
 }
 
