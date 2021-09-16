@@ -474,6 +474,7 @@ importers:
       ethers: ^5.4.6
       react: ^17.0.2
       react-query: ^3.23.2
+      styled-breakpoints: ^10.0.1
       vconsole: ^3.9.1
     dependencies:
       '@phala/app-config': link:../app-config
@@ -488,6 +489,7 @@ importers:
       decimal.js: 10.3.1
       ethers: 5.4.6
       react: 17.0.2
+      styled-breakpoints: 10.0.1_react@17.0.2
       vconsole: 3.9.1
     devDependencies:
       react-query: 3.23.2_react@17.0.2
@@ -8225,7 +8227,7 @@ packages:
   /axios/0.21.4:
     resolution: {integrity: sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==}
     dependencies:
-      follow-redirects: 1.14.3_debug@3.2.7
+      follow-redirects: 1.14.3
     transitivePeerDependencies:
       - debug
     dev: false
@@ -12507,6 +12509,16 @@ packages:
     dependencies:
       inherits: 2.0.4
       readable-stream: 2.3.7
+
+  /follow-redirects/1.14.3:
+    resolution: {integrity: sha512-3MkHxknWMUtb23apkgz/83fDoe+y+qr0TdgacGIA7bew+QLBo3vdgEN2xEsuXNivpFy4CyDhBBZnNZOtalmenw==}
+    engines: {node: '>=4.0'}
+    peerDependencies:
+      debug: '*'
+    peerDependenciesMeta:
+      debug:
+        optional: true
+    dev: false
 
   /follow-redirects/1.14.3_debug@3.2.7:
     resolution: {integrity: sha512-3MkHxknWMUtb23apkgz/83fDoe+y+qr0TdgacGIA7bew+QLBo3vdgEN2xEsuXNivpFy4CyDhBBZnNZOtalmenw==}

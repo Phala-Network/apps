@@ -4,12 +4,17 @@ import Decimal from 'decimal.js'
 import styled from 'styled-components'
 import {usePolkadotAccountAtom} from '@phala/app-store'
 import {Table} from '@phala/react-components'
-import {StakePool, useStakePools, useUserStakeInfo} from '@phala/react-hooks'
+import {
+  StakePool,
+  useStakePools,
+  useUserStakeInfo,
+  useIsMobile,
+} from '@phala/react-hooks'
 import {toFixed} from '@phala/utils'
 import useFormat from '../hooks/useFormat'
 import useGetARP from '../hooks/useGetAPR'
 import useModalVisible, {ModalKey} from '../hooks/useModalVisible'
-import ActionButton from './ActionButton'
+import ItemMenu from './ItemMenu'
 import ClaimModal from './ClaimModal'
 import ContributeModal from './ContributeModal'
 import WithdrawModal from './WithdrawModal'
@@ -29,13 +34,8 @@ const modalEntries: [ModalKey, (props: StakePoolModalProps) => JSX.Element][] =
     ['withdraw', WithdrawModal],
   ]
 
-const buttonEntries: [ModalKey, string][] = [
-  ['claim', 'Claim'],
-  ['contribute', 'Contribute'],
-  ['withdraw', 'Withdraw'],
-]
-
 const MyDelegateTable = (): JSX.Element => {
+  const isMobile = useIsMobile()
   const {getAPR, getProportion} = useGetARP()
   const [pid, setPid] = useState<number | null>(null)
   const format = useFormat()
@@ -65,19 +65,19 @@ const MyDelegateTable = (): JSX.Element => {
     return stakePools.filter((pool) => userStakeInfo[pool.pid])
   }, [stakePools, userStakeInfo])
 
-  const columns = useMemo<Column<StakePool>[]>(
-    () => [
+  const columns = useMemo<Column<StakePool>[]>(() => {
+    const columns: (Column<StakePool> | boolean)[] = [
       {Header: 'pid', accessor: 'pid'},
-      {
+      !isMobile && {
         Header: 'Worker',
         accessor: (stakePool) => stakePool.workers.length,
       },
-      {
+      !isMobile && {
         Header: 'Commission',
         accessor: (stakePool) =>
           `${toFixed(stakePool.payoutCommission.div(10 ** 4), 2)}%`,
       },
-      {
+      !isMobile && {
         Header: 'Proportion',
         accessor: (stakePool) => {
           const proportion = getProportion(stakePool)
@@ -87,22 +87,22 @@ const MyDelegateTable = (): JSX.Element => {
           return '-'
         },
       },
-      {
+      !isMobile && {
         Header: 'APR',
         accessor: (stakePool) => {
           const APR = getAPR(stakePool)
           return APR ? `${toFixed(APR.mul(100), 2)}%` : '-'
         },
       },
-      {
+      !isMobile && {
         Header: 'Free Stake',
         accessor: (stakePool) => format(stakePool.freeStake),
       },
-      {
+      !isMobile && {
         Header: 'Releasing Stake',
         accessor: (stakePool) => format(stakePool.releasingStake),
       },
-      {
+      !isMobile && {
         Header: 'Cap Gap',
         accessor: (stakePool) =>
           stakePool.cap === null
@@ -121,7 +121,7 @@ const MyDelegateTable = (): JSX.Element => {
           )
         },
       },
-      {
+      !isMobile && {
         Header: 'Your Withdrawing',
         accessor: (stakePool) =>
           format(
@@ -153,33 +153,36 @@ const MyDelegateTable = (): JSX.Element => {
         },
       },
       {
-        Header: 'Actions',
+        id: 'actions',
         disableSortBy: true,
         accessor: (stakePool) => {
-          return buttonEntries.map(([modalKey, text]) => (
-            <ActionButton
-              size="small"
-              key={modalKey}
-              onClick={() => {
+          return (
+            <ItemMenu
+              items={[
+                {key: 'claim', item: 'Claim'},
+                {key: 'contribute', item: 'Contribute'},
+                {key: 'withdraw', item: 'Withdraw'},
+              ]}
+              onSelect={(key) => {
                 setPid(stakePool.pid)
-                open(modalKey)
+                open(key as ModalKey)
               }}
-            >
-              {text}
-            </ActionButton>
-          ))
+            ></ItemMenu>
+          )
         },
       },
-    ],
-    [
-      format,
-      userStakeInfo,
-      polkadotAccount?.address,
-      open,
-      getAPR,
-      getProportion,
     ]
-  )
+
+    return columns.filter(Boolean) as Column<StakePool>[]
+  }, [
+    format,
+    userStakeInfo,
+    polkadotAccount?.address,
+    open,
+    getAPR,
+    getProportion,
+    isMobile,
+  ])
 
   return (
     <Wrapper>

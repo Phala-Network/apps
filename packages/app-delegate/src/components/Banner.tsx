@@ -5,6 +5,7 @@ import {useStakePools} from '@phala/react-hooks'
 import {useMemo} from 'react'
 import useFormat from '../hooks/useFormat'
 import Decimal from 'decimal.js'
+import {down} from 'styled-breakpoints'
 
 const Wrapper = styled.div`
   display: flex;
@@ -18,6 +19,10 @@ const Wrapper = styled.div`
 const Content = styled.div`
   font-size: 24px;
   font-weight: bold;
+
+  ${down('sm')} {
+    font-size: 18px;
+  }
 
   span {
     font-family: PT Mono, monospace;
@@ -43,7 +48,7 @@ const Banner = (): JSX.Element => {
         Locked: <span>{locked}</span>
       </Content>
       <Link to="/delegate/my-delegate/">
-        <Button>My Delegate</Button>
+        <Button size="small">My Delegate</Button>
       </Link>
     </Wrapper>
   )

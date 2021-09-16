@@ -2,7 +2,7 @@ import {useCallback, useMemo, useState} from 'react'
 import {Column} from 'react-table'
 import styled from 'styled-components'
 import {Input, Table, Checkbox} from '@phala/react-components'
-import {StakePool, useStakePools} from '@phala/react-hooks'
+import {StakePool, useStakePools, useIsMobile} from '@phala/react-hooks'
 import {toFixed} from '@phala/utils'
 import {Row} from 'react-table'
 import ContributeModal from './ContributeModal'
@@ -34,6 +34,7 @@ const Filter = styled.div`
 `
 
 const MainTable = (): JSX.Element => {
+  const isMobile = useIsMobile()
   const {getAPR, getProportion} = useGetARP()
   const [filterPid, setFilterPid] = useState<string>('')
   const [showPoolWithWorkers, setShowPoolWithWorkers] = useState<boolean>(false)
@@ -48,22 +49,22 @@ const MainTable = (): JSX.Element => {
     [data, pid]
   )
 
-  const columns = useMemo<Column<StakePool>[]>(
-    () => [
+  const columns = useMemo<Column<StakePool>[]>(() => {
+    const columns: (Column<StakePool> | boolean)[] = [
       {
         Header: 'pid',
         accessor: 'pid',
       },
-      {
+      !isMobile && {
         Header: 'Worker',
         accessor: (stakePool) => stakePool.workers.length,
       },
-      {
+      !isMobile && {
         Header: 'Commission',
         accessor: (stakePool) =>
           `${toFixed(stakePool.payoutCommission.div(10 ** 4), 2)}%`,
       },
-      {
+      !isMobile && {
         Header: 'Proportion',
         accessor: (stakePool) => {
           const proportion = getProportion(stakePool)
@@ -80,15 +81,15 @@ const MainTable = (): JSX.Element => {
           return APR ? `${toFixed(APR.mul(100), 2)}%` : '-'
         },
       },
-      {
+      !isMobile && {
         Header: 'Total Stake',
         accessor: (stakePool) => format(stakePool.totalStake),
       },
-      {
+      !isMobile && {
         Header: 'Free Stake',
         accessor: (stakePool) => format(stakePool.freeStake),
       },
-      {
+      !isMobile && {
         Header: 'Releasing Stake',
         accessor: (stakePool) => format(stakePool.releasingStake),
       },
@@ -116,9 +117,9 @@ const MainTable = (): JSX.Element => {
           </>
         ),
       },
-    ],
-    [format, open, getAPR, getProportion]
-  )
+    ]
+    return columns.filter(Boolean) as Column<StakePool>[]
+  }, [format, open, getAPR, getProportion, isMobile])
 
   return (
     <Wrapper>

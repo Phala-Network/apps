@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import {Link as GatsbyLink} from 'gatsby-plugin-intl'
+import {isDev, isTest} from '@phala/utils'
 
 const Wrapper = styled.div`
   flex: 1;
@@ -25,6 +26,7 @@ const Links: React.FC = () => {
     <Wrapper>
       <Link to="/">Assets</Link>
       <Link to="/bridge/">Bridge</Link>
+      {(isDev() || isTest()) && <Link to="/delegate/">Delegate</Link>}
     </Wrapper>
   )
 }

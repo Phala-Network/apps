@@ -3,11 +3,15 @@ import styled from 'styled-components'
 import {Button} from '@phala/react-components'
 import MyDelegateTable from '../components/MyDelegateTable'
 import {Helmet} from 'react-helmet'
+import {up} from 'styled-breakpoints'
 
 const Wrapper = styled.div`
   overflow-x: auto;
-  margin: 30px;
-  flex: 1;
+
+  ${up('md')} {
+    margin: 30px;
+    flex: 1;
+  }
 `
 
 const Block = styled.div`

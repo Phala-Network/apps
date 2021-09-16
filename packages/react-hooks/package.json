@@ -26,6 +26,7 @@
     "decimal.js": "^10.3.1",
     "ethers": "^5.4.6",
     "react": "^17.0.2",
+    "styled-breakpoints": "^10.0.1",
     "vconsole": "^3.9.1"
   },
   "devDependencies": {
