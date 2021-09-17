@@ -26,11 +26,6 @@ const Filter = styled.div`
     width: 300px;
     flex-shrink: 1;
   }
-
-  & > *:last-child {
-    margin-left: 20px;
-    flex: none;
-  }
 `
 
 const MainTable = (): JSX.Element => {
