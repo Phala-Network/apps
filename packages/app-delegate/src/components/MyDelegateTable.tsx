@@ -69,16 +69,12 @@ const MyDelegateTable = (): JSX.Element => {
     const columns: (Column<StakePool> | boolean)[] = [
       {Header: 'pid', accessor: 'pid'},
       !isMobile && {
-        Header: 'Worker',
-        accessor: (stakePool) => stakePool.workers.length,
-      },
-      !isMobile && {
         Header: 'Commission',
         accessor: (stakePool) =>
           `${toFixed(stakePool.payoutCommission.div(10 ** 4), 2)}%`,
       },
       !isMobile && {
-        Header: 'Proportion',
+        Header: 'Reward Proportion',
         accessor: (stakePool) => {
           const proportion = getProportion(stakePool)
           if (proportion) {
