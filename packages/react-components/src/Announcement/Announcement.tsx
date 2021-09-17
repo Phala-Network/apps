@@ -3,15 +3,11 @@ import {
   CloseIcon,
   Container,
   Content,
-  Link,
   NotificationIcon,
 } from './styledComponents'
 
-export const Announcement: React.FC = () => {
+export const Announcement: React.FC = (props) => {
   const [closed, setClosed] = useState(false)
-  const link = 'https://phala.network'
-  const text =
-    'CPU time, on-chain storage, network bandwidth, off-chain storage, and more resources. Phala provides a wide-ranged infrastructure including cross-chain confidential widgets, and trustless general-purpose computing platform. All these features are accessible with PHA. To be a Gatekeeper one must stake a certain amount of PHA. The stake would be fined and took if he betrayed Gatekeeper rules.'
 
   if (closed) return null
 
@@ -37,14 +33,7 @@ export const Announcement: React.FC = () => {
           />
         </svg>
       </NotificationIcon>
-      <Content>
-        {text}{' '}
-        {link && (
-          <Link target="_blank" href={link}>
-            see more
-          </Link>
-        )}
-      </Content>
+      <Content>{props.children}</Content>
       <CloseIcon onClick={close}>
         <svg
           width="24"
