@@ -29,17 +29,19 @@ const Placeholder = styled.div`
 const Styles = styled.div`
   table {
     font-size: 12px;
+    line-height: 1.2;
     border-spacing: 0;
     border: none;
     width: 100%;
     font-family: Lato;
     font-style: normal;
 
-    tr {
-      :last-child {
-        td {
-          border-bottom: 0;
-        }
+    tbody tr {
+      :nth-child(even) {
+        background-color: #f7f7f7;
+      }
+      :hover {
+        background-color: ${(props) => props.theme.colors.phala};
       }
     }
 
@@ -48,13 +50,13 @@ const Styles = styled.div`
       line-height: 14px;
       color: #202020;
       border-bottom: 1px solid #dddddd;
-      padding: 0.625rem;
+      padding: 12px;
       text-align: left;
     }
 
     td {
       margin: 0;
-      padding: 0.625rem;
+      padding: 12px;
       white-space: nowrap;
 
       :last-child {
@@ -100,6 +102,7 @@ export const Table = <D extends Record<string, unknown>>(
     pageCount,
     setAllFilters,
     setGlobalFilter,
+    gotoPage,
   } = table
 
   useEffect(() => {
@@ -128,7 +131,6 @@ export const Table = <D extends Record<string, unknown>>(
                       isSorted={column.isSorted}
                       isSortedDesc={column.isSortedDesc}
                     >
-                      {' '}
                       {column.render('Header')}
                     </TableSorter>
                   </th>
@@ -171,6 +173,7 @@ export const Table = <D extends Record<string, unknown>>(
           canPreviousPage={canPreviousPage}
           canNextPage={canNextPage}
           nextPage={nextPage}
+          gotoPage={gotoPage}
         />
       )}
     </Styles>

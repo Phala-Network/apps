@@ -8,7 +8,7 @@
   "dependencies": {
     "@phala/app-config": "workspace:*",
     "@phala/react-graph-chainbridge": "workspace:^0.0.1",
-    "@phala/typedefs": "^0.2.23",
+    "@phala/typedefs": "^0.2.25",
     "@phala/utils": "workspace:*",
     "@polkadot/api": "^4.17.1",
     "@polkadot/extension-dapp": "^0.38.8",
@@ -27,7 +27,7 @@
     "graphql": "^15.5.3",
     "graphql-request": "^3.5.0",
     "react": "^17.0.2",
-    "react-query": "^3.22.0",
+    "react-query": "^3.23.2",
     "styletron-engine-atomic": "^1.4.8",
     "uuid": "^8.3.2",
     "web3modal": "^1.9.4"

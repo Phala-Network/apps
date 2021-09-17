@@ -57,7 +57,7 @@ const MobilePolkadotTicket: React.FC = () => {
       {polkadotAccount ? (
         <Account onClick={() => setAccountModalVisible(true)}>
           <KhalaIcon width="24" height="24" />
-          {polkadotAccount.name} | {abridgeString(polkadotAccount.address)}
+          {abridgeString(polkadotAccount.address)}
         </Account>
       ) : (
         <ConnectButton onClick={onClick}></ConnectButton>

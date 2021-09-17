@@ -40,7 +40,7 @@ const BridgePage: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title>Phala App</title>
+        <title>Bridge</title>
       </Helmet>
       <QueryClientProvider contextSharing={true} client={queryClient}>
         <RightContent>

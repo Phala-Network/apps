@@ -1,5 +1,6 @@
-import React from 'react'
+import React, {useCallback, useEffect, useState} from 'react'
 import styled from 'styled-components'
+import {Input} from '..'
 
 type Props = {
   pageIndex: number
@@ -8,6 +9,7 @@ type Props = {
   canPreviousPage: boolean
   canNextPage: boolean
   nextPage: () => void
+  gotoPage: (pageIndex: number) => void
 }
 
 const Button = styled.button`
@@ -31,6 +33,16 @@ const PaginationWrap = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
+
+  > span {
+    margin-left: 8px;
+  }
+`
+
+const PageInput = styled(Input)`
+  input {
+    font-size: 14px;
+  }
 `
 
 const TablePagination: React.FC<Props> = (props) => {
@@ -41,7 +53,30 @@ const TablePagination: React.FC<Props> = (props) => {
     canPreviousPage,
     canNextPage,
     nextPage,
+    gotoPage,
   } = props
+  const [value, setValue] = useState<string>(String(pageIndex + 1))
+
+  const onChange = useCallback((value) => {
+    if (/\d*/.test(value)) {
+      setValue(value)
+    }
+  }, [])
+
+  const onKeyDown = useCallback(
+    (e) => {
+      if (e.key === 'Enter') {
+        const nextPageIndex = Number(value) - 1
+
+        gotoPage(Math.min(nextPageIndex, pageOptions.length - 1))
+      }
+    },
+    [value, pageOptions.length, gotoPage]
+  )
+
+  useEffect(() => {
+    setValue(String(pageIndex + 1))
+  }, [pageIndex])
 
   return (
     <PaginationWrap>
@@ -61,9 +96,16 @@ const TablePagination: React.FC<Props> = (props) => {
           />
         </svg>
       </Button>
-      <span>
-        {pageIndex + 1} / {pageOptions.length}
-      </span>
+      <PageInput
+        type="number"
+        value={value}
+        onChange={onChange}
+        onBlur={() => setValue(String(pageIndex + 1))}
+        onKeyDown={onKeyDown}
+        width={30}
+        height={20}
+      ></PageInput>
+      <span> / {pageOptions.length}</span>
       <Button onClick={nextPage} disabled={!canNextPage}>
         <svg
           width="5"
