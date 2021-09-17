@@ -1,5 +1,5 @@
 {
-  "name": "@phala/app-console",
+  "name": "@phala/app-mining",
   "version": "0.0.1",
   "type": "module",
   "main": "src/index.tsx",

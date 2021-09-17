@@ -5,7 +5,7 @@ import {ExtrinsicStatus} from '@polkadot/types/interfaces'
 import {ISubmittableResult} from '@polkadot/types/types'
 import {toast} from 'react-toastify'
 
-// Temporary abstraction for console due to time limit
+// Temporary abstraction for mining due to time limit
 const useWaitSignAndSend = (): ((
   extrinsic: SubmittableExtrinsic<'promise', ISubmittableResult> | undefined,
   onstatus?: (status: ExtrinsicStatus) => void

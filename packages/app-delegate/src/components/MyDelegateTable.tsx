@@ -95,7 +95,7 @@ const MyDelegateTable = (): JSX.Element => {
         },
       },
       !isMobile && {
-        Header: 'Free Stake',
+        Header: 'Free Delegation',
         accessor: (stakePool) => format(stakePool.freeStake),
       },
       !isMobile && {
@@ -110,7 +110,7 @@ const MyDelegateTable = (): JSX.Element => {
             : format(stakePool.cap.sub(stakePool.totalStake)),
       },
       {
-        Header: 'Your Stake',
+        Header: 'Your Delegation',
         accessor: (stakePool) => {
           const userStake = userStakeInfo?.[stakePool.pid]
           if (!userStake) return '-'

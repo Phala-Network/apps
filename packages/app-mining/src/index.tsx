@@ -18,11 +18,11 @@ const Block = styled.div`
   }
 `
 
-const Console: React.FC = () => {
+const Mining: React.FC = () => {
   return (
     <Wrapper>
       <Helmet>
-        <title>Console</title>
+        <title>Mining</title>
       </Helmet>
       <Block>
         <StakePoolTable />
@@ -35,4 +35,4 @@ const Console: React.FC = () => {
   )
 }
 
-export default Console
+export default Mining

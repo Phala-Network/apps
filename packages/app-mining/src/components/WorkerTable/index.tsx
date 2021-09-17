@@ -5,7 +5,7 @@ import {Column} from 'react-table'
 import useFormat from '../../hooks/useFormat'
 import useModalVisible, {ModalKey} from '../../hooks/useModalVisible'
 import useSelfStakePools from '../../hooks/useSelfStakePools'
-import ConsoleTable from '../ConsoleTable'
+import MiningTable from '../MiningTable'
 import RemoveModal from './RemoveModal'
 import StartModal from './StartModal'
 import StopModal from './StopModal'
@@ -138,12 +138,12 @@ const WorkerTable = (): JSX.Element => {
   )
   return (
     <>
-      <ConsoleTable
+      <MiningTable
         isLoading={isLoading}
         title="Worker"
         columns={columns}
         data={tableData}
-      ></ConsoleTable>
+      ></MiningTable>
 
       {selectedWorker &&
         modalEntries.map(

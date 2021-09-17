@@ -7,7 +7,7 @@ import {StakePool} from '@phala/react-hooks'
 import useFormat from '../../hooks/useFormat'
 import useModalVisible, {ModalKey} from '../../hooks/useModalVisible'
 import useSelfStakePools from '../../hooks/useSelfStakePools'
-import ConsoleTable from '../ConsoleTable'
+import MiningTable from '../MiningTable'
 import AddWorkerModal from './AddWorkerModal'
 import ClaimModal from './ClaimModal'
 import DelegateModal from './DelegateModal'
@@ -129,7 +129,7 @@ const StakePoolTable = (): JSX.Element => {
   )
   return (
     <>
-      <ConsoleTable
+      <MiningTable
         title="Stakepool"
         header={
           <Button
@@ -144,7 +144,7 @@ const StakePoolTable = (): JSX.Element => {
         columns={columns}
         data={data || []}
         isLoading={isLoading}
-      ></ConsoleTable>
+      ></MiningTable>
 
       {/* CreateModal is special */}
       {modalVisible.create && (

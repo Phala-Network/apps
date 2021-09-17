@@ -21,7 +21,7 @@ exports.onCreateWebpackConfig = ({getConfig, actions}) => {
       new NodePolyfillPlugin({
         excludeAliases: [
           'assert',
-          'console',
+          'mining',
           'constants',
           'domain',
           'events',

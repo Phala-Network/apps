@@ -20,7 +20,7 @@ const TableTitle = styled.div`
   font-size: 16px;
   font-weight: bold;
 `
-const ConsoleTable = <D extends Record<string, unknown>>({
+const MiningTable = <D extends Record<string, unknown>>({
   title,
   header,
   ...restProps
@@ -43,4 +43,4 @@ const ConsoleTable = <D extends Record<string, unknown>>({
   )
 }
 
-export default ConsoleTable
+export default MiningTable
