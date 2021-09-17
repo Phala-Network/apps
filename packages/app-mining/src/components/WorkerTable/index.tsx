@@ -2,6 +2,7 @@ import {useWorkers, Worker} from '@phala/react-hooks'
 import {toFixed} from '@phala/utils'
 import {useMemo, useState} from 'react'
 import {Column} from 'react-table'
+import {toast} from 'react-toastify'
 import useFormat from '../../hooks/useFormat'
 import useModalVisible, {ModalKey} from '../../hooks/useModalVisible'
 import useSelfStakePools from '../../hooks/useSelfStakePools'
@@ -10,6 +11,7 @@ import RemoveModal from './RemoveModal'
 import StartModal from './StartModal'
 import StopModal from './StopModal'
 import ItemMenu from '../ItemMenu'
+import useMiningEnabled from '../../hooks/useMiningEnabled'
 
 type TableItem = Worker & {pid: number}
 
@@ -22,6 +24,7 @@ const modalEntries: [ModalKey, (props: WorkerModalProps) => JSX.Element][] = [
 ]
 
 const WorkerTable = (): JSX.Element => {
+  const miningEnabled = useMiningEnabled()
   const {open, close, modalVisible} = useModalVisible()
   const {data} = useSelfStakePools()
   const workersPidMap = useMemo<Record<string, number>>(() => {
@@ -124,8 +127,12 @@ const WorkerTable = (): JSX.Element => {
                   disabled: state !== 'Ready' && state !== 'MiningCoolingDown',
                 },
               ]}
-              onSelect={(key) => {
-                open(key as ModalKey)
+              onClick={(key) => {
+                if (key === 'start' && miningEnabled === false) {
+                  toast.warning('Mining feature not enabled, please wait.')
+                  return
+                }
+                open(key)
                 setSelectedPubkey(worker.pubkey)
               }}
             ></ItemMenu>
@@ -134,7 +141,7 @@ const WorkerTable = (): JSX.Element => {
         disableSortBy: true,
       },
     ],
-    [format, open]
+    [format, open, miningEnabled]
   )
   return (
     <>

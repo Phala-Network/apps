@@ -163,7 +163,7 @@ const MyDelegateTable = (): JSX.Element => {
                 {key: 'delegate', item: 'Delegate'},
                 {key: 'withdraw', item: 'Withdraw'},
               ]}
-              onSelect={(key) => {
+              onClick={(key) => {
                 setPid(stakePool.pid)
                 open(key as ModalKey)
               }}

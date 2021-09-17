@@ -115,7 +115,7 @@ const StakePoolTable = (): JSX.Element => {
                 {key: 'claim', item: 'Claim'},
                 {key: 'setPayoutPref', item: 'Set Payout Pref'},
               ]}
-              onSelect={(key) => {
+              onClick={(key) => {
                 setSelectedPid(stakePool.pid)
                 open(key as ModalKey)
               }}

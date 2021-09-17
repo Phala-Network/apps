@@ -14,14 +14,14 @@ const MoreButton = styled.div`
 
 type Props = {
   items: Array<{key: string; item: string; disabled?: boolean}>
-  onSelect: (key: string) => void
+  onClick: (key: string) => void
 }
 
 const ItemMenu = (props: Props): JSX.Element => (
   <Dropdown
     items={props.items}
-    onSelect={(key) => {
-      props.onSelect(key)
+    onClick={(key) => {
+      props.onClick(key)
     }}
   >
     <MoreButton>
