@@ -10,6 +10,7 @@ import {ErrorBoundary} from 'react-error-boundary'
 import {down} from 'styled-breakpoints'
 import {useBreakpoint} from 'styled-breakpoints/react-styled'
 import {
+  AlertModal,
   Button,
   ErrorText,
   Input,
@@ -19,8 +20,8 @@ import {
   ModalAction,
   ModalActions,
   Spacer,
-  useToast,
 } from '../..'
+import {Link} from '../../Announcement/styledComponents'
 import {StepProps} from '../BridgeProcess'
 import EthereumAllowance from '../EthereumAllowance'
 import FormItem from '../FormItem'
@@ -50,8 +51,9 @@ type Props = {
 } & StepProps
 
 const InputDataStep: React.FC<Props> = (props) => {
+  const [modalVisible, setModalVisible] = useState(false)
   const isMobile = useBreakpoint(down('sm'))
-  const {layout, onNext, onCancel} = props
+  const {layout, onCancel} = props
   const [amountInput, setAmountInput] = useState<number>()
   const [recipient, setRecipient] = useState<string>('')
   const [polkadotAccount] = usePolkadotAccountAtom()
@@ -59,7 +61,7 @@ const InputDataStep: React.FC<Props> = (props) => {
   const [ethereumAccount] = useEthereumAccountAtom()
   const ethereumAccountAddress = ethereumAccount?.address
   const [errorString, setErrorString] = useState('')
-  const {toast} = useToast()
+  // const {toast} = useToast()
 
   const ethereumAccountBalanceDecimal = useEthereumAccountBalanceDecimal(
     ethereumAccountAddress
@@ -116,55 +118,70 @@ const InputDataStep: React.FC<Props> = (props) => {
   }, [currentAddress])
 
   const submit = () => {
-    const accountFrom = isFromEthereum
-      ? ethereumAccountAddress
-      : polkadotAccountAddress
-    const amountTo = amountInput
-    let errorString = ''
+    setModalVisible(true)
+    // const accountFrom = isFromEthereum
+    //   ? ethereumAccountAddress
+    //   : polkadotAccountAddress
+    // const amountTo = amountInput
+    // let errorString = ''
 
-    setErrorString(errorString)
+    // setErrorString(errorString)
 
-    if (!amountTo) {
-      errorString = 'Need enter amount'
-    } else if (!recipient) {
-      errorString = 'Need enter recipient'
-    } else if (!validateAddress(recipient)) {
-      errorString = 'Need enter the correct recipient'
-    } else if (!accountFrom) {
-      errorString = 'Need login'
-    } else if (new Decimal(amountTo).greaterThan(new Decimal(maxAmount))) {
-      errorString = 'Insufficient balance'
-    }
+    // if (!amountTo) {
+    //   errorString = 'Need enter amount'
+    // } else if (!recipient) {
+    //   errorString = 'Need enter recipient'
+    // } else if (!validateAddress(recipient)) {
+    //   errorString = 'Need enter the correct recipient'
+    // } else if (!accountFrom) {
+    //   errorString = 'Need login'
+    // } else if (new Decimal(amountTo).greaterThan(new Decimal(maxAmount))) {
+    //   errorString = 'Insufficient balance'
+    // }
 
-    if (errorString) {
-      isMobile
-        ? toast({
-            text: errorString,
-          })
-        : setErrorString(errorString)
-      return
-    }
+    // if (errorString) {
+    //   isMobile
+    //     ? toast({
+    //         text: errorString,
+    //       })
+    //     : setErrorString(errorString)
+    //   return
+    // }
 
-    onNext({
-      from: {
-        ...tradeTypeSelectValue.from,
-        // NOTE: The code is checked
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        account: accountFrom!,
-        balance: currentBalance,
-      },
-      to: {
-        ...tradeTypeSelectValue.to,
-        account: recipient,
-      },
-      // NOTE: The code is checked
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      amount: new Decimal(amountTo!),
-    })
+    // onNext({
+    //   from: {
+    //     ...tradeTypeSelectValue.from,
+    //     // NOTE: The code is checked
+    //     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    //     account: accountFrom!,
+    //     balance: currentBalance,
+    //   },
+    //   to: {
+    //     ...tradeTypeSelectValue.to,
+    //     account: recipient,
+    //   },
+    //   // NOTE: The code is checked
+    //   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    //   amount: new Decimal(amountTo!),
+    // })
   }
 
   return (
     <>
+      <AlertModal
+        content={
+          <div>
+            Technical upgrade and maintenance, temporarily unavailable. You can
+            contact us on{' '}
+            <Link target="_blank" href="https://discord.com/invite/kpYj9GWjwN">
+              Discord
+            </Link>
+            .
+          </div>
+        }
+        visible={modalVisible}
+        onClose={() => setModalVisible(false)}
+      />
       <div style={{height: 26}}>
         <InputExternalInfo
           label={'Balance'}

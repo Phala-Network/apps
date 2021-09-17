@@ -1,4 +1,6 @@
 import {
+  Announcement,
+  AnnouncementLink,
   InputDataStep,
   InputDataStepResult,
   SubmitStepModal,
@@ -46,6 +48,17 @@ const BridgePage: React.FC = () => {
         <RightContent>
           {/* TODO: need a message api */}
           {/* <Announcement></Announcement> */}
+          <Announcement>
+            Technical upgrade and maintenance, temporarily unavailable. You can
+            contact us on{' '}
+            <AnnouncementLink
+              target="_blank"
+              href="https://discord.com/invite/kpYj9GWjwN"
+            >
+              Discord
+            </AnnouncementLink>
+            .
+          </Announcement>
           <WhiteCard>
             <InputDataStep layout={'flex'} onNext={showSubmitModal} />
 
