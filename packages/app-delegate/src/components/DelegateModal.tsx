@@ -7,10 +7,11 @@ import {
 import {usePolkadotAccountAtom} from '@phala/app-store'
 import Decimal from 'decimal.js'
 import {useCallback, useState} from 'react'
-import {useUserStakeInfo, useAllBalances} from '@phala/react-hooks'
+import {useUserStakeInfo} from '@phala/react-hooks'
 import useWaitSignAndSend from '../hooks/useWaitSignAndSend'
 import ActionModal, {Label, Value} from './ActionModal'
 import useFormat from '../hooks/useFormat'
+import {useDelegableBalance} from '../hooks/useDelegableBalance'
 
 const Extra = styled.div`
   margin-top: 10px;
@@ -19,7 +20,7 @@ const Extra = styled.div`
 
 const DelegateModal = (props: StakePoolModalProps): JSX.Element => {
   const [polkadotAccount] = usePolkadotAccountAtom()
-  const allBalances = useAllBalances(polkadotAccount?.address)
+  const delegableBalance = useDelegableBalance()
   const {onClose, stakePool} = props
   const {api} = useApiPromise()
   const waitSignAndSend = useWaitSignAndSend()
@@ -27,11 +28,7 @@ const DelegateModal = (props: StakePoolModalProps): JSX.Element => {
   const [amount, setAmount] = useState<number | undefined>()
   const {refetch} = useUserStakeInfo(polkadotAccount?.address, stakePool.pid)
   const format = useFormat()
-  const availableBalance = format(
-    allBalances?.availableBalance
-      ? new Decimal(allBalances.availableBalance.toJSON())
-      : null
-  )
+
   const capGap =
     stakePool.cap === null
       ? '∞'
@@ -75,7 +72,7 @@ const DelegateModal = (props: StakePoolModalProps): JSX.Element => {
         onChange={onInputChange}
         after="PHA"
       ></InputNumber>
-      <Extra>Transferrable: {availableBalance}</Extra>
+      <Extra>Delegable Balance: {format(delegableBalance)}</Extra>
       <Extra>Cap Gap: {capGap}</Extra>
     </ActionModal>
   )
