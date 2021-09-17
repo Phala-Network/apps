@@ -1,7 +1,7 @@
 import {useCallback, useMemo, useState} from 'react'
 import {Column} from 'react-table'
 import styled from 'styled-components'
-import {Input, Table, Checkbox} from '@phala/react-components'
+import {Input, Table} from '@phala/react-components'
 import {StakePool, useStakePools, useIsMobile} from '@phala/react-hooks'
 import {toFixed} from '@phala/utils'
 import {Row} from 'react-table'
@@ -37,7 +37,7 @@ const MainTable = (): JSX.Element => {
   const isMobile = useIsMobile()
   const {getAPR, getProportion} = useGetARP()
   const [filterPid, setFilterPid] = useState<string>('')
-  const [showPoolWithWorkers, setShowPoolWithWorkers] = useState<boolean>(false)
+  const [showPoolWithWorkers] = useState<boolean>(false)
   const [pid, setPid] = useState<number | null>(null)
   const format = useFormat()
   const {data, isFetching, refetch} = useStakePools()
@@ -125,12 +125,12 @@ const MainTable = (): JSX.Element => {
     <Wrapper>
       <Filter>
         <Input onChange={setFilterPid} placeholder="Search Pid"></Input>
-        <Checkbox
+        {/* <Checkbox
           checked={showPoolWithWorkers}
           onChange={setShowPoolWithWorkers}
         >
           Pool with workers
-        </Checkbox>
+        </Checkbox> */}
       </Filter>
 
       <Table

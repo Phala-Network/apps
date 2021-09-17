@@ -45,7 +45,7 @@ const Banner = (): JSX.Element => {
   return (
     <Wrapper>
       <Content>
-        Locked: <span>{locked}</span>
+        Total Staked: <span>{locked}</span>
       </Content>
       <Link to="/delegate/my-delegate/">
         <Button size="small">My Delegate</Button>
