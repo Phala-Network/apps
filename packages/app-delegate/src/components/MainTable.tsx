@@ -81,7 +81,7 @@ const MainTable = (): JSX.Element => {
         },
       },
       {
-        Header: 'Cap Gap',
+        Header: 'Remaining',
         accessor: (stakePool) =>
           stakePool.cap === null
             ? '∞'
