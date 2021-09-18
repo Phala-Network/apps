@@ -10,9 +10,16 @@ import ActionButton from './ActionButton'
 import useFormat from '../hooks/useFormat'
 import useModalVisible from '../hooks/useModalVisible'
 import useGetARP from '../hooks/useGetAPR'
+import useIdentities from '../hooks/useIdentities'
+import {abridgeString} from '@phala/utils'
 
 const Wrapper = styled.div`
   tbody {
+    a {
+      color: inherit;
+      text-decoration: underline;
+    }
+
     td:not(:last-child) {
       font-family: PT Mono, monospace;
     }
@@ -30,7 +37,8 @@ const Filter = styled.div`
 
 const MainTable = (): JSX.Element => {
   const isMobile = useIsMobile()
-  const {getAPR, getProportion} = useGetARP()
+  const identities = useIdentities()
+  const {getAPR} = useGetARP()
   const [filterPid, setFilterPid] = useState<string>('')
   const [showPoolWithWorkers] = useState<boolean>(false)
   const [pid, setPid] = useState<number | null>(null)
@@ -49,6 +57,21 @@ const MainTable = (): JSX.Element => {
       {
         Header: 'pid',
         accessor: 'pid',
+      },
+      {
+        Header: 'Owner',
+        accessor: ({owner}) => {
+          const display = identities?.[owner] || abridgeString(owner)
+          return (
+            <a
+              href={`https://khala.subscan.io/account/${owner}`}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {display}
+            </a>
+          )
+        },
       },
       {
         Header: 'APR',
@@ -114,7 +137,7 @@ const MainTable = (): JSX.Element => {
       },
     ]
     return columns.filter(Boolean) as Column<StakePool>[]
-  }, [format, open, getAPR, getProportion, isMobile])
+  }, [format, open, getAPR, isMobile, identities])
 
   return (
     <Wrapper>
