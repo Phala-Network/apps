@@ -18,9 +18,16 @@ import ItemMenu from './ItemMenu'
 import ClaimModal from './ClaimModal'
 import DelegateModal from './DelegateModal'
 import WithdrawModal from './WithdrawModal'
+import useIdentities from '../hooks/useIdentities'
+import {abridgeString} from '@phala/utils'
 
 const Wrapper = styled.div`
   tbody {
+    a {
+      color: inherit;
+      text-decoration: underline;
+    }
+
     td:not(:last-child) {
       font-family: PT Mono, monospace;
     }
@@ -36,6 +43,7 @@ const modalEntries: [ModalKey, (props: StakePoolModalProps) => JSX.Element][] =
 
 const MyDelegateTable = (): JSX.Element => {
   const isMobile = useIsMobile()
+  const identities = useIdentities()
   const {getAPR, getProportion} = useGetARP()
   const [pid, setPid] = useState<number | null>(null)
   const format = useFormat()
@@ -68,6 +76,21 @@ const MyDelegateTable = (): JSX.Element => {
   const columns = useMemo<Column<StakePool>[]>(() => {
     const columns: (Column<StakePool> | boolean)[] = [
       {Header: 'pid', accessor: 'pid'},
+      {
+        Header: 'Owner',
+        accessor: ({owner}) => {
+          const display = identities?.[owner] || abridgeString(owner)
+          return (
+            <a
+              href={`https://khala.subscan.io/account/${owner}`}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {display}
+            </a>
+          )
+        },
+      },
       !isMobile && {
         Header: 'Commission',
         accessor: (stakePool) =>
