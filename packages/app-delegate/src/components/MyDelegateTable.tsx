@@ -73,16 +73,16 @@ const MyDelegateTable = (): JSX.Element => {
         accessor: (stakePool) =>
           `${toFixed(stakePool.payoutCommission.div(10 ** 4), 2)}%`,
       },
-      !isMobile && {
-        Header: 'Reward Proportion',
-        accessor: (stakePool) => {
-          const proportion = getProportion(stakePool)
-          if (proportion) {
-            return `${toFixed(proportion.mul(100), 2)}%`
-          }
-          return '-'
-        },
-      },
+      // !isMobile && {
+      //   Header: 'Reward Proportion',
+      //   accessor: (stakePool) => {
+      //     const proportion = getProportion(stakePool)
+      //     if (proportion) {
+      //       return `${toFixed(proportion.mul(100), 2)}%`
+      //     }
+      //     return '-'
+      //   },
+      // },
       !isMobile && {
         Header: 'APR',
         accessor: (stakePool) => {

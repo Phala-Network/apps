@@ -64,16 +64,16 @@ const MainTable = (): JSX.Element => {
             ? '∞'
             : format(stakePool.cap.sub(stakePool.totalStake)),
       },
-      !isMobile && {
-        Header: 'Reward Proportion',
-        accessor: (stakePool) => {
-          const proportion = getProportion(stakePool)
-          if (proportion) {
-            return `${toFixed(proportion.mul(100), 2)}%`
-          }
-          return '-'
-        },
-      },
+      // !isMobile && {
+      //   Header: 'Reward Proportion',
+      //   accessor: (stakePool) => {
+      //     const proportion = getProportion(stakePool)
+      //     if (proportion) {
+      //       return `${toFixed(proportion.mul(100), 2)}%`
+      //     }
+      //     return '-'
+      //   },
+      // },
       !isMobile && {
         Header: 'Commission',
         accessor: (stakePool) =>

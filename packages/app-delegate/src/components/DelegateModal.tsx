@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import {InputNumber} from '@phala/react-components'
+import {Alert, InputNumber} from '@phala/react-components'
 import {
   useApiPromise,
   useDecimalJsTokenDecimalMultiplier,
@@ -72,6 +72,7 @@ const DelegateModal = (props: StakePoolModalProps): JSX.Element => {
         onChange={onInputChange}
         after="PHA"
       ></InputNumber>
+      <Alert style={{marginTop: 10}}>Please reserve about 1 PHA fee.</Alert>
       <Extra>Delegable Balance: {format(delegableBalance)}</Extra>
       <Extra>Cap Gap: {capGap}</Extra>
     </ActionModal>
