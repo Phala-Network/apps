@@ -95,7 +95,7 @@ const StartModal = (props: WorkerModalProps): JSX.Element => {
 
       <Extra>Smin: {sMin}</Extra>
       <Extra>Smax: {sMax}</Extra>
-      <Extra>Pool Free Stake: {poolFreeStake}</Extra>
+      <Extra>Pool Free Delegation: {poolFreeStake}</Extra>
     </ActionModal>
   )
 }

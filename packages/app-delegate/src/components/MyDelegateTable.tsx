@@ -122,7 +122,7 @@ const MyDelegateTable = (): JSX.Element => {
         accessor: (stakePool) => format(stakePool.releasingStake),
       },
       !isMobile && {
-        Header: 'Cap Gap',
+        Header: 'Remaining',
         accessor: (stakePool) =>
           stakePool.cap === null
             ? '∞'

@@ -28,7 +28,7 @@ const DelegateModal = (props: StakePoolModalProps): JSX.Element => {
   const {refetch} = useSelfUserStakeInfo(stakePool.pid)
   const format = useFormat()
 
-  const capGap =
+  const remaining =
     stakePool.cap === null
       ? '∞'
       : format(stakePool.cap.sub(stakePool.totalStake))
@@ -73,7 +73,7 @@ const DelegateModal = (props: StakePoolModalProps): JSX.Element => {
       ></InputNumber>
       <Alert style={{marginTop: 10}}>Please reserve about 1 PHA fee.</Alert>
       <Extra>Delegable Balance: {format(delegableBalance)}</Extra>
-      <Extra>Cap Gap: {capGap}</Extra>
+      <Extra>Pool Remaining: {remaining}</Extra>
     </ActionModal>
   )
 }
