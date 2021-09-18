@@ -100,7 +100,7 @@ const WorkerTable = (): JSX.Element => {
         },
       },
       {
-        Header: 'Minted',
+        Header: 'Mined',
         accessor: (worker) => format(worker.miner?.stats.totalReward),
       },
       {
