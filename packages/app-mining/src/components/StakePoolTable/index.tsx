@@ -74,7 +74,7 @@ const StakePoolTable = (): JSX.Element => {
           `${toFixed(stakePool.payoutCommission.div(10 ** 4), 2)}%`,
       },
       {
-        Header: 'Cap Gap',
+        Header: 'Remaining',
         accessor: (stakePool) =>
           stakePool.cap === null
             ? '∞'
@@ -85,11 +85,11 @@ const StakePoolTable = (): JSX.Element => {
         accessor: (stakePool) => format(stakePool.ownerReward),
       },
       {
-        Header: 'Total Stake',
+        Header: 'Delegated',
         accessor: (stakePool) => format(stakePool.totalStake),
       },
       {
-        Header: 'Free Stake',
+        Header: 'Free Delegation',
         accessor: (stakePool) => format(stakePool.freeStake),
       },
       {
@@ -106,7 +106,7 @@ const StakePoolTable = (): JSX.Element => {
                 open('stakeInfo')
               }}
             >
-              Stake Info
+              Info
             </DetailButton>
             <ItemMenu
               items={[

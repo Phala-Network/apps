@@ -29,7 +29,7 @@ const StakeInfoModal = (props: StakePoolModalProps): JSX.Element => {
   const {data: gracePeriod} = useGracePeriod()
   const withdrawQueueColumns = useMemo<Column<WithdrawQueue>[]>(
     () => [
-      {Header: 'Staker', accessor: 'user'},
+      {Header: 'Delegator', accessor: 'user'},
       {
         Header: 'Shares',
         accessor: (queue) => format(queue.shares, {unit: null}),
@@ -77,14 +77,14 @@ const StakeInfoModal = (props: StakePoolModalProps): JSX.Element => {
           <Value>{format(stakePool.totalShares, {unit: null})}</Value>
         </div>
         <div>
-          <Label>Total Stake</Label>
+          <Label>Delegated</Label>
           <Value>{format(stakePool.totalStake)}</Value>
         </div>
       </Line>
 
       <Line>
         <div>
-          <Label>Free Stake</Label>
+          <Label>Free Delegation</Label>
           <Value>{format(stakePool.freeStake)}</Value>
         </div>
         <div>
@@ -103,12 +103,8 @@ const StakeInfoModal = (props: StakePoolModalProps): JSX.Element => {
 
       <Line>
         <div>
-          <Label>Your Locked</Label>
+          <Label>Your Delegation</Label>
           <Value>{format(userStakeInfo?.locked)}</Value>
-        </div>
-        <div>
-          <Label>Your Shares</Label>
-          <Value>{format(userStakeInfo?.shares, {unit: null})}</Value>
         </div>
       </Line>
     </Modal>
