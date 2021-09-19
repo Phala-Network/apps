@@ -14,6 +14,7 @@
     "prepublishOnly": "run-s lint build"
   },
   "dependencies": {
+    "@polkadot/keyring": "^7.4.1",
     "@polkadot/util": "^6.11.1",
     "@polkadot/util-crypto": "^6.11.1",
     "@types/node": "^16.7.13",

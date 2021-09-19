@@ -1,9 +1,13 @@
-import {validateAddress} from '@polkadot/util-crypto'
+import {decodeAddress, encodeAddress} from '@polkadot/keyring'
+import {hexToU8a, isHex} from '@polkadot/util'
 
-export default function (address: string): boolean {
+// https://polkadot.js.org/docs/util-crypto/examples/validate-address
+export default (address: string): boolean => {
   try {
-    return validateAddress(address)
-  } catch (e) {
+    encodeAddress(isHex(address) ? hexToU8a(address) : decodeAddress(address))
+
+    return true
+  } catch (error) {
     return false
   }
 }
