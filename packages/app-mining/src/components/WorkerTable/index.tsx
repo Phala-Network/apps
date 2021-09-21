@@ -82,12 +82,20 @@ const WorkerTable = (): JSX.Element => {
             : toFixed(worker.miner.v),
       },
       {
-        Header: 'P',
+        Header: 'P Instant',
         accessor: (worker) =>
           worker.miner?.state === 'Ready' ||
           typeof worker.miner?.benchmark.pInstant !== 'number'
             ? '-'
             : worker.miner.benchmark.pInstant,
+      },
+      {
+        Header: 'P Initial',
+        accessor: (worker) =>
+          worker.miner?.state === 'Ready' ||
+          typeof worker.miner?.benchmark.pInit !== 'number'
+            ? '-'
+            : worker.miner.benchmark.pInit,
       },
       {
         Header: 'state',
