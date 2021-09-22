@@ -88,14 +88,16 @@ const MyDelegateTable = (): JSX.Element => {
           const display = identities?.[owner]?.display || abridgeString(owner)
           const verified = identities?.[owner]?.verified || false
           return (
-            <a
-              href={`https://khala.subscan.io/account/${owner}`}
-              target="_blank"
-              rel="noreferrer"
-            >
-              {display}
-              {verified && '(Verified)'}
-            </a>
+            <span>
+              <a
+                href={`https://khala.subscan.io/account/${owner}`}
+                target="_blank"
+                rel="noreferrer"
+              >
+                {display}
+              </a>
+              {verified && ' ✅'}
+            </span>
           )
         },
       },

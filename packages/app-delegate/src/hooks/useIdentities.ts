@@ -25,7 +25,9 @@ const useIdentities = () => {
               key.toHuman(),
               {
                 display: hexToUtf8(data.info.display.raw),
-                verified: data.judgements[0]?.[1].knownGood === null,
+                verified:
+                  data.judgements[0]?.[1].knownGood === null ||
+                  data.judgements[0]?.[1].reasonable === null,
               },
             ]
           })
