@@ -70,7 +70,13 @@ const MyDelegateTable = (): JSX.Element => {
 
   const myDelegate = useMemo<StakePool[]>(() => {
     if (!stakePools || !userStakeInfo) return []
-    return stakePools.filter((pool) => userStakeInfo[pool.pid]?.shares.isZero())
+    return stakePools.filter((pool) => {
+      const poolUserStakeInfo = userStakeInfo[pool.pid]
+      if (poolUserStakeInfo) {
+        return !poolUserStakeInfo.shares.isZero()
+      }
+      return false
+    })
   }, [stakePools, userStakeInfo])
 
   const columns = useMemo<Column<StakePool>[]>(() => {
