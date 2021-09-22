@@ -39,32 +39,36 @@ function useUserStakeInfo(
 ): UseQueryResult<UserStakeInfo | Record<number, UserStakeInfo> | null> {
   const {api, endpoint} = useApiPromise()
 
-  return useQuery(['poolStaker', endpoint, pid, address], async () => {
-    if (!api || !address) return null
+  return useQuery(
+    ['poolStaker', endpoint, pid, address],
+    async () => {
+      if (!api || !address) return null
 
-    if (typeof pid === 'number') {
-      const userStakeInfo = await api.query.phalaStakePool
-        ?.poolStakers?.([pid, address])
-        .then((value) => value.toJSON() as UserStakeInfoJson)
-        .then((json) => json && transformJson(json))
+      if (typeof pid === 'number') {
+        const userStakeInfo = await api.query.phalaStakePool
+          ?.poolStakers?.([pid, address])
+          .then((value) => value.toJSON() as UserStakeInfoJson)
+          .then((json) => json && transformJson(json))
 
-      return userStakeInfo ?? null
-    }
+        return userStakeInfo ?? null
+      }
 
-    const entries = await api.query.phalaStakePool?.poolStakers?.entries()
-    if (!entries) return null
+      const entries = await api.query.phalaStakePool?.poolStakers?.entries()
+      if (!entries) return null
 
-    return Object.fromEntries(
-      entries
-        .filter(
-          (entry) => (entry[0].toHuman() as string[][])[0]?.[1] === address
-        )
-        .map((entry) => [
-          Number((entry[0].toHuman() as string[][])[0]?.[0]),
-          transformJson(entry[1].toJSON() as UserStakeInfoJson),
-        ])
-    )
-  })
+      return Object.fromEntries(
+        entries
+          .filter(
+            (entry) => (entry[0].toHuman() as string[][])[0]?.[1] === address
+          )
+          .map((entry) => [
+            Number((entry[0].toHuman() as string[][])[0]?.[0]),
+            transformJson(entry[1].toJSON() as UserStakeInfoJson),
+          ])
+      )
+    },
+    {refetchOnMount: false}
+  )
 }
 
 export default useUserStakeInfo

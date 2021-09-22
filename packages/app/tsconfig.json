@@ -12,10 +12,12 @@
   "include": ["./src/**/*.ts", "./src/**/*.tsx"],
   "references": [
     {"path": "../app-analytics"},
+    {"path": "../app-config"},
+    {"path": "../app-types"},
+    {"path": "../app-mining"},
     {"path": "../app-assets"},
     {"path": "../app-bridge"},
     {"path": "../app-config"},
-    {"path": "../app-console"},
     {"path": "../app-data-analytics"},
     {"path": "../app-store"},
     {"path": "../app-types"},

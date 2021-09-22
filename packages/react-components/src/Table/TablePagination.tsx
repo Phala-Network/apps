@@ -100,6 +100,7 @@ const TablePagination: React.FC<Props> = (props) => {
         type="number"
         value={value}
         onChange={onChange}
+        onBlur={() => setValue(String(pageIndex + 1))}
         onKeyDown={onKeyDown}
         width={30}
         height={20}

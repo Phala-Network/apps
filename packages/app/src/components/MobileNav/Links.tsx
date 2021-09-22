@@ -25,6 +25,7 @@ const Links: React.FC = () => {
     <Wrapper>
       <Link to="/">Assets</Link>
       <Link to="/bridge/">Bridge</Link>
+      <Link to="/delegate/">Delegate</Link>
     </Wrapper>
   )
 }

@@ -53,7 +53,7 @@ export const Style = createGlobalStyle`
   .rc-dropdown-menu > .rc-dropdown-menu-item-active,
   .rc-dropdown-menu > .rc-dropdown-menu-item-selected {
     font-weight: bold;
-    background-color: ${(props) => props.theme.colors.phala};
+    background-color: #D1FF52;
   }
   .rc-dropdown-menu > .rc-dropdown-menu-item-selected {
     position: relative;
