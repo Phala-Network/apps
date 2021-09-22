@@ -44,7 +44,7 @@ const modalEntries: [ModalKey, (props: StakePoolModalProps) => JSX.Element][] =
 const MyDelegateTable = (): JSX.Element => {
   const isMobile = useIsMobile()
   const identities = useIdentities()
-  const {getAPR, getProportion} = useGetARP()
+  const {getAPR} = useGetARP()
   const [pid, setPid] = useState<number | null>(null)
   const format = useFormat()
   const [polkadotAccount] = usePolkadotAccountAtom()
@@ -70,7 +70,7 @@ const MyDelegateTable = (): JSX.Element => {
 
   const myDelegate = useMemo<StakePool[]>(() => {
     if (!stakePools || !userStakeInfo) return []
-    return stakePools.filter((pool) => userStakeInfo[pool.pid])
+    return stakePools.filter((pool) => userStakeInfo[pool.pid]?.shares.isZero())
   }, [stakePools, userStakeInfo])
 
   const columns = useMemo<Column<StakePool>[]>(() => {
@@ -201,8 +201,9 @@ const MyDelegateTable = (): JSX.Element => {
     polkadotAccount?.address,
     open,
     getAPR,
-    getProportion,
+    // getProportion,
     isMobile,
+    identities,
   ])
 
   return (
