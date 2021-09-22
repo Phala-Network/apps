@@ -31,8 +31,11 @@ const StakeInfoModal = (props: StakePoolModalProps): JSX.Element => {
     () => [
       {Header: 'Delegator', accessor: 'user'},
       {
-        Header: 'Shares',
-        accessor: (queue) => format(queue.shares, {unit: null}),
+        Header: 'Delegation',
+        accessor: (queue) =>
+          format(
+            queue.shares.mul(stakePool.totalStake).div(stakePool.totalShares)
+          ),
       },
       {
         Header: 'Countdown',
@@ -50,7 +53,7 @@ const StakeInfoModal = (props: StakePoolModalProps): JSX.Element => {
         },
       },
     ],
-    [format, gracePeriod]
+    [format, gracePeriod, stakePool]
   )
 
   return (

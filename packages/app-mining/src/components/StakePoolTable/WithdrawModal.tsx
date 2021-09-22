@@ -23,11 +23,15 @@ const WithdrawModal = (props: StakePoolModalProps): JSX.Element => {
       return waitSignAndSend(
         api.tx.phalaStakePool?.withdraw?.(
           stakePool.pid,
-          new Decimal(amount).mul(decimals).toString()
+          new Decimal(amount)
+            .mul(decimals)
+            .mul(stakePool.totalShares)
+            .div(stakePool.totalStake)
+            .toString()
         )
       )
     }
-  }, [api, waitSignAndSend, stakePool.pid, amount, decimals])
+  }, [api, waitSignAndSend, stakePool, amount, decimals])
   const onInputChange = useCallback((value) => {
     const number = parseFloat(value)
     if (typeof number === 'number') {
@@ -47,7 +51,7 @@ const WithdrawModal = (props: StakePoolModalProps): JSX.Element => {
     >
       <Label>pid</Label>
       <Value>{stakePool.pid}</Value>
-      <Label>Shares</Label>
+      <Label>Delegation</Label>
       <InputNumber
         type="number"
         placeholder="Amount"
