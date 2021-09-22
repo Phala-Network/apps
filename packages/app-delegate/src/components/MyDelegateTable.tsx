@@ -79,7 +79,8 @@ const MyDelegateTable = (): JSX.Element => {
       {
         Header: 'Owner',
         accessor: ({owner}) => {
-          const display = identities?.[owner] || abridgeString(owner)
+          const display = identities?.[owner]?.display || abridgeString(owner)
+          const verified = identities?.[owner]?.verified || false
           return (
             <a
               href={`https://khala.subscan.io/account/${owner}`}
@@ -87,6 +88,7 @@ const MyDelegateTable = (): JSX.Element => {
               rel="noreferrer"
             >
               {display}
+              {verified && '(Verified)'}
             </a>
           )
         },
