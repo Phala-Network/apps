@@ -44,7 +44,7 @@ module.exports = {
         path: `${__dirname}/src/i18n`,
         languages: [`en`, `zh`],
         defaultLanguage: `en`,
-        redirect: false,
+        redirect: true,
       },
     },
     `gatsby-plugin-react-helmet`,
