@@ -23,7 +23,7 @@ const LangSwitch: React.FC = () => {
   const langSwitch =
     locale === 'en' ? (
       <Text>
-        可用语言:
+        <span>可用语言: </span>
         <Lang
           onClick={() => {
             i18n.changeLanguage('zh')
@@ -35,7 +35,7 @@ const LangSwitch: React.FC = () => {
       </Text>
     ) : (
       <Text>
-        Available in:
+        <span>Available in: </span>
         <Lang
           onClick={() => {
             i18n.changeLanguage('en')
