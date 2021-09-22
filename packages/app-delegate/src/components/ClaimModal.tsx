@@ -1,6 +1,6 @@
 import Decimal from 'decimal.js'
 import {usePolkadotAccountAtom} from '@phala/app-store'
-import {Input} from '@phala/react-components'
+import {Input, InputAction} from '@phala/react-components'
 import {useApiPromise} from '@phala/react-libs'
 import {useCallback, useMemo, useState} from 'react'
 import useFormat from '../hooks/useFormat'
@@ -54,7 +54,17 @@ const ClaimModal = (props: StakePoolModalProps): JSX.Element => {
       <Label>Rewards</Label>
       <Value>{rewards}</Value>
       <Label>Target Address</Label>
-      <Input value={address} onChange={onInputChange}></Input>
+      <Input
+        value={address}
+        onChange={onInputChange}
+        after={
+          <InputAction
+            onClick={() => setAddress(polkadotAccount?.address || '')}
+          >
+            MY ADDRESS
+          </InputAction>
+        }
+      ></Input>
     </ActionModal>
   )
 }

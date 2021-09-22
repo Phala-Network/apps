@@ -1,4 +1,5 @@
-import {Input} from '@phala/react-components'
+import {usePolkadotAccountAtom} from '@phala/app-store'
+import {Input, InputAction} from '@phala/react-components'
 import {useApiPromise} from '@phala/react-libs'
 import {useCallback, useMemo, useState} from 'react'
 import {StakePoolModalProps} from '.'
@@ -9,6 +10,7 @@ import ActionModal, {Label, Value} from '../ActionModal'
 
 const ClaimModal = (props: StakePoolModalProps): JSX.Element => {
   const {onClose, stakePool} = props
+  const [polkadotAccount] = usePolkadotAccountAtom()
   const {api} = useApiPromise()
   const format = useFormat()
   const waitSignAndSend = useWaitSignAndSend()
@@ -48,7 +50,17 @@ const ClaimModal = (props: StakePoolModalProps): JSX.Element => {
       <Label>Rewards</Label>
       <Value>{rewards}</Value>
       <Label>Target Address</Label>
-      <Input value={address} onChange={onInputChange}></Input>
+      <Input
+        value={address}
+        onChange={onInputChange}
+        after={
+          <InputAction
+            onClick={() => setAddress(polkadotAccount?.address || '')}
+          >
+            MY ADDRESS
+          </InputAction>
+        }
+      ></Input>
     </ActionModal>
   )
 }
