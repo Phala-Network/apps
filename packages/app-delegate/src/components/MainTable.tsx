@@ -50,6 +50,7 @@ const MainTable = (): JSX.Element => {
   const [filterPid, setFilterPid] = useState<string>('')
   const [showPoolWithWorkers, setShowPoolWithWorkers] = useState<boolean>(true)
   const [showHasAPR, setShowHasAPR] = useState<boolean>(false)
+  const [showHasRemaining, setShowHasRemaining] = useState<boolean>(true)
   const [showNotMaxCommission, setShowNotMaxCommission] =
     useState<boolean>(true)
   const [pid, setPid] = useState<number | null>(null)
@@ -112,6 +113,19 @@ const MainTable = (): JSX.Element => {
           stakePool.cap === null
             ? '∞'
             : format(stakePool.cap.sub(stakePool.totalStake)),
+        filter: (
+          rows: Row<StakePool>[],
+          columnIds: string[],
+          filterValue: boolean
+        ) => {
+          return filterValue
+            ? rows.filter(
+                (row) =>
+                  row.values.Remaining !== '0 PHA' &&
+                  row.values.Remaining !== '-'
+              )
+            : rows
+        },
       },
       // !isMobile && {
       //   Header: 'Reward Proportion',
@@ -193,6 +207,9 @@ const MainTable = (): JSX.Element => {
         >
           {'Commission < 100%'}
         </Checkbox>
+        <Checkbox checked={showHasRemaining} onChange={setShowHasRemaining}>
+          {'Remaining > 0'}
+        </Checkbox>
       </Filter>
 
       <Table
@@ -210,8 +227,9 @@ const MainTable = (): JSX.Element => {
               {id: 'pid', value: filterPid},
               {id: 'APR', value: showHasAPR},
               {id: 'Commission', value: showNotMaxCommission},
+              {id: 'Remaining', value: showHasRemaining},
             ].filter(Boolean),
-          [filterPid, showHasAPR, showNotMaxCommission]
+          [filterPid, showHasAPR, showNotMaxCommission, showHasRemaining]
         )}
         globalFilterValue={showPoolWithWorkers}
         globalFilter={useCallback(
