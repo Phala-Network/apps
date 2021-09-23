@@ -15,7 +15,16 @@ import theme from './theme'
 
 const WrapApp: React.FC = ({children}) => {
   const customEndpoint = useCustomEndpoint()
-  const client = useRef(new QueryClient())
+  const client = useRef(
+    new QueryClient({
+      defaultOptions: {
+        queries: {
+          refetchOnMount: false,
+          refetchOnWindowFocus: false,
+        },
+      },
+    })
+  )
 
   const defaultNetwork =
     process.env['GATSBY_DEFAULT_NETWORK'] ||

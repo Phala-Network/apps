@@ -1,10 +1,18 @@
 import {usePolkadotAccountAtom} from '@phala/app-store'
 import {useStakePools} from '@phala/react-hooks'
-import {isDev} from '@phala/utils'
 
 const useSelfStakePools = (): ReturnType<typeof useStakePools> => {
   const [polkadotAccount] = usePolkadotAccountAtom()
-  return useStakePools(isDev() ? undefined : polkadotAccount?.address)
+  return useStakePools({
+    select: (stakePools) => {
+      if (!polkadotAccount || !stakePools) return null
+
+      return stakePools.filter(
+        (stakePool) => stakePool.owner === polkadotAccount.address
+      )
+    },
+    enabled: Boolean(polkadotAccount?.address),
+  })
 }
 
 export default useSelfStakePools

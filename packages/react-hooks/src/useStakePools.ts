@@ -32,16 +32,21 @@ export type StakePool = {
   workers: string[]
 }
 
+type Options = {
+  select: (stakePools: StakePool[] | null) => StakePool[] | null
+  enabled?: boolean
+}
+
 const useStakePools = (
-  address?: string
+  options?: Options
 ): UseQueryResult<StakePool[] | null> => {
   const {api, endpoint} = useApiPromise()
 
   return useQuery(
-    ['stakePools', endpoint, address],
+    ['stakePools', endpoint],
     async () => {
       if (!api) return null
-      let stakePools = await api.query.phalaStakePool?.stakePools
+      const stakePools = await api.query.phalaStakePool?.stakePools
         ?.entries()
         .then((entries) =>
           entries.map((entry) => entry[1].toJSON() as StakePoolJSON)
@@ -49,9 +54,6 @@ const useStakePools = (
 
       if (!stakePools) return null
 
-      if (address) {
-        stakePools = stakePools.filter(({owner}) => owner === address)
-      }
       return stakePools
         .sort((a, b) => a.pid - b.pid)
         .map((json) => {
@@ -73,7 +75,7 @@ const useStakePools = (
         })
     },
 
-    {refetchOnMount: false}
+    {refetchOnMount: false, ...options}
   )
 }
 
