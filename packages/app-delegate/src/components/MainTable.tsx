@@ -27,15 +27,19 @@ const Wrapper = styled.div`
 `
 const Filter = styled.div`
   display: flex;
+  flex-wrap: wrap;
   margin-bottom: 20px;
+  margin-right: -20px;
+  margin-top: -20px;
 
   & > *:first-child {
     width: 300px;
     flex-shrink: 1;
   }
 
-  & > * + * {
-    margin-left: 20px;
+  & > * {
+    margin-right: 20px;
+    margin-top: 20px;
   }
 `
 
@@ -45,6 +49,9 @@ const MainTable = (): JSX.Element => {
   const {getAPR} = useGetARP()
   const [filterPid, setFilterPid] = useState<string>('')
   const [showPoolWithWorkers, setShowPoolWithWorkers] = useState<boolean>(true)
+  const [showHasAPR, setShowHasAPR] = useState<boolean>(false)
+  const [showNotMaxCommission, setShowNotMaxCommission] =
+    useState<boolean>(true)
   const [pid, setPid] = useState<number | null>(null)
   const format = useFormat()
   const {data, isFetching, refetch} = useStakePools()
@@ -87,6 +94,17 @@ const MainTable = (): JSX.Element => {
           const APR = getAPR(stakePool)
           return APR ? `${toFixed(APR.mul(100), 2)}%` : '-'
         },
+        filter: (
+          rows: Row<StakePool>[],
+          columnIds: string[],
+          filterValue: boolean
+        ) => {
+          return filterValue
+            ? rows.filter(
+                (row) => row.values.APR !== '0%' && row.values.APR !== '-'
+              )
+            : rows
+        },
       },
       {
         Header: 'Remaining',
@@ -109,6 +127,15 @@ const MainTable = (): JSX.Element => {
         Header: 'Commission',
         accessor: (stakePool) =>
           `${toFixed(stakePool.payoutCommission.div(10 ** 4), 2)}%`,
+        filter: (
+          rows: Row<StakePool>[],
+          columnIds: string[],
+          filterValue: boolean
+        ) => {
+          return filterValue
+            ? rows.filter((row) => row.values.Commission !== '100%')
+            : rows
+        },
       },
       !isMobile && {
         Header: 'Delegated',
@@ -157,6 +184,15 @@ const MainTable = (): JSX.Element => {
         >
           Pool with workers
         </Checkbox>
+        <Checkbox checked={showHasAPR} onChange={setShowHasAPR}>
+          {'APR > 0%'}
+        </Checkbox>
+        <Checkbox
+          checked={showNotMaxCommission}
+          onChange={setShowNotMaxCommission}
+        >
+          {'Commission < 100%'}
+        </Checkbox>
       </Filter>
 
       <Table
@@ -168,7 +204,15 @@ const MainTable = (): JSX.Element => {
         autoResetPage={false}
         isLoading={isFetching}
         columns={columns}
-        filters={[{id: 'pid', value: filterPid}]}
+        filters={useMemo(
+          () =>
+            [
+              {id: 'pid', value: filterPid},
+              {id: 'APR', value: showHasAPR},
+              {id: 'Commission', value: showNotMaxCommission},
+            ].filter(Boolean),
+          [filterPid, showHasAPR, showNotMaxCommission]
+        )}
         globalFilterValue={showPoolWithWorkers}
         globalFilter={useCallback(
           (
