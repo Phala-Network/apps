@@ -160,9 +160,9 @@ export const Table = <D extends Record<string, unknown>>(
           )}
         </table>
 
-        {props.data.length ? null : isLoading ? (
+        {isLoading ? (
           <Placeholder>Loading…</Placeholder>
-        ) : (
+        ) : props.data.length ? null : (
           <Placeholder>No Data</Placeholder>
         )}
       </TableWrapper>

@@ -46,7 +46,7 @@ const Filter = styled.div`
 const MainTable = (): JSX.Element => {
   const isMobile = useIsMobile()
   const identities = useIdentities()
-  const {getAPR} = useGetARP()
+  const {getAPR, isLoading: isAPRLoading} = useGetARP()
   const [filterPid, setFilterPid] = useState<string>('')
   const [showPoolWithWorkers, setShowPoolWithWorkers] = useState<boolean>(true)
   const [showHasAPR, setShowHasAPR] = useState<boolean>(false)
@@ -55,7 +55,7 @@ const MainTable = (): JSX.Element => {
     useState<boolean>(true)
   const [pid, setPid] = useState<number | null>(null)
   const format = useFormat()
-  const {data, isFetching, refetch} = useStakePools()
+  const {data, isLoading, refetch} = useStakePools()
   const {modalVisible, open, close} = useModalVisible()
   const activeStakePool = useMemo<StakePool | null>(
     () =>
@@ -219,7 +219,7 @@ const MainTable = (): JSX.Element => {
         initialState={{pageSize: 20}}
         data={data || []}
         autoResetPage={false}
-        isLoading={isFetching}
+        isLoading={isLoading || (showHasAPR && isAPRLoading)}
         columns={columns}
         filters={useMemo(
           () =>

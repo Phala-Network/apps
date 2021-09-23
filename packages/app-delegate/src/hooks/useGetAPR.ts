@@ -29,8 +29,9 @@ const getWorkerShare = (worker: Worker) => {
 }
 
 const useGetARP = () => {
-  const {data: tokenomicParameters} = useTokenomicParameters()
-  const {data: allWorkers} = useWorkers()
+  const {data: tokenomicParameters, isLoading: isTokenomicParametersLoading} =
+    useTokenomicParameters()
+  const {data: allWorkers, isLoading: isWorkersLoading} = useWorkers()
   const miningIdleWorkersEntry = useMemo<Record<string, Worker> | null>(() => {
     if (!allWorkers) return null
     return Object.fromEntries(
@@ -123,6 +124,7 @@ const useGetARP = () => {
   return {
     getAPR,
     getProportion,
+    isLoading: isTokenomicParametersLoading || isWorkersLoading,
   }
 }
 
