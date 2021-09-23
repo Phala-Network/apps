@@ -108,12 +108,14 @@ export const Table = <D extends Record<string, unknown>>(
   useEffect(() => {
     if (filters) {
       setAllFilters(filters)
+      gotoPage(0)
     }
-  }, [filters, setAllFilters])
+  }, [filters, setAllFilters, gotoPage])
 
   useEffect(() => {
     setGlobalFilter(globalFilterValue)
-  }, [globalFilterValue, setGlobalFilter])
+    gotoPage(0)
+  }, [globalFilterValue, setGlobalFilter, gotoPage])
 
   return (
     <Styles>
