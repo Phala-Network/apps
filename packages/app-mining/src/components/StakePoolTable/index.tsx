@@ -113,7 +113,7 @@ const StakePoolTable = (): JSX.Element => {
                 {key: 'addWorker', item: 'Add Worker'},
                 {key: 'setCap', item: 'Set Cap'},
                 {key: 'claim', item: 'Claim'},
-                {key: 'setPayoutPref', item: 'Set Payout Pref'},
+                {key: 'setPayoutPref', item: 'Set Commission'},
               ]}
               onClick={(key) => {
                 setSelectedPid(stakePool.pid)

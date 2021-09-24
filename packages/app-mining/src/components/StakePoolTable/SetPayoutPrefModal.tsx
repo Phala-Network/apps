@@ -33,7 +33,7 @@ const SetPayoutPrefModal = (props: StakePoolModalProps): JSX.Element => {
     <ActionModal
       onClose={onClose}
       onConfirm={onConfirm}
-      title="Set Payout Pref"
+      title="Set Commission"
       disabled={!payoutPref}
     >
       <Label>pid</Label>
