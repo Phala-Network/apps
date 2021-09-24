@@ -5,7 +5,7 @@ export default function toFixed(
   fractionDigits = 4
 ): string {
   // NOTE: https://stackoverflow.com/a/63988968/7920298
-  const str = value.toFixed(fractionDigits)
+  const str = value.toFixed(fractionDigits, Decimal.ROUND_DOWN)
   if (fractionDigits > 0) {
     return str.replace(/(\.0+|0+)$/, '')
   }
