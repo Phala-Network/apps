@@ -72,10 +72,7 @@ const MyDelegateTable = (): JSX.Element => {
     if (!stakePools || !userStakeInfo) return []
     return stakePools.filter((pool) => {
       const poolUserStakeInfo = userStakeInfo[pool.pid]
-      if (poolUserStakeInfo) {
-        return !poolUserStakeInfo.shares.isZero()
-      }
-      return false
+      return poolUserStakeInfo
     })
   }, [stakePools, userStakeInfo])
 
