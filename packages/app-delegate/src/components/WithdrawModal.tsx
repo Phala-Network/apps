@@ -23,9 +23,9 @@ const WithdrawModal = (props: StakePoolModalProps): JSX.Element => {
         api.tx.phalaStakePool?.withdraw?.(
           stakePool.pid,
           new Decimal(amount)
-            .mul(decimals)
             .mul(stakePool.totalShares)
             .div(stakePool.totalStake)
+            .mul(decimals)
             .toString()
         )
       )
