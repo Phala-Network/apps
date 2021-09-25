@@ -59,10 +59,11 @@ function useUserStakeInfo(
       return Object.fromEntries(
         entries
           .filter(
-            (entry) => (entry[0].toHuman() as string[][])[0]?.[1] === address
+            (entry) =>
+              (entry[0].args[0]?.toJSON() as [number, string])[1] === address
           )
           .map((entry) => [
-            Number((entry[0].toHuman() as string[][])[0]?.[0]),
+            (entry[0].args[0]?.toJSON() as [number, string])[0],
             transformJson(entry[1].toJSON() as UserStakeInfoJson),
           ])
       )
