@@ -1,1 +1,1 @@
-export * from './event'
+export {AppAnalytics as default} from './AppAnalytics'

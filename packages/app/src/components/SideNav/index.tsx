@@ -1,6 +1,8 @@
+import {useTranslation} from '@phala/react-i18n'
 import React from 'react'
 import styled from 'styled-components'
 import Feedback from './Feedback'
+import LangSwitch from './LangSwitch'
 import Links from './Links'
 import Logo from './Logo'
 import bg from './sidebar.jpg'
@@ -47,26 +49,28 @@ const ExternalLink = styled.a`
   }
 `
 
-const LINKS = [
-  {
-    name: 'Phala.network',
-    link: 'https://phala.network',
-  },
-  {
-    name: 'Wiki',
-    link: 'https://wiki.phala.network',
-  },
-  {
-    name: 'Forum',
-    link: 'https://forum.phala.network/t/topic/2450/2',
-  },
-  {
-    name: 'Discord',
-    link: 'https://discord.gg/kpYj9GWjwN',
-  },
-]
-
 const SideNav: React.FC = () => {
+  const {t} = useTranslation()
+
+  const LINKS = [
+    {
+      name: 'Phala.network',
+      link: 'https://phala.network',
+    },
+    {
+      name: t('wiki'),
+      link: 'https://wiki.phala.network',
+    },
+    {
+      name: t('forum'),
+      link: 'https://forum.phala.network/t/topic/2450/2',
+    },
+    {
+      name: t('discord'),
+      link: 'https://discord.gg/kpYj9GWjwN',
+    },
+  ]
+
   return (
     <SideNavWrap>
       <Header>
@@ -85,8 +89,10 @@ const SideNav: React.FC = () => {
         })}
 
         <Feedback>
-          <ExternalLink>Feedback</ExternalLink>
+          <ExternalLink>{t('feedback')}</ExternalLink>
         </Feedback>
+
+        <LangSwitch></LangSwitch>
       </Footer>
     </SideNavWrap>
   )

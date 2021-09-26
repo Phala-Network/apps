@@ -6,9 +6,10 @@ import {Provider as LibProvider} from '@phala/react-libs'
 import {isDev, isTest} from '@phala/utils'
 import * as Sentry from '@sentry/react'
 import React, {useLayoutEffect, useRef} from 'react'
-import {ThemeProvider} from 'styled-components'
-import {QueryClientProvider, QueryClient} from 'react-query'
+import {Helmet} from 'react-helmet'
+import {QueryClient, QueryClientProvider} from 'react-query'
 import {ReactQueryDevtools} from 'react-query/devtools'
+import {ThemeProvider} from 'styled-components'
 import './fonts.css'
 import useCustomEndpoint from './hooks/useCustomEndpoint'
 import theme from './theme'
@@ -47,6 +48,12 @@ const WrapApp: React.FC = ({children}) => {
 
   return (
     <I18nextProvider>
+      <Helmet>
+        <script
+          type="text/javascript"
+          src="https://api.map.baidu.com/getscript?v=2.0&ak=EOI79Ys8F8IN75wY5jfzRwKjGtQ5eKPz"
+        />
+      </Helmet>
       <LibProvider {...productionConfig}>
         <QueryClientProvider contextSharing={true} client={client.current}>
           <ThemeProvider theme={theme}>
