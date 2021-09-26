@@ -2,7 +2,6 @@ import {useTranslation} from '@phala/react-i18n'
 import React from 'react'
 import styled from 'styled-components'
 import Feedback from './Feedback'
-import LangSwitch from './LangSwitch'
 import Links from './Links'
 import Logo from './Logo'
 import bg from './sidebar.jpg'
@@ -92,7 +91,7 @@ const SideNav: React.FC = () => {
           <ExternalLink>{t('feedback')}</ExternalLink>
         </Feedback>
 
-        <LangSwitch></LangSwitch>
+        {/* <LangSwitch></LangSwitch> */}
       </Footer>
     </SideNavWrap>
   )
