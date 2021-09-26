@@ -34,7 +34,7 @@ const StakeInfoModal = (props: StakePoolModalProps): JSX.Element => {
         Header: 'Delegation',
         accessor: (queue) =>
           format(
-            queue.shares.mul(stakePool.totalStake).div(stakePool.totalShares)
+            queue.shares.mul(stakePool.totalStake.div(stakePool.totalShares))
           ),
       },
       {
