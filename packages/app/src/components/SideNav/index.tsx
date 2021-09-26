@@ -78,7 +78,7 @@ const SideNav: React.FC = () => {
       <Footer>
         {LINKS.map((link) => {
           return (
-            <ExternalLink key={link.name} target="_blank">
+            <ExternalLink href={link.link} key={link.name} target="_blank">
               {link.name}
             </ExternalLink>
           )
