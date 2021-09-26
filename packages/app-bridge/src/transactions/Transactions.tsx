@@ -1,4 +1,4 @@
-import {clickEvent} from '@phala/app-analytics'
+import {clickEvent} from '@phala/app-data-analytics'
 import {useEthereumAccountAtom} from '@phala/app-store'
 import {TransactionRecords} from '@phala/app-types'
 import {FloatModal} from '@phala/react-components'

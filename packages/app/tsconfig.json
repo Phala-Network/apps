@@ -11,17 +11,21 @@
   },
   "include": ["./src/**/*.ts", "./src/**/*.tsx"],
   "references": [
-    {"path": "../app-store"},
+    {"path": "../app-analytics"},
     {"path": "../app-config"},
     {"path": "../app-types"},
     {"path": "../app-mining"},
     {"path": "../app-assets"},
     {"path": "../app-bridge"},
-    {"path": "../utils"},
-    {"path": "../react-libs"},
-    {"path": "../react-hooks"},
+    {"path": "../app-config"},
+    {"path": "../app-data-analytics"},
+    {"path": "../app-store"},
+    {"path": "../app-types"},
+    {"path": "../react-cms"},
     {"path": "../react-components"},
+    {"path": "../react-hooks"},
     {"path": "../react-i18n"},
-    {"path": "../react-cms"}
+    {"path": "../react-libs"},
+    {"path": "../utils"}
   ]
 }

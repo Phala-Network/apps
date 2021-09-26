@@ -1,4 +1,4 @@
-import {clickEvent} from '@phala/app-analytics'
+import {clickEvent} from '@phala/app-data-analytics'
 import {TransactionRecord} from '@phala/app-types'
 import {ResultStepModal} from '@phala/react-components'
 import {useBridgePhalaRecordInfo} from '@phala/react-libs'

@@ -17,6 +17,7 @@ module.exports = {
       options: {
         alias: {
           '@phala/app-analytics': rp('../app-analytics/src'),
+          '@phala/app-data-analytics': rp('../app-data-analytics/src'),
           '@phala/app-assets': rp('../app-assets/src'),
           '@phala/app-bridge': rp('../app-bridge/src'),
           '@phala/app-config': rp('../app-config/src'),
@@ -43,7 +44,7 @@ module.exports = {
         path: `${__dirname}/src/i18n`,
         languages: [`en`, `zh`],
         defaultLanguage: `en`,
-        redirect: false,
+        redirect: true,
       },
     },
     `gatsby-plugin-react-helmet`,
