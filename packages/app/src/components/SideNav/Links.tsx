@@ -22,7 +22,7 @@ const Links: React.FC = () => {
       <Link to="/delegate/">{t('delegate')}</Link>
       <Divider></Divider>
       {(isDev() || isTest()) && <Link to="/console/">{t('console')}</Link>}
-      <Link to="/analytics/">{t('analytics')}</Link>
+      {(isDev() || isTest()) && <Link to="/analytics/">{t('analytics')}</Link>}
       <Link to="/mining/">{t('mining')}</Link>
 
       {/* <Link to="/darkpool">Darkpool</Link> */}
