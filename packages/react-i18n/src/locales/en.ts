@@ -26,4 +26,15 @@ export default {
   feedback_success: 'Success: send feedback',
   feedback_close: 'Close',
   feedback_submit: 'Submit',
+
+  // account
+  account_alert: '警告',
+
+  // polkadot
+  polkadot_link: 'Connect Polkadot{.js}',
+
+  // metamask
+  metamask_link: 'Connect METAMASK',
+  metamask_wrong_network_title: 'Wrong Network',
+  metamask_wrong_network_description: 'Please connect to the Ethereum Mainnet.',
 }

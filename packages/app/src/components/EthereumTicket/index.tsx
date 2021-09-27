@@ -1,5 +1,6 @@
 import {useEthereumAccountAtom} from '@phala/app-store'
 import {BalanceLabel, EthereumAccountModal} from '@phala/react-components'
+import {useTranslation} from '@phala/react-i18n'
 import React, {useState} from 'react'
 import {toast} from 'react-toastify'
 import styled from 'styled-components'
@@ -25,6 +26,7 @@ const TicketName = styled(_TicketName)`
 `
 
 const EthereumTicket: React.FC = () => {
+  const {t} = useTranslation()
   const [ethereumAccount] = useEthereumAccountAtom()
   const {value: ethereumAccountBalanceETHDecimal} =
     useEthereumAccountBalanceETHDecimal()
@@ -38,8 +40,8 @@ const EthereumTicket: React.FC = () => {
     } else {
       toast(
         <div>
-          <h1>Wrong Network</h1>
-          <p>Please connect to the Ethereum Mainnet.</p>
+          <h1>{t('metamask_wrong_network_title')}</h1>
+          <p>{t('metamask_wrong_network_description')}</p>
         </div>
       )
     }
@@ -55,7 +57,7 @@ const EthereumTicket: React.FC = () => {
               <DefaultStatusIcon>
                 <img src={logoImage} alt="logo" />
               </DefaultStatusIcon>
-              <DefaultStatusName>Connet METAMASK</DefaultStatusName>
+              <DefaultStatusName>{t('metamask_link')}</DefaultStatusName>
             </DefaultStatus>
           }
         ></Ticket>

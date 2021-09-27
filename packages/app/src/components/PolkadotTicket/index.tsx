@@ -1,6 +1,7 @@
 import {usePolkadotAccountAtom} from '@phala/app-store'
 import {BalanceLabel, PolkadotAccountModal} from '@phala/react-components'
 import {useBalance} from '@phala/react-hooks'
+import {useTranslation} from '@phala/react-i18n'
 import {formatPolkadotBalance} from '@phala/utils'
 import Decimal from 'decimal.js'
 import React, {useState} from 'react'
@@ -25,6 +26,7 @@ const TicketName = styled(_TicketName)`
 `
 
 const PolkadotTicket: React.FC = () => {
+  const {t} = useTranslation()
   const theme = useTheme()
   const [polkadotAccount] = usePolkadotAccountAtom()
   const [selectAccountModalViable, setSelectAccountModalViable] =
@@ -44,7 +46,7 @@ const PolkadotTicket: React.FC = () => {
               <DefaultStatusIcon>
                 <img src={logo} alt="logo" />
               </DefaultStatusIcon>
-              <DefaultStatusName>{`Connect Polkadot{.js}`}</DefaultStatusName>
+              <DefaultStatusName>{t('polkadot_link')}</DefaultStatusName>
             </DefaultStatus>
           }
         />

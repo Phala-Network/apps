@@ -25,4 +25,15 @@ export default {
   feedback_success: '发送成功',
   feedback_close: '关闭',
   feedback_submit: '提交',
+
+  // account
+  account_alert: '警告',
+
+  // polkadot
+  polkadot_link: '连接 Polkadot{.js}',
+
+  // metamask
+  metamask_link: '连接 MetaMask',
+  metamask_wrong_network_title: '网络错误',
+  metamask_wrong_network_description: 'MetaMask 当前不在 Ethereum 网络上',
 }

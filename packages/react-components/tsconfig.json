@@ -17,6 +17,7 @@
     {"path": "../react-libs"},
     {"path": "../utils"},
     {"path": "../react-hooks"},
-    {"path": "../react-graph-chainbridge"}
+    {"path": "../react-graph-chainbridge"},
+    {"path": "../react-i18n"}
   ]
 }
