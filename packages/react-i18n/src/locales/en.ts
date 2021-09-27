@@ -34,6 +34,9 @@ export default {
 
   // polkadot
   polkadot_link: 'Connect Polkadot{.js}',
+  polkadot_install_extension:
+    'No Polkadot{.js} extension found, please install it first.',
+  polkadot_install: 'Install',
 
   // metamask
   metamask_link: 'Connect METAMASK',

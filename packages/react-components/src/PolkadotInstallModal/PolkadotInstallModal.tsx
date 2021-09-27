@@ -1,3 +1,4 @@
+import {useTranslation} from '@phala/react-i18n'
 import React from 'react'
 import styled from 'styled-components'
 import {Button} from '../Button'
@@ -21,9 +22,11 @@ const Content = styled.div`
 `
 
 export const PolkadotInstallModal: React.FC<Props> = (props) => {
+  const {t} = useTranslation()
+
   return (
-    <Modal {...props} title="Alert">
-      <Content>{`No Polkadot{.js} extension found, please install it first.`}</Content>
+    <Modal {...props} title={t('account_alert')}>
+      <Content>{t('polkadot_install_extension')}</Content>
       <Button
         type="primary"
         style={{width: '100%'}}
@@ -32,7 +35,7 @@ export const PolkadotInstallModal: React.FC<Props> = (props) => {
           props.onClose()
         }}
       >
-        Install
+        {t('polkadot_install')}
       </Button>
     </Modal>
   )
