@@ -60,4 +60,8 @@ export default {
   bridge_balance: 'Balance',
   bridge_destination_address: 'Destination Address',
   bridge_amount: 'Amount ($PHA)',
+  bridge_need_enter_amount: 'Need enter amount',
+  bridge_need_enter_recipient: 'Need enter recipient',
+  bridge_need_login: 'Need login',
+  bridge_need_insufficient_balance: 'Insufficient balance',
 }

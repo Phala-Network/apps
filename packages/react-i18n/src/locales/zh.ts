@@ -57,4 +57,8 @@ export default {
   bridge_balance: '余额',
   bridge_destination_address: '目的地地址',
   bridge_amount: '数量 （$PHA）',
+  bridge_need_enter_amount: '请输入数量',
+  bridge_need_enter_recipient: '请输入正确的地址',
+  bridge_need_login: '需要登录',
+  bridge_need_insufficient_balance: '余额不足',
 }
