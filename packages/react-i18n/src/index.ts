@@ -17,7 +17,7 @@ i18next
     interpolation: {escapeValue: false},
     resources,
     detection: {
-      order: ['navigator'],
+      order: ['htmlTag', 'path'],
     },
   })
 

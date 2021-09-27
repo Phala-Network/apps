@@ -64,4 +64,6 @@ export default {
   bridge_need_enter_recipient: 'Need enter recipient',
   bridge_need_login: 'Need login',
   bridge_need_insufficient_balance: 'Insufficient balance',
+  bridge_transactions_panel: 'Transactions Panel',
+  bridge_done: 'Done',
 }

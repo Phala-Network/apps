@@ -1,5 +1,6 @@
 import {useTransactionsInfoAtom} from '@phala/app-store'
 import {TransactionInfoItem} from '@phala/app-types'
+import {useTranslation} from '@phala/react-i18n'
 import {
   useErc20BalanceQuery,
   useErc20Deposit,
@@ -20,6 +21,7 @@ import BaseInfo from './BaseInfo'
 type Props = SubmitStepProps & StepProps
 
 const SubmitStepToKhala: React.FC<Props> = (props) => {
+  const {t} = useTranslation()
   const [transactionsInfoSuccess, setTransactionsInfoSuccess] = useState(false)
   const [transactionsInfo, setTransactionsInfo] = useTransactionsInfoAtom()
   const {onSubmit, onPrev, onSuccess, layout, data} = props
@@ -104,7 +106,7 @@ const SubmitStepToKhala: React.FC<Props> = (props) => {
         <ModalActions>
           <ModalAction>
             <Button type="primary" onClick={onPrev}>
-              Done
+              {t('bridge_done')}
             </Button>
           </ModalAction>
         </ModalActions>

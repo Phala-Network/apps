@@ -61,4 +61,6 @@ export default {
   bridge_need_enter_recipient: '请输入正确的地址',
   bridge_need_login: '需要登录',
   bridge_need_insufficient_balance: '余额不足',
+  bridge_transactions_panel: '跨链记录',
+  bridge_done: '好的',
 }

@@ -3,11 +3,13 @@ import {useEthereumAccountAtom} from '@phala/app-store'
 import {TransactionRecords} from '@phala/app-types'
 import {FloatModal} from '@phala/react-components'
 import {useDepositRecordsByDepositorQuery} from '@phala/react-graph-chainbridge'
+import {useTranslation} from '@phala/react-i18n'
 import {useEthereumGraphQL} from '@phala/react-libs'
 import React, {useEffect, useState} from 'react'
 import TransactionsList from './List/List'
 
 const Transactions: React.FC = () => {
+  const {t} = useTranslation()
   const {client} = useEthereumGraphQL()
   const [records, setRecords] = useState<TransactionRecords>([])
   const [ethereumAccount] = useEthereumAccountAtom()
@@ -41,7 +43,7 @@ const Transactions: React.FC = () => {
   }
 
   return (
-    <FloatModal title="Transactions Panel" onActive={onActive}>
+    <FloatModal title={t('bridge_transactions_panel')} onActive={onActive}>
       {/* 
         <ClearButton onClick={() => setTransactionsInfo([])}>
           Clear
