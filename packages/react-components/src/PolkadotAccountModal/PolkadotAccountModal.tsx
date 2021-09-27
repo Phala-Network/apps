@@ -1,5 +1,6 @@
 import {usePolkadotAccountAtom} from '@phala/app-store'
 import {useSSR} from '@phala/react-hooks'
+import {useTranslation} from '@phala/react-i18n'
 import {
   useAddressNormalizer,
   useApiPromise,
@@ -22,6 +23,7 @@ export function web3IsInjected(): boolean {
 }
 
 export const PolkadotAccountModal: React.FC<Props> = (props) => {
+  const {t} = useTranslation()
   const {accounts, enabled} = usePolkadotWeb3()
   const {api} = useApiPromise()
   const normalizeAddress = useAddressNormalizer(api)
@@ -43,21 +45,11 @@ export const PolkadotAccountModal: React.FC<Props> = (props) => {
   }
 
   if (!enabled) {
-    return (
-      <AlertModal
-        content="Please allow access in the Polkadot extension."
-        {...props}
-      />
-    )
+    return <AlertModal content={t('polkadot_allow_access')} {...props} />
   }
 
   if (polkadotAccounts.length === 0) {
-    return (
-      <AlertModal
-        content="No account found, please add account in your wallet extension or unlock it."
-        {...props}
-      />
-    )
+    return <AlertModal content={t('polkadot_no_account_found')} {...props} />
   }
 
   return (

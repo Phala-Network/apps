@@ -1,3 +1,4 @@
+import {useTranslation} from '@phala/react-i18n'
 import React from 'react'
 import {Button} from '../Button'
 import {Modal} from '../Modal'
@@ -10,8 +11,10 @@ export type AlertModalProps = {
 }
 
 export const AlertModal: React.FC<AlertModalProps> = (props) => {
+  const {t} = useTranslation()
+
   return (
-    <Modal {...props} title="Alert">
+    <Modal {...props} title={t('account_alert')}>
       <Content>{props.content}</Content>
       <Button style={{width: '100%'}} onClick={() => props.onClose?.()}>
         Cancel

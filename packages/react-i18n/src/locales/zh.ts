@@ -33,6 +33,10 @@ export default {
 
   // polkadot
   polkadot_link: '连接 Polkadot{.js}',
+  polkadot_install_extension: '没有找到 polkadot{.js} 钱包，请先安装',
+  polkadot_install: '安装',
+  polkadot_allow_access: '请先在 polkadot{.js} 插件钱包授权',
+  polkadot_no_account_found: '没有找到地址，请先在插件中添加地址，或解锁',
 
   // metamask
   metamask_link: '连接 MetaMask',

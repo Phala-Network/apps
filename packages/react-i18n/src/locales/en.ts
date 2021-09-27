@@ -37,6 +37,9 @@ export default {
   polkadot_install_extension:
     'No Polkadot{.js} extension found, please install it first.',
   polkadot_install: 'Install',
+  polkadot_allow_access: 'Please allow access in the Polkadot extension.',
+  polkadot_no_account_found:
+    'No account found, please add account in your wallet extension or unlock it.',
 
   // metamask
   metamask_link: 'Connect METAMASK',
