@@ -1,6 +1,7 @@
 import {useEthereumAccountAtom} from '@phala/app-store'
 import {Account} from '@phala/app-types'
 import {useSSR} from '@phala/react-hooks'
+import {useTranslation} from '@phala/react-i18n'
 import {useAccountsQuery, useEthers} from '@phala/react-libs'
 import React, {useEffect, useMemo} from 'react'
 import {AlertModal} from '../AlertModal'
@@ -13,6 +14,7 @@ type Props = {
 }
 
 export const EthereumAccountModal: React.FC<Props> = (props) => {
+  const {t} = useTranslation()
   const {data: accounts = []} = useAccountsQuery()
   const {readystate: readyState} = useEthers()
   const isReady = readyState === 'connected'
@@ -46,21 +48,11 @@ export const EthereumAccountModal: React.FC<Props> = (props) => {
   }
 
   if (!isReady) {
-    return (
-      <AlertModal
-        content="Please allow access in the MetaMask extension."
-        {...props}
-      />
-    )
+    return <AlertModal content={t('metamask_allow_access')} {...props} />
   }
 
   if (accountsIsEmpty) {
-    return (
-      <AlertModal
-        content="No account found, please add account in your wallet extension or unlock it."
-        {...props}
-      />
-    )
+    return <AlertModal content={t('metamask_no_account_found')} {...props} />
   }
 
   return (

@@ -28,7 +28,9 @@ export default {
   feedback_submit: 'Submit',
 
   // account
-  account_alert: '警告',
+  account_alert: 'Alert',
+  select_account: 'Select An Account',
+  select_account_cancel: 'Cancel',
 
   // polkadot
   polkadot_link: 'Connect Polkadot{.js}',
@@ -37,4 +39,9 @@ export default {
   metamask_link: 'Connect METAMASK',
   metamask_wrong_network_title: 'Wrong Network',
   metamask_wrong_network_description: 'Please connect to the Ethereum Mainnet.',
+  metamask_allow_access: 'Please allow access in the MetaMask extension.',
+  metamask_no_account_found:
+    'No account found, please add account in your wallet or make sure that the correct wallet is used.',
+  metamask_install_extension:
+    'No metamask extension found, please install it first.',
 }

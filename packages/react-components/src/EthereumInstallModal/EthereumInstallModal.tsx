@@ -1,3 +1,4 @@
+import {useTranslation} from '@phala/react-i18n'
 import React from 'react'
 import styled from 'styled-components'
 import {Button} from '../Button'
@@ -21,9 +22,10 @@ const Content = styled.div`
 `
 
 export const EthereumInstallModal: React.FC<Props> = (props) => {
+  const {t} = useTranslation()
   return (
     <Modal {...props} title="Alert">
-      <Content>{`No metamask extension found, please install it first.`}</Content>
+      <Content>{t('metamask_install_extension')}</Content>
       <Button
         type="primary"
         style={{width: '100%'}}
@@ -32,7 +34,7 @@ export const EthereumInstallModal: React.FC<Props> = (props) => {
           props.onClose()
         }}
       >
-        Install
+        {t('metamask_install')}
       </Button>
     </Modal>
   )

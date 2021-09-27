@@ -1,4 +1,5 @@
 import {Account} from '@phala/app-types'
+import {useTranslation} from '@phala/react-i18n'
 import React from 'react'
 import styled from 'styled-components'
 import {Button} from '../Button'
@@ -28,13 +29,14 @@ const Content = styled.div`
 export const SelectAccountModal: React.FC<SelectAccountModalProps> = (
   props
 ) => {
+  const {t} = useTranslation()
   const {visible, currentAccount, accounts, onClose, onSelect} = props
 
   return (
     <Modal
       onClose={onClose}
       visible={visible}
-      title={<Center>Select An Account</Center>}
+      title={<Center>{t('select_account')}</Center>}
     >
       <Content style={{paddingRight: accounts.length > 2 ? 20 : 0}}>
         {accounts.map((item) => (
@@ -50,7 +52,7 @@ export const SelectAccountModal: React.FC<SelectAccountModalProps> = (
         ))}
       </Content>
       <Button style={{width: '100%'}} onClick={onClose}>
-        Cancel
+        {t('select_account_cancel')}
       </Button>
     </Modal>
   )

@@ -28,6 +28,8 @@ export default {
 
   // account
   account_alert: '警告',
+  select_account: '选择地址',
+  select_account_cancel: '取消',
 
   // polkadot
   polkadot_link: '连接 Polkadot{.js}',
@@ -36,4 +38,9 @@ export default {
   metamask_link: '连接 MetaMask',
   metamask_wrong_network_title: '网络错误',
   metamask_wrong_network_description: 'MetaMask 当前不在 Ethereum 网络上',
+  metamask_allow_access: '请授权访问 MetaMask 扩展',
+  metamask_no_account_found:
+    '没有找到地址，请先在插件中添加地址，或确保在使用正确的钱包地址',
+  metamask_install_extension: '安装 MetaMask 扩展',
+  metamask_install: 'Install',
 }
