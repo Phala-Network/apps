@@ -9,6 +9,7 @@ import {
   Spacer,
   Textarea,
 } from '@phala/react-components'
+import {useTranslation} from '@phala/react-i18n'
 import * as Sentry from '@sentry/react'
 import axios from 'axios'
 import React, {useState} from 'react'
@@ -38,24 +39,17 @@ const FeedbackModal: React.FC<ModalProps> = (props) => {
   const [email, setEmail] = useState('')
   const [comments, setComments] = useState('')
   const [error, setError] = useState('')
+  const {t} = useTranslation()
 
   const submit = async () => {
     let error = ''
 
     if (!name) {
-      error = 'Please input your name'
-    }
-
-    if (!email) {
-      error = 'Please input your email'
-    }
-
-    if (!validateEmail(email)) {
-      error = 'Please check your email format'
-    }
-
-    if (!comments) {
-      error = 'Please input your comments'
+      error = t('feedback_name_invalid')
+    } else if (!email || !validateEmail(email)) {
+      error = t('feedback_email_invalid')
+    } else if (!comments) {
+      error = t('feedback_comments_invalid')
     }
 
     if (error) {
@@ -86,23 +80,24 @@ const FeedbackModal: React.FC<ModalProps> = (props) => {
       console.error(e)
     }
 
-    toast('Success: send feedback')
+    setName('')
+    setEmail('')
+    setComments('')
+
+    toast(t('feedback_success'))
 
     props.onClose?.()
   }
 
   return (
-    <Modal title={"It looks like we're having issues."} {...props}>
-      <Description>
-        Our team has been notified. If you’d like to help, tell us what happened
-        below.
-      </Description>
+    <Modal title={t('feedback_title')} {...props}>
+      <Description>{t('feedback_description')}</Description>
 
       <Input
         onChange={setName}
         name="name"
         size="large"
-        placeholder="Name"
+        placeholder={t('feedback_name_placeholder')}
       ></Input>
 
       <Spacer></Spacer>
@@ -111,7 +106,7 @@ const FeedbackModal: React.FC<ModalProps> = (props) => {
         onChange={setEmail}
         name="email"
         size="large"
-        placeholder="Email"
+        placeholder={t('feedback_email_placeholder')}
       ></Input>
 
       <Spacer></Spacer>
@@ -120,16 +115,18 @@ const FeedbackModal: React.FC<ModalProps> = (props) => {
         onChange={setComments}
         name="description"
         rows={6}
-        placeholder="What Happened?"
+        placeholder={t('feedback_comments_placeholder')}
       ></Textarea>
 
       <ModalActions>
         <ModalAction>
-          <Button onClick={() => props.onClose?.()}>Close</Button>
+          <Button onClick={() => props.onClose?.()}>
+            {t('feedback_close')}
+          </Button>
         </ModalAction>
         <ModalAction>
           <Button type="primary" onClick={submit}>
-            Submit
+            {t('feedback_submit')}
           </Button>
         </ModalAction>
       </ModalActions>
