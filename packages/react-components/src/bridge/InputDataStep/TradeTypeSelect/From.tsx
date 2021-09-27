@@ -1,3 +1,4 @@
+import {useTranslation} from '@phala/react-i18n'
 import React from 'react'
 import {Target} from '.'
 import Block from './Block'
@@ -8,7 +9,9 @@ type Props = {
 }
 
 const From: React.FC<Props> = (props) => {
-  return <Block {...props} title="From" />
+  const {t} = useTranslation()
+
+  return <Block {...props} title={t('bridge_from')} />
 }
 
 export default From

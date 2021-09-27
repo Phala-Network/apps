@@ -3,6 +3,7 @@ import {
   useEthereumAccountBalanceDecimal,
   usePolkadotAccountBalanceDecimal,
 } from '@phala/react-hooks'
+import {useTranslation} from '@phala/react-i18n'
 import {validateAddress} from '@phala/utils'
 import {Decimal} from 'decimal.js'
 import React, {useEffect, useState} from 'react'
@@ -50,6 +51,7 @@ type Props = {
 } & StepProps
 
 const InputDataStep: React.FC<Props> = (props) => {
+  const {t} = useTranslation()
   const isMobile = useBreakpoint(down('sm'))
   const {layout, onNext, onCancel} = props
   const [amountInput, setAmountInput] = useState<number>()
@@ -167,7 +169,7 @@ const InputDataStep: React.FC<Props> = (props) => {
     <>
       <div style={{height: 26}}>
         <InputExternalInfo
-          label={'Balance'}
+          label={t('bridge_balance')}
           type={'PHA'}
           value={currentBalance}
         />
@@ -192,10 +194,10 @@ const InputDataStep: React.FC<Props> = (props) => {
               setErrorString('')
             }}
             value={amountInput}
-            placeholder="Amount (PHA)"
+            placeholder={t('bridge_amount')}
             after={
               isShowMaxButton ? (
-                <InputAction onClick={setMax}>MAX</InputAction>
+                <InputAction onClick={setMax}>{t('bridge_max')}</InputAction>
               ) : null
             }
           />
@@ -209,10 +211,12 @@ const InputDataStep: React.FC<Props> = (props) => {
               setErrorString('')
             }}
             size="large"
-            placeholder="Destination Address"
+            placeholder={t('bridge_destination_address')}
             after={
               isShowRecipient && !addressValid && !isMobile ? (
-                <InputAction onClick={setMyAddress}>MY ADDRESS</InputAction>
+                <InputAction onClick={setMyAddress}>
+                  {t('bridge_my_address')}
+                </InputAction>
               ) : null
             }
           />
@@ -234,7 +238,7 @@ const InputDataStep: React.FC<Props> = (props) => {
                 account={ethereumAccount.address}
               >
                 <Button type="primary" onClick={submit}>
-                  Next
+                  {t('bridge_next')}
                 </Button>
               </EthereumAllowance>
             </ErrorBoundary>

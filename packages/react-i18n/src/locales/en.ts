@@ -50,4 +50,14 @@ export default {
     'No account found, please add account in your wallet or make sure that the correct wallet is used.',
   metamask_install_extension:
     'No metamask extension found, please install it first.',
+
+  // bridge
+  bridge_from: 'From',
+  bridge_to: 'To',
+  bridge_max: 'Max',
+  bridge_my_address: 'MY ADDRESS',
+  bridge_next: 'Next',
+  bridge_balance: 'Balance',
+  bridge_destination_address: 'Destination Address',
+  bridge_amount: 'Amount ($PHA)',
 }

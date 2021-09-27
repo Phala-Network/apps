@@ -47,4 +47,14 @@ export default {
     '没有找到地址，请先在插件中添加地址，或确保在使用正确的钱包地址',
   metamask_install_extension: '安装 MetaMask 扩展',
   metamask_install: 'Install',
+
+  // bridge
+  bridge_from: '从',
+  bridge_to: '到',
+  bridge_max: '全部',
+  bridge_my_address: '我的地址',
+  bridge_next: '下一步',
+  bridge_balance: '余额',
+  bridge_destination_address: '目的地地址',
+  bridge_amount: '数量 （$PHA）',
 }
