@@ -1,6 +1,6 @@
-import {useQuery, UseQueryResult} from 'react-query'
 import {useApiPromise} from '@phala/react-libs'
 import Decimal from 'decimal.js'
+import {useQuery, UseQueryResult} from 'react-query'
 
 type StakePoolJSON = {
   cap: string | null

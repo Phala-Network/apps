@@ -133,7 +133,7 @@ export const Table = <D extends Record<string, unknown>>(
                       isSorted={column.isSorted}
                       isSortedDesc={column.isSortedDesc}
                     >
-                      {column.render('Header')}
+                      {column.render('name')}
                     </TableSorter>
                   </th>
                 ))}

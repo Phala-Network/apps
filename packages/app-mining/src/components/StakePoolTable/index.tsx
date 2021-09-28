@@ -1,22 +1,23 @@
 import {Button} from '@phala/react-components'
-import styled from 'styled-components'
+import {StakePool} from '@phala/react-hooks'
+import {useTranslation} from '@phala/react-i18n'
 import {toFixed} from '@phala/utils'
 import {useMemo, useState} from 'react'
 import {Column} from 'react-table'
-import {StakePool} from '@phala/react-hooks'
+import styled from 'styled-components'
 import useFormat from '../../hooks/useFormat'
 import useModalVisible, {ModalKey} from '../../hooks/useModalVisible'
 import useSelfStakePools from '../../hooks/useSelfStakePools'
+import ItemMenu from '../ItemMenu'
 import MiningTable from '../MiningTable'
 import AddWorkerModal from './AddWorkerModal'
 import ClaimModal from './ClaimModal'
-import DelegateModal from './DelegateModal'
 import CreateModal from './CreateModal'
+import DelegateModal from './DelegateModal'
 import SetCapModal from './SetCapModal'
 import SetPayoutPrefModal from './SetPayoutPrefModal'
 import StakeInfoModal from './StakeInfoModal'
 import WithdrawModal from './WithdrawModal'
-import ItemMenu from '../ItemMenu'
 
 const Actions = styled.div`
   align-items: center;
@@ -42,6 +43,7 @@ const modalEntries: [ModalKey, (props: StakePoolModalProps) => JSX.Element][] =
   ]
 
 const StakePoolTable = (): JSX.Element => {
+  const {t} = useTranslation()
   const {modalVisible, open, close, visibleCount} = useModalVisible()
   const [selectedPid, setSelectedPid] = useState<number | null>(null)
   const {data, refetch, isLoading} = useSelfStakePools()
@@ -59,21 +61,25 @@ const StakePoolTable = (): JSX.Element => {
   const columns = useMemo<Column<StakePool>[]>(
     () => [
       {
+        name: 'pid',
         Header: 'pid',
         accessor: (stakePool) => (
           <span style={{fontWeight: 'bold'}}>{stakePool.pid}</span>
         ),
       },
       {
+        name: 'Worker',
         Header: 'Worker',
         accessor: (stakePool) => stakePool.workers.length,
       },
       {
+        name: 'Commission',
         Header: 'Commission',
         accessor: (stakePool) =>
           `${toFixed(stakePool.payoutCommission.div(10 ** 4), 2)}%`,
       },
       {
+        name: t('delegate.remaining'),
         Header: 'Remaining',
         accessor: (stakePool) =>
           stakePool.cap === null
@@ -81,18 +87,22 @@ const StakePoolTable = (): JSX.Element => {
             : format(stakePool.cap.sub(stakePool.totalStake)),
       },
       {
+        name: 'Owner Reward',
         Header: 'Owner Reward',
         accessor: (stakePool) => format(stakePool.ownerReward),
       },
       {
+        name: 'Delegated',
         Header: 'Delegated',
         accessor: (stakePool) => format(stakePool.totalStake),
       },
       {
+        name: 'Free Delegation',
         Header: 'Free Delegation',
         accessor: (stakePool) => format(stakePool.freeStake),
       },
       {
+        name: 'Releasing Stake',
         Header: 'Releasing Stake',
         accessor: (stakePool) => format(stakePool.releasingStake),
       },

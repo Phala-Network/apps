@@ -281,6 +281,7 @@ importers:
       '@phala/app-store': workspace:^0.0.1
       '@phala/react-components': workspace:^0.0.1
       '@phala/react-hooks': workspace:^0.0.1
+      '@phala/react-i18n': workspace:^0.0.1
       '@phala/react-libs': workspace:^0.0.1
       '@phala/utils': workspace:^0.0.1
       '@polkadot/api': ^4.17.1
@@ -296,6 +297,7 @@ importers:
       '@phala/app-store': link:../app-store
       '@phala/react-components': link:../react-components
       '@phala/react-hooks': link:../react-hooks
+      '@phala/react-i18n': link:../react-i18n
       '@phala/react-libs': link:../react-libs
       '@phala/utils': link:../utils
       '@polkadot/api': 4.17.1
@@ -313,6 +315,7 @@ importers:
       '@phala/app-store': workspace:^0.0.1
       '@phala/react-components': workspace:^0.0.1
       '@phala/react-hooks': workspace:^0.0.1
+      '@phala/react-i18n': workspace:^0.0.1
       '@phala/react-libs': workspace:^0.0.1
       '@phala/utils': workspace:^0.0.1
       '@polkadot/api': ^4.17.1
@@ -329,6 +332,7 @@ importers:
       '@phala/app-store': link:../app-store
       '@phala/react-components': link:../react-components
       '@phala/react-hooks': link:../react-hooks
+      '@phala/react-i18n': link:../react-i18n
       '@phala/react-libs': link:../react-libs
       '@phala/utils': link:../utils
       '@polkadot/api': 4.17.1

@@ -1,17 +1,16 @@
+import {Checkbox, Input, Table} from '@phala/react-components'
+import {StakePool, useIsMobile, useStakePools} from '@phala/react-hooks'
+import {useTranslation} from '@phala/react-i18n'
+import {abridgeString, toFixed} from '@phala/utils'
 import {useCallback, useMemo, useState} from 'react'
-import {Column} from 'react-table'
+import {Column, Row} from 'react-table'
 import styled from 'styled-components'
-import {Input, Table, Checkbox} from '@phala/react-components'
-import {StakePool, useStakePools, useIsMobile} from '@phala/react-hooks'
-import {toFixed} from '@phala/utils'
-import {Row} from 'react-table'
-import DelegateModal from './DelegateModal'
-import ActionButton from './ActionButton'
 import useFormat from '../hooks/useFormat'
-import useModalVisible from '../hooks/useModalVisible'
 import useGetARP from '../hooks/useGetAPR'
 import useIdentities from '../hooks/useIdentities'
-import {abridgeString} from '@phala/utils'
+import useModalVisible from '../hooks/useModalVisible'
+import ActionButton from './ActionButton'
+import DelegateModal from './DelegateModal'
 
 const Wrapper = styled.div`
   tbody {
@@ -44,6 +43,7 @@ const Filter = styled.div`
 `
 
 const MainTable = (): JSX.Element => {
+  const {t} = useTranslation()
   const isMobile = useIsMobile()
   const identities = useIdentities()
   const {getAPR, isLoading: isAPRLoading} = useGetARP()
@@ -67,10 +67,12 @@ const MainTable = (): JSX.Element => {
   const columns = useMemo<Column<StakePool>[]>(() => {
     const columns: (Column<StakePool> | boolean)[] = [
       {
+        name: 'pid',
         Header: 'pid',
         accessor: 'pid',
       },
       {
+        name: 'Owner',
         Header: 'Owner',
         accessor: ({owner}) => {
           const display = identities?.[owner]?.display || abridgeString(owner)
@@ -90,6 +92,7 @@ const MainTable = (): JSX.Element => {
         },
       },
       {
+        name: 'APR',
         Header: 'APR',
         accessor: (stakePool) => {
           const APR = getAPR(stakePool)
@@ -108,6 +111,7 @@ const MainTable = (): JSX.Element => {
         },
       },
       {
+        name: t('delegate.remaining'),
         Header: 'Remaining',
         accessor: (stakePool) =>
           stakePool.cap === null
@@ -128,6 +132,7 @@ const MainTable = (): JSX.Element => {
         },
       },
       // !isMobile && {
+      //   name: 'Reward Proportion',
       //   Header: 'Reward Proportion',
       //   accessor: (stakePool) => {
       //     const proportion = getProportion(stakePool)
@@ -138,6 +143,7 @@ const MainTable = (): JSX.Element => {
       //   },
       // },
       !isMobile && {
+        name: 'Commission',
         Header: 'Commission',
         accessor: (stakePool) =>
           `${toFixed(stakePool.payoutCommission.div(10 ** 4), 2)}%`,
@@ -152,22 +158,27 @@ const MainTable = (): JSX.Element => {
         },
       },
       !isMobile && {
+        name: 'Delegated',
         Header: 'Delegated',
         accessor: (stakePool) => format(stakePool.totalStake),
       },
       !isMobile && {
+        name: 'Free Delegation',
         Header: 'Free Delegation',
         accessor: (stakePool) => format(stakePool.freeStake),
       },
       !isMobile && {
+        name: 'Releasing Stake',
         Header: 'Releasing Stake',
         accessor: (stakePool) => format(stakePool.releasingStake),
       },
       !isMobile && {
+        name: 'Worker',
         Header: 'Worker',
         accessor: (stakePool) => stakePool.workers.length,
       },
       {
+        name: 'Actions',
         Header: 'Actions',
         disableSortBy: true,
         accessor: (stakePool) => (

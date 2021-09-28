@@ -100,4 +100,12 @@ export default {
     ethereum_confirmed: 'Ethereum Confirmed',
     khala_confirmed: 'Khala Confirmed',
   },
+
+  delegate: {
+    total_delegated: 'Total Delegated',
+    search_pid: 'Search Pid',
+    pool_with_workers: 'Pool with workers',
+    remaining: 'Remaining',
+    commission: 'Commission',
+  },
 }

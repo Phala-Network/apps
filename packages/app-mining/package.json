@@ -7,6 +7,7 @@
     "@phala/app-store": "workspace:^0.0.1",
     "@phala/react-components": "workspace:^0.0.1",
     "@phala/react-hooks": "workspace:^0.0.1",
+    "@phala/react-i18n": "workspace:^0.0.1",
     "@phala/react-libs": "workspace:^0.0.1",
     "@phala/utils": "workspace:^0.0.1",
     "@polkadot/api": "^4.17.1",
@@ -23,8 +24,8 @@
   "peerDependencies": {
     "react": "^17.0.2",
     "react-query": "^3.22.0",
-    "styled-breakpoints": "^10.0.1",
     "react-toastify": "^7.0.4",
+    "styled-breakpoints": "^10.0.1",
     "styled-components": "^5.3.1"
   }
 }

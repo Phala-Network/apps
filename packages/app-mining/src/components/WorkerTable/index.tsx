@@ -4,14 +4,14 @@ import {useMemo, useState} from 'react'
 import {Column} from 'react-table'
 import {toast} from 'react-toastify'
 import useFormat from '../../hooks/useFormat'
+import useMiningEnabled from '../../hooks/useMiningEnabled'
 import useModalVisible, {ModalKey} from '../../hooks/useModalVisible'
 import useSelfStakePools from '../../hooks/useSelfStakePools'
+import ItemMenu from '../ItemMenu'
 import MiningTable from '../MiningTable'
 import RemoveModal from './RemoveModal'
 import StartModal from './StartModal'
 import StopModal from './StopModal'
-import ItemMenu from '../ItemMenu'
-import useMiningEnabled from '../../hooks/useMiningEnabled'
 
 type TableItem = Worker & {pid: number}
 
@@ -65,9 +65,19 @@ const WorkerTable = (): JSX.Element => {
 
   const columns = useMemo<Column<TableItem>[]>(
     () => [
-      {Header: 'WorkerPublicKey', accessor: 'pubkey', disableSortBy: true},
-      {Header: 'pid', accessor: 'pid'},
       {
+        name: 'WorkerPublicKey',
+        Header: 'WorkerPublicKey',
+        accessor: 'pubkey',
+        disableSortBy: true,
+      },
+      {
+        name: 'pid',
+        Header: 'pid',
+        accessor: 'pid',
+      },
+      {
+        name: 'Ve',
         Header: 'Ve',
         accessor: (worker) =>
           worker.miner?.state === 'Ready' || !worker.miner?.ve
@@ -75,6 +85,7 @@ const WorkerTable = (): JSX.Element => {
             : toFixed(worker.miner.ve),
       },
       {
+        name: 'V',
         Header: 'V',
         accessor: (worker) =>
           worker.miner?.state === 'Ready' || !worker.miner?.v
@@ -82,6 +93,7 @@ const WorkerTable = (): JSX.Element => {
             : toFixed(worker.miner.v),
       },
       {
+        name: 'P Instant',
         Header: 'P Instant',
         accessor: (worker) =>
           worker.miner?.state === 'Ready' ||
@@ -90,6 +102,7 @@ const WorkerTable = (): JSX.Element => {
             : worker.miner.benchmark.pInstant,
       },
       {
+        name: 'P Initial',
         Header: 'P Initial',
         accessor: (worker) =>
           worker.miner?.state === 'Ready' ||
@@ -98,6 +111,7 @@ const WorkerTable = (): JSX.Element => {
             : worker.miner.benchmark.pInit,
       },
       {
+        name: 'state',
         Header: 'state',
         accessor: (worker) => {
           const state = worker.miner?.state
@@ -108,10 +122,12 @@ const WorkerTable = (): JSX.Element => {
         },
       },
       {
+        name: 'Mined',
         Header: 'Mined',
         accessor: (worker) => format(worker.miner?.stats.totalReward),
       },
       {
+        name: 'Stake',
         Header: 'Stake',
         accessor: (worker) => format(worker.stake),
       },

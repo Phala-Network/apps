@@ -97,4 +97,12 @@ export default {
     ethereum_confirmed: '以太坊已确认',
     khala_confirmed: 'Khala 已确认',
   },
+
+  delegate: {
+    total_delegated: '总委托抵押量',
+    search_pid: '搜索Pid',
+    pool_with_workers: '有worker的池',
+    remaining: '剩余额度',
+    commission: '分成率（对池主人）',
+  },
 }

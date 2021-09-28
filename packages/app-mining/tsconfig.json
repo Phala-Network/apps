@@ -14,6 +14,7 @@
     {"path": "../utils"},
     {"path": "../react-libs"},
     {"path": "../react-hooks"},
-    {"path": "../react-components"}
+    {"path": "../react-components"},
+    {"path": "../react-i18n"}
   ]
 }

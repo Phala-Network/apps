@@ -1,4 +1,5 @@
 import {Button, Modal, Table} from '@phala/react-components'
+import {StakePool} from '@phala/react-hooks'
 import {formatDuration, intervalToDuration} from 'date-fns'
 import {useMemo} from 'react'
 import {Column} from 'react-table'
@@ -8,7 +9,6 @@ import useFormat from '../../hooks/useFormat'
 import useGracePeriod from '../../hooks/useGracePeriod'
 import useModalVisible from '../../hooks/useModalVisible'
 import useSelfUserStakeInfo from '../../hooks/useSelfUserStakeInfo'
-import {StakePool} from '@phala/react-hooks'
 import {Label, Value} from '../ActionModal'
 
 const Line = styled.div`
@@ -29,8 +29,13 @@ const StakeInfoModal = (props: StakePoolModalProps): JSX.Element => {
   const {data: gracePeriod} = useGracePeriod()
   const withdrawQueueColumns = useMemo<Column<WithdrawQueue>[]>(
     () => [
-      {Header: 'Delegator', accessor: 'user'},
       {
+        name: 'Delegator',
+        Header: 'Delegator',
+        accessor: 'user',
+      },
+      {
+        name: 'Delegation',
         Header: 'Delegation',
         accessor: (queue) =>
           format(
@@ -38,6 +43,7 @@ const StakeInfoModal = (props: StakePoolModalProps): JSX.Element => {
           ),
       },
       {
+        name: 'Countdown',
         Header: 'Countdown',
         accessor: (queue) => {
           if (typeof gracePeriod !== 'number') return '-'

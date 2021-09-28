@@ -1,11 +1,12 @@
-import styled from 'styled-components'
 import {Button} from '@phala/react-components'
-import {Link} from 'gatsby-plugin-intl'
 import {useStakePools} from '@phala/react-hooks'
-import {useMemo} from 'react'
-import useFormat from '../hooks/useFormat'
+import {useTranslation} from '@phala/react-i18n'
 import Decimal from 'decimal.js'
+import {Link} from 'gatsby-plugin-intl'
+import {useMemo} from 'react'
 import {down} from 'styled-breakpoints'
+import styled from 'styled-components'
+import useFormat from '../hooks/useFormat'
 
 const Wrapper = styled.div`
   display: flex;
@@ -30,6 +31,7 @@ const Content = styled.div`
 `
 
 const Banner = (): JSX.Element => {
+  const {t} = useTranslation()
   const {data: stakePools} = useStakePools()
   const format = useFormat()
   const locked = useMemo<string>(() => {
@@ -45,7 +47,7 @@ const Banner = (): JSX.Element => {
   return (
     <Wrapper>
       <Content>
-        Total Delegated: <span>{locked}</span>
+        {t('delegate.total_delegated')}: <span>{locked}</span>
       </Content>
       <Link to="/delegate/my-delegate/">
         <Button size="small">My Delegate</Button>

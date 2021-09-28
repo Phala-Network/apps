@@ -1,25 +1,25 @@
-import {useMemo, useState} from 'react'
-import {Column} from 'react-table'
-import Decimal from 'decimal.js'
-import styled from 'styled-components'
 import {usePolkadotAccountAtom} from '@phala/app-store'
 import {Table} from '@phala/react-components'
 import {
   StakePool,
+  useIsMobile,
   useStakePools,
   useUserStakeInfo,
-  useIsMobile,
 } from '@phala/react-hooks'
-import {toFixed} from '@phala/utils'
+import {useTranslation} from '@phala/react-i18n'
+import {abridgeString, toFixed} from '@phala/utils'
+import Decimal from 'decimal.js'
+import {useMemo, useState} from 'react'
+import {Column} from 'react-table'
+import styled from 'styled-components'
 import useFormat from '../hooks/useFormat'
 import useGetARP from '../hooks/useGetAPR'
+import useIdentities from '../hooks/useIdentities'
 import useModalVisible, {ModalKey} from '../hooks/useModalVisible'
-import ItemMenu from './ItemMenu'
 import ClaimModal from './ClaimModal'
 import DelegateModal from './DelegateModal'
+import ItemMenu from './ItemMenu'
 import WithdrawModal from './WithdrawModal'
-import useIdentities from '../hooks/useIdentities'
-import {abridgeString} from '@phala/utils'
 
 const Wrapper = styled.div`
   tbody {
@@ -42,6 +42,7 @@ const modalEntries: [ModalKey, (props: StakePoolModalProps) => JSX.Element][] =
   ]
 
 const MyDelegateTable = (): JSX.Element => {
+  const {t} = useTranslation()
   const isMobile = useIsMobile()
   const identities = useIdentities()
   const {getAPR} = useGetARP()
@@ -78,8 +79,13 @@ const MyDelegateTable = (): JSX.Element => {
 
   const columns = useMemo<Column<StakePool>[]>(() => {
     const columns: (Column<StakePool> | boolean)[] = [
-      {Header: 'pid', accessor: 'pid'},
       {
+        name: 'pid',
+        Header: 'pid',
+        accessor: 'pid',
+      },
+      {
+        name: 'Owner',
         Header: 'Owner',
         accessor: ({owner}) => {
           const display = identities?.[owner]?.display || abridgeString(owner)
@@ -99,11 +105,13 @@ const MyDelegateTable = (): JSX.Element => {
         },
       },
       !isMobile && {
+        name: 'Commission',
         Header: 'Commission',
         accessor: (stakePool) =>
           `${toFixed(stakePool.payoutCommission.div(10 ** 4), 2)}%`,
       },
       // !isMobile && {
+      //   name: 'Reward Proportion',
       //   Header: 'Reward Proportion',
       //   accessor: (stakePool) => {
       //     const proportion = getProportion(stakePool)
@@ -114,6 +122,7 @@ const MyDelegateTable = (): JSX.Element => {
       //   },
       // },
       !isMobile && {
+        name: 'APR',
         Header: 'APR',
         accessor: (stakePool) => {
           const APR = getAPR(stakePool)
@@ -121,21 +130,25 @@ const MyDelegateTable = (): JSX.Element => {
         },
       },
       !isMobile && {
+        name: 'Free Delegation',
         Header: 'Free Delegation',
         accessor: (stakePool) => format(stakePool.freeStake),
       },
       !isMobile && {
+        name: 'Releasing Stake',
         Header: 'Releasing Stake',
         accessor: (stakePool) => format(stakePool.releasingStake),
       },
       !isMobile && {
-        Header: 'Remaining',
+        name: t('delegate.remaining'),
+        Header: t('delegate.remaining'),
         accessor: (stakePool) =>
           stakePool.cap === null
             ? '∞'
             : format(stakePool.cap.sub(stakePool.totalStake)),
       },
       {
+        name: 'Your Delegation',
         Header: 'Your Delegation',
         accessor: (stakePool) => {
           const userStake = userStakeInfo?.[stakePool.pid]
@@ -148,6 +161,7 @@ const MyDelegateTable = (): JSX.Element => {
         },
       },
       !isMobile && {
+        name: 'Your Withdrawing',
         Header: 'Your Withdrawing',
         accessor: (stakePool) =>
           format(
@@ -162,6 +176,7 @@ const MyDelegateTable = (): JSX.Element => {
           ),
       },
       {
+        name: 'Claimable Rewards',
         Header: 'Claimable Rewards',
         accessor: (stakePool) => {
           const userStake = userStakeInfo?.[stakePool.pid]
@@ -179,6 +194,7 @@ const MyDelegateTable = (): JSX.Element => {
       },
       {
         id: 'actions',
+        name: 'Actions',
         disableSortBy: true,
         accessor: (stakePool) => {
           return (
