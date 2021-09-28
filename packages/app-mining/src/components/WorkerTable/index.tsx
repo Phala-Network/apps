@@ -141,16 +141,20 @@ const WorkerTable = (): JSX.Element => {
           return (
             <ItemMenu
               items={[
-                {key: 'start', item: 'Start', disabled: state !== 'Ready'},
+                {
+                  key: 'start',
+                  item: t('mining.start'),
+                  disabled: state !== 'Ready',
+                },
                 {
                   key: 'stop',
-                  item: 'Stop',
+                  item: t('mining.stop'),
                   disabled:
                     state !== 'MiningIdle' && state !== 'MiningUnresponsive',
                 },
                 {
                   key: 'remove',
-                  item: 'Remove',
+                  item: t('mining.remove'),
                   disabled: state !== 'Ready' && state !== 'MiningCoolingDown',
                 },
               ]}

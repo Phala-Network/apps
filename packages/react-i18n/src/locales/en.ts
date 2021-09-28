@@ -154,5 +154,16 @@ export default {
     claim: 'Claim',
     claim_all_the_pending_rewards_of_the_sender_and_send_to_the:
       'Claim all the pending rewards of the sender and send to the `target`',
+    start: 'Start',
+    stop: 'Stop',
+    remove: 'Remove',
+    target_address: 'Target Address',
+    total_shares: 'Total Shares',
+    withdraw_queue: 'Withdraw Queue',
+    delegator: 'Delegator',
+    delegation: 'Delegation',
+    countdown: 'Countdown',
+    your_delegation: 'Your Delegation',
+    info: 'Info',
   },
 }

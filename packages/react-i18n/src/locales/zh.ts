@@ -151,5 +151,16 @@ export default {
     claim: '认领',
     claim_all_the_pending_rewards_of_the_sender_and_send_to_the:
       '认领所有奖励余额并且发送到收益地址',
+    start: '开始',
+    stop: '中止',
+    remove: '移除',
+    target_address: '收益地址',
+    total_shares: '总份额',
+    withdraw_queue: '提取队列',
+    delegator: '委托人',
+    delegation: '提取的委托量',
+    countdown: '提取倒计时',
+    your_delegation: '你的委托量',
+    info: '池详情',
   },
 }

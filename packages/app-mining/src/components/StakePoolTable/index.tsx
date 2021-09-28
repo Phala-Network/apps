@@ -117,7 +117,7 @@ const StakePoolTable = (): JSX.Element => {
                 open('stakeInfo')
               }}
             >
-              Info
+              {t('mining.info')}
             </DetailButton>
             <ItemMenu
               items={[

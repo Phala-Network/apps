@@ -53,7 +53,7 @@ const ClaimModal = (props: StakePoolModalProps): JSX.Element => {
       <Value>{stakePool.pid}</Value>
       <Label>Rewards</Label>
       <Value>{rewards}</Value>
-      <Label>Target Address</Label>
+      <Label>{t('mining.target_address')}</Label>
       <Input
         value={address}
         onChange={onInputChange}

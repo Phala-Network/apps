@@ -32,12 +32,12 @@ const StakeInfoModal = (props: StakePoolModalProps): JSX.Element => {
   const withdrawQueueColumns = useMemo<Column<WithdrawQueue>[]>(
     () => [
       {
-        name: 'Delegator',
+        name: t('mining.delegator'),
         Header: 'Delegator',
         accessor: 'user',
       },
       {
-        name: 'Delegation',
+        name: t('mining.delegation'),
         Header: 'Delegation',
         accessor: (queue) =>
           format(
@@ -45,7 +45,7 @@ const StakeInfoModal = (props: StakePoolModalProps): JSX.Element => {
           ),
       },
       {
-        name: 'Countdown',
+        name: t('mining.countdown'),
         Header: 'Countdown',
         accessor: (queue) => {
           if (typeof gracePeriod !== 'number') return '-'
@@ -84,7 +84,7 @@ const StakeInfoModal = (props: StakePoolModalProps): JSX.Element => {
     >
       <Line>
         <div>
-          <Label>Total Shares</Label>
+          <Label>{t('mining.total_shares')}</Label>
           <Value>{format(stakePool.totalShares, {unit: null})}</Value>
         </div>
         <div>
@@ -104,7 +104,7 @@ const StakeInfoModal = (props: StakePoolModalProps): JSX.Element => {
         </div>
       </Line>
 
-      <Label>Withdraw Queue</Label>
+      <Label>{t('mining.withdraw_queue')}</Label>
       <Table
         isLoading={isLoading}
         columns={withdrawQueueColumns}
@@ -114,7 +114,7 @@ const StakeInfoModal = (props: StakePoolModalProps): JSX.Element => {
 
       <Line>
         <div>
-          <Label>Your Delegation</Label>
+          <Label>{t('mining.your_delegation')}</Label>
           <Value>{format(userStakeInfo?.locked)}</Value>
         </div>
       </Line>
