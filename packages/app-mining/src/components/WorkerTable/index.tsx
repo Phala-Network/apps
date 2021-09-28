@@ -68,7 +68,7 @@ const WorkerTable = (): JSX.Element => {
   const columns = useMemo<Column<TableItem>[]>(
     () => [
       {
-        name: 'WorkerPublicKey',
+        name: t('mining.WorkerPublicKey'),
         Header: 'WorkerPublicKey',
         accessor: 'pubkey',
         disableSortBy: true,
@@ -79,7 +79,7 @@ const WorkerTable = (): JSX.Element => {
         accessor: 'pid',
       },
       {
-        name: 'Ve',
+        name: t('mining.Ve'),
         Header: 'Ve',
         accessor: (worker) =>
           worker.miner?.state === 'Ready' || !worker.miner?.ve
@@ -87,7 +87,7 @@ const WorkerTable = (): JSX.Element => {
             : toFixed(worker.miner.ve),
       },
       {
-        name: 'V',
+        name: t('mining.V'),
         Header: 'V',
         accessor: (worker) =>
           worker.miner?.state === 'Ready' || !worker.miner?.v
@@ -95,7 +95,7 @@ const WorkerTable = (): JSX.Element => {
             : toFixed(worker.miner.v),
       },
       {
-        name: 'P Instant',
+        name: t('mining.p_instant'),
         Header: 'P Instant',
         accessor: (worker) =>
           worker.miner?.state === 'Ready' ||
@@ -104,7 +104,7 @@ const WorkerTable = (): JSX.Element => {
             : worker.miner.benchmark.pInstant,
       },
       {
-        name: 'P Initial',
+        name: t('mining.p_intial'),
         Header: 'P Initial',
         accessor: (worker) =>
           worker.miner?.state === 'Ready' ||
@@ -113,23 +113,23 @@ const WorkerTable = (): JSX.Element => {
             : worker.miner.benchmark.pInit,
       },
       {
-        name: 'state',
+        name: t('mining.state'),
         Header: 'state',
         accessor: (worker) => {
           const state = worker.miner?.state
-          if (state === 'MiningIdle') return 'Mining'
-          if (state === 'MiningUnresponsive') return 'Unresponsive'
-          if (state === 'MiningCoolingDown') return 'CoolingDown'
+          if (state === 'MiningIdle') return t('mining.mining2')
+          if (state === 'MiningUnresponsive') return t('mining.unresponsive')
+          if (state === 'MiningCoolingDown') return t('mining.coolingDown')
           return state
         },
       },
       {
-        name: 'Mined',
+        name: t('mining.mined'),
         Header: 'Mined',
         accessor: (worker) => format(worker.miner?.stats.totalReward),
       },
       {
-        name: 'Stake',
+        name: t('mining.stake'),
         Header: 'Stake',
         accessor: (worker) => format(worker.stake),
       },

@@ -1,3 +1,4 @@
+import {useTranslation} from '@phala/react-i18n'
 import {Helmet} from 'react-helmet'
 import styled from 'styled-components'
 import StakePoolTable from './components/StakePoolTable'
@@ -19,10 +20,12 @@ const Block = styled.div`
 `
 
 const Mining: React.FC = () => {
+  const {t} = useTranslation()
+
   return (
     <Wrapper>
       <Helmet>
-        <title>Mining</title>
+        <title>{t('mining.mining')}</title>
       </Helmet>
       <Block>
         <StakePoolTable />

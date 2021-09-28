@@ -1,3 +1,4 @@
+import {useTranslation} from '@phala/react-i18n'
 import {useApiPromise} from '@phala/react-libs'
 import {useCallback} from 'react'
 import {WorkerModalProps} from '.'
@@ -8,6 +9,7 @@ const StopModal = (props: WorkerModalProps): JSX.Element => {
   const {worker, onClose} = props
   const {api} = useApiPromise()
   const waitSignAndSend = useWaitSignAndSend()
+  const {t} = useTranslation()
 
   const onConfirm = useCallback(async () => {
     if (api) {
@@ -26,7 +28,7 @@ const StopModal = (props: WorkerModalProps): JSX.Element => {
     >
       <Label>pid</Label>
       <Value>{worker.pid}</Value>
-      <Label>WorkerPublicKey</Label>
+      <Label>{t('mining.WorkerPublicKey')}</Label>
       <Value>{worker.pubkey}</Value>
     </ActionModal>
   )

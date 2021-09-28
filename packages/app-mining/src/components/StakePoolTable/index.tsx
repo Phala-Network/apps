@@ -87,12 +87,12 @@ const StakePoolTable = (): JSX.Element => {
             : format(stakePool.cap.sub(stakePool.totalStake)),
       },
       {
-        name: 'Owner Reward',
+        name: t('mining.owner_reward'),
         Header: 'Owner Reward',
         accessor: (stakePool) => format(stakePool.ownerReward),
       },
       {
-        name: t('delegate.delegated'),
+        name: t('mining.delegated'),
         Header: 'Delegated',
         accessor: (stakePool) => format(stakePool.totalStake),
       },
@@ -141,7 +141,7 @@ const StakePoolTable = (): JSX.Element => {
   return (
     <>
       <MiningTable
-        title="Stakepool"
+        title={t('mining.stakepool')}
         header={
           <Button
             type="primary"
@@ -149,7 +149,7 @@ const StakePoolTable = (): JSX.Element => {
             style={{marginLeft: 10}}
             onClick={() => open('create')}
           >
-            Create pool
+            {t('mining.create_pool')}
           </Button>
         }
         columns={columns}

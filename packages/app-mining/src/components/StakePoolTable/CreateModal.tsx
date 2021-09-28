@@ -1,3 +1,4 @@
+import {useTranslation} from '@phala/react-i18n'
 import {useApiPromise} from '@phala/react-libs'
 import {useCallback} from 'react'
 import useSelfStakePools from '../../hooks/useSelfStakePools'
@@ -5,6 +6,7 @@ import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
 import ActionModal from '../ActionModal'
 
 const CreateModal = (props: {onClose: () => void}): JSX.Element => {
+  const {t} = useTranslation()
   const {refetch} = useSelfStakePools()
   const waitSignAndSend = useWaitSignAndSend()
   const {api} = useApiPromise()
@@ -19,8 +21,8 @@ const CreateModal = (props: {onClose: () => void}): JSX.Element => {
   return (
     <ActionModal
       onClose={props.onClose}
-      title="Create"
-      subtitle="You will create a new stake pool"
+      title={t('mining.create2')}
+      subtitle={t('mining.you_will_create_a_new_stake_pool')}
       onConfirm={onConfirm}
     ></ActionModal>
   )

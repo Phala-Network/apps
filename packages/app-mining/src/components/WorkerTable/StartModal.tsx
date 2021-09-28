@@ -12,6 +12,7 @@ import useFormat from '../../hooks/useFormat'
 import useSelfStakePools from '../../hooks/useSelfStakePools'
 import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
 import ActionModal, {Label, Value} from '../ActionModal'
+import {useTranslation} from '@phala/react-i18n'
 
 const Extra = styled.div`
   margin-top: 2px;
@@ -19,6 +20,7 @@ const Extra = styled.div`
 `
 
 const StartModal = (props: WorkerModalProps): JSX.Element => {
+  const {t} = useTranslation()
   const {worker, onClose} = props
   const {api} = useApiPromise()
   const waitSignAndSend = useWaitSignAndSend()
@@ -82,7 +84,7 @@ const StartModal = (props: WorkerModalProps): JSX.Element => {
     >
       <Label>pid</Label>
       <Value>{worker.pid}</Value>
-      <Label>WorkerPublicKey</Label>
+      <Label>{t('mining.WorkerPublicKey')}</Label>
       <Value>{worker.pubkey}</Value>
       <Label>Amount</Label>
       <InputNumber
