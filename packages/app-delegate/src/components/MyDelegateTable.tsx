@@ -141,9 +141,9 @@ const MyDelegateTable = (): JSX.Element => {
           const userStake = userStakeInfo?.[stakePool.pid]
           if (!userStake) return '-'
           return format(
-            userStake.shares
-              .mul(stakePool.totalShares)
-              .div(stakePool.totalStake)
+            userStake.shares.mul(
+              stakePool.totalStake.div(stakePool.totalShares)
+            )
           )
         },
       },
@@ -158,8 +158,7 @@ const MyDelegateTable = (): JSX.Element => {
                 }
                 return acc
               }, new Decimal(0))
-              .mul(stakePool.totalShares)
-              .div(stakePool.totalStake)
+              .mul(stakePool.totalShares.div(stakePool.totalStake))
           ),
       },
       {
