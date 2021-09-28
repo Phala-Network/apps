@@ -1,4 +1,5 @@
 import {ethereums} from '@phala/app-config'
+import {useTranslation} from '@phala/react-i18n'
 import {
   useErc20Contract,
   useEthers,
@@ -24,6 +25,7 @@ const Content = styled.div`
 `
 
 const ApproveDialog: React.FC<Props> = (props) => {
+  const {t} = useTranslation()
   const {visible, onClose} = props
   const {contract} = useErc20Contract()
   const {provider, signer} = useEthers()
@@ -65,19 +67,16 @@ const ApproveDialog: React.FC<Props> = (props) => {
   }, [receipt, onClose])
 
   return (
-    <Modal visible={visible} title="Approve PHA">
-      <Content>
-        In order for the bridge to move your ERC20 tokens to Khala Network, it
-        first needs your approval. This is only required once per ERC20 token!
-      </Content>
+    <Modal visible={visible} title={t('bridge.approve_pha')}>
+      <Content>{t('bridge.approve_pha_description')}</Content>
 
       <ModalActions>
         <ModalAction full>
-          <Button onClick={onClose}>Reject</Button>
+          <Button onClick={onClose}>{t('bridge.reject')}</Button>
         </ModalAction>
         <ModalAction full>
           <Button loading={isSubmitting} type="primary" onClick={startApprove}>
-            Confirm
+            {t('bridge.confirm')}
           </Button>
         </ModalAction>
       </ModalActions>

@@ -88,5 +88,11 @@ export default {
     need_insufficient_balance: 'Insufficient balance',
     transactions_panel: 'Transactions Panel',
     done: 'Done',
+    approve: 'Approve',
+    approve_pha: 'Approve $PHA',
+    approve_description:
+      'In order for the bridge to move your ERC20 tokens to Khala Network, it first needs your approval. This is only required once per ERC20 token!',
+    reject: 'Reject',
+    confirm: 'Confirm',
   },
 }

@@ -85,5 +85,11 @@ export default {
     need_insufficient_balance: '余额不足',
     transactions_panel: '跨链记录',
     done: '好的',
+    approve: '授权',
+    approve_pha: '授权合约操作 $PHA',
+    approve_description:
+      '为了让桥将你的 ERC20 代币转移到 Khala Network，首先需要你的批准。每个 ERC20 代币只需要一次授权！',
+    reject: '拒绝',
+    confirm: '确认',
   },
 }
