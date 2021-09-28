@@ -1,7 +1,8 @@
-import Decimal from 'decimal.js'
 import {usePolkadotAccountAtom} from '@phala/app-store'
 import {Input, InputAction} from '@phala/react-components'
+import {useTranslation} from '@phala/react-i18n'
 import {useApiPromise} from '@phala/react-libs'
+import Decimal from 'decimal.js'
 import {useCallback, useMemo, useState} from 'react'
 import useFormat from '../hooks/useFormat'
 import useSelfUserStakeInfo from '../hooks/useSelfUserStakeInfo'
@@ -16,6 +17,7 @@ const ClaimModal = (props: StakePoolModalProps): JSX.Element => {
   const waitSignAndSend = useWaitSignAndSend()
   const [address, setAddress] = useState<string>('')
   const {data: userStakeInfo} = useSelfUserStakeInfo(stakePool.pid)
+  const {t} = useTranslation()
 
   const rewards = useMemo<string>(() => {
     if (!userStakeInfo) return '-'
@@ -45,7 +47,7 @@ const ClaimModal = (props: StakePoolModalProps): JSX.Element => {
     <ActionModal
       onClose={onClose}
       onConfirm={onConfirm}
-      title="Claim"
+      title={t('delegate.claim')}
       subtitle="Claim all the pending rewards of the sender and send to the `target`"
       disabled={!address}
     >

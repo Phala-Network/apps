@@ -68,12 +68,12 @@ const StakePoolTable = (): JSX.Element => {
         ),
       },
       {
-        name: 'Worker',
+        name: t('delegate.worker'),
         Header: 'Worker',
         accessor: (stakePool) => stakePool.workers.length,
       },
       {
-        name: 'Commission',
+        name: t('delegate.commission'),
         Header: 'Commission',
         accessor: (stakePool) =>
           `${toFixed(stakePool.payoutCommission.div(10 ** 4), 2)}%`,
@@ -92,17 +92,17 @@ const StakePoolTable = (): JSX.Element => {
         accessor: (stakePool) => format(stakePool.ownerReward),
       },
       {
-        name: 'Delegated',
+        name: t('delegate.delegated'),
         Header: 'Delegated',
         accessor: (stakePool) => format(stakePool.totalStake),
       },
       {
-        name: 'Free Delegation',
+        name: t('delegate.free_delegation'),
         Header: 'Free Delegation',
         accessor: (stakePool) => format(stakePool.freeStake),
       },
       {
-        name: 'Releasing Stake',
+        name: t('delegate.releasing_stake'),
         Header: 'Releasing Stake',
         accessor: (stakePool) => format(stakePool.releasingStake),
       },

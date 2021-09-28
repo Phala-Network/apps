@@ -50,7 +50,7 @@ const Banner = (): JSX.Element => {
         {t('delegate.total_delegated')}: <span>{locked}</span>
       </Content>
       <Link to="/delegate/my-delegate/">
-        <Button size="small">My Delegate</Button>
+        <Button size="small">{t('delegate.my_delegated')}</Button>
       </Link>
     </Wrapper>
   )

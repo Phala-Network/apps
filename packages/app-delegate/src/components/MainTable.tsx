@@ -143,7 +143,7 @@ const MainTable = (): JSX.Element => {
       //   },
       // },
       !isMobile && {
-        name: 'Commission',
+        name: t('delegate.commission'),
         Header: 'Commission',
         accessor: (stakePool) =>
           `${toFixed(stakePool.payoutCommission.div(10 ** 4), 2)}%`,
@@ -158,27 +158,27 @@ const MainTable = (): JSX.Element => {
         },
       },
       !isMobile && {
-        name: 'Delegated',
+        name: t('delegate.delegated'),
         Header: 'Delegated',
         accessor: (stakePool) => format(stakePool.totalStake),
       },
       !isMobile && {
-        name: 'Free Delegation',
+        name: t('delegate.free_delegation'),
         Header: 'Free Delegation',
         accessor: (stakePool) => format(stakePool.freeStake),
       },
       !isMobile && {
-        name: 'Releasing Stake',
+        name: t('delegate.releasing_stake'),
         Header: 'Releasing Stake',
         accessor: (stakePool) => format(stakePool.releasingStake),
       },
       !isMobile && {
-        name: 'Worker',
+        name: t('delegate.worker'),
         Header: 'Worker',
         accessor: (stakePool) => stakePool.workers.length,
       },
       {
-        name: 'Actions',
+        name: t('delegate.actions'),
         Header: 'Actions',
         disableSortBy: true,
         accessor: (stakePool) => (
@@ -190,7 +190,7 @@ const MainTable = (): JSX.Element => {
                 open('delegate')
               }}
             >
-              Delegate
+              {t('delegate.delegate')}
             </ActionButton>
           </>
         ),
@@ -202,12 +202,15 @@ const MainTable = (): JSX.Element => {
   return (
     <Wrapper>
       <Filter>
-        <Input onChange={setFilterPid} placeholder="Search Pid"></Input>
+        <Input
+          onChange={setFilterPid}
+          placeholder={t('delegate.search_pid')}
+        ></Input>
         <Checkbox
           checked={showPoolWithWorkers}
           onChange={setShowPoolWithWorkers}
         >
-          Pool with workers
+          {t('delegate.pool_with_workers')}
         </Checkbox>
         <Checkbox checked={showHasAPR} onChange={setShowHasAPR}>
           {'APR > 0%'}
@@ -216,10 +219,12 @@ const MainTable = (): JSX.Element => {
           checked={showNotMaxCommission}
           onChange={setShowNotMaxCommission}
         >
-          {'Commission < 100%'}
+          {t('delegate.commission')}
+          {' < 100%'}
         </Checkbox>
         <Checkbox checked={showHasRemaining} onChange={setShowHasRemaining}>
-          {'Remaining > 0'}
+          {t('delegate.remaining')}
+          {' > 0'}
         </Checkbox>
       </Filter>
 

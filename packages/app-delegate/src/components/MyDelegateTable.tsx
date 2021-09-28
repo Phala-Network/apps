@@ -105,7 +105,7 @@ const MyDelegateTable = (): JSX.Element => {
         },
       },
       !isMobile && {
-        name: 'Commission',
+        name: t('delegate.commission'),
         Header: 'Commission',
         accessor: (stakePool) =>
           `${toFixed(stakePool.payoutCommission.div(10 ** 4), 2)}%`,
@@ -130,12 +130,12 @@ const MyDelegateTable = (): JSX.Element => {
         },
       },
       !isMobile && {
-        name: 'Free Delegation',
+        name: t('delegate.free_delegation'),
         Header: 'Free Delegation',
         accessor: (stakePool) => format(stakePool.freeStake),
       },
       !isMobile && {
-        name: 'Releasing Stake',
+        name: t('delegate.releasing_stake'),
         Header: 'Releasing Stake',
         accessor: (stakePool) => format(stakePool.releasingStake),
       },
@@ -148,7 +148,7 @@ const MyDelegateTable = (): JSX.Element => {
             : format(stakePool.cap.sub(stakePool.totalStake)),
       },
       {
-        name: 'Your Delegation',
+        name: t('delegate.your_delegated'),
         Header: 'Your Delegation',
         accessor: (stakePool) => {
           const userStake = userStakeInfo?.[stakePool.pid]
@@ -161,7 +161,7 @@ const MyDelegateTable = (): JSX.Element => {
         },
       },
       !isMobile && {
-        name: 'Your Withdrawing',
+        name: t('delegate.your_withdrawing'),
         Header: 'Your Withdrawing',
         accessor: (stakePool) =>
           format(
@@ -176,7 +176,7 @@ const MyDelegateTable = (): JSX.Element => {
           ),
       },
       {
-        name: 'Claimable Rewards',
+        name: t('delegate.claimable_rewards'),
         Header: 'Claimable Rewards',
         accessor: (stakePool) => {
           const userStake = userStakeInfo?.[stakePool.pid]
@@ -194,7 +194,7 @@ const MyDelegateTable = (): JSX.Element => {
       },
       {
         id: 'actions',
-        name: 'Actions',
+        name: t('delegate.actions'),
         disableSortBy: true,
         accessor: (stakePool) => {
           return (

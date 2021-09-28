@@ -1,8 +1,9 @@
+import {useTranslation} from '@phala/react-i18n'
 import {Helmet} from 'react-helmet'
-import styled from 'styled-components'
 import {up} from 'styled-breakpoints'
-import MainTable from '../components/MainTable'
+import styled from 'styled-components'
 import Banner from '../components/Banner'
+import MainTable from '../components/MainTable'
 
 const Wrapper = styled.div`
   overflow-x: auto;
@@ -20,10 +21,12 @@ const Block = styled.div`
 `
 
 const Delegate = (): JSX.Element => {
+  const {t} = useTranslation()
+
   return (
     <>
       <Helmet>
-        <title>Delegate</title>
+        <title>{t('delegate.delegate')}</title>
       </Helmet>
 
       <Wrapper>

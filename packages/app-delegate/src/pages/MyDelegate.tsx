@@ -1,9 +1,10 @@
-import {Link} from 'gatsby-plugin-intl'
-import styled from 'styled-components'
 import {Button} from '@phala/react-components'
-import MyDelegateTable from '../components/MyDelegateTable'
+import {useTranslation} from '@phala/react-i18n'
+import {Link} from 'gatsby-plugin-intl'
 import {Helmet} from 'react-helmet'
 import {up} from 'styled-breakpoints'
+import styled from 'styled-components'
+import MyDelegateTable from '../components/MyDelegateTable'
 
 const Wrapper = styled.div`
   overflow-x: auto;
@@ -20,13 +21,15 @@ const Block = styled.div`
 `
 
 const MyState = () => {
+  const {t} = useTranslation()
+
   return (
     <Wrapper>
       <Helmet>
-        <title>My Delegate</title>
+        <title>{t('delegate.my_delegated')}</title>
       </Helmet>
       <Link to="/delegate/">
-        <Button>Back</Button>
+        <Button>{t('delegate.back')}</Button>
       </Link>
       <Block>
         <MyDelegateTable />

@@ -1,5 +1,6 @@
 import {Button, Modal, Table} from '@phala/react-components'
 import {StakePool} from '@phala/react-hooks'
+import {useTranslation} from '@phala/react-i18n'
 import {formatDuration, intervalToDuration} from 'date-fns'
 import {useMemo} from 'react'
 import {Column} from 'react-table'
@@ -22,6 +23,7 @@ const Line = styled.div`
 type WithdrawQueue = StakePool['withdrawQueue'] extends (infer P)[] ? P : never
 
 const StakeInfoModal = (props: StakePoolModalProps): JSX.Element => {
+  const {t} = useTranslation()
   const {open} = useModalVisible()
   const {stakePool, onClose} = props
   const format = useFormat()
@@ -97,7 +99,7 @@ const StakeInfoModal = (props: StakePoolModalProps): JSX.Element => {
           <Value>{format(stakePool.freeStake)}</Value>
         </div>
         <div>
-          <Label>Releasing Stake</Label>
+          <Label>{t('delegate.releasing_stake')}</Label>
           <Value>{format(stakePool.releasingStake)}</Value>
         </div>
       </Line>

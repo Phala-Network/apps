@@ -1,4 +1,5 @@
 import {InputNumber} from '@phala/react-components'
+import {useTranslation} from '@phala/react-i18n'
 import {
   useApiPromise,
   useDecimalJsTokenDecimalMultiplier,
@@ -16,6 +17,7 @@ const WithdrawModal = (props: StakePoolModalProps): JSX.Element => {
   const decimals = useDecimalJsTokenDecimalMultiplier(api)
   const [amount, setAmount] = useState<number | undefined>()
   const {refetch} = useSelfUserStakeInfo(stakePool.pid)
+  const {t} = useTranslation()
 
   const onConfirm = useCallback(async () => {
     if (api && decimals && amount) {
@@ -45,7 +47,7 @@ const WithdrawModal = (props: StakePoolModalProps): JSX.Element => {
         onClose()
       }}
       onConfirm={onConfirm}
-      title="Withdraw"
+      title={t('delegate.withdraw')}
       disabled={!amount}
     >
       <Label>pid</Label>
@@ -53,7 +55,7 @@ const WithdrawModal = (props: StakePoolModalProps): JSX.Element => {
       <Label>Delegation</Label>
       <InputNumber
         type="number"
-        placeholder="Amount"
+        placeholder={t('delegate.amount')}
         value={amount}
         onChange={onInputChange}
         after="PHA"

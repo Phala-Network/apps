@@ -1,17 +1,18 @@
-import styled from 'styled-components'
 import {Alert, InputNumber} from '@phala/react-components'
+import {useTranslation} from '@phala/react-i18n'
 import {
   useApiPromise,
   useDecimalJsTokenDecimalMultiplier,
 } from '@phala/react-libs'
 import Decimal from 'decimal.js'
 import {useCallback, useState} from 'react'
+import styled from 'styled-components'
 import {StakePoolModalProps} from '.'
+import {useDelegableBalance} from '../../hooks/useDelegableBalance'
+import useFormat from '../../hooks/useFormat'
 import useSelfUserStakeInfo from '../../hooks/useSelfUserStakeInfo'
 import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
 import ActionModal, {Label, Value} from '../ActionModal'
-import useFormat from '../../hooks/useFormat'
-import {useDelegableBalance} from '../../hooks/useDelegableBalance'
 
 const Extra = styled.div`
   margin-top: 10px;
@@ -27,6 +28,7 @@ const DelegateModal = (props: StakePoolModalProps): JSX.Element => {
   const [amount, setAmount] = useState<number | undefined>()
   const {refetch} = useSelfUserStakeInfo(stakePool.pid)
   const format = useFormat()
+  const {t} = useTranslation()
 
   const remaining =
     stakePool.cap === null
@@ -57,8 +59,8 @@ const DelegateModal = (props: StakePoolModalProps): JSX.Element => {
         onClose()
       }}
       onConfirm={onConfirm}
-      title="Delegate"
-      subtitle="Delegate some stake to a pool"
+      title={t('delegate.delegate')}
+      subtitle={t('delegate.delegate_some_stake_to_a_pool')}
       disabled={!amount}
     >
       <Label>pid</Label>
@@ -71,9 +73,13 @@ const DelegateModal = (props: StakePoolModalProps): JSX.Element => {
         onChange={onInputChange}
         after="PHA"
       ></InputNumber>
-      <Alert style={{marginTop: 10}}>Please reserve about 1 PHA fee.</Alert>
-      <Extra>Delegable Balance: {format(delegableBalance)}</Extra>
-      <Extra>Pool Remaining: {remaining}</Extra>
+      <Alert style={{marginTop: 10}}>{t('delegate.please_reserve')}</Alert>
+      <Extra>
+        {t('delegate.delegable_balance')}: {format(delegableBalance)}
+      </Extra>
+      <Extra>
+        {t('delegate.pool_remaining')}: {remaining}
+      </Extra>
     </ActionModal>
   )
 }
