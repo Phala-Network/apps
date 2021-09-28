@@ -83,7 +83,7 @@ export default {
     destination_address: 'Destination Address',
     amount: 'Amount ($PHA)',
     need_enter_amount: 'Need enter amount',
-    need_enter_recipient: 'Need enter recipient',
+    need_enter_recipient: 'Need enter the correct recipient',
     need_login: 'Need login',
     need_insufficient_balance: 'Insufficient balance',
     transactions_panel: 'Transactions Panel',
