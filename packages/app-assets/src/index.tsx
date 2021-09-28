@@ -44,7 +44,7 @@ const HomePage: React.FC = () => {
   )
   const COMING_SOON_CATEGORIES = [
     t('assets.parachain_assets'),
-    t('assets.bridge.assets'),
+    t('assets.bridge_assets'),
   ]
 
   // NOTE: copied from InputDataStep.tsx
