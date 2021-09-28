@@ -95,5 +95,9 @@ export default {
     reject: 'Reject',
     confirm: 'Confirm',
     bridge_information: 'Bridge Information',
+    transaction_send: 'Transaction Send',
+    relayer_confirmed: 'Relayer Confirmed',
+    ethereum_confirmed: 'Ethereum Confirmed',
+    khala_confirmed: 'Khala Confirmed',
   },
 }

@@ -1,4 +1,5 @@
 import {useDepositRecordByHash} from '@phala/react-graph-chainbridge'
+import {useTranslation} from '@phala/react-i18n'
 import {useBridgePhalaRecordInfo, useEthereumGraphQL} from '@phala/react-libs'
 import {useMemo} from 'react'
 import Progress from './Progress'
@@ -7,6 +8,7 @@ type EthereumProgressParams = {
   transactionHash?: string
 }
 export const EthereumProgress: React.FC<EthereumProgressParams> = (props) => {
+  const {t} = useTranslation()
   const {transactionHash} = props
   let link = ''
 
@@ -20,17 +22,17 @@ export const EthereumProgress: React.FC<EthereumProgressParams> = (props) => {
 
   const steps = [
     {
-      text: 'Transaction Send',
+      text: t('transaction_send'),
     },
     {
-      text: 'Ethereum Confirmed',
+      text: t('ethereum_confirmed'),
       link,
     },
     {
-      text: 'Relayer Confirmed',
+      text: t('relayer_confirmed'),
     },
     {
-      text: 'Khala Confirmed',
+      text: t('khala_confirmed'),
     },
   ]
 

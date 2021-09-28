@@ -92,5 +92,9 @@ export default {
     reject: '拒绝',
     confirm: '确认',
     bridge_information: '跨链信息',
+    transaction_send: '交易已发出',
+    relayer_confirmed: 'Relayer 已确认',
+    ethereum_confirmed: '以太坊已确认',
+    khala_confirmed: 'Khala 已确认',
   },
 }
