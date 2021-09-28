@@ -106,7 +106,7 @@ const SubmitStepToKhala: React.FC<Props> = (props) => {
         <ModalActions>
           <ModalAction>
             <Button type="primary" onClick={onPrev}>
-              {t('bridge_done')}
+              {t('bridge.done')}
             </Button>
           </ModalAction>
         </ModalActions>

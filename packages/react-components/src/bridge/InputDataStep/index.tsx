@@ -127,13 +127,13 @@ const InputDataStep: React.FC<Props> = (props) => {
     setErrorString(errorString)
 
     if (!amountTo) {
-      errorString = t('bridge_need_enter_amount')
+      errorString = t('bridge.need_enter_amount')
     } else if (!recipient || !validateAddress(recipient)) {
-      errorString = t('bridge_need_enter_recipient')
+      errorString = t('bridge.need_enter_recipient')
     } else if (!accountFrom) {
-      errorString = t('bridge_need_login')
+      errorString = t('bridge.need_login')
     } else if (new Decimal(amountTo).greaterThan(new Decimal(maxAmount))) {
-      errorString = t('bridge_need_insufficient_balance')
+      errorString = t('bridge.need_insufficient_balance')
     }
 
     if (errorString) {
@@ -167,7 +167,7 @@ const InputDataStep: React.FC<Props> = (props) => {
     <>
       <div style={{height: 26}}>
         <InputExternalInfo
-          label={t('bridge_balance')}
+          label={t('bridge.balance')}
           type={'PHA'}
           value={currentBalance}
         />
@@ -192,10 +192,10 @@ const InputDataStep: React.FC<Props> = (props) => {
               setErrorString('')
             }}
             value={amountInput}
-            placeholder={t('bridge_amount')}
+            placeholder={t('bridge.amount')}
             after={
               isShowMaxButton ? (
-                <InputAction onClick={setMax}>{t('bridge_max')}</InputAction>
+                <InputAction onClick={setMax}>{t('bridge.max')}</InputAction>
               ) : null
             }
           />
@@ -209,11 +209,11 @@ const InputDataStep: React.FC<Props> = (props) => {
               setErrorString('')
             }}
             size="large"
-            placeholder={t('bridge_destination_address')}
+            placeholder={t('bridge.destination_address')}
             after={
               isShowRecipient && !addressValid && !isMobile ? (
                 <InputAction onClick={setMyAddress}>
-                  {t('bridge_my_address')}
+                  {t('bridge.my_address')}
                 </InputAction>
               ) : null
             }
@@ -236,7 +236,7 @@ const InputDataStep: React.FC<Props> = (props) => {
                 account={ethereumAccount.address}
               >
                 <Button type="primary" onClick={submit}>
-                  {t('bridge_next')}
+                  {t('bridge.next')}
                 </Button>
               </EthereumAllowance>
             </ErrorBoundary>

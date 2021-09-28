@@ -46,7 +46,7 @@ const PolkadotTicket: React.FC = () => {
               <DefaultStatusIcon>
                 <img src={logo} alt="logo" />
               </DefaultStatusIcon>
-              <DefaultStatusName>{t('polkadot_link')}</DefaultStatusName>
+              <DefaultStatusName>{t('polkadot.link')}</DefaultStatusName>
             </DefaultStatus>
           }
         />

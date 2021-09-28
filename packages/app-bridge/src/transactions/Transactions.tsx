@@ -43,7 +43,7 @@ const Transactions: React.FC = () => {
   }
 
   return (
-    <FloatModal title={t('bridge_transactions_panel')} onActive={onActive}>
+    <FloatModal title={t('bridge.transactions_panel')} onActive={onActive}>
       {/* 
         <ClearButton onClick={() => setTransactionsInfo([])}>
           Clear

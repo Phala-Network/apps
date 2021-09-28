@@ -18,6 +18,7 @@
     "@phala/app-store": "workspace:^0.0.1",
     "@phala/react-components": "workspace:^0.0.1",
     "@phala/react-hooks": "workspace:^0.0.1",
+    "@phala/react-i18n": "workspace:^0.0.1",
     "@phala/react-libs": "workspace:^0.0.1",
     "@phala/utils": "workspace:^0.0.1",
     "@polkadot/api-derive": "^5.8.3",

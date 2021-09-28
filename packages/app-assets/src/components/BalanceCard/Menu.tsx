@@ -1,4 +1,5 @@
 import {BridgeModal} from '@phala/react-components'
+import {useTranslation} from '@phala/react-i18n'
 import {forwardRef, useState} from 'react'
 import {down, up} from 'styled-breakpoints'
 import styled from 'styled-components'
@@ -114,6 +115,7 @@ const Menu = forwardRef<HTMLDivElement, Props>((props, ref) => {
   const [visibleTransferModal, setVisibleTransferModal] = useState(false)
   const [visibleConvertModal, setVisibleConvertModal] = useState(false)
   const [claimModalVisible, setClaimModalVisible] = useState(false)
+  const {t} = useTranslation()
 
   return (
     <>
@@ -149,7 +151,7 @@ const Menu = forwardRef<HTMLDivElement, Props>((props, ref) => {
           )}
           {!disableClaim && (
             <Button onClick={() => setClaimModalVisible(true)} active={active}>
-              <span>Claim</span>
+              <span>{t('assets.claim')}</span>
               <ButtonBottomBorder active={active}></ButtonBottomBorder>
             </Button>
           )}

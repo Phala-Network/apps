@@ -25,8 +25,8 @@ export const PolkadotInstallModal: React.FC<Props> = (props) => {
   const {t} = useTranslation()
 
   return (
-    <Modal {...props} title={t('account_alert')}>
-      <Content>{t('polkadot_install_extension')}</Content>
+    <Modal {...props} title={t('account.alert')}>
+      <Content>{t('polkadot.install_extension')}</Content>
       <Button
         type="primary"
         style={{width: '100%'}}
@@ -35,7 +35,7 @@ export const PolkadotInstallModal: React.FC<Props> = (props) => {
           props.onClose()
         }}
       >
-        {t('polkadot_install')}
+        {t('polkadot.install')}
       </Button>
     </Modal>
   )

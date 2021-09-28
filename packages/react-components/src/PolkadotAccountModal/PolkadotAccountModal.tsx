@@ -45,11 +45,11 @@ export const PolkadotAccountModal: React.FC<Props> = (props) => {
   }
 
   if (!enabled) {
-    return <AlertModal content={t('polkadot_allow_access')} {...props} />
+    return <AlertModal content={t('polkadot.allow_access')} {...props} />
   }
 
   if (polkadotAccounts.length === 0) {
-    return <AlertModal content={t('polkadot_no_account_found')} {...props} />
+    return <AlertModal content={t('polkadot.no_account_found')} {...props} />
   }
 
   return (

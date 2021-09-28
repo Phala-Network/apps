@@ -14,7 +14,7 @@ export const AlertModal: React.FC<AlertModalProps> = (props) => {
   const {t} = useTranslation()
 
   return (
-    <Modal {...props} title={t('account_alert')}>
+    <Modal {...props} title={t('account.alert')}>
       <Content>{props.content}</Content>
       <Button style={{width: '100%'}} onClick={() => props.onClose?.()}>
         Cancel

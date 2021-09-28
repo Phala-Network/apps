@@ -13,8 +13,6 @@ i18next
   .use(LanguageDetector)
   .init({
     debug: true,
-    keySeparator: false,
-    interpolation: {escapeValue: false},
     resources,
     detection: {
       order: ['htmlTag', 'path'],

@@ -1,6 +1,7 @@
 import {usePolkadotAccountAtom} from '@phala/app-store'
 import {Alert, Button, Modal} from '@phala/react-components'
 import {useAllBalances} from '@phala/react-hooks'
+import {useTranslation} from '@phala/react-i18n'
 import {
   bnToDecimal,
   useApiPromise,
@@ -36,6 +37,7 @@ const Info = styled.div`
 `
 
 const ClaimModal: React.FC<Props> = ({visible, onClose}) => {
+  const {t} = useTranslation()
   const [loading, setLoading] = useState(false)
   const {api} = useApiPromise()
   const polkadotAccount = usePolkadotAccountAtom()[0]?.address
@@ -75,10 +77,10 @@ const ClaimModal: React.FC<Props> = ({visible, onClose}) => {
     <Modal
       visible={visible}
       onClose={onClose}
-      title="Claim PHA"
+      title={t('assets.claim_pha')}
       actions={[
         <Button onClick={onClose} key="reject">
-          Cancel
+          {t('assets.cancel')}
         </Button>,
         <Button
           disabled={loading || !canClaim}
@@ -86,19 +88,19 @@ const ClaimModal: React.FC<Props> = ({visible, onClose}) => {
           key="confirm"
           type="primary"
         >
-          {loading ? 'Confirming' : 'Confirm'}
+          {loading ? t('assets.confirming') : t('assets.confirm')}
         </Button>,
       ]}
     >
       <Text>
-        You have unlocked{' '}
-        {format(vestedClaimable && vestedBalance?.sub(vestedClaimable))} PHA,
-        you still have {format(vestingLocked)} PHA to be unlocked.
+        {t('assets.unlocked', {
+          vestedClaimable: format(
+            vestedClaimable && vestedBalance?.sub(vestedClaimable)
+          ),
+          vestingLocked: format(vestingLocked),
+        })}
       </Text>
-      <Alert>
-        Sorry, the claim module is disabled until Khala enables transfer
-        function.
-      </Alert>
+      <Alert>{t('assets.sorry')}</Alert>
       {canClaim && (
         <Info>
           <span>Claim now:</span> {format(vestedClaimable)} PHA

@@ -48,11 +48,11 @@ export const EthereumAccountModal: React.FC<Props> = (props) => {
   }
 
   if (!isReady) {
-    return <AlertModal content={t('metamask_allow_access')} {...props} />
+    return <AlertModal content={t('metamask.allow_access')} {...props} />
   }
 
   if (accountsIsEmpty) {
-    return <AlertModal content={t('metamask_no_account_found')} {...props} />
+    return <AlertModal content={t('metamask.no_account_found')} {...props} />
   }
 
   return (

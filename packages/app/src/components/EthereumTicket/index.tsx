@@ -40,8 +40,8 @@ const EthereumTicket: React.FC = () => {
     } else {
       toast(
         <div>
-          <h1>{t('metamask_wrong_network_title')}</h1>
-          <p>{t('metamask_wrong_network_description')}</p>
+          <h1>{t('metamask.wrong_network_title')}</h1>
+          <p>{t('metamask.wrong_network_description')}</p>
         </div>
       )
     }
@@ -57,7 +57,7 @@ const EthereumTicket: React.FC = () => {
               <DefaultStatusIcon>
                 <img src={logoImage} alt="logo" />
               </DefaultStatusIcon>
-              <DefaultStatusName>{t('metamask_link')}</DefaultStatusName>
+              <DefaultStatusName>{t('metamask.link')}</DefaultStatusName>
             </DefaultStatus>
           }
         ></Ticket>

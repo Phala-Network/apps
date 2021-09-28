@@ -45,11 +45,11 @@ const FeedbackModal: React.FC<ModalProps> = (props) => {
     let error = ''
 
     if (!name) {
-      error = t('feedback_name_invalid')
+      error = t('feedback.name_invalid')
     } else if (!email || !validateEmail(email)) {
-      error = t('feedback_email_invalid')
+      error = t('feedback.email_invalid')
     } else if (!comments) {
-      error = t('feedback_comments_invalid')
+      error = t('feedback.comments_invalid')
     }
 
     if (error) {
@@ -84,20 +84,20 @@ const FeedbackModal: React.FC<ModalProps> = (props) => {
     setEmail('')
     setComments('')
 
-    toast(t('feedback_success'))
+    toast(t('feedback.success'))
 
     props.onClose?.()
   }
 
   return (
-    <Modal title={t('feedback_title')} {...props}>
-      <Description>{t('feedback_description')}</Description>
+    <Modal title={t('feedback.title')} {...props}>
+      <Description>{t('feedback.description')}</Description>
 
       <Input
         onChange={setName}
         name="name"
         size="large"
-        placeholder={t('feedback_name_placeholder')}
+        placeholder={t('feedback.name_placeholder')}
       ></Input>
 
       <Spacer></Spacer>
@@ -106,7 +106,7 @@ const FeedbackModal: React.FC<ModalProps> = (props) => {
         onChange={setEmail}
         name="email"
         size="large"
-        placeholder={t('feedback_email_placeholder')}
+        placeholder={t('feedback.email_placeholder')}
       ></Input>
 
       <Spacer></Spacer>
@@ -115,18 +115,18 @@ const FeedbackModal: React.FC<ModalProps> = (props) => {
         onChange={setComments}
         name="description"
         rows={6}
-        placeholder={t('feedback_comments_placeholder')}
+        placeholder={t('feedback.comments_placeholder')}
       ></Textarea>
 
       <ModalActions>
         <ModalAction>
           <Button onClick={() => props.onClose?.()}>
-            {t('feedback_close')}
+            {t('feedback.close')}
           </Button>
         </ModalAction>
         <ModalAction>
           <Button type="primary" onClick={submit}>
-            {t('feedback_submit')}
+            {t('feedback.submit')}
           </Button>
         </ModalAction>
       </ModalActions>

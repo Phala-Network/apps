@@ -1,5 +1,6 @@
 import {useEthereumAccountAtom, usePolkadotAccountAtom} from '@phala/app-store'
 import {useBalance} from '@phala/react-hooks'
+import {useTranslation} from '@phala/react-i18n'
 import {useErc20BalanceQuery} from '@phala/react-libs'
 import {toFixed} from '@phala/utils'
 import {Decimal} from 'decimal.js'
@@ -17,8 +18,6 @@ import {EthereumIcon} from './components/Icons/EthereumIcon'
 import {KhalaIcon} from './components/Icons/KhalaIcon'
 import usePHAPrice from './hooks/usePHAPrice'
 
-const COMING_SOON_CATEGORIES: string[] = ['Parachain Assets', 'Bridge Assets']
-
 const ContentWrapper = styled.div`
   flex: 1;
   box-sizing: border-box;
@@ -32,6 +31,7 @@ const ContentWrapper = styled.div`
 `
 
 const HomePage: React.FC = () => {
+  const {t} = useTranslation()
   const md = useBreakpoint(up('md'))
   const PHAPrice = usePHAPrice()
   const [polkadotAccount] = usePolkadotAccountAtom()
@@ -42,6 +42,10 @@ const HomePage: React.FC = () => {
   const {data: ethereumAccountBalance} = useErc20BalanceQuery(
     ethereumAccountAddress
   )
+  const COMING_SOON_CATEGORIES = [
+    t('assets.parachain_assets'),
+    t('assets.bridge.assets'),
+  ]
 
   // NOTE: copied from InputDataStep.tsx
   const polkadotAccountBalanceNumber = useMemo<Decimal | undefined>(
@@ -79,7 +83,7 @@ const HomePage: React.FC = () => {
       <ContentWrapper>
         <Category
           title="Phala"
-          description={`Total: ${
+          description={`${t('assets.total')}: ${
             totalBalanceNumber ? toFixed(totalBalanceNumber, 4) : '-'
           } PHA`}
         >
@@ -122,7 +126,7 @@ const HomePage: React.FC = () => {
           <Category title={category} key={category}>
             <ComingSoonBox>
               <div style={{fontWeight: 'bold'}}>{category}</div>
-              <div>Coming Soon</div>
+              <div>{t('assets.coming_soon')}</div>
             </ComingSoonBox>
           </Category>
         ))}

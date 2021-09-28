@@ -203,6 +203,7 @@ importers:
       '@phala/app-store': workspace:^0.0.1
       '@phala/react-components': workspace:^0.0.1
       '@phala/react-hooks': workspace:^0.0.1
+      '@phala/react-i18n': workspace:^0.0.1
       '@phala/react-libs': workspace:^0.0.1
       '@phala/utils': workspace:^0.0.1
       '@polkadot/api-derive': ^5.8.3
@@ -217,6 +218,7 @@ importers:
       '@phala/app-store': link:../app-store
       '@phala/react-components': link:../react-components
       '@phala/react-hooks': link:../react-hooks
+      '@phala/react-i18n': link:../react-i18n
       '@phala/react-libs': link:../react-libs
       '@phala/utils': link:../utils
       '@polkadot/api-derive': 5.8.3
@@ -8346,7 +8348,7 @@ packages:
   /axios/0.21.4:
     resolution: {integrity: sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==}
     dependencies:
-      follow-redirects: 1.14.3_debug@3.2.7
+      follow-redirects: 1.14.3
     transitivePeerDependencies:
       - debug
     dev: false
@@ -12641,6 +12643,16 @@ packages:
     dependencies:
       inherits: 2.0.4
       readable-stream: 2.3.7
+
+  /follow-redirects/1.14.3:
+    resolution: {integrity: sha512-3MkHxknWMUtb23apkgz/83fDoe+y+qr0TdgacGIA7bew+QLBo3vdgEN2xEsuXNivpFy4CyDhBBZnNZOtalmenw==}
+    engines: {node: '>=4.0'}
+    peerDependencies:
+      debug: '*'
+    peerDependenciesMeta:
+      debug:
+        optional: true
+    dev: false
 
   /follow-redirects/1.14.3_debug@3.2.7:
     resolution: {integrity: sha512-3MkHxknWMUtb23apkgz/83fDoe+y+qr0TdgacGIA7bew+QLBo3vdgEN2xEsuXNivpFy4CyDhBBZnNZOtalmenw==}

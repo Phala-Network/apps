@@ -10,7 +10,7 @@ type Props = {
 
 const To: React.FC<Props> = (props) => {
   const {t} = useTranslation()
-  return <Block {...props} title={t('bridge_to')}></Block>
+  return <Block {...props} title={t('bridge.to')}></Block>
 }
 
 export default To

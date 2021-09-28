@@ -11,7 +11,7 @@ type Props = {
 const From: React.FC<Props> = (props) => {
   const {t} = useTranslation()
 
-  return <Block {...props} title={t('bridge_from')} />
+  return <Block {...props} title={t('bridge.from')} />
 }
 
 export default From

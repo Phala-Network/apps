@@ -25,7 +25,7 @@ export const EthereumInstallModal: React.FC<Props> = (props) => {
   const {t} = useTranslation()
   return (
     <Modal {...props} title="Alert">
-      <Content>{t('metamask_install_extension')}</Content>
+      <Content>{t('metamask.install_extension')}</Content>
       <Button
         type="primary"
         style={{width: '100%'}}
@@ -34,7 +34,7 @@ export const EthereumInstallModal: React.FC<Props> = (props) => {
           props.onClose()
         }}
       >
-        {t('metamask_install')}
+        {t('metamask.install')}
       </Button>
     </Modal>
   )

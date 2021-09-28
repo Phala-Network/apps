@@ -1,69 +1,92 @@
 export default {
-  // side
-  about: 'About',
-  feedback: 'Feedback',
-  discord: 'Discord',
-  forum: 'Forum',
-  wiki: 'Wiki',
-
-  assets: 'Assets',
-  bridge: 'Safe Bridge',
-  delegate: 'Delegate',
-  console: 'Console',
-  analytics: 'Analytics',
-  mining: 'Mining',
+  side: {
+    about: 'About',
+    feedback: 'Feedback',
+    discord: 'Discord',
+    forum: 'Forum',
+    wiki: 'Wiki',
+    assets: 'Assets',
+    bridge: 'Safe Bridge',
+    delegate: 'Delegate',
+    console: 'Console',
+    analytics: 'Analytics',
+    mining: 'Mining',
+  },
 
   // feedback
-  feedback_title: 'Feedback',
-  feedback_description:
-    "The feedback's response is not timely, if you have an urgent question, you can report it on discord",
-  feedback_name_placeholder: 'Name',
-  feedback_name_invalid: 'Please input your name',
-  feedback_email_placeholder: 'Email',
-  feedback_email_invalid: 'Please check your email format',
-  feedback_comments_placeholder: 'What Happened?',
-  feedback_message_invalid: 'Please input your comments',
-  feedback_success: 'Success: send feedback',
-  feedback_close: 'Close',
-  feedback_submit: 'Submit',
+  feedback: {
+    title: 'Feedback',
+    description:
+      "The feedback's response is not timely, if you have an urgent question, you can report it on discord",
+    name_placeholder: 'Name',
+    name_invalid: 'Please input your name',
+    email_placeholder: 'Email',
+    email_invalid: 'Please check your email format',
+    comments_placeholder: 'What Happened?',
+    message_invalid: 'Please input your comments',
+    success: 'Success: send feedback',
+    close: 'Close',
+    submit: 'Submit',
+  },
 
   // account
-  account_alert: 'Alert',
-  select_account: 'Select An Account',
-  select_account_cancel: 'Cancel',
+  account: {
+    alert: 'Alert',
+    select: 'Select An Account',
+    select_cancel: 'Cancel',
+  },
 
-  // polkadot
-  polkadot_link: 'Connect Polkadot{.js}',
-  polkadot_install_extension:
-    'No Polkadot{.js} extension found, please install it first.',
-  polkadot_install: 'Install',
-  polkadot_allow_access: 'Please allow access in the Polkadot extension.',
-  polkadot_no_account_found:
-    'No account found, please add account in your wallet extension or unlock it.',
+  polkadot: {
+    link: 'Connect Polkadot{.js}',
+    install_extension:
+      'No Polkadot{.js} extension found, please install it first.',
+    install: 'Install',
+    allow_access: 'Please allow access in the Polkadot extension.',
+    no_account_found:
+      'No account found, please add account in your wallet extension or unlock it.',
+  },
 
-  // metamask
-  metamask_link: 'Connect METAMASK',
-  metamask_wrong_network_title: 'Wrong Network',
-  metamask_wrong_network_description: 'Please connect to the Ethereum Mainnet.',
-  metamask_allow_access: 'Please allow access in the MetaMask extension.',
-  metamask_no_account_found:
-    'No account found, please add account in your wallet or make sure that the correct wallet is used.',
-  metamask_install_extension:
-    'No metamask extension found, please install it first.',
+  metamask: {
+    link: 'Connect METAMASK',
+    wrong_network_title: 'Wrong Network',
+    wrong_network_description: 'Please connect to the Ethereum Mainnet.',
+    allow_access: 'Please allow access in the MetaMask extension.',
+    no_account_found:
+      'No account found, please add account in your wallet or make sure that the correct wallet is used.',
+    install_extension: 'No metamask extension found, please install it first.',
+  },
+
+  assets: {
+    total: 'Total',
+    parachain_assets: 'Parachain Assets',
+    bridge_assets: 'Bridge Assets',
+    coming_soon: 'Coming Soon',
+    claim: 'Claim',
+    cancel: 'Cancel',
+    confirm: 'Confirm',
+    confirming: 'Confirming',
+    claim_pha: 'Claim $PHA',
+    sorry:
+      'Sorry, the claim module is disabled until Khala enables transfer function.',
+    unlocked:
+      'You have unlocked {{vestedClaimable}} $PHA, you still have {{vestingLocked}} $PHA to be unlocked.',
+  },
 
   // bridge
-  bridge_from: 'From',
-  bridge_to: 'To',
-  bridge_max: 'Max',
-  bridge_my_address: 'MY ADDRESS',
-  bridge_next: 'Next',
-  bridge_balance: 'Balance',
-  bridge_destination_address: 'Destination Address',
-  bridge_amount: 'Amount ($PHA)',
-  bridge_need_enter_amount: 'Need enter amount',
-  bridge_need_enter_recipient: 'Need enter recipient',
-  bridge_need_login: 'Need login',
-  bridge_need_insufficient_balance: 'Insufficient balance',
-  bridge_transactions_panel: 'Transactions Panel',
-  bridge_done: 'Done',
+  bridge: {
+    from: 'From',
+    to: 'To',
+    max: 'Max',
+    my_address: 'MY ADDRESS',
+    next: 'Next',
+    balance: 'Balance',
+    destination_address: 'Destination Address',
+    amount: 'Amount ($PHA)',
+    need_enter_amount: 'Need enter amount',
+    need_enter_recipient: 'Need enter recipient',
+    need_login: 'Need login',
+    need_insufficient_balance: 'Insufficient balance',
+    transactions_panel: 'Transactions Panel',
+    done: 'Done',
+  },
 }
