@@ -108,6 +108,7 @@ const StakePoolTable = (): JSX.Element => {
       },
       {
         id: 'actions',
+        name: t('delegate.actions'),
         accessor: (stakePool) => (
           <Actions>
             <DetailButton

@@ -1,4 +1,5 @@
 import {useWorkers, Worker} from '@phala/react-hooks'
+import {useTranslation} from '@phala/react-i18n'
 import {toFixed} from '@phala/utils'
 import {useMemo, useState} from 'react'
 import {Column} from 'react-table'
@@ -24,6 +25,7 @@ const modalEntries: [ModalKey, (props: WorkerModalProps) => JSX.Element][] = [
 ]
 
 const WorkerTable = (): JSX.Element => {
+  const {t} = useTranslation()
   const miningEnabled = useMiningEnabled()
   const {open, close, modalVisible} = useModalVisible()
   const {data} = useSelfStakePools()
@@ -133,6 +135,7 @@ const WorkerTable = (): JSX.Element => {
       },
       {
         id: 'actions',
+        name: t('delegate.actions'),
         accessor: (worker) => {
           const state = worker.miner?.state
           return (
