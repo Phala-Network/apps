@@ -1,4 +1,5 @@
 import {TransactionInfo, TransactionRecord} from '@phala/app-types'
+import {useTranslation} from '@phala/react-i18n'
 import React from 'react'
 import {Button, Modal, ModalAction, ModalActions} from '../..'
 import ResultStepToKhala from './ResultStepToKhala'
@@ -11,6 +12,7 @@ type Props = {
 }
 
 const TransactionDetailModal: React.FC<Props> = (props) => {
+  const {t} = useTranslation()
   const {visible, onClose, transactionInfo, record} = props
 
   if (!transactionInfo) {
@@ -18,7 +20,7 @@ const TransactionDetailModal: React.FC<Props> = (props) => {
   }
 
   return (
-    <Modal visible={visible} title="Bridge Information">
+    <Modal visible={visible} title={t('bridge.bridge_information')}>
       <ResultStepToKhala
         record={record}
         transactionInfo={transactionInfo}
@@ -27,7 +29,7 @@ const TransactionDetailModal: React.FC<Props> = (props) => {
       <ModalActions>
         <ModalAction full>
           <Button type="primary" onClick={onClose}>
-            Done
+            {t('bridge.done')}
           </Button>
         </ModalAction>
       </ModalActions>

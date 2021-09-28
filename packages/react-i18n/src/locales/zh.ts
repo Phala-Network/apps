@@ -91,5 +91,6 @@ export default {
       '为了让桥将你的 ERC20 代币转移到 Khala Network，首先需要你的批准。每个 ERC20 代币只需要一次授权！',
     reject: '拒绝',
     confirm: '确认',
+    bridge_information: '跨链信息',
   },
 }

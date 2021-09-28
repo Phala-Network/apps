@@ -1,6 +1,7 @@
 import {TransactionInfo} from '@phala/app-types'
-import {Address, AmountInfo, InfoTitle, Spacer} from '../..'
+import {useTranslation} from '@phala/react-i18n'
 import React from 'react'
+import {Address, AmountInfo, InfoTitle, Spacer} from '../..'
 import {StepProps} from '../BridgeProcess'
 import FormItem from '../FormItem'
 import FormLayout from '../FormLayout'
@@ -12,13 +13,14 @@ type Props = {
 } & StepProps
 
 const BaseInfo: React.FC<Props> = (props) => {
+  const {t} = useTranslation()
   const {layout, data} = props
   const {from, to} = data || {}
 
   return (
     <FormLayout layout={layout}>
       <FormItem>
-        <InfoTitle>From</InfoTitle>
+        <InfoTitle>{t('bridge.from')}</InfoTitle>
         <AmountInfo
           network={from?.network}
           amount={from?.amount?.toString()}
@@ -31,7 +33,7 @@ const BaseInfo: React.FC<Props> = (props) => {
       <Spacer></Spacer>
 
       <FormItem>
-        <InfoTitle>To</InfoTitle>
+        <InfoTitle>{t('bridge.to')}</InfoTitle>
         <AmountInfo
           network={to?.network}
           amount={to?.amount?.toString()}
