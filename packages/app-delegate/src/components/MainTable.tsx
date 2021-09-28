@@ -142,7 +142,7 @@ const MainTable = (): JSX.Element => {
       //     return '-'
       //   },
       // },
-      !isMobile && {
+      {
         name: t('delegate.commission'),
         Header: 'Commission',
         accessor: (stakePool) =>
@@ -238,13 +238,12 @@ const MainTable = (): JSX.Element => {
         isLoading={isLoading || (showHasAPR && isAPRLoading)}
         columns={columns}
         filters={useMemo(
-          () =>
-            [
-              {id: 'pid', value: filterPid},
-              {id: 'APR', value: showHasAPR},
-              {id: 'Commission', value: showNotMaxCommission},
-              {id: 'Remaining', value: showHasRemaining},
-            ].filter(Boolean),
+          () => [
+            {id: 'pid', value: filterPid},
+            {id: 'APR', value: showHasAPR},
+            {id: 'Commission', value: showNotMaxCommission},
+            {id: 'Remaining', value: showHasRemaining},
+          ],
           [filterPid, showHasAPR, showNotMaxCommission, showHasRemaining]
         )}
         globalFilterValue={showPoolWithWorkers}
