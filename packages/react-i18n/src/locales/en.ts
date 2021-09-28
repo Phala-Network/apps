@@ -147,5 +147,12 @@ export default {
     coolingDown: 'CoolingDown',
     unresponsive: 'Unresponsive',
     mining2: 'Mining',
+    commission: 'Commission',
+    add_worker: 'Add worker',
+    set_commission: 'Set Commission',
+    set_cap: 'Set Cap',
+    claim: 'Claim',
+    claim_all_the_pending_rewards_of_the_sender_and_send_to_the:
+      'Claim all the pending rewards of the sender and send to the `target`',
   },
 }

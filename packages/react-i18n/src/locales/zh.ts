@@ -144,5 +144,12 @@ export default {
     coolingDown: '冷却中',
     unresponsive: '无响应',
     mining2: '挖矿中',
+    commission: '分成率',
+    add_worker: '增加Worker',
+    set_commission: '设置分成率',
+    set_cap: '设置上限',
+    claim: '认领',
+    claim_all_the_pending_rewards_of_the_sender_and_send_to_the:
+      '认领所有奖励余额并且发送到收益地址',
   },
 }

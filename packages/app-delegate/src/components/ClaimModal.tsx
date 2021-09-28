@@ -48,7 +48,9 @@ const ClaimModal = (props: StakePoolModalProps): JSX.Element => {
       onClose={onClose}
       onConfirm={onConfirm}
       title={t('delegate.claim')}
-      subtitle="Claim all the pending rewards of the sender and send to the `target`"
+      subtitle={t(
+        'mining.claim_all_the_pending_rewards_of_the_sender_and_send_to_the'
+      )}
       disabled={!address}
     >
       <Label>pid</Label>

@@ -1,5 +1,6 @@
 import {usePolkadotAccountAtom} from '@phala/app-store'
 import {Input, InputAction} from '@phala/react-components'
+import {useTranslation} from '@phala/react-i18n'
 import {useApiPromise} from '@phala/react-libs'
 import {useCallback, useMemo, useState} from 'react'
 import {StakePoolModalProps} from '.'
@@ -16,6 +17,7 @@ const ClaimModal = (props: StakePoolModalProps): JSX.Element => {
   const waitSignAndSend = useWaitSignAndSend()
   const [address, setAddress] = useState<string>('')
   const {data: userStakeInfo} = useSelfUserStakeInfo(stakePool.pid)
+  const {t} = useTranslation()
 
   const rewards = useMemo<string>(() => {
     if (!userStakeInfo) return '-'
@@ -41,8 +43,10 @@ const ClaimModal = (props: StakePoolModalProps): JSX.Element => {
     <ActionModal
       onClose={onClose}
       onConfirm={onConfirm}
-      title="Claim"
-      subtitle="Claim all the pending rewards of the sender and send to the `target`"
+      title={t('mining.Claim')}
+      subtitle={t(
+        'mining.claim_all_the_pending_rewards_of_the_sender_and_send_to_the'
+      )}
       disabled={!address}
     >
       <Label>pid</Label>

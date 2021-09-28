@@ -1,4 +1,5 @@
 import {InputNumber} from '@phala/react-components'
+import {useTranslation} from '@phala/react-i18n'
 import {useApiPromise} from '@phala/react-libs'
 import Decimal from 'decimal.js'
 import {useCallback, useState} from 'react'
@@ -11,6 +12,7 @@ const SetPayoutPrefModal = (props: StakePoolModalProps): JSX.Element => {
   const {api} = useApiPromise()
   const waitSignAndSend = useWaitSignAndSend()
   const [payoutPref, setPayoutPref] = useState<number | undefined>()
+  const {t} = useTranslation()
 
   const onConfirm = useCallback(async () => {
     if (api && payoutPref) {
@@ -38,7 +40,7 @@ const SetPayoutPrefModal = (props: StakePoolModalProps): JSX.Element => {
     >
       <Label>pid</Label>
       <Value>{stakePool.pid}</Value>
-      <Label>PayoutPref</Label>
+      <Label>{t('mining.commission')}</Label>
       <InputNumber
         min={0}
         max={100}

@@ -121,10 +121,10 @@ const StakePoolTable = (): JSX.Element => {
             </DetailButton>
             <ItemMenu
               items={[
-                {key: 'addWorker', item: 'Add Worker'},
-                {key: 'setCap', item: 'Set Cap'},
-                {key: 'claim', item: 'Claim'},
-                {key: 'setPayoutPref', item: 'Set Commission'},
+                {key: 'addWorker', item: t('mining.add_worker')},
+                {key: 'setCap', item: t('mining.set_cap')},
+                {key: 'claim', item: t('mining.claim')},
+                {key: 'setPayoutPref', item: t('mining.set_commission')},
               ]}
               onClick={(key) => {
                 setSelectedPid(stakePool.pid)

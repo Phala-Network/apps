@@ -1,4 +1,5 @@
 import {Input} from '@phala/react-components'
+import {useTranslation} from '@phala/react-i18n'
 import {
   useApiPromise,
   useDecimalJsTokenDecimalMultiplier,
@@ -14,6 +15,7 @@ const AddWorkerModal = (props: StakePoolModalProps): JSX.Element => {
   const waitSignAndSend = useWaitSignAndSend()
   const decimals = useDecimalJsTokenDecimalMultiplier(api)
   const [pubkey, setPubkey] = useState<string>('')
+  const {t} = useTranslation()
 
   const onConfirm = useCallback(async () => {
     if (api && decimals && pubkey) {
@@ -30,7 +32,7 @@ const AddWorkerModal = (props: StakePoolModalProps): JSX.Element => {
     <ActionModal
       onClose={onClose}
       onConfirm={onConfirm}
-      title="Add Worker"
+      title={t('mining.add_worker')}
       disabled={!pubkey}
     >
       <Label>pid</Label>
