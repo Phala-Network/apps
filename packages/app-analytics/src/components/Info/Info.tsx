@@ -1,4 +1,4 @@
-import {FC} from 'react'
+import {FC, useEffect, useState} from 'react'
 import styled from 'styled-components'
 import {Item} from './Item'
 
@@ -10,22 +10,40 @@ const Root = styled.div`
   width: fit-content;
 `
 
-const data = [
-  {
-    value: '15.3%',
-    name: 'Workers',
-  },
-  {
-    value: '2988.12',
-    name: 'vCPU',
-  },
-  {
-    value: '123',
-    name: 'Country',
-  },
-]
-
 export const Info: FC = () => {
+  const [cpu, setCpu] = useState(0)
+  const [workers, setWorkers] = useState(0)
+  // date: "2021-09-29"
+  // onlineWorkers: 5161
+  // reward: 486178.03000000044
+  // vCPU: 317702.1533333333
+  // workers: 10555
+  useEffect(() => {
+    fetch('https://app-analytics-data.netlify.app/latest/daily.json').then(
+      (response) => {
+        response.json().then((data) => {
+          setCpu(data.vCPU)
+          setWorkers(data.workers)
+        })
+      }
+    )
+  })
+
+  const data = [
+    {
+      value: workers.toFixed(0),
+      name: 'Workers',
+    },
+    {
+      value: cpu.toFixed(0),
+      name: 'vCPU',
+    },
+    // {
+    //   value: '123',
+    //   name: 'Country',
+    // },
+  ]
+
   return (
     <Root>
       {data.map((props) => {
