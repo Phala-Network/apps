@@ -1,6 +1,4 @@
 import {useTranslation} from '@phala/react-i18n'
-import {isDev, isTest} from '@phala/utils'
-import React from 'react'
 import styled from 'styled-components'
 import ActiveOutline from './ActiveOutline'
 import Link from './Link'
@@ -21,7 +19,7 @@ const Links: React.FC = () => {
       <Link to="/bridge/">{t('bridge')}</Link>
       <Link to="/delegate/">{t('delegate')}</Link>
       <Divider></Divider>
-      {(isDev() || isTest()) && <Link to="/analytics/">{t('analytics')}</Link>}
+      <Link to="/analytics/">{t('analytics')}</Link>
       <Link to="/mining/">{t('mining')}</Link>
 
       {/* <Link to="/darkpool">Darkpool</Link> */}
