@@ -1,4 +1,4 @@
-import {FC, useEffect, useState} from 'react'
+import {FC, useCallback, useEffect, useState} from 'react'
 import styled from 'styled-components'
 import {Item} from './Item'
 
@@ -13,21 +13,28 @@ const Root = styled.div`
 export const Info: FC = () => {
   const [cpu, setCpu] = useState(0)
   const [workers, setWorkers] = useState(0)
+
+  const getData = useCallback(
+    async function getData() {
+      const response = await fetch(
+        'https://app-analytics-data.netlify.app/latest/daily.json'
+      )
+      const data = await response.json()
+
+      setCpu(data.vCPU)
+      setWorkers(data.workers)
+    },
+    [setCpu, setWorkers]
+  )
+
   // date: "2021-09-29"
   // onlineWorkers: 5161
   // reward: 486178.03000000044
   // vCPU: 317702.1533333333
   // workers: 10555
   useEffect(() => {
-    fetch('https://app-analytics-data.netlify.app/latest/daily.json').then(
-      (response) => {
-        response.json().then((data) => {
-          setCpu(data.vCPU)
-          setWorkers(data.workers)
-        })
-      }
-    )
-  })
+    getData()
+  }, [getData])
 
   const data = [
     {
