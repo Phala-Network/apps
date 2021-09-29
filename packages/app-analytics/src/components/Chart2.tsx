@@ -1,5 +1,6 @@
 import ReactECharts from 'echarts-for-react'
-import React, {useEffect} from 'react'
+import React from 'react'
+import {AnalyticsData} from '../AppAnalytics'
 
 const defaultChartOptions = {
   tooltip: {
@@ -19,7 +20,7 @@ const defaultChartOptions = {
         type: 'dashed',
       },
     },
-    splitNumber: 20,
+    // splitNumber: 20,
     // axisLabel: {
     //   formatter(value) {
     //     const date = new Date(value)
@@ -54,15 +55,15 @@ const defaultChartOptions = {
   ],
   series: [
     {
-      name: 'KSM',
+      name: 'onlineWorkers',
       type: 'line',
-      itemStyle: {color: '#eb5757'},
+      itemStyle: {color: '#D1FF52'},
       showSymbol: false,
       yAxisIndex: 0,
       data: [],
     },
     {
-      name: 'PHA',
+      name: 'workers',
       type: 'line',
       itemStyle: {color: '#03FFFF'},
       showSymbol: false,
@@ -72,42 +73,31 @@ const defaultChartOptions = {
   ],
 }
 
-export const Chart2: React.FC = () => {
-  const [PHA, setPHA] = React.useState<any>({})
-  const [KSM, setKSM] = React.useState<any>({})
-
-  useEffect(() => {
-    fetch('https://crowdloan-api.phala.network/coin_market_charts/PHA')
-      .then((response) => response.json())
-      .then((res) => {
-        setPHA(res)
-      })
-  }, [])
-
-  useEffect(() => {
-    fetch('https://crowdloan-api.phala.network/coin_market_charts/KSM')
-      .then((response) => response.json())
-      .then((res) => {
-        setKSM(res)
-      })
-  }, [])
+export const Chart2: React.FC<{data: AnalyticsData}> = (props) => {
+  const {data} = props
 
   const chartOptions = React.useMemo(() => {
-    const formatData = (item: [string, number]) => [item[0], item[1].toFixed(2)]
+    const formatData = (item: number) => item.toFixed(2)
 
     return Object.assign({}, defaultChartOptions, {
       series: [
         {
           ...defaultChartOptions.series[0],
-          data: KSM?.data?.map?.(formatData),
+          data: data?.map?.((item) => [
+            item.date + 'T00:00:00.000Z',
+            formatData(item.onlineWorkers),
+          ]),
         },
         {
           ...defaultChartOptions.series[1],
-          data: PHA?.data?.map?.(formatData),
+          data: data?.map?.((item) => [
+            item.date + 'T00:00:00.000Z',
+            formatData(item.workers),
+          ]),
         },
       ],
     })
-  }, [PHA, KSM])
+  }, [data])
 
   return (
     <ReactECharts
