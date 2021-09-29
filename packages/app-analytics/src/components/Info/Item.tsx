@@ -27,7 +27,7 @@ const Value = styled.div`
 
 export interface ItemProps {
   name: string
-  value: string
+  value: string | number
 }
 
 export const Item: FC<ItemProps> = (props) => {
