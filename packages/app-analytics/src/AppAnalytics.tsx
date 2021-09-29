@@ -38,7 +38,7 @@ export type AnalyticsData = {
 }[]
 
 export const AppAnalytics = () => {
-  const [analyticsData, setAnalyticsData] = useState<AnalyticsData>()
+  const [analyticsData, setAnalyticsData] = useState<AnalyticsData>([])
   const getData = useCallback(async function getData() {
     const response = await fetch(
       'https://app-analytics-data.netlify.app/chart/chartData.json'
