@@ -19,8 +19,8 @@ const Links: React.FC = () => {
       <Link to="/bridge/">{t('bridge')}</Link>
       <Link to="/delegate/">{t('delegate')}</Link>
       <Divider></Divider>
-      <Link to="/analytics/">{t('analytics')}</Link>
       <Link to="/mining/">{t('mining')}</Link>
+      <Link to="/analytics/">{t('analytics')}</Link>
 
       {/* <Link to="/darkpool">Darkpool</Link> */}
       {/* <Link to="/tokens">Tokens</Link> */}
