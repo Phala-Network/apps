@@ -5,7 +5,7 @@ import {BlackCard, Chart, Chart2, Info} from './components'
 
 const Root = styled.div`
   width: 100%;
-  margin: 30px;
+  margin: 48px;
   box-sizing: border-box;
 `
 
