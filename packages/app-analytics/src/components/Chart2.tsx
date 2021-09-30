@@ -57,7 +57,7 @@ const defaultChartOptions = {
     {
       name: 'onlineWorkers',
       type: 'line',
-      itemStyle: {color: '#D1FF52'},
+      itemStyle: {color: '#bae445'},
       showSymbol: false,
       yAxisIndex: 0,
       data: [],
@@ -104,7 +104,7 @@ export const Chart2: React.FC<{data: AnalyticsData}> = (props) => {
       opts={{locale: 'en'}}
       option={chartOptions}
       style={{
-        backgroundColor: 'black',
+        backgroundColor: 'white',
         height: 'auto',
         minHeight: '300px',
         flex: 1,

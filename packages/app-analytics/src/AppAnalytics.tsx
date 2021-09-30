@@ -12,6 +12,7 @@ const Root = styled.div`
 const Charts = styled.div`
   display: flex;
   gap: 12px;
+  max-width: 960px;
 
   & > {
     margin-bottom: 80px;
@@ -62,9 +63,11 @@ export const AppAnalytics = () => {
 
         <Charts>
           <BlackCard>
+            <h3>Online Worker/Worker</h3>
             <Chart2 data={analyticsData}></Chart2>
           </BlackCard>
           <BlackCard>
+            <h3>Reward/Average Reward</h3>
             <Chart data={analyticsData}></Chart>
           </BlackCard>
         </Charts>
