@@ -18,7 +18,6 @@ type Props = {
 }
 
 const Text = styled.div`
-  font-family: Lato;
   font-size: 12px;
   color: #878787;
   margin-bottom: 20px;
