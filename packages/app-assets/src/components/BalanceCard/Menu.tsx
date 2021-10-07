@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import ClaimModal from '../ClaimModal'
 import ConvertModal from '../ConvertModal'
 import {ActionArrowIcon} from '../Icons/ActionArrowIcon'
-import TransferModal from './TransferModal'
+import TransferModal from '../TransferModal'
 
 const MenuWrap = styled.div<{active: boolean}>`
   position: absolute;
@@ -169,11 +169,6 @@ const Menu = forwardRef<HTMLDivElement, Props>((props, ref) => {
         onClose={() => setVisibleConvertModal(false)}
       ></ConvertModal>
 
-      <TransferModal
-        visible={visibleTransferModal}
-        onClose={() => setVisibleTransferModal(false)}
-      ></TransferModal>
-
       <BridgeModal
         visible={visibleBridge}
         onClose={() => setVisibleBridge(false)}
@@ -186,6 +181,12 @@ const Menu = forwardRef<HTMLDivElement, Props>((props, ref) => {
           visible={true}
           onClose={() => setClaimModalVisible(false)}
         ></ClaimModal>
+      )}
+      {visibleTransferModal && (
+        <TransferModal
+          visible={true}
+          onClose={() => setVisibleTransferModal(false)}
+        ></TransferModal>
       )}
     </>
   )
