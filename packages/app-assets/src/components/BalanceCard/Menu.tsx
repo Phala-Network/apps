@@ -162,6 +162,11 @@ const Menu = forwardRef<HTMLDivElement, Props>((props, ref) => {
             Claim<ActionArrowIcon></ActionArrowIcon>
           </MobileAction>
         )}
+        {!disableTransfer && (
+          <MobileAction onClick={() => setVisibleTransferModal(true)}>
+            Transfer<ActionArrowIcon></ActionArrowIcon>
+          </MobileAction>
+        )}
       </MobileActions>
 
       <ConvertModal

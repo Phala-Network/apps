@@ -1,5 +1,5 @@
 import {usePolkadotAccountAtom} from '@phala/app-store'
-import {Alert, Button, Modal} from '@phala/react-components'
+import {Button, Modal} from '@phala/react-components'
 import {useAllBalances} from '@phala/react-hooks'
 import {
   bnToDecimal,
@@ -66,9 +66,7 @@ const ClaimModal: React.FC<Props> = ({visible, onClose}) => {
     }
   }, [api, polkadotAccount, onClose])
 
-  // NOTE: Temporarily disable claim
-  const canClaim = false
-  // const canClaim = Boolean(vestedClaimable) && vestedClaimable !== '0'
+  const canClaim = Boolean(vestedClaimable) && !vestedClaimable?.isZero()
 
   return (
     <Modal
@@ -94,10 +92,7 @@ const ClaimModal: React.FC<Props> = ({visible, onClose}) => {
         {format(vestedClaimable && vestedBalance?.sub(vestedClaimable))} PHA,
         you still have {format(vestingLocked)} PHA to be unlocked.
       </Text>
-      <Alert>
-        Sorry, the claim module is disabled until Khala enables transfer
-        function.
-      </Alert>
+
       {canClaim && (
         <Info>
           <span>Claim now:</span> {format(vestedClaimable)} PHA
