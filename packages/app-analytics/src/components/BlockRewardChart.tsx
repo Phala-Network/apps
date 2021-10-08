@@ -31,23 +31,60 @@ export const BlockRewardChart: React.FC<{blockData: AnalyticsData}> = (
       boundaryGap: false,
       data: blockData.map((item) => item.block),
     },
-    yAxis: {
-      type: 'value',
-      show: false,
-    },
+    // yAxis: {
+    //   type: 'value',
+    //   show: false,
+    // },
+    // series: [
+    //   {
+    //     name: 'Reward',
+    //     type: 'line',
+    //     itemStyle: {color: '#bae445'},
+    //     showSymbol: false,
+    //     data: blockData.map((item) => formatData(item.reward)),
+    //   },
+    //   {
+    //     name: 'Average Reward',
+    //     type: 'line',
+    //     itemStyle: {color: '#03FFFF'},
+    //     showSymbol: false,
+    //     data: blockData.map((item) =>
+    //       formatData(item.workers === 0 ? 0 : item.reward / item.onlineWorkers)
+    //     ),
+    //   },
+    // ],
+
+    yAxis: [
+      {
+        type: 'value',
+        name: 'Amount',
+        splitLine: {show: false},
+        axisPointer: {show: false},
+        show: false,
+      },
+      {
+        type: 'value',
+        name: 'PHA',
+        splitLine: {show: false},
+        axisPointer: {show: false},
+        show: false,
+      },
+    ],
     series: [
       {
         name: 'Reward',
         type: 'line',
         itemStyle: {color: '#bae445'},
         showSymbol: false,
+        yAxisIndex: 0,
         data: blockData.map((item) => formatData(item.reward)),
       },
       {
-        name: 'Average Reward',
+        name: 'AverageReward',
         type: 'line',
         itemStyle: {color: '#03FFFF'},
         showSymbol: false,
+        yAxisIndex: 1,
         data: blockData.map((item) =>
           formatData(item.workers === 0 ? 0 : item.reward / item.onlineWorkers)
         ),
