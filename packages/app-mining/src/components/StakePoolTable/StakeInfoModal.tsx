@@ -1,5 +1,5 @@
 import {Button, Modal, Table} from '@phala/react-components'
-import {formatDuration, intervalToDuration} from 'date-fns'
+import {formatDuration, intervalToDuration, isAfter} from 'date-fns'
 import {useMemo} from 'react'
 import {Column} from 'react-table'
 import styled from 'styled-components'
@@ -42,10 +42,12 @@ const StakeInfoModal = (props: StakePoolModalProps): JSX.Element => {
         accessor: (queue) => {
           if (typeof gracePeriod !== 'number') return '-'
           const {startTime} = queue
+          const start = new Date()
+          const end = new Date((startTime + gracePeriod) * 1000)
           const duration = formatDuration(
             intervalToDuration({
-              start: new Date(),
-              end: new Date((startTime + gracePeriod) * 1000),
+              start,
+              end: isAfter(end, start) ? end : start,
             }),
             {format: ['days', 'hours', 'minutes'], zero: true}
           )
