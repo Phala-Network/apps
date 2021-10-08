@@ -9,5 +9,5 @@
     "esModuleInterop": false
   },
   "include": ["src/**/*.ts", "src/**/*.tsx"],
-  "references": []
+  "references": [{"path": "../react-components"}]
 }

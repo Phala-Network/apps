@@ -185,12 +185,14 @@ importers:
 
   packages/app-analytics:
     specifiers:
+      '@phala/react-components': workspace:^0.0.1
       echarts: ^5.2.0
       echarts-for-react: ^3.0.1
       react-helmet: ^6.1.0
       styled-breakpoints: ^10.0.1
       styled-components: ^5.3.1
     dependencies:
+      '@phala/react-components': link:../react-components
       echarts: 5.2.0
       echarts-for-react: 3.0.1_echarts@5.2.0
       react-helmet: 6.1.0
@@ -8693,7 +8695,7 @@ packages:
       '@babel/helper-module-imports': 7.15.4
       babel-plugin-syntax-jsx: 6.18.0
       lodash: 4.17.21
-      styled-components: 5.3.1_1f55980affd76ea66174a1939c753673
+      styled-components: 5.3.1
 
   /babel-plugin-syntax-jsx/6.18.0:
     resolution: {integrity: sha1-CvMqmm4Tyno/1QaeYtew9Y0NiUY=}
