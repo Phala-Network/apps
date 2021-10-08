@@ -33,6 +33,7 @@ const HideBMapIcon = createGlobalStyle`
 `
 
 export type AnalyticsData = {
+  block: number
   date: string
   onlineWorkers: number
   reward: number
@@ -40,20 +41,29 @@ export type AnalyticsData = {
   workers: number
 }[]
 
-export const AppAnalytics = () => {
-  const [, setAnalyticsData] = useState<AnalyticsData>([])
-  const getData = useCallback(async function getData() {
-    const response = await fetch(
-      'https://app-analytics-data.netlify.app/chart/chartData.json'
-    )
-    const data = await response.json()
+function useData(url: string) {
+  const [data, setAnalyticsData] = useState<AnalyticsData>([])
+  const getData = useCallback(
+    async function getData() {
+      const response = await fetch(url)
+      const data = await response.json()
 
-    setAnalyticsData(data)
-  }, [])
+      setAnalyticsData(data)
+    },
+    [url]
+  )
 
   useEffect(() => {
     getData()
   }, [getData])
+
+  return data
+}
+
+export const AppAnalytics = () => {
+  const blockData = useData(
+    'https://app-analytics-data.netlify.app/chart/blockChartData.json'
+  )
 
   return (
     <>
@@ -77,11 +87,11 @@ export const AppAnalytics = () => {
         <Charts>
           <BlackCard>
             <h3>Online Worker/Worker</h3>
-            <BlockWorkerChart></BlockWorkerChart>
+            <BlockWorkerChart blockData={blockData}></BlockWorkerChart>
           </BlackCard>
           <BlackCard>
             <h3>Reward/Average Reward</h3>
-            <BlockRewardChart></BlockRewardChart>
+            <BlockRewardChart blockData={blockData}></BlockRewardChart>
           </BlackCard>
         </Charts>
       </Root>
