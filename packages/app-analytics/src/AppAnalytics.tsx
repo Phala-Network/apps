@@ -1,7 +1,9 @@
 import {useCallback, useEffect, useState} from 'react'
 import {down} from 'styled-breakpoints'
 import styled, {createGlobalStyle} from 'styled-components'
-import {BlackCard, Chart, Chart2, Info} from './components'
+import {BlackCard, Info} from './components'
+import {BlockRewardChart} from './components/BlockRewardChart'
+import {BlockWorkerChart} from './components/BlockWorkerChart'
 
 const Root = styled.div`
   width: 100%;
@@ -39,7 +41,7 @@ export type AnalyticsData = {
 }[]
 
 export const AppAnalytics = () => {
-  const [analyticsData, setAnalyticsData] = useState<AnalyticsData>([])
+  const [, setAnalyticsData] = useState<AnalyticsData>([])
   const getData = useCallback(async function getData() {
     const response = await fetch(
       'https://app-analytics-data.netlify.app/chart/chartData.json'
@@ -61,14 +63,25 @@ export const AppAnalytics = () => {
 
         <h2>Chart</h2>
 
-        <Charts>
+        {/* <Charts>
           <BlackCard>
             <h3>Online Worker/Worker</h3>
-            <Chart2 data={analyticsData}></Chart2>
+            <DateWorkerChart data={analyticsData}></DateWorkerChart>
           </BlackCard>
           <BlackCard>
             <h3>Reward/Average Reward</h3>
             <Chart data={analyticsData}></Chart>
+          </BlackCard>
+        </Charts> */}
+
+        <Charts>
+          <BlackCard>
+            <h3>Online Worker/Worker</h3>
+            <BlockWorkerChart></BlockWorkerChart>
+          </BlackCard>
+          <BlackCard>
+            <h3>Reward/Average Reward</h3>
+            <BlockRewardChart></BlockRewardChart>
           </BlackCard>
         </Charts>
       </Root>

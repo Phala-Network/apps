@@ -4,6 +4,7 @@ import styled from 'styled-components'
 const Root = styled.div`
   background-color: white;
   padding: 0 12px 12px 12px;
+  margin-bottom: 12px;
   flex: 1;
 `
 
