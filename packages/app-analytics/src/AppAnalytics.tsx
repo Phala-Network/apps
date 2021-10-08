@@ -1,3 +1,4 @@
+import {Button} from '@phala/react-components'
 import {useCallback, useEffect, useState} from 'react'
 import {down} from 'styled-breakpoints'
 import styled, {createGlobalStyle} from 'styled-components'
@@ -71,7 +72,18 @@ export const AppAnalytics = () => {
       <Root>
         <Info></Info>
 
-        <h2>Chart</h2>
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '20px',
+          }}
+        >
+          <h2>Chart</h2>
+          <Button type="primary" size="small">
+            Datetime
+          </Button>
+        </div>
 
         {/* <Charts>
           <BlackCard>
