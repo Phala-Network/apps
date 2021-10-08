@@ -1,10 +1,14 @@
 import ReactECharts from 'echarts-for-react'
 import React from 'react'
-import {mockData} from './data/mockData'
+import {AnalyticsData} from '../AppAnalytics'
 
 const formatData = (item: number) => item.toFixed(2)
 
-export const BlockRewardChart: React.FC = () => {
+export const BlockRewardChart: React.FC<{blockData: AnalyticsData}> = (
+  props
+) => {
+  const {blockData} = props
+
   const chartOptions = {
     tooltip: {
       trigger: 'axis',
@@ -25,7 +29,7 @@ export const BlockRewardChart: React.FC = () => {
     xAxis: {
       type: 'category',
       boundaryGap: false,
-      data: mockData.map((item) => item.block),
+      data: blockData.map((item) => item.block),
     },
     yAxis: {
       type: 'value',
@@ -37,14 +41,14 @@ export const BlockRewardChart: React.FC = () => {
         type: 'line',
         itemStyle: {color: '#bae445'},
         showSymbol: false,
-        data: mockData.map((item) => formatData(item.reward)),
+        data: blockData.map((item) => formatData(item.reward)),
       },
       {
         name: 'Average Reward',
         type: 'line',
         itemStyle: {color: '#03FFFF'},
         showSymbol: false,
-        data: mockData.map((item) =>
+        data: blockData.map((item) =>
           formatData(item.workers === 0 ? 0 : item.reward / item.onlineWorkers)
         ),
       },
