@@ -6,7 +6,7 @@ const Root = styled.div`
   background: #ffffff;
   display: flex;
   padding: 30px;
-  gap: 60px;
+  gap: 80px;
   width: fit-content;
 `
 
