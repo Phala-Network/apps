@@ -1,7 +1,7 @@
 import {usePolkadotAccountAtom} from '@phala/app-store'
 import {PolkadotAccountModal} from '@phala/react-components'
 import {usePolkadotWeb3} from '@phala/react-libs'
-import {abridgeString} from '@phala/utils'
+import {trimAddress} from '@phala/utils'
 import React, {useCallback, useEffect, useState} from 'react'
 import styled from 'styled-components'
 import KhalaIcon from '../../icons/khala.svg'
@@ -57,7 +57,7 @@ const MobilePolkadotTicket: React.FC = () => {
       {polkadotAccount ? (
         <Account onClick={() => setAccountModalVisible(true)}>
           <KhalaIcon width="24" height="24" />
-          {abridgeString(polkadotAccount.address)}
+          {trimAddress(polkadotAccount.address)}
         </Account>
       ) : (
         <ConnectButton onClick={onClick}></ConnectButton>

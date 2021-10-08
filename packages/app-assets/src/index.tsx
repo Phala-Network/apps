@@ -109,6 +109,7 @@ const HomePage: React.FC = () => {
                 </BlackHeader>
               }
               balance={ethereumAccountBalanceNumber}
+              disableTransfer
               disableBridge
               disableConvert
               disableClaim

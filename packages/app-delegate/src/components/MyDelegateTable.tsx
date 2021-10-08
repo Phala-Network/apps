@@ -19,7 +19,7 @@ import ClaimModal from './ClaimModal'
 import DelegateModal from './DelegateModal'
 import WithdrawModal from './WithdrawModal'
 import useIdentities from '../hooks/useIdentities'
-import {abridgeString} from '@phala/utils'
+import {trimAddress} from '@phala/utils'
 
 const Wrapper = styled.div`
   tbody {
@@ -82,7 +82,7 @@ const MyDelegateTable = (): JSX.Element => {
       {
         Header: 'Owner',
         accessor: ({owner}) => {
-          const display = identities?.[owner]?.display || abridgeString(owner)
+          const display = identities?.[owner]?.display || trimAddress(owner)
           const verified = identities?.[owner]?.verified || false
           return (
             <span>

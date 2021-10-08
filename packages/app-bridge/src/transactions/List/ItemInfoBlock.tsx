@@ -1,4 +1,4 @@
-import {abridgeString} from '@phala/utils'
+import {trimAddress} from '@phala/utils'
 import React from 'react'
 import styled from 'styled-components'
 
@@ -33,7 +33,7 @@ const ItemInfoBlock: React.FC<ItemInfoBlockProps> = (props) => {
   return (
     <ItemInfoBlockRoot {...others}>
       <div>
-        <NetworkName>{network}</NetworkName>: {abridgeString(address)}
+        <NetworkName>{network}</NetworkName>: {trimAddress(address)}
       </div>
       <div>
         {amount} <B>PHA</B>
