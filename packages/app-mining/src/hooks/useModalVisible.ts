@@ -16,6 +16,7 @@ const initialState = {
   start: false,
   stop: false,
   remove: false,
+  reclaim: false,
 }
 
 export type ModalKey = keyof typeof initialState
