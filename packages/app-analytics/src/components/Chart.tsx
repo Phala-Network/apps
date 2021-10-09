@@ -75,6 +75,20 @@ const defaultChartOptions = {
 
 export const Chart: React.FC<{data: AnalyticsData}> = (props) => {
   const {data} = props
+  const data2 = data.map((item, index, items) => {
+    if (index === 0) {
+      return item
+    } else {
+      const lastOne = items[index - 1] ?? {
+        reward: 0,
+      }
+
+      return {
+        ...item,
+        reward: item.reward - lastOne.reward,
+      }
+    }
+  })
 
   const chartOptions = React.useMemo(() => {
     const formatData = (item: number) => item.toFixed(2)
@@ -83,14 +97,14 @@ export const Chart: React.FC<{data: AnalyticsData}> = (props) => {
       series: [
         {
           ...defaultChartOptions.series[0],
-          data: data?.map?.((item) => [
+          data: data2?.map?.((item) => [
             item.date + 'T00:00:00.000Z',
             formatData(item.reward),
           ]),
         },
         {
           ...defaultChartOptions.series[1],
-          data: data?.map?.((item) => [
+          data: data2?.map?.((item) => [
             item.date + 'T00:00:00.000Z',
             formatData(
               item.workers === 0 ? 0 : item.reward / item.onlineWorkers
@@ -99,7 +113,7 @@ export const Chart: React.FC<{data: AnalyticsData}> = (props) => {
         },
       ],
     })
-  }, [data])
+  }, [data2])
 
   return (
     <ReactECharts
