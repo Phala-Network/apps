@@ -75,6 +75,7 @@ const defaultChartOptions = {
 
 export const DateWorkerChart: React.FC<{data: AnalyticsData}> = (props) => {
   const {data} = props
+  const data2 = data.filter((item) => item.reward > 0)
 
   const chartOptions = React.useMemo(() => {
     const formatData = (item: number) => item.toFixed(2)
@@ -83,21 +84,21 @@ export const DateWorkerChart: React.FC<{data: AnalyticsData}> = (props) => {
       series: [
         {
           ...defaultChartOptions.series[0],
-          data: data?.map?.((item) => [
+          data: data2?.map?.((item) => [
             item.date + 'T00:00:00.000Z',
             formatData(item.onlineWorkers),
           ]),
         },
         {
           ...defaultChartOptions.series[1],
-          data: data?.map?.((item) => [
+          data: data2?.map?.((item) => [
             item.date + 'T00:00:00.000Z',
             formatData(item.workers),
           ]),
         },
       ],
     })
-  }, [data])
+  }, [data2])
 
   return (
     <ReactECharts
