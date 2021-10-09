@@ -8,8 +8,12 @@ import {DateWorkerChart} from './components/DateWorkerChart'
 
 const Root = styled.div`
   width: 100%;
-  margin: 48px;
+  padding: 48px;
   box-sizing: border-box;
+
+  ${down('md')} {
+    padding: 20px 8px;
+  }
 `
 
 const Charts = styled.div`
@@ -21,7 +25,7 @@ const Charts = styled.div`
     margin-bottom: 80px;
   }
 
-  ${down('md')} {
+  ${down('lg')} {
     flex-direction: column;
   }
 `
@@ -88,17 +92,18 @@ export const AppAnalytics = () => {
             <Chart data={analyticsData}></Chart>
           </BlackCard>
         </Charts>
-
-        <Charts>
-          <BlackCard>
-            <h3>Online Worker/Worker (block)</h3>
-            <BlockWorkerChart blockData={blockData}></BlockWorkerChart>
-          </BlackCard>
-          <BlackCard>
-            <h3>Reward/Average Reward (block)</h3>
-            <BlockRewardChart blockData={blockData}></BlockRewardChart>
-          </BlackCard>
-        </Charts>
+        {blockData.length > 0 && (
+          <Charts>
+            <BlackCard>
+              <h3>Online Worker/Worker (block)</h3>
+              <BlockWorkerChart blockData={blockData}></BlockWorkerChart>
+            </BlackCard>
+            <BlackCard>
+              <h3>Reward/Average Reward (block)</h3>
+              <BlockRewardChart blockData={blockData}></BlockRewardChart>
+            </BlackCard>
+          </Charts>
+        )}
       </Root>
     </>
   )
