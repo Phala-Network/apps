@@ -1,4 +1,4 @@
-import ReactECharts from 'echarts-for-react'
+import EChartsReact from 'echarts-for-react'
 import React from 'react'
 import {AnalyticsData} from '../AppAnalytics'
 
@@ -8,6 +8,7 @@ export const BlockRewardChart: React.FC<{blockData: AnalyticsData}> = (
   props
 ) => {
   const {blockData} = props
+  const data = blockData.filter((_, index) => index % 2 === 0)
 
   const chartOptions = {
     tooltip: {
@@ -29,42 +30,19 @@ export const BlockRewardChart: React.FC<{blockData: AnalyticsData}> = (
     xAxis: {
       type: 'category',
       boundaryGap: false,
-      data: blockData.map((item) => item.block),
+      data: data.map((item) => item.block),
     },
-    // yAxis: {
-    //   type: 'value',
-    //   show: false,
-    // },
-    // series: [
-    //   {
-    //     name: 'Reward',
-    //     type: 'line',
-    //     itemStyle: {color: '#bae445'},
-    //     showSymbol: false,
-    //     data: blockData.map((item) => formatData(item.reward)),
-    //   },
-    //   {
-    //     name: 'Average Reward',
-    //     type: 'line',
-    //     itemStyle: {color: '#03FFFF'},
-    //     showSymbol: false,
-    //     data: blockData.map((item) =>
-    //       formatData(item.workers === 0 ? 0 : item.reward / item.onlineWorkers)
-    //     ),
-    //   },
-    // ],
-
     yAxis: [
       {
         type: 'value',
-        name: 'Amount',
+        name: 'Reward',
         splitLine: {show: false},
         axisPointer: {show: false},
         show: false,
       },
       {
         type: 'value',
-        name: 'PHA',
+        name: 'AverageReward',
         splitLine: {show: false},
         axisPointer: {show: false},
         show: false,
@@ -77,7 +55,7 @@ export const BlockRewardChart: React.FC<{blockData: AnalyticsData}> = (
         itemStyle: {color: '#bae445'},
         showSymbol: false,
         yAxisIndex: 0,
-        data: blockData.map((item) => formatData(item.reward)),
+        data: data.map((item) => formatData(item.reward)),
       },
       {
         name: 'AverageReward',
@@ -85,7 +63,7 @@ export const BlockRewardChart: React.FC<{blockData: AnalyticsData}> = (
         itemStyle: {color: '#03FFFF'},
         showSymbol: false,
         yAxisIndex: 1,
-        data: blockData.map((item) =>
+        data: data.map((item) =>
           formatData(item.workers === 0 ? 0 : item.reward / item.onlineWorkers)
         ),
       },
@@ -93,7 +71,7 @@ export const BlockRewardChart: React.FC<{blockData: AnalyticsData}> = (
   }
 
   return (
-    <ReactECharts
+    <EChartsReact
       opts={{locale: 'en'}}
       option={chartOptions}
       style={{
