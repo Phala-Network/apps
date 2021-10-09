@@ -9,6 +9,7 @@ export const BlockRewardChart: React.FC<{blockData: AnalyticsData}> = (
 ) => {
   const {blockData} = props
   const data = blockData
+    .filter((item) => item.reward > 0)
     .filter((_, index) => index % 2 === 0)
     .map((item, index, items) => {
       if (index === 0) {

@@ -75,20 +75,23 @@ const defaultChartOptions = {
 
 export const Chart: React.FC<{data: AnalyticsData}> = (props) => {
   const {data} = props
-  const data2 = data.map((item, index, items) => {
-    if (index === 0) {
-      return item
-    } else {
-      const lastOne = items[index - 1] ?? {
-        reward: 0,
-      }
 
-      return {
-        ...item,
-        reward: item.reward - lastOne.reward,
+  const data2 = data
+    .filter((item) => item.reward > 0)
+    .map((item, index, items) => {
+      if (index === 0) {
+        return item
+      } else {
+        const lastOne = items[index - 1] ?? {
+          reward: 0,
+        }
+
+        return {
+          ...item,
+          reward: item.reward - lastOne.reward,
+        }
       }
-    }
-  })
+    })
 
   const chartOptions = React.useMemo(() => {
     const formatData = (item: number) => item.toFixed(2)

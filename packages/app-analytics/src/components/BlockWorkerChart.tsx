@@ -6,7 +6,9 @@ export const BlockWorkerChart: React.FC<{blockData: AnalyticsData}> = (
   props
 ) => {
   const {blockData} = props
-  const data = blockData.filter((_, index) => index % 2 === 0)
+  const data = blockData
+    .filter((item) => item.reward > 0)
+    .filter((_, index) => index % 2 === 0)
 
   const chartOptions = {
     tooltip: {
