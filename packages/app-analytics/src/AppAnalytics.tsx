@@ -16,6 +16,11 @@ const Root = styled.div`
   }
 `
 
+const Title = styled.div`
+  font-size: 16px;
+  line-height: 50px;
+`
+
 const Charts = styled.div`
   display: flex;
   gap: 12px;
@@ -84,22 +89,22 @@ export const AppAnalytics = () => {
 
         <Charts>
           <BlackCard>
-            <h3>Online Worker/Worker (date)</h3>
+            <Title>Online Worker/Worker (24h)</Title>
             <DateWorkerChart data={analyticsData}></DateWorkerChart>
           </BlackCard>
           <BlackCard>
-            <h3>Reward/Average Reward (date)</h3>
+            <Title>Reward/Average Reward (24h)</Title>
             <Chart data={analyticsData}></Chart>
           </BlackCard>
         </Charts>
         {blockData.length > 0 && (
           <Charts>
             <BlackCard>
-              <h3>Online Worker/Worker (block)</h3>
+              <Title>Online Worker/Worker (7200block)</Title>
               <BlockWorkerChart blockData={blockData}></BlockWorkerChart>
             </BlackCard>
             <BlackCard>
-              <h3>Reward/Average Reward (block)</h3>
+              <Title>Reward/Average Reward (7200block)</Title>
               <BlockRewardChart blockData={blockData}></BlockRewardChart>
             </BlackCard>
           </Charts>
