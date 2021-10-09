@@ -63,9 +63,11 @@ export const BlockRewardChart: React.FC<{blockData: AnalyticsData}> = (
         itemStyle: {color: '#03FFFF'},
         showSymbol: false,
         yAxisIndex: 1,
-        data: data.map((item) =>
-          formatData(item.workers === 0 ? 0 : item.reward / item.onlineWorkers)
-        ),
+        data: data.map((item) => {
+          return formatData(
+            item.workers === 0 ? 0 : item.reward / item.onlineWorkers
+          )
+        }),
       },
     ],
   }
