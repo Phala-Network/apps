@@ -6,6 +6,7 @@ export const BlockWorkerChart: React.FC<{blockData: AnalyticsData}> = (
   props
 ) => {
   const {blockData} = props
+  const data = blockData.filter((_, index) => index % 2 === 0)
 
   const chartOptions = {
     tooltip: {
@@ -27,28 +28,40 @@ export const BlockWorkerChart: React.FC<{blockData: AnalyticsData}> = (
     xAxis: {
       type: 'category',
       boundaryGap: false,
-      data: blockData.map((item) => item.block),
+      data: data.map((item) => item.block),
     },
-    yAxis: {
-      type: 'value',
-      show: false,
-    },
-    series: [
+    yAxis: [
       {
-        name: 'onlineWorkers',
-        type: 'line',
-        stack: 'Total',
-        itemStyle: {color: '#bae445'},
-        showSymbol: false,
-        data: blockData.map((item) => item.onlineWorkers),
+        type: 'value',
+        name: 'OnlineWorkers',
+        splitLine: {show: false},
+        axisPointer: {show: false},
+        show: false,
       },
       {
-        name: 'workers',
+        type: 'value',
+        name: 'Workers',
+        splitLine: {show: false},
+        axisPointer: {show: false},
+        show: false,
+      },
+    ],
+    series: [
+      {
+        name: 'OnlineWorkers',
         type: 'line',
-        stack: 'Total',
+        itemStyle: {color: '#bae445'},
+        showSymbol: false,
+        yAxisIndex: 0,
+        data: data.map((item) => item.onlineWorkers),
+      },
+      {
+        name: 'Workers',
+        type: 'line',
         itemStyle: {color: '#03FFFF'},
         showSymbol: false,
-        data: blockData.map((item) => item.workers),
+        yAxisIndex: 1,
+        data: data.map((item) => item.workers),
       },
     ],
   }
