@@ -57,15 +57,15 @@ const SideNav: React.FC = () => {
       link: 'https://phala.network',
     },
     {
-      name: t('wiki'),
+      name: t('Wiki'),
       link: 'https://wiki.phala.network',
     },
     {
-      name: t('forum'),
+      name: t('Forum'),
       link: 'https://forum.phala.network/t/topic/2450/2',
     },
     {
-      name: t('discord'),
+      name: t('Discord'),
       link: 'https://discord.gg/kpYj9GWjwN',
     },
   ]
@@ -88,7 +88,7 @@ const SideNav: React.FC = () => {
         })}
 
         <Feedback>
-          <ExternalLink>{t('feedback')}</ExternalLink>
+          <ExternalLink>{t('Feedback')}</ExternalLink>
         </Feedback>
 
         {/* <LangSwitch></LangSwitch> */}
