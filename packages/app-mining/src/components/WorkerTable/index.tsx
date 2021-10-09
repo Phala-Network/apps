@@ -12,6 +12,7 @@ import StartModal from './StartModal'
 import StopModal from './StopModal'
 import ItemMenu from '../ItemMenu'
 import useMiningEnabled from '../../hooks/useMiningEnabled'
+import ReclaimModal from './ReclaimModal'
 
 type TableItem = Worker & {pid: number}
 
@@ -21,6 +22,7 @@ const modalEntries: [ModalKey, (props: WorkerModalProps) => JSX.Element][] = [
   ['start', StartModal],
   ['stop', StopModal],
   ['remove', RemoveModal],
+  ['reclaim', ReclaimModal],
 ]
 
 const WorkerTable = (): JSX.Element => {
@@ -118,7 +120,7 @@ const WorkerTable = (): JSX.Element => {
       {
         id: 'actions',
         accessor: (worker) => {
-          const state = worker.miner?.state
+          const {state, coolDownStart = 0} = worker.miner || {}
           return (
             <ItemMenu
               items={[
@@ -133,6 +135,14 @@ const WorkerTable = (): JSX.Element => {
                   key: 'remove',
                   item: 'Remove',
                   disabled: state !== 'Ready' && state !== 'MiningCoolingDown',
+                },
+                {
+                  key: 'reclaim',
+                  item: 'Reclaim',
+                  disabled:
+                    state !== 'MiningCoolingDown' ||
+                    new Date().getTime() / 1000 - coolDownStart <
+                      7 * 24 * 60 * 60, // 7 days CD
                 },
               ]}
               onClick={(key) => {
