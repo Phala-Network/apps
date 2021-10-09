@@ -8,7 +8,22 @@ export const BlockRewardChart: React.FC<{blockData: AnalyticsData}> = (
   props
 ) => {
   const {blockData} = props
-  const data = blockData.filter((_, index) => index % 2 === 0)
+  const data = blockData
+    .filter((_, index) => index % 2 === 0)
+    .map((item, index, items) => {
+      if (index === 0) {
+        return item
+      } else {
+        const lastOne = items[index - 1] ?? {
+          reward: 0,
+        }
+
+        return {
+          ...item,
+          reward: item.reward - lastOne.reward,
+        }
+      }
+    })
 
   const chartOptions = {
     tooltip: {
