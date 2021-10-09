@@ -17,6 +17,13 @@ const useFormat = (): Format => {
 
   return useCallback<Format>(
     (value, option) => {
+      if (
+        (value instanceof Decimal && value.isNaN()) ||
+        (typeof value === 'number' && Number.isNaN(value))
+      ) {
+        return '-'
+      }
+
       const {unit = 'PHA'} = option || {}
       if (decimals && (value || value === 0)) {
         return `${toFixed(new Decimal(value).div(decimals))}${
