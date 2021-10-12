@@ -43,6 +43,7 @@ const SubmitStepToEthereum: React.FC<Props> = (props) => {
 
     try {
       setSubmitting(true)
+      onSubmit?.()
 
       const accountToAddress = getAddress(accountTo)
 
