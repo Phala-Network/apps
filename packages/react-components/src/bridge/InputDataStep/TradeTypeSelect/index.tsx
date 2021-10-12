@@ -1,6 +1,6 @@
 import React from 'react'
-import {Spacer} from '../../../Spacer'
 import DEFAULT_VALUE from './DEFAULT_VALUE'
+import ExchangeIcon from './ExchangeIcon'
 import From from './From'
 import To from './To'
 
@@ -43,8 +43,7 @@ const index: React.FC<TradeTypeSelectProps> = (props) => {
   return (
     <div {...others}>
       <From disableSelect={disableSelect} value={value?.from}></From>
-      {/* <ExchangeIcon onClick={exchange}></ExchangeIcon> */}
-      <Spacer></Spacer>
+      <ExchangeIcon onClick={exchange}></ExchangeIcon>
       <To disableSelect={disableSelect} value={value?.to}></To>
     </div>
   )
