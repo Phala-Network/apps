@@ -102,9 +102,7 @@ const SubmitStepToEthereum: React.FC<Props> = (props) => {
       <Alert>
         {progressIndex === -1 ? (
           <span>
-            Please be patient as the transaction may take a few hours and is
-            related to the state of the Ethereum network. This transaction will
-            charge an additional{' '}
+            This transaction will charge an additional{' '}
             <span style={{fontWeight: 'bold'}}>
               {fee?.toFixed(2) || '...'} PHA
             </span>{' '}
