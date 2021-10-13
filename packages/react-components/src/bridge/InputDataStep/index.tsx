@@ -132,8 +132,8 @@ const InputDataStep: React.FC<Props> = (props) => {
       errorString = 'Need enter amount'
     } else if (!recipient) {
       errorString = 'Need enter recipient'
-      // } else if (!validateAddress(recipient)) {
-      //   errorString = 'Need enter the correct recipient'
+    } else if (isFromEthereum && !validateAddress(recipient)) {
+      errorString = 'Need enter the correct recipient'
     } else if (!accountFrom) {
       errorString = 'Need login'
     } else if (new Decimal(amountTo).greaterThan(new Decimal(maxAmount))) {
