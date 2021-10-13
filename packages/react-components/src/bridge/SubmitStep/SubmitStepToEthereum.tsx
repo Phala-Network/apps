@@ -90,30 +90,52 @@ const SubmitStepToEthereum: React.FC<Props> = (props) => {
       <Alert>
         {progressIndex === -1 ? (
           <span>
-            This transaction will charge an additional{' '}
+            Please be patient as the transaction may take a few hours and is
+            related to the state of the Ethereum network. This transaction will
+            charge an additional{' '}
             <span style={{fontWeight: 'bold'}}>
               {fee?.toFixed(2) || '...'} PHA
             </span>{' '}
-            bridge fee to pay for the Ethereum transaction fee. Please be
-            patient as the transaction may take a few hours and is related to
-            the state of the Ethereum network.
+            bridge fee to cover the Ethereum gas fee (up to 120 GWei price). The
+            transaction may take some time ranged from a few seconds to a few
+            hours, depending on if the Ethereum blockchain is congested. In the
+            case of congestion, it may be necessary to wait for more than 24h.
           </span>
         ) : (
           <span>
-            Please be patient as the transaction may take a few hours. You can
-            follow each step of the transaction through{' '}
+            The transaction may take some time ranged from a few seconds to a
+            few hours, depending on if the Ethereum blockchain is congested. In
+            the case of congestion, it may be necessary to wait for more than
+            24h. You can follow each step of the transaction through{' '}
             <Link
+              target="_blank"
               href={`https://phala-testnet.subscan.io/account/${transactionInfo.from.address}?tab=transfer`}
             >
               Khala&apos;s explorer
             </Link>{' '}
             and{' '}
             <Link
+              target="_blank"
               href={`https://kovan.etherscan.io/address/${transactionInfo.to.address}#tokentxns`}
             >
               Ethereum&apos;s explorer
             </Link>{' '}
-            once you confirm it!
+            once you confirm it. If it has not arrived after 24 hours, you can
+            post on the{' '}
+            <Link
+              target="_blank"
+              href={`https://forum.phala.network/c/support/function/33`}
+            >
+              forum
+            </Link>{' '}
+            or leave a message on{' '}
+            <Link
+              target="_blank"
+              href={`https://discord.com/invite/SvdKgHfhTG#product-feedback`}
+            >
+              Discord #product-feedback
+            </Link>{' '}
+            for support.
           </span>
         )}
       </Alert>
