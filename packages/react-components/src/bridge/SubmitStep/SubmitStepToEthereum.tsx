@@ -9,7 +9,15 @@ import {Decimal} from 'decimal.js'
 import {getAddress} from 'ethers/lib/utils'
 import React, {useMemo, useState} from 'react'
 import {SubmitStepProps} from '.'
-import {Alert, Button, ModalAction, ModalActions, Spacer} from '../..'
+import {useKhalaBridgeFee} from '..'
+import {
+  Alert,
+  Button,
+  KhalaToEthereumFee,
+  ModalAction,
+  ModalActions,
+  Spacer,
+} from '../..'
 import {Link} from '../../Announcement/styledComponents'
 import {StepProps} from '../BridgeProcess'
 import useTransactionInfo from '../hooks/useTransactionInfo'
@@ -29,6 +37,7 @@ const SubmitStepToEthereum: React.FC<Props> = (props) => {
   const [isSubmitting, setSubmitting] = useState<boolean>(false)
   const [progressIndex, setProgressIndex] = useState(-1)
   const {transactionInfo} = useTransactionInfo(data)
+  const {fee} = useKhalaBridgeFee()
 
   const amount = useMemo(() => {
     if (!amountFromPrevStep || !api || !decimals) return
@@ -81,10 +90,13 @@ const SubmitStepToEthereum: React.FC<Props> = (props) => {
       <Alert>
         {progressIndex === -1 ? (
           <span>
-            This transaction will charge an additional [BridgeFee] bridge fee to
-            pay for the Ethereum transaction fee. Please be patient as the
-            transaction may take a few hours and is related to the state of the
-            Ethereum network.
+            This transaction will charge an additional{' '}
+            <span style={{fontWeight: 'bold'}}>
+              {fee?.toFixed(2) || '...'} PHA
+            </span>{' '}
+            bridge fee to pay for the Ethereum transaction fee. Please be
+            patient as the transaction may take a few hours and is related to
+            the state of the Ethereum network.
           </span>
         ) : (
           <span>
@@ -128,6 +140,10 @@ const SubmitStepToEthereum: React.FC<Props> = (props) => {
 
       {!submittedHash && (
         <ModalActions>
+          <KhalaToEthereumFee
+            style={{padding: 8, flex: 1}}
+          ></KhalaToEthereumFee>
+
           {onPrev && !isSubmitting && (
             <ModalAction>
               <Button onClick={onPrev}>Back</Button>

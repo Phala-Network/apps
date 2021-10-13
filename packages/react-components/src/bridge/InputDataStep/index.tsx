@@ -16,6 +16,7 @@ import {
   InputAction,
   InputExternalInfo,
   InputNumber,
+  KhalaToEthereumFee,
   ModalAction,
   ModalActions,
   Spacer,
@@ -220,6 +221,8 @@ const InputDataStep: React.FC<Props> = (props) => {
       </FormLayout>
 
       <ModalActions>
+        <KhalaToEthereumFee style={{padding: 8, flex: 1}}></KhalaToEthereumFee>
+
         {onCancel && (
           <ModalAction>
             <Button onClick={onCancel}>Cancel</Button>
