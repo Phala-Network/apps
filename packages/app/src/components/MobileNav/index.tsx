@@ -1,3 +1,4 @@
+import {BridgeTypeAtomEnum, useBridgeTypeAtom} from '@phala/app-store'
 import {useSSR} from '@phala/react-hooks'
 import {useLocation} from '@reach/router'
 import React from 'react'
@@ -29,8 +30,12 @@ const Wrapper = styled.div`
 const MobileNav: React.FC = () => {
   const {isBrowser} = useSSR()
   const {pathname} = useLocation()
+  const [bridgeType] = useBridgeTypeAtom()
 
-  const ticketCheck = isBrowser && pathname.endsWith('/bridge/')
+  const ticketCheck =
+    isBrowser &&
+    pathname.endsWith('/bridge/') &&
+    bridgeType === BridgeTypeAtomEnum.fromEthToKhala
 
   return (
     <Wrapper>

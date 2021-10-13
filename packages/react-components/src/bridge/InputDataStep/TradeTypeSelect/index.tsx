@@ -1,3 +1,4 @@
+import {BridgeTypeAtomEnum, useBridgeTypeAtom} from '@phala/app-store'
 import React from 'react'
 import DEFAULT_VALUE from './DEFAULT_VALUE'
 import ExchangeIcon from './ExchangeIcon'
@@ -22,7 +23,8 @@ export type TradeTypeSelectProps = {
   onChange?: (value: TradeTypeSelectValue) => void
 } & Omit<React.ComponentProps<'div'>, 'onChange'>
 
-const index: React.FC<TradeTypeSelectProps> = (props) => {
+const TradeTypeSelect: React.FC<TradeTypeSelectProps> = (props) => {
+  const [, setBridgeType] = useBridgeTypeAtom()
   const {
     onChange,
     value = DEFAULT_VALUE,
@@ -37,6 +39,12 @@ const index: React.FC<TradeTypeSelectProps> = (props) => {
       to: value.from,
     }
 
+    if (newValue.from.network === 'khala') {
+      setBridgeType(BridgeTypeAtomEnum.fromKhalaToEth)
+    } else {
+      setBridgeType(BridgeTypeAtomEnum.fromEthToKhala)
+    }
+
     onChange?.(newValue)
   }
 
@@ -49,4 +57,4 @@ const index: React.FC<TradeTypeSelectProps> = (props) => {
   )
 }
 
-export default index
+export default TradeTypeSelect
