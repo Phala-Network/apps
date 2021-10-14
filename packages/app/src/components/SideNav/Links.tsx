@@ -1,4 +1,4 @@
-import {useTranslation} from '@phala/react-i18n'
+import { useTranslation } from '@phala/react-i18n'
 import styled from 'styled-components'
 import ActiveOutline from './ActiveOutline'
 import Link from './Link'
@@ -16,7 +16,7 @@ const Links: React.FC = () => {
       <ActiveOutline />
 
       <Link to="/">{t('Assets')}</Link>
-      <Link to="/bridge/">{t('Bridge')}</Link>
+      {/* <Link to="/bridge/">{t('Bridge')}</Link> */}
       <Link to="/delegate/">{t('Delegate')}</Link>
       <Divider></Divider>
       <Link to="/mining/">{t('Mining')}</Link>
