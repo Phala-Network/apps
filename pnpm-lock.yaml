@@ -265,13 +265,13 @@ importers:
 
   packages/app-config:
     specifiers:
-      '@phala/typedefs': ^0.2.28
+      '@phala/typedefs': ^0.2.25
       '@polkadot/types': ^4.17.1
-      '@types/node': ^16.10.3
+      '@types/node': ^16.7.13
     dependencies:
       '@phala/typedefs': 0.2.28
       '@polkadot/types': 4.17.1
-      '@types/node': 16.10.3
+      '@types/node': 16.7.13
 
   packages/app-data-analytics:
     specifiers: {}
@@ -4671,7 +4671,7 @@ packages:
   /@phala/typedefs/0.2.28:
     resolution: {integrity: sha512-2TLB2bR2XaWgnRVXsfQ1doIbYXI+tBFSFKzaDYcpAaVyeON12pV1YD0qeJIgF6ORsydONR84ULLIQU3L9gTN2A==}
     dependencies:
-      '@polkadot/types': 5.9.1
+      '@polkadot/types': 5.8.3
     dev: false
 
   /@pmmmwh/react-refresh-webpack-plugin/0.4.3_637fe0af5eea2230ffdb56306b9d64e4:
@@ -5072,16 +5072,6 @@ packages:
       '@polkadot/util': 7.3.1
       '@polkadot/util-crypto': 7.3.1
       rxjs: 7.3.0
-    dev: false
-
-  /@polkadot/types/5.9.1:
-    resolution: {integrity: sha512-30vcSlNBxPyWYZaxKDr/BoMhfLCRKB265XxpnnNJmbdZZsL+N4Zp2mJR9/UbA6ypmJBkUjD7b1s9AYsLwUs+8w==}
-    engines: {node: '>=14.0.0'}
-    dependencies:
-      '@babel/runtime': 7.15.4
-      '@polkadot/util': 7.4.1
-      '@polkadot/util-crypto': 7.4.1
-      rxjs: 7.4.0
     dev: false
 
   /@polkadot/ui-keyring/0.84.3:
@@ -6931,7 +6921,7 @@ packages:
   /@types/bn.js/4.11.6:
     resolution: {integrity: sha512-pqr857jrp2kPuO9uRjZ3PwnJTjoQy+fcdxvBTvHm6dkmEL9q+hDD/2j/0ELOBPtPnS8LjCX0gI9nbl8lVkadpg==}
     dependencies:
-      '@types/node': 16.10.3
+      '@types/node': 16.7.13
     dev: false
 
   /@types/braces/3.0.1:
@@ -21573,12 +21563,6 @@ packages:
 
   /rxjs/7.3.0:
     resolution: {integrity: sha512-p2yuGIg9S1epc3vrjKf6iVb3RCaAYjYskkO+jHIaV0IjOPlJop4UnodOoFb2xeNwlguqLYvGw1b1McillYb5Gw==}
-    dependencies:
-      tslib: 2.1.0
-    dev: false
-
-  /rxjs/7.4.0:
-    resolution: {integrity: sha512-7SQDi7xeTMCJpqViXh8gL/lebcwlp3d831F05+9B44A4B0WfsEwUQHR64gsH1kvJ+Ep/J9K2+n1hVl1CsGN23w==}
     dependencies:
       tslib: 2.1.0
     dev: false
