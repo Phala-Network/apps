@@ -83,19 +83,7 @@ const SubmitStepToEthereum: React.FC<Props> = (props) => {
 
   return (
     <>
-      {/* from amount add bridge fee is the finally amount */}
-      <BaseInfo
-        layout={layout}
-        data={{
-          ...transactionInfo,
-          from: {
-            ...transactionInfo.from,
-            amount: new Decimal(fee ?? 0)
-              .add(transactionInfo.from.amount)
-              .toNumber(),
-          },
-        }}
-      />
+      <BaseInfo layout={layout} data={transactionInfo} />
 
       <Spacer></Spacer>
 
