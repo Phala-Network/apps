@@ -1,6 +1,6 @@
 import {TransactionInfo} from '@phala/app-types'
-import {Address, AmountInfo, InfoTitle, Spacer} from '../..'
 import React from 'react'
+import {Address, AmountInfo, InfoTitle, Spacer} from '../..'
 import {StepProps} from '../BridgeProcess'
 import FormItem from '../FormItem'
 import FormLayout from '../FormLayout'
@@ -9,10 +9,11 @@ type Props = {
   onPrev?(): void
   onSubmit?(): void
   data?: TransactionInfo
+  fromTooltip?: string
 } & StepProps
 
 const BaseInfo: React.FC<Props> = (props) => {
-  const {layout, data} = props
+  const {layout, data, fromTooltip} = props
   const {from, to} = data || {}
 
   return (
@@ -20,6 +21,7 @@ const BaseInfo: React.FC<Props> = (props) => {
       <FormItem>
         <InfoTitle>From</InfoTitle>
         <AmountInfo
+          tooltip={fromTooltip}
           network={from?.network}
           amount={from?.amount?.toString()}
           type={from?.type}
