@@ -118,8 +118,8 @@ export const reactToastifyGlobalStyle = css`
   .Toastify__toast-body {
     margin: auto 0;
     flex: 1 1 auto;
-    padding: 14px 22px;
-    /* word-break: break-all; */
+    padding: 16px 25px;
+    word-break: break-all;
   }
 
   .Toastify--animate {
