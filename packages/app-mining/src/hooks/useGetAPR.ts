@@ -1,9 +1,6 @@
-import {
-  StakePool,
-  Worker,
-  useTokenomicParameters,
-  useWorkers,
-} from '@phala/react-hooks'
+import {useTokenomicParameters} from '@phala/react-hooks'
+import useWorkers, {Worker} from './useWorkers'
+import type {StakePool} from './useStakePools'
 import Decimal from 'decimal.js'
 import {useCallback, useMemo} from 'react'
 

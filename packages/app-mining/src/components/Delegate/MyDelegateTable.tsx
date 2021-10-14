@@ -1,24 +1,22 @@
 import {useMemo, useState} from 'react'
-import {Column} from 'react-table'
+import type {Column} from 'react-table'
 import Decimal from 'decimal.js'
 import styled from 'styled-components'
 import {usePolkadotAccountAtom} from '@phala/app-store'
 import {Table} from '@phala/react-components'
-import {
-  StakePool,
-  useStakePools,
-  useUserStakeInfo,
-  useIsMobile,
-} from '@phala/react-hooks'
+import {useIsMobile} from '@phala/react-hooks'
 import {toFixed} from '@phala/utils'
-import useFormat from '../hooks/useFormat'
-import useGetARP from '../hooks/useGetAPR'
-import useModalVisible, {ModalKey} from '../hooks/useModalVisible'
-import ItemMenu from './ItemMenu'
-import ClaimModal from './ClaimModal'
-import DelegateModal from './DelegateModal'
-import WithdrawModal from './WithdrawModal'
-import useIdentities from '../hooks/useIdentities'
+import type {StakePoolModalProps} from '../StakePoolTable'
+import useFormat from '../../hooks/useFormat'
+import useGetARP from '../../hooks/useGetAPR'
+import useStakePools, {StakePool} from '../../hooks/useStakePools'
+import useUserStakeInfo from '../../hooks/useUserStakeInfo'
+import useModalVisible, {ModalKey} from '../../hooks/useModalVisible'
+import ItemMenu from '../ItemMenu'
+import ClaimModal from '../ClaimModal'
+import DelegateModal from '../DelegateModal'
+import WithdrawModal from '../WithdrawModal'
+import useIdentities from '../../hooks/useIdentities'
 import {trimAddress} from '@phala/utils'
 
 const Wrapper = styled.div`

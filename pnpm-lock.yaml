@@ -45,7 +45,6 @@ importers:
       '@phala/app-bridge': workspace:^0.0.1
       '@phala/app-config': workspace:*
       '@phala/app-data-analytics': workspace:^0.0.1
-      '@phala/app-delegate': workspace:^0.0.1
       '@phala/app-mining': workspace:^0.0.1
       '@phala/app-store': workspace:*
       '@phala/app-types': workspace:*
@@ -117,7 +116,6 @@ importers:
       '@phala/app-bridge': link:../app-bridge
       '@phala/app-config': link:../app-config
       '@phala/app-data-analytics': link:../app-data-analytics
-      '@phala/app-delegate': link:../app-delegate
       '@phala/app-mining': link:../app-mining
       '@phala/app-store': link:../app-store
       '@phala/app-types': link:../app-types
@@ -275,38 +273,6 @@ importers:
 
   packages/app-data-analytics:
     specifiers: {}
-
-  packages/app-delegate:
-    specifiers:
-      '@phala/app-store': workspace:^0.0.1
-      '@phala/react-components': workspace:^0.0.1
-      '@phala/react-hooks': workspace:^0.0.1
-      '@phala/react-libs': workspace:^0.0.1
-      '@phala/utils': workspace:^0.0.1
-      '@polkadot/api': ^4.17.1
-      '@polkadot/api-derive': ^5.8.3
-      '@polkadot/extension-dapp': ^0.38.8
-      '@polkadot/util': ^6.11.1
-      '@types/react': ^17.0.20
-      date-fns: ^2.23.0
-      decimal.js: ^10.3.1
-      ethers: ^5.4.6
-      jotai: ^1.3.2
-    dependencies:
-      '@phala/app-store': link:../app-store
-      '@phala/react-components': link:../react-components
-      '@phala/react-hooks': link:../react-hooks
-      '@phala/react-libs': link:../react-libs
-      '@phala/utils': link:../utils
-      '@polkadot/api': 4.17.1
-      '@polkadot/api-derive': 5.8.3
-      '@polkadot/extension-dapp': 0.38.8_@polkadot+api@4.17.1
-      '@polkadot/util': 6.11.1
-      '@types/react': 17.0.20
-      date-fns: 2.23.0
-      decimal.js: 10.3.1
-      ethers: 5.4.6
-      jotai: 1.3.2
 
   packages/app-mining:
     specifiers:
@@ -8522,7 +8488,7 @@ packages:
   /axios/0.21.4:
     resolution: {integrity: sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==}
     dependencies:
-      follow-redirects: 1.14.3
+      follow-redirects: 1.14.3_debug@3.2.7
     transitivePeerDependencies:
       - debug
     dev: false
@@ -8871,7 +8837,7 @@ packages:
       '@babel/helper-module-imports': 7.15.4
       babel-plugin-syntax-jsx: 6.18.0
       lodash: 4.17.21
-      styled-components: 5.3.1
+      styled-components: 5.3.1_1f55980affd76ea66174a1939c753673
 
   /babel-plugin-syntax-jsx/6.18.0:
     resolution: {integrity: sha1-CvMqmm4Tyno/1QaeYtew9Y0NiUY=}
@@ -12895,16 +12861,6 @@ packages:
     dependencies:
       inherits: 2.0.4
       readable-stream: 2.3.7
-
-  /follow-redirects/1.14.3:
-    resolution: {integrity: sha512-3MkHxknWMUtb23apkgz/83fDoe+y+qr0TdgacGIA7bew+QLBo3vdgEN2xEsuXNivpFy4CyDhBBZnNZOtalmenw==}
-    engines: {node: '>=4.0'}
-    peerDependencies:
-      debug: '*'
-    peerDependenciesMeta:
-      debug:
-        optional: true
-    dev: false
 
   /follow-redirects/1.14.3_debug@3.2.7:
     resolution: {integrity: sha512-3MkHxknWMUtb23apkgz/83fDoe+y+qr0TdgacGIA7bew+QLBo3vdgEN2xEsuXNivpFy4CyDhBBZnNZOtalmenw==}

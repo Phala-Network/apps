@@ -1,8 +1,8 @@
 import {Helmet} from 'react-helmet'
 import styled from 'styled-components'
 import {up} from 'styled-breakpoints'
-import MainTable from '../components/MainTable'
-import Banner from '../components/Banner'
+import MainTable from '../components/Delegate/DelegateTable'
+import Banner from '../components/Delegate/Banner'
 
 const Wrapper = styled.div`
   overflow-x: auto;
@@ -19,7 +19,7 @@ const Block = styled.div`
   background: #fff;
 `
 
-const Delegate = (): JSX.Element => {
+export const Delegate = (): JSX.Element => {
   return (
     <>
       <Helmet>
@@ -36,6 +36,3 @@ const Delegate = (): JSX.Element => {
     </>
   )
 }
-
-export {default as MyDelegate} from './MyDelegate'
-export default Delegate

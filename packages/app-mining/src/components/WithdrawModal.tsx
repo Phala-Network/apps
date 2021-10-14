@@ -5,10 +5,10 @@ import {
 } from '@phala/react-libs'
 import Decimal from 'decimal.js'
 import {useCallback, useState} from 'react'
-import {StakePoolModalProps} from '.'
-import useSelfUserStakeInfo from '../../hooks/useSelfUserStakeInfo'
-import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
-import ActionModal, {Label, Value} from '../ActionModal'
+import type {StakePoolModalProps} from './StakePoolTable'
+import useSelfUserStakeInfo from '../hooks/useSelfUserStakeInfo'
+import useWaitSignAndSend from '../hooks/useWaitSignAndSend'
+import ActionModal, {Label, Value} from './ActionModal'
 
 const WithdrawModal = (props: StakePoolModalProps): JSX.Element => {
   const {onClose, stakePool} = props

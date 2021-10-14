@@ -5,7 +5,7 @@ import {
 } from '@phala/react-libs'
 import Decimal from 'decimal.js'
 import {useCallback, useState} from 'react'
-import {StakePoolModalProps} from '.'
+import type {StakePoolModalProps} from '.'
 import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
 import ActionModal, {Label, Value} from '../ActionModal'
 

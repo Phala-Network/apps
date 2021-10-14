@@ -1,9 +1,9 @@
 import styled from 'styled-components'
 import {Button} from '@phala/react-components'
 import {Link} from 'gatsby-plugin-intl'
-import {useStakePools} from '@phala/react-hooks'
+import useStakePools from '../../hooks/useStakePools'
 import {useMemo} from 'react'
-import useFormat from '../hooks/useFormat'
+import useFormat from '../../hooks/useFormat'
 import Decimal from 'decimal.js'
 import {down} from 'styled-breakpoints'
 

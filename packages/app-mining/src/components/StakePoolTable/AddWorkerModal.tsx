@@ -4,7 +4,7 @@ import {
   useDecimalJsTokenDecimalMultiplier,
 } from '@phala/react-libs'
 import {useCallback, useState} from 'react'
-import {StakePoolModalProps} from '.'
+import type {StakePoolModalProps} from '.'
 import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
 import ActionModal, {Label, Value} from '../ActionModal'
 

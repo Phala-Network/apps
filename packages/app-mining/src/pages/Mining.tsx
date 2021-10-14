@@ -1,7 +1,7 @@
 import {Helmet} from 'react-helmet'
 import styled from 'styled-components'
-import StakePoolTable from './components/StakePoolTable'
-import WorkerTable from './components/WorkerTable'
+import StakePoolTable from '../components/StakePoolTable'
+import WorkerTable from '../components/WorkerTable'
 
 const Wrapper = styled.div`
   flex: 1;
@@ -18,7 +18,7 @@ const Block = styled.div`
   }
 `
 
-const Mining: React.FC = () => {
+export const Mining: React.FC = () => {
   return (
     <Wrapper>
       <Helmet>
@@ -34,5 +34,3 @@ const Mining: React.FC = () => {
     </Wrapper>
   )
 }
-
-export default Mining
