@@ -8,6 +8,7 @@ import {Hash} from '@polkadot/types/interfaces'
 import {Decimal} from 'decimal.js'
 import {getAddress} from 'ethers/lib/utils'
 import React, {useMemo, useState} from 'react'
+import {toast} from 'react-toastify'
 import {SubmitStepProps} from '..'
 import {useKhalaBridgeFee} from '../..'
 import {
@@ -26,7 +27,7 @@ import BaseInfo from '../BaseInfo'
 
 type Props = SubmitStepProps & StepProps
 
-const SubmitStepToEthereum: React.FC<Props> = (props) => {
+export const SubmitStepToEthereum: React.FC<Props> = (props) => {
   const {onSubmit, onPrev, onSuccess, layout, data} = props
   const {from, to, amount: amountFromPrevStep} = data || {}
   const {account: accountFrom} = from || {}
@@ -39,6 +40,7 @@ const SubmitStepToEthereum: React.FC<Props> = (props) => {
   const [progressIndex, setProgressIndex] = useState(-1)
   const {transactionInfo} = useTransactionInfo(data)
   const {fee} = useKhalaBridgeFee()
+  const [checkBoxChecked, setCheckBoxChecked] = useState<boolean>(false)
 
   const amount = useMemo(() => {
     if (!amountFromPrevStep || !api || !decimals) return
@@ -47,6 +49,11 @@ const SubmitStepToEthereum: React.FC<Props> = (props) => {
   }, [amountFromPrevStep, api, decimals])
 
   const submit = async () => {
+    if (!checkBoxChecked) {
+      toast('Please agrees the transaction alert')
+      return
+    }
+
     if (!accountTo || !amount || !accountFrom) {
       return
     }
@@ -170,7 +177,10 @@ const SubmitStepToEthereum: React.FC<Props> = (props) => {
         }}
       >
         <div>
-          <Checkbox></Checkbox>
+          <Checkbox
+            checked={checkBoxChecked}
+            onChange={setCheckBoxChecked}
+          ></Checkbox>
         </div>
         <div style={{padding: '2px 2px'}}>
           I understood the transaction can take long time and the bridge fee is
@@ -211,5 +221,3 @@ const SubmitStepToEthereum: React.FC<Props> = (props) => {
     </>
   )
 }
-
-export default SubmitStepToEthereum
