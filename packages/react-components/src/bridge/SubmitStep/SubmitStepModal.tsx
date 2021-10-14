@@ -14,13 +14,12 @@ const SubmitStepModal: React.FC<Props> = (props) => {
   const {visible, submitData, setModalVisible} = props
   const [, setTransactionInfo] = useState<TransactionInfo>()
   const [, setResultStepModalVisible] = useState(false)
-  const [title, setTitle] = useState('Bridge Confirmation')
 
   if (!submitData) return null
 
   return (
     <>
-      <Modal visible={visible} title={title}>
+      <Modal visible={visible} title="Bridge Confirmation">
         <SubmitStep
           data={submitData}
           onPrev={() => setModalVisible(false)}
@@ -28,9 +27,6 @@ const SubmitStepModal: React.FC<Props> = (props) => {
             setModalVisible(false)
             setResultStepModalVisible(true)
             setTransactionInfo(transactionInfo)
-          }}
-          onSubmit={() => {
-            setTitle('Bridge Information')
           }}
         />
       </Modal>
