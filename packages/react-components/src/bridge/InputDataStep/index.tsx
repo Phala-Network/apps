@@ -238,7 +238,7 @@ const InputDataStep: React.FC<Props> = (props) => {
         </FormItem>
       </FormLayout>
 
-      <ModalActions style={{display: 'none'}}>
+      <ModalActions>
         {isFromKhala && (
           <KhalaToEthereumFee
             style={{padding: 8, flex: 1}}
