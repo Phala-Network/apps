@@ -136,7 +136,10 @@ const InputDataStep: React.FC<Props> = (props) => {
       errorString = 'Need enter the correct recipient'
     } else if (!accountFrom) {
       errorString = 'Need login'
-    } else if (isFromKhala && !recipient.startsWith('0x')) {
+    } else if (
+      isFromKhala &&
+      !new RegExp(/0x[0-9a-fA-F]{40}/).test(recipient)
+    ) {
       errorString = 'Need enter the correct recipient'
     } else if (isFromKhala && !fee) {
       errorString = 'Please wait fee check'
