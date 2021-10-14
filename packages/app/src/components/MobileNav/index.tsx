@@ -1,13 +1,13 @@
-import {useSSR} from '@phala/react-hooks'
-import {useLocation} from '@reach/router'
 import React from 'react'
-import {up} from 'styled-breakpoints'
 import styled from 'styled-components'
+import {up} from 'styled-breakpoints'
+import {useLocation} from '@reach/router'
+import MobilePolkadotTicker from './MobilePolkadotTicket'
 import PhalaIcon from '../../icons/phala_icon.svg'
+import background from './mobile_nav_background.png'
 import Links from './Links'
 import MobileEthereumTicket from './MobileEthereumTicket'
-import MobilePolkadotTicker from './MobilePolkadotTicket'
-import background from './mobile_nav_background.png'
+import {useSSR} from '@phala/react-hooks'
 
 const Wrapper = styled.div`
   display: flex;
@@ -30,13 +30,16 @@ const MobileNav: React.FC = () => {
   const {isBrowser} = useSSR()
   const {pathname} = useLocation()
 
-  const ticketCheck = isBrowser && pathname.endsWith('/bridge/')
-
   return (
     <Wrapper>
       <PhalaIcon></PhalaIcon>
       <Links></Links>
-      {ticketCheck ? <MobileEthereumTicket /> : <MobilePolkadotTicker />}
+      {isBrowser &&
+        (pathname.endsWith('/bridge/') ? (
+          <MobileEthereumTicket></MobileEthereumTicket>
+        ) : (
+          <MobilePolkadotTicker></MobilePolkadotTicker>
+        ))}
     </Wrapper>
   )
 }
