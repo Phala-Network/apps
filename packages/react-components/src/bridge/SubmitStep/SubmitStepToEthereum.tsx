@@ -10,9 +10,9 @@ import {getAddress} from 'ethers/lib/utils'
 import React, {useMemo, useState} from 'react'
 import {SubmitStepProps} from '.'
 import {Alert, Button, ModalAction, ModalActions, Spacer} from '../..'
-import {Link} from '../../Announcement/styledComponents'
 import {StepProps} from '../BridgeProcess'
 import useTransactionInfo from '../hooks/useTransactionInfo'
+import {KhalaProcess} from '../KhalaProcess'
 import BaseInfo from './BaseInfo'
 
 type Props = SubmitStepProps & StepProps
@@ -79,42 +79,16 @@ const SubmitStepToEthereum: React.FC<Props> = (props) => {
       <Spacer></Spacer>
 
       <Alert>
-        {progressIndex === -1 ? (
-          <span>
-            This transaction will charge an additional [BridgeFee] bridge fee to
-            pay for the Ethereum transaction fee. Please be patient as the
-            transaction may take a few hours and is related to the state of the
-            Ethereum network.
-          </span>
-        ) : (
-          <span>
-            Please be patient as the transaction may take a few hours. You can
-            follow each step of the transaction through{' '}
-            <Link
-              href={`https://phala-testnet.subscan.io/account/${transactionInfo.from.address}?tab=transfer`}
-            >
-              Khala&apos;s explorer
-            </Link>{' '}
-            and{' '}
-            <Link
-              href={`https://kovan.etherscan.io/address/${transactionInfo.to.address}#tokentxns`}
-            >
-              Ethereum&apos;s explorer
-            </Link>{' '}
-            once you confirm it!
-          </span>
-        )}
-      </Alert>
-
-      {/* <Alert>
-        {progressIndex >= 0 && (
+        {progressIndex >= 0 ? (
           <KhalaProcess
             khalaAddress={transactionInfo.from.address}
             etherscanAddress={transactionInfo.to.address}
             progressIndex={progressIndex}
           />
+        ) : (
+          `Please be patient as the transaction may take a few hours. You can follow each step of the transaction through Khala's explorer and Ethereum's explorer once you confirm it!`
         )}
-      </Alert> */}
+      </Alert>
 
       {submittedHash && (
         <ModalActions>
