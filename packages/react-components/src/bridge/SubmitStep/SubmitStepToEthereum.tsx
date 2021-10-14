@@ -51,7 +51,6 @@ const SubmitStepToEthereum: React.FC<Props> = (props) => {
         accountToAddress,
         accountFrom,
         (status) => {
-          console.warn('status.hash', status.hash.toHuman())
           if (status.isReady) {
             setProgressIndex(0)
           } else if (status.isBroadcast) {
