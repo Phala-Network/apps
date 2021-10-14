@@ -8,21 +8,20 @@ import {Hash} from '@polkadot/types/interfaces'
 import {Decimal} from 'decimal.js'
 import {getAddress} from 'ethers/lib/utils'
 import React, {useMemo, useState} from 'react'
-import {SubmitStepProps} from '..'
-import {useKhalaBridgeFee} from '../..'
+import {SubmitStepProps} from '.'
+import {useKhalaBridgeFee} from '..'
 import {
   Alert,
   Button,
-  Checkbox,
   KhalaToEthereumFee,
   ModalAction,
   ModalActions,
   Spacer,
-} from '../../..'
-import {Link} from '../../../Announcement/styledComponents'
-import {StepProps} from '../../BridgeProcess'
-import useTransactionInfo from '../../hooks/useTransactionInfo'
-import BaseInfo from '../BaseInfo'
+} from '../..'
+import {Link} from '../../Announcement/styledComponents'
+import {StepProps} from '../BridgeProcess'
+import useTransactionInfo from '../hooks/useTransactionInfo'
+import BaseInfo from './BaseInfo'
 
 type Props = SubmitStepProps & StepProps
 
@@ -160,23 +159,6 @@ const SubmitStepToEthereum: React.FC<Props> = (props) => {
           />
         )}
       </Alert> */}
-
-      <label
-        style={{
-          display: 'flex',
-          fontSize: 14,
-          padding: '8px 0',
-          margin: '8px 0',
-        }}
-      >
-        <div>
-          <Checkbox></Checkbox>
-        </div>
-        <div style={{padding: '2px 2px'}}>
-          I understood the transaction can take long time and the bridge fee is
-          used to cover the Ethereum gas fee
-        </div>
-      </label>
 
       {submittedHash && (
         <ModalActions>
