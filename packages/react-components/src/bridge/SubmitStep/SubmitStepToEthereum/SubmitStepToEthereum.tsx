@@ -34,7 +34,7 @@ export const SubmitStepToEthereum: React.FC<Props> = (props) => {
   const {account: accountTo} = to || {}
   const {api} = useApiPromise()
   const decimals = useDecimalJsTokenDecimalMultiplier(api)
-  const transferSubmit = useTransferSubmit(1)
+  const transferSubmit = useTransferSubmit(0)
   const [submittedHash, setSubmittedHash] = useState<Hash>()
   const [isSubmitting, setSubmitting] = useState<boolean>(false)
   const [progressIndex, setProgressIndex] = useState(-1)
