@@ -50,7 +50,7 @@ export const SubmitStepToEthereum: React.FC<Props> = (props) => {
 
   const submit = async () => {
     if (!checkBoxChecked) {
-      toast('Please agrees the transaction alert')
+      toast('Please check the risk warning.')
       return
     }
 
@@ -184,7 +184,7 @@ export const SubmitStepToEthereum: React.FC<Props> = (props) => {
         </div>
         <div style={{padding: '2px 2px'}}>
           I understood the transaction can take long time and the bridge fee is
-          used to cover the Ethereum gas fee
+          used to cover the Ethereum gas fee.
         </div>
       </label>
 
