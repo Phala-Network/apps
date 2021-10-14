@@ -8,7 +8,6 @@ import {Hash} from '@polkadot/types/interfaces'
 import {Decimal} from 'decimal.js'
 import {getAddress} from 'ethers/lib/utils'
 import React, {useMemo, useState} from 'react'
-import {toast} from 'react-toastify'
 import {SubmitStepProps} from '..'
 import {useKhalaBridgeFee} from '../..'
 import {
@@ -49,10 +48,11 @@ export const SubmitStepToEthereum: React.FC<Props> = (props) => {
   }, [amountFromPrevStep, api, decimals])
 
   const submit = async () => {
-    if (!checkBoxChecked) {
-      toast('Please check the risk warning.')
-      return
-    }
+    // TODO: check
+    // if (!checkBoxChecked) {
+    //   toast('Please check the risk warning.')
+    //   return
+    // }
 
     if (!accountTo || !amount || !accountFrom) {
       return
@@ -60,6 +60,7 @@ export const SubmitStepToEthereum: React.FC<Props> = (props) => {
 
     try {
       setSubmitting(true)
+      onSubmit?.()
 
       const accountToAddress = getAddress(accountTo)
 
@@ -68,8 +69,7 @@ export const SubmitStepToEthereum: React.FC<Props> = (props) => {
         accountToAddress,
         accountFrom,
         (status) => {
-          onSubmit?.()
-
+          console.warn('status.hash', status.hash.toHuman(), status)
           if (status.isReady) {
             setProgressIndex(0)
           } else if (status.isBroadcast) {
@@ -168,7 +168,7 @@ export const SubmitStepToEthereum: React.FC<Props> = (props) => {
         )}
       </Alert> */}
 
-      {progressIndex === -1 && (
+      {checkBoxChecked && (
         <label
           style={{
             display: 'flex',
@@ -193,13 +193,7 @@ export const SubmitStepToEthereum: React.FC<Props> = (props) => {
       {submittedHash && (
         <ModalActions>
           <ModalAction>
-            <Button
-              type="primary"
-              onClick={() => {
-                onPrev?.()
-                setProgressIndex(-1)
-              }}
-            >
+            <Button type="primary" onClick={onPrev}>
               Done
             </Button>
           </ModalAction>
