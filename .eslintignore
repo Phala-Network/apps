@@ -4,5 +4,5 @@
 env.config.js
 env.development.config.js
 next.config.js
-packages/react-graph-chainbridge/src/ethereum/interfaces/index.ts
-packages/react-graph-chainbridge/src/substrate/interfaces/index.ts
+react-graph-chainbridge/src/ethereum/interfaces/index.ts
+react-graph-chainbridge/src/substrate/interfaces/index.ts
