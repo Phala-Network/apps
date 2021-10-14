@@ -8,19 +8,20 @@ interface ProgressProps {
 }
 
 export const KhalaProcess: FC<ProgressProps> = (props) => {
-  const {progressIndex, etherscanAddress, khalaAddress} = props
+  const {progressIndex, etherscanAddress} = props
 
+  // https://kovan.etherscan.io/address/0xdf2e83f33db8a9ccf3a00fce18c3f509b974353d#tokentxns
   const steps = [
     {
       text: 'Transaction Send',
     },
     {
       text: 'Khala Confirmed',
-      ...(progressIndex > 0
-        ? {
-            link: `https://phala-testnet.subscan.io/account/${khalaAddress}?tab=transfer`,
-          }
-        : {}),
+      // ...(progressIndex > 0
+      //   ? {
+      //       link: `https://kovan.etherscan.io/address/${khalaAddress}#tokentxns`,
+      //     }
+      //   : {}),
     },
     {
       text: 'Relayer Confirmed',
