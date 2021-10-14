@@ -81,7 +81,7 @@ const SubmitStepToEthereum: React.FC<Props> = (props) => {
         {progressIndex >= 0 ? (
           <KhalaProcess progressIndex={progressIndex} />
         ) : (
-          `Please be patient as the transaction may take a few hours. You can follow each step of the transaction through Khala's explorer and Ethereum's explorer once you confirm it!`
+          'Please be patient as the transaction may take a few minutes. You can follow each step of the transaction here once you confirm it!'
         )}
       </Alert>
 
