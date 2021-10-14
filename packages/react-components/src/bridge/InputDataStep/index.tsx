@@ -128,7 +128,7 @@ const InputDataStep: React.FC<Props> = (props) => {
 
     setErrorString(errorString)
 
-    if (!amountTo || amountTo <= 0) {
+    if (!amountTo) {
       errorString = 'Need enter amount'
     } else if (!recipient) {
       errorString = 'Need enter recipient'
@@ -136,8 +136,6 @@ const InputDataStep: React.FC<Props> = (props) => {
       errorString = 'Need enter the correct recipient'
     } else if (!accountFrom) {
       errorString = 'Need login'
-    } else if (isFromKhala && !fee) {
-      errorString = 'Please wait fee check'
     } else if (new Decimal(amountTo).greaterThan(new Decimal(maxAmount))) {
       errorString = 'Insufficient balance'
     } else if (
