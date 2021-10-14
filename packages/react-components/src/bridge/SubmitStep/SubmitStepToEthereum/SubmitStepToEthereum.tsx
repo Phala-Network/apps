@@ -8,6 +8,7 @@ import {Hash} from '@polkadot/types/interfaces'
 import {Decimal} from 'decimal.js'
 import {getAddress} from 'ethers/lib/utils'
 import React, {useMemo, useState} from 'react'
+import {toast} from 'react-toastify'
 import {SubmitStepProps} from '..'
 import {useKhalaBridgeFee} from '../..'
 import {
@@ -48,11 +49,10 @@ export const SubmitStepToEthereum: React.FC<Props> = (props) => {
   }, [amountFromPrevStep, api, decimals])
 
   const submit = async () => {
-    // TODO: check
-    // if (!checkBoxChecked) {
-    //   toast('Please check the risk warning.')
-    //   return
-    // }
+    if (!checkBoxChecked) {
+      toast('Please check the risk warning.')
+      return
+    }
 
     if (!accountTo || !amount || !accountFrom) {
       return
@@ -168,27 +168,25 @@ export const SubmitStepToEthereum: React.FC<Props> = (props) => {
         )}
       </Alert> */}
 
-      {checkBoxChecked && (
-        <label
-          style={{
-            display: 'flex',
-            fontSize: 14,
-            padding: '8px 0',
-            margin: '8px 0',
-          }}
-        >
-          <div>
-            <Checkbox
-              checked={checkBoxChecked}
-              onChange={setCheckBoxChecked}
-            ></Checkbox>
-          </div>
-          <div style={{padding: '2px 2px'}}>
-            I understood the transaction can take long time and the bridge fee
-            is used to cover the Ethereum gas fee.
-          </div>
-        </label>
-      )}
+      <label
+        style={{
+          display: 'flex',
+          fontSize: 14,
+          padding: '8px 0',
+          margin: '8px 0',
+        }}
+      >
+        <div>
+          <Checkbox
+            checked={checkBoxChecked}
+            onChange={setCheckBoxChecked}
+          ></Checkbox>
+        </div>
+        <div style={{padding: '2px 2px'}}>
+          I understood the transaction can take long time and the bridge fee is
+          used to cover the Ethereum gas fee.
+        </div>
+      </label>
 
       {submittedHash && (
         <ModalActions>
