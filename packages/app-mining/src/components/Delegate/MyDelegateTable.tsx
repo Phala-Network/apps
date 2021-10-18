@@ -149,14 +149,11 @@ const MyDelegateTable = (): JSX.Element => {
         Header: 'Your Withdrawing',
         accessor: (stakePool) =>
           format(
-            stakePool.withdrawQueue
-              .reduce((acc, cur) => {
-                if (cur.user === polkadotAccount?.address) {
-                  return acc.add(cur.shares)
-                }
-                return acc
-              }, new Decimal(0))
-              .mul(stakePool.totalShares.div(stakePool.totalStake))
+            (
+              stakePool.withdrawQueue.find(
+                (x) => x.user === polkadotAccount?.address
+              )?.shares || new Decimal(0)
+            ).mul(stakePool.totalShares.div(stakePool.totalStake))
           ),
       },
       {
