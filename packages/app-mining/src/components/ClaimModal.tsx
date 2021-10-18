@@ -1,16 +1,16 @@
-import Decimal from 'decimal.js'
 import {usePolkadotAccountAtom} from '@phala/app-store'
 import {Input, InputAction} from '@phala/react-components'
 import {useApiPromise} from '@phala/react-libs'
 import {useCallback, useMemo, useState} from 'react'
+import type {StakePoolModalProps} from './StakePoolTable'
 import useFormat from '../hooks/useFormat'
 import useSelfUserStakeInfo from '../hooks/useSelfUserStakeInfo'
 import useWaitSignAndSend from '../hooks/useWaitSignAndSend'
 import ActionModal, {Label, Value} from './ActionModal'
 
 const ClaimModal = (props: StakePoolModalProps): JSX.Element => {
-  const [polkadotAccount] = usePolkadotAccountAtom()
   const {onClose, stakePool} = props
+  const [polkadotAccount] = usePolkadotAccountAtom()
   const {api} = useApiPromise()
   const format = useFormat()
   const waitSignAndSend = useWaitSignAndSend()
@@ -19,16 +19,12 @@ const ClaimModal = (props: StakePoolModalProps): JSX.Element => {
 
   const rewards = useMemo<string>(() => {
     if (!userStakeInfo) return '-'
-    const {ownerReward, rewardAcc, owner} = stakePool
+    const {ownerReward, rewardAcc} = stakePool
     const {shares, availableRewards, rewardDebt} = userStakeInfo
-    const isOwner = owner === polkadotAccount?.address
     const pendingRewards = shares.mul(rewardAcc).sub(rewardDebt)
-    return format(
-      (isOwner ? ownerReward : new Decimal(0))
-        .add(pendingRewards)
-        .add(availableRewards)
-    )
-  }, [stakePool, userStakeInfo, format, polkadotAccount?.address])
+
+    return format(ownerReward.add(pendingRewards).add(availableRewards))
+  }, [stakePool, userStakeInfo, format])
 
   const onConfirm = useCallback(async () => {
     if (api && address) {

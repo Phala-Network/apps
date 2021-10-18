@@ -1,8 +1,8 @@
 import {useApiPromise} from '@phala/react-libs'
 import {useCallback} from 'react'
-import useSelfStakePools from '../../hooks/useSelfStakePools'
-import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
-import ActionModal from '../ActionModal'
+import useSelfStakePools from '../hooks/useSelfStakePools'
+import useWaitSignAndSend from '../hooks/useWaitSignAndSend'
+import ActionModal from './ActionModal'
 
 const CreateModal = (props: {onClose: () => void}): JSX.Element => {
   const {refetch} = useSelfStakePools()

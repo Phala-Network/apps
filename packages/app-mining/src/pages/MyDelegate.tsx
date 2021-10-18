@@ -1,7 +1,7 @@
 import {Link} from 'gatsby-plugin-intl'
 import styled from 'styled-components'
 import {Button} from '@phala/react-components'
-import MyDelegateTable from '../components/MyDelegateTable'
+import MyDelegateTable from '../components/Delegate/MyDelegateTable'
 import {Helmet} from 'react-helmet'
 import {up} from 'styled-breakpoints'
 
@@ -19,7 +19,7 @@ const Block = styled.div`
   background: #fff;
 `
 
-const MyState = () => {
+export const MyDelegate = () => {
   return (
     <Wrapper>
       <Helmet>
@@ -34,5 +34,3 @@ const MyState = () => {
     </Wrapper>
   )
 }
-
-export default MyState

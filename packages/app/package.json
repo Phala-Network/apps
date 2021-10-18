@@ -18,7 +18,6 @@
     "@phala/app-config": "workspace:*",
     "@phala/app-data-analytics": "workspace:^0.0.1",
     "@phala/app-mining": "workspace:^0.0.1",
-    "@phala/app-delegate": "workspace:^0.0.1",
     "@phala/app-store": "workspace:*",
     "@phala/app-types": "workspace:*",
     "@phala/react-cms": "workspace:^0.0.1",

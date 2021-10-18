@@ -3,19 +3,19 @@ import styled from 'styled-components'
 import {toFixed} from '@phala/utils'
 import {useMemo, useState} from 'react'
 import {Column} from 'react-table'
-import {StakePool} from '@phala/react-hooks'
+import type {UseQueryResult} from 'react-query'
+import type {StakePool} from '../../hooks/useStakePools'
 import useFormat from '../../hooks/useFormat'
 import useModalVisible, {ModalKey} from '../../hooks/useModalVisible'
-import useSelfStakePools from '../../hooks/useSelfStakePools'
 import MiningTable from '../MiningTable'
 import AddWorkerModal from './AddWorkerModal'
-import ClaimModal from './ClaimModal'
-import DelegateModal from './DelegateModal'
-import CreateModal from './CreateModal'
+import ClaimModal from '../ClaimModal'
+import DelegateModal from '../DelegateModal'
+import CreateModal from '../CreateModal'
 import SetCapModal from './SetCapModal'
 import SetPayoutPrefModal from './SetPayoutPrefModal'
 import StakeInfoModal from './StakeInfoModal'
-import WithdrawModal from './WithdrawModal'
+import WithdrawModal from '../WithdrawModal'
 import ItemMenu from '../ItemMenu'
 
 const Actions = styled.div`
@@ -41,10 +41,14 @@ const modalEntries: [ModalKey, (props: StakePoolModalProps) => JSX.Element][] =
     ['withdraw', WithdrawModal],
   ]
 
-const StakePoolTable = (): JSX.Element => {
+const StakePoolTable = ({
+  selfStakePools,
+}: {
+  selfStakePools: UseQueryResult<StakePool[] | null>
+}): JSX.Element => {
   const {modalVisible, open, close, visibleCount} = useModalVisible()
   const [selectedPid, setSelectedPid] = useState<number | null>(null)
-  const {data, refetch, isLoading} = useSelfStakePools()
+  const {data, refetch, isLoading} = selfStakePools
   const format = useFormat()
 
   const selectedStakePool = useMemo<StakePool | null>(
@@ -98,30 +102,34 @@ const StakePoolTable = (): JSX.Element => {
       },
       {
         id: 'actions',
-        accessor: (stakePool) => (
-          <Actions>
-            <DetailButton
-              onClick={() => {
-                setSelectedPid(stakePool.pid)
-                open('stakeInfo')
-              }}
-            >
-              Info
-            </DetailButton>
-            <ItemMenu
-              items={[
-                {key: 'addWorker', item: 'Add Worker'},
-                {key: 'setCap', item: 'Set Cap'},
-                {key: 'claim', item: 'Claim'},
-                {key: 'setPayoutPref', item: 'Set Commission'},
-              ]}
-              onClick={(key) => {
-                setSelectedPid(stakePool.pid)
-                open(key as ModalKey)
-              }}
-            ></ItemMenu>
-          </Actions>
-        ),
+        accessor: (stakePool) => {
+          const items: {key: ModalKey; item: string}[] = [
+            {key: 'addWorker', item: 'Add Worker'},
+            {key: 'setCap', item: 'Set Cap'},
+            {key: 'claim', item: 'Claim'},
+            {key: 'setPayoutPref', item: 'Set Commission'},
+          ]
+
+          return (
+            <Actions>
+              <DetailButton
+                onClick={() => {
+                  setSelectedPid(stakePool.pid)
+                  open('stakeInfo')
+                }}
+              >
+                Info
+              </DetailButton>
+              <ItemMenu
+                items={items}
+                onClick={(key) => {
+                  setSelectedPid(stakePool.pid)
+                  open(key)
+                }}
+              ></ItemMenu>
+            </Actions>
+          )
+        },
         disableSortBy: true,
       },
     ],

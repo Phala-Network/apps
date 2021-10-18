@@ -1,1 +1,1 @@
-export {default} from '@phala/app-mining'
+export {Mining as default} from '@phala/app-mining'
