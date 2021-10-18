@@ -10,7 +10,8 @@
     "develop:deps": "pnpm --parallel --filter ./packages  --filter !./packages/app run develop",
     "preinstall": "npx only-allow pnpm",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "clean": "git clean -xdf && pnpm install"
   },
   "repository": {
     "type": "git",
