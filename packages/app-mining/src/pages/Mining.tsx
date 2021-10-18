@@ -1,7 +1,10 @@
+import {useMemo} from 'react'
 import {Helmet} from 'react-helmet'
 import styled from 'styled-components'
+import useWorkers from '../hooks/useWorkers'
 import StakePoolTable from '../components/StakePoolTable'
 import WorkerTable from '../components/WorkerTable'
+import useSelfStakePools from '../hooks/useSelfStakePools'
 
 const Wrapper = styled.div`
   flex: 1;
@@ -19,17 +22,32 @@ const Block = styled.div`
 `
 
 export const Mining: React.FC = () => {
+  const selfStakePools = useSelfStakePools()
+  const {data: stakePoolsData} = selfStakePools
+  const workersPidMap = useMemo<Record<string, number>>(() => {
+    if (stakePoolsData?.length) {
+      return Object.fromEntries(
+        stakePoolsData
+          .map(({workers, pid}) => workers.map((pubkey) => [pubkey, pid]))
+          .flat()
+      )
+    }
+    return {}
+  }, [stakePoolsData])
+
+  const workers = useWorkers(Object.keys(workersPidMap))
+
   return (
     <Wrapper>
       <Helmet>
         <title>Mining</title>
       </Helmet>
       <Block>
-        <StakePoolTable />
+        <StakePoolTable selfStakePools={selfStakePools} />
       </Block>
 
       <Block>
-        <WorkerTable />
+        <WorkerTable workers={workers} workersPidMap={workersPidMap} />
       </Block>
     </Wrapper>
   )

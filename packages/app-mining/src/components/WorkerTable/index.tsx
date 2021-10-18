@@ -1,11 +1,11 @@
 import {toFixed} from '@phala/utils'
 import {useMemo, useState} from 'react'
 import {Column} from 'react-table'
+import type {UseQueryResult} from 'react-query'
 import {toast} from 'react-toastify'
 import useFormat from '../../hooks/useFormat'
 import useModalVisible, {ModalKey} from '../../hooks/useModalVisible'
-import useSelfStakePools from '../../hooks/useSelfStakePools'
-import useWorkers, {Worker} from '../../hooks/useWorkers'
+import type {Worker} from '../../hooks/useWorkers'
 import MiningTable from '../MiningTable'
 import RemoveModal from './RemoveModal'
 import StartModal from './StartModal'
@@ -13,6 +13,7 @@ import StopModal from './StopModal'
 import ItemMenu from '../ItemMenu'
 import useMiningEnabled from '../../hooks/useMiningEnabled'
 import ReclaimModal from './ReclaimModal'
+import {canWorkerBeReclaimed} from '../../utils/canWorkerBeReclaimed'
 
 type TableItem = Worker & {pid: number}
 
@@ -25,26 +26,17 @@ const modalEntries: [ModalKey, (props: WorkerModalProps) => JSX.Element][] = [
   ['reclaim', ReclaimModal],
 ]
 
-const WorkerTable = (): JSX.Element => {
+const WorkerTable = ({
+  workers,
+  workersPidMap,
+}: {
+  workers: UseQueryResult<Worker[] | null>
+  workersPidMap: Record<string, number>
+}): JSX.Element => {
   const miningEnabled = useMiningEnabled()
   const {open, close, modalVisible} = useModalVisible()
-  const {data} = useSelfStakePools()
-  const workersPidMap = useMemo<Record<string, number>>(() => {
-    if (data?.length) {
-      return Object.fromEntries(
-        data
-          .map(({workers, pid}) => workers.map((pubkey) => [pubkey, pid]))
-          .flat()
-      )
-    }
-    return {}
-  }, [data])
 
-  const {
-    data: workersData,
-    refetch,
-    isLoading,
-  } = useWorkers(Object.keys(workersPidMap))
+  const {data: workersData, refetch, isLoading} = workers
 
   const tableData = useMemo<TableItem[]>(() => {
     if (!workersData) return []
@@ -120,7 +112,7 @@ const WorkerTable = (): JSX.Element => {
       {
         id: 'actions',
         accessor: (worker) => {
-          const {state, coolDownStart = 0} = worker.miner || {}
+          const {state} = worker.miner || {}
           return (
             <ItemMenu
               items={[
@@ -139,10 +131,7 @@ const WorkerTable = (): JSX.Element => {
                 {
                   key: 'reclaim',
                   item: 'Reclaim',
-                  disabled:
-                    state !== 'MiningCoolingDown' ||
-                    new Date().getTime() / 1000 - coolDownStart <
-                      7 * 24 * 60 * 60, // 7 days CD
+                  disabled: !canWorkerBeReclaimed(worker),
                 },
               ]}
               onClick={(key) => {

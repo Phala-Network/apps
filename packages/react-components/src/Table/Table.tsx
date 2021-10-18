@@ -163,11 +163,12 @@ export const Table = <D extends Record<string, unknown>>(
           )}
         </table>
 
-        {isLoading ? (
-          <Placeholder>Loading…</Placeholder>
-        ) : props.data.length ? null : (
-          <Placeholder>No Data</Placeholder>
-        )}
+        {!props.data.length &&
+          (isLoading ? (
+            <Placeholder>Loading…</Placeholder>
+          ) : (
+            <Placeholder>No Data</Placeholder>
+          ))}
       </TableWrapper>
 
       {pageCount > 1 && (
