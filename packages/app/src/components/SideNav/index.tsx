@@ -89,7 +89,7 @@ const SideNav: React.FC = () => {
         })}
 
         <Feedback>
-          <ExternalLink>{t('feedback.title')}</ExternalLink>
+          <ExternalLink>{t('side.feedback')}</ExternalLink>
         </Feedback>
 
         <LangSwitch></LangSwitch>

@@ -2,7 +2,7 @@ import {TransactionInfo} from '@phala/app-types'
 import React from 'react'
 import {StepProps} from '../BridgeProcess'
 import {InputDataStepResult} from '../InputDataStep'
-import SubmitStepToEthereum from './SubmitStepToEthereum'
+import {SubmitStepToEthereum} from './SubmitStepToEthereum'
 import SubmitStepToKhala from './SubmitStepToKhala'
 
 export type SubmitStepProps = {

@@ -1,8 +1,8 @@
 import {Checkbox, Input, Table} from '@phala/react-components'
 import {StakePool, useIsMobile, useStakePools} from '@phala/react-hooks'
 import {useTranslation} from '@phala/react-i18n'
-import {abridgeString, toFixed} from '@phala/utils'
-import {useCallback, useMemo, useState} from 'react'
+import {toFixed} from '@phala/utils'
+import {useMemo, useState} from 'react'
 import {Column, Row} from 'react-table'
 import styled from 'styled-components'
 import useFormat from '../hooks/useFormat'
@@ -47,12 +47,12 @@ const MainTable = (): JSX.Element => {
   const isMobile = useIsMobile()
   const identities = useIdentities()
   const {getAPR, isLoading: isAPRLoading} = useGetARP()
-  const [filterPid, setFilterPid] = useState<string>('')
-  const [showPoolWithWorkers, setShowPoolWithWorkers] = useState<boolean>(true)
+  const [searchText, setSearchText] = useState<string>('')
   const [showHasAPR, setShowHasAPR] = useState<boolean>(false)
   const [showHasRemaining, setShowHasRemaining] = useState<boolean>(true)
   const [showNotMaxCommission, setShowNotMaxCommission] =
     useState<boolean>(true)
+  const [showHasWorkers, setShowHasWorkers] = useState<boolean>(true)
   const [pid, setPid] = useState<number | null>(null)
   const format = useFormat()
   const {data, isLoading, refetch} = useStakePools()
@@ -74,9 +74,19 @@ const MainTable = (): JSX.Element => {
       {
         name: 'Owner',
         Header: 'Owner',
-        accessor: ({owner}) => {
-          const display = identities?.[owner]?.display || abridgeString(owner)
+        accessor: ({owner}) => identities?.[owner]?.display || owner,
+        Cell: ({
+          value,
+          row: {
+            original: {owner},
+          },
+        }: {
+          value: string
+          row: {original: StakePool}
+        }) => {
           const verified = identities?.[owner]?.verified || false
+          const hasIdentity = Boolean(identities?.[owner])
+
           return (
             <span>
               <a
@@ -84,7 +94,7 @@ const MainTable = (): JSX.Element => {
                 target="_blank"
                 rel="noreferrer"
               >
-                {display}
+                {hasIdentity ? value : trimAddress(value)}
               </a>
               {verified && ' ✅'}
             </span>
@@ -109,6 +119,7 @@ const MainTable = (): JSX.Element => {
               )
             : rows
         },
+        disableGlobalFilter: true,
       },
       {
         name: t('delegate.remaining'),
@@ -130,6 +141,7 @@ const MainTable = (): JSX.Element => {
               )
             : rows
         },
+        disableGlobalFilter: true,
       },
       // !isMobile && {
       //   name: 'Reward Proportion',
@@ -156,26 +168,40 @@ const MainTable = (): JSX.Element => {
             ? rows.filter((row) => row.values.Commission !== '100%')
             : rows
         },
+        disableGlobalFilter: true,
       },
       !isMobile && {
         name: t('delegate.delegated'),
         Header: 'Delegated',
         accessor: (stakePool) => format(stakePool.totalStake),
+        disableGlobalFilter: true,
       },
       !isMobile && {
         name: t('delegate.free_delegation'),
         Header: 'Free Delegation',
         accessor: (stakePool) => format(stakePool.freeStake),
+        disableGlobalFilter: true,
       },
       !isMobile && {
         name: t('delegate.releasing_stake'),
         Header: 'Releasing Stake',
         accessor: (stakePool) => format(stakePool.releasingStake),
+        disableGlobalFilter: true,
       },
       !isMobile && {
         name: t('delegate.worker'),
         Header: 'Worker',
         accessor: (stakePool) => stakePool.workers.length,
+        disableGlobalFilter: true,
+        filter: (
+          rows: Row<StakePool>[],
+          columnIds: string[],
+          filterValue: boolean
+        ) => {
+          return filterValue
+            ? rows.filter((row) => row.original.workers.length)
+            : rows
+        },
       },
       {
         name: t('delegate.actions'),
@@ -194,6 +220,7 @@ const MainTable = (): JSX.Element => {
             </ActionButton>
           </>
         ),
+        disableGlobalFilter: true,
       },
     ]
     return columns.filter(Boolean) as Column<StakePool>[]
@@ -203,13 +230,10 @@ const MainTable = (): JSX.Element => {
     <Wrapper>
       <Filter>
         <Input
-          onChange={setFilterPid}
+          onChange={setSearchText}
           placeholder={t('delegate.search_pid')}
         ></Input>
-        <Checkbox
-          checked={showPoolWithWorkers}
-          onChange={setShowPoolWithWorkers}
-        >
+        <Checkbox checked={showHasWorkers} onChange={setShowHasWorkers}>
           {t('delegate.pool_with_workers')}
         </Checkbox>
         <Checkbox checked={showHasAPR} onChange={setShowHasAPR}>
@@ -239,26 +263,14 @@ const MainTable = (): JSX.Element => {
         columns={columns}
         filters={useMemo(
           () => [
-            {id: 'pid', value: filterPid},
             {id: 'APR', value: showHasAPR},
             {id: 'Commission', value: showNotMaxCommission},
             {id: 'Remaining', value: showHasRemaining},
+            {id: 'Worker', value: showHasWorkers},
           ],
-          [filterPid, showHasAPR, showNotMaxCommission, showHasRemaining]
+          [showHasAPR, showNotMaxCommission, showHasRemaining, showHasWorkers]
         )}
-        globalFilterValue={showPoolWithWorkers}
-        globalFilter={useCallback(
-          (
-            rows: Row<StakePool>[],
-            columnIds: string[],
-            globalFilterValue: boolean
-          ) => {
-            return globalFilterValue
-              ? rows.filter((row) => row.original.workers.length > 0)
-              : rows
-          },
-          []
-        )}
+        globalFilterValue={searchText}
       ></Table>
 
       {modalVisible.delegate && activeStakePool && (

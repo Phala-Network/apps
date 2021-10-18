@@ -18,7 +18,7 @@ const Value = styled.div`
   font-family: Lato;
   font-style: normal;
   font-weight: normal;
-  font-size: 12px;
+  font-size: 20px;
   line-height: 14px;
   display: flex;
   align-items: center;
@@ -27,7 +27,7 @@ const Value = styled.div`
 
 export interface ItemProps {
   name: string
-  value: string
+  value: string | number
 }
 
 export const Item: FC<ItemProps> = (props) => {

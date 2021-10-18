@@ -1,5 +1,5 @@
 import {useEthereumAccountAtom} from '@phala/app-store'
-import {abridgeString} from '@phala/utils'
+import {trimAddress} from '@phala/utils'
 import {useState} from 'react'
 import styled from 'styled-components'
 import EthereumIcon from '../../icons/ethereum.svg'
@@ -32,7 +32,7 @@ const MobileEthereumTicket: React.FC = () => {
       {address ? (
         <Account>
           <EthereumIcon width="24" height="24"></EthereumIcon>
-          {abridgeString(address)}
+          {trimAddress(address)}
         </Account>
       ) : (
         <ConnectButton

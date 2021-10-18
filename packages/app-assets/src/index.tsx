@@ -98,7 +98,6 @@ const HomePage: React.FC = () => {
               </BlackHeader>
             }
             balance={polkadotAccountBalanceNumber}
-            disableTransfer
             disableBridge
             disableConvert
             dollar={polkadotAccountBalanceNumber?.mul(PHAPrice)}

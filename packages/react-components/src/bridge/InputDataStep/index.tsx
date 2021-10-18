@@ -17,9 +17,11 @@ import {
   InputAction,
   InputExternalInfo,
   InputNumber,
+  KhalaToEthereumFee,
   ModalAction,
   ModalActions,
   Spacer,
+  useKhalaBridgeFee,
   useToast,
 } from '../..'
 import {StepProps} from '../BridgeProcess'
@@ -61,6 +63,7 @@ const InputDataStep: React.FC<Props> = (props) => {
   const [ethereumAccount] = useEthereumAccountAtom()
   const ethereumAccountAddress = ethereumAccount?.address
   const [errorString, setErrorString] = useState('')
+  const {fee} = useKhalaBridgeFee()
   const {toast} = useToast()
 
   const ethereumAccountBalanceDecimal = useEthereumAccountBalanceDecimal(
@@ -76,6 +79,7 @@ const InputDataStep: React.FC<Props> = (props) => {
     useState<TradeTypeSelectValue>(DEFAULT_VALUE)
 
   const isFromEthereum = tradeTypeSelectValue.from.network === 'ethereum'
+  const isFromKhala = !isFromEthereum
   const currentAddress = isFromEthereum
     ? ethereumAccountAddress
     : polkadotAccountAddress
@@ -126,13 +130,30 @@ const InputDataStep: React.FC<Props> = (props) => {
 
     setErrorString(errorString)
 
-    if (!amountTo) {
+    if (!amountTo || amountTo <= 0) {
       errorString = t('bridge.need_enter_amount')
-    } else if (!recipient || !validateAddress(recipient)) {
+    } else if (!recipient) {
       errorString = t('bridge.need_enter_recipient')
+    } else if (isFromEthereum && !validateAddress(recipient)) {
+      errorString = 'Need enter the correct recipient'
     } else if (!accountFrom) {
       errorString = t('bridge.need_login')
+    } else if (
+      isFromKhala &&
+      !new RegExp(/0x[0-9a-fA-F]{40}/).test(recipient)
+    ) {
+      errorString = 'Need enter the correct recipient'
+    } else if (isFromKhala && !fee) {
+      errorString = 'Please wait fee check'
+    } else if (isFromKhala && fee?.toString() === '0') {
+      errorString = 'Please wait fee check'
     } else if (new Decimal(amountTo).greaterThan(new Decimal(maxAmount))) {
+      errorString = t('bridge.need_insufficient_balance')
+    } else if (
+      isFromKhala &&
+      fee &&
+      new Decimal(amountTo).greaterThan(new Decimal(maxAmount).sub(fee))
+    ) {
       errorString = t('bridge.need_insufficient_balance')
     }
 
@@ -222,6 +243,12 @@ const InputDataStep: React.FC<Props> = (props) => {
       </FormLayout>
 
       <ModalActions>
+        {isFromKhala && (
+          <KhalaToEthereumFee
+            style={{padding: 8, flex: 1}}
+          ></KhalaToEthereumFee>
+        )}
+
         {onCancel && (
           <ModalAction>
             <Button onClick={onCancel}>Cancel</Button>

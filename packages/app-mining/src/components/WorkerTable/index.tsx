@@ -10,6 +10,7 @@ import useModalVisible, {ModalKey} from '../../hooks/useModalVisible'
 import useSelfStakePools from '../../hooks/useSelfStakePools'
 import ItemMenu from '../ItemMenu'
 import MiningTable from '../MiningTable'
+import ReclaimModal from './ReclaimModal'
 import RemoveModal from './RemoveModal'
 import StartModal from './StartModal'
 import StopModal from './StopModal'
@@ -22,6 +23,7 @@ const modalEntries: [ModalKey, (props: WorkerModalProps) => JSX.Element][] = [
   ['start', StartModal],
   ['stop', StopModal],
   ['remove', RemoveModal],
+  ['reclaim', ReclaimModal],
 ]
 
 const WorkerTable = (): JSX.Element => {
@@ -137,7 +139,7 @@ const WorkerTable = (): JSX.Element => {
         id: 'actions',
         name: t('delegate.actions'),
         accessor: (worker) => {
-          const state = worker.miner?.state
+          const {state, coolDownStart = 0} = worker.miner || {}
           return (
             <ItemMenu
               items={[
@@ -156,6 +158,14 @@ const WorkerTable = (): JSX.Element => {
                   key: 'remove',
                   item: t('mining.remove'),
                   disabled: state !== 'Ready' && state !== 'MiningCoolingDown',
+                },
+                {
+                  key: 'reclaim',
+                  item: 'Reclaim',
+                  disabled:
+                    state !== 'MiningCoolingDown' ||
+                    new Date().getTime() / 1000 - coolDownStart <
+                      7 * 24 * 60 * 60, // 7 days CD
                 },
               ]}
               onClick={(key) => {

@@ -7,6 +7,7 @@ import {
   usePagination,
   useSortBy,
   useTable,
+  useAsyncDebounce,
 } from 'react-table'
 import styled from 'styled-components'
 import TablePagination from './TablePagination'
@@ -105,6 +106,8 @@ export const Table = <D extends Record<string, unknown>>(
     gotoPage,
   } = table
 
+  const debounceSetGlobalFilter = useAsyncDebounce(setGlobalFilter, 200)
+
   useEffect(() => {
     if (filters) {
       setAllFilters(filters)
@@ -113,9 +116,9 @@ export const Table = <D extends Record<string, unknown>>(
   }, [filters, setAllFilters, gotoPage])
 
   useEffect(() => {
-    setGlobalFilter(globalFilterValue)
+    debounceSetGlobalFilter(globalFilterValue)
     gotoPage(0)
-  }, [globalFilterValue, setGlobalFilter, gotoPage])
+  }, [globalFilterValue, debounceSetGlobalFilter, gotoPage])
 
   return (
     <Styles>

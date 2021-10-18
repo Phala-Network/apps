@@ -1,4 +1,4 @@
-export {default as abridgeString} from './abridgeString'
+export {default as trimAddress} from './trimAddress'
 export {default as formatCurrency} from './formatCurrency'
 export * from './formatPolkadotBalance'
 export {default as getBrowserLanguage} from './getBrowserLanguage'

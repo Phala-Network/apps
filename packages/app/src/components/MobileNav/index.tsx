@@ -1,13 +1,14 @@
-import React from 'react'
-import styled from 'styled-components'
-import {up} from 'styled-breakpoints'
+import {BridgeTypeAtomEnum, useBridgeTypeAtom} from '@phala/app-store'
+import {useSSR} from '@phala/react-hooks'
 import {useLocation} from '@reach/router'
-import MobilePolkadotTicker from './MobilePolkadotTicket'
+import React from 'react'
+import {up} from 'styled-breakpoints'
+import styled from 'styled-components'
 import PhalaIcon from '../../icons/phala_icon.svg'
-import background from './mobile_nav_background.png'
 import Links from './Links'
 import MobileEthereumTicket from './MobileEthereumTicket'
-import {useSSR} from '@phala/react-hooks'
+import MobilePolkadotTicker from './MobilePolkadotTicket'
+import background from './mobile_nav_background.png'
 
 const Wrapper = styled.div`
   display: flex;
@@ -29,17 +30,18 @@ const Wrapper = styled.div`
 const MobileNav: React.FC = () => {
   const {isBrowser} = useSSR()
   const {pathname} = useLocation()
+  const [bridgeType] = useBridgeTypeAtom()
+
+  const ticketCheck =
+    isBrowser &&
+    pathname.endsWith('/bridge/') &&
+    bridgeType === BridgeTypeAtomEnum.fromEthToKhala
 
   return (
     <Wrapper>
       <PhalaIcon></PhalaIcon>
       <Links></Links>
-      {isBrowser &&
-        (pathname.endsWith('/bridge/') ? (
-          <MobileEthereumTicket></MobileEthereumTicket>
-        ) : (
-          <MobilePolkadotTicker></MobilePolkadotTicker>
-        ))}
+      {ticketCheck ? <MobileEthereumTicket /> : <MobilePolkadotTicker />}
     </Wrapper>
   )
 }

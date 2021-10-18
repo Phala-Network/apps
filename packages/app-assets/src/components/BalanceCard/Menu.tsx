@@ -6,7 +6,7 @@ import styled from 'styled-components'
 import ClaimModal from '../ClaimModal'
 import ConvertModal from '../ConvertModal'
 import {ActionArrowIcon} from '../Icons/ActionArrowIcon'
-import TransferModal from './TransferModal'
+import TransferModal from '../TransferModal'
 
 const MenuWrap = styled.div<{active: boolean}>`
   position: absolute;
@@ -164,17 +164,17 @@ const Menu = forwardRef<HTMLDivElement, Props>((props, ref) => {
             Claim<ActionArrowIcon></ActionArrowIcon>
           </MobileAction>
         )}
+        {!disableTransfer && (
+          <MobileAction onClick={() => setVisibleTransferModal(true)}>
+            Transfer<ActionArrowIcon></ActionArrowIcon>
+          </MobileAction>
+        )}
       </MobileActions>
 
       <ConvertModal
         visible={visibleConvertModal}
         onClose={() => setVisibleConvertModal(false)}
       ></ConvertModal>
-
-      <TransferModal
-        visible={visibleTransferModal}
-        onClose={() => setVisibleTransferModal(false)}
-      ></TransferModal>
 
       <BridgeModal
         visible={visibleBridge}
@@ -188,6 +188,12 @@ const Menu = forwardRef<HTMLDivElement, Props>((props, ref) => {
           visible={true}
           onClose={() => setClaimModalVisible(false)}
         ></ClaimModal>
+      )}
+      {visibleTransferModal && (
+        <TransferModal
+          visible={true}
+          onClose={() => setVisibleTransferModal(false)}
+        ></TransferModal>
       )}
     </>
   )

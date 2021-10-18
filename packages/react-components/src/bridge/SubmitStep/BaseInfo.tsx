@@ -10,11 +10,12 @@ type Props = {
   onPrev?(): void
   onSubmit?(): void
   data?: TransactionInfo
+  fromTooltip?: string
 } & StepProps
 
 const BaseInfo: React.FC<Props> = (props) => {
   const {t} = useTranslation()
-  const {layout, data} = props
+  const {layout, data, fromTooltip} = props
   const {from, to} = data || {}
 
   return (
@@ -22,6 +23,7 @@ const BaseInfo: React.FC<Props> = (props) => {
       <FormItem>
         <InfoTitle>{t('bridge.from')}</InfoTitle>
         <AmountInfo
+          tooltip={fromTooltip}
           network={from?.network}
           amount={from?.amount?.toString()}
           type={from?.type}

@@ -7,7 +7,7 @@ import {
   useUserStakeInfo,
 } from '@phala/react-hooks'
 import {useTranslation} from '@phala/react-i18n'
-import {abridgeString, toFixed} from '@phala/utils'
+import {toFixed, trimAddress} from '@phala/utils'
 import Decimal from 'decimal.js'
 import {useMemo, useState} from 'react'
 import {Column} from 'react-table'
@@ -88,7 +88,7 @@ const MyDelegateTable = (): JSX.Element => {
         name: 'Owner',
         Header: 'Owner',
         accessor: ({owner}) => {
-          const display = identities?.[owner]?.display || abridgeString(owner)
+          const display = identities?.[owner]?.display || trimAddress(owner)
           const verified = identities?.[owner]?.verified || false
           return (
             <span>

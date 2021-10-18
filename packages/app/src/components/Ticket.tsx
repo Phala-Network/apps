@@ -1,4 +1,4 @@
-import {abridgeString} from '@phala/utils'
+import {trimAddress} from '@phala/utils'
 import React, {ComponentProps, useEffect} from 'react'
 import styled from 'styled-components'
 
@@ -80,7 +80,7 @@ const Ticket: React.FC<Props> = (props) => {
       <Content>
         {no ? (
           <>
-            <No2> {abridgeString(no)}</No2>
+            <No2> {trimAddress(no)}</No2>
 
             {bottomContent ? (
               <div style={{marginTop: 4, display: 'flex'}}>{bottomContent}</div>

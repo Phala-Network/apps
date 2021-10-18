@@ -19,7 +19,6 @@ type Props = {
 }
 
 const Text = styled.div`
-  font-family: Lato;
   font-size: 12px;
   color: #878787;
   margin-bottom: 20px;
@@ -69,9 +68,7 @@ const ClaimModal: React.FC<Props> = ({visible, onClose}) => {
     }
   }, [api, polkadotAccount, onClose])
 
-  // NOTE: Temporarily disable claim
-  const canClaim = false
-  // const canClaim = Boolean(vestedClaimable) && vestedClaimable !== '0'
+  const canClaim = Boolean(vestedClaimable) && !vestedClaimable?.isZero()
 
   return (
     <Modal

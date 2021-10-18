@@ -10,6 +10,8 @@ export const Wrap = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 `
 
 export const Content = styled.div`
