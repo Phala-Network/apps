@@ -5,6 +5,7 @@ import {useMemo, useState} from 'react'
 import {Column} from 'react-table'
 import type {UseQueryResult} from 'react-query'
 import type {StakePool} from '../../hooks/useStakePools'
+import type {Worker} from '../../hooks/useWorkers'
 import useFormat from '../../hooks/useFormat'
 import useModalVisible, {ModalKey} from '../../hooks/useModalVisible'
 import MiningTable from '../MiningTable'
@@ -17,6 +18,8 @@ import SetPayoutPrefModal from './SetPayoutPrefModal'
 import StakeInfoModal from './StakeInfoModal'
 import WithdrawModal from '../WithdrawModal'
 import ItemMenu from '../ItemMenu'
+import ReclaimAllModal from '../ReclaimAllModal'
+import {canWorkerBeReclaimed} from '../../utils/canWorkerBeReclaimed'
 
 const Actions = styled.div`
   align-items: center;
@@ -28,7 +31,13 @@ const DetailButton = styled.span`
   font-weight: bold;
 `
 
-export type StakePoolModalProps = {onClose: () => void; stakePool: StakePool}
+type TableItem = StakePool & {reclaimableWorkers: string[]}
+
+export type StakePoolModalProps = {
+  onClose: () => void
+  stakePool: TableItem
+  reclaimableWorkers?: Worker[]
+}
 
 const modalEntries: [ModalKey, (props: StakePoolModalProps) => JSX.Element][] =
   [
@@ -39,28 +48,56 @@ const modalEntries: [ModalKey, (props: StakePoolModalProps) => JSX.Element][] =
     ['setPayoutPref', SetPayoutPrefModal],
     ['stakeInfo', StakeInfoModal],
     ['withdraw', WithdrawModal],
+    ['reclaimAll', ReclaimAllModal],
   ]
 
 const StakePoolTable = ({
+  workers,
   selfStakePools,
 }: {
+  workers: UseQueryResult<Worker[] | null>
   selfStakePools: UseQueryResult<StakePool[] | null>
 }): JSX.Element => {
   const {modalVisible, open, close, visibleCount} = useModalVisible()
   const [selectedPid, setSelectedPid] = useState<number | null>(null)
   const {data, refetch, isLoading} = selfStakePools
+  const {data: workersData} = workers
   const format = useFormat()
+  const workerMap = useMemo<Record<string, Worker>>(() => {
+    const map: Record<string, Worker> = {}
+    workersData?.forEach((worker) => (map[worker.pubkey] = worker))
+    return map
+  }, [workersData])
 
-  const selectedStakePool = useMemo<StakePool | null>(
+  const tableData = useMemo<TableItem[]>(() => {
+    if (!data) return []
+    return data.map((stakePool) => ({
+      ...stakePool,
+      reclaimableWorkers: stakePool.workers.filter((pubkey) => {
+        const worker = workerMap[pubkey]
+        if (!worker) return false
+        return canWorkerBeReclaimed(worker)
+      }),
+    }))
+  }, [data, workerMap])
+
+  const selectedStakePool = useMemo<TableItem | null>(
     () =>
-      (data &&
+      (tableData &&
         typeof selectedPid === 'number' &&
-        data.find((v) => v.pid === selectedPid)) ||
+        tableData.find((v) => v.pid === selectedPid)) ||
       null,
-    [data, selectedPid]
+    [tableData, selectedPid]
   )
 
-  const columns = useMemo<Column<StakePool>[]>(
+  const selectedReclaimableWorkers = useMemo<Worker[]>(() => {
+    if (!selectedStakePool) return []
+    return selectedStakePool.reclaimableWorkers
+      .map((pubkey) => workerMap[pubkey])
+      .filter(Boolean) as Worker[]
+  }, [selectedStakePool, workerMap])
+
+  const columns = useMemo<Column<TableItem>[]>(
     () => [
       {
         Header: 'pid',
@@ -103,11 +140,16 @@ const StakePoolTable = ({
       {
         id: 'actions',
         accessor: (stakePool) => {
-          const items: {key: ModalKey; item: string}[] = [
+          const items: {key: ModalKey; item: string; disabled?: boolean}[] = [
             {key: 'addWorker', item: 'Add Worker'},
             {key: 'setCap', item: 'Set Cap'},
             {key: 'claim', item: 'Claim'},
             {key: 'setPayoutPref', item: 'Set Commission'},
+            {
+              key: 'reclaimAll',
+              item: 'Reclaim All',
+              disabled: !stakePool.reclaimableWorkers.length,
+            },
           ]
 
           return (
@@ -150,7 +192,7 @@ const StakePoolTable = ({
           </Button>
         }
         columns={columns}
-        data={data || []}
+        data={tableData}
         isLoading={isLoading}
       ></MiningTable>
 
@@ -169,6 +211,9 @@ const StakePoolTable = ({
           ([modalKey, Modal]) =>
             modalVisible[modalKey] && (
               <Modal
+                {...(modalKey === 'reclaimAll' && {
+                  reclaimableWorkers: selectedReclaimableWorkers,
+                })}
                 key={modalKey}
                 stakePool={selectedStakePool}
                 onClose={() => {

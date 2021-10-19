@@ -11,6 +11,7 @@ const initialState = {
   setPayoutPref: false,
   stakeInfo: false,
   withdraw: false,
+  reclaimAll: false,
 
   // Worker
   start: false,
