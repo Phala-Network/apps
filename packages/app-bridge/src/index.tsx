@@ -38,7 +38,9 @@ const BridgePage: React.FC = () => {
     setModalVisible(true)
   }
 
-  khalaChainbridgeGraphqlQuery.useQueryTransactionsByRecipient()
+  khalaChainbridgeGraphqlQuery.useQueryTransactionsByRecipient(
+    '41dK53XCVBW4dJ79MXvdS56W27i3ZjWi8YpMsBXUfMYpEhwU'
+  )
 
   return (
     <>
