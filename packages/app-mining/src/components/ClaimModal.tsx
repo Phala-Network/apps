@@ -7,6 +7,7 @@ import useFormat from '../hooks/useFormat'
 import useSelfUserStakeInfo from '../hooks/useSelfUserStakeInfo'
 import useWaitSignAndSend from '../hooks/useWaitSignAndSend'
 import ActionModal, {Label, Value} from './ActionModal'
+import Decimal from 'decimal.js'
 
 const ClaimModal = (props: StakePoolModalProps): JSX.Element => {
   const {onClose, stakePool} = props
@@ -19,12 +20,16 @@ const ClaimModal = (props: StakePoolModalProps): JSX.Element => {
 
   const rewards = useMemo<string>(() => {
     if (!userStakeInfo) return '-'
-    const {ownerReward, rewardAcc} = stakePool
+    const {ownerReward, rewardAcc, owner} = stakePool
     const {shares, availableRewards, rewardDebt} = userStakeInfo
     const pendingRewards = shares.mul(rewardAcc).sub(rewardDebt)
 
-    return format(ownerReward.add(pendingRewards).add(availableRewards))
-  }, [stakePool, userStakeInfo, format])
+    return format(
+      (owner === polkadotAccount?.address ? ownerReward : new Decimal(0))
+        .add(pendingRewards)
+        .add(availableRewards)
+    )
+  }, [stakePool, userStakeInfo, format, polkadotAccount])
 
   const onConfirm = useCallback(async () => {
     if (api && address) {
