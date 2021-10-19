@@ -1,8 +1,8 @@
 import {gql} from 'graphql-request'
-import {request} from './request'
+import {useRequest} from './useRequest'
 
-export function queryTransactionsByRecipient(recipient: string) {
-  return request(gql`
+export function useQueryTransactionsByRecipient(recipient: string) {
+  return useRequest(gql`
     {
       chainBridgeFungibleTransferEvents(
         first: 5

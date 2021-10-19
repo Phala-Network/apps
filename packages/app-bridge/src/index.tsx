@@ -1,4 +1,4 @@
-import {khalaChainbridgeGraphqlQuery2} from '@phala/khala-chainbridge-graphql'
+import {khalaChainbridgeGraphqlQuery} from '@phala/khala-chainbridge-graphql'
 import {
   InputDataStep,
   InputDataStepResult,
@@ -38,7 +38,7 @@ const BridgePage: React.FC = () => {
     setModalVisible(true)
   }
 
-  khalaChainbridgeGraphqlQuery2()
+  khalaChainbridgeGraphqlQuery.useQueryTransactionsByRecipient()
 
   return (
     <>
