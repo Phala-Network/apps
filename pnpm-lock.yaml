@@ -214,6 +214,7 @@ importers:
       decimal.js: ^10.3.1
       ethers: ^5.4.6
       react: ^17.0.2
+      react-toastify: ^7.0.4
       styled-breakpoints: ^10.0.1
     dependencies:
       '@phala/app-store': link:../app-store
@@ -229,12 +230,15 @@ importers:
       ethers: 5.4.6
       react: 17.0.2
       styled-breakpoints: 10.0.1_react@17.0.2
+    devDependencies:
+      react-toastify: 7.0.4_react@17.0.2
 
   packages/app-bridge:
     specifiers:
       '@phala/app-data-analytics': workspace:^0.0.1
       '@phala/app-store': workspace:^0.0.1
       '@phala/app-types': workspace:^0.0.1
+      '@phala/khala-chainbridge-graphql': workspace:^0.0.1
       '@phala/react-components': workspace:^0.0.1
       '@phala/react-graph-chainbridge': workspace:^0.0.1
       '@phala/react-hooks': workspace:^0.0.1
@@ -250,6 +254,7 @@ importers:
       '@phala/app-data-analytics': link:../app-data-analytics
       '@phala/app-store': link:../app-store
       '@phala/app-types': link:../app-types
+      '@phala/khala-chainbridge-graphql': link:../khala-chainbridge-graphql
       '@phala/react-components': link:../react-components
       '@phala/react-graph-chainbridge': link:../react-graph-chainbridge
       '@phala/react-hooks': link:../react-hooks
@@ -355,6 +360,16 @@ importers:
 
   packages/app/plugins/local-plugin-layout:
     specifiers: {}
+
+  packages/khala-chainbridge-graphql:
+    specifiers:
+      graphql: ^15.5.3
+      graphql-request: ^3.5.0
+      react-query: ^3.27.0
+    devDependencies:
+      graphql: 15.5.3
+      graphql-request: 3.5.0_graphql@15.5.3
+      react-query: 3.27.0
 
   packages/react-cms:
     specifiers:
@@ -14198,7 +14213,6 @@ packages:
   /graphql/15.5.3:
     resolution: {integrity: sha512-sM+jXaO5KinTui6lbK/7b7H/Knj9BpjGxZ+Ki35v7YbUJxxdBCUqNM0h3CRVU1ZF9t5lNiBzvBCSYPvIwxPOQA==}
     engines: {node: '>= 10.x'}
-    dev: false
 
   /growly/1.3.0:
     resolution: {integrity: sha1-8QdIy+dq+WS3yWyTxrzCivEgwIE=}
@@ -20694,6 +20708,23 @@ packages:
       match-sorter: 6.3.0
       react: 17.0.2
 
+  /react-query/3.27.0:
+    resolution: {integrity: sha512-2MR5LBXnR6OMXQVLcv/57x1zkDNj6gK5J5mtjGi6pu0aQ6Y4jGQysVvkrAErMKMZJVZELFcYGA8LsGIHzlo/zg==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0
+      react-dom: '*'
+      react-native: '*'
+    peerDependenciesMeta:
+      react-dom:
+        optional: true
+      react-native:
+        optional: true
+    dependencies:
+      '@babel/runtime': 7.15.4
+      broadcast-channel: 3.7.0
+      match-sorter: 6.3.0
+    dev: true
+
   /react-refresh/0.8.3:
     resolution: {integrity: sha512-X8jZHc7nCMjaCqoU+V2I0cOhNW+QMBwSUkeXnTi8IPe6zaRWfn60ZzvFDZqWPfmSJfjub7dDW1SP0jaHWLu/hg==}
     engines: {node: '>=0.10.0'}
@@ -20862,6 +20893,16 @@ packages:
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
     dev: false
+
+  /react-toastify/7.0.4_react@17.0.2:
+    resolution: {integrity: sha512-Rol7+Cn39hZp5hQ/k6CbMNE2CKYV9E5OQdC/hBLtIQU2xz7DdAm7xil4NITQTHR6zEbE5RVFbpgSwTD7xRGLeQ==}
+    peerDependencies:
+      react: '>=16'
+      react-dom: '>=16'
+    dependencies:
+      clsx: 1.1.1
+      react: 17.0.2
+    dev: true
 
   /react/16.14.0:
     resolution: {integrity: sha512-0X2CImDkJGApiAlcf0ODKIneSwBPhqJawOa5wCtKbu7ZECrmS26NvtSILynQ66cgkT/RJ4LidJOc3bUESwmU8g==}

@@ -33,6 +33,9 @@ module.exports = {
           '@phala/react-i18n': rp('../react-i18n/src'),
           '@phala/react-libs': rp('../react-libs/src'),
           '@phala/utils': rp('../utils/src'),
+          '@phala/khala-chainbridge-graphql': rp(
+            '../khala-chainbridge-graphql/src'
+          ),
         },
       },
     },

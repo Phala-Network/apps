@@ -1,0 +1,53 @@
+type SpecVersion @entity {
+  id: ID! #specVersion
+  blockHeight: BigInt!
+}
+
+type Event @entity {
+  id: ID!
+  blockHeight: BigInt! @index
+  event: String! @index
+  module: String! @index
+}
+
+type Extrinsic @entity {
+  id: ID!
+  blockHeight: BigInt! @index
+  call: String! @index
+  isSigned: Boolean!
+  module: String! @index
+  success: Boolean!
+}
+
+# FungibleTransfer(ChainId, DepositNonce, ResourceId, U256, Vec<u8>)
+type ChainBridgeFungibleTransferEvent @entity {
+  id: ID!
+
+  amount: String!
+  depositNonce: BigInt! @index
+  destinationChainId: Int! @index
+  executedAt: String!
+  recipient: String!
+  resourceId: String!
+  signer: String
+}
+
+type ChainBridgeProposalApproval @entity {
+  id: ID!
+
+  depositNonce: BigInt! @index
+  originChainId: Int! @index
+
+  approvalBlockHeight: BigInt!
+  approvalExtrinsic: String!
+  signer: String!
+}
+
+type ChainBridgeProposalExecution @entity {
+  id: ID!
+
+  depositNonce: BigInt! @index
+  originChainId: Int! @index
+
+  signer: String!
+}

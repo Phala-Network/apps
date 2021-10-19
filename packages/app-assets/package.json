@@ -31,5 +31,8 @@
   },
   "peerDependencies": {
     "react-toastify": "^7.0.4"
+  },
+  "devDependencies": {
+    "react-toastify": "^7.0.4"
   }
 }
