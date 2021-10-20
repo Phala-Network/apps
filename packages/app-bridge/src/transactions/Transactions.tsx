@@ -1,10 +1,12 @@
 import {clickEvent} from '@phala/app-data-analytics'
-import {useEthereumAccountAtom} from '@phala/app-store'
+import {useEthereumAccountAtom, usePolkadotAccountAtom} from '@phala/app-store'
 import {TransactionRecords} from '@phala/app-types'
+import {khalaChainbridgeGraphqlQuery} from '@phala/khala-chainbridge-graphql'
 import {FloatModal} from '@phala/react-components'
 import {useDepositRecordsByDepositorQuery} from '@phala/react-graph-chainbridge'
 import {useEthereumGraphQL} from '@phala/react-libs'
 import React, {useEffect, useState} from 'react'
+import {useQuery} from 'react-query'
 import TransactionsList from './List/List'
 
 const Transactions: React.FC = () => {
@@ -12,6 +14,18 @@ const Transactions: React.FC = () => {
   const [records, setRecords] = useState<TransactionRecords>([])
   const [ethereumAccount] = useEthereumAccountAtom()
   const depositor = ethereumAccount?.address || ''
+  const [polkadotAccount] = usePolkadotAccountAtom()
+
+  const {data: polkadotData} = useQuery(
+    ['useQueryTransactionsBySigner', polkadotAccount?.address],
+    () =>
+      khalaChainbridgeGraphqlQuery.useQueryTransactionsBySigner(
+        '42vfdiXkd3EzyDHCugnogd3hPA3hYBud4NWVv7S5E52Af8fW' ||
+          polkadotAccount?.address
+      )
+  )
+
+  console.error(polkadotData?.chainBridgeFungibleTransferEvents)
 
   // NOTE: for test purposes
   // const depositor = '0x766d4b6fd707c45518eb49878142a88378a7443c'

@@ -1,13 +1,13 @@
 import {gql} from 'graphql-request'
 import {useRequest} from './useRequest'
 
-export function useQueryTransactionsByRecipient(recipient = '') {
+export function useQueryTransactionsBySigner(signer = '') {
   return useRequest(gql`
     {
       chainBridgeFungibleTransferEvents(
         first: 5
         filter: {
-          recipient: {equalTo: "${recipient}"}
+          signer: {equalTo: "${signer}"}
         }
       ) {
         totalCount
