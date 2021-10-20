@@ -1,4 +1,4 @@
-import {Link} from 'gatsby-plugin-intl'
+import {navigate} from 'gatsby-plugin-intl'
 import styled from 'styled-components'
 import {Button} from '@phala/react-components'
 import MyDelegateTable from '../components/Delegate/MyDelegateTable'
@@ -19,15 +19,21 @@ const Block = styled.div`
   background: #fff;
 `
 
+const Header = styled.div`
+  padding: 10px;
+`
+
 export const MyDelegate = () => {
   return (
     <Wrapper>
       <Helmet>
         <title>My Delegate</title>
       </Helmet>
-      <Link to="/delegate/">
-        <Button>Back</Button>
-      </Link>
+      <Header>
+        <Button size="small" onClick={() => navigate('/delegate/')}>
+          Back
+        </Button>
+      </Header>
       <Block>
         <MyDelegateTable />
       </Block>

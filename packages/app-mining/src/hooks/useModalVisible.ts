@@ -12,6 +12,7 @@ const initialState = {
   stakeInfo: false,
   withdraw: false,
   reclaimAll: false,
+  claimAll: false,
 
   // Worker
   start: false,

@@ -23,13 +23,9 @@ const ReclaimAllModal = (props: StakePoolModalProps): JSX.Element => {
     if (api) {
       return waitSignAndSend(
         api.tx.utility.batch(
-          stakePool.reclaimableWorkers.map(
-            (pubkey) =>
-              api.tx.phalaStakePool?.reclaimPoolWorker?.(
-                stakePool.pid,
-                pubkey
-              ) as any
-          )
+          stakePool.reclaimableWorkers?.map((pubkey) =>
+            api.tx.phalaStakePool?.reclaimPoolWorker?.(stakePool.pid, pubkey)
+          ) as any
         )
       )
     }
@@ -55,7 +51,7 @@ const ReclaimAllModal = (props: StakePoolModalProps): JSX.Element => {
       <Value>{stakePool.pid}</Value>
       <Label>Worker PublicKeys</Label>
       <WorkersWrapper>
-        {stakePool.reclaimableWorkers.map((pubkey) => (
+        {stakePool.reclaimableWorkers?.map((pubkey) => (
           <Value key={pubkey}>{pubkey}</Value>
         ))}
       </WorkersWrapper>
