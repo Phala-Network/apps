@@ -43,7 +43,7 @@ export const Mining: React.FC = () => {
         <title>Mining</title>
       </Helmet>
       <Block>
-        <StakePoolTable selfStakePools={selfStakePools} />
+        <StakePoolTable workers={workers} selfStakePools={selfStakePools} />
       </Block>
 
       <Block>
