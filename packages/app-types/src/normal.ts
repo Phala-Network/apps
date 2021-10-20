@@ -24,4 +24,5 @@ export type TransactionRecord = {
   resourceId: string
   transaction: string
   hash?: string
+  type?: 'fromEthToKhala' | 'fromKhalaToEth'
 }
