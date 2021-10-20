@@ -5,7 +5,7 @@ export function useQueryTransactionsBySigner(signer = '') {
   return useRequest(gql`
     {
       chainBridgeFungibleTransferEvents(
-        first: 5
+        first: 50
         filter: {
           signer: {equalTo: "${signer}"}
         }

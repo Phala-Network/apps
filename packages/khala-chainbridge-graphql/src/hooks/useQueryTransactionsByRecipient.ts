@@ -5,7 +5,7 @@ export function useQueryTransactionsByRecipient(recipient = '') {
   return useRequest(gql`
     {
       chainBridgeFungibleTransferEvents(
-        first: 5
+        first: 50
         filter: {
           recipient: {equalTo: "${recipient}"}
         }
