@@ -3,7 +3,7 @@ import type {Column} from 'react-table'
 import Decimal from 'decimal.js'
 import styled from 'styled-components'
 import {usePolkadotAccountAtom} from '@phala/app-store'
-import {Table} from '@phala/react-components'
+import {Button, Table} from '@phala/react-components'
 import {useIsMobile} from '@phala/react-hooks'
 import {toFixed} from '@phala/utils'
 import type {StakePoolModalProps} from '../StakePoolTable'
@@ -18,6 +18,7 @@ import DelegateModal from '../DelegateModal'
 import WithdrawModal from '../WithdrawModal'
 import useIdentities from '../../hooks/useIdentities'
 import {trimAddress} from '@phala/utils'
+import ClaimAllModal from '../ClaimAllModal'
 
 const Wrapper = styled.div`
   tbody {
@@ -31,6 +32,20 @@ const Wrapper = styled.div`
     }
   }
 `
+
+const Header = styled.div`
+  display: flex;
+  justify-content: space-between;
+`
+
+const TableTitle = styled.div`
+  font-size: 16px;
+  font-weight: bold;
+`
+
+export type TableItem = StakePool & {
+  claimableRewards: Decimal | null
+}
 
 const modalEntries: [ModalKey, (props: StakePoolModalProps) => JSX.Element][] =
   [
@@ -66,16 +81,35 @@ const MyDelegateTable = (): JSX.Element => {
     [stakePools, pid]
   )
 
-  const myDelegate = useMemo<StakePool[]>(() => {
+  const myDelegate = useMemo<TableItem[]>(() => {
     if (!stakePools || !userStakeInfo) return []
-    return stakePools.filter((pool) => {
-      const poolUserStakeInfo = userStakeInfo[pool.pid]
-      return poolUserStakeInfo
-    })
-  }, [stakePools, userStakeInfo])
+    return stakePools
+      .filter((pool) => {
+        const poolUserStakeInfo = userStakeInfo[pool.pid]
+        return poolUserStakeInfo
+      })
+      .map((stakePool) => {
+        const userStake = userStakeInfo?.[stakePool.pid]
+        let claimableRewards = null
 
-  const columns = useMemo<Column<StakePool>[]>(() => {
-    const columns: (Column<StakePool> | boolean)[] = [
+        if (userStake) {
+          const {ownerReward, rewardAcc, owner} = stakePool
+          const {shares, availableRewards, rewardDebt} = userStake
+          const isOwner = owner === polkadotAccount?.address
+          const pendingRewards = shares.mul(rewardAcc).sub(rewardDebt)
+          claimableRewards = (isOwner ? ownerReward : new Decimal(0))
+            .add(pendingRewards)
+            .add(availableRewards)
+        }
+        return {
+          ...stakePool,
+          claimableRewards,
+        }
+      })
+  }, [stakePools, userStakeInfo, polkadotAccount?.address])
+
+  const columns = useMemo<Column<TableItem>[]>(() => {
+    const columns: (Column<TableItem> | boolean)[] = [
       {Header: 'pid', accessor: 'pid'},
       {
         Header: 'Owner',
@@ -158,19 +192,7 @@ const MyDelegateTable = (): JSX.Element => {
       },
       {
         Header: 'Claimable Rewards',
-        accessor: (stakePool) => {
-          const userStake = userStakeInfo?.[stakePool.pid]
-          if (!userStake) return '-'
-          const {ownerReward, rewardAcc, owner} = stakePool
-          const {shares, availableRewards, rewardDebt} = userStake
-          const isOwner = owner === polkadotAccount?.address
-          const pendingRewards = shares.mul(rewardAcc).sub(rewardDebt)
-          return format(
-            (isOwner ? ownerReward : new Decimal(0))
-              .add(pendingRewards)
-              .add(availableRewards)
-          )
-        },
+        accessor: (stakePool) => format(stakePool.claimableRewards),
       },
       {
         id: 'actions',
@@ -193,7 +215,7 @@ const MyDelegateTable = (): JSX.Element => {
       },
     ]
 
-    return columns.filter(Boolean) as Column<StakePool>[]
+    return columns.filter(Boolean) as Column<TableItem>[]
   }, [
     format,
     userStakeInfo,
@@ -207,9 +229,15 @@ const MyDelegateTable = (): JSX.Element => {
 
   return (
     <Wrapper>
+      <Header>
+        <TableTitle>My Delegate</TableTitle>
+        <Button size="small" type="primary" onClick={() => open('claimAll')}>
+          Claim All
+        </Button>
+      </Header>
       <Table
         initialState={{pageSize: 20}}
-        data={myDelegate || []}
+        data={myDelegate}
         autoResetPage={false}
         autoResetSortBy={false}
         isLoading={isFetchingStakePools || isFetchingUserStakeInfo}
@@ -231,6 +259,17 @@ const MyDelegateTable = (): JSX.Element => {
               />
             )
         )}
+
+      {modalVisible.claimAll && (
+        <ClaimAllModal
+          stakePools={myDelegate}
+          onClose={() => {
+            close('claimAll')
+            refetchStakePools()
+            refetchUserStakeInfo()
+          }}
+        ></ClaimAllModal>
+      )}
     </Wrapper>
   )
 }

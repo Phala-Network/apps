@@ -20,6 +20,7 @@ import WithdrawModal from '../WithdrawModal'
 import ItemMenu from '../ItemMenu'
 import ReclaimAllModal from '../ReclaimAllModal'
 import {canWorkerBeReclaimed} from '../../utils/canWorkerBeReclaimed'
+import Decimal from 'decimal.js'
 
 const Actions = styled.div`
   align-items: center;
@@ -31,7 +32,10 @@ const DetailButton = styled.span`
   font-weight: bold;
 `
 
-type TableItem = StakePool & {reclaimableWorkers: string[]}
+type TableItem = StakePool & {
+  reclaimableWorkers?: string[]
+  claimableRewards?: Decimal | null
+}
 
 export type StakePoolModalProps = {
   onClose: () => void
@@ -92,9 +96,9 @@ const StakePoolTable = ({
 
   const selectedReclaimableWorkers = useMemo<Worker[]>(() => {
     if (!selectedStakePool) return []
-    return selectedStakePool.reclaimableWorkers
-      .map((pubkey) => workerMap[pubkey])
-      .filter(Boolean) as Worker[]
+    return (selectedStakePool.reclaimableWorkers
+      ?.map((pubkey) => workerMap[pubkey])
+      .filter(Boolean) || []) as Worker[]
   }, [selectedStakePool, workerMap])
 
   const columns = useMemo<Column<TableItem>[]>(
@@ -148,7 +152,7 @@ const StakePoolTable = ({
             {
               key: 'reclaimAll',
               item: 'Reclaim All',
-              disabled: !stakePool.reclaimableWorkers.length,
+              disabled: !stakePool.reclaimableWorkers?.length,
             },
           ]
 
