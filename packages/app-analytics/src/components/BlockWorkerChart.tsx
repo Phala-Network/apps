@@ -32,38 +32,24 @@ export const BlockWorkerChart: React.FC<{blockData: AnalyticsData}> = (
       boundaryGap: false,
       data: data.map((item) => item.block),
     },
-    yAxis: [
-      {
-        type: 'value',
-        name: 'OnlineWorkers',
-        splitLine: {show: false},
-        axisPointer: {show: false},
-        show: false,
-      },
-      {
-        type: 'value',
-        name: 'Workers',
-        splitLine: {show: false},
-        axisPointer: {show: false},
-        show: false,
-      },
-    ],
+    yAxis: {
+      type: 'value',
+      show: false,
+    },
     series: [
-      {
-        name: 'OnlineWorkers',
-        type: 'line',
-        itemStyle: {color: '#bae445'},
-        showSymbol: false,
-        yAxisIndex: 0,
-        data: data.map((item) => item.onlineWorkers),
-      },
       {
         name: 'Workers',
         type: 'line',
         itemStyle: {color: '#03FFFF'},
         showSymbol: false,
-        yAxisIndex: 1,
         data: data.map((item) => item.workers),
+      },
+      {
+        name: 'OnlineWorkers',
+        type: 'line',
+        itemStyle: {color: '#bae445'},
+        showSymbol: false,
+        data: data.map((item) => item.onlineWorkers),
       },
     ],
   }

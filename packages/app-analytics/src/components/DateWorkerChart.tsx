@@ -37,29 +37,16 @@ const defaultChartOptions = {
       top: '20px',
     },
   ],
-  yAxis: [
-    {
-      type: 'value',
-      name: 'Amount',
-      splitLine: {show: false},
-      axisPointer: {show: false},
-      show: false,
-    },
-    {
-      type: 'value',
-      name: 'PHA',
-      splitLine: {show: false},
-      axisPointer: {show: false},
-      show: false,
-    },
-  ],
+  yAxis: {
+    type: 'value',
+    show: false,
+  },
   series: [
     {
       name: 'onlineWorkers',
-      type: 'line',
       itemStyle: {color: '#bae445'},
+      type: 'line',
       showSymbol: false,
-      yAxisIndex: 0,
       data: [],
     },
     {
@@ -67,7 +54,6 @@ const defaultChartOptions = {
       type: 'line',
       itemStyle: {color: '#03FFFF'},
       showSymbol: false,
-      yAxisIndex: 1,
       data: [],
     },
   ],
@@ -83,17 +69,17 @@ export const DateWorkerChart: React.FC<{data: AnalyticsData}> = (props) => {
     return Object.assign({}, defaultChartOptions, {
       series: [
         {
-          ...defaultChartOptions.series[0],
-          data: data2?.map?.((item) => [
-            item.date + 'T00:00:00.000Z',
-            formatData(item.onlineWorkers),
-          ]),
-        },
-        {
           ...defaultChartOptions.series[1],
           data: data2?.map?.((item) => [
             item.date + 'T00:00:00.000Z',
             formatData(item.workers),
+          ]),
+        },
+        {
+          ...defaultChartOptions.series[0],
+          data: data2?.map?.((item) => [
+            item.date + 'T00:00:00.000Z',
+            formatData(item.onlineWorkers),
           ]),
         },
       ],
