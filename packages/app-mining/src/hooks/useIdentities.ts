@@ -18,19 +18,22 @@ const useIdentities = () => {
     () =>
       api?.query.identity.identityOf.entries().then((entries) =>
         Object.fromEntries(
-          entries.map(([key, value]) => {
-            const data = value.toJSON() as Value
+          entries
+            .map(([key, value]) => {
+              const data = value.toJSON() as Value
+              if (!data.info.display.raw) return null
 
-            return [
-              key.toHuman(),
-              {
-                display: hexToUtf8(data.info.display.raw),
-                verified:
-                  data.judgements[0]?.[1].knownGood === null ||
-                  data.judgements[0]?.[1].reasonable === null,
-              },
-            ]
-          })
+              return [
+                key.toHuman(),
+                {
+                  display: hexToUtf8(data.info.display.raw),
+                  verified:
+                    data.judgements[0]?.[1].knownGood === null ||
+                    data.judgements[0]?.[1].reasonable === null,
+                },
+              ]
+            })
+            .filter(Boolean) as [string, {display: string; verified: boolean}][]
         )
       ),
     {refetchOnMount: false}
