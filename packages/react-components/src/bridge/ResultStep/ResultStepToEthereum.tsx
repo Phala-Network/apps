@@ -10,10 +10,10 @@ type Props = {
 }
 
 const ResultStepToEthereum: React.FC<Props> = (props) => {
-  const {transactionInfo} = props
+  const {transactionInfo, record} = props
   // const {transaction} = record
 
-  // console.log('transaction', transaction)
+  // console.log('transaction', record)
 
   return (
     <>
@@ -23,6 +23,7 @@ const ResultStepToEthereum: React.FC<Props> = (props) => {
 
       <Alert>
         <KhalaProcess
+          hash={record.hash}
           khalaAddress={transactionInfo.from.address}
           etherscanAddress={transactionInfo.to.address}
           progressIndex={3}
