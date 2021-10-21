@@ -1,6 +1,7 @@
 import {clickEvent} from '@phala/app-data-analytics'
 import {TransactionRecord} from '@phala/app-types'
 import {ResultStepModal} from '@phala/react-components'
+import {Decimal} from 'decimal.js'
 import React, {useState} from 'react'
 import styled from 'styled-components'
 import ArrowIcon from './ArrowIcon'
@@ -39,9 +40,11 @@ const Component: React.FC<TransactionsListItemFromPolkadotProps> = (props) => {
   const {record} = props
   const {depositor} = record
   const [modalVisible, setModalVisible] = useState(false)
-  const convertedAmount = '1000'
-  const destinationRecipient = '9sdifosduhfosdhfosduhf'
-  const hash = 's;fjhsdlkjfh'
+  const {hash, destinationRecipient, amount} = record
+  const convertedAmount = new Decimal(amount.toString())
+    .div(10 ** 12)
+    .toString()
+
   // const {events, hash, convertedAmount, destinationRecipient} =
   //   useBridgePhalaRecordInfo(record)
 
