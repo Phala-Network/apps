@@ -1,6 +1,7 @@
 import {TransactionInfo, TransactionRecord} from '@phala/app-types'
 import React from 'react'
 import {Button, Modal, ModalAction, ModalActions} from '../..'
+import ResultStepToEthereum from './ResultStepToEthereum'
 import ResultStepToKhala from './ResultStepToKhala'
 
 type Props = {
@@ -19,10 +20,16 @@ const TransactionDetailModal: React.FC<Props> = (props) => {
 
   return (
     <Modal visible={visible} title="Bridge Information">
-      <ResultStepToKhala
-        record={record}
-        transactionInfo={transactionInfo}
-      ></ResultStepToKhala>
+      {transactionInfo.to.network === 'Khala' && (
+        <ResultStepToKhala record={record} transactionInfo={transactionInfo} />
+      )}
+
+      {transactionInfo.to.network === 'Ethereum' && (
+        <ResultStepToEthereum
+          record={record}
+          transactionInfo={transactionInfo}
+        />
+      )}
 
       <ModalActions>
         <ModalAction full>

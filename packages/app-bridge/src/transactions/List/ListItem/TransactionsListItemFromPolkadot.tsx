@@ -70,7 +70,7 @@ const Component: React.FC<TransactionsListItemFromPolkadotProps> = (props) => {
   return (
     <>
       <ItemRoot onClick={openModal}>
-        <Status status={'pending'} />
+        <Status status={'executed'} />
 
         <ItemInfoBlock
           network="Khala"
