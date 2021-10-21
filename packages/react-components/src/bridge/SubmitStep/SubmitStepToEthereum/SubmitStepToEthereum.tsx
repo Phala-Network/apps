@@ -4,7 +4,6 @@ import {
   useDecimalJsTokenDecimalMultiplier,
   useTransferSubmit,
 } from '@phala/react-libs'
-import {Hash} from '@polkadot/types/interfaces'
 import {Decimal} from 'decimal.js'
 import {getAddress} from 'ethers/lib/utils'
 import React, {useMemo, useState} from 'react'
@@ -35,7 +34,7 @@ export const SubmitStepToEthereum: React.FC<Props> = (props) => {
   const {api} = useApiPromise()
   const decimals = useDecimalJsTokenDecimalMultiplier(api)
   const transferSubmit = useTransferSubmit(1)
-  const [submittedHash, setSubmittedHash] = useState<Hash>()
+  const [submittedHash, setSubmittedSuccess] = useState<boolean>(false)
   const [isSubmitting, setSubmitting] = useState<boolean>(false)
   const [progressIndex, setProgressIndex] = useState(-1)
   const {transactionInfo} = useTransactionInfo(data)
@@ -78,7 +77,7 @@ export const SubmitStepToEthereum: React.FC<Props> = (props) => {
             setProgressIndex(2)
           } else if (status.isFinalized) {
             setProgressIndex(3)
-            setSubmittedHash(status.hash)
+            setSubmittedSuccess(true)
           }
         }
       )
