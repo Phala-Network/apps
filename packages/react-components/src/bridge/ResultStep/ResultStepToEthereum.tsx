@@ -2,6 +2,7 @@ import {TransactionInfo, TransactionRecord} from '@phala/app-types'
 import React from 'react'
 import {Alert, Spacer} from '../..'
 import BaseInfo from '../../bridge/SubmitStep/BaseInfo'
+import {KhalaProcess} from '../KhalaProcess'
 
 type Props = {
   transactionInfo: TransactionInfo
@@ -20,7 +21,13 @@ const ResultStepToEthereum: React.FC<Props> = (props) => {
 
       <Spacer></Spacer>
 
-      <Alert></Alert>
+      <Alert>
+        <KhalaProcess
+          khalaAddress={transactionInfo.from.address}
+          etherscanAddress={transactionInfo.to.address}
+          progressIndex={3}
+        />
+      </Alert>
     </>
   )
 }

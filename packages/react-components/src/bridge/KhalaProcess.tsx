@@ -18,7 +18,7 @@ export const KhalaProcess: FC<ProgressProps> = (props) => {
       text: 'Khala Confirmed',
       ...(progressIndex > 0
         ? {
-            link: `https://phala-testnet.subscan.io/account/${khalaAddress}?tab=transfer`,
+            link: `https://phala.subscan.io/account/${khalaAddress}?tab=transfer`,
           }
         : {}),
     },
