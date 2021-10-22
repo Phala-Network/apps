@@ -1,4 +1,5 @@
-import styled from 'styled-components'
+import styled, {keyframes} from 'styled-components'
+import * as Icon from 'react-feather'
 import {ButtonProps} from './Button'
 
 export const ButtonWrap = styled.button<ButtonProps>`
@@ -40,15 +41,17 @@ export const ButtonWrap = styled.button<ButtonProps>`
   }
 `
 
-export const Loading = styled.div`
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  background-image: url('/loading.gif');
-  background-repeat: no-repeat;
-  background-size: auto 28px;
-  background-position: center center;
-  background-color: #d1ff52;
+const rotate = keyframes`
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+`
+
+export const Loading = styled(Icon.Loader).attrs({size: 16})`
+  animation: ${rotate} 3s linear infinite;
+  margin-right: 4px;
 `

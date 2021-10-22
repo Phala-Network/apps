@@ -1,5 +1,5 @@
 import {usePolkadotAccountAtom} from '@phala/app-store'
-import {Input, InputAction} from '@phala/react-components'
+import {Alert, Input, InputAction} from '@phala/react-components'
 import {useApiPromise} from '@phala/react-libs'
 import {useCallback, useMemo, useState} from 'react'
 import useFormat from '../hooks/useFormat'
@@ -31,18 +31,24 @@ const ClaimAllModal = (props: {
     [stakePools, format]
   )
 
+  const claimablePools = useMemo<TableItem[]>(() => {
+    return stakePools.filter(
+      ({claimableRewards}) => claimableRewards?.greaterThan(10 ** 10) // 0.01 PHA
+    )
+  }, [stakePools])
+
   const onConfirm = useCallback(async () => {
     if (api && address) {
       return waitSignAndSend(
-        api.tx.utility.batch(
-          stakePools.map(
+        api.tx.utility.batchAll?.(
+          claimablePools.map(
             ({pid}) =>
               api.tx.phalaStakePool?.claimRewards?.(pid, address) as any
           )
         )
       )
     }
-  }, [api, waitSignAndSend, stakePools, address])
+  }, [api, waitSignAndSend, claimablePools, address])
 
   const onInputChange = useCallback((value) => {
     setAddress(value)
@@ -54,7 +60,7 @@ const ClaimAllModal = (props: {
       onConfirm={onConfirm}
       title="Claim All"
       subtitle="Claim all the pending rewards of the sender and send to the target"
-      disabled={!address}
+      disabled={!address || !claimablePools.length}
     >
       <Label>Rewards</Label>
       <Value>{rewards}</Value>
@@ -70,6 +76,9 @@ const ClaimAllModal = (props: {
           </InputAction>
         }
       ></Input>
+      <Alert style={{marginTop: 20}}>
+        Only claim rewards greater than 0.01 PHA.
+      </Alert>
     </ActionModal>
   )
 }
