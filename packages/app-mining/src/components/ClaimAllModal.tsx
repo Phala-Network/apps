@@ -34,7 +34,7 @@ const ClaimAllModal = (props: {
   const onConfirm = useCallback(async () => {
     if (api && address) {
       return waitSignAndSend(
-        api.tx.utility.batch(
+        api.tx.utility.batchTry?.(
           stakePools.map(
             ({pid}) =>
               api.tx.phalaStakePool?.claimRewards?.(pid, address) as any
