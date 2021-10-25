@@ -4,15 +4,20 @@ import {useApiPromise} from './hooks/useApiPromise'
 // DOC:
 // https://polkadot.js.org/docs/api/cookbook/tx/
 
-export async function useTransactionFee(
-  sender: string,
-  recipient: string,
-  amount: string
-) {
+export function useTransactionFee(
+  sender?: string,
+  recipient?: string,
+  amount?: number
+): string {
   const {api} = useApiPromise()
-  const [fee, setFee] = useState<string>()
+  const [fee, setFee] = useState<string>('')
 
   useEffect(() => {
+    if (!api || !sender || !recipient || !amount) {
+      setFee('')
+      return
+    }
+
     api?.tx?.balances
       .transfer(recipient, amount)
       .paymentInfo(sender)

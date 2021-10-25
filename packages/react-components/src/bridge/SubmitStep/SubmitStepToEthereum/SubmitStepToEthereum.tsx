@@ -2,6 +2,7 @@ import {
   decimalToBalance,
   useApiPromise,
   useDecimalJsTokenDecimalMultiplier,
+  useTransactionFee,
   useTransferSubmit,
 } from '@phala/react-libs'
 import {Hash} from '@polkadot/types/interfaces'
@@ -22,6 +23,7 @@ import {
 } from '../../..'
 import {Link} from '../../../Announcement/styledComponents'
 import {StepProps} from '../../BridgeProcess'
+import {Fee} from '../../Fee'
 import useTransactionInfo from '../../hooks/useTransactionInfo'
 import BaseInfo from '../BaseInfo'
 
@@ -41,6 +43,12 @@ export const SubmitStepToEthereum: React.FC<Props> = (props) => {
   const {transactionInfo} = useTransactionInfo(data)
   const {fee} = useKhalaBridgeFee()
   const [checkBoxChecked, setCheckBoxChecked] = useState<boolean>(false)
+
+  const transactionFee = useTransactionFee(
+    accountFrom,
+    accountTo,
+    amountFromPrevStep?.toNumber()
+  )
 
   const amount = useMemo(() => {
     if (!amountFromPrevStep || !api || !decimals) return
@@ -210,9 +218,10 @@ export const SubmitStepToEthereum: React.FC<Props> = (props) => {
 
       {!submittedHash && (
         <ModalActions>
-          <KhalaToEthereumFee
-            style={{padding: 8, flex: 1}}
-          ></KhalaToEthereumFee>
+          <div style={{flex: 1}}>
+            <KhalaToEthereumFee />
+            <Fee fee={transactionFee} label={'Fee'}></Fee>
+          </div>
 
           {onPrev && !isSubmitting && (
             <ModalAction>

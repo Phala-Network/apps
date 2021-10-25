@@ -57,11 +57,13 @@ const Label = styled.span`
 export type KhalaToEthereumFeeProps = ComponentPropsWithoutRef<typeof Root>
 
 export const KhalaToEthereumFee: FC<KhalaToEthereumFeeProps> = (props) => {
+  const {children} = props
   const {fee} = useKhalaBridgeFee()
 
   return (
     <Root {...props}>
-      <Label>Fee:</Label> {fee?.toFixed(2) || '...'} PHA
+      <Label>Bridge Fee:</Label> {fee?.toFixed(2) || '...'} PHA
+      {children}
     </Root>
   )
 }
