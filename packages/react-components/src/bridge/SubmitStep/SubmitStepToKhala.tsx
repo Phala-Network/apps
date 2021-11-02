@@ -3,6 +3,7 @@ import {TransactionInfoItem} from '@phala/app-types'
 import {
   useErc20BalanceQuery,
   useErc20Deposit,
+  useEthFee,
   useTransactionReceiptQuery,
 } from '@phala/react-libs'
 import {u8aToHex} from '@polkadot/util'
@@ -39,6 +40,21 @@ const SubmitStepToKhala: React.FC<Props> = (props) => {
     currentTransactionHash
   )
   const {refetch} = useErc20BalanceQuery(accountFrom)
+
+  useEthFee()
+
+  // bridgeContract.contract?.estimateGas().then((gas) => {
+  //   console.log('gas', gas.toNumber())
+  // })
+
+  if (accountFrom && accountTo) {
+    // provider?.getFeeData().then((feeData) => {
+    //   console.log(
+    //     'gasPrice',
+    //     parseFloat(utils.formatUnits(feeData.gasPrice.toString(), 'gwei'))
+    //   )
+    // })
+  }
 
   const submit = async () => {
     setSubmitting(true)
