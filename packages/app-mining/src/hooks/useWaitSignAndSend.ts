@@ -1,4 +1,5 @@
 import {usePolkadotAccountAtom} from '@phala/app-store'
+import {decodeAddress, encodeAddress} from '@polkadot/keyring'
 import {useApiPromise, waitSignAndSend} from '@phala/react-libs'
 import {SubmittableExtrinsic} from '@polkadot/api/types'
 import {ExtrinsicStatus} from '@polkadot/types/interfaces'
@@ -22,11 +23,14 @@ const useWaitSignAndSend = (): ((
     if (!api || !polkadotAccount || !extrinsic) return
     const web3FromAddress = (await import('@polkadot/extension-dapp'))
       .web3FromAddress
-    const signer = (await web3FromAddress(polkadotAccount.address)).signer
+    // TEST: imtoken
+    const account = encodeAddress(decodeAddress(polkadotAccount.address), 0)
+    console.log(account) // eslint-disable-line
+    const signer = (await web3FromAddress(account)).signer
 
     return waitSignAndSend({
       api,
-      account: polkadotAccount.address,
+      account,
       extrinsic,
       signer,
       onstatus,

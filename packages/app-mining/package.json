@@ -12,6 +12,7 @@
     "@polkadot/api": "^4.17.1",
     "@polkadot/api-derive": "^5.8.3",
     "@polkadot/extension-dapp": "^0.38.8",
+    "@polkadot/keyring": "^7.4.1",
     "@polkadot/util": "^6.11.1",
     "@types/react": "^17.0.20",
     "date-fns": "^2.23.0",

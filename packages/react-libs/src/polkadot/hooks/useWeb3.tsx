@@ -82,9 +82,10 @@ export const Web3Provider = ({
             logInfo(
               'Updated injected accounts:',
               accounts.map((account) => account.address).join(', ')
-            )
-          },
-          {ss58Format: api.registry.chainSS58}
+            ),
+              {ss58Format: 0}
+          }
+          // {ss58Format: api.registry.chainSS58}
         )
         logDebug('Subscribed to account injection updates')
         return unsub
@@ -108,7 +109,8 @@ export const Web3Provider = ({
     importPolkadotExtensionDapp()
       .then(async ({web3Accounts}) => {
         const accounts = await web3Accounts({
-          ss58Format: api?.registry.chainSS58,
+          ss58Format: 0,
+          // ss58Format: api?.registry.chainSS58,
         })
         setAccounts(accounts)
         logInfo(

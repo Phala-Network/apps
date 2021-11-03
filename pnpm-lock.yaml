@@ -284,6 +284,7 @@ importers:
       '@polkadot/api': ^4.17.1
       '@polkadot/api-derive': ^5.8.3
       '@polkadot/extension-dapp': ^0.38.8
+      '@polkadot/keyring': ^7.4.1
       '@polkadot/util': ^6.11.1
       '@types/react': ^17.0.20
       date-fns: ^2.23.0
@@ -301,6 +302,7 @@ importers:
       '@polkadot/api': 4.17.1
       '@polkadot/api-derive': 5.8.3
       '@polkadot/extension-dapp': 0.38.8_@polkadot+api@4.17.1
+      '@polkadot/keyring': 7.4.1
       '@polkadot/util': 6.11.1
       '@types/react': 17.0.20
       date-fns: 2.23.0
@@ -4816,7 +4818,7 @@ packages:
       '@polkadot/rpc-core': 5.8.3
       '@polkadot/types': 5.8.3
       '@polkadot/util': 7.3.1
-      '@polkadot/util-crypto': 7.3.1
+      '@polkadot/util-crypto': 7.4.1
       rxjs: 7.3.0
     dev: false
 
@@ -4844,13 +4846,13 @@ packages:
     dependencies:
       '@babel/runtime': 7.15.4
       '@polkadot/api-derive': 5.8.3
-      '@polkadot/keyring': 7.3.1
+      '@polkadot/keyring': 7.4.1
       '@polkadot/rpc-core': 5.8.3
       '@polkadot/rpc-provider': 5.8.3
       '@polkadot/types': 5.8.3
       '@polkadot/types-known': 5.8.3
-      '@polkadot/util': 7.3.1
-      '@polkadot/util-crypto': 7.3.1
+      '@polkadot/util': 7.4.1
+      '@polkadot/util-crypto': 7.4.1
       eventemitter3: 4.0.7
       rxjs: 7.3.0
     dev: false
@@ -4976,7 +4978,7 @@ packages:
       '@babel/runtime': 7.15.4
       '@polkadot/rpc-provider': 5.8.3
       '@polkadot/types': 5.8.3
-      '@polkadot/util': 7.3.1
+      '@polkadot/util': 7.4.1
       rxjs: 7.3.0
     dev: false
 
@@ -5000,10 +5002,10 @@ packages:
     dependencies:
       '@babel/runtime': 7.15.4
       '@polkadot/types': 5.8.3
-      '@polkadot/util': 7.3.1
-      '@polkadot/util-crypto': 7.3.1
+      '@polkadot/util': 7.4.1
+      '@polkadot/util-crypto': 7.4.1
       '@polkadot/x-fetch': 7.3.1
-      '@polkadot/x-global': 7.3.1
+      '@polkadot/x-global': 7.4.1
       '@polkadot/x-ws': 7.3.1
       eventemitter3: 4.0.7
     dev: false
@@ -5023,9 +5025,9 @@ packages:
     engines: {node: '>=14.0.0'}
     dependencies:
       '@babel/runtime': 7.15.4
-      '@polkadot/networks': 7.3.1
+      '@polkadot/networks': 7.4.1
       '@polkadot/types': 5.8.3
-      '@polkadot/util': 7.3.1
+      '@polkadot/util': 7.4.1
     dev: false
 
   /@polkadot/types/4.17.1:
@@ -5044,8 +5046,8 @@ packages:
     engines: {node: '>=14.0.0'}
     dependencies:
       '@babel/runtime': 7.15.4
-      '@polkadot/util': 7.3.1
-      '@polkadot/util-crypto': 7.3.1
+      '@polkadot/util': 7.4.1
+      '@polkadot/util-crypto': 7.4.1
       rxjs: 7.3.0
     dev: false
 

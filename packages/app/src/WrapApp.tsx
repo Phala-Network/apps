@@ -53,6 +53,8 @@ const WrapApp: React.FC = ({children}) => {
           type="text/javascript"
           src="https://api.map.baidu.com/getscript?v=2.0&ak=EOI79Ys8F8IN75wY5jfzRwKjGtQ5eKPz"
         />
+        <script src="//cdn.jsdelivr.net/npm/eruda"></script>
+        <script>eruda.init();</script>
       </Helmet>
       <LibProvider {...productionConfig}>
         <QueryClientProvider contextSharing={true} client={client.current}>
