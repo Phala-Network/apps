@@ -31,7 +31,8 @@ const TransactionsListRoot = styled.div`
 `
 
 export const TransactionsList: React.FC<Props> = (props) => {
-  const {records} = props
+  const {records = []} = props
+
   const items = records.map((record: TransactionRecord) => {
     const component =
       record.type === 'fromKhalaToEth'
