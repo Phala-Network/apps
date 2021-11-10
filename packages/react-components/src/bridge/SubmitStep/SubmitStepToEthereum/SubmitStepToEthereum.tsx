@@ -4,13 +4,13 @@ import {
   useDecimalJsTokenDecimalMultiplier,
   useTransferSubmit,
 } from '@phala/react-libs'
-import {Hash} from '@polkadot/types/interfaces'
-import {Decimal} from 'decimal.js'
-import {getAddress} from 'ethers/lib/utils'
-import React, {useMemo, useState} from 'react'
-import {toast} from 'react-toastify'
-import {SubmitStepProps} from '..'
-import {useKhalaBridgeFee} from '../..'
+import { Hash } from '@polkadot/types/interfaces'
+import { Decimal } from 'decimal.js'
+import { getAddress } from 'ethers/lib/utils'
+import React, { useMemo, useState } from 'react'
+import { toast } from 'react-toastify'
+import { SubmitStepProps } from '..'
+import { useKhalaBridgeFee } from '../..'
 import {
   Alert,
   Button,
@@ -20,26 +20,26 @@ import {
   ModalActions,
   Spacer,
 } from '../../..'
-import {Link} from '../../../Announcement/styledComponents'
-import {StepProps} from '../../BridgeProcess'
+import { Link } from '../../../Announcement/styledComponents'
+import { StepProps } from '../../BridgeProcess'
 import useTransactionInfo from '../../hooks/useTransactionInfo'
 import BaseInfo from '../BaseInfo'
 
 type Props = SubmitStepProps & StepProps
 
 export const SubmitStepToEthereum: React.FC<Props> = (props) => {
-  const {onSubmit, onPrev, onSuccess, layout, data} = props
-  const {from, to, amount: amountFromPrevStep} = data || {}
-  const {account: accountFrom} = from || {}
-  const {account: accountTo} = to || {}
-  const {api} = useApiPromise()
+  const { onSubmit, onPrev, onSuccess, layout, data } = props
+  const { from, to, amount: amountFromPrevStep } = data || {}
+  const { account: accountFrom } = from || {}
+  const { account: accountTo } = to || {}
+  const { api } = useApiPromise()
   const decimals = useDecimalJsTokenDecimalMultiplier(api)
   const transferSubmit = useTransferSubmit(1)
   const [submittedHash, setSubmittedHash] = useState<Hash>()
   const [isSubmitting, setSubmitting] = useState<boolean>(false)
   const [progressIndex, setProgressIndex] = useState(-1)
-  const {transactionInfo} = useTransactionInfo(data)
-  const {fee} = useKhalaBridgeFee()
+  const { transactionInfo } = useTransactionInfo(data)
+  const { fee } = useKhalaBridgeFee()
   const [checkBoxChecked, setCheckBoxChecked] = useState<boolean>(false)
 
   const amount = useMemo(() => {
@@ -113,7 +113,7 @@ export const SubmitStepToEthereum: React.FC<Props> = (props) => {
         {progressIndex === -1 ? (
           <span>
             This transaction will charge an additional{' '}
-            <span style={{fontWeight: 'bold'}}>
+            <span style={{ fontWeight: 'bold' }}>
               {fee?.toFixed(2) || '...'} PHA
             </span>{' '}
             bridge fee to cover the Ethereum gas fee (up to 120 GWei price). The
@@ -129,14 +129,14 @@ export const SubmitStepToEthereum: React.FC<Props> = (props) => {
             24h. You can follow each step of the transaction through{' '}
             <Link
               target="_blank"
-              href={`https://phala-testnet.subscan.io/account/${transactionInfo.from.address}?tab=transfer`}
+              href={`https://khala.subscan.io/account/${transactionInfo.from.address}?tab=transfer`}
             >
               Khala&apos;s explorer
             </Link>{' '}
             and{' '}
             <Link
               target="_blank"
-              href={`https://kovan.etherscan.io/address/${transactionInfo.to.address}#tokentxns`}
+              href={`https://etherscan.io/address/${transactionInfo.to.address}#tokentxns`}
             >
               Ethereum&apos;s explorer
             </Link>{' '}
@@ -144,7 +144,7 @@ export const SubmitStepToEthereum: React.FC<Props> = (props) => {
             post on the{' '}
             <Link
               target="_blank"
-              href={`https://forum.phala.network/c/support/function/33`}
+              href={`https://forum.phala.network/c/help-center/25`}
             >
               forum
             </Link>{' '}
@@ -185,7 +185,7 @@ export const SubmitStepToEthereum: React.FC<Props> = (props) => {
               onChange={setCheckBoxChecked}
             ></Checkbox>
           </div>
-          <div style={{padding: '2px 2px'}}>
+          <div style={{ padding: '2px 2px' }}>
             I understood the transaction can take long time and the bridge fee
             is used to cover the Ethereum gas fee.
           </div>
@@ -211,7 +211,7 @@ export const SubmitStepToEthereum: React.FC<Props> = (props) => {
       {!submittedHash && (
         <ModalActions>
           <KhalaToEthereumFee
-            style={{padding: 8, flex: 1}}
+            style={{ padding: 8, flex: 1 }}
           ></KhalaToEthereumFee>
 
           {onPrev && !isSubmitting && (
