@@ -25,7 +25,8 @@ export const ethereums: Record<string, EthereumNetworkOptions> = {
       'khala-pc-test': 0,
     },
     graph: {
-      endpoint: 'https://graphs-api.phala.network/subgraphs/name/chainbridge',
+      endpoint:
+        'https://explorer.subquery.network/subquery/Phala-Network/khala-chainbridge',
     },
   },
   1: {
@@ -38,7 +39,8 @@ export const ethereums: Record<string, EthereumNetworkOptions> = {
       khala: 1,
     },
     graph: {
-      endpoint: 'https://graphs-api.phala.network/subgraphs/name/chainbridge',
+      endpoint:
+        'https://explorer.subquery.network/subquery/Phala-Network/khala-chainbridge',
     },
   },
 }

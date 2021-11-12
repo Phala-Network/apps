@@ -36,9 +36,10 @@ const WrapApp: React.FC = ({children}) => {
 
   const productionConfig = {
     defaultNetwork,
-    substrateGraphEndpoint: 'https://subquery-api.phala.network',
+    substrateGraphEndpoint:
+      'https://api.subquery.network/sq/Phala-Network/khala-chainbridge',
     ethereumGraphEndpoint:
-      'https://graphs-api.phala.network/subgraphs/name/chainbridge',
+      'https://gateway.thegraph.com/api/cfd0e529ce4d511c6ec482c97faafa99/subgraphs/id/0x7dc6f99be5cf16d605bedf237771413aaa3021b1-0',
     customEndpoint,
   }
 
