@@ -1,6 +1,11 @@
 import {gql} from 'graphql-request'
 import {useRequest} from './useRequest'
 
+/**
+ * @deprecated
+ * @param recipient
+ * @returns
+ */
 export function useQueryTransactionsByRecipient(recipient = '') {
   return useRequest(gql`
     {

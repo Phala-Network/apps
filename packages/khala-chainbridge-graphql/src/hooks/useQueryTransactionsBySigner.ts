@@ -1,6 +1,11 @@
 import {gql} from 'graphql-request'
 import {useRequest} from './useRequest'
 
+/**
+ * @deprecated
+ * @param signer
+ * @returns
+ */
 export function useQueryTransactionsBySigner(signer = '') {
   return useRequest(gql`
     {

@@ -1,7 +1,10 @@
 import {clickEvent} from '@phala/app-data-analytics'
 import {useEthereumAccountAtom, usePolkadotAccountAtom} from '@phala/app-store'
 import {TransactionRecords} from '@phala/app-types'
-import {khalaChainbridgeGraphqlQuery} from '@phala/khala-chainbridge-graphql'
+import {
+  khalaChainbridgeGraphqlQuery,
+  useKhalaChainbridgeTransactions,
+} from '@phala/khala-chainbridge-graphql'
 import {FloatModal} from '@phala/react-components'
 import {useDepositRecordsByDepositorQuery} from '@phala/react-graph-chainbridge'
 import {useEthereumGraphQL} from '@phala/react-libs'
@@ -24,6 +27,8 @@ const Transactions: React.FC = () => {
           polkadotAccount?.address
       )
   )
+
+  useKhalaChainbridgeTransactions()
 
   useEffect(() => {
     type ChainBridgeFungibleTransferEventNode = {
