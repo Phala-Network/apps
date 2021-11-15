@@ -28,7 +28,14 @@ const Transactions: React.FC = () => {
       )
   )
 
-  useKhalaChainbridgeTransactions()
+  console.error(
+    'useKhalaChainbridgeTransactions',
+    useKhalaChainbridgeTransactions
+  )
+
+  useKhalaChainbridgeTransactions().then((records) => {
+    console.error('records', records)
+  })
 
   useEffect(() => {
     type ChainBridgeFungibleTransferEventNode = {
