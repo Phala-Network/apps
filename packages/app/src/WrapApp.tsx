@@ -1,9 +1,10 @@
+import {ethereumGraphEndpoint} from '@phala/app-config'
 import {Provider as AppStoreProvider} from '@phala/app-store'
 import {getCMSLog} from '@phala/react-cms'
 import {MobileToastContextProvider} from '@phala/react-components'
 import {I18nextProvider} from '@phala/react-i18n'
 import {Provider as LibProvider} from '@phala/react-libs'
-import {isDev, isTest} from '@phala/utils'
+import {isDev, isProduction, isTest} from '@phala/utils'
 import * as Sentry from '@sentry/react'
 import React, {useLayoutEffect, useRef} from 'react'
 import {Helmet} from 'react-helmet'
@@ -38,8 +39,10 @@ const WrapApp: React.FC = ({children}) => {
     defaultNetwork,
     substrateGraphEndpoint:
       'https://api.subquery.network/sq/Phala-Network/khala-chainbridge',
-    ethereumGraphEndpoint:
-      'https://gateway.thegraph.com/api/cfd0e529ce4d511c6ec482c97faafa99/subgraphs/id/0x7dc6f99be5cf16d605bedf237771413aaa3021b1-0',
+    ethereumGraphEndpoint: isProduction()
+      ? ethereumGraphEndpoint.production
+      : ethereumGraphEndpoint.development,
+
     customEndpoint,
   }
 

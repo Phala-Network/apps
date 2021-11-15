@@ -1,6 +1,13 @@
 import {khala, khalaDev} from '@phala/typedefs'
 import {EthereumNetworkOptions, SubstrateNetworkOptions} from './configuration'
 
+export const ethereumGraphEndpoint = {
+  production:
+    'https://gateway.thegraph.com/api/3c7a8c45fdffab6d5280be3602571790/subgraphs/id/0x7dc6f99be5cf16d605bedf237771413aaa3021b1-0',
+  development:
+    'https://gateway.thegraph.com/api/cfd0e529ce4d511c6ec482c97faafa99/subgraphs/id/0x7dc6f99be5cf16d605bedf237771413aaa3021b1-0',
+}
+
 export const ethereums: Record<string, EthereumNetworkOptions> = {
   // 42: {
   //   bridge: '0xC84456ecA286194A201F844993C220150Cf22C63',
