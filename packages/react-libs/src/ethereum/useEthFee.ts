@@ -1,44 +1,24 @@
-import {BigNumber, ethers} from 'ethers'
+import {ethers} from 'ethers'
 import {isHexString} from 'ethers/lib/utils'
-import {useMemo} from 'react'
+import {useCallback, useEffect, useState} from 'react'
 import {useNetworkContext} from '../polkadot/hooks/useSubstrateNetwork'
 import {useBridgeContract} from './bridge/useBridgeContract'
-import {useEthers} from './contexts/useEthers'
 import {useEthereumNetworkOptions} from './queries/useEthereumNetworkOptions'
 import {useEthersNetworkQuery} from './queries/useEthersNetworkQuery'
-// import {useNetworkContext} from '../../polkadot/hooks/useSubstrateNetwork'
-// import {useEthers} from '../contexts/useEthers'
-// import {useEthereumNetworkOptions} from '../queries/useEthereumNetworkOptions'
-// import {useEthersNetworkQuery} from '../queries/useEthersNetworkQuery'
-// import {useBridgeContract} from './useBridgeContract'
 
-type DepositSubmitFn = (
-  amount: BigNumber,
-  recipient: string
-) => Promise<ethers.providers.TransactionResponse> // TODO: use HexString
-
-/**
- * Submits a transfer of ERC-20 tokens from Ethereum to Substrate
- */
-export const useEthFee = (sender?: string): DepositSubmitFn | undefined => {
+export const useEthFee = (recipient?: string) => {
   const {contract} = useBridgeContract()
   const {network: substrateName} = useNetworkContext()
   const {options: config} = useEthereumNetworkOptions()
   const {data: network} = useEthersNetworkQuery()
-  const {provider} = useEthers()
+  const [fee, setFee] = useState<number | undefined>()
 
-  const bridge = useMemo(() => {
-    return contract !== undefined && provider !== undefined
-      ? contract.connect(provider.getSigner(sender))
-      : undefined
-  }, [contract, provider, sender])
+  const estimateGas = useCallback(async () => {
+    const amount = ethers.utils.parseUnits('1', 18)
 
-  return useMemo(() => {
     if (
-      bridge === undefined ||
       config === undefined ||
       network === undefined ||
-      sender === undefined ||
       substrateName === undefined
     ) {
       return undefined
@@ -48,38 +28,42 @@ export const useEthFee = (sender?: string): DepositSubmitFn | undefined => {
       | number
       | undefined
 
-    return async (amount, recipient) => {
-      if (destChainId === undefined) {
-        throw new Error(
-          `Unsupported Ethereum network: ${network.name} (${network.chainId})`
-        )
-      }
-
-      if (typeof bridge.functions['deposit'] !== 'function') {
-        throw new Error(
-          'Assertion failed: deposit should be available on the bridge contract'
-        )
-      }
-
-      if (!isHexString(recipient)) {
-        throw new Error('Validation failed: recipient should be hex string')
-      }
-
-      const amountPayload = ethers.utils
-        .hexZeroPad(amount.toHexString(), 32)
-        .substr(2)
-      const recipientPayload = recipient.substr(2)
-      const recipientSize = ethers.utils
-        .hexZeroPad(ethers.utils.hexlify(recipientPayload.length / 2), 32)
-        .substr(2)
-
-      const payload = `0x${amountPayload}${recipientSize}${recipientPayload}`
-
-      return await (bridge.functions['deposit'](
-        destChainId,
-        config.erc20ResourceId,
-        payload
-      ) as Promise<ethers.providers.TransactionResponse>)
+    if (destChainId === undefined) {
+      throw new Error(
+        `Unsupported Ethereum network: ${network.name} (${network.chainId})`
+      )
     }
-  }, [bridge, config, network, sender, substrateName])
+
+    if (!isHexString(recipient) || !recipient) {
+      throw new Error('Validation failed: recipient should be hex string')
+    }
+
+    const amountPayload = ethers.utils
+      .hexZeroPad(amount.toHexString(), 32)
+      .substr(2)
+    const recipientPayload = recipient.substr(2)
+    const recipientSize = ethers.utils
+      .hexZeroPad(ethers.utils.hexlify(recipientPayload.length / 2), 32)
+      .substr(2)
+
+    const payload = `0x${amountPayload}${recipientSize}${recipientPayload}`
+
+    const result = await contract?.estimateGas?.deposit?.(
+      destChainId,
+      config.erc20ResourceId,
+      payload
+    )
+
+    setFee(result?.toNumber())
+
+    console.error('fee', result?.toNumber())
+
+    return result
+  }, [config, contract?.estimateGas, network, recipient, substrateName])
+
+  useEffect(() => {
+    estimateGas()
+  }, [estimateGas])
+
+  return fee
 }

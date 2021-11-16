@@ -41,7 +41,7 @@ const SubmitStepToKhala: React.FC<Props> = (props) => {
   )
   const {refetch} = useErc20BalanceQuery(accountFrom)
 
-  useEthFee()
+  useEthFee('0x4b510EDb1f076f1664a1416Eb34a1a7880D2DAA7')
 
   // bridgeContract.contract?.estimateGas().then((gas) => {
   //   console.log('gas', gas.toNumber())
