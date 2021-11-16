@@ -7,7 +7,8 @@ import {useBridgeContract} from './bridge/useBridgeContract'
 import {useEthereumNetworkOptions} from './queries/useEthereumNetworkOptions'
 import {useEthersNetworkQuery} from './queries/useEthersNetworkQuery'
 
-export const useEthFee = (recipient?: string) => {
+export const useEthereumBridgeFee = () => {
+  const recipient = '0x4b510EDb1f076f1664a1416Eb34a1a7880D2DAA7'
   const {contract} = useBridgeContract()
   const {network: substrateName} = useNetworkContext()
   const {options: config} = useEthereumNetworkOptions()
