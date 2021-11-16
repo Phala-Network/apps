@@ -19,7 +19,7 @@ export const EthereumToKhalaFee: FC = (props) => {
 
   return (
     <Root {...props}>
-      <Label>Bridge Fee:</Label> {ethFee?.toFixed(4) || '...'} ETH
+      <Label>Fee:</Label> {ethFee?.toFixed(4) || '...'} ETH
       {children}
     </Root>
   )
