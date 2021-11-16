@@ -3,7 +3,7 @@ import {TransactionInfoItem} from '@phala/app-types'
 import {
   useErc20BalanceQuery,
   useErc20Deposit,
-  useEthFee,
+  useEthereumBridgeFee,
   useTransactionReceiptQuery,
 } from '@phala/react-libs'
 import {u8aToHex} from '@polkadot/util'
@@ -41,9 +41,7 @@ const SubmitStepToKhala: React.FC<Props> = (props) => {
   )
   const {refetch} = useErc20BalanceQuery(accountFrom)
 
-  const ethFee = useEthFee('0x4b510EDb1f076f1664a1416Eb34a1a7880D2DAA7')
-
-  console.error('ethFee', ethFee)
+  const ethFee = useEthereumBridgeFee()
 
   const submit = async () => {
     setSubmitting(true)
@@ -117,6 +115,8 @@ const SubmitStepToKhala: React.FC<Props> = (props) => {
 
       {!transactionsInfoSuccess && (
         <ModalActions>
+          <div style={{flex: 1}}>Fee: {ethFee?.toFixed(4)} ETH</div>
+
           {onPrev && !isSubmitting && !isReceiptLoading && (
             <ModalAction>
               <Button onClick={onPrev}>Back</Button>
