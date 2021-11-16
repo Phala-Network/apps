@@ -6,10 +6,10 @@ import {Backdrop} from '../Backdrop'
 import {FloatModalHeader} from './FloatModalHeader'
 
 const Root = styled.div`
-  position: fixed;
   width: 210px;
   height: 44px;
   right: 48px;
+  margin-left: auto;
   bottom: 48px;
   transform: translate3d(0, 0, 0);
   background: #000000;
