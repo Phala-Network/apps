@@ -25,6 +25,7 @@ import {
 } from '../..'
 import {StepProps} from '../BridgeProcess'
 import EthereumAllowance from '../EthereumAllowance'
+import {EthereumToKhalaFee} from '../EthereumToKhalaFee'
 import FormItem from '../FormItem'
 import FormLayout from '../FormLayout'
 import ActionButton from './ActionButton'
@@ -239,11 +240,10 @@ const InputDataStep: React.FC<Props> = (props) => {
       </FormLayout>
 
       <ModalActions>
-        {isFromKhala && (
-          <KhalaToEthereumFee
-            style={{padding: 8, flex: 1}}
-          ></KhalaToEthereumFee>
-        )}
+        <div style={{padding: 8, flex: 1}}>
+          {isFromKhala && <KhalaToEthereumFee />}
+          {isFromEthereum && <EthereumToKhalaFee />}
+        </div>
 
         {onCancel && (
           <ModalAction>
