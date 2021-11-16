@@ -20,9 +20,7 @@ type DepositSubmitFn = (
 /**
  * Submits a transfer of ERC-20 tokens from Ethereum to Substrate
  */
-export const useErc20Deposit = (
-  sender?: string
-): DepositSubmitFn | undefined => {
+export const useEthFee = (sender?: string): DepositSubmitFn | undefined => {
   const {contract} = useBridgeContract()
   const {network: substrateName} = useNetworkContext()
   const {options: config} = useEthereumNetworkOptions()
