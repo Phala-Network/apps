@@ -18,7 +18,7 @@ export const KhalaProcess: FC<ProgressProps> = (props) => {
       text: 'Khala Confirmed',
       ...(progressIndex > 0
         ? {
-            link: `https://phala-testnet.subscan.io/account/${khalaAddress}?tab=transfer`,
+            link: `https://khala.subscan.io/account/${khalaAddress}?tab=transfer`,
           }
         : {}),
     },
@@ -29,7 +29,7 @@ export const KhalaProcess: FC<ProgressProps> = (props) => {
       text: 'Ethereum Confirmed',
       ...(progressIndex === 3
         ? {
-            link: `https://kovan.etherscan.io/address/${etherscanAddress}#tokentxns`,
+            link: `https://etherscan.io/address/${etherscanAddress}#tokentxns`,
           }
         : {}),
     },
