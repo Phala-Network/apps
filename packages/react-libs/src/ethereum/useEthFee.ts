@@ -1,6 +1,7 @@
 import {ethers} from 'ethers'
 import {isHexString} from 'ethers/lib/utils'
 import {useCallback, useEffect, useState} from 'react'
+import {useEthers} from '..'
 import {useNetworkContext} from '../polkadot/hooks/useSubstrateNetwork'
 import {useBridgeContract} from './bridge/useBridgeContract'
 import {useEthereumNetworkOptions} from './queries/useEthereumNetworkOptions'
@@ -12,11 +13,18 @@ export const useEthFee = (recipient?: string) => {
   const {options: config} = useEthereumNetworkOptions()
   const {data: network} = useEthersNetworkQuery()
   const [fee, setFee] = useState<number | undefined>()
+  const [gasPrice, setGasPrice] = useState<number | undefined>()
+  const {provider} = useEthers()
+
+  provider?.getGasPrice().then((gasPrice) => {
+    setGasPrice(parseFloat(ethers.utils.formatUnits(gasPrice, 'gwei')))
+  })
 
   const estimateGas = useCallback(async () => {
     const amount = ethers.utils.parseUnits('1', 18)
 
     if (
+      gasPrice === undefined ||
       config === undefined ||
       network === undefined ||
       substrateName === undefined
@@ -54,12 +62,19 @@ export const useEthFee = (recipient?: string) => {
       payload
     )
 
-    setFee(result?.toNumber())
-
-    console.error('fee', result?.toNumber())
+    if (result) {
+      setFee((result?.toNumber() * gasPrice * 1e9) / 1e18)
+    }
 
     return result
-  }, [config, contract?.estimateGas, network, recipient, substrateName])
+  }, [
+    config,
+    contract?.estimateGas,
+    network,
+    recipient,
+    substrateName,
+    gasPrice,
+  ])
 
   useEffect(() => {
     estimateGas()

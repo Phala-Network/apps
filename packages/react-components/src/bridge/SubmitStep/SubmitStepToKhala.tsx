@@ -41,20 +41,9 @@ const SubmitStepToKhala: React.FC<Props> = (props) => {
   )
   const {refetch} = useErc20BalanceQuery(accountFrom)
 
-  useEthFee('0x4b510EDb1f076f1664a1416Eb34a1a7880D2DAA7')
+  const ethFee = useEthFee('0x4b510EDb1f076f1664a1416Eb34a1a7880D2DAA7')
 
-  // bridgeContract.contract?.estimateGas().then((gas) => {
-  //   console.log('gas', gas.toNumber())
-  // })
-
-  if (accountFrom && accountTo) {
-    // provider?.getFeeData().then((feeData) => {
-    //   console.log(
-    //     'gasPrice',
-    //     parseFloat(utils.formatUnits(feeData.gasPrice.toString(), 'gwei'))
-    //   )
-    // })
-  }
+  console.error('ethFee', ethFee)
 
   const submit = async () => {
     setSubmitting(true)
