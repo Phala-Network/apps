@@ -3,7 +3,7 @@ import {useEffect} from 'react'
 
 export function useZendeskHack() {
   const {width = 0} = useWindowSize()
-  const right = width < 660 ? '20px' : '48px'
+  const right = width < 990 ? '20px' : '48px'
 
   useEffect(() => {
     const timerId = setInterval(() => {
