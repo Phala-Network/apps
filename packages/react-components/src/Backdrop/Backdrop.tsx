@@ -5,11 +5,13 @@ import {Content, Layer, Wrap} from './styledComponents'
 export interface BackdropProps {
   onClick?: (event: MouseEvent<HTMLElement>) => void
   visible?: boolean
+  zIndex?: number
 }
 
 export const Backdrop: React.FC<BackdropProps> = ({
   children,
   onClick,
+  zIndex = 1000,
   visible = false,
   ...props
 }) => {
@@ -34,12 +36,13 @@ export const Backdrop: React.FC<BackdropProps> = ({
 
   return (
     <Wrap
+      style={{zIndex}}
       className="backdrop"
       onClick={clickHandler}
       onMouseUp={mouseUpHandler}
       {...props}
     >
-      <Layer></Layer>
+      <Layer style={{zIndex}}></Layer>
       <Content
         onClick={childrenClickHandler}
         className="content"

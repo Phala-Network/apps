@@ -1,6 +1,6 @@
 import {useClickAway} from '@phala/react-hooks'
 import {FC, useEffect, useRef, useState} from 'react'
-import {down, up} from 'styled-breakpoints'
+import {down} from 'styled-breakpoints'
 import styled from 'styled-components'
 import {Backdrop} from '../Backdrop'
 import {FloatModalHeader} from './FloatModalHeader'
@@ -14,12 +14,8 @@ const Root = styled.div`
   background: #000000;
   color: white;
   box-sizing: border-box;
-  z-index: 900;
+  z-index: 950;
   transition: all 0.2s ease;
-
-  ${up('sm')} {
-    right: 40px;
-  }
 
   ${down('sm')} {
     position: fixed;
@@ -64,7 +60,7 @@ export const FloatModal: FC<FloatModalProps> = (props) => {
 
   return (
     <>
-      <Backdrop visible={active} />
+      <Backdrop visible={active} zIndex={900} />
       <Root ref={rootRef} className={active ? 'active' : ''}>
         <FloatModalHeader
           active={active}
