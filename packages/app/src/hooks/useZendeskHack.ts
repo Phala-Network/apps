@@ -27,7 +27,7 @@ export function useZendeskHack() {
 
       result.forEach((iframe) => {
         iframe.style.right = right
-        iframe.style.zIndex = '1000'
+        iframe.style.zIndex = '100'
 
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
