@@ -12,6 +12,7 @@ import {ReactQueryDevtools} from 'react-query/devtools'
 import {ThemeProvider} from 'styled-components'
 import './fonts.css'
 import useCustomEndpoint from './hooks/useCustomEndpoint'
+import {useZendeskHack} from './hooks/useZendeskHack'
 import theme from './theme'
 
 const WrapApp: React.FC = ({children}) => {
@@ -45,6 +46,8 @@ const WrapApp: React.FC = ({children}) => {
   useLayoutEffect(() => {
     getCMSLog().catch((e) => Sentry.captureException(e))
   }, [])
+
+  useZendeskHack()
 
   return (
     <I18nextProvider>
