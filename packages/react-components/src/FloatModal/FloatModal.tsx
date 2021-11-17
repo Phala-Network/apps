@@ -1,6 +1,6 @@
 import {useClickAway} from '@phala/react-hooks'
 import {FC, useEffect, useRef, useState} from 'react'
-import {down} from 'styled-breakpoints'
+import {down, up} from 'styled-breakpoints'
 import styled from 'styled-components'
 import {Backdrop} from '../Backdrop'
 import {FloatModalHeader} from './FloatModalHeader'
@@ -8,19 +8,23 @@ import {FloatModalHeader} from './FloatModalHeader'
 const Root = styled.div`
   width: 210px;
   height: 44px;
-  right: 48px;
   margin-left: auto;
   bottom: 48px;
   transform: translate3d(0, 0, 0);
   background: #000000;
   color: white;
   box-sizing: border-box;
-  z-index: 9000;
+  z-index: 900;
   transition: all 0.2s ease;
 
+  ${up('sm')} {
+    right: 40px;
+  }
+
   ${down('sm')} {
-    right: 0;
-    bottom: 0;
+    position: fixed;
+    left: 16px;
+    bottom: 16px;
     border: none;
   }
 
@@ -32,7 +36,9 @@ const Root = styled.div`
     color: black;
 
     ${down('sm')} {
-      width: 100vw;
+      width: 100%;
+      left: 0;
+      bottom: 0;
     }
   }
 `
