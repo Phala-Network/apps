@@ -27,6 +27,7 @@ export function useZendeskHack() {
 
       result.forEach((iframe) => {
         iframe.style.right = right
+        iframe.style.zIndex = '1000'
 
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
@@ -42,6 +43,10 @@ export function useZendeskHack() {
           clearInterval(timerId)
         }
       })
+
+      return () => {
+        clearInterval(timerId)
+      }
     }, 200)
   }, [right])
 }

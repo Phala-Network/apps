@@ -15,7 +15,7 @@ const Root = styled.div`
   background: #000000;
   color: white;
   box-sizing: border-box;
-  z-index: 1000;
+  z-index: 9000;
   transition: all 0.2s ease;
 
   ${down('sm')} {
