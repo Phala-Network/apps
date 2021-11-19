@@ -122,7 +122,7 @@ export const SubmitStepToEthereum: React.FC<Props> = (props) => {
           <span>
             This transaction will charge an additional{' '}
             <span style={{fontWeight: 'bold'}}>
-              {fee?.toFixed(2) || '...'} PHA
+              {fee?.toFixed(2) || '-'} PHA
             </span>{' '}
             bridge fee to cover the Ethereum gas fee (up to 120 GWei price). The
             transaction may take some time ranged from a few seconds to a few
