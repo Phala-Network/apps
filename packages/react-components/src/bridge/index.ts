@@ -1,4 +1,5 @@
 export {default as BridgeModal} from './BridgeModal'
+export {default as EthereumAllowance} from './EthereumAllowance'
 export {default as FormLayout} from './FormLayout'
 export {default as InputDataStep} from './InputDataStep'
 export type {InputDataStepResult} from './InputDataStep'

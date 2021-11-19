@@ -1,6 +1,7 @@
 import {ethereums} from '@phala/app-config'
 import {
   useErc20Contract,
+  useEthereumBridgeApproveFee,
   useEthers,
   useTransactionReceiptQuery,
 } from '@phala/react-libs'
@@ -8,6 +9,7 @@ import {ethers} from 'ethers'
 import React, {useEffect, useState} from 'react'
 import styled from 'styled-components'
 import {Button, Modal, ModalAction, ModalActions} from '../..'
+import {Fee} from '../Fee'
 
 type Props = {
   visible: boolean
@@ -30,6 +32,7 @@ const ApproveDialog: React.FC<Props> = (props) => {
   const [isSubmitting, setSubmitting] = useState<boolean>(false)
   const [approveHash, setApproveHash] = useState('')
   const {data: receipt} = useTransactionReceiptQuery(approveHash)
+  const fee = useEthereumBridgeApproveFee()
 
   const startApprove = async () => {
     try {
@@ -70,6 +73,8 @@ const ApproveDialog: React.FC<Props> = (props) => {
         In order for the bridge to move your ERC20 tokens to Khala Network, it
         first needs your approval. This is only required once per ERC20 token!
       </Content>
+      <br />
+      <Fee label="Fee" fee={(fee?.toFixed(6) || '') + ' ETH'}></Fee>
 
       <ModalActions>
         <ModalAction full>
