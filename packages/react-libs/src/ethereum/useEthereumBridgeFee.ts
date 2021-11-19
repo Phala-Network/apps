@@ -57,17 +57,22 @@ export const useEthereumBridgeFee = () => {
 
     const payload = `0x${amountPayload}${recipientSize}${recipientPayload}`
 
-    const result = await contract?.estimateGas?.deposit?.(
-      destChainId,
-      config.erc20ResourceId,
-      payload
-    )
+    try {
+      const result = await contract?.estimateGas?.deposit?.(
+        destChainId,
+        config.erc20ResourceId,
+        payload
+      )
 
-    if (result) {
-      setFee((result?.toNumber() * gasPrice * 1e9) / 1e18)
+      if (result) {
+        setFee((result?.toNumber() * gasPrice * 1e9) / 1e18)
+        return result
+      }
+    } catch (e) {
+      console.error(e)
     }
 
-    return result
+    return 0
   }, [
     config,
     contract?.estimateGas,

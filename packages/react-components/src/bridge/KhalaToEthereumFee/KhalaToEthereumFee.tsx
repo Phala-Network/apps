@@ -62,7 +62,7 @@ export const KhalaToEthereumFee: FC<KhalaToEthereumFeeProps> = (props) => {
 
   return (
     <Root {...props}>
-      <Label>Bridge Fee:</Label> {fee?.toFixed(2) || '...'} PHA
+      <Label>Bridge Fee:</Label> {fee?.toFixed(2) || '-'} PHA
       {children}
     </Root>
   )

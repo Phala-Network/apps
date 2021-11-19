@@ -14,11 +14,13 @@ export function useEthereumBridgeApproveFee() {
   })
 
   useEffect(() => {
-    const network = ethereums[provider?.network.chainId as number]
+    const network = ethereums[provider?.network?.chainId as number]
 
     if (
+      provider === undefined ||
       contract === undefined ||
       network === undefined ||
+      network.erc20AssetHandler === undefined ||
       signer === undefined
     ) {
       return
@@ -26,15 +28,19 @@ export function useEthereumBridgeApproveFee() {
 
     const contractSigned = contract.connect(signer)
 
-    contractSigned.estimateGas
-      .approve?.(
-        network.erc20AssetHandler,
-        ethers.utils.parseUnits('11451419810', 18)
-      )
-      .then((result) =>
-        setFee((result?.toNumber() * (gasPrice ?? 150) * 1e9) / 1e18)
-      )
-  }, [contract, gasPrice, provider?.network.chainId, signer])
+    try {
+      contractSigned.estimateGas
+        .approve?.(
+          network.erc20AssetHandler,
+          ethers.utils.parseUnits('11451419810', 18)
+        )
+        .then((result) =>
+          setFee((result?.toNumber() * (gasPrice ?? 150) * 1e9) / 1e18)
+        )
+    } catch (e) {
+      console.error(e)
+    }
+  }, [contract, provider, gasPrice, signer])
 
   return fee
 }
