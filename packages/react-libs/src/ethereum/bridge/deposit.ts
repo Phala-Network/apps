@@ -75,7 +75,10 @@ export const useErc20Deposit = (
       return await (bridge.functions['deposit'](
         destChainId,
         config.erc20ResourceId,
-        payload
+        payload,
+        {
+          gasLimit: 350000,
+        }
       ) as Promise<ethers.providers.TransactionResponse>)
     }
   }, [bridge, config, network, sender, substrateName])
