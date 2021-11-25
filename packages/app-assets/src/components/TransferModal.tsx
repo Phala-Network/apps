@@ -1,14 +1,14 @@
 import {usePolkadotAccountAtom} from '@phala/app-store'
-import {Button, Modal, Input} from '@phala/react-components'
+import {Button, Input, Modal} from '@phala/react-components'
 import {
   useApiPromise,
   useDecimalJsTokenDecimalMultiplier,
   waitSignAndSend,
 } from '@phala/react-libs'
+import {validateAddress} from '@phala/utils'
+import Decimal from 'decimal.js'
 import React, {useCallback, useState} from 'react'
 import {toast} from 'react-toastify'
-import Decimal from 'decimal.js'
-import {validateAddress} from '@phala/utils'
 import styled from 'styled-components'
 
 type Props = {
@@ -77,26 +77,22 @@ const TransferModal: React.FC<Props> = ({visible, onClose}) => {
             confirm().finally(() => setLoading(false))
           }}
           key="confirm"
-          type="primary"
-        >
+          type="primary">
           {loading ? 'Confirming' : 'Confirm'}
         </Button>,
-      ]}
-    >
+      ]}>
       <Input
         size="large"
         placeholder="Address"
         value={address}
-        onChange={setAddress}
-      ></Input>
+        onChange={setAddress}></Input>
       <Spacer></Spacer>
       <Input
         size="large"
         after="PHA"
         placeholder="Amount"
         value={amount}
-        onChange={setAmount}
-      ></Input>
+        onChange={setAmount}></Input>
     </Modal>
   )
 }
