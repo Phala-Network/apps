@@ -15,6 +15,7 @@ import {
   Alert,
   Button,
   Checkbox,
+  FeeLabel,
   KhalaToEthereumFee,
   ModalAction,
   ModalActions,
@@ -22,7 +23,6 @@ import {
 } from '../../..'
 import {Link} from '../../../Announcement/styledComponents'
 import {StepProps} from '../../BridgeProcess'
-import {Fee} from '../../Fee'
 import useTransactionInfo from '../../hooks/useTransactionInfo'
 import BaseInfo from '../BaseInfo'
 
@@ -213,7 +213,7 @@ export const SubmitStepToEthereum: React.FC<Props> = (props) => {
         <ModalActions>
           <div style={{flex: 1}}>
             <KhalaToEthereumFee />
-            <Fee fee={transactionFee} label={'Fee'}></Fee>
+            <FeeLabel fee={transactionFee} label={'Fee'} />
           </div>
 
           {onPrev && !isSubmitting && (

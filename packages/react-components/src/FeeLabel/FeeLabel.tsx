@@ -12,12 +12,12 @@ const Label = styled.span`
   display: block;
 `
 
-export type FeeProps = ComponentPropsWithoutRef<typeof Root> & {
+export type FeeLabelProps = ComponentPropsWithoutRef<typeof Root> & {
   fee: string
   label?: string
 }
 
-export const Fee: FC<FeeProps> = (props) => {
+export const FeeLabel: FC<FeeLabelProps> = (props) => {
   const {children, label, fee} = props
 
   return (
