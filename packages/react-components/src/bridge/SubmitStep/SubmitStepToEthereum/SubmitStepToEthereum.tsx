@@ -137,14 +137,14 @@ export const SubmitStepToEthereum: React.FC<Props> = (props) => {
             24h. You can follow each step of the transaction through{' '}
             <Link
               target="_blank"
-              href={`https://phala-testnet.subscan.io/account/${transactionInfo.from.address}?tab=transfer`}
+              href={`https://khala.subscan.io/account/${transactionInfo.from.address}?tab=transfer`}
             >
               Khala&apos;s explorer
             </Link>{' '}
             and{' '}
             <Link
               target="_blank"
-              href={`https://kovan.etherscan.io/address/${transactionInfo.to.address}#tokentxns`}
+              href={`https://etherscan.io/address/${transactionInfo.to.address}#tokentxns`}
             >
               Ethereum&apos;s explorer
             </Link>{' '}
