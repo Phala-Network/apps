@@ -53,7 +53,7 @@ importers:
       '@phala/react-hooks': workspace:*
       '@phala/react-i18n': workspace:^0.0.1
       '@phala/react-libs': workspace:*
-      '@phala/typedefs': ^0.2.25
+      '@phala/typedefs': 0.2.29
       '@phala/utils': workspace:*
       '@polkadot/api': ^4.17.1
       '@polkadot/api-derive': ^5.8.3
@@ -124,7 +124,7 @@ importers:
       '@phala/react-hooks': link:../react-hooks
       '@phala/react-i18n': link:../react-i18n
       '@phala/react-libs': link:../react-libs
-      '@phala/typedefs': 0.2.28
+      '@phala/typedefs': 0.2.29
       '@phala/utils': link:../utils
       '@polkadot/api': 4.17.1
       '@polkadot/api-derive': 5.8.3
@@ -263,11 +263,11 @@ importers:
 
   packages/app-config:
     specifiers:
-      '@phala/typedefs': ^0.2.28
+      '@phala/typedefs': 0.2.29
       '@polkadot/types': ^4.17.1
       '@types/node': ^16.10.3
     dependencies:
-      '@phala/typedefs': 0.2.28
+      '@phala/typedefs': 0.2.29
       '@polkadot/types': 4.17.1
       '@types/node': 16.10.3
 
@@ -501,7 +501,7 @@ importers:
     specifiers:
       '@phala/app-config': workspace:*
       '@phala/react-graph-chainbridge': workspace:^0.0.1
-      '@phala/typedefs': ^0.2.25
+      '@phala/typedefs': 0.2.29
       '@phala/utils': workspace:*
       '@polkadot/api': ^4.17.1
       '@polkadot/extension-dapp': ^0.38.8
@@ -527,7 +527,7 @@ importers:
     dependencies:
       '@phala/app-config': link:../app-config
       '@phala/react-graph-chainbridge': link:../react-graph-chainbridge
-      '@phala/typedefs': 0.2.28
+      '@phala/typedefs': 0.2.29
       '@phala/utils': link:../utils
       '@polkadot/api': 4.17.1
       '@polkadot/extension-dapp': 0.38.8_@polkadot+api@4.17.1
@@ -4643,8 +4643,8 @@ packages:
       mkdirp: 1.0.4
       rimraf: 3.0.2
 
-  /@phala/typedefs/0.2.28:
-    resolution: {integrity: sha512-2TLB2bR2XaWgnRVXsfQ1doIbYXI+tBFSFKzaDYcpAaVyeON12pV1YD0qeJIgF6ORsydONR84ULLIQU3L9gTN2A==}
+  /@phala/typedefs/0.2.29:
+    resolution: {integrity: sha512-nchW9rpTNLXzxxn3AE2IE5gj1uRE59ZL+OjUh4axaI/0V06j5hdssG7WayhYONi0/ZQWPNJJq9cxrnAtd4G0Ew==}
     dependencies:
       '@polkadot/types': 5.9.1
     dev: false
