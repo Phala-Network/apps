@@ -53,14 +53,12 @@ const ActionModal: React.FC<ActionModalProps> = (props) => {
           key="confirm"
           type="primary"
           onClick={onConfirmClick}
-          loading={loading}
-        >
+          loading={loading}>
           Confirm
         </Button>,
       ]}
       onClose={onClose}
-      {...restProps}
-    >
+      {...restProps}>
       {Boolean(subtitle) && <Subtitle>{subtitle}</Subtitle>}
       {children}
     </Modal>

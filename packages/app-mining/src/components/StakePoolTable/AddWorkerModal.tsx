@@ -31,16 +31,14 @@ const AddWorkerModal = (props: StakePoolModalProps): JSX.Element => {
       onClose={onClose}
       onConfirm={onConfirm}
       title="Add Worker"
-      disabled={!pubkey}
-    >
+      disabled={!pubkey}>
       <Label>pid</Label>
       <Value>{stakePool.pid}</Value>
       <Label>Pubkey</Label>
       <Input
         placeholder="Public Key"
         value={pubkey}
-        onChange={onInputChange}
-      ></Input>
+        onChange={onInputChange}></Input>
     </ActionModal>
   )
 }

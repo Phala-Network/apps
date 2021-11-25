@@ -9,8 +9,7 @@ export default {
         height="32"
         viewBox="0 0 32 32"
         fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
+        xmlns="http://www.w3.org/2000/svg">
         <path
           d="M21.3298 16.4229L15.9983 8L10.6666 16.4229L15.9983 18.6667L21.3298 16.4229Z"
           fill="currentColor"
@@ -32,8 +31,7 @@ export default {
         height="32"
         viewBox="0 0 32 32"
         fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
+        xmlns="http://www.w3.org/2000/svg">
         <path
           d="M12.9445 9.33301H9.33337V22.6663H12.9445V9.33301Z"
           fill="currentColor"

@@ -81,8 +81,7 @@ const HomePage: React.FC = () => {
           title="Phala"
           description={`Total: ${
             totalBalanceNumber ? toFixed(totalBalanceNumber, 4) : '-'
-          } PHA`}
-        >
+          } PHA`}>
           {/* FIXME: balance can be preset with name and icon */}
 
           <BalanceCard
@@ -96,8 +95,7 @@ const HomePage: React.FC = () => {
             balance={polkadotAccountBalanceNumber}
             disableBridge
             disableConvert
-            dollar={polkadotAccountBalanceNumber?.mul(PHAPrice)}
-          ></BalanceCard>
+            dollar={polkadotAccountBalanceNumber?.mul(PHAPrice)}></BalanceCard>
 
           {md && (
             <BalanceCard
@@ -113,8 +111,9 @@ const HomePage: React.FC = () => {
               disableBridge
               disableConvert
               disableClaim
-              dollar={ethereumAccountBalanceNumber?.mul(PHAPrice)}
-            ></BalanceCard>
+              dollar={ethereumAccountBalanceNumber?.mul(
+                PHAPrice
+              )}></BalanceCard>
           )}
         </Category>
         {COMING_SOON_CATEGORIES.map((category) => (

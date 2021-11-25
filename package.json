@@ -10,6 +10,7 @@
     "develop:deps": "pnpm --parallel --filter ./packages  --filter !./packages/app run develop",
     "preinstall": "npx only-allow pnpm",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "format": "prettier-eslint --list-different --write \"./packages/**/*.tsx\"",
     "prepare": "husky install"
   },
   "repository": {
@@ -38,6 +39,8 @@
     "husky": "^7.0.2",
     "lint-staged": "^11.2.3",
     "prettier": "^2.4.1",
+    "prettier-eslint": "^13.0.0",
+    "prettier-eslint-cli": "^5.0.1",
     "ts-node": "^10.3.0"
   },
   "lint-staged": {

@@ -78,8 +78,7 @@ const StartModal = (props: WorkerModalProps): JSX.Element => {
       onConfirm={onConfirm}
       title="Start Mining"
       subtitle="Start a miner on behalf of the stake pool"
-      disabled={!amount}
-    >
+      disabled={!amount}>
       <Label>pid</Label>
       <Value>{worker.pid}</Value>
       <Label>WorkerPublicKey</Label>
@@ -90,8 +89,7 @@ const StartModal = (props: WorkerModalProps): JSX.Element => {
         placeholder="Amount"
         value={amount}
         onChange={onInputChange}
-        after="PHA"
-      ></InputNumber>
+        after="PHA"></InputNumber>
 
       <Extra>Smin: {sMin}</Extra>
       <Extra>Smax: {sMax}</Extra>

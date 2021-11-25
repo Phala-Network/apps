@@ -74,8 +74,7 @@ const StakeInfoModal = (props: StakePoolModalProps): JSX.Element => {
         <Button key="close" onClick={onClose}>
           Close
         </Button>,
-      ]}
-    >
+      ]}>
       <Line>
         <div>
           <Label>Total Shares</Label>
@@ -103,8 +102,7 @@ const StakeInfoModal = (props: StakePoolModalProps): JSX.Element => {
         isLoading={isLoading}
         columns={withdrawQueueColumns}
         data={stakePool.withdrawQueue}
-        initialState={{pageSize: 5}}
-      ></Table>
+        initialState={{pageSize: 5}}></Table>
 
       <Line>
         <div>

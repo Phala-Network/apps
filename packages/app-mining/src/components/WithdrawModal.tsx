@@ -56,8 +56,7 @@ const WithdrawModal = (props: StakePoolModalProps): JSX.Element => {
       }}
       onConfirm={onConfirm}
       title="Withdraw"
-      disabled={!amount}
-    >
+      disabled={!amount}>
       <Label>pid</Label>
       <Value>{stakePool.pid}</Value>
       <Label>Delegation</Label>
@@ -66,8 +65,7 @@ const WithdrawModal = (props: StakePoolModalProps): JSX.Element => {
         placeholder="Amount"
         value={amount}
         onChange={onInputChange}
-        after="PHA"
-      ></InputNumber>
+        after="PHA"></InputNumber>
       <Alert style={{marginTop: '10px'}}>
         {hasWithdrawing
           ? 'You have a pending withdraw request! Only one withdraw request is kept. Resubmission will replace the existing one and reset the countdown.'

@@ -28,8 +28,7 @@ const EthereumAllowance: FC<Props> = (props: Props) => {
       })}
       <ApproveDialog
         visible={modalVisible}
-        onClose={() => setModalVisible(false)}
-      ></ApproveDialog>
+        onClose={() => setModalVisible(false)}></ApproveDialog>
     </>
   )
 }

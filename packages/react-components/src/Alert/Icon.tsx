@@ -7,8 +7,7 @@ export default function Icon(): ReactElement {
       height="20"
       viewBox="0 0 20 20"
       fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
+      xmlns="http://www.w3.org/2000/svg">
       <path d="M9 7V5H11V7H9Z" fill="#494949" />
       <path d="M9 15V9H11V15H9Z" fill="#494949" />
       <path

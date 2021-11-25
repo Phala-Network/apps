@@ -22,8 +22,7 @@ const RemoveModal = (props: WorkerModalProps): JSX.Element => {
       onClose={onClose}
       onConfirm={onConfirm}
       title="Remove Worker"
-      subtitle="Remove a worker from a pool"
-    >
+      subtitle="Remove a worker from a pool">
       <Label>pid</Label>
       <Value>{worker.pid}</Value>
       <Label>WorkerPublicKey</Label>

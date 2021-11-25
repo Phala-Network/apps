@@ -102,8 +102,7 @@ const FeedbackModal: React.FC<ModalProps> = (props) => {
         onChange={setName}
         name="name"
         size="large"
-        placeholder="Name"
-      ></Input>
+        placeholder="Name"></Input>
 
       <Spacer></Spacer>
 
@@ -111,8 +110,7 @@ const FeedbackModal: React.FC<ModalProps> = (props) => {
         onChange={setEmail}
         name="email"
         size="large"
-        placeholder="Email"
-      ></Input>
+        placeholder="Email"></Input>
 
       <Spacer></Spacer>
 
@@ -120,8 +118,7 @@ const FeedbackModal: React.FC<ModalProps> = (props) => {
         onChange={setComments}
         name="description"
         rows={6}
-        placeholder="What Happened?"
-      ></Textarea>
+        placeholder="What Happened?"></Textarea>
 
       <ModalActions>
         <ModalAction>

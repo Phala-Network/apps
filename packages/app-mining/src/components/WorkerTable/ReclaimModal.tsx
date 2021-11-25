@@ -24,8 +24,7 @@ const ReclaimModal = (props: WorkerModalProps): JSX.Element => {
       onClose={onClose}
       onConfirm={onConfirm}
       title="Reclaim Worker"
-      subtitle="Reclaims the releasing stake of miners in a pool"
-    >
+      subtitle="Reclaims the releasing stake of miners in a pool">
       <Label>pid</Label>
       <Value>{worker.pid}</Value>
       <Label>Worker PublicKey</Label>

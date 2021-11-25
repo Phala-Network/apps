@@ -21,8 +21,7 @@ const CreateModal = (props: {onClose: () => void}): JSX.Element => {
       onClose={props.onClose}
       title="Create"
       subtitle="You will create a new stake pool"
-      onConfirm={onConfirm}
-    ></ActionModal>
+      onConfirm={onConfirm}></ActionModal>
   )
 }
 

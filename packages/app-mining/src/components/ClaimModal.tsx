@@ -48,8 +48,7 @@ const ClaimModal = (props: StakePoolModalProps): JSX.Element => {
       onConfirm={onConfirm}
       title="Claim"
       subtitle="Claim all the pending rewards of the sender and send to the `target`"
-      disabled={!address}
-    >
+      disabled={!address}>
       <Label>pid</Label>
       <Value>{stakePool.pid}</Value>
       <Label>Rewards</Label>
@@ -60,12 +59,10 @@ const ClaimModal = (props: StakePoolModalProps): JSX.Element => {
         onChange={onInputChange}
         after={
           <InputAction
-            onClick={() => setAddress(polkadotAccount?.address || '')}
-          >
+            onClick={() => setAddress(polkadotAccount?.address || '')}>
             MY ADDRESS
           </InputAction>
-        }
-      ></Input>
+        }></Input>
     </ActionModal>
   )
 }

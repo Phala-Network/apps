@@ -10,8 +10,7 @@ const Feedback: React.FC = (props) => {
       <span
         onClick={() => {
           setVisible(!visible)
-        }}
-      >
+        }}>
         {children}
       </span>
 

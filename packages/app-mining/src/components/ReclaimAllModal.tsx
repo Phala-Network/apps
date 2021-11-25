@@ -45,8 +45,7 @@ const ReclaimAllModal = (props: StakePoolModalProps): JSX.Element => {
       onClose={onClose}
       onConfirm={onConfirm}
       title="Reclaim All Worker"
-      subtitle="Reclaims the releasing stake of miners in a pool"
-    >
+      subtitle="Reclaims the releasing stake of miners in a pool">
       <Label>pid</Label>
       <Value>{stakePool.pid}</Value>
       <Label>Worker PublicKeys</Label>

@@ -34,8 +34,7 @@ export const SelectAccountModal: React.FC<SelectAccountModalProps> = (
     <Modal
       onClose={onClose}
       visible={visible}
-      title={<Center>Select An Account</Center>}
-    >
+      title={<Center>Select An Account</Center>}>
       <Content style={{paddingRight: accounts.length > 2 ? 20 : 0}}>
         {accounts.map((item) => (
           <AccountOption
@@ -45,8 +44,7 @@ export const SelectAccountModal: React.FC<SelectAccountModalProps> = (
               onSelect(account)
               onClose()
             }}
-            {...item}
-          ></AccountOption>
+            {...item}></AccountOption>
         ))}
       </Content>
       <Button style={{width: '100%'}} onClick={onClose}>
