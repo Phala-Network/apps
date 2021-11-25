@@ -1,5 +1,5 @@
 import {usePolkadotAccountAtom} from '@phala/app-store'
-import {Button, Input, Modal} from '@phala/react-components'
+import {Button, FeeLabel, Input, Modal} from '@phala/react-components'
 import {
   useApiPromise,
   useDecimalJsTokenDecimalMultiplier,
@@ -26,16 +26,17 @@ const TransferModal: React.FC<Props> = ({visible, onClose}) => {
   const [loading, setLoading] = useState(false)
   const {api} = useApiPromise()
   const [polkadotAccount] = usePolkadotAccountAtom()
-  // const allBalances = useAllBalances(polkadotAccount)
   const decimals = useDecimalJsTokenDecimalMultiplier(api)
 
   const confirm = useCallback(async () => {
     if (api && polkadotAccount && decimals) {
       let amountString: string
+
       if (!validateAddress(address)) {
         toast.error('Invalid address')
         return
       }
+
       try {
         amountString = new Decimal(amount).mul(decimals).toString()
       } catch (err) {
@@ -53,6 +54,7 @@ const TransferModal: React.FC<Props> = ({visible, onClose}) => {
           extrinsic: api.tx.balances.transfer(address, amountString),
           signer,
         })
+
         toast.success('Success')
         onClose()
       } catch (err) {
@@ -93,6 +95,17 @@ const TransferModal: React.FC<Props> = ({visible, onClose}) => {
         placeholder="Amount"
         value={amount}
         onChange={setAmount}></Input>
+      <Spacer></Spacer>
+      <FeeLabel
+        style={{
+          justifyContent: 'flex-end',
+        }}
+        key="fee"
+        label="Fee"
+        fee={
+          api?.consts.transactionPayment?.transactionByteFee.toHuman() || '-'
+        }
+      />
     </Modal>
   )
 }
