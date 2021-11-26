@@ -1,1 +1,1 @@
-export * from './PolkadotTransactionFeeLabel'
+export * from './PhalaStakePoolTransactionFeeLabel'

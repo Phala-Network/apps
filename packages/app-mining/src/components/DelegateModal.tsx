@@ -1,4 +1,7 @@
-import {Alert, InputNumber} from '@phala/react-components'
+import {
+  InputNumber,
+  PhalaStakePoolTransactionFeeLabel,
+} from '@phala/react-components'
 import {
   useApiPromise,
   useDecimalJsTokenDecimalMultiplier,
@@ -45,9 +48,7 @@ const DelegateModal = (props: StakePoolModalProps): JSX.Element => {
   }, [api, stakePool.pid, amount, decimals])
 
   const onConfirm = useCallback(async () => {
-    if (phalaStakePoolTransaction) {
-      waitSignAndSend(phalaStakePoolTransaction)
-    }
+    phalaStakePoolTransaction && waitSignAndSend(phalaStakePoolTransaction)
   }, [phalaStakePoolTransaction, waitSignAndSend])
 
   const onInputChange = useCallback((value) => {
@@ -76,7 +77,7 @@ const DelegateModal = (props: StakePoolModalProps): JSX.Element => {
         value={amount}
         onChange={onInputChange}
         after="PHA"></InputNumber>
-      <Alert style={{marginTop: 10}}>Please reserve about 1 PHA fee.</Alert>
+      <PhalaStakePoolTransactionFeeLabel action={phalaStakePoolTransaction} />
       <Extra>Delegable Balance: {format(delegableBalance)}</Extra>
       <Extra>Pool Remaining: {remaining}</Extra>
     </ActionModal>
