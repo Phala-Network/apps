@@ -4,7 +4,7 @@ import {FC, useState} from 'react'
 import {FeeLabel} from '../FeeLabel'
 
 interface PhalaStakePoolTransactionFeeLabelProps {
-  action: SubmittableExtrinsic<'promise', any>
+  action?: SubmittableExtrinsic<'promise', any>
 }
 
 export const PhalaStakePoolTransactionFeeLabel: FC<PhalaStakePoolTransactionFeeLabelProps> =
