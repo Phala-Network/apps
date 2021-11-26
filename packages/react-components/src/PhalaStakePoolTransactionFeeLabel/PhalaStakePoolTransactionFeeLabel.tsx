@@ -1,6 +1,7 @@
 import {usePolkadotAccountAtom} from '@phala/app-store'
+import {usePhalaStakePoolTransactionFee} from '@phala/react-libs'
 import {SubmittableExtrinsic} from '@polkadot/api/types'
-import {FC, useState} from 'react'
+import {FC} from 'react'
 import {FeeLabel} from '../FeeLabel'
 
 interface PhalaStakePoolTransactionFeeLabelProps {
@@ -11,13 +12,7 @@ export const PhalaStakePoolTransactionFeeLabel: FC<PhalaStakePoolTransactionFeeL
   (props) => {
     const [polkadotAccount] = usePolkadotAccountAtom()
     const {action} = props
-    const [fee, setFee] = useState<string>('-')
-
-    if (action && polkadotAccount) {
-      action.paymentInfo(polkadotAccount.address).then(({partialFee}) => {
-        setFee(partialFee.toHuman())
-      })
-    }
+    const fee = usePhalaStakePoolTransactionFee(action, polkadotAccount.address)
 
     return (
       <FeeLabel
