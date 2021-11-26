@@ -5,12 +5,12 @@ import {FeeLabel} from '../FeeLabel'
 interface PolkadotTransactionFeeLabelProps {
   sender?: string
   recipient?: string
-  amount?: number
+  amount?: number | string
 }
 
 export const PolkadotTransactionFeeLabel: FC<PolkadotTransactionFeeLabelProps> =
   (props) => {
-    const {sender, recipient, amount} = props
+    const {sender, recipient, amount = 1} = props
     const fee = useTransactionFee(sender, recipient, amount)
 
     return (

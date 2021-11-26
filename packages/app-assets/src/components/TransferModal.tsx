@@ -105,7 +105,7 @@ const TransferModal: React.FC<Props> = ({visible, onClose}) => {
       <PolkadotTransactionFeeLabel
         sender={polkadotAccount?.address}
         recipient={address}
-        amount={parseFloat(amount)}
+        amount={amount}
       />
     </Modal>
   )
