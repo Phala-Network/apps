@@ -13,7 +13,8 @@ export const PolkadotTransactionFeeLabel: FC<PolkadotTransactionFeeLabelProps> =
   (props) => {
     const [polkadotAccount] = usePolkadotAccountAtom()
     const {
-      sender = polkadotAccount.address,
+      sender = polkadotAccount?.address ||
+        '44qokWaaP4L2QqzMQ8UQtUFpRdRWwmVMbUTCpq6dNzSHXqLD',
       recipient = '42ew9osX4adpNiX4icz7UUfuQhJMeUsMDWTtJQiGGAxMFfRN',
       amount = 1,
     } = props

@@ -4,7 +4,7 @@ import {
   useDecimalJsTokenDecimalMultiplier,
 } from '@phala/react-libs'
 import Decimal from 'decimal.js'
-import {useCallback, useState} from 'react'
+import {useCallback, useMemo, useState} from 'react'
 import styled from 'styled-components'
 import {useDelegableBalance} from '../hooks/useDelegableBalance'
 import useFormat from '../hooks/useFormat'
@@ -33,16 +33,23 @@ const DelegateModal = (props: StakePoolModalProps): JSX.Element => {
       ? '∞'
       : format(stakePool.cap.sub(stakePool.totalStake))
 
-  const onConfirm = useCallback(async () => {
+  const phalaStakePoolTransaction = useMemo(() => {
     if (api && decimals && amount) {
-      return waitSignAndSend(
-        api.tx.phalaStakePool?.contribute?.(
-          stakePool.pid,
-          new Decimal(amount).mul(decimals).toString()
-        )
+      return api.tx.phalaStakePool?.contribute?.(
+        stakePool.pid,
+        new Decimal(amount).mul(decimals).toString()
       )
+    } else {
+      return
     }
-  }, [api, waitSignAndSend, stakePool.pid, amount, decimals])
+  }, [api, stakePool.pid, amount, decimals])
+
+  const onConfirm = useCallback(async () => {
+    if (phalaStakePoolTransaction) {
+      waitSignAndSend(phalaStakePoolTransaction)
+    }
+  }, [phalaStakePoolTransaction, waitSignAndSend])
+
   const onInputChange = useCallback((value) => {
     const number = parseFloat(value)
     if (typeof number === 'number') {
