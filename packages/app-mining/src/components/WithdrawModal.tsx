@@ -1,15 +1,16 @@
+import {usePolkadotAccountAtom} from '@phala/app-store'
 import {Alert, InputNumber} from '@phala/react-components'
 import {
   useApiPromise,
   useDecimalJsTokenDecimalMultiplier,
+  usePhalaStakePoolTransactionFee,
 } from '@phala/react-libs'
 import Decimal from 'decimal.js'
-import {useCallback, useState, useMemo} from 'react'
-import type {StakePoolModalProps} from './StakePoolTable'
+import {useCallback, useMemo, useState} from 'react'
 import useSelfUserStakeInfo from '../hooks/useSelfUserStakeInfo'
 import useWaitSignAndSend from '../hooks/useWaitSignAndSend'
 import ActionModal, {Label, Value} from './ActionModal'
-import {usePolkadotAccountAtom} from '@phala/app-store'
+import type {StakePoolModalProps} from './StakePoolTable'
 
 const WithdrawModal = (props: StakePoolModalProps): JSX.Element => {
   const [polkadotAccount] = usePolkadotAccountAtom()
@@ -20,26 +21,39 @@ const WithdrawModal = (props: StakePoolModalProps): JSX.Element => {
   const [amount, setAmount] = useState<number | undefined>()
   const {refetch} = useSelfUserStakeInfo(stakePool.pid)
 
+  const action = useMemo(() => {
+    if (!api || !amount || !decimals) return
+
+    return api.tx.phalaStakePool?.withdraw?.(
+      stakePool.pid,
+      new Decimal(amount)
+        .mul(stakePool.totalShares.div(stakePool.totalStake))
+        .mul(decimals)
+        .floor()
+        .toString()
+    )
+  }, [
+    api,
+    amount,
+    decimals,
+    stakePool.pid,
+    stakePool.totalShares,
+    stakePool.totalStake,
+  ])
+
   const onConfirm = useCallback(async () => {
-    if (api && decimals && amount) {
-      return waitSignAndSend(
-        api.tx.phalaStakePool?.withdraw?.(
-          stakePool.pid,
-          new Decimal(amount)
-            .mul(stakePool.totalShares.div(stakePool.totalStake))
-            .mul(decimals)
-            .floor()
-            .toString()
-        )
-      )
+    if (action) {
+      return waitSignAndSend(action)
     }
-  }, [api, waitSignAndSend, stakePool, amount, decimals])
+  }, [action, waitSignAndSend])
+
   const onInputChange = useCallback((value) => {
     const number = parseFloat(value)
     if (typeof number === 'number') {
       setAmount(number)
     }
   }, [])
+
   const hasWithdrawing = useMemo<boolean>(
     () =>
       Boolean(
@@ -47,6 +61,8 @@ const WithdrawModal = (props: StakePoolModalProps): JSX.Element => {
       ),
     [stakePool, polkadotAccount]
   )
+
+  const fee = usePhalaStakePoolTransactionFee(action, polkadotAccount?.address)
 
   return (
     <ActionModal
@@ -66,6 +82,8 @@ const WithdrawModal = (props: StakePoolModalProps): JSX.Element => {
         value={amount}
         onChange={onInputChange}
         after="PHA"></InputNumber>
+      <Label>Fee</Label>
+      <Value>{fee}</Value>
       <Alert style={{marginTop: '10px'}}>
         {hasWithdrawing
           ? 'You have a pending withdraw request! Only one withdraw request is kept. Resubmission will replace the existing one and reset the countdown.'
