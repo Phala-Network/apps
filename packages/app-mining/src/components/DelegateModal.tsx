@@ -50,14 +50,6 @@ const DelegateModal = (props: StakePoolModalProps): JSX.Element => {
     }
   }, [])
 
-  // const fee = useTransactionFee(
-  //   '41dK53XCVBW4dJ79MXvdS56W27i3ZjWi8YpMsBXUfMYpEhwU',
-  //   '42ew9osX4adpNiX4icz7UUfuQhJMeUsMDWTtJQiGGAxMFfRN',
-  //   amount || 1
-  // )
-
-  // console.log('fee', fee)
-
   return (
     <ActionModal
       onClose={() => {
