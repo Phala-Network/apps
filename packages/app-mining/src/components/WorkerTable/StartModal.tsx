@@ -81,7 +81,7 @@ const StartModal = (props: WorkerModalProps): JSX.Element => {
     }
   }, [])
 
-  const fee = usePhalaStakePoolTransactionFee(action, polkadotAccount.address)
+  const fee = usePhalaStakePoolTransactionFee(action, polkadotAccount?.address)
 
   return (
     <ActionModal

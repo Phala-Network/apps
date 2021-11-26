@@ -32,7 +32,7 @@ const ReclaimAllModal = (props: StakePoolModalProps): JSX.Element => {
     }
   }, [api, stakePool])
 
-  const fee = usePhalaStakePoolTransactionFee(action, polkadotAccount.address)
+  const fee = usePhalaStakePoolTransactionFee(action, polkadotAccount?.address)
 
   const onConfirm = useCallback(async () => {
     if (action) {

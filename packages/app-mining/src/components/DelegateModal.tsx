@@ -49,7 +49,7 @@ const DelegateModal = (props: StakePoolModalProps): JSX.Element => {
 
   const fee = usePhalaStakePoolTransactionFee(
     phalaStakePoolTransaction,
-    polkadotAccount.address
+    polkadotAccount?.address
   )
 
   const onConfirm = useCallback(async () => {
