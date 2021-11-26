@@ -12,7 +12,10 @@ export const PhalaStakePoolTransactionFeeLabel: FC<PhalaStakePoolTransactionFeeL
   (props) => {
     const [polkadotAccount] = usePolkadotAccountAtom()
     const {action} = props
-    const fee = usePhalaStakePoolTransactionFee(action, polkadotAccount.address)
+    const fee = usePhalaStakePoolTransactionFee(
+      action,
+      polkadotAccount?.address
+    )
 
     return (
       <FeeLabel
