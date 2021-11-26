@@ -1,10 +1,9 @@
-import {
-  InputNumber,
-  PhalaStakePoolTransactionFeeLabel,
-} from '@phala/react-components'
+import {usePolkadotAccountAtom} from '@phala/app-store'
+import {InputNumber} from '@phala/react-components'
 import {
   useApiPromise,
   useDecimalJsTokenDecimalMultiplier,
+  usePhalaStakePoolTransactionFee,
 } from '@phala/react-libs'
 import Decimal from 'decimal.js'
 import {useCallback, useMemo, useState} from 'react'
@@ -30,6 +29,7 @@ const DelegateModal = (props: StakePoolModalProps): JSX.Element => {
   const [amount, setAmount] = useState<number | undefined>()
   const {refetch} = useSelfUserStakeInfo(stakePool.pid)
   const format = useFormat()
+  const [polkadotAccount] = usePolkadotAccountAtom()
 
   const remaining =
     stakePool.cap === null
@@ -46,6 +46,11 @@ const DelegateModal = (props: StakePoolModalProps): JSX.Element => {
       return
     }
   }, [api, stakePool.pid, amount, decimals])
+
+  const fee = usePhalaStakePoolTransactionFee(
+    phalaStakePoolTransaction,
+    polkadotAccount.address
+  )
 
   const onConfirm = useCallback(async () => {
     phalaStakePoolTransaction && waitSignAndSend(phalaStakePoolTransaction)
@@ -77,7 +82,8 @@ const DelegateModal = (props: StakePoolModalProps): JSX.Element => {
         value={amount}
         onChange={onInputChange}
         after="PHA"></InputNumber>
-      <PhalaStakePoolTransactionFeeLabel action={phalaStakePoolTransaction} />
+
+      <Extra>Fee: {fee}</Extra>
       <Extra>Delegable Balance: {format(delegableBalance)}</Extra>
       <Extra>Pool Remaining: {remaining}</Extra>
     </ActionModal>
