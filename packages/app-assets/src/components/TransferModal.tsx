@@ -1,5 +1,10 @@
 import {usePolkadotAccountAtom} from '@phala/app-store'
-import {Button, FeeLabel, Input, Modal} from '@phala/react-components'
+import {
+  Button,
+  Input,
+  Modal,
+  PolkadotTransactionFeeLabel,
+} from '@phala/react-components'
 import {
   useApiPromise,
   useDecimalJsTokenDecimalMultiplier,
@@ -96,15 +101,11 @@ const TransferModal: React.FC<Props> = ({visible, onClose}) => {
         value={amount}
         onChange={setAmount}></Input>
       <Spacer></Spacer>
-      <FeeLabel
-        style={{
-          justifyContent: 'flex-end',
-        }}
-        key="fee"
-        label="Fee"
-        fee={
-          api?.consts.transactionPayment?.transactionByteFee.toHuman() || '-'
-        }
+
+      <PolkadotTransactionFeeLabel
+        sender={polkadotAccount?.address}
+        recipient={address}
+        amount={parseFloat(amount)}
       />
     </Modal>
   )

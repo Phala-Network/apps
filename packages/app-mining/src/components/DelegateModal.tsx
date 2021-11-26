@@ -1,4 +1,3 @@
-import styled from 'styled-components'
 import {Alert, InputNumber} from '@phala/react-components'
 import {
   useApiPromise,
@@ -6,12 +5,13 @@ import {
 } from '@phala/react-libs'
 import Decimal from 'decimal.js'
 import {useCallback, useState} from 'react'
-import type {StakePoolModalProps} from './StakePoolTable'
+import styled from 'styled-components'
+import {useDelegableBalance} from '../hooks/useDelegableBalance'
+import useFormat from '../hooks/useFormat'
 import useSelfUserStakeInfo from '../hooks/useSelfUserStakeInfo'
 import useWaitSignAndSend from '../hooks/useWaitSignAndSend'
 import ActionModal, {Label, Value} from './ActionModal'
-import useFormat from '../hooks/useFormat'
-import {useDelegableBalance} from '../hooks/useDelegableBalance'
+import type {StakePoolModalProps} from './StakePoolTable'
 
 const Extra = styled.div`
   margin-top: 10px;
@@ -49,6 +49,14 @@ const DelegateModal = (props: StakePoolModalProps): JSX.Element => {
       setAmount(number)
     }
   }, [])
+
+  // const fee = useTransactionFee(
+  //   '41dK53XCVBW4dJ79MXvdS56W27i3ZjWi8YpMsBXUfMYpEhwU',
+  //   '42ew9osX4adpNiX4icz7UUfuQhJMeUsMDWTtJQiGGAxMFfRN',
+  //   amount || 1
+  // )
+
+  // console.log('fee', fee)
 
   return (
     <ActionModal
