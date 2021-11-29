@@ -1,10 +1,11 @@
-import {usePolkadotAccountAtom} from '@phala/app-store'
-import {InputNumber} from '@phala/react-components'
+import {
+  InputNumber,
+  PhalaStakePoolTransactionFeeLabel,
+} from '@phala/react-components'
 import {useTokenomicParameters} from '@phala/react-hooks'
 import {
   useApiPromise,
   useDecimalJsTokenDecimalMultiplier,
-  usePhalaStakePoolTransactionFee,
 } from '@phala/react-libs'
 import Decimal from 'decimal.js'
 import {useCallback, useMemo, useState} from 'react'
@@ -29,7 +30,6 @@ const StartModal = (props: WorkerModalProps): JSX.Element => {
   const [amount, setAmount] = useState<number | undefined>()
   const {data: tokenomicParameters} = useTokenomicParameters()
   const {data: stakePools} = useSelfStakePools()
-  const [polkadotAccount] = usePolkadotAccountAtom()
 
   const poolFreeStake = useMemo<string>(() => {
     if (!stakePools) return '-'
@@ -81,15 +81,14 @@ const StartModal = (props: WorkerModalProps): JSX.Element => {
     }
   }, [])
 
-  const fee = usePhalaStakePoolTransactionFee(action, polkadotAccount?.address)
-
   return (
     <ActionModal
       onClose={onClose}
       onConfirm={onConfirm}
       title="Start Mining"
       subtitle="Start a miner on behalf of the stake pool"
-      disabled={!amount}>
+      disabled={!amount}
+      actionsExtra={<PhalaStakePoolTransactionFeeLabel action={action} />}>
       <Label>pid</Label>
       <Value>{worker.pid}</Value>
       <Label>WorkerPublicKey</Label>
@@ -105,7 +104,6 @@ const StartModal = (props: WorkerModalProps): JSX.Element => {
       <Extra>Smin: {sMin}</Extra>
       <Extra>Smax: {sMax}</Extra>
       <Extra>Pool Free Delegation: {poolFreeStake}</Extra>
-      <Extra>Fee: {fee}</Extra>
     </ActionModal>
   )
 }
