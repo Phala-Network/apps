@@ -1,5 +1,5 @@
-import {usePolkadotAccountAtom} from '@phala/app-store'
-import {useApiPromise, usePhalaStakePoolTransactionFee} from '@phala/react-libs'
+import {PhalaStakePoolTransactionFeeLabel} from '@phala/react-components'
+import {useApiPromise} from '@phala/react-libs'
 import {useCallback, useMemo} from 'react'
 import {WorkerModalProps} from '.'
 import useFormat from '../../hooks/useFormat'
@@ -11,7 +11,6 @@ const ReclaimModal = (props: WorkerModalProps): JSX.Element => {
   const {api} = useApiPromise()
   const waitSignAndSend = useWaitSignAndSend()
   const format = useFormat()
-  const [polkadotAccount] = usePolkadotAccountAtom()
 
   const action = useMemo(() => {
     if (!api) return
@@ -23,22 +22,19 @@ const ReclaimModal = (props: WorkerModalProps): JSX.Element => {
     if (action) return waitSignAndSend(action)
   }, [action, waitSignAndSend])
 
-  const fee = usePhalaStakePoolTransactionFee(action, polkadotAccount.address)
-
   return (
     <ActionModal
       onClose={onClose}
       onConfirm={onConfirm}
       title="Reclaim Worker"
-      subtitle="Reclaims the releasing stake of miners in a pool">
+      subtitle="Reclaims the releasing stake of miners in a pool"
+      actionsExtra={<PhalaStakePoolTransactionFeeLabel action={action} />}>
       <Label>pid</Label>
       <Value>{worker.pid}</Value>
       <Label>Worker PublicKey</Label>
       <Value>{worker.pubkey}</Value>
       <Label>Reclaimable Stake</Label>
       <Value>{format(worker.stake)}</Value>
-      <Label>Fee</Label>
-      <Value>{fee}</Value>
     </ActionModal>
   )
 }

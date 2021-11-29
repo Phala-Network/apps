@@ -33,8 +33,6 @@ const RemoveModal = (props: WorkerModalProps): JSX.Element => {
       <Value>{worker.pid}</Value>
       <Label>WorkerPublicKey</Label>
       <Value>{worker.pubkey}</Value>
-      <Label>fee</Label>
-      <Value>{fee}</Value>
     </ActionModal>
   )
 }
