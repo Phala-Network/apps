@@ -1,5 +1,5 @@
-import {usePolkadotAccountAtom} from '@phala/app-store'
-import {useApiPromise, usePhalaStakePoolTransactionFee} from '@phala/react-libs'
+import {PhalaStakePoolTransactionFeeLabel} from '@phala/react-components'
+import {useApiPromise} from '@phala/react-libs'
 import {useCallback, useMemo} from 'react'
 import {WorkerModalProps} from '.'
 import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
@@ -9,7 +9,6 @@ const StopModal = (props: WorkerModalProps): JSX.Element => {
   const {worker, onClose} = props
   const {api} = useApiPromise()
   const waitSignAndSend = useWaitSignAndSend()
-  const [polkadotAccount] = usePolkadotAccountAtom()
 
   const action = useMemo(() => {
     if (api) {
@@ -18,7 +17,6 @@ const StopModal = (props: WorkerModalProps): JSX.Element => {
       return
     }
   }, [api, worker.pid, worker.pubkey])
-  const fee = usePhalaStakePoolTransactionFee(action, polkadotAccount.address)
 
   const onConfirm = useCallback(async () => {
     if (action) {
@@ -31,13 +29,12 @@ const StopModal = (props: WorkerModalProps): JSX.Element => {
       onClose={onClose}
       onConfirm={onConfirm}
       title="Stop Mining"
-      subtitle="Stop a miner on behalf of the stake pool">
+      subtitle="Stop a miner on behalf of the stake pool"
+      actionsExtra={<PhalaStakePoolTransactionFeeLabel action={action} />}>
       <Label>pid</Label>
       <Value>{worker.pid}</Value>
       <Label>WorkerPublicKey</Label>
       <Value>{worker.pubkey}</Value>
-      <Label>Fee</Label>
-      <Value>{fee}</Value>
     </ActionModal>
   )
 }
