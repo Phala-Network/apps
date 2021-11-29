@@ -102,19 +102,23 @@ export const Chart: React.FC<{data: AnalyticsData}> = (props) => {
       series: [
         {
           ...defaultChartOptions.series[0],
-          data: data2?.map?.((item) => [
-            item.date + 'T00:00:00.000Z',
-            formatData(item.reward),
-          ]),
+          data: data2
+            ?.map?.((item) => [
+              item.date + 'T00:00:00.000Z',
+              formatData(item.reward),
+            ])
+            .slice(-30),
         },
         {
           ...defaultChartOptions.series[1],
-          data: data2?.map?.((item) => [
-            item.date + 'T00:00:00.000Z',
-            formatData(
-              item.workers === 0 ? 0 : item.reward / item.onlineWorkers
-            ),
-          ]),
+          data: data2
+            ?.map?.((item) => [
+              item.date + 'T00:00:00.000Z',
+              formatData(
+                item.workers === 0 ? 0 : item.reward / item.onlineWorkers
+              ),
+            ])
+            .slice(-30),
         },
       ],
     })

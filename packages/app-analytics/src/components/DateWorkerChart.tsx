@@ -63,17 +63,21 @@ export const DateWorkerChart: React.FC<{data: AnalyticsData}> = (props) => {
       series: [
         {
           ...defaultChartOptions.series[1],
-          data: data2?.map?.((item) => [
-            item.date + 'T00:00:00.000Z',
-            formatData(item.workers),
-          ]),
+          data: data2
+            ?.map?.((item) => [
+              item.date + 'T00:00:00.000Z',
+              formatData(item.workers),
+            ])
+            .slice(-30),
         },
         {
           ...defaultChartOptions.series[0],
-          data: data2?.map?.((item) => [
-            item.date + 'T00:00:00.000Z',
-            formatData(item.onlineWorkers),
-          ]),
+          data: data2
+            ?.map?.((item) => [
+              item.date + 'T00:00:00.000Z',
+              formatData(item.onlineWorkers),
+            ])
+            .slice(-30),
         },
       ],
     })
