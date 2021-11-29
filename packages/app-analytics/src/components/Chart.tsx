@@ -44,6 +44,7 @@ const defaultChartOptions = {
       splitLine: {show: false},
       axisPointer: {show: false},
       show: false,
+      min: 0,
     },
     {
       type: 'value',
@@ -51,6 +52,7 @@ const defaultChartOptions = {
       splitLine: {show: false},
       axisPointer: {show: false},
       show: false,
+      min: 0,
     },
   ],
   series: [
@@ -94,7 +96,7 @@ export const Chart: React.FC<{data: AnalyticsData}> = (props) => {
     })
 
   const chartOptions = React.useMemo(() => {
-    const formatData = (item: number) => item.toFixed(2)
+    const formatData = (item: number) => parseFloat(item.toFixed(2))
 
     return Object.assign({}, defaultChartOptions, {
       series: [
