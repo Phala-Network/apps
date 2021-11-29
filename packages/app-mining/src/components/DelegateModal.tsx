@@ -1,9 +1,10 @@
-import {usePolkadotAccountAtom} from '@phala/app-store'
-import {InputNumber} from '@phala/react-components'
+import {
+  InputNumber,
+  PhalaStakePoolTransactionFeeLabel,
+} from '@phala/react-components'
 import {
   useApiPromise,
   useDecimalJsTokenDecimalMultiplier,
-  usePhalaStakePoolTransactionFee,
 } from '@phala/react-libs'
 import Decimal from 'decimal.js'
 import {useCallback, useMemo, useState} from 'react'
@@ -29,14 +30,13 @@ const DelegateModal = (props: StakePoolModalProps): JSX.Element => {
   const [amount, setAmount] = useState<number | undefined>()
   const {refetch} = useSelfUserStakeInfo(stakePool.pid)
   const format = useFormat()
-  const [polkadotAccount] = usePolkadotAccountAtom()
 
   const remaining =
     stakePool.cap === null
       ? '∞'
       : format(stakePool.cap.sub(stakePool.totalStake))
 
-  const phalaStakePoolTransaction = useMemo(() => {
+  const action = useMemo(() => {
     if (api && decimals && amount) {
       return api.tx.phalaStakePool?.contribute?.(
         stakePool.pid,
@@ -47,14 +47,9 @@ const DelegateModal = (props: StakePoolModalProps): JSX.Element => {
     }
   }, [api, stakePool.pid, amount, decimals])
 
-  const fee = usePhalaStakePoolTransactionFee(
-    phalaStakePoolTransaction,
-    polkadotAccount?.address
-  )
-
   const onConfirm = useCallback(async () => {
-    phalaStakePoolTransaction && waitSignAndSend(phalaStakePoolTransaction)
-  }, [phalaStakePoolTransaction, waitSignAndSend])
+    action && waitSignAndSend(action)
+  }, [action, waitSignAndSend])
 
   const onInputChange = useCallback((value) => {
     const number = parseFloat(value)
@@ -72,6 +67,7 @@ const DelegateModal = (props: StakePoolModalProps): JSX.Element => {
       onConfirm={onConfirm}
       title="Delegate"
       subtitle="Delegate some stake to a pool"
+      actionsExtra={<PhalaStakePoolTransactionFeeLabel action={action} />}
       disabled={!amount}>
       <Label>pid</Label>
       <Value>{stakePool.pid}</Value>
@@ -83,7 +79,6 @@ const DelegateModal = (props: StakePoolModalProps): JSX.Element => {
         onChange={onInputChange}
         after="PHA"></InputNumber>
 
-      <Extra>Fee: {fee}</Extra>
       <Extra>Delegable Balance: {format(delegableBalance)}</Extra>
       <Extra>Pool Remaining: {remaining}</Extra>
     </ActionModal>
