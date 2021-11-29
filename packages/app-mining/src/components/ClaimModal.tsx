@@ -1,6 +1,10 @@
 import {usePolkadotAccountAtom} from '@phala/app-store'
-import {Input, InputAction} from '@phala/react-components'
-import {useApiPromise, usePhalaStakePoolTransactionFee} from '@phala/react-libs'
+import {
+  Input,
+  InputAction,
+  PhalaStakePoolTransactionFeeLabel,
+} from '@phala/react-components'
+import {useApiPromise} from '@phala/react-libs'
 import Decimal from 'decimal.js'
 import {useCallback, useMemo, useState} from 'react'
 import useFormat from '../hooks/useFormat'
@@ -49,21 +53,18 @@ const ClaimModal = (props: StakePoolModalProps): JSX.Element => {
     setAddress(value)
   }, [])
 
-  const fee = usePhalaStakePoolTransactionFee(action, polkadotAccount?.address)
-
   return (
     <ActionModal
       onClose={onClose}
       onConfirm={onConfirm}
       title="Claim"
       subtitle="Claim all the pending rewards of the sender and send to the `target`"
+      actionsExtra={<PhalaStakePoolTransactionFeeLabel action={action} />}
       disabled={!address}>
       <Label>pid</Label>
       <Value>{stakePool.pid}</Value>
       <Label>Rewards</Label>
       <Value>{rewards}</Value>
-      <Label>Fee</Label>
-      <Value>{fee}</Value>
       <Label>Target Address</Label>
       <Input
         value={address}
