@@ -1,9 +1,7 @@
-import {usePolkadotAccountAtom} from '@phala/app-store'
-import {Input} from '@phala/react-components'
+import {Input, PhalaStakePoolTransactionFeeLabel} from '@phala/react-components'
 import {
   useApiPromise,
   useDecimalJsTokenDecimalMultiplier,
-  usePhalaStakePoolTransactionFee,
 } from '@phala/react-libs'
 import {useCallback, useMemo, useState} from 'react'
 import type {StakePoolModalProps} from '.'
@@ -16,7 +14,6 @@ const AddWorkerModal = (props: StakePoolModalProps): JSX.Element => {
   const waitSignAndSend = useWaitSignAndSend()
   const decimals = useDecimalJsTokenDecimalMultiplier(api)
   const [pubkey, setPubkey] = useState<string>('')
-  const [polkadotAccount] = usePolkadotAccountAtom()
 
   const action = useMemo(() => {
     if (!api || !pubkey || !decimals) return
@@ -34,14 +31,13 @@ const AddWorkerModal = (props: StakePoolModalProps): JSX.Element => {
     setPubkey(value)
   }, [])
 
-  const fee = usePhalaStakePoolTransactionFee(action, polkadotAccount.address)
-
   return (
     <ActionModal
       onClose={onClose}
       onConfirm={onConfirm}
       title="Add Worker"
-      disabled={!pubkey}>
+      disabled={!pubkey}
+      actionsExtra={<PhalaStakePoolTransactionFeeLabel action={action} />}>
       <Label>pid</Label>
       <Value>{stakePool.pid}</Value>
 
@@ -50,9 +46,6 @@ const AddWorkerModal = (props: StakePoolModalProps): JSX.Element => {
         placeholder="Public Key"
         value={pubkey}
         onChange={onInputChange}></Input>
-
-      <Label>Fee</Label>
-      <Value>{fee}</Value>
     </ActionModal>
   )
 }
