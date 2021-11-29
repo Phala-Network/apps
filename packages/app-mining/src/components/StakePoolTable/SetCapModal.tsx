@@ -1,9 +1,10 @@
-import {usePolkadotAccountAtom} from '@phala/app-store'
-import {InputNumber} from '@phala/react-components'
+import {
+  InputNumber,
+  PhalaStakePoolTransactionFeeLabel,
+} from '@phala/react-components'
 import {
   useApiPromise,
   useDecimalJsTokenDecimalMultiplier,
-  usePhalaStakePoolTransactionFee,
 } from '@phala/react-libs'
 import Decimal from 'decimal.js'
 import {useCallback, useMemo, useState} from 'react'
@@ -17,7 +18,6 @@ const SetCapModal = (props: StakePoolModalProps): JSX.Element => {
   const waitSignAndSend = useWaitSignAndSend()
   const decimals = useDecimalJsTokenDecimalMultiplier(api)
   const [cap, setCap] = useState<number | undefined>()
-  const [polkadotAccount] = usePolkadotAccountAtom()
 
   const action = useMemo(() => {
     if (!api || !cap || !decimals) return
@@ -34,8 +34,6 @@ const SetCapModal = (props: StakePoolModalProps): JSX.Element => {
     }
   }, [action, waitSignAndSend])
 
-  const fee = usePhalaStakePoolTransactionFee(action, polkadotAccount.address)
-
   const onInputChange = useCallback((value) => {
     const number = parseFloat(value)
     if (typeof number === 'number') {
@@ -48,7 +46,8 @@ const SetCapModal = (props: StakePoolModalProps): JSX.Element => {
       onClose={onClose}
       onConfirm={onConfirm}
       title="Set Cap"
-      disabled={!cap}>
+      disabled={!cap}
+      actionsExtra={<PhalaStakePoolTransactionFeeLabel action={action} />}>
       <Label>pid</Label>
       <Value>{stakePool.pid}</Value>
 
@@ -59,9 +58,6 @@ const SetCapModal = (props: StakePoolModalProps): JSX.Element => {
         value={cap}
         onChange={onInputChange}
         after="PHA"></InputNumber>
-
-      <Label>Fee</Label>
-      <Value>{fee}</Value>
     </ActionModal>
   )
 }
