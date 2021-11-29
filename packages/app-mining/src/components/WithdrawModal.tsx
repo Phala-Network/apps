@@ -1,9 +1,12 @@
 import {usePolkadotAccountAtom} from '@phala/app-store'
-import {Alert, InputNumber} from '@phala/react-components'
+import {
+  Alert,
+  InputNumber,
+  PhalaStakePoolTransactionFeeLabel,
+} from '@phala/react-components'
 import {
   useApiPromise,
   useDecimalJsTokenDecimalMultiplier,
-  usePhalaStakePoolTransactionFee,
 } from '@phala/react-libs'
 import Decimal from 'decimal.js'
 import {useCallback, useMemo, useState} from 'react'
@@ -62,8 +65,6 @@ const WithdrawModal = (props: StakePoolModalProps): JSX.Element => {
     [stakePool, polkadotAccount]
   )
 
-  const fee = usePhalaStakePoolTransactionFee(action, polkadotAccount?.address)
-
   return (
     <ActionModal
       onClose={() => {
@@ -72,7 +73,8 @@ const WithdrawModal = (props: StakePoolModalProps): JSX.Element => {
       }}
       onConfirm={onConfirm}
       title="Withdraw"
-      disabled={!amount}>
+      disabled={!amount}
+      actionsExtra={<PhalaStakePoolTransactionFeeLabel action={action} />}>
       <Label>pid</Label>
       <Value>{stakePool.pid}</Value>
       <Label>Delegation</Label>
@@ -82,8 +84,6 @@ const WithdrawModal = (props: StakePoolModalProps): JSX.Element => {
         value={amount}
         onChange={onInputChange}
         after="PHA"></InputNumber>
-      <Label>Fee</Label>
-      <Value>{fee}</Value>
       <Alert style={{marginTop: '10px'}}>
         {hasWithdrawing
           ? 'You have a pending withdraw request! Only one withdraw request is kept. Resubmission will replace the existing one and reset the countdown.'
