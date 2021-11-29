@@ -20,14 +20,6 @@ const defaultChartOptions = {
         type: 'dashed',
       },
     },
-    // splitNumber: 20,
-    // axisLabel: {
-    //   formatter(value) {
-    //     const date = new Date(value)
-
-    //     return [date.getMonth() + 1, date.getDate()].join('.')
-    //   },
-    // },
   },
   grid: [
     {
@@ -40,6 +32,7 @@ const defaultChartOptions = {
   yAxis: {
     type: 'value',
     show: false,
+    min: 0,
   },
   series: [
     {

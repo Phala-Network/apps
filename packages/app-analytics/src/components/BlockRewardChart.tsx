@@ -55,6 +55,7 @@ export const BlockRewardChart: React.FC<{blockData: AnalyticsData}> = (
         splitLine: {show: false},
         axisPointer: {show: false},
         show: false,
+        min: 0,
       },
       {
         type: 'value',
@@ -62,6 +63,7 @@ export const BlockRewardChart: React.FC<{blockData: AnalyticsData}> = (
         splitLine: {show: false},
         axisPointer: {show: false},
         show: false,
+        min: 0,
       },
     ],
     series: [

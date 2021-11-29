@@ -35,6 +35,7 @@ export const BlockWorkerChart: React.FC<{blockData: AnalyticsData}> = (
     yAxis: {
       type: 'value',
       show: false,
+      min: 0,
     },
     series: [
       {
