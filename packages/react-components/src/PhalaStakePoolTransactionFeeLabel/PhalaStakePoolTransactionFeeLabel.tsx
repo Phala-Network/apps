@@ -17,14 +17,5 @@ export const PhalaStakePoolTransactionFeeLabel: FC<PhalaStakePoolTransactionFeeL
       polkadotAccount?.address
     )
 
-    return (
-      <FeeLabel
-        style={{
-          justifyContent: 'flex-end',
-        }}
-        key="fee"
-        label="Fee"
-        fee={fee}
-      />
-    )
+    return <FeeLabel key="fee" label="Fee" fee={fee} />
   }

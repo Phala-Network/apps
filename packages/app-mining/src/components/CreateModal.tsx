@@ -28,11 +28,9 @@ const CreateModal = (props: {onClose: () => void}): JSX.Element => {
       onClose={props.onClose}
       title="Create"
       subtitle="You will create a new stake pool"
-      onConfirm={onConfirm}>
-      <div>
-        <PhalaStakePoolTransactionFeeLabel action={action} />
-      </div>
-    </ActionModal>
+      onConfirm={onConfirm}
+      actionsExtra={<PhalaStakePoolTransactionFeeLabel action={action} />}
+    />
   )
 }
 
