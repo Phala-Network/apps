@@ -1,6 +1,8 @@
-import {usePolkadotAccountAtom} from '@phala/app-store'
-import {InputNumber} from '@phala/react-components'
-import {useApiPromise, usePhalaStakePoolTransactionFee} from '@phala/react-libs'
+import {
+  InputNumber,
+  PhalaStakePoolTransactionFeeLabel,
+} from '@phala/react-components'
+import {useApiPromise} from '@phala/react-libs'
 import Decimal from 'decimal.js'
 import {useCallback, useMemo, useState} from 'react'
 import type {StakePoolModalProps} from '.'
@@ -12,7 +14,6 @@ const SetPayoutPrefModal = (props: StakePoolModalProps): JSX.Element => {
   const {api} = useApiPromise()
   const waitSignAndSend = useWaitSignAndSend()
   const [payoutPref, setPayoutPref] = useState<number | undefined>()
-  const [polkadotAccount] = usePolkadotAccountAtom()
 
   const action = useMemo(() => {
     if (!api || !payoutPref) return
@@ -36,14 +37,13 @@ const SetPayoutPrefModal = (props: StakePoolModalProps): JSX.Element => {
     }
   }, [])
 
-  const fee = usePhalaStakePoolTransactionFee(action, polkadotAccount.address)
-
   return (
     <ActionModal
       onClose={onClose}
       onConfirm={onConfirm}
       title="Set Commission"
-      disabled={!payoutPref}>
+      disabled={!payoutPref}
+      actionsExtra={<PhalaStakePoolTransactionFeeLabel action={action} />}>
       <Label>pid</Label>
       <Value>{stakePool.pid}</Value>
 
@@ -56,9 +56,6 @@ const SetPayoutPrefModal = (props: StakePoolModalProps): JSX.Element => {
         value={payoutPref}
         onChange={onInputChange}
         after="%"></InputNumber>
-
-      <Label>Fee</Label>
-      <Value>{fee}</Value>
     </ActionModal>
   )
 }
