@@ -14,12 +14,21 @@ export type ModalProps = {
   visible: boolean
   onClose?: () => void
   title?: React.ReactNode
+  actionsExtra?: React.ReactNode
   bodyStyle?: React.CSSProperties
   actions?: React.ReactNode[]
 }
 
 export const Modal: React.FC<ModalProps> = (props) => {
-  const {children, title, visible = false, onClose, bodyStyle, actions} = props
+  const {
+    children,
+    title,
+    visible = false,
+    onClose,
+    bodyStyle,
+    actions,
+    actionsExtra,
+  } = props
   const portal = usePortal('modal')
 
   if (!portal) return null
@@ -33,6 +42,7 @@ export const Modal: React.FC<ModalProps> = (props) => {
 
           {actions && actions?.length > 0 && (
             <ModalActions>
+              {actionsExtra && <div style={{flex: 1}}>{actionsExtra}</div>}
               {actions?.map((item, index) => (
                 <ModalAction key={index}>{item}</ModalAction>
               ))}

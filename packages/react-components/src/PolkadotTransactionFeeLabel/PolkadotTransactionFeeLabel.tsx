@@ -20,14 +20,5 @@ export const PolkadotTransactionFeeLabel: FC<PolkadotTransactionFeeLabelProps> =
     } = props
     const fee = useTransactionFee(sender, recipient, amount)
 
-    return (
-      <FeeLabel
-        style={{
-          justifyContent: 'flex-end',
-        }}
-        key="fee"
-        label="Fee"
-        fee={fee || '-'}
-      />
-    )
+    return <FeeLabel key="fee" label="Fee" fee={fee || '-'} />
   }

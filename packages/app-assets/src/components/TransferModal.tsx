@@ -73,6 +73,14 @@ const TransferModal: React.FC<Props> = ({visible, onClose}) => {
       visible={visible}
       onClose={onClose}
       title="Transfer"
+      actionsExtra={
+        <PolkadotTransactionFeeLabel
+          key="PolkadotTransactionFeeLabel"
+          sender={polkadotAccount?.address}
+          recipient={address}
+          amount={amount}
+        />
+      }
       actions={[
         <Button onClick={onClose} key="reject">
           Cancel
@@ -101,12 +109,6 @@ const TransferModal: React.FC<Props> = ({visible, onClose}) => {
         value={amount}
         onChange={setAmount}></Input>
       <Spacer></Spacer>
-
-      <PolkadotTransactionFeeLabel
-        sender={polkadotAccount?.address}
-        recipient={address}
-        amount={amount}
-      />
     </Modal>
   )
 }
