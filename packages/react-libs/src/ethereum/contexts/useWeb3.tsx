@@ -1,6 +1,7 @@
 import {
   createContext,
   PropsWithChildren,
+  useCallback,
   useContext,
   useEffect,
   useMemo,
@@ -27,11 +28,13 @@ interface IWeb3Context {
 
   provider?: Provider
   readystate: Readystate
+  ethereumWeb3connect(): void
 }
 
 const Web3Context = createContext<IWeb3Context>({
   accounts: [],
   readystate: 'idle',
+  ethereumWeb3connect: () => null,
 })
 
 export const Web3Provider = ({
@@ -56,7 +59,7 @@ export const Web3Provider = ({
     []
   )
 
-  useEffect(() => {
+  const ethereumWeb3connect = useCallback(() => {
     if (readystate !== 'idle') {
       return
     }
@@ -85,7 +88,8 @@ export const Web3Provider = ({
   }, [provider])
 
   return (
-    <Web3Context.Provider value={{accounts, provider, readystate}}>
+    <Web3Context.Provider
+      value={{accounts, provider, readystate, ethereumWeb3connect}}>
       {children}
     </Web3Context.Provider>
   )
