@@ -11,7 +11,8 @@
     "preinstall": "npx only-allow pnpm",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "format": "prettier-eslint --list-different --write \"./packages/**/*.tsx\"",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "life": "git clean -xdf && pnpm install && pnpm run develop"
   },
   "repository": {
     "type": "git",
