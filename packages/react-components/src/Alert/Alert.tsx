@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {ComponentProps} from 'react'
 import styled from 'styled-components'
 import Icon from './Icon'
 
@@ -17,7 +17,7 @@ const Root = styled.div`
   align-items: center;
 `
 
-export const Alert: React.FC = (props) => {
+export const Alert: React.FC<ComponentProps<typeof Root>> = (props) => {
   const {children, ...rest} = props
 
   return (

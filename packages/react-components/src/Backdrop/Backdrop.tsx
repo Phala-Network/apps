@@ -40,14 +40,12 @@ export const Backdrop: React.FC<BackdropProps> = ({
       className="backdrop"
       onClick={clickHandler}
       onMouseUp={mouseUpHandler}
-      {...props}
-    >
+      {...props}>
       <Layer style={{zIndex}}></Layer>
       <Content
         onClick={childrenClickHandler}
         className="content"
-        onMouseDown={() => setIsContentMouseDown(true)}
-      >
+        onMouseDown={() => setIsContentMouseDown(true)}>
         {children}
       </Content>
     </Wrap>

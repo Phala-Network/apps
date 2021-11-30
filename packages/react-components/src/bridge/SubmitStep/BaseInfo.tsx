@@ -24,8 +24,7 @@ const BaseInfo: React.FC<Props> = (props) => {
           tooltip={fromTooltip}
           network={from?.network}
           amount={from?.amount?.toString()}
-          type={from?.type}
-        >
+          type={from?.type}>
           <Address>{from?.address}</Address>
         </AmountInfo>
       </FormItem>
@@ -37,8 +36,7 @@ const BaseInfo: React.FC<Props> = (props) => {
         <AmountInfo
           network={to?.network}
           amount={to?.amount?.toString()}
-          type={to?.type}
-        >
+          type={to?.type}>
           <Address>{to?.address}</Address>
         </AmountInfo>
       </FormItem>

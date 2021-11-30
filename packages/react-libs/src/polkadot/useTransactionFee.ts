@@ -1,3 +1,4 @@
+import {validateAddress} from '@phala/utils'
 import {useEffect, useState} from 'react'
 import {useApiPromise} from './hooks/useApiPromise'
 
@@ -7,19 +8,37 @@ import {useApiPromise} from './hooks/useApiPromise'
 export function useTransactionFee(
   sender?: string,
   recipient?: string,
-  amount?: number
+  amount?: number | string
 ): string {
   const {api} = useApiPromise()
   const [fee, setFee] = useState<string>('')
 
   useEffect(() => {
-    if (!api || !sender || !recipient || !amount) {
+    let amountFormatted = 1
+
+    if (typeof amount === 'string') {
+      try {
+        amountFormatted = parseFloat(amount)
+      } catch (e) {
+        amountFormatted = 1
+      }
+    } else if (typeof amount === 'number') {
+      amountFormatted = amount
+    }
+
+    if (
+      !api ||
+      !sender ||
+      !recipient ||
+      !amountFormatted ||
+      !validateAddress(recipient)
+    ) {
       setFee('')
       return
     }
 
     api?.tx?.balances
-      .transfer(recipient, amount)
+      .transfer(recipient, amountFormatted)
       .paymentInfo(sender)
       .then(({partialFee}) => {
         setFee(`${partialFee.toHuman()} `)

@@ -1,5 +1,6 @@
+import {PhalaStakePoolTransactionFeeLabel} from '@phala/react-components'
 import {useApiPromise} from '@phala/react-libs'
-import {useCallback} from 'react'
+import {useCallback, useMemo} from 'react'
 import {WorkerModalProps} from '.'
 import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
 import ActionModal, {Label, Value} from '../ActionModal'
@@ -9,13 +10,17 @@ const RemoveModal = (props: WorkerModalProps): JSX.Element => {
   const {api} = useApiPromise()
   const waitSignAndSend = useWaitSignAndSend()
 
+  const action = useMemo(() => {
+    if (!api) return
+
+    return api.tx.phalaStakePool?.removeWorker?.(worker.pid, worker.pubkey)
+  }, [api, worker.pid, worker.pubkey])
+
   const onConfirm = useCallback(async () => {
-    if (api) {
-      return waitSignAndSend(
-        api.tx.phalaStakePool?.removeWorker?.(worker.pid, worker.pubkey)
-      )
+    if (action) {
+      return waitSignAndSend(action)
     }
-  }, [api, waitSignAndSend, worker.pid, worker.pubkey])
+  }, [action, waitSignAndSend])
 
   return (
     <ActionModal
@@ -23,7 +28,7 @@ const RemoveModal = (props: WorkerModalProps): JSX.Element => {
       onConfirm={onConfirm}
       title="Remove Worker"
       subtitle="Remove a worker from a pool"
-    >
+      actionsExtra={<PhalaStakePoolTransactionFeeLabel action={action} />}>
       <Label>pid</Label>
       <Value>{worker.pid}</Value>
       <Label>WorkerPublicKey</Label>

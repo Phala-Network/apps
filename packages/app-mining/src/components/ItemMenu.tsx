@@ -22,8 +22,7 @@ const ItemMenu = <T extends string = string>(props: Props<T>): JSX.Element => (
     items={props.items}
     onClick={(key) => {
       props.onClick(key)
-    }}
-  >
+    }}>
     <MoreButton>
       <MoreIcon></MoreIcon>
     </MoreButton>

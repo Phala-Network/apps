@@ -1,5 +1,6 @@
+import {PhalaStakePoolTransactionFeeLabel} from '@phala/react-components'
 import {useApiPromise} from '@phala/react-libs'
-import {useCallback} from 'react'
+import {useCallback, useMemo} from 'react'
 import {WorkerModalProps} from '.'
 import useFormat from '../../hooks/useFormat'
 import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
@@ -11,13 +12,15 @@ const ReclaimModal = (props: WorkerModalProps): JSX.Element => {
   const waitSignAndSend = useWaitSignAndSend()
   const format = useFormat()
 
+  const action = useMemo(() => {
+    if (!api) return
+
+    return api.tx.phalaStakePool?.reclaimPoolWorker?.(worker.pid, worker.pubkey)
+  }, [api, worker.pid, worker.pubkey])
+
   const onConfirm = useCallback(async () => {
-    if (api) {
-      return waitSignAndSend(
-        api.tx.phalaStakePool?.reclaimPoolWorker?.(worker.pid, worker.pubkey)
-      )
-    }
-  }, [api, waitSignAndSend, worker.pid, worker.pubkey])
+    if (action) return waitSignAndSend(action)
+  }, [action, waitSignAndSend])
 
   return (
     <ActionModal
@@ -25,7 +28,7 @@ const ReclaimModal = (props: WorkerModalProps): JSX.Element => {
       onConfirm={onConfirm}
       title="Reclaim Worker"
       subtitle="Reclaims the releasing stake of miners in a pool"
-    >
+      actionsExtra={<PhalaStakePoolTransactionFeeLabel action={action} />}>
       <Label>pid</Label>
       <Value>{worker.pid}</Value>
       <Label>Worker PublicKey</Label>

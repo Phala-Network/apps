@@ -68,7 +68,7 @@ export const substrates: Record<string, SubstrateNetworkOptions> = {
     peerChainIds: {
       42: 0,
     },
-    endpoint: 'wss://pc-test-2.phala.network/khala/ws',
+    endpoint: 'wss://khala-api.phala.network/ws',
     typedefs: khalaDev,
   },
   para2: {

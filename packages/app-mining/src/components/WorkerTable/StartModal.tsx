@@ -1,4 +1,8 @@
-import {InputNumber} from '@phala/react-components'
+import {
+  InputNumber,
+  PhalaStakePoolTransactionFeeLabel,
+} from '@phala/react-components'
+import {useTokenomicParameters} from '@phala/react-hooks'
 import {
   useApiPromise,
   useDecimalJsTokenDecimalMultiplier,
@@ -6,7 +10,6 @@ import {
 import Decimal from 'decimal.js'
 import {useCallback, useMemo, useState} from 'react'
 import styled from 'styled-components'
-import {useTokenomicParameters} from '@phala/react-hooks'
 import {WorkerModalProps} from '.'
 import useFormat from '../../hooks/useFormat'
 import useSelfStakePools from '../../hooks/useSelfStakePools'
@@ -27,6 +30,7 @@ const StartModal = (props: WorkerModalProps): JSX.Element => {
   const [amount, setAmount] = useState<number | undefined>()
   const {data: tokenomicParameters} = useTokenomicParameters()
   const {data: stakePools} = useSelfStakePools()
+
   const poolFreeStake = useMemo<string>(() => {
     if (!stakePools) return '-'
     const stakePool = stakePools.find((pool) => pool.pid === worker.pid)
@@ -54,17 +58,22 @@ const StartModal = (props: WorkerModalProps): JSX.Element => {
     return `${s.toString()} PHA`
   }, [tokenomicParameters, worker])
 
+  const action = useMemo(() => {
+    if (!api || !decimals || !amount) return
+
+    return api.tx.phalaStakePool?.startMining?.(
+      worker.pid,
+      worker.pubkey,
+      new Decimal(amount).mul(decimals).toString()
+    )
+  }, [amount, api, decimals, worker.pid, worker.pubkey])
+
   const onConfirm = useCallback(async () => {
-    if (api && decimals && amount) {
-      return waitSignAndSend(
-        api.tx.phalaStakePool?.startMining?.(
-          worker.pid,
-          worker.pubkey,
-          new Decimal(amount).mul(decimals).toString()
-        )
-      )
+    if (action) {
+      return waitSignAndSend(action)
     }
-  }, [api, waitSignAndSend, worker.pid, worker.pubkey, amount, decimals])
+  }, [waitSignAndSend, action])
+
   const onInputChange = useCallback((value) => {
     const number = parseFloat(value)
     if (typeof number === 'number') {
@@ -79,7 +88,7 @@ const StartModal = (props: WorkerModalProps): JSX.Element => {
       title="Start Mining"
       subtitle="Start a miner on behalf of the stake pool"
       disabled={!amount}
-    >
+      actionsExtra={<PhalaStakePoolTransactionFeeLabel action={action} />}>
       <Label>pid</Label>
       <Value>{worker.pid}</Value>
       <Label>WorkerPublicKey</Label>
@@ -90,8 +99,7 @@ const StartModal = (props: WorkerModalProps): JSX.Element => {
         placeholder="Amount"
         value={amount}
         onChange={onInputChange}
-        after="PHA"
-      ></InputNumber>
+        after="PHA"></InputNumber>
 
       <Extra>Smin: {sMin}</Extra>
       <Extra>Smax: {sMax}</Extra>

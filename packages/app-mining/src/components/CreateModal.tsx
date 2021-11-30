@@ -1,5 +1,6 @@
+import {PhalaStakePoolTransactionFeeLabel} from '@phala/react-components'
 import {useApiPromise} from '@phala/react-libs'
-import {useCallback} from 'react'
+import {useCallback, useMemo} from 'react'
 import useSelfStakePools from '../hooks/useSelfStakePools'
 import useWaitSignAndSend from '../hooks/useWaitSignAndSend'
 import ActionModal from './ActionModal'
@@ -8,13 +9,19 @@ const CreateModal = (props: {onClose: () => void}): JSX.Element => {
   const {refetch} = useSelfStakePools()
   const waitSignAndSend = useWaitSignAndSend()
   const {api} = useApiPromise()
+  const action = useMemo(() => {
+    if (!api) return
+
+    return api.tx.phalaStakePool?.create?.()
+  }, [api])
+
   const onConfirm = useCallback(async () => {
-    if (api) {
-      return waitSignAndSend(api.tx.phalaStakePool?.create?.()).then(() => {
+    if (action) {
+      return waitSignAndSend(action).then(() => {
         refetch()
       })
     }
-  }, [api, waitSignAndSend, refetch])
+  }, [waitSignAndSend, action, refetch])
 
   return (
     <ActionModal
@@ -22,7 +29,8 @@ const CreateModal = (props: {onClose: () => void}): JSX.Element => {
       title="Create"
       subtitle="You will create a new stake pool"
       onConfirm={onConfirm}
-    ></ActionModal>
+      actionsExtra={<PhalaStakePoolTransactionFeeLabel action={action} />}
+    />
   )
 }
 

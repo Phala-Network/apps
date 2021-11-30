@@ -8,8 +8,7 @@ import {
 import {ethers} from 'ethers'
 import React, {useEffect, useState} from 'react'
 import styled from 'styled-components'
-import {Button, Modal, ModalAction, ModalActions} from '../..'
-import {Fee} from '../Fee'
+import {Button, FeeLabel, Modal, ModalAction, ModalActions} from '../..'
 
 type Props = {
   visible: boolean
@@ -74,7 +73,7 @@ const ApproveDialog: React.FC<Props> = (props) => {
         first needs your approval. This is only required once per ERC20 token!
       </Content>
       <br />
-      <Fee label="Fee" fee={(fee?.toFixed(6) || '') + ' ETH'}></Fee>
+      <FeeLabel label="Fee" fee={(fee?.toFixed(6) || '') + ' ETH'} />
 
       <ModalActions>
         <ModalAction full>

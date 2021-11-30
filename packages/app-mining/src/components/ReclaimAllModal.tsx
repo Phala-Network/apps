@@ -1,7 +1,7 @@
+import {PhalaStakePoolTransactionFeeLabel} from '@phala/react-components'
 import {useApiPromise} from '@phala/react-libs'
 import Decimal from 'decimal.js'
-import {useMemo} from 'react'
-import {useCallback} from 'react'
+import {useCallback, useMemo} from 'react'
 import styled from 'styled-components'
 import useFormat from '../hooks/useFormat'
 import useWaitSignAndSend from '../hooks/useWaitSignAndSend'
@@ -19,17 +19,23 @@ const ReclaimAllModal = (props: StakePoolModalProps): JSX.Element => {
   const waitSignAndSend = useWaitSignAndSend()
   const format = useFormat()
 
-  const onConfirm = useCallback(async () => {
+  const action = useMemo(() => {
     if (api) {
-      return waitSignAndSend(
-        api.tx.utility.batch(
-          stakePool.reclaimableWorkers?.map((pubkey) =>
-            api.tx.phalaStakePool?.reclaimPoolWorker?.(stakePool.pid, pubkey)
-          ) as any
-        )
+      return api.tx.utility.batch(
+        stakePool.reclaimableWorkers?.map((pubkey) =>
+          api.tx.phalaStakePool?.reclaimPoolWorker?.(stakePool.pid, pubkey)
+        ) as any
       )
+    } else {
+      return
     }
-  }, [api, waitSignAndSend, stakePool])
+  }, [api, stakePool])
+
+  const onConfirm = useCallback(async () => {
+    if (action) {
+      return waitSignAndSend(action)
+    }
+  }, [action, waitSignAndSend])
 
   const reclaimableStake = useMemo<string>(() => {
     if (!reclaimableWorkers?.length) return '-'
@@ -46,7 +52,7 @@ const ReclaimAllModal = (props: StakePoolModalProps): JSX.Element => {
       onConfirm={onConfirm}
       title="Reclaim All Worker"
       subtitle="Reclaims the releasing stake of miners in a pool"
-    >
+      actionsExtra={<PhalaStakePoolTransactionFeeLabel action={action} />}>
       <Label>pid</Label>
       <Value>{stakePool.pid}</Value>
       <Label>Worker PublicKeys</Label>

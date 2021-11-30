@@ -37,8 +37,7 @@ const MiningTable = <D extends Record<string, unknown>>({
       <Table
         autoResetPage={false}
         autoResetSortBy={false}
-        {...restProps}
-      ></Table>
+        {...restProps}></Table>
     </TableWrapper>
   )
 }

@@ -24,8 +24,7 @@ export const Dropdown = <T extends string = string>(
               </RcMenuItem>
             ))}
           </RcMenu>
-        }
-      >
+        }>
         {props.children}
       </RcDropdown>
     </>

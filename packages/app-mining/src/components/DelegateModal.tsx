@@ -1,17 +1,20 @@
-import styled from 'styled-components'
-import {Alert, InputNumber} from '@phala/react-components'
+import {
+  InputNumber,
+  PhalaStakePoolTransactionFeeLabel,
+} from '@phala/react-components'
 import {
   useApiPromise,
   useDecimalJsTokenDecimalMultiplier,
 } from '@phala/react-libs'
 import Decimal from 'decimal.js'
-import {useCallback, useState} from 'react'
-import type {StakePoolModalProps} from './StakePoolTable'
+import {useCallback, useMemo, useState} from 'react'
+import styled from 'styled-components'
+import {useDelegableBalance} from '../hooks/useDelegableBalance'
+import useFormat from '../hooks/useFormat'
 import useSelfUserStakeInfo from '../hooks/useSelfUserStakeInfo'
 import useWaitSignAndSend from '../hooks/useWaitSignAndSend'
 import ActionModal, {Label, Value} from './ActionModal'
-import useFormat from '../hooks/useFormat'
-import {useDelegableBalance} from '../hooks/useDelegableBalance'
+import type {StakePoolModalProps} from './StakePoolTable'
 
 const Extra = styled.div`
   margin-top: 10px;
@@ -33,16 +36,21 @@ const DelegateModal = (props: StakePoolModalProps): JSX.Element => {
       ? '∞'
       : format(stakePool.cap.sub(stakePool.totalStake))
 
-  const onConfirm = useCallback(async () => {
+  const action = useMemo(() => {
     if (api && decimals && amount) {
-      return waitSignAndSend(
-        api.tx.phalaStakePool?.contribute?.(
-          stakePool.pid,
-          new Decimal(amount).mul(decimals).toString()
-        )
+      return api.tx.phalaStakePool?.contribute?.(
+        stakePool.pid,
+        new Decimal(amount).mul(decimals).toString()
       )
+    } else {
+      return
     }
-  }, [api, waitSignAndSend, stakePool.pid, amount, decimals])
+  }, [api, stakePool.pid, amount, decimals])
+
+  const onConfirm = useCallback(async () => {
+    action && waitSignAndSend(action)
+  }, [action, waitSignAndSend])
+
   const onInputChange = useCallback((value) => {
     const number = parseFloat(value)
     if (typeof number === 'number') {
@@ -59,8 +67,8 @@ const DelegateModal = (props: StakePoolModalProps): JSX.Element => {
       onConfirm={onConfirm}
       title="Delegate"
       subtitle="Delegate some stake to a pool"
-      disabled={!amount}
-    >
+      actionsExtra={<PhalaStakePoolTransactionFeeLabel action={action} />}
+      disabled={!amount}>
       <Label>pid</Label>
       <Value>{stakePool.pid}</Value>
       <Label>Amount</Label>
@@ -69,9 +77,8 @@ const DelegateModal = (props: StakePoolModalProps): JSX.Element => {
         placeholder="Amount"
         value={amount}
         onChange={onInputChange}
-        after="PHA"
-      ></InputNumber>
-      <Alert style={{marginTop: 10}}>Please reserve about 1 PHA fee.</Alert>
+        after="PHA"></InputNumber>
+
       <Extra>Delegable Balance: {format(delegableBalance)}</Extra>
       <Extra>Pool Remaining: {remaining}</Extra>
     </ActionModal>

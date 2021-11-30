@@ -15,6 +15,7 @@ import {
   Alert,
   Button,
   Checkbox,
+  FeeLabel,
   KhalaToEthereumFee,
   ModalAction,
   ModalActions,
@@ -22,7 +23,6 @@ import {
 } from '../../..'
 import {Link} from '../../../Announcement/styledComponents'
 import {StepProps} from '../../BridgeProcess'
-import {Fee} from '../../Fee'
 import useTransactionInfo from '../../hooks/useTransactionInfo'
 import BaseInfo from '../BaseInfo'
 
@@ -137,30 +137,26 @@ export const SubmitStepToEthereum: React.FC<Props> = (props) => {
             24h. You can follow each step of the transaction through{' '}
             <Link
               target="_blank"
-              href={`https://khala.subscan.io/account/${transactionInfo.from.address}?tab=transfer`}
-            >
+              href={`https://khala.subscan.io/account/${transactionInfo.from.address}?tab=transfer`}>
               Khala&apos;s explorer
             </Link>{' '}
             and{' '}
             <Link
               target="_blank"
-              href={`https://etherscan.io/address/${transactionInfo.to.address}#tokentxns`}
-            >
+              href={`https://etherscan.io/address/${transactionInfo.to.address}#tokentxns`}>
               Ethereum&apos;s explorer
             </Link>{' '}
             once you confirm it. If it has not arrived after 24 hours, you can
             post on the{' '}
             <Link
               target="_blank"
-              href={`https://forum.phala.network/c/support/function/33`}
-            >
+              href={`https://forum.phala.network/c/support/function/33`}>
               forum
             </Link>{' '}
             or leave a message on{' '}
             <Link
               target="_blank"
-              href={`https://discord.com/invite/SvdKgHfhTG#product-feedback`}
-            >
+              href={`https://discord.com/invite/SvdKgHfhTG#product-feedback`}>
               Discord #product-feedback
             </Link>{' '}
             for support.
@@ -185,13 +181,11 @@ export const SubmitStepToEthereum: React.FC<Props> = (props) => {
             fontSize: 14,
             padding: '8px 0',
             margin: '8px 0',
-          }}
-        >
+          }}>
           <div>
             <Checkbox
               checked={checkBoxChecked}
-              onChange={setCheckBoxChecked}
-            ></Checkbox>
+              onChange={setCheckBoxChecked}></Checkbox>
           </div>
           <div style={{padding: '2px 2px'}}>
             I understood the transaction can take long time and the bridge fee
@@ -208,8 +202,7 @@ export const SubmitStepToEthereum: React.FC<Props> = (props) => {
               onClick={() => {
                 onPrev?.()
                 setProgressIndex(-1)
-              }}
-            >
+              }}>
               Done
             </Button>
           </ModalAction>
@@ -220,7 +213,7 @@ export const SubmitStepToEthereum: React.FC<Props> = (props) => {
         <ModalActions>
           <div style={{flex: 1}}>
             <KhalaToEthereumFee />
-            <Fee fee={transactionFee} label={'Fee'}></Fee>
+            <FeeLabel fee={transactionFee} label={'Fee'} />
           </div>
 
           {onPrev && !isSubmitting && (

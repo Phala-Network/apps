@@ -1,14 +1,19 @@
 import {usePolkadotAccountAtom} from '@phala/app-store'
-import {Button, Modal, Input} from '@phala/react-components'
+import {
+  Button,
+  Input,
+  Modal,
+  PolkadotTransactionFeeLabel,
+} from '@phala/react-components'
 import {
   useApiPromise,
   useDecimalJsTokenDecimalMultiplier,
   waitSignAndSend,
 } from '@phala/react-libs'
+import {validateAddress} from '@phala/utils'
+import Decimal from 'decimal.js'
 import React, {useCallback, useState} from 'react'
 import {toast} from 'react-toastify'
-import Decimal from 'decimal.js'
-import {validateAddress} from '@phala/utils'
 import styled from 'styled-components'
 
 type Props = {
@@ -26,16 +31,17 @@ const TransferModal: React.FC<Props> = ({visible, onClose}) => {
   const [loading, setLoading] = useState(false)
   const {api} = useApiPromise()
   const [polkadotAccount] = usePolkadotAccountAtom()
-  // const allBalances = useAllBalances(polkadotAccount)
   const decimals = useDecimalJsTokenDecimalMultiplier(api)
 
   const confirm = useCallback(async () => {
     if (api && polkadotAccount && decimals) {
       let amountString: string
+
       if (!validateAddress(address)) {
         toast.error('Invalid address')
         return
       }
+
       try {
         amountString = new Decimal(amount).mul(decimals).toString()
       } catch (err) {
@@ -53,6 +59,7 @@ const TransferModal: React.FC<Props> = ({visible, onClose}) => {
           extrinsic: api.tx.balances.transfer(address, amountString),
           signer,
         })
+
         toast.success('Success')
         onClose()
       } catch (err) {
@@ -66,6 +73,14 @@ const TransferModal: React.FC<Props> = ({visible, onClose}) => {
       visible={visible}
       onClose={onClose}
       title="Transfer"
+      actionsExtra={
+        <PolkadotTransactionFeeLabel
+          key="PolkadotTransactionFeeLabel"
+          sender={polkadotAccount?.address}
+          recipient={address}
+          amount={amount}
+        />
+      }
       actions={[
         <Button onClick={onClose} key="reject">
           Cancel
@@ -77,26 +92,23 @@ const TransferModal: React.FC<Props> = ({visible, onClose}) => {
             confirm().finally(() => setLoading(false))
           }}
           key="confirm"
-          type="primary"
-        >
+          type="primary">
           {loading ? 'Confirming' : 'Confirm'}
         </Button>,
-      ]}
-    >
+      ]}>
       <Input
         size="large"
         placeholder="Address"
         value={address}
-        onChange={setAddress}
-      ></Input>
+        onChange={setAddress}></Input>
       <Spacer></Spacer>
       <Input
         size="large"
         after="PHA"
         placeholder="Amount"
         value={amount}
-        onChange={setAmount}
-      ></Input>
+        onChange={setAmount}></Input>
+      <Spacer></Spacer>
     </Modal>
   )
 }

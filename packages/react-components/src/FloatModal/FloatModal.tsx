@@ -64,8 +64,7 @@ export const FloatModal: FC<FloatModalProps> = (props) => {
       <Root ref={rootRef} className={active ? 'active' : ''}>
         <FloatModalHeader
           active={active}
-          onClickHeader={() => setActive((prev) => !prev)}
-        >
+          onClickHeader={() => setActive((prev) => !prev)}>
           {title}
         </FloatModalHeader>
 

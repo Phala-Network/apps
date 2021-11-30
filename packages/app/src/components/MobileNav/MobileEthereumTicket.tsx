@@ -36,14 +36,12 @@ const MobileEthereumTicket: React.FC = () => {
         </Account>
       ) : (
         <ConnectButton
-          onClick={() => setEmptyAccountModalVisible(true)}
-        ></ConnectButton>
+          onClick={() => setEmptyAccountModalVisible(true)}></ConnectButton>
       )}
 
       <EmptyAccountModal
         visible={emptyAccountModalVisible}
-        onClose={() => setEmptyAccountModalVisible(false)}
-      ></EmptyAccountModal>
+        onClose={() => setEmptyAccountModalVisible(false)}></EmptyAccountModal>
     </Wrapper>
   )
 }

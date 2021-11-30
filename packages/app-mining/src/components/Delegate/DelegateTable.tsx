@@ -90,8 +90,7 @@ const MainTable = (): JSX.Element => {
               <a
                 href={`https://khala.subscan.io/account/${owner}`}
                 target="_blank"
-                rel="noreferrer"
-              >
+                rel="noreferrer">
                 {hasIdentity ? value : trimAddress(value)}
               </a>
               {verified && ' ✅'}
@@ -203,8 +202,7 @@ const MainTable = (): JSX.Element => {
               onClick={() => {
                 setPid(stakePool.pid)
                 open('delegate')
-              }}
-            >
+              }}>
               Delegate
             </ActionButton>
           </>
@@ -227,8 +225,7 @@ const MainTable = (): JSX.Element => {
         </Checkbox>
         <Checkbox
           checked={showNotMaxCommission}
-          onChange={setShowNotMaxCommission}
-        >
+          onChange={setShowNotMaxCommission}>
           {'Commission < 100%'}
         </Checkbox>
         <Checkbox checked={showHasRemaining} onChange={setShowHasRemaining}>
@@ -254,8 +251,7 @@ const MainTable = (): JSX.Element => {
           ],
           [showHasAPR, showNotMaxCommission, showHasRemaining, showHasWorkers]
         )}
-        globalFilterValue={searchText}
-      ></Table>
+        globalFilterValue={searchText}></Table>
 
       {modalVisible.delegate && activeStakePool && (
         <DelegateModal
@@ -263,8 +259,7 @@ const MainTable = (): JSX.Element => {
           onClose={() => {
             close('delegate')
             refetch()
-          }}
-        ></DelegateModal>
+          }}></DelegateModal>
       )}
     </Wrapper>
   )

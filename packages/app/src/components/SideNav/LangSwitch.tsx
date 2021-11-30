@@ -28,8 +28,7 @@ const LangSwitch: React.FC = () => {
           onClick={() => {
             i18n.changeLanguage('zh')
             changeLocale('zh')
-          }}
-        >
+          }}>
           中文(中国)
         </Lang>
       </Text>
@@ -40,8 +39,7 @@ const LangSwitch: React.FC = () => {
           onClick={() => {
             i18n.changeLanguage('en')
             changeLocale('en')
-          }}
-        >
+          }}>
           English
         </Lang>
       </Text>

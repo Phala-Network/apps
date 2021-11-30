@@ -141,8 +141,7 @@ const WorkerTable = ({
                 }
                 open(key)
                 setSelectedPubkey(worker.pubkey)
-              }}
-            ></ItemMenu>
+              }}></ItemMenu>
           )
         },
         disableSortBy: true,
@@ -156,8 +155,7 @@ const WorkerTable = ({
         isLoading={isLoading}
         title="Worker"
         columns={columns}
-        data={tableData}
-      ></MiningTable>
+        data={tableData}></MiningTable>
 
       {selectedWorker &&
         modalEntries.map(

@@ -1,13 +1,17 @@
 import {usePolkadotAccountAtom} from '@phala/app-store'
-import {Input, InputAction} from '@phala/react-components'
+import {
+  Input,
+  InputAction,
+  PhalaStakePoolTransactionFeeLabel,
+} from '@phala/react-components'
 import {useApiPromise} from '@phala/react-libs'
+import Decimal from 'decimal.js'
 import {useCallback, useMemo, useState} from 'react'
-import type {StakePoolModalProps} from './StakePoolTable'
 import useFormat from '../hooks/useFormat'
 import useSelfUserStakeInfo from '../hooks/useSelfUserStakeInfo'
 import useWaitSignAndSend from '../hooks/useWaitSignAndSend'
 import ActionModal, {Label, Value} from './ActionModal'
-import Decimal from 'decimal.js'
+import type {StakePoolModalProps} from './StakePoolTable'
 
 const ClaimModal = (props: StakePoolModalProps): JSX.Element => {
   const {onClose, stakePool} = props
@@ -31,13 +35,20 @@ const ClaimModal = (props: StakePoolModalProps): JSX.Element => {
     )
   }, [stakePool, userStakeInfo, format, polkadotAccount])
 
-  const onConfirm = useCallback(async () => {
+  const action = useMemo(() => {
     if (api && address) {
-      return waitSignAndSend(
-        api.tx.phalaStakePool?.claimRewards?.(stakePool.pid, address)
-      )
+      return api.tx.phalaStakePool?.claimRewards?.(stakePool.pid, address)
+    } else {
+      return
     }
-  }, [api, waitSignAndSend, stakePool.pid, address])
+  }, [api, address, stakePool])
+
+  const onConfirm = useCallback(async () => {
+    if (action) {
+      return waitSignAndSend(action)
+    }
+  }, [action, waitSignAndSend])
+
   const onInputChange = useCallback((value) => {
     setAddress(value)
   }, [])
@@ -48,8 +59,8 @@ const ClaimModal = (props: StakePoolModalProps): JSX.Element => {
       onConfirm={onConfirm}
       title="Claim"
       subtitle="Claim all the pending rewards of the sender and send to the `target`"
-      disabled={!address}
-    >
+      actionsExtra={<PhalaStakePoolTransactionFeeLabel action={action} />}
+      disabled={!address}>
       <Label>pid</Label>
       <Value>{stakePool.pid}</Value>
       <Label>Rewards</Label>
@@ -60,12 +71,10 @@ const ClaimModal = (props: StakePoolModalProps): JSX.Element => {
         onChange={onInputChange}
         after={
           <InputAction
-            onClick={() => setAddress(polkadotAccount?.address || '')}
-          >
+            onClick={() => setAddress(polkadotAccount?.address || '')}>
             MY ADDRESS
           </InputAction>
-        }
-      ></Input>
+        }></Input>
     </ActionModal>
   )
 }
