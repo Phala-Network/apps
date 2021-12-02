@@ -1,4 +1,5 @@
 import {validateAddress} from '@phala/utils'
+import Decimal from 'decimal.js'
 import {useEffect, useState} from 'react'
 import {useApiPromise} from './hooks/useApiPromise'
 
@@ -41,7 +42,9 @@ export function useTransactionFee(
       .transfer(recipient, amountFormatted)
       .paymentInfo(sender)
       .then(({partialFee}) => {
-        setFee(`${partialFee.toHuman()} `)
+        setFee(
+          new Decimal(partialFee.toString()).div(10 ** 12).toFixed(8) + ' PHA'
+        )
       })
   }, [api, setFee, sender, recipient, amount])
 
