@@ -1,5 +1,9 @@
 import {usePolkadotAccountAtom} from '@phala/app-store'
-import {Button, Modal} from '@phala/react-components'
+import {
+  Button,
+  Modal,
+  PhalaStakePoolTransactionFeeLabel,
+} from '@phala/react-components'
 import {useAllBalances} from '@phala/react-hooks'
 import {
   bnToDecimal,
@@ -8,7 +12,7 @@ import {
   vest,
 } from '@phala/react-libs'
 import {BN} from '@polkadot/util'
-import React, {useCallback, useState} from 'react'
+import React, {useCallback, useMemo, useState} from 'react'
 import {toast} from 'react-toastify'
 import styled from 'styled-components'
 
@@ -52,9 +56,16 @@ const ClaimModal: React.FC<Props> = ({visible, onClose}) => {
     [decimals]
   )
 
+  const action = useMemo(() => {
+    if (!api) return
+
+    return api.tx.vesting.vest()
+  }, [api])
+
   const confirm = useCallback(() => {
     if (api && polkadotAccount) {
       setLoading(true)
+
       vest({api, sender: polkadotAccount})
         .then(() => {
           toast('Success')
@@ -73,6 +84,7 @@ const ClaimModal: React.FC<Props> = ({visible, onClose}) => {
       visible={visible}
       onClose={onClose}
       title="Claim PHA"
+      actionsExtra={<PhalaStakePoolTransactionFeeLabel action={action} />}
       actions={[
         <Button onClick={onClose} key="reject">
           Cancel
