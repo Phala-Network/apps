@@ -48,7 +48,9 @@ const DelegateModal = (props: StakePoolModalProps): JSX.Element => {
   }, [api, stakePool.pid, amount, decimals])
 
   const onConfirm = useCallback(async () => {
-    action && waitSignAndSend(action)
+    if (action) {
+      return waitSignAndSend(action)
+    }
   }, [action, waitSignAndSend])
 
   const onInputChange = useCallback((value) => {
