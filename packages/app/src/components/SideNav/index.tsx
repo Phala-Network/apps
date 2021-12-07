@@ -67,6 +67,10 @@ const SideNav: React.FC = () => {
       name: t('Discord'),
       link: 'https://discord.gg/kpYj9GWjwN',
     },
+    {
+      name: 'Governance',
+      link: 'https://khala.subsquare.io/',
+    },
   ]
 
   return (
