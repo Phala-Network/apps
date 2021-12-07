@@ -212,6 +212,7 @@ const InputDataStep: React.FC<Props> = (props) => {
               setErrorString('')
             }}
             value={amountInput}
+            min={0.00000001}
             placeholder="Amount (PHA)"
             after={
               isShowMaxButton ? (
