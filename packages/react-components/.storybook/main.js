@@ -23,7 +23,6 @@ module.exports = {
     alias['@phala/app-types'] = resolve(base, 'app-types', 'src')
     alias['@phala/react-cms'] = resolve(base, 'react-cms', 'src')
     alias['@phala/react-hooks'] = resolve(base, 'react-hooks', 'src')
-    alias['@phala/react-i18n'] = resolve(base, 'react-i18n', 'src')
     alias['@phala/react-libs'] = resolve(base, 'react-libs', 'src')
     alias['@phala/utils'] = resolve(base, 'utils', 'src')
     alias['@phala/react-graph-chainbridge'] = resolve(
