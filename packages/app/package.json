@@ -29,7 +29,6 @@
     "@polkadot/api": "^4.17.1",
     "@polkadot/extension-dapp": "^0.38.8",
     "@polkadot/types": "^4.17.1",
-    "@polkadot/ui-keyring": "^0.84.3",
     "@polkadot/util": "^6.11.1",
     "@polkadot/util-crypto": "^6.11.1",
     "@sentry/gatsby": "^6.16.0",
