@@ -48,7 +48,9 @@ const DelegateModal = (props: StakePoolModalProps): JSX.Element => {
   }, [api, stakePool.pid, amount, decimals])
 
   const onConfirm = useCallback(async () => {
-    action && waitSignAndSend(action)
+    if (action) {
+      return waitSignAndSend(action)
+    }
   }, [action, waitSignAndSend])
 
   const onInputChange = useCallback((value) => {
@@ -68,7 +70,7 @@ const DelegateModal = (props: StakePoolModalProps): JSX.Element => {
       title="Delegate"
       subtitle="Delegate some stake to a pool"
       actionsExtra={<PhalaStakePoolTransactionFeeLabel action={action} />}
-      disabled={!amount}>
+      disabled={!amount || !action}>
       <Label>pid</Label>
       <Value>{stakePool.pid}</Value>
       <Label>Amount</Label>

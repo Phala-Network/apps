@@ -35,8 +35,8 @@ export const waitSignAndSend = ({
 }: SignAndSendProps): Promise<Hash> => {
   const extrinsicResultPromise = new Promise<Hash>((resolve, reject) => {
     extrinsic
-      .signAndSend(account, {signer}, ({events, status}) => {
-        if (status.isFinalized) {
+      .signAndSend(account, {signer, nonce: -1}, ({events, status}) => {
+        if (status.isFinalized || status.isInBlock) {
           const failures = events.filter(({event}) => {
             return api.events.system.ExtrinsicFailed.is(event)
           })

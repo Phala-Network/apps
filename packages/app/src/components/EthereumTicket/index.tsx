@@ -1,7 +1,7 @@
 import {useEthereumAccountAtom} from '@phala/app-store'
 import {BalanceLabel, EthereumAccountModal} from '@phala/react-components'
+import {useEthereumWeb3} from '@phala/react-libs'
 import React, {useState} from 'react'
-import {toast} from 'react-toastify'
 import styled from 'styled-components'
 import {useCheckEthereumNetwork} from '../../hooks/useCheckEthereumNetwork'
 import useEthereumAccountBalanceETHDecimal from '../../hooks/useEthereumAccountBalanceETHDecimal'
@@ -31,17 +31,13 @@ const EthereumTicket: React.FC = () => {
   const [selectAccountModalViable, setSelectAccountModalViable] =
     useState(false)
   const isTheCurrentNetworkCorrect = useCheckEthereumNetwork()
+  const {ethereumWeb3connect} = useEthereumWeb3()
 
   const openAccountSelectModal = () => {
     if (isTheCurrentNetworkCorrect) {
       setSelectAccountModalViable(true)
     } else {
-      toast(
-        <div>
-          <h1>Wrong Network</h1>
-          <p>Please connect to the Ethereum Mainnet.</p>
-        </div>
-      )
+      ethereumWeb3connect()
     }
   }
 
@@ -55,7 +51,7 @@ const EthereumTicket: React.FC = () => {
               <DefaultStatusIcon>
                 <img src={logoImage} alt="logo" />
               </DefaultStatusIcon>
-              <DefaultStatusName>Connet METAMASK</DefaultStatusName>
+              <DefaultStatusName>Connect METAMASK</DefaultStatusName>
             </DefaultStatus>
           }></Ticket>
       ) : (
