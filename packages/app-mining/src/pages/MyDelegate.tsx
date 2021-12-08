@@ -1,9 +1,9 @@
-import {navigate} from 'gatsby-plugin-intl'
-import styled from 'styled-components'
 import {Button} from '@phala/react-components'
-import MyDelegateTable from '../components/Delegate/MyDelegateTable'
 import {Helmet} from 'react-helmet'
 import {up} from 'styled-breakpoints'
+import styled from 'styled-components'
+import MyDelegateTable from '../components/Delegate/MyDelegateTable'
+import {Link} from 'gatsby'
 
 const Wrapper = styled.div`
   overflow-x: auto;
@@ -30,9 +30,9 @@ export const MyDelegate = () => {
         <title>My Delegate</title>
       </Helmet>
       <Header>
-        <Button size="small" onClick={() => navigate('/delegate/')}>
-          Back
-        </Button>
+        <Link to="/delegate">
+          <Button size="small">Back</Button>
+        </Link>
       </Header>
       <Block>
         <MyDelegateTable />

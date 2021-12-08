@@ -1,11 +1,11 @@
-import styled from 'styled-components'
 import {Button} from '@phala/react-components'
-import {Link} from 'gatsby-plugin-intl'
-import useStakePools from '../../hooks/useStakePools'
-import {useMemo} from 'react'
-import useFormat from '../../hooks/useFormat'
 import Decimal from 'decimal.js'
+import {Link} from 'gatsby'
+import {useMemo} from 'react'
 import {down} from 'styled-breakpoints'
+import styled from 'styled-components'
+import useFormat from '../../hooks/useFormat'
+import useStakePools from '../../hooks/useStakePools'
 
 const Wrapper = styled.div`
   display: flex;
