@@ -2,7 +2,6 @@ import {ethereumGraphEndpoint} from '@phala/app-config'
 import {Provider as AppStoreProvider} from '@phala/app-store'
 import {getCMSLog} from '@phala/react-cms'
 import {MobileToastContextProvider} from '@phala/react-components'
-import {I18nextProvider} from '@phala/react-i18n'
 import {Provider as LibProvider} from '@phala/react-libs'
 import {isProduction} from '@phala/utils'
 import * as Sentry from '@sentry/react'
@@ -49,7 +48,7 @@ const WrapApp: React.FC = ({children}) => {
   }, [])
 
   return (
-    <I18nextProvider>
+    <div>
       <Helmet>
         <script
           type="text/javascript"
@@ -71,7 +70,7 @@ const WrapApp: React.FC = ({children}) => {
           <ReactQueryDevtools />
         </QueryClientProvider>
       </LibProvider>
-    </I18nextProvider>
+    </div>
   )
 }
 

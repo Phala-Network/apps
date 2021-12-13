@@ -18,7 +18,6 @@
     "@phala/react-libs": "workspace:*",
     "@phala/utils": "workspace:*",
     "@polkadot/api": "^4.17.1",
-    "@polkadot/api-derive": "^4.17.1",
     "@polkadot/types": "^4.17.1",
     "@sentry/react": "^6.12.0",
     "@types/react": "^17.0.20",

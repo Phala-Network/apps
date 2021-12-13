@@ -24,7 +24,6 @@
     {"path": "../react-cms"},
     {"path": "../react-components"},
     {"path": "../react-hooks"},
-    {"path": "../react-i18n"},
     {"path": "../react-libs"},
     {"path": "../utils"}
   ]

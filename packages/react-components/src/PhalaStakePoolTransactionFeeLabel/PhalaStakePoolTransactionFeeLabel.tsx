@@ -8,14 +8,12 @@ interface PhalaStakePoolTransactionFeeLabelProps {
   action?: SubmittableExtrinsic<'promise', any>
 }
 
-export const PhalaStakePoolTransactionFeeLabel: FC<PhalaStakePoolTransactionFeeLabelProps> =
-  (props) => {
-    const [polkadotAccount] = usePolkadotAccountAtom()
-    const {action} = props
-    const fee = usePhalaStakePoolTransactionFee(
-      action,
-      polkadotAccount?.address
-    )
+const Component: FC<PhalaStakePoolTransactionFeeLabelProps> = (props) => {
+  const [polkadotAccount] = usePolkadotAccountAtom()
+  const {action} = props
+  const fee = usePhalaStakePoolTransactionFee(action, polkadotAccount?.address)
 
-    return <FeeLabel key="fee" label="Fee" fee={fee} />
-  }
+  return <FeeLabel key="fee" label="Fee" fee={fee} />
+}
+
+export const PhalaStakePoolTransactionFeeLabel = Component

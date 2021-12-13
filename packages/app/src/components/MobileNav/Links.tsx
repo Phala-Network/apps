@@ -1,5 +1,5 @@
+import {Link as GatsbyLink} from 'gatsby'
 import styled from 'styled-components'
-import {Link as GatsbyLink} from 'gatsby-plugin-intl'
 
 const Wrapper = styled.div`
   flex: 1;

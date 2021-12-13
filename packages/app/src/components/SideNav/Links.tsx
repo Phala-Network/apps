@@ -1,4 +1,3 @@
-import {useTranslation} from '@phala/react-i18n'
 import styled from 'styled-components'
 import ActiveOutline from './ActiveOutline'
 import Link from './Link'
@@ -9,18 +8,16 @@ const Divider = styled.div`
 `
 
 const Links: React.FC = () => {
-  const {t} = useTranslation()
-
   return (
     <div id="navLinks" style={{position: 'relative', paddingTop: 1}}>
       <ActiveOutline />
 
-      <Link to="/">{t('Assets')}</Link>
-      <Link to="/bridge/">{t('Bridge')}</Link>
-      <Link to="/delegate/">{t('Delegate')}</Link>
+      <Link to="/">Assets</Link>
+      <Link to="/bridge/">Bridge</Link>
+      <Link to="/delegate/">Delegate</Link>
       <Divider></Divider>
-      <Link to="/mining/">{t('Mining')}</Link>
-      <Link to="/analytics/">{t('Analytics')}</Link>
+      <Link to="/mining/">Mining</Link>
+      <Link to="/analytics/">Analytics</Link>
 
       {/* <Link to="/darkpool">Darkpool</Link> */}
       {/* <Link to="/tokens">Tokens</Link> */}

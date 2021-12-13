@@ -1,4 +1,3 @@
-import {useTranslation} from '@phala/react-i18n'
 import React from 'react'
 import styled from 'styled-components'
 import Links from './Links'
@@ -48,23 +47,21 @@ const ExternalLink = styled.a`
 `
 
 const SideNav: React.FC = () => {
-  const {t} = useTranslation()
-
   const LINKS = [
     {
       name: 'Phala.network',
       link: 'https://phala.network',
     },
     {
-      name: t('Wiki'),
+      name: 'Wiki',
       link: 'https://wiki.phala.network',
     },
     {
-      name: t('Forum'),
+      name: 'Forum',
       link: 'https://forum.phala.network/t/topic/2450/2',
     },
     {
-      name: t('Discord'),
+      name: 'Discord',
       link: 'https://discord.gg/kpYj9GWjwN',
     },
     {
