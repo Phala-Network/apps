@@ -255,6 +255,14 @@ importers:
       '@phala/react-libs': link:../react-libs
       react-query: 3.33.5
 
+  packages/app-bridge-v2:
+    specifiers:
+      '@polkadot/api': ^4.17.1
+      bn.js: ^5.2.0
+    dependencies:
+      '@polkadot/api': 4.17.1
+      bn.js: 5.2.0
+
   packages/app-config:
     specifiers:
       '@phala/typedefs': 0.2.29
