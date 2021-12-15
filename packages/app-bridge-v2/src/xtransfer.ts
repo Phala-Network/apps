@@ -18,16 +18,6 @@ async function transferPHAFromKhalaToKarura(
     ?.transferNative?.(karuraParaId, recipient.address, amount, 6000000000)
     .signAndSend(sender, (result) => {
       callback?.(`Transfer PHA from Khala to Karura: ${result.status}`)
-
-      if (result.status.isInBlock) {
-        callback?.(
-          `Transaction included at blockHash ${result.status.asInBlock}`
-        )
-      } else if (result.status.isFinalized) {
-        callback?.(
-          `Transaction finalized at blockHash ${result.status.asFinalized}`
-        )
-      }
     })
 }
 
