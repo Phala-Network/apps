@@ -14,7 +14,7 @@
     "prepublishOnly": "run-s lint build"
   },
   "dependencies": {
-    "@polkadot/api": "^4.17.1",
+    "@polkadot/api": "^6.12.1",
     "bn.js": "^5.2.0"
   }
 }
