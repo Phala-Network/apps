@@ -20,6 +20,7 @@ module.exports = {
           '@phala/app-data-analytics': rp('../app-data-analytics/src'),
           '@phala/app-assets': rp('../app-assets/src'),
           '@phala/app-bridge': rp('../app-bridge/src'),
+          '@phala/app-bridge-v2': rp('../app-bridge-v2/src'),
           '@phala/app-config': rp('../app-config/src'),
           '@phala/app-mining': rp('../app-mining/src'),
           '@phala/app-store': rp('../app-store/src'),

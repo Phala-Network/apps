@@ -15,6 +15,7 @@
     "@phala/app-analytics": "workspace:^0.0.1",
     "@phala/app-assets": "workspace:^0.0.1",
     "@phala/app-bridge": "workspace:^0.0.1",
+    "@phala/app-bridge-v2": "workspace:^0.0.1",
     "@phala/app-config": "workspace:*",
     "@phala/app-data-analytics": "workspace:^0.0.1",
     "@phala/app-mining": "workspace:^0.0.1",

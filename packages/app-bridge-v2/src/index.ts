@@ -1,1 +1,1 @@
-export * from './BridgePage'
+export {BridgePage as default} from './BridgePage'
