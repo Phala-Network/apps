@@ -1,7 +1,7 @@
 import {Button} from '@phala/react-components'
 import {ApiPromise, Keyring} from '@polkadot/api'
 import BN from 'bn.js'
-import {useEffect, useState} from 'react'
+import {useCallback, useEffect, useState} from 'react'
 import {
   getBaseInfo,
   transferPHAFromKaruraToKhala,
@@ -32,6 +32,13 @@ export const BridgePage = () => {
     setKhalaAccount(khalaAccount)
   }, [])
 
+  const log = useCallback(
+    (message: string) => {
+      setMessages((messages) => [...messages, message])
+    },
+    [setMessages]
+  )
+
   return (
     <div style={{padding: 20, margin: 20}}>
       <div>
@@ -45,9 +52,7 @@ export const BridgePage = () => {
                 khalaAccount,
                 karuraAccount,
                 bn1e12.mul(new BN(100)),
-                (message) => {
-                  setMessages((messages) => [...messages, message])
-                }
+                log
               )
           }}>
           transfer PHA From Khala To Karura
@@ -65,9 +70,7 @@ export const BridgePage = () => {
                 karuraAccount,
                 khalaAccount,
                 bn1e12.mul(new BN(50)),
-                (message) => {
-                  setMessages((messages) => [...messages, message])
-                }
+                log
               )
           }}>
           transfer PHA From Karura To Khala
