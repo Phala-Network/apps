@@ -70,9 +70,9 @@ export function transferKARFromKaruraToKhala(
   amount: BN,
   callback?: (message: string) => void
 ) {
-  log(`Transfer KAR from Karura to Khala...`)
-  return karuraApi.tx.xTokens
-    .transfer(
+  callback?.(`Transfer KAR from Karura to Khala...`)
+  return karuraApi?.tx?.xTokens
+    ?.transfer?.(
       karuraApi.createType('AcalaPrimitivesCurrencyCurrencyId', {
         // 128 is KAR in kurura runtime
         Token: karuraApi.createType('AcalaPrimitivesCurrencyTokenSymbol', 128),
