@@ -2,12 +2,6 @@ import {ApiPromise, Keyring, WsProvider} from '@polkadot/api'
 import {AddressOrPair} from '@polkadot/api/types'
 import BN from 'bn.js'
 
-const {log} = console
-
-type KeyringPair = {
-  address: string
-}
-
 const bn1e12 = new BN(10).pow(new BN(12))
 // const khalaParaId = 2004
 const karuraParaId = 2000
@@ -15,17 +9,24 @@ const karuraParaId = 2000
 async function transferPHAFromKhalaToKarura(
   khalaApi: ApiPromise,
   sender: AddressOrPair,
-  recipient: KeyringPair,
-  amount: BN
+  recipient: any,
+  amount: BN,
+  callback?: (message: string) => void
 ) {
-  log(`Transfer PHA from Khala to Karura...`)
+  callback?.(`Transfer PHA from Khala to Karura...`)
   await khalaApi?.tx?.xcmTransfer
     ?.transferNative?.(karuraParaId, recipient.address, amount, 6000000000)
     .signAndSend(sender, (result) => {
+      callback?.(`Transfer PHA from Khala to Karura: ${result.status}`)
+
       if (result.status.isInBlock) {
-        log(`Transaction included at blockHash ${result.status.asInBlock}`)
+        callback?.(
+          `Transaction included at blockHash ${result.status.asInBlock}`
+        )
       } else if (result.status.isFinalized) {
-        log(`Transaction finalized at blockHash ${result.status.asFinalized}`)
+        callback?.(
+          `Transaction finalized at blockHash ${result.status.asFinalized}`
+        )
       }
     })
 }
@@ -222,37 +223,47 @@ async function transferPHAFromKhalaToKarura(
 //   })
 // }
 
-export async function main() {
-  log('LOG: ' + 'create khala api')
+async function getBaseInfo() {
   const khalaEndpoint = 'ws://35.215.162.102:9944'
   const khalaProvider = new WsProvider(khalaEndpoint)
   const khalaApi = await ApiPromise.create({
     provider: khalaProvider,
   })
 
+  const keyring = new Keyring({type: 'sr25519'})
+  const karuraAccount = keyring.addFromUri('//Alice')
+  const khalaAccount = keyring.addFromUri('//Bob')
+
+  return {
+    khalaApi,
+    khalaAccount,
+    karuraAccount,
+  } as const
+}
+
+export async function runTransferPHAFromKhalaToKarura(
+  callback?: (message: string) => void
+) {
+  const {khalaApi, khalaAccount, karuraAccount} = await getBaseInfo()
+
+  await transferPHAFromKhalaToKarura(
+    khalaApi,
+    khalaAccount,
+    karuraAccount,
+    bn1e12.mul(new BN(100)),
+    callback
+  )
+
+  // khalaApi.disconnect()
+}
+
+export async function main() {
   // log('LOG: ' + 'create karura api')
   // const karuraEndpoint = 'ws://35.215.162.102:9955'
   // const karuraProvider = new WsProvider(karuraEndpoint)
   // const karuraApi = await ApiPromise.create({
   //   provider: karuraProvider,
   // })
-
-  log('LOG: ' + 'create accounts')
-  const keyring = new Keyring({type: 'sr25519'})
-  const karuraAccount = keyring.addFromUri('//Alice')
-  const khalaAccount = keyring.addFromUri('//Bob')
-
-  log(
-    'LOG: ' +
-      'transfer 100 PHA from khalaAccount on khala network to karuraAccount on karura network'
-  )
-  await transferPHAFromKhalaToKarura(
-    khalaApi,
-    khalaAccount,
-    karuraAccount,
-    bn1e12.mul(new BN(100))
-  )
-
   // log(
   //   'LOG: ' +
   //     'now, karuraAccount has reserved 100 PHA on karura network(actually with small fee being deducted, so < 100)'
@@ -267,7 +278,6 @@ export async function main() {
   //   khalaAccount,
   //   bn1e12.mul(new BN(50))
   // )
-
   // log(
   //   'LOG: ' +
   //     'transfer 100 KAR from karuraAccount on karura network to khalaAccount on khala network'
@@ -278,7 +288,6 @@ export async function main() {
   //   khalaAccount,
   //   bn1e12.mul(new BN(100))
   // )
-
   // log(
   //   'LOG: ' +
   //     'now, khalaAccount has reserved 100 KAR on khala network(actually with small fee being deducted, so < 100)'
