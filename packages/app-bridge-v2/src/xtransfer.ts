@@ -1,12 +1,11 @@
-import {ApiPromise, Keyring, WsProvider} from '@polkadot/api'
+import {ApiPromise, WsProvider} from '@polkadot/api'
 import {AddressOrPair} from '@polkadot/api/types'
 import BN from 'bn.js'
 
-const bn1e12 = new BN(10).pow(new BN(12))
 // const khalaParaId = 2004
 const karuraParaId = 2000
 
-async function transferPHAFromKhalaToKarura(
+export function transferPHAFromKhalaToKarura(
   khalaApi: ApiPromise,
   sender: AddressOrPair,
   recipient: any,
@@ -14,7 +13,7 @@ async function transferPHAFromKhalaToKarura(
   callback?: (message: string) => void
 ) {
   callback?.(`Transfer PHA from Khala to Karura...`)
-  await khalaApi?.tx?.xcmTransfer
+  return khalaApi?.tx?.xcmTransfer
     ?.transferNative?.(karuraParaId, recipient.address, amount, 6000000000)
     .signAndSend(sender, (result) => {
       callback?.(`Transfer PHA from Khala to Karura: ${result.status}`)
@@ -213,47 +212,27 @@ async function transferPHAFromKhalaToKarura(
 //   })
 // }
 
-async function getBaseInfo() {
+export async function getBaseInfo() {
   const khalaEndpoint = 'ws://35.215.162.102:9944'
   const khalaProvider = new WsProvider(khalaEndpoint)
   const khalaApi = await ApiPromise.create({
     provider: khalaProvider,
   })
 
-  const keyring = new Keyring({type: 'sr25519'})
-  const karuraAccount = keyring.addFromUri('//Alice')
-  const khalaAccount = keyring.addFromUri('//Bob')
+  const karuraEndpoint = 'ws://35.215.162.102:9955'
+  const karuraProvider = new WsProvider(karuraEndpoint)
+  const karuraApi = await ApiPromise.create({
+    provider: karuraProvider,
+  })
 
   return {
     khalaApi,
-    khalaAccount,
-    karuraAccount,
-  } as const
-}
-
-export async function runTransferPHAFromKhalaToKarura(
-  callback?: (message: string) => void
-) {
-  const {khalaApi, khalaAccount, karuraAccount} = await getBaseInfo()
-
-  await transferPHAFromKhalaToKarura(
-    khalaApi,
-    khalaAccount,
-    karuraAccount,
-    bn1e12.mul(new BN(100)),
-    callback
-  )
-
-  // khalaApi.disconnect()
+    karuraApi,
+  }
 }
 
 export async function main() {
   // log('LOG: ' + 'create karura api')
-  // const karuraEndpoint = 'ws://35.215.162.102:9955'
-  // const karuraProvider = new WsProvider(karuraEndpoint)
-  // const karuraApi = await ApiPromise.create({
-  //   provider: karuraProvider,
-  // })
   // log(
   //   'LOG: ' +
   //     'now, karuraAccount has reserved 100 PHA on karura network(actually with small fee being deducted, so < 100)'
