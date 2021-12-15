@@ -1,14 +1,16 @@
+import {Button} from '@phala/react-components'
 import {main} from './xtransfer'
 
 export const BridgePage = () => {
   return (
     <div>
-      <button
+      <Button
+        type="primary"
         onClick={() => {
           main()
         }}>
-        Test
-      </button>
+        transfer PHA From Khala To Karura
+      </Button>
     </div>
   )
 }
