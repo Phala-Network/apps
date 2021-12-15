@@ -115,8 +115,8 @@ export function transferKARFromKhalaToKarura(
 ) {
   callback?.(`Transfer KAR from Khala to Karura...`)
 
-  return khalaApi.tx.xcmTransfer
-    .transferAsset(
+  return khalaApi?.tx?.xcmTransfer
+    ?.transferAsset?.(
       khalaApi.createType('XtransferPalletsAssetsWrapperPalletXTransferAsset', {
         ParachainAsset: khalaApi.createType('XcmV1MultiLocation', {
           parents: 1,
