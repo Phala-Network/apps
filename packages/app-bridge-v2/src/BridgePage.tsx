@@ -4,6 +4,7 @@ import BN from 'bn.js'
 import {useCallback, useEffect, useState} from 'react'
 import {
   getBaseInfo,
+  transferKARFromKaruraToKhala,
   transferPHAFromKaruraToKhala,
   transferPHAFromKhalaToKarura,
 } from './xtransfer'
@@ -74,6 +75,24 @@ export const BridgePage = () => {
               )
           }}>
           transfer PHA From Karura To Khala
+        </Button>
+
+        <div style={{height: 20, width: 20}} />
+
+        <Button
+          type="primary"
+          onClick={() => {
+            setMessages([])
+            karuraApi &&
+              transferKARFromKaruraToKhala(
+                karuraApi,
+                karuraAccount,
+                khalaAccount,
+                bn1e12.mul(new BN(100)),
+                log
+              )
+          }}>
+          transfer KAR From Karura To Khala
         </Button>
 
         <ul>
