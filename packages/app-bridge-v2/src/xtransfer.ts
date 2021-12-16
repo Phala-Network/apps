@@ -28,6 +28,7 @@ export function transferPHAFromKaruraToKhala(
   callback?: (message: string) => void
 ) {
   callback?.(`Transfer PHA from Karura to Khala...`)
+  callback?.(`Recipient.publicKey: ${recipient.publicKey}`)
   return karuraApi?.tx?.xTokens
     ?.transfer?.(
       karuraApi.createType('AcalaPrimitivesCurrencyCurrencyId', {

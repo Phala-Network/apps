@@ -1,4 +1,4 @@
-import {Button} from '@phala/react-components'
+import {Button, FormLabel, Input} from '@phala/react-components'
 import {ApiPromise, Keyring} from '@polkadot/api'
 import BN from 'bn.js'
 import {useCallback, useEffect, useState} from 'react'
@@ -42,8 +42,20 @@ export const BridgePage = () => {
   )
 
   return (
-    <div style={{padding: 20, margin: 20}}>
+    <div style={{padding: 20, margin: 20, background: 'white'}}>
+      <div style={{width: '80vw'}}>
+        <FormLabel>karuraAccount address:</FormLabel>
+        <Input value={karuraAccount?.address} size="large" />
+
+        <FormLabel>khalaAccount address:</FormLabel>
+        <Input value={khalaAccount?.address} size="large" />
+
+        <FormLabel>Amount:</FormLabel>
+        <Input value={50} size="large" />
+      </div>
       <div>
+        <div style={{height: 20, width: 20}} />
+
         <Button
           type="primary"
           onClick={() => {
