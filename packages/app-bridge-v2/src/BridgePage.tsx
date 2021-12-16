@@ -1,4 +1,5 @@
 import {Button, FormLabel, Input, InputNumber} from '@phala/react-components'
+import {validateAddress} from '@phala/utils'
 import {ApiPromise, Keyring} from '@polkadot/api'
 import BN from 'bn.js'
 import {useCallback, useEffect, useState} from 'react'
@@ -19,6 +20,11 @@ export const BridgePage = () => {
   const [karuraApi, setKaruraApi] = useState<ApiPromise>()
   const [karuraAccount, setKaruraAccount] = useState<any>()
   const [khalaAccount, setKhalaAccount] = useState<any>()
+
+  const [karuraAccountAddressInput, setKaruraAccountAddressInput] =
+    useState<string>('')
+  const [khalaAccountAddressInput, setKhalaAccountAddressInput] =
+    useState<string>('')
   const [amount, setAmount] = useState<number>(1)
 
   useEffect(() => {
@@ -28,18 +34,15 @@ export const BridgePage = () => {
     })
 
     const keyring = new Keyring({type: 'sr25519'})
+    // 5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY
     const karuraAccount = keyring.addFromUri('//Alice')
+    // 5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty
     const khalaAccount = keyring.addFromUri('//Bob')
 
-    // from address
-    // const testAccount = keyring.addFromAddress(
-    //   '5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY'
-    // )
-
-    // console.log('testAccount', testAccount)
-
     setKaruraAccount(karuraAccount)
+    setKaruraAccountAddressInput(karuraAccount.address)
     setKhalaAccount(khalaAccount)
+    setKhalaAccountAddressInput(khalaAccount.address)
   }, [])
 
   const log = useCallback(
@@ -53,10 +56,34 @@ export const BridgePage = () => {
     <div style={{padding: 20, margin: 20, background: 'white', flex: 1}}>
       <div>
         <FormLabel>Karura address:</FormLabel>
-        <Input value={karuraAccount?.address} size="large" />
+        <Input
+          value={karuraAccountAddressInput}
+          onChange={(value) => {
+            setKaruraAccountAddressInput(value)
+
+            if (validateAddress(value)) {
+              const keyring = new Keyring({type: 'sr25519'})
+              const karuraAccount = keyring.addFromAddress(value)
+              setKaruraAccount(karuraAccount)
+            }
+          }}
+          size="large"
+        />
 
         <FormLabel>Khala address:</FormLabel>
-        <Input value={khalaAccount?.address} size="large" />
+        <Input
+          value={khalaAccountAddressInput}
+          onChange={(value) => {
+            setKhalaAccountAddressInput(value)
+
+            if (validateAddress(value)) {
+              const keyring = new Keyring({type: 'sr25519'})
+              const khalaAccount = keyring.addFromAddress(value)
+              setKhalaAccount(khalaAccount)
+            }
+          }}
+          size="large"
+        />
 
         <FormLabel>Amount:</FormLabel>
         <InputNumber

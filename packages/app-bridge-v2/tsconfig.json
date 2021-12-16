@@ -10,5 +10,5 @@
     "esModuleInterop": false
   },
   "include": ["src/**/*"],
-  "references": [{"path": "../react-components"}]
+  "references": [{"path": "../react-components"}, {"path": "../utils"}]
 }

@@ -1,5 +1,4 @@
 import {ApiPromise, WsProvider} from '@polkadot/api'
-import {AddressOrPair} from '@polkadot/api/types'
 import BN from 'bn.js'
 
 const khalaParaId = 2004
@@ -7,26 +6,28 @@ const karuraParaId = 2000
 
 export function transferPHAFromKhalaToKarura(
   khalaApi: ApiPromise,
-  sender: AddressOrPair,
+  sender: any,
   recipient: any,
   amount: BN,
   callback?: (message: string) => void
 ) {
+  callback?.(`From ${sender.address} to ${recipient.address}`)
   callback?.(`Transfer PHA from Khala to Karura...`)
   return khalaApi?.tx?.xcmTransfer
     ?.transferNative?.(karuraParaId, recipient.address, amount, 6000000000)
-    .signAndSend(sender, (result) => {
+    .signAndSend(sender, (result: {status: string}) => {
       callback?.(`Transfer PHA from Khala to Karura: ${result.status}`)
     })
 }
 
 export function transferPHAFromKaruraToKhala(
   karuraApi: ApiPromise,
-  sender: AddressOrPair,
+  sender: any,
   recipient: any,
   amount: BN,
   callback?: (message: string) => void
 ) {
+  callback?.(`From ${sender.address} to ${recipient.address}`)
   callback?.(`Transfer PHA from Karura to Khala...`)
   callback?.(`Recipient.publicKey: ${recipient.publicKey}`)
   return karuraApi?.tx?.xTokens
@@ -59,18 +60,19 @@ export function transferPHAFromKaruraToKhala(
       }),
       6000000000
     )
-    .signAndSend(sender, (result) => {
+    .signAndSend(sender, (result: {status: string}) => {
       callback?.(`Transaction ${result.status}`)
     })
 }
 
 export function transferKARFromKaruraToKhala(
   karuraApi: ApiPromise,
-  sender: AddressOrPair,
+  sender: any,
   recipient: any,
   amount: BN,
   callback?: (message: string) => void
 ) {
+  callback?.(`From ${sender.address} to ${recipient.address}`)
   callback?.(`Transfer KAR from Karura to Khala...`)
   return karuraApi?.tx?.xTokens
     ?.transfer?.(
@@ -102,18 +104,19 @@ export function transferKARFromKaruraToKhala(
       }),
       6000000000
     )
-    .signAndSend(sender, (result) => {
+    .signAndSend(sender, (result: {status: string}) => {
       callback?.(`Transaction ${result.status}`)
     })
 }
 
 export function transferKARFromKhalaToKarura(
   khalaApi: ApiPromise,
-  sender: AddressOrPair,
+  sender: any,
   recipient: any,
   amount: BN,
   callback?: (message: string) => void
 ) {
+  callback?.(`From ${sender.address} to ${recipient.address}`)
   callback?.(`Transfer KAR from Khala to Karura...`)
 
   return khalaApi?.tx?.xcmTransfer
@@ -139,7 +142,7 @@ export function transferKARFromKhalaToKarura(
       amount,
       6000000000
     )
-    .signAndSend(sender, (result) => {
+    .signAndSend(sender, (result: {status: string}) => {
       callback?.(`Transaction ${result.status}`)
     })
 }

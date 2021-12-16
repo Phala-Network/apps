@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@phala/react-components": "workspace:^0.0.1",
+    "@phala/utils": "workspace:^0.0.1",
     "@polkadot/api": "^6.12.1",
     "bn.js": "^5.2.0"
   }
