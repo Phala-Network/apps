@@ -31,6 +31,13 @@ export const BridgePage = () => {
     const karuraAccount = keyring.addFromUri('//Alice')
     const khalaAccount = keyring.addFromUri('//Bob')
 
+    // from address
+    // const testAccount = keyring.addFromAddress(
+    //   '5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY'
+    // )
+
+    // console.log('testAccount', testAccount)
+
     setKaruraAccount(karuraAccount)
     setKhalaAccount(khalaAccount)
   }, [])
@@ -43,12 +50,12 @@ export const BridgePage = () => {
   )
 
   return (
-    <div style={{padding: 20, margin: 20, background: 'white'}}>
+    <div style={{padding: 20, margin: 20, background: 'white', flex: 1}}>
       <div>
-        <FormLabel>karuraAccount address:</FormLabel>
+        <FormLabel>Karura address:</FormLabel>
         <Input value={karuraAccount?.address} size="large" />
 
-        <FormLabel>khalaAccount address:</FormLabel>
+        <FormLabel>Khala address:</FormLabel>
         <Input value={khalaAccount?.address} size="large" />
 
         <FormLabel>Amount:</FormLabel>
