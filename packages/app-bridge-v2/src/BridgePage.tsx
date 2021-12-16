@@ -1,4 +1,4 @@
-import {Button, FormLabel, Input} from '@phala/react-components'
+import {Button, FormLabel, Input, InputNumber} from '@phala/react-components'
 import {ApiPromise, Keyring} from '@polkadot/api'
 import BN from 'bn.js'
 import {useCallback, useEffect, useState} from 'react'
@@ -19,6 +19,7 @@ export const BridgePage = () => {
   const [karuraApi, setKaruraApi] = useState<ApiPromise>()
   const [karuraAccount, setKaruraAccount] = useState<any>()
   const [khalaAccount, setKhalaAccount] = useState<any>()
+  const [amount, setAmount] = useState<number>(1)
 
   useEffect(() => {
     getBaseInfo().then(({khalaApi, karuraApi}) => {
@@ -43,7 +44,7 @@ export const BridgePage = () => {
 
   return (
     <div style={{padding: 20, margin: 20, background: 'white'}}>
-      <div style={{width: '80vw'}}>
+      <div>
         <FormLabel>karuraAccount address:</FormLabel>
         <Input value={karuraAccount?.address} size="large" />
 
@@ -51,7 +52,11 @@ export const BridgePage = () => {
         <Input value={khalaAccount?.address} size="large" />
 
         <FormLabel>Amount:</FormLabel>
-        <Input value={50} size="large" />
+        <InputNumber
+          value={amount}
+          onChange={(value) => setAmount(new BN(value).toNumber())}
+          size="large"
+        />
       </div>
       <div>
         <div style={{height: 20, width: 20}} />
@@ -65,7 +70,7 @@ export const BridgePage = () => {
                 khalaApi,
                 khalaAccount,
                 karuraAccount,
-                bn1e12.mul(new BN(100)),
+                bn1e12.mul(new BN(amount)),
                 log
               )
           }}>
@@ -83,7 +88,7 @@ export const BridgePage = () => {
                 karuraApi,
                 karuraAccount,
                 khalaAccount,
-                bn1e12.mul(new BN(50)),
+                bn1e12.mul(new BN(amount)),
                 log
               )
           }}>
@@ -101,7 +106,7 @@ export const BridgePage = () => {
                 karuraApi,
                 karuraAccount,
                 khalaAccount,
-                bn1e12.mul(new BN(100)),
+                bn1e12.mul(new BN(amount)),
                 log
               )
           }}>
@@ -119,7 +124,7 @@ export const BridgePage = () => {
                 khalaApi,
                 khalaAccount,
                 karuraAccount,
-                bn1e12.mul(new BN(50)),
+                bn1e12.mul(new BN(amount)),
                 log
               )
           }}>
