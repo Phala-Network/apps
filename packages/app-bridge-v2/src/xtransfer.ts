@@ -15,7 +15,7 @@ export function transferPHAFromKhalaToKarura(
   callback?.(`Transfer PHA from Khala to Karura...`)
   return khalaApi?.tx?.xcmTransfer
     ?.transferNative?.(karuraParaId, recipient.address, amount, 6000000000)
-    .signAndSend(sender, (result: {status: string}) => {
+    .signAndSend(sender, (result: any) => {
       callback?.(`Transfer PHA from Khala to Karura: ${result.status}`)
     })
 }
@@ -60,7 +60,7 @@ export function transferPHAFromKaruraToKhala(
       }),
       6000000000
     )
-    .signAndSend(sender, (result: {status: string}) => {
+    .signAndSend(sender, (result: any) => {
       callback?.(`Transaction ${result.status}`)
     })
 }
@@ -104,7 +104,7 @@ export function transferKARFromKaruraToKhala(
       }),
       6000000000
     )
-    .signAndSend(sender, (result: {status: string}) => {
+    .signAndSend(sender, (result: any) => {
       callback?.(`Transaction ${result.status}`)
     })
 }
@@ -142,7 +142,7 @@ export function transferKARFromKhalaToKarura(
       amount,
       6000000000
     )
-    .signAndSend(sender, (result: {status: string}) => {
+    .signAndSend(sender, (result: any) => {
       callback?.(`Transaction ${result.status}`)
     })
 }
