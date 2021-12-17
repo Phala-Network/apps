@@ -9,7 +9,7 @@
     "sourceMap": true,
     "esModuleInterop": false
   },
-  "include": ["src/**/*", "src/**/*.json", "../../typings"],
+  "include": ["src/**/*", "src/**/*.json"],
   "references": [
     {"path": "../app-config"},
     {"path": "../app-types"},

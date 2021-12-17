@@ -52,9 +52,9 @@ export const waitSignAndSend = ({
                 const decoded = api.registry.findMetaError(
                   (error as DispatchError).asModule
                 )
-                const {documentation, method, section} = decoded
+                const {docs, method, section} = decoded
 
-                reject(new ExtrinsicFailedError(section, method, documentation))
+                reject(new ExtrinsicFailedError(section, method, docs))
               } else {
                 reject(
                   new SimpleExtrinsicFailedError(
