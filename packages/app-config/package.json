@@ -7,7 +7,7 @@
   "types": "esm/index.d.ts",
   "dependencies": {
     "@phala/typedefs": "0.2.29",
-    "@polkadot/types": "^4.17.1",
+    "@polkadot/types": "^6.12.1",
     "@types/node": "^16.10.3"
   },
   "scripts": {

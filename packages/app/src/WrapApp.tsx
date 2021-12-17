@@ -51,11 +51,6 @@ const WrapApp: React.FC = ({children}) => {
     <div>
       <Helmet>
         <script
-          type="text/javascript"
-          src="https://api.map.baidu.com/getscript?v=2.0&ak=EOI79Ys8F8IN75wY5jfzRwKjGtQ5eKPz"
-        />
-
-        <script
           id="ze-snippet"
           src="https://static.zdassets.com/ekr/snippet.js?key=fca22f47-80b0-47a4-8cde-80ca1fe206d2"
         />

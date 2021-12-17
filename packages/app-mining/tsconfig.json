@@ -8,7 +8,7 @@
     "sourceMap": true,
     "esModuleInterop": false
   },
-  "include": ["src/**/*", "../../typings"],
+  "include": ["src/**/*"],
   "references": [
     {"path": "../app-store"},
     {"path": "../utils"},
