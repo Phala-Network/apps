@@ -2,12 +2,14 @@ import {usePolkadotAccountAtom} from '@phala/app-store'
 import {
   Alert,
   InputNumber,
+  InputAction,
   PhalaStakePoolTransactionFeeLabel,
 } from '@phala/react-components'
 import {
   useApiPromise,
   useDecimalJsTokenDecimalMultiplier,
 } from '@phala/react-libs'
+import {usePolkadotAccountBalanceDecimal} from '@phala/react-hooks'
 import Decimal from 'decimal.js'
 import {useCallback, useMemo, useState} from 'react'
 import useSelfUserStakeInfo from '../hooks/useSelfUserStakeInfo'
@@ -17,12 +19,19 @@ import type {StakePoolModalProps} from './StakePoolTable'
 
 const WithdrawModal = (props: StakePoolModalProps): JSX.Element => {
   const [polkadotAccount] = usePolkadotAccountAtom()
+  const polkadotAccountAddress = polkadotAccount?.address
   const {onClose, stakePool} = props
   const {api} = useApiPromise()
   const waitSignAndSend = useWaitSignAndSend()
   const decimals = useDecimalJsTokenDecimalMultiplier(api)
   const [amount, setAmount] = useState<number | undefined>()
   const {refetch} = useSelfUserStakeInfo(stakePool.pid)
+
+  const polkadotAccountBalanceDecimal = usePolkadotAccountBalanceDecimal(
+    polkadotAccountAddress
+  )
+
+  const maxAmount = polkadotAccountBalanceDecimal.toNumber()
 
   const action = useMemo(() => {
     if (!api || !amount || !decimals) return
@@ -57,6 +66,10 @@ const WithdrawModal = (props: StakePoolModalProps): JSX.Element => {
     }
   }, [])
 
+  const setMax = () => {
+    setAmount(maxAmount)
+  }
+
   const hasWithdrawing = useMemo<boolean>(
     () =>
       Boolean(
@@ -80,10 +93,12 @@ const WithdrawModal = (props: StakePoolModalProps): JSX.Element => {
       <Label>Delegation</Label>
       <InputNumber
         type="number"
-        placeholder="Amount"
+        placeholder="Amount (PHA)"
         value={amount}
         onChange={onInputChange}
-        after="PHA"></InputNumber>
+        after={
+          maxAmount > 0 ? <InputAction onClick={setMax}>MAX</InputAction> : null
+        }></InputNumber>
       <Alert style={{marginTop: '10px'}}>
         {hasWithdrawing
           ? 'You have a pending withdraw request! Only one withdraw request is kept. Resubmission will replace the existing one and reset the countdown.'
