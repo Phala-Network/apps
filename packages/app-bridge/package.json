@@ -22,8 +22,8 @@
     "@phala/react-graph-chainbridge": "workspace:^0.0.1",
     "@phala/react-hooks": "workspace:^0.0.1",
     "@phala/utils": "workspace:^0.0.1",
-    "@polkadot/util": "^6.11.1",
-    "@polkadot/util-crypto": "^6.11.1",
+    "@polkadot/util": "^8.1.2",
+    "@polkadot/util-crypto": "^8.1.2",
     "bn.js": "^5.2.0",
     "styled-breakpoints": "^10.0.1"
   },
