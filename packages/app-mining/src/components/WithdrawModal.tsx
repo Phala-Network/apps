@@ -9,29 +9,25 @@ import {
   useApiPromise,
   useDecimalJsTokenDecimalMultiplier,
 } from '@phala/react-libs'
-import {usePolkadotAccountBalanceDecimal} from '@phala/react-hooks'
 import Decimal from 'decimal.js'
 import {useCallback, useMemo, useState} from 'react'
 import useSelfUserStakeInfo from '../hooks/useSelfUserStakeInfo'
 import useWaitSignAndSend from '../hooks/useWaitSignAndSend'
+import useUserStakeInfo from '../hooks/useUserStakeInfo'
+import useFormat from '../hooks/useFormat'
 import ActionModal, {Label, Value} from './ActionModal'
 import type {StakePoolModalProps} from './StakePoolTable'
 
 const WithdrawModal = (props: StakePoolModalProps): JSX.Element => {
   const [polkadotAccount] = usePolkadotAccountAtom()
-  const polkadotAccountAddress = polkadotAccount?.address
   const {onClose, stakePool} = props
   const {api} = useApiPromise()
   const waitSignAndSend = useWaitSignAndSend()
   const decimals = useDecimalJsTokenDecimalMultiplier(api)
   const [amount, setAmount] = useState<number | undefined>()
   const {refetch} = useSelfUserStakeInfo(stakePool.pid)
-
-  const polkadotAccountBalanceDecimal = usePolkadotAccountBalanceDecimal(
-    polkadotAccountAddress
-  )
-
-  const maxAmount = polkadotAccountBalanceDecimal.toNumber()
+  const {data: userStakeInfo} = useUserStakeInfo(polkadotAccount?.address)
+  const format = useFormat()
 
   const action = useMemo(() => {
     if (!api || !amount || !decimals) return
@@ -67,7 +63,13 @@ const WithdrawModal = (props: StakePoolModalProps): JSX.Element => {
   }, [])
 
   const setMax = () => {
-    setAmount(maxAmount)
+    const userStake = userStakeInfo?.[stakePool.pid]
+    if (!userStake) return
+    const yourDelegation = format(
+      userStake.shares.mul(stakePool.totalStake.div(stakePool.totalShares)),
+      {unit: null}
+    )
+    setAmount(Number(yourDelegation))
   }
 
   const hasWithdrawing = useMemo<boolean>(
@@ -96,9 +98,7 @@ const WithdrawModal = (props: StakePoolModalProps): JSX.Element => {
         placeholder="Amount (PHA)"
         value={amount}
         onChange={onInputChange}
-        after={
-          maxAmount > 0 ? <InputAction onClick={setMax}>MAX</InputAction> : null
-        }></InputNumber>
+        after={<InputAction onClick={setMax}>MAX</InputAction>}></InputNumber>
       <Alert style={{marginTop: '10px'}}>
         {hasWithdrawing
           ? 'You have a pending withdraw request! Only one withdraw request is kept. Resubmission will replace the existing one and reset the countdown.'
