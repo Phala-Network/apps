@@ -13,7 +13,6 @@ import Decimal from 'decimal.js'
 import {useCallback, useMemo, useState} from 'react'
 import useSelfUserStakeInfo from '../hooks/useSelfUserStakeInfo'
 import useWaitSignAndSend from '../hooks/useWaitSignAndSend'
-import useUserStakeInfo from '../hooks/useUserStakeInfo'
 import useFormat from '../hooks/useFormat'
 import ActionModal, {Label, Value} from './ActionModal'
 import type {StakePoolModalProps} from './StakePoolTable'
@@ -25,8 +24,7 @@ const WithdrawModal = (props: StakePoolModalProps): JSX.Element => {
   const waitSignAndSend = useWaitSignAndSend()
   const decimals = useDecimalJsTokenDecimalMultiplier(api)
   const [amount, setAmount] = useState<number | undefined>()
-  const {refetch} = useSelfUserStakeInfo(stakePool.pid)
-  const {data: userStakeInfo} = useUserStakeInfo(polkadotAccount?.address)
+  const {data: userStakeInfo, refetch} = useSelfUserStakeInfo(stakePool.pid)
   const format = useFormat()
 
   const action = useMemo(() => {
@@ -63,10 +61,9 @@ const WithdrawModal = (props: StakePoolModalProps): JSX.Element => {
   }, [])
 
   const setMax = () => {
-    const userStake = userStakeInfo?.[stakePool.pid]
-    if (!userStake) return
+    if (!userStakeInfo) return
     const yourDelegation = format(
-      userStake.shares.mul(stakePool.totalStake.div(stakePool.totalShares)),
+      userStakeInfo.shares.mul(stakePool.totalStake.div(stakePool.totalShares)),
       {unit: null}
     )
     setAmount(Number(yourDelegation))
