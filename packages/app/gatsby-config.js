@@ -54,6 +54,12 @@ module.exports = {
         },
       },
     },
+    {
+      resolve: 'gatsby-plugin-styletron',
+      options: {
+        prefix: '_',
+      },
+    },
     process.env.NODE_ENV === 'production' && {
       resolve: '@sentry/gatsby',
       options: {
