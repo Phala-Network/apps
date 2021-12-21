@@ -22,7 +22,7 @@ const WithdrawModal = (props: StakePoolModalProps): JSX.Element => {
   const {api} = useApiPromise()
   const waitSignAndSend = useWaitSignAndSend()
   const decimals = useDecimalJsTokenDecimalMultiplier(api)
-  const [amount, setAmount] = useState<number | undefined>()
+  const [amount, setAmount] = useState<number | string | undefined>()
   const {data: userStakeInfo, refetch} = useSelfUserStakeInfo(stakePool.pid)
 
   const action = useMemo(() => {
@@ -59,11 +59,11 @@ const WithdrawModal = (props: StakePoolModalProps): JSX.Element => {
   }, [])
 
   const setMax = () => {
-    if (!userStakeInfo) return
+    if (!userStakeInfo || !decimals) return
     const yourDelegation = userStakeInfo.shares
       .mul(stakePool.totalStake.div(stakePool.totalShares))
       .div(decimals)
-      .toNumber()
+      .toString()
     setAmount(yourDelegation)
   }
 
@@ -89,7 +89,6 @@ const WithdrawModal = (props: StakePoolModalProps): JSX.Element => {
       <Value>{stakePool.pid}</Value>
       <Label>Delegation</Label>
       <InputNumber
-        type="number"
         placeholder="Amount (PHA)"
         value={amount}
         onChange={onInputChange}
