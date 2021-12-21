@@ -21,15 +21,8 @@
     "ts-node": "^10.4.0"
   },
   "sideEffects": false,
-  "main": "dist/index.js",
-  "module": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "src/index.ts",
   "scripts": {
-    "develop": "tsc --watch",
-    "start": "tsc --watch",
-    "test": "tsc --noEmit",
-    "lint": "type-coverage",
-    "codegen": "gulp codegen",
-    "build": "tsc --build"
+    "codegen": "gulp codegen"
   }
 }

@@ -9,22 +9,5 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["./src/**/*.ts", "./src/**/*.tsx"],
-  "references": [
-    {"path": "../app-analytics"},
-    {"path": "../app-config"},
-    {"path": "../app-types"},
-    {"path": "../app-mining"},
-    {"path": "../app-assets"},
-    {"path": "../app-bridge"},
-    {"path": "../app-config"},
-    {"path": "../app-data-analytics"},
-    {"path": "../app-store"},
-    {"path": "../app-types"},
-    {"path": "../react-cms"},
-    {"path": "../react-components"},
-    {"path": "../react-hooks"},
-    {"path": "../react-libs"},
-    {"path": "../utils"}
-  ]
+  "include": ["./src/**/*.ts", "./src/**/*.tsx"]
 }

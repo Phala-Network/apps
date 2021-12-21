@@ -44,20 +44,20 @@ importers:
   packages/app:
     specifiers:
       '@babel/core': ^7.16.0
-      '@phala/app-analytics': workspace:^0.0.1
-      '@phala/app-assets': workspace:^0.0.1
-      '@phala/app-bridge': workspace:^0.0.1
-      '@phala/app-config': workspace:*
-      '@phala/app-data-analytics': workspace:^0.0.1
-      '@phala/app-mining': workspace:^0.0.1
-      '@phala/app-store': 0.0.1
-      '@phala/app-types': 0.0.1
-      '@phala/react-cms': workspace:^0.0.1
-      '@phala/react-components': 0.0.1
-      '@phala/react-hooks': 0.0.1
-      '@phala/react-libs': 0.0.1
+      '@phala/app-analytics': workspace:0.0.1
+      '@phala/app-assets': workspace:0.0.1
+      '@phala/app-bridge': workspace:0.0.1
+      '@phala/app-config': workspace:0.0.1
+      '@phala/app-data-analytics': workspace:0.0.1
+      '@phala/app-mining': workspace:0.0.1
+      '@phala/app-store': workspace:0.0.1
+      '@phala/app-types': workspace:0.0.1
+      '@phala/react-cms': workspace:0.0.1
+      '@phala/react-components': workspace:0.0.1
+      '@phala/react-hooks': workspace:0.0.1
+      '@phala/react-libs': workspace:0.0.1
       '@phala/typedefs': ^0.2.29
-      '@phala/utils': 0.0.1
+      '@phala/utils': workspace:0.0.1
       '@polkadot/api': ^6.12.1
       '@polkadot/extension-dapp': ^0.42.2
       '@polkadot/types': ^6.12.1
@@ -86,7 +86,6 @@ importers:
       decimal.js: ^10.3.1
       ethers: ^5.5.2
       gatsby: ^4.3.0
-      gatsby-plugin-alias-imports: ^1.0.5
       gatsby-plugin-google-gtag: ^3.14.0
       gatsby-plugin-pnpm: ^1.2.9
       gatsby-plugin-react-helmet: ^4.14.0
@@ -149,7 +148,6 @@ importers:
       decimal.js: 10.3.1
       ethers: 5.5.2
       gatsby: 4.3.0_3d8392ef988879db7b1ef93206ebbe58
-      gatsby-plugin-alias-imports: 1.0.5_gatsby@4.3.0
       gatsby-plugin-google-gtag: 3.14.0_ebdf6a49a7628b6089318812aa4dc21a
       gatsby-plugin-pnpm: 1.2.9_gatsby@4.3.0
       gatsby-plugin-react-helmet: 4.14.0_gatsby@4.3.0+react-helmet@6.1.0
@@ -190,7 +188,7 @@ importers:
 
   packages/app-analytics:
     specifiers:
-      '@phala/react-components': 0.0.1
+      '@phala/react-components': workspace:0.0.1
       echarts: ^5.2.0
       echarts-for-react: ^3.0.1
       react-helmet: ^6.1.0
@@ -202,16 +200,15 @@ importers:
       echarts-for-react: 3.0.2_echarts@5.2.2
       react-helmet: 6.1.0
       styled-breakpoints: 10.0.1_styled-components@5.3.3
-    devDependencies:
       styled-components: 5.3.3
 
   packages/app-assets:
     specifiers:
-      '@phala/app-store': 0.0.1
-      '@phala/react-components': 0.0.1
-      '@phala/react-hooks': 0.0.1
-      '@phala/react-libs': 0.0.1
-      '@phala/utils': 0.0.1
+      '@phala/app-store': workspace:0.0.1
+      '@phala/react-components': workspace:0.0.1
+      '@phala/react-hooks': workspace:0.0.1
+      '@phala/react-libs': workspace:0.0.1
+      '@phala/utils': workspace:0.0.1
       '@polkadot/util': ^8.1.2
       '@types/react': ^17.0.37
       axios: ^0.21.4
@@ -235,14 +232,14 @@ importers:
 
   packages/app-bridge:
     specifiers:
-      '@phala/app-data-analytics': workspace:^0.0.1
-      '@phala/app-store': 0.0.1
-      '@phala/app-types': 0.0.1
-      '@phala/react-components': 0.0.1
-      '@phala/react-graph-chainbridge': workspace:^0.0.1
-      '@phala/react-hooks': 0.0.1
-      '@phala/react-libs': 0.0.1
-      '@phala/utils': 0.0.1
+      '@phala/app-data-analytics': workspace:0.0.1
+      '@phala/app-store': workspace:0.0.1
+      '@phala/app-types': workspace:0.0.1
+      '@phala/react-components': workspace:0.0.1
+      '@phala/react-graph-chainbridge': workspace:0.0.1
+      '@phala/react-hooks': workspace:0.0.1
+      '@phala/react-libs': workspace:0.0.1
+      '@phala/utils': workspace:0.0.1
       '@polkadot/util': ^8.1.2
       '@polkadot/util-crypto': ^8.1.2
       bn.js: ^5.2.0
@@ -255,13 +252,13 @@ importers:
       '@phala/react-components': link:../react-components
       '@phala/react-graph-chainbridge': link:../react-graph-chainbridge
       '@phala/react-hooks': link:../react-hooks
+      '@phala/react-libs': link:../react-libs
       '@phala/utils': link:../utils
       '@polkadot/util': 8.1.2
       '@polkadot/util-crypto': 8.1.2
       bn.js: 5.2.0
       styled-breakpoints: 10.0.1
     devDependencies:
-      '@phala/react-libs': link:../react-libs
       react-query: 3.34.5
 
   packages/app-config:
@@ -279,11 +276,11 @@ importers:
 
   packages/app-mining:
     specifiers:
-      '@phala/app-store': 0.0.1
-      '@phala/react-components': 0.0.1
-      '@phala/react-hooks': 0.0.1
-      '@phala/react-libs': 0.0.1
-      '@phala/utils': 0.0.1
+      '@phala/app-store': workspace:0.0.1
+      '@phala/react-components': workspace:0.0.1
+      '@phala/react-hooks': workspace:0.0.1
+      '@phala/react-libs': workspace:0.0.1
+      '@phala/utils': workspace:0.0.1
       '@polkadot/api': ^6.12.1
       '@polkadot/extension-dapp': ^0.42.2
       '@polkadot/util': ^8.1.2
@@ -336,7 +333,7 @@ importers:
 
   packages/app-store:
     specifiers:
-      '@phala/app-types': 0.0.1
+      '@phala/app-types': workspace:0.0.1
       jotai: ^1.3.2
     dependencies:
       '@phala/app-types': link:../app-types
@@ -354,13 +351,13 @@ importers:
   packages/react-components:
     specifiers:
       '@babel/core': ^7.16.0
-      '@phala/app-config': workspace:*
-      '@phala/app-store': 0.0.1
-      '@phala/app-types': 0.0.1
-      '@phala/react-graph-chainbridge': workspace:^0.0.1
-      '@phala/react-hooks': 0.0.1
-      '@phala/react-libs': 0.0.1
-      '@phala/utils': 0.0.1
+      '@phala/app-config': workspace:0.0.1
+      '@phala/app-store': workspace:0.0.1
+      '@phala/app-types': workspace:0.0.1
+      '@phala/react-graph-chainbridge': workspace:0.0.1
+      '@phala/react-hooks': workspace:0.0.1
+      '@phala/react-libs': workspace:0.0.1
+      '@phala/utils': workspace:0.0.1
       '@polkadot/api': ^6.12.1
       '@polkadot/util': ^8.1.2
       '@polkadot/util-crypto': ^8.1.2
@@ -475,9 +472,9 @@ importers:
 
   packages/react-hooks:
     specifiers:
-      '@phala/app-config': workspace:*
-      '@phala/react-libs': 0.0.1
-      '@phala/utils': 0.0.1
+      '@phala/app-config': workspace:0.0.1
+      '@phala/react-libs': workspace:0.0.1
+      '@phala/utils': workspace:0.0.1
       '@polkadot/api': ^6.12.1
       '@polkadot/api-derive': ^6.12.1
       '@polkadot/types': ^6.12.1
@@ -509,10 +506,10 @@ importers:
 
   packages/react-libs:
     specifiers:
-      '@phala/app-config': workspace:*
-      '@phala/react-graph-chainbridge': workspace:^0.0.1
+      '@phala/app-config': workspace:0.0.1
+      '@phala/react-graph-chainbridge': workspace:0.0.1
       '@phala/typedefs': ^0.2.29
-      '@phala/utils': 0.0.1
+      '@phala/utils': workspace:0.0.1
       '@polkadot/api': ^6.12.1
       '@polkadot/extension-dapp': ^0.42.2
       '@polkadot/extension-inject': ^0.42.2
@@ -2997,6 +2994,7 @@ packages:
       globals: 11.12.0
     transitivePeerDependencies:
       - supports-color
+    dev: false
 
   /@babel/types/7.16.0:
     resolution: {integrity: sha512-PJgg/k3SdLsGb3hhisFvtLOw5ts113klrpLuIPtCJIU+BB24fqq6lf8RWqKJEjzqXR9AEH1rIb5XTqwBHB+kQg==}
@@ -8982,6 +8980,7 @@ packages:
       babel-plugin-syntax-jsx: 6.18.0
       lodash: 4.17.21
       styled-components: 5.3.3_1f55980affd76ea66174a1939c753673
+    dev: false
 
   /babel-plugin-syntax-jsx/6.18.0:
     resolution: {integrity: sha1-CvMqmm4Tyno/1QaeYtew9Y0NiUY=}
@@ -9805,6 +9804,7 @@ packages:
 
   /camelize/1.0.0:
     resolution: {integrity: sha1-FkpUg+Yw+kMh5a8HAg5TGDGyYJs=}
+    dev: false
 
   /caniuse-api/3.0.0:
     resolution: {integrity: sha512-bsTwuIg/BZZK/vreVTYYbSWoe2F+71P7K5QGEX+pT250DZbfU1MQ5prOKpPR+LL6uWKK3KMwMCAS74QB3Um1uw==}
@@ -10734,6 +10734,7 @@ packages:
   /css-color-keywords/1.0.0:
     resolution: {integrity: sha1-/qJhbcZ2spYmhrOvjb2+GAskTgU=}
     engines: {node: '>=4'}
+    dev: false
 
   /css-color-names/0.0.4:
     resolution: {integrity: sha1-gIrcLnnPhHOAabZGyyDsJ762KeA=}
@@ -10916,6 +10917,7 @@ packages:
       camelize: 1.0.0
       css-color-keywords: 1.0.0
       postcss-value-parser: 4.2.0
+    dev: false
 
   /css-tree/1.0.0-alpha.37:
     resolution: {integrity: sha512-DMxWJg0rnz7UgxKT0Q1HU/L9BeJI0M6ksor0OgqOnF+aRCDWg/N2641HmVyU9KVIu0OVVWOb2IpC9A+BJRnejg==}
@@ -11227,6 +11229,7 @@ packages:
     dependencies:
       ms: 2.1.2
       supports-color: 5.5.0
+    dev: false
 
   /debug/4.3.3_supports-color@6.1.0:
     resolution: {integrity: sha512-/zxw5+vh1Tfv+4Qn7a5nsbcJKPaSvCDhojn6FEl9vupwK2VCSDtEiEtqr8DFtzYFOdz63LBkxec7DYuc2jon6Q==}
@@ -13722,15 +13725,6 @@ packages:
       glob: 7.2.0
       lodash: 4.17.21
       micromatch: 4.0.4
-    dev: false
-
-  /gatsby-plugin-alias-imports/1.0.5_gatsby@4.3.0:
-    resolution: {integrity: sha512-q58JrSjuVNh4NApamqElR0zqwm55FOb9vFAVb2i2ftPRu0uYzWJkbOz2IN3vSw7a+5PmGzX7VL8XDFXlNHrMNA==}
-    peerDependencies:
-      gatsby: '>2.0.0'
-    dependencies:
-      '@babel/runtime': 7.16.3
-      gatsby: 4.3.0_3d8392ef988879db7b1ef93206ebbe58
     dev: false
 
   /gatsby-plugin-google-gtag/3.14.0_ebdf6a49a7628b6089318812aa4dc21a:
@@ -23358,7 +23352,7 @@ packages:
       hoist-non-react-statics: 3.3.2
       shallowequal: 1.1.0
       supports-color: 5.5.0
-    dev: true
+    dev: false
 
   /styled-components/5.3.3_1f55980affd76ea66174a1939c753673:
     resolution: {integrity: sha512-++4iHwBM7ZN+x6DtPPWkCI4vdtwumQ+inA/DdAsqYd4SVgUKJie5vXyzotA00ttcFdQkCng7zc6grwlfIfw+lw==}

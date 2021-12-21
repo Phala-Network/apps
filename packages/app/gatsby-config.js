@@ -3,9 +3,6 @@
  *
  * See: https://www.gatsbyjs.com/docs/gatsby-config/
  */
-const path = require('path')
-const resolvePath = (pathString) => path.resolve(__dirname, pathString)
-const rp = resolvePath
 
 module.exports = {
   flags: {
@@ -13,29 +10,6 @@ module.exports = {
   },
   plugins: [
     'local-plugin-layout', // This plugin's place decides providers order, which is highly important
-    {
-      resolve: `gatsby-plugin-alias-imports`,
-      options: {
-        alias: {
-          '@phala/app-analytics': rp('../app-analytics/src'),
-          '@phala/app-data-analytics': rp('../app-data-analytics/src'),
-          '@phala/app-assets': rp('../app-assets/src'),
-          '@phala/app-bridge': rp('../app-bridge/src'),
-          '@phala/app-config': rp('../app-config/src'),
-          '@phala/app-mining': rp('../app-mining/src'),
-          '@phala/app-store': rp('../app-store/src'),
-          '@phala/app-types': rp('../app-types/src'),
-          '@phala/react-cms': rp('../react-cms/src'),
-          '@phala/react-components': rp('../react-components/src'),
-          '@phala/react-graph-chainbridge': rp(
-            '../react-graph-chainbridge/src'
-          ),
-          '@phala/react-hooks': rp('../react-hooks/src'),
-          '@phala/react-libs': rp('../react-libs/src'),
-          '@phala/utils': rp('../utils/src'),
-        },
-      },
-    },
     `gatsby-plugin-pnpm`,
     {
       resolve: 'gatsby-plugin-styletron',
