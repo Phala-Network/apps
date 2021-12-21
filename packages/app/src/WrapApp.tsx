@@ -5,7 +5,7 @@ import {MobileToastContextProvider} from '@phala/react-components'
 import {Provider as LibProvider} from '@phala/react-libs'
 import {isProduction} from '@phala/utils'
 import * as Sentry from '@sentry/react'
-import React, {useLayoutEffect, useRef} from 'react'
+import React, {StrictMode, useLayoutEffect, useRef} from 'react'
 import {Helmet} from 'react-helmet'
 import {QueryClient, QueryClientProvider} from 'react-query'
 import {ReactQueryDevtools} from 'react-query/devtools'
@@ -49,26 +49,28 @@ const WrapApp: React.FC = ({children}) => {
   }, [])
 
   return (
-    <div>
-      <Helmet>
-        <script
-          id="ze-snippet"
-          src="https://static.zdassets.com/ekr/snippet.js?key=fca22f47-80b0-47a4-8cde-80ca1fe206d2"
-        />
-      </Helmet>
-      <LibProvider {...productionConfig}>
-        <QueryClientProvider contextSharing={true} client={client.current}>
-          <ThemeProvider theme={theme}>
-            <MobileToastContextProvider>
-              <AppStoreProvider>
-                <BaseProvider theme={LightTheme}>{children}</BaseProvider>
-              </AppStoreProvider>
-            </MobileToastContextProvider>
-          </ThemeProvider>
-          <ReactQueryDevtools />
-        </QueryClientProvider>
-      </LibProvider>
-    </div>
+    <StrictMode>
+      <div>
+        <Helmet>
+          <script
+            id="ze-snippet"
+            src="https://static.zdassets.com/ekr/snippet.js?key=fca22f47-80b0-47a4-8cde-80ca1fe206d2"
+          />
+        </Helmet>
+        <LibProvider {...productionConfig}>
+          <QueryClientProvider contextSharing={true} client={client.current}>
+            <ThemeProvider theme={theme}>
+              <MobileToastContextProvider>
+                <AppStoreProvider>
+                  <BaseProvider theme={LightTheme}>{children}</BaseProvider>
+                </AppStoreProvider>
+              </MobileToastContextProvider>
+            </ThemeProvider>
+            <ReactQueryDevtools />
+          </QueryClientProvider>
+        </LibProvider>
+      </div>
+    </StrictMode>
   )
 }
 
