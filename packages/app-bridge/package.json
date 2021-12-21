@@ -16,23 +16,23 @@
   },
   "dependencies": {
     "@phala/app-data-analytics": "workspace:^0.0.1",
-    "@phala/app-store": "workspace:^0.0.1",
-    "@phala/app-types": "workspace:^0.0.1",
-    "@phala/react-components": "workspace:^0.0.1",
+    "@phala/app-store": "0.0.1",
+    "@phala/app-types": "0.0.1",
+    "@phala/react-components": "0.0.1",
     "@phala/react-graph-chainbridge": "workspace:^0.0.1",
-    "@phala/react-hooks": "workspace:^0.0.1",
-    "@phala/utils": "workspace:^0.0.1",
+    "@phala/react-hooks": "0.0.1",
+    "@phala/utils": "0.0.1",
     "@polkadot/util": "^8.1.2",
     "@polkadot/util-crypto": "^8.1.2",
     "bn.js": "^5.2.0",
     "styled-breakpoints": "^10.0.1"
   },
   "devDependencies": {
-    "@phala/react-libs": "workspace:^0.0.1",
-    "react-query": "^3.22.0"
+    "@phala/react-libs": "0.0.1",
+    "react-query": "3.34.5"
   },
   "peerDependencies": {
-    "@phala/react-libs": "workspace:^0.0.1",
-    "react-query": "^3.19.6"
+    "@phala/react-libs": "0.0.1",
+    "react-query": "3.34.5"
   }
 }

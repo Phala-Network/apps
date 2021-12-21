@@ -7,34 +7,34 @@
   "types": "esm/index.d.ts",
   "dependencies": {
     "@phala/app-config": "workspace:*",
-    "@phala/app-store": "workspace:^0.0.1",
-    "@phala/app-types": "workspace:*",
+    "@phala/app-store": "0.0.1",
+    "@phala/app-types": "0.0.1",
     "@phala/react-graph-chainbridge": "workspace:^0.0.1",
-    "@phala/react-hooks": "workspace:*",
-    "@phala/react-libs": "workspace:*",
-    "@phala/utils": "workspace:*",
+    "@phala/react-hooks": "0.0.1",
+    "@phala/react-libs": "0.0.1",
+    "@phala/utils": "0.0.1",
     "@polkadot/api": "^6.12.1",
     "@polkadot/util": "^8.1.2",
     "@polkadot/util-crypto": "^8.1.2",
-    "@types/node": "^16.7.13",
-    "@types/react": "^17.0.20",
-    "@types/react-dom": "^17.0.9",
-    "@types/styled-components": "^5.1.14",
+    "@types/node": "^16.11.12",
+    "@types/react": "^17.0.37",
+    "@types/react-dom": "^17.0.11",
+    "@types/styled-components": "^5.1.17",
     "csstype": "^3.0.8",
     "currency.js": "^2.0.4",
     "decimal.js": "^10.3.1",
-    "ethers": "^5.4.6",
+    "ethers": "^5.5.2",
     "rc-dropdown": "^3.2.0",
     "rc-input-number": "^7.3.0",
     "rc-menu": "^9.0.12",
     "rc-tooltip": "^5.1.1",
-    "react-error-boundary": "^3.1.3",
+    "react-error-boundary": "^3.1.4",
     "react-feather": "^2.0.9",
     "react-is": "^16.13.1",
     "react-table": "^7.7.0",
     "react-toastify": "^7.0.4",
     "styled-breakpoints": "^10.0.1",
-    "styled-components": "^5.3.1"
+    "styled-components": "^5.3.3"
   },
   "scripts": {
     "develop": "tsc --watch",
@@ -48,7 +48,7 @@
     "build-storybook": "build-storybook"
   },
   "devDependencies": {
-    "@babel/core": "^7.15.0",
+    "@babel/core": "^7.16.0",
     "@storybook/addon-actions": "^6.3.8",
     "@storybook/addon-essentials": "^6.3.8",
     "@storybook/addon-links": "^6.3.8",
@@ -58,15 +58,15 @@
     "@storybook/preset-create-react-app": "^3.2.0",
     "@storybook/react": "^6.3.8",
     "@storybook/theming": "^6.3.8",
-    "@types/react-table": "^7.7.2",
+    "@types/react-table": "^7.7.9",
     "babel-loader": "8.1.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "webpack": "4.44.2"
+    "webpack": "^5.65.0"
   },
   "peerDependencies": {
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "webpack": "4.44.2"
+    "webpack": "^5.65.0"
   }
 }

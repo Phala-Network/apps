@@ -15,16 +15,16 @@
     "prepublishOnly": "run-s lint build"
   },
   "dependencies": {
-    "@phala/app-store": "workspace:^0.0.1",
-    "@phala/react-components": "workspace:^0.0.1",
-    "@phala/react-hooks": "workspace:^0.0.1",
-    "@phala/react-libs": "workspace:^0.0.1",
-    "@phala/utils": "workspace:^0.0.1",
+    "@phala/app-store": "0.0.1",
+    "@phala/react-components": "0.0.1",
+    "@phala/react-hooks": "0.0.1",
+    "@phala/react-libs": "0.0.1",
+    "@phala/utils": "0.0.1",
     "@polkadot/util": "^8.1.2",
-    "@types/react": "^17.0.20",
+    "@types/react": "^17.0.37",
     "axios": "^0.21.4",
     "decimal.js": "^10.3.1",
-    "ethers": "^5.4.6",
+    "ethers": "^5.5.2",
     "react": "^17.0.2",
     "styled-breakpoints": "^10.0.1"
   },

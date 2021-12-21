@@ -12,6 +12,7 @@ module.exports = {
     DEV_SSR: false,
   },
   plugins: [
+    'local-plugin-layout', // This plugin's place decides providers order, which is highly important
     {
       resolve: `gatsby-plugin-alias-imports`,
       options: {
@@ -36,7 +37,12 @@ module.exports = {
       },
     },
     `gatsby-plugin-pnpm`,
-    'local-plugin-layout', // Move IntlProvider outside of the layout component
+    {
+      resolve: 'gatsby-plugin-styletron',
+      options: {
+        prefix: '_',
+      },
+    },
     `gatsby-plugin-react-helmet`,
     `gatsby-plugin-typescript`,
     `gatsby-plugin-styled-components`,
@@ -52,12 +58,6 @@ module.exports = {
         rule: {
           include: /.svg$/,
         },
-      },
-    },
-    {
-      resolve: 'gatsby-plugin-styletron',
-      options: {
-        prefix: '_',
       },
     },
     process.env.NODE_ENV === 'production' && {
