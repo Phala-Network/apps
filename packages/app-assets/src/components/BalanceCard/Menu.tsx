@@ -122,7 +122,8 @@ const Menu = forwardRef<HTMLDivElement, Props>((props, ref) => {
           {!disableTransfer && (
             <Button
               onClick={() => setVisibleTransferModal(true)}
-              active={active}>
+              active={active}
+            >
               <span>Transfer</span>
               <ButtonBottomBorder active={active}></ButtonBottomBorder>
             </Button>
@@ -131,7 +132,8 @@ const Menu = forwardRef<HTMLDivElement, Props>((props, ref) => {
             // TODO: specify bridge target in url query
             <Button
               onClick={() => (window.location.href = '/')}
-              active={active}>
+              active={active}
+            >
               <span>Bridge</span>
               <ButtonBottomBorder active={active}></ButtonBottomBorder>
             </Button>
@@ -139,7 +141,8 @@ const Menu = forwardRef<HTMLDivElement, Props>((props, ref) => {
           {!disableConvert && (
             <Button
               onClick={() => setVisibleConvertModal(true)}
-              active={active}>
+              active={active}
+            >
               <span>Convert</span>
               <ButtonBottomBorder active={active}></ButtonBottomBorder>
             </Button>
@@ -168,23 +171,27 @@ const Menu = forwardRef<HTMLDivElement, Props>((props, ref) => {
 
       <ConvertModal
         visible={visibleConvertModal}
-        onClose={() => setVisibleConvertModal(false)}></ConvertModal>
+        onClose={() => setVisibleConvertModal(false)}
+      ></ConvertModal>
 
       <BridgeModal
         visible={visibleBridge}
-        onClose={() => setVisibleBridge(false)}></BridgeModal>
+        onClose={() => setVisibleBridge(false)}
+      ></BridgeModal>
 
       {/* FIXME: hooks running should be prevented when modal is invisible */}
       {/* FIXME: modal should be load asynchronously */}
       {claimModalVisible && (
         <ClaimModal
           visible={true}
-          onClose={() => setClaimModalVisible(false)}></ClaimModal>
+          onClose={() => setClaimModalVisible(false)}
+        ></ClaimModal>
       )}
       {visibleTransferModal && (
         <TransferModal
           visible={true}
-          onClose={() => setVisibleTransferModal(false)}></TransferModal>
+          onClose={() => setVisibleTransferModal(false)}
+        ></TransferModal>
       )}
     </>
   )

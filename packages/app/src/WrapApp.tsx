@@ -5,13 +5,11 @@ import {MobileToastContextProvider} from '@phala/react-components'
 import {Provider as LibProvider} from '@phala/react-libs'
 import {isProduction} from '@phala/utils'
 import * as Sentry from '@sentry/react'
-import React, {useLayoutEffect, useRef, useState} from 'react'
+import React, {useLayoutEffect, useRef} from 'react'
 import {Helmet} from 'react-helmet'
 import {QueryClient, QueryClientProvider} from 'react-query'
 import {ReactQueryDevtools} from 'react-query/devtools'
 import {ThemeProvider} from 'styled-components'
-import {Client as Styletron} from 'styletron-engine-atomic'
-import {Provider as StyletronProvider} from 'styletron-react'
 import {LightTheme, BaseProvider} from 'baseui'
 import './fonts.css'
 import useCustomEndpoint from './hooks/useCustomEndpoint'
@@ -29,8 +27,6 @@ const WrapApp: React.FC = ({children}) => {
       },
     })
   )
-
-  const [styletronEngine] = useState(new Styletron())
 
   const defaultNetwork = 'khala'
 
@@ -65,9 +61,7 @@ const WrapApp: React.FC = ({children}) => {
           <ThemeProvider theme={theme}>
             <MobileToastContextProvider>
               <AppStoreProvider>
-                <StyletronProvider value={styletronEngine}>
-                  <BaseProvider theme={LightTheme}>{children}</BaseProvider>
-                </StyletronProvider>
+                <BaseProvider theme={LightTheme}>{children}</BaseProvider>
               </AppStoreProvider>
             </MobileToastContextProvider>
           </ThemeProvider>

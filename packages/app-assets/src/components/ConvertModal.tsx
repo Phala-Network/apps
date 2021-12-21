@@ -27,11 +27,13 @@ const ConvertModal: React.FC<Props> = (props) => {
           Cancel
         </Button>,
       ]}
-      title="Convert to pPHA">
+      title="Convert to pPHA"
+    >
       <InputNumber
         size="large"
         placeholder="Amount (PHA)"
-        after={<InputAction>MAX</InputAction>}></InputNumber>
+        after={<InputAction>MAX</InputAction>}
+      ></InputNumber>
 
       <Spacer y={0.2}></Spacer>
 

@@ -47,7 +47,8 @@ const SetCapModal = (props: StakePoolModalProps): JSX.Element => {
       onConfirm={onConfirm}
       title="Set Cap"
       disabled={!cap}
-      actionsExtra={<PhalaStakePoolTransactionFeeLabel action={action} />}>
+      actionsExtra={<PhalaStakePoolTransactionFeeLabel action={action} />}
+    >
       <Label>pid</Label>
       <Value>{stakePool.pid}</Value>
 
@@ -57,7 +58,8 @@ const SetCapModal = (props: StakePoolModalProps): JSX.Element => {
         placeholder="Cap"
         value={cap}
         onChange={onInputChange}
-        after="PHA"></InputNumber>
+        after="PHA"
+      ></InputNumber>
     </ActionModal>
   )
 }

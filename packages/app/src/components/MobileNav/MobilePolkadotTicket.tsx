@@ -65,11 +65,13 @@ const MobilePolkadotTicket: React.FC = () => {
 
       <PolkadotAccountModal
         visible={accountModalVisible}
-        onClose={() => setAccountModalVisible(false)}></PolkadotAccountModal>
+        onClose={() => setAccountModalVisible(false)}
+      ></PolkadotAccountModal>
 
       <EmptyAccountModal
         visible={emptyAccountModalVisible}
-        onClose={() => setEmptyAccountModalVisible(false)}></EmptyAccountModal>
+        onClose={() => setEmptyAccountModalVisible(false)}
+      ></EmptyAccountModal>
     </Wrapper>
   )
 }

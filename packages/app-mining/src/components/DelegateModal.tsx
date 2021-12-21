@@ -70,7 +70,8 @@ const DelegateModal = (props: StakePoolModalProps): JSX.Element => {
       title="Delegate"
       subtitle="Delegate some stake to a pool"
       actionsExtra={<PhalaStakePoolTransactionFeeLabel action={action} />}
-      disabled={!amount || !action}>
+      disabled={!amount || !action}
+    >
       <Label>pid</Label>
       <Value>{stakePool.pid}</Value>
       <Label>Amount</Label>
@@ -79,7 +80,8 @@ const DelegateModal = (props: StakePoolModalProps): JSX.Element => {
         placeholder="Amount"
         value={amount}
         onChange={onInputChange}
-        after="PHA"></InputNumber>
+        after="PHA"
+      ></InputNumber>
 
       <Extra>Delegable Balance: {format(delegableBalance)}</Extra>
       <Extra>Pool Remaining: {remaining}</Extra>

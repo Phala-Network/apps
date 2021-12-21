@@ -70,14 +70,16 @@ const TransactionsListItem: React.FC<TransactionsListItemProps> = (props) => {
         <ItemInfoBlock
           network="Ethereum"
           amount={convertedAmount || ''}
-          address={depositor || ''}></ItemInfoBlock>
+          address={depositor || ''}
+        ></ItemInfoBlock>
 
         <ArrowIcon />
 
         <ItemInfoBlock
           network="Khala"
           amount={convertedAmount || ''}
-          address={destinationRecipient}></ItemInfoBlock>
+          address={destinationRecipient}
+        ></ItemInfoBlock>
 
         <JumpIcon />
 

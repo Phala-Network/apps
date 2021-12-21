@@ -53,7 +53,8 @@ const EthereumTicket: React.FC = () => {
               </DefaultStatusIcon>
               <DefaultStatusName>Connect METAMASK</DefaultStatusName>
             </DefaultStatus>
-          }></Ticket>
+          }
+        ></Ticket>
       ) : (
         <Ticket
           onClick={openAccountSelectModal}

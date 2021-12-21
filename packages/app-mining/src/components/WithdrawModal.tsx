@@ -85,7 +85,8 @@ const WithdrawModal = (props: StakePoolModalProps): JSX.Element => {
       onConfirm={onConfirm}
       title="Withdraw"
       disabled={!amount}
-      actionsExtra={<PhalaStakePoolTransactionFeeLabel action={action} />}>
+      actionsExtra={<PhalaStakePoolTransactionFeeLabel action={action} />}
+    >
       <Label>pid</Label>
       <Value>{stakePool.pid}</Value>
       <Label>Delegation</Label>
@@ -93,7 +94,8 @@ const WithdrawModal = (props: StakePoolModalProps): JSX.Element => {
         placeholder="Amount (PHA)"
         value={amount}
         onChange={onInputChange}
-        after={<InputAction onClick={setMax}>MAX</InputAction>}></InputNumber>
+        after={<InputAction onClick={setMax}>MAX</InputAction>}
+      ></InputNumber>
       <Alert style={{marginTop: '10px'}}>
         {hasWithdrawing
           ? 'You have a pending withdraw request! Only one withdraw request is kept. Resubmission will replace the existing one and reset the countdown.'

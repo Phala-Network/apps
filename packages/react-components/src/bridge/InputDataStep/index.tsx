@@ -258,7 +258,8 @@ const InputDataStep: React.FC<Props> = (props) => {
             <ErrorBoundary fallbackRender={() => null}>
               <EthereumAllowance
                 placeholder={<Button type="primary">Approve</Button>}
-                account={ethereumAccount.address}>
+                account={ethereumAccount.address}
+              >
                 <Button type="primary" onClick={submit}>
                   Next
                 </Button>
@@ -269,7 +270,8 @@ const InputDataStep: React.FC<Props> = (props) => {
           {!isFromEthereum && (
             <ActionButton
               isFromEthereum={isFromEthereum}
-              onClick={submit}></ActionButton>
+              onClick={submit}
+            ></ActionButton>
           )}
         </ModalAction>
       </ModalActions>

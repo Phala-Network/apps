@@ -50,7 +50,8 @@ export const StripeHeader: FC<ComponentProps<typeof StripeHeaderWrap>> = (
         colorCheck(status, index) {
           return index < 30 ? true : status > 0.3
         },
-      }}>
+      }}
+    >
       <StripeHeaderWrap {...props}></StripeHeaderWrap>
     </BlockStripe>
   )

@@ -37,7 +37,8 @@ const AddWorkerModal = (props: StakePoolModalProps): JSX.Element => {
       onConfirm={onConfirm}
       title="Add Worker"
       disabled={!pubkey}
-      actionsExtra={<PhalaStakePoolTransactionFeeLabel action={action} />}>
+      actionsExtra={<PhalaStakePoolTransactionFeeLabel action={action} />}
+    >
       <Label>pid</Label>
       <Value>{stakePool.pid}</Value>
 
@@ -45,7 +46,8 @@ const AddWorkerModal = (props: StakePoolModalProps): JSX.Element => {
       <Input
         placeholder="Public Key"
         value={pubkey}
-        onChange={onInputChange}></Input>
+        onChange={onInputChange}
+      ></Input>
     </ActionModal>
   )
 }

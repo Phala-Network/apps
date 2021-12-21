@@ -60,7 +60,8 @@ const ClaimModal = (props: StakePoolModalProps): JSX.Element => {
       title="Claim"
       subtitle="Claim all the pending rewards of the sender and send to the `target`"
       actionsExtra={<PhalaStakePoolTransactionFeeLabel action={action} />}
-      disabled={!address}>
+      disabled={!address}
+    >
       <Label>pid</Label>
       <Value>{stakePool.pid}</Value>
       <Label>Rewards</Label>
@@ -71,10 +72,12 @@ const ClaimModal = (props: StakePoolModalProps): JSX.Element => {
         onChange={onInputChange}
         after={
           <InputAction
-            onClick={() => setAddress(polkadotAccount?.address || '')}>
+            onClick={() => setAddress(polkadotAccount?.address || '')}
+          >
             MY ADDRESS
           </InputAction>
-        }></Input>
+        }
+      ></Input>
     </ActionModal>
   )
 }

@@ -14,7 +14,8 @@ const Logo: React.FC = () => {
         height="41"
         viewBox="0 0 143 41"
         fill="none"
-        xmlns="http://www.w3.org/2000/svg">
+        xmlns="http://www.w3.org/2000/svg"
+      >
         <path
           d="M31.8235 20.9049H7.95832V28.8805H31.8235V20.9049Z"
           fill="#D1FF52"
