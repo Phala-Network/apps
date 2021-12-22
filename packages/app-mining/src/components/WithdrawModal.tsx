@@ -11,6 +11,7 @@ import {
 } from '@phala/react-libs'
 import Decimal from 'decimal.js'
 import {useCallback, useMemo, useState} from 'react'
+import {toFixed} from '@phala/utils'
 import useSelfUserStakeInfo from '../hooks/useSelfUserStakeInfo'
 import useWaitSignAndSend from '../hooks/useWaitSignAndSend'
 import ActionModal, {Label, Value} from './ActionModal'
@@ -62,9 +63,10 @@ const WithdrawModal = (props: StakePoolModalProps): JSX.Element => {
     if (!userStakeInfo || !decimals) return
     const yourDelegation = userStakeInfo.shares
       .mul(stakePool.totalStake.div(stakePool.totalShares))
+      .floor()
       .div(decimals)
-      .toString()
-    setAmount(yourDelegation)
+    const res = toFixed(yourDelegation, 12).toString()
+    setAmount(res)
   }
 
   const hasWithdrawing = useMemo<boolean>(
