@@ -62,6 +62,7 @@ const WithdrawModal = (props: StakePoolModalProps): JSX.Element => {
     if (!userStakeInfo || !decimals) return
     const yourDelegation = userStakeInfo.shares
       .mul(stakePool.totalStake.div(stakePool.totalShares))
+      .floor()
       .div(decimals)
       .toString()
     setAmount(yourDelegation)
