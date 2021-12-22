@@ -2,6 +2,7 @@ import {usePolkadotAccountAtom} from '@phala/app-store'
 import {
   Alert,
   InputNumber,
+  InputAction,
   PhalaStakePoolTransactionFeeLabel,
 } from '@phala/react-components'
 import {
@@ -21,8 +22,8 @@ const WithdrawModal = (props: StakePoolModalProps): JSX.Element => {
   const {api} = useApiPromise()
   const waitSignAndSend = useWaitSignAndSend()
   const decimals = useDecimalJsTokenDecimalMultiplier(api)
-  const [amount, setAmount] = useState<number | undefined>()
-  const {refetch} = useSelfUserStakeInfo(stakePool.pid)
+  const [amount, setAmount] = useState<number | string | undefined>()
+  const {data: userStakeInfo, refetch} = useSelfUserStakeInfo(stakePool.pid)
 
   const action = useMemo(() => {
     if (!api || !amount || !decimals) return
@@ -57,6 +58,15 @@ const WithdrawModal = (props: StakePoolModalProps): JSX.Element => {
     }
   }, [])
 
+  const setMax = () => {
+    if (!userStakeInfo || !decimals) return
+    const yourDelegation = userStakeInfo.shares
+      .mul(stakePool.totalStake.div(stakePool.totalShares))
+      .div(decimals)
+      .toString()
+    setAmount(yourDelegation)
+  }
+
   const hasWithdrawing = useMemo<boolean>(
     () =>
       Boolean(
@@ -79,11 +89,10 @@ const WithdrawModal = (props: StakePoolModalProps): JSX.Element => {
       <Value>{stakePool.pid}</Value>
       <Label>Delegation</Label>
       <InputNumber
-        type="number"
-        placeholder="Amount"
+        placeholder="Amount (PHA)"
         value={amount}
         onChange={onInputChange}
-        after="PHA"></InputNumber>
+        after={<InputAction onClick={setMax}>MAX</InputAction>}></InputNumber>
       <Alert style={{marginTop: '10px'}}>
         {hasWithdrawing
           ? 'You have a pending withdraw request! Only one withdraw request is kept. Resubmission will replace the existing one and reset the countdown.'

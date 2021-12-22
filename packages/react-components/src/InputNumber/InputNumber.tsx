@@ -2,7 +2,7 @@ import {InputNumberProps} from 'rc-input-number'
 import React from 'react'
 import {Input, InputProps} from '../Input'
 
-type Props = InputProps & Omit<InputNumberProps<number>, 'size'>
+type Props = InputProps & Omit<InputNumberProps<number | string>, 'size'>
 
 export const InputNumber: React.FC<Props> = (props) => {
   const {size, ...others} = props
