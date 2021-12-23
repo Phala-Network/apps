@@ -76,7 +76,13 @@ export const ApiPromiseProvider = ({
         prevApi?.disconnect()
       }
       waitEnable.current = enableApiPromise(endpoint, registryTypes)
-        .then((api) => {
+        .then(async (originApi) => {
+          const params = new URLSearchParams(location.search)
+          const block = params.get('block')
+          const blockHash = (
+            await originApi.rpc.chain.getBlockHash(block)
+          ).toString()
+          const api = await originApi.at(blockHash)
           setApi(api)
           setActiveEndpoint(endpoint)
           setState('ready')
