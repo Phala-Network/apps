@@ -1,54 +1,43 @@
-import {Button} from '@phala/react-components'
-import Decimal from 'decimal.js'
-import {Link} from 'gatsby'
-import {useMemo} from 'react'
-import {down} from 'styled-breakpoints'
 import styled from 'styled-components'
-import useFormat from '../../hooks/useFormat'
-import useStakePools from '../../hooks/useStakePools'
+import {DisplayXSmall, LabelLarge} from 'baseui/typography'
+import {Link} from 'gatsby'
+import {Button} from 'baseui/button'
+import {Skeleton} from 'baseui/skeleton'
+import {useAggregateStakePoolsQuery} from '../../hooks/graphql'
+import {client} from '../../utils/GraphQLClient'
+import {formatCurrency} from '@phala/utils'
+import {ChevronRight} from 'react-feather'
 
 const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
-  background-color: #fff;
   align-items: center;
-  padding: 10px;
-  padding-left: 30px;
-`
-
-const Content = styled.div`
-  font-size: 24px;
-  font-weight: bold;
-
-  ${down('sm')} {
-    font-size: 18px;
-  }
-
-  span {
-    font-family: PT Mono, monospace;
-  }
+  background-color: #fff;
+  padding: 20px;
 `
 
 const Banner = (): JSX.Element => {
-  const {data: stakePools} = useStakePools()
-  const format = useFormat()
-  const locked = useMemo<string>(() => {
-    if (!stakePools) return '-'
-    const value = stakePools.reduce(
-      (acc, stakePool) => acc.add(stakePool.totalStake),
-      new Decimal(0)
-    )
+  const {data} = useAggregateStakePoolsQuery(client)
 
-    return format(value)
-  }, [stakePools, format])
+  const value = data?.aggregateStakePools._sum?.totalStake
 
   return (
     <Wrapper>
-      <Content>
-        Total Delegated: <span>{locked}</span>
-      </Content>
-      <Link to="/delegate/my-delegate/">
-        <Button size="small">My Delegate</Button>
+      <div>
+        <LabelLarge>Total Delegated</LabelLarge>
+        <DisplayXSmall>
+          {value ? (
+            `${formatCurrency(value)} PHA`
+          ) : (
+            <Skeleton animation height="44px" width="300px" />
+          )}
+        </DisplayXSmall>
+      </div>
+      <Link to="/delegate/my-delegate">
+        <Button kind="minimal" size="compact">
+          My Delegate
+          <ChevronRight />
+        </Button>
       </Link>
     </Wrapper>
   )

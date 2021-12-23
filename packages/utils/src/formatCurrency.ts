@@ -1,16 +1,12 @@
-import {isNumber} from '@polkadot/util'
+import Decimal from 'decimal.js'
+import {toFixed} from './toFixed'
 
-export default function formatCurrency(value: number | string): string {
-  let string
+export function formatCurrency(value: Decimal | string | number): string {
+  const fixedValue = toFixed(
+    typeof value === 'string' ? new Decimal(value) : value,
+    2
+  )
 
-  if (isNumber(value)) {
-    string = value.toFixed(6).toString()
-  } else {
-    string = value
-  }
-
-  const n = 3
-  const re = '\\d(?=(\\d{' + 3 + '})+' + (n > 0 ? '\\.' : '$') + ')'
-
-  return string.replace(new RegExp(re, 'g'), '$&,')
+  // @see https://stackoverflow.com/questions/2901102/how-to-print-a-number-with-commas-as-thousands-separators-in-javascript
+  return fixedValue.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
 }

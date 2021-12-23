@@ -10,10 +10,11 @@ import {Helmet} from 'react-helmet'
 import {QueryClient, QueryClientProvider} from 'react-query'
 import {ReactQueryDevtools} from 'react-query/devtools'
 import {ThemeProvider} from 'styled-components'
-import {LightTheme, BaseProvider} from 'baseui'
+import {BaseProvider} from 'baseui'
 import './fonts.css'
 import useCustomEndpoint from './hooks/useCustomEndpoint'
-import theme from './theme'
+import theme, {baseTheme} from './theme'
+import {SnackbarProvider} from 'baseui/snackbar'
 
 const WrapApp: React.FC = ({children}) => {
   const customEndpoint = useCustomEndpoint()
@@ -62,7 +63,9 @@ const WrapApp: React.FC = ({children}) => {
             <ThemeProvider theme={theme}>
               <MobileToastContextProvider>
                 <AppStoreProvider>
-                  <BaseProvider theme={LightTheme}>{children}</BaseProvider>
+                  <BaseProvider theme={baseTheme}>
+                    <SnackbarProvider>{children}</SnackbarProvider>
+                  </BaseProvider>
                 </AppStoreProvider>
               </MobileToastContextProvider>
             </ThemeProvider>

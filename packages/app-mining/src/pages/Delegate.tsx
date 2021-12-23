@@ -1,8 +1,8 @@
 import {Helmet} from 'react-helmet'
 import styled from 'styled-components'
 import {up} from 'styled-breakpoints'
-import MainTable from '../components/Delegate/DelegateTable'
 import Banner from '../components/Delegate/Banner'
+import StakePoolTableV2 from '../components/StakePoolTableV2'
 
 const Wrapper = styled.div`
   overflow-x: auto;
@@ -10,6 +10,7 @@ const Wrapper = styled.div`
   ${up('md')} {
     margin: 30px;
     flex: 1;
+    margin-bottom: 70px;
   }
 `
 
@@ -30,7 +31,7 @@ export const Delegate = (): JSX.Element => {
         <Banner></Banner>
 
         <Block>
-          <MainTable></MainTable>
+          <StakePoolTableV2 kind="delegate" />
         </Block>
       </Wrapper>
     </>
