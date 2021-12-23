@@ -33,7 +33,8 @@ export const Provider: FC<ProviderProps> = (props) => {
             <EthersProvider>
               <NetworkContextProvider
                 defaultNetwork={defaultNetwork}
-                customEndpoint={customEndpoint}>
+                customEndpoint={customEndpoint}
+              >
                 <ApiPromiseProvider>
                   <PolkadotWeb3Provider originName="ChainBridge Operator">
                     {children}

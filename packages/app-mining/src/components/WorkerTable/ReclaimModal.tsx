@@ -28,7 +28,8 @@ const ReclaimModal = (props: WorkerModalProps): JSX.Element => {
       onConfirm={onConfirm}
       title="Reclaim Worker"
       subtitle="Reclaims the releasing stake of miners in a pool"
-      actionsExtra={<PhalaStakePoolTransactionFeeLabel action={action} />}>
+      actionsExtra={<PhalaStakePoolTransactionFeeLabel action={action} />}
+    >
       <Label>pid</Label>
       <Value>{worker.pid}</Value>
       <Label>Worker PublicKey</Label>

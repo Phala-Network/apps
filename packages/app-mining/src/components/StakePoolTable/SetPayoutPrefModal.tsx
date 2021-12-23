@@ -43,7 +43,8 @@ const SetPayoutPrefModal = (props: StakePoolModalProps): JSX.Element => {
       onConfirm={onConfirm}
       title="Set Commission"
       disabled={!payoutPref}
-      actionsExtra={<PhalaStakePoolTransactionFeeLabel action={action} />}>
+      actionsExtra={<PhalaStakePoolTransactionFeeLabel action={action} />}
+    >
       <Label>pid</Label>
       <Value>{stakePool.pid}</Value>
 
@@ -55,7 +56,8 @@ const SetPayoutPrefModal = (props: StakePoolModalProps): JSX.Element => {
         placeholder="0-100"
         value={payoutPref}
         onChange={onInputChange}
-        after="%"></InputNumber>
+        after="%"
+      ></InputNumber>
     </ActionModal>
   )
 }

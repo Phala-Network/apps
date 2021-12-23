@@ -89,7 +89,8 @@ export const Web3Provider = ({
 
   return (
     <Web3Context.Provider
-      value={{accounts, provider, readystate, ethereumWeb3connect}}>
+      value={{accounts, provider, readystate, ethereumWeb3connect}}
+    >
       {children}
     </Web3Context.Provider>
   )

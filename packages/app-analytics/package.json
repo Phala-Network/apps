@@ -3,28 +3,13 @@
   "version": "0.0.1",
   "type": "module",
   "sideEffects": false,
-  "main": "esm/index.js",
-  "module": "esm/index.js",
-  "types": "esm/index.d.ts",
-  "scripts": {
-    "develop": "tsc --watch",
-    "start": "tsc --watch",
-    "build": "tsc",
-    "test": "tsc --noEmit",
-    "lint": "type-coverage",
-    "prepublishOnly": "run-s lint build"
-  },
+  "main": "src/index.ts",
   "dependencies": {
-    "@phala/react-components": "workspace:^0.0.1",
+    "@phala/react-components": "workspace:0.0.1",
     "echarts": "^5.2.0",
     "echarts-for-react": "^3.0.1",
     "react-helmet": "^6.1.0",
-    "styled-breakpoints": "^10.0.1"
-  },
-  "devDependencies": {
-    "styled-components": "^5.3.1"
-  },
-  "peerDependencies": {
-    "styled-components": "^5.3.1"
+    "styled-breakpoints": "^10.0.1",
+    "styled-components": "^5.3.3"
   }
 }

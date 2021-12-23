@@ -28,7 +28,8 @@ const RemoveModal = (props: WorkerModalProps): JSX.Element => {
       onConfirm={onConfirm}
       title="Remove Worker"
       subtitle="Remove a worker from a pool"
-      actionsExtra={<PhalaStakePoolTransactionFeeLabel action={action} />}>
+      actionsExtra={<PhalaStakePoolTransactionFeeLabel action={action} />}
+    >
       <Label>pid</Label>
       <Value>{worker.pid}</Value>
       <Label>WorkerPublicKey</Label>

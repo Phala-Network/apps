@@ -8,6 +8,5 @@
     "sourceMap": true,
     "esModuleInterop": false
   },
-  "include": ["src/**/*"],
-  "references": [{"path": "../react-libs"}]
+  "include": ["src/**/*"]
 }

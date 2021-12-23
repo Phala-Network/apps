@@ -9,6 +9,5 @@
     "sourceMap": true,
     "esModuleInterop": false
   },
-  "include": ["src/**/*", "src/**/*.json"],
-  "references": [{"path": "../app-types"}]
+  "include": ["src/**/*", "src/**/*.json"]
 }

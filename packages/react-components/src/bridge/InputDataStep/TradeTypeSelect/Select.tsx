@@ -118,7 +118,8 @@ const Select: React.FC<Props> = (props) => {
                     onChange?.(item)
                     setVisible(false)
                   }}
-                  key={item}>
+                  key={item}
+                >
                   {item}
                 </SelectItem>
               )

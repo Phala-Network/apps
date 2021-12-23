@@ -118,7 +118,8 @@ const BalanceCard: React.FC<Props> = (props) => {
           disableTransfer={disableTransfer}
           disableBridge={disableBridge}
           disableConvert={disableConvert}
-          disableClaim={disableClaim}></Menu>
+          disableClaim={disableClaim}
+        ></Menu>
       </Wrap>
     </Background>
   )

@@ -8,6 +8,5 @@
     "sourceMap": true,
     "esModuleInterop": false
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx"],
-  "references": [{"path": "../react-components"}]
+  "include": ["src/**/*.ts", "src/**/*.tsx"]
 }

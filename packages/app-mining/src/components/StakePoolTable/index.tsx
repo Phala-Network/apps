@@ -162,7 +162,8 @@ const StakePoolTable = ({
                 onClick={() => {
                   setSelectedPid(stakePool.pid)
                   open('stakeInfo')
-                }}>
+                }}
+              >
                 Info
               </DetailButton>
               <ItemMenu
@@ -170,7 +171,8 @@ const StakePoolTable = ({
                 onClick={(key) => {
                   setSelectedPid(stakePool.pid)
                   open(key)
-                }}></ItemMenu>
+                }}
+              ></ItemMenu>
             </Actions>
           )
         },
@@ -188,13 +190,15 @@ const StakePoolTable = ({
             type="primary"
             size="small"
             style={{marginLeft: 10}}
-            onClick={() => open('create')}>
+            onClick={() => open('create')}
+          >
             Create pool
           </Button>
         }
         columns={columns}
         data={tableData}
-        isLoading={isLoading}></MiningTable>
+        isLoading={isLoading}
+      ></MiningTable>
 
       {/* CreateModal is special */}
       {modalVisible.create && (
@@ -202,7 +206,8 @@ const StakePoolTable = ({
           onClose={() => {
             close('create')
             refetch()
-          }}></CreateModal>
+          }}
+        ></CreateModal>
       )}
 
       {selectedStakePool &&
