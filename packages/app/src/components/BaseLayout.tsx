@@ -2,13 +2,14 @@ import React from 'react'
 import {down, up} from 'styled-breakpoints'
 import styled from 'styled-components'
 import MobileNav from './MobileNav'
-import SideNav from './SideNav'
-import Tickets from './Tickets'
+// import SideNav from './SideNav'
+// import Tickets from './Tickets'
+import Navbar from './Navbar'
 
 const HomePageWrap = styled.div`
   ${up('md')} {
     display: flex;
-    padding-left: 230px;
+    /* padding-left: 230px; */
   }
 
   ${down('sm')} {
@@ -17,10 +18,14 @@ const HomePageWrap = styled.div`
   }
 `
 
-const Sider = styled.div`
-  ${down('sm')} {
-    display: none;
-  }
+// const Sider = styled.div`
+//   ${down('sm')} {
+//     display: none;
+//   }
+// `
+
+const ContentWrap = styled.div`
+  margin: 80px auto auto;
 `
 
 const BaseLayout: React.FC = (props) => {
@@ -28,12 +33,14 @@ const BaseLayout: React.FC = (props) => {
 
   return (
     <HomePageWrap>
-      <Sider>
+      {/* <Sider>
         <SideNav></SideNav>
         <Tickets></Tickets>
-      </Sider>
+      </Sider> */}
 
-      {children}
+      <Navbar />
+
+      <ContentWrap>{children}</ContentWrap>
 
       <MobileNav />
     </HomePageWrap>
