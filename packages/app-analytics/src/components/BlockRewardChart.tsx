@@ -25,6 +25,7 @@ export const BlockRewardChart: React.FC<{blockData: AnalyticsData}> = (
         }
       }
     })
+    .slice(1)
 
   const chartOptions = {
     tooltip: {

@@ -22,7 +22,8 @@ export const Textarea: React.FC<Props> = (props) => {
         onChange={(e) => onChange?.(e.target.value)}
         ref={ref}
         onClick={() => setActive(true)}
-        onBlur={() => setActive(false)}></textarea>
+        onBlur={() => setActive(false)}
+      ></textarea>
     </Wrapper>
   )
 }

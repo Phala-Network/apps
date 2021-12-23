@@ -30,7 +30,8 @@ export const PolkadotInstallModal: React.FC<Props> = (props) => {
         onClick={() => {
           window.open('https://polkadot.js.org/extension/')
           props.onClose()
-        }}>
+        }}
+      >
         Install
       </Button>
     </Modal>

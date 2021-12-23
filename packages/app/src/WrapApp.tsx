@@ -5,11 +5,12 @@ import {MobileToastContextProvider} from '@phala/react-components'
 import {Provider as LibProvider} from '@phala/react-libs'
 import {isProduction} from '@phala/utils'
 import * as Sentry from '@sentry/react'
-import React, {useLayoutEffect, useRef} from 'react'
+import React, {StrictMode, useLayoutEffect, useRef} from 'react'
 import {Helmet} from 'react-helmet'
 import {QueryClient, QueryClientProvider} from 'react-query'
 import {ReactQueryDevtools} from 'react-query/devtools'
 import {ThemeProvider} from 'styled-components'
+import {LightTheme, BaseProvider} from 'baseui'
 import './fonts.css'
 import useCustomEndpoint from './hooks/useCustomEndpoint'
 import theme from './theme'
@@ -48,29 +49,28 @@ const WrapApp: React.FC = ({children}) => {
   }, [])
 
   return (
-    <div>
-      <Helmet>
-        <script
-          type="text/javascript"
-          src="https://api.map.baidu.com/getscript?v=2.0&ak=EOI79Ys8F8IN75wY5jfzRwKjGtQ5eKPz"
-        />
-
-        <script
-          id="ze-snippet"
-          src="https://static.zdassets.com/ekr/snippet.js?key=fca22f47-80b0-47a4-8cde-80ca1fe206d2"
-        />
-      </Helmet>
-      <LibProvider {...productionConfig}>
-        <QueryClientProvider contextSharing={true} client={client.current}>
-          <ThemeProvider theme={theme}>
-            <MobileToastContextProvider>
-              <AppStoreProvider>{children}</AppStoreProvider>
-            </MobileToastContextProvider>
-          </ThemeProvider>
-          <ReactQueryDevtools />
-        </QueryClientProvider>
-      </LibProvider>
-    </div>
+    <StrictMode>
+      <div>
+        <Helmet>
+          <script
+            id="ze-snippet"
+            src="https://static.zdassets.com/ekr/snippet.js?key=fca22f47-80b0-47a4-8cde-80ca1fe206d2"
+          />
+        </Helmet>
+        <LibProvider {...productionConfig}>
+          <QueryClientProvider contextSharing={true} client={client.current}>
+            <ThemeProvider theme={theme}>
+              <MobileToastContextProvider>
+                <AppStoreProvider>
+                  <BaseProvider theme={LightTheme}>{children}</BaseProvider>
+                </AppStoreProvider>
+              </MobileToastContextProvider>
+            </ThemeProvider>
+            <ReactQueryDevtools />
+          </QueryClientProvider>
+        </LibProvider>
+      </div>
+    </StrictMode>
   )
 }
 

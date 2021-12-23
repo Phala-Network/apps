@@ -121,7 +121,8 @@ const MyDelegateTable = (): JSX.Element => {
               <a
                 href={`https://khala.subscan.io/account/${owner}`}
                 target="_blank"
-                rel="noreferrer">
+                rel="noreferrer"
+              >
                 {display}
               </a>
               {verified && ' ✅'}
@@ -207,7 +208,8 @@ const MyDelegateTable = (): JSX.Element => {
               onClick={(key) => {
                 setPid(stakePool.pid)
                 open(key as ModalKey)
-              }}></ItemMenu>
+              }}
+            ></ItemMenu>
           )
         },
       },
@@ -239,7 +241,8 @@ const MyDelegateTable = (): JSX.Element => {
         autoResetPage={false}
         autoResetSortBy={false}
         isLoading={isFetchingStakePools || isFetchingUserStakeInfo}
-        columns={columns}></Table>
+        columns={columns}
+      ></Table>
 
       {activeStakePool &&
         modalEntries.map(
@@ -264,7 +267,8 @@ const MyDelegateTable = (): JSX.Element => {
             close('claimAll')
             refetchStakePools()
             refetchUserStakeInfo()
-          }}></ClaimAllModal>
+          }}
+        ></ClaimAllModal>
       )}
     </Wrapper>
   )

@@ -52,7 +52,8 @@ const ReclaimAllModal = (props: StakePoolModalProps): JSX.Element => {
       onConfirm={onConfirm}
       title="Reclaim All Worker"
       subtitle="Reclaims the releasing stake of miners in a pool"
-      actionsExtra={<PhalaStakePoolTransactionFeeLabel action={action} />}>
+      actionsExtra={<PhalaStakePoolTransactionFeeLabel action={action} />}
+    >
       <Label>pid</Label>
       <Value>{stakePool.pid}</Value>
       <Label>Worker PublicKeys</Label>

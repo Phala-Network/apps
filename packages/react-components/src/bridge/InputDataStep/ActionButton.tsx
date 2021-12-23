@@ -28,7 +28,8 @@ const ActionButton: React.FC<Props> = (props) => {
       <>
         <Button
           onClick={() => setPolkadotAccountModalViable(true)}
-          type="primary">{`Connect Polkadot{.js}`}</Button>
+          type="primary"
+        >{`Connect Polkadot{.js}`}</Button>
 
         <PolkadotAccountModal
           onClose={() => setPolkadotAccountModalViable(false)}
@@ -43,7 +44,8 @@ const ActionButton: React.FC<Props> = (props) => {
       <>
         <Button
           onClick={() => setEthereumAccountModalViable(true)}
-          type="primary">
+          type="primary"
+        >
           Connet METAMASK
         </Button>
 

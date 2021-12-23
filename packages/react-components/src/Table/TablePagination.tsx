@@ -86,7 +86,8 @@ const TablePagination: React.FC<Props> = (props) => {
           height="8"
           viewBox="0 0 5 8"
           fill="none"
-          xmlns="http://www.w3.org/2000/svg">
+          xmlns="http://www.w3.org/2000/svg"
+        >
           <path
             fillRule="evenodd"
             clipRule="evenodd"
@@ -102,7 +103,8 @@ const TablePagination: React.FC<Props> = (props) => {
         onBlur={() => setValue(String(pageIndex + 1))}
         onKeyDown={onKeyDown}
         width={30}
-        height={20}></PageInput>
+        height={20}
+      ></PageInput>
       <span> / {pageOptions.length}</span>
       <Button onClick={nextPage} disabled={!canNextPage}>
         <svg
@@ -110,7 +112,8 @@ const TablePagination: React.FC<Props> = (props) => {
           height="8"
           viewBox="0 0 5 8"
           fill="none"
-          xmlns="http://www.w3.org/2000/svg">
+          xmlns="http://www.w3.org/2000/svg"
+        >
           <path
             fillRule="evenodd"
             clipRule="evenodd"

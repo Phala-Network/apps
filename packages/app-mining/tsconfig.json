@@ -5,15 +5,7 @@
     "outDir": "esm",
     "declaration": true,
     "declarationMap": true,
-    "sourceMap": true,
-    "esModuleInterop": false
+    "sourceMap": true
   },
-  "include": ["src/**/*", "../../typings"],
-  "references": [
-    {"path": "../app-store"},
-    {"path": "../utils"},
-    {"path": "../react-libs"},
-    {"path": "../react-hooks"},
-    {"path": "../react-components"}
-  ]
+  "include": ["src"]
 }

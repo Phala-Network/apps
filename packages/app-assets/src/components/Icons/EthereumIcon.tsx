@@ -6,7 +6,8 @@ export const EthereumIcon = (props: React.SVGProps<SVGSVGElement>) => {
       viewBox="0 0 32 32"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      {...props}>
+      {...props}
+    >
       <path
         d="M21.3298 16.4229L15.9983 8L10.6666 16.4229L15.9983 18.6667L21.3298 16.4229Z"
         fill="currentColor"
