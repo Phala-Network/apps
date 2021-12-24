@@ -24,6 +24,7 @@ const Button = styled.button`
   font-size: 16px;
   line-height: 16px;
   margin-left: 20px;
+  margin-right: 30px;
 `
 
 const AccountLable = styled.div`
@@ -37,6 +38,7 @@ const AccountLable = styled.div`
   font-size: 16px;
   line-height: 16px;
   margin-left: 20px;
+  margin-right: 30px;
   background: #eeeeee;
   height: 36px;
   min-width: 300px;
@@ -48,7 +50,7 @@ const AccountLable = styled.div`
 
 const Balance = styled.span`
   padding: 0 10px;
-  max-width: 200px;
+  max-width: 300px;
   overflow: hidden;
 `
 
@@ -82,7 +84,9 @@ const Account = (): JSX.Element => {
 
   const balanceValue = useMemo(() => {
     if (!api || !balance || !decimals) return new Decimal(0)
-    return new Decimal(balance.toString() || '0').div(decimals)
+    return new Decimal(balance.toString() || '0')
+      .mul(567585868758)
+      .div(decimals)
   }, [api, balance, decimals])
 
   return (

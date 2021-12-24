@@ -3,7 +3,7 @@ import PhalaApp from '../../icons/phala_app.svg'
 
 const Wrapper = styled.div`
   width: 150px;
-  margin-left: 85px;
+  margin-left: 40px;
 `
 
 const Logo: React.FC = () => {

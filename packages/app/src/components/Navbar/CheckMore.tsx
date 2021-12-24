@@ -10,6 +10,16 @@ const Link = styled(GatsbyLink)`
 
 const MoreButton = styled.div`
   cursor: pointer;
+
+  &:after {
+    content: '';
+    height: 10px;
+    width: 100%;
+    background-color: transparent;
+    position: absolute;
+    top: 100%;
+    left: 0;
+  }
 `
 
 const LineWrap = styled.a`
@@ -49,10 +59,11 @@ const Popover = styled.div`
     transform: translate(-50%, -50%) scale(0);
     transition: transform 0.2s;
     z-index: 300;
-    left: 50%;
+    right: 0;
     top: 100%;
     background-color: #eeeeee;
     border: 1px solid #aad829;
+    margin-top: 10px;
 
     &:before {
       content: url(${Arrow});
@@ -61,7 +72,7 @@ const Popover = styled.div`
       transform: scale(0.3);
       position: absolute;
       top: -22px;
-      right: 55px;
+      right: -15px;
     }
   }
 
@@ -69,7 +80,7 @@ const Popover = styled.div`
   :hover .popover-container {
     display: block;
     opacity: 1;
-    transform: translate(-50%, 0) scale(1);
+    transform: translate(0, 0) scale(1);
   }
 `
 

@@ -17,7 +17,7 @@ const Wrapper = styled.div`
   height: 80px;
   background-color: #fff;
   z-index: 100;
-  padding-right: 85px;
+  padding-right: 40px;
 
   ${down('sm')} {
     display: none;
