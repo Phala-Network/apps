@@ -134,7 +134,8 @@ export const Table = <D extends Record<string, unknown>>(
                     <TableSorter
                       canSort={column.canSort}
                       isSorted={column.isSorted}
-                      isSortedDesc={column.isSortedDesc}>
+                      isSortedDesc={column.isSortedDesc}
+                    >
                       {column.render('Header')}
                     </TableSorter>
                   </th>

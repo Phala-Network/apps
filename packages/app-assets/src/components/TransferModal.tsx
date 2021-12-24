@@ -92,22 +92,26 @@ const TransferModal: React.FC<Props> = ({visible, onClose}) => {
             confirm().finally(() => setLoading(false))
           }}
           key="confirm"
-          type="primary">
+          type="primary"
+        >
           {loading ? 'Confirming' : 'Confirm'}
         </Button>,
-      ]}>
+      ]}
+    >
       <Input
         size="large"
         placeholder="Address"
         value={address}
-        onChange={setAddress}></Input>
+        onChange={setAddress}
+      ></Input>
       <Spacer></Spacer>
       <Input
         size="large"
         after="PHA"
         placeholder="Amount"
         value={amount}
-        onChange={setAmount}></Input>
+        onChange={setAmount}
+      ></Input>
       <Spacer></Spacer>
     </Modal>
   )

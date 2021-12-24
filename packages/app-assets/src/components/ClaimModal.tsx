@@ -93,10 +93,12 @@ const ClaimModal: React.FC<Props> = ({visible, onClose}) => {
           disabled={loading || !canClaim}
           onClick={confirm}
           key="confirm"
-          type="primary">
+          type="primary"
+        >
           {loading ? 'Confirming' : 'Confirm'}
         </Button>,
-      ]}>
+      ]}
+    >
       <Text>
         You have unlocked{' '}
         {format(vestedClaimable && vestedBalance?.sub(vestedClaimable))} PHA,

@@ -26,7 +26,8 @@ export const Button: React.FC<Props> = (props) => {
       type={type}
       disabled={loading || disabled}
       shape={shape}
-      {...others}>
+      {...others}
+    >
       {loading && <Loading></Loading>}
       {children}
     </ButtonWrap>

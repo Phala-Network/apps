@@ -21,7 +21,8 @@ const TransactionDetailModal: React.FC<Props> = (props) => {
     <Modal visible={visible} title="Bridge Information">
       <ResultStepToKhala
         record={record}
-        transactionInfo={transactionInfo}></ResultStepToKhala>
+        transactionInfo={transactionInfo}
+      ></ResultStepToKhala>
 
       <ModalActions>
         <ModalAction full>

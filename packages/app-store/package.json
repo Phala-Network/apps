@@ -2,19 +2,9 @@
   "name": "@phala/app-store",
   "version": "0.0.1",
   "sideEffects": false,
-  "main": "esm/index.js",
-  "module": "esm/index.js",
-  "types": "esm/index.d.ts",
-  "scripts": {
-    "develop": "tsc --watch",
-    "start": "tsc --watch",
-    "build": "tsc",
-    "test": "tsc --noEmit",
-    "lint": "type-coverage",
-    "prepublishOnly": "run-s lint build"
-  },
+  "main": "src/index.ts",
   "dependencies": {
-    "@phala/app-types": "workspace:^0.0.1",
+    "@phala/app-types": "workspace:0.0.1",
     "jotai": "^1.3.2"
   }
 }

@@ -30,7 +30,8 @@ const StopModal = (props: WorkerModalProps): JSX.Element => {
       onConfirm={onConfirm}
       title="Stop Mining"
       subtitle="Stop a miner on behalf of the stake pool"
-      actionsExtra={<PhalaStakePoolTransactionFeeLabel action={action} />}>
+      actionsExtra={<PhalaStakePoolTransactionFeeLabel action={action} />}
+    >
       <Label>pid</Label>
       <Value>{worker.pid}</Value>
       <Label>WorkerPublicKey</Label>

@@ -71,7 +71,8 @@ const ClaimAllModal = (props: {
       title="Claim All"
       subtitle="Claim all the pending rewards of the sender and send to the target"
       disabled={!address || !claimablePools.length}
-      actionsExtra={<PhalaStakePoolTransactionFeeLabel action={batchAll} />}>
+      actionsExtra={<PhalaStakePoolTransactionFeeLabel action={batchAll} />}
+    >
       <Label>Rewards</Label>
       <Value>{rewards}</Value>
       <Label>Target Address</Label>
@@ -80,10 +81,12 @@ const ClaimAllModal = (props: {
         onChange={onInputChange}
         after={
           <InputAction
-            onClick={() => setAddress(polkadotAccount?.address || '')}>
+            onClick={() => setAddress(polkadotAccount?.address || '')}
+          >
             MY ADDRESS
           </InputAction>
-        }></Input>
+        }
+      ></Input>
 
       <Alert style={{marginTop: 20}}>
         Only claim rewards greater than 0.01 PHA.

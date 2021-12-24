@@ -30,7 +30,8 @@ export const EthereumInstallModal: React.FC<Props> = (props) => {
         onClick={() => {
           window.open('https://metamask.io/download.html')
           props.onClose()
-        }}>
+        }}
+      >
         Install
       </Button>
     </Modal>

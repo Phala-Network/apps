@@ -46,7 +46,8 @@ const Block: React.FC<Props> = (props) => {
         disable={disableSelect}
         color={value.color}
         icon={value.icon}
-        value={value.network}></Select>
+        value={value.network}
+      ></Select>
       <Divider></Divider>
       <Select disable={disableSelect} value={value.type}></Select>
     </BlockWrap>

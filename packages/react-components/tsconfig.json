@@ -9,14 +9,5 @@
     "sourceMap": true,
     "esModuleInterop": false
   },
-  "include": ["src/**/*", "src/**/*.json"],
-  "references": [
-    {"path": "../app-config"},
-    {"path": "../app-types"},
-    {"path": "../app-store"},
-    {"path": "../react-libs"},
-    {"path": "../utils"},
-    {"path": "../react-hooks"},
-    {"path": "../react-graph-chainbridge"}
-  ]
+  "include": ["src/**/*", "src/**/*.json"]
 }

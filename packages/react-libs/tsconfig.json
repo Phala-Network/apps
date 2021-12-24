@@ -8,10 +8,5 @@
     "sourceMap": true,
     "esModuleInterop": false
   },
-  "include": ["src/**/*", "src/**/*.json"],
-  "references": [
-    {"path": "../react-graph-chainbridge"},
-    {"path": "../app-config"},
-    {"path": "../utils"}
-  ]
+  "include": ["src/**/*", "src/**/*.json"]
 }
