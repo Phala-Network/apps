@@ -16,6 +16,10 @@ const Link = styled(GatsbyLink).attrs({activeClassName: 'active'})`
   text-decoration: none;
   margin-left: 72px;
 
+  &:hover {
+    color: #aad829;
+  }
+
   &.active {
     color: #aad829;
   }

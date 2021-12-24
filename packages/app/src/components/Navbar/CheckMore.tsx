@@ -2,6 +2,7 @@ import {Link as GatsbyLink} from 'gatsby'
 import styled from 'styled-components'
 import MoreIcon from '../../icons/more.svg'
 import ExternalLink from '../../icons/external_link.svg'
+import Arrow from '../../icons/top_point.png'
 
 const Link = styled(GatsbyLink)`
   color: #111111;
@@ -9,7 +10,6 @@ const Link = styled(GatsbyLink)`
 
 const MoreButton = styled.div`
   cursor: pointer;
-  margin-right: 85px;
 `
 
 const LineWrap = styled.a`
@@ -53,13 +53,23 @@ const Popover = styled.div`
     top: 100%;
     background-color: #eeeeee;
     border: 1px solid #aad829;
+
+    &:before {
+      content: url(${Arrow});
+      display: inline-block;
+      z-index: 9999;
+      transform: scale(0.3);
+      position: absolute;
+      top: -22px;
+      right: 55px;
+    }
   }
 
   *:focus + .popover-container,
   :hover .popover-container {
     display: block;
     opacity: 1;
-    transform: translate(-100%, 0) scale(1);
+    transform: translate(-50%, 0) scale(1);
   }
 `
 
@@ -94,7 +104,7 @@ const CheckMore = (): JSX.Element => {
       </MoreButton>
       <div className="popover-container">
         <LineWrap>
-          <Link to="/analytics/">Dashboard</Link>
+          <Link to="/analytics/">Analytics</Link>
         </LineWrap>
         {LINKS.map(({name, link}) => (
           <LineWrap href={link} key={name} target="_blank">
