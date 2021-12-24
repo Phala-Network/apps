@@ -107,7 +107,8 @@ export const BridgePage = () => {
                 bn1e12.mul(new BN(amount)),
                 log
               )
-          }}>
+          }}
+        >
           transfer PHA From Khala To Karura
         </Button>
 
@@ -125,7 +126,8 @@ export const BridgePage = () => {
                 bn1e12.mul(new BN(amount)),
                 log
               )
-          }}>
+          }}
+        >
           transfer PHA From Karura To Khala
         </Button>
 
@@ -143,7 +145,8 @@ export const BridgePage = () => {
                 bn1e12.mul(new BN(amount)),
                 log
               )
-          }}>
+          }}
+        >
           transfer KAR From Karura To Khala
         </Button>
 
@@ -161,7 +164,8 @@ export const BridgePage = () => {
                 bn1e12.mul(new BN(amount)),
                 log
               )
-          }}>
+          }}
+        >
           transfer KAR From Khala To Karura
         </Button>
 
