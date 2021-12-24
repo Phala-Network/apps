@@ -1,12 +1,19 @@
 {
   "name": "@phala/app-bridge-v2",
   "version": "0.0.1",
+  "type": "module",
   "sideEffects": false,
-  "main": "src/index.tsx",
+  "main": "src/index.ts",
   "dependencies": {
-    "@phala/react-components": "workspace:^0.0.1",
-    "@phala/utils": "workspace:^0.0.1",
+    "@phala/react-components": "workspace:0.0.1",
+    "@phala/utils": "workspace:0.0.1",
     "@polkadot/api": "^6.12.1",
     "bn.js": "^5.2.0"
+  },
+  "devDependencies": {
+    "@phala/app-store": "workspace:^0.0.1"
+  },
+  "peerDependencies": {
+    "@phala/app-store": "workspace:^0.0.1"
   }
 }
