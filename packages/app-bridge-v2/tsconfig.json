@@ -9,6 +9,5 @@
     "sourceMap": true,
     "esModuleInterop": false
   },
-  "include": ["src/**/*"],
-  "references": [{"path": "../react-components"}, {"path": "../utils"}]
+  "include": ["src/**/*"]
 }

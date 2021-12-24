@@ -47,6 +47,7 @@ importers:
       '@phala/app-analytics': workspace:0.0.1
       '@phala/app-assets': workspace:0.0.1
       '@phala/app-bridge': workspace:0.0.1
+      '@phala/app-bridge-v2': workspace:0.0.1
       '@phala/app-config': workspace:0.0.1
       '@phala/app-data-analytics': workspace:0.0.1
       '@phala/app-mining': workspace:0.0.1
@@ -5078,16 +5079,6 @@ packages:
       websocket: 1.0.34
     dev: false
 
-  /@polkadot/x-ws/8.1.2:
-    resolution: {integrity: sha512-9ELWRNbQL5WARAv9/m0mpdPc9ucN/xwgpPrQ4WSK+HMHswwrpmmq8mPlfIhGtw0ys5DQPgXXIYLGP50m0MNshA==}
-    engines: {node: '>=14.0.0'}
-    dependencies:
-      '@babel/runtime': 7.16.3
-      '@polkadot/x-global': 8.1.2
-      '@types/websocket': 1.0.4
-      websocket: 1.0.34
-    dev: false
-
   /@popperjs/core/2.10.2:
     resolution: {integrity: sha512-IXf3XA7+XyN7CP9gGh/XB0UxVMlvARGEgGXLubFICsUMGz6Q+DU+i4gGlpOxTjKvXjkJDJC8YdqdKkDj9qZHEQ==}
     dev: true
@@ -9008,7 +8999,7 @@ packages:
     dependencies:
       '@babel/core': 7.16.0
       '@babel/runtime': 7.16.3
-      gatsby: 4.3.0_e122c54355b87019702265d6ca26c4ad
+      gatsby: 4.3.0_3d8392ef988879db7b1ef93206ebbe58
       gatsby-core-utils: 3.3.0
     dev: false
 
@@ -9035,7 +9026,6 @@ packages:
       lodash: 4.17.21
       styled-components: 5.3.3_1f55980affd76ea66174a1939c753673
     dev: false
-
 
   /babel-plugin-syntax-jsx/6.18.0:
     resolution: {integrity: sha1-CvMqmm4Tyno/1QaeYtew9Y0NiUY=}
@@ -13824,7 +13814,7 @@ packages:
       '@sindresorhus/slugify': 1.1.2
       chokidar: 3.5.2
       fs-exists-cached: 1.0.0
-      gatsby: 4.3.0_e122c54355b87019702265d6ca26c4ad
+      gatsby: 4.3.0_3d8392ef988879db7b1ef93206ebbe58
       gatsby-core-utils: 3.3.0
       gatsby-page-utils: 2.3.0
       gatsby-plugin-utils: 2.3.0_gatsby@4.3.0
@@ -13931,7 +13921,7 @@ packages:
       '@babel/preset-typescript': 7.16.0_@babel+core@7.16.0
       '@babel/runtime': 7.16.3
       babel-plugin-remove-graphql-queries: 4.3.0_@babel+core@7.16.0+gatsby@4.3.0
-      gatsby: 4.3.0_e122c54355b87019702265d6ca26c4ad
+      gatsby: 4.3.0_3d8392ef988879db7b1ef93206ebbe58
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -13943,7 +13933,7 @@ packages:
       gatsby: ^4.0.0-next
     dependencies:
       '@babel/runtime': 7.16.3
-      gatsby: 4.3.0_e122c54355b87019702265d6ca26c4ad
+      gatsby: 4.3.0_3d8392ef988879db7b1ef93206ebbe58
       joi: 17.5.0
     dev: false
 
