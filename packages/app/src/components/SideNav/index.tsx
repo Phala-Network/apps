@@ -62,7 +62,7 @@ const SideNav: React.FC = () => {
     },
     {
       name: 'Discord',
-      link: 'https://discord.gg/kpYj9GWjwN',
+      link: 'https://discord.gg/phala',
     },
     {
       name: 'Governance',
