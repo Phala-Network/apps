@@ -70,7 +70,7 @@ export function transferPHAFromKaruraToKhala(
                     'XcmV0JunctionNetworkId',
                     'Any'
                   ),
-                  id: '0x' + Buffer.from(recipient.publicKey).toString('hex'),
+                  id: '0x' + recipient.publicKey.toString('hex'),
                 },
               }),
             ],
