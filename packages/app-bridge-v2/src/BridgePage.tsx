@@ -3,6 +3,7 @@ import {validateAddress} from '@phala/utils'
 import {ApiPromise, Keyring} from '@polkadot/api'
 import BN from 'bn.js'
 import {useCallback, useEffect, useState} from 'react'
+import BridgeInfo from './Bridge.json'
 import {
   getBaseInfo,
   transferKARFromKaruraToKhala,
@@ -10,6 +11,9 @@ import {
   transferPHAFromKaruraToKhala,
   transferPHAFromKhalaToKarura,
 } from './xtransfer'
+
+// eslint-disable-next-line no-console
+console.log(BridgeInfo)
 
 const bn1e12 = new BN(10).pow(new BN(12))
 
