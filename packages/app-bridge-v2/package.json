@@ -11,9 +11,11 @@
     "bn.js": "^5.2.0"
   },
   "devDependencies": {
-    "@phala/app-store": "workspace:^0.0.1"
+    "@phala/app-store": "workspace:^0.0.1",
+    "ethers": "^5.5.2"
   },
   "peerDependencies": {
-    "@phala/app-store": "workspace:^0.0.1"
+    "@phala/app-store": "workspace:^0.0.1",
+    "ethers": "^5.5.2"
   }
 }
