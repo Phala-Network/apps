@@ -181,6 +181,36 @@ export function transferKARFromKhalaToKarura(
     })
 }
 
+// transfer assets except PHA between accounts on khala network
+export function transferAssetsKhalaAccounts(
+  khalaApi: ApiPromise,
+  sender: any,
+  recipient: any,
+  amount: BN,
+  callback?: (message: string) => void
+) {
+  callback?.(`Transfer KAR between accounts on khala network...`)
+  return khalaApi.tx.assets
+    .transfer(
+      // 0 is assetid that KAR registered on khala network,
+      // should confirm this with maintainer before run script
+      0,
+      recipient.address,
+      amount
+    )
+    .signAndSend(sender, (result: any) => {
+      if (result.status.isInBlock) {
+        callback?.(
+          `Transaction included at blockHash ${result.status.asInBlock}`
+        )
+      } else if (result.status.isFinalized) {
+        callback?.(
+          `Transaction finalized at blockHash ${result.status.asFinalized}`
+        )
+      }
+    })
+}
+
 export async function getBaseInfo() {
   const khalaEndpoint = 'ws://35.215.162.102:9944'
   const khalaProvider = new WsProvider(khalaEndpoint)

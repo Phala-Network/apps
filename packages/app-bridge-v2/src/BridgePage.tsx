@@ -6,6 +6,7 @@ import {useCallback, useEffect, useState} from 'react'
 import BridgeInfo from './Bridge.json'
 import {
   getBaseInfo,
+  transferAssetsKhalaAccounts,
   transferKARFromKaruraToKhala,
   transferKARFromKhalaToKarura,
   transferPHAFromKaruraToKhala,
@@ -171,6 +172,23 @@ export const BridgePage = () => {
           }}
         >
           transfer KAR From Khala To Karura
+        </Button>
+
+        <Button
+          type="primary"
+          onClick={() => {
+            setMessages([])
+            khalaApi &&
+              transferAssetsKhalaAccounts(
+                khalaApi,
+                khalaAccount,
+                karuraAccount,
+                bn1e12.mul(new BN(amount)),
+                log
+              )
+          }}
+        >
+          transfer PHA From Khala To Khala
         </Button>
 
         <ul>
