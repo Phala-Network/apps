@@ -7,11 +7,12 @@ import {Checkbox} from 'baseui/checkbox'
 import {
   SortOrder,
   StakePools,
+  QueryMode,
   useStakePoolsQuery,
   StakePoolsOrderByWithRelationInput,
 } from '../../hooks/graphql'
 import {client} from '../../utils/GraphQLClient'
-import {AddressCell, PercentCell, TokenCell} from './Cells'
+import {OwnerCell, PercentCell, TokenCell} from './Cells'
 import styled from 'styled-components'
 import {StatefulInput} from 'baseui/input'
 import {debounce} from 'lodash-es'
@@ -83,13 +84,29 @@ const StakePoolTableV2 = ({
     {
       take: PAGE_SIZE,
       withStakePoolStakers: kind === 'myDelegate',
+      withStakePoolWithdrawals: kind === 'myDelegate',
       skip: PAGE_SIZE * (currentPage - 1),
       orderBy: {[sortColumn]: sortAsc ? SortOrder.Asc : SortOrder.Desc},
       where: {
         ...(searchString && {
           OR: [
             /^\d+$/.test(searchString) && {pid: {equals: searchString}},
-            {ownerAddress: {contains: searchString}},
+            {
+              ownerAddress: {
+                contains: searchString,
+                mode: QueryMode.Insensitive,
+              },
+            },
+            {
+              accounts: {
+                is: {
+                  identity: {
+                    contains: searchString,
+                    mode: QueryMode.Insensitive,
+                  },
+                },
+              },
+            },
           ].filter(isTruthy),
         }),
         AND: [
@@ -112,6 +129,11 @@ const StakePoolTableV2 = ({
       ...(myDelegateAvailable && {
         stakePoolStakersWhere: {
           address: {
+            equals: address,
+          },
+        },
+        stakePoolWithdrawalsWhere: {
+          userAddress: {
             equals: address,
           },
         },
@@ -241,9 +263,7 @@ const StakePoolTableV2 = ({
                 </StatefulTooltip>
               }
             >
-              {(stakePool: StakePools) => (
-                <AddressCell value={stakePool.ownerAddress} />
-              )}
+              {(stakePool: StakePools) => <OwnerCell stakePool={stakePool} />}
             </TableBuilderColumn>
             <TableBuilderColumn
               id="apr"

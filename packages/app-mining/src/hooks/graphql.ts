@@ -6482,14 +6482,17 @@ export type StakePoolWithdrawals = {
   endBlockNumber?: Maybe<Scalars['BigInt']>;
   endEventId?: Maybe<Scalars['BigInt']>;
   endTimestamp?: Maybe<Scalars['DateTime']>;
+  estimatesEndTime: Scalars['DateTime'];
   eventsEventsTostakePoolWithdrawalsEndEventId?: Maybe<Events>;
   eventsEventsTostakePoolWithdrawalsStartEventId?: Maybe<Events>;
   id: Scalars['BigInt'];
   shares: Scalars['Decimal'];
+  stake: Scalars['Decimal'];
   stakePoolId: Scalars['BigInt'];
   stakePools: StakePools;
   startBlockNumber?: Maybe<Scalars['BigInt']>;
   startEventId?: Maybe<Scalars['BigInt']>;
+  startTime: Scalars['DateTime'];
   startTimestamp?: Maybe<Scalars['DateTime']>;
   updatedAt: Scalars['DateTime'];
   userAddress?: Maybe<Scalars['String']>;
@@ -6502,6 +6505,7 @@ export type StakePoolWithdrawalsAvgAggregate = {
   endEventId?: Maybe<Scalars['Float']>;
   id?: Maybe<Scalars['Float']>;
   shares?: Maybe<Scalars['Decimal']>;
+  stake?: Maybe<Scalars['Decimal']>;
   stakePoolId?: Maybe<Scalars['Float']>;
   startBlockNumber?: Maybe<Scalars['Float']>;
   startEventId?: Maybe<Scalars['Float']>;
@@ -6513,6 +6517,7 @@ export type StakePoolWithdrawalsAvgOrderByAggregateInput = {
   endEventId?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
   shares?: InputMaybe<SortOrder>;
+  stake?: InputMaybe<SortOrder>;
   stakePoolId?: InputMaybe<SortOrder>;
   startBlockNumber?: InputMaybe<SortOrder>;
   startEventId?: InputMaybe<SortOrder>;
@@ -6526,11 +6531,14 @@ export type StakePoolWithdrawalsCountAggregate = {
   endBlockNumber: Scalars['Int'];
   endEventId: Scalars['Int'];
   endTimestamp: Scalars['Int'];
+  estimatesEndTime: Scalars['Int'];
   id: Scalars['Int'];
   shares: Scalars['Int'];
+  stake: Scalars['Int'];
   stakePoolId: Scalars['Int'];
   startBlockNumber: Scalars['Int'];
   startEventId: Scalars['Int'];
+  startTime: Scalars['Int'];
   startTimestamp: Scalars['Int'];
   updatedAt: Scalars['Int'];
   userAddress: Scalars['Int'];
@@ -6542,11 +6550,14 @@ export type StakePoolWithdrawalsCountOrderByAggregateInput = {
   endBlockNumber?: InputMaybe<SortOrder>;
   endEventId?: InputMaybe<SortOrder>;
   endTimestamp?: InputMaybe<SortOrder>;
+  estimatesEndTime?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
   shares?: InputMaybe<SortOrder>;
+  stake?: InputMaybe<SortOrder>;
   stakePoolId?: InputMaybe<SortOrder>;
   startBlockNumber?: InputMaybe<SortOrder>;
   startEventId?: InputMaybe<SortOrder>;
+  startTime?: InputMaybe<SortOrder>;
   startTimestamp?: InputMaybe<SortOrder>;
   updatedAt?: InputMaybe<SortOrder>;
   userAddress?: InputMaybe<SortOrder>;
@@ -6558,12 +6569,15 @@ export type StakePoolWithdrawalsCreateInput = {
   createdAt: Scalars['DateTime'];
   endBlockNumber?: InputMaybe<Scalars['BigInt']>;
   endTimestamp?: InputMaybe<Scalars['DateTime']>;
+  estimatesEndTime?: InputMaybe<Scalars['DateTime']>;
   eventsEventsTostakePoolWithdrawalsEndEventId?: InputMaybe<EventsCreateNestedOneWithoutStakePoolWithdrawalsEventsTostakePoolWithdrawalsEndEventIdsInput>;
   eventsEventsTostakePoolWithdrawalsStartEventId?: InputMaybe<EventsCreateNestedOneWithoutStakePoolWithdrawalsEventsTostakePoolWithdrawalsStartEventIdsInput>;
   id?: InputMaybe<Scalars['BigInt']>;
   shares: Scalars['Decimal'];
+  stake?: InputMaybe<Scalars['Decimal']>;
   stakePools: StakePoolsCreateNestedOneWithoutStakePoolWithdrawalsInput;
   startBlockNumber?: InputMaybe<Scalars['BigInt']>;
+  startTime: Scalars['DateTime'];
   startTimestamp?: InputMaybe<Scalars['DateTime']>;
   updatedAt: Scalars['DateTime'];
   userAddress?: InputMaybe<Scalars['String']>;
@@ -6574,11 +6588,14 @@ export type StakePoolWithdrawalsCreateManyAccountsInput = {
   endBlockNumber?: InputMaybe<Scalars['BigInt']>;
   endEventId?: InputMaybe<Scalars['BigInt']>;
   endTimestamp?: InputMaybe<Scalars['DateTime']>;
+  estimatesEndTime?: InputMaybe<Scalars['DateTime']>;
   id?: InputMaybe<Scalars['BigInt']>;
   shares: Scalars['Decimal'];
+  stake?: InputMaybe<Scalars['Decimal']>;
   stakePoolId: Scalars['BigInt'];
   startBlockNumber?: InputMaybe<Scalars['BigInt']>;
   startEventId?: InputMaybe<Scalars['BigInt']>;
+  startTime: Scalars['DateTime'];
   startTimestamp?: InputMaybe<Scalars['DateTime']>;
   updatedAt: Scalars['DateTime'];
   userAddress?: InputMaybe<Scalars['String']>;
@@ -6593,11 +6610,14 @@ export type StakePoolWithdrawalsCreateManyEventsEventsTostakePoolWithdrawalsEndE
   createdAt: Scalars['DateTime'];
   endBlockNumber?: InputMaybe<Scalars['BigInt']>;
   endTimestamp?: InputMaybe<Scalars['DateTime']>;
+  estimatesEndTime?: InputMaybe<Scalars['DateTime']>;
   id?: InputMaybe<Scalars['BigInt']>;
   shares: Scalars['Decimal'];
+  stake?: InputMaybe<Scalars['Decimal']>;
   stakePoolId: Scalars['BigInt'];
   startBlockNumber?: InputMaybe<Scalars['BigInt']>;
   startEventId?: InputMaybe<Scalars['BigInt']>;
+  startTime: Scalars['DateTime'];
   startTimestamp?: InputMaybe<Scalars['DateTime']>;
   updatedAt: Scalars['DateTime'];
   userAddress?: InputMaybe<Scalars['String']>;
@@ -6614,10 +6634,13 @@ export type StakePoolWithdrawalsCreateManyEventsEventsTostakePoolWithdrawalsStar
   endBlockNumber?: InputMaybe<Scalars['BigInt']>;
   endEventId?: InputMaybe<Scalars['BigInt']>;
   endTimestamp?: InputMaybe<Scalars['DateTime']>;
+  estimatesEndTime?: InputMaybe<Scalars['DateTime']>;
   id?: InputMaybe<Scalars['BigInt']>;
   shares: Scalars['Decimal'];
+  stake?: InputMaybe<Scalars['Decimal']>;
   stakePoolId: Scalars['BigInt'];
   startBlockNumber?: InputMaybe<Scalars['BigInt']>;
+  startTime: Scalars['DateTime'];
   startTimestamp?: InputMaybe<Scalars['DateTime']>;
   updatedAt: Scalars['DateTime'];
   userAddress?: InputMaybe<Scalars['String']>;
@@ -6634,11 +6657,14 @@ export type StakePoolWithdrawalsCreateManyInput = {
   endBlockNumber?: InputMaybe<Scalars['BigInt']>;
   endEventId?: InputMaybe<Scalars['BigInt']>;
   endTimestamp?: InputMaybe<Scalars['DateTime']>;
+  estimatesEndTime?: InputMaybe<Scalars['DateTime']>;
   id?: InputMaybe<Scalars['BigInt']>;
   shares: Scalars['Decimal'];
+  stake?: InputMaybe<Scalars['Decimal']>;
   stakePoolId: Scalars['BigInt'];
   startBlockNumber?: InputMaybe<Scalars['BigInt']>;
   startEventId?: InputMaybe<Scalars['BigInt']>;
+  startTime: Scalars['DateTime'];
   startTimestamp?: InputMaybe<Scalars['DateTime']>;
   updatedAt: Scalars['DateTime'];
   userAddress?: InputMaybe<Scalars['String']>;
@@ -6650,10 +6676,13 @@ export type StakePoolWithdrawalsCreateManyStakePoolsInput = {
   endBlockNumber?: InputMaybe<Scalars['BigInt']>;
   endEventId?: InputMaybe<Scalars['BigInt']>;
   endTimestamp?: InputMaybe<Scalars['DateTime']>;
+  estimatesEndTime?: InputMaybe<Scalars['DateTime']>;
   id?: InputMaybe<Scalars['BigInt']>;
   shares: Scalars['Decimal'];
+  stake?: InputMaybe<Scalars['Decimal']>;
   startBlockNumber?: InputMaybe<Scalars['BigInt']>;
   startEventId?: InputMaybe<Scalars['BigInt']>;
+  startTime: Scalars['DateTime'];
   startTimestamp?: InputMaybe<Scalars['DateTime']>;
   updatedAt: Scalars['DateTime'];
   userAddress?: InputMaybe<Scalars['String']>;
@@ -6717,12 +6746,15 @@ export type StakePoolWithdrawalsCreateWithoutAccountsInput = {
   createdAt: Scalars['DateTime'];
   endBlockNumber?: InputMaybe<Scalars['BigInt']>;
   endTimestamp?: InputMaybe<Scalars['DateTime']>;
+  estimatesEndTime?: InputMaybe<Scalars['DateTime']>;
   eventsEventsTostakePoolWithdrawalsEndEventId?: InputMaybe<EventsCreateNestedOneWithoutStakePoolWithdrawalsEventsTostakePoolWithdrawalsEndEventIdsInput>;
   eventsEventsTostakePoolWithdrawalsStartEventId?: InputMaybe<EventsCreateNestedOneWithoutStakePoolWithdrawalsEventsTostakePoolWithdrawalsStartEventIdsInput>;
   id?: InputMaybe<Scalars['BigInt']>;
   shares: Scalars['Decimal'];
+  stake?: InputMaybe<Scalars['Decimal']>;
   stakePools: StakePoolsCreateNestedOneWithoutStakePoolWithdrawalsInput;
   startBlockNumber?: InputMaybe<Scalars['BigInt']>;
+  startTime: Scalars['DateTime'];
   startTimestamp?: InputMaybe<Scalars['DateTime']>;
   updatedAt: Scalars['DateTime'];
   userAddress?: InputMaybe<Scalars['String']>;
@@ -6733,11 +6765,14 @@ export type StakePoolWithdrawalsCreateWithoutEventsEventsTostakePoolWithdrawalsE
   createdAt: Scalars['DateTime'];
   endBlockNumber?: InputMaybe<Scalars['BigInt']>;
   endTimestamp?: InputMaybe<Scalars['DateTime']>;
+  estimatesEndTime?: InputMaybe<Scalars['DateTime']>;
   eventsEventsTostakePoolWithdrawalsStartEventId?: InputMaybe<EventsCreateNestedOneWithoutStakePoolWithdrawalsEventsTostakePoolWithdrawalsStartEventIdsInput>;
   id?: InputMaybe<Scalars['BigInt']>;
   shares: Scalars['Decimal'];
+  stake?: InputMaybe<Scalars['Decimal']>;
   stakePools: StakePoolsCreateNestedOneWithoutStakePoolWithdrawalsInput;
   startBlockNumber?: InputMaybe<Scalars['BigInt']>;
+  startTime: Scalars['DateTime'];
   startTimestamp?: InputMaybe<Scalars['DateTime']>;
   updatedAt: Scalars['DateTime'];
   userAddress?: InputMaybe<Scalars['String']>;
@@ -6748,11 +6783,14 @@ export type StakePoolWithdrawalsCreateWithoutEventsEventsTostakePoolWithdrawalsS
   createdAt: Scalars['DateTime'];
   endBlockNumber?: InputMaybe<Scalars['BigInt']>;
   endTimestamp?: InputMaybe<Scalars['DateTime']>;
+  estimatesEndTime?: InputMaybe<Scalars['DateTime']>;
   eventsEventsTostakePoolWithdrawalsEndEventId?: InputMaybe<EventsCreateNestedOneWithoutStakePoolWithdrawalsEventsTostakePoolWithdrawalsEndEventIdsInput>;
   id?: InputMaybe<Scalars['BigInt']>;
   shares: Scalars['Decimal'];
+  stake?: InputMaybe<Scalars['Decimal']>;
   stakePools: StakePoolsCreateNestedOneWithoutStakePoolWithdrawalsInput;
   startBlockNumber?: InputMaybe<Scalars['BigInt']>;
+  startTime: Scalars['DateTime'];
   startTimestamp?: InputMaybe<Scalars['DateTime']>;
   updatedAt: Scalars['DateTime'];
   userAddress?: InputMaybe<Scalars['String']>;
@@ -6763,11 +6801,14 @@ export type StakePoolWithdrawalsCreateWithoutStakePoolsInput = {
   createdAt: Scalars['DateTime'];
   endBlockNumber?: InputMaybe<Scalars['BigInt']>;
   endTimestamp?: InputMaybe<Scalars['DateTime']>;
+  estimatesEndTime?: InputMaybe<Scalars['DateTime']>;
   eventsEventsTostakePoolWithdrawalsEndEventId?: InputMaybe<EventsCreateNestedOneWithoutStakePoolWithdrawalsEventsTostakePoolWithdrawalsEndEventIdsInput>;
   eventsEventsTostakePoolWithdrawalsStartEventId?: InputMaybe<EventsCreateNestedOneWithoutStakePoolWithdrawalsEventsTostakePoolWithdrawalsStartEventIdsInput>;
   id?: InputMaybe<Scalars['BigInt']>;
   shares: Scalars['Decimal'];
+  stake?: InputMaybe<Scalars['Decimal']>;
   startBlockNumber?: InputMaybe<Scalars['BigInt']>;
+  startTime: Scalars['DateTime'];
   startTimestamp?: InputMaybe<Scalars['DateTime']>;
   updatedAt: Scalars['DateTime'];
   userAddress?: InputMaybe<Scalars['String']>;
@@ -6784,11 +6825,14 @@ export type StakePoolWithdrawalsGroupBy = {
   endBlockNumber?: Maybe<Scalars['BigInt']>;
   endEventId?: Maybe<Scalars['BigInt']>;
   endTimestamp?: Maybe<Scalars['DateTime']>;
+  estimatesEndTime: Scalars['DateTime'];
   id: Scalars['BigInt'];
   shares: Scalars['Decimal'];
+  stake: Scalars['Decimal'];
   stakePoolId: Scalars['BigInt'];
   startBlockNumber?: Maybe<Scalars['BigInt']>;
   startEventId?: Maybe<Scalars['BigInt']>;
+  startTime: Scalars['DateTime'];
   startTimestamp?: Maybe<Scalars['DateTime']>;
   updatedAt: Scalars['DateTime'];
   userAddress?: Maybe<Scalars['String']>;
@@ -6807,11 +6851,14 @@ export type StakePoolWithdrawalsMaxAggregate = {
   endBlockNumber?: Maybe<Scalars['BigInt']>;
   endEventId?: Maybe<Scalars['BigInt']>;
   endTimestamp?: Maybe<Scalars['DateTime']>;
+  estimatesEndTime?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['BigInt']>;
   shares?: Maybe<Scalars['Decimal']>;
+  stake?: Maybe<Scalars['Decimal']>;
   stakePoolId?: Maybe<Scalars['BigInt']>;
   startBlockNumber?: Maybe<Scalars['BigInt']>;
   startEventId?: Maybe<Scalars['BigInt']>;
+  startTime?: Maybe<Scalars['DateTime']>;
   startTimestamp?: Maybe<Scalars['DateTime']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
   userAddress?: Maybe<Scalars['String']>;
@@ -6823,11 +6870,14 @@ export type StakePoolWithdrawalsMaxOrderByAggregateInput = {
   endBlockNumber?: InputMaybe<SortOrder>;
   endEventId?: InputMaybe<SortOrder>;
   endTimestamp?: InputMaybe<SortOrder>;
+  estimatesEndTime?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
   shares?: InputMaybe<SortOrder>;
+  stake?: InputMaybe<SortOrder>;
   stakePoolId?: InputMaybe<SortOrder>;
   startBlockNumber?: InputMaybe<SortOrder>;
   startEventId?: InputMaybe<SortOrder>;
+  startTime?: InputMaybe<SortOrder>;
   startTimestamp?: InputMaybe<SortOrder>;
   updatedAt?: InputMaybe<SortOrder>;
   userAddress?: InputMaybe<SortOrder>;
@@ -6840,11 +6890,14 @@ export type StakePoolWithdrawalsMinAggregate = {
   endBlockNumber?: Maybe<Scalars['BigInt']>;
   endEventId?: Maybe<Scalars['BigInt']>;
   endTimestamp?: Maybe<Scalars['DateTime']>;
+  estimatesEndTime?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['BigInt']>;
   shares?: Maybe<Scalars['Decimal']>;
+  stake?: Maybe<Scalars['Decimal']>;
   stakePoolId?: Maybe<Scalars['BigInt']>;
   startBlockNumber?: Maybe<Scalars['BigInt']>;
   startEventId?: Maybe<Scalars['BigInt']>;
+  startTime?: Maybe<Scalars['DateTime']>;
   startTimestamp?: Maybe<Scalars['DateTime']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
   userAddress?: Maybe<Scalars['String']>;
@@ -6856,11 +6909,14 @@ export type StakePoolWithdrawalsMinOrderByAggregateInput = {
   endBlockNumber?: InputMaybe<SortOrder>;
   endEventId?: InputMaybe<SortOrder>;
   endTimestamp?: InputMaybe<SortOrder>;
+  estimatesEndTime?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
   shares?: InputMaybe<SortOrder>;
+  stake?: InputMaybe<SortOrder>;
   stakePoolId?: InputMaybe<SortOrder>;
   startBlockNumber?: InputMaybe<SortOrder>;
   startEventId?: InputMaybe<SortOrder>;
+  startTime?: InputMaybe<SortOrder>;
   startTimestamp?: InputMaybe<SortOrder>;
   updatedAt?: InputMaybe<SortOrder>;
   userAddress?: InputMaybe<SortOrder>;
@@ -6881,11 +6937,14 @@ export type StakePoolWithdrawalsOrderByWithAggregationInput = {
   endBlockNumber?: InputMaybe<SortOrder>;
   endEventId?: InputMaybe<SortOrder>;
   endTimestamp?: InputMaybe<SortOrder>;
+  estimatesEndTime?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
   shares?: InputMaybe<SortOrder>;
+  stake?: InputMaybe<SortOrder>;
   stakePoolId?: InputMaybe<SortOrder>;
   startBlockNumber?: InputMaybe<SortOrder>;
   startEventId?: InputMaybe<SortOrder>;
+  startTime?: InputMaybe<SortOrder>;
   startTimestamp?: InputMaybe<SortOrder>;
   updatedAt?: InputMaybe<SortOrder>;
   userAddress?: InputMaybe<SortOrder>;
@@ -6898,14 +6957,17 @@ export type StakePoolWithdrawalsOrderByWithRelationInput = {
   endBlockNumber?: InputMaybe<SortOrder>;
   endEventId?: InputMaybe<SortOrder>;
   endTimestamp?: InputMaybe<SortOrder>;
+  estimatesEndTime?: InputMaybe<SortOrder>;
   eventsEventsTostakePoolWithdrawalsEndEventId?: InputMaybe<EventsOrderByWithRelationInput>;
   eventsEventsTostakePoolWithdrawalsStartEventId?: InputMaybe<EventsOrderByWithRelationInput>;
   id?: InputMaybe<SortOrder>;
   shares?: InputMaybe<SortOrder>;
+  stake?: InputMaybe<SortOrder>;
   stakePoolId?: InputMaybe<SortOrder>;
   stakePools?: InputMaybe<StakePoolsOrderByWithRelationInput>;
   startBlockNumber?: InputMaybe<SortOrder>;
   startEventId?: InputMaybe<SortOrder>;
+  startTime?: InputMaybe<SortOrder>;
   startTimestamp?: InputMaybe<SortOrder>;
   updatedAt?: InputMaybe<SortOrder>;
   userAddress?: InputMaybe<SortOrder>;
@@ -6917,11 +6979,14 @@ export enum StakePoolWithdrawalsScalarFieldEnum {
   EndBlockNumber = 'endBlockNumber',
   EndEventId = 'endEventId',
   EndTimestamp = 'endTimestamp',
+  EstimatesEndTime = 'estimatesEndTime',
   Id = 'id',
   Shares = 'shares',
+  Stake = 'stake',
   StakePoolId = 'stakePoolId',
   StartBlockNumber = 'startBlockNumber',
   StartEventId = 'startEventId',
+  StartTime = 'startTime',
   StartTimestamp = 'startTimestamp',
   UpdatedAt = 'updatedAt',
   UserAddress = 'userAddress',
@@ -6936,11 +7001,14 @@ export type StakePoolWithdrawalsScalarWhereInput = {
   endBlockNumber?: InputMaybe<BigIntNullableFilter>;
   endEventId?: InputMaybe<BigIntNullableFilter>;
   endTimestamp?: InputMaybe<DateTimeNullableFilter>;
+  estimatesEndTime?: InputMaybe<DateTimeFilter>;
   id?: InputMaybe<BigIntFilter>;
   shares?: InputMaybe<DecimalFilter>;
+  stake?: InputMaybe<DecimalFilter>;
   stakePoolId?: InputMaybe<BigIntFilter>;
   startBlockNumber?: InputMaybe<BigIntNullableFilter>;
   startEventId?: InputMaybe<BigIntNullableFilter>;
+  startTime?: InputMaybe<DateTimeFilter>;
   startTimestamp?: InputMaybe<DateTimeNullableFilter>;
   updatedAt?: InputMaybe<DateTimeFilter>;
   userAddress?: InputMaybe<StringNullableFilter>;
@@ -6955,11 +7023,14 @@ export type StakePoolWithdrawalsScalarWhereWithAggregatesInput = {
   endBlockNumber?: InputMaybe<BigIntNullableWithAggregatesFilter>;
   endEventId?: InputMaybe<BigIntNullableWithAggregatesFilter>;
   endTimestamp?: InputMaybe<DateTimeNullableWithAggregatesFilter>;
+  estimatesEndTime?: InputMaybe<DateTimeWithAggregatesFilter>;
   id?: InputMaybe<BigIntWithAggregatesFilter>;
   shares?: InputMaybe<DecimalWithAggregatesFilter>;
+  stake?: InputMaybe<DecimalWithAggregatesFilter>;
   stakePoolId?: InputMaybe<BigIntWithAggregatesFilter>;
   startBlockNumber?: InputMaybe<BigIntNullableWithAggregatesFilter>;
   startEventId?: InputMaybe<BigIntNullableWithAggregatesFilter>;
+  startTime?: InputMaybe<DateTimeWithAggregatesFilter>;
   startTimestamp?: InputMaybe<DateTimeNullableWithAggregatesFilter>;
   updatedAt?: InputMaybe<DateTimeWithAggregatesFilter>;
   userAddress?: InputMaybe<StringNullableWithAggregatesFilter>;
@@ -6972,6 +7043,7 @@ export type StakePoolWithdrawalsSumAggregate = {
   endEventId?: Maybe<Scalars['BigInt']>;
   id?: Maybe<Scalars['BigInt']>;
   shares?: Maybe<Scalars['Decimal']>;
+  stake?: Maybe<Scalars['Decimal']>;
   stakePoolId?: Maybe<Scalars['BigInt']>;
   startBlockNumber?: Maybe<Scalars['BigInt']>;
   startEventId?: Maybe<Scalars['BigInt']>;
@@ -6983,6 +7055,7 @@ export type StakePoolWithdrawalsSumOrderByAggregateInput = {
   endEventId?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
   shares?: InputMaybe<SortOrder>;
+  stake?: InputMaybe<SortOrder>;
   stakePoolId?: InputMaybe<SortOrder>;
   startBlockNumber?: InputMaybe<SortOrder>;
   startEventId?: InputMaybe<SortOrder>;
@@ -6994,12 +7067,15 @@ export type StakePoolWithdrawalsUpdateInput = {
   createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   endBlockNumber?: InputMaybe<NullableBigIntFieldUpdateOperationsInput>;
   endTimestamp?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  estimatesEndTime?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   eventsEventsTostakePoolWithdrawalsEndEventId?: InputMaybe<EventsUpdateOneWithoutStakePoolWithdrawalsEventsTostakePoolWithdrawalsEndEventIdsInput>;
   eventsEventsTostakePoolWithdrawalsStartEventId?: InputMaybe<EventsUpdateOneWithoutStakePoolWithdrawalsEventsTostakePoolWithdrawalsStartEventIdsInput>;
   id?: InputMaybe<BigIntFieldUpdateOperationsInput>;
   shares?: InputMaybe<DecimalFieldUpdateOperationsInput>;
+  stake?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   stakePools?: InputMaybe<StakePoolsUpdateOneRequiredWithoutStakePoolWithdrawalsInput>;
   startBlockNumber?: InputMaybe<NullableBigIntFieldUpdateOperationsInput>;
+  startTime?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   startTimestamp?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
   updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   userAddress?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
@@ -7009,9 +7085,12 @@ export type StakePoolWithdrawalsUpdateManyMutationInput = {
   createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   endBlockNumber?: InputMaybe<NullableBigIntFieldUpdateOperationsInput>;
   endTimestamp?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  estimatesEndTime?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   id?: InputMaybe<BigIntFieldUpdateOperationsInput>;
   shares?: InputMaybe<DecimalFieldUpdateOperationsInput>;
+  stake?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   startBlockNumber?: InputMaybe<NullableBigIntFieldUpdateOperationsInput>;
+  startTime?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   startTimestamp?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
   updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   userAddress?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
@@ -7117,12 +7196,15 @@ export type StakePoolWithdrawalsUpdateWithoutAccountsInput = {
   createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   endBlockNumber?: InputMaybe<NullableBigIntFieldUpdateOperationsInput>;
   endTimestamp?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  estimatesEndTime?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   eventsEventsTostakePoolWithdrawalsEndEventId?: InputMaybe<EventsUpdateOneWithoutStakePoolWithdrawalsEventsTostakePoolWithdrawalsEndEventIdsInput>;
   eventsEventsTostakePoolWithdrawalsStartEventId?: InputMaybe<EventsUpdateOneWithoutStakePoolWithdrawalsEventsTostakePoolWithdrawalsStartEventIdsInput>;
   id?: InputMaybe<BigIntFieldUpdateOperationsInput>;
   shares?: InputMaybe<DecimalFieldUpdateOperationsInput>;
+  stake?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   stakePools?: InputMaybe<StakePoolsUpdateOneRequiredWithoutStakePoolWithdrawalsInput>;
   startBlockNumber?: InputMaybe<NullableBigIntFieldUpdateOperationsInput>;
+  startTime?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   startTimestamp?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
   updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   userAddress?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
@@ -7133,11 +7215,14 @@ export type StakePoolWithdrawalsUpdateWithoutEventsEventsTostakePoolWithdrawalsE
   createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   endBlockNumber?: InputMaybe<NullableBigIntFieldUpdateOperationsInput>;
   endTimestamp?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  estimatesEndTime?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   eventsEventsTostakePoolWithdrawalsStartEventId?: InputMaybe<EventsUpdateOneWithoutStakePoolWithdrawalsEventsTostakePoolWithdrawalsStartEventIdsInput>;
   id?: InputMaybe<BigIntFieldUpdateOperationsInput>;
   shares?: InputMaybe<DecimalFieldUpdateOperationsInput>;
+  stake?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   stakePools?: InputMaybe<StakePoolsUpdateOneRequiredWithoutStakePoolWithdrawalsInput>;
   startBlockNumber?: InputMaybe<NullableBigIntFieldUpdateOperationsInput>;
+  startTime?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   startTimestamp?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
   updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   userAddress?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
@@ -7148,11 +7233,14 @@ export type StakePoolWithdrawalsUpdateWithoutEventsEventsTostakePoolWithdrawalsS
   createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   endBlockNumber?: InputMaybe<NullableBigIntFieldUpdateOperationsInput>;
   endTimestamp?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  estimatesEndTime?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   eventsEventsTostakePoolWithdrawalsEndEventId?: InputMaybe<EventsUpdateOneWithoutStakePoolWithdrawalsEventsTostakePoolWithdrawalsEndEventIdsInput>;
   id?: InputMaybe<BigIntFieldUpdateOperationsInput>;
   shares?: InputMaybe<DecimalFieldUpdateOperationsInput>;
+  stake?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   stakePools?: InputMaybe<StakePoolsUpdateOneRequiredWithoutStakePoolWithdrawalsInput>;
   startBlockNumber?: InputMaybe<NullableBigIntFieldUpdateOperationsInput>;
+  startTime?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   startTimestamp?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
   updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   userAddress?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
@@ -7163,11 +7251,14 @@ export type StakePoolWithdrawalsUpdateWithoutStakePoolsInput = {
   createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   endBlockNumber?: InputMaybe<NullableBigIntFieldUpdateOperationsInput>;
   endTimestamp?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  estimatesEndTime?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   eventsEventsTostakePoolWithdrawalsEndEventId?: InputMaybe<EventsUpdateOneWithoutStakePoolWithdrawalsEventsTostakePoolWithdrawalsEndEventIdsInput>;
   eventsEventsTostakePoolWithdrawalsStartEventId?: InputMaybe<EventsUpdateOneWithoutStakePoolWithdrawalsEventsTostakePoolWithdrawalsStartEventIdsInput>;
   id?: InputMaybe<BigIntFieldUpdateOperationsInput>;
   shares?: InputMaybe<DecimalFieldUpdateOperationsInput>;
+  stake?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   startBlockNumber?: InputMaybe<NullableBigIntFieldUpdateOperationsInput>;
+  startTime?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   startTimestamp?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
   updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   userAddress?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
@@ -7206,14 +7297,17 @@ export type StakePoolWithdrawalsWhereInput = {
   endBlockNumber?: InputMaybe<BigIntNullableFilter>;
   endEventId?: InputMaybe<BigIntNullableFilter>;
   endTimestamp?: InputMaybe<DateTimeNullableFilter>;
+  estimatesEndTime?: InputMaybe<DateTimeFilter>;
   eventsEventsTostakePoolWithdrawalsEndEventId?: InputMaybe<EventsRelationFilter>;
   eventsEventsTostakePoolWithdrawalsStartEventId?: InputMaybe<EventsRelationFilter>;
   id?: InputMaybe<BigIntFilter>;
   shares?: InputMaybe<DecimalFilter>;
+  stake?: InputMaybe<DecimalFilter>;
   stakePoolId?: InputMaybe<BigIntFilter>;
   stakePools?: InputMaybe<StakePoolsRelationFilter>;
   startBlockNumber?: InputMaybe<BigIntNullableFilter>;
   startEventId?: InputMaybe<BigIntNullableFilter>;
+  startTime?: InputMaybe<DateTimeFilter>;
   startTimestamp?: InputMaybe<DateTimeNullableFilter>;
   updatedAt?: InputMaybe<DateTimeFilter>;
   userAddress?: InputMaybe<StringNullableFilter>;
@@ -11426,10 +11520,12 @@ export type StakePoolsQueryVariables = Exact<{
   skip?: InputMaybe<Scalars['Int']>;
   withStakePoolStakers?: InputMaybe<Scalars['Boolean']>;
   stakePoolStakersWhere?: InputMaybe<StakePoolStakersWhereInput>;
+  withStakePoolWithdrawals?: InputMaybe<Scalars['Boolean']>;
+  stakePoolWithdrawalsWhere?: InputMaybe<StakePoolWithdrawalsWhereInput>;
 }>;
 
 
-export type StakePoolsQuery = { __typename?: 'Query', findManyStakePools: Array<{ __typename?: 'StakePools', pid: string, ownerAddress: string, commission: string, ownerReward: string, cap?: string | null | undefined, rewardAcc: string, totalShares: string, totalStake: string, freeStake: string, releasingStake: string, usedStake: string, remainingStake?: string | null | undefined, stakersCount: number, workersCount: number, miningWorkersCount: number, apr: string, stakePoolStakers?: Array<{ __typename?: 'StakePoolStakers', address?: string | null | undefined, shares: string, locked: string, availableRewards: string, rewardDebt: string, stake: string, pendingRewards: string, stakeRewards: string, claimableRewards: string, instantClaimableRewards: string, isOwner: boolean }> }>, aggregateStakePools: { __typename?: 'AggregateStakePools', _count?: { __typename?: 'StakePoolsCountAggregate', _all: number } | null | undefined } };
+export type StakePoolsQuery = { __typename?: 'Query', findManyStakePools: Array<{ __typename?: 'StakePools', pid: string, ownerAddress: string, commission: string, ownerReward: string, cap?: string | null | undefined, rewardAcc: string, totalShares: string, totalStake: string, freeStake: string, releasingStake: string, usedStake: string, remainingStake?: string | null | undefined, stakersCount: number, workersCount: number, miningWorkersCount: number, apr: string, stakePoolStakers?: Array<{ __typename?: 'StakePoolStakers', address?: string | null | undefined, shares: string, locked: string, availableRewards: string, rewardDebt: string, stake: string, pendingRewards: string, stakeRewards: string, claimableRewards: string, instantClaimableRewards: string, isOwner: boolean }>, accounts: { __typename?: 'Accounts', identity?: string | null | undefined, identityVerified: boolean }, stakePoolWithdrawals?: Array<{ __typename?: 'StakePoolWithdrawals', shares: string, startTime: any, estimatesEndTime: any, stake: string, userAddress?: string | null | undefined }> }>, aggregateStakePools: { __typename?: 'AggregateStakePools', _count?: { __typename?: 'StakePoolsCountAggregate', _all: number } | null | undefined } };
 
 export type AggregateStakePoolsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -11438,7 +11534,7 @@ export type AggregateStakePoolsQuery = { __typename?: 'Query', aggregateStakePoo
 
 
 export const StakePoolsDocument = `
-    query StakePools($where: StakePoolsWhereInput, $orderBy: [StakePoolsOrderByWithRelationInput!], $take: Int, $skip: Int, $withStakePoolStakers: Boolean = false, $stakePoolStakersWhere: StakePoolStakersWhereInput) {
+    query StakePools($where: StakePoolsWhereInput, $orderBy: [StakePoolsOrderByWithRelationInput!], $take: Int, $skip: Int, $withStakePoolStakers: Boolean = false, $stakePoolStakersWhere: StakePoolStakersWhereInput, $withStakePoolWithdrawals: Boolean = false, $stakePoolWithdrawalsWhere: StakePoolWithdrawalsWhereInput) {
   findManyStakePools(where: $where, orderBy: $orderBy, take: $take, skip: $skip) {
     pid
     ownerAddress
@@ -11468,6 +11564,17 @@ export const StakePoolsDocument = `
       claimableRewards
       instantClaimableRewards
       isOwner
+    }
+    accounts {
+      identity
+      identityVerified
+    }
+    stakePoolWithdrawals(where: $stakePoolWithdrawalsWhere) @include(if: $withStakePoolWithdrawals) {
+      shares
+      startTime
+      estimatesEndTime
+      stake
+      userAddress
     }
   }
   aggregateStakePools(where: $where) {
