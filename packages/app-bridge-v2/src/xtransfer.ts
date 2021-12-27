@@ -3,9 +3,12 @@ import BN from 'bn.js'
 import ethers, {Contract} from 'ethers'
 import BridgeJson from './Bridge.json'
 
+const khalaChainId = 1
 const khalaParaId = 2004
 const karuraParaId = 2000
 const bridgeAddressOnRinkeby = '0x0712Cf53B9fA1A33018d180a4AbcC7f1803F55f4'
+const phaResourceId =
+  '0x41ab283b2b268c9c99ddfe96ed5dfbfa3dcc1a2f5551a30049fea8484186f2eb'
 
 export function transferPHAFromKhalaToKarura(
   khalaApi: ApiPromise,
@@ -222,9 +225,6 @@ export async function transferPhaFromEvmToKhala(
   recipient: any,
   amount: BN
 ) {
-  const khalaChainId = 1
-  const phaResourceId =
-    '0x41ab283b2b268c9c99ddfe96ed5dfbfa3dcc1a2f5551a30049fea8484186f2eb'
   // dest is not Account public key any more.
   const dest = khalaApi
     .createType('XcmV1MultiLocation', {
@@ -262,9 +262,6 @@ export async function transferPhaFromEvmToKarura(
   recipient: any,
   amount: BN
 ) {
-  const khalaChainId = 1
-  const phaResourceId =
-    '0x41ab283b2b268c9c99ddfe96ed5dfbfa3dcc1a2f5551a30049fea8484186f2eb'
   const dest = khalaApi
     .createType('XcmV1MultiLocation', {
       // parents = 1 means we wanna send to other parachains or relaychain
