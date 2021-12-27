@@ -26,6 +26,7 @@ const HomePageWrap = styled.div`
 
 const ContentWrap = styled.div`
   margin: 80px auto auto;
+  width: 960px;
 `
 
 const BaseLayout: React.FC = (props) => {
