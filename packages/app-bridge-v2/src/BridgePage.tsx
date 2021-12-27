@@ -1,9 +1,12 @@
-import {Button, FormLabel, Input, InputNumber} from '@phala/react-components'
+import {FormLabel, Input, InputNumber} from '@phala/react-components'
 import {validateAddress} from '@phala/utils'
 import {ApiPromise, Keyring} from '@polkadot/api'
+import {Button} from 'baseui/button'
 import BN from 'bn.js'
 import {useCallback, useEffect, useState} from 'react'
 import {ExtraInfoPanel} from './ExtraInfoPanel'
+import {Header} from './Header'
+import {Root} from './styledComponents'
 import {TransferPanel} from './TransferPanel'
 import {
   getBaseInfo,
@@ -56,146 +59,162 @@ export const BridgePage = () => {
   )
 
   return (
-    <div style={{padding: 20, margin: 20, background: 'white', flex: 1}}>
-      <TransferPanel />
-      <ExtraInfoPanel />
+    <div style={{padding: 20, margin: 20, flex: 1}}>
+      <Root
+        style={{
+          width: 672,
+          margin: '0 auto',
+        }}
+      >
+        <Header />
+        <TransferPanel />
+        <ExtraInfoPanel
+          infos={[
+            {label: 'Bridge Fee', value: '375 PHA'},
+            {label: 'Transaction Fee', value: '0.002123 PHA'},
+            {
+              label: 'Estimated time',
+              value: '30mins',
+            },
+          ]}
+        />
+        <Button>Done</Button>
+      </Root>
+
       <div>
-        <FormLabel>Karura address:</FormLabel>
-        <Input
-          value={karuraAccountAddressInput}
-          onChange={(value) => {
-            setKaruraAccountAddressInput(value)
+        <div>
+          <FormLabel>Karura address:</FormLabel>
+          <Input
+            value={karuraAccountAddressInput}
+            onChange={(value) => {
+              setKaruraAccountAddressInput(value)
 
-            if (validateAddress(value)) {
-              const keyring = new Keyring({type: 'sr25519'})
-              const karuraAccount = keyring.addFromAddress(value)
-              setKaruraAccount(karuraAccount)
-            }
-          }}
-          size="large"
-        />
+              if (validateAddress(value)) {
+                const keyring = new Keyring({type: 'sr25519'})
+                const karuraAccount = keyring.addFromAddress(value)
+                setKaruraAccount(karuraAccount)
+              }
+            }}
+            size="large"
+          />
 
-        <FormLabel>Khala address:</FormLabel>
-        <Input
-          value={khalaAccountAddressInput}
-          onChange={(value) => {
-            setKhalaAccountAddressInput(value)
+          <FormLabel>Khala address:</FormLabel>
+          <Input
+            value={khalaAccountAddressInput}
+            onChange={(value) => {
+              setKhalaAccountAddressInput(value)
 
-            if (validateAddress(value)) {
-              const keyring = new Keyring({type: 'sr25519'})
-              const khalaAccount = keyring.addFromAddress(value)
-              setKhalaAccount(khalaAccount)
-            }
-          }}
-          size="large"
-        />
+              if (validateAddress(value)) {
+                const keyring = new Keyring({type: 'sr25519'})
+                const khalaAccount = keyring.addFromAddress(value)
+                setKhalaAccount(khalaAccount)
+              }
+            }}
+            size="large"
+          />
 
-        <FormLabel>Amount:</FormLabel>
-        <InputNumber
-          value={amount}
-          onChange={(value) => setAmount(new BN(value).toNumber())}
-          size="large"
-        />
-      </div>
-      <div>
-        <div style={{height: 20, width: 20}} />
+          <FormLabel>Amount:</FormLabel>
+          <InputNumber
+            value={amount}
+            onChange={(value) => setAmount(new BN(value).toNumber())}
+            size="large"
+          />
+        </div>
+        <div>
+          <div style={{height: 20, width: 20}} />
 
-        <Button
-          type="primary"
-          onClick={() => {
-            setMessages([])
-            khalaApi &&
-              transferPHAFromKhalaToKarura(
-                khalaApi,
-                khalaAccount,
-                karuraAccount,
-                bn1e12.mul(new BN(amount)),
-                log
-              )
-          }}
-        >
-          transfer PHA From Khala To Karura
-        </Button>
+          <Button
+            onClick={() => {
+              setMessages([])
+              khalaApi &&
+                transferPHAFromKhalaToKarura(
+                  khalaApi,
+                  khalaAccount,
+                  karuraAccount,
+                  bn1e12.mul(new BN(amount)),
+                  log
+                )
+            }}
+          >
+            transfer PHA From Khala To Karura
+          </Button>
 
-        <div style={{height: 20, width: 20}} />
+          <div style={{height: 20, width: 20}} />
 
-        <Button
-          type="primary"
-          onClick={() => {
-            setMessages([])
-            karuraApi &&
-              transferPHAFromKaruraToKhala(
-                karuraApi,
-                karuraAccount,
-                khalaAccount,
-                bn1e12.mul(new BN(amount)),
-                log
-              )
-          }}
-        >
-          transfer PHA From Karura To Khala
-        </Button>
+          <Button
+            onClick={() => {
+              setMessages([])
+              karuraApi &&
+                transferPHAFromKaruraToKhala(
+                  karuraApi,
+                  karuraAccount,
+                  khalaAccount,
+                  bn1e12.mul(new BN(amount)),
+                  log
+                )
+            }}
+          >
+            transfer PHA From Karura To Khala
+          </Button>
 
-        <div style={{height: 20, width: 20}} />
+          <div style={{height: 20, width: 20}} />
 
-        <Button
-          type="primary"
-          onClick={() => {
-            setMessages([])
-            karuraApi &&
-              transferKARFromKaruraToKhala(
-                karuraApi,
-                karuraAccount,
-                khalaAccount,
-                bn1e12.mul(new BN(amount)),
-                log
-              )
-          }}
-        >
-          transfer KAR From Karura To Khala
-        </Button>
+          <Button
+            onClick={() => {
+              setMessages([])
+              karuraApi &&
+                transferKARFromKaruraToKhala(
+                  karuraApi,
+                  karuraAccount,
+                  khalaAccount,
+                  bn1e12.mul(new BN(amount)),
+                  log
+                )
+            }}
+          >
+            transfer KAR From Karura To Khala
+          </Button>
 
-        <div style={{height: 20, width: 20}} />
+          <div style={{height: 20, width: 20}} />
 
-        <Button
-          type="primary"
-          onClick={() => {
-            setMessages([])
-            khalaApi &&
-              transferKARFromKhalaToKarura(
-                khalaApi,
-                khalaAccount,
-                karuraAccount,
-                bn1e12.mul(new BN(amount)),
-                log
-              )
-          }}
-        >
-          transfer KAR From Khala To Karura
-        </Button>
+          <Button
+            onClick={() => {
+              setMessages([])
+              khalaApi &&
+                transferKARFromKhalaToKarura(
+                  khalaApi,
+                  khalaAccount,
+                  karuraAccount,
+                  bn1e12.mul(new BN(amount)),
+                  log
+                )
+            }}
+          >
+            transfer KAR From Khala To Karura
+          </Button>
 
-        <Button
-          type="primary"
-          onClick={() => {
-            setMessages([])
-            khalaApi &&
-              transferAssetsKhalaAccounts(
-                khalaApi,
-                khalaAccount,
-                karuraAccount,
-                bn1e12.mul(new BN(amount)),
-                log
-              )
-          }}
-        >
-          transfer PHA From Khala To Khala
-        </Button>
+          <Button
+            onClick={() => {
+              setMessages([])
+              khalaApi &&
+                transferAssetsKhalaAccounts(
+                  khalaApi,
+                  khalaAccount,
+                  karuraAccount,
+                  bn1e12.mul(new BN(amount)),
+                  log
+                )
+            }}
+          >
+            transfer PHA From Khala To Khala
+          </Button>
 
-        <ul>
-          {messages.map((message) => (
-            <li key={message}>{message}</li>
-          ))}
-        </ul>
+          <ul>
+            {messages.map((message) => (
+              <li key={message}>{message}</li>
+            ))}
+          </ul>
+        </div>
       </div>
     </div>
   )

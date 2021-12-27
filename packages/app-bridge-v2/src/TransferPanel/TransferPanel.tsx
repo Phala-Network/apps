@@ -1,11 +1,11 @@
-import {Header} from './Header'
 import {NetworkSelect} from './NetworkSelect'
+import {Root} from './styledComponents'
 
 export const TransferPanel = () => {
   return (
-    <div>
-      <Header />
+    <Root>
       <NetworkSelect />
-    </div>
+      <NetworkSelect />
+    </Root>
   )
 }

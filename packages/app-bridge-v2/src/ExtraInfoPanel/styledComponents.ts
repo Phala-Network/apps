@@ -6,3 +6,9 @@ export const Root = styled.div`
 
   background: #f3ffd3;
 `
+
+export const Item = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`
