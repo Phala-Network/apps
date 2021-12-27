@@ -12,10 +12,12 @@
   },
   "devDependencies": {
     "@phala/app-store": "workspace:^0.0.1",
+    "baseui": "^10.6.0",
     "ethers": "^5.5.2"
   },
   "peerDependencies": {
     "@phala/app-store": "workspace:^0.0.1",
+    "baseui": "^10.6.0",
     "ethers": "^5.5.2"
   }
 }

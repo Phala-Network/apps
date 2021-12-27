@@ -1,3 +1,10 @@
+import {NetworkSelect} from './NetworkSelect'
+
 export const TransferPanel = () => {
-  return <div>TransferPanel</div>
+  return (
+    <div>
+      TransferPanel
+      <NetworkSelect />
+    </div>
+  )
 }
