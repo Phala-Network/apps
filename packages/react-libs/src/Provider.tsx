@@ -20,7 +20,7 @@ export const Provider: FC<ProviderProps> = (props) => {
     ethereumGraphEndpoint = '',
     substrateGraphEndpoint = '',
     defaultNetwork = 'khala',
-    customEndpoint,
+    // customEndpoint,
     children,
   } = props
   const client = useRef(new QueryClient())
@@ -33,7 +33,7 @@ export const Provider: FC<ProviderProps> = (props) => {
             <EthersProvider>
               <NetworkContextProvider
                 defaultNetwork={defaultNetwork}
-                customEndpoint={customEndpoint}
+                // customEndpoint={customEndpoint}
               >
                 <ApiPromiseProvider>
                   <PolkadotWeb3Provider originName="ChainBridge Operator">

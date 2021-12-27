@@ -1,8 +1,9 @@
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import styled from 'styled-components'
 import {useCustomEndpointAtom} from '@phala/app-store'
 import Arrow from '../../icons/top_point.png'
 import DropdownIcon from '../../icons/dropdown.svg'
+import useCustomEndpoint from '../../hooks/useCustomEndpoint'
 
 const Button = styled.button`
   cursor: pointer;
@@ -99,8 +100,15 @@ const NODES: NodeType[] = [
 
 const SelectNode = (): JSX.Element => {
   const [node, setNode] = useState('Khala via Phala')
+  const urlEndpoint = useCustomEndpoint()
 
   const [, setCustomEndpoint] = useCustomEndpointAtom()
+
+  useEffect(() => {
+    if (urlEndpoint) {
+      setCustomEndpoint(urlEndpoint)
+    }
+  }, [urlEndpoint, setCustomEndpoint])
 
   const handleClick = (item: NodeType) => {
     setNode(item.name)
