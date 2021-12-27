@@ -21,6 +21,8 @@ import PopoverButton from '../PopoverButton'
 import {usePolkadotAccountAtom} from '@phala/app-store'
 import Pagination from '../Pagination'
 import {Modal} from 'baseui/modal'
+import {StatefulTooltip} from 'baseui/tooltip'
+import {tooltipContent} from './tooltipContent'
 
 // FIXME: should be loadable, but meet some problems when configuring gatsby-plugin-loadable-components-ssr
 import DelegateModalBody from './DelegateModalBody'
@@ -214,29 +216,94 @@ const StakePoolTableV2 = ({
               },
             }}
           >
-            <TableBuilderColumn id="pid" header="Pid" sortable>
+            <TableBuilderColumn
+              id="pid"
+              header={
+                <StatefulTooltip
+                  content={tooltipContent.pid}
+                  placement="bottomLeft"
+                >
+                  Pid
+                </StatefulTooltip>
+              }
+              sortable
+            >
               {(stakePool: StakePools) => stakePool.pid}
             </TableBuilderColumn>
-            <TableBuilderColumn header="Owner">
+            <TableBuilderColumn
+              id="owner"
+              header={
+                <StatefulTooltip
+                  content={tooltipContent.owner}
+                  placement="bottomLeft"
+                >
+                  Owner
+                </StatefulTooltip>
+              }
+            >
               {(stakePool: StakePools) => (
                 <AddressCell value={stakePool.ownerAddress} />
               )}
             </TableBuilderColumn>
-            <TableBuilderColumn id="apr" header="APR" sortable>
+            <TableBuilderColumn
+              id="apr"
+              header={
+                <StatefulTooltip
+                  content={tooltipContent.apr}
+                  placement="bottomLeft"
+                >
+                  APR
+                </StatefulTooltip>
+              }
+              sortable
+            >
               {(stakePool: StakePools) => <PercentCell value={stakePool.apr} />}
             </TableBuilderColumn>
-            <TableBuilderColumn id="remainingStake" header="Remaining" sortable>
+            <TableBuilderColumn
+              id="remainingStake"
+              header={
+                <StatefulTooltip
+                  content={tooltipContent.remaining}
+                  placement="bottomLeft"
+                >
+                  Remaining
+                </StatefulTooltip>
+              }
+              sortable
+            >
               {({remainingStake}: StakePools) =>
                 remainingStake ? <TokenCell value={remainingStake} /> : '∞'
               }
             </TableBuilderColumn>
-            <TableBuilderColumn id="commission" header="Commission" sortable>
+            <TableBuilderColumn
+              id="commission"
+              header={
+                <StatefulTooltip
+                  content={tooltipContent.commission}
+                  placement="bottomLeft"
+                >
+                  Commission
+                </StatefulTooltip>
+              }
+              sortable
+            >
               {(stakePool: StakePools) => (
                 <PercentCell value={stakePool.commission} />
               )}
             </TableBuilderColumn>
             {kind !== 'myDelegate' && (
-              <TableBuilderColumn id="totalStake" header="Delegated" sortable>
+              <TableBuilderColumn
+                id="totalStake"
+                header={
+                  <StatefulTooltip
+                    content={tooltipContent.delegated}
+                    placement="bottomLeft"
+                  >
+                    Delegated
+                  </StatefulTooltip>
+                }
+                sortable
+              >
                 {(stakePool: StakePools) => (
                   <TokenCell value={stakePool.totalStake} />
                 )}
@@ -244,7 +311,14 @@ const StakePoolTableV2 = ({
             )}
             <TableBuilderColumn
               id="freeStake"
-              header="Free Delegation"
+              header={
+                <StatefulTooltip
+                  content={tooltipContent.freeDelegation}
+                  placement="bottomLeft"
+                >
+                  Free Delegation
+                </StatefulTooltip>
+              }
               sortable
             >
               {(stakePool: StakePools) => (
@@ -254,7 +328,14 @@ const StakePoolTableV2 = ({
             {kind === 'mining' && (
               <TableBuilderColumn
                 id="releasingStake"
-                header="Releasing Stake"
+                header={
+                  <StatefulTooltip
+                    content={tooltipContent.releasingStake}
+                    placement="bottomLeft"
+                  >
+                    Releasing Stake
+                  </StatefulTooltip>
+                }
                 sortable
               >
                 {(stakePool: StakePools) => (
@@ -268,7 +349,17 @@ const StakePoolTableV2 = ({
               </TableBuilderColumn>
             )}
             {kind === 'myDelegate' && (
-              <TableBuilderColumn id="yourDelegation" header="Your Delegation">
+              <TableBuilderColumn
+                id="yourDelegation"
+                header={
+                  <StatefulTooltip
+                    content={tooltipContent.yourDelegation}
+                    placement="bottomLeft"
+                  >
+                    Your Delegation
+                  </StatefulTooltip>
+                }
+              >
                 {(stakePool: StakePools) => {
                   const value = stakePool.stakePoolStakers?.[0]?.stake
                   return value ? <TokenCell value={value} /> : '-'
@@ -278,7 +369,14 @@ const StakePoolTableV2 = ({
             {kind === 'myDelegate' && (
               <TableBuilderColumn
                 id="yourWithdrawing"
-                header="Your Withdrawing"
+                header={
+                  <StatefulTooltip
+                    content={tooltipContent.yourWithdrawing}
+                    placement="bottomLeft"
+                  >
+                    Your Withdrawing
+                  </StatefulTooltip>
+                }
               >
                 {/* TODO: add withdrawing when withdrawQueue is ready */}
                 {() => '-'}
@@ -287,7 +385,14 @@ const StakePoolTableV2 = ({
             {kind === 'myDelegate' && (
               <TableBuilderColumn
                 id="claimableRewards"
-                header="Claimable Rewards"
+                header={
+                  <StatefulTooltip
+                    content={tooltipContent.claimableRewards}
+                    placement="bottomLeft"
+                  >
+                    Claimable Rewards
+                  </StatefulTooltip>
+                }
               >
                 {(stakePool: StakePools) => {
                   const value =
@@ -324,7 +429,7 @@ const StakePoolTableV2 = ({
                         onItemSelect={({item}: {item: MenuItem}) => {
                           setIsModalOpen(true)
                           setOpenModalKey(item.key)
-                          setOperatingPool(stakePool)
+                          setOperatingPool(stakePool) // Pass object directly is Bad design
                           close()
                         }}
                       />
