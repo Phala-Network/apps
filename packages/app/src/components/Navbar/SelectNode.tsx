@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react'
+import {useEffect, useMemo} from 'react'
 import styled from 'styled-components'
 import {useCustomEndpointAtom} from '@phala/app-store'
 import Arrow from '../../icons/top_point.png'
@@ -99,10 +99,8 @@ const NODES: NodeType[] = [
 ]
 
 const SelectNode = (): JSX.Element => {
-  const [node, setNode] = useState('Khala via Phala')
   const urlEndpoint = useCustomEndpoint()
-
-  const [, setCustomEndpoint] = useCustomEndpointAtom()
+  const [customEndpoint, setCustomEndpoint] = useCustomEndpointAtom()
 
   useEffect(() => {
     if (urlEndpoint) {
@@ -110,15 +108,20 @@ const SelectNode = (): JSX.Element => {
     }
   }, [urlEndpoint, setCustomEndpoint])
 
+  const nodeName = useMemo(() => {
+    const selectedNode = NODES.find((item) => item.address === customEndpoint)
+    if (selectedNode) return selectedNode.name
+    return ''
+  }, [customEndpoint])
+
   const handleClick = (item: NodeType) => {
-    setNode(item.name)
     setCustomEndpoint(item.address)
   }
 
   return (
     <Popover>
       <Button>
-        <span>{node}</span>
+        <span>{nodeName}</span>
         <DropdownIcon />
       </Button>
       <div className="popover-container">
