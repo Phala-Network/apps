@@ -1,7 +1,7 @@
 import {useEffect, useMemo} from 'react'
 import styled from 'styled-components'
 import {useCustomEndpointAtom} from '@phala/app-store'
-import Arrow from '../../icons/top_point.png'
+import {StatefulPopover, PLACEMENT} from 'baseui/popover'
 import DropdownIcon from '../../icons/dropdown.svg'
 import useCustomEndpoint from '../../hooks/useCustomEndpoint'
 
@@ -11,22 +11,18 @@ const Button = styled.button`
   align-items: center;
   width: 200px;
   padding: 10px;
-  background: #cecece;
+  background: #eeeeee;
   border: none;
   font-family: Montserrat;
   font-style: normal;
   font-weight: normal;
   font-size: 16px;
   line-height: 16px;
+  transition: all 0.2s;
 
-  &:after {
-    content: '';
-    height: 10px;
-    width: 100%;
-    background-color: transparent;
-    position: absolute;
-    top: 100%;
-    left: 0;
+  :hover,
+  :focus {
+    background: #cecece;
   }
 
   span {
@@ -55,40 +51,7 @@ const LineWrap = styled.div`
     background-color: #d1ff52;
   }
 `
-const Popover = styled.div`
-  display: inline-block;
-  position: relative;
 
-  .popover-container {
-    opacity: 0;
-    position: absolute;
-    transform: translate(-50%, -50%) scale(0);
-    transition: transform 0.2s;
-    z-index: 300;
-    left: 50%;
-    top: 100%;
-    background-color: #eeeeee;
-    border: 1px solid #aad829;
-    margin-top: 10px;
-
-    &:before {
-      content: url(${Arrow});
-      display: inline-block;
-      z-index: 9999;
-      transform: scale(0.3);
-      position: absolute;
-      top: -22px;
-      right: 55px;
-    }
-  }
-
-  *:focus + .popover-container,
-  :hover .popover-container {
-    display: block;
-    opacity: 1;
-    transform: translate(-50%, 0) scale(1);
-  }
-`
 type NodeType = {name: string; address: string}
 const NODES: NodeType[] = [
   {name: 'Khala via Phala', address: 'wss://khala-api.phala.network/ws'},
@@ -119,19 +82,48 @@ const SelectNode = (): JSX.Element => {
   }
 
   return (
-    <Popover>
-      <Button>
-        <span>{nodeName}</span>
-        <DropdownIcon />
-      </Button>
-      <div className="popover-container">
-        {NODES.map((item) => (
-          <LineWrap key={item.name} onClick={() => handleClick(item)}>
-            {item.name}
-          </LineWrap>
-        ))}
-      </div>
-    </Popover>
+    <div>
+      <StatefulPopover
+        content={({close}) => (
+          <>
+            {NODES.map((item) => (
+              <LineWrap
+                key={item.name}
+                onClick={() => {
+                  handleClick(item)
+                  close()
+                }}
+              >
+                {item.name}
+              </LineWrap>
+            ))}
+          </>
+        )}
+        placement={PLACEMENT.bottom}
+        showArrow
+        overrides={{
+          Arrow: {
+            style: {
+              outline: `#aad829 solid`,
+              backgroundColor: '#aad829',
+            },
+          },
+          Body: {
+            style: {
+              outline: `1px #aad829 solid`,
+              backgroundColor: '#eeeeee',
+              boxShadow: 'none',
+              zIndex: 200,
+            },
+          },
+        }}
+      >
+        <Button>
+          <span>{nodeName}</span>
+          <DropdownIcon />
+        </Button>
+      </StatefulPopover>
+    </div>
   )
 }
 

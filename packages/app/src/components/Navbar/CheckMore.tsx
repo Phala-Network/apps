@@ -1,8 +1,25 @@
 import {Link as GatsbyLink} from 'gatsby'
 import styled from 'styled-components'
+import {StatefulPopover, PLACEMENT} from 'baseui/popover'
 import MoreIcon from '../../icons/more.svg'
 import ExternalLink from '../../icons/external_link.svg'
-import Arrow from '../../icons/top_point.png'
+
+const MoreButton = styled.button`
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  width: 36px;
+  height: 36px;
+  background-color: #fff;
+  transition: all 0.2s;
+
+  :hover,
+  :focus {
+    background: #cecece;
+  }
+`
 
 const Link = styled(GatsbyLink)`
   color: #111111;
@@ -22,20 +39,6 @@ const Link = styled(GatsbyLink)`
 
   :hover {
     background-color: #d1ff52;
-  }
-`
-
-const MoreButton = styled.div`
-  cursor: pointer;
-
-  &:after {
-    content: '';
-    height: 10px;
-    width: 100%;
-    background-color: transparent;
-    position: absolute;
-    top: 100%;
-    left: 0;
   }
 `
 
@@ -66,40 +69,6 @@ const LineWrap = styled.a`
     flex: 1;
   }
 `
-const Popover = styled.div`
-  display: inline-block;
-  position: relative;
-
-  .popover-container {
-    opacity: 0;
-    position: absolute;
-    transform: translate(-50%, -50%) scale(0);
-    transition: transform 0.2s;
-    z-index: 300;
-    right: 0;
-    top: 100%;
-    background-color: #eeeeee;
-    border: 1px solid #aad829;
-    margin-top: 10px;
-
-    &:before {
-      content: url(${Arrow});
-      display: inline-block;
-      z-index: 9999;
-      transform: scale(0.3);
-      position: absolute;
-      top: -22px;
-      right: -15px;
-    }
-  }
-
-  *:focus + .popover-container,
-  :hover .popover-container {
-    display: block;
-    opacity: 1;
-    transform: translate(0, 0) scale(1);
-  }
-`
 
 const CheckMore = (): JSX.Element => {
   const LINKS = [
@@ -126,20 +95,56 @@ const CheckMore = (): JSX.Element => {
   ]
 
   return (
-    <Popover>
+    <StatefulPopover
+      content={({close}) => (
+        <>
+          <Link
+            onClick={() => {
+              close
+            }}
+            to="/analytics/"
+          >
+            Analytics
+          </Link>
+          {LINKS.map(({name, link}) => (
+            <LineWrap
+              onClick={() => {
+                close
+              }}
+              href={link}
+              key={name}
+              target="_blank"
+            >
+              <span>{name}</span>
+              <ExternalLink />
+            </LineWrap>
+          ))}
+        </>
+      )}
+      placement={PLACEMENT.bottom}
+      showArrow
+      overrides={{
+        Arrow: {
+          style: {
+            outline: `#aad829 solid`,
+            backgroundColor: '#aad829',
+          },
+        },
+        Body: {
+          style: {
+            outline: `1px #aad829 solid`,
+            backgroundColor: '#eeeeee',
+            boxShadow: 'none',
+            marginRight: '20px',
+            zIndex: 200,
+          },
+        },
+      }}
+    >
       <MoreButton>
         <MoreIcon />
       </MoreButton>
-      <div className="popover-container">
-        <Link to="/analytics/">Analytics</Link>
-        {LINKS.map(({name, link}) => (
-          <LineWrap href={link} key={name} target="_blank">
-            <span>{name}</span>
-            <ExternalLink />
-          </LineWrap>
-        ))}
-      </div>
-    </Popover>
+    </StatefulPopover>
   )
 }
 
