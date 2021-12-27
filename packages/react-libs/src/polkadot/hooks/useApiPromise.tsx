@@ -9,6 +9,7 @@ import {
   useState,
   useRef,
 } from 'react'
+import {useCustomEndpointAtom} from '@phala/app-store'
 import {useNetworkContext} from './useSubstrateNetwork'
 
 type Readystate = 'unavailable' | 'init' | 'ready' | 'failed'
@@ -57,7 +58,9 @@ export const ApiPromiseProvider = ({
   const [api, setApi] = useState<ApiPromise>()
   const [readystate, setState] = useState<Readystate>('unavailable')
   const {options} = useNetworkContext()
-  const endpoint = options?.endpoint
+  // const endpoint = options?.endpoint
+  const [customEndpoint] = useCustomEndpointAtom()
+  const endpoint = customEndpoint
   const registryTypes = options?.typedefs
   const [activeEndpoint, setActiveEndpoint] = useState<string | undefined>()
 

@@ -57,18 +57,18 @@ const WrapApp: React.FC = ({children}) => {
             src="https://static.zdassets.com/ekr/snippet.js?key=fca22f47-80b0-47a4-8cde-80ca1fe206d2"
           />
         </Helmet>
-        <LibProvider {...productionConfig}>
-          <QueryClientProvider contextSharing={true} client={client.current}>
-            <ThemeProvider theme={theme}>
-              <MobileToastContextProvider>
-                <AppStoreProvider>
+        <AppStoreProvider>
+          <LibProvider {...productionConfig}>
+            <QueryClientProvider contextSharing={true} client={client.current}>
+              <ThemeProvider theme={theme}>
+                <MobileToastContextProvider>
                   <BaseProvider theme={LightTheme}>{children}</BaseProvider>
-                </AppStoreProvider>
-              </MobileToastContextProvider>
-            </ThemeProvider>
-            <ReactQueryDevtools />
-          </QueryClientProvider>
-        </LibProvider>
+                </MobileToastContextProvider>
+              </ThemeProvider>
+              <ReactQueryDevtools />
+            </QueryClientProvider>
+          </LibProvider>
+        </AppStoreProvider>
       </div>
     </StrictMode>
   )

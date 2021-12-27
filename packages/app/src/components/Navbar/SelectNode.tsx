@@ -1,5 +1,6 @@
 import {useState} from 'react'
 import styled from 'styled-components'
+import {useCustomEndpointAtom} from '@phala/app-store'
 import Arrow from '../../icons/top_point.png'
 import DropdownIcon from '../../icons/dropdown.svg'
 
@@ -87,20 +88,35 @@ const Popover = styled.div`
     transform: translate(-50%, 0) scale(1);
   }
 `
-const NODES = [{name: 'Khala via Phala'}, {name: 'Khala via Onfinality'}]
+type NodeType = {name: string; address: string}
+const NODES: NodeType[] = [
+  {name: 'Khala via Phala', address: 'wss://khala-api.phala.network/ws'},
+  {
+    name: 'Khala via Onfinality',
+    address: 'wss://khala.api.onfinality.io/public-ws',
+  },
+]
+
 const SelectNode = (): JSX.Element => {
-  const [node, setNode] = useState('Khala via Phala')
+  const [node, setNode] = useState('')
+
+  const [, setCustomEndpoint] = useCustomEndpointAtom()
+
+  const handleClick = (item: NodeType) => {
+    setNode(item.name)
+    setCustomEndpoint(item.address)
+  }
 
   return (
     <Popover>
       <Button>
-        <span>{node}</span>
+        <span>{node || 'Select Node'}</span>
         <DropdownIcon />
       </Button>
       <div className="popover-container">
-        {NODES.map(({name}) => (
-          <LineWrap key={name} onClick={() => setNode(name)}>
-            {name}
+        {NODES.map((item) => (
+          <LineWrap key={item.name} onClick={() => handleClick(item)}>
+            {item.name}
           </LineWrap>
         ))}
       </div>

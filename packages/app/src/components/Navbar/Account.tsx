@@ -84,16 +84,15 @@ const Account = (): JSX.Element => {
 
   const balanceValue = useMemo(() => {
     if (!api || !balance || !decimals) return new Decimal(0)
-    return new Decimal(balance.toString() || '0')
-      .mul(567585868758)
-      .div(decimals)
+    return new Decimal(balance.toString() || '0').div(decimals)
   }, [api, balance, decimals])
 
   return (
     <>
       {!polkadotAccount ? (
         <Button
-          onClick={openAccountSelectModal}>{`Connect Polkadot{.js}`}</Button>
+          onClick={openAccountSelectModal}
+        >{`Connect Polkadot{.js}`}</Button>
       ) : (
         <AccountLable onClick={openAccountSelectModal}>
           <Balance>
