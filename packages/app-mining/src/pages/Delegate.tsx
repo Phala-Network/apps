@@ -1,6 +1,7 @@
 import {Helmet} from 'react-helmet'
 import styled from 'styled-components'
 import {up} from 'styled-breakpoints'
+import {Card} from 'baseui/card'
 import Banner from '../components/Delegate/Banner'
 import StakePoolTableV2 from '../components/StakePoolTableV2'
 
@@ -16,8 +17,6 @@ const Wrapper = styled.div`
 
 const Block = styled.div`
   margin-top: 20px;
-  padding: 20px;
-  background: #fff;
 `
 
 export const Delegate = (): JSX.Element => {
@@ -31,7 +30,9 @@ export const Delegate = (): JSX.Element => {
         <Banner></Banner>
 
         <Block>
-          <StakePoolTableV2 kind="delegate" />
+          <Card>
+            <StakePoolTableV2 kind="delegate" />
+          </Card>
         </Block>
       </Wrapper>
     </>

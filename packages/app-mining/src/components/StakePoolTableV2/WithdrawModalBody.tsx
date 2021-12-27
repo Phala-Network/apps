@@ -102,12 +102,6 @@ const WithdrawModalBody = ({
         )}
       </ModalBody>
       <ModalFooter>
-        <ModalButton
-          kind="tertiary"
-          onClick={() => onClose?.({closeSource: 'closeButton'})}
-        >
-          Cancel
-        </ModalButton>
         <ModalButton disabled={!amount} onClick={onConfirm}>
           Confirm
         </ModalButton>

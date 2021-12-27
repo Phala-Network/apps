@@ -9,6 +9,7 @@ import {client} from '../utils/GraphQLClient'
 import {usePolkadotAccountAtom} from '@phala/app-store'
 import {Button} from 'baseui/button'
 import {ChevronLeft} from 'react-feather'
+import {Card} from 'baseui/card'
 
 const Wrapper = styled.div`
   overflow-x: auto;
@@ -25,14 +26,10 @@ const Heading = styled.div`
 `
 
 const Block = styled.div`
-  padding: 20px;
   margin-top: 20px;
-  background: #fff;
 `
 
 const Header = styled.div`
-  padding: 20px;
-  background: #fff;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -62,21 +59,26 @@ export const MyDelegate = () => {
       <Helmet>
         <title>My Delegate</title>
       </Helmet>
-      <Header>
-        <Heading>
-          <Link to="/delegate">
-            <Button size="compact" kind="minimal">
-              <ChevronLeft />
-            </Button>
-          </Link>
-          <HeadingMedium as="div">My Delegate</HeadingMedium>
-        </Heading>
-        <Button size="compact" disabled={!data?.findManyStakePools.length}>
-          Claim All
-        </Button>
-      </Header>
+      <Card>
+        <Header>
+          <Heading>
+            <Link to="/delegate">
+              <Button size="compact" kind="minimal">
+                <ChevronLeft />
+              </Button>
+            </Link>
+            <HeadingMedium as="div">My Delegate</HeadingMedium>
+          </Heading>
+          <Button kind="secondary" disabled={!data?.findManyStakePools.length}>
+            Claim All
+          </Button>
+        </Header>
+      </Card>
+
       <Block>
-        <StakePoolTableV2 kind="myDelegate" />
+        <Card>
+          <StakePoolTableV2 kind="myDelegate" />
+        </Card>
       </Block>
     </Wrapper>
   )

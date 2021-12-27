@@ -347,21 +347,7 @@ const StakePoolTableV2 = ({
       />
 
       {!isSSR() && operatingPool && (
-        <Modal
-          isOpen={isModalOpen}
-          overrides={{
-            Dialog: {
-              style: {
-                // Fix overrides mixing shorthand and longhand properties warnings
-                borderTopLeftRadius: 0,
-                borderTopRightRadius: 0,
-                borderBottomLeftRadius: 0,
-                borderBottomRightRadius: 0,
-              },
-            },
-          }}
-          onClose={closeModal}
-        >
+        <Modal isOpen={isModalOpen} onClose={closeModal}>
           {/* TODO: add suspense wrapper here with loadable modal components */}
           {openModalKey === 'delegate' && (
             <DelegateModalBody stakePool={operatingPool} onClose={closeModal} />

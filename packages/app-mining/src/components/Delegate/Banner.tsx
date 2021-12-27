@@ -7,13 +7,13 @@ import {useAggregateStakePoolsQuery} from '../../hooks/graphql'
 import {client} from '../../utils/GraphQLClient'
 import {formatCurrency} from '@phala/utils'
 import {ChevronRight} from 'react-feather'
+import {Card} from 'baseui/card'
 
-const Wrapper = styled.div`
+const Content = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
   background-color: #fff;
-  padding: 20px;
 `
 
 const Banner = (): JSX.Element => {
@@ -22,24 +22,26 @@ const Banner = (): JSX.Element => {
   const value = data?.aggregateStakePools._sum?.totalStake
 
   return (
-    <Wrapper>
-      <div>
-        <LabelLarge>Total Delegated</LabelLarge>
-        <DisplayXSmall>
-          {value ? (
-            `${formatCurrency(value)} PHA`
-          ) : (
-            <Skeleton animation height="44px" width="300px" />
-          )}
-        </DisplayXSmall>
-      </div>
-      <Link to="/delegate/my-delegate">
-        <Button kind="minimal" size="compact">
-          My Delegate
-          <ChevronRight />
-        </Button>
-      </Link>
-    </Wrapper>
+    <Card>
+      <Content>
+        <div>
+          <LabelLarge>Total Delegated</LabelLarge>
+          <DisplayXSmall>
+            {value ? (
+              `${formatCurrency(value)} PHA`
+            ) : (
+              <Skeleton animation height="44px" width="300px" />
+            )}
+          </DisplayXSmall>
+        </div>
+        <Link to="/delegate/my-delegate">
+          <Button kind="minimal">
+            My Delegate
+            <ChevronRight />
+          </Button>
+        </Link>
+      </Content>
+    </Card>
   )
 }
 

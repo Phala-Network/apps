@@ -104,12 +104,6 @@ const ClaimModalBody = ({
         </FormControl>
       </ModalBody>
       <ModalFooter>
-        <ModalButton
-          kind="tertiary"
-          onClick={() => onClose?.({closeSource: 'closeButton'})}
-        >
-          Cancel
-        </ModalButton>
         <ModalButton disabled={!address || isAddressError} onClick={onConfirm}>
           Confirm
         </ModalButton>
