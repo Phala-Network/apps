@@ -6,6 +6,23 @@ import Arrow from '../../icons/top_point.png'
 
 const Link = styled(GatsbyLink)`
   color: #111111;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  width: 175px;
+  height: 47px;
+  padding: 14px 23px 14px 21px;
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 16px;
+  border-bottom: 1px solid #cecece;
+
+  :hover {
+    background-color: #d1ff52;
+  }
 `
 
 const MoreButton = styled.div`
@@ -114,9 +131,7 @@ const CheckMore = (): JSX.Element => {
         <MoreIcon />
       </MoreButton>
       <div className="popover-container">
-        <LineWrap>
-          <Link to="/analytics/">Analytics</Link>
-        </LineWrap>
+        <Link to="/analytics/">Analytics</Link>
         {LINKS.map(({name, link}) => (
           <LineWrap href={link} key={name} target="_blank">
             <span>{name}</span>
