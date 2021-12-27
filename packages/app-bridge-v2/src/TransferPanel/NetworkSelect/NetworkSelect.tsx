@@ -16,6 +16,7 @@ export const NetworkSelect = () => {
         {label: 'Azure', id: '#F0FFFF'},
         {label: 'Beige', id: '#F5F5DC'},
       ]}
+      clearable={false}
       value={value}
       placeholder="Select color"
       onChange={(params) => setValue(params.value)}

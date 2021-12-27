@@ -1,12 +1,11 @@
 import {ApiPromise, WsProvider} from '@polkadot/api'
 import BN from 'bn.js'
 import ethers, {Contract} from 'ethers'
-import BridgeJson from './Bridge.json'
 
 const khalaChainId = 1
 const khalaParaId = 2004
 const karuraParaId = 2000
-const bridgeAddressOnRinkeby = '0x0712Cf53B9fA1A33018d180a4AbcC7f1803F55f4'
+// const bridgeAddressOnRinkeby = '0x0712Cf53B9fA1A33018d180a4AbcC7f1803F55f4'
 const phaResourceId =
   '0x41ab283b2b268c9c99ddfe96ed5dfbfa3dcc1a2f5551a30049fea8484186f2eb'
 
@@ -307,19 +306,19 @@ export async function getBaseInfo() {
     provider: karuraProvider,
   })
 
-  const privateKey = process.env.KEY || '0x'
-  const provider = new ethers.providers.JsonRpcProvider(
-    'https://rinkeby.infura.io/v3/6d61e7957c1c489ea8141e947447405b'
-  )
-  const ethereumWallet = new ethers.Wallet(privateKey, provider)
-  const bridge = new ethers.Contract(
-    bridgeAddressOnRinkeby,
-    BridgeJson.abi,
-    ethereumWallet
-  )
+  // const privateKey = process.env.KEY || '0x'
+  // const provider = new ethers.providers.JsonRpcProvider(
+  //   'https://rinkeby.infura.io/v3/6d61e7957c1c489ea8141e947447405b'
+  // )
+  // const ethereumWallet = new ethers.Wallet(privateKey, provider)
+  // const bridge = new ethers.Contract(
+  //   bridgeAddressOnRinkeby,
+  //   BridgeJson.abi,
+  //   ethereumWallet
+  // )
 
   return {
-    bridge,
+    // bridge,
     khalaApi,
     karuraApi,
   }
