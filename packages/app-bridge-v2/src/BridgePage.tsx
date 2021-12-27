@@ -3,6 +3,7 @@ import {validateAddress} from '@phala/utils'
 import {ApiPromise, Keyring} from '@polkadot/api'
 import BN from 'bn.js'
 import {useCallback, useEffect, useState} from 'react'
+import {TransferPanel} from './TransferPanel'
 import {
   getBaseInfo,
   transferAssetsKhalaAccounts,
@@ -55,6 +56,7 @@ export const BridgePage = () => {
 
   return (
     <div style={{padding: 20, margin: 20, background: 'white', flex: 1}}>
+      <TransferPanel />
       <div>
         <FormLabel>Karura address:</FormLabel>
         <Input
