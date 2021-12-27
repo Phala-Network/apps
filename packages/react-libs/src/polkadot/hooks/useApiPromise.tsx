@@ -58,9 +58,8 @@ export const ApiPromiseProvider = ({
   const [api, setApi] = useState<ApiPromise>()
   const [readystate, setState] = useState<Readystate>('unavailable')
   const {options} = useNetworkContext()
-  // const endpoint = options?.endpoint
   const [customEndpoint] = useCustomEndpointAtom()
-  const endpoint = customEndpoint
+  const endpoint = customEndpoint || options?.endpoint
   const registryTypes = options?.typedefs
   const [activeEndpoint, setActiveEndpoint] = useState<string | undefined>()
 

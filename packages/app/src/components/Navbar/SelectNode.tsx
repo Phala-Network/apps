@@ -98,7 +98,7 @@ const NODES: NodeType[] = [
 ]
 
 const SelectNode = (): JSX.Element => {
-  const [node, setNode] = useState('')
+  const [node, setNode] = useState('Khala via Phala')
 
   const [, setCustomEndpoint] = useCustomEndpointAtom()
 
@@ -110,7 +110,7 @@ const SelectNode = (): JSX.Element => {
   return (
     <Popover>
       <Button>
-        <span>{node || 'Select Node'}</span>
+        <span>{node}</span>
         <DropdownIcon />
       </Button>
       <div className="popover-container">
