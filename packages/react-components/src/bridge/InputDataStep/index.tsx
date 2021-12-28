@@ -87,9 +87,9 @@ const InputDataStep: React.FC<Props> = (props) => {
     ? ethereumAccountBalanceDecimal
     : polkadotAccountBalanceDecimal
 
-  const maxAmount = currentBalance.toNumber()
+  const maxAmountDecimal = new Decimal(currentBalance)
 
-  const isShowMaxButton = maxAmount > 0 && isFromEthereum
+  const isShowMaxButton = maxAmountDecimal.greaterThan(0) && isFromEthereum
 
   const isShowRecipient = isFromEthereum
     ? !!polkadotAccountAddress
@@ -108,7 +108,7 @@ const InputDataStep: React.FC<Props> = (props) => {
   }
 
   function setMax() {
-    setAmountInput(maxAmount)
+    setAmountInput(maxAmountDecimal.toNumber())
   }
 
   const onTradeTypeSelectChange = (value: TradeTypeSelectValue) => {
@@ -146,12 +146,12 @@ const InputDataStep: React.FC<Props> = (props) => {
       errorString = 'Please wait fee check'
     } else if (isFromKhala && fee?.toString() === '0') {
       errorString = 'Please wait fee check'
-    } else if (new Decimal(amountTo).greaterThan(new Decimal(maxAmount))) {
+    } else if (new Decimal(amountTo).greaterThan(maxAmountDecimal)) {
       errorString = 'Insufficient balance'
     } else if (
       isFromKhala &&
       fee &&
-      new Decimal(amountTo).greaterThan(new Decimal(maxAmount).sub(fee))
+      new Decimal(amountTo).greaterThan(maxAmountDecimal.sub(fee))
     ) {
       errorString = 'Insufficient balance'
     }
