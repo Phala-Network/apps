@@ -220,7 +220,8 @@ export function transferAssetsKhalaAccounts(
 export async function transferPhaFromEvmToKhala(
   khalaApi: ApiPromise,
   bridge: Contract,
-  sender: any,
+  // sender: any,
+  _: any,
   recipient: any,
   amount: BN
 ) {
@@ -257,7 +258,8 @@ export async function transferPhaFromEvmToKhala(
 export async function transferPhaFromEvmToKarura(
   khalaApi: ApiPromise,
   bridge: Contract,
-  sender: any,
+  _: any,
+  // sender: any,
   recipient: any,
   amount: BN
 ) {

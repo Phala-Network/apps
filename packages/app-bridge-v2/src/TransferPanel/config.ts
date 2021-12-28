@@ -1,12 +1,30 @@
-export const network = [
+export const networks = [
   {
+    label: 'Khala',
     name: 'Khala',
   },
   {
+    label: 'Karura',
     name: 'Karura',
   },
   {
+    label: 'Evm',
     name: 'Evm',
+  },
+]
+
+export const coins = [
+  {
+    label: 'PHA',
+    name: 'PHA',
+  },
+  {
+    label: 'KHR',
+    name: 'KHR',
+  },
+  {
+    label: 'ETH',
+    name: 'ETH',
   },
 ]
 
