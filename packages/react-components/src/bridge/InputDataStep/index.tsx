@@ -108,7 +108,7 @@ const InputDataStep: React.FC<Props> = (props) => {
   }
 
   function setMax() {
-    setAmountInput(maxAmountDecimal.toNumber())
+    setAmountInput(parseFloat(maxAmountDecimal.toFixed(8, Decimal.ROUND_DOWN)))
   }
 
   const onTradeTypeSelectChange = (value: TradeTypeSelectValue) => {
