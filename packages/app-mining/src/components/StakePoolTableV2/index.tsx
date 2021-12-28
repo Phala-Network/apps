@@ -29,6 +29,7 @@ import {tooltipContent} from './tooltipContent'
 import DelegateModalBody from './DelegateModalBody'
 import ClaimModalBody from './ClaimModalBody'
 import WithdrawModalBody from './WithdrawModalBody'
+import Decimal from 'decimal.js'
 
 const SearchInput = styled.div`
   width: 420px;
@@ -66,14 +67,14 @@ const StakePoolTableV2 = ({
   const myDelegateAvailable: boolean = kind === 'myDelegate' && Boolean(address)
   const [searchString, setSearchString] = useState('')
   const [sortColumn, setSortColumn] =
-    useState<keyof StakePoolsOrderByWithRelationInput>('apr')
+    useState<keyof StakePoolsOrderByWithRelationInput>('instantApr')
   const [sortAsc, setSortAsc] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
 
   const [workersFilter, setWorkersFilter] = useState(kind === 'delegate')
   const [aprFilter, setAprFilter] = useState(false)
   const [commissionFilter, setCommissionFilter] = useState(kind === 'delegate')
-  const [remainingFilter, setRemainingFilter] = useState(true)
+  const [remainingFilter, setRemainingFilter] = useState(kind === 'delegate')
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   const [openModalKey, setOpenModalKey] = useState<ModalKey | null>(null)
@@ -111,18 +112,22 @@ const StakePoolTableV2 = ({
         }),
         AND: [
           workersFilter && {workersCount: {gt: 0}},
-          aprFilter && {apr: {gt: '0'}},
+          aprFilter && {instantApr: {gt: '0'}},
           commissionFilter && {commission: {lt: '1'}},
           myDelegateAvailable && {
             stakePoolStakers: {
               some: {
-                AND: [{address: {equals: address}}, {shares: {gt: '0'}}],
+                address: {equals: address},
+                OR: [{claimableRewards: {gt: '0'}}, {shares: {gt: '0'}}],
               },
             },
           },
           remainingFilter && {
             // remainingStake null means ∞
-            OR: [{remainingStake: {gt: '0'}}, {remainingStake: {equals: null}}],
+            OR: [
+              {remainingStake: {gt: '0.01'}},
+              {remainingStake: {equals: null}},
+            ],
           },
         ].filter(isTruthy),
       },
@@ -266,7 +271,7 @@ const StakePoolTableV2 = ({
               {(stakePool: StakePools) => <OwnerCell stakePool={stakePool} />}
             </TableBuilderColumn>
             <TableBuilderColumn
-              id="apr"
+              id="instantApr"
               header={
                 <StatefulTooltip
                   content={tooltipContent.apr}
@@ -277,7 +282,9 @@ const StakePoolTableV2 = ({
               }
               sortable
             >
-              {(stakePool: StakePools) => <PercentCell value={stakePool.apr} />}
+              {(stakePool: StakePools) => (
+                <PercentCell value={stakePool.instantApr} />
+              )}
             </TableBuilderColumn>
             <TableBuilderColumn
               id="remainingStake"
@@ -398,8 +405,19 @@ const StakePoolTableV2 = ({
                   </StatefulTooltip>
                 }
               >
-                {/* TODO: add withdrawing when withdrawQueue is ready */}
-                {() => '-'}
+                {(stakePool: StakePools) => {
+                  const totalWithdrawal = stakePool.stakePoolWithdrawals.reduce(
+                    (acc, cur) => {
+                      if (cur.userAddress === address) {
+                        return acc.add(cur.stake)
+                      }
+                      return acc
+                    },
+                    new Decimal(0)
+                  )
+
+                  return <TokenCell value={totalWithdrawal} />
+                }}
               </TableBuilderColumn>
             )}
             {kind === 'myDelegate' && (

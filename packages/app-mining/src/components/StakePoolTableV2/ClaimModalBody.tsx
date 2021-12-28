@@ -68,7 +68,6 @@ const ClaimModalBody = ({
           label="Target Address"
           error={isAddressError ? 'Invalid address' : null}
         >
-          {/* FIXME: add amount validation */}
           <Input
             value={address}
             autoFocus

@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import {useMemo, useState} from 'react'
 import {Input} from 'baseui/input'
 import {
   ModalHeader,
@@ -19,6 +19,7 @@ import {
 } from '@phala/react-libs'
 import {Button} from 'baseui/button'
 import {formatCurrency} from '@phala/utils'
+import {usePolkadotAccountAtom} from '@phala/app-store'
 
 const WithdrawModalBody = ({
   stakePool,
@@ -27,6 +28,7 @@ const WithdrawModalBody = ({
   const {pid} = stakePool
   const {api} = useApiPromise()
   const [amount, setAmount] = useState('')
+  const [polkadotAccount] = usePolkadotAccountAtom()
   const waitSignAndSend = useWaitSignAndSend()
   const decimals = useDecimalJsTokenDecimalMultiplier(api)
   const onConfirm = () => {
@@ -49,8 +51,15 @@ const WithdrawModalBody = ({
       )
     }
   }
-  // TODO: add withdrawing when withdrawQueue is ready
-  const hasWithdrawing = true
+  const hasWithdrawing = useMemo<boolean>(
+    () =>
+      Boolean(
+        stakePool.stakePoolWithdrawals.find(
+          (withdrawal) => withdrawal.userAddress === polkadotAccount?.address
+        )
+      ),
+    [stakePool, polkadotAccount]
+  )
 
   return (
     <>

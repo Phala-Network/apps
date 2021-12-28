@@ -4,12 +4,10 @@ import {up} from 'styled-breakpoints'
 import {Link} from 'gatsby'
 import {HeadingMedium} from 'baseui/typography'
 import StakePoolTableV2 from '../components/StakePoolTableV2'
-import {useStakePoolsQuery} from '../hooks/graphql'
-import {client} from '../utils/GraphQLClient'
-import {usePolkadotAccountAtom} from '@phala/app-store'
 import {Button} from 'baseui/button'
 import {ChevronLeft} from 'react-feather'
 import {Card} from 'baseui/card'
+import ClaimAll from '../components/ClaimAll'
 
 const Wrapper = styled.div`
   overflow-x: auto;
@@ -25,61 +23,39 @@ const Heading = styled.div`
   align-items: center;
 `
 
-const Block = styled.div`
-  margin-top: 20px;
-`
-
-const Header = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`
-
 export const MyDelegate = () => {
-  const [polkadotAccount] = usePolkadotAccountAtom()
-  const {data} = useStakePoolsQuery(
-    client,
-    {
-      withStakePoolStakers: true,
-      where: {
-        stakePoolStakers: {
-          some: {
-            AND: [
-              {address: {equals: polkadotAccount?.address}},
-              {shares: {gt: '0'}},
-            ],
-          },
-        },
-      },
-    },
-    {enabled: Boolean(polkadotAccount?.address)}
-  )
   return (
     <Wrapper>
       <Helmet>
         <title>My Delegate</title>
       </Helmet>
-      <Card>
-        <Header>
-          <Heading>
-            <Link to="/delegate">
-              <Button size="compact" kind="minimal">
-                <ChevronLeft />
-              </Button>
-            </Link>
-            <HeadingMedium as="div">My Delegate</HeadingMedium>
-          </Heading>
-          <Button kind="secondary" disabled={!data?.findManyStakePools.length}>
-            Claim All
-          </Button>
-        </Header>
+      <Card
+        overrides={{
+          Root: {style: {borderRadius: '0'}},
+          Body: {
+            style: {
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            },
+          },
+        }}
+      >
+        <Heading>
+          <Link to="/delegate">
+            <Button size="compact" kind="minimal">
+              <ChevronLeft />
+            </Button>
+          </Link>
+          <HeadingMedium as="div">My Delegate</HeadingMedium>
+        </Heading>
+
+        <ClaimAll />
       </Card>
 
-      <Block>
-        <Card>
-          <StakePoolTableV2 kind="myDelegate" />
-        </Card>
-      </Block>
+      <Card overrides={{Root: {style: {borderRadius: '0', marginTop: '20px'}}}}>
+        <StakePoolTableV2 kind="myDelegate" />
+      </Card>
     </Wrapper>
   )
 }

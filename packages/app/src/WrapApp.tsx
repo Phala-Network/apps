@@ -15,6 +15,7 @@ import './fonts.css'
 import useCustomEndpoint from './hooks/useCustomEndpoint'
 import theme, {baseTheme} from './theme'
 import {SnackbarProvider} from 'baseui/snackbar'
+import {toaster, ToasterContainer} from 'baseui/toast'
 
 const WrapApp: React.FC = ({children}) => {
   const customEndpoint = useCustomEndpoint()
@@ -24,6 +25,12 @@ const WrapApp: React.FC = ({children}) => {
         queries: {
           refetchOnMount: false,
           refetchOnWindowFocus: false,
+          onError: () => {
+            toaster.negative(
+              'Something went wrong. Please try again later.',
+              {}
+            )
+          },
         },
       },
     })
@@ -65,6 +72,17 @@ const WrapApp: React.FC = ({children}) => {
                 <AppStoreProvider>
                   <BaseProvider theme={baseTheme}>
                     <SnackbarProvider>{children}</SnackbarProvider>
+                    <ToasterContainer
+                      autoHideDuration={3000}
+                      overrides={{
+                        ToastBody: {
+                          style: {
+                            maxWidth: '100%',
+                            width: '400px',
+                          },
+                        },
+                      }}
+                    />
                   </BaseProvider>
                 </AppStoreProvider>
               </MobileToastContextProvider>

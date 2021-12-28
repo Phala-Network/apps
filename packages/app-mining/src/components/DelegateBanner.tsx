@@ -1,10 +1,10 @@
 import styled from 'styled-components'
-import {DisplayXSmall, LabelLarge} from 'baseui/typography'
+import {HeadingMedium, LabelMedium} from 'baseui/typography'
 import {Link} from 'gatsby'
 import {Button} from 'baseui/button'
 import {Skeleton} from 'baseui/skeleton'
-import {useAggregateStakePoolsQuery} from '../../hooks/graphql'
-import {client} from '../../utils/GraphQLClient'
+import {useTotalStakeQuery} from '../hooks/graphql'
+import {client} from '../utils/GraphQLClient'
 import {formatCurrency} from '@phala/utils'
 import {ChevronRight} from 'react-feather'
 import {Card} from 'baseui/card'
@@ -16,23 +16,23 @@ const Content = styled.div`
   background-color: #fff;
 `
 
-const Banner = (): JSX.Element => {
-  const {data} = useAggregateStakePoolsQuery(client)
+const DelegateBanner = (): JSX.Element => {
+  const {data} = useTotalStakeQuery(client)
 
   const value = data?.aggregateStakePools._sum?.totalStake
 
   return (
-    <Card>
+    <Card overrides={{Root: {style: {borderRadius: '0'}}}}>
       <Content>
         <div>
-          <LabelLarge>Total Delegated</LabelLarge>
-          <DisplayXSmall>
+          <LabelMedium>Total Delegated</LabelMedium>
+          <HeadingMedium as="div">
             {value ? (
               `${formatCurrency(value)} PHA`
             ) : (
-              <Skeleton animation height="44px" width="300px" />
+              <Skeleton animation height="36px" width="300px" />
             )}
-          </DisplayXSmall>
+          </HeadingMedium>
         </div>
         <Link to="/delegate/my-delegate">
           <Button kind="minimal">
@@ -45,4 +45,4 @@ const Banner = (): JSX.Element => {
   )
 }
 
-export default Banner
+export default DelegateBanner

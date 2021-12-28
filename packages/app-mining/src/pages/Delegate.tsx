@@ -2,7 +2,7 @@ import {Helmet} from 'react-helmet'
 import styled from 'styled-components'
 import {up} from 'styled-breakpoints'
 import {Card} from 'baseui/card'
-import Banner from '../components/Delegate/Banner'
+import DelegateBanner from '../components/DelegateBanner'
 import StakePoolTableV2 from '../components/StakePoolTableV2'
 
 const Wrapper = styled.div`
@@ -15,10 +15,6 @@ const Wrapper = styled.div`
   }
 `
 
-const Block = styled.div`
-  margin-top: 20px;
-`
-
 export const Delegate = (): JSX.Element => {
   return (
     <>
@@ -27,13 +23,13 @@ export const Delegate = (): JSX.Element => {
       </Helmet>
 
       <Wrapper>
-        <Banner></Banner>
+        <DelegateBanner></DelegateBanner>
 
-        <Block>
-          <Card>
-            <StakePoolTableV2 kind="delegate" />
-          </Card>
-        </Block>
+        <Card
+          overrides={{Root: {style: {borderRadius: '0', marginTop: '20px'}}}}
+        >
+          <StakePoolTableV2 kind="delegate" />
+        </Card>
       </Wrapper>
     </>
   )
