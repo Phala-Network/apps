@@ -14,7 +14,7 @@ const Link = styled(GatsbyLink).attrs({activeClassName: 'active'})`
   line-height: 16px;
   color: #111111;
   text-decoration: none;
-  margin-left: 40px;
+  margin-left: 72px;
 
   &:hover {
     color: #aad829;

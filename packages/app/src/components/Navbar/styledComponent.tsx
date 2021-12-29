@@ -9,7 +9,6 @@ export const LineWrap = styled.a`
   padding: 16px 23px 16px 21px;
   font-family: Montserrat;
   font-style: normal;
-  font-weight: normal;
   font-weight: 500;
   font-size: 16px;
   line-height: 16px;

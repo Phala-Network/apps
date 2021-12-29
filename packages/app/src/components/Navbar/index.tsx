@@ -1,5 +1,5 @@
 import React from 'react'
-import {down} from 'styled-breakpoints'
+import {down, up} from 'styled-breakpoints'
 import styled from 'styled-components'
 import Logo from './Logo'
 import Links from './Links'
@@ -9,7 +9,7 @@ import CheckMore from './CheckMore'
 
 const Wrapper = styled.div`
   display: flex;
-  align-items: center;
+  justify-content: center;
   position: fixed;
   top: 0;
   left: 0;
@@ -17,21 +17,31 @@ const Wrapper = styled.div`
   height: 80px;
   background-color: #fff;
   z-index: 100;
-  padding-right: 40px;
 
   ${down('sm')} {
     display: none;
   }
 `
 
+const Content = styled.div`
+  display: flex;
+  align-items: center;
+
+  ${up('lg')} {
+    width: 1270px;
+  }
+`
+
 const Index: React.FC = () => {
   return (
     <Wrapper>
-      <Logo />
-      <Links />
-      <SelectNode />
-      <Account />
-      <CheckMore />
+      <Content>
+        <Logo />
+        <Links />
+        <SelectNode />
+        <Account />
+        <CheckMore />
+      </Content>
     </Wrapper>
   )
 }

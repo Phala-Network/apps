@@ -20,7 +20,6 @@ const Connect = styled.div`
   background: #d1ff52;
   font-family: Montserrat;
   font-style: normal;
-  font-weight: normal;
   font-weight: 500;
   font-size: 16px;
   line-height: 16px;
@@ -35,7 +34,6 @@ const AccountLable = styled.div`
   justify-content: space-between;
   font-family: Montserrat;
   font-style: normal;
-  font-weight: normal;
   font-weight: 500;
   font-size: 16px;
   line-height: 16px;
