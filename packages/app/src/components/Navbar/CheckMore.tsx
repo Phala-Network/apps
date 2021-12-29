@@ -1,8 +1,9 @@
-import {Link as GatsbyLink} from 'gatsby'
+import {navigate} from 'gatsby'
 import styled from 'styled-components'
 import {StatefulPopover, PLACEMENT} from 'baseui/popover'
 import MoreIcon from '../../icons/more.svg'
 import ExternalLink from '../../icons/external_link.svg'
+import {LineWrap} from './styledComponent'
 
 const MoreButton = styled.button`
   cursor: pointer;
@@ -21,53 +22,8 @@ const MoreButton = styled.button`
   }
 `
 
-const Link = styled(GatsbyLink)`
-  color: #111111;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  box-sizing: border-box;
-  width: 175px;
-  height: 47px;
-  padding: 14px 23px 14px 21px;
-  font-family: Montserrat;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 16px;
-  line-height: 16px;
-  border-bottom: 1px solid #cecece;
-
-  :hover {
-    background-color: #d1ff52;
-  }
-`
-
-const LineWrap = styled.a`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  box-sizing: border-box;
-  width: 175px;
-  height: 47px;
-  padding: 14px 23px 14px 21px;
-  font-family: Montserrat;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 16px;
-  line-height: 16px;
-
-  :not(:last-of-type) {
-    border-bottom: 1px solid #cecece;
-  }
-
-  :hover {
-    background-color: #d1ff52;
-  }
-
-  span {
-    color: #111111;
-    flex: 1;
-  }
+const ExternalName = styled.span`
+  padding-right: 16px;
 `
 
 const LINKS = [
@@ -98,24 +54,17 @@ const CheckMore = (): JSX.Element => {
     <StatefulPopover
       content={({close}) => (
         <>
-          <Link
+          <LineWrap
             onClick={() => {
-              close
+              navigate('/analytics/')
+              close()
             }}
-            to="/analytics/"
           >
             Analytics
-          </Link>
+          </LineWrap>
           {LINKS.map(({name, link}) => (
-            <LineWrap
-              onClick={() => {
-                close
-              }}
-              href={link}
-              key={name}
-              target="_blank"
-            >
-              <span>{name}</span>
+            <LineWrap onClick={close} href={link} key={name} target="_blank">
+              <ExternalName>{name}</ExternalName>
               <ExternalLink />
             </LineWrap>
           ))}
@@ -126,7 +75,7 @@ const CheckMore = (): JSX.Element => {
       overrides={{
         Arrow: {
           style: {
-            outline: `#aad829 solid`,
+            outline: `1px #aad829 solid`,
             backgroundColor: '#aad829',
           },
         },

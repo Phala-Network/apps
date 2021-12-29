@@ -4,6 +4,7 @@ import {useCustomEndpointAtom} from '@phala/app-store'
 import {StatefulPopover, PLACEMENT} from 'baseui/popover'
 import DropdownIcon from '../../icons/dropdown.svg'
 import useCustomEndpoint from '../../hooks/useCustomEndpoint'
+import {LineWrap} from './styledComponent'
 
 const Button = styled.button`
   cursor: pointer;
@@ -25,30 +26,6 @@ const Button = styled.button`
   :hover,
   :focus {
     background: #cecece;
-  }
-`
-
-const LineWrap = styled.div`
-  display: flex;
-  align-items: center;
-  width: 197px;
-  box-sizing: border-box;
-  padding: 16px 0 16px 21px;
-  white-space: nowrap;
-  font-family: Montserrat;
-  font-style: normal;
-  font-weight: normal;
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 16px;
-  color: #111111;
-
-  :not(:last-of-type) {
-    border-bottom: 1px solid #cecece;
-  }
-
-  :hover {
-    background-color: #d1ff52;
   }
 `
 
