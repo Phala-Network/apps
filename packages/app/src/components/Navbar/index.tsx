@@ -17,6 +17,7 @@ const Wrapper = styled.div`
   height: 80px;
   background-color: #fff;
   z-index: 100;
+  padding: 0 30px;
 
   ${down('sm')} {
     display: none;
@@ -26,8 +27,9 @@ const Wrapper = styled.div`
 const Content = styled.div`
   display: flex;
   align-items: center;
+  width: 100%;
 
-  ${up('lg')} {
+  ${up('xl')} {
     width: 1270px;
   }
 `

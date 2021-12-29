@@ -1,5 +1,6 @@
 import {useState, useMemo} from 'react'
 import styled from 'styled-components'
+import {down} from 'styled-breakpoints'
 import {BalanceLabel, PolkadotAccountModal} from '@phala/react-components'
 import {usePolkadotAccountAtom} from '@phala/app-store'
 import {trimAddress} from '@phala/utils'
@@ -25,6 +26,13 @@ const Connect = styled.div`
   line-height: 16px;
   color: #111111;
   margin-right: 20px;
+
+  ${down('lg')} {
+    font-size: 14px;
+    line-height: 14px;
+    padding: 0 10px;
+    margin-right: 10px;
+  }
 `
 
 const AccountLable = styled.div`
@@ -40,6 +48,12 @@ const AccountLable = styled.div`
   background: #eeeeee;
   margin-right: 20px;
   height: 36px;
+
+  ${down('lg')} {
+    font-size: 14px;
+    line-height: 14px;
+    margin-right: 10px;
+  }
 `
 
 const Balance = styled.span`
@@ -59,6 +73,10 @@ const AccountInfo = styled.div`
   box-sizing: border-box;
   height: 100%;
   padding: 0 16px;
+
+  ${down('lg')} {
+    padding: 0 10px;
+  }
 `
 const Name = styled.span`
   margin-right: 16px;
@@ -67,6 +85,10 @@ const Name = styled.span`
   overflow: hidden;
   text-overflow: ellipsis;
   box-sizing: border-box;
+
+  ${down('lg')} {
+    display: none;
+  }
 `
 
 const Address = styled.span``

@@ -1,5 +1,6 @@
 import {Link as GatsbyLink} from 'gatsby'
 import styled from 'styled-components'
+import {down} from 'styled-breakpoints'
 
 const Wrapper = styled.div`
   flex: 1;
@@ -22,6 +23,12 @@ const Link = styled(GatsbyLink).attrs({activeClassName: 'active'})`
 
   &.active {
     color: #aad829;
+  }
+
+  ${down('lg')} {
+    font-size: 14px;
+    line-height: 14px;
+    margin-left: 20px;
   }
 `
 

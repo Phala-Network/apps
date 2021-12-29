@@ -1,5 +1,6 @@
 import {useEffect} from 'react'
 import styled from 'styled-components'
+import {down} from 'styled-breakpoints'
 import {useCustomEndpointAtom} from '@phala/app-store'
 import {StatefulPopover, PLACEMENT} from 'baseui/popover'
 import DropdownIcon from '../../icons/dropdown.svg'
@@ -27,6 +28,14 @@ const Button = styled.button`
   :hover,
   :focus {
     background: #cecece;
+  }
+
+  ${down('lg')} {
+    width: 100px;
+    padding: 10px 8px 10px 13px;
+    font-size: 14px;
+    line-height: 14px;
+    margin-right: 10px;
   }
 `
 
