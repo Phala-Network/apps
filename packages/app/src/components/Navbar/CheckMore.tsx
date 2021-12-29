@@ -70,30 +70,30 @@ const LineWrap = styled.a`
   }
 `
 
-const CheckMore = (): JSX.Element => {
-  const LINKS = [
-    {
-      name: 'About',
-      link: 'https://phala.network',
-    },
-    {
-      name: 'Wiki',
-      link: 'https://wiki.phala.network',
-    },
-    {
-      name: 'Forum',
-      link: 'https://forum.phala.network/t/topic/2450/2',
-    },
-    {
-      name: 'Discord',
-      link: 'https://discord.gg/kpYj9GWjwN',
-    },
-    {
-      name: 'Governance',
-      link: 'https://khala.subsquare.io/',
-    },
-  ]
+const LINKS = [
+  {
+    name: 'About',
+    link: 'https://phala.network',
+  },
+  {
+    name: 'Wiki',
+    link: 'https://wiki.phala.network',
+  },
+  {
+    name: 'Forum',
+    link: 'https://forum.phala.network/t/topic/2450/2',
+  },
+  {
+    name: 'Discord',
+    link: 'https://discord.com/invite/phala',
+  },
+  {
+    name: 'Governance',
+    link: 'https://khala.subsquare.io/',
+  },
+]
 
+const CheckMore = (): JSX.Element => {
   return (
     <StatefulPopover
       content={({close}) => (

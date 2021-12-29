@@ -8,9 +8,11 @@ import useCustomEndpoint from '../../hooks/useCustomEndpoint'
 const Button = styled.button`
   cursor: pointer;
   display: flex;
-  align-items: center;
-  width: 200px;
-  padding: 10px;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 119px;
+  height: 36px;
+  padding: 10px 16px 10px 26px;
   background: #eeeeee;
   border: none;
   font-family: Montserrat;
@@ -24,21 +26,19 @@ const Button = styled.button`
   :focus {
     background: #cecece;
   }
-
-  span {
-    flex: 1;
-  }
 `
 
 const LineWrap = styled.div`
   display: flex;
   align-items: center;
+  width: 197px;
   box-sizing: border-box;
-  padding: 15px 20px;
+  padding: 16px 0 16px 21px;
   white-space: nowrap;
   font-family: Montserrat;
   font-style: normal;
   font-weight: normal;
+  font-weight: 500;
   font-size: 16px;
   line-height: 16px;
   color: #111111;
@@ -97,7 +97,7 @@ const SelectNode = (): JSX.Element => {
       overrides={{
         Arrow: {
           style: {
-            outline: `#aad829 solid`,
+            outline: `1px #aad829 solid`,
             backgroundColor: '#aad829',
           },
         },
