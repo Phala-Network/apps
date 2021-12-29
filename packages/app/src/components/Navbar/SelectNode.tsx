@@ -19,9 +19,11 @@ const Button = styled.button`
   font-family: Montserrat;
   font-style: normal;
   font-weight: normal;
+  font-weight: 500;
   font-size: 16px;
   line-height: 16px;
   transition: all 0.2s;
+  margin-right: 20px;
 
   :hover,
   :focus {

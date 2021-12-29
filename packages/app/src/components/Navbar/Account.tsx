@@ -10,21 +10,22 @@ import {
 } from '@phala/react-libs'
 import Decimal from 'decimal.js'
 
-const Button = styled.button`
+const Connect = styled.div`
   cursor: pointer;
   display: flex;
+  justify-content: center;
   align-items: center;
-  width: 200px;
-  padding: 10px;
+  height: 36px;
+  padding: 0 20px;
   background: #d1ff52;
-  border: none;
   font-family: Montserrat;
   font-style: normal;
   font-weight: normal;
+  font-weight: 500;
   font-size: 16px;
   line-height: 16px;
-  margin-left: 20px;
-  margin-right: 30px;
+  color: #111111;
+  margin-right: 20px;
 `
 
 const AccountLable = styled.div`
@@ -35,43 +36,42 @@ const AccountLable = styled.div`
   font-family: Montserrat;
   font-style: normal;
   font-weight: normal;
+  font-weight: 500;
   font-size: 16px;
   line-height: 16px;
-  margin-left: 20px;
-  margin-right: 30px;
   background: #eeeeee;
+  margin-right: 20px;
   height: 36px;
-  min-width: 300px;
-
-  .unit {
-    padding: 0 5px;
-  }
 `
 
 const Balance = styled.span`
-  padding: 0 10px;
+  padding: 0 16px;
   max-width: 300px;
   overflow: hidden;
-`
 
-const Address = styled.div`
-  display: flex;
-  align-items: center;
-  background: #cecece;
-  border: 1px solid #8c8c8c;
-  box-sizing: border-box;
-  height: 100%;
-  width: 211px;
-  padding: 0 10px;
-
-  .name {
-    flex: 1;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    margin-right: 10px;
+  .unit {
+    padding-left: 5px;
   }
 `
+
+const AccountInfo = styled.div`
+  display: flex;
+  align-items: center;
+  border: 1px solid #cecece;
+  box-sizing: border-box;
+  height: 100%;
+  padding: 0 16px;
+`
+const Name = styled.span`
+  margin-right: 16px;
+  max-width: 50px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  box-sizing: border-box;
+`
+
+const Address = styled.span``
 
 const Account = (): JSX.Element => {
   const [selectAccountModalViable, setSelectAccountModalViable] =
@@ -90,21 +90,19 @@ const Account = (): JSX.Element => {
   return (
     <>
       {!polkadotAccount ? (
-        <Button
+        <Connect
           onClick={openAccountSelectModal}
-        >{`Connect Polkadot{.js}`}</Button>
+        >{`Connect Polkadot{.js}`}</Connect>
       ) : (
         <AccountLable onClick={openAccountSelectModal}>
           <Balance>
             <BalanceLabel value={balanceValue} />
             <span className="unit">PHA</span>
           </Balance>
-          <Address>
-            <span className="name">{polkadotAccount?.name}</span>
-            <span className="address">
-              {trimAddress(polkadotAccount?.address)}
-            </span>
-          </Address>
+          <AccountInfo>
+            <Name>{polkadotAccount?.name}</Name>
+            <Address>{trimAddress(polkadotAccount?.address)}</Address>
+          </AccountInfo>
         </AccountLable>
       )}
       <PolkadotAccountModal
