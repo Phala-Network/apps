@@ -1,4 +1,4 @@
-import {useEffect, useMemo} from 'react'
+import {useEffect} from 'react'
 import styled from 'styled-components'
 import {useCustomEndpointAtom} from '@phala/app-store'
 import {StatefulPopover, PLACEMENT} from 'baseui/popover'
@@ -63,7 +63,7 @@ const NODES: NodeType[] = [
 
 const SelectNode = (): JSX.Element => {
   const urlEndpoint = useCustomEndpoint()
-  const [customEndpoint, setCustomEndpoint] = useCustomEndpointAtom()
+  const [, setCustomEndpoint] = useCustomEndpointAtom()
 
   useEffect(() => {
     if (urlEndpoint) {
@@ -71,59 +71,51 @@ const SelectNode = (): JSX.Element => {
     }
   }, [urlEndpoint, setCustomEndpoint])
 
-  const nodeName = useMemo(() => {
-    const selectedNode = NODES.find((item) => item.address === customEndpoint)
-    if (selectedNode) return selectedNode.name
-    return ''
-  }, [customEndpoint])
-
   const handleClick = (item: NodeType) => {
     setCustomEndpoint(item.address)
   }
 
   return (
-    <div>
-      <StatefulPopover
-        content={({close}) => (
-          <>
-            {NODES.map((item) => (
-              <LineWrap
-                key={item.name}
-                onClick={() => {
-                  handleClick(item)
-                  close()
-                }}
-              >
-                {item.name}
-              </LineWrap>
-            ))}
-          </>
-        )}
-        placement={PLACEMENT.bottom}
-        showArrow
-        overrides={{
-          Arrow: {
-            style: {
-              outline: `#aad829 solid`,
-              backgroundColor: '#aad829',
-            },
+    <StatefulPopover
+      content={({close}) => (
+        <>
+          {NODES.map((item) => (
+            <LineWrap
+              key={item.name}
+              onClick={() => {
+                handleClick(item)
+                close()
+              }}
+            >
+              {item.name}
+            </LineWrap>
+          ))}
+        </>
+      )}
+      placement={PLACEMENT.bottom}
+      showArrow
+      overrides={{
+        Arrow: {
+          style: {
+            outline: `#aad829 solid`,
+            backgroundColor: '#aad829',
           },
-          Body: {
-            style: {
-              outline: `1px #aad829 solid`,
-              backgroundColor: '#eeeeee',
-              boxShadow: 'none',
-              zIndex: 200,
-            },
+        },
+        Body: {
+          style: {
+            outline: `1px #aad829 solid`,
+            backgroundColor: '#eeeeee',
+            boxShadow: 'none',
+            zIndex: 200,
           },
-        }}
-      >
-        <Button>
-          <span>{nodeName}</span>
-          <DropdownIcon />
-        </Button>
-      </StatefulPopover>
-    </div>
+        },
+      }}
+    >
+      <Button>
+        <span>Khala</span>
+        <DropdownIcon />
+      </Button>
+    </StatefulPopover>
   )
 }
 
