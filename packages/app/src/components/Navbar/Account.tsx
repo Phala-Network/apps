@@ -41,7 +41,6 @@ const Connect = styled.div`
 `
 
 const AccountLable = styled.div`
-  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -81,6 +80,7 @@ const Balance = styled.span`
 `
 
 const AccountInfo = styled.div`
+  cursor: pointer;
   display: flex;
   align-items: center;
   border: 1px solid #cecece;
@@ -140,12 +140,12 @@ const Account: React.FC = () => {
       {!polkadotAccount ? (
         <Connect onClick={openAccountSelectModal}>{`Connect Wallet`}</Connect>
       ) : (
-        <AccountLable onClick={openAccountSelectModal}>
+        <AccountLable>
           <Balance>
             <BalanceLabel value={balanceValue} />
             <span className="unit">PHA</span>
           </Balance>
-          <AccountInfo>
+          <AccountInfo onClick={openAccountSelectModal}>
             <Name>{polkadotAccount?.name}</Name>
             <Address>{trimAddress(polkadotAccount.address)}</Address>
           </AccountInfo>
