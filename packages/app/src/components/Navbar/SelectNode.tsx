@@ -27,7 +27,7 @@ const Button = styled.button`
 
   :hover,
   :focus {
-    background: #cecece;
+    background: #d1ff52;
   }
 
   ${down('lg')} {

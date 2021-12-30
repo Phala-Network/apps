@@ -18,7 +18,7 @@ const MoreButton = styled.button`
 
   :hover,
   :focus {
-    background: #cecece;
+    background: #d1ff52;
   }
 `
 
