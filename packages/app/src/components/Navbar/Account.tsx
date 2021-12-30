@@ -1,4 +1,4 @@
-import {useState, useMemo} from 'react'
+import {useState, useMemo, useEffect} from 'react'
 import styled from 'styled-components'
 import {down} from 'styled-breakpoints'
 import {BalanceLabel, PolkadotAccountModal} from '@phala/react-components'
@@ -93,7 +93,7 @@ const Name = styled.span`
 
 const Address = styled.span``
 
-const Account = (): JSX.Element => {
+const Account: React.FC = () => {
   const [selectAccountModalViable, setSelectAccountModalViable] =
     useState(false)
   const openAccountSelectModal = () => setSelectAccountModalViable(true)
@@ -106,6 +106,16 @@ const Account = (): JSX.Element => {
     if (!api || !balance || !decimals) return new Decimal(0)
     return new Decimal(balance.toString() || '0').div(decimals)
   }, [api, balance, decimals])
+
+  const [isActive, setIsActive] = useState(false)
+
+  useEffect(() => {
+    setIsActive(true)
+  }, [])
+
+  if (!isActive) {
+    return null
+  }
 
   return (
     <>
@@ -121,7 +131,7 @@ const Account = (): JSX.Element => {
           </Balance>
           <AccountInfo>
             <Name>{polkadotAccount?.name}</Name>
-            <Address>{trimAddress(polkadotAccount?.address)}</Address>
+            <Address>{trimAddress(polkadotAccount.address)}</Address>
           </AccountInfo>
         </AccountLable>
       )}
