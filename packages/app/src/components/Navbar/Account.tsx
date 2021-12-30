@@ -58,11 +58,15 @@ const AccountLable = styled.div`
 
 const Balance = styled.span`
   padding: 0 16px;
-  max-width: 300px;
+  max-width: 100px;
   overflow: hidden;
 
   .unit {
     padding-left: 5px;
+  }
+
+  ${down('lg')} {
+    display: none;
   }
 `
 
@@ -87,11 +91,15 @@ const Name = styled.span`
   box-sizing: border-box;
 
   ${down('lg')} {
-    display: none;
+    margin-right: 0;
   }
 `
 
-const Address = styled.span``
+const Address = styled.span`
+  ${down('lg')} {
+    display: none;
+  }
+`
 
 const Account: React.FC = () => {
   const [selectAccountModalViable, setSelectAccountModalViable] =
@@ -120,9 +128,7 @@ const Account: React.FC = () => {
   return (
     <>
       {!polkadotAccount ? (
-        <Connect
-          onClick={openAccountSelectModal}
-        >{`Connect Polkadot{.js}`}</Connect>
+        <Connect onClick={openAccountSelectModal}>{`Connect Wallet`}</Connect>
       ) : (
         <AccountLable onClick={openAccountSelectModal}>
           <Balance>

@@ -30,6 +30,10 @@ const Link = styled(GatsbyLink).attrs({activeClassName: 'active'})`
     line-height: 14px;
     margin-left: 20px;
   }
+
+  @media screen and (max-width: 1270px) {
+    margin-left: 40px;
+  }
 `
 
 const Links: React.FC = () => {
