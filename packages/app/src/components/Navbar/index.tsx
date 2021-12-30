@@ -17,7 +17,7 @@ const Wrapper = styled.div`
   height: 80px;
   background-color: #fff;
   z-index: 100;
-  padding: 0 30px;
+  padding: 0 40px;
 
   ${down('sm')} {
     display: none;
@@ -29,9 +29,9 @@ const Content = styled.div`
   align-items: center;
   width: 100%;
 
-  ${up('xl')} {
-    width: 1270px;
-  }
+  /* ${up('xl')} {
+    width: 1360px;
+  } */
 `
 
 const Index: React.FC = () => {

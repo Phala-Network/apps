@@ -19,7 +19,7 @@ const Button = styled.button`
   border: none;
   font-family: Montserrat;
   font-style: normal;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 16px;
   line-height: 16px;
   transition: all 0.2s;

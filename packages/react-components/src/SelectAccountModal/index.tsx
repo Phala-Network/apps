@@ -17,7 +17,6 @@ export type SelectAccountModalProps = {
 const Content = styled.div`
   display: grid;
   grid-gap: 20px;
-  padding: 10px 0;
   max-height: 200px;
   overflow-y: auto;
 
@@ -30,7 +29,7 @@ const ModalTitle = styled.div`
   font-weight: 500;
   font-size: 32px;
   line-height: 32px;
-  margin-bottom: 30px;
+  margin-bottom: 40px;
 `
 
 export const SelectAccountModal: React.FC<SelectAccountModalProps> = (
@@ -54,7 +53,7 @@ export const SelectAccountModal: React.FC<SelectAccountModalProps> = (
           ></AccountOption>
         ))}
       </Content>
-      <ModalFooter style={{padding: 0, margin: '30px 0 0 0'}}>
+      <ModalFooter style={{padding: 0, margin: '40px 0 0'}}>
         <ModalButton
           onClick={() => props.onClose()}
           overrides={{

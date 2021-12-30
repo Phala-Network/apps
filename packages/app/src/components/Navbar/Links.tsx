@@ -10,12 +10,12 @@ const Wrapper = styled.div`
 const Link = styled(GatsbyLink).attrs({activeClassName: 'active'})`
   font-family: Montserrat;
   font-style: normal;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 16px;
   line-height: 16px;
   color: #111111;
   text-decoration: none;
-  margin-left: 72px;
+  margin-left: 56px;
 
   &:hover {
     color: #aad829;
@@ -31,8 +31,8 @@ const Link = styled(GatsbyLink).attrs({activeClassName: 'active'})`
     margin-left: 20px;
   }
 
-  @media screen and (max-width: 1270px) {
-    margin-left: 40px;
+  @media screen and (max-width: 1300px) {
+    margin-left: 25px;
   }
 `
 

@@ -18,19 +18,14 @@ const Connect = styled.div`
   align-items: center;
   height: 36px;
   padding: 0 20px;
-  background: #eeeeee;
+  background: #d1ff52;
   font-family: Montserrat;
   font-style: normal;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 16px;
   line-height: 16px;
   color: #111111;
   margin-right: 20px;
-
-  :hover,
-  :focus {
-    background: #d1ff52;
-  }
 
   ${down('lg')} {
     font-size: 14px;
@@ -46,17 +41,12 @@ const AccountLable = styled.div`
   justify-content: space-between;
   font-family: Montserrat;
   font-style: normal;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 16px;
   line-height: 16px;
   background: #eeeeee;
   margin-right: 20px;
   height: 36px;
-
-  :hover,
-  :focus {
-    background: #d1ff52;
-  }
 
   ${down('lg')} {
     font-size: 14px;
@@ -67,7 +57,7 @@ const AccountLable = styled.div`
 
 const Balance = styled.span`
   padding: 0 16px;
-  max-width: 100px;
+  max-width: 200px;
   overflow: hidden;
 
   .unit {

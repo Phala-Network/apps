@@ -11,15 +11,18 @@ type Props = {
 }
 
 const Name = styled.div`
-  font-weight: 500;
+  font-weight: 400;
   margin-bottom: 10px;
   display: flex;
   align-items: center;
+  font-family: Montserrat;
 `
 
 const Address = styled.div`
   word-break: break-all;
-  font-weight: 400;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 14px;
 `
 
 const AccountInfo = styled.div`
@@ -39,7 +42,6 @@ const AccountOptionWithStyle = styled.div`
   box-sizing: border-box;
 
   color: #111111;
-  font-family: Montserrat;
   font-style: normal;
   font-size: 16px;
   line-height: 16px;
