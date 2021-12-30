@@ -18,7 +18,7 @@ const Connect = styled.div`
   align-items: center;
   height: 36px;
   padding: 0 20px;
-  background: #d1ff52;
+  background: #eeeeee;
   font-family: Montserrat;
   font-style: normal;
   font-weight: 500;
@@ -26,6 +26,11 @@ const Connect = styled.div`
   line-height: 16px;
   color: #111111;
   margin-right: 20px;
+
+  :hover,
+  :focus {
+    background: #d1ff52;
+  }
 
   ${down('lg')} {
     font-size: 14px;
@@ -48,6 +53,11 @@ const AccountLable = styled.div`
   background: #eeeeee;
   margin-right: 20px;
   height: 36px;
+
+  :hover,
+  :focus {
+    background: #d1ff52;
+  }
 
   ${down('lg')} {
     font-size: 14px;
