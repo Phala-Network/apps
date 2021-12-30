@@ -2,8 +2,8 @@ import {css} from 'styled-components'
 
 export default css`
   ::-webkit-scrollbar {
-    width: 3px;
-    background-color: #ececec;
+    width: 4px;
+    background-color: #cecece;
   }
 
   ::-webkit-scrollbar-track {
@@ -12,6 +12,6 @@ export default css`
 
   ::-webkit-scrollbar-thumb {
     border-radius: 0;
-    background-color: #000000;
+    background-color: #111111;
   }
 `

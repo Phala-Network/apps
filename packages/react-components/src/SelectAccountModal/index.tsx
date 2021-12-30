@@ -1,11 +1,10 @@
 import {Account} from '@phala/app-types'
 import React from 'react'
 import styled from 'styled-components'
-import {Button} from '../Button'
-import {Center} from '../Center'
-import {Modal} from '../Modal'
+import {ModalWrapper} from '../Modal'
 import scrollbar from '../scrollbar'
 import AccountOption from './AccountOption'
+import {ModalFooter, ModalButton} from 'baseui/modal'
 
 export type SelectAccountModalProps = {
   visible: boolean
@@ -17,12 +16,21 @@ export type SelectAccountModalProps = {
 
 const Content = styled.div`
   display: grid;
-  grid-gap: 24px;
-  margin: 24px 0;
+  grid-gap: 20px;
+  padding: 10px 0;
   max-height: 200px;
   overflow-y: auto;
 
   ${scrollbar}
+`
+
+const ModalTitle = styled.div`
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 32px;
+  line-height: 32px;
+  margin-bottom: 30px;
 `
 
 export const SelectAccountModal: React.FC<SelectAccountModalProps> = (
@@ -31,11 +39,8 @@ export const SelectAccountModal: React.FC<SelectAccountModalProps> = (
   const {visible, currentAccount, accounts, onClose, onSelect} = props
 
   return (
-    <Modal
-      onClose={onClose}
-      visible={visible}
-      title={<Center>Select An Account</Center>}
-    >
+    <ModalWrapper onClose={onClose} visible={visible}>
+      <ModalTitle>Select An Account</ModalTitle>
       <Content style={{paddingRight: accounts.length > 2 ? 20 : 0}}>
         {accounts.map((item) => (
           <AccountOption
@@ -49,9 +54,32 @@ export const SelectAccountModal: React.FC<SelectAccountModalProps> = (
           ></AccountOption>
         ))}
       </Content>
-      <Button style={{width: '100%'}} onClick={onClose}>
-        Cancel
-      </Button>
-    </Modal>
+      <ModalFooter style={{padding: 0, margin: '30px 0 0 0'}}>
+        <ModalButton
+          onClick={() => props.onClose()}
+          overrides={{
+            BaseButton: {
+              style: () => ({
+                width: '100%',
+                backgroundColor: '#EEEEEE',
+                fontFamily: 'Montserrat',
+                fontStyle: 'normal',
+                fontWeight: 500,
+                fontSize: '20px',
+                lineHeight: '20px',
+                paddingTop: '16px',
+                paddingBottom: '16px',
+                color: '#111111',
+                ':hover': {
+                  backgroundColor: '#D1FF52',
+                },
+              }),
+            },
+          }}
+        >
+          Cancel
+        </ModalButton>
+      </ModalFooter>
+    </ModalWrapper>
   )
 }
