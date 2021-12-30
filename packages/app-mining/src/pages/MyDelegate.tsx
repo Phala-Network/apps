@@ -8,12 +8,13 @@ import {Button} from 'baseui/button'
 import {ChevronLeft} from 'react-feather'
 import {Card} from 'baseui/card'
 import ClaimAll from '../components/ClaimAll'
+import UpdateInfo from '../components/UpdateInfo'
 
 const Wrapper = styled.div`
   overflow-x: auto;
 
   ${up('md')} {
-    margin: 30px;
+    margin: 10px 30px 70px;
     flex: 1;
   }
 `
@@ -29,6 +30,7 @@ export const MyDelegate = () => {
       <Helmet>
         <title>My Delegate</title>
       </Helmet>
+      <UpdateInfo />
       <Card
         overrides={{
           Root: {style: {borderRadius: '0'}},

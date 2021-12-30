@@ -11597,6 +11597,11 @@ export type TotalStakeQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type TotalStakeQuery = { __typename?: 'Query', aggregateStakePools: { __typename?: 'AggregateStakePools', _sum?: { __typename?: 'StakePoolsSumAggregate', totalStake?: string | null | undefined } | null | undefined } };
 
+export type StatesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type StatesQuery = { __typename?: 'Query', findManyStates: Array<{ __typename?: 'States', integerValue?: number | null | undefined, datetimeValue?: any | null | undefined }> };
+
 
 export const StakePoolsDocument = `
     query StakePools($where: StakePoolsWhereInput, $orderBy: [StakePoolsOrderByWithRelationInput!], $take: Int, $skip: Int, $withStakePoolStakers: Boolean = false, $stakePoolStakersWhere: StakePoolStakersWhereInput, $withStakePoolWithdrawals: Boolean = false, $stakePoolWithdrawalsWhere: StakePoolWithdrawalsWhereInput) {
@@ -11684,5 +11689,27 @@ export const useTotalStakeQuery = <
     useQuery<TotalStakeQuery, TError, TData>(
       variables === undefined ? ['TotalStake'] : ['TotalStake', variables],
       fetcher<TotalStakeQuery, TotalStakeQueryVariables>(client, TotalStakeDocument, variables, headers),
+      options
+    );
+export const StatesDocument = `
+    query States {
+  findManyStates {
+    integerValue
+    datetimeValue
+  }
+}
+    `;
+export const useStatesQuery = <
+      TData = StatesQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: StatesQueryVariables,
+      options?: UseQueryOptions<StatesQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<StatesQuery, TError, TData>(
+      variables === undefined ? ['States'] : ['States', variables],
+      fetcher<StatesQuery, StatesQueryVariables>(client, StatesDocument, variables, headers),
       options
     );

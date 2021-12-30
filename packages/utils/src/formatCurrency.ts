@@ -7,6 +7,9 @@ export function formatCurrency(value: Decimal | string | number): string {
     2
   )
 
-  // @see https://stackoverflow.com/questions/2901102/how-to-print-a-number-with-commas-as-thousands-separators-in-javascript
-  return fixedValue.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+  const n = fixedValue
+  const p = n.indexOf('.')
+  return n.replace(/\d(?=(?:\d{3})+(?:\.|$))/g, (m, i) =>
+    p < 0 || i < p ? `${m},` : m
+  )
 }

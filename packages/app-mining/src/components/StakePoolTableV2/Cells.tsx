@@ -28,14 +28,15 @@ export const OwnerCell = ({
   stakePool: StakePools
 }): JSX.Element => (
   <Block display="flex" alignItems="center">
-    <StyledLink
-      title={ownerAddress}
-      href={`https://khala.subscan.io/account/${ownerAddress}`}
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      {identity || trimAddress(ownerAddress)}
-    </StyledLink>
+    <StatefulTooltip content={ownerAddress} placement="bottomLeft">
+      <StyledLink
+        href={`https://khala.subscan.io/account/${ownerAddress}`}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        {identity || trimAddress(ownerAddress)}
+      </StyledLink>
+    </StatefulTooltip>
     {identityVerified && (
       <StatefulTooltip content="Verified">
         <VerifiedIcon size={16} />

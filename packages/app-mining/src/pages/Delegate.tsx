@@ -4,14 +4,14 @@ import {up} from 'styled-breakpoints'
 import {Card} from 'baseui/card'
 import DelegateBanner from '../components/DelegateBanner'
 import StakePoolTableV2 from '../components/StakePoolTableV2'
+import UpdateInfo from '../components/UpdateInfo'
 
 const Wrapper = styled.div`
   overflow-x: auto;
 
   ${up('md')} {
-    margin: 30px;
+    margin: 10px 30px 70px;
     flex: 1;
-    margin-bottom: 70px;
   }
 `
 
@@ -23,10 +23,11 @@ export const Delegate = (): JSX.Element => {
       </Helmet>
 
       <Wrapper>
+        <UpdateInfo />
         <DelegateBanner></DelegateBanner>
 
         <Card
-          overrides={{Root: {style: {borderRadius: '0', marginTop: '20px'}}}}
+          overrides={{Root: {style: {borderRadius: '4px', marginTop: '20px'}}}}
         >
           <StakePoolTableV2 kind="delegate" />
         </Card>

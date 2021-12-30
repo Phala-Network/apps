@@ -2,7 +2,7 @@ import {TableBuilder, TableBuilderColumn} from 'baseui/table-semantic'
 import {StatefulPopover} from 'baseui/popover'
 import {StatefulMenu} from 'baseui/menu'
 import {useCallback, useState} from 'react'
-import {Search} from 'react-feather'
+import {Info, Search} from 'react-feather'
 import {Checkbox} from 'baseui/checkbox'
 import {
   SortOrder,
@@ -22,7 +22,7 @@ import PopoverButton from '../PopoverButton'
 import {usePolkadotAccountAtom} from '@phala/app-store'
 import Pagination from '../Pagination'
 import {Modal} from 'baseui/modal'
-import {StatefulTooltip} from 'baseui/tooltip'
+import {StatefulTooltip, TooltipProps} from 'baseui/tooltip'
 import {tooltipContent} from './tooltipContent'
 
 // FIXME: should be loadable, but meet some problems when configuring gatsby-plugin-loadable-components-ssr
@@ -30,6 +30,7 @@ import DelegateModalBody from './DelegateModalBody'
 import ClaimModalBody from './ClaimModalBody'
 import WithdrawModalBody from './WithdrawModalBody'
 import Decimal from 'decimal.js'
+import {Block} from 'baseui/block'
 
 const SearchInput = styled.div`
   width: 420px;
@@ -56,6 +57,19 @@ type ModalKey =
   | 'reclaimAll'
 type MenuItem = {label: string; key: ModalKey}
 const PAGE_SIZE = 20
+
+const TooltipHeader = ({children, ...props}: TooltipProps): JSX.Element => (
+  <Block display="flex" alignItems="center">
+    {children}
+    <StatefulTooltip
+      placement="bottomLeft"
+      overrides={{Body: {style: {maxWidth: '400px'}}}}
+      {...props}
+    >
+      <Info size={16} style={{marginLeft: 5}} />
+    </StatefulTooltip>
+  </Block>
+)
 
 const StakePoolTableV2 = ({
   kind,
@@ -246,12 +260,7 @@ const StakePoolTableV2 = ({
             <TableBuilderColumn
               id="pid"
               header={
-                <StatefulTooltip
-                  content={tooltipContent.pid}
-                  placement="bottomLeft"
-                >
-                  Pid
-                </StatefulTooltip>
+                <TooltipHeader content={tooltipContent.pid}>Pid</TooltipHeader>
               }
               sortable
             >
@@ -260,12 +269,9 @@ const StakePoolTableV2 = ({
             <TableBuilderColumn
               id="owner"
               header={
-                <StatefulTooltip
-                  content={tooltipContent.owner}
-                  placement="bottomLeft"
-                >
+                <TooltipHeader content={tooltipContent.owner}>
                   Owner
-                </StatefulTooltip>
+                </TooltipHeader>
               }
             >
               {(stakePool: StakePools) => <OwnerCell stakePool={stakePool} />}
@@ -273,12 +279,7 @@ const StakePoolTableV2 = ({
             <TableBuilderColumn
               id="instantApr"
               header={
-                <StatefulTooltip
-                  content={tooltipContent.apr}
-                  placement="bottomLeft"
-                >
-                  APR
-                </StatefulTooltip>
+                <TooltipHeader content={tooltipContent.apr}>APR</TooltipHeader>
               }
               sortable
             >
@@ -289,12 +290,9 @@ const StakePoolTableV2 = ({
             <TableBuilderColumn
               id="remainingStake"
               header={
-                <StatefulTooltip
-                  content={tooltipContent.remaining}
-                  placement="bottomLeft"
-                >
+                <TooltipHeader content={tooltipContent.remaining}>
                   Remaining
-                </StatefulTooltip>
+                </TooltipHeader>
               }
               sortable
             >
@@ -305,12 +303,9 @@ const StakePoolTableV2 = ({
             <TableBuilderColumn
               id="commission"
               header={
-                <StatefulTooltip
-                  content={tooltipContent.commission}
-                  placement="bottomLeft"
-                >
+                <TooltipHeader content={tooltipContent.commission}>
                   Commission
-                </StatefulTooltip>
+                </TooltipHeader>
               }
               sortable
             >
@@ -322,12 +317,9 @@ const StakePoolTableV2 = ({
               <TableBuilderColumn
                 id="totalStake"
                 header={
-                  <StatefulTooltip
-                    content={tooltipContent.delegated}
-                    placement="bottomLeft"
-                  >
+                  <TooltipHeader content={tooltipContent.delegated}>
                     Delegated
-                  </StatefulTooltip>
+                  </TooltipHeader>
                 }
                 sortable
               >
@@ -339,12 +331,9 @@ const StakePoolTableV2 = ({
             <TableBuilderColumn
               id="freeStake"
               header={
-                <StatefulTooltip
-                  content={tooltipContent.freeDelegation}
-                  placement="bottomLeft"
-                >
+                <TooltipHeader content={tooltipContent.freeDelegation}>
                   Free Delegation
-                </StatefulTooltip>
+                </TooltipHeader>
               }
               sortable
             >
@@ -356,12 +345,9 @@ const StakePoolTableV2 = ({
               <TableBuilderColumn
                 id="releasingStake"
                 header={
-                  <StatefulTooltip
-                    content={tooltipContent.releasingStake}
-                    placement="bottomLeft"
-                  >
+                  <TooltipHeader content={tooltipContent.releasingStake}>
                     Releasing Stake
-                  </StatefulTooltip>
+                  </TooltipHeader>
                 }
                 sortable
               >
@@ -379,12 +365,9 @@ const StakePoolTableV2 = ({
               <TableBuilderColumn
                 id="yourDelegation"
                 header={
-                  <StatefulTooltip
-                    content={tooltipContent.yourDelegation}
-                    placement="bottomLeft"
-                  >
+                  <TooltipHeader content={tooltipContent.yourDelegation}>
                     Your Delegation
-                  </StatefulTooltip>
+                  </TooltipHeader>
                 }
               >
                 {(stakePool: StakePools) => {
@@ -397,12 +380,9 @@ const StakePoolTableV2 = ({
               <TableBuilderColumn
                 id="yourWithdrawing"
                 header={
-                  <StatefulTooltip
-                    content={tooltipContent.yourWithdrawing}
-                    placement="bottomLeft"
-                  >
+                  <TooltipHeader content={tooltipContent.yourWithdrawing}>
                     Your Withdrawing
-                  </StatefulTooltip>
+                  </TooltipHeader>
                 }
               >
                 {(stakePool: StakePools) => {
@@ -424,12 +404,9 @@ const StakePoolTableV2 = ({
               <TableBuilderColumn
                 id="claimableRewards"
                 header={
-                  <StatefulTooltip
-                    content={tooltipContent.claimableRewards}
-                    placement="bottomLeft"
-                  >
+                  <TooltipHeader content={tooltipContent.claimableRewards}>
                     Claimable Rewards
-                  </StatefulTooltip>
+                  </TooltipHeader>
                 }
               >
                 {(stakePool: StakePools) => {
