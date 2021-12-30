@@ -26,7 +26,7 @@ const Address = styled.div`
 `
 
 const AccountInfo = styled.div`
-  margin-right: 38px;
+  margin-right: 20px;
 `
 
 const AccountOptionWithStyle = styled.div`
