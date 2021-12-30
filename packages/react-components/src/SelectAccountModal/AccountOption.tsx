@@ -33,7 +33,7 @@ const AccountOptionWithStyle = styled.div`
   padding: 18px 20px 16px 20px;
   margin-right: 20px;
 
-  height: 76px;
+  /* height: 76px; */
 
   background-color: #eeeeee;
   box-sizing: border-box;
