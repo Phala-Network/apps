@@ -84,6 +84,7 @@ export const SubmitStepToEthereum: React.FC<Props> = (props) => {
             setProgressIndex(1)
           } else if (status.isInBlock) {
             setProgressIndex(2)
+            setSubmittedHashBoolean(true)
           } else if (status.isFinalized) {
             setProgressIndex(3)
             setSubmittedHashBoolean(true)
