@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import {ModalWrapper, ModalButtonWrapper} from '../Modal'
 import scrollbar from '../scrollbar'
 import AccountOption from './AccountOption'
-import {ModalBody} from 'baseui/modal'
+import {ModalBody, ModalFooter} from 'baseui/modal'
 
 export type SelectAccountModalProps = {
   visible: boolean
@@ -30,6 +30,7 @@ const ModalTitle = styled.div`
   font-size: 32px;
   line-height: 32px;
   margin-bottom: 30px;
+  margin-top: 20px;
 `
 
 export const SelectAccountModal: React.FC<SelectAccountModalProps> = (
@@ -55,7 +56,9 @@ export const SelectAccountModal: React.FC<SelectAccountModalProps> = (
           ))}
         </Content>
       </ModalBody>
-      <ModalButtonWrapper onClick={props.onClose}>Cancel</ModalButtonWrapper>
+      <ModalFooter style={{padding: 0, margin: '30px 0 20px 0'}}>
+        <ModalButtonWrapper onClick={props.onClose}>Cancel</ModalButtonWrapper>
+      </ModalFooter>
     </ModalWrapper>
   )
 }

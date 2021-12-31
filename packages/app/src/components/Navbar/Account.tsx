@@ -1,10 +1,10 @@
-import {useState, useMemo, useEffect} from 'react'
+import {useState, useMemo} from 'react'
 import styled from 'styled-components'
 import {down} from 'styled-breakpoints'
 import {BalanceLabel, PolkadotAccountModal} from '@phala/react-components'
 import {usePolkadotAccountAtom} from '@phala/app-store'
 import {trimAddress} from '@phala/utils'
-import {useBalance} from '@phala/react-hooks'
+import {useBalance, useSSR} from '@phala/react-hooks'
 import {
   useApiPromise,
   useDecimalJsTokenDecimalMultiplier,
@@ -115,15 +115,9 @@ const Account: React.FC = () => {
     return new Decimal(balance.toString() || '0').div(decimals)
   }, [api, balance, decimals])
 
-  const [isActive, setIsActive] = useState(false)
+  const {isServer} = useSSR()
 
-  useEffect(() => {
-    setIsActive(true)
-  }, [])
-
-  if (!isActive) {
-    return null
-  }
+  if (isServer) return null
 
   return (
     <>

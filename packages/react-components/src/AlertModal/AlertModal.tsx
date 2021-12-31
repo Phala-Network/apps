@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import {ModalFooter} from 'baseui/modal'
 import {ModalWrapper, ModalButtonWrapper} from '../Modal'
 
 const Content = styled.div`
@@ -21,7 +22,9 @@ export const AlertModal: React.FC<AlertModalProps> = (props) => {
   return (
     <ModalWrapper {...props} title="Alert">
       <Content>{props.content}</Content>
-      <ModalButtonWrapper onClick={props.onClose}>Cancel</ModalButtonWrapper>
+      <ModalFooter style={{padding: 0, margin: '30px 0 0'}}>
+        <ModalButtonWrapper onClick={props.onClose}>Cancel</ModalButtonWrapper>
+      </ModalFooter>
     </ModalWrapper>
   )
 }

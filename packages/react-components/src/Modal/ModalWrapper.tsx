@@ -35,6 +35,8 @@ export const ModalWrapper = (props: IModalProps): JSX.Element => {
         },
         Dialog: {
           style: () => ({
+            boxSizing: 'border-box',
+            width: '615px',
             outline: `2px #AAD829 solid`,
             borderTopLeftRadius: '0px',
             borderTopRightRadius: '0px',
