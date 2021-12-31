@@ -62,7 +62,6 @@
     "react-scripts": "4.0.3",
     "react-toastify": "^7.0.4",
     "styled-breakpoints": "^10.0.1",
-    "styled-components": "^5.3.3",
     "styletron-engine-atomic": "^1.4.8",
     "styletron-react": "^6.0.2",
     "svg-react-loader": "^0.4.6",
