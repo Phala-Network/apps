@@ -85,7 +85,6 @@ const CheckMore = (): JSX.Element => {
             backgroundColor: '#eeeeee',
             boxShadow: 'none',
             marginRight: '20px',
-            zIndex: 200,
           },
         },
       }}

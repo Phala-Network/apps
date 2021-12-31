@@ -28,11 +28,6 @@ export const ModalWrapper = (props: IModalProps): JSX.Element => {
       closeable={closeable === undefined ? false : closeable}
       isOpen={visible}
       overrides={{
-        Root: {
-          style: () => ({
-            zIndex: 200,
-          }),
-        },
         Dialog: {
           style: () => ({
             boxSizing: 'border-box',

@@ -1,6 +1,7 @@
 import React from 'react'
-import {down, up} from 'styled-breakpoints'
+import {down} from 'styled-breakpoints'
 import styled from 'styled-components'
+import {Layer} from 'baseui/layer'
 import Logo from './Logo'
 import Links from './Links'
 import SelectNode from './SelectNode'
@@ -16,7 +17,6 @@ const Wrapper = styled.div`
   right: 0;
   height: 80px;
   background-color: #fff;
-  z-index: 100;
   padding: 0 40px;
 
   ${down('sm')} {
@@ -28,23 +28,21 @@ const Content = styled.div`
   display: flex;
   align-items: center;
   width: 100%;
-
-  /* ${up('xl')} {
-    width: 1360px;
-  } */
 `
 
 const Index: React.FC = () => {
   return (
-    <Wrapper>
-      <Content>
-        <Logo />
-        <Links />
-        <SelectNode />
-        <Account />
-        <CheckMore />
-      </Content>
-    </Wrapper>
+    <Layer>
+      <Wrapper>
+        <Content>
+          <Logo />
+          <Links />
+          <SelectNode />
+          <Account />
+          <CheckMore />
+        </Content>
+      </Wrapper>
+    </Layer>
   )
 }
 

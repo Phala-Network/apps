@@ -99,7 +99,6 @@ const SelectNode = (): JSX.Element => {
             outline: `1px #aad829 solid`,
             backgroundColor: '#eeeeee',
             boxShadow: 'none',
-            zIndex: 200,
           },
         },
       }}
