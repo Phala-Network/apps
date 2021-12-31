@@ -34,7 +34,6 @@ const AccountOptionWithStyle = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 18px 20px 16px 20px;
-  margin-right: 20px;
 
   /* height: 76px; */
 

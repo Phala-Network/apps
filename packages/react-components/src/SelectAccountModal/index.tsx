@@ -17,7 +17,7 @@ export type SelectAccountModalProps = {
 const Content = styled.div`
   display: grid;
   grid-gap: 20px;
-  max-height: 200px;
+  max-height: 300px;
   overflow-y: auto;
 
   ${scrollbar}
