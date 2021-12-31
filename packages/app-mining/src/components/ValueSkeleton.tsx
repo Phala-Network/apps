@@ -1,6 +1,7 @@
 import {Skeleton, SkeletonPropsT} from 'baseui/skeleton'
 import {forwardRef} from 'react'
 
+// TODO: migrate to global overrides
 const ValueSkeleton = forwardRef<HTMLDivElement, SkeletonPropsT>(
   (props, ref) => {
     return (

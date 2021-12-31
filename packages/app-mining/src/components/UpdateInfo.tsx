@@ -32,25 +32,18 @@ const UpdateInfo = (): JSX.Element => {
   )
 
   return (
-    <Block display="flex" justifyContent="flex-end">
-      <Block
-        display="flex"
-        justifyContent="flex-end"
-        alignItems="center"
-        height="34px"
+    <Block display="flex" alignItems="center" height="34px">
+      <StatefulTooltip
+        content="Usually updated every 15 mins"
+        placement="bottomLeft"
       >
-        <StatefulTooltip
-          content="Usually updated every 15 mins"
-          placement="bottomLeft"
-        >
-          <Info size={16} />
-        </StatefulTooltip>
-        <LabelSmall $style={{marginLeft: '5px'}}>
-          Last Update: {distance && `${distance} ago`}
-        </LabelSmall>
-        {isLoading && <Skeleton animation height="34px" width="200px" />}
-        {blockNumber && <Tag closeable={false}>#{blockNumber}</Tag>}
-      </Block>
+        <Info size={16} />
+      </StatefulTooltip>
+      <LabelSmall $style={{marginLeft: '5px'}}>
+        Last Update: {distance && `${distance} ago`}
+      </LabelSmall>
+      {isLoading && <Skeleton animation height="34px" width="200px" />}
+      {blockNumber && <Tag closeable={false}>#{blockNumber}</Tag>}
     </Block>
   )
 }
