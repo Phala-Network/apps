@@ -19,6 +19,11 @@ export const ModalWrapper = (props: IModalProps): JSX.Element => {
   const {title, children, visible, onClose, closeable} = props
   return (
     <Modal
+      // From https://baseweb.design/components/modal:
+      // Makes modal scrollable while cursor is over the modal's backdrop.
+      // Will be removed and implemented as the default behavior in the
+      // next major version.
+      unstable_ModalBackdropScroll={true}
       onClose={onClose}
       closeable={closeable === undefined ? false : closeable}
       isOpen={visible}
