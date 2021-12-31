@@ -1,26 +1,28 @@
 import {Block} from 'baseui/block'
-import {StyledLink} from 'baseui/link'
 import {useLocation} from '@reach/router'
 import {navigate} from 'gatsby'
+import UpdateInfo from './UpdateInfo'
+import {StyledLink} from 'baseui/link'
 
-const DelegateTopBar = (): JSX.Element => {
+const DelegateTopBarV2 = (): JSX.Element => {
   const {pathname} = useLocation()
   return (
-    <Block display="flex" justifyContent="flex-end" padding="10px 0">
+    <Block display="flex" justifyContent="flex-end" alignItems="center">
+      <UpdateInfo />
       <StyledLink
         href="#"
         onClick={(e) => {
           e.preventDefault()
-          navigate(`${pathname.replace('/v1', '')}`)
+          navigate(`/v1${pathname}`)
         }}
         $style={{
           margin: '0 10px',
         }}
       >
-        Switch to New Version
+        Switch to Old Version
       </StyledLink>
     </Block>
   )
 }
 
-export default DelegateTopBar
+export default DelegateTopBarV2

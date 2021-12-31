@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import {Card} from 'baseui/card'
 import DelegateBanner from '../components/DelegateBanner'
 import StakePoolTableV2 from '../components/StakePoolTableV2'
-import DelegateTopBar from '../components/DelegateTopBar'
+import DelegateTopBar from '../components/DelegateTopBarV2'
 
 const Wrapper = styled.div`
   overflow-x: auto;

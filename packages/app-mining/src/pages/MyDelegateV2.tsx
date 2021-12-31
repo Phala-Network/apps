@@ -7,7 +7,7 @@ import {Button} from 'baseui/button'
 import {ChevronLeft} from 'react-feather'
 import {Card} from 'baseui/card'
 import ClaimAll from '../components/ClaimAll'
-import DelegateTopBar from '../components/DelegateTopBar'
+import DelegateTopBar from '../components/DelegateTopBarV2'
 
 const Wrapper = styled.div`
   overflow-x: auto;
