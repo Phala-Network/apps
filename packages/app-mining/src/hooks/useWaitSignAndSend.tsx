@@ -3,9 +3,10 @@ import {useApiPromise, waitSignAndSend} from '@phala/react-libs'
 import {SubmittableExtrinsic} from '@polkadot/api/types'
 import {ExtrinsicStatus} from '@polkadot/types/interfaces'
 import {ISubmittableResult} from '@polkadot/types/types'
-import {toast} from 'react-toastify'
+import {DURATION, useSnackbar} from 'baseui/snackbar'
+import {XCircle, CheckCircle} from 'react-feather'
 
-// Temporary abstraction for mining due to time limit
+// TODO: move to common hooks lib
 const useWaitSignAndSend = (): ((
   extrinsic: SubmittableExtrinsic<'promise', ISubmittableResult> | undefined,
   onstatus?: (status: ExtrinsicStatus) => void
@@ -15,6 +16,7 @@ const useWaitSignAndSend = (): ((
       : never)
   | void
 >) => {
+  const {enqueue, dequeue} = useSnackbar()
   const [polkadotAccount] = usePolkadotAccountAtom()
   const {api} = useApiPromise()
 
@@ -29,14 +31,38 @@ const useWaitSignAndSend = (): ((
       account: polkadotAccount.address,
       extrinsic,
       signer,
-      onstatus,
+      onstatus: (status) => {
+        if (status.isReady) {
+          enqueue(
+            {
+              message: 'Submitting transaction',
+              progress: true,
+            },
+            DURATION.infinite
+          )
+        }
+
+        onstatus?.(status)
+      },
     })
       .then((res) => {
-        toast.success('Success')
+        dequeue()
+        // TODO: add view in subscan button
+        enqueue({
+          message: 'Transaction in block',
+          startEnhancer: ({size}) => <CheckCircle size={size} />,
+        })
         return res
       })
       .catch((err) => {
-        toast.error(err?.message)
+        dequeue()
+        enqueue(
+          {
+            message: err?.message,
+            startEnhancer: ({size}) => <XCircle size={size} />,
+          },
+          DURATION.long
+        )
         throw err
       })
   }
