@@ -23,7 +23,7 @@ const MoreButton = styled.button`
 `
 
 const ExternalName = styled.span`
-  padding-right: 16px;
+  margin-right: 16px;
 `
 
 const LINKS = [

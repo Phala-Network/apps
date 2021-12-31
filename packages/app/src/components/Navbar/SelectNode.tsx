@@ -4,6 +4,7 @@ import {down} from 'styled-breakpoints'
 import {useCustomEndpointAtom} from '@phala/app-store'
 import {StatefulPopover, PLACEMENT} from 'baseui/popover'
 import DropdownIcon from '../../icons/dropdown.svg'
+import CheckIcon from '../../icons/check.svg'
 import useCustomEndpoint from '../../hooks/useCustomEndpoint'
 import {LineWrap} from './styledComponent'
 
@@ -39,6 +40,10 @@ const Button = styled.button`
   }
 `
 
+const NodeName = styled.span`
+  margin-right: 25px;
+`
+
 type NodeType = {name: string; address: string}
 const NODES: NodeType[] = [
   {name: 'Khala via Phala', address: 'wss://khala-api.phala.network/ws'},
@@ -50,7 +55,7 @@ const NODES: NodeType[] = [
 
 const SelectNode = (): JSX.Element => {
   const urlEndpoint = useCustomEndpoint()
-  const [, setCustomEndpoint] = useCustomEndpointAtom()
+  const [customEndpoint, setCustomEndpoint] = useCustomEndpointAtom()
 
   useEffect(() => {
     if (urlEndpoint) {
@@ -74,7 +79,8 @@ const SelectNode = (): JSX.Element => {
                 close()
               }}
             >
-              {item.name}
+              <NodeName>{item.name}</NodeName>
+              {customEndpoint === item.address ? <CheckIcon /> : null}
             </LineWrap>
           ))}
         </>
