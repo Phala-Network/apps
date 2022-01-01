@@ -1,1 +1,1 @@
-export {Delegate as default} from '@phala/app-mining'
+export {DelegateV2 as default} from '@phala/app-mining'
