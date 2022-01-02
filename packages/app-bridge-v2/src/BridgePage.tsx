@@ -121,8 +121,6 @@ export const BridgePage = () => {
           />
         </div>
         <div>
-          <div style={{height: 20, width: 20}} />
-
           <Button
             onClick={() => {
               setMessages([])
@@ -138,8 +136,6 @@ export const BridgePage = () => {
           >
             transfer PHA From Khala To Karura
           </Button>
-
-          <div style={{height: 20, width: 20}} />
 
           <Button
             onClick={() => {
@@ -157,8 +153,6 @@ export const BridgePage = () => {
             transfer PHA From Karura To Khala
           </Button>
 
-          <div style={{height: 20, width: 20}} />
-
           <Button
             onClick={() => {
               setMessages([])
@@ -174,8 +168,6 @@ export const BridgePage = () => {
           >
             transfer KAR From Karura To Khala
           </Button>
-
-          <div style={{height: 20, width: 20}} />
 
           <Button
             onClick={() => {

@@ -1,6 +1,6 @@
 import {ApiPromise} from '@polkadot/api'
 import BN from 'bn.js'
-import {khalaParaId} from './config'
+import {khalaParaId} from '../../config'
 
 export function transferPHAFromKaruraToKhala(
   karuraApi: ApiPromise,
