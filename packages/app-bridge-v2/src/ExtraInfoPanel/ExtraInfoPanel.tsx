@@ -1,5 +1,5 @@
 import {FC, ReactNode} from 'react'
-import {Item, Root} from './styledComponents'
+import {Item, ItemTitle, ItemValue, Root} from './styledComponents'
 
 interface ExtraInfoPanelProps {
   infos: {
@@ -12,15 +12,13 @@ export const ExtraInfoPanel: FC<ExtraInfoPanelProps> = (props) => {
   const {infos} = props
 
   return (
-    <div>
-      <Root>
-        {infos.map((info, index) => (
-          <Item key={index}>
-            <div>{info.label}</div>
-            <div>{info.value}</div>
-          </Item>
-        ))}
-      </Root>
-    </div>
+    <Root>
+      {infos.map((info, index) => (
+        <Item key={index}>
+          <ItemTitle>{info.label}</ItemTitle>
+          <ItemValue>{info.value}</ItemValue>
+        </Item>
+      ))}
+    </Root>
   )
 }
