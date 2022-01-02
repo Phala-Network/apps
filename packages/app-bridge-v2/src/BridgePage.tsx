@@ -8,12 +8,14 @@ import {ExtraInfoPanel} from './ExtraInfoPanel'
 import {Header} from './Header'
 import {Root} from './styledComponents'
 import {
+  transferPHAFromKaruraToKhala,
+  transferPHAFromKhalaToKarura,
+} from './TransferModal/transfer'
+import {
   getBaseInfo,
   transferAssetsKhalaAccounts,
   transferKARFromKaruraToKhala,
   transferKARFromKhalaToKarura,
-  transferPHAFromKaruraToKhala,
-  transferPHAFromKhalaToKarura,
 } from './TransferModal/xtransfer'
 import {TransferPanel} from './TransferPanel'
 
