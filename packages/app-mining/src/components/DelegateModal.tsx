@@ -27,7 +27,7 @@ const DelegateModal = (props: StakePoolModalProps): JSX.Element => {
   const {api} = useApiPromise()
   const waitSignAndSend = useWaitSignAndSend()
   const decimals = useDecimalJsTokenDecimalMultiplier(api)
-  const [amount, setAmount] = useState<number | undefined>()
+  const [amount, setAmount] = useState<number>()
   const {refetch} = useSelfUserStakeInfo(stakePool.pid)
   const format = useFormat()
 

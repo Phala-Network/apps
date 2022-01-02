@@ -12,7 +12,6 @@
     "@polkadot/api": "^6.12.1",
     "@polkadot/extension-dapp": "^0.42.2",
     "@polkadot/util": "^8.1.2",
-    "@types/react": "^17.0.37",
     "date-fns": "^2.23.0",
     "decimal.js": "^10.3.1",
     "ethers": "^5.5.2",

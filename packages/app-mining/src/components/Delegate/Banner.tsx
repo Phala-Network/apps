@@ -47,7 +47,7 @@ const Banner = (): JSX.Element => {
       <Content>
         Total Delegated: <span>{locked}</span>
       </Content>
-      <Link to="/delegate/my-delegate/">
+      <Link to="/v1/delegate/my-delegate/">
         <Button size="small">My Delegate</Button>
       </Link>
     </Wrapper>
