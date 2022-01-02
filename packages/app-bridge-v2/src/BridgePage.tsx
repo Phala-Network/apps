@@ -7,7 +7,6 @@ import {useCallback, useEffect, useState} from 'react'
 import {ExtraInfoPanel} from './ExtraInfoPanel'
 import {Header} from './Header'
 import {Root} from './styledComponents'
-import {TransferPanel} from './TransferPanel'
 import {
   getBaseInfo,
   transferAssetsKhalaAccounts,
@@ -15,7 +14,8 @@ import {
   transferKARFromKhalaToKarura,
   transferPHAFromKaruraToKhala,
   transferPHAFromKhalaToKarura,
-} from './xtransfer'
+} from './TransferModal/xtransfer'
+import {TransferPanel} from './TransferPanel'
 
 const bn1e12 = new BN(10).pow(new BN(12))
 
