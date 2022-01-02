@@ -8,15 +8,13 @@ import {ExtraInfoPanel} from './ExtraInfoPanel'
 import {Header} from './Header'
 import {Root} from './styledComponents'
 import {
-  transferPHAFromKaruraToKhala,
-  transferPHAFromKhalaToKarura,
-} from './TransferModal/transfer'
-import {
-  getBaseInfo,
   transferAssetsKhalaAccounts,
   transferKARFromKaruraToKhala,
   transferKARFromKhalaToKarura,
-} from './TransferModal/xtransfer'
+  transferPHAFromKaruraToKhala,
+  transferPHAFromKhalaToKarura,
+} from './TransferModal/transfer'
+import {getBaseInfo} from './TransferModal/xtransfer'
 import {TransferPanel} from './TransferPanel'
 
 const bn1e12 = new BN(10).pow(new BN(12))
