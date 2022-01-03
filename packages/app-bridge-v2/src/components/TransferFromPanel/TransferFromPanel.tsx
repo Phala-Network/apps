@@ -1,13 +1,18 @@
 import {Keyring} from '@polkadot/api'
 import {Block} from 'baseui/block'
 import {FC, useEffect, useState} from 'react'
+import {TransactionInfoItem} from '../../types'
 import {AddressInput} from '../AddressInput'
 import {AmountInput} from '../AmountInput'
 import {CoinSelect} from '../CoinSelect'
 import {NetworkSelect} from '../NetworkSelect'
 import {TransferPanel} from '../TransferPanel'
 
-export const TransferFromPanel: FC = () => {
+interface TransferFromPanelProps {
+  transactionInfoItem?: TransactionInfoItem
+}
+
+export const TransferFromPanel: FC<TransferFromPanelProps> = () => {
   const [address, setAddress] = useState('')
 
   useEffect(() => {

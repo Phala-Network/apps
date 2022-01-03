@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import {FC, useState} from 'react'
 import {Helmet} from 'react-helmet'
 import {ExchangeIcon} from './components/ExchangeIcon'
 import {ExtraInfoPanel} from './components/ExtraInfoPanel'
@@ -8,8 +8,10 @@ import {TransferFromPanel} from './components/TransferFromPanel'
 import {TransferModal} from './components/TransferModal'
 import {TransferToPanel} from './components/TransferToPanel'
 import {BlockItem, Root} from './styledComponents'
+import {TransactionInfo} from './types'
 
-export const BridgePage = () => {
+export const BridgePage: FC = () => {
+  const [transactionInfo] = useState<TransactionInfo>()
   const [isOpenTransferModal, setIsOpenTransferModal] = useState(false)
 
   const submit = () => {
@@ -57,6 +59,7 @@ export const BridgePage = () => {
       </Root>
 
       <TransferModal
+        transactionInfo={transactionInfo}
         onClose={() => {
           setIsOpenTransferModal(false)
         }}
