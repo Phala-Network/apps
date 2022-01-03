@@ -9,7 +9,7 @@ import {
   SIZE,
 } from 'baseui/modal'
 import {FC} from 'react'
-import {TransactionInfo} from '../types'
+import {TransactionInfo} from '../../types'
 
 interface TransferModalProps {
   type?: string

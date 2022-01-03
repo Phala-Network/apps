@@ -10,8 +10,8 @@ import {
   transferKARFromKhalaToKarura,
   transferPHAFromKaruraToKhala,
   transferPHAFromKhalaToKarura,
-} from './TransferModal/transfer'
-import {getBaseInfo} from './TransferModal/xtransfer'
+} from './components/TransferModal/transfer'
+import {getBaseInfo} from './components/TransferModal/xtransfer'
 
 const bn1e12 = new BN(10).pow(new BN(12))
 
