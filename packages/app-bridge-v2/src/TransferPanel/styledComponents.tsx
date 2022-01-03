@@ -4,3 +4,14 @@ export const Root = styled.div`
   background-color: white;
   padding: 24px;
 `
+
+export const Label = styled.div`
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 20px;
+  line-height: 20px;
+
+  /* Bk 001 */
+  color: #111111;
+`

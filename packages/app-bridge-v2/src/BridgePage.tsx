@@ -25,11 +25,11 @@ export const BridgePage = () => {
         <Header />
 
         <BlockItem>
-          <TransferPanel />
+          <TransferPanel label="From" />
 
           <ExchangeIcon />
 
-          <TransferPanel />
+          <TransferPanel label="To" />
         </BlockItem>
 
         <BlockItem>
