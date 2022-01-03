@@ -15,6 +15,7 @@
     "baseui": "^10.6.0",
     "ethers": "^5.5.2",
     "react-query": "3.34.5",
+    "styled-breakpoints": "^10.0.1",
     "styled-components": "^5.3.3"
   },
   "peerDependencies": {
@@ -23,6 +24,7 @@
     "baseui": "^10.6.0",
     "ethers": "^5.5.2",
     "react-query": "3.34.5",
+    "styled-breakpoints": "^10.0.1",
     "styled-components": "^5.3.3"
   }
 }
