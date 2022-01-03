@@ -8,3 +8,9 @@ export const Root = styled.div`
   width: 672;
   margin: '0 auto';
 `
+
+export const BlockItem = styled.div`
+  filter: drop-shadow(0px 16px 48px rgba(0, 0, 0, 0.1));
+  width: 100%;
+  margin-top: 20px;
+`

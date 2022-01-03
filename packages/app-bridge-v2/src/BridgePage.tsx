@@ -1,9 +1,8 @@
-import {Block} from 'baseui/block'
 import {Button} from 'baseui/button'
 import {ExchangeIcon} from './ExchangeIcon'
 import {ExtraInfoPanel} from './ExtraInfoPanel'
 import {Header} from './Header'
-import {Root} from './styledComponents'
+import {BlockItem, Root} from './styledComponents'
 import {TransferPanel} from './TransferPanel'
 
 export const BridgePage = () => {
@@ -21,34 +20,43 @@ export const BridgePage = () => {
       >
         <Header />
 
-        <Block marginTop={['20px']}>
+        <BlockItem>
           <TransferPanel />
 
           <ExchangeIcon />
 
           <TransferPanel />
-        </Block>
+        </BlockItem>
 
-        <ExtraInfoPanel
-          infos={[
-            {label: 'Bridge Fee', value: '375 PHA'},
-            {label: 'Transaction Fee', value: '0.002123 PHA'},
-            {
-              label: 'Estimated time',
-              value: '30mins',
-            },
-          ]}
-        />
+        <BlockItem>
+          <ExtraInfoPanel
+            infos={[
+              {label: 'Bridge Fee', value: '375 PHA'},
+              {label: 'Transaction Fee', value: '0.002123 PHA'},
+              {
+                label: 'Estimated time',
+                value: '30mins',
+              },
+            ]}
+          />
+        </BlockItem>
 
-        <Block marginTop={['20px']}>
+        <BlockItem>
           <Button
+            overrides={{
+              BaseButton: {
+                style: () => ({
+                  width: '100%',
+                }),
+              },
+            }}
             onClick={() => {
               submit()
             }}
           >
             Submit 2
           </Button>
-        </Block>
+        </BlockItem>
       </Root>
     </div>
   )
