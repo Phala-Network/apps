@@ -2,10 +2,10 @@ import {Keyring} from '@polkadot/api'
 import {Block} from 'baseui/block'
 import {FC, useEffect, useState} from 'react'
 import {AddressInput} from '../AddressInput'
-import {AmountInput} from '../AmountInput'
 import {CoinSelect} from '../CoinSelect'
 import {NetworkSelect} from '../NetworkSelect'
 import {TransferPanel} from '../TransferPanel'
+import {AmountDisplay} from './AmountDisplay'
 
 export const TransferToPanel: FC = () => {
   const [address, setAddress] = useState('')
@@ -37,7 +37,7 @@ export const TransferToPanel: FC = () => {
       </Block>
 
       <Block marginTop={['20px']}>
-        <AmountInput />
+        <AmountDisplay>1000</AmountDisplay>
       </Block>
     </TransferPanel>
   )
