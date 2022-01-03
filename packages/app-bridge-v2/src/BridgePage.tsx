@@ -1,4 +1,5 @@
 import {useState} from 'react'
+import {Helmet} from 'react-helmet'
 import {ExchangeIcon} from './components/ExchangeIcon'
 import {ExtraInfoPanel} from './components/ExtraInfoPanel'
 import {Header} from './components/Header'
@@ -17,6 +18,10 @@ export const BridgePage = () => {
 
   return (
     <div style={{padding: 20, margin: 20, flex: 1}}>
+      <Helmet>
+        <title>Bridge</title>
+      </Helmet>
+
       <Root
         style={{
           width: 672,
