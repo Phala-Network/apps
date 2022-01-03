@@ -3,6 +3,7 @@ import {Helmet} from 'react-helmet'
 import {ExchangeIcon} from './components/ExchangeIcon'
 import {ExtraInfoPanel} from './components/ExtraInfoPanel'
 import {Header} from './components/Header'
+import {InformationModal} from './components/InformationModal'
 import {SubmitButton} from './components/SubmitButton'
 import {TransferFromPanel} from './components/TransferFromPanel'
 import {TransferModal} from './components/TransferModal'
@@ -65,6 +66,8 @@ export const BridgePage: FC = () => {
         }}
         isOpen={isOpenTransferModal}
       />
+
+      <InformationModal />
     </div>
   )
 }

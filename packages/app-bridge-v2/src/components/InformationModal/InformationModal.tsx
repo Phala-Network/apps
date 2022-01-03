@@ -1,4 +1,3 @@
-import {KIND as ButtonKind} from 'baseui/button'
 import {
   Modal,
   ModalBody,
@@ -9,13 +8,14 @@ import {
   SIZE,
 } from 'baseui/modal'
 import {FC, useState} from 'react'
+import {TimeIcon} from './components/TimeIcon'
 
 interface InformationModalProps {
   type?: string
 }
 
 export const InformationModal: FC<InformationModalProps> = () => {
-  const [isOpen, setIsOpen] = useState(true)
+  const [isOpen, setIsOpen] = useState(false)
 
   return (
     <Modal
@@ -27,14 +27,14 @@ export const InformationModal: FC<InformationModalProps> = () => {
       size={SIZE.default}
       role={ROLE.dialog}
     >
-      <ModalHeader>Hello world</ModalHeader>
+      <ModalHeader>Bridge Confirmation</ModalHeader>
+
       <ModalBody>
-        Proin ut dui sed metus pharetra hend rerit vel non mi. Nulla ornare
-        faucibus ex, non facilisis nisl. Maecenas aliquet mauris ut tempus.
+        <TimeIcon />
       </ModalBody>
+
       <ModalFooter>
-        <ModalButton kind={ButtonKind.tertiary}>Cancel</ModalButton>
-        <ModalButton>Okay</ModalButton>
+        <ModalButton>Collapse</ModalButton>
       </ModalFooter>
     </Modal>
   )
