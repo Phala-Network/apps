@@ -266,12 +266,12 @@ importers:
       ethers: ^5.5.2
       styled-components: ^5.3.3
     dependencies:
-      '@phala/react-components': link:../react-components
       '@phala/utils': link:../utils
       '@polkadot/api': 6.12.1
       bn.js: 5.2.0
     devDependencies:
       '@phala/app-store': link:../app-store
+      '@phala/react-components': link:../react-components
       baseui: 10.6.0_@types+react@17.0.37
       ethers: 5.5.2
       styled-components: 5.3.3
