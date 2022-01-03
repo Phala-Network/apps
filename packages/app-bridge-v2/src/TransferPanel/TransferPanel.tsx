@@ -1,4 +1,5 @@
-import {InformationModal} from '../InformationModal'
+import {Block} from 'baseui/block'
+import {AddressInput} from '../AddressInput'
 import {CoinSelect} from './CoinSelect'
 import {NetworkSelect} from './NetworkSelect'
 import {Root} from './styledComponents'
@@ -6,10 +7,12 @@ import {Root} from './styledComponents'
 export const TransferPanel = () => {
   return (
     <Root>
-      <NetworkSelect />
-      <CoinSelect />
+      <Block display="flex">
+        <NetworkSelect />
+        <CoinSelect />
+      </Block>
 
-      <InformationModal />
+      <AddressInput />
     </Root>
   )
 }

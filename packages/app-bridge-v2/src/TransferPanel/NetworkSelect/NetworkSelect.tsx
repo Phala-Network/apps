@@ -7,6 +7,26 @@ export const NetworkSelect = () => {
 
   return (
     <Select
+      overrides={{
+        ControlContainer: {
+          style: () => ({
+            /* Bk 001 */
+            backgroundColor: '#111111',
+            color: 'white',
+          }),
+        },
+        ClearIcon: {
+          props: {
+            overrides: {
+              Svg: {
+                style: () => ({
+                  color: 'white',
+                }),
+              },
+            },
+          },
+        },
+      }}
       options={networks}
       clearable={false}
       value={value}

@@ -15,6 +15,10 @@ export const networks = [
     label: 'Evm',
     name: 'Evm',
   },
+  {
+    label: 'Ethereum',
+    name: 'Ethereum',
+  },
 ]
 
 export const coins = [
