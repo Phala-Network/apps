@@ -1,13 +1,17 @@
-import {Button} from 'baseui/button'
+import {useState} from 'react'
 import {ExchangeIcon} from './ExchangeIcon'
 import {ExtraInfoPanel} from './ExtraInfoPanel'
 import {Header} from './Header'
 import {BlockItem, Root} from './styledComponents'
+import {SubmitButton} from './SubmitButton'
+import {TransferModal} from './TransferModal'
 import {TransferPanel} from './TransferPanel'
 
 export const BridgePage = () => {
+  const [isOpenTransferModal, setIsOpenTransferModal] = useState(false)
+
   const submit = () => {
-    return
+    setIsOpenTransferModal(true)
   }
 
   return (
@@ -42,22 +46,16 @@ export const BridgePage = () => {
         </BlockItem>
 
         <BlockItem>
-          <Button
-            overrides={{
-              BaseButton: {
-                style: () => ({
-                  width: '100%',
-                }),
-              },
-            }}
-            onClick={() => {
-              submit()
-            }}
-          >
-            Submit 2
-          </Button>
+          <SubmitButton onClick={submit} />
         </BlockItem>
       </Root>
+
+      <TransferModal
+        onClose={() => {
+          setIsOpenTransferModal(false)
+        }}
+        isOpen={isOpenTransferModal}
+      />
     </div>
   )
 }
