@@ -31,10 +31,10 @@ export const TransferModal: FC<TransferModalProps> = (props) => {
       size={SIZE.default}
       role={ROLE.dialog}
       overrides={{
-        Root: {
+        Dialog: {
           style: {
             border: '2px solid #AAD829',
-            borderRadius: '0',
+            borderRadius: 0,
           },
         },
       }}
