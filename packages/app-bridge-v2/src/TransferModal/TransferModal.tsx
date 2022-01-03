@@ -30,6 +30,14 @@ export const TransferModal: FC<TransferModalProps> = (props) => {
       autoFocus
       size={SIZE.default}
       role={ROLE.dialog}
+      overrides={{
+        Root: {
+          style: {
+            border: '2px solid #AAD829',
+            borderRadius: '0',
+          },
+        },
+      }}
     >
       <ModalHeader>Bridge Confirmation</ModalHeader>
       <ModalBody>Proin ut dui sed metus pharet</ModalBody>
