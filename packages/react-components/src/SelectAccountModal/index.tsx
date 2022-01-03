@@ -42,7 +42,7 @@ export const SelectAccountModal: React.FC<SelectAccountModalProps> = (
     <ModalWrapper onClose={onClose} visible={visible}>
       <ModalTitle>Select An Account</ModalTitle>
       <ModalBody style={{padding: '10px 0', margin: 0}}>
-        <Content style={{paddingRight: accounts.length > 2 ? 20 : 0}}>
+        <Content>
           {accounts.map((item) => (
             <AccountOption
               key={item.address}
