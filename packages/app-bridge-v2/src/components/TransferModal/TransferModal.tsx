@@ -10,6 +10,7 @@ import {
 } from 'baseui/modal'
 import {FC} from 'react'
 import {TransactionInfo} from '../../types'
+import {InformationDetailItem} from '../InformationDetailItem'
 
 interface TransferModalProps {
   type?: string
@@ -41,7 +42,21 @@ export const TransferModal: FC<TransferModalProps> = (props) => {
     >
       <ModalHeader>Bridge Confirmation</ModalHeader>
 
-      <ModalBody>Proin ut dui sed metus pharet</ModalBody>
+      <ModalBody>
+        <InformationDetailItem
+          label="From"
+          address="5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty"
+          amount="10000"
+          type="PHA"
+        />
+
+        <InformationDetailItem
+          label="To"
+          address="5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty"
+          amount="10000"
+          type="PHA"
+        />
+      </ModalBody>
 
       <ModalFooter>
         <ModalButton onClick={onClose} kind={ButtonKind.tertiary}>
