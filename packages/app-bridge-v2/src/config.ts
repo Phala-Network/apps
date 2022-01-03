@@ -2,6 +2,8 @@ export const khalaChainId = 1
 export const khalaParaId = 2004
 export const karuraParaId = 2000
 
+export const keyringType = 'sr25519'
+
 export const networks = [
   {
     label: 'Khala',
