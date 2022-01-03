@@ -1,14 +1,6 @@
 import {Input} from 'baseui/input'
-import {useState} from 'react'
+import {ComponentProps, FC} from 'react'
 
-export const AddressInput = () => {
-  const [value, setValue] = useState('Hello')
-  return (
-    <Input
-      value={value}
-      onChange={(e: any) => setValue(e.target?.value)}
-      placeholder="Wallet address"
-      clearOnEscape
-    />
-  )
+export const AddressInput: FC<ComponentProps<typeof Input>> = (props) => {
+  return <Input placeholder="Wallet address" clearOnEscape {...props} />
 }

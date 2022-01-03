@@ -40,9 +40,13 @@ export const TransferModal: FC<TransferModalProps> = (props) => {
       }}
     >
       <ModalHeader>Bridge Confirmation</ModalHeader>
+
       <ModalBody>Proin ut dui sed metus pharet</ModalBody>
+
       <ModalFooter>
-        <ModalButton kind={ButtonKind.tertiary}>Cancel</ModalButton>
+        <ModalButton onClick={onClose} kind={ButtonKind.tertiary}>
+          Cancel
+        </ModalButton>
         <ModalButton>Submit</ModalButton>
       </ModalFooter>
     </Modal>

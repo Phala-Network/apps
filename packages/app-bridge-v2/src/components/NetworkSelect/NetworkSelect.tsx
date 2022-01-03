@@ -1,6 +1,6 @@
 import {Select} from 'baseui/select'
 import * as React from 'react'
-import {networks} from '../../../config'
+import {networks} from '../../config'
 
 export const NetworkSelect = () => {
   const [value, setValue] = React.useState<any>([{label: 'Phala'}])
