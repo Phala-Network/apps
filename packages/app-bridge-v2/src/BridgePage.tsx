@@ -2,10 +2,11 @@ import {useState} from 'react'
 import {ExchangeIcon} from './components/ExchangeIcon'
 import {ExtraInfoPanel} from './components/ExtraInfoPanel'
 import {Header} from './components/Header'
-import {BlockItem, Root} from './styledComponents'
 import {SubmitButton} from './components/SubmitButton'
+import {TransferFromPanel} from './components/TransferFromPanel'
 import {TransferModal} from './components/TransferModal'
-import {TransferPanel} from './components/TransferPanel'
+import {TransferToPanel} from './components/TransferToPanel'
+import {BlockItem, Root} from './styledComponents'
 
 export const BridgePage = () => {
   const [isOpenTransferModal, setIsOpenTransferModal] = useState(false)
@@ -25,11 +26,11 @@ export const BridgePage = () => {
         <Header />
 
         <BlockItem>
-          <TransferPanel label="From" />
+          <TransferFromPanel />
 
           <ExchangeIcon />
 
-          <TransferPanel label="To" />
+          <TransferToPanel />
         </BlockItem>
 
         <BlockItem>
