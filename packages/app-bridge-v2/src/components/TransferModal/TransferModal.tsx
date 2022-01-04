@@ -9,6 +9,7 @@ import {
   SIZE,
 } from 'baseui/modal'
 import {FC} from 'react'
+import {useAllTransferData} from '../../store'
 import {TransactionInfo} from '../../types'
 import {InformationDetailItem} from '../InformationDetailItem'
 
@@ -21,6 +22,7 @@ interface TransferModalProps {
 
 export const TransferModal: FC<TransferModalProps> = (props) => {
   const {isOpen, onClose} = props
+  const allTransferData = useAllTransferData()
 
   return (
     <Modal
@@ -45,18 +47,18 @@ export const TransferModal: FC<TransferModalProps> = (props) => {
       <ModalBody>
         <InformationDetailItem
           label="From"
-          address="5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty"
-          amount="10000"
-          type="PHA"
-          network="Phala"
+          address={allTransferData.fromAddress}
+          network={allTransferData.fromNetwork}
+          coin={allTransferData.fromCoin}
+          amount={allTransferData.fromAmount.toString()}
         />
 
         <InformationDetailItem
           label="To"
-          address="5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty"
-          amount="10000"
-          type="PHA"
-          network="Phala"
+          address={allTransferData.toAddress}
+          network={allTransferData.toNetwork}
+          coin={allTransferData.toCoin}
+          amount={allTransferData.fromAmount.toString()}
         />
       </ModalBody>
 

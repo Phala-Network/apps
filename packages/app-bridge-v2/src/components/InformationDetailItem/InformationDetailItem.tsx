@@ -13,13 +13,13 @@ import {
 interface TransferPanelProps {
   label: string
   address?: string
-  type?: string
+  coin?: string
   amount?: string
   network?: string
 }
 
 export const InformationDetailItem: FC<TransferPanelProps> = (props) => {
-  const {type, label, address, amount, network} = props
+  const {coin, label, address, amount, network} = props
 
   return (
     <div>
@@ -32,7 +32,7 @@ export const InformationDetailItem: FC<TransferPanelProps> = (props) => {
 
         <Block display="flex">
           <Amount>{amount}</Amount>
-          <Type>{type}</Type>
+          <Type>{coin}</Type>
         </Block>
       </Body>
 
