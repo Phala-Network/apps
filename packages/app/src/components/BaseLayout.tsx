@@ -27,7 +27,7 @@ const HomePageWrap = styled.div`
 
 const ContentWrap = styled.div<{isDelegate?: boolean}>`
   margin: 80px auto auto;
-  width: ${(props) => (props.isDelegate ? '1300px' : '960px')};
+  width: ${(props) => (props.isDelegate ? '100%' : '960px')};
 `
 
 const BaseLayout: React.FC = (props) => {
