@@ -3,15 +3,9 @@ import {ModalButton} from 'baseui/modal'
 import {ButtonProps} from 'baseui/button'
 
 export const ModalButtonWrapper: React.FC<ButtonProps> = (props) => {
-  const {children, onClick} = props
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    if (onClick) {
-      onClick(e)
-    }
-  }
+  const {children, ...params} = props
   return (
     <ModalButton
-      onClick={handleClick}
       overrides={{
         BaseButton: {
           style: () => ({
@@ -31,6 +25,7 @@ export const ModalButtonWrapper: React.FC<ButtonProps> = (props) => {
           }),
         },
       }}
+      {...params}
     >
       {children}
     </ModalButton>

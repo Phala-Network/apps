@@ -15,8 +15,8 @@ interface IModalProps extends ModalProps {
   title?: React.ReactNode
 }
 
-export const ModalWrapper = (props: IModalProps): JSX.Element => {
-  const {title, children, visible, onClose, closeable} = props
+export const ModalWrapper: React.FC<IModalProps> = (props) => {
+  const {title, children, visible, ...params} = props
   return (
     <Modal
       // From https://baseweb.design/components/modal:
@@ -24,8 +24,7 @@ export const ModalWrapper = (props: IModalProps): JSX.Element => {
       // Will be removed and implemented as the default behavior in the
       // next major version.
       unstable_ModalBackdropScroll={true}
-      onClose={onClose}
-      closeable={closeable === undefined ? false : closeable}
+      closeable={false}
       isOpen={visible}
       overrides={{
         Dialog: {
@@ -41,6 +40,7 @@ export const ModalWrapper = (props: IModalProps): JSX.Element => {
           }),
         },
       }}
+      {...params}
     >
       {title ? <ModalTitle>{title}</ModalTitle> : null}
 
