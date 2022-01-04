@@ -12,13 +12,11 @@ import {ReactQueryDevtools} from 'react-query/devtools'
 import {ThemeProvider} from 'styled-components'
 import {BaseProvider} from 'baseui'
 import './fonts.css'
-// import useCustomEndpoint from './hooks/useCustomEndpoint'
 import theme, {baseTheme} from './theme'
 import {SnackbarProvider} from 'baseui/snackbar'
 import {toaster, ToasterContainer} from 'baseui/toast'
 
 const WrapApp: React.FC = ({children}) => {
-  // const customEndpoint = useCustomEndpoint()
   const client = useRef(
     new QueryClient({
       defaultOptions: {
@@ -48,8 +46,6 @@ const WrapApp: React.FC = ({children}) => {
     ethereumGraphEndpoint: isProduction()
       ? ethereumGraphEndpoint.production
       : ethereumGraphEndpoint.development,
-
-    // customEndpoint,
   }
 
   useLayoutEffect(() => {
