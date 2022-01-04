@@ -7,7 +7,7 @@ import DelegateTopBar from '../components/DelegateTopBarV2'
 
 const Wrapper = styled.div`
   overflow-x: auto;
-  margin: 10px 30px 70px;
+  margin: 10px 40px 70px;
   flex: 1;
 `
 

@@ -10,59 +10,60 @@ type Props = {
   onClick: (account: Account) => void
 }
 
-const Name = styled.div``
+const Name = styled.div`
+  font-weight: 400;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  font-family: Montserrat;
+`
 
 const Address = styled.div`
   word-break: break-all;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 14px;
+`
+
+const AccountInfo = styled.div`
+  margin-right: 20px;
 `
 
 const AccountOptionWithStyle = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 4px 16px;
+  padding: 18px 20px 16px 20px;
 
-  height: 56px;
-
-  border: 0.5px solid #878787;
+  background-color: #eeeeee;
   box-sizing: border-box;
 
-  color: #878787;
-  font-family: Lato;
+  color: #111111;
   font-style: normal;
-  font-weight: bold;
-  font-size: 12px;
-  line-height: 14px;
+  font-size: 16px;
+  line-height: 16px;
 
   cursor: pointer;
 
   &:hover,
   &.active {
-    background-color: ${(props) => props.theme.colors.phala};
-
-    ${Name} {
-      color: rgba(0, 0, 0, 0.5);
-    }
-
-    ${Address} {
-      color: rgba(0, 0, 0, 0.9);
-    }
+    background-color: #d1ff52;
   }
 `
 
 const icon = (
   <svg
-    width="10"
-    height="7"
-    viewBox="0 0 10 7"
+    width="19"
+    height="12"
+    viewBox="0 0 19 12"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
     <path
       fillRule="evenodd"
       clipRule="evenodd"
-      d="M0.22347 2.34212C0.52143 2.04416 1.00452 2.04416 1.30248 2.34212L4 5.03964L8.69752 0.342122C8.99548 0.0441623 9.47857 0.0441623 9.77653 0.342122C10.0745 0.640082 10.0745 1.12317 9.77653 1.42113L4.5395 6.65816C4.24154 6.95612 3.75846 6.95612 3.4605 6.65816L0.22347 3.42113C-0.07449 3.12317 -0.07449 2.64008 0.22347 2.34212Z"
-      fill="black"
+      d="M0.664898 4.01165C1.2181 3.49081 2.11501 3.49081 2.66821 4.01165L7.67647 8.72694L16.398 0.515628C16.9512 -0.00520918 17.8481 -0.00520918 18.4013 0.515628C18.9545 1.03646 18.9545 1.88091 18.4013 2.40174L8.67813 11.5561C8.12493 12.077 7.22802 12.077 6.67482 11.5561L0.664898 5.89776C0.1117 5.37693 0.1117 4.53248 0.664898 4.01165Z"
+      fill="#111111"
     />
   </svg>
 )
@@ -75,15 +76,15 @@ const AccountOption: React.FC<Props> = (props) => {
       className={active ? 'active' : ''}
       onClick={() => onClick({name, address})}
     >
-      <div>
+      <AccountInfo>
         {name && (
           <Name>
             {name}
-            <Copy style={{marginLeft: 3}} value={address}></Copy>
+            <Copy style={{marginLeft: 22}} value={address}></Copy>
           </Name>
         )}
         {address && <Address>{address}</Address>}
-      </div>
+      </AccountInfo>
       {active ? icon : null}
     </AccountOptionWithStyle>
   )
