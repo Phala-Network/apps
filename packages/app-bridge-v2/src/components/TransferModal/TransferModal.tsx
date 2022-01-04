@@ -48,6 +48,7 @@ export const TransferModal: FC<TransferModalProps> = (props) => {
           address="5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty"
           amount="10000"
           type="PHA"
+          network="Phala"
         />
 
         <InformationDetailItem
@@ -55,6 +56,7 @@ export const TransferModal: FC<TransferModalProps> = (props) => {
           address="5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty"
           amount="10000"
           type="PHA"
+          network="Phala"
         />
       </ModalBody>
 

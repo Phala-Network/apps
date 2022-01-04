@@ -6,6 +6,7 @@ export const Body = styled.div`
   height: 55px;
   display: flex;
   align-items: center;
+  justify-content: space-between;
 `
 
 export const Label = styled.div`
@@ -15,6 +16,21 @@ export const Label = styled.div`
   font-size: 20px;
   line-height: 30px;
   height: 30px;
+
+  /* Bk 001 */
+  color: #111111;
+`
+
+export const Network = styled.div`
+  font-family: Noto Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 16px;
+
+  display: flex;
+  align-items: center;
+  text-align: center;
 
   /* Bk 001 */
   color: #111111;
