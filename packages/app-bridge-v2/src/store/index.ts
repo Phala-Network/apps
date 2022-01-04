@@ -1,13 +1,9 @@
 import {atom, useAtom} from 'jotai'
 
 const fromAddress = atom<string>('')
-
-export function useFromAddress() {
-  return useAtom(fromAddress)
-}
-
 const fromAmount = atom<number>(0)
+const toAddress = atom<string>('')
 
-export function useFromAmount() {
-  return useAtom(fromAmount)
-}
+export const useFromAddress = () => useAtom(fromAddress)
+export const useFromAmount = () => useAtom(fromAmount)
+export const useToAddress = () => useAtom(toAddress)
