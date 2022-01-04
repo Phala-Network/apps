@@ -8,18 +8,22 @@ export const networks = [
   {
     label: 'Khala',
     name: 'Khala',
+    id: 'Khala',
   },
   {
     label: 'Karura',
     name: 'Karura',
+    id: 'Karura',
   },
   {
     label: 'Evm',
     name: 'Evm',
+    id: 'Evm',
   },
   {
     label: 'Ethereum',
     name: 'Ethereum',
+    id: 'Ethereum',
   },
 ]
 
@@ -27,14 +31,17 @@ export const coins = [
   {
     label: 'PHA',
     name: 'PHA',
+    id: 'PHA',
   },
   {
     label: 'KHR',
     name: 'KHR',
+    id: 'KHR',
   },
   {
     label: 'ETH',
     name: 'ETH',
+    id: 'ETH',
   },
 ]
 
