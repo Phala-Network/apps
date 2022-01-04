@@ -1,6 +1,6 @@
 import React from 'react'
 import {down, up} from 'styled-breakpoints'
-import styled from 'styled-components'
+import styled, {css} from 'styled-components'
 import {useLocation} from '@reach/router'
 import MobileNav from './MobileNav'
 // import SideNav from './SideNav'
@@ -27,7 +27,16 @@ const HomePageWrap = styled.div`
 
 const ContentWrap = styled.div<{isDelegate?: boolean}>`
   margin: 80px auto auto;
-  width: ${(props) => (props.isDelegate ? '100%' : '960px')};
+  /* width: ${(props) => (props.isDelegate ? '100%' : '960px')}; */
+  ${(props) =>
+    props.isDelegate
+      ? css`
+          width: 100%;
+          max-width: 1700px;
+        `
+      : css`
+          width: 960px;
+        `}
 `
 
 const BaseLayout: React.FC = (props) => {
