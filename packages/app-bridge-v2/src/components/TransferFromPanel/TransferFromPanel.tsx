@@ -1,8 +1,12 @@
 import {Keyring} from '@polkadot/api'
 import {Block} from 'baseui/block'
-import {Value} from 'baseui/select'
-import {FC, useEffect, useState} from 'react'
-import {useFromAddress, useFromAmount} from '../../store'
+import {FC, useEffect} from 'react'
+import {
+  useFromAddress,
+  useFromAmount,
+  useFromCoin,
+  useFromNetwork,
+} from '../../store'
 import {TransactionInfoItem} from '../../types'
 import {AddressInput} from '../AddressInput'
 import {AmountInput} from '../AmountInput'
@@ -16,8 +20,8 @@ interface TransferFromPanelProps {
 
 export const TransferFromPanel: FC<TransferFromPanelProps> = () => {
   const [address, setAddress] = useFromAddress()
-  const [network, setNetwork] = useState<Value>([{label: 'Phala'}])
-  const [coin, setCoin] = useState<Value>([{label: 'PHA'}])
+  const [network, setNetwork] = useFromNetwork()
+  const [coin, setCoin] = useFromCoin()
   const [amount, setAmount] = useFromAmount()
 
   useEffect(() => {
