@@ -1,5 +1,6 @@
 import {Block} from 'baseui/block'
 import {FC} from 'react'
+import {NetworkIcon} from '../NetworkIcon'
 import {
   Address,
   Amount,
@@ -26,9 +27,10 @@ export const InformationDetailItem: FC<TransferPanelProps> = (props) => {
       <Label>{label}</Label>
 
       <Body>
-        <div>
+        <Block display="flex">
+          <NetworkIcon network={network as any} />
           <Network>{network}</Network>
-        </div>
+        </Block>
 
         <Block display="flex">
           <Amount>{amount}</Amount>

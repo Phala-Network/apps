@@ -1,20 +1,30 @@
-import {DetailedHTMLProps, FC, ImgHTMLAttributes} from 'react'
+import {FC} from 'react'
 import Ethereum from './images/Ethereum.jpg'
 import Khala from './images/Khala.jpg'
 import Phala from './images/Phala.jpg'
 
-type Image = FC<
-  DetailedHTMLProps<ImgHTMLAttributes<HTMLImageElement>, HTMLImageElement>
->
+const images = {
+  Ethereum,
+  Khala,
+  Phala,
+} as const
 
-export const EthereumIcon: Image = (props) => (
-  <img src={Ethereum} alt="Ethereum" {...props} />
-)
+interface NetworkIconProps {
+  network: keyof typeof images
+}
 
-export const KhalaIcon: Image = (props) => (
-  <img src={Khala} alt="Khala" {...props} />
-)
+export const NetworkIcon: FC<NetworkIconProps> = (props) => {
+  const {network} = props
 
-export const PhalaIcon: Image = (props) => (
-  <img src={Phala} alt="Phala" {...props} />
-)
+  return (
+    <img
+      style={{
+        width: 54,
+        height: 54,
+      }}
+      src={images[network]}
+      alt={network}
+      {...props}
+    />
+  )
+}
