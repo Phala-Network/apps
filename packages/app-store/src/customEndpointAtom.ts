@@ -1,6 +1,8 @@
-import {atom, useAtom} from 'jotai'
+import {useAtom} from 'jotai'
+import {atomWithStorage} from 'jotai/utils'
 
-export const customEndpointAtom = atom<string>(
+export const customEndpointAtom = atomWithStorage<string>(
+  'customEndpoint',
   'wss://khala-api.phala.network/ws'
 )
 
