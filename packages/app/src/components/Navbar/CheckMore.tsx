@@ -49,7 +49,7 @@ const LINKS = [
   },
 ]
 
-const CheckMore = (): JSX.Element => {
+const CheckMore: React.FC = () => {
   return (
     <StatefulPopover
       content={({close}) => (

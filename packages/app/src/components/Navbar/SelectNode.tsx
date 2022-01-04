@@ -53,7 +53,7 @@ const NODES: NodeType[] = [
   },
 ]
 
-const SelectNode = (): JSX.Element => {
+const SelectNode: React.FC = () => {
   const urlEndpoint = useCustomEndpoint()
   const [customEndpoint, setCustomEndpoint] = useCustomEndpointAtom()
 
