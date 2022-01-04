@@ -1,5 +1,6 @@
 import {FC, useState} from 'react'
 import {Helmet} from 'react-helmet'
+import {BridgePageTest} from './BridgePageTest'
 import {ExchangeIcon} from './components/ExchangeIcon'
 import {ExtraInfoPanel} from './components/ExtraInfoPanel'
 import {Header} from './components/Header'
@@ -70,6 +71,8 @@ export const BridgePage: FC = () => {
       />
 
       <InformationModal />
+
+      <BridgePageTest />
     </div>
   )
 }

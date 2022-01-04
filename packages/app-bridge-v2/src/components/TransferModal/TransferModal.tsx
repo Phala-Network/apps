@@ -14,7 +14,7 @@ import {FC, useCallback, useEffect, useState} from 'react'
 import {useAllTransferData} from '../../store'
 import {TransactionInfo} from '../../types'
 import {InformationDetailItem} from '../InformationDetailItem'
-import {transferPHAFromKhalaToKarura} from './transfer'
+import {transferAssetsKhalaAccounts} from './transfer'
 import {getBaseInfo} from './xtransfer'
 
 const bn1e12 = new BN(10).pow(new BN(12))
@@ -50,22 +50,31 @@ export const TransferModal: FC<TransferModalProps> = (props) => {
 
     const keyring = new Keyring({type: 'sr25519'})
 
-    transferPHAFromKhalaToKarura(
+    // transferPHAFromKhalaToKarura(
+    //   khalaApi,
+    //   keyring.addFromAddress(allTransferData.fromAddress),
+    //   keyring.addFromAddress(allTransferData.toAddress),
+    //   bn1e12.mul(new BN(allTransferData.fromAmount)),
+    //   log
+    // )
+
+    // 5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY
+    const karuraAccount = keyring.addFromUri('//Alice')
+    // 5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty
+    const khalaAccount = keyring.addFromUri('//Bob')
+
+    transferAssetsKhalaAccounts(
       khalaApi,
-      keyring.addFromAddress(allTransferData.fromAddress),
-      keyring.addFromAddress(allTransferData.toAddress),
+      // keyring.addFromAddress(allTransferData.fromAddress),
+      karuraAccount,
+      // keyring.addFromAddress(allTransferData.toAddress),
+      khalaAccount,
       bn1e12.mul(new BN(allTransferData.fromAmount)),
       log
     )
 
     onConfirm?.()
-  }, [
-    allTransferData.fromAddress,
-    allTransferData.fromAmount,
-    allTransferData.toAddress,
-    khalaApi,
-    onConfirm,
-  ])
+  }, [allTransferData.fromAmount, khalaApi, onConfirm])
 
   return (
     <Modal

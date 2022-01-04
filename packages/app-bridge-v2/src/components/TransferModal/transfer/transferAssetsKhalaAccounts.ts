@@ -18,7 +18,7 @@ export function transferAssetsKhalaAccounts(
       recipient.address,
       amount
     )
-    .signAndSend(sender, (result: any) => {
+    .signAndSend(sender, {nonce: -1}, (result: any) => {
       if (result.status.isInBlock) {
         callback?.(
           `Transaction included at blockHash ${result.status.asInBlock}`

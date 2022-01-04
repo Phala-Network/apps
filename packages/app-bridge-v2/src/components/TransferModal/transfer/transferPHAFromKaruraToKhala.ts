@@ -42,7 +42,7 @@ export function transferPHAFromKaruraToKhala(
       }),
       6000000000
     )
-    .signAndSend(sender, (result: any) => {
+    .signAndSend(sender, {nonce: -1}, (result: any) => {
       callback?.(`Transaction ${result.status}`)
     })
 }

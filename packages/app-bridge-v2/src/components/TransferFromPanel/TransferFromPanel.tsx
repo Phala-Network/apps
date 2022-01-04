@@ -1,6 +1,5 @@
-import {Keyring} from '@polkadot/api'
 import {Block} from 'baseui/block'
-import {FC, useEffect} from 'react'
+import {FC} from 'react'
 import {
   useFromAddress,
   useFromAmount,
@@ -23,13 +22,6 @@ export const TransferFromPanel: FC<TransferFromPanelProps> = () => {
   const [network, setNetwork] = useFromNetwork()
   const [coin, setCoin] = useFromCoin()
   const [amount, setAmount] = useFromAmount()
-
-  useEffect(() => {
-    const keyring = new Keyring({type: 'sr25519'})
-    const karuraAccount = keyring.addFromUri('//Alice')
-
-    setAddress(karuraAccount.address)
-  }, [setAddress])
 
   return (
     <TransferPanel label="From">

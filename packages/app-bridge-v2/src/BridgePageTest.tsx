@@ -15,7 +15,7 @@ import {getBaseInfo} from './components/TransferModal/xtransfer'
 
 const bn1e12 = new BN(10).pow(new BN(12))
 
-export const BridgePage = () => {
+export const BridgePageTest = () => {
   const [messages, setMessages] = useState<string[]>([])
 
   const [khalaApi, setKhalaApi] = useState<ApiPromise>()
