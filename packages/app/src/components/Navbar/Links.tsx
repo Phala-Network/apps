@@ -41,7 +41,9 @@ const Links: React.FC = () => {
     <Wrapper>
       <Link to="/">Dashboard</Link>
       <Link to="/bridge/">Bridge</Link>
-      <Link to="/delegate/">Delegate</Link>
+      <Link to="/delegate/" partiallyActive={true}>
+        Delegate
+      </Link>
       <Link to="/mining/">Mining</Link>
     </Wrapper>
   )

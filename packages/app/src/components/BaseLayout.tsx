@@ -1,6 +1,7 @@
 import React from 'react'
 import {down, up} from 'styled-breakpoints'
 import styled from 'styled-components'
+import {useLocation} from '@reach/router'
 import MobileNav from './MobileNav'
 // import SideNav from './SideNav'
 // import Tickets from './Tickets'
@@ -24,13 +25,14 @@ const HomePageWrap = styled.div`
 //   }
 // `
 
-const ContentWrap = styled.div`
+const ContentWrap = styled.div<{isDelegate?: boolean}>`
   margin: 80px auto auto;
-  width: 960px;
+  width: ${(props) => (props.isDelegate ? '1300px' : '960px')};
 `
 
 const BaseLayout: React.FC = (props) => {
   const {children} = props
+  const {pathname} = useLocation()
 
   return (
     <HomePageWrap>
@@ -41,7 +43,9 @@ const BaseLayout: React.FC = (props) => {
 
       <Navbar />
 
-      <ContentWrap>{children}</ContentWrap>
+      <ContentWrap isDelegate={pathname.includes('/delegate')}>
+        {children}
+      </ContentWrap>
 
       <MobileNav />
     </HomePageWrap>
