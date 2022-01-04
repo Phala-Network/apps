@@ -8,12 +8,14 @@ import {SubmitButton} from './components/SubmitButton'
 import {TransferFromPanel} from './components/TransferFromPanel'
 import {TransferModal} from './components/TransferModal'
 import {TransferToPanel} from './components/TransferToPanel'
+import {useSwitchToAndFormData} from './store'
 import {BlockItem, Root} from './styledComponents'
 import {TransactionInfo} from './types'
 
 export const BridgePage: FC = () => {
   const [transactionInfo] = useState<TransactionInfo>()
   const [isOpenTransferModal, setIsOpenTransferModal] = useState(false)
+  const switchData = useSwitchToAndFormData()
 
   const submit = () => {
     setIsOpenTransferModal(true)
@@ -36,7 +38,7 @@ export const BridgePage: FC = () => {
         <BlockItem>
           <TransferFromPanel />
 
-          <ExchangeIcon />
+          <ExchangeIcon onClick={switchData} />
 
           <TransferToPanel />
         </BlockItem>

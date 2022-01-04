@@ -18,3 +18,26 @@ export const useFromCoin = () => useAtom(fromCoin)
 export const useToAddress = () => useAtom(toAddress)
 export const useToNetwork = () => useAtom(toNetwork)
 export const useToCoin = () => useAtom(toCoin)
+
+// switch all from and to fields
+export function useSwitchToAndFormData() {
+  const [fromAddress, setFromAddress] = useFromAddress()
+  const [fromNetwork, setFromNetwork] = useFromNetwork()
+  const [fromCoin, setFromCoin] = useFromCoin()
+
+  const [toAddress, setToAddress] = useToAddress()
+  const [toNetwork, setToNetwork] = useToNetwork()
+  const [toCoin, setToCoin] = useToCoin()
+
+  const switchToAndFormData = () => {
+    setFromAddress(toAddress)
+    setFromNetwork(toNetwork)
+    setFromCoin(toCoin)
+
+    setToAddress(fromAddress)
+    setToNetwork(fromNetwork)
+    setToCoin(fromCoin)
+  }
+
+  return switchToAndFormData
+}
