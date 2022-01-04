@@ -25,7 +25,7 @@ export const networks = [
     name: 'Ethereum',
     id: 'Ethereum',
   },
-]
+] as const
 
 export const coins = [
   {
@@ -43,7 +43,7 @@ export const coins = [
     name: 'ETH',
     id: 'ETH',
   },
-]
+] as const
 
 export enum Transfers {
   transferPHAFromKhalaToKarura = 'transferPHAFromKhalaToKarura',

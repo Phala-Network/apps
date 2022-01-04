@@ -1,14 +1,15 @@
 import {Value} from 'baseui/select'
 import {atom, useAtom} from 'jotai'
+import {coins, networks} from '../config'
 
 const fromAddress = atom<string>('')
 const fromAmount = atom<number>(0)
-const fromNetwork = atom<Value>([{label: 'Phala'}])
-const fromCoin = atom<Value>([{label: 'PHA'}])
+const fromNetwork = atom<Value>([networks[0]])
+const fromCoin = atom<Value>([coins[0]])
 
 const toAddress = atom<string>('')
-const toNetwork = atom<Value>([{label: 'Phala'}])
-const toCoin = atom<Value>([{label: 'PHA'}])
+const toNetwork = atom<Value>([networks[0]])
+const toCoin = atom<Value>([coins[0]])
 
 export const useFromAddress = () => useAtom(fromAddress)
 export const useFromAmount = () => useAtom(fromAmount)
