@@ -17,6 +17,9 @@ exports.onCreateWebpackConfig = ({getConfig, actions}) => {
   }
 
   actions.setWebpackConfig({
+    node: {
+      Buffer: true,
+    },
     plugins: [
       new NodePolyfillPlugin({
         excludeAliases: [

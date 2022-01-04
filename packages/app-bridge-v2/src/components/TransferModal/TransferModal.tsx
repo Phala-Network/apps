@@ -1,3 +1,4 @@
+import {ApiPromise, Keyring} from '@polkadot/api'
 import {KIND as ButtonKind} from 'baseui/button'
 import {
   Modal,
@@ -8,21 +9,63 @@ import {
   ROLE,
   SIZE,
 } from 'baseui/modal'
-import {FC} from 'react'
+import BN from 'bn.js'
+import {FC, useCallback, useEffect, useState} from 'react'
 import {useAllTransferData} from '../../store'
 import {TransactionInfo} from '../../types'
 import {InformationDetailItem} from '../InformationDetailItem'
+import {transferPHAFromKhalaToKarura} from './transfer'
+import {getBaseInfo} from './xtransfer'
+
+const bn1e12 = new BN(10).pow(new BN(12))
 
 interface TransferModalProps {
   type?: string
   isOpen: boolean
   onClose: () => void
+  onConfirm?: () => void
   transactionInfo?: TransactionInfo
 }
 
 export const TransferModal: FC<TransferModalProps> = (props) => {
-  const {isOpen, onClose} = props
+  const {isOpen, onClose, onConfirm} = props
   const allTransferData = useAllTransferData()
+  const [khalaApi, setKhalaApi] = useState<ApiPromise>()
+  const [, setKaruraApi] = useState<ApiPromise>()
+
+  useEffect(() => {
+    getBaseInfo().then(({khalaApi, karuraApi}) => {
+      setKhalaApi(khalaApi)
+      setKaruraApi(karuraApi)
+    })
+  }, [])
+
+  const log = (message: string) => {
+    // eslint-disable-next-line no-console
+    console.log(message)
+  }
+
+  const submit = useCallback(() => {
+    if (!khalaApi) return
+
+    const keyring = new Keyring({type: 'sr25519'})
+
+    transferPHAFromKhalaToKarura(
+      khalaApi,
+      keyring.addFromAddress(allTransferData.fromAddress),
+      keyring.addFromAddress(allTransferData.toAddress),
+      bn1e12.mul(new BN(allTransferData.fromAmount)),
+      log
+    )
+
+    onConfirm?.()
+  }, [
+    allTransferData.fromAddress,
+    allTransferData.fromAmount,
+    allTransferData.toAddress,
+    khalaApi,
+    onConfirm,
+  ])
 
   return (
     <Modal
@@ -66,7 +109,7 @@ export const TransferModal: FC<TransferModalProps> = (props) => {
         <ModalButton onClick={onClose} kind={ButtonKind.tertiary}>
           Cancel
         </ModalButton>
-        <ModalButton>Submit</ModalButton>
+        <ModalButton onClick={submit}>Submit</ModalButton>
       </ModalFooter>
     </Modal>
   )
