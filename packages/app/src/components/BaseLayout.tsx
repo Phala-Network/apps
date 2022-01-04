@@ -35,12 +35,10 @@ const BaseLayout: React.FC = (props) => {
 
   return (
     <HomePageWrap>
-      <Navbar />
-
       <ContentWrap isDelegate={pathname.includes('/delegate')}>
         {children}
       </ContentWrap>
-
+      <Navbar />
       <MobileNav />
     </HomePageWrap>
   )

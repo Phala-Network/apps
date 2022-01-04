@@ -1,7 +1,6 @@
 import React from 'react'
 import {down} from 'styled-breakpoints'
 import styled from 'styled-components'
-import {Layer} from 'baseui/layer'
 import Logo from './Logo'
 import Links from './Links'
 import SelectNode from './SelectNode'
@@ -32,17 +31,15 @@ const Content = styled.div`
 
 const Index: React.FC = () => {
   return (
-    <Layer>
-      <Wrapper>
-        <Content>
-          <Logo />
-          <Links />
-          <SelectNode />
-          <Account />
-          <CheckMore />
-        </Content>
-      </Wrapper>
-    </Layer>
+    <Wrapper>
+      <Content>
+        <Logo />
+        <Links />
+        <SelectNode />
+        <Account />
+        <CheckMore />
+      </Content>
+    </Wrapper>
   )
 }
 
