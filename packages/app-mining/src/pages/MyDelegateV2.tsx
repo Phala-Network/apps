@@ -40,7 +40,7 @@ export const MyDelegateV2 = () => {
         }}
       >
         <Heading>
-          <Link to="/delegate">
+          <Link to="/delegate/">
             <Button size="compact" kind="minimal">
               <ChevronLeft />
             </Button>
