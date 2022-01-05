@@ -4,6 +4,7 @@ import styled, {css} from 'styled-components'
 import {useLocation} from '@reach/router'
 import MobileNav from './MobileNav'
 import Navbar from './Navbar'
+import MobileNavbar from './MobileNavbar'
 
 const HomePageWrap = styled.div`
   ${up('md')} {
@@ -39,6 +40,7 @@ const BaseLayout: React.FC = (props) => {
         {children}
       </ContentWrap>
       <Navbar />
+      <MobileNavbar />
       <MobileNav />
     </HomePageWrap>
   )
