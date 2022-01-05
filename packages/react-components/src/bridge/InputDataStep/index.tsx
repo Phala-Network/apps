@@ -3,6 +3,7 @@ import {
   useEthereumAccountBalanceDecimal,
   usePolkadotAccountBalanceDecimal,
 } from '@phala/react-hooks'
+import {useEthereumWeb3} from '@phala/react-libs'
 import {validateAddress} from '@phala/utils'
 import {Decimal} from 'decimal.js'
 import React, {useEffect, useState} from 'react'
@@ -53,6 +54,7 @@ type Props = {
 } & StepProps
 
 const InputDataStep: React.FC<Props> = (props) => {
+  const {ethereumWeb3connect} = useEthereumWeb3()
   const isMobile = useBreakpoint(down('sm'))
   const {layout, onNext, onCancel} = props
   const [amountInput, setAmountInput] = useState<number>()
@@ -265,6 +267,12 @@ const InputDataStep: React.FC<Props> = (props) => {
                 </Button>
               </EthereumAllowance>
             </ErrorBoundary>
+          )}
+
+          {!ethereumAccount && (
+            <Button type="primary" onClick={ethereumWeb3connect}>
+              Connect Wallet
+            </Button>
           )}
 
           {!isFromEthereum && (
