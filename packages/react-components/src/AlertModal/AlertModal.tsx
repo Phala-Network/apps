@@ -1,7 +1,16 @@
 import React from 'react'
-import {Button} from '../Button'
-import {Modal} from '../Modal'
-import {Content} from './styledComponets'
+import styled from 'styled-components'
+import {ModalFooter} from 'baseui/modal'
+import {ModalWrapper, ModalButtonWrapper} from '../Modal'
+
+const Content = styled.div`
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 16px;
+  color: #111111;
+`
 
 export type AlertModalProps = {
   content: React.ReactNode
@@ -11,11 +20,11 @@ export type AlertModalProps = {
 
 export const AlertModal: React.FC<AlertModalProps> = (props) => {
   return (
-    <Modal {...props} title="Alert">
+    <ModalWrapper {...props} title="Alert">
       <Content>{props.content}</Content>
-      <Button style={{width: '100%'}} onClick={() => props.onClose?.()}>
-        Cancel
-      </Button>
-    </Modal>
+      <ModalFooter style={{padding: 0, margin: '30px 0 0'}}>
+        <ModalButtonWrapper onClick={props.onClose}>Cancel</ModalButtonWrapper>
+      </ModalFooter>
+    </ModalWrapper>
   )
 }

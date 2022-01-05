@@ -11,7 +11,7 @@ import DelegateTopBar from '../components/DelegateTopBarV2'
 
 const Wrapper = styled.div`
   overflow-x: auto;
-  margin: 10px 30px 70px;
+  margin: 10px 40px 70px;
   flex: 1;
 `
 
@@ -40,7 +40,7 @@ export const MyDelegateV2 = () => {
         }}
       >
         <Heading>
-          <Link to="/delegate">
+          <Link to="/delegate/">
             <Button size="compact" kind="minimal">
               <ChevronLeft />
             </Button>

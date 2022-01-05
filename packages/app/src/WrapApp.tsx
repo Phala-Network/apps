@@ -12,13 +12,11 @@ import {ReactQueryDevtools} from 'react-query/devtools'
 import {ThemeProvider} from 'styled-components'
 import {BaseProvider} from 'baseui'
 import './fonts.css'
-import useCustomEndpoint from './hooks/useCustomEndpoint'
 import theme, {baseTheme} from './theme'
 import {SnackbarProvider} from 'baseui/snackbar'
 import {toaster, ToasterContainer} from 'baseui/toast'
 
 const WrapApp: React.FC = ({children}) => {
-  const customEndpoint = useCustomEndpoint()
   const client = useRef(
     new QueryClient({
       defaultOptions: {
@@ -48,8 +46,6 @@ const WrapApp: React.FC = ({children}) => {
     ethereumGraphEndpoint: isProduction()
       ? ethereumGraphEndpoint.production
       : ethereumGraphEndpoint.development,
-
-    customEndpoint,
   }
 
   useLayoutEffect(() => {
@@ -65,11 +61,11 @@ const WrapApp: React.FC = ({children}) => {
             src="https://static.zdassets.com/ekr/snippet.js?key=fca22f47-80b0-47a4-8cde-80ca1fe206d2"
           />
         </Helmet>
-        <LibProvider {...productionConfig}>
-          <QueryClientProvider contextSharing={true} client={client.current}>
-            <ThemeProvider theme={theme}>
-              <MobileToastContextProvider>
-                <AppStoreProvider>
+        <AppStoreProvider>
+          <LibProvider {...productionConfig}>
+            <QueryClientProvider contextSharing={true} client={client.current}>
+              <ThemeProvider theme={theme}>
+                <MobileToastContextProvider>
                   <BaseProvider theme={baseTheme}>
                     <SnackbarProvider>{children}</SnackbarProvider>
                     <ToasterContainer
@@ -84,12 +80,12 @@ const WrapApp: React.FC = ({children}) => {
                       }}
                     />
                   </BaseProvider>
-                </AppStoreProvider>
-              </MobileToastContextProvider>
-            </ThemeProvider>
-            <ReactQueryDevtools />
-          </QueryClientProvider>
-        </LibProvider>
+                </MobileToastContextProvider>
+              </ThemeProvider>
+              <ReactQueryDevtools />
+            </QueryClientProvider>
+          </LibProvider>
+        </AppStoreProvider>
       </div>
     </StrictMode>
   )

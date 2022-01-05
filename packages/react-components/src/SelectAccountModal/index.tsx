@@ -1,11 +1,10 @@
 import {Account} from '@phala/app-types'
 import React from 'react'
 import styled from 'styled-components'
-import {Button} from '../Button'
-import {Center} from '../Center'
-import {Modal} from '../Modal'
+import {ModalWrapper, ModalButtonWrapper} from '../Modal'
 import scrollbar from '../scrollbar'
 import AccountOption from './AccountOption'
+import {ModalBody, ModalFooter} from 'baseui/modal'
 
 export type SelectAccountModalProps = {
   visible: boolean
@@ -17,12 +16,21 @@ export type SelectAccountModalProps = {
 
 const Content = styled.div`
   display: grid;
-  grid-gap: 24px;
-  margin: 24px 0;
-  max-height: 200px;
+  grid-gap: 20px;
+  max-height: 300px;
   overflow-y: auto;
 
   ${scrollbar}
+`
+
+const ModalTitle = styled.div`
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 32px;
+  line-height: 32px;
+  margin-bottom: 30px;
+  margin-top: 20px;
 `
 
 export const SelectAccountModal: React.FC<SelectAccountModalProps> = (
@@ -31,27 +39,26 @@ export const SelectAccountModal: React.FC<SelectAccountModalProps> = (
   const {visible, currentAccount, accounts, onClose, onSelect} = props
 
   return (
-    <Modal
-      onClose={onClose}
-      visible={visible}
-      title={<Center>Select An Account</Center>}
-    >
-      <Content style={{paddingRight: accounts.length > 2 ? 20 : 0}}>
-        {accounts.map((item) => (
-          <AccountOption
-            key={item.address}
-            active={currentAccount?.address === item.address}
-            onClick={(account) => {
-              onSelect(account)
-              onClose()
-            }}
-            {...item}
-          ></AccountOption>
-        ))}
-      </Content>
-      <Button style={{width: '100%'}} onClick={onClose}>
-        Cancel
-      </Button>
-    </Modal>
+    <ModalWrapper onClose={onClose} visible={visible}>
+      <ModalTitle>Select An Account</ModalTitle>
+      <ModalBody style={{padding: '10px 0', margin: 0}}>
+        <Content>
+          {accounts.map((item) => (
+            <AccountOption
+              key={item.address}
+              active={currentAccount?.address === item.address}
+              onClick={(account) => {
+                onSelect(account)
+                onClose()
+              }}
+              {...item}
+            ></AccountOption>
+          ))}
+        </Content>
+      </ModalBody>
+      <ModalFooter style={{padding: 0, margin: '30px 0 20px 0'}}>
+        <ModalButtonWrapper onClick={props.onClose}>Cancel</ModalButtonWrapper>
+      </ModalFooter>
+    </ModalWrapper>
   )
 }

@@ -2,16 +2,16 @@ import {css} from 'styled-components'
 
 export default css`
   ::-webkit-scrollbar {
-    width: 3px;
-    background-color: #ececec;
+    width: 24px;
   }
 
   ::-webkit-scrollbar-track {
-    background: transparent;
+    box-shadow: inset 0 0 4px 4px #cecece;
+    border-left: solid 20px transparent;
   }
 
   ::-webkit-scrollbar-thumb {
-    border-radius: 0;
-    background-color: #000000;
+    box-shadow: inset 0 0 4px 4px #111111;
+    border-left: solid 20px transparent;
   }
 `
