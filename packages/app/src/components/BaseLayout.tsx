@@ -2,7 +2,7 @@ import React from 'react'
 import {down, up} from 'styled-breakpoints'
 import styled, {css} from 'styled-components'
 import {useLocation} from '@reach/router'
-import MobileNav from './MobileNav'
+// import MobileNav from './MobileNav'
 import Navbar from './Navbar'
 import MobileNavbar from './MobileNavbar'
 
@@ -41,7 +41,7 @@ const BaseLayout: React.FC = (props) => {
       </ContentWrap>
       <Navbar />
       <MobileNavbar />
-      <MobileNav />
+      {/* <MobileNav /> */}
     </HomePageWrap>
   )
 }
