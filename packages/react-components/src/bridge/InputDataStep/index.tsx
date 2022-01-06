@@ -286,7 +286,7 @@ const InputDataStep: React.FC<Props> = (props) => {
             </ErrorBoundary>
           )}
 
-          {!ethereumAccount && (
+          {!ethereumAccount && isFromEthereum && (
             <Button type="primary" onClick={ethereumWeb3connect}>
               Connect Wallet
             </Button>
