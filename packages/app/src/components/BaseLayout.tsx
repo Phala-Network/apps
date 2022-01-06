@@ -7,7 +7,6 @@ import MobileNavbar from './MobileNavbar'
 
 const HomePageWrap = styled.div`
   padding-top: 80px;
-
   ${up('md')} {
     display: flex;
   }
@@ -21,15 +20,17 @@ const HomePageWrap = styled.div`
 
 const ContentWrap = styled.div<{isDelegate?: boolean}>`
   margin: 0 auto;
-  ${(props) =>
-    props.isDelegate
-      ? css`
-          width: 100%;
-          max-width: 1700px;
-        `
-      : css`
-          width: 960px;
-        `}
+  ${up('md')} {
+    ${(props) =>
+      props.isDelegate
+        ? css`
+            width: 100%;
+            max-width: 1700px;
+          `
+        : css`
+            width: 960px;
+          `}
+  }
 `
 
 const BaseLayout: React.FC = (props) => {
@@ -38,7 +39,7 @@ const BaseLayout: React.FC = (props) => {
 
   return (
     <HomePageWrap>
-      <ContentWrap isDelegate={pathname.includes('/delegate')}>
+      <ContentWrap isDelegate={/^\/(delegate|mining)/.test(pathname)}>
         {children}
       </ContentWrap>
       <Navbar />
