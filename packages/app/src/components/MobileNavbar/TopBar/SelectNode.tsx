@@ -58,7 +58,10 @@ const SelectNode: React.FC = () => {
         overrides={{
           DrawerBody: {
             style: () => ({
-              margin: 0,
+              marginTop: 0,
+              marginLeft: 0,
+              marginRight: 0,
+              marginBottom: 0,
             }),
           },
         }}

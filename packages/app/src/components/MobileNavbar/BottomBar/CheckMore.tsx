@@ -68,13 +68,21 @@ const CheckMore: React.FC = () => {
         overrides={{
           DrawerBody: {
             style: () => ({
-              margin: 0,
+              marginTop: 0,
+              marginLeft: 0,
+              marginRight: 0,
+              marginBottom: 0,
             }),
           },
         }}
       >
         {LINKS.map(({name, link}) => (
-          <LineWrap onClick={close} href={link} key={name} target="_blank">
+          <LineWrap
+            onClick={() => setIsOpen(false)}
+            href={link}
+            key={name}
+            target="_blank"
+          >
             <ExternalName>{name}</ExternalName>
             <ExternalLink />
           </LineWrap>
