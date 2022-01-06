@@ -9,7 +9,8 @@ const Wrapper = styled.div`
   justify-content: space-between;
   position: fixed;
   bottom: 0;
-  width: 100%;
+  left: 0;
+  right: 0;
   height: 72px;
   background-color: #fff;
 `

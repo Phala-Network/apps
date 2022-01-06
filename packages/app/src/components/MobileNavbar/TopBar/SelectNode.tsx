@@ -11,6 +11,12 @@ const NodeName = styled.span`
   margin-right: 25px;
 `
 
+const Button = styled.div`
+  display: flex;
+  align-items: center;
+  margin-right: 7px;
+`
+
 type NodeType = {name: string; address: string}
 const NODES: NodeType[] = [
   {name: 'Khala via Phala', address: 'wss://khala-api.phala.network/ws'},
@@ -37,9 +43,9 @@ const SelectNode: React.FC = () => {
 
   return (
     <div>
-      <div onClick={() => setIsOpen(true)}>
+      <Button onClick={() => setIsOpen(true)}>
         <Khala />
-      </div>
+      </Button>
       <Drawer
         isOpen={isOpen}
         autoFocus

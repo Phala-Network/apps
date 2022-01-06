@@ -15,6 +15,7 @@ const MoreButton = styled.button`
   height: 36px;
   background-color: #fff;
   transition: all 0.2s;
+  margin-right: 15px;
 
   :hover,
   :focus {

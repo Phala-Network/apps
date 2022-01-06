@@ -2,7 +2,8 @@ import styled from 'styled-components'
 import PhalaApp from '../../../icons/phala_app.svg'
 
 const Wrapper = styled.div`
-  /* flex: 1; */
+  padding-left: 4px;
+  flex: 1;
 `
 
 const Logo: React.FC = () => {
