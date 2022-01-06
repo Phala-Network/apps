@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import styled from 'styled-components'
-import {Drawer, ANCHOR} from 'baseui/drawer'
+import {Drawer, ANCHOR, SIZE} from 'baseui/drawer'
 import MoreIcon from '../../../icons/more.svg'
 import ExternalLink from '../../../icons/external_link.svg'
 import {LineWrap} from '../../Navbar/styledComponent'
@@ -24,7 +24,8 @@ const MoreButton = styled.button`
 `
 
 const ExternalName = styled.span`
-  margin-right: 16px;
+  flex: 1;
+  text-align: center;
 `
 
 const LINKS = [
@@ -61,7 +62,16 @@ const CheckMore: React.FC = () => {
         isOpen={isOpen}
         autoFocus
         anchor={ANCHOR.bottom}
-        onClose={() => setIsOpen(false)}
+        size={SIZE.auto}
+        closeable={false}
+        onBackdropClick={() => setIsOpen(false)}
+        overrides={{
+          DrawerBody: {
+            style: () => ({
+              margin: 0,
+            }),
+          },
+        }}
       >
         {LINKS.map(({name, link}) => (
           <LineWrap onClick={close} href={link} key={name} target="_blank">

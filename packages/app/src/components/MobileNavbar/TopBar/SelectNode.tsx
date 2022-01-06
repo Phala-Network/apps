@@ -1,14 +1,15 @@
 import {useEffect, useState} from 'react'
 import styled from 'styled-components'
 import {useCustomEndpointAtom} from '@phala/app-store'
-import {Drawer, ANCHOR} from 'baseui/drawer'
+import {Drawer, ANCHOR, SIZE} from 'baseui/drawer'
 import CheckIcon from '../../../icons/check.svg'
 import Khala from '../../../icons/khala_new.svg'
 import useCustomEndpoint from '../../../hooks/useCustomEndpoint'
 import {LineWrap} from '../../Navbar/styledComponent'
 
 const NodeName = styled.span`
-  margin-right: 25px;
+  flex: 1;
+  text-align: center;
 `
 
 const Button = styled.div`
@@ -39,6 +40,7 @@ const SelectNode: React.FC = () => {
 
   const handleClick = (item: NodeType) => {
     setCustomEndpoint(item.address)
+    setIsOpen(false)
   }
 
   return (
@@ -50,14 +52,22 @@ const SelectNode: React.FC = () => {
         isOpen={isOpen}
         autoFocus
         anchor={ANCHOR.top}
-        onClose={() => setIsOpen(false)}
+        size={SIZE.auto}
+        closeable={false}
+        onBackdropClick={() => setIsOpen(false)}
+        overrides={{
+          DrawerBody: {
+            style: () => ({
+              margin: 0,
+            }),
+          },
+        }}
       >
         {NODES.map((item) => (
           <LineWrap
             key={item.name}
             onClick={() => {
               handleClick(item)
-              close()
             }}
           >
             <NodeName>{item.name}</NodeName>
