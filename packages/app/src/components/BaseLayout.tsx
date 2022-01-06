@@ -6,6 +6,7 @@ import MobileNav from './MobileNav'
 import Navbar from './Navbar'
 
 const HomePageWrap = styled.div`
+  padding-top: 80px;
   ${up('md')} {
     display: flex;
   }
@@ -17,7 +18,7 @@ const HomePageWrap = styled.div`
 `
 
 const ContentWrap = styled.div<{isDelegate?: boolean}>`
-  margin: 80px auto auto;
+  margin: 0 auto;
   ${(props) =>
     props.isDelegate
       ? css`
@@ -35,7 +36,7 @@ const BaseLayout: React.FC = (props) => {
 
   return (
     <HomePageWrap>
-      <ContentWrap isDelegate={pathname.includes('/delegate')}>
+      <ContentWrap isDelegate={/^\/(delegate|mining)/.test(pathname)}>
         {children}
       </ContentWrap>
       <Navbar />
