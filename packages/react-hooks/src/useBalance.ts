@@ -1,13 +1,12 @@
 import {useApiPromise} from '@phala/react-libs'
-import type {AccountId} from '@polkadot/types/interfaces'
-import BN from 'bn.js'
+import type {AccountId, Balance} from '@polkadot/types/interfaces'
 import {useEffect, useState} from 'react'
 
 export default function useBalance(
   address?: string | AccountId | Uint8Array
-): BN | undefined {
+): Balance | undefined {
   const {api, readystate} = useApiPromise()
-  const [balance, setBalance] = useState<BN>()
+  const [balance, setBalance] = useState<Balance>()
   const initialized = readystate === 'ready'
 
   useEffect(() => {
@@ -17,13 +16,9 @@ export default function useBalance(
 
     let unsubscribe: () => void
 
-    // max(0, data.free - max(data.frozenAll, data.miscFrozen, data.feeFrozen))
     api.query.system
-      .account(address, ({data}) => {
-        const miscFrozen = new BN(data.miscFrozen)
-        const feeFrozen = new BN(data.feeFrozen)
-        const maxFrozen = BN.max(miscFrozen, feeFrozen)
-        setBalance(BN.max(new BN(0), new BN(data.free).sub(maxFrozen)))
+      .account(address, ({data: {free}}) => {
+        setBalance(free)
       })
       .then((_unsubscribe) => (unsubscribe = _unsubscribe))
 
