@@ -8,7 +8,7 @@ importers:
       '@types/react': ^17.0.37
       '@typescript-eslint/eslint-plugin': ^5.8.0
       '@typescript-eslint/parser': ^5.8.0
-      baseui: ^10.6.0
+      baseui: ^10.7.1
       eslint: ^8.5.0
       eslint-config-prettier: ^8.3.0
       eslint-plugin-prettier: ^4.0.0
@@ -26,7 +26,7 @@ importers:
     dependencies:
       '@types/node': 16.11.12
       '@types/react': 17.0.37
-      baseui: 10.6.0_@types+react@17.0.37
+      baseui: 10.7.1_@types+react@17.0.37
       npm-run-all: 4.1.5
       styled-components: 5.3.3
       typescript: 4.5.2
@@ -93,7 +93,7 @@ importers:
       gatsby-plugin-react-helmet: ^4.14.0
       gatsby-plugin-react-svg: ^3.1.0
       gatsby-plugin-styled-components: ^5.4.0
-      gatsby-plugin-styletron: ^7.3.0
+      gatsby-plugin-styletron: ^7.4.0
       gatsby-plugin-typescript: ^3.14.0
       node-polyfill-webpack-plugin: ^1.1.4
       rc-tooltip: ^5.1.1
@@ -9485,8 +9485,8 @@ packages:
     engines: {node: ^4.5.0 || >= 5.9}
     dev: false
 
-  /baseui/10.6.0_@types+react@17.0.37:
-    resolution: {integrity: sha512-sJ/BLrY6NSBZ8SwedMrOjLkka5KpMu27eCoXNLuyAIXPwHL3P0WBzYT2ESUeGSWzH0r0ETytkhwDWa64/KyETA==}
+  /baseui/10.7.1_@types+react@17.0.37:
+    resolution: {integrity: sha512-MfeKeJKhiXJ0yGmleYzcwQOwcWEfudEMLTXzOJ29ZHr1XAQK5Yu354Txs5JZtn8WzPJff/e4fHJG1CbLFuXJVw==}
     engines: {node: '>=10.x'}
     requiresBuild: true
     peerDependencies:
@@ -9500,6 +9500,7 @@ packages:
       glob: 7.2.0
       just-extend: 4.2.1
       memoize-one: 5.2.1
+      mockdate: 3.0.5
       polished: 3.7.2
       popper.js: 1.16.1
       react-dropzone: 9.0.0
@@ -10752,7 +10753,7 @@ packages:
 
   /core-js/2.6.12:
     resolution: {integrity: sha512-Kb2wC0fvsWfQrgk8HU5lW6U/Lcs8+9aaYcy4ZFc6DDlo4nZ7n70dEgE5rtR0oG6ufKDUnrwfWL1mXR5ljDatrQ==}
-    deprecated: core-js@<3.3 is no longer maintained and not recommended for usage due to the number of issues. Because of the V8 engine whims, feature detection in old core-js versions could cause a slowdown up to 100x even if nothing is polyfilled. Please, upgrade your dependencies to the actual version of core-js.
+    deprecated: core-js@<3.4 is no longer maintained and not recommended for usage due to the number of issues. Because of the V8 engine whims, feature detection in old core-js versions could cause a slowdown up to 100x even if nothing is polyfilled. Please, upgrade your dependencies to the actual version of core-js.
     requiresBuild: true
     dev: false
 
@@ -18515,6 +18516,9 @@ packages:
   /mock-socket/9.1.0:
     resolution: {integrity: sha512-zNsH8h0D7buVMDZ2X1GyFYso9A1X1Co/TDfFs0AIKhSLkJeh381HYESNl/mL6BzmQpNOxZVnNhEDS1OWBrS+cQ==}
     engines: {node: '>= 8'}
+    
+  /mockdate/3.0.5:
+    resolution: {integrity: sha512-iniQP4rj1FhBdBYS/+eQv7j1tadJ9lJtdzgOpvsOHng/GbcDh2Fhdeq+ZRldrPYdXvCyfFUmFeEwEGXZB5I/AQ==}
     dev: false
 
   /moment/2.29.1:

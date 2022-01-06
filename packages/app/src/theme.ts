@@ -24,12 +24,15 @@ const mediaQuery: MediaQuery = {
 const overrides = {
   breakpoints,
   mediaQuery,
+  lighting: {
+    shallowAbove: '0px -4px 16px rgba(0, 0, 0, 0.06',
+    shallowBelow: '0px 4px 16px rgba(0, 0, 0, 0.06)',
+  },
 }
 
 export const baseTheme = createLightTheme(
   {
-    // TODO: add base theme here
-    // primaryFontFamily: 'Lato',
+    accent: '#D1FF52',
   },
   overrides
 )

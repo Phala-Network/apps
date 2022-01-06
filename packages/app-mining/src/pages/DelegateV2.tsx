@@ -1,40 +1,35 @@
 import {Helmet} from 'react-helmet'
-import styled from 'styled-components'
-import {up} from 'styled-breakpoints'
 import {Card} from 'baseui/card'
 import DelegateBanner from '../components/DelegateBanner'
 import StakePoolTableV2 from '../components/StakePoolTableV2'
-import DelegateTopBar from '../components/DelegateTopBarV2'
-
-const Wrapper = styled.div`
-  overflow-x: auto;
-  padding: 10px 40px 70px;
-  flex: 1;
-  width: 100%;
-  box-sizing: border-box;
-  ${up('md')} {
-    margin: 0 auto;
-    max-width: 1780px;
-  }
-`
+import StatusBar from '../components/StatusBarV2'
+import {Block} from 'baseui/block'
 
 export const DelegateV2 = (): JSX.Element => {
   return (
-    <>
+    <Block>
       <Helmet>
         <title>Delegate</title>
       </Helmet>
 
-      <Wrapper>
-        <DelegateTopBar />
-        <DelegateBanner></DelegateBanner>
+      <StatusBar />
 
-        <Card
-          overrides={{Root: {style: {borderRadius: '4px', marginTop: '20px'}}}}
-        >
-          <StakePoolTableV2 kind="delegate" />
-        </Card>
-      </Wrapper>
-    </>
+      <Card
+        overrides={{
+          Root: {
+            style: ({$theme}) => ({
+              borderRadius: '0',
+              border: 'none',
+              boxShadow: $theme.lighting.shallowBelow,
+            }),
+          },
+        }}
+      >
+        <Block marginBottom="scale600">
+          <DelegateBanner />
+        </Block>
+        <StakePoolTableV2 kind="delegate" />
+      </Card>
+    </Block>
   )
 }

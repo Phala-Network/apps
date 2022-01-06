@@ -3,18 +3,20 @@ import {StyledLink} from 'baseui/link'
 import {useLocation} from '@reach/router'
 import {navigate} from 'gatsby'
 
-const DelegateTopBar = (): JSX.Element => {
+const StatusBar = (): JSX.Element => {
   const {pathname} = useLocation()
   return (
-    <Block display="flex" justifyContent="flex-end" padding="10px 0">
+    <Block
+      display="flex"
+      justifyContent="flex-end"
+      marginTop="scale100"
+      marginBottom="scale100"
+    >
       <StyledLink
         href="#"
         onClick={(e) => {
           e.preventDefault()
           navigate(`${pathname.replace('/v1', '')}`)
-        }}
-        $style={{
-          margin: '0 10px',
         }}
       >
         Switch to New Version
@@ -23,4 +25,4 @@ const DelegateTopBar = (): JSX.Element => {
   )
 }
 
-export default DelegateTopBar
+export default StatusBar

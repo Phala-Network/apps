@@ -3,11 +3,9 @@ import styled from 'styled-components'
 import {up} from 'styled-breakpoints'
 import MainTable from '../components/Delegate/DelegateTable'
 import Banner from '../components/Delegate/Banner'
-import DelegateTopBar from '../components/DelegateTopBar'
+import StatusBar from '../components/StatusBar'
 
 const Wrapper = styled.div`
-  overflow-x: auto;
-
   ${up('md')} {
     margin: 30px;
     margin-top: 10px;
@@ -29,7 +27,7 @@ export const Delegate = (): JSX.Element => {
       </Helmet>
 
       <Wrapper>
-        <DelegateTopBar />
+        <StatusBar />
         <Banner></Banner>
 
         <Block>

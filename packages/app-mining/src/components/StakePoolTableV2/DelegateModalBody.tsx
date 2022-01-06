@@ -13,12 +13,12 @@ import type {StakePools} from '../../hooks/graphql'
 import {useDelegableBalance} from '../../hooks/useDelegableBalance'
 import Decimal from 'decimal.js'
 import {formatCurrency} from '@phala/utils'
-import ValueSkeleton from '../ValueSkeleton'
 import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
 import {
   useApiPromise,
   useDecimalJsTokenDecimalMultiplier,
 } from '@phala/react-libs'
+import {Skeleton} from 'baseui/skeleton'
 
 const DelegateModalBody = ({
   stakePool,
@@ -68,7 +68,16 @@ const DelegateModalBody = ({
               {delegableBalance && decimals ? (
                 `${formatCurrency(delegableBalance.div(decimals))} PHA`
               ) : (
-                <ValueSkeleton />
+                <Skeleton
+                  animation
+                  rows={1}
+                  width="96px"
+                  overrides={{
+                    Root: {
+                      style: {display: 'inline-block', verticalAlign: 'middle'},
+                    },
+                  }}
+                />
               )}
             </>
           }

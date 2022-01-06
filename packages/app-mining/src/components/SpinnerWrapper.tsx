@@ -1,10 +1,7 @@
 // TODO: move this component to common folder
 import styled from 'styled-components'
 import {StyledSpinnerNext} from 'baseui/spinner'
-
-const Wrapper = styled.div`
-  position: relative;
-`
+import {Block} from 'baseui/block'
 
 const Overlap = styled.div`
   position: absolute;
@@ -23,14 +20,14 @@ const SpinnerWrapper: React.FC<{isLoading: boolean}> = ({
   children,
 }) => {
   return (
-    <Wrapper>
+    <Block position="relative">
       {children}
       {isLoading && (
         <Overlap>
           <StyledSpinnerNext />
         </Overlap>
       )}
-    </Wrapper>
+    </Block>
   )
 }
 

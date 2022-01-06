@@ -194,6 +194,7 @@ const StakePoolTableV2 = ({
         <TableHeader>
           <SearchInput>
             <StatefulInput
+              size="compact"
               clearable
               placeholder="Search Pid or Owner Address"
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>

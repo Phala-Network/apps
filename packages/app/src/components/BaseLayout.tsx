@@ -29,7 +29,7 @@ const ContentWrap = styled.div<{compact?: boolean}>`
         : css`
             width: 100%;
           `}
-  }
+  
 `
 
 const BaseLayout: React.FC = (props) => {
