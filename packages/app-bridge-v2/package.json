@@ -9,8 +9,10 @@
     "buffer": "^6.0.3"
   },
   "devDependencies": {
+    "@phala/app-config": "workspace:^0.0.1",
     "@phala/app-store": "workspace:^0.0.1",
     "@phala/react-components": "workspace:0.0.1",
+    "@phala/react-libs": "workspace:^0.0.1",
     "@polkadot/api": "^7.2.1",
     "baseui": "^10.6.0",
     "bn.js": "^5.2.0",
@@ -21,8 +23,10 @@
     "styled-components": "^5.3.3"
   },
   "peerDependencies": {
+    "@phala/app-config": "workspace:^0.0.1",
     "@phala/app-store": "workspace:^0.0.1",
     "@phala/react-components": "workspace:0.0.1",
+    "@phala/react-libs": "workspace:^0.0.1",
     "@polkadot/api": "^7.2.1",
     "baseui": "^10.6.0",
     "bn.js": "^5.2.0",

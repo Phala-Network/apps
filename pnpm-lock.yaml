@@ -257,8 +257,10 @@ importers:
 
   packages/app-bridge-v2:
     specifiers:
+      '@phala/app-config': workspace:^0.0.1
       '@phala/app-store': workspace:^0.0.1
       '@phala/react-components': workspace:0.0.1
+      '@phala/react-libs': workspace:^0.0.1
       '@phala/utils': workspace:0.0.1
       '@polkadot/api': ^7.2.1
       baseui: ^10.6.0
@@ -273,8 +275,10 @@ importers:
       '@phala/utils': link:../utils
       buffer: 6.0.3
     devDependencies:
+      '@phala/app-config': link:../app-config
       '@phala/app-store': link:../app-store
       '@phala/react-components': link:../react-components
+      '@phala/react-libs': link:../react-libs
       '@polkadot/api': 7.2.1
       baseui: 10.6.0_@types+react@17.0.37
       bn.js: 5.2.0
@@ -9303,7 +9307,6 @@ packages:
       babel-plugin-syntax-jsx: 6.18.0
       lodash: 4.17.21
       styled-components: 5.3.3
-    dev: false
 
   /babel-plugin-styled-components/2.0.2_styled-components@5.3.3:
     resolution: {integrity: sha512-7eG5NE8rChnNTDxa6LQfynwgHTVOYYaHJbUYSlOhk8QBXIQiMBKq4gyfHBBKPrxUcVBXVJL61ihduCpCQbuNbw==}
@@ -9315,6 +9318,7 @@ packages:
       babel-plugin-syntax-jsx: 6.18.0
       lodash: 4.17.21
       styled-components: 5.3.3
+    dev: false
 
   /babel-plugin-syntax-jsx/6.18.0:
     resolution: {integrity: sha1-CvMqmm4Tyno/1QaeYtew9Y0NiUY=}
