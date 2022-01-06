@@ -2,23 +2,25 @@ import React from 'react'
 import {down, up} from 'styled-breakpoints'
 import styled, {css} from 'styled-components'
 import {useLocation} from '@reach/router'
-// import MobileNav from './MobileNav'
 import Navbar from './Navbar'
 import MobileNavbar from './MobileNavbar'
 
 const HomePageWrap = styled.div`
+  padding-top: 80px;
+
   ${up('md')} {
     display: flex;
   }
 
   ${down('sm')} {
     display: block;
-    padding-top: 40px;
+    padding-top: 72px;
+    padding-bottom: 72px;
   }
 `
 
 const ContentWrap = styled.div<{isDelegate?: boolean}>`
-  margin: 80px auto auto;
+  margin: 0 auto;
   ${(props) =>
     props.isDelegate
       ? css`
@@ -41,7 +43,6 @@ const BaseLayout: React.FC = (props) => {
       </ContentWrap>
       <Navbar />
       <MobileNavbar />
-      {/* <MobileNav /> */}
     </HomePageWrap>
   )
 }
