@@ -82,11 +82,11 @@ export const AppAnalytics = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Analytics</title>
+      </Helmet>
       <HideBMapIcon></HideBMapIcon>
       <Root>
-        <Helmet>
-          <title>Analytics</title>
-        </Helmet>
         <Info></Info>
 
         <h2>Chart</h2>
