@@ -1,4 +1,5 @@
 import {useCallback, useEffect, useState} from 'react'
+import {Helmet} from 'react-helmet'
 import {down} from 'styled-breakpoints'
 import styled, {createGlobalStyle} from 'styled-components'
 import {BlackCard, Chart, Info} from './components'
@@ -83,6 +84,9 @@ export const AppAnalytics = () => {
     <>
       <HideBMapIcon></HideBMapIcon>
       <Root>
+        <Helmet>
+          <title>Analytics</title>
+        </Helmet>
         <Info></Info>
 
         <h2>Chart</h2>

@@ -74,7 +74,7 @@ const HomePage: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title>Assets</title>
+        <title>Dashboard</title>
       </Helmet>
       <ContentWrapper>
         <Category
