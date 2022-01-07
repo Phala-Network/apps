@@ -97,18 +97,17 @@ const WithdrawModalBody = ({
             onChange={(e) => setAmount(e.currentTarget.value)}
           />
         </FormControl>
-        {hasWithdrawing && (
-          <Notification
-            kind="warning"
-            overrides={{
-              Body: {style: {width: 'auto', whiteSpace: 'pre-wrap'}},
-            }}
-          >
-            {hasWithdrawing && 'You have a pending withdraw request!\n\n'}
-            Only one withdraw request is kept. Resubmission will replace the
-            existing one and reset the countdown.
-          </Notification>
-        )}
+
+        <Notification
+          kind="warning"
+          overrides={{
+            Body: {style: {width: 'auto', whiteSpace: 'pre-wrap'}},
+          }}
+        >
+          {hasWithdrawing && 'You have a pending withdraw request!\n\n'}
+          Only one withdraw request is kept. Resubmission will replace the
+          existing one and reset the countdown.
+        </Notification>
       </ModalBody>
       <ModalFooter>
         <ModalButton disabled={!amount} onClick={onConfirm}>

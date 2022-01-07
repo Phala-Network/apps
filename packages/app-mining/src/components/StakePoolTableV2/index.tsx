@@ -22,7 +22,7 @@ import PopoverButton from '../PopoverButton'
 import {usePolkadotAccountAtom} from '@phala/app-store'
 import Pagination from '../Pagination'
 import {Modal} from 'baseui/modal'
-import {StatefulTooltip, TooltipProps} from 'baseui/tooltip'
+import {StatefulTooltip, StatefulTooltipProps} from 'baseui/tooltip'
 import {tooltipContent} from './tooltipContent'
 
 // FIXME: should be loadable, but meet some problems when configuring gatsby-plugin-loadable-components-ssr
@@ -58,7 +58,10 @@ type ModalKey =
 type MenuItem = {label: string; key: ModalKey}
 const PAGE_SIZE = 20
 
-const TooltipHeader = ({children, ...props}: TooltipProps): JSX.Element => (
+const TooltipHeader = ({
+  children,
+  ...props
+}: StatefulTooltipProps): JSX.Element => (
   <Block display="flex" alignItems="center">
     {children}
     <StatefulTooltip
