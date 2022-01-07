@@ -72,16 +72,6 @@ const CheckMore: React.FC = () => {
               zIndex: 999999,
             }),
           },
-          Backdrop: {
-            style: () => ({
-              transitionDuration: '2s',
-            }),
-          },
-          DrawerContainer: {
-            style: () => ({
-              transitionDuration: '2s',
-            }),
-          },
           DrawerBody: {
             style: () => ({
               marginTop: 0,
