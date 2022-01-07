@@ -52,7 +52,7 @@ const SelectNode: React.FC = () => {
         isOpen={isOpen}
         autoFocus
         animate={true}
-        anchor={ANCHOR.top}
+        anchor={ANCHOR.bottom}
         size={SIZE.auto}
         closeable={false}
         onBackdropClick={() => setIsOpen(false)}

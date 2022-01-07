@@ -11,8 +11,8 @@ const MoreButton = styled.button`
   align-items: center;
   justify-content: center;
   border: none;
-  width: 36px;
-  height: 36px;
+  width: 43px;
+  height: 43px;
   background-color: #fff;
   transition: all 0.2s;
   margin-right: 15px;
@@ -56,7 +56,7 @@ const CheckMore: React.FC = () => {
   return (
     <div>
       <MoreButton onClick={() => setIsOpen(true)}>
-        <MoreIcon />
+        <MoreIcon width="43" height="43" />
       </MoreButton>
       <Drawer
         isOpen={isOpen}
