@@ -10,6 +10,7 @@ export {default as useEthereumAccountBalanceETHDecimal} from './useEthereumAccou
 export * from './useInterval'
 export * from './useIsMobile'
 export {default as usePolkadotAccountBalanceDecimal} from './usePolkadotAccountBalanceDecimal'
+export * from './usePolkadotAccountTransferrableBalanceDecimal'
 export {default as usePortal} from './usePortal'
 export {default as useSSR} from './useSSR'
 export {default as useTokenomicParameters} from './useTokenomicParameters'
