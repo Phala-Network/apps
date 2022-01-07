@@ -2,7 +2,7 @@ import {Decimal} from 'decimal.js'
 import {useMemo} from 'react'
 import useTransferrableBalance from './useTransferrableBalance'
 
-export default function usePolkadotAccountTransferrableBalanceDecimal(
+export function usePolkadotAccountTransferrableBalanceDecimal(
   address?: string
 ): Decimal {
   const polkadotAccountBalance = useTransferrableBalance(address)
