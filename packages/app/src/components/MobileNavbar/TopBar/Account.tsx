@@ -3,6 +3,7 @@ import {PolkadotAccountModal} from '@phala/react-components'
 import {usePolkadotWeb3} from '@phala/react-libs'
 import React, {useCallback, useEffect, useState} from 'react'
 import styled from 'styled-components'
+import {useSSR} from '@phala/react-hooks'
 import EmptyAccountModal from './EmptyAccountModal'
 
 const Wrapper = styled.div`
@@ -71,6 +72,10 @@ const MobilePolkadotTicket: React.FC = () => {
       setEmptyAccountModalVisible(true)
     }
   }, [accounts.length])
+
+  const {isServer} = useSSR()
+
+  if (isServer) return null
 
   return (
     <Wrapper>
