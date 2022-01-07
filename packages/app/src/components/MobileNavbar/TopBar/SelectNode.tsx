@@ -51,6 +51,7 @@ const SelectNode: React.FC = () => {
       <Drawer
         isOpen={isOpen}
         autoFocus
+        animate={true}
         anchor={ANCHOR.top}
         size={SIZE.auto}
         closeable={false}

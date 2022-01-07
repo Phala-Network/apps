@@ -61,6 +61,7 @@ const CheckMore: React.FC = () => {
       <Drawer
         isOpen={isOpen}
         autoFocus
+        animate={true}
         anchor={ANCHOR.bottom}
         size={SIZE.auto}
         closeable={false}
