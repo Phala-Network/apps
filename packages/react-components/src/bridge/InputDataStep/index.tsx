@@ -1,7 +1,7 @@
 import {useEthereumAccountAtom, usePolkadotAccountAtom} from '@phala/app-store'
 import {
   useEthereumAccountBalanceDecimal,
-  usePolkadotAccountBalanceDecimal,
+  usePolkadotAccountTransferrableBalanceDecimal,
 } from '@phala/react-hooks'
 import {useAccountsQuery, useEthereumWeb3, useEthers} from '@phala/react-libs'
 import {validateAddress} from '@phala/utils'
@@ -87,9 +87,8 @@ const InputDataStep: React.FC<Props> = (props) => {
   const ethereumAccountBalanceDecimal = useEthereumAccountBalanceDecimal(
     ethereumAccountAddress
   )
-  const polkadotAccountBalanceDecimal = usePolkadotAccountBalanceDecimal(
-    polkadotAccountAddress
-  )
+  const polkadotAccountBalanceDecimal =
+    usePolkadotAccountTransferrableBalanceDecimal(polkadotAccountAddress)
 
   const [addressValid, setAddressValid] = useState(false)
 
