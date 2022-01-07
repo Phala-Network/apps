@@ -15,7 +15,11 @@ const NodeName = styled.span`
 const Button = styled.div`
   display: flex;
   align-items: center;
+  justify-content: center;
   margin-right: 7px;
+  width: 36px;
+  height: 36px;
+  background-color: #000;
 `
 
 type NodeType = {name: string; address: string}
@@ -46,7 +50,7 @@ const SelectNode: React.FC = () => {
   return (
     <div>
       <Button onClick={() => setIsOpen(true)}>
-        <Khala />
+        <Khala width="36" height="36" viewBox="1190 1190 80 80" />
       </Button>
       <Drawer
         isOpen={isOpen}
@@ -60,6 +64,16 @@ const SelectNode: React.FC = () => {
           Root: {
             style: () => ({
               zIndex: 999999,
+            }),
+          },
+          Backdrop: {
+            style: () => ({
+              transitionDuration: '2s',
+            }),
+          },
+          DrawerContainer: {
+            style: () => ({
+              transitionDuration: '2s',
             }),
           },
           DrawerBody: {
