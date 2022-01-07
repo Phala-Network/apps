@@ -32,10 +32,6 @@ import WithdrawModalBody from './WithdrawModalBody'
 import Decimal from 'decimal.js'
 import {Block} from 'baseui/block'
 
-const SearchInput = styled.div`
-  width: 420px;
-`
-
 const TableHeader = styled.div`
   display: flex;
   align-items: center;
@@ -56,7 +52,6 @@ type ModalKey =
   | 'setCommission'
   | 'reclaimAll'
 type MenuItem = {label: string; key: ModalKey}
-const PAGE_SIZE = 20
 
 const TooltipHeader = ({
   children,
@@ -79,12 +74,14 @@ const StakePoolTableV2 = ({
 }: {
   kind: 'delegate' | 'myDelegate' | 'mining'
 }): JSX.Element => {
+  const pageSize = kind === 'mining' ? 10 : 20
   const [polkadotAccount] = usePolkadotAccountAtom()
   const address = polkadotAccount?.address
   const myDelegateAvailable: boolean = kind === 'myDelegate' && Boolean(address)
   const [searchString, setSearchString] = useState('')
-  const [sortColumn, setSortColumn] =
-    useState<keyof StakePoolsOrderByWithRelationInput>('instantApr')
+  const [sortColumn, setSortColumn] = useState<
+    keyof StakePoolsOrderByWithRelationInput
+  >(kind === 'mining' ? 'pid' : 'instantApr')
   const [sortAsc, setSortAsc] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
 
@@ -100,10 +97,10 @@ const StakePoolTableV2 = ({
   const {data, isFetching} = useStakePoolsQuery(
     client,
     {
-      take: PAGE_SIZE,
+      take: pageSize,
       withStakePoolStakers: kind === 'myDelegate',
       withStakePoolWithdrawals: kind === 'myDelegate',
-      skip: PAGE_SIZE * (currentPage - 1),
+      skip: pageSize * (currentPage - 1),
       orderBy: {[sortColumn]: sortAsc ? SortOrder.Asc : SortOrder.Desc},
       where: {
         ...(searchString && {
@@ -128,6 +125,9 @@ const StakePoolTableV2 = ({
           ].filter(isTruthy),
         }),
         AND: [
+          // For development
+          process.env.NODE_ENV !== 'development' &&
+            kind === 'mining' && {ownerAddress: {equals: address}},
           workersFilter && {workersCount: {gt: 0}},
           aprFilter && {instantApr: {gt: '0'}},
           commissionFilter && {commission: {lt: '1'}},
@@ -192,17 +192,22 @@ const StakePoolTableV2 = ({
     <div>
       {kind === 'delegate' && (
         <TableHeader>
-          <SearchInput>
-            <StatefulInput
-              size="compact"
-              clearable
-              placeholder="Search Pid or Owner Address"
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                debouncedSetSearchString(e.target.value)
-              }
-              endEnhancer={<Search size={18} />}
-            />
-          </SearchInput>
+          <StatefulInput
+            size="compact"
+            clearable
+            placeholder="Search Pid or Owner Address"
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              debouncedSetSearchString(e.target.value)
+            }
+            endEnhancer={<Search size={18} />}
+            overrides={{
+              Root: {
+                style: {
+                  width: '420px',
+                },
+              },
+            }}
+          />
           <Checkbox
             checked={workersFilter}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -270,27 +275,38 @@ const StakePoolTableV2 = ({
             >
               {(stakePool: StakePools) => stakePool.pid}
             </TableBuilderColumn>
-            <TableBuilderColumn
-              id="owner"
-              header={
-                <TooltipHeader content={tooltipContent.owner}>
-                  Owner
-                </TooltipHeader>
-              }
-            >
-              {(stakePool: StakePools) => <OwnerCell stakePool={stakePool} />}
-            </TableBuilderColumn>
-            <TableBuilderColumn
-              id="instantApr"
-              header={
-                <TooltipHeader content={tooltipContent.apr}>APR</TooltipHeader>
-              }
-              sortable
-            >
-              {(stakePool: StakePools) => (
-                <PercentCell value={stakePool.instantApr} />
-              )}
-            </TableBuilderColumn>
+            {kind === 'mining' && (
+              <TableBuilderColumn id="workersCount" header="Worker" sortable>
+                {(stakePool: StakePools) => stakePool.workersCount}
+              </TableBuilderColumn>
+            )}
+            {kind !== 'mining' && (
+              <TableBuilderColumn
+                id="owner"
+                header={
+                  <TooltipHeader content={tooltipContent.owner}>
+                    Owner
+                  </TooltipHeader>
+                }
+              >
+                {(stakePool: StakePools) => <OwnerCell stakePool={stakePool} />}
+              </TableBuilderColumn>
+            )}
+            {kind !== 'mining' && (
+              <TableBuilderColumn
+                id="instantApr"
+                header={
+                  <TooltipHeader content={tooltipContent.apr}>
+                    APR
+                  </TooltipHeader>
+                }
+                sortable
+              >
+                {(stakePool: StakePools) => (
+                  <PercentCell value={stakePool.instantApr} />
+                )}
+              </TableBuilderColumn>
+            )}
             <TableBuilderColumn
               id="remainingStake"
               header={
@@ -358,11 +374,6 @@ const StakePoolTableV2 = ({
                 {(stakePool: StakePools) => (
                   <TokenCell value={stakePool.releasingStake} />
                 )}
-              </TableBuilderColumn>
-            )}
-            {kind === 'mining' && (
-              <TableBuilderColumn id="workersCount" header="Worker" sortable>
-                {(stakePool: StakePools) => stakePool.workersCount}
               </TableBuilderColumn>
             )}
             {kind === 'myDelegate' && (
@@ -467,7 +478,7 @@ const StakePoolTableV2 = ({
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
         totalCount={totalCount}
-        pageSize={PAGE_SIZE}
+        pageSize={pageSize}
       />
 
       {!isSSR() && operatingPool && (
