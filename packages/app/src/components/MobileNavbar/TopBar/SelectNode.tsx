@@ -57,6 +57,11 @@ const SelectNode: React.FC = () => {
         closeable={false}
         onBackdropClick={() => setIsOpen(false)}
         overrides={{
+          Root: {
+            style: () => ({
+              zIndex: 999999,
+            }),
+          },
           DrawerBody: {
             style: () => ({
               marginTop: 0,

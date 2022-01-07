@@ -50,6 +50,20 @@ const WrapApp: React.FC = ({children}) => {
 
   useLayoutEffect(() => {
     getCMSLog().catch((e) => Sentry.captureException(e))
+
+    // re-position the Web Widget (Classic)
+    // https://developer.zendesk.com/api-reference/widget/settings/?_ga=2.264317322.488128662.1641529242-1063742040.1641529242#offset
+    if (window) {
+      window.zESettings = {
+        webWidget: {
+          offset: {
+            mobile: {
+              vertical: '70px',
+            },
+          },
+        },
+      }
+    }
   }, [])
 
   return (
