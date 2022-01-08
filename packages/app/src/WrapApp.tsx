@@ -6,7 +6,6 @@ import {Provider as LibProvider} from '@phala/react-libs'
 import {isProduction} from '@phala/utils'
 import * as Sentry from '@sentry/react'
 import React, {StrictMode, useLayoutEffect, useRef} from 'react'
-import {Helmet} from 'react-helmet'
 import {QueryClient, QueryClientProvider} from 'react-query'
 import {ReactQueryDevtools} from 'react-query/devtools'
 import {ThemeProvider} from 'styled-components'
@@ -15,6 +14,7 @@ import './fonts.css'
 import theme, {baseTheme} from './theme'
 import {SnackbarProvider} from 'baseui/snackbar'
 import {toaster, ToasterContainer} from 'baseui/toast'
+import useZendesk from './hooks/useZendesk'
 
 const WrapApp: React.FC = ({children}) => {
   const client = useRef(
@@ -48,33 +48,15 @@ const WrapApp: React.FC = ({children}) => {
       : ethereumGraphEndpoint.development,
   }
 
+  useZendesk()
+
   useLayoutEffect(() => {
     getCMSLog().catch((e) => Sentry.captureException(e))
-
-    // re-position the Web Widget (Classic)
-    // https://developer.zendesk.com/api-reference/widget/settings/?_ga=2.264317322.488128662.1641529242-1063742040.1641529242#offset
-    if (window) {
-      window.zESettings = {
-        webWidget: {
-          offset: {
-            mobile: {
-              vertical: '70px',
-            },
-          },
-        },
-      }
-    }
   }, [])
 
   return (
     <StrictMode>
       <div>
-        <Helmet>
-          <script
-            id="ze-snippet"
-            src="https://static.zdassets.com/ekr/snippet.js?key=fca22f47-80b0-47a4-8cde-80ca1fe206d2"
-          />
-        </Helmet>
         <AppStoreProvider>
           <LibProvider {...productionConfig}>
             <QueryClientProvider contextSharing={true} client={client.current}>
