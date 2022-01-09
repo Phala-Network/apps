@@ -33,5 +33,5 @@ export function useKhalaBridgeFee() {
     getFeeData()
   }, [getFeeData])
 
-  return {fee}
+  return fee
 }

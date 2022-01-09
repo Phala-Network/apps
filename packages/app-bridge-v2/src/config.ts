@@ -28,18 +28,18 @@ export const networks: Network[] = [
     id: Khala,
     blockchainType: blockchainTypes.polkadot,
   },
-  {
-    label: Karura,
-    name: Karura,
-    id: Karura,
-    blockchainType: blockchainTypes.polkadot,
-  },
-  {
-    label: Evm,
-    name: Evm,
-    id: Evm,
-    blockchainType: blockchainTypes.ethereum,
-  },
+  // {
+  //   label: Karura,
+  //   name: Karura,
+  //   id: Karura,
+  //   blockchainType: blockchainTypes.polkadot,
+  // },
+  // {
+  //   label: Evm,
+  //   name: Evm,
+  //   id: Evm,
+  //   blockchainType: blockchainTypes.ethereum,
+  // },
   {
     label: Ethereum,
     name: Ethereum,
