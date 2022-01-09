@@ -9,7 +9,7 @@ const images = {
   Phala,
 } as const
 
-interface NetworkIconProps {
+export interface NetworkIconProps {
   network: keyof typeof images
 }
 
@@ -21,6 +21,7 @@ export const NetworkIcon: FC<NetworkIconProps> = (props) => {
       style={{
         width: 54,
         height: 54,
+        display: 'block',
       }}
       src={images[network]}
       alt={network}

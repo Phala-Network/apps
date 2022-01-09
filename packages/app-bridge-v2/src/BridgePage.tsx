@@ -31,7 +31,7 @@ export const BridgePage: FC = () => {
         <title>Bridge</title>
       </Helmet>
 
-      <Root style={{}}>
+      <Root>
         <Header />
 
         <BlockItem>

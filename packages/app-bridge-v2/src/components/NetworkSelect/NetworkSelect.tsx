@@ -15,6 +15,20 @@ export const NetworkSelect: FC<NetworkSelectProps> = (props) => {
   return (
     <Select
       overrides={{
+        ValueContainer: {
+          style: {
+            padding: 0,
+          },
+        },
+        ControlContainer: {
+          style: {
+            padding: 0,
+            height: 48,
+            fontSize: 16,
+            backgroundColor: 'black',
+            color: 'white',
+          },
+        },
         Dropdown: {
           style: () => ({
             backgroundColor: 'black',
@@ -22,11 +36,34 @@ export const NetworkSelect: FC<NetworkSelectProps> = (props) => {
             color: 'white',
           }),
         },
+        DropdownListItem: {
+          style: {
+            height: 48,
+            lineHeight: '48px',
+            fontSize: 16,
+            padding: 0,
+            textAlign: 'center',
+            color: 'white',
+            backgroundColor: 'black',
+            ':hover': {
+              backgroundColor: '#D1FF52',
+              color: '#111111',
+            },
+          },
+        },
+        SelectArrow: {
+          props: {
+            style: {
+              fill: 'white',
+            },
+          },
+        },
       }}
       options={networks}
       clearable={false}
       placeholder="Select Network"
       getOptionLabel={getLabel}
+      getValueLabel={getLabel}
       {...props}
     />
   )
