@@ -10,16 +10,13 @@ import {SubmitButton} from './components/SubmitButton'
 import {TransferFromPanel} from './components/TransferFromPanel'
 import {TransferModal} from './components/TransferModal'
 import {TransferToPanel} from './components/TransferToPanel'
-import {useSwitchToAndFormData} from './store'
+import {useAllTransferData, useSwitchToAndFormData} from './store'
 import {BlockItem, Root} from './styledComponents'
-import {TransactionInfo} from './types'
 import {useBridgePage} from './useBridgePage'
 
 export const BridgePage: FC = () => {
-  const [transactionInfo] = useState<TransactionInfo>()
-  const {currentBalance} = useBridgePage({
-    blockchainType: transactionInfo?.from.blockchainType,
-  })
+  const transactionInfo = useAllTransferData()
+  const {currentBalance} = useBridgePage()
   const [isOpenTransferModal, setIsOpenTransferModal] = useState(false)
   const switchData = useSwitchToAndFormData()
 
@@ -32,7 +29,6 @@ export const BridgePage: FC = () => {
       <Helmet>
         <title>Bridge</title>
       </Helmet>
-
       <Root
         style={{
           width: 672,
@@ -66,13 +62,12 @@ export const BridgePage: FC = () => {
         {currentBalance.toString()}
 
         <BlockItem>
-          <SubmitButton onClick={submit} />
+          <SubmitButton onSubmit={submit} />
         </BlockItem>
 
         {/* todo */}
         <EthereumConnectWallet />
       </Root>
-
       <TransferModal
         transactionInfo={transactionInfo}
         onClose={() => {
@@ -80,9 +75,8 @@ export const BridgePage: FC = () => {
         }}
         isOpen={isOpenTransferModal}
       />
-
       <InformationModal />
-
+      {JSON.stringify(transactionInfo)}
       <BridgePageTest />
     </div>
   )

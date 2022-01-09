@@ -5,13 +5,13 @@ import {
 } from '@phala/react-hooks'
 import {Decimal} from 'decimal.js'
 import {blockchainTypes} from './config'
+import {useAllTransferData} from './store'
 
-interface useBridgePageProps {
-  blockchainType?: string
-}
+export function useBridgePage() {
+  const transactionInfo = useAllTransferData()
 
-export function useBridgePage(props: useBridgePageProps) {
-  const {blockchainType = blockchainTypes.ethereum} = props
+  const blockchainType =
+    transactionInfo?.fromBlockchainType || blockchainTypes.ethereum
   const [polkadotAccount] = usePolkadotAccountAtom()
   const polkadotAccountAddress = polkadotAccount?.address
   const [ethereumAccount] = useEthereumAccountAtom()

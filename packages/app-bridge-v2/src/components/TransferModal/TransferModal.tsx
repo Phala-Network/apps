@@ -20,7 +20,6 @@ import {getBaseInfo} from './xtransfer'
 const bn1e12 = new BN(10).pow(new BN(12))
 
 interface TransferModalProps {
-  type?: string
   isOpen: boolean
   onClose: () => void
   onConfirm?: () => void

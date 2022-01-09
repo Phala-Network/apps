@@ -14,48 +14,59 @@ export const Karura = 'Karura'
 export const Evm = 'Evm'
 export const Ethereum = 'Ethereum'
 
-export const networks = [
+export type Network = {
+  id: string
+  name: string
+  blockchainType: string
+  label: string
+}
+
+export const networks: Network[] = [
   {
     label: Khala,
     name: Khala,
     id: Khala,
-    blockchainTypes: blockchainTypes.polkadot,
+    blockchainType: blockchainTypes.polkadot,
   },
   {
     label: Karura,
     name: Karura,
     id: Karura,
-    blockchainTypes: blockchainTypes.polkadot,
+    blockchainType: blockchainTypes.polkadot,
   },
   {
     label: Evm,
     name: Evm,
     id: Evm,
-    blockchainTypes: blockchainTypes.ethereum,
+    blockchainType: blockchainTypes.ethereum,
   },
   {
     label: Ethereum,
     name: Ethereum,
     id: Ethereum,
-    blockchainTypes: blockchainTypes.ethereum,
+    blockchainType: blockchainTypes.ethereum,
   },
-] as const
+]
+
+export const PHA = 'PHA'
+export const KHR = 'KHR'
+export const ETH = 'ETH'
 
 export const coins = [
   {
-    label: 'PHA',
-    name: 'PHA',
-    id: 'PHA',
+    label: PHA,
+    name: PHA,
+    id: PHA,
   },
   {
-    label: 'KHR',
-    name: 'KHR',
-    id: 'KHR',
+    label: KHR,
+    name: KHR,
+    id: KHR,
   },
   {
-    label: 'ETH',
-    name: 'ETH',
-    id: 'ETH',
+    label: ETH,
+    name: ETH,
+    id: ETH,
   },
 ] as const
 

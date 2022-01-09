@@ -1,18 +1,18 @@
 import {Value} from 'baseui/select'
 import {atom, useAtom} from 'jotai'
-import {coins, networks} from '../config'
+import {coins, Network, networks} from '../config'
 
 const fromAddress = atom<string>(
   '5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty'
 )
 const fromAmount = atom<number>(0)
-const fromNetwork = atom<Value>([networks[0]])
+const fromNetwork = atom<(Network | undefined)[]>([networks[0]])
 const fromCoin = atom<Value>([coins[0]])
 
 const toAddress = atom<string>(
   '5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY'
 )
-const toNetwork = atom<Value>([networks[0]])
+const toNetwork = atom<(Network | undefined)[]>([networks[1]])
 const toCoin = atom<Value>([coins[0]])
 
 export const useFromAddress = () => useAtom(fromAddress)
@@ -35,13 +35,30 @@ export function useAllTransferData() {
   const [toCoin] = useToCoin()
 
   return {
+    fromBlockchainType: fromNetwork[0]?.blockchainType,
     fromAddress,
-    fromNetwork: fromNetwork[0]?.id as string,
-    fromCoin: fromCoin[0]?.id as string,
+    fromNetwork: fromNetwork[0]?.name,
+    fromCoin: fromCoin[0]?.name,
     fromAmount,
+    from: {
+      address: fromAddress,
+      amount: fromAmount,
+      network: fromNetwork[0]?.name,
+      blockchainType: fromNetwork[0]?.blockchainType,
+      coin: fromCoin[0]?.name,
+    },
+
+    toBlockchainType: toNetwork[0]?.blockchainType,
     toAddress,
-    toNetwork: toNetwork[0]?.id as string,
-    toCoin: toCoin[0]?.id as string,
+    toNetwork: toNetwork[0]?.name,
+    toCoin: toCoin[0]?.name,
+    to: {
+      address: toAddress,
+      amount: fromAmount,
+      network: toNetwork[0]?.name,
+      blockchainType: toNetwork[0]?.blockchainType,
+      coin: toCoin[0]?.name,
+    },
   }
 }
 
