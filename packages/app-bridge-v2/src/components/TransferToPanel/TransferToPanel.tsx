@@ -1,5 +1,6 @@
 import {Block} from 'baseui/block'
 import {FC} from 'react'
+import {Network} from '../../config'
 import {useFromAmount, useToAddress, useToCoin, useToNetwork} from '../../store'
 import {AddressInput} from '../AddressInput'
 import {CoinSelect} from '../CoinSelect'
@@ -20,7 +21,7 @@ export const TransferToPanel: FC = () => {
           <NetworkSelect
             value={network}
             onChange={(params) => {
-              setNetwork(params.value)
+              setNetwork(params.value as Network[])
             }}
           />
         </Block>

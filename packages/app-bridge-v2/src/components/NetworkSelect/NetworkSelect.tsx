@@ -1,9 +1,13 @@
 import {Select} from 'baseui/select'
 import {ComponentProps, FC} from 'react'
-import {networks} from '../../config'
+import {Network, networks} from '../../config'
 import {NetworkSelectItem} from './NetworkSelectItem'
 
-export const NetworkSelect: FC<ComponentProps<typeof Select>> = (props) => {
+type NetworkSelectProps = Omit<ComponentProps<typeof Select>, 'value'> & {
+  value: Network[]
+}
+
+export const NetworkSelect: FC<NetworkSelectProps> = (props) => {
   const getLabel = ({option}: any) => {
     return <NetworkSelectItem id={option.id} />
   }
@@ -22,7 +26,6 @@ export const NetworkSelect: FC<ComponentProps<typeof Select>> = (props) => {
       options={networks}
       clearable={false}
       placeholder="Select Network"
-      value={props.value}
       getOptionLabel={getLabel}
       {...props}
     />

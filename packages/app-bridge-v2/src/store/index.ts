@@ -6,13 +6,17 @@ const fromAddress = atom<string>(
   '5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty'
 )
 const fromAmount = atom<number>(0)
-const fromNetwork = atom<(Network | undefined)[]>([networks[0]])
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+const fromNetwork = atom<Network[]>([networks[0]])
 const fromCoin = atom<Value>([coins[0]])
 
 const toAddress = atom<string>(
   '5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY'
 )
-const toNetwork = atom<(Network | undefined)[]>([networks[1]])
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+const toNetwork = atom<Network[]>([networks[0]])
 const toCoin = atom<Value>([coins[0]])
 
 export const useFromAddress = () => useAtom(fromAddress)
