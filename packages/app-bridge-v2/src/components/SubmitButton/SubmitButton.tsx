@@ -1,5 +1,5 @@
-import {Button} from 'baseui/button'
 import {ComponentProps, FC} from 'react'
+import {Button} from '../Button'
 
 interface SubmitButtonProps extends ComponentProps<typeof Button> {
   onSubmit: () => void
@@ -13,21 +13,7 @@ export const SubmitButton: FC<SubmitButtonProps> = (props) => {
   }
 
   return (
-    <Button
-      overrides={{
-        BaseButton: {
-          style: () => ({
-            width: '100%',
-            /* Gn 001 */
-            background: '#D1FF52',
-            /* Bk 001 */
-            color: '#111111',
-          }),
-        },
-      }}
-      {...props}
-      onClick={onSubmitCheck}
-    >
+    <Button {...props} onClick={onSubmitCheck}>
       Submit
     </Button>
   )
