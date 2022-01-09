@@ -1,8 +1,9 @@
 import {useEthereumAccountAtom, usePolkadotAccountAtom} from '@phala/app-store'
 import {
   useEthereumAccountBalanceDecimal,
-  usePolkadotAccountBalanceDecimal,
+  usePolkadotAccountTransferrableBalanceDecimal,
 } from '@phala/react-hooks'
+import {useAccountsQuery, useEthereumWeb3, useEthers} from '@phala/react-libs'
 import {validateAddress} from '@phala/utils'
 import {Decimal} from 'decimal.js'
 import React, {useEffect, useState} from 'react'
@@ -53,24 +54,41 @@ type Props = {
 } & StepProps
 
 const InputDataStep: React.FC<Props> = (props) => {
+  // temp
+  const {data: accounts = []} = useAccountsQuery()
+  const {ethereumWeb3connect} = useEthereumWeb3()
+  const {readystate: readyState} = useEthers()
+  const isReady = readyState === 'connected'
+
   const isMobile = useBreakpoint(down('sm'))
   const {layout, onNext, onCancel} = props
   const [amountInput, setAmountInput] = useState<number>()
   const [recipient, setRecipient] = useState<string>('')
   const [polkadotAccount] = usePolkadotAccountAtom()
   const polkadotAccountAddress = polkadotAccount?.address
-  const [ethereumAccount] = useEthereumAccountAtom()
+  const [ethereumAccount, setEthereumAccount] = useEthereumAccountAtom()
   const ethereumAccountAddress = ethereumAccount?.address
   const [errorString, setErrorString] = useState('')
   const {fee} = useKhalaBridgeFee()
   const {toast} = useToast()
 
+  useEffect(() => {
+    const [account] = accounts
+    if (!accounts || !isReady) {
+      return
+    }
+
+    setEthereumAccount({
+      name: account,
+      address: account || '',
+    })
+  }, [accounts, isReady, setEthereumAccount])
+
   const ethereumAccountBalanceDecimal = useEthereumAccountBalanceDecimal(
     ethereumAccountAddress
   )
-  const polkadotAccountBalanceDecimal = usePolkadotAccountBalanceDecimal(
-    polkadotAccountAddress
-  )
+  const polkadotAccountBalanceDecimal =
+    usePolkadotAccountTransferrableBalanceDecimal(polkadotAccountAddress)
 
   const [addressValid, setAddressValid] = useState(false)
 
@@ -265,6 +283,12 @@ const InputDataStep: React.FC<Props> = (props) => {
                 </Button>
               </EthereumAllowance>
             </ErrorBoundary>
+          )}
+
+          {!ethereumAccount && isFromEthereum && (
+            <Button type="primary" onClick={ethereumWeb3connect}>
+              Connect Wallet
+            </Button>
           )}
 
           {!isFromEthereum && (
