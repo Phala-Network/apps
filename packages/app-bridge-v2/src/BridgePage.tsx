@@ -1,3 +1,4 @@
+import {toast, ToasterContainer} from '@phala/react-components'
 import {FC, useState} from 'react'
 import {Helmet} from 'react-helmet'
 import {BridgePageTest} from './BridgePageTest'
@@ -76,8 +77,16 @@ export const BridgePage: FC = () => {
         isOpen={isOpenTransferModal}
       />
       <InformationModal />
-      {JSON.stringify(transactionInfo)}
+
+      <button
+        onClick={() => {
+          toast('test')
+        }}
+      >
+        toast
+      </button>
       <BridgePageTest />
+      <ToasterContainer />
     </div>
   )
 }
