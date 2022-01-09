@@ -7,7 +7,7 @@ import {Decimal} from 'decimal.js'
 import {blockchainTypes} from './config'
 
 interface useBridgePageProps {
-  blockchainType: string
+  blockchainType?: string
 }
 
 export function useBridgePage(props: useBridgePageProps) {

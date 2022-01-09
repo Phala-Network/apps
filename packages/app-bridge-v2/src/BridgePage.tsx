@@ -1,6 +1,7 @@
 import {FC, useState} from 'react'
 import {Helmet} from 'react-helmet'
 import {BridgePageTest} from './BridgePageTest'
+import {EthereumConnectWallet} from './components/EthereumConnectWallet'
 import {ExchangeIcon} from './components/ExchangeIcon'
 import {ExtraInfoPanel} from './components/ExtraInfoPanel'
 import {Header} from './components/Header'
@@ -12,9 +13,13 @@ import {TransferToPanel} from './components/TransferToPanel'
 import {useSwitchToAndFormData} from './store'
 import {BlockItem, Root} from './styledComponents'
 import {TransactionInfo} from './types'
+import {useBridgePage} from './useBridgePage'
 
 export const BridgePage: FC = () => {
   const [transactionInfo] = useState<TransactionInfo>()
+  const {currentBalance} = useBridgePage({
+    blockchainType: transactionInfo?.from.blockchainType,
+  })
   const [isOpenTransferModal, setIsOpenTransferModal] = useState(false)
   const switchData = useSwitchToAndFormData()
 
@@ -57,9 +62,15 @@ export const BridgePage: FC = () => {
           />
         </BlockItem>
 
+        {/* todo */}
+        {currentBalance.toString()}
+
         <BlockItem>
           <SubmitButton onClick={submit} />
         </BlockItem>
+
+        {/* todo */}
+        <EthereumConnectWallet />
       </Root>
 
       <TransferModal

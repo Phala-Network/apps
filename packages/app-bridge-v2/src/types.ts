@@ -3,6 +3,7 @@ export type TransactionInfoItem = {
   amount: number
   network: string
   type: string
+  blockchainType: string
 }
 
 export type TransactionInfo = {
