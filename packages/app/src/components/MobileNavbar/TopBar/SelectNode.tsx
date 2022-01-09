@@ -1,10 +1,9 @@
-import {useEffect, useState} from 'react'
+import {useState} from 'react'
 import styled from 'styled-components'
 import {useCustomEndpointAtom} from '@phala/app-store'
 import {Drawer, ANCHOR, SIZE} from 'baseui/drawer'
 import CheckIcon from '../../../icons/check.svg'
 import Khala from '../../../icons/khala_new.svg'
-import useCustomEndpoint from '../../../hooks/useCustomEndpoint'
 import {LineWrap} from '../../Navbar/styledComponent'
 
 const NodeName = styled.span`
@@ -33,14 +32,7 @@ const NODES: NodeType[] = [
 
 const SelectNode: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false)
-  const urlEndpoint = useCustomEndpoint()
   const [customEndpoint, setCustomEndpoint] = useCustomEndpointAtom()
-
-  useEffect(() => {
-    if (urlEndpoint) {
-      setCustomEndpoint(urlEndpoint)
-    }
-  }, [urlEndpoint, setCustomEndpoint])
 
   const handleClick = (item: NodeType) => {
     setCustomEndpoint(item.address)
@@ -50,7 +42,7 @@ const SelectNode: React.FC = () => {
   return (
     <div>
       <Button onClick={() => setIsOpen(true)}>
-        <Khala width="36" height="36" viewBox="1190 1190 80 80" />
+        <Khala />
       </Button>
       <Drawer
         isOpen={isOpen}
