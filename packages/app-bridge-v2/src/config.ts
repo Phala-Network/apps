@@ -7,32 +7,36 @@ export const keyringType = 'sr25519'
 export const blockchainTypes = {
   ethereum: 'ethereum',
   polkadot: 'polkadot',
-}
+} as const
+
+export const Khala = 'Khala'
+export const Karura = 'Karura'
+export const Evm = 'Evm'
+export const Ethereum = 'Ethereum'
 
 export const networks = [
   {
-    label: 'Khala',
-    name: 'Khala',
-    id: 'Khala',
+    label: Khala,
+    name: Khala,
+    id: Khala,
     blockchainTypes: blockchainTypes.polkadot,
   },
   {
-    label: 'Karura',
-    name: 'Karura',
-    id: 'Karura',
+    label: Karura,
+    name: Karura,
+    id: Karura,
     blockchainTypes: blockchainTypes.polkadot,
   },
   {
-    label: 'Evm',
-    name: 'Evm',
-    id: 'Evm',
+    label: Evm,
+    name: Evm,
+    id: Evm,
     blockchainTypes: blockchainTypes.ethereum,
   },
   {
-    label: 'Ethereum',
-    name: 'Ethereum',
-    id: 'Ethereum',
-    ethereum: 'ethereum',
+    label: Ethereum,
+    name: Ethereum,
+    id: Ethereum,
     blockchainTypes: blockchainTypes.ethereum,
   },
 ] as const
@@ -55,12 +59,12 @@ export const coins = [
   },
 ] as const
 
-export enum Transfers {
-  transferPHAFromKhalaToKarura = 'transferPHAFromKhalaToKarura',
-  transferPHAFromKaruraToKhala = 'transferPHAFromKaruraToKhala',
-  transferKARFromKaruraToKhala = 'transferKARFromKaruraToKhala',
-  transferKARFromKhalaToKarura = 'transferKARFromKhalaToKarura',
-  transferAssetsKhalaAccounts = 'transferAssetsKhalaAccounts',
-  transferPhaFromEvmToKhala = 'transferPhaFromEvmToKhala',
-  transferPhaFromEvmToKarura = 'transferPhaFromEvmToKarura',
+export const Transfers = {
+  transferPHAFromKhalaToKarura: 'transferPHAFromKhalaToKarura',
+  transferPHAFromKaruraToKhala: 'transferPHAFromKaruraToKhala',
+  transferKARFromKaruraToKhala: 'transferKARFromKaruraToKhala',
+  transferKARFromKhalaToKarura: 'transferKARFromKhalaToKarura',
+  transferAssetsKhalaAccounts: 'transferAssetsKhalaAccounts',
+  transferPhaFromEvmToKhala: 'transferPhaFromEvmToKhala',
+  transferPhaFromEvmToKarura: 'transferPhaFromEvmToKarura',
 }
