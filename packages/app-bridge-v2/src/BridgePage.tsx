@@ -30,12 +30,8 @@ export const BridgePage: FC = () => {
       <Helmet>
         <title>Bridge</title>
       </Helmet>
-      <Root
-        style={{
-          width: 672,
-          margin: '0 auto',
-        }}
-      >
+
+      <Root style={{}}>
         <Header />
 
         <BlockItem>

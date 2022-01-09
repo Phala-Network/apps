@@ -5,7 +5,7 @@ export const Root = styled.div`
   display: grid;
   grid-template-columns: 1fr;
 
-  width: 672;
+  max-width: 672;
   margin: '0 auto';
 `
 
