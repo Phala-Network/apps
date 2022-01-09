@@ -1,4 +1,5 @@
 import {toast, ToasterContainer} from '@phala/react-components'
+import {PLACEMENT} from 'baseui/toast'
 import {FC, useState} from 'react'
 import {Helmet} from 'react-helmet'
 import {BridgePageTest} from './BridgePageTest'
@@ -86,7 +87,7 @@ export const BridgePage: FC = () => {
         toast
       </button>
       <BridgePageTest />
-      <ToasterContainer />
+      <ToasterContainer placement={PLACEMENT.topRight} />
     </div>
   )
 }
