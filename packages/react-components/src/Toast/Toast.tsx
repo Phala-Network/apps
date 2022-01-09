@@ -3,7 +3,10 @@ import * as React from 'react'
 
 export {ToasterContainer} from 'baseui/toast'
 
-export const toast = (content: React.ReactNode, type: 'normal' | 'error') => {
+export const toast = (
+  content: React.ReactNode,
+  type: 'normal' | 'error' = 'normal'
+) => {
   const toastKey = toaster.info(content, {
     overrides: {
       Body: {

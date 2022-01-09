@@ -1,4 +1,4 @@
-import {toast, ToasterContainer} from '@phala/react-components'
+import {ToasterContainer} from '@phala/react-components'
 import {PLACEMENT} from 'baseui/toast'
 import {FC, useState} from 'react'
 import {Helmet} from 'react-helmet'
@@ -12,15 +12,15 @@ import {SubmitButton} from './components/SubmitButton'
 import {TransferFromPanel} from './components/TransferFromPanel'
 import {TransferModal} from './components/TransferModal'
 import {TransferToPanel} from './components/TransferToPanel'
+import {useExtraInfo} from './hooks/useExtraInfo'
 import {useAllTransferData, useSwitchToAndFormData} from './store'
 import {BlockItem, Root} from './styledComponents'
-import {useBridgePage} from './useBridgePage'
 
 export const BridgePage: FC = () => {
   const transactionInfo = useAllTransferData()
-  const {currentBalance} = useBridgePage()
   const [isOpenTransferModal, setIsOpenTransferModal] = useState(false)
   const switchData = useSwitchToAndFormData()
+  const extraInfo = useExtraInfo()
 
   const submit = () => {
     setIsOpenTransferModal(true)
@@ -48,20 +48,8 @@ export const BridgePage: FC = () => {
         </BlockItem>
 
         <BlockItem>
-          <ExtraInfoPanel
-            infos={[
-              {label: 'Bridge Fee', value: '375 PHA'},
-              {label: 'Transaction Fee', value: '0.002123 PHA'},
-              {
-                label: 'Estimated time',
-                value: '30mins',
-              },
-            ]}
-          />
+          <ExtraInfoPanel infos={extraInfo} />
         </BlockItem>
-
-        {/* todo */}
-        {currentBalance.toString()}
 
         <BlockItem>
           <SubmitButton onSubmit={submit} />
@@ -79,13 +67,6 @@ export const BridgePage: FC = () => {
       />
       <InformationModal />
 
-      <button
-        onClick={() => {
-          toast('test')
-        }}
-      >
-        toast
-      </button>
       <BridgePageTest />
       <ToasterContainer placement={PLACEMENT.topRight} />
     </div>
