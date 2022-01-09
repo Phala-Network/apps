@@ -4,13 +4,14 @@ import {
   usePolkadotAccountTransferrableBalanceDecimal,
 } from '@phala/react-hooks'
 import {Decimal} from 'decimal.js'
+import {blockchainTypes} from './config'
 
 interface useBridgePageProps {
   blockchainType: string
 }
 
 export function useBridgePage(props: useBridgePageProps) {
-  const {blockchainType = 'ethereum'} = props
+  const {blockchainType = blockchainTypes.ethereum} = props
   const [polkadotAccount] = usePolkadotAccountAtom()
   const polkadotAccountAddress = polkadotAccount?.address
   const [ethereumAccount] = useEthereumAccountAtom()
@@ -22,7 +23,7 @@ export function useBridgePage(props: useBridgePageProps) {
   const polkadotAccountBalanceDecimal =
     usePolkadotAccountTransferrableBalanceDecimal(polkadotAccountAddress)
 
-  const isFromEthereum = blockchainType === 'ethereum'
+  const isFromEthereum = blockchainType === blockchainTypes.ethereum
   const isFromKhala = !isFromEthereum
   const currentAddress = isFromEthereum
     ? ethereumAccountAddress
