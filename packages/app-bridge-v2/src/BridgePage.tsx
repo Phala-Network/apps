@@ -2,7 +2,6 @@ import {ToasterContainer} from '@phala/react-components'
 import {PLACEMENT} from 'baseui/toast'
 import {FC, useState} from 'react'
 import {Helmet} from 'react-helmet'
-import {BridgePageTest} from './BridgePageTest'
 import {EthereumConnectWallet} from './components/EthereumConnectWallet'
 import {ExchangeIcon} from './components/ExchangeIcon'
 import {ExtraInfoPanel} from './components/ExtraInfoPanel'
@@ -67,7 +66,7 @@ export const BridgePage: FC = () => {
       />
       <InformationModal />
 
-      <BridgePageTest />
+      {/* <BridgePageTest /> */}
       <ToasterContainer placement={PLACEMENT.topRight} />
     </div>
   )
