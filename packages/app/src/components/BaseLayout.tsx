@@ -19,15 +19,17 @@ const HomePageWrap = styled.div`
 
 const ContentWrap = styled.div<{isDelegate?: boolean}>`
   margin: 0 auto;
-  ${(props) =>
-    props.isDelegate
-      ? css`
-          width: 100%;
-          max-width: 1700px;
-        `
-      : css`
-          width: 960px;
-        `}
+  ${up('md')} {
+    ${(props) =>
+      props.isDelegate
+        ? css`
+            width: 100%;
+            max-width: 1700px;
+          `
+        : css`
+            width: 960px;
+          `}
+  }
 `
 
 const BaseLayout: React.FC = (props) => {
