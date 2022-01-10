@@ -1,20 +1,54 @@
+import {useApiPromise} from '@phala/react-libs'
 import {Button} from 'baseui/button'
-import {Modal, ModalBody} from 'baseui/modal'
+import {
+  Modal,
+  ModalBody,
+  ModalButton,
+  ModalFooter,
+  ModalHeader,
+  ModalProps,
+} from 'baseui/modal'
+import {ParagraphSmall} from 'baseui/typography'
+import {useState} from 'react'
+import useWaitSignAndSend from '../hooks/useWaitSignAndSend'
 
-const Body = (): JSX.Element => {
+const Body = ({onClose}: Pick<ModalProps, 'onClose'>): JSX.Element => {
+  const {api} = useApiPromise()
+  const waitSignAndSend = useWaitSignAndSend()
+  const onConfirm = () => {
+    if (!api) return
+    waitSignAndSend(api.tx.phalaStakePool?.create?.()).then(() => {
+      onClose?.({closeSource: 'closeButton'})
+    })
+  }
   return (
     <>
-      <ModalBody></ModalBody>
+      <ModalHeader>Create Pool</ModalHeader>
+      <ModalBody>
+        <ParagraphSmall>You will create a new stake pool.</ParagraphSmall>
+      </ModalBody>
+      <ModalFooter>
+        <ModalButton onClick={onConfirm}>Confirm</ModalButton>
+      </ModalFooter>
     </>
   )
 }
 
 const CreatePoolButton = (): JSX.Element => {
+  const [isOpen, setIsOpen] = useState(false)
+  const onClose = () => setIsOpen(false)
   return (
     <>
-      <Button kind="secondary">Create Pool</Button>
-      <Modal>
-        <Body />
+      <Button
+        kind="secondary"
+        onClick={() => {
+          setIsOpen(true)
+        }}
+      >
+        Create Pool
+      </Button>
+      <Modal onClose={onClose} isOpen={isOpen}>
+        <Body onClose={onClose} />
       </Modal>
     </>
   )
