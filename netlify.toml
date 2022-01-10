@@ -1,3 +1,9 @@
+[[headers]]
+  for = "/static/fonts/Montserrat/*.otf"
+  [headers.values]
+    Cache-Control = "public, max-age=365000000"
+    Access-Control-Allow-Origin = "*"
+    Content-Type = "application/font-otf"
 [build]
     command = "./scripts/netlify-deploy.sh"
 [build.environment]
