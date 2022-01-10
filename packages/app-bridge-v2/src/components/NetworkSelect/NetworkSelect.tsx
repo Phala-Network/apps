@@ -17,12 +17,18 @@ export const NetworkSelect: FC<NetworkSelectProps> = (props) => {
       overrides={{
         ValueContainer: {
           style: {
-            padding: 0,
+            paddingLeft: 0,
+            paddingRight: 0,
+            paddingTop: 0,
+            paddingBottom: 0,
           },
         },
         ControlContainer: {
           style: {
-            padding: 0,
+            paddingLeft: 0,
+            paddingRight: 0,
+            paddingTop: 0,
+            paddingBottom: 0,
             height: 48,
             fontSize: 16,
             backgroundColor: 'black',
@@ -32,7 +38,10 @@ export const NetworkSelect: FC<NetworkSelectProps> = (props) => {
         Dropdown: {
           style: () => ({
             backgroundColor: 'black',
-            padding: 0,
+            paddingLeft: 0,
+            paddingRight: 0,
+            paddingTop: 0,
+            paddingBottom: 0,
             color: 'white',
           }),
         },
@@ -41,7 +50,10 @@ export const NetworkSelect: FC<NetworkSelectProps> = (props) => {
             height: 48,
             lineHeight: '48px',
             fontSize: 16,
-            padding: 0,
+            paddingLeft: 0,
+            paddingRight: 0,
+            paddingTop: 0,
+            paddingBottom: 0,
             textAlign: 'center',
             color: 'white',
             backgroundColor: 'black',

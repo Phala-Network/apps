@@ -38,7 +38,10 @@ export const EthereumConnectWallet: FC<EthereumConnectWalletProps> = (
         Root: {
           style: () => ({
             height: 28,
-            borderRadius: 14,
+            borderBottomLeftRadius: 14,
+            borderBottomRightRadius: 14,
+            borderTopLeftRadius: 14,
+            borderTopRightRadius: 14,
           }),
         },
       }}

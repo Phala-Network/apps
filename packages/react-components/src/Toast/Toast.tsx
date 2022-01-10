@@ -16,12 +16,15 @@ export const toast = (
           /* Bk 001 */
           color: '#111111',
           /* Wt 001 */
-          background: '#FFFFFF',
+          backgroundColor: '#FFFFFF',
           /* Gn 002 */
           border: type === 'normal' ? '2px solid #AAD829' : '2px solid #EB5757',
           boxSizing: 'border-box',
           boxShadow: '0px 16px 48px rgba(0, 0, 0, 0.1)',
-          borderRadius: 0,
+          borderBottomLeftRadius: 14,
+          borderBottomRightRadius: 14,
+          borderTopLeftRadius: 14,
+          borderTopRightRadius: 14,
         },
       },
       InnerContainer: {
