@@ -1,12 +1,11 @@
+import {up} from 'styled-breakpoints'
 import styled from 'styled-components'
 
 export const Root = styled.div`
-  width: 100%;
-  display: grid;
-  grid-template-columns: 1fr;
-
-  max-width: 672;
-  margin: '0 auto';
+  ${up('md')} {
+    width: 672px;
+    margin: 0;
+  }
 `
 
 export const BlockItem = styled.div`

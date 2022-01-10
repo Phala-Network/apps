@@ -1,7 +1,7 @@
+import {useLocation} from '@reach/router'
 import React from 'react'
 import {down, up} from 'styled-breakpoints'
 import styled, {css} from 'styled-components'
-import {useLocation} from '@reach/router'
 import MobileNav from './MobileNav'
 import Navbar from './Navbar'
 
@@ -26,7 +26,7 @@ const ContentWrap = styled.div<{isDelegate?: boolean}>`
           max-width: 1700px;
         `
       : css`
-          width: 960px;
+          max-width: 960px;
         `}
 `
 
