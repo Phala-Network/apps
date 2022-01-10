@@ -1,8 +1,8 @@
 import {Block} from 'baseui/block'
 import {FC} from 'react'
 import {
+  useAmount,
   useFromAddress,
-  useFromAmount,
   useFromCoin,
   useFromNetwork,
 } from '../../store'
@@ -21,7 +21,7 @@ export const TransferFromPanel: FC<TransferFromPanelProps> = () => {
   const [address, setAddress] = useFromAddress()
   const [network, setNetwork] = useFromNetwork()
   const [coin, setCoin] = useFromCoin()
-  const [amount, setAmount] = useFromAmount()
+  const [amount, setAmount] = useAmount()
 
   return (
     <TransferPanel label="From">

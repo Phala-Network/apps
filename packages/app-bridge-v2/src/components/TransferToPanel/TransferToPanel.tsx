@@ -1,7 +1,7 @@
 import {Block} from 'baseui/block'
 import {FC} from 'react'
 import {Network} from '../../config'
-import {useFromAmount, useToAddress, useToCoin, useToNetwork} from '../../store'
+import {useAmount, useToAddress, useToCoin, useToNetwork} from '../../store'
 import {AddressInput} from '../AddressInput'
 import {CoinSelect} from '../CoinSelect'
 import {NetworkSelect} from '../NetworkSelect'
@@ -10,7 +10,7 @@ import {AmountDisplay} from './AmountDisplay'
 
 export const TransferToPanel: FC = () => {
   const [address, setAddress] = useToAddress()
-  const [amount] = useFromAmount()
+  const [amount] = useAmount()
   const [network, setNetwork] = useToNetwork()
   const [coin, setCoin] = useToCoin()
 

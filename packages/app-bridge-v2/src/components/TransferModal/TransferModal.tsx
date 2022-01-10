@@ -53,7 +53,7 @@ export const TransferModal: FC<TransferModalProps> = (props) => {
     //   khalaApi,
     //   keyring.addFromAddress(allTransferData.fromAddress),
     //   keyring.addFromAddress(allTransferData.toAddress),
-    //   bn1e12.mul(new BN(allTransferData.fromAmount)),
+    //   bn1e12.mul(new BN(allTransferData.amount)),
     //   log
     // )
 
@@ -68,12 +68,12 @@ export const TransferModal: FC<TransferModalProps> = (props) => {
       karuraAccount,
       // keyring.addFromAddress(allTransferData.toAddress),
       khalaAccount,
-      bn1e12.mul(new BN(allTransferData.fromAmount)),
+      bn1e12.mul(new BN(allTransferData.amount)),
       log
     )
 
     onConfirm?.()
-  }, [allTransferData.fromAmount, khalaApi, onConfirm])
+  }, [allTransferData.amount, khalaApi, onConfirm])
 
   return (
     <Modal
@@ -101,7 +101,7 @@ export const TransferModal: FC<TransferModalProps> = (props) => {
           address={allTransferData.fromAddress}
           network={allTransferData.fromNetwork}
           coin={allTransferData.fromCoin}
-          amount={allTransferData.fromAmount.toString()}
+          amount={allTransferData.amount.toString()}
         />
 
         <InformationDetailItem
@@ -109,7 +109,7 @@ export const TransferModal: FC<TransferModalProps> = (props) => {
           address={allTransferData.toAddress}
           network={allTransferData.toNetwork}
           coin={allTransferData.toCoin}
-          amount={allTransferData.fromAmount.toString()}
+          amount={allTransferData.amount.toString()}
         />
       </ModalBody>
 

@@ -1,11 +1,12 @@
 import {Value} from 'baseui/select'
+import Decimal from 'decimal.js'
 import {atom, useAtom} from 'jotai'
 import {coins, Network, networks} from '../config'
 
 const fromAddress = atom<string>(
   '5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty'
 )
-const fromAmount = atom<number>(0)
+const amount = atom<number>(0)
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 const fromNetwork = atom<Network[]>([networks[0]])
@@ -20,7 +21,7 @@ const toNetwork = atom<Network[]>([networks[0]])
 const toCoin = atom<Value>([coins[0]])
 
 export const useFromAddress = () => useAtom(fromAddress)
-export const useFromAmount = () => useAtom(fromAmount)
+export const useAmount = () => useAtom(amount)
 export const useFromNetwork = () => useAtom(fromNetwork)
 export const useFromCoin = () => useAtom(fromCoin)
 
@@ -32,7 +33,7 @@ export function useAllTransferData() {
   const [fromAddress] = useFromAddress()
   const [fromNetwork] = useFromNetwork()
   const [fromCoin] = useFromCoin()
-  const [fromAmount] = useFromAmount()
+  const [amount] = useAmount()
 
   const [toAddress] = useToAddress()
   const [toNetwork] = useToNetwork()
@@ -43,22 +44,20 @@ export function useAllTransferData() {
     fromAddress,
     fromNetwork: fromNetwork[0]?.name,
     fromCoin: fromCoin[0]?.name,
-    fromAmount,
+    amount,
+    amountDecimal: new Decimal(amount),
     from: {
       address: fromAddress,
-      amount: fromAmount,
       network: fromNetwork[0]?.name,
       blockchainType: fromNetwork[0]?.blockchainType,
       coin: fromCoin[0]?.name,
     },
-
     toBlockchainType: toNetwork[0]?.blockchainType,
     toAddress,
     toNetwork: toNetwork[0]?.name,
     toCoin: toCoin[0]?.name,
     to: {
       address: toAddress,
-      amount: fromAmount,
       network: toNetwork[0]?.name,
       blockchainType: toNetwork[0]?.blockchainType,
       coin: toCoin[0]?.name,
