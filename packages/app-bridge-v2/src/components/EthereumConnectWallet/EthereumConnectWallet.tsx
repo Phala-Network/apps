@@ -1,7 +1,7 @@
 import {useEthereumAccountAtom} from '@phala/app-store'
 import {useAccountsQuery, useEthereumWeb3, useEthers} from '@phala/react-libs'
-import {Button} from 'baseui/button'
 import {FC, useEffect} from 'react'
+import {Button} from '../Button'
 
 export interface EthereumConnectWalletProps {
   hidden?: boolean
@@ -32,5 +32,19 @@ export const EthereumConnectWallet: FC<EthereumConnectWalletProps> = (
 
   if (hidden) return null
 
-  return <Button onClick={ethereumWeb3connect}>Connect Wallet</Button>
+  return (
+    <Button
+      overrides={{
+        Root: {
+          style: {
+            height: '28px',
+            borderRadius: '14px',
+          },
+        },
+      }}
+      onClick={ethereumWeb3connect}
+    >
+      Connect Wallet
+    </Button>
+  )
 }
