@@ -12,15 +12,15 @@ import {
   StakePoolsOrderByWithRelationInput,
 } from '../../hooks/graphql'
 import {client} from '../../utils/GraphQLClient'
-import {OwnerCell, PercentCell, TokenCell} from './Cells'
+import {OwnerCell, TokenCell} from './Cells'
 import styled from 'styled-components'
 import {StatefulInput} from 'baseui/input'
 import {debounce} from 'lodash-es'
-import {isSSR, isTruthy} from '@phala/utils'
+import {isSSR, isTruthy, toFixed} from '@phala/utils'
 import PopoverButton from '../PopoverButton'
 import {usePolkadotAccountAtom} from '@phala/app-store'
 import Pagination from '../Pagination'
-import {Modal} from 'baseui/modal'
+import {Modal, ModalProps} from 'baseui/modal'
 import {StatefulTooltip, StatefulTooltipProps} from 'baseui/tooltip'
 import {tooltipContent} from './tooltipContent'
 import Decimal from 'decimal.js'
@@ -31,6 +31,9 @@ import TableSkeleton from '../TableSkeleton'
 import DelegateModalBody from './DelegateModalBody'
 import ClaimModalBody from './ClaimModalBody'
 import WithdrawModalBody from './WithdrawModalBody'
+import SetCapModalBody from './SetCapModalBody'
+import SetCommissionModalBody from './SetCommissionModalBody'
+import AddWorkerModalBody from './AddWorkerModalBody'
 
 const TableHeader = styled.div`
   display: flex;
@@ -50,8 +53,26 @@ type ModalKey =
   | 'delegate'
   | 'withdraw'
   | 'setCommission'
-  | 'reclaimAll'
+// | 'reclaimAll'
 type MenuItem = {label: string; key: ModalKey}
+
+const modalKeyMap: Readonly<
+  Record<
+    ModalKey,
+    (
+      props: {
+        stakePool: StakePools
+      } & Pick<ModalProps, 'onClose'>
+    ) => JSX.Element
+  >
+> = {
+  delegate: DelegateModalBody,
+  claim: ClaimModalBody,
+  withdraw: WithdrawModalBody,
+  setCap: SetCapModalBody,
+  setCommission: SetCommissionModalBody,
+  addWorker: AddWorkerModalBody,
+}
 
 const TooltipHeader = ({
   children,
@@ -82,7 +103,7 @@ const StakePoolTableV2 = ({
   const [sortColumn, setSortColumn] = useState<
     keyof StakePoolsOrderByWithRelationInput
   >(kind === 'mining' ? 'pid' : 'instantApr')
-  const [sortAsc, setSortAsc] = useState(false)
+  const [sortAsc, setSortAsc] = useState(kind !== 'delegate')
   const [currentPage, setCurrentPage] = useState(1)
 
   const [workersFilter, setWorkersFilter] = useState(kind === 'delegate')
@@ -187,6 +208,8 @@ const StakePoolTableV2 = ({
   const closeModal = useCallback(() => {
     setIsModalOpen(false)
   }, [])
+
+  const ModalBody = openModalKey && modalKeyMap[openModalKey]
 
   return (
     <div>
@@ -305,9 +328,9 @@ const StakePoolTableV2 = ({
             }
             sortable
           >
-            {(stakePool: StakePools) => (
-              <PercentCell value={stakePool.instantApr} />
-            )}
+            {(stakePool: StakePools) =>
+              `${toFixed(new Decimal(stakePool.instantApr).div(100), 2)}%`
+            }
           </TableBuilderColumn>
         )}
         <TableBuilderColumn
@@ -332,9 +355,9 @@ const StakePoolTableV2 = ({
           }
           sortable
         >
-          {(stakePool: StakePools) => (
-            <PercentCell value={stakePool.commission} />
-          )}
+          {(stakePool: StakePools) =>
+            `${new Decimal(stakePool.commission).times(100)}%`
+          }
         </TableBuilderColumn>
         {kind !== 'myDelegate' && (
           <TableBuilderColumn
@@ -444,6 +467,12 @@ const StakePoolTableV2 = ({
         >
           {(stakePool: StakePools) => {
             const allItems: (false | MenuItem)[] = [
+              kind === 'mining' && {label: 'Add Worker', key: 'addWorker'},
+              kind === 'mining' && {label: 'Set Cap', key: 'setCap'},
+              kind === 'mining' && {
+                label: 'Set Commission',
+                key: 'setCommission',
+              },
               kind === 'myDelegate' && {label: 'Claim', key: 'claim'},
               {label: 'Delegate', key: 'delegate'},
               kind === 'myDelegate' && {label: 'Withdraw', key: 'withdraw'},
@@ -482,14 +511,8 @@ const StakePoolTableV2 = ({
       {!isSSR() && operatingPool && (
         <Modal isOpen={isModalOpen} onClose={closeModal}>
           {/* TODO: add suspense wrapper here with loadable modal components */}
-          {openModalKey === 'delegate' && (
-            <DelegateModalBody stakePool={operatingPool} onClose={closeModal} />
-          )}
-          {openModalKey === 'claim' && (
-            <ClaimModalBody stakePool={operatingPool} onClose={closeModal} />
-          )}
-          {openModalKey === 'withdraw' && (
-            <WithdrawModalBody stakePool={operatingPool} onClose={closeModal} />
+          {ModalBody && (
+            <ModalBody stakePool={operatingPool} onClose={closeModal} />
           )}
         </Modal>
       )}

@@ -17,8 +17,10 @@ const Body = ({onClose}: Pick<ModalProps, 'onClose'>): JSX.Element => {
   const waitSignAndSend = useWaitSignAndSend()
   const onConfirm = () => {
     if (!api) return
-    waitSignAndSend(api.tx.phalaStakePool?.create?.()).then(() => {
-      onClose?.({closeSource: 'closeButton'})
+    waitSignAndSend(api.tx.phalaStakePool?.create?.(), (status) => {
+      if (status.isReady) {
+        onClose?.({closeSource: 'closeButton'})
+      }
     })
   }
   return (
