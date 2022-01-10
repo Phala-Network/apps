@@ -1,5 +1,6 @@
 import {Block} from 'baseui/block'
 import {FC} from 'react'
+import {Network} from '../../config'
 import {
   useAmount,
   useFromAddress,
@@ -29,7 +30,7 @@ export const TransferFromPanel: FC<TransferFromPanelProps> = () => {
         <Block flex={1}>
           <NetworkSelect
             value={network}
-            onChange={(params) => setNetwork(params.value)}
+            onChange={(params) => setNetwork(params.value as Network[])}
           />
         </Block>
 
