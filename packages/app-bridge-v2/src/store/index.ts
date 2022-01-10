@@ -7,17 +7,49 @@ const fromAddress = atom<string>(
   '5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty'
 )
 const amount = atom<number>(0)
+
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-const fromNetwork = atom<Network[]>([networks[0]])
+const _fromNetwork = atom<Network[]>([networks[0]])
+
+const fromNetwork = atom(
+  (get) => get(_fromNetwork),
+  (get, set, newPrice: Network[]) => {
+    const toNetworkValue = get(_toNetwork)
+    const fromNetworkValue = get(_fromNetwork)
+
+    if (toNetworkValue[0]?.name === newPrice[0]?.name) {
+      set(_toNetwork, fromNetworkValue)
+      set(_fromNetwork, newPrice)
+    } else {
+      set(_fromNetwork, newPrice)
+    }
+  }
+)
+
 const fromCoin = atom<Value>([coins[0]])
 
 const toAddress = atom<string>(
   '5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY'
 )
+
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-const toNetwork = atom<Network[]>([networks[0]])
+const _toNetwork = atom<Network[]>([networks[1]])
+const toNetwork = atom(
+  (get) => get(_toNetwork),
+  (get, set, newPrice: Network[]) => {
+    const toNetworkValue = get(_toNetwork)
+    const fromNetworkValue = get(_fromNetwork)
+
+    if (fromNetworkValue[0]?.name === newPrice[0]?.name) {
+      set(_toNetwork, newPrice)
+      set(_fromNetwork, toNetworkValue)
+    } else {
+      set(_toNetwork, newPrice)
+    }
+  }
+)
 const toCoin = atom<Value>([coins[0]])
 
 export const useFromAddress = () => useAtom(fromAddress)

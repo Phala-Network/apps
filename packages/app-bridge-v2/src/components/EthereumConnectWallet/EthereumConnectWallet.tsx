@@ -36,10 +36,10 @@ export const EthereumConnectWallet: FC<EthereumConnectWalletProps> = (
     <Button
       overrides={{
         Root: {
-          style: {
-            height: '28px',
-            borderRadius: '14px',
-          },
+          style: () => ({
+            height: 28,
+            borderRadius: 14,
+          }),
         },
       }}
       onClick={ethereumWeb3connect}
