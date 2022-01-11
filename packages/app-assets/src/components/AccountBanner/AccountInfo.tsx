@@ -1,8 +1,10 @@
-import React from 'react'
+import React, {useMemo} from 'react'
 import styled from 'styled-components'
 import {down} from 'styled-breakpoints'
 import {useBreakpoint} from 'styled-breakpoints/react-styled'
 import {Button, SHAPE} from 'baseui/button'
+import {usePolkadotAccountAtom} from '@phala/app-store'
+import {trimAddress} from '@phala/utils'
 import {CopyIcon} from '../Icons/CopyIcon'
 
 const Wrapper = styled.div`
@@ -15,7 +17,7 @@ const Wrapper = styled.div`
 
   ${down('sm')} {
     grid-template-rows: 20px 21px;
-    grid-template-columns: 1fr 128px;
+    grid-template-columns: 1fr auto;
     grid-template-areas: 'Name Button' 'Address .';
   }
 `
@@ -38,6 +40,7 @@ const Name = styled.div`
 const ButtonWrapper = styled.div`
   grid-area: Button;
   padding-top: 4px;
+  padding-right: 30px;
 
   ${down('sm')} {
     padding-top: 0;
@@ -71,45 +74,57 @@ const Address = styled.span`
 `
 
 const AccountInfo: React.FC = () => {
+  const [polkadotAccount] = usePolkadotAccountAtom()
+  const isMobile = useBreakpoint(down('sm'))
+  const isPad = useBreakpoint(down('md'))
+
+  const addressVale = useMemo(() => {
+    if (!polkadotAccount) {
+      return 'Earn , Transfer , Operate in the world of Web3'
+    }
+    if (isPad) return trimAddress(polkadotAccount.address)
+    return polkadotAccount.address
+  }, [isPad, polkadotAccount])
+
+  const copyIcon = useMemo(() => {
+    if (isMobile) return <CopyIcon width="13" height="13" />
+    return <CopyIcon />
+  }, [isMobile])
   return (
     <Wrapper>
-      <Name>Zhang</Name>
-      <ButtonWrapper>
-        <Button
-          onClick={() => alert('click')}
-          shape={SHAPE.pill}
-          isSelected
-          overrides={{
-            BaseButton: {
-              style: () => ({
-                outline: `1px solid #D1FF52`,
-                backgroundColor: '#D1FF52',
-                borderRadius: '14px',
-                padding: '6px 18px',
-                color: '#111111',
-                fontFamily: 'Montserrat',
-                fontStyle: 'normal',
-                fontWeight: 500,
-                fontSize: '16px',
-                lineHeight: '16px',
-              }),
-            },
-          }}
-        >
-          Change
-        </Button>
-      </ButtonWrapper>
+      <Name>
+        {!polkadotAccount ? 'Participate in Phala' : polkadotAccount.name}
+      </Name>
+      {!polkadotAccount && isMobile ? null : (
+        <ButtonWrapper>
+          <Button
+            onClick={() => alert('click')}
+            shape={SHAPE.pill}
+            isSelected
+            overrides={{
+              BaseButton: {
+                style: () => ({
+                  outline: `1px solid #D1FF52`,
+                  backgroundColor: '#D1FF52',
+                  borderRadius: '14px',
+                  padding: '6px 18px',
+                  color: '#111111',
+                  fontFamily: 'Montserrat',
+                  fontStyle: 'normal',
+                  fontWeight: 500,
+                  fontSize: '16px',
+                  lineHeight: '16px',
+                }),
+              },
+            }}
+          >
+            {!polkadotAccount ? 'Connect Wallet' : 'Change'}
+          </Button>
+        </ButtonWrapper>
+      )}
       <AddressWrapper>
-        <Address>
-          {useBreakpoint(down('md'))
-            ? '3zrXit…bLct'
-            : '5G8w7BUWZevX1tcCqprSuevT9AB4z9NcNs44KSVbcY6s2uy2'}
-        </Address>
-        {useBreakpoint(down('sm')) ? (
-          <CopyIcon width="13" height="13" />
-        ) : (
-          <CopyIcon />
-        )}
+        <Address>{addressVale}</Address>
+        {!polkadotAccount ? null : copyIcon}
       </AddressWrapper>
     </Wrapper>
   )

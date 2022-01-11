@@ -1,8 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
 import {down} from 'styled-breakpoints'
+import {useSSR} from '@phala/react-hooks'
+import {usePolkadotAccountAtom} from '@phala/app-store'
 import bannerBg from '../Icons/banner-bg.png'
 import AccountInfo from './AccountInfo'
+import {PhalaIcon} from '../Icons/PhalaIcon'
 
 const Wrapper = styled.div`
   background-color: #111111;
@@ -30,6 +33,19 @@ const Left = styled.div`
   }
 `
 
+const Icon = styled.div`
+  padding-top: 33px;
+  padding-right: 96px;
+
+  ${down('lg')} {
+    padding-right: 50px;
+  }
+
+  ${down('md')} {
+    display: none;
+  }
+`
+
 const Dollar = styled.div`
   font-family: Montserrat;
   font-style: normal;
@@ -50,13 +66,24 @@ const Dollar = styled.div`
 `
 
 const AccountBanner: React.FC = () => {
+  const [polkadotAccount] = usePolkadotAccountAtom()
+  const {isServer} = useSSR()
+
+  if (isServer) return null
+
   return (
     <Wrapper>
       <Left>
         <AccountInfo />
       </Left>
       <div>
-        <Dollar>$ 1.345</Dollar>
+        {!polkadotAccount ? (
+          <Icon>
+            <PhalaIcon />
+          </Icon>
+        ) : (
+          <Dollar>$ 1.345</Dollar>
+        )}
       </div>
     </Wrapper>
   )
