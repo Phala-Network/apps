@@ -12,6 +12,7 @@
     "@phala/react-libs": "workspace:^0.0.1",
     "@phala/utils": "workspace:0.0.1",
     "buffer": "^6.0.3",
+    "currency.js": "^2.0.4",
     "rc-input-number": "^7.3.0"
   },
   "devDependencies": {

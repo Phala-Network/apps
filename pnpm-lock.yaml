@@ -265,6 +265,7 @@ importers:
       baseui: ^10.6.0
       bn.js: ^5.2.0
       buffer: ^6.0.3
+      currency.js: ^2.0.4
       decimal.js: ^10.3.1
       ethers: ^5.5.2
       jotai: ^1.4.5
@@ -281,6 +282,7 @@ importers:
       '@phala/react-libs': link:../react-libs
       '@phala/utils': link:../utils
       buffer: 6.0.3
+      currency.js: 2.0.4
       rc-input-number: 7.3.4
     devDependencies:
       '@polkadot/api': 7.2.1
