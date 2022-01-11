@@ -101,7 +101,7 @@ export const TransferModal: FC<TransferModalProps> = (props) => {
           address={allTransferData.fromAddress}
           network={allTransferData.fromNetwork}
           coin={allTransferData.fromCoin}
-          amount={allTransferData.amount.toString()}
+          amount={allTransferData.amountDecimal.toString()}
         />
 
         <InformationDetailItem
@@ -109,7 +109,7 @@ export const TransferModal: FC<TransferModalProps> = (props) => {
           address={allTransferData.toAddress}
           network={allTransferData.toNetwork}
           coin={allTransferData.toCoin}
-          amount={allTransferData.amount.toString()}
+          amount={allTransferData.amountDecimal.toString()}
         />
       </ModalBody>
 

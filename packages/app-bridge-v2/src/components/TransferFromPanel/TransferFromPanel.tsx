@@ -51,8 +51,8 @@ export const TransferFromPanel: FC<TransferFromPanelProps> = () => {
 
       <Block marginTop={['20px']}>
         <AmountInput
-          value={amount.toString()}
-          onChange={(e: any) => setAmount(parseFloat(e.target?.value))}
+          value={amount}
+          onChange={(value: any) => setAmount(value)}
         />
       </Block>
     </TransferPanel>

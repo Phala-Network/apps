@@ -77,7 +77,7 @@ export function useAllTransferData() {
     fromNetwork: fromNetwork[0]?.name,
     fromCoin: fromCoin[0]?.name,
     amount,
-    amountDecimal: new Decimal(amount),
+    amountDecimal: new Decimal(amount || 0),
     from: {
       address: fromAddress,
       network: fromNetwork[0]?.name,
