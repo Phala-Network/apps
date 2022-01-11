@@ -1,10 +1,13 @@
-import React, {useMemo} from 'react'
+import React, {useMemo, useState, MouseEventHandler} from 'react'
 import styled from 'styled-components'
 import {down} from 'styled-breakpoints'
 import {useBreakpoint} from 'styled-breakpoints/react-styled'
 import {Button, SHAPE} from 'baseui/button'
 import {usePolkadotAccountAtom} from '@phala/app-store'
 import {trimAddress} from '@phala/utils'
+import {PolkadotAccountModal} from '@phala/react-components'
+import {useClipboard} from '@phala/react-hooks'
+import {toast} from 'react-toastify'
 import {CopyIcon} from '../Icons/CopyIcon'
 
 const Wrapper = styled.div`
@@ -74,6 +77,8 @@ const Address = styled.span`
 `
 
 const AccountInfo: React.FC = () => {
+  const [selectAccountModalViable, setSelectAccountModalViable] =
+    useState(false)
   const [polkadotAccount] = usePolkadotAccountAtom()
   const isMobile = useBreakpoint(down('sm'))
   const isPad = useBreakpoint(down('md'))
@@ -86,47 +91,64 @@ const AccountInfo: React.FC = () => {
     return polkadotAccount.address
   }, [isPad, polkadotAccount])
 
-  const copyIcon = useMemo(() => {
-    if (isMobile) return <CopyIcon width="13" height="13" />
-    return <CopyIcon />
-  }, [isMobile])
+  const {copy} = useClipboard()
+
+  const onClick: MouseEventHandler<SVGSVGElement> = (e) => {
+    e.stopPropagation()
+    if (polkadotAccount) {
+      copy(polkadotAccount.address)
+      toast('Copied to clipboard')
+    }
+  }
   return (
-    <Wrapper>
-      <Name>
-        {!polkadotAccount ? 'Participate in Phala' : polkadotAccount.name}
-      </Name>
-      {!polkadotAccount && isMobile ? null : (
-        <ButtonWrapper>
-          <Button
-            onClick={() => alert('click')}
-            shape={SHAPE.pill}
-            isSelected
-            overrides={{
-              BaseButton: {
-                style: () => ({
-                  outline: `1px solid #D1FF52`,
-                  backgroundColor: '#D1FF52',
-                  borderRadius: '14px',
-                  padding: '6px 18px',
-                  color: '#111111',
-                  fontFamily: 'Montserrat',
-                  fontStyle: 'normal',
-                  fontWeight: 500,
-                  fontSize: '16px',
-                  lineHeight: '16px',
-                }),
-              },
-            }}
-          >
-            {!polkadotAccount ? 'Connect Wallet' : 'Change'}
-          </Button>
-        </ButtonWrapper>
-      )}
-      <AddressWrapper>
-        <Address>{addressVale}</Address>
-        {!polkadotAccount ? null : copyIcon}
-      </AddressWrapper>
-    </Wrapper>
+    <>
+      <Wrapper>
+        <Name>
+          {!polkadotAccount ? 'Participate in Phala' : polkadotAccount.name}
+        </Name>
+        {!polkadotAccount && isMobile ? null : (
+          <ButtonWrapper>
+            <Button
+              onClick={() => setSelectAccountModalViable(true)}
+              shape={SHAPE.pill}
+              isSelected
+              overrides={{
+                BaseButton: {
+                  style: () => ({
+                    border: `1px solid #D1FF52`,
+                    backgroundColor: '#D1FF52',
+                    borderRadius: '14px',
+                    padding: '6px 18px',
+                    color: '#111111',
+                    fontFamily: 'Montserrat',
+                    fontStyle: 'normal',
+                    fontWeight: 500,
+                    fontSize: '16px',
+                    lineHeight: '16px',
+                  }),
+                },
+              }}
+            >
+              {!polkadotAccount ? 'Connect Wallet' : 'Change'}
+            </Button>
+          </ButtonWrapper>
+        )}
+        <AddressWrapper>
+          <Address>{addressVale}</Address>
+          {!polkadotAccount ? null : (
+            <CopyIcon
+              onClick={onClick}
+              width={isMobile ? '13' : '26'}
+              height={isMobile ? '13' : '26'}
+            />
+          )}
+        </AddressWrapper>
+      </Wrapper>
+      <PolkadotAccountModal
+        onClose={() => setSelectAccountModalViable(false)}
+        visible={selectAccountModalViable}
+      />
+    </>
   )
 }
 
