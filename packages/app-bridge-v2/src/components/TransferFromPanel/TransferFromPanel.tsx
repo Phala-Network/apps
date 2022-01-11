@@ -16,6 +16,7 @@ import {EthereumConnectWallet} from '../EthereumConnectWallet'
 import {NetworkSelect} from '../NetworkSelect'
 import {TransferPanel} from '../TransferPanel'
 import {BalanceLabel} from './BalanceLabel'
+import {InputArea} from './styledComponents'
 
 interface TransferFromPanelProps {
   transactionInfoItem?: TransactionInfoItem
@@ -45,7 +46,7 @@ export const TransferFromPanel: FC<TransferFromPanelProps> = () => {
         </Block>
       </Block>
 
-      <Block marginTop={['20px']}>
+      <InputArea>
         <AmountInput
           value={amount}
           onChange={(value: any) => setAmount(value)}
@@ -54,7 +55,7 @@ export const TransferFromPanel: FC<TransferFromPanelProps> = () => {
         <Divider />
 
         <BalanceLabel />
-      </Block>
+      </InputArea>
 
       <Block marginTop={['20px']}>
         <AddressInput
