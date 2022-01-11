@@ -6,3 +6,10 @@ export const InputArea = styled.div`
   padding: 20px;
   margin-top: 20px;
 `
+
+export const AddressArea = styled.div`
+  position: relative;
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+`

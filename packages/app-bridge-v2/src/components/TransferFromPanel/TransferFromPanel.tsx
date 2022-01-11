@@ -16,7 +16,7 @@ import {EthereumConnectWallet} from '../EthereumConnectWallet'
 import {NetworkSelect} from '../NetworkSelect'
 import {TransferPanel} from '../TransferPanel'
 import {BalanceLabel} from './BalanceLabel'
-import {InputArea} from './styledComponents'
+import {AddressArea, InputArea} from './styledComponents'
 
 interface TransferFromPanelProps {
   transactionInfoItem?: TransactionInfoItem
@@ -57,14 +57,13 @@ export const TransferFromPanel: FC<TransferFromPanelProps> = () => {
         <BalanceLabel />
       </InputArea>
 
-      <Block marginTop={['20px']}>
+      <AddressArea>
         <AddressInput
           value={address}
           onChange={(e: any) => setAddress(e.target?.value)}
+          endEnhancer={<EthereumConnectWallet />}
         />
-
-        <EthereumConnectWallet />
-      </Block>
+      </AddressArea>
     </TransferPanel>
   )
 }

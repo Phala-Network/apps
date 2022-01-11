@@ -37,6 +37,7 @@ export const EthereumConnectWallet: FC<EthereumConnectWalletProps> = (
       overrides={{
         BaseButton: {
           style: {
+            width: '160px',
             lineHeight: '16px',
             height: '28px',
             borderTopLeftRadius: '14px',
