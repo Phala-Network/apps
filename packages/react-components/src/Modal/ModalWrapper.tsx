@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import {down} from 'styled-breakpoints'
 import {Modal, ModalProps} from 'baseui/modal'
 
 const ModalTitle = styled.div`
@@ -7,7 +8,11 @@ const ModalTitle = styled.div`
   font-weight: 500;
   font-size: 20px;
   line-height: 20px;
-  margin-bottom: 30px;
+  padding-bottom: 30px;
+
+  ${down('md')} {
+    padding-bottom: 20px;
+  }
 `
 
 interface IModalProps extends ModalProps {
@@ -28,7 +33,7 @@ export const ModalWrapper: React.FC<IModalProps> = (props) => {
       isOpen={visible}
       overrides={{
         Dialog: {
-          style: () => ({
+          style: ({$theme}) => ({
             boxSizing: 'border-box',
             width: '615px',
             outline: `2px #AAD829 solid`,
@@ -37,6 +42,9 @@ export const ModalWrapper: React.FC<IModalProps> = (props) => {
             borderBottomLeftRadius: '0px',
             borderBottomRightRadius: '0px',
             padding: '40px',
+            [$theme.mediaQuery.medium]: {
+              padding: '20px',
+            },
           }),
         },
       }}
