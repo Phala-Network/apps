@@ -11,6 +11,7 @@ import {TransactionInfoItem} from '../../types'
 import {AddressInput} from '../AddressInput'
 import {AmountInput} from '../AmountInput'
 import {CoinSelect} from '../CoinSelect'
+import {Divider} from '../Divider'
 import {EthereumConnectWallet} from '../EthereumConnectWallet'
 import {NetworkSelect} from '../NetworkSelect'
 import {TransferPanel} from '../TransferPanel'
@@ -49,6 +50,8 @@ export const TransferFromPanel: FC<TransferFromPanelProps> = () => {
           value={amount}
           onChange={(value: any) => setAmount(value)}
         />
+
+        <Divider />
 
         <BalanceLabel />
       </Block>
