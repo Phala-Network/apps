@@ -9,18 +9,16 @@ type NetworkSelectProps = Omit<ComponentProps<typeof Select>, 'value'> & {
 }
 
 export const NetworkSelect: FC<NetworkSelectProps> = (props) => {
-  const getLabel = ({option}: any) => {
-    return <NetworkSelectItem id={option.id} />
-  }
-
   return (
     <Select
       overrides={selectOverrides}
       options={networks}
       clearable={false}
       placeholder="Select Network"
-      getOptionLabel={getLabel}
-      getValueLabel={getLabel}
+      getOptionLabel={({option}: any) => <NetworkSelectItem id={option.id} />}
+      getValueLabel={({option}: any) => (
+        <NetworkSelectItem id={option.id} isValue={true} />
+      )}
       {...props}
     />
   )

@@ -1,31 +1,35 @@
-import {Block} from 'baseui/block'
 import {FC} from 'react'
 import styled from 'styled-components'
 import {CoinIcon, CoinIconProps} from '../CoinIcon'
 
-const Root = styled.div``
-
 type Props = {
   id: string
+  isValue?: boolean
 }
 
+const Root = styled.div<{isValue?: boolean}>`
+  display: flex;
+  align-items: center;
+  color: white;
+
+  &:hover {
+    color: ${(props) => (props.isValue ? 'white' : 'black')};
+  }
+`
+
+const Name = styled.div`
+  text-align: center;
+  margin-left: 10px;
+  flex: 1;
+`
+
 export const CoinSelectItem: FC<Props> = (props) => {
-  const {id} = props
+  const {id, isValue} = props
 
   return (
-    <Root>
-      <Block display="flex" alignItems="center">
-        <CoinIcon coin={id as CoinIconProps['coin']} />
-        <Block
-          marginLeft={['10px']}
-          flex={1}
-          $style={{
-            textAlign: 'center',
-          }}
-        >
-          {id}
-        </Block>
-      </Block>
+    <Root isValue={isValue}>
+      <CoinIcon coin={id as CoinIconProps['coin']} />
+      <Name>{id}</Name>
     </Root>
   )
 }

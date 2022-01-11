@@ -1,31 +1,35 @@
-import {Block} from 'baseui/block'
 import {FC} from 'react'
 import styled from 'styled-components'
 import {NetworkIcon, NetworkIconProps} from '../NetworkIcon'
 
-const Root = styled.div``
-
 type Props = {
   id: string
+  isValue?: boolean
 }
 
+const Root = styled.div<{isValue?: boolean}>`
+  display: flex;
+  align-items: center;
+  color: white;
+
+  &:hover {
+    color: ${(props) => (props.isValue ? 'white' : 'black')};
+  }
+`
+
+const Name = styled.div`
+  text-align: center;
+  margin-left: 10px;
+  flex: 1;
+`
+
 export const NetworkSelectItem: FC<Props> = (props) => {
-  const {id} = props
+  const {id, isValue} = props
 
   return (
-    <Root>
-      <Block display="flex" alignItems="center">
-        <NetworkIcon network={id as NetworkIconProps['network']} />
-        <Block
-          marginLeft={['10px']}
-          flex={1}
-          $style={{
-            textAlign: 'center',
-          }}
-        >
-          {id}
-        </Block>
-      </Block>
+    <Root isValue={isValue}>
+      <NetworkIcon network={id as NetworkIconProps['network']} />
+      <Name>{id}</Name>
     </Root>
   )
 }

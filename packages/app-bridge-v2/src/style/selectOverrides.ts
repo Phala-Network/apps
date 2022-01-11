@@ -44,15 +44,13 @@ export const selectOverrides: SelectOverrides = {
       color: 'white',
     },
   },
-  DropdownContainer: {
+  DropdownOption: {
     style: {
-      borderWidth: '2px',
-      borderStyle: 'solid',
-      borderColor: '#AAD829',
+      color: 'white',
     },
   },
   DropdownListItem: {
-    style: {
+    style: ({$selected}) => ({
       height: 48,
       lineHeight: '48px',
       fontSize: 16,
@@ -62,12 +60,13 @@ export const selectOverrides: SelectOverrides = {
       paddingBottom: 0,
       textAlign: 'center',
       color: 'white',
-      backgroundColor: 'black',
+      backgroundColor: $selected ? '#D1FF52' : 'black',
+
       ':hover': {
         backgroundColor: '#D1FF52',
         color: '#111111',
       },
-    },
+    }),
   },
   SelectArrow: {
     props: {
