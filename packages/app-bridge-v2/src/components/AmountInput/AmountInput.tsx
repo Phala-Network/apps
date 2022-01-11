@@ -17,6 +17,7 @@ const Root = styled.div`
     align-items: center;
     /* Bk 001 */
     color: #111111;
+    background-color: transparent;
   }
 `
 
