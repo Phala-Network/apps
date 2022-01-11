@@ -1,8 +1,18 @@
 import React from 'react'
+import styled from 'styled-components'
 import {DataType} from './Table'
 
-const ValueCell: React.FC<DataType> = () => {
-  return <div>ValueCell</div>
+const Wrapper = styled.div`
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 16px;
+  color: #111111;
+`
+
+const ValueCell: React.FC<DataType> = ({value}) => {
+  return <Wrapper>{value}</Wrapper>
 }
 
 export default ValueCell

@@ -1,5 +1,7 @@
 import React from 'react'
 import {TableBuilder, TableBuilderColumn} from 'baseui/table-semantic'
+import {useBreakpoint} from 'styled-breakpoints/react-styled'
+import {down} from 'styled-breakpoints'
 import AssetCell from './AssetCell'
 import BalanceCell from './BalanceCell'
 import ButtonCell from './ButtonCell'
@@ -13,21 +15,37 @@ export type DataType = {
   crowdloanVesting?: string
   delegate?: string
   value?: string
+  isKPHA?: boolean
 }
 
 const ROW: DataType[] = [
   {
     name: 'K-PHA',
-    icon: '36666.2333 PHA',
+    icon: '/images/Phala.svg',
     balance: '36666.2333 PHA',
-    transferrable: 'x36666.2333 PHA',
+    transferrable: '36666.2333 PHA',
     crowdloanVesting: '36666.2333 PHA',
     delegate: '36666.2333 PHA',
-    value: '22',
+    value: '$ 22',
+    isKPHA: true,
+  },
+  {
+    name: 'K-PHA',
+    icon: '/images/Phala.svg',
+    balance: '36666.2333 PHA',
+    value: '$ 22',
+  },
+  {
+    name: 'K-PHA',
+    icon: '/images/Phala.svg',
+    balance: '36666.2333 PHA',
+    value: '$ 23',
   },
 ]
 
 const Table: React.FC = () => {
+  const isMobile = useBreakpoint(down('sm'))
+
   return (
     <TableBuilder
       data={ROW}
@@ -50,31 +68,39 @@ const Table: React.FC = () => {
             paddingTop: '18px',
             paddingBottom: '18px',
             paddingLeft: '40px',
+            paddingRight: 0,
             [$theme.mediaQuery.small]: {
               fontSize: '16px',
               lineHeight: '16px',
               paddingTop: '20px',
               paddingBottom: '20px',
-              paddingLeft: '10px',
+              ':first-of-type': {
+                paddingLeft: '10px',
+              },
             },
           }),
         },
         TableBodyCell: {
           style: ({$theme}) => ({
-            paddingLeft: '40px',
             paddingTop: '16px',
             paddingBottom: '16px',
+            paddingLeft: '40px',
+            paddingRight: 0,
             [$theme.mediaQuery.small]: {
               paddingTop: '20px',
               paddingBottom: '20px',
-              paddingLeft: '10px',
+              ':first-of-type': {
+                paddingLeft: '10px',
+              },
             },
           }),
         },
       }}
     >
       <TableBuilderColumn header="Asset">
-        {(row) => <AssetCell name={row.name} icon={row.icon} />}
+        {(row) => (
+          <AssetCell name={row.name} icon={row.icon} isKPHA={row.isKPHA} />
+        )}
       </TableBuilderColumn>
       <TableBuilderColumn header="Balance">
         {(row) => (
@@ -86,9 +112,12 @@ const Table: React.FC = () => {
           />
         )}
       </TableBuilderColumn>
-      <TableBuilderColumn header="Value">
-        {(row) => <ValueCell value={row.value} />}
-      </TableBuilderColumn>
+      {isMobile ? null : (
+        <TableBuilderColumn header="Value">
+          {(row) => <ValueCell value={row.value} />}
+        </TableBuilderColumn>
+      )}
+
       <TableBuilderColumn>
         {(row) => <ButtonCell row={row} />}
       </TableBuilderColumn>
