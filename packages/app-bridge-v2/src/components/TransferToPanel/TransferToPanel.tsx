@@ -1,4 +1,5 @@
 import {Block} from 'baseui/block'
+import Decimal from 'decimal.js'
 import {FC} from 'react'
 import {Network} from '../../config'
 import {useAmount, useToAddress, useToCoin, useToNetwork} from '../../store'
@@ -35,14 +36,16 @@ export const TransferToPanel: FC = () => {
       </Block>
 
       <Block marginTop={['20px']}>
+        <AmountDisplay>
+          {new Decimal(amount || 0).toNumber() || 'Amount'}
+        </AmountDisplay>
+      </Block>
+
+      <Block marginTop={['20px']}>
         <AddressInput
           value={address}
           onChange={(e: any) => setAddress(e.target?.value)}
         />
-      </Block>
-
-      <Block marginTop={['20px']}>
-        <AmountDisplay>{amount || 'Amount'}</AmountDisplay>
       </Block>
     </TransferPanel>
   )

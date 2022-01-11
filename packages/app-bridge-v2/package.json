@@ -11,7 +11,8 @@
     "@phala/react-hooks": "workspace:^0.0.1",
     "@phala/react-libs": "workspace:^0.0.1",
     "@phala/utils": "workspace:0.0.1",
-    "buffer": "^6.0.3"
+    "buffer": "^6.0.3",
+    "rc-input-number": "^7.3.0"
   },
   "devDependencies": {
     "@polkadot/api": "^7.2.1",
