@@ -88,7 +88,10 @@ export const TransferModal: FC<TransferModalProps> = (props) => {
         Dialog: {
           style: {
             border: '2px solid #AAD829',
-            borderRadius: 0,
+            borderTopLeftRadius: '0',
+            borderTopRightRadius: '0',
+            borderBottomLeftRadius: '0',
+            borderBottomRightRadius: '0',
           },
         },
       }}

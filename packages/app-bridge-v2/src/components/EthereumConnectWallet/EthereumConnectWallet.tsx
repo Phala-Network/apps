@@ -39,7 +39,10 @@ export const EthereumConnectWallet: FC<EthereumConnectWalletProps> = (
           style: {
             lineHeight: '16px',
             height: '28px',
-            borderRadius: '14px',
+            borderTopLeftRadius: '14px',
+            borderTopRightRadius: '14px',
+            borderBottomLeftRadius: '14px',
+            borderBottomRightRadius: '14px',
             fontSize: '16px',
             /* Gn 001 */
             backgroundColor: '#D1FF52',

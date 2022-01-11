@@ -22,7 +22,10 @@ export const selectOverrides: SelectOverrides = {
   },
   ControlContainer: {
     style: {
-      borderWidth: 0,
+      borderLeftWidth: '0',
+      borderRightWidth: '0',
+      borderTopWidth: '0',
+      borderBottomWidth: '0',
       marginLeft: 0,
       paddingLeft: 0,
       paddingRight: 0,
