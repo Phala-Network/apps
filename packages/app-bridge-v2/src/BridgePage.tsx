@@ -2,7 +2,6 @@ import {ToasterContainer} from '@phala/react-components'
 import {PLACEMENT} from 'baseui/toast'
 import {FC, useState} from 'react'
 import {Helmet} from 'react-helmet'
-import {EthereumConnectWallet} from './components/EthereumConnectWallet'
 import {ExchangeIcon} from './components/ExchangeIcon'
 import {ExtraInfoPanel} from './components/ExtraInfoPanel'
 import {Header} from './components/Header'
@@ -49,9 +48,6 @@ export const BridgePage: FC = () => {
         <BlockItem>
           <SubmitButton onSubmit={submit} />
         </BlockItem>
-
-        {/* todo */}
-        <EthereumConnectWallet />
       </Root>
       <TransferModal
         transactionInfo={transactionInfo}

@@ -11,8 +11,10 @@ import {TransactionInfoItem} from '../../types'
 import {AddressInput} from '../AddressInput'
 import {AmountInput} from '../AmountInput'
 import {CoinSelect} from '../CoinSelect'
+import {EthereumConnectWallet} from '../EthereumConnectWallet'
 import {NetworkSelect} from '../NetworkSelect'
 import {TransferPanel} from '../TransferPanel'
+import {BalanceLabel} from './BalanceLabel'
 
 interface TransferFromPanelProps {
   transactionInfoItem?: TransactionInfoItem
@@ -43,17 +45,21 @@ export const TransferFromPanel: FC<TransferFromPanelProps> = () => {
       </Block>
 
       <Block marginTop={['20px']}>
-        <AddressInput
-          value={address}
-          onChange={(e: any) => setAddress(e.target?.value)}
-        />
-      </Block>
-
-      <Block marginTop={['20px']}>
         <AmountInput
           value={amount}
           onChange={(value: any) => setAmount(value)}
         />
+
+        <BalanceLabel />
+      </Block>
+
+      <Block marginTop={['20px']}>
+        <AddressInput
+          value={address}
+          onChange={(e: any) => setAddress(e.target?.value)}
+        />
+
+        <EthereumConnectWallet />
       </Block>
     </TransferPanel>
   )

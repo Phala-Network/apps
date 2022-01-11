@@ -10,6 +10,7 @@ export const AddressInput: FC<ComponentProps<typeof Input>> = (props) => {
         Root: {
           style: {
             height: '56px',
+            borderWidth: '0',
           },
         },
       }}
