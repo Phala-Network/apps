@@ -33,11 +33,14 @@ const ImgWrapper = styled.img<{isKPHA?: boolean}>`
   }
 `
 
-const AssetCell: React.FC<DataType> = ({name, icon, isKPHA}) => {
+const AssetCell: React.FC<Pick<DataType, 'name' | 'icon' | 'isKPHA'>> = ({
+  name,
+  icon,
+  isKPHA,
+}) => {
   return (
     <Wrapper>
-      {<ImgWrapper isKPHA={isKPHA} src={icon} alt={name} />}
-
+      <ImgWrapper isKPHA={isKPHA} src={icon} alt={name} />
       <Name isKPHA={isKPHA}>{name}</Name>
     </Wrapper>
   )

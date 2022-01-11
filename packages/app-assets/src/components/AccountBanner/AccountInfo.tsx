@@ -2,13 +2,13 @@ import React, {useMemo, useState, MouseEventHandler} from 'react'
 import styled from 'styled-components'
 import {down} from 'styled-breakpoints'
 import {useBreakpoint} from 'styled-breakpoints/react-styled'
-import {Button, SHAPE} from 'baseui/button'
 import {usePolkadotAccountAtom} from '@phala/app-store'
 import {trimAddress} from '@phala/utils'
 import {PolkadotAccountModal} from '@phala/react-components'
 import {useClipboard} from '@phala/react-hooks'
 import {toast} from 'react-toastify'
 import {CopyIcon} from '../Icons/CopyIcon'
+import Button from '../Button'
 
 const Wrapper = styled.div`
   box-sizing: border-box;
@@ -108,27 +108,7 @@ const AccountInfo: React.FC = () => {
         </Name>
         {!polkadotAccount && isMobile ? null : (
           <ButtonWrapper>
-            <Button
-              onClick={() => setSelectAccountModalViable(true)}
-              shape={SHAPE.pill}
-              isSelected
-              overrides={{
-                BaseButton: {
-                  style: () => ({
-                    border: `1px solid #D1FF52`,
-                    backgroundColor: '#D1FF52',
-                    borderRadius: '14px',
-                    padding: '6px 18px',
-                    color: '#111111',
-                    fontFamily: 'Montserrat',
-                    fontStyle: 'normal',
-                    fontWeight: 500,
-                    fontSize: '16px',
-                    lineHeight: '16px',
-                  }),
-                },
-              }}
-            >
+            <Button onClick={() => setSelectAccountModalViable(true)}>
               {!polkadotAccount ? 'Connect Wallet' : 'Change'}
             </Button>
           </ButtonWrapper>

@@ -8,14 +8,14 @@ import ButtonCell from './ButtonCell'
 import ValueCell from './ValueCell'
 
 export type DataType = {
-  name?: string
-  icon?: string
-  balance?: string
+  name: string
+  icon: string
+  balance: string
+  value: string
+  isKPHA?: boolean
   transferrable?: string
   crowdloanVesting?: string
   delegate?: string
-  value?: string
-  isKPHA?: boolean
 }
 
 const ROW: DataType[] = [

@@ -35,12 +35,9 @@ const ValueItem = styled.div`
   }
 `
 
-const BalanceCell: React.FC<DataType> = ({
-  balance,
-  transferrable,
-  crowdloanVesting,
-  delegate,
-}) => {
+const BalanceCell: React.FC<
+  Pick<DataType, 'balance' | 'transferrable' | 'crowdloanVesting' | 'delegate'>
+> = ({balance, transferrable, crowdloanVesting, delegate}) => {
   return (
     <Wrapper>
       <Balance>{balance}</Balance>

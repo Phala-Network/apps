@@ -18,17 +18,17 @@ const HomePageWrap = styled.div`
   }
 `
 
-const ContentWrap = styled.div<{isDelegate?: boolean}>`
+const ContentWrap = styled.div<{compact?: boolean}>`
   margin: 0 auto;
   ${up('md')} {
     ${(props) =>
-      props.isDelegate
+      props.compact
         ? css`
-            width: 100%;
-            max-width: 1700px;
+            width: 960px;
           `
         : css`
-            width: 960px;
+            width: 100%;
+            max-width: 1700px;
           `}
   }
 `
@@ -39,7 +39,7 @@ const BaseLayout: React.FC = (props) => {
 
   return (
     <HomePageWrap>
-      <ContentWrap isDelegate={/^\/(delegate|mining)/.test(pathname)}>
+      <ContentWrap compact={/^\/(bridge|analytics)/.test(pathname)}>
         {children}
       </ContentWrap>
       <Navbar />

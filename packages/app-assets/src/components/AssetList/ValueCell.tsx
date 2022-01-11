@@ -11,7 +11,7 @@ const Wrapper = styled.div`
   color: #111111;
 `
 
-const ValueCell: React.FC<DataType> = ({value}) => {
+const ValueCell: React.FC<Pick<DataType, 'value'>> = ({value}) => {
   return <Wrapper>{value}</Wrapper>
 }
 
