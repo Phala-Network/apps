@@ -59,7 +59,7 @@ const AddressWrapper = styled.div`
   }
 `
 
-const Address = styled.span`
+const Address = styled.a`
   font-style: normal;
   font-weight: normal;
   font-size: 16px;
@@ -134,7 +134,18 @@ const AccountInfo: React.FC = () => {
           </ButtonWrapper>
         )}
         <AddressWrapper>
-          <Address>{addressVale}</Address>
+          {!polkadotAccount ? (
+            <Address>{addressVale}</Address>
+          ) : (
+            <Address
+              href={`https://khala.subscan.io/account/${polkadotAccount?.address}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {addressVale}
+            </Address>
+          )}
+
           {!polkadotAccount ? null : (
             <CopyIcon
               onClick={onClick}
