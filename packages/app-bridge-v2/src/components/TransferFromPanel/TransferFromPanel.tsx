@@ -10,9 +10,9 @@ import {
 import {TransactionInfoItem} from '../../types'
 import {AddressInput} from '../AddressInput'
 import {AmountInput} from '../AmountInput'
+import {Approved} from '../Approved'
 import {CoinSelect} from '../CoinSelect'
 import {Divider} from '../Divider'
-import {EthereumConnectWallet} from '../EthereumConnectWallet'
 import {NetworkSelect} from '../NetworkSelect'
 import {TransferPanel} from '../TransferPanel'
 import {BalanceLabel} from './BalanceLabel'
@@ -61,7 +61,7 @@ export const TransferFromPanel: FC<TransferFromPanelProps> = () => {
         <AddressInput
           value={address}
           onChange={(e: any) => setAddress(e.target?.value)}
-          endEnhancer={<EthereumConnectWallet />}
+          endEnhancer={<Approved />}
         />
       </AddressArea>
     </TransferPanel>
