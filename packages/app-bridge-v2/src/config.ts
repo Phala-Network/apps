@@ -58,16 +58,16 @@ export const coins = [
     name: PHA,
     id: PHA,
   },
-  {
-    label: KHR,
-    name: KHR,
-    id: KHR,
-  },
-  {
-    label: ETH,
-    name: ETH,
-    id: ETH,
-  },
+  // {
+  //   label: KHR,
+  //   name: KHR,
+  //   id: KHR,
+  // },
+  // {
+  //   label: ETH,
+  //   name: ETH,
+  //   id: ETH,
+  // },
 ] as const
 
 export const Transfers = {
