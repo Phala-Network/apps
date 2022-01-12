@@ -7,19 +7,21 @@ import {
   ROLE,
   SIZE,
 } from 'baseui/modal'
-import {FC, useState} from 'react'
+import {FC} from 'react'
 import {TimeIcon} from './components/TimeIcon'
 
 interface InformationModalProps {
   type?: string
+  isOpen?: boolean
+  onClose?: () => void
 }
 
-export const InformationModal: FC<InformationModalProps> = () => {
-  const [isOpen, setIsOpen] = useState(false)
+export const InformationModal: FC<InformationModalProps> = (props) => {
+  const {isOpen, onClose} = props
 
   return (
     <Modal
-      onClose={() => setIsOpen(false)}
+      onClose={onClose}
       closeable
       isOpen={isOpen}
       animate

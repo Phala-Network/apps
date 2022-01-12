@@ -17,6 +17,7 @@ import {BlockItem, Root} from './styledComponents'
 export const BridgePage: FC = () => {
   const transactionInfo = useAllTransferData()
   const [isOpenTransferModal, setIsOpenTransferModal] = useState(false)
+  const [isOpenInformationModal, setIsOpenInformationModal] = useState(false)
   const switchData = useSwitchToAndFormData()
   const extraInfo = useExtraInfo()
 
@@ -58,14 +59,27 @@ export const BridgePage: FC = () => {
         isOpen={isOpenTransferModal}
       />
 
-      <InformationModal />
+      <InformationModal
+        onClose={() => {
+          setIsOpenInformationModal(false)
+        }}
+        isOpen={isOpenInformationModal}
+      />
 
       <Button
         onClick={() => {
           setIsOpenTransferModal(true)
         }}
       >
-        a
+        提交窗口
+      </Button>
+
+      <Button
+        onClick={() => {
+          setIsOpenInformationModal(true)
+        }}
+      >
+        信息窗口
       </Button>
 
       <ToasterContainer placement={PLACEMENT.topRight} />
