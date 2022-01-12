@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import {ModalFooter} from 'baseui/modal'
+import {down} from 'styled-breakpoints'
 import {ModalWrapper, ModalButtonWrapper} from '../Modal'
 
 const Content = styled.div`
@@ -10,6 +10,14 @@ const Content = styled.div`
   font-size: 16px;
   line-height: 16px;
   color: #111111;
+`
+
+const ModalFooter = styled.div`
+  padding: 30px 0 0;
+
+  ${down('md')} {
+    padding: 20px 0 0;
+  }
 `
 
 export type AlertModalProps = {
@@ -22,7 +30,7 @@ export const AlertModal: React.FC<AlertModalProps> = (props) => {
   return (
     <ModalWrapper {...props} title="Alert">
       <Content>{props.content}</Content>
-      <ModalFooter style={{padding: 0, margin: '30px 0 0'}}>
+      <ModalFooter>
         <ModalButtonWrapper onClick={props.onClose}>Cancel</ModalButtonWrapper>
       </ModalFooter>
     </ModalWrapper>
