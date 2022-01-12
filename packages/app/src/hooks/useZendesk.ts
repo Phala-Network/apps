@@ -1,5 +1,4 @@
 import {useEffect} from 'react'
-import {useSSR} from '@phala/react-hooks'
 
 function insertScript() {
   const script = document.createElement('script')
@@ -13,10 +12,8 @@ function insertScript() {
 // use the Web Widget (Classic)
 // re-position: https://developer.zendesk.com/api-reference/widget/settings/?_ga=2.264317322.488128662.1641529242-1063742040.1641529242#offset
 const useZendesk = () => {
-  const {isBrowser} = useSSR()
-
   useEffect(() => {
-    if (isBrowser && !window.zE) {
+    if (!window.zE) {
       insertScript()
       window.zESettings = {
         webWidget: {
@@ -29,13 +26,13 @@ const useZendesk = () => {
       }
     }
     return () => {
-      if (!isBrowser || !window.zE) {
+      if (!window.zE) {
         return
       }
       delete window.zE
       delete window.zESettings
     }
-  }, [isBrowser])
+  }, [])
 }
 
 export default useZendesk
