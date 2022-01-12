@@ -6,6 +6,7 @@ import AssetCell from './AssetCell'
 import BalanceCell from './BalanceCell'
 import ButtonCell from './ButtonCell'
 import ValueCell from './ValueCell'
+import useKPhaData from '../../hooks/useKPhaData'
 
 export type DataType = {
   name: string
@@ -23,32 +24,17 @@ const ROW: DataType[] = [
     name: 'K-PHA',
     icon: '/images/Phala.svg',
     balance: '36666.2333 PHA',
-    transferrable: '36666.2333 PHA',
-    crowdloanVesting: '36666.2333 PHA',
-    delegate: '36666.2333 PHA',
-    value: '$ 22',
-    isKPHA: true,
-  },
-  {
-    name: 'K-PHA',
-    icon: '/images/Phala.svg',
-    balance: '36666.2333 PHA',
-    value: '$ 22',
-  },
-  {
-    name: 'K-PHA',
-    icon: '/images/Phala.svg',
-    balance: '36666.2333 PHA',
     value: '$ 23',
   },
 ]
 
 const Table: React.FC = () => {
   const isMobile = useBreakpoint(down('sm'))
+  const kphaData = useKPhaData()
 
   return (
     <TableBuilder
-      data={ROW}
+      data={[kphaData, ...ROW]}
       overrides={{
         Root: {
           style: () => ({
