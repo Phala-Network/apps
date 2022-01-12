@@ -41,7 +41,7 @@ export const FillMyAddress = () => {
           BaseButton: {
             style: {
               ...littleRoundButtonOverrides.BaseButton.style,
-              width: 'auto',
+              width: '130px',
               backgroundColor: 'white',
             },
           },

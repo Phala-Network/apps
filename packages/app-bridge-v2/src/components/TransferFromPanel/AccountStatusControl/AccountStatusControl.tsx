@@ -22,7 +22,18 @@ export const AccountStatusControl: FC = () => {
         <ErrorBoundary fallbackRender={() => null}>
           <EthereumAllowance
             placeholder={
-              <Button overrides={littleRoundButtonOverrides}>Approve</Button>
+              <Button
+                overrides={{
+                  BaseButton: {
+                    style: {
+                      ...littleRoundButtonOverrides.BaseButton.style,
+                      width: '100px',
+                    },
+                  },
+                }}
+              >
+                Approve
+              </Button>
             }
             account={ethereumAccount.address}
           >
