@@ -3,9 +3,7 @@ import Decimal from 'decimal.js'
 import {atom, useAtom} from 'jotai'
 import {coins, Network, networks} from '../config'
 
-const fromAddress = atom<string>(
-  '5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty'
-)
+const fromAddress = atom<string>('')
 const amount = atom<number>(0)
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -29,9 +27,7 @@ const fromNetwork = atom(
 
 const fromCoin = atom<Value>([coins[0]])
 
-const toAddress = atom<string>(
-  '5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY'
-)
+const toAddress = atom<string>('')
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
