@@ -1,4 +1,4 @@
-import {ToasterContainer} from '@phala/react-components'
+import {Button, ToasterContainer} from '@phala/react-components'
 import {PLACEMENT} from 'baseui/toast'
 import {FC, useState} from 'react'
 import {Helmet} from 'react-helmet'
@@ -49,6 +49,7 @@ export const BridgePage: FC = () => {
           <SubmitButton onSubmit={submit} />
         </BlockItem>
       </Root>
+
       <TransferModal
         transactionInfo={transactionInfo}
         onClose={() => {
@@ -56,9 +57,17 @@ export const BridgePage: FC = () => {
         }}
         isOpen={isOpenTransferModal}
       />
+
       <InformationModal />
 
-      {/* <BridgePageTest /> */}
+      <Button
+        onClick={() => {
+          setIsOpenTransferModal(true)
+        }}
+      >
+        a
+      </Button>
+
       <ToasterContainer placement={PLACEMENT.topRight} />
     </div>
   )

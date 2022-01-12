@@ -8,6 +8,7 @@ import {CoinSelect} from '../CoinSelect'
 import {NetworkSelect} from '../NetworkSelect'
 import {TransferPanel} from '../TransferPanel'
 import {AmountDisplay} from './AmountDisplay'
+import {FillMyAddress} from './FillMyAddress'
 
 export const TransferToPanel: FC = () => {
   const [address, setAddress] = useToAddress()
@@ -45,6 +46,7 @@ export const TransferToPanel: FC = () => {
         <AddressInput
           value={address}
           onChange={(e: any) => setAddress(e.target?.value)}
+          endEnhancer={<FillMyAddress />}
         />
       </Block>
     </TransferPanel>
