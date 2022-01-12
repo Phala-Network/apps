@@ -10,11 +10,11 @@ import {
 import {TransactionInfoItem} from '../../types'
 import {AddressInput} from '../AddressInput'
 import {AmountInput} from '../AmountInput'
-import {Approved} from '../Approved'
 import {CoinSelect} from '../CoinSelect'
 import {Divider} from '../Divider'
 import {NetworkSelect} from '../NetworkSelect'
 import {TransferPanel} from '../TransferPanel'
+import {AccountStatusControl} from './AccountStatusControl'
 import {BalanceLabel} from './BalanceLabel'
 import {AddressArea, InputArea} from './styledComponents'
 
@@ -61,7 +61,7 @@ export const TransferFromPanel: FC<TransferFromPanelProps> = () => {
         <AddressInput
           value={address}
           onChange={(e: any) => setAddress(e.target?.value)}
-          endEnhancer={<Approved />}
+          endEnhancer={<AccountStatusControl />}
         />
       </AddressArea>
     </TransferPanel>
