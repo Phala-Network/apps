@@ -2,7 +2,7 @@ import {useEthereumAccountAtom} from '@phala/app-store'
 import {useAccountsQuery, useEthereumWeb3, useEthers} from '@phala/react-libs'
 import {Button} from 'baseui/button'
 import {FC, useEffect} from 'react'
-import {littleRoundButtonOverrides} from '../../style/littleRoundButtonOverrieds'
+import {littleRoundButtonOverrides} from '../../style/littleRoundButtonOverrides'
 
 export interface EthereumConnectWalletProps {
   hidden?: boolean
