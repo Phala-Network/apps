@@ -1,10 +1,14 @@
 import {Account} from '@phala/app-types'
 import React from 'react'
 import styled from 'styled-components'
-import {ModalWrapper, ModalButtonWrapper} from '../Modal'
+import {
+  ModalWrapper,
+  ModalButtonWrapper,
+  ModalFooterWrapper,
+  ModalTitleWrapper,
+} from '../Modal'
 import scrollbar from '../scrollbar'
 import AccountOption from './AccountOption'
-import {ModalBody, ModalFooter} from 'baseui/modal'
 
 export type SelectAccountModalProps = {
   visible: boolean
@@ -23,16 +27,6 @@ const Content = styled.div`
   ${scrollbar}
 `
 
-const ModalTitle = styled.div`
-  font-family: Montserrat;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 32px;
-  line-height: 32px;
-  margin-bottom: 30px;
-  margin-top: 20px;
-`
-
 export const SelectAccountModal: React.FC<SelectAccountModalProps> = (
   props
 ) => {
@@ -40,25 +34,23 @@ export const SelectAccountModal: React.FC<SelectAccountModalProps> = (
 
   return (
     <ModalWrapper onClose={onClose} visible={visible}>
-      <ModalTitle>Select An Account</ModalTitle>
-      <ModalBody style={{padding: '10px 0', margin: 0}}>
-        <Content>
-          {accounts.map((item) => (
-            <AccountOption
-              key={item.address}
-              active={currentAccount?.address === item.address}
-              onClick={(account) => {
-                onSelect(account)
-                onClose()
-              }}
-              {...item}
-            ></AccountOption>
-          ))}
-        </Content>
-      </ModalBody>
-      <ModalFooter style={{padding: 0, margin: '30px 0 20px 0'}}>
+      <ModalTitleWrapper>Select An Account</ModalTitleWrapper>
+      <Content>
+        {accounts.map((item) => (
+          <AccountOption
+            key={item.address}
+            active={currentAccount?.address === item.address}
+            onClick={(account) => {
+              onSelect(account)
+              onClose()
+            }}
+            {...item}
+          ></AccountOption>
+        ))}
+      </Content>
+      <ModalFooterWrapper>
         <ModalButtonWrapper onClick={props.onClose}>Cancel</ModalButtonWrapper>
-      </ModalFooter>
+      </ModalFooterWrapper>
     </ModalWrapper>
   )
 }

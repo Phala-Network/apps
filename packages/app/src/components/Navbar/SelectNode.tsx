@@ -57,6 +57,7 @@ const SelectNode: React.FC = () => {
   const urlEndpoint = useCustomEndpoint()
   const [customEndpoint, setCustomEndpoint] = useCustomEndpointAtom()
 
+  // set the custom endpoint from the url search param
   useEffect(() => {
     if (urlEndpoint) {
       setCustomEndpoint(urlEndpoint)

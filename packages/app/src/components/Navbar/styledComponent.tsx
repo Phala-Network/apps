@@ -14,6 +14,7 @@ export const LineWrap = styled.a`
   font-size: 16px;
   line-height: 16px;
   color: #111111;
+  outline: none;
 
   :not(:last-of-type) {
     border-bottom: 1px solid #cecece;

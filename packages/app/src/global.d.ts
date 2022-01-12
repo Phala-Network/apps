@@ -13,4 +13,6 @@ declare module '*.svg' {
 interface Window {
   injectedWeb3: any
   web3: any
+  zE?: any
+  zESettings?: any
 }
