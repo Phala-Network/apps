@@ -35,7 +35,18 @@ export const FillMyAddress = () => {
 
   if (isShowRecipient && !addressValid && !isMobile) {
     return (
-      <Button onClick={setMyAddress} overrides={littleRoundButtonOverrides}>
+      <Button
+        onClick={setMyAddress}
+        overrides={{
+          BaseButton: {
+            style: {
+              ...littleRoundButtonOverrides.BaseButton.style,
+              width: 'auto',
+              backgroundColor: 'white',
+            },
+          },
+        }}
+      >
         My Address
       </Button>
     )

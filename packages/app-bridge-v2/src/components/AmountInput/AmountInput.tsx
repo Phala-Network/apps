@@ -1,12 +1,19 @@
 import InputNumber from 'rc-input-number'
 import {ComponentProps, FC} from 'react'
 import styled from 'styled-components'
+import {Max} from './Max'
 
 const Root = styled.div`
+  display: flex;
+  align-items: center;
+`
+
+const InputContainer = styled.div`
+  flex: 1;
+
   input {
     border-width: 0;
     outline: none;
-    /* 金额 M */
     font-family: Montserrat;
     font-style: normal;
     font-weight: normal;
@@ -24,7 +31,10 @@ const Root = styled.div`
 export const AmountInput: FC<ComponentProps<typeof InputNumber>> = (props) => {
   return (
     <Root>
-      <InputNumber min={0.00000001} placeholder="Amount" {...props} />
+      <InputContainer>
+        <InputNumber min={0.00000001} placeholder="Amount" {...props} />
+      </InputContainer>
+      <Max />
     </Root>
   )
 }
