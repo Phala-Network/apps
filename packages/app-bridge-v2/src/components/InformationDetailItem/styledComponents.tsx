@@ -54,11 +54,13 @@ export const Address = styled.span`
   font-weight: normal;
   font-size: 14px;
   line-height: 16px;
-  display: flex;
-  align-items: center;
   /* Bk 001 */
   color: #111111;
   padding-left: 74px;
+  padding-right: 20px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `
 
 export const Line = styled.div`
