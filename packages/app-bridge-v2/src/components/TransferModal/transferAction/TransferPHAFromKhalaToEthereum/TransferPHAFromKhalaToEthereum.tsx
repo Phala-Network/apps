@@ -23,7 +23,6 @@ import React, {useMemo, useState} from 'react'
 // import {Link} from '../../../Announcement/styledComponents'
 import {useKhalaBridgeFee} from '../../../../hooks/useKhalaBridgeFee'
 import {useAllTransferData} from '../../../../store'
-import {KhalaProcess} from './KhalaProcess'
 // import useTransactionInfo from '../../hooks/useTransactionInfo'
 
 interface TransferPHAFromKhalaToEthereumProps {
@@ -171,7 +170,7 @@ export const TransferPHAFromKhalaToEthereum: React.FC<
         )}
       </Alert>
 
-      <Alert>
+      {/* <Alert>
         {progressIndex >= 0 && (
           <KhalaProcess
             khalaAddress={fromAddress}
@@ -179,7 +178,7 @@ export const TransferPHAFromKhalaToEthereum: React.FC<
             progressIndex={progressIndex}
           />
         )}
-      </Alert>
+      </Alert> */}
 
       {progressIndex === -1 && (
         <label
