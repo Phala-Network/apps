@@ -1,6 +1,10 @@
 import {SelectOverrides} from 'baseui/select'
+import {ArrowIcon} from '../components/ArrowIcon'
 
 export const selectOverrides: SelectOverrides = {
+  SelectArrow: () => {
+    return <ArrowIcon />
+  },
   Root: {
     style: {},
   },
@@ -70,12 +74,5 @@ export const selectOverrides: SelectOverrides = {
         color: '#111111',
       },
     }),
-  },
-  SelectArrow: {
-    props: {
-      style: {
-        fill: 'white',
-      },
-    },
   },
 }
