@@ -46,6 +46,7 @@ export const Progress: FC<ProgressProps> = (props) => {
       {items.map((item, index) => {
         const isCurrent = progressIndex === index
         const isActive = progressIndex >= index
+        const isLast = index === items.length - 1
 
         return (
           <ProgressItem isActive={isActive} key={item.text}>
@@ -56,7 +57,7 @@ export const Progress: FC<ProgressProps> = (props) => {
             ) : (
               item.text
             )}
-            {isCurrent && (
+            {isCurrent && !isLast && (
               <Icon>
                 <TimeIcon />
               </Icon>
