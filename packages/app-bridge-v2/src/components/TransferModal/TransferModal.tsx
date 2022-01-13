@@ -12,6 +12,7 @@ import {
 import BN from 'bn.js'
 import {FC, useCallback, useEffect, useState} from 'react'
 import {useAllTransferData} from '../../store'
+import {modalOverrides} from '../../style/modalOverrides'
 import {TransactionInfo} from '../../types'
 import {InformationDetailItem} from '../InformationDetailItem'
 import {transferAssetsKhalaAccounts} from './transfer'
@@ -76,17 +77,7 @@ export const TransferModal: FC<TransferModalProps> = (props) => {
       autoFocus
       size={SIZE.default}
       role={ROLE.dialog}
-      overrides={{
-        Dialog: {
-          style: {
-            border: '2px solid #AAD829',
-            borderTopLeftRadius: '0',
-            borderTopRightRadius: '0',
-            borderBottomLeftRadius: '0',
-            borderBottomRightRadius: '0',
-          },
-        },
-      }}
+      overrides={modalOverrides}
     >
       <ModalHeader>Bridge Confirmation</ModalHeader>
 

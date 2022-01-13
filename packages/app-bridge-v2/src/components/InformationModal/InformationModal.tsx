@@ -8,6 +8,7 @@ import {
   SIZE,
 } from 'baseui/modal'
 import {FC} from 'react'
+import {modalOverrides} from '../../style/modalOverrides'
 import {TimeIcon} from './components/TimeIcon'
 
 interface InformationModalProps {
@@ -28,6 +29,7 @@ export const InformationModal: FC<InformationModalProps> = (props) => {
       autoFocus
       size={SIZE.default}
       role={ROLE.dialog}
+      overrides={modalOverrides}
     >
       <ModalHeader>Bridge Confirmation</ModalHeader>
 
