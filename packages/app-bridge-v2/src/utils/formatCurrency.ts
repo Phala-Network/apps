@@ -19,7 +19,7 @@ export function formatCurrency(
 
   const _value = new Decimal(value)
   const precision = 4
-  const type = currency || 'PHA'
+  const type = currency || ''
   const zero = new Decimal(0)
 
   let balanceDisplay = ''

@@ -1,5 +1,9 @@
 import styled from 'styled-components'
 
+export const Root = styled.div`
+  margin: 0;
+`
+
 export const Body = styled.div`
   /* Gy 001 */
   background: #eeeeee;
@@ -13,9 +17,10 @@ export const Label = styled.div`
   font-family: Montserrat;
   font-style: normal;
   font-weight: normal;
-  font-size: 20px;
-  line-height: 30px;
+  font-size: 18px;
+  line-height: 20px;
   height: 30px;
+  margin-top: 20px;
 
   /* Bk 001 */
   color: #111111;
@@ -27,13 +32,12 @@ export const Network = styled.div`
   font-weight: normal;
   font-size: 16px;
   line-height: 16px;
-
   display: flex;
   align-items: center;
   text-align: center;
-
   /* Bk 001 */
   color: #111111;
+  padding-left: 20px;
 `
 
 export const Amount = styled.span`
@@ -41,13 +45,6 @@ export const Amount = styled.span`
   font-style: normal;
   font-weight: normal;
   font-size: 20px;
-  line-height: 20px;
-  /* identical to box height, or 100% */
-
-  display: flex;
-  align-items: center;
-  text-align: right;
-
   /* Bk 001 */
   color: #111111;
 `
@@ -59,15 +56,15 @@ export const Address = styled.span`
   line-height: 16px;
   display: flex;
   align-items: center;
-
   /* Bk 001 */
   color: #111111;
+  padding-left: 74px;
 `
 
 export const Line = styled.div`
   opacity: 0.5;
   /* Gy 003 */
-  border: 1px solid #8c8c8c;
+  border-top: 1px solid #8c8c8c;
 `
 
 export const Type = styled.span`
@@ -75,14 +72,9 @@ export const Type = styled.span`
   font-style: normal;
   font-weight: normal;
   font-size: 16px;
-  line-height: 16px;
-  /* identical to box height, or 100% */
-
-  display: flex;
-  align-items: center;
-  text-align: right;
-
   /* Bk 001 */
-
   color: #111111;
+  margin-bottom: -2px;
+  padding-right: 20px;
+  padding-left: 9px;
 `

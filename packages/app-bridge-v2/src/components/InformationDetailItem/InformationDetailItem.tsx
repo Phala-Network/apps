@@ -1,5 +1,6 @@
 import {Block} from 'baseui/block'
 import {FC} from 'react'
+import {formatCurrency} from '../../utils/formatCurrency'
 import {NetworkIcon} from '../NetworkIcon'
 import {
   Address,
@@ -8,6 +9,7 @@ import {
   Label,
   Line,
   Network,
+  Root,
   Type,
 } from './styledComponents'
 
@@ -31,7 +33,7 @@ export const InformationDetailItem: FC<TransferPanelProps> = (props) => {
   } = props
 
   return (
-    <div>
+    <Root>
       <Label>{label}</Label>
 
       <Body>
@@ -41,8 +43,8 @@ export const InformationDetailItem: FC<TransferPanelProps> = (props) => {
           <Network>{network}</Network>
         </Block>
 
-        <Block display="flex">
-          <Amount>{amount}</Amount>
+        <Block display="flex" alignItems="flex-end">
+          <Amount>{formatCurrency(amount)}</Amount>
           <Type>{coin}</Type>
         </Block>
       </Body>
@@ -52,6 +54,6 @@ export const InformationDetailItem: FC<TransferPanelProps> = (props) => {
       <Body>
         <Address>{address}</Address>
       </Body>
-    </div>
+    </Root>
   )
 }
