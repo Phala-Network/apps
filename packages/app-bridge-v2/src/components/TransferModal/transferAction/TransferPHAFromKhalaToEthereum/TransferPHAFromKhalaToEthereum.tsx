@@ -23,13 +23,14 @@ import React, {useMemo, useState} from 'react'
 // import {Link} from '../../../Announcement/styledComponents'
 import {useKhalaBridgeFee} from '../../../../hooks/useKhalaBridgeFee'
 import {useAllTransferData} from '../../../../store'
+import {KhalaProcess} from './KhalaProcess'
 // import useTransactionInfo from '../../hooks/useTransactionInfo'
 
 export const TransferPHAFromKhalaToEthereum: React.FC<any> = (props) => {
-  const {onSubmit, onPrev, onSuccess, transactionInfo} = props
+  const {onSubmit, onPrev, onSuccess} = props
   const allTransactionsInfo = useAllTransferData()
-  const accountFrom = allTransactionsInfo.fromAddress
-  const accountTo = allTransactionsInfo.toAddress
+  const fromAddress = allTransactionsInfo.fromAddress
+  const toAddress = allTransactionsInfo.toAddress
   const amountDecimal = allTransactionsInfo.amountDecimal
   const {api} = useApiPromise()
   const decimals = useDecimalJsTokenDecimalMultiplier(api)
@@ -42,8 +43,8 @@ export const TransferPHAFromKhalaToEthereum: React.FC<any> = (props) => {
   const [checkBoxChecked, setCheckBoxChecked] = useState<boolean>(false)
 
   const transactionFee = useTransactionFee(
-    accountFrom,
-    accountTo,
+    fromAddress,
+    toAddress,
     amountDecimal?.toNumber()
   )
 
@@ -59,19 +60,19 @@ export const TransferPHAFromKhalaToEthereum: React.FC<any> = (props) => {
       return
     }
 
-    if (!accountTo || !amount || !accountFrom) {
+    if (!toAddress || !amount || !fromAddress) {
       return
     }
 
     try {
       setSubmitting(true)
 
-      const accountToAddress = getAddress(accountTo)
+      const accountToAddress = getAddress(toAddress)
 
       await transferSubmit?.(
         amount,
         accountToAddress,
-        accountFrom,
+        fromAddress,
         (status) => {
           onSubmit?.()
 
@@ -135,14 +136,14 @@ export const TransferPHAFromKhalaToEthereum: React.FC<any> = (props) => {
             24h. You can follow each step of the transaction through{' '}
             <Link
               target="_blank"
-              href={`https://khala.subscan.io/account/${transactionInfo.from.address}?tab=transfer`}
+              href={`https://khala.subscan.io/account/${fromAddress}?tab=transfer`}
             >
               Khala&apos;s explorer
             </Link>{' '}
             and{' '}
             <Link
               target="_blank"
-              href={`https://etherscan.io/address/${transactionInfo.to.address}#tokentxns`}
+              href={`https://etherscan.io/address/${toAddress}#tokentxns`}
             >
               Ethereum&apos;s explorer
             </Link>{' '}
@@ -166,15 +167,15 @@ export const TransferPHAFromKhalaToEthereum: React.FC<any> = (props) => {
         )}
       </Alert>
 
-      {/* <Alert>
+      <Alert>
         {progressIndex >= 0 && (
           <KhalaProcess
-            khalaAddress={transactionInfo.from.address}
-            etherscanAddress={transactionInfo.to.address}
+            khalaAddress={fromAddress}
+            etherscanAddress={toAddress}
             progressIndex={progressIndex}
           />
         )}
-      </Alert> */}
+      </Alert>
 
       {progressIndex === -1 && (
         <label
