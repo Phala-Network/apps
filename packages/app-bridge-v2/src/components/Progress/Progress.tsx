@@ -1,5 +1,6 @@
 import {FC} from 'react'
 import styled from 'styled-components'
+import {TimeIcon} from './TimeIcon'
 
 const Root = styled.div`
   display: grid;
@@ -34,22 +35,27 @@ export interface ProgressProps {
 }
 
 export const Progress: FC<ProgressProps> = (props) => {
-  const {steps} = props
+  const {steps, progressIndex = 0} = props
   const items = steps || []
 
   return (
     <Root>
-      {items.map((item) => (
-        <ProgressItem key={item.text}>
-          {item.link ? (
-            <Link href={item.link} target="_blank">
-              {item.text}
-            </Link>
-          ) : (
-            item.text
-          )}
-        </ProgressItem>
-      ))}
+      {items.map((item, index) => {
+        const isCurrent = progressIndex === index
+
+        return (
+          <ProgressItem key={item.text}>
+            {item.link ? (
+              <Link href={item.link} target="_blank">
+                {item.text}
+              </Link>
+            ) : (
+              item.text
+            )}
+            {isCurrent && <TimeIcon />}
+          </ProgressItem>
+        )
+      })}
     </Root>
   )
 }
