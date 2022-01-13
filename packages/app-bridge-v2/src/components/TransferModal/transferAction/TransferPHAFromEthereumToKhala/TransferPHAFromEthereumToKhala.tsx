@@ -1,4 +1,3 @@
-// import {TransactionInfoItem} from '@phala/app-types'
 import {
   Alert,
   Button,
@@ -16,20 +15,26 @@ import {u8aToHex} from '@polkadot/util'
 import {decodeAddress} from '@polkadot/util-crypto'
 import {ethers} from 'ethers'
 import React, {useEffect, useState} from 'react'
+import {useAllTransferData} from '../../../../store'
 import {EthereumProgress} from './EthereumProgress'
 import {EthereumToKhalaFee} from './EthereumToKhalaFee'
 // import useTransactionInfo from '../hooks/useTransactionInfo'
 // import BaseInfo from './BaseInfo'
 
-type Props = any
+interface TransferPHAFromEthereumToKhalaProps {
+  onCloseTransfer(): void
+}
 
-export const TransferPHAFromEthereumToKhala: React.FC<Props> = (props) => {
+export const TransferPHAFromEthereumToKhala: React.FC<
+  TransferPHAFromEthereumToKhalaProps
+> = (props) => {
   const [transactionsInfoSuccess, setTransactionsInfoSuccess] = useState(false)
-  const {onSubmit, onPrev, onSuccess, data} = props
-  const {from, to, amount: amountFromPrevStep} = data || {}
-  const {account: accountFrom} = from || {}
-  const {account: accountTo} = to || {}
-  const submitDeposit = useErc20Deposit(accountFrom)
+  const {onCloseTransfer} = props
+  const allTransactionsInfo = useAllTransferData()
+  const fromAddress = allTransactionsInfo.fromAddress
+  const toAddress = allTransactionsInfo.toAddress
+  const amountDecimal = allTransactionsInfo.amountDecimal
+  const submitDeposit = useErc20Deposit(fromAddress)
   const [isSubmitting, setSubmitting] = useState<boolean>(false)
   // const {transactionInfo} = useTransactionInfo(data)
   const [currentTransactionInfo, setCurrentTransactionInfo] = useState<{
@@ -39,16 +44,16 @@ export const TransferPHAFromEthereumToKhala: React.FC<Props> = (props) => {
   const {isLoading: isReceiptLoading} = useTransactionReceiptQuery(
     currentTransactionHash
   )
-  const {refetch} = useErc20BalanceQuery(accountFrom)
+  const {refetch} = useErc20BalanceQuery(fromAddress)
 
   const submit = async () => {
     setSubmitting(true)
 
-    const recipient = u8aToHex(decodeAddress(accountTo))
+    const recipient = u8aToHex(decodeAddress(toAddress))
 
     try {
       const amount = ethers.utils.parseUnits(
-        amountFromPrevStep?.toString() || '0',
+        amountDecimal?.toString() || '0',
         18
       )
 
@@ -103,7 +108,7 @@ export const TransferPHAFromEthereumToKhala: React.FC<Props> = (props) => {
       {transactionsInfoSuccess && (
         <ModalActions>
           <ModalAction>
-            <Button type="primary" onClick={onPrev}>
+            <Button type="primary" onClick={onCloseTransfer}>
               Done
             </Button>
           </ModalAction>
@@ -116,18 +121,17 @@ export const TransferPHAFromEthereumToKhala: React.FC<Props> = (props) => {
             <EthereumToKhalaFee />
           </div>
 
-          {onPrev && !isSubmitting && !isReceiptLoading && (
+          {onCloseTransfer && !isSubmitting && !isReceiptLoading && (
             <ModalAction>
-              <Button onClick={onPrev}>Back</Button>
+              <Button onClick={onCloseTransfer}>Back</Button>
             </ModalAction>
           )}
-          {(onSubmit || onSuccess) && (
-            <ModalAction>
-              <Button loading={isSubmitting} type="primary" onClick={submit}>
-                {isSubmitting ? 'Submitting' : 'Submit'}
-              </Button>
-            </ModalAction>
-          )}
+
+          <ModalAction>
+            <Button loading={isSubmitting} type="primary" onClick={submit}>
+              {isSubmitting ? 'Submitting' : 'Submit'}
+            </Button>
+          </ModalAction>
         </ModalActions>
       )}
     </>

@@ -26,8 +26,14 @@ import {useAllTransferData} from '../../../../store'
 import {KhalaProcess} from './KhalaProcess'
 // import useTransactionInfo from '../../hooks/useTransactionInfo'
 
-export const TransferPHAFromKhalaToEthereum: React.FC<any> = (props) => {
-  const {onSubmit, onPrev, onSuccess} = props
+interface TransferPHAFromKhalaToEthereumProps {
+  onCloseTransfer(): void
+}
+
+export const TransferPHAFromKhalaToEthereum: React.FC<
+  TransferPHAFromKhalaToEthereumProps
+> = (props) => {
+  const {onCloseTransfer} = props
   const allTransactionsInfo = useAllTransferData()
   const fromAddress = allTransactionsInfo.fromAddress
   const toAddress = allTransactionsInfo.toAddress
@@ -74,8 +80,6 @@ export const TransferPHAFromKhalaToEthereum: React.FC<any> = (props) => {
         accountToAddress,
         fromAddress,
         (status) => {
-          onSubmit?.()
-
           if (status.isReady) {
             setProgressIndex(0)
           } else if (status.isBroadcast) {
@@ -205,7 +209,7 @@ export const TransferPHAFromKhalaToEthereum: React.FC<any> = (props) => {
             <Button
               type="primary"
               onClick={() => {
-                onPrev?.()
+                onCloseTransfer?.()
                 setProgressIndex(-1)
               }}
             >
@@ -222,18 +226,17 @@ export const TransferPHAFromKhalaToEthereum: React.FC<any> = (props) => {
             <FeeLabel fee={transactionFee} label={'Fee'} />
           </div>
 
-          {onPrev && !isSubmitting && (
+          {onCloseTransfer && !isSubmitting && (
             <ModalAction>
-              <Button onClick={onPrev}>Back</Button>
+              <Button onClick={onCloseTransfer}>Back</Button>
             </ModalAction>
           )}
-          {(onSubmit || onSuccess) && (
-            <ModalAction>
-              <Button loading={isSubmitting} type="primary" onClick={submit}>
-                {isSubmitting ? 'Submitting' : 'Submit'}
-              </Button>
-            </ModalAction>
-          )}
+
+          <ModalAction>
+            <Button loading={isSubmitting} type="primary" onClick={submit}>
+              {isSubmitting ? 'Submitting' : 'Submit'}
+            </Button>
+          </ModalAction>
         </ModalActions>
       )}
     </>

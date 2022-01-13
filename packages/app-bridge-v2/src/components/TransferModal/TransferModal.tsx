@@ -1,13 +1,4 @@
-import {KIND as ButtonKind} from 'baseui/button'
-import {
-  Modal,
-  ModalBody,
-  ModalButton,
-  ModalFooter,
-  ModalHeader,
-  ROLE,
-  SIZE,
-} from 'baseui/modal'
+import {Modal, ModalBody, ModalHeader, ROLE, SIZE} from 'baseui/modal'
 import {FC} from 'react'
 import {Ethereum, Khala, PHA} from '../../config'
 import {useAllTransferData} from '../../store'
@@ -46,6 +37,7 @@ export const TransferModal: FC<TransferModalProps> = (props) => {
 
   return (
     <Modal
+      onClose={onClose}
       isOpen={isOpen}
       animate
       autoFocus
@@ -56,16 +48,13 @@ export const TransferModal: FC<TransferModalProps> = (props) => {
       <ModalHeader>Bridge Confirmation</ModalHeader>
 
       <ModalBody>
-        {is(PHA, Khala, Ethereum) && TransferPHAFromKhalaToEthereum}
-        {is(PHA, Ethereum, Khala) && TransferPHAFromEthereumToKhala}
+        {is(PHA, Khala, Ethereum) && (
+          <TransferPHAFromKhalaToEthereum onCloseTransfer={onClose} />
+        )}
+        {is(PHA, Ethereum, Khala) && (
+          <TransferPHAFromEthereumToKhala onCloseTransfer={onClose} />
+        )}
       </ModalBody>
-
-      <ModalFooter>
-        <ModalButton onClick={onClose} kind={ButtonKind.tertiary}>
-          Cancel
-        </ModalButton>
-        <ModalButton>Submit</ModalButton>
-      </ModalFooter>
     </Modal>
   )
 }
