@@ -17,10 +17,18 @@ interface TransferPanelProps {
   coin?: string
   amount?: string
   network?: string
+  isShowNetworkIcon?: boolean
 }
 
 export const InformationDetailItem: FC<TransferPanelProps> = (props) => {
-  const {coin, label, address, amount, network} = props
+  const {
+    coin,
+    label,
+    address,
+    amount,
+    network,
+    isShowNetworkIcon = true,
+  } = props
 
   return (
     <div>
@@ -28,7 +36,8 @@ export const InformationDetailItem: FC<TransferPanelProps> = (props) => {
 
       <Body>
         <Block display="flex">
-          <NetworkIcon network={network as any} />
+          {isShowNetworkIcon && <NetworkIcon network={network as any} />}
+
           <Network>{network}</Network>
         </Block>
 

@@ -49,14 +49,6 @@ export const TransferModal: FC<TransferModalProps> = (props) => {
 
     const keyring = new Keyring({type: 'sr25519'})
 
-    // transferPHAFromKhalaToKarura(
-    //   khalaApi,
-    //   keyring.addFromAddress(allTransferData.fromAddress),
-    //   keyring.addFromAddress(allTransferData.toAddress),
-    //   bn1e12.mul(new BN(allTransferData.amount)),
-    //   log
-    // )
-
     // 5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY
     const karuraAccount = keyring.addFromUri('//Alice')
     // 5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty
