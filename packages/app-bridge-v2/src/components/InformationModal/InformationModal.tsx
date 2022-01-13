@@ -9,6 +9,8 @@ import {
 } from 'baseui/modal'
 import {FC} from 'react'
 import {modalOverrides} from '../../style/modalOverrides'
+import {CurrentTransferInformationDetailItems} from '../CurrentTransferInformationDetailItems'
+import {EthereumProgress} from '../TransferModal/transferAction/TransferPHAFromEthereumToKhala/EthereumProgress'
 
 interface InformationModalProps {
   type?: string
@@ -32,7 +34,10 @@ export const InformationModal: FC<InformationModalProps> = (props) => {
     >
       <ModalHeader>Bridge Confirmation</ModalHeader>
 
-      <ModalBody></ModalBody>
+      <ModalBody>
+        <CurrentTransferInformationDetailItems />
+        <EthereumProgress transactionHash={'9898sss'} />
+      </ModalBody>
 
       <ModalFooter>
         <ModalButton>Collapse</ModalButton>
