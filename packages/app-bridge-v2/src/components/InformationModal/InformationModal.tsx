@@ -1,7 +1,6 @@
 import {
   Modal,
   ModalBody,
-  ModalButton,
   ModalFooter,
   ModalHeader,
   ROLE,
@@ -9,6 +8,7 @@ import {
 } from 'baseui/modal'
 import {FC} from 'react'
 import {modalOverrides} from '../../style/modalOverrides'
+import {Button} from '../Button'
 import {CurrentTransferInformationDetailItems} from '../CurrentTransferInformationDetailItems'
 import {EthereumProgress} from '../TransferModal/transferAction/TransferPHAFromEthereumToKhala/EthereumProgress'
 
@@ -40,7 +40,7 @@ export const InformationModal: FC<InformationModalProps> = (props) => {
       </ModalBody>
 
       <ModalFooter>
-        <ModalButton>Collapse</ModalButton>
+        <Button onClick={onClose}>Collapse</Button>
       </ModalFooter>
     </Modal>
   )
