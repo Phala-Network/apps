@@ -57,6 +57,12 @@ export const useToAddress = () => useAtom(toAddress)
 export const useToNetwork = () => useAtom(toNetwork)
 export const useToCoin = () => useAtom(toCoin)
 
+export function useCurrentTransferType() {
+  const {fromCoin, fromNetwork, toNetwork} = useAllTransferData()
+
+  return `transfer${fromCoin}From${fromNetwork}To${toNetwork}`
+}
+
 export function useAllTransferData() {
   const [fromAddress] = useFromAddress()
   const [fromNetwork] = useFromNetwork()

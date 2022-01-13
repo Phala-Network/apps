@@ -9,10 +9,12 @@ import {
   SIZE,
 } from 'baseui/modal'
 import {FC} from 'react'
+import {Ethereum, Khala, PHA} from '../../config'
 import {useAllTransferData} from '../../store'
 import {modalOverrides} from '../../style/modalOverrides'
 import {TransactionInfo} from '../../types'
-import {InformationDetailItem} from '../InformationDetailItem'
+import {TransferPHAFromEthereumToKhala} from './transferAction/TransferPHAFromEthereumToKhala'
+import {TransferPHAFromKhalaToEthereum} from './transferAction/TransferPHAFromKhalaToEthereum'
 
 interface TransferModalProps {
   isOpen: boolean
@@ -21,9 +23,26 @@ interface TransferModalProps {
   transactionInfo?: TransactionInfo
 }
 
+function useCheckTransferType() {
+  const {fromCoin, fromNetwork, toNetwork} = useAllTransferData()
+
+  return function (
+    checkFromCoin: string,
+    checkFromNetwork: string,
+    checkToNetwork: string
+  ) {
+    return (
+      fromCoin === checkFromCoin &&
+      fromNetwork === checkFromNetwork &&
+      toNetwork === checkToNetwork
+    )
+  }
+}
+
 export const TransferModal: FC<TransferModalProps> = (props) => {
   const {isOpen, onClose} = props
-  const allTransferData = useAllTransferData()
+
+  const is = useCheckTransferType()
 
   return (
     <Modal
@@ -37,21 +56,8 @@ export const TransferModal: FC<TransferModalProps> = (props) => {
       <ModalHeader>Bridge Confirmation</ModalHeader>
 
       <ModalBody>
-        <InformationDetailItem
-          label="From"
-          address={allTransferData.fromAddress}
-          network={allTransferData.fromNetwork}
-          coin={allTransferData.fromCoin}
-          amount={allTransferData.amountDecimal.toString()}
-        />
-
-        <InformationDetailItem
-          label="To"
-          address={allTransferData.toAddress}
-          network={allTransferData.toNetwork}
-          coin={allTransferData.toCoin}
-          amount={allTransferData.amountDecimal.toString()}
-        />
+        {is(PHA, Khala, Ethereum) && TransferPHAFromKhalaToEthereum}
+        {is(PHA, Ethereum, Khala) && TransferPHAFromEthereumToKhala}
       </ModalBody>
 
       <ModalFooter>
