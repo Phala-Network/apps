@@ -1,4 +1,3 @@
-import {ApiPromise, Keyring} from '@polkadot/api'
 import {KIND as ButtonKind} from 'baseui/button'
 import {
   Modal,
@@ -9,16 +8,11 @@ import {
   ROLE,
   SIZE,
 } from 'baseui/modal'
-import BN from 'bn.js'
-import {FC, useCallback, useEffect, useState} from 'react'
+import {FC} from 'react'
 import {useAllTransferData} from '../../store'
 import {modalOverrides} from '../../style/modalOverrides'
 import {TransactionInfo} from '../../types'
 import {InformationDetailItem} from '../InformationDetailItem'
-import {transferAssetsKhalaAccounts} from './transfer'
-import {getBaseInfo} from './xtransfer'
-
-const bn1e12 = new BN(10).pow(new BN(12))
 
 interface TransferModalProps {
   isOpen: boolean
@@ -28,50 +22,11 @@ interface TransferModalProps {
 }
 
 export const TransferModal: FC<TransferModalProps> = (props) => {
-  const {isOpen, onClose, onConfirm} = props
+  const {isOpen, onClose} = props
   const allTransferData = useAllTransferData()
-  const [khalaApi, setKhalaApi] = useState<ApiPromise>()
-  const [, setKaruraApi] = useState<ApiPromise>()
-
-  useEffect(() => {
-    getBaseInfo().then(({khalaApi, karuraApi}) => {
-      setKhalaApi(khalaApi)
-      setKaruraApi(karuraApi)
-    })
-  }, [])
-
-  const log = (message: string) => {
-    // eslint-disable-next-line no-console
-    console.log(message)
-  }
-
-  const submit = useCallback(() => {
-    if (!khalaApi) return
-
-    const keyring = new Keyring({type: 'sr25519'})
-
-    // 5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY
-    const karuraAccount = keyring.addFromUri('//Alice')
-    // 5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty
-    const khalaAccount = keyring.addFromUri('//Bob')
-
-    transferAssetsKhalaAccounts(
-      khalaApi,
-      // keyring.addFromAddress(allTransferData.fromAddress),
-      karuraAccount,
-      // keyring.addFromAddress(allTransferData.toAddress),
-      khalaAccount,
-      bn1e12.mul(new BN(allTransferData.amount)),
-      log
-    )
-
-    onConfirm?.()
-  }, [allTransferData.amount, khalaApi, onConfirm])
 
   return (
     <Modal
-      onClose={onClose}
-      closeable
       isOpen={isOpen}
       animate
       autoFocus
@@ -103,7 +58,7 @@ export const TransferModal: FC<TransferModalProps> = (props) => {
         <ModalButton onClick={onClose} kind={ButtonKind.tertiary}>
           Cancel
         </ModalButton>
-        <ModalButton onClick={submit}>Submit</ModalButton>
+        <ModalButton>Submit</ModalButton>
       </ModalFooter>
     </Modal>
   )
