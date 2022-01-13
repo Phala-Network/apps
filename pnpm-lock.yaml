@@ -84,6 +84,7 @@ importers:
       babel-loader: 8.1.0
       babel-plugin-styled-components: ^2.0.2
       babel-preset-gatsby: ^1.14.0
+      baseui: ^10.6.0
       bn.js: ^5.2.0
       core-js: ^3.19.3
       decimal.js: ^10.3.1
@@ -143,6 +144,7 @@ importers:
       babel-loader: 8.1.0_@babel+core@7.16.0
       babel-plugin-styled-components: 2.0.2_styled-components@5.3.3
       babel-preset-gatsby: 1.14.0_4e6e979ffc4bb99b480c5bc39b9b1eb6
+      baseui: 10.6.0_14194c2c391ec96ed452985e21da9090
       bn.js: 5.2.0
       core-js: 3.19.3
       decimal.js: 10.3.1
@@ -9583,6 +9585,43 @@ packages:
   /base64id/2.0.0:
     resolution: {integrity: sha512-lGe34o6EHj9y3Kts9R4ZYs/Gr+6N7MCaMlIFA3F1R2O5/m7K06AxfSeO5530PEERE6/WyEg3lsuyw4GHlPZHog==}
     engines: {node: ^4.5.0 || >= 5.9}
+    dev: false
+
+  /baseui/10.6.0_14194c2c391ec96ed452985e21da9090:
+    resolution: {integrity: sha512-sJ/BLrY6NSBZ8SwedMrOjLkka5KpMu27eCoXNLuyAIXPwHL3P0WBzYT2ESUeGSWzH0r0ETytkhwDWa64/KyETA==}
+    engines: {node: '>=10.x'}
+    requiresBuild: true
+    peerDependencies:
+      react: '>= 16.8.0 < 18'
+      react-dom: '>= 16.8.0 < 18'
+      styletron-react: '>=5.2.2 < 7'
+    dependencies:
+      '@date-io/date-fns': 2.11.0_date-fns@2.27.0
+      card-validator: 6.2.0
+      date-fns: 2.27.0
+      glob: 7.2.0
+      just-extend: 4.2.1
+      memoize-one: 5.2.1
+      polished: 3.7.2
+      popper.js: 1.16.1
+      react: 17.0.2
+      react-dom: 17.0.2_react@17.0.2
+      react-dropzone: 9.0.0_react@17.0.2
+      react-focus-lock: 2.6.0_cfedea9b3ed0faf0dded75c187406c5e
+      react-input-mask: 2.0.4_react-dom@17.0.2+react@17.0.2
+      react-is: 16.13.1
+      react-movable: 2.5.4_react-dom@17.0.2+react@17.0.2
+      react-multi-ref: 1.0.0
+      react-range: 1.8.11_react-dom@17.0.2+react@17.0.2
+      react-uid: 2.3.1_cfedea9b3ed0faf0dded75c187406c5e
+      react-virtualized: 9.22.3_react-dom@17.0.2+react@17.0.2
+      react-virtualized-auto-sizer: 1.0.6_react-dom@17.0.2+react@17.0.2
+      react-window: 1.8.6_react-dom@17.0.2+react@17.0.2
+      resize-observer-polyfill: 1.5.1
+      styletron-react: 6.0.2_react@17.0.2
+      timezone-support: 2.0.2
+    transitivePeerDependencies:
+      - '@types/react'
     dev: false
 
   /baseui/10.6.0_5539cae010396b202b015f3568914e95:
@@ -21118,7 +21157,6 @@ packages:
       react: 17.0.2
       react-is: 16.13.1
       warning: 4.0.3
-    dev: true
 
   /prop-types/15.7.2:
     resolution: {integrity: sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==}
@@ -21566,7 +21604,6 @@ packages:
     dependencies:
       '@babel/runtime': 7.16.7
       react: 17.0.2
-    dev: true
 
   /react-colorful/5.5.1_react-dom@17.0.2+react@17.0.2:
     resolution: {integrity: sha512-M1TJH2X3RXEt12sWkpa6hLc/bbYS0H6F4rIqjQZ+RxNBstpY67d9TrFXtqdZwhpmBXcCwEi7stKqFue3ZRkiOg==}
@@ -21717,7 +21754,6 @@ packages:
       prop-types: 15.7.2
       prop-types-extra: 1.1.1_react@17.0.2
       react: 17.0.2
-    dev: true
 
   /react-element-to-jsx-string/14.3.4_react-dom@17.0.2+react@17.0.2:
     resolution: {integrity: sha512-t4ZwvV6vwNxzujDQ+37bspnLwA4JlgUPWhLjBJWsNIDceAf6ZKUTCjdm08cN6WeZ5pTMKiCJkmAYnpmR4Bm+dg==}
@@ -21794,7 +21830,6 @@ packages:
       use-sidecar: 1.0.5_react@17.0.2
     transitivePeerDependencies:
       - '@types/react'
-    dev: true
 
   /react-helmet-async/1.1.2_react-dom@17.0.2+react@17.0.2:
     resolution: {integrity: sha512-LTTzDDkyIleT/JJ6T/uqx7Y8qi1EuPPSiJawQY/nHHz0h7SPDT6HxP1YDDQx/fzcVxCqpWEEMS3QdrSrNkJYhg==}
@@ -21842,7 +21877,6 @@ packages:
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
       warning: 4.0.3
-    dev: true
 
   /react-inspector/5.1.1_react@17.0.2:
     resolution: {integrity: sha512-GURDaYzoLbW8pMGXwYPDBIv6nqei4kK7LPRZ9q9HCZF54wqXz/dnylBp/kfE9XmekBhHvLDdcYeyIwSrvtOiWg==}
@@ -21878,7 +21912,6 @@ packages:
     dependencies:
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
-    dev: true
 
   /react-multi-ref/1.0.0:
     resolution: {integrity: sha512-LJuQXEabnv8JLcvcWeJcTogxG4eXVFiPfQ9CECuwWUbfJdrVpPf13m9RxmImyJS0J99BWokGn7dlR1dR06XPDw==}
@@ -21978,7 +22011,6 @@ packages:
     dependencies:
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
-    dev: true
 
   /react-refresh/0.8.3:
     resolution: {integrity: sha512-X8jZHc7nCMjaCqoU+V2I0cOhNW+QMBwSUkeXnTi8IPe6zaRWfn60ZzvFDZqWPfmSJfjub7dDW1SP0jaHWLu/hg==}
@@ -22170,7 +22202,6 @@ packages:
       '@types/react': 17.0.37
       react: 17.0.2
       tslib: 1.14.1
-    dev: true
 
   /react-virtualized-auto-sizer/1.0.6:
     resolution: {integrity: sha512-7tQ0BmZqfVF6YYEWcIGuoR3OdYe8I/ZFbNclFlGOC3pMqunkYF/oL30NCjSGl9sMEb17AnzixDz98Kqc3N76HQ==}
@@ -22188,7 +22219,6 @@ packages:
     dependencies:
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
-    dev: true
 
   /react-virtualized/9.22.3:
     resolution: {integrity: sha512-MKovKMxWTcwPSxE1kK1HcheQTWfuCxAuBoSTf2gwyMM21NdX/PXUhnoP8Uc5dRKd+nKm8v41R36OellhdCpkrw==}
@@ -22217,7 +22247,6 @@ packages:
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
       react-lifecycles-compat: 3.0.4
-    dev: true
 
   /react-window/1.8.6:
     resolution: {integrity: sha512-8VwEEYyjz6DCnGBsd+MgkD0KJ2/OXFULyDtorIiTz+QzwoP94tBoA7CnbtyXMm+cCeAUER5KJcPtWl9cpKbOBg==}
@@ -22240,7 +22269,6 @@ packages:
       memoize-one: 5.2.1
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
-    dev: true
 
   /react/16.14.0:
     resolution: {integrity: sha512-0X2CImDkJGApiAlcf0ODKIneSwBPhqJawOa5wCtKbu7ZECrmS26NvtSILynQ66cgkT/RJ4LidJOc3bUESwmU8g==}
@@ -25350,7 +25378,6 @@ packages:
     dependencies:
       '@types/react': 17.0.37
       react: 17.0.2
-    dev: true
 
   /use-composed-ref/1.1.0_react@17.0.2:
     resolution: {integrity: sha512-my1lNHGWsSDAhhVAT4MKs6IjBUtG6ZG11uUqexPH9PptiIZDQOzaF4f5tEbJ2+7qvNbtXNBbU3SfmN+fXlWDhg==}
@@ -25406,7 +25433,6 @@ packages:
       detect-node-es: 1.1.0
       react: 17.0.2
       tslib: 1.14.1
-    dev: true
 
   /use/3.1.1:
     resolution: {integrity: sha512-cwESVXlO3url9YWlFW/TA9cshCEhtu7IKJ/p5soJ/gGpj7vbvFrAY/eIioQ6Dw23KjZhYgiIo8HOs1nQ2vr/oQ==}
