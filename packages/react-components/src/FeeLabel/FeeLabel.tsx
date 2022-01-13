@@ -4,10 +4,15 @@ import styled from 'styled-components'
 const Root = styled.div`
   display: flex;
   font-size: 14px;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 16px;
+  color: #111111;
 `
 
 const Label = styled.span`
-  font-weight: bold;
+  /* font-weight: bold; */
   margin-right: 5px;
   display: block;
 `
