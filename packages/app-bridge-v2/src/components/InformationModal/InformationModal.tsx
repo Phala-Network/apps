@@ -9,7 +9,6 @@ import {
 } from 'baseui/modal'
 import {FC} from 'react'
 import {modalOverrides} from '../../style/modalOverrides'
-import {TimeIcon} from './components/TimeIcon'
 
 interface InformationModalProps {
   type?: string
@@ -33,9 +32,7 @@ export const InformationModal: FC<InformationModalProps> = (props) => {
     >
       <ModalHeader>Bridge Confirmation</ModalHeader>
 
-      <ModalBody>
-        <TimeIcon />
-      </ModalBody>
+      <ModalBody></ModalBody>
 
       <ModalFooter>
         <ModalButton>Collapse</ModalButton>
