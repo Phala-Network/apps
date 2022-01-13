@@ -1,9 +1,11 @@
 import {usePolkadotAccountAtom} from '@phala/app-store'
 import {
-  Button,
   Input,
-  Modal,
   PolkadotTransactionFeeLabel,
+  ModalWrapper,
+  ModalTitleWrapper,
+  ModalFooterWrapper,
+  ModalButtonWrapper,
 } from '@phala/react-components'
 import {
   useApiPromise,
@@ -23,6 +25,12 @@ type Props = {
 
 const Spacer = styled.div`
   margin-top: 20px;
+`
+
+const ButtonContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-column-gap: 20px;
 `
 
 const TransferModal: React.FC<Props> = ({visible, onClose}) => {
@@ -69,35 +77,8 @@ const TransferModal: React.FC<Props> = ({visible, onClose}) => {
   }, [api, polkadotAccount, onClose, address, amount, decimals])
 
   return (
-    <Modal
-      visible={visible}
-      onClose={onClose}
-      title="Transfer"
-      actionsExtra={
-        <PolkadotTransactionFeeLabel
-          key="PolkadotTransactionFeeLabel"
-          sender={polkadotAccount?.address}
-          recipient={address}
-          amount={amount}
-        />
-      }
-      actions={[
-        <Button onClick={onClose} key="reject">
-          Cancel
-        </Button>,
-        <Button
-          disabled={loading}
-          onClick={() => {
-            setLoading(true)
-            confirm().finally(() => setLoading(false))
-          }}
-          key="confirm"
-          type="primary"
-        >
-          {loading ? 'Confirming' : 'Confirm'}
-        </Button>,
-      ]}
-    >
+    <ModalWrapper visible={visible} onClose={onClose}>
+      <ModalTitleWrapper>Transfer PHA</ModalTitleWrapper>
       <Input
         size="large"
         placeholder="Address"
@@ -113,7 +94,28 @@ const TransferModal: React.FC<Props> = ({visible, onClose}) => {
         onChange={setAmount}
       ></Input>
       <Spacer></Spacer>
-    </Modal>
+      <PolkadotTransactionFeeLabel
+        key="PolkadotTransactionFeeLabel"
+        sender={polkadotAccount?.address}
+        recipient={address}
+        amount={amount}
+      />
+      <ModalFooterWrapper>
+        <ButtonContainer>
+          <ModalButtonWrapper onClick={onClose}>Cancel</ModalButtonWrapper>
+          <ModalButtonWrapper
+            disabled={loading}
+            onClick={() => {
+              setLoading(true)
+              confirm().finally(() => setLoading(false))
+            }}
+            type="submit"
+          >
+            {loading ? 'Confirming' : 'Confirm'}
+          </ModalButtonWrapper>
+        </ButtonContainer>
+      </ModalFooterWrapper>
+    </ModalWrapper>
   )
 }
 
