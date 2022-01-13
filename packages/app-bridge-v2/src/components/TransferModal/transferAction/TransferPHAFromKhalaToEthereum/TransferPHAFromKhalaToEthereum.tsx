@@ -23,6 +23,7 @@ import React, {useMemo, useState} from 'react'
 // import {Link} from '../../../Announcement/styledComponents'
 import {useKhalaBridgeFee} from '../../../../hooks/useKhalaBridgeFee'
 import {useAllTransferData} from '../../../../store'
+import {CurrentTransferInformationDetailItems} from '../../../CurrentTransferInformationDetailItems'
 // import useTransactionInfo from '../../hooks/useTransactionInfo'
 
 interface TransferPHAFromKhalaToEthereumProps {
@@ -116,6 +117,8 @@ export const TransferPHAFromKhalaToEthereum: React.FC<
           },
         }}
       /> */}
+
+      <CurrentTransferInformationDetailItems />
 
       <Spacer></Spacer>
 

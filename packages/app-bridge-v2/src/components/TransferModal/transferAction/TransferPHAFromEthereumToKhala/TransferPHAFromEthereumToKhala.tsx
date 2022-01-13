@@ -16,6 +16,7 @@ import {decodeAddress} from '@polkadot/util-crypto'
 import {ethers} from 'ethers'
 import React, {useEffect, useState} from 'react'
 import {useAllTransferData} from '../../../../store'
+import {CurrentTransferInformationDetailItems} from '../../../CurrentTransferInformationDetailItems'
 import {EthereumProgress} from './EthereumProgress'
 import {EthereumToKhalaFee} from './EthereumToKhalaFee'
 // import useTransactionInfo from '../hooks/useTransactionInfo'
@@ -91,7 +92,7 @@ export const TransferPHAFromEthereumToKhala: React.FC<
 
   return (
     <>
-      {/* <BaseInfo layout={layout} data={transactionInfo} /> */}
+      <CurrentTransferInformationDetailItems />
 
       <Spacer></Spacer>
 
