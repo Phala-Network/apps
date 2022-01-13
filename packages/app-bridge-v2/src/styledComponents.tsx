@@ -1,7 +1,18 @@
-import {up} from 'styled-breakpoints'
+import {down, up} from 'styled-breakpoints'
 import styled from 'styled-components'
 
 export const Root = styled.div`
+  padding: 20px;
+  margin: 20px;
+  flex: 1;
+
+  ${down('md')} {
+    margin: 10px;
+    padding: 10px;
+  }
+`
+
+export const MainContent = styled.div`
   ${up('md')} {
     width: 672px;
     margin: 0;

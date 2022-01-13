@@ -14,7 +14,7 @@ import {TransferModal} from './components/TransferModal'
 import {TransferToPanel} from './components/TransferToPanel'
 import {useExtraInfo} from './hooks/useExtraInfo'
 import {useAllTransferData, useSwitchToAndFormData} from './store'
-import {BlockItem, Root} from './styledComponents'
+import {BlockItem, MainContent, Root} from './styledComponents'
 
 const queryClient = new QueryClient()
 
@@ -31,12 +31,12 @@ export const BridgePage: FC = () => {
 
   return (
     <QueryClientProvider contextSharing={true} client={queryClient}>
-      <div style={{padding: 20, margin: 20, flex: 1}}>
+      <Root>
         <Helmet>
           <title>Bridge</title>
         </Helmet>
 
-        <Root>
+        <MainContent>
           <Header />
 
           <BlockItem>
@@ -54,7 +54,7 @@ export const BridgePage: FC = () => {
           <BlockItem>
             <SubmitButton onSubmit={submit} />
           </BlockItem>
-        </Root>
+        </MainContent>
 
         <TransferModal
           transactionInfo={transactionInfo}
@@ -90,7 +90,7 @@ export const BridgePage: FC = () => {
         <ToasterContainer placement={PLACEMENT.topRight} />
 
         <Transactions />
-      </div>
+      </Root>
     </QueryClientProvider>
   )
 }
