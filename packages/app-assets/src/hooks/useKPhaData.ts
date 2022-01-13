@@ -2,6 +2,7 @@ import {useMemo} from 'react'
 import {usePolkadotAccountAtom} from '@phala/app-store'
 import {
   useBalance,
+  useLockedBalance,
   usePolkadotAccountTransferrableBalanceDecimal,
 } from '@phala/react-hooks'
 import {toFixed} from '@phala/utils'
@@ -15,6 +16,10 @@ const useKPhaData = () => {
   const polkadotAccountBalance = useBalance(polkadotAccountAddress)
   const polkadotTransferBalanceDecimal =
     usePolkadotAccountTransferrableBalanceDecimal(polkadotAccountAddress)
+
+  const {delegateBalance, crowdloanVestingBalance} = useLockedBalance(
+    polkadotAccountAddress
+  )
 
   // NOTE: copied from InputDataStep.tsx
   const polkadotAccountBalanceNumber = useMemo<Decimal | undefined>(
@@ -39,13 +44,27 @@ const useKPhaData = () => {
     return `${toFixed(polkadotTransferBalanceDecimal)} PHA`
   }, [polkadotTransferBalanceDecimal])
 
+  const delegateValue = useMemo(() => {
+    if (!delegateBalance) return '-'
+    const delegateNumber = new Decimal(delegateBalance.toString()).div(10 ** 12)
+    return `${toFixed(delegateNumber)} PHA`
+  }, [delegateBalance])
+
+  const crowdloanVestingValue = useMemo(() => {
+    if (!crowdloanVestingBalance) return '-'
+    const crowdloanVestingNumber = new Decimal(
+      crowdloanVestingBalance.toString()
+    ).div(10 ** 12)
+    return `${toFixed(crowdloanVestingNumber)} PHA`
+  }, [crowdloanVestingBalance])
+
   return {
     name: 'K-PHA',
     icon: '/images/Phala.svg',
     balance: balanceValue,
     transferrable: transferrableValue,
-    crowdloanVesting: '36666.2333 PHA',
-    delegate: '36666.2333 PHA',
+    crowdloanVesting: crowdloanVestingValue,
+    delegate: delegateValue,
     value: dollarValue,
     isKPHA: true,
   }
