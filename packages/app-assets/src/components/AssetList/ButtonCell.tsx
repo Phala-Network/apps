@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import Button from '../Button'
-import {DataType} from './Table'
+import {DataType} from './index'
 
 type Props = {
   row?: DataType

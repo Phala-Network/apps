@@ -65,7 +65,11 @@ const Dollar = styled.div`
   }
 `
 
-const AccountBanner: React.FC = () => {
+type Props = {
+  totalValue: string
+}
+
+const AccountBanner: React.FC<Props> = ({totalValue}) => {
   const [polkadotAccount] = usePolkadotAccountAtom()
   const {isServer} = useSSR()
 
@@ -82,7 +86,7 @@ const AccountBanner: React.FC = () => {
             <PhalaIcon />
           </Icon>
         ) : (
-          <Dollar>$ 1.345</Dollar>
+          <Dollar>{totalValue ? `$ ${totalValue}` : '-'}</Dollar>
         )}
       </div>
     </Wrapper>

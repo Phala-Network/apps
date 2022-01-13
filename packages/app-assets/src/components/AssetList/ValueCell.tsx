@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import {DataType} from './Table'
+import {DataType} from './index'
 
 const Wrapper = styled.div`
   font-family: Montserrat;
@@ -12,7 +12,7 @@ const Wrapper = styled.div`
 `
 
 const ValueCell: React.FC<Pick<DataType, 'value'>> = ({value}) => {
-  return <Wrapper>{value}</Wrapper>
+  return <Wrapper>{value ? `$ ${value}` : '-'}</Wrapper>
 }
 
 export default ValueCell

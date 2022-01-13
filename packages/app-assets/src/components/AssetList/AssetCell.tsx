@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import {down} from 'styled-breakpoints'
-import {DataType} from './Table'
+import {DataType} from './index'
 
 const Wrapper = styled.div`
   display: flex;

@@ -35,8 +35,8 @@ const useKPhaData = () => {
   }, [polkadotAccountBalanceNumber])
 
   const dollarValue = useMemo(() => {
-    if (!polkadotAccountBalanceNumber) return '-'
-    return `$ ${toFixed(polkadotAccountBalanceNumber.mul(PHAPrice), 2)}`
+    if (!polkadotAccountBalanceNumber) return ''
+    return toFixed(polkadotAccountBalanceNumber.mul(PHAPrice), 2)
   }, [polkadotAccountBalanceNumber, PHAPrice])
 
   const transferrableValue = useMemo(() => {
