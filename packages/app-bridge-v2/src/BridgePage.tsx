@@ -7,6 +7,7 @@ import {ExtraInfoPanel} from './components/ExtraInfoPanel'
 import {Header} from './components/Header'
 import {InformationModal} from './components/InformationModal'
 import {SubmitButton} from './components/SubmitButton'
+import {Transactions} from './components/Transactions'
 import {TransferFromPanel} from './components/TransferFromPanel'
 import {TransferModal} from './components/TransferModal'
 import {TransferToPanel} from './components/TransferToPanel'
@@ -83,6 +84,8 @@ export const BridgePage: FC = () => {
       </Button>
 
       <ToasterContainer placement={PLACEMENT.topRight} />
+
+      <Transactions />
     </div>
   )
 }
