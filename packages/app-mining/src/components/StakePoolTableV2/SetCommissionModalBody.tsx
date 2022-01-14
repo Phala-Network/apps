@@ -49,12 +49,15 @@ const SetCommissionModalBody = ({
         <FormControl label="Pid">
           <ParagraphLarge as="div">{pid}</ParagraphLarge>
         </FormControl>
-        <FormControl label="Current Commission">
-          <ParagraphLarge as="div">
-            {new Decimal(currentCommission).times(100).toString()}%
-          </ParagraphLarge>
-        </FormControl>
-        <FormControl label="New Commission">
+        <FormControl
+          label="New Commission"
+          caption={
+            <span>
+              Current Commission:{' '}
+              {new Decimal(currentCommission).times(100).toString()}%
+            </span>
+          }
+        >
           {/* FIXME: add amount validation */}
           <Input
             autoFocus

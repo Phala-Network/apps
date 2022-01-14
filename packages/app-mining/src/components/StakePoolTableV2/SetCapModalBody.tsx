@@ -22,7 +22,7 @@ const SetCapModalBody = ({
   stakePool,
   onClose,
 }: {stakePool: StakePools} & Pick<ModalProps, 'onClose'>): JSX.Element => {
-  const {pid, cap: currentCap} = stakePool
+  const {pid, cap: currentCap, totalStake} = stakePool
   const {api} = useApiPromise()
   const [cap, setCap] = useState('')
   const waitSignAndSend = useWaitSignAndSend()
@@ -50,14 +50,17 @@ const SetCapModalBody = ({
         <FormControl label="Pid">
           <ParagraphLarge as="div">{pid}</ParagraphLarge>
         </FormControl>
-        {currentCap && (
-          <FormControl label="Current Cap">
-            <ParagraphLarge as="div">
-              {formatCurrency(currentCap)} PHA
-            </ParagraphLarge>
-          </FormControl>
-        )}
-        <FormControl label="New Cap">
+        <FormControl
+          label="New Cap"
+          caption={
+            <>
+              Current Cap:{' '}
+              {currentCap ? `${formatCurrency(currentCap)} PHA` : '∞'}
+              <br />
+              Delegated: {formatCurrency(totalStake)} PHA
+            </>
+          }
+        >
           {/* FIXME: add cap validation */}
           <Input
             autoFocus

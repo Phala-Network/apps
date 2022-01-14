@@ -47,8 +47,7 @@ const DelegateModalBody = ({
   }
 
   const remaining = remainingStake
-    ? // FIXME: use common format
-      `${formatCurrency(remainingStake)} PHA`
+    ? `${formatCurrency(remainingStake)} PHA`
     : '∞'
 
   return (

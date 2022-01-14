@@ -599,6 +599,15 @@ export type AggregateEvents = {
   _sum?: Maybe<EventsSumAggregate>;
 };
 
+export type AggregateMinerActivities = {
+  __typename?: 'AggregateMinerActivities';
+  _avg?: Maybe<MinerActivitiesAvgAggregate>;
+  _count?: Maybe<MinerActivitiesCountAggregate>;
+  _max?: Maybe<MinerActivitiesMaxAggregate>;
+  _min?: Maybe<MinerActivitiesMinAggregate>;
+  _sum?: Maybe<MinerActivitiesSumAggregate>;
+};
+
 export type AggregateMiners = {
   __typename?: 'AggregateMiners';
   _avg?: Maybe<MinersAvgAggregate>;
@@ -1043,6 +1052,7 @@ export type Events = {
   createdAt?: Maybe<Scalars['DateTime']>;
   data?: Maybe<Scalars['String']>;
   id: Scalars['BigInt'];
+  minerActivities: Array<MinerActivities>;
   name: Scalars['String'];
   note?: Maybe<Scalars['String']>;
   processedAt?: Maybe<Scalars['DateTime']>;
@@ -1050,11 +1060,21 @@ export type Events = {
   skipped: Scalars['Boolean'];
   stakePoolActivities: Array<StakePoolActivities>;
   stakePoolStakerActivities: Array<StakePoolStakerActivities>;
-  stakePoolWithdrawalsEventsTostakePoolWithdrawalsEndEventIds: Array<StakePoolWithdrawals>;
-  stakePoolWithdrawalsEventsTostakePoolWithdrawalsStartEventIds: Array<StakePoolWithdrawals>;
+  stakePoolWithdrawalsEventsToStakePoolWithdrawalsEndEventIds: Array<StakePoolWithdrawals>;
+  stakePoolWithdrawalsEventsToStakePoolWithdrawalsStartEventIds: Array<StakePoolWithdrawals>;
   timestamp: Scalars['DateTime'];
   tokenomicVersion: Scalars['Int'];
   workerActivities: Array<WorkerActivities>;
+};
+
+
+export type EventsMinerActivitiesArgs = {
+  cursor?: InputMaybe<MinerActivitiesWhereUniqueInput>;
+  distinct?: InputMaybe<Array<MinerActivitiesScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<MinerActivitiesOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']>;
+  take?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<MinerActivitiesWhereInput>;
 };
 
 
@@ -1078,7 +1098,7 @@ export type EventsStakePoolStakerActivitiesArgs = {
 };
 
 
-export type EventsStakePoolWithdrawalsEventsTostakePoolWithdrawalsEndEventIdsArgs = {
+export type EventsStakePoolWithdrawalsEventsToStakePoolWithdrawalsEndEventIdsArgs = {
   cursor?: InputMaybe<StakePoolWithdrawalsWhereUniqueInput>;
   distinct?: InputMaybe<Array<StakePoolWithdrawalsScalarFieldEnum>>;
   orderBy?: InputMaybe<Array<StakePoolWithdrawalsOrderByWithRelationInput>>;
@@ -1088,7 +1108,7 @@ export type EventsStakePoolWithdrawalsEventsTostakePoolWithdrawalsEndEventIdsArg
 };
 
 
-export type EventsStakePoolWithdrawalsEventsTostakePoolWithdrawalsStartEventIdsArgs = {
+export type EventsStakePoolWithdrawalsEventsToStakePoolWithdrawalsStartEventIdsArgs = {
   cursor?: InputMaybe<StakePoolWithdrawalsWhereUniqueInput>;
   distinct?: InputMaybe<Array<StakePoolWithdrawalsScalarFieldEnum>>;
   orderBy?: InputMaybe<Array<StakePoolWithdrawalsOrderByWithRelationInput>>;
@@ -1122,10 +1142,11 @@ export type EventsAvgOrderByAggregateInput = {
 
 export type EventsCount = {
   __typename?: 'EventsCount';
+  minerActivities: Scalars['Int'];
   stakePoolActivities: Scalars['Int'];
   stakePoolStakerActivities: Scalars['Int'];
-  stakePoolWithdrawalsEventsTostakePoolWithdrawalsEndEventIds: Scalars['Int'];
-  stakePoolWithdrawalsEventsTostakePoolWithdrawalsStartEventIds: Scalars['Int'];
+  stakePoolWithdrawalsEventsToStakePoolWithdrawalsEndEventIds: Scalars['Int'];
+  stakePoolWithdrawalsEventsToStakePoolWithdrawalsStartEventIds: Scalars['Int'];
   workerActivities: Scalars['Int'];
 };
 
@@ -1164,6 +1185,7 @@ export type EventsCreateInput = {
   createdAt?: InputMaybe<Scalars['DateTime']>;
   data?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['BigInt']>;
+  minerActivities?: InputMaybe<MinerActivitiesCreateNestedManyWithoutEventsInput>;
   name: Scalars['String'];
   note?: InputMaybe<Scalars['String']>;
   processedAt?: InputMaybe<Scalars['DateTime']>;
@@ -1171,8 +1193,8 @@ export type EventsCreateInput = {
   skipped?: InputMaybe<Scalars['Boolean']>;
   stakePoolActivities?: InputMaybe<StakePoolActivitiesCreateNestedManyWithoutEventsInput>;
   stakePoolStakerActivities?: InputMaybe<StakePoolStakerActivitiesCreateNestedManyWithoutEventsInput>;
-  stakePoolWithdrawalsEventsTostakePoolWithdrawalsEndEventIds?: InputMaybe<StakePoolWithdrawalsCreateNestedManyWithoutEventsEventsTostakePoolWithdrawalsEndEventIdInput>;
-  stakePoolWithdrawalsEventsTostakePoolWithdrawalsStartEventIds?: InputMaybe<StakePoolWithdrawalsCreateNestedManyWithoutEventsEventsTostakePoolWithdrawalsStartEventIdInput>;
+  stakePoolWithdrawalsEventsToStakePoolWithdrawalsEndEventIds?: InputMaybe<StakePoolWithdrawalsCreateNestedManyWithoutEventsEventsToStakePoolWithdrawalsEndEventIdInput>;
+  stakePoolWithdrawalsEventsToStakePoolWithdrawalsStartEventIds?: InputMaybe<StakePoolWithdrawalsCreateNestedManyWithoutEventsEventsToStakePoolWithdrawalsStartEventIdInput>;
   timestamp: Scalars['DateTime'];
   tokenomicVersion: Scalars['Int'];
   workerActivities?: InputMaybe<WorkerActivitiesCreateNestedManyWithoutEventsInput>;
@@ -1192,6 +1214,12 @@ export type EventsCreateManyInput = {
   tokenomicVersion: Scalars['Int'];
 };
 
+export type EventsCreateNestedOneWithoutMinerActivitiesInput = {
+  connect?: InputMaybe<EventsWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<EventsCreateOrConnectWithoutMinerActivitiesInput>;
+  create?: InputMaybe<EventsCreateWithoutMinerActivitiesInput>;
+};
+
 export type EventsCreateNestedOneWithoutStakePoolActivitiesInput = {
   connect?: InputMaybe<EventsWhereUniqueInput>;
   connectOrCreate?: InputMaybe<EventsCreateOrConnectWithoutStakePoolActivitiesInput>;
@@ -1204,22 +1232,27 @@ export type EventsCreateNestedOneWithoutStakePoolStakerActivitiesInput = {
   create?: InputMaybe<EventsCreateWithoutStakePoolStakerActivitiesInput>;
 };
 
-export type EventsCreateNestedOneWithoutStakePoolWithdrawalsEventsTostakePoolWithdrawalsEndEventIdsInput = {
+export type EventsCreateNestedOneWithoutStakePoolWithdrawalsEventsToStakePoolWithdrawalsEndEventIdsInput = {
   connect?: InputMaybe<EventsWhereUniqueInput>;
-  connectOrCreate?: InputMaybe<EventsCreateOrConnectWithoutStakePoolWithdrawalsEventsTostakePoolWithdrawalsEndEventIdsInput>;
-  create?: InputMaybe<EventsCreateWithoutStakePoolWithdrawalsEventsTostakePoolWithdrawalsEndEventIdsInput>;
+  connectOrCreate?: InputMaybe<EventsCreateOrConnectWithoutStakePoolWithdrawalsEventsToStakePoolWithdrawalsEndEventIdsInput>;
+  create?: InputMaybe<EventsCreateWithoutStakePoolWithdrawalsEventsToStakePoolWithdrawalsEndEventIdsInput>;
 };
 
-export type EventsCreateNestedOneWithoutStakePoolWithdrawalsEventsTostakePoolWithdrawalsStartEventIdsInput = {
+export type EventsCreateNestedOneWithoutStakePoolWithdrawalsEventsToStakePoolWithdrawalsStartEventIdsInput = {
   connect?: InputMaybe<EventsWhereUniqueInput>;
-  connectOrCreate?: InputMaybe<EventsCreateOrConnectWithoutStakePoolWithdrawalsEventsTostakePoolWithdrawalsStartEventIdsInput>;
-  create?: InputMaybe<EventsCreateWithoutStakePoolWithdrawalsEventsTostakePoolWithdrawalsStartEventIdsInput>;
+  connectOrCreate?: InputMaybe<EventsCreateOrConnectWithoutStakePoolWithdrawalsEventsToStakePoolWithdrawalsStartEventIdsInput>;
+  create?: InputMaybe<EventsCreateWithoutStakePoolWithdrawalsEventsToStakePoolWithdrawalsStartEventIdsInput>;
 };
 
 export type EventsCreateNestedOneWithoutWorkerActivitiesInput = {
   connect?: InputMaybe<EventsWhereUniqueInput>;
   connectOrCreate?: InputMaybe<EventsCreateOrConnectWithoutWorkerActivitiesInput>;
   create?: InputMaybe<EventsCreateWithoutWorkerActivitiesInput>;
+};
+
+export type EventsCreateOrConnectWithoutMinerActivitiesInput = {
+  create: EventsCreateWithoutMinerActivitiesInput;
+  where: EventsWhereUniqueInput;
 };
 
 export type EventsCreateOrConnectWithoutStakePoolActivitiesInput = {
@@ -1232,13 +1265,13 @@ export type EventsCreateOrConnectWithoutStakePoolStakerActivitiesInput = {
   where: EventsWhereUniqueInput;
 };
 
-export type EventsCreateOrConnectWithoutStakePoolWithdrawalsEventsTostakePoolWithdrawalsEndEventIdsInput = {
-  create: EventsCreateWithoutStakePoolWithdrawalsEventsTostakePoolWithdrawalsEndEventIdsInput;
+export type EventsCreateOrConnectWithoutStakePoolWithdrawalsEventsToStakePoolWithdrawalsEndEventIdsInput = {
+  create: EventsCreateWithoutStakePoolWithdrawalsEventsToStakePoolWithdrawalsEndEventIdsInput;
   where: EventsWhereUniqueInput;
 };
 
-export type EventsCreateOrConnectWithoutStakePoolWithdrawalsEventsTostakePoolWithdrawalsStartEventIdsInput = {
-  create: EventsCreateWithoutStakePoolWithdrawalsEventsTostakePoolWithdrawalsStartEventIdsInput;
+export type EventsCreateOrConnectWithoutStakePoolWithdrawalsEventsToStakePoolWithdrawalsStartEventIdsInput = {
+  create: EventsCreateWithoutStakePoolWithdrawalsEventsToStakePoolWithdrawalsStartEventIdsInput;
   where: EventsWhereUniqueInput;
 };
 
@@ -1247,7 +1280,7 @@ export type EventsCreateOrConnectWithoutWorkerActivitiesInput = {
   where: EventsWhereUniqueInput;
 };
 
-export type EventsCreateWithoutStakePoolActivitiesInput = {
+export type EventsCreateWithoutMinerActivitiesInput = {
   blockNumber: Scalars['BigInt'];
   createdAt?: InputMaybe<Scalars['DateTime']>;
   data?: InputMaybe<Scalars['String']>;
@@ -1257,9 +1290,29 @@ export type EventsCreateWithoutStakePoolActivitiesInput = {
   processedAt?: InputMaybe<Scalars['DateTime']>;
   section: Scalars['String'];
   skipped?: InputMaybe<Scalars['Boolean']>;
+  stakePoolActivities?: InputMaybe<StakePoolActivitiesCreateNestedManyWithoutEventsInput>;
   stakePoolStakerActivities?: InputMaybe<StakePoolStakerActivitiesCreateNestedManyWithoutEventsInput>;
-  stakePoolWithdrawalsEventsTostakePoolWithdrawalsEndEventIds?: InputMaybe<StakePoolWithdrawalsCreateNestedManyWithoutEventsEventsTostakePoolWithdrawalsEndEventIdInput>;
-  stakePoolWithdrawalsEventsTostakePoolWithdrawalsStartEventIds?: InputMaybe<StakePoolWithdrawalsCreateNestedManyWithoutEventsEventsTostakePoolWithdrawalsStartEventIdInput>;
+  stakePoolWithdrawalsEventsToStakePoolWithdrawalsEndEventIds?: InputMaybe<StakePoolWithdrawalsCreateNestedManyWithoutEventsEventsToStakePoolWithdrawalsEndEventIdInput>;
+  stakePoolWithdrawalsEventsToStakePoolWithdrawalsStartEventIds?: InputMaybe<StakePoolWithdrawalsCreateNestedManyWithoutEventsEventsToStakePoolWithdrawalsStartEventIdInput>;
+  timestamp: Scalars['DateTime'];
+  tokenomicVersion: Scalars['Int'];
+  workerActivities?: InputMaybe<WorkerActivitiesCreateNestedManyWithoutEventsInput>;
+};
+
+export type EventsCreateWithoutStakePoolActivitiesInput = {
+  blockNumber: Scalars['BigInt'];
+  createdAt?: InputMaybe<Scalars['DateTime']>;
+  data?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['BigInt']>;
+  minerActivities?: InputMaybe<MinerActivitiesCreateNestedManyWithoutEventsInput>;
+  name: Scalars['String'];
+  note?: InputMaybe<Scalars['String']>;
+  processedAt?: InputMaybe<Scalars['DateTime']>;
+  section: Scalars['String'];
+  skipped?: InputMaybe<Scalars['Boolean']>;
+  stakePoolStakerActivities?: InputMaybe<StakePoolStakerActivitiesCreateNestedManyWithoutEventsInput>;
+  stakePoolWithdrawalsEventsToStakePoolWithdrawalsEndEventIds?: InputMaybe<StakePoolWithdrawalsCreateNestedManyWithoutEventsEventsToStakePoolWithdrawalsEndEventIdInput>;
+  stakePoolWithdrawalsEventsToStakePoolWithdrawalsStartEventIds?: InputMaybe<StakePoolWithdrawalsCreateNestedManyWithoutEventsEventsToStakePoolWithdrawalsStartEventIdInput>;
   timestamp: Scalars['DateTime'];
   tokenomicVersion: Scalars['Int'];
   workerActivities?: InputMaybe<WorkerActivitiesCreateNestedManyWithoutEventsInput>;
@@ -1270,24 +1323,26 @@ export type EventsCreateWithoutStakePoolStakerActivitiesInput = {
   createdAt?: InputMaybe<Scalars['DateTime']>;
   data?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['BigInt']>;
+  minerActivities?: InputMaybe<MinerActivitiesCreateNestedManyWithoutEventsInput>;
   name: Scalars['String'];
   note?: InputMaybe<Scalars['String']>;
   processedAt?: InputMaybe<Scalars['DateTime']>;
   section: Scalars['String'];
   skipped?: InputMaybe<Scalars['Boolean']>;
   stakePoolActivities?: InputMaybe<StakePoolActivitiesCreateNestedManyWithoutEventsInput>;
-  stakePoolWithdrawalsEventsTostakePoolWithdrawalsEndEventIds?: InputMaybe<StakePoolWithdrawalsCreateNestedManyWithoutEventsEventsTostakePoolWithdrawalsEndEventIdInput>;
-  stakePoolWithdrawalsEventsTostakePoolWithdrawalsStartEventIds?: InputMaybe<StakePoolWithdrawalsCreateNestedManyWithoutEventsEventsTostakePoolWithdrawalsStartEventIdInput>;
+  stakePoolWithdrawalsEventsToStakePoolWithdrawalsEndEventIds?: InputMaybe<StakePoolWithdrawalsCreateNestedManyWithoutEventsEventsToStakePoolWithdrawalsEndEventIdInput>;
+  stakePoolWithdrawalsEventsToStakePoolWithdrawalsStartEventIds?: InputMaybe<StakePoolWithdrawalsCreateNestedManyWithoutEventsEventsToStakePoolWithdrawalsStartEventIdInput>;
   timestamp: Scalars['DateTime'];
   tokenomicVersion: Scalars['Int'];
   workerActivities?: InputMaybe<WorkerActivitiesCreateNestedManyWithoutEventsInput>;
 };
 
-export type EventsCreateWithoutStakePoolWithdrawalsEventsTostakePoolWithdrawalsEndEventIdsInput = {
+export type EventsCreateWithoutStakePoolWithdrawalsEventsToStakePoolWithdrawalsEndEventIdsInput = {
   blockNumber: Scalars['BigInt'];
   createdAt?: InputMaybe<Scalars['DateTime']>;
   data?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['BigInt']>;
+  minerActivities?: InputMaybe<MinerActivitiesCreateNestedManyWithoutEventsInput>;
   name: Scalars['String'];
   note?: InputMaybe<Scalars['String']>;
   processedAt?: InputMaybe<Scalars['DateTime']>;
@@ -1295,17 +1350,18 @@ export type EventsCreateWithoutStakePoolWithdrawalsEventsTostakePoolWithdrawalsE
   skipped?: InputMaybe<Scalars['Boolean']>;
   stakePoolActivities?: InputMaybe<StakePoolActivitiesCreateNestedManyWithoutEventsInput>;
   stakePoolStakerActivities?: InputMaybe<StakePoolStakerActivitiesCreateNestedManyWithoutEventsInput>;
-  stakePoolWithdrawalsEventsTostakePoolWithdrawalsStartEventIds?: InputMaybe<StakePoolWithdrawalsCreateNestedManyWithoutEventsEventsTostakePoolWithdrawalsStartEventIdInput>;
+  stakePoolWithdrawalsEventsToStakePoolWithdrawalsStartEventIds?: InputMaybe<StakePoolWithdrawalsCreateNestedManyWithoutEventsEventsToStakePoolWithdrawalsStartEventIdInput>;
   timestamp: Scalars['DateTime'];
   tokenomicVersion: Scalars['Int'];
   workerActivities?: InputMaybe<WorkerActivitiesCreateNestedManyWithoutEventsInput>;
 };
 
-export type EventsCreateWithoutStakePoolWithdrawalsEventsTostakePoolWithdrawalsStartEventIdsInput = {
+export type EventsCreateWithoutStakePoolWithdrawalsEventsToStakePoolWithdrawalsStartEventIdsInput = {
   blockNumber: Scalars['BigInt'];
   createdAt?: InputMaybe<Scalars['DateTime']>;
   data?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['BigInt']>;
+  minerActivities?: InputMaybe<MinerActivitiesCreateNestedManyWithoutEventsInput>;
   name: Scalars['String'];
   note?: InputMaybe<Scalars['String']>;
   processedAt?: InputMaybe<Scalars['DateTime']>;
@@ -1313,7 +1369,7 @@ export type EventsCreateWithoutStakePoolWithdrawalsEventsTostakePoolWithdrawalsS
   skipped?: InputMaybe<Scalars['Boolean']>;
   stakePoolActivities?: InputMaybe<StakePoolActivitiesCreateNestedManyWithoutEventsInput>;
   stakePoolStakerActivities?: InputMaybe<StakePoolStakerActivitiesCreateNestedManyWithoutEventsInput>;
-  stakePoolWithdrawalsEventsTostakePoolWithdrawalsEndEventIds?: InputMaybe<StakePoolWithdrawalsCreateNestedManyWithoutEventsEventsTostakePoolWithdrawalsEndEventIdInput>;
+  stakePoolWithdrawalsEventsToStakePoolWithdrawalsEndEventIds?: InputMaybe<StakePoolWithdrawalsCreateNestedManyWithoutEventsEventsToStakePoolWithdrawalsEndEventIdInput>;
   timestamp: Scalars['DateTime'];
   tokenomicVersion: Scalars['Int'];
   workerActivities?: InputMaybe<WorkerActivitiesCreateNestedManyWithoutEventsInput>;
@@ -1324,6 +1380,7 @@ export type EventsCreateWithoutWorkerActivitiesInput = {
   createdAt?: InputMaybe<Scalars['DateTime']>;
   data?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['BigInt']>;
+  minerActivities?: InputMaybe<MinerActivitiesCreateNestedManyWithoutEventsInput>;
   name: Scalars['String'];
   note?: InputMaybe<Scalars['String']>;
   processedAt?: InputMaybe<Scalars['DateTime']>;
@@ -1331,8 +1388,8 @@ export type EventsCreateWithoutWorkerActivitiesInput = {
   skipped?: InputMaybe<Scalars['Boolean']>;
   stakePoolActivities?: InputMaybe<StakePoolActivitiesCreateNestedManyWithoutEventsInput>;
   stakePoolStakerActivities?: InputMaybe<StakePoolStakerActivitiesCreateNestedManyWithoutEventsInput>;
-  stakePoolWithdrawalsEventsTostakePoolWithdrawalsEndEventIds?: InputMaybe<StakePoolWithdrawalsCreateNestedManyWithoutEventsEventsTostakePoolWithdrawalsEndEventIdInput>;
-  stakePoolWithdrawalsEventsTostakePoolWithdrawalsStartEventIds?: InputMaybe<StakePoolWithdrawalsCreateNestedManyWithoutEventsEventsTostakePoolWithdrawalsStartEventIdInput>;
+  stakePoolWithdrawalsEventsToStakePoolWithdrawalsEndEventIds?: InputMaybe<StakePoolWithdrawalsCreateNestedManyWithoutEventsEventsToStakePoolWithdrawalsEndEventIdInput>;
+  stakePoolWithdrawalsEventsToStakePoolWithdrawalsStartEventIds?: InputMaybe<StakePoolWithdrawalsCreateNestedManyWithoutEventsEventsToStakePoolWithdrawalsStartEventIdInput>;
   timestamp: Scalars['DateTime'];
   tokenomicVersion: Scalars['Int'];
 };
@@ -1439,6 +1496,7 @@ export type EventsOrderByWithRelationInput = {
   createdAt?: InputMaybe<SortOrder>;
   data?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
+  minerActivities?: InputMaybe<MinerActivitiesOrderByRelationAggregateInput>;
   name?: InputMaybe<SortOrder>;
   note?: InputMaybe<SortOrder>;
   processedAt?: InputMaybe<SortOrder>;
@@ -1446,8 +1504,8 @@ export type EventsOrderByWithRelationInput = {
   skipped?: InputMaybe<SortOrder>;
   stakePoolActivities?: InputMaybe<StakePoolActivitiesOrderByRelationAggregateInput>;
   stakePoolStakerActivities?: InputMaybe<StakePoolStakerActivitiesOrderByRelationAggregateInput>;
-  stakePoolWithdrawalsEventsTostakePoolWithdrawalsEndEventIds?: InputMaybe<StakePoolWithdrawalsOrderByRelationAggregateInput>;
-  stakePoolWithdrawalsEventsTostakePoolWithdrawalsStartEventIds?: InputMaybe<StakePoolWithdrawalsOrderByRelationAggregateInput>;
+  stakePoolWithdrawalsEventsToStakePoolWithdrawalsEndEventIds?: InputMaybe<StakePoolWithdrawalsOrderByRelationAggregateInput>;
+  stakePoolWithdrawalsEventsToStakePoolWithdrawalsStartEventIds?: InputMaybe<StakePoolWithdrawalsOrderByRelationAggregateInput>;
   timestamp?: InputMaybe<SortOrder>;
   tokenomicVersion?: InputMaybe<SortOrder>;
   workerActivities?: InputMaybe<WorkerActivitiesOrderByRelationAggregateInput>;
@@ -1507,6 +1565,7 @@ export type EventsUpdateInput = {
   createdAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
   data?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   id?: InputMaybe<BigIntFieldUpdateOperationsInput>;
+  minerActivities?: InputMaybe<MinerActivitiesUpdateManyWithoutEventsInput>;
   name?: InputMaybe<StringFieldUpdateOperationsInput>;
   note?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   processedAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
@@ -1514,8 +1573,8 @@ export type EventsUpdateInput = {
   skipped?: InputMaybe<BoolFieldUpdateOperationsInput>;
   stakePoolActivities?: InputMaybe<StakePoolActivitiesUpdateManyWithoutEventsInput>;
   stakePoolStakerActivities?: InputMaybe<StakePoolStakerActivitiesUpdateManyWithoutEventsInput>;
-  stakePoolWithdrawalsEventsTostakePoolWithdrawalsEndEventIds?: InputMaybe<StakePoolWithdrawalsUpdateManyWithoutEventsEventsTostakePoolWithdrawalsEndEventIdInput>;
-  stakePoolWithdrawalsEventsTostakePoolWithdrawalsStartEventIds?: InputMaybe<StakePoolWithdrawalsUpdateManyWithoutEventsEventsTostakePoolWithdrawalsStartEventIdInput>;
+  stakePoolWithdrawalsEventsToStakePoolWithdrawalsEndEventIds?: InputMaybe<StakePoolWithdrawalsUpdateManyWithoutEventsEventsToStakePoolWithdrawalsEndEventIdInput>;
+  stakePoolWithdrawalsEventsToStakePoolWithdrawalsStartEventIds?: InputMaybe<StakePoolWithdrawalsUpdateManyWithoutEventsEventsToStakePoolWithdrawalsStartEventIdInput>;
   timestamp?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   tokenomicVersion?: InputMaybe<IntFieldUpdateOperationsInput>;
   workerActivities?: InputMaybe<WorkerActivitiesUpdateManyWithoutEventsInput>;
@@ -1533,6 +1592,16 @@ export type EventsUpdateManyMutationInput = {
   skipped?: InputMaybe<BoolFieldUpdateOperationsInput>;
   timestamp?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   tokenomicVersion?: InputMaybe<IntFieldUpdateOperationsInput>;
+};
+
+export type EventsUpdateOneWithoutMinerActivitiesInput = {
+  connect?: InputMaybe<EventsWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<EventsCreateOrConnectWithoutMinerActivitiesInput>;
+  create?: InputMaybe<EventsCreateWithoutMinerActivitiesInput>;
+  delete?: InputMaybe<Scalars['Boolean']>;
+  disconnect?: InputMaybe<Scalars['Boolean']>;
+  update?: InputMaybe<EventsUpdateWithoutMinerActivitiesInput>;
+  upsert?: InputMaybe<EventsUpsertWithoutMinerActivitiesInput>;
 };
 
 export type EventsUpdateOneWithoutStakePoolActivitiesInput = {
@@ -1555,24 +1624,24 @@ export type EventsUpdateOneWithoutStakePoolStakerActivitiesInput = {
   upsert?: InputMaybe<EventsUpsertWithoutStakePoolStakerActivitiesInput>;
 };
 
-export type EventsUpdateOneWithoutStakePoolWithdrawalsEventsTostakePoolWithdrawalsEndEventIdsInput = {
+export type EventsUpdateOneWithoutStakePoolWithdrawalsEventsToStakePoolWithdrawalsEndEventIdsInput = {
   connect?: InputMaybe<EventsWhereUniqueInput>;
-  connectOrCreate?: InputMaybe<EventsCreateOrConnectWithoutStakePoolWithdrawalsEventsTostakePoolWithdrawalsEndEventIdsInput>;
-  create?: InputMaybe<EventsCreateWithoutStakePoolWithdrawalsEventsTostakePoolWithdrawalsEndEventIdsInput>;
+  connectOrCreate?: InputMaybe<EventsCreateOrConnectWithoutStakePoolWithdrawalsEventsToStakePoolWithdrawalsEndEventIdsInput>;
+  create?: InputMaybe<EventsCreateWithoutStakePoolWithdrawalsEventsToStakePoolWithdrawalsEndEventIdsInput>;
   delete?: InputMaybe<Scalars['Boolean']>;
   disconnect?: InputMaybe<Scalars['Boolean']>;
-  update?: InputMaybe<EventsUpdateWithoutStakePoolWithdrawalsEventsTostakePoolWithdrawalsEndEventIdsInput>;
-  upsert?: InputMaybe<EventsUpsertWithoutStakePoolWithdrawalsEventsTostakePoolWithdrawalsEndEventIdsInput>;
+  update?: InputMaybe<EventsUpdateWithoutStakePoolWithdrawalsEventsToStakePoolWithdrawalsEndEventIdsInput>;
+  upsert?: InputMaybe<EventsUpsertWithoutStakePoolWithdrawalsEventsToStakePoolWithdrawalsEndEventIdsInput>;
 };
 
-export type EventsUpdateOneWithoutStakePoolWithdrawalsEventsTostakePoolWithdrawalsStartEventIdsInput = {
+export type EventsUpdateOneWithoutStakePoolWithdrawalsEventsToStakePoolWithdrawalsStartEventIdsInput = {
   connect?: InputMaybe<EventsWhereUniqueInput>;
-  connectOrCreate?: InputMaybe<EventsCreateOrConnectWithoutStakePoolWithdrawalsEventsTostakePoolWithdrawalsStartEventIdsInput>;
-  create?: InputMaybe<EventsCreateWithoutStakePoolWithdrawalsEventsTostakePoolWithdrawalsStartEventIdsInput>;
+  connectOrCreate?: InputMaybe<EventsCreateOrConnectWithoutStakePoolWithdrawalsEventsToStakePoolWithdrawalsStartEventIdsInput>;
+  create?: InputMaybe<EventsCreateWithoutStakePoolWithdrawalsEventsToStakePoolWithdrawalsStartEventIdsInput>;
   delete?: InputMaybe<Scalars['Boolean']>;
   disconnect?: InputMaybe<Scalars['Boolean']>;
-  update?: InputMaybe<EventsUpdateWithoutStakePoolWithdrawalsEventsTostakePoolWithdrawalsStartEventIdsInput>;
-  upsert?: InputMaybe<EventsUpsertWithoutStakePoolWithdrawalsEventsTostakePoolWithdrawalsStartEventIdsInput>;
+  update?: InputMaybe<EventsUpdateWithoutStakePoolWithdrawalsEventsToStakePoolWithdrawalsStartEventIdsInput>;
+  upsert?: InputMaybe<EventsUpsertWithoutStakePoolWithdrawalsEventsToStakePoolWithdrawalsStartEventIdsInput>;
 };
 
 export type EventsUpdateOneWithoutWorkerActivitiesInput = {
@@ -1585,7 +1654,7 @@ export type EventsUpdateOneWithoutWorkerActivitiesInput = {
   upsert?: InputMaybe<EventsUpsertWithoutWorkerActivitiesInput>;
 };
 
-export type EventsUpdateWithoutStakePoolActivitiesInput = {
+export type EventsUpdateWithoutMinerActivitiesInput = {
   blockNumber?: InputMaybe<BigIntFieldUpdateOperationsInput>;
   createdAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
   data?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
@@ -1595,9 +1664,29 @@ export type EventsUpdateWithoutStakePoolActivitiesInput = {
   processedAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
   section?: InputMaybe<StringFieldUpdateOperationsInput>;
   skipped?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  stakePoolActivities?: InputMaybe<StakePoolActivitiesUpdateManyWithoutEventsInput>;
   stakePoolStakerActivities?: InputMaybe<StakePoolStakerActivitiesUpdateManyWithoutEventsInput>;
-  stakePoolWithdrawalsEventsTostakePoolWithdrawalsEndEventIds?: InputMaybe<StakePoolWithdrawalsUpdateManyWithoutEventsEventsTostakePoolWithdrawalsEndEventIdInput>;
-  stakePoolWithdrawalsEventsTostakePoolWithdrawalsStartEventIds?: InputMaybe<StakePoolWithdrawalsUpdateManyWithoutEventsEventsTostakePoolWithdrawalsStartEventIdInput>;
+  stakePoolWithdrawalsEventsToStakePoolWithdrawalsEndEventIds?: InputMaybe<StakePoolWithdrawalsUpdateManyWithoutEventsEventsToStakePoolWithdrawalsEndEventIdInput>;
+  stakePoolWithdrawalsEventsToStakePoolWithdrawalsStartEventIds?: InputMaybe<StakePoolWithdrawalsUpdateManyWithoutEventsEventsToStakePoolWithdrawalsStartEventIdInput>;
+  timestamp?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  tokenomicVersion?: InputMaybe<IntFieldUpdateOperationsInput>;
+  workerActivities?: InputMaybe<WorkerActivitiesUpdateManyWithoutEventsInput>;
+};
+
+export type EventsUpdateWithoutStakePoolActivitiesInput = {
+  blockNumber?: InputMaybe<BigIntFieldUpdateOperationsInput>;
+  createdAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  data?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  id?: InputMaybe<BigIntFieldUpdateOperationsInput>;
+  minerActivities?: InputMaybe<MinerActivitiesUpdateManyWithoutEventsInput>;
+  name?: InputMaybe<StringFieldUpdateOperationsInput>;
+  note?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  processedAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  section?: InputMaybe<StringFieldUpdateOperationsInput>;
+  skipped?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  stakePoolStakerActivities?: InputMaybe<StakePoolStakerActivitiesUpdateManyWithoutEventsInput>;
+  stakePoolWithdrawalsEventsToStakePoolWithdrawalsEndEventIds?: InputMaybe<StakePoolWithdrawalsUpdateManyWithoutEventsEventsToStakePoolWithdrawalsEndEventIdInput>;
+  stakePoolWithdrawalsEventsToStakePoolWithdrawalsStartEventIds?: InputMaybe<StakePoolWithdrawalsUpdateManyWithoutEventsEventsToStakePoolWithdrawalsStartEventIdInput>;
   timestamp?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   tokenomicVersion?: InputMaybe<IntFieldUpdateOperationsInput>;
   workerActivities?: InputMaybe<WorkerActivitiesUpdateManyWithoutEventsInput>;
@@ -1608,24 +1697,26 @@ export type EventsUpdateWithoutStakePoolStakerActivitiesInput = {
   createdAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
   data?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   id?: InputMaybe<BigIntFieldUpdateOperationsInput>;
+  minerActivities?: InputMaybe<MinerActivitiesUpdateManyWithoutEventsInput>;
   name?: InputMaybe<StringFieldUpdateOperationsInput>;
   note?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   processedAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
   section?: InputMaybe<StringFieldUpdateOperationsInput>;
   skipped?: InputMaybe<BoolFieldUpdateOperationsInput>;
   stakePoolActivities?: InputMaybe<StakePoolActivitiesUpdateManyWithoutEventsInput>;
-  stakePoolWithdrawalsEventsTostakePoolWithdrawalsEndEventIds?: InputMaybe<StakePoolWithdrawalsUpdateManyWithoutEventsEventsTostakePoolWithdrawalsEndEventIdInput>;
-  stakePoolWithdrawalsEventsTostakePoolWithdrawalsStartEventIds?: InputMaybe<StakePoolWithdrawalsUpdateManyWithoutEventsEventsTostakePoolWithdrawalsStartEventIdInput>;
+  stakePoolWithdrawalsEventsToStakePoolWithdrawalsEndEventIds?: InputMaybe<StakePoolWithdrawalsUpdateManyWithoutEventsEventsToStakePoolWithdrawalsEndEventIdInput>;
+  stakePoolWithdrawalsEventsToStakePoolWithdrawalsStartEventIds?: InputMaybe<StakePoolWithdrawalsUpdateManyWithoutEventsEventsToStakePoolWithdrawalsStartEventIdInput>;
   timestamp?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   tokenomicVersion?: InputMaybe<IntFieldUpdateOperationsInput>;
   workerActivities?: InputMaybe<WorkerActivitiesUpdateManyWithoutEventsInput>;
 };
 
-export type EventsUpdateWithoutStakePoolWithdrawalsEventsTostakePoolWithdrawalsEndEventIdsInput = {
+export type EventsUpdateWithoutStakePoolWithdrawalsEventsToStakePoolWithdrawalsEndEventIdsInput = {
   blockNumber?: InputMaybe<BigIntFieldUpdateOperationsInput>;
   createdAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
   data?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   id?: InputMaybe<BigIntFieldUpdateOperationsInput>;
+  minerActivities?: InputMaybe<MinerActivitiesUpdateManyWithoutEventsInput>;
   name?: InputMaybe<StringFieldUpdateOperationsInput>;
   note?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   processedAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
@@ -1633,17 +1724,18 @@ export type EventsUpdateWithoutStakePoolWithdrawalsEventsTostakePoolWithdrawalsE
   skipped?: InputMaybe<BoolFieldUpdateOperationsInput>;
   stakePoolActivities?: InputMaybe<StakePoolActivitiesUpdateManyWithoutEventsInput>;
   stakePoolStakerActivities?: InputMaybe<StakePoolStakerActivitiesUpdateManyWithoutEventsInput>;
-  stakePoolWithdrawalsEventsTostakePoolWithdrawalsStartEventIds?: InputMaybe<StakePoolWithdrawalsUpdateManyWithoutEventsEventsTostakePoolWithdrawalsStartEventIdInput>;
+  stakePoolWithdrawalsEventsToStakePoolWithdrawalsStartEventIds?: InputMaybe<StakePoolWithdrawalsUpdateManyWithoutEventsEventsToStakePoolWithdrawalsStartEventIdInput>;
   timestamp?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   tokenomicVersion?: InputMaybe<IntFieldUpdateOperationsInput>;
   workerActivities?: InputMaybe<WorkerActivitiesUpdateManyWithoutEventsInput>;
 };
 
-export type EventsUpdateWithoutStakePoolWithdrawalsEventsTostakePoolWithdrawalsStartEventIdsInput = {
+export type EventsUpdateWithoutStakePoolWithdrawalsEventsToStakePoolWithdrawalsStartEventIdsInput = {
   blockNumber?: InputMaybe<BigIntFieldUpdateOperationsInput>;
   createdAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
   data?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   id?: InputMaybe<BigIntFieldUpdateOperationsInput>;
+  minerActivities?: InputMaybe<MinerActivitiesUpdateManyWithoutEventsInput>;
   name?: InputMaybe<StringFieldUpdateOperationsInput>;
   note?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   processedAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
@@ -1651,7 +1743,7 @@ export type EventsUpdateWithoutStakePoolWithdrawalsEventsTostakePoolWithdrawalsS
   skipped?: InputMaybe<BoolFieldUpdateOperationsInput>;
   stakePoolActivities?: InputMaybe<StakePoolActivitiesUpdateManyWithoutEventsInput>;
   stakePoolStakerActivities?: InputMaybe<StakePoolStakerActivitiesUpdateManyWithoutEventsInput>;
-  stakePoolWithdrawalsEventsTostakePoolWithdrawalsEndEventIds?: InputMaybe<StakePoolWithdrawalsUpdateManyWithoutEventsEventsTostakePoolWithdrawalsEndEventIdInput>;
+  stakePoolWithdrawalsEventsToStakePoolWithdrawalsEndEventIds?: InputMaybe<StakePoolWithdrawalsUpdateManyWithoutEventsEventsToStakePoolWithdrawalsEndEventIdInput>;
   timestamp?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   tokenomicVersion?: InputMaybe<IntFieldUpdateOperationsInput>;
   workerActivities?: InputMaybe<WorkerActivitiesUpdateManyWithoutEventsInput>;
@@ -1662,6 +1754,7 @@ export type EventsUpdateWithoutWorkerActivitiesInput = {
   createdAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
   data?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   id?: InputMaybe<BigIntFieldUpdateOperationsInput>;
+  minerActivities?: InputMaybe<MinerActivitiesUpdateManyWithoutEventsInput>;
   name?: InputMaybe<StringFieldUpdateOperationsInput>;
   note?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   processedAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
@@ -1669,10 +1762,15 @@ export type EventsUpdateWithoutWorkerActivitiesInput = {
   skipped?: InputMaybe<BoolFieldUpdateOperationsInput>;
   stakePoolActivities?: InputMaybe<StakePoolActivitiesUpdateManyWithoutEventsInput>;
   stakePoolStakerActivities?: InputMaybe<StakePoolStakerActivitiesUpdateManyWithoutEventsInput>;
-  stakePoolWithdrawalsEventsTostakePoolWithdrawalsEndEventIds?: InputMaybe<StakePoolWithdrawalsUpdateManyWithoutEventsEventsTostakePoolWithdrawalsEndEventIdInput>;
-  stakePoolWithdrawalsEventsTostakePoolWithdrawalsStartEventIds?: InputMaybe<StakePoolWithdrawalsUpdateManyWithoutEventsEventsTostakePoolWithdrawalsStartEventIdInput>;
+  stakePoolWithdrawalsEventsToStakePoolWithdrawalsEndEventIds?: InputMaybe<StakePoolWithdrawalsUpdateManyWithoutEventsEventsToStakePoolWithdrawalsEndEventIdInput>;
+  stakePoolWithdrawalsEventsToStakePoolWithdrawalsStartEventIds?: InputMaybe<StakePoolWithdrawalsUpdateManyWithoutEventsEventsToStakePoolWithdrawalsStartEventIdInput>;
   timestamp?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   tokenomicVersion?: InputMaybe<IntFieldUpdateOperationsInput>;
+};
+
+export type EventsUpsertWithoutMinerActivitiesInput = {
+  create: EventsCreateWithoutMinerActivitiesInput;
+  update: EventsUpdateWithoutMinerActivitiesInput;
 };
 
 export type EventsUpsertWithoutStakePoolActivitiesInput = {
@@ -1685,14 +1783,14 @@ export type EventsUpsertWithoutStakePoolStakerActivitiesInput = {
   update: EventsUpdateWithoutStakePoolStakerActivitiesInput;
 };
 
-export type EventsUpsertWithoutStakePoolWithdrawalsEventsTostakePoolWithdrawalsEndEventIdsInput = {
-  create: EventsCreateWithoutStakePoolWithdrawalsEventsTostakePoolWithdrawalsEndEventIdsInput;
-  update: EventsUpdateWithoutStakePoolWithdrawalsEventsTostakePoolWithdrawalsEndEventIdsInput;
+export type EventsUpsertWithoutStakePoolWithdrawalsEventsToStakePoolWithdrawalsEndEventIdsInput = {
+  create: EventsCreateWithoutStakePoolWithdrawalsEventsToStakePoolWithdrawalsEndEventIdsInput;
+  update: EventsUpdateWithoutStakePoolWithdrawalsEventsToStakePoolWithdrawalsEndEventIdsInput;
 };
 
-export type EventsUpsertWithoutStakePoolWithdrawalsEventsTostakePoolWithdrawalsStartEventIdsInput = {
-  create: EventsCreateWithoutStakePoolWithdrawalsEventsTostakePoolWithdrawalsStartEventIdsInput;
-  update: EventsUpdateWithoutStakePoolWithdrawalsEventsTostakePoolWithdrawalsStartEventIdsInput;
+export type EventsUpsertWithoutStakePoolWithdrawalsEventsToStakePoolWithdrawalsStartEventIdsInput = {
+  create: EventsCreateWithoutStakePoolWithdrawalsEventsToStakePoolWithdrawalsStartEventIdsInput;
+  update: EventsUpdateWithoutStakePoolWithdrawalsEventsToStakePoolWithdrawalsStartEventIdsInput;
 };
 
 export type EventsUpsertWithoutWorkerActivitiesInput = {
@@ -1708,6 +1806,7 @@ export type EventsWhereInput = {
   createdAt?: InputMaybe<DateTimeNullableFilter>;
   data?: InputMaybe<StringNullableFilter>;
   id?: InputMaybe<BigIntFilter>;
+  minerActivities?: InputMaybe<MinerActivitiesListRelationFilter>;
   name?: InputMaybe<StringFilter>;
   note?: InputMaybe<StringNullableFilter>;
   processedAt?: InputMaybe<DateTimeNullableFilter>;
@@ -1715,8 +1814,8 @@ export type EventsWhereInput = {
   skipped?: InputMaybe<BoolFilter>;
   stakePoolActivities?: InputMaybe<StakePoolActivitiesListRelationFilter>;
   stakePoolStakerActivities?: InputMaybe<StakePoolStakerActivitiesListRelationFilter>;
-  stakePoolWithdrawalsEventsTostakePoolWithdrawalsEndEventIds?: InputMaybe<StakePoolWithdrawalsListRelationFilter>;
-  stakePoolWithdrawalsEventsTostakePoolWithdrawalsStartEventIds?: InputMaybe<StakePoolWithdrawalsListRelationFilter>;
+  stakePoolWithdrawalsEventsToStakePoolWithdrawalsEndEventIds?: InputMaybe<StakePoolWithdrawalsListRelationFilter>;
+  stakePoolWithdrawalsEventsToStakePoolWithdrawalsStartEventIds?: InputMaybe<StakePoolWithdrawalsListRelationFilter>;
   timestamp?: InputMaybe<DateTimeFilter>;
   tokenomicVersion?: InputMaybe<IntFilter>;
   workerActivities?: InputMaybe<WorkerActivitiesListRelationFilter>;
@@ -1796,13 +1895,863 @@ export type IntWithAggregatesFilter = {
   notIn?: InputMaybe<Array<Scalars['Int']>>;
 };
 
+export type MinerActivities = {
+  __typename?: 'MinerActivities';
+  active: Scalars['Boolean'];
+  blockNumber: Scalars['BigInt'];
+  coolingDownStartedAt?: Maybe<Scalars['DateTime']>;
+  createdAt: Scalars['DateTime'];
+  current: Scalars['Boolean'];
+  estimatesReclaimableAt?: Maybe<Scalars['DateTime']>;
+  eventId?: Maybe<Scalars['BigInt']>;
+  events?: Maybe<Events>;
+  id: Scalars['BigInt'];
+  iterations: Scalars['BigInt'];
+  lastChallengedAt?: Maybe<Scalars['DateTime']>;
+  minerId: Scalars['BigInt'];
+  miners: Miners;
+  miningStartedAt?: Maybe<Scalars['DateTime']>;
+  pInit: Scalars['Int'];
+  pInstant: Scalars['Int'];
+  shares: Scalars['Decimal'];
+  state: Scalars['String'];
+  timestamp: Scalars['DateTime'];
+  tokenomicVersion: Scalars['Int'];
+  totalReward: Scalars['Decimal'];
+  type: Scalars['String'];
+  updatedAt: Scalars['DateTime'];
+  v: Scalars['Decimal'];
+  vUpdatedAt?: Maybe<Scalars['DateTime']>;
+  ve: Scalars['Decimal'];
+};
+
+export type MinerActivitiesAvgAggregate = {
+  __typename?: 'MinerActivitiesAvgAggregate';
+  blockNumber?: Maybe<Scalars['Float']>;
+  eventId?: Maybe<Scalars['Float']>;
+  id?: Maybe<Scalars['Float']>;
+  iterations?: Maybe<Scalars['Float']>;
+  minerId?: Maybe<Scalars['Float']>;
+  pInit?: Maybe<Scalars['Float']>;
+  pInstant?: Maybe<Scalars['Float']>;
+  shares?: Maybe<Scalars['Decimal']>;
+  tokenomicVersion?: Maybe<Scalars['Float']>;
+  totalReward?: Maybe<Scalars['Decimal']>;
+  v?: Maybe<Scalars['Decimal']>;
+  ve?: Maybe<Scalars['Decimal']>;
+};
+
+export type MinerActivitiesAvgOrderByAggregateInput = {
+  blockNumber?: InputMaybe<SortOrder>;
+  eventId?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  iterations?: InputMaybe<SortOrder>;
+  minerId?: InputMaybe<SortOrder>;
+  pInit?: InputMaybe<SortOrder>;
+  pInstant?: InputMaybe<SortOrder>;
+  shares?: InputMaybe<SortOrder>;
+  tokenomicVersion?: InputMaybe<SortOrder>;
+  totalReward?: InputMaybe<SortOrder>;
+  v?: InputMaybe<SortOrder>;
+  ve?: InputMaybe<SortOrder>;
+};
+
+export type MinerActivitiesCountAggregate = {
+  __typename?: 'MinerActivitiesCountAggregate';
+  _all: Scalars['Int'];
+  active: Scalars['Int'];
+  blockNumber: Scalars['Int'];
+  coolingDownStartedAt: Scalars['Int'];
+  createdAt: Scalars['Int'];
+  current: Scalars['Int'];
+  estimatesReclaimableAt: Scalars['Int'];
+  eventId: Scalars['Int'];
+  id: Scalars['Int'];
+  iterations: Scalars['Int'];
+  lastChallengedAt: Scalars['Int'];
+  minerId: Scalars['Int'];
+  miningStartedAt: Scalars['Int'];
+  pInit: Scalars['Int'];
+  pInstant: Scalars['Int'];
+  shares: Scalars['Int'];
+  state: Scalars['Int'];
+  timestamp: Scalars['Int'];
+  tokenomicVersion: Scalars['Int'];
+  totalReward: Scalars['Int'];
+  type: Scalars['Int'];
+  updatedAt: Scalars['Int'];
+  v: Scalars['Int'];
+  vUpdatedAt: Scalars['Int'];
+  ve: Scalars['Int'];
+};
+
+export type MinerActivitiesCountOrderByAggregateInput = {
+  active?: InputMaybe<SortOrder>;
+  blockNumber?: InputMaybe<SortOrder>;
+  coolingDownStartedAt?: InputMaybe<SortOrder>;
+  createdAt?: InputMaybe<SortOrder>;
+  current?: InputMaybe<SortOrder>;
+  estimatesReclaimableAt?: InputMaybe<SortOrder>;
+  eventId?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  iterations?: InputMaybe<SortOrder>;
+  lastChallengedAt?: InputMaybe<SortOrder>;
+  minerId?: InputMaybe<SortOrder>;
+  miningStartedAt?: InputMaybe<SortOrder>;
+  pInit?: InputMaybe<SortOrder>;
+  pInstant?: InputMaybe<SortOrder>;
+  shares?: InputMaybe<SortOrder>;
+  state?: InputMaybe<SortOrder>;
+  timestamp?: InputMaybe<SortOrder>;
+  tokenomicVersion?: InputMaybe<SortOrder>;
+  totalReward?: InputMaybe<SortOrder>;
+  type?: InputMaybe<SortOrder>;
+  updatedAt?: InputMaybe<SortOrder>;
+  v?: InputMaybe<SortOrder>;
+  vUpdatedAt?: InputMaybe<SortOrder>;
+  ve?: InputMaybe<SortOrder>;
+};
+
+export type MinerActivitiesCreateInput = {
+  active?: InputMaybe<Scalars['Boolean']>;
+  blockNumber: Scalars['BigInt'];
+  coolingDownStartedAt?: InputMaybe<Scalars['DateTime']>;
+  createdAt: Scalars['DateTime'];
+  current?: InputMaybe<Scalars['Boolean']>;
+  estimatesReclaimableAt?: InputMaybe<Scalars['DateTime']>;
+  events?: InputMaybe<EventsCreateNestedOneWithoutMinerActivitiesInput>;
+  id?: InputMaybe<Scalars['BigInt']>;
+  iterations?: InputMaybe<Scalars['BigInt']>;
+  lastChallengedAt?: InputMaybe<Scalars['DateTime']>;
+  miners: MinersCreateNestedOneWithoutMinerActivitiesInput;
+  miningStartedAt?: InputMaybe<Scalars['DateTime']>;
+  pInit?: InputMaybe<Scalars['Int']>;
+  pInstant?: InputMaybe<Scalars['Int']>;
+  shares?: InputMaybe<Scalars['Decimal']>;
+  state?: InputMaybe<Scalars['String']>;
+  timestamp: Scalars['DateTime'];
+  tokenomicVersion: Scalars['Int'];
+  totalReward?: InputMaybe<Scalars['Decimal']>;
+  type: Scalars['String'];
+  updatedAt: Scalars['DateTime'];
+  v?: InputMaybe<Scalars['Decimal']>;
+  vUpdatedAt?: InputMaybe<Scalars['DateTime']>;
+  ve?: InputMaybe<Scalars['Decimal']>;
+};
+
+export type MinerActivitiesCreateManyEventsInput = {
+  active?: InputMaybe<Scalars['Boolean']>;
+  blockNumber: Scalars['BigInt'];
+  coolingDownStartedAt?: InputMaybe<Scalars['DateTime']>;
+  createdAt: Scalars['DateTime'];
+  current?: InputMaybe<Scalars['Boolean']>;
+  estimatesReclaimableAt?: InputMaybe<Scalars['DateTime']>;
+  id?: InputMaybe<Scalars['BigInt']>;
+  iterations?: InputMaybe<Scalars['BigInt']>;
+  lastChallengedAt?: InputMaybe<Scalars['DateTime']>;
+  minerId: Scalars['BigInt'];
+  miningStartedAt?: InputMaybe<Scalars['DateTime']>;
+  pInit?: InputMaybe<Scalars['Int']>;
+  pInstant?: InputMaybe<Scalars['Int']>;
+  shares?: InputMaybe<Scalars['Decimal']>;
+  state?: InputMaybe<Scalars['String']>;
+  timestamp: Scalars['DateTime'];
+  tokenomicVersion: Scalars['Int'];
+  totalReward?: InputMaybe<Scalars['Decimal']>;
+  type: Scalars['String'];
+  updatedAt: Scalars['DateTime'];
+  v?: InputMaybe<Scalars['Decimal']>;
+  vUpdatedAt?: InputMaybe<Scalars['DateTime']>;
+  ve?: InputMaybe<Scalars['Decimal']>;
+};
+
+export type MinerActivitiesCreateManyEventsInputEnvelope = {
+  data: Array<MinerActivitiesCreateManyEventsInput>;
+  skipDuplicates?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type MinerActivitiesCreateManyInput = {
+  active?: InputMaybe<Scalars['Boolean']>;
+  blockNumber: Scalars['BigInt'];
+  coolingDownStartedAt?: InputMaybe<Scalars['DateTime']>;
+  createdAt: Scalars['DateTime'];
+  current?: InputMaybe<Scalars['Boolean']>;
+  estimatesReclaimableAt?: InputMaybe<Scalars['DateTime']>;
+  eventId?: InputMaybe<Scalars['BigInt']>;
+  id?: InputMaybe<Scalars['BigInt']>;
+  iterations?: InputMaybe<Scalars['BigInt']>;
+  lastChallengedAt?: InputMaybe<Scalars['DateTime']>;
+  minerId: Scalars['BigInt'];
+  miningStartedAt?: InputMaybe<Scalars['DateTime']>;
+  pInit?: InputMaybe<Scalars['Int']>;
+  pInstant?: InputMaybe<Scalars['Int']>;
+  shares?: InputMaybe<Scalars['Decimal']>;
+  state?: InputMaybe<Scalars['String']>;
+  timestamp: Scalars['DateTime'];
+  tokenomicVersion: Scalars['Int'];
+  totalReward?: InputMaybe<Scalars['Decimal']>;
+  type: Scalars['String'];
+  updatedAt: Scalars['DateTime'];
+  v?: InputMaybe<Scalars['Decimal']>;
+  vUpdatedAt?: InputMaybe<Scalars['DateTime']>;
+  ve?: InputMaybe<Scalars['Decimal']>;
+};
+
+export type MinerActivitiesCreateManyMinersInput = {
+  active?: InputMaybe<Scalars['Boolean']>;
+  blockNumber: Scalars['BigInt'];
+  coolingDownStartedAt?: InputMaybe<Scalars['DateTime']>;
+  createdAt: Scalars['DateTime'];
+  current?: InputMaybe<Scalars['Boolean']>;
+  estimatesReclaimableAt?: InputMaybe<Scalars['DateTime']>;
+  eventId?: InputMaybe<Scalars['BigInt']>;
+  id?: InputMaybe<Scalars['BigInt']>;
+  iterations?: InputMaybe<Scalars['BigInt']>;
+  lastChallengedAt?: InputMaybe<Scalars['DateTime']>;
+  miningStartedAt?: InputMaybe<Scalars['DateTime']>;
+  pInit?: InputMaybe<Scalars['Int']>;
+  pInstant?: InputMaybe<Scalars['Int']>;
+  shares?: InputMaybe<Scalars['Decimal']>;
+  state?: InputMaybe<Scalars['String']>;
+  timestamp: Scalars['DateTime'];
+  tokenomicVersion: Scalars['Int'];
+  totalReward?: InputMaybe<Scalars['Decimal']>;
+  type: Scalars['String'];
+  updatedAt: Scalars['DateTime'];
+  v?: InputMaybe<Scalars['Decimal']>;
+  vUpdatedAt?: InputMaybe<Scalars['DateTime']>;
+  ve?: InputMaybe<Scalars['Decimal']>;
+};
+
+export type MinerActivitiesCreateManyMinersInputEnvelope = {
+  data: Array<MinerActivitiesCreateManyMinersInput>;
+  skipDuplicates?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type MinerActivitiesCreateNestedManyWithoutEventsInput = {
+  connect?: InputMaybe<Array<MinerActivitiesWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<MinerActivitiesCreateOrConnectWithoutEventsInput>>;
+  create?: InputMaybe<Array<MinerActivitiesCreateWithoutEventsInput>>;
+  createMany?: InputMaybe<MinerActivitiesCreateManyEventsInputEnvelope>;
+};
+
+export type MinerActivitiesCreateNestedManyWithoutMinersInput = {
+  connect?: InputMaybe<Array<MinerActivitiesWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<MinerActivitiesCreateOrConnectWithoutMinersInput>>;
+  create?: InputMaybe<Array<MinerActivitiesCreateWithoutMinersInput>>;
+  createMany?: InputMaybe<MinerActivitiesCreateManyMinersInputEnvelope>;
+};
+
+export type MinerActivitiesCreateOrConnectWithoutEventsInput = {
+  create: MinerActivitiesCreateWithoutEventsInput;
+  where: MinerActivitiesWhereUniqueInput;
+};
+
+export type MinerActivitiesCreateOrConnectWithoutMinersInput = {
+  create: MinerActivitiesCreateWithoutMinersInput;
+  where: MinerActivitiesWhereUniqueInput;
+};
+
+export type MinerActivitiesCreateWithoutEventsInput = {
+  active?: InputMaybe<Scalars['Boolean']>;
+  blockNumber: Scalars['BigInt'];
+  coolingDownStartedAt?: InputMaybe<Scalars['DateTime']>;
+  createdAt: Scalars['DateTime'];
+  current?: InputMaybe<Scalars['Boolean']>;
+  estimatesReclaimableAt?: InputMaybe<Scalars['DateTime']>;
+  id?: InputMaybe<Scalars['BigInt']>;
+  iterations?: InputMaybe<Scalars['BigInt']>;
+  lastChallengedAt?: InputMaybe<Scalars['DateTime']>;
+  miners: MinersCreateNestedOneWithoutMinerActivitiesInput;
+  miningStartedAt?: InputMaybe<Scalars['DateTime']>;
+  pInit?: InputMaybe<Scalars['Int']>;
+  pInstant?: InputMaybe<Scalars['Int']>;
+  shares?: InputMaybe<Scalars['Decimal']>;
+  state?: InputMaybe<Scalars['String']>;
+  timestamp: Scalars['DateTime'];
+  tokenomicVersion: Scalars['Int'];
+  totalReward?: InputMaybe<Scalars['Decimal']>;
+  type: Scalars['String'];
+  updatedAt: Scalars['DateTime'];
+  v?: InputMaybe<Scalars['Decimal']>;
+  vUpdatedAt?: InputMaybe<Scalars['DateTime']>;
+  ve?: InputMaybe<Scalars['Decimal']>;
+};
+
+export type MinerActivitiesCreateWithoutMinersInput = {
+  active?: InputMaybe<Scalars['Boolean']>;
+  blockNumber: Scalars['BigInt'];
+  coolingDownStartedAt?: InputMaybe<Scalars['DateTime']>;
+  createdAt: Scalars['DateTime'];
+  current?: InputMaybe<Scalars['Boolean']>;
+  estimatesReclaimableAt?: InputMaybe<Scalars['DateTime']>;
+  events?: InputMaybe<EventsCreateNestedOneWithoutMinerActivitiesInput>;
+  id?: InputMaybe<Scalars['BigInt']>;
+  iterations?: InputMaybe<Scalars['BigInt']>;
+  lastChallengedAt?: InputMaybe<Scalars['DateTime']>;
+  miningStartedAt?: InputMaybe<Scalars['DateTime']>;
+  pInit?: InputMaybe<Scalars['Int']>;
+  pInstant?: InputMaybe<Scalars['Int']>;
+  shares?: InputMaybe<Scalars['Decimal']>;
+  state?: InputMaybe<Scalars['String']>;
+  timestamp: Scalars['DateTime'];
+  tokenomicVersion: Scalars['Int'];
+  totalReward?: InputMaybe<Scalars['Decimal']>;
+  type: Scalars['String'];
+  updatedAt: Scalars['DateTime'];
+  v?: InputMaybe<Scalars['Decimal']>;
+  vUpdatedAt?: InputMaybe<Scalars['DateTime']>;
+  ve?: InputMaybe<Scalars['Decimal']>;
+};
+
+export type MinerActivitiesGroupBy = {
+  __typename?: 'MinerActivitiesGroupBy';
+  _avg?: Maybe<MinerActivitiesAvgAggregate>;
+  _count?: Maybe<MinerActivitiesCountAggregate>;
+  _max?: Maybe<MinerActivitiesMaxAggregate>;
+  _min?: Maybe<MinerActivitiesMinAggregate>;
+  _sum?: Maybe<MinerActivitiesSumAggregate>;
+  active: Scalars['Boolean'];
+  blockNumber: Scalars['BigInt'];
+  coolingDownStartedAt?: Maybe<Scalars['DateTime']>;
+  createdAt: Scalars['DateTime'];
+  current: Scalars['Boolean'];
+  estimatesReclaimableAt?: Maybe<Scalars['DateTime']>;
+  eventId?: Maybe<Scalars['BigInt']>;
+  id: Scalars['BigInt'];
+  iterations: Scalars['BigInt'];
+  lastChallengedAt?: Maybe<Scalars['DateTime']>;
+  minerId: Scalars['BigInt'];
+  miningStartedAt?: Maybe<Scalars['DateTime']>;
+  pInit: Scalars['Int'];
+  pInstant: Scalars['Int'];
+  shares: Scalars['Decimal'];
+  state: Scalars['String'];
+  timestamp: Scalars['DateTime'];
+  tokenomicVersion: Scalars['Int'];
+  totalReward: Scalars['Decimal'];
+  type: Scalars['String'];
+  updatedAt: Scalars['DateTime'];
+  v: Scalars['Decimal'];
+  vUpdatedAt?: Maybe<Scalars['DateTime']>;
+  ve: Scalars['Decimal'];
+};
+
+export type MinerActivitiesListRelationFilter = {
+  every?: InputMaybe<MinerActivitiesWhereInput>;
+  none?: InputMaybe<MinerActivitiesWhereInput>;
+  some?: InputMaybe<MinerActivitiesWhereInput>;
+};
+
+export type MinerActivitiesMaxAggregate = {
+  __typename?: 'MinerActivitiesMaxAggregate';
+  active?: Maybe<Scalars['Boolean']>;
+  blockNumber?: Maybe<Scalars['BigInt']>;
+  coolingDownStartedAt?: Maybe<Scalars['DateTime']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  current?: Maybe<Scalars['Boolean']>;
+  estimatesReclaimableAt?: Maybe<Scalars['DateTime']>;
+  eventId?: Maybe<Scalars['BigInt']>;
+  id?: Maybe<Scalars['BigInt']>;
+  iterations?: Maybe<Scalars['BigInt']>;
+  lastChallengedAt?: Maybe<Scalars['DateTime']>;
+  minerId?: Maybe<Scalars['BigInt']>;
+  miningStartedAt?: Maybe<Scalars['DateTime']>;
+  pInit?: Maybe<Scalars['Int']>;
+  pInstant?: Maybe<Scalars['Int']>;
+  shares?: Maybe<Scalars['Decimal']>;
+  state?: Maybe<Scalars['String']>;
+  timestamp?: Maybe<Scalars['DateTime']>;
+  tokenomicVersion?: Maybe<Scalars['Int']>;
+  totalReward?: Maybe<Scalars['Decimal']>;
+  type?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+  v?: Maybe<Scalars['Decimal']>;
+  vUpdatedAt?: Maybe<Scalars['DateTime']>;
+  ve?: Maybe<Scalars['Decimal']>;
+};
+
+export type MinerActivitiesMaxOrderByAggregateInput = {
+  active?: InputMaybe<SortOrder>;
+  blockNumber?: InputMaybe<SortOrder>;
+  coolingDownStartedAt?: InputMaybe<SortOrder>;
+  createdAt?: InputMaybe<SortOrder>;
+  current?: InputMaybe<SortOrder>;
+  estimatesReclaimableAt?: InputMaybe<SortOrder>;
+  eventId?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  iterations?: InputMaybe<SortOrder>;
+  lastChallengedAt?: InputMaybe<SortOrder>;
+  minerId?: InputMaybe<SortOrder>;
+  miningStartedAt?: InputMaybe<SortOrder>;
+  pInit?: InputMaybe<SortOrder>;
+  pInstant?: InputMaybe<SortOrder>;
+  shares?: InputMaybe<SortOrder>;
+  state?: InputMaybe<SortOrder>;
+  timestamp?: InputMaybe<SortOrder>;
+  tokenomicVersion?: InputMaybe<SortOrder>;
+  totalReward?: InputMaybe<SortOrder>;
+  type?: InputMaybe<SortOrder>;
+  updatedAt?: InputMaybe<SortOrder>;
+  v?: InputMaybe<SortOrder>;
+  vUpdatedAt?: InputMaybe<SortOrder>;
+  ve?: InputMaybe<SortOrder>;
+};
+
+export type MinerActivitiesMinAggregate = {
+  __typename?: 'MinerActivitiesMinAggregate';
+  active?: Maybe<Scalars['Boolean']>;
+  blockNumber?: Maybe<Scalars['BigInt']>;
+  coolingDownStartedAt?: Maybe<Scalars['DateTime']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  current?: Maybe<Scalars['Boolean']>;
+  estimatesReclaimableAt?: Maybe<Scalars['DateTime']>;
+  eventId?: Maybe<Scalars['BigInt']>;
+  id?: Maybe<Scalars['BigInt']>;
+  iterations?: Maybe<Scalars['BigInt']>;
+  lastChallengedAt?: Maybe<Scalars['DateTime']>;
+  minerId?: Maybe<Scalars['BigInt']>;
+  miningStartedAt?: Maybe<Scalars['DateTime']>;
+  pInit?: Maybe<Scalars['Int']>;
+  pInstant?: Maybe<Scalars['Int']>;
+  shares?: Maybe<Scalars['Decimal']>;
+  state?: Maybe<Scalars['String']>;
+  timestamp?: Maybe<Scalars['DateTime']>;
+  tokenomicVersion?: Maybe<Scalars['Int']>;
+  totalReward?: Maybe<Scalars['Decimal']>;
+  type?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+  v?: Maybe<Scalars['Decimal']>;
+  vUpdatedAt?: Maybe<Scalars['DateTime']>;
+  ve?: Maybe<Scalars['Decimal']>;
+};
+
+export type MinerActivitiesMinOrderByAggregateInput = {
+  active?: InputMaybe<SortOrder>;
+  blockNumber?: InputMaybe<SortOrder>;
+  coolingDownStartedAt?: InputMaybe<SortOrder>;
+  createdAt?: InputMaybe<SortOrder>;
+  current?: InputMaybe<SortOrder>;
+  estimatesReclaimableAt?: InputMaybe<SortOrder>;
+  eventId?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  iterations?: InputMaybe<SortOrder>;
+  lastChallengedAt?: InputMaybe<SortOrder>;
+  minerId?: InputMaybe<SortOrder>;
+  miningStartedAt?: InputMaybe<SortOrder>;
+  pInit?: InputMaybe<SortOrder>;
+  pInstant?: InputMaybe<SortOrder>;
+  shares?: InputMaybe<SortOrder>;
+  state?: InputMaybe<SortOrder>;
+  timestamp?: InputMaybe<SortOrder>;
+  tokenomicVersion?: InputMaybe<SortOrder>;
+  totalReward?: InputMaybe<SortOrder>;
+  type?: InputMaybe<SortOrder>;
+  updatedAt?: InputMaybe<SortOrder>;
+  v?: InputMaybe<SortOrder>;
+  vUpdatedAt?: InputMaybe<SortOrder>;
+  ve?: InputMaybe<SortOrder>;
+};
+
+export type MinerActivitiesOrderByRelationAggregateInput = {
+  _count?: InputMaybe<SortOrder>;
+};
+
+export type MinerActivitiesOrderByWithAggregationInput = {
+  _avg?: InputMaybe<MinerActivitiesAvgOrderByAggregateInput>;
+  _count?: InputMaybe<MinerActivitiesCountOrderByAggregateInput>;
+  _max?: InputMaybe<MinerActivitiesMaxOrderByAggregateInput>;
+  _min?: InputMaybe<MinerActivitiesMinOrderByAggregateInput>;
+  _sum?: InputMaybe<MinerActivitiesSumOrderByAggregateInput>;
+  active?: InputMaybe<SortOrder>;
+  blockNumber?: InputMaybe<SortOrder>;
+  coolingDownStartedAt?: InputMaybe<SortOrder>;
+  createdAt?: InputMaybe<SortOrder>;
+  current?: InputMaybe<SortOrder>;
+  estimatesReclaimableAt?: InputMaybe<SortOrder>;
+  eventId?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  iterations?: InputMaybe<SortOrder>;
+  lastChallengedAt?: InputMaybe<SortOrder>;
+  minerId?: InputMaybe<SortOrder>;
+  miningStartedAt?: InputMaybe<SortOrder>;
+  pInit?: InputMaybe<SortOrder>;
+  pInstant?: InputMaybe<SortOrder>;
+  shares?: InputMaybe<SortOrder>;
+  state?: InputMaybe<SortOrder>;
+  timestamp?: InputMaybe<SortOrder>;
+  tokenomicVersion?: InputMaybe<SortOrder>;
+  totalReward?: InputMaybe<SortOrder>;
+  type?: InputMaybe<SortOrder>;
+  updatedAt?: InputMaybe<SortOrder>;
+  v?: InputMaybe<SortOrder>;
+  vUpdatedAt?: InputMaybe<SortOrder>;
+  ve?: InputMaybe<SortOrder>;
+};
+
+export type MinerActivitiesOrderByWithRelationInput = {
+  active?: InputMaybe<SortOrder>;
+  blockNumber?: InputMaybe<SortOrder>;
+  coolingDownStartedAt?: InputMaybe<SortOrder>;
+  createdAt?: InputMaybe<SortOrder>;
+  current?: InputMaybe<SortOrder>;
+  estimatesReclaimableAt?: InputMaybe<SortOrder>;
+  eventId?: InputMaybe<SortOrder>;
+  events?: InputMaybe<EventsOrderByWithRelationInput>;
+  id?: InputMaybe<SortOrder>;
+  iterations?: InputMaybe<SortOrder>;
+  lastChallengedAt?: InputMaybe<SortOrder>;
+  minerId?: InputMaybe<SortOrder>;
+  miners?: InputMaybe<MinersOrderByWithRelationInput>;
+  miningStartedAt?: InputMaybe<SortOrder>;
+  pInit?: InputMaybe<SortOrder>;
+  pInstant?: InputMaybe<SortOrder>;
+  shares?: InputMaybe<SortOrder>;
+  state?: InputMaybe<SortOrder>;
+  timestamp?: InputMaybe<SortOrder>;
+  tokenomicVersion?: InputMaybe<SortOrder>;
+  totalReward?: InputMaybe<SortOrder>;
+  type?: InputMaybe<SortOrder>;
+  updatedAt?: InputMaybe<SortOrder>;
+  v?: InputMaybe<SortOrder>;
+  vUpdatedAt?: InputMaybe<SortOrder>;
+  ve?: InputMaybe<SortOrder>;
+};
+
+export enum MinerActivitiesScalarFieldEnum {
+  Active = 'active',
+  BlockNumber = 'blockNumber',
+  CoolingDownStartedAt = 'coolingDownStartedAt',
+  CreatedAt = 'createdAt',
+  Current = 'current',
+  EstimatesReclaimableAt = 'estimatesReclaimableAt',
+  EventId = 'eventId',
+  Id = 'id',
+  Iterations = 'iterations',
+  LastChallengedAt = 'lastChallengedAt',
+  MinerId = 'minerId',
+  MiningStartedAt = 'miningStartedAt',
+  PInit = 'pInit',
+  PInstant = 'pInstant',
+  Shares = 'shares',
+  State = 'state',
+  Timestamp = 'timestamp',
+  TokenomicVersion = 'tokenomicVersion',
+  TotalReward = 'totalReward',
+  Type = 'type',
+  UpdatedAt = 'updatedAt',
+  V = 'v',
+  VUpdatedAt = 'vUpdatedAt',
+  Ve = 've'
+}
+
+export type MinerActivitiesScalarWhereInput = {
+  AND?: InputMaybe<Array<MinerActivitiesScalarWhereInput>>;
+  NOT?: InputMaybe<Array<MinerActivitiesScalarWhereInput>>;
+  OR?: InputMaybe<Array<MinerActivitiesScalarWhereInput>>;
+  active?: InputMaybe<BoolFilter>;
+  blockNumber?: InputMaybe<BigIntFilter>;
+  coolingDownStartedAt?: InputMaybe<DateTimeNullableFilter>;
+  createdAt?: InputMaybe<DateTimeFilter>;
+  current?: InputMaybe<BoolFilter>;
+  estimatesReclaimableAt?: InputMaybe<DateTimeNullableFilter>;
+  eventId?: InputMaybe<BigIntNullableFilter>;
+  id?: InputMaybe<BigIntFilter>;
+  iterations?: InputMaybe<BigIntFilter>;
+  lastChallengedAt?: InputMaybe<DateTimeNullableFilter>;
+  minerId?: InputMaybe<BigIntFilter>;
+  miningStartedAt?: InputMaybe<DateTimeNullableFilter>;
+  pInit?: InputMaybe<IntFilter>;
+  pInstant?: InputMaybe<IntFilter>;
+  shares?: InputMaybe<DecimalFilter>;
+  state?: InputMaybe<StringFilter>;
+  timestamp?: InputMaybe<DateTimeFilter>;
+  tokenomicVersion?: InputMaybe<IntFilter>;
+  totalReward?: InputMaybe<DecimalFilter>;
+  type?: InputMaybe<StringFilter>;
+  updatedAt?: InputMaybe<DateTimeFilter>;
+  v?: InputMaybe<DecimalFilter>;
+  vUpdatedAt?: InputMaybe<DateTimeNullableFilter>;
+  ve?: InputMaybe<DecimalFilter>;
+};
+
+export type MinerActivitiesScalarWhereWithAggregatesInput = {
+  AND?: InputMaybe<Array<MinerActivitiesScalarWhereWithAggregatesInput>>;
+  NOT?: InputMaybe<Array<MinerActivitiesScalarWhereWithAggregatesInput>>;
+  OR?: InputMaybe<Array<MinerActivitiesScalarWhereWithAggregatesInput>>;
+  active?: InputMaybe<BoolWithAggregatesFilter>;
+  blockNumber?: InputMaybe<BigIntWithAggregatesFilter>;
+  coolingDownStartedAt?: InputMaybe<DateTimeNullableWithAggregatesFilter>;
+  createdAt?: InputMaybe<DateTimeWithAggregatesFilter>;
+  current?: InputMaybe<BoolWithAggregatesFilter>;
+  estimatesReclaimableAt?: InputMaybe<DateTimeNullableWithAggregatesFilter>;
+  eventId?: InputMaybe<BigIntNullableWithAggregatesFilter>;
+  id?: InputMaybe<BigIntWithAggregatesFilter>;
+  iterations?: InputMaybe<BigIntWithAggregatesFilter>;
+  lastChallengedAt?: InputMaybe<DateTimeNullableWithAggregatesFilter>;
+  minerId?: InputMaybe<BigIntWithAggregatesFilter>;
+  miningStartedAt?: InputMaybe<DateTimeNullableWithAggregatesFilter>;
+  pInit?: InputMaybe<IntWithAggregatesFilter>;
+  pInstant?: InputMaybe<IntWithAggregatesFilter>;
+  shares?: InputMaybe<DecimalWithAggregatesFilter>;
+  state?: InputMaybe<StringWithAggregatesFilter>;
+  timestamp?: InputMaybe<DateTimeWithAggregatesFilter>;
+  tokenomicVersion?: InputMaybe<IntWithAggregatesFilter>;
+  totalReward?: InputMaybe<DecimalWithAggregatesFilter>;
+  type?: InputMaybe<StringWithAggregatesFilter>;
+  updatedAt?: InputMaybe<DateTimeWithAggregatesFilter>;
+  v?: InputMaybe<DecimalWithAggregatesFilter>;
+  vUpdatedAt?: InputMaybe<DateTimeNullableWithAggregatesFilter>;
+  ve?: InputMaybe<DecimalWithAggregatesFilter>;
+};
+
+export type MinerActivitiesSumAggregate = {
+  __typename?: 'MinerActivitiesSumAggregate';
+  blockNumber?: Maybe<Scalars['BigInt']>;
+  eventId?: Maybe<Scalars['BigInt']>;
+  id?: Maybe<Scalars['BigInt']>;
+  iterations?: Maybe<Scalars['BigInt']>;
+  minerId?: Maybe<Scalars['BigInt']>;
+  pInit?: Maybe<Scalars['Int']>;
+  pInstant?: Maybe<Scalars['Int']>;
+  shares?: Maybe<Scalars['Decimal']>;
+  tokenomicVersion?: Maybe<Scalars['Int']>;
+  totalReward?: Maybe<Scalars['Decimal']>;
+  v?: Maybe<Scalars['Decimal']>;
+  ve?: Maybe<Scalars['Decimal']>;
+};
+
+export type MinerActivitiesSumOrderByAggregateInput = {
+  blockNumber?: InputMaybe<SortOrder>;
+  eventId?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  iterations?: InputMaybe<SortOrder>;
+  minerId?: InputMaybe<SortOrder>;
+  pInit?: InputMaybe<SortOrder>;
+  pInstant?: InputMaybe<SortOrder>;
+  shares?: InputMaybe<SortOrder>;
+  tokenomicVersion?: InputMaybe<SortOrder>;
+  totalReward?: InputMaybe<SortOrder>;
+  v?: InputMaybe<SortOrder>;
+  ve?: InputMaybe<SortOrder>;
+};
+
+export type MinerActivitiesUpdateInput = {
+  active?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  blockNumber?: InputMaybe<BigIntFieldUpdateOperationsInput>;
+  coolingDownStartedAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  current?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  estimatesReclaimableAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  events?: InputMaybe<EventsUpdateOneWithoutMinerActivitiesInput>;
+  id?: InputMaybe<BigIntFieldUpdateOperationsInput>;
+  iterations?: InputMaybe<BigIntFieldUpdateOperationsInput>;
+  lastChallengedAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  miners?: InputMaybe<MinersUpdateOneRequiredWithoutMinerActivitiesInput>;
+  miningStartedAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  pInit?: InputMaybe<IntFieldUpdateOperationsInput>;
+  pInstant?: InputMaybe<IntFieldUpdateOperationsInput>;
+  shares?: InputMaybe<DecimalFieldUpdateOperationsInput>;
+  state?: InputMaybe<StringFieldUpdateOperationsInput>;
+  timestamp?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  tokenomicVersion?: InputMaybe<IntFieldUpdateOperationsInput>;
+  totalReward?: InputMaybe<DecimalFieldUpdateOperationsInput>;
+  type?: InputMaybe<StringFieldUpdateOperationsInput>;
+  updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  v?: InputMaybe<DecimalFieldUpdateOperationsInput>;
+  vUpdatedAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  ve?: InputMaybe<DecimalFieldUpdateOperationsInput>;
+};
+
+export type MinerActivitiesUpdateManyMutationInput = {
+  active?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  blockNumber?: InputMaybe<BigIntFieldUpdateOperationsInput>;
+  coolingDownStartedAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  current?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  estimatesReclaimableAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  id?: InputMaybe<BigIntFieldUpdateOperationsInput>;
+  iterations?: InputMaybe<BigIntFieldUpdateOperationsInput>;
+  lastChallengedAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  miningStartedAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  pInit?: InputMaybe<IntFieldUpdateOperationsInput>;
+  pInstant?: InputMaybe<IntFieldUpdateOperationsInput>;
+  shares?: InputMaybe<DecimalFieldUpdateOperationsInput>;
+  state?: InputMaybe<StringFieldUpdateOperationsInput>;
+  timestamp?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  tokenomicVersion?: InputMaybe<IntFieldUpdateOperationsInput>;
+  totalReward?: InputMaybe<DecimalFieldUpdateOperationsInput>;
+  type?: InputMaybe<StringFieldUpdateOperationsInput>;
+  updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  v?: InputMaybe<DecimalFieldUpdateOperationsInput>;
+  vUpdatedAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  ve?: InputMaybe<DecimalFieldUpdateOperationsInput>;
+};
+
+export type MinerActivitiesUpdateManyWithWhereWithoutEventsInput = {
+  data: MinerActivitiesUpdateManyMutationInput;
+  where: MinerActivitiesScalarWhereInput;
+};
+
+export type MinerActivitiesUpdateManyWithWhereWithoutMinersInput = {
+  data: MinerActivitiesUpdateManyMutationInput;
+  where: MinerActivitiesScalarWhereInput;
+};
+
+export type MinerActivitiesUpdateManyWithoutEventsInput = {
+  connect?: InputMaybe<Array<MinerActivitiesWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<MinerActivitiesCreateOrConnectWithoutEventsInput>>;
+  create?: InputMaybe<Array<MinerActivitiesCreateWithoutEventsInput>>;
+  createMany?: InputMaybe<MinerActivitiesCreateManyEventsInputEnvelope>;
+  delete?: InputMaybe<Array<MinerActivitiesWhereUniqueInput>>;
+  deleteMany?: InputMaybe<Array<MinerActivitiesScalarWhereInput>>;
+  disconnect?: InputMaybe<Array<MinerActivitiesWhereUniqueInput>>;
+  set?: InputMaybe<Array<MinerActivitiesWhereUniqueInput>>;
+  update?: InputMaybe<Array<MinerActivitiesUpdateWithWhereUniqueWithoutEventsInput>>;
+  updateMany?: InputMaybe<Array<MinerActivitiesUpdateManyWithWhereWithoutEventsInput>>;
+  upsert?: InputMaybe<Array<MinerActivitiesUpsertWithWhereUniqueWithoutEventsInput>>;
+};
+
+export type MinerActivitiesUpdateManyWithoutMinersInput = {
+  connect?: InputMaybe<Array<MinerActivitiesWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<MinerActivitiesCreateOrConnectWithoutMinersInput>>;
+  create?: InputMaybe<Array<MinerActivitiesCreateWithoutMinersInput>>;
+  createMany?: InputMaybe<MinerActivitiesCreateManyMinersInputEnvelope>;
+  delete?: InputMaybe<Array<MinerActivitiesWhereUniqueInput>>;
+  deleteMany?: InputMaybe<Array<MinerActivitiesScalarWhereInput>>;
+  disconnect?: InputMaybe<Array<MinerActivitiesWhereUniqueInput>>;
+  set?: InputMaybe<Array<MinerActivitiesWhereUniqueInput>>;
+  update?: InputMaybe<Array<MinerActivitiesUpdateWithWhereUniqueWithoutMinersInput>>;
+  updateMany?: InputMaybe<Array<MinerActivitiesUpdateManyWithWhereWithoutMinersInput>>;
+  upsert?: InputMaybe<Array<MinerActivitiesUpsertWithWhereUniqueWithoutMinersInput>>;
+};
+
+export type MinerActivitiesUpdateWithWhereUniqueWithoutEventsInput = {
+  data: MinerActivitiesUpdateWithoutEventsInput;
+  where: MinerActivitiesWhereUniqueInput;
+};
+
+export type MinerActivitiesUpdateWithWhereUniqueWithoutMinersInput = {
+  data: MinerActivitiesUpdateWithoutMinersInput;
+  where: MinerActivitiesWhereUniqueInput;
+};
+
+export type MinerActivitiesUpdateWithoutEventsInput = {
+  active?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  blockNumber?: InputMaybe<BigIntFieldUpdateOperationsInput>;
+  coolingDownStartedAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  current?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  estimatesReclaimableAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  id?: InputMaybe<BigIntFieldUpdateOperationsInput>;
+  iterations?: InputMaybe<BigIntFieldUpdateOperationsInput>;
+  lastChallengedAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  miners?: InputMaybe<MinersUpdateOneRequiredWithoutMinerActivitiesInput>;
+  miningStartedAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  pInit?: InputMaybe<IntFieldUpdateOperationsInput>;
+  pInstant?: InputMaybe<IntFieldUpdateOperationsInput>;
+  shares?: InputMaybe<DecimalFieldUpdateOperationsInput>;
+  state?: InputMaybe<StringFieldUpdateOperationsInput>;
+  timestamp?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  tokenomicVersion?: InputMaybe<IntFieldUpdateOperationsInput>;
+  totalReward?: InputMaybe<DecimalFieldUpdateOperationsInput>;
+  type?: InputMaybe<StringFieldUpdateOperationsInput>;
+  updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  v?: InputMaybe<DecimalFieldUpdateOperationsInput>;
+  vUpdatedAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  ve?: InputMaybe<DecimalFieldUpdateOperationsInput>;
+};
+
+export type MinerActivitiesUpdateWithoutMinersInput = {
+  active?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  blockNumber?: InputMaybe<BigIntFieldUpdateOperationsInput>;
+  coolingDownStartedAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  current?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  estimatesReclaimableAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  events?: InputMaybe<EventsUpdateOneWithoutMinerActivitiesInput>;
+  id?: InputMaybe<BigIntFieldUpdateOperationsInput>;
+  iterations?: InputMaybe<BigIntFieldUpdateOperationsInput>;
+  lastChallengedAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  miningStartedAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  pInit?: InputMaybe<IntFieldUpdateOperationsInput>;
+  pInstant?: InputMaybe<IntFieldUpdateOperationsInput>;
+  shares?: InputMaybe<DecimalFieldUpdateOperationsInput>;
+  state?: InputMaybe<StringFieldUpdateOperationsInput>;
+  timestamp?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  tokenomicVersion?: InputMaybe<IntFieldUpdateOperationsInput>;
+  totalReward?: InputMaybe<DecimalFieldUpdateOperationsInput>;
+  type?: InputMaybe<StringFieldUpdateOperationsInput>;
+  updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  v?: InputMaybe<DecimalFieldUpdateOperationsInput>;
+  vUpdatedAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  ve?: InputMaybe<DecimalFieldUpdateOperationsInput>;
+};
+
+export type MinerActivitiesUpsertWithWhereUniqueWithoutEventsInput = {
+  create: MinerActivitiesCreateWithoutEventsInput;
+  update: MinerActivitiesUpdateWithoutEventsInput;
+  where: MinerActivitiesWhereUniqueInput;
+};
+
+export type MinerActivitiesUpsertWithWhereUniqueWithoutMinersInput = {
+  create: MinerActivitiesCreateWithoutMinersInput;
+  update: MinerActivitiesUpdateWithoutMinersInput;
+  where: MinerActivitiesWhereUniqueInput;
+};
+
+export type MinerActivitiesWhereInput = {
+  AND?: InputMaybe<Array<MinerActivitiesWhereInput>>;
+  NOT?: InputMaybe<Array<MinerActivitiesWhereInput>>;
+  OR?: InputMaybe<Array<MinerActivitiesWhereInput>>;
+  active?: InputMaybe<BoolFilter>;
+  blockNumber?: InputMaybe<BigIntFilter>;
+  coolingDownStartedAt?: InputMaybe<DateTimeNullableFilter>;
+  createdAt?: InputMaybe<DateTimeFilter>;
+  current?: InputMaybe<BoolFilter>;
+  estimatesReclaimableAt?: InputMaybe<DateTimeNullableFilter>;
+  eventId?: InputMaybe<BigIntNullableFilter>;
+  events?: InputMaybe<EventsRelationFilter>;
+  id?: InputMaybe<BigIntFilter>;
+  iterations?: InputMaybe<BigIntFilter>;
+  lastChallengedAt?: InputMaybe<DateTimeNullableFilter>;
+  minerId?: InputMaybe<BigIntFilter>;
+  miners?: InputMaybe<MinersRelationFilter>;
+  miningStartedAt?: InputMaybe<DateTimeNullableFilter>;
+  pInit?: InputMaybe<IntFilter>;
+  pInstant?: InputMaybe<IntFilter>;
+  shares?: InputMaybe<DecimalFilter>;
+  state?: InputMaybe<StringFilter>;
+  timestamp?: InputMaybe<DateTimeFilter>;
+  tokenomicVersion?: InputMaybe<IntFilter>;
+  totalReward?: InputMaybe<DecimalFilter>;
+  type?: InputMaybe<StringFilter>;
+  updatedAt?: InputMaybe<DateTimeFilter>;
+  v?: InputMaybe<DecimalFilter>;
+  vUpdatedAt?: InputMaybe<DateTimeNullableFilter>;
+  ve?: InputMaybe<DecimalFilter>;
+};
+
+export type MinerActivitiesWhereUniqueInput = {
+  id?: InputMaybe<Scalars['BigInt']>;
+};
+
 export type Miners = {
   __typename?: 'Miners';
+  _count?: Maybe<MinersCount>;
+  active: Scalars['Boolean'];
   address: Scalars['String'];
+  coolingDownStartedAt?: Maybe<Scalars['DateTime']>;
   createdAt: Scalars['DateTime'];
+  current: Scalars['Boolean'];
+  estimatesReclaimableAt?: Maybe<Scalars['DateTime']>;
   id: Scalars['BigInt'];
+  iterations: Scalars['BigInt'];
+  lastChallengedAt?: Maybe<Scalars['DateTime']>;
   lastUpdatedBlockNumber: Scalars['BigInt'];
   lastUpdatedTimestamp: Scalars['DateTime'];
+  minerActivities: Array<MinerActivities>;
+  miningStartedAt?: Maybe<Scalars['DateTime']>;
   pInit: Scalars['Int'];
   pInstant: Scalars['Int'];
   shares: Scalars['Decimal'];
@@ -1812,14 +2761,49 @@ export type Miners = {
   totalReward: Scalars['Decimal'];
   updatedAt: Scalars['DateTime'];
   v: Scalars['Decimal'];
+  vUpdatedAt?: Maybe<Scalars['DateTime']>;
   ve: Scalars['Decimal'];
-  workerId: Scalars['BigInt'];
-  workers: Workers;
+  workerActivities: Array<WorkerActivities>;
+  workerId?: Maybe<Scalars['BigInt']>;
+  workerPublicKey?: Maybe<Scalars['String']>;
+  workersMinersToWorkersCurrentMinerIds: Array<Workers>;
+  workersMinersWorkerIdToWorkers?: Maybe<Workers>;
+};
+
+
+export type MinersMinerActivitiesArgs = {
+  cursor?: InputMaybe<MinerActivitiesWhereUniqueInput>;
+  distinct?: InputMaybe<Array<MinerActivitiesScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<MinerActivitiesOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']>;
+  take?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<MinerActivitiesWhereInput>;
+};
+
+
+export type MinersWorkerActivitiesArgs = {
+  cursor?: InputMaybe<WorkerActivitiesWhereUniqueInput>;
+  distinct?: InputMaybe<Array<WorkerActivitiesScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<WorkerActivitiesOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']>;
+  take?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<WorkerActivitiesWhereInput>;
+};
+
+
+export type MinersWorkersMinersToWorkersCurrentMinerIdsArgs = {
+  cursor?: InputMaybe<WorkersWhereUniqueInput>;
+  distinct?: InputMaybe<Array<WorkersScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<WorkersOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']>;
+  take?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<WorkersWhereInput>;
 };
 
 export type MinersAvgAggregate = {
   __typename?: 'MinersAvgAggregate';
   id?: Maybe<Scalars['Float']>;
+  iterations?: Maybe<Scalars['Float']>;
   lastUpdatedBlockNumber?: Maybe<Scalars['Float']>;
   pInit?: Maybe<Scalars['Float']>;
   pInstant?: Maybe<Scalars['Float']>;
@@ -1833,6 +2817,7 @@ export type MinersAvgAggregate = {
 
 export type MinersAvgOrderByAggregateInput = {
   id?: InputMaybe<SortOrder>;
+  iterations?: InputMaybe<SortOrder>;
   lastUpdatedBlockNumber?: InputMaybe<SortOrder>;
   pInit?: InputMaybe<SortOrder>;
   pInstant?: InputMaybe<SortOrder>;
@@ -1844,14 +2829,28 @@ export type MinersAvgOrderByAggregateInput = {
   workerId?: InputMaybe<SortOrder>;
 };
 
+export type MinersCount = {
+  __typename?: 'MinersCount';
+  minerActivities: Scalars['Int'];
+  workerActivities: Scalars['Int'];
+  workersMinersToWorkersCurrentMinerIds: Scalars['Int'];
+};
+
 export type MinersCountAggregate = {
   __typename?: 'MinersCountAggregate';
   _all: Scalars['Int'];
+  active: Scalars['Int'];
   address: Scalars['Int'];
+  coolingDownStartedAt: Scalars['Int'];
   createdAt: Scalars['Int'];
+  current: Scalars['Int'];
+  estimatesReclaimableAt: Scalars['Int'];
   id: Scalars['Int'];
+  iterations: Scalars['Int'];
+  lastChallengedAt: Scalars['Int'];
   lastUpdatedBlockNumber: Scalars['Int'];
   lastUpdatedTimestamp: Scalars['Int'];
+  miningStartedAt: Scalars['Int'];
   pInit: Scalars['Int'];
   pInstant: Scalars['Int'];
   shares: Scalars['Int'];
@@ -1860,16 +2859,25 @@ export type MinersCountAggregate = {
   totalReward: Scalars['Int'];
   updatedAt: Scalars['Int'];
   v: Scalars['Int'];
+  vUpdatedAt: Scalars['Int'];
   ve: Scalars['Int'];
   workerId: Scalars['Int'];
+  workerPublicKey: Scalars['Int'];
 };
 
 export type MinersCountOrderByAggregateInput = {
+  active?: InputMaybe<SortOrder>;
   address?: InputMaybe<SortOrder>;
+  coolingDownStartedAt?: InputMaybe<SortOrder>;
   createdAt?: InputMaybe<SortOrder>;
+  current?: InputMaybe<SortOrder>;
+  estimatesReclaimableAt?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
+  iterations?: InputMaybe<SortOrder>;
+  lastChallengedAt?: InputMaybe<SortOrder>;
   lastUpdatedBlockNumber?: InputMaybe<SortOrder>;
   lastUpdatedTimestamp?: InputMaybe<SortOrder>;
+  miningStartedAt?: InputMaybe<SortOrder>;
   pInit?: InputMaybe<SortOrder>;
   pInstant?: InputMaybe<SortOrder>;
   shares?: InputMaybe<SortOrder>;
@@ -1878,16 +2886,26 @@ export type MinersCountOrderByAggregateInput = {
   totalReward?: InputMaybe<SortOrder>;
   updatedAt?: InputMaybe<SortOrder>;
   v?: InputMaybe<SortOrder>;
+  vUpdatedAt?: InputMaybe<SortOrder>;
   ve?: InputMaybe<SortOrder>;
   workerId?: InputMaybe<SortOrder>;
+  workerPublicKey?: InputMaybe<SortOrder>;
 };
 
 export type MinersCreateInput = {
+  active?: InputMaybe<Scalars['Boolean']>;
   address: Scalars['String'];
+  coolingDownStartedAt?: InputMaybe<Scalars['DateTime']>;
   createdAt: Scalars['DateTime'];
+  current?: InputMaybe<Scalars['Boolean']>;
+  estimatesReclaimableAt?: InputMaybe<Scalars['DateTime']>;
   id?: InputMaybe<Scalars['BigInt']>;
+  iterations?: InputMaybe<Scalars['BigInt']>;
+  lastChallengedAt?: InputMaybe<Scalars['DateTime']>;
   lastUpdatedBlockNumber: Scalars['BigInt'];
   lastUpdatedTimestamp: Scalars['DateTime'];
+  minerActivities?: InputMaybe<MinerActivitiesCreateNestedManyWithoutMinersInput>;
+  miningStartedAt?: InputMaybe<Scalars['DateTime']>;
   pInit?: InputMaybe<Scalars['Int']>;
   pInstant?: InputMaybe<Scalars['Int']>;
   shares?: InputMaybe<Scalars['Decimal']>;
@@ -1896,16 +2914,27 @@ export type MinersCreateInput = {
   totalReward?: InputMaybe<Scalars['Decimal']>;
   updatedAt: Scalars['DateTime'];
   v?: InputMaybe<Scalars['Decimal']>;
+  vUpdatedAt?: InputMaybe<Scalars['DateTime']>;
   ve?: InputMaybe<Scalars['Decimal']>;
-  workers: WorkersCreateNestedOneWithoutMinersInput;
+  workerActivities?: InputMaybe<WorkerActivitiesCreateNestedManyWithoutMinersInput>;
+  workerPublicKey?: InputMaybe<Scalars['String']>;
+  workersMinersToWorkersCurrentMinerIds?: InputMaybe<WorkersCreateNestedManyWithoutMinersMinersToWorkersCurrentMinerIdInput>;
+  workersMinersWorkerIdToWorkers?: InputMaybe<WorkersCreateNestedOneWithoutMinersMinersWorkerIdToWorkersInput>;
 };
 
 export type MinersCreateManyInput = {
+  active?: InputMaybe<Scalars['Boolean']>;
   address: Scalars['String'];
+  coolingDownStartedAt?: InputMaybe<Scalars['DateTime']>;
   createdAt: Scalars['DateTime'];
+  current?: InputMaybe<Scalars['Boolean']>;
+  estimatesReclaimableAt?: InputMaybe<Scalars['DateTime']>;
   id?: InputMaybe<Scalars['BigInt']>;
+  iterations?: InputMaybe<Scalars['BigInt']>;
+  lastChallengedAt?: InputMaybe<Scalars['DateTime']>;
   lastUpdatedBlockNumber: Scalars['BigInt'];
   lastUpdatedTimestamp: Scalars['DateTime'];
+  miningStartedAt?: InputMaybe<Scalars['DateTime']>;
   pInit?: InputMaybe<Scalars['Int']>;
   pInstant?: InputMaybe<Scalars['Int']>;
   shares?: InputMaybe<Scalars['Decimal']>;
@@ -1914,16 +2943,25 @@ export type MinersCreateManyInput = {
   totalReward?: InputMaybe<Scalars['Decimal']>;
   updatedAt: Scalars['DateTime'];
   v?: InputMaybe<Scalars['Decimal']>;
+  vUpdatedAt?: InputMaybe<Scalars['DateTime']>;
   ve?: InputMaybe<Scalars['Decimal']>;
-  workerId: Scalars['BigInt'];
+  workerId?: InputMaybe<Scalars['BigInt']>;
+  workerPublicKey?: InputMaybe<Scalars['String']>;
 };
 
 export type MinersCreateManyStakePoolsInput = {
+  active?: InputMaybe<Scalars['Boolean']>;
   address: Scalars['String'];
+  coolingDownStartedAt?: InputMaybe<Scalars['DateTime']>;
   createdAt: Scalars['DateTime'];
+  current?: InputMaybe<Scalars['Boolean']>;
+  estimatesReclaimableAt?: InputMaybe<Scalars['DateTime']>;
   id?: InputMaybe<Scalars['BigInt']>;
+  iterations?: InputMaybe<Scalars['BigInt']>;
+  lastChallengedAt?: InputMaybe<Scalars['DateTime']>;
   lastUpdatedBlockNumber: Scalars['BigInt'];
   lastUpdatedTimestamp: Scalars['DateTime'];
+  miningStartedAt?: InputMaybe<Scalars['DateTime']>;
   pInit?: InputMaybe<Scalars['Int']>;
   pInstant?: InputMaybe<Scalars['Int']>;
   shares?: InputMaybe<Scalars['Decimal']>;
@@ -1931,8 +2969,10 @@ export type MinersCreateManyStakePoolsInput = {
   totalReward?: InputMaybe<Scalars['Decimal']>;
   updatedAt: Scalars['DateTime'];
   v?: InputMaybe<Scalars['Decimal']>;
+  vUpdatedAt?: InputMaybe<Scalars['DateTime']>;
   ve?: InputMaybe<Scalars['Decimal']>;
-  workerId: Scalars['BigInt'];
+  workerId?: InputMaybe<Scalars['BigInt']>;
+  workerPublicKey?: InputMaybe<Scalars['String']>;
 };
 
 export type MinersCreateManyStakePoolsInputEnvelope = {
@@ -1940,12 +2980,19 @@ export type MinersCreateManyStakePoolsInputEnvelope = {
   skipDuplicates?: InputMaybe<Scalars['Boolean']>;
 };
 
-export type MinersCreateManyWorkersInput = {
+export type MinersCreateManyWorkersMinersWorkerIdToWorkersInput = {
+  active?: InputMaybe<Scalars['Boolean']>;
   address: Scalars['String'];
+  coolingDownStartedAt?: InputMaybe<Scalars['DateTime']>;
   createdAt: Scalars['DateTime'];
+  current?: InputMaybe<Scalars['Boolean']>;
+  estimatesReclaimableAt?: InputMaybe<Scalars['DateTime']>;
   id?: InputMaybe<Scalars['BigInt']>;
+  iterations?: InputMaybe<Scalars['BigInt']>;
+  lastChallengedAt?: InputMaybe<Scalars['DateTime']>;
   lastUpdatedBlockNumber: Scalars['BigInt'];
   lastUpdatedTimestamp: Scalars['DateTime'];
+  miningStartedAt?: InputMaybe<Scalars['DateTime']>;
   pInit?: InputMaybe<Scalars['Int']>;
   pInstant?: InputMaybe<Scalars['Int']>;
   shares?: InputMaybe<Scalars['Decimal']>;
@@ -1954,11 +3001,13 @@ export type MinersCreateManyWorkersInput = {
   totalReward?: InputMaybe<Scalars['Decimal']>;
   updatedAt: Scalars['DateTime'];
   v?: InputMaybe<Scalars['Decimal']>;
+  vUpdatedAt?: InputMaybe<Scalars['DateTime']>;
   ve?: InputMaybe<Scalars['Decimal']>;
+  workerPublicKey?: InputMaybe<Scalars['String']>;
 };
 
-export type MinersCreateManyWorkersInputEnvelope = {
-  data: Array<MinersCreateManyWorkersInput>;
+export type MinersCreateManyWorkersMinersWorkerIdToWorkersInputEnvelope = {
+  data: Array<MinersCreateManyWorkersMinersWorkerIdToWorkersInput>;
   skipDuplicates?: InputMaybe<Scalars['Boolean']>;
 };
 
@@ -1969,11 +3018,34 @@ export type MinersCreateNestedManyWithoutStakePoolsInput = {
   createMany?: InputMaybe<MinersCreateManyStakePoolsInputEnvelope>;
 };
 
-export type MinersCreateNestedManyWithoutWorkersInput = {
+export type MinersCreateNestedManyWithoutWorkersMinersWorkerIdToWorkersInput = {
   connect?: InputMaybe<Array<MinersWhereUniqueInput>>;
-  connectOrCreate?: InputMaybe<Array<MinersCreateOrConnectWithoutWorkersInput>>;
-  create?: InputMaybe<Array<MinersCreateWithoutWorkersInput>>;
-  createMany?: InputMaybe<MinersCreateManyWorkersInputEnvelope>;
+  connectOrCreate?: InputMaybe<Array<MinersCreateOrConnectWithoutWorkersMinersWorkerIdToWorkersInput>>;
+  create?: InputMaybe<Array<MinersCreateWithoutWorkersMinersWorkerIdToWorkersInput>>;
+  createMany?: InputMaybe<MinersCreateManyWorkersMinersWorkerIdToWorkersInputEnvelope>;
+};
+
+export type MinersCreateNestedOneWithoutMinerActivitiesInput = {
+  connect?: InputMaybe<MinersWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<MinersCreateOrConnectWithoutMinerActivitiesInput>;
+  create?: InputMaybe<MinersCreateWithoutMinerActivitiesInput>;
+};
+
+export type MinersCreateNestedOneWithoutWorkerActivitiesInput = {
+  connect?: InputMaybe<MinersWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<MinersCreateOrConnectWithoutWorkerActivitiesInput>;
+  create?: InputMaybe<MinersCreateWithoutWorkerActivitiesInput>;
+};
+
+export type MinersCreateNestedOneWithoutWorkersMinersToWorkersCurrentMinerIdsInput = {
+  connect?: InputMaybe<MinersWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<MinersCreateOrConnectWithoutWorkersMinersToWorkersCurrentMinerIdsInput>;
+  create?: InputMaybe<MinersCreateWithoutWorkersMinersToWorkersCurrentMinerIdsInput>;
+};
+
+export type MinersCreateOrConnectWithoutMinerActivitiesInput = {
+  create: MinersCreateWithoutMinerActivitiesInput;
+  where: MinersWhereUniqueInput;
 };
 
 export type MinersCreateOrConnectWithoutStakePoolsInput = {
@@ -1981,34 +3053,34 @@ export type MinersCreateOrConnectWithoutStakePoolsInput = {
   where: MinersWhereUniqueInput;
 };
 
-export type MinersCreateOrConnectWithoutWorkersInput = {
-  create: MinersCreateWithoutWorkersInput;
+export type MinersCreateOrConnectWithoutWorkerActivitiesInput = {
+  create: MinersCreateWithoutWorkerActivitiesInput;
   where: MinersWhereUniqueInput;
 };
 
-export type MinersCreateWithoutStakePoolsInput = {
-  address: Scalars['String'];
-  createdAt: Scalars['DateTime'];
-  id?: InputMaybe<Scalars['BigInt']>;
-  lastUpdatedBlockNumber: Scalars['BigInt'];
-  lastUpdatedTimestamp: Scalars['DateTime'];
-  pInit?: InputMaybe<Scalars['Int']>;
-  pInstant?: InputMaybe<Scalars['Int']>;
-  shares?: InputMaybe<Scalars['Decimal']>;
-  state?: InputMaybe<Scalars['String']>;
-  totalReward?: InputMaybe<Scalars['Decimal']>;
-  updatedAt: Scalars['DateTime'];
-  v?: InputMaybe<Scalars['Decimal']>;
-  ve?: InputMaybe<Scalars['Decimal']>;
-  workers: WorkersCreateNestedOneWithoutMinersInput;
+export type MinersCreateOrConnectWithoutWorkersMinersToWorkersCurrentMinerIdsInput = {
+  create: MinersCreateWithoutWorkersMinersToWorkersCurrentMinerIdsInput;
+  where: MinersWhereUniqueInput;
 };
 
-export type MinersCreateWithoutWorkersInput = {
+export type MinersCreateOrConnectWithoutWorkersMinersWorkerIdToWorkersInput = {
+  create: MinersCreateWithoutWorkersMinersWorkerIdToWorkersInput;
+  where: MinersWhereUniqueInput;
+};
+
+export type MinersCreateWithoutMinerActivitiesInput = {
+  active?: InputMaybe<Scalars['Boolean']>;
   address: Scalars['String'];
+  coolingDownStartedAt?: InputMaybe<Scalars['DateTime']>;
   createdAt: Scalars['DateTime'];
+  current?: InputMaybe<Scalars['Boolean']>;
+  estimatesReclaimableAt?: InputMaybe<Scalars['DateTime']>;
   id?: InputMaybe<Scalars['BigInt']>;
+  iterations?: InputMaybe<Scalars['BigInt']>;
+  lastChallengedAt?: InputMaybe<Scalars['DateTime']>;
   lastUpdatedBlockNumber: Scalars['BigInt'];
   lastUpdatedTimestamp: Scalars['DateTime'];
+  miningStartedAt?: InputMaybe<Scalars['DateTime']>;
   pInit?: InputMaybe<Scalars['Int']>;
   pInstant?: InputMaybe<Scalars['Int']>;
   shares?: InputMaybe<Scalars['Decimal']>;
@@ -2017,7 +3089,128 @@ export type MinersCreateWithoutWorkersInput = {
   totalReward?: InputMaybe<Scalars['Decimal']>;
   updatedAt: Scalars['DateTime'];
   v?: InputMaybe<Scalars['Decimal']>;
+  vUpdatedAt?: InputMaybe<Scalars['DateTime']>;
   ve?: InputMaybe<Scalars['Decimal']>;
+  workerActivities?: InputMaybe<WorkerActivitiesCreateNestedManyWithoutMinersInput>;
+  workerPublicKey?: InputMaybe<Scalars['String']>;
+  workersMinersToWorkersCurrentMinerIds?: InputMaybe<WorkersCreateNestedManyWithoutMinersMinersToWorkersCurrentMinerIdInput>;
+  workersMinersWorkerIdToWorkers?: InputMaybe<WorkersCreateNestedOneWithoutMinersMinersWorkerIdToWorkersInput>;
+};
+
+export type MinersCreateWithoutStakePoolsInput = {
+  active?: InputMaybe<Scalars['Boolean']>;
+  address: Scalars['String'];
+  coolingDownStartedAt?: InputMaybe<Scalars['DateTime']>;
+  createdAt: Scalars['DateTime'];
+  current?: InputMaybe<Scalars['Boolean']>;
+  estimatesReclaimableAt?: InputMaybe<Scalars['DateTime']>;
+  id?: InputMaybe<Scalars['BigInt']>;
+  iterations?: InputMaybe<Scalars['BigInt']>;
+  lastChallengedAt?: InputMaybe<Scalars['DateTime']>;
+  lastUpdatedBlockNumber: Scalars['BigInt'];
+  lastUpdatedTimestamp: Scalars['DateTime'];
+  minerActivities?: InputMaybe<MinerActivitiesCreateNestedManyWithoutMinersInput>;
+  miningStartedAt?: InputMaybe<Scalars['DateTime']>;
+  pInit?: InputMaybe<Scalars['Int']>;
+  pInstant?: InputMaybe<Scalars['Int']>;
+  shares?: InputMaybe<Scalars['Decimal']>;
+  state?: InputMaybe<Scalars['String']>;
+  totalReward?: InputMaybe<Scalars['Decimal']>;
+  updatedAt: Scalars['DateTime'];
+  v?: InputMaybe<Scalars['Decimal']>;
+  vUpdatedAt?: InputMaybe<Scalars['DateTime']>;
+  ve?: InputMaybe<Scalars['Decimal']>;
+  workerActivities?: InputMaybe<WorkerActivitiesCreateNestedManyWithoutMinersInput>;
+  workerPublicKey?: InputMaybe<Scalars['String']>;
+  workersMinersToWorkersCurrentMinerIds?: InputMaybe<WorkersCreateNestedManyWithoutMinersMinersToWorkersCurrentMinerIdInput>;
+  workersMinersWorkerIdToWorkers?: InputMaybe<WorkersCreateNestedOneWithoutMinersMinersWorkerIdToWorkersInput>;
+};
+
+export type MinersCreateWithoutWorkerActivitiesInput = {
+  active?: InputMaybe<Scalars['Boolean']>;
+  address: Scalars['String'];
+  coolingDownStartedAt?: InputMaybe<Scalars['DateTime']>;
+  createdAt: Scalars['DateTime'];
+  current?: InputMaybe<Scalars['Boolean']>;
+  estimatesReclaimableAt?: InputMaybe<Scalars['DateTime']>;
+  id?: InputMaybe<Scalars['BigInt']>;
+  iterations?: InputMaybe<Scalars['BigInt']>;
+  lastChallengedAt?: InputMaybe<Scalars['DateTime']>;
+  lastUpdatedBlockNumber: Scalars['BigInt'];
+  lastUpdatedTimestamp: Scalars['DateTime'];
+  minerActivities?: InputMaybe<MinerActivitiesCreateNestedManyWithoutMinersInput>;
+  miningStartedAt?: InputMaybe<Scalars['DateTime']>;
+  pInit?: InputMaybe<Scalars['Int']>;
+  pInstant?: InputMaybe<Scalars['Int']>;
+  shares?: InputMaybe<Scalars['Decimal']>;
+  stakePools?: InputMaybe<StakePoolsCreateNestedOneWithoutMinersInput>;
+  state?: InputMaybe<Scalars['String']>;
+  totalReward?: InputMaybe<Scalars['Decimal']>;
+  updatedAt: Scalars['DateTime'];
+  v?: InputMaybe<Scalars['Decimal']>;
+  vUpdatedAt?: InputMaybe<Scalars['DateTime']>;
+  ve?: InputMaybe<Scalars['Decimal']>;
+  workerPublicKey?: InputMaybe<Scalars['String']>;
+  workersMinersToWorkersCurrentMinerIds?: InputMaybe<WorkersCreateNestedManyWithoutMinersMinersToWorkersCurrentMinerIdInput>;
+  workersMinersWorkerIdToWorkers?: InputMaybe<WorkersCreateNestedOneWithoutMinersMinersWorkerIdToWorkersInput>;
+};
+
+export type MinersCreateWithoutWorkersMinersToWorkersCurrentMinerIdsInput = {
+  active?: InputMaybe<Scalars['Boolean']>;
+  address: Scalars['String'];
+  coolingDownStartedAt?: InputMaybe<Scalars['DateTime']>;
+  createdAt: Scalars['DateTime'];
+  current?: InputMaybe<Scalars['Boolean']>;
+  estimatesReclaimableAt?: InputMaybe<Scalars['DateTime']>;
+  id?: InputMaybe<Scalars['BigInt']>;
+  iterations?: InputMaybe<Scalars['BigInt']>;
+  lastChallengedAt?: InputMaybe<Scalars['DateTime']>;
+  lastUpdatedBlockNumber: Scalars['BigInt'];
+  lastUpdatedTimestamp: Scalars['DateTime'];
+  minerActivities?: InputMaybe<MinerActivitiesCreateNestedManyWithoutMinersInput>;
+  miningStartedAt?: InputMaybe<Scalars['DateTime']>;
+  pInit?: InputMaybe<Scalars['Int']>;
+  pInstant?: InputMaybe<Scalars['Int']>;
+  shares?: InputMaybe<Scalars['Decimal']>;
+  stakePools?: InputMaybe<StakePoolsCreateNestedOneWithoutMinersInput>;
+  state?: InputMaybe<Scalars['String']>;
+  totalReward?: InputMaybe<Scalars['Decimal']>;
+  updatedAt: Scalars['DateTime'];
+  v?: InputMaybe<Scalars['Decimal']>;
+  vUpdatedAt?: InputMaybe<Scalars['DateTime']>;
+  ve?: InputMaybe<Scalars['Decimal']>;
+  workerActivities?: InputMaybe<WorkerActivitiesCreateNestedManyWithoutMinersInput>;
+  workerPublicKey?: InputMaybe<Scalars['String']>;
+  workersMinersWorkerIdToWorkers?: InputMaybe<WorkersCreateNestedOneWithoutMinersMinersWorkerIdToWorkersInput>;
+};
+
+export type MinersCreateWithoutWorkersMinersWorkerIdToWorkersInput = {
+  active?: InputMaybe<Scalars['Boolean']>;
+  address: Scalars['String'];
+  coolingDownStartedAt?: InputMaybe<Scalars['DateTime']>;
+  createdAt: Scalars['DateTime'];
+  current?: InputMaybe<Scalars['Boolean']>;
+  estimatesReclaimableAt?: InputMaybe<Scalars['DateTime']>;
+  id?: InputMaybe<Scalars['BigInt']>;
+  iterations?: InputMaybe<Scalars['BigInt']>;
+  lastChallengedAt?: InputMaybe<Scalars['DateTime']>;
+  lastUpdatedBlockNumber: Scalars['BigInt'];
+  lastUpdatedTimestamp: Scalars['DateTime'];
+  minerActivities?: InputMaybe<MinerActivitiesCreateNestedManyWithoutMinersInput>;
+  miningStartedAt?: InputMaybe<Scalars['DateTime']>;
+  pInit?: InputMaybe<Scalars['Int']>;
+  pInstant?: InputMaybe<Scalars['Int']>;
+  shares?: InputMaybe<Scalars['Decimal']>;
+  stakePools?: InputMaybe<StakePoolsCreateNestedOneWithoutMinersInput>;
+  state?: InputMaybe<Scalars['String']>;
+  totalReward?: InputMaybe<Scalars['Decimal']>;
+  updatedAt: Scalars['DateTime'];
+  v?: InputMaybe<Scalars['Decimal']>;
+  vUpdatedAt?: InputMaybe<Scalars['DateTime']>;
+  ve?: InputMaybe<Scalars['Decimal']>;
+  workerActivities?: InputMaybe<WorkerActivitiesCreateNestedManyWithoutMinersInput>;
+  workerPublicKey?: InputMaybe<Scalars['String']>;
+  workersMinersToWorkersCurrentMinerIds?: InputMaybe<WorkersCreateNestedManyWithoutMinersMinersToWorkersCurrentMinerIdInput>;
 };
 
 export type MinersGroupBy = {
@@ -2027,11 +3220,18 @@ export type MinersGroupBy = {
   _max?: Maybe<MinersMaxAggregate>;
   _min?: Maybe<MinersMinAggregate>;
   _sum?: Maybe<MinersSumAggregate>;
+  active: Scalars['Boolean'];
   address: Scalars['String'];
+  coolingDownStartedAt?: Maybe<Scalars['DateTime']>;
   createdAt: Scalars['DateTime'];
+  current: Scalars['Boolean'];
+  estimatesReclaimableAt?: Maybe<Scalars['DateTime']>;
   id: Scalars['BigInt'];
+  iterations: Scalars['BigInt'];
+  lastChallengedAt?: Maybe<Scalars['DateTime']>;
   lastUpdatedBlockNumber: Scalars['BigInt'];
   lastUpdatedTimestamp: Scalars['DateTime'];
+  miningStartedAt?: Maybe<Scalars['DateTime']>;
   pInit: Scalars['Int'];
   pInstant: Scalars['Int'];
   shares: Scalars['Decimal'];
@@ -2040,8 +3240,10 @@ export type MinersGroupBy = {
   totalReward: Scalars['Decimal'];
   updatedAt: Scalars['DateTime'];
   v: Scalars['Decimal'];
+  vUpdatedAt?: Maybe<Scalars['DateTime']>;
   ve: Scalars['Decimal'];
-  workerId: Scalars['BigInt'];
+  workerId?: Maybe<Scalars['BigInt']>;
+  workerPublicKey?: Maybe<Scalars['String']>;
 };
 
 export type MinersListRelationFilter = {
@@ -2052,11 +3254,18 @@ export type MinersListRelationFilter = {
 
 export type MinersMaxAggregate = {
   __typename?: 'MinersMaxAggregate';
+  active?: Maybe<Scalars['Boolean']>;
   address?: Maybe<Scalars['String']>;
+  coolingDownStartedAt?: Maybe<Scalars['DateTime']>;
   createdAt?: Maybe<Scalars['DateTime']>;
+  current?: Maybe<Scalars['Boolean']>;
+  estimatesReclaimableAt?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['BigInt']>;
+  iterations?: Maybe<Scalars['BigInt']>;
+  lastChallengedAt?: Maybe<Scalars['DateTime']>;
   lastUpdatedBlockNumber?: Maybe<Scalars['BigInt']>;
   lastUpdatedTimestamp?: Maybe<Scalars['DateTime']>;
+  miningStartedAt?: Maybe<Scalars['DateTime']>;
   pInit?: Maybe<Scalars['Int']>;
   pInstant?: Maybe<Scalars['Int']>;
   shares?: Maybe<Scalars['Decimal']>;
@@ -2065,16 +3274,25 @@ export type MinersMaxAggregate = {
   totalReward?: Maybe<Scalars['Decimal']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
   v?: Maybe<Scalars['Decimal']>;
+  vUpdatedAt?: Maybe<Scalars['DateTime']>;
   ve?: Maybe<Scalars['Decimal']>;
   workerId?: Maybe<Scalars['BigInt']>;
+  workerPublicKey?: Maybe<Scalars['String']>;
 };
 
 export type MinersMaxOrderByAggregateInput = {
+  active?: InputMaybe<SortOrder>;
   address?: InputMaybe<SortOrder>;
+  coolingDownStartedAt?: InputMaybe<SortOrder>;
   createdAt?: InputMaybe<SortOrder>;
+  current?: InputMaybe<SortOrder>;
+  estimatesReclaimableAt?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
+  iterations?: InputMaybe<SortOrder>;
+  lastChallengedAt?: InputMaybe<SortOrder>;
   lastUpdatedBlockNumber?: InputMaybe<SortOrder>;
   lastUpdatedTimestamp?: InputMaybe<SortOrder>;
+  miningStartedAt?: InputMaybe<SortOrder>;
   pInit?: InputMaybe<SortOrder>;
   pInstant?: InputMaybe<SortOrder>;
   shares?: InputMaybe<SortOrder>;
@@ -2083,17 +3301,26 @@ export type MinersMaxOrderByAggregateInput = {
   totalReward?: InputMaybe<SortOrder>;
   updatedAt?: InputMaybe<SortOrder>;
   v?: InputMaybe<SortOrder>;
+  vUpdatedAt?: InputMaybe<SortOrder>;
   ve?: InputMaybe<SortOrder>;
   workerId?: InputMaybe<SortOrder>;
+  workerPublicKey?: InputMaybe<SortOrder>;
 };
 
 export type MinersMinAggregate = {
   __typename?: 'MinersMinAggregate';
+  active?: Maybe<Scalars['Boolean']>;
   address?: Maybe<Scalars['String']>;
+  coolingDownStartedAt?: Maybe<Scalars['DateTime']>;
   createdAt?: Maybe<Scalars['DateTime']>;
+  current?: Maybe<Scalars['Boolean']>;
+  estimatesReclaimableAt?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['BigInt']>;
+  iterations?: Maybe<Scalars['BigInt']>;
+  lastChallengedAt?: Maybe<Scalars['DateTime']>;
   lastUpdatedBlockNumber?: Maybe<Scalars['BigInt']>;
   lastUpdatedTimestamp?: Maybe<Scalars['DateTime']>;
+  miningStartedAt?: Maybe<Scalars['DateTime']>;
   pInit?: Maybe<Scalars['Int']>;
   pInstant?: Maybe<Scalars['Int']>;
   shares?: Maybe<Scalars['Decimal']>;
@@ -2102,16 +3329,25 @@ export type MinersMinAggregate = {
   totalReward?: Maybe<Scalars['Decimal']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
   v?: Maybe<Scalars['Decimal']>;
+  vUpdatedAt?: Maybe<Scalars['DateTime']>;
   ve?: Maybe<Scalars['Decimal']>;
   workerId?: Maybe<Scalars['BigInt']>;
+  workerPublicKey?: Maybe<Scalars['String']>;
 };
 
 export type MinersMinOrderByAggregateInput = {
+  active?: InputMaybe<SortOrder>;
   address?: InputMaybe<SortOrder>;
+  coolingDownStartedAt?: InputMaybe<SortOrder>;
   createdAt?: InputMaybe<SortOrder>;
+  current?: InputMaybe<SortOrder>;
+  estimatesReclaimableAt?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
+  iterations?: InputMaybe<SortOrder>;
+  lastChallengedAt?: InputMaybe<SortOrder>;
   lastUpdatedBlockNumber?: InputMaybe<SortOrder>;
   lastUpdatedTimestamp?: InputMaybe<SortOrder>;
+  miningStartedAt?: InputMaybe<SortOrder>;
   pInit?: InputMaybe<SortOrder>;
   pInstant?: InputMaybe<SortOrder>;
   shares?: InputMaybe<SortOrder>;
@@ -2120,8 +3356,10 @@ export type MinersMinOrderByAggregateInput = {
   totalReward?: InputMaybe<SortOrder>;
   updatedAt?: InputMaybe<SortOrder>;
   v?: InputMaybe<SortOrder>;
+  vUpdatedAt?: InputMaybe<SortOrder>;
   ve?: InputMaybe<SortOrder>;
   workerId?: InputMaybe<SortOrder>;
+  workerPublicKey?: InputMaybe<SortOrder>;
 };
 
 export type MinersOrderByRelationAggregateInput = {
@@ -2134,11 +3372,18 @@ export type MinersOrderByWithAggregationInput = {
   _max?: InputMaybe<MinersMaxOrderByAggregateInput>;
   _min?: InputMaybe<MinersMinOrderByAggregateInput>;
   _sum?: InputMaybe<MinersSumOrderByAggregateInput>;
+  active?: InputMaybe<SortOrder>;
   address?: InputMaybe<SortOrder>;
+  coolingDownStartedAt?: InputMaybe<SortOrder>;
   createdAt?: InputMaybe<SortOrder>;
+  current?: InputMaybe<SortOrder>;
+  estimatesReclaimableAt?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
+  iterations?: InputMaybe<SortOrder>;
+  lastChallengedAt?: InputMaybe<SortOrder>;
   lastUpdatedBlockNumber?: InputMaybe<SortOrder>;
   lastUpdatedTimestamp?: InputMaybe<SortOrder>;
+  miningStartedAt?: InputMaybe<SortOrder>;
   pInit?: InputMaybe<SortOrder>;
   pInstant?: InputMaybe<SortOrder>;
   shares?: InputMaybe<SortOrder>;
@@ -2147,16 +3392,26 @@ export type MinersOrderByWithAggregationInput = {
   totalReward?: InputMaybe<SortOrder>;
   updatedAt?: InputMaybe<SortOrder>;
   v?: InputMaybe<SortOrder>;
+  vUpdatedAt?: InputMaybe<SortOrder>;
   ve?: InputMaybe<SortOrder>;
   workerId?: InputMaybe<SortOrder>;
+  workerPublicKey?: InputMaybe<SortOrder>;
 };
 
 export type MinersOrderByWithRelationInput = {
+  active?: InputMaybe<SortOrder>;
   address?: InputMaybe<SortOrder>;
+  coolingDownStartedAt?: InputMaybe<SortOrder>;
   createdAt?: InputMaybe<SortOrder>;
+  current?: InputMaybe<SortOrder>;
+  estimatesReclaimableAt?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
+  iterations?: InputMaybe<SortOrder>;
+  lastChallengedAt?: InputMaybe<SortOrder>;
   lastUpdatedBlockNumber?: InputMaybe<SortOrder>;
   lastUpdatedTimestamp?: InputMaybe<SortOrder>;
+  minerActivities?: InputMaybe<MinerActivitiesOrderByRelationAggregateInput>;
+  miningStartedAt?: InputMaybe<SortOrder>;
   pInit?: InputMaybe<SortOrder>;
   pInstant?: InputMaybe<SortOrder>;
   shares?: InputMaybe<SortOrder>;
@@ -2166,17 +3421,33 @@ export type MinersOrderByWithRelationInput = {
   totalReward?: InputMaybe<SortOrder>;
   updatedAt?: InputMaybe<SortOrder>;
   v?: InputMaybe<SortOrder>;
+  vUpdatedAt?: InputMaybe<SortOrder>;
   ve?: InputMaybe<SortOrder>;
+  workerActivities?: InputMaybe<WorkerActivitiesOrderByRelationAggregateInput>;
   workerId?: InputMaybe<SortOrder>;
-  workers?: InputMaybe<WorkersOrderByWithRelationInput>;
+  workerPublicKey?: InputMaybe<SortOrder>;
+  workersMinersToWorkersCurrentMinerIds?: InputMaybe<WorkersOrderByRelationAggregateInput>;
+  workersMinersWorkerIdToWorkers?: InputMaybe<WorkersOrderByWithRelationInput>;
+};
+
+export type MinersRelationFilter = {
+  is?: InputMaybe<MinersWhereInput>;
+  isNot?: InputMaybe<MinersWhereInput>;
 };
 
 export enum MinersScalarFieldEnum {
+  Active = 'active',
   Address = 'address',
+  CoolingDownStartedAt = 'coolingDownStartedAt',
   CreatedAt = 'createdAt',
+  Current = 'current',
+  EstimatesReclaimableAt = 'estimatesReclaimableAt',
   Id = 'id',
+  Iterations = 'iterations',
+  LastChallengedAt = 'lastChallengedAt',
   LastUpdatedBlockNumber = 'lastUpdatedBlockNumber',
   LastUpdatedTimestamp = 'lastUpdatedTimestamp',
+  MiningStartedAt = 'miningStartedAt',
   PInit = 'pInit',
   PInstant = 'pInstant',
   Shares = 'shares',
@@ -2185,19 +3456,28 @@ export enum MinersScalarFieldEnum {
   TotalReward = 'totalReward',
   UpdatedAt = 'updatedAt',
   V = 'v',
+  VUpdatedAt = 'vUpdatedAt',
   Ve = 've',
-  WorkerId = 'workerId'
+  WorkerId = 'workerId',
+  WorkerPublicKey = 'workerPublicKey'
 }
 
 export type MinersScalarWhereInput = {
   AND?: InputMaybe<Array<MinersScalarWhereInput>>;
   NOT?: InputMaybe<Array<MinersScalarWhereInput>>;
   OR?: InputMaybe<Array<MinersScalarWhereInput>>;
+  active?: InputMaybe<BoolFilter>;
   address?: InputMaybe<StringFilter>;
+  coolingDownStartedAt?: InputMaybe<DateTimeNullableFilter>;
   createdAt?: InputMaybe<DateTimeFilter>;
+  current?: InputMaybe<BoolFilter>;
+  estimatesReclaimableAt?: InputMaybe<DateTimeNullableFilter>;
   id?: InputMaybe<BigIntFilter>;
+  iterations?: InputMaybe<BigIntFilter>;
+  lastChallengedAt?: InputMaybe<DateTimeNullableFilter>;
   lastUpdatedBlockNumber?: InputMaybe<BigIntFilter>;
   lastUpdatedTimestamp?: InputMaybe<DateTimeFilter>;
+  miningStartedAt?: InputMaybe<DateTimeNullableFilter>;
   pInit?: InputMaybe<IntFilter>;
   pInstant?: InputMaybe<IntFilter>;
   shares?: InputMaybe<DecimalFilter>;
@@ -2206,19 +3486,28 @@ export type MinersScalarWhereInput = {
   totalReward?: InputMaybe<DecimalFilter>;
   updatedAt?: InputMaybe<DateTimeFilter>;
   v?: InputMaybe<DecimalFilter>;
+  vUpdatedAt?: InputMaybe<DateTimeNullableFilter>;
   ve?: InputMaybe<DecimalFilter>;
-  workerId?: InputMaybe<BigIntFilter>;
+  workerId?: InputMaybe<BigIntNullableFilter>;
+  workerPublicKey?: InputMaybe<StringNullableFilter>;
 };
 
 export type MinersScalarWhereWithAggregatesInput = {
   AND?: InputMaybe<Array<MinersScalarWhereWithAggregatesInput>>;
   NOT?: InputMaybe<Array<MinersScalarWhereWithAggregatesInput>>;
   OR?: InputMaybe<Array<MinersScalarWhereWithAggregatesInput>>;
+  active?: InputMaybe<BoolWithAggregatesFilter>;
   address?: InputMaybe<StringWithAggregatesFilter>;
+  coolingDownStartedAt?: InputMaybe<DateTimeNullableWithAggregatesFilter>;
   createdAt?: InputMaybe<DateTimeWithAggregatesFilter>;
+  current?: InputMaybe<BoolWithAggregatesFilter>;
+  estimatesReclaimableAt?: InputMaybe<DateTimeNullableWithAggregatesFilter>;
   id?: InputMaybe<BigIntWithAggregatesFilter>;
+  iterations?: InputMaybe<BigIntWithAggregatesFilter>;
+  lastChallengedAt?: InputMaybe<DateTimeNullableWithAggregatesFilter>;
   lastUpdatedBlockNumber?: InputMaybe<BigIntWithAggregatesFilter>;
   lastUpdatedTimestamp?: InputMaybe<DateTimeWithAggregatesFilter>;
+  miningStartedAt?: InputMaybe<DateTimeNullableWithAggregatesFilter>;
   pInit?: InputMaybe<IntWithAggregatesFilter>;
   pInstant?: InputMaybe<IntWithAggregatesFilter>;
   shares?: InputMaybe<DecimalWithAggregatesFilter>;
@@ -2227,13 +3516,16 @@ export type MinersScalarWhereWithAggregatesInput = {
   totalReward?: InputMaybe<DecimalWithAggregatesFilter>;
   updatedAt?: InputMaybe<DateTimeWithAggregatesFilter>;
   v?: InputMaybe<DecimalWithAggregatesFilter>;
+  vUpdatedAt?: InputMaybe<DateTimeNullableWithAggregatesFilter>;
   ve?: InputMaybe<DecimalWithAggregatesFilter>;
-  workerId?: InputMaybe<BigIntWithAggregatesFilter>;
+  workerId?: InputMaybe<BigIntNullableWithAggregatesFilter>;
+  workerPublicKey?: InputMaybe<StringNullableWithAggregatesFilter>;
 };
 
 export type MinersSumAggregate = {
   __typename?: 'MinersSumAggregate';
   id?: Maybe<Scalars['BigInt']>;
+  iterations?: Maybe<Scalars['BigInt']>;
   lastUpdatedBlockNumber?: Maybe<Scalars['BigInt']>;
   pInit?: Maybe<Scalars['Int']>;
   pInstant?: Maybe<Scalars['Int']>;
@@ -2247,6 +3539,7 @@ export type MinersSumAggregate = {
 
 export type MinersSumOrderByAggregateInput = {
   id?: InputMaybe<SortOrder>;
+  iterations?: InputMaybe<SortOrder>;
   lastUpdatedBlockNumber?: InputMaybe<SortOrder>;
   pInit?: InputMaybe<SortOrder>;
   pInstant?: InputMaybe<SortOrder>;
@@ -2259,11 +3552,19 @@ export type MinersSumOrderByAggregateInput = {
 };
 
 export type MinersUpdateInput = {
+  active?: InputMaybe<BoolFieldUpdateOperationsInput>;
   address?: InputMaybe<StringFieldUpdateOperationsInput>;
+  coolingDownStartedAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
   createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  current?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  estimatesReclaimableAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
   id?: InputMaybe<BigIntFieldUpdateOperationsInput>;
+  iterations?: InputMaybe<BigIntFieldUpdateOperationsInput>;
+  lastChallengedAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
   lastUpdatedBlockNumber?: InputMaybe<BigIntFieldUpdateOperationsInput>;
   lastUpdatedTimestamp?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  minerActivities?: InputMaybe<MinerActivitiesUpdateManyWithoutMinersInput>;
+  miningStartedAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
   pInit?: InputMaybe<IntFieldUpdateOperationsInput>;
   pInstant?: InputMaybe<IntFieldUpdateOperationsInput>;
   shares?: InputMaybe<DecimalFieldUpdateOperationsInput>;
@@ -2272,16 +3573,27 @@ export type MinersUpdateInput = {
   totalReward?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   v?: InputMaybe<DecimalFieldUpdateOperationsInput>;
+  vUpdatedAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
   ve?: InputMaybe<DecimalFieldUpdateOperationsInput>;
-  workers?: InputMaybe<WorkersUpdateOneRequiredWithoutMinersInput>;
+  workerActivities?: InputMaybe<WorkerActivitiesUpdateManyWithoutMinersInput>;
+  workerPublicKey?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  workersMinersToWorkersCurrentMinerIds?: InputMaybe<WorkersUpdateManyWithoutMinersMinersToWorkersCurrentMinerIdInput>;
+  workersMinersWorkerIdToWorkers?: InputMaybe<WorkersUpdateOneWithoutMinersMinersWorkerIdToWorkersInput>;
 };
 
 export type MinersUpdateManyMutationInput = {
+  active?: InputMaybe<BoolFieldUpdateOperationsInput>;
   address?: InputMaybe<StringFieldUpdateOperationsInput>;
+  coolingDownStartedAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
   createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  current?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  estimatesReclaimableAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
   id?: InputMaybe<BigIntFieldUpdateOperationsInput>;
+  iterations?: InputMaybe<BigIntFieldUpdateOperationsInput>;
+  lastChallengedAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
   lastUpdatedBlockNumber?: InputMaybe<BigIntFieldUpdateOperationsInput>;
   lastUpdatedTimestamp?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  miningStartedAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
   pInit?: InputMaybe<IntFieldUpdateOperationsInput>;
   pInstant?: InputMaybe<IntFieldUpdateOperationsInput>;
   shares?: InputMaybe<DecimalFieldUpdateOperationsInput>;
@@ -2289,7 +3601,9 @@ export type MinersUpdateManyMutationInput = {
   totalReward?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   v?: InputMaybe<DecimalFieldUpdateOperationsInput>;
+  vUpdatedAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
   ve?: InputMaybe<DecimalFieldUpdateOperationsInput>;
+  workerPublicKey?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
 };
 
 export type MinersUpdateManyWithWhereWithoutStakePoolsInput = {
@@ -2297,7 +3611,7 @@ export type MinersUpdateManyWithWhereWithoutStakePoolsInput = {
   where: MinersScalarWhereInput;
 };
 
-export type MinersUpdateManyWithWhereWithoutWorkersInput = {
+export type MinersUpdateManyWithWhereWithoutWorkersMinersWorkerIdToWorkersInput = {
   data: MinersUpdateManyMutationInput;
   where: MinersScalarWhereInput;
 };
@@ -2316,18 +3630,46 @@ export type MinersUpdateManyWithoutStakePoolsInput = {
   upsert?: InputMaybe<Array<MinersUpsertWithWhereUniqueWithoutStakePoolsInput>>;
 };
 
-export type MinersUpdateManyWithoutWorkersInput = {
+export type MinersUpdateManyWithoutWorkersMinersWorkerIdToWorkersInput = {
   connect?: InputMaybe<Array<MinersWhereUniqueInput>>;
-  connectOrCreate?: InputMaybe<Array<MinersCreateOrConnectWithoutWorkersInput>>;
-  create?: InputMaybe<Array<MinersCreateWithoutWorkersInput>>;
-  createMany?: InputMaybe<MinersCreateManyWorkersInputEnvelope>;
+  connectOrCreate?: InputMaybe<Array<MinersCreateOrConnectWithoutWorkersMinersWorkerIdToWorkersInput>>;
+  create?: InputMaybe<Array<MinersCreateWithoutWorkersMinersWorkerIdToWorkersInput>>;
+  createMany?: InputMaybe<MinersCreateManyWorkersMinersWorkerIdToWorkersInputEnvelope>;
   delete?: InputMaybe<Array<MinersWhereUniqueInput>>;
   deleteMany?: InputMaybe<Array<MinersScalarWhereInput>>;
   disconnect?: InputMaybe<Array<MinersWhereUniqueInput>>;
   set?: InputMaybe<Array<MinersWhereUniqueInput>>;
-  update?: InputMaybe<Array<MinersUpdateWithWhereUniqueWithoutWorkersInput>>;
-  updateMany?: InputMaybe<Array<MinersUpdateManyWithWhereWithoutWorkersInput>>;
-  upsert?: InputMaybe<Array<MinersUpsertWithWhereUniqueWithoutWorkersInput>>;
+  update?: InputMaybe<Array<MinersUpdateWithWhereUniqueWithoutWorkersMinersWorkerIdToWorkersInput>>;
+  updateMany?: InputMaybe<Array<MinersUpdateManyWithWhereWithoutWorkersMinersWorkerIdToWorkersInput>>;
+  upsert?: InputMaybe<Array<MinersUpsertWithWhereUniqueWithoutWorkersMinersWorkerIdToWorkersInput>>;
+};
+
+export type MinersUpdateOneRequiredWithoutMinerActivitiesInput = {
+  connect?: InputMaybe<MinersWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<MinersCreateOrConnectWithoutMinerActivitiesInput>;
+  create?: InputMaybe<MinersCreateWithoutMinerActivitiesInput>;
+  update?: InputMaybe<MinersUpdateWithoutMinerActivitiesInput>;
+  upsert?: InputMaybe<MinersUpsertWithoutMinerActivitiesInput>;
+};
+
+export type MinersUpdateOneWithoutWorkerActivitiesInput = {
+  connect?: InputMaybe<MinersWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<MinersCreateOrConnectWithoutWorkerActivitiesInput>;
+  create?: InputMaybe<MinersCreateWithoutWorkerActivitiesInput>;
+  delete?: InputMaybe<Scalars['Boolean']>;
+  disconnect?: InputMaybe<Scalars['Boolean']>;
+  update?: InputMaybe<MinersUpdateWithoutWorkerActivitiesInput>;
+  upsert?: InputMaybe<MinersUpsertWithoutWorkerActivitiesInput>;
+};
+
+export type MinersUpdateOneWithoutWorkersMinersToWorkersCurrentMinerIdsInput = {
+  connect?: InputMaybe<MinersWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<MinersCreateOrConnectWithoutWorkersMinersToWorkersCurrentMinerIdsInput>;
+  create?: InputMaybe<MinersCreateWithoutWorkersMinersToWorkersCurrentMinerIdsInput>;
+  delete?: InputMaybe<Scalars['Boolean']>;
+  disconnect?: InputMaybe<Scalars['Boolean']>;
+  update?: InputMaybe<MinersUpdateWithoutWorkersMinersToWorkersCurrentMinerIdsInput>;
+  upsert?: InputMaybe<MinersUpsertWithoutWorkersMinersToWorkersCurrentMinerIdsInput>;
 };
 
 export type MinersUpdateWithWhereUniqueWithoutStakePoolsInput = {
@@ -2335,34 +3677,24 @@ export type MinersUpdateWithWhereUniqueWithoutStakePoolsInput = {
   where: MinersWhereUniqueInput;
 };
 
-export type MinersUpdateWithWhereUniqueWithoutWorkersInput = {
-  data: MinersUpdateWithoutWorkersInput;
+export type MinersUpdateWithWhereUniqueWithoutWorkersMinersWorkerIdToWorkersInput = {
+  data: MinersUpdateWithoutWorkersMinersWorkerIdToWorkersInput;
   where: MinersWhereUniqueInput;
 };
 
-export type MinersUpdateWithoutStakePoolsInput = {
+export type MinersUpdateWithoutMinerActivitiesInput = {
+  active?: InputMaybe<BoolFieldUpdateOperationsInput>;
   address?: InputMaybe<StringFieldUpdateOperationsInput>;
+  coolingDownStartedAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
   createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  current?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  estimatesReclaimableAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
   id?: InputMaybe<BigIntFieldUpdateOperationsInput>;
+  iterations?: InputMaybe<BigIntFieldUpdateOperationsInput>;
+  lastChallengedAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
   lastUpdatedBlockNumber?: InputMaybe<BigIntFieldUpdateOperationsInput>;
   lastUpdatedTimestamp?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  pInit?: InputMaybe<IntFieldUpdateOperationsInput>;
-  pInstant?: InputMaybe<IntFieldUpdateOperationsInput>;
-  shares?: InputMaybe<DecimalFieldUpdateOperationsInput>;
-  state?: InputMaybe<StringFieldUpdateOperationsInput>;
-  totalReward?: InputMaybe<DecimalFieldUpdateOperationsInput>;
-  updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  v?: InputMaybe<DecimalFieldUpdateOperationsInput>;
-  ve?: InputMaybe<DecimalFieldUpdateOperationsInput>;
-  workers?: InputMaybe<WorkersUpdateOneRequiredWithoutMinersInput>;
-};
-
-export type MinersUpdateWithoutWorkersInput = {
-  address?: InputMaybe<StringFieldUpdateOperationsInput>;
-  createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  id?: InputMaybe<BigIntFieldUpdateOperationsInput>;
-  lastUpdatedBlockNumber?: InputMaybe<BigIntFieldUpdateOperationsInput>;
-  lastUpdatedTimestamp?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  miningStartedAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
   pInit?: InputMaybe<IntFieldUpdateOperationsInput>;
   pInstant?: InputMaybe<IntFieldUpdateOperationsInput>;
   shares?: InputMaybe<DecimalFieldUpdateOperationsInput>;
@@ -2371,7 +3703,128 @@ export type MinersUpdateWithoutWorkersInput = {
   totalReward?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   v?: InputMaybe<DecimalFieldUpdateOperationsInput>;
+  vUpdatedAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
   ve?: InputMaybe<DecimalFieldUpdateOperationsInput>;
+  workerActivities?: InputMaybe<WorkerActivitiesUpdateManyWithoutMinersInput>;
+  workerPublicKey?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  workersMinersToWorkersCurrentMinerIds?: InputMaybe<WorkersUpdateManyWithoutMinersMinersToWorkersCurrentMinerIdInput>;
+  workersMinersWorkerIdToWorkers?: InputMaybe<WorkersUpdateOneWithoutMinersMinersWorkerIdToWorkersInput>;
+};
+
+export type MinersUpdateWithoutStakePoolsInput = {
+  active?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  address?: InputMaybe<StringFieldUpdateOperationsInput>;
+  coolingDownStartedAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  current?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  estimatesReclaimableAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  id?: InputMaybe<BigIntFieldUpdateOperationsInput>;
+  iterations?: InputMaybe<BigIntFieldUpdateOperationsInput>;
+  lastChallengedAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  lastUpdatedBlockNumber?: InputMaybe<BigIntFieldUpdateOperationsInput>;
+  lastUpdatedTimestamp?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  minerActivities?: InputMaybe<MinerActivitiesUpdateManyWithoutMinersInput>;
+  miningStartedAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  pInit?: InputMaybe<IntFieldUpdateOperationsInput>;
+  pInstant?: InputMaybe<IntFieldUpdateOperationsInput>;
+  shares?: InputMaybe<DecimalFieldUpdateOperationsInput>;
+  state?: InputMaybe<StringFieldUpdateOperationsInput>;
+  totalReward?: InputMaybe<DecimalFieldUpdateOperationsInput>;
+  updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  v?: InputMaybe<DecimalFieldUpdateOperationsInput>;
+  vUpdatedAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  ve?: InputMaybe<DecimalFieldUpdateOperationsInput>;
+  workerActivities?: InputMaybe<WorkerActivitiesUpdateManyWithoutMinersInput>;
+  workerPublicKey?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  workersMinersToWorkersCurrentMinerIds?: InputMaybe<WorkersUpdateManyWithoutMinersMinersToWorkersCurrentMinerIdInput>;
+  workersMinersWorkerIdToWorkers?: InputMaybe<WorkersUpdateOneWithoutMinersMinersWorkerIdToWorkersInput>;
+};
+
+export type MinersUpdateWithoutWorkerActivitiesInput = {
+  active?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  address?: InputMaybe<StringFieldUpdateOperationsInput>;
+  coolingDownStartedAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  current?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  estimatesReclaimableAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  id?: InputMaybe<BigIntFieldUpdateOperationsInput>;
+  iterations?: InputMaybe<BigIntFieldUpdateOperationsInput>;
+  lastChallengedAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  lastUpdatedBlockNumber?: InputMaybe<BigIntFieldUpdateOperationsInput>;
+  lastUpdatedTimestamp?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  minerActivities?: InputMaybe<MinerActivitiesUpdateManyWithoutMinersInput>;
+  miningStartedAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  pInit?: InputMaybe<IntFieldUpdateOperationsInput>;
+  pInstant?: InputMaybe<IntFieldUpdateOperationsInput>;
+  shares?: InputMaybe<DecimalFieldUpdateOperationsInput>;
+  stakePools?: InputMaybe<StakePoolsUpdateOneWithoutMinersInput>;
+  state?: InputMaybe<StringFieldUpdateOperationsInput>;
+  totalReward?: InputMaybe<DecimalFieldUpdateOperationsInput>;
+  updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  v?: InputMaybe<DecimalFieldUpdateOperationsInput>;
+  vUpdatedAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  ve?: InputMaybe<DecimalFieldUpdateOperationsInput>;
+  workerPublicKey?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  workersMinersToWorkersCurrentMinerIds?: InputMaybe<WorkersUpdateManyWithoutMinersMinersToWorkersCurrentMinerIdInput>;
+  workersMinersWorkerIdToWorkers?: InputMaybe<WorkersUpdateOneWithoutMinersMinersWorkerIdToWorkersInput>;
+};
+
+export type MinersUpdateWithoutWorkersMinersToWorkersCurrentMinerIdsInput = {
+  active?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  address?: InputMaybe<StringFieldUpdateOperationsInput>;
+  coolingDownStartedAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  current?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  estimatesReclaimableAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  id?: InputMaybe<BigIntFieldUpdateOperationsInput>;
+  iterations?: InputMaybe<BigIntFieldUpdateOperationsInput>;
+  lastChallengedAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  lastUpdatedBlockNumber?: InputMaybe<BigIntFieldUpdateOperationsInput>;
+  lastUpdatedTimestamp?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  minerActivities?: InputMaybe<MinerActivitiesUpdateManyWithoutMinersInput>;
+  miningStartedAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  pInit?: InputMaybe<IntFieldUpdateOperationsInput>;
+  pInstant?: InputMaybe<IntFieldUpdateOperationsInput>;
+  shares?: InputMaybe<DecimalFieldUpdateOperationsInput>;
+  stakePools?: InputMaybe<StakePoolsUpdateOneWithoutMinersInput>;
+  state?: InputMaybe<StringFieldUpdateOperationsInput>;
+  totalReward?: InputMaybe<DecimalFieldUpdateOperationsInput>;
+  updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  v?: InputMaybe<DecimalFieldUpdateOperationsInput>;
+  vUpdatedAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  ve?: InputMaybe<DecimalFieldUpdateOperationsInput>;
+  workerActivities?: InputMaybe<WorkerActivitiesUpdateManyWithoutMinersInput>;
+  workerPublicKey?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  workersMinersWorkerIdToWorkers?: InputMaybe<WorkersUpdateOneWithoutMinersMinersWorkerIdToWorkersInput>;
+};
+
+export type MinersUpdateWithoutWorkersMinersWorkerIdToWorkersInput = {
+  active?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  address?: InputMaybe<StringFieldUpdateOperationsInput>;
+  coolingDownStartedAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  current?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  estimatesReclaimableAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  id?: InputMaybe<BigIntFieldUpdateOperationsInput>;
+  iterations?: InputMaybe<BigIntFieldUpdateOperationsInput>;
+  lastChallengedAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  lastUpdatedBlockNumber?: InputMaybe<BigIntFieldUpdateOperationsInput>;
+  lastUpdatedTimestamp?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  minerActivities?: InputMaybe<MinerActivitiesUpdateManyWithoutMinersInput>;
+  miningStartedAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  pInit?: InputMaybe<IntFieldUpdateOperationsInput>;
+  pInstant?: InputMaybe<IntFieldUpdateOperationsInput>;
+  shares?: InputMaybe<DecimalFieldUpdateOperationsInput>;
+  stakePools?: InputMaybe<StakePoolsUpdateOneWithoutMinersInput>;
+  state?: InputMaybe<StringFieldUpdateOperationsInput>;
+  totalReward?: InputMaybe<DecimalFieldUpdateOperationsInput>;
+  updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  v?: InputMaybe<DecimalFieldUpdateOperationsInput>;
+  vUpdatedAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  ve?: InputMaybe<DecimalFieldUpdateOperationsInput>;
+  workerActivities?: InputMaybe<WorkerActivitiesUpdateManyWithoutMinersInput>;
+  workerPublicKey?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  workersMinersToWorkersCurrentMinerIds?: InputMaybe<WorkersUpdateManyWithoutMinersMinersToWorkersCurrentMinerIdInput>;
 };
 
 export type MinersUpsertWithWhereUniqueWithoutStakePoolsInput = {
@@ -2380,21 +3833,44 @@ export type MinersUpsertWithWhereUniqueWithoutStakePoolsInput = {
   where: MinersWhereUniqueInput;
 };
 
-export type MinersUpsertWithWhereUniqueWithoutWorkersInput = {
-  create: MinersCreateWithoutWorkersInput;
-  update: MinersUpdateWithoutWorkersInput;
+export type MinersUpsertWithWhereUniqueWithoutWorkersMinersWorkerIdToWorkersInput = {
+  create: MinersCreateWithoutWorkersMinersWorkerIdToWorkersInput;
+  update: MinersUpdateWithoutWorkersMinersWorkerIdToWorkersInput;
   where: MinersWhereUniqueInput;
+};
+
+export type MinersUpsertWithoutMinerActivitiesInput = {
+  create: MinersCreateWithoutMinerActivitiesInput;
+  update: MinersUpdateWithoutMinerActivitiesInput;
+};
+
+export type MinersUpsertWithoutWorkerActivitiesInput = {
+  create: MinersCreateWithoutWorkerActivitiesInput;
+  update: MinersUpdateWithoutWorkerActivitiesInput;
+};
+
+export type MinersUpsertWithoutWorkersMinersToWorkersCurrentMinerIdsInput = {
+  create: MinersCreateWithoutWorkersMinersToWorkersCurrentMinerIdsInput;
+  update: MinersUpdateWithoutWorkersMinersToWorkersCurrentMinerIdsInput;
 };
 
 export type MinersWhereInput = {
   AND?: InputMaybe<Array<MinersWhereInput>>;
   NOT?: InputMaybe<Array<MinersWhereInput>>;
   OR?: InputMaybe<Array<MinersWhereInput>>;
+  active?: InputMaybe<BoolFilter>;
   address?: InputMaybe<StringFilter>;
+  coolingDownStartedAt?: InputMaybe<DateTimeNullableFilter>;
   createdAt?: InputMaybe<DateTimeFilter>;
+  current?: InputMaybe<BoolFilter>;
+  estimatesReclaimableAt?: InputMaybe<DateTimeNullableFilter>;
   id?: InputMaybe<BigIntFilter>;
+  iterations?: InputMaybe<BigIntFilter>;
+  lastChallengedAt?: InputMaybe<DateTimeNullableFilter>;
   lastUpdatedBlockNumber?: InputMaybe<BigIntFilter>;
   lastUpdatedTimestamp?: InputMaybe<DateTimeFilter>;
+  minerActivities?: InputMaybe<MinerActivitiesListRelationFilter>;
+  miningStartedAt?: InputMaybe<DateTimeNullableFilter>;
   pInit?: InputMaybe<IntFilter>;
   pInstant?: InputMaybe<IntFilter>;
   shares?: InputMaybe<DecimalFilter>;
@@ -2404,9 +3880,13 @@ export type MinersWhereInput = {
   totalReward?: InputMaybe<DecimalFilter>;
   updatedAt?: InputMaybe<DateTimeFilter>;
   v?: InputMaybe<DecimalFilter>;
+  vUpdatedAt?: InputMaybe<DateTimeNullableFilter>;
   ve?: InputMaybe<DecimalFilter>;
-  workerId?: InputMaybe<BigIntFilter>;
-  workers?: InputMaybe<WorkersRelationFilter>;
+  workerActivities?: InputMaybe<WorkerActivitiesListRelationFilter>;
+  workerId?: InputMaybe<BigIntNullableFilter>;
+  workerPublicKey?: InputMaybe<StringNullableFilter>;
+  workersMinersToWorkersCurrentMinerIds?: InputMaybe<WorkersListRelationFilter>;
+  workersMinersWorkerIdToWorkers?: InputMaybe<WorkersRelationFilter>;
 };
 
 export type MinersWhereUniqueInput = {
@@ -2422,6 +3902,7 @@ export type Mutation = {
   createManyAccounts: AffectedRowsOutput;
   createManyArInternalMetadata: AffectedRowsOutput;
   createManyEvents: AffectedRowsOutput;
+  createManyMinerActivities: AffectedRowsOutput;
   createManyMiners: AffectedRowsOutput;
   createManySchemaMigrations: AffectedRowsOutput;
   createManyStakePoolActivities: AffectedRowsOutput;
@@ -2432,6 +3913,7 @@ export type Mutation = {
   createManyStates: AffectedRowsOutput;
   createManyWorkerActivities: AffectedRowsOutput;
   createManyWorkers: AffectedRowsOutput;
+  createMinerActivities: MinerActivities;
   createMiners: Miners;
   createSchemaMigrations: SchemaMigrations;
   createStakePoolActivities: StakePoolActivities;
@@ -2448,6 +3930,7 @@ export type Mutation = {
   deleteManyAccounts: AffectedRowsOutput;
   deleteManyArInternalMetadata: AffectedRowsOutput;
   deleteManyEvents: AffectedRowsOutput;
+  deleteManyMinerActivities: AffectedRowsOutput;
   deleteManyMiners: AffectedRowsOutput;
   deleteManySchemaMigrations: AffectedRowsOutput;
   deleteManyStakePoolActivities: AffectedRowsOutput;
@@ -2458,6 +3941,7 @@ export type Mutation = {
   deleteManyStates: AffectedRowsOutput;
   deleteManyWorkerActivities: AffectedRowsOutput;
   deleteManyWorkers: AffectedRowsOutput;
+  deleteMinerActivities?: Maybe<MinerActivities>;
   deleteMiners?: Maybe<Miners>;
   deleteSchemaMigrations?: Maybe<SchemaMigrations>;
   deleteStakePoolActivities?: Maybe<StakePoolActivities>;
@@ -2474,6 +3958,7 @@ export type Mutation = {
   updateManyAccounts: AffectedRowsOutput;
   updateManyArInternalMetadata: AffectedRowsOutput;
   updateManyEvents: AffectedRowsOutput;
+  updateManyMinerActivities: AffectedRowsOutput;
   updateManyMiners: AffectedRowsOutput;
   updateManySchemaMigrations: AffectedRowsOutput;
   updateManyStakePoolActivities: AffectedRowsOutput;
@@ -2484,6 +3969,7 @@ export type Mutation = {
   updateManyStates: AffectedRowsOutput;
   updateManyWorkerActivities: AffectedRowsOutput;
   updateManyWorkers: AffectedRowsOutput;
+  updateMinerActivities?: Maybe<MinerActivities>;
   updateMiners?: Maybe<Miners>;
   updateSchemaMigrations?: Maybe<SchemaMigrations>;
   updateStakePoolActivities?: Maybe<StakePoolActivities>;
@@ -2497,6 +3983,7 @@ export type Mutation = {
   upsertAccounts: Accounts;
   upsertArInternalMetadata: ArInternalMetadata;
   upsertEvents: Events;
+  upsertMinerActivities: MinerActivities;
   upsertMiners: Miners;
   upsertSchemaMigrations: SchemaMigrations;
   upsertStakePoolActivities: StakePoolActivities;
@@ -2539,6 +4026,12 @@ export type MutationCreateManyArInternalMetadataArgs = {
 
 export type MutationCreateManyEventsArgs = {
   data: Array<EventsCreateManyInput>;
+  skipDuplicates?: InputMaybe<Scalars['Boolean']>;
+};
+
+
+export type MutationCreateManyMinerActivitiesArgs = {
+  data: Array<MinerActivitiesCreateManyInput>;
   skipDuplicates?: InputMaybe<Scalars['Boolean']>;
 };
 
@@ -2600,6 +4093,11 @@ export type MutationCreateManyWorkerActivitiesArgs = {
 export type MutationCreateManyWorkersArgs = {
   data: Array<WorkersCreateManyInput>;
   skipDuplicates?: InputMaybe<Scalars['Boolean']>;
+};
+
+
+export type MutationCreateMinerActivitiesArgs = {
+  data: MinerActivitiesCreateInput;
 };
 
 
@@ -2683,6 +4181,11 @@ export type MutationDeleteManyEventsArgs = {
 };
 
 
+export type MutationDeleteManyMinerActivitiesArgs = {
+  where?: InputMaybe<MinerActivitiesWhereInput>;
+};
+
+
 export type MutationDeleteManyMinersArgs = {
   where?: InputMaybe<MinersWhereInput>;
 };
@@ -2730,6 +4233,11 @@ export type MutationDeleteManyWorkerActivitiesArgs = {
 
 export type MutationDeleteManyWorkersArgs = {
   where?: InputMaybe<WorkersWhereInput>;
+};
+
+
+export type MutationDeleteMinerActivitiesArgs = {
+  where: MinerActivitiesWhereUniqueInput;
 };
 
 
@@ -2819,6 +4327,12 @@ export type MutationUpdateManyEventsArgs = {
 };
 
 
+export type MutationUpdateManyMinerActivitiesArgs = {
+  data: MinerActivitiesUpdateManyMutationInput;
+  where?: InputMaybe<MinerActivitiesWhereInput>;
+};
+
+
 export type MutationUpdateManyMinersArgs = {
   data: MinersUpdateManyMutationInput;
   where?: InputMaybe<MinersWhereInput>;
@@ -2876,6 +4390,12 @@ export type MutationUpdateManyWorkerActivitiesArgs = {
 export type MutationUpdateManyWorkersArgs = {
   data: WorkersUpdateManyMutationInput;
   where?: InputMaybe<WorkersWhereInput>;
+};
+
+
+export type MutationUpdateMinerActivitiesArgs = {
+  data: MinerActivitiesUpdateInput;
+  where: MinerActivitiesWhereUniqueInput;
 };
 
 
@@ -2957,6 +4477,13 @@ export type MutationUpsertEventsArgs = {
   create: EventsCreateInput;
   update: EventsUpdateInput;
   where: EventsWhereUniqueInput;
+};
+
+
+export type MutationUpsertMinerActivitiesArgs = {
+  create: MinerActivitiesCreateInput;
+  update: MinerActivitiesUpdateInput;
+  where: MinerActivitiesWhereUniqueInput;
 };
 
 
@@ -3392,6 +4919,7 @@ export type Query = {
   aggregateAccounts: AggregateAccounts;
   aggregateArInternalMetadata: AggregateArInternalMetadata;
   aggregateEvents: AggregateEvents;
+  aggregateMinerActivities: AggregateMinerActivities;
   aggregateMiners: AggregateMiners;
   aggregateSchemaMigrations: AggregateSchemaMigrations;
   aggregateStakePoolActivities: AggregateStakePoolActivities;
@@ -3405,6 +4933,7 @@ export type Query = {
   findFirstAccounts?: Maybe<Accounts>;
   findFirstArInternalMetadata?: Maybe<ArInternalMetadata>;
   findFirstEvents?: Maybe<Events>;
+  findFirstMinerActivities?: Maybe<MinerActivities>;
   findFirstMiners?: Maybe<Miners>;
   findFirstSchemaMigrations?: Maybe<SchemaMigrations>;
   findFirstStakePoolActivities?: Maybe<StakePoolActivities>;
@@ -3418,6 +4947,7 @@ export type Query = {
   findManyAccounts: Array<Accounts>;
   findManyArInternalMetadata: Array<ArInternalMetadata>;
   findManyEvents: Array<Events>;
+  findManyMinerActivities: Array<MinerActivities>;
   findManyMiners: Array<Miners>;
   findManySchemaMigrations: Array<SchemaMigrations>;
   findManyStakePoolActivities: Array<StakePoolActivities>;
@@ -3431,6 +4961,7 @@ export type Query = {
   findUniqueAccounts?: Maybe<Accounts>;
   findUniqueArInternalMetadata?: Maybe<ArInternalMetadata>;
   findUniqueEvents?: Maybe<Events>;
+  findUniqueMinerActivities?: Maybe<MinerActivities>;
   findUniqueMiners?: Maybe<Miners>;
   findUniqueSchemaMigrations?: Maybe<SchemaMigrations>;
   findUniqueStakePoolActivities?: Maybe<StakePoolActivities>;
@@ -3444,6 +4975,7 @@ export type Query = {
   groupByAccounts: Array<AccountsGroupBy>;
   groupByArInternalMetadata: Array<ArInternalMetadataGroupBy>;
   groupByEvents: Array<EventsGroupBy>;
+  groupByMinerActivities: Array<MinerActivitiesGroupBy>;
   groupByMiners: Array<MinersGroupBy>;
   groupBySchemaMigrations: Array<SchemaMigrationsGroupBy>;
   groupByStakePoolActivities: Array<StakePoolActivitiesGroupBy>;
@@ -3481,6 +5013,15 @@ export type QueryAggregateEventsArgs = {
   skip?: InputMaybe<Scalars['Int']>;
   take?: InputMaybe<Scalars['Int']>;
   where?: InputMaybe<EventsWhereInput>;
+};
+
+
+export type QueryAggregateMinerActivitiesArgs = {
+  cursor?: InputMaybe<MinerActivitiesWhereUniqueInput>;
+  orderBy?: InputMaybe<Array<MinerActivitiesOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']>;
+  take?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<MinerActivitiesWhereInput>;
 };
 
 
@@ -3601,6 +5142,16 @@ export type QueryFindFirstEventsArgs = {
   skip?: InputMaybe<Scalars['Int']>;
   take?: InputMaybe<Scalars['Int']>;
   where?: InputMaybe<EventsWhereInput>;
+};
+
+
+export type QueryFindFirstMinerActivitiesArgs = {
+  cursor?: InputMaybe<MinerActivitiesWhereUniqueInput>;
+  distinct?: InputMaybe<Array<MinerActivitiesScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<MinerActivitiesOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']>;
+  take?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<MinerActivitiesWhereInput>;
 };
 
 
@@ -3734,6 +5285,16 @@ export type QueryFindManyEventsArgs = {
 };
 
 
+export type QueryFindManyMinerActivitiesArgs = {
+  cursor?: InputMaybe<MinerActivitiesWhereUniqueInput>;
+  distinct?: InputMaybe<Array<MinerActivitiesScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<MinerActivitiesOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']>;
+  take?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<MinerActivitiesWhereInput>;
+};
+
+
 export type QueryFindManyMinersArgs = {
   cursor?: InputMaybe<MinersWhereUniqueInput>;
   distinct?: InputMaybe<Array<MinersScalarFieldEnum>>;
@@ -3849,6 +5410,11 @@ export type QueryFindUniqueEventsArgs = {
 };
 
 
+export type QueryFindUniqueMinerActivitiesArgs = {
+  where: MinerActivitiesWhereUniqueInput;
+};
+
+
 export type QueryFindUniqueMinersArgs = {
   where: MinersWhereUniqueInput;
 };
@@ -3926,6 +5492,16 @@ export type QueryGroupByEventsArgs = {
   skip?: InputMaybe<Scalars['Int']>;
   take?: InputMaybe<Scalars['Int']>;
   where?: InputMaybe<EventsWhereInput>;
+};
+
+
+export type QueryGroupByMinerActivitiesArgs = {
+  by: Array<MinerActivitiesScalarFieldEnum>;
+  having?: InputMaybe<MinerActivitiesScalarWhereWithAggregatesInput>;
+  orderBy?: InputMaybe<Array<MinerActivitiesOrderByWithAggregationInput>>;
+  skip?: InputMaybe<Scalars['Int']>;
+  take?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<MinerActivitiesWhereInput>;
 };
 
 
@@ -4133,14 +5709,17 @@ export type StakePoolActivities = {
   blockNumber: Scalars['BigInt'];
   cap?: Maybe<Scalars['Decimal']>;
   commission: Scalars['Decimal'];
+  coolingDownMinersCount: Scalars['Int'];
   createdAt: Scalars['DateTime'];
   eventId?: Maybe<Scalars['BigInt']>;
   events?: Maybe<Events>;
   freeStake: Scalars['Decimal'];
   id: Scalars['BigInt'];
+  idleMinersCount: Scalars['Int'];
   instantApr: Scalars['Decimal'];
-  miningWorkersCount: Scalars['Int'];
+  minersCount: Scalars['Int'];
   ownerReward: Scalars['Decimal'];
+  readyMinersCount: Scalars['Int'];
   releasingStake: Scalars['Decimal'];
   remainingStake?: Maybe<Scalars['Decimal']>;
   rewardAcc: Scalars['Decimal'];
@@ -4152,10 +5731,10 @@ export type StakePoolActivities = {
   totalShares: Scalars['Decimal'];
   totalStake: Scalars['Decimal'];
   type: Scalars['String'];
+  unresponsiveMinersCount: Scalars['Int'];
   updatedAt: Scalars['DateTime'];
   usedStake: Scalars['Decimal'];
   withdrawalsCount: Scalars['Int'];
-  workersCount: Scalars['Int'];
 };
 
 export type StakePoolActivitiesAvgAggregate = {
@@ -4163,12 +5742,15 @@ export type StakePoolActivitiesAvgAggregate = {
   blockNumber?: Maybe<Scalars['Float']>;
   cap?: Maybe<Scalars['Decimal']>;
   commission?: Maybe<Scalars['Decimal']>;
+  coolingDownMinersCount?: Maybe<Scalars['Float']>;
   eventId?: Maybe<Scalars['Float']>;
   freeStake?: Maybe<Scalars['Decimal']>;
   id?: Maybe<Scalars['Float']>;
+  idleMinersCount?: Maybe<Scalars['Float']>;
   instantApr?: Maybe<Scalars['Decimal']>;
-  miningWorkersCount?: Maybe<Scalars['Float']>;
+  minersCount?: Maybe<Scalars['Float']>;
   ownerReward?: Maybe<Scalars['Decimal']>;
+  readyMinersCount?: Maybe<Scalars['Float']>;
   releasingStake?: Maybe<Scalars['Decimal']>;
   remainingStake?: Maybe<Scalars['Decimal']>;
   rewardAcc?: Maybe<Scalars['Decimal']>;
@@ -4177,21 +5759,24 @@ export type StakePoolActivitiesAvgAggregate = {
   tokenomicVersion?: Maybe<Scalars['Float']>;
   totalShares?: Maybe<Scalars['Decimal']>;
   totalStake?: Maybe<Scalars['Decimal']>;
+  unresponsiveMinersCount?: Maybe<Scalars['Float']>;
   usedStake?: Maybe<Scalars['Decimal']>;
   withdrawalsCount?: Maybe<Scalars['Float']>;
-  workersCount?: Maybe<Scalars['Float']>;
 };
 
 export type StakePoolActivitiesAvgOrderByAggregateInput = {
   blockNumber?: InputMaybe<SortOrder>;
   cap?: InputMaybe<SortOrder>;
   commission?: InputMaybe<SortOrder>;
+  coolingDownMinersCount?: InputMaybe<SortOrder>;
   eventId?: InputMaybe<SortOrder>;
   freeStake?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
+  idleMinersCount?: InputMaybe<SortOrder>;
   instantApr?: InputMaybe<SortOrder>;
-  miningWorkersCount?: InputMaybe<SortOrder>;
+  minersCount?: InputMaybe<SortOrder>;
   ownerReward?: InputMaybe<SortOrder>;
+  readyMinersCount?: InputMaybe<SortOrder>;
   releasingStake?: InputMaybe<SortOrder>;
   remainingStake?: InputMaybe<SortOrder>;
   rewardAcc?: InputMaybe<SortOrder>;
@@ -4200,9 +5785,9 @@ export type StakePoolActivitiesAvgOrderByAggregateInput = {
   tokenomicVersion?: InputMaybe<SortOrder>;
   totalShares?: InputMaybe<SortOrder>;
   totalStake?: InputMaybe<SortOrder>;
+  unresponsiveMinersCount?: InputMaybe<SortOrder>;
   usedStake?: InputMaybe<SortOrder>;
   withdrawalsCount?: InputMaybe<SortOrder>;
-  workersCount?: InputMaybe<SortOrder>;
 };
 
 export type StakePoolActivitiesCountAggregate = {
@@ -4211,13 +5796,16 @@ export type StakePoolActivitiesCountAggregate = {
   blockNumber: Scalars['Int'];
   cap: Scalars['Int'];
   commission: Scalars['Int'];
+  coolingDownMinersCount: Scalars['Int'];
   createdAt: Scalars['Int'];
   eventId: Scalars['Int'];
   freeStake: Scalars['Int'];
   id: Scalars['Int'];
+  idleMinersCount: Scalars['Int'];
   instantApr: Scalars['Int'];
-  miningWorkersCount: Scalars['Int'];
+  minersCount: Scalars['Int'];
   ownerReward: Scalars['Int'];
+  readyMinersCount: Scalars['Int'];
   releasingStake: Scalars['Int'];
   remainingStake: Scalars['Int'];
   rewardAcc: Scalars['Int'];
@@ -4228,23 +5816,26 @@ export type StakePoolActivitiesCountAggregate = {
   totalShares: Scalars['Int'];
   totalStake: Scalars['Int'];
   type: Scalars['Int'];
+  unresponsiveMinersCount: Scalars['Int'];
   updatedAt: Scalars['Int'];
   usedStake: Scalars['Int'];
   withdrawalsCount: Scalars['Int'];
-  workersCount: Scalars['Int'];
 };
 
 export type StakePoolActivitiesCountOrderByAggregateInput = {
   blockNumber?: InputMaybe<SortOrder>;
   cap?: InputMaybe<SortOrder>;
   commission?: InputMaybe<SortOrder>;
+  coolingDownMinersCount?: InputMaybe<SortOrder>;
   createdAt?: InputMaybe<SortOrder>;
   eventId?: InputMaybe<SortOrder>;
   freeStake?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
+  idleMinersCount?: InputMaybe<SortOrder>;
   instantApr?: InputMaybe<SortOrder>;
-  miningWorkersCount?: InputMaybe<SortOrder>;
+  minersCount?: InputMaybe<SortOrder>;
   ownerReward?: InputMaybe<SortOrder>;
+  readyMinersCount?: InputMaybe<SortOrder>;
   releasingStake?: InputMaybe<SortOrder>;
   remainingStake?: InputMaybe<SortOrder>;
   rewardAcc?: InputMaybe<SortOrder>;
@@ -4255,23 +5846,26 @@ export type StakePoolActivitiesCountOrderByAggregateInput = {
   totalShares?: InputMaybe<SortOrder>;
   totalStake?: InputMaybe<SortOrder>;
   type?: InputMaybe<SortOrder>;
+  unresponsiveMinersCount?: InputMaybe<SortOrder>;
   updatedAt?: InputMaybe<SortOrder>;
   usedStake?: InputMaybe<SortOrder>;
   withdrawalsCount?: InputMaybe<SortOrder>;
-  workersCount?: InputMaybe<SortOrder>;
 };
 
 export type StakePoolActivitiesCreateInput = {
   blockNumber: Scalars['BigInt'];
   cap?: InputMaybe<Scalars['Decimal']>;
   commission?: InputMaybe<Scalars['Decimal']>;
+  coolingDownMinersCount?: InputMaybe<Scalars['Int']>;
   createdAt: Scalars['DateTime'];
   events?: InputMaybe<EventsCreateNestedOneWithoutStakePoolActivitiesInput>;
   freeStake?: InputMaybe<Scalars['Decimal']>;
   id?: InputMaybe<Scalars['BigInt']>;
+  idleMinersCount?: InputMaybe<Scalars['Int']>;
   instantApr?: InputMaybe<Scalars['Decimal']>;
-  miningWorkersCount?: InputMaybe<Scalars['Int']>;
+  minersCount?: InputMaybe<Scalars['Int']>;
   ownerReward?: InputMaybe<Scalars['Decimal']>;
+  readyMinersCount?: InputMaybe<Scalars['Int']>;
   releasingStake?: InputMaybe<Scalars['Decimal']>;
   remainingStake?: InputMaybe<Scalars['Decimal']>;
   rewardAcc?: InputMaybe<Scalars['Decimal']>;
@@ -4282,22 +5876,25 @@ export type StakePoolActivitiesCreateInput = {
   totalShares?: InputMaybe<Scalars['Decimal']>;
   totalStake?: InputMaybe<Scalars['Decimal']>;
   type: Scalars['String'];
+  unresponsiveMinersCount?: InputMaybe<Scalars['Int']>;
   updatedAt: Scalars['DateTime'];
   usedStake?: InputMaybe<Scalars['Decimal']>;
   withdrawalsCount?: InputMaybe<Scalars['Int']>;
-  workersCount?: InputMaybe<Scalars['Int']>;
 };
 
 export type StakePoolActivitiesCreateManyEventsInput = {
   blockNumber: Scalars['BigInt'];
   cap?: InputMaybe<Scalars['Decimal']>;
   commission?: InputMaybe<Scalars['Decimal']>;
+  coolingDownMinersCount?: InputMaybe<Scalars['Int']>;
   createdAt: Scalars['DateTime'];
   freeStake?: InputMaybe<Scalars['Decimal']>;
   id?: InputMaybe<Scalars['BigInt']>;
+  idleMinersCount?: InputMaybe<Scalars['Int']>;
   instantApr?: InputMaybe<Scalars['Decimal']>;
-  miningWorkersCount?: InputMaybe<Scalars['Int']>;
+  minersCount?: InputMaybe<Scalars['Int']>;
   ownerReward?: InputMaybe<Scalars['Decimal']>;
+  readyMinersCount?: InputMaybe<Scalars['Int']>;
   releasingStake?: InputMaybe<Scalars['Decimal']>;
   remainingStake?: InputMaybe<Scalars['Decimal']>;
   rewardAcc?: InputMaybe<Scalars['Decimal']>;
@@ -4308,10 +5905,10 @@ export type StakePoolActivitiesCreateManyEventsInput = {
   totalShares?: InputMaybe<Scalars['Decimal']>;
   totalStake?: InputMaybe<Scalars['Decimal']>;
   type: Scalars['String'];
+  unresponsiveMinersCount?: InputMaybe<Scalars['Int']>;
   updatedAt: Scalars['DateTime'];
   usedStake?: InputMaybe<Scalars['Decimal']>;
   withdrawalsCount?: InputMaybe<Scalars['Int']>;
-  workersCount?: InputMaybe<Scalars['Int']>;
 };
 
 export type StakePoolActivitiesCreateManyEventsInputEnvelope = {
@@ -4323,13 +5920,16 @@ export type StakePoolActivitiesCreateManyInput = {
   blockNumber: Scalars['BigInt'];
   cap?: InputMaybe<Scalars['Decimal']>;
   commission?: InputMaybe<Scalars['Decimal']>;
+  coolingDownMinersCount?: InputMaybe<Scalars['Int']>;
   createdAt: Scalars['DateTime'];
   eventId?: InputMaybe<Scalars['BigInt']>;
   freeStake?: InputMaybe<Scalars['Decimal']>;
   id?: InputMaybe<Scalars['BigInt']>;
+  idleMinersCount?: InputMaybe<Scalars['Int']>;
   instantApr?: InputMaybe<Scalars['Decimal']>;
-  miningWorkersCount?: InputMaybe<Scalars['Int']>;
+  minersCount?: InputMaybe<Scalars['Int']>;
   ownerReward?: InputMaybe<Scalars['Decimal']>;
+  readyMinersCount?: InputMaybe<Scalars['Int']>;
   releasingStake?: InputMaybe<Scalars['Decimal']>;
   remainingStake?: InputMaybe<Scalars['Decimal']>;
   rewardAcc?: InputMaybe<Scalars['Decimal']>;
@@ -4340,23 +5940,26 @@ export type StakePoolActivitiesCreateManyInput = {
   totalShares?: InputMaybe<Scalars['Decimal']>;
   totalStake?: InputMaybe<Scalars['Decimal']>;
   type: Scalars['String'];
+  unresponsiveMinersCount?: InputMaybe<Scalars['Int']>;
   updatedAt: Scalars['DateTime'];
   usedStake?: InputMaybe<Scalars['Decimal']>;
   withdrawalsCount?: InputMaybe<Scalars['Int']>;
-  workersCount?: InputMaybe<Scalars['Int']>;
 };
 
 export type StakePoolActivitiesCreateManyStakePoolsInput = {
   blockNumber: Scalars['BigInt'];
   cap?: InputMaybe<Scalars['Decimal']>;
   commission?: InputMaybe<Scalars['Decimal']>;
+  coolingDownMinersCount?: InputMaybe<Scalars['Int']>;
   createdAt: Scalars['DateTime'];
   eventId?: InputMaybe<Scalars['BigInt']>;
   freeStake?: InputMaybe<Scalars['Decimal']>;
   id?: InputMaybe<Scalars['BigInt']>;
+  idleMinersCount?: InputMaybe<Scalars['Int']>;
   instantApr?: InputMaybe<Scalars['Decimal']>;
-  miningWorkersCount?: InputMaybe<Scalars['Int']>;
+  minersCount?: InputMaybe<Scalars['Int']>;
   ownerReward?: InputMaybe<Scalars['Decimal']>;
+  readyMinersCount?: InputMaybe<Scalars['Int']>;
   releasingStake?: InputMaybe<Scalars['Decimal']>;
   remainingStake?: InputMaybe<Scalars['Decimal']>;
   rewardAcc?: InputMaybe<Scalars['Decimal']>;
@@ -4366,10 +5969,10 @@ export type StakePoolActivitiesCreateManyStakePoolsInput = {
   totalShares?: InputMaybe<Scalars['Decimal']>;
   totalStake?: InputMaybe<Scalars['Decimal']>;
   type: Scalars['String'];
+  unresponsiveMinersCount?: InputMaybe<Scalars['Int']>;
   updatedAt: Scalars['DateTime'];
   usedStake?: InputMaybe<Scalars['Decimal']>;
   withdrawalsCount?: InputMaybe<Scalars['Int']>;
-  workersCount?: InputMaybe<Scalars['Int']>;
 };
 
 export type StakePoolActivitiesCreateManyStakePoolsInputEnvelope = {
@@ -4405,12 +6008,15 @@ export type StakePoolActivitiesCreateWithoutEventsInput = {
   blockNumber: Scalars['BigInt'];
   cap?: InputMaybe<Scalars['Decimal']>;
   commission?: InputMaybe<Scalars['Decimal']>;
+  coolingDownMinersCount?: InputMaybe<Scalars['Int']>;
   createdAt: Scalars['DateTime'];
   freeStake?: InputMaybe<Scalars['Decimal']>;
   id?: InputMaybe<Scalars['BigInt']>;
+  idleMinersCount?: InputMaybe<Scalars['Int']>;
   instantApr?: InputMaybe<Scalars['Decimal']>;
-  miningWorkersCount?: InputMaybe<Scalars['Int']>;
+  minersCount?: InputMaybe<Scalars['Int']>;
   ownerReward?: InputMaybe<Scalars['Decimal']>;
+  readyMinersCount?: InputMaybe<Scalars['Int']>;
   releasingStake?: InputMaybe<Scalars['Decimal']>;
   remainingStake?: InputMaybe<Scalars['Decimal']>;
   rewardAcc?: InputMaybe<Scalars['Decimal']>;
@@ -4421,23 +6027,26 @@ export type StakePoolActivitiesCreateWithoutEventsInput = {
   totalShares?: InputMaybe<Scalars['Decimal']>;
   totalStake?: InputMaybe<Scalars['Decimal']>;
   type: Scalars['String'];
+  unresponsiveMinersCount?: InputMaybe<Scalars['Int']>;
   updatedAt: Scalars['DateTime'];
   usedStake?: InputMaybe<Scalars['Decimal']>;
   withdrawalsCount?: InputMaybe<Scalars['Int']>;
-  workersCount?: InputMaybe<Scalars['Int']>;
 };
 
 export type StakePoolActivitiesCreateWithoutStakePoolsInput = {
   blockNumber: Scalars['BigInt'];
   cap?: InputMaybe<Scalars['Decimal']>;
   commission?: InputMaybe<Scalars['Decimal']>;
+  coolingDownMinersCount?: InputMaybe<Scalars['Int']>;
   createdAt: Scalars['DateTime'];
   events?: InputMaybe<EventsCreateNestedOneWithoutStakePoolActivitiesInput>;
   freeStake?: InputMaybe<Scalars['Decimal']>;
   id?: InputMaybe<Scalars['BigInt']>;
+  idleMinersCount?: InputMaybe<Scalars['Int']>;
   instantApr?: InputMaybe<Scalars['Decimal']>;
-  miningWorkersCount?: InputMaybe<Scalars['Int']>;
+  minersCount?: InputMaybe<Scalars['Int']>;
   ownerReward?: InputMaybe<Scalars['Decimal']>;
+  readyMinersCount?: InputMaybe<Scalars['Int']>;
   releasingStake?: InputMaybe<Scalars['Decimal']>;
   remainingStake?: InputMaybe<Scalars['Decimal']>;
   rewardAcc?: InputMaybe<Scalars['Decimal']>;
@@ -4447,10 +6056,10 @@ export type StakePoolActivitiesCreateWithoutStakePoolsInput = {
   totalShares?: InputMaybe<Scalars['Decimal']>;
   totalStake?: InputMaybe<Scalars['Decimal']>;
   type: Scalars['String'];
+  unresponsiveMinersCount?: InputMaybe<Scalars['Int']>;
   updatedAt: Scalars['DateTime'];
   usedStake?: InputMaybe<Scalars['Decimal']>;
   withdrawalsCount?: InputMaybe<Scalars['Int']>;
-  workersCount?: InputMaybe<Scalars['Int']>;
 };
 
 export type StakePoolActivitiesGroupBy = {
@@ -4463,13 +6072,16 @@ export type StakePoolActivitiesGroupBy = {
   blockNumber: Scalars['BigInt'];
   cap?: Maybe<Scalars['Decimal']>;
   commission: Scalars['Decimal'];
+  coolingDownMinersCount: Scalars['Int'];
   createdAt: Scalars['DateTime'];
   eventId?: Maybe<Scalars['BigInt']>;
   freeStake: Scalars['Decimal'];
   id: Scalars['BigInt'];
+  idleMinersCount: Scalars['Int'];
   instantApr: Scalars['Decimal'];
-  miningWorkersCount: Scalars['Int'];
+  minersCount: Scalars['Int'];
   ownerReward: Scalars['Decimal'];
+  readyMinersCount: Scalars['Int'];
   releasingStake: Scalars['Decimal'];
   remainingStake?: Maybe<Scalars['Decimal']>;
   rewardAcc: Scalars['Decimal'];
@@ -4480,10 +6092,10 @@ export type StakePoolActivitiesGroupBy = {
   totalShares: Scalars['Decimal'];
   totalStake: Scalars['Decimal'];
   type: Scalars['String'];
+  unresponsiveMinersCount: Scalars['Int'];
   updatedAt: Scalars['DateTime'];
   usedStake: Scalars['Decimal'];
   withdrawalsCount: Scalars['Int'];
-  workersCount: Scalars['Int'];
 };
 
 export type StakePoolActivitiesListRelationFilter = {
@@ -4497,13 +6109,16 @@ export type StakePoolActivitiesMaxAggregate = {
   blockNumber?: Maybe<Scalars['BigInt']>;
   cap?: Maybe<Scalars['Decimal']>;
   commission?: Maybe<Scalars['Decimal']>;
+  coolingDownMinersCount?: Maybe<Scalars['Int']>;
   createdAt?: Maybe<Scalars['DateTime']>;
   eventId?: Maybe<Scalars['BigInt']>;
   freeStake?: Maybe<Scalars['Decimal']>;
   id?: Maybe<Scalars['BigInt']>;
+  idleMinersCount?: Maybe<Scalars['Int']>;
   instantApr?: Maybe<Scalars['Decimal']>;
-  miningWorkersCount?: Maybe<Scalars['Int']>;
+  minersCount?: Maybe<Scalars['Int']>;
   ownerReward?: Maybe<Scalars['Decimal']>;
+  readyMinersCount?: Maybe<Scalars['Int']>;
   releasingStake?: Maybe<Scalars['Decimal']>;
   remainingStake?: Maybe<Scalars['Decimal']>;
   rewardAcc?: Maybe<Scalars['Decimal']>;
@@ -4514,23 +6129,26 @@ export type StakePoolActivitiesMaxAggregate = {
   totalShares?: Maybe<Scalars['Decimal']>;
   totalStake?: Maybe<Scalars['Decimal']>;
   type?: Maybe<Scalars['String']>;
+  unresponsiveMinersCount?: Maybe<Scalars['Int']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
   usedStake?: Maybe<Scalars['Decimal']>;
   withdrawalsCount?: Maybe<Scalars['Int']>;
-  workersCount?: Maybe<Scalars['Int']>;
 };
 
 export type StakePoolActivitiesMaxOrderByAggregateInput = {
   blockNumber?: InputMaybe<SortOrder>;
   cap?: InputMaybe<SortOrder>;
   commission?: InputMaybe<SortOrder>;
+  coolingDownMinersCount?: InputMaybe<SortOrder>;
   createdAt?: InputMaybe<SortOrder>;
   eventId?: InputMaybe<SortOrder>;
   freeStake?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
+  idleMinersCount?: InputMaybe<SortOrder>;
   instantApr?: InputMaybe<SortOrder>;
-  miningWorkersCount?: InputMaybe<SortOrder>;
+  minersCount?: InputMaybe<SortOrder>;
   ownerReward?: InputMaybe<SortOrder>;
+  readyMinersCount?: InputMaybe<SortOrder>;
   releasingStake?: InputMaybe<SortOrder>;
   remainingStake?: InputMaybe<SortOrder>;
   rewardAcc?: InputMaybe<SortOrder>;
@@ -4541,10 +6159,10 @@ export type StakePoolActivitiesMaxOrderByAggregateInput = {
   totalShares?: InputMaybe<SortOrder>;
   totalStake?: InputMaybe<SortOrder>;
   type?: InputMaybe<SortOrder>;
+  unresponsiveMinersCount?: InputMaybe<SortOrder>;
   updatedAt?: InputMaybe<SortOrder>;
   usedStake?: InputMaybe<SortOrder>;
   withdrawalsCount?: InputMaybe<SortOrder>;
-  workersCount?: InputMaybe<SortOrder>;
 };
 
 export type StakePoolActivitiesMinAggregate = {
@@ -4552,13 +6170,16 @@ export type StakePoolActivitiesMinAggregate = {
   blockNumber?: Maybe<Scalars['BigInt']>;
   cap?: Maybe<Scalars['Decimal']>;
   commission?: Maybe<Scalars['Decimal']>;
+  coolingDownMinersCount?: Maybe<Scalars['Int']>;
   createdAt?: Maybe<Scalars['DateTime']>;
   eventId?: Maybe<Scalars['BigInt']>;
   freeStake?: Maybe<Scalars['Decimal']>;
   id?: Maybe<Scalars['BigInt']>;
+  idleMinersCount?: Maybe<Scalars['Int']>;
   instantApr?: Maybe<Scalars['Decimal']>;
-  miningWorkersCount?: Maybe<Scalars['Int']>;
+  minersCount?: Maybe<Scalars['Int']>;
   ownerReward?: Maybe<Scalars['Decimal']>;
+  readyMinersCount?: Maybe<Scalars['Int']>;
   releasingStake?: Maybe<Scalars['Decimal']>;
   remainingStake?: Maybe<Scalars['Decimal']>;
   rewardAcc?: Maybe<Scalars['Decimal']>;
@@ -4569,23 +6190,26 @@ export type StakePoolActivitiesMinAggregate = {
   totalShares?: Maybe<Scalars['Decimal']>;
   totalStake?: Maybe<Scalars['Decimal']>;
   type?: Maybe<Scalars['String']>;
+  unresponsiveMinersCount?: Maybe<Scalars['Int']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
   usedStake?: Maybe<Scalars['Decimal']>;
   withdrawalsCount?: Maybe<Scalars['Int']>;
-  workersCount?: Maybe<Scalars['Int']>;
 };
 
 export type StakePoolActivitiesMinOrderByAggregateInput = {
   blockNumber?: InputMaybe<SortOrder>;
   cap?: InputMaybe<SortOrder>;
   commission?: InputMaybe<SortOrder>;
+  coolingDownMinersCount?: InputMaybe<SortOrder>;
   createdAt?: InputMaybe<SortOrder>;
   eventId?: InputMaybe<SortOrder>;
   freeStake?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
+  idleMinersCount?: InputMaybe<SortOrder>;
   instantApr?: InputMaybe<SortOrder>;
-  miningWorkersCount?: InputMaybe<SortOrder>;
+  minersCount?: InputMaybe<SortOrder>;
   ownerReward?: InputMaybe<SortOrder>;
+  readyMinersCount?: InputMaybe<SortOrder>;
   releasingStake?: InputMaybe<SortOrder>;
   remainingStake?: InputMaybe<SortOrder>;
   rewardAcc?: InputMaybe<SortOrder>;
@@ -4596,10 +6220,10 @@ export type StakePoolActivitiesMinOrderByAggregateInput = {
   totalShares?: InputMaybe<SortOrder>;
   totalStake?: InputMaybe<SortOrder>;
   type?: InputMaybe<SortOrder>;
+  unresponsiveMinersCount?: InputMaybe<SortOrder>;
   updatedAt?: InputMaybe<SortOrder>;
   usedStake?: InputMaybe<SortOrder>;
   withdrawalsCount?: InputMaybe<SortOrder>;
-  workersCount?: InputMaybe<SortOrder>;
 };
 
 export type StakePoolActivitiesOrderByRelationAggregateInput = {
@@ -4615,13 +6239,16 @@ export type StakePoolActivitiesOrderByWithAggregationInput = {
   blockNumber?: InputMaybe<SortOrder>;
   cap?: InputMaybe<SortOrder>;
   commission?: InputMaybe<SortOrder>;
+  coolingDownMinersCount?: InputMaybe<SortOrder>;
   createdAt?: InputMaybe<SortOrder>;
   eventId?: InputMaybe<SortOrder>;
   freeStake?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
+  idleMinersCount?: InputMaybe<SortOrder>;
   instantApr?: InputMaybe<SortOrder>;
-  miningWorkersCount?: InputMaybe<SortOrder>;
+  minersCount?: InputMaybe<SortOrder>;
   ownerReward?: InputMaybe<SortOrder>;
+  readyMinersCount?: InputMaybe<SortOrder>;
   releasingStake?: InputMaybe<SortOrder>;
   remainingStake?: InputMaybe<SortOrder>;
   rewardAcc?: InputMaybe<SortOrder>;
@@ -4632,24 +6259,27 @@ export type StakePoolActivitiesOrderByWithAggregationInput = {
   totalShares?: InputMaybe<SortOrder>;
   totalStake?: InputMaybe<SortOrder>;
   type?: InputMaybe<SortOrder>;
+  unresponsiveMinersCount?: InputMaybe<SortOrder>;
   updatedAt?: InputMaybe<SortOrder>;
   usedStake?: InputMaybe<SortOrder>;
   withdrawalsCount?: InputMaybe<SortOrder>;
-  workersCount?: InputMaybe<SortOrder>;
 };
 
 export type StakePoolActivitiesOrderByWithRelationInput = {
   blockNumber?: InputMaybe<SortOrder>;
   cap?: InputMaybe<SortOrder>;
   commission?: InputMaybe<SortOrder>;
+  coolingDownMinersCount?: InputMaybe<SortOrder>;
   createdAt?: InputMaybe<SortOrder>;
   eventId?: InputMaybe<SortOrder>;
   events?: InputMaybe<EventsOrderByWithRelationInput>;
   freeStake?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
+  idleMinersCount?: InputMaybe<SortOrder>;
   instantApr?: InputMaybe<SortOrder>;
-  miningWorkersCount?: InputMaybe<SortOrder>;
+  minersCount?: InputMaybe<SortOrder>;
   ownerReward?: InputMaybe<SortOrder>;
+  readyMinersCount?: InputMaybe<SortOrder>;
   releasingStake?: InputMaybe<SortOrder>;
   remainingStake?: InputMaybe<SortOrder>;
   rewardAcc?: InputMaybe<SortOrder>;
@@ -4661,23 +6291,26 @@ export type StakePoolActivitiesOrderByWithRelationInput = {
   totalShares?: InputMaybe<SortOrder>;
   totalStake?: InputMaybe<SortOrder>;
   type?: InputMaybe<SortOrder>;
+  unresponsiveMinersCount?: InputMaybe<SortOrder>;
   updatedAt?: InputMaybe<SortOrder>;
   usedStake?: InputMaybe<SortOrder>;
   withdrawalsCount?: InputMaybe<SortOrder>;
-  workersCount?: InputMaybe<SortOrder>;
 };
 
 export enum StakePoolActivitiesScalarFieldEnum {
   BlockNumber = 'blockNumber',
   Cap = 'cap',
   Commission = 'commission',
+  CoolingDownMinersCount = 'coolingDownMinersCount',
   CreatedAt = 'createdAt',
   EventId = 'eventId',
   FreeStake = 'freeStake',
   Id = 'id',
+  IdleMinersCount = 'idleMinersCount',
   InstantApr = 'instantApr',
-  MiningWorkersCount = 'miningWorkersCount',
+  MinersCount = 'minersCount',
   OwnerReward = 'ownerReward',
+  ReadyMinersCount = 'readyMinersCount',
   ReleasingStake = 'releasingStake',
   RemainingStake = 'remainingStake',
   RewardAcc = 'rewardAcc',
@@ -4688,10 +6321,10 @@ export enum StakePoolActivitiesScalarFieldEnum {
   TotalShares = 'totalShares',
   TotalStake = 'totalStake',
   Type = 'type',
+  UnresponsiveMinersCount = 'unresponsiveMinersCount',
   UpdatedAt = 'updatedAt',
   UsedStake = 'usedStake',
-  WithdrawalsCount = 'withdrawalsCount',
-  WorkersCount = 'workersCount'
+  WithdrawalsCount = 'withdrawalsCount'
 }
 
 export type StakePoolActivitiesScalarWhereInput = {
@@ -4701,13 +6334,16 @@ export type StakePoolActivitiesScalarWhereInput = {
   blockNumber?: InputMaybe<BigIntFilter>;
   cap?: InputMaybe<DecimalNullableFilter>;
   commission?: InputMaybe<DecimalFilter>;
+  coolingDownMinersCount?: InputMaybe<IntFilter>;
   createdAt?: InputMaybe<DateTimeFilter>;
   eventId?: InputMaybe<BigIntNullableFilter>;
   freeStake?: InputMaybe<DecimalFilter>;
   id?: InputMaybe<BigIntFilter>;
+  idleMinersCount?: InputMaybe<IntFilter>;
   instantApr?: InputMaybe<DecimalFilter>;
-  miningWorkersCount?: InputMaybe<IntFilter>;
+  minersCount?: InputMaybe<IntFilter>;
   ownerReward?: InputMaybe<DecimalFilter>;
+  readyMinersCount?: InputMaybe<IntFilter>;
   releasingStake?: InputMaybe<DecimalFilter>;
   remainingStake?: InputMaybe<DecimalNullableFilter>;
   rewardAcc?: InputMaybe<DecimalFilter>;
@@ -4718,10 +6354,10 @@ export type StakePoolActivitiesScalarWhereInput = {
   totalShares?: InputMaybe<DecimalFilter>;
   totalStake?: InputMaybe<DecimalFilter>;
   type?: InputMaybe<StringFilter>;
+  unresponsiveMinersCount?: InputMaybe<IntFilter>;
   updatedAt?: InputMaybe<DateTimeFilter>;
   usedStake?: InputMaybe<DecimalFilter>;
   withdrawalsCount?: InputMaybe<IntFilter>;
-  workersCount?: InputMaybe<IntFilter>;
 };
 
 export type StakePoolActivitiesScalarWhereWithAggregatesInput = {
@@ -4731,13 +6367,16 @@ export type StakePoolActivitiesScalarWhereWithAggregatesInput = {
   blockNumber?: InputMaybe<BigIntWithAggregatesFilter>;
   cap?: InputMaybe<DecimalNullableWithAggregatesFilter>;
   commission?: InputMaybe<DecimalWithAggregatesFilter>;
+  coolingDownMinersCount?: InputMaybe<IntWithAggregatesFilter>;
   createdAt?: InputMaybe<DateTimeWithAggregatesFilter>;
   eventId?: InputMaybe<BigIntNullableWithAggregatesFilter>;
   freeStake?: InputMaybe<DecimalWithAggregatesFilter>;
   id?: InputMaybe<BigIntWithAggregatesFilter>;
+  idleMinersCount?: InputMaybe<IntWithAggregatesFilter>;
   instantApr?: InputMaybe<DecimalWithAggregatesFilter>;
-  miningWorkersCount?: InputMaybe<IntWithAggregatesFilter>;
+  minersCount?: InputMaybe<IntWithAggregatesFilter>;
   ownerReward?: InputMaybe<DecimalWithAggregatesFilter>;
+  readyMinersCount?: InputMaybe<IntWithAggregatesFilter>;
   releasingStake?: InputMaybe<DecimalWithAggregatesFilter>;
   remainingStake?: InputMaybe<DecimalNullableWithAggregatesFilter>;
   rewardAcc?: InputMaybe<DecimalWithAggregatesFilter>;
@@ -4748,10 +6387,10 @@ export type StakePoolActivitiesScalarWhereWithAggregatesInput = {
   totalShares?: InputMaybe<DecimalWithAggregatesFilter>;
   totalStake?: InputMaybe<DecimalWithAggregatesFilter>;
   type?: InputMaybe<StringWithAggregatesFilter>;
+  unresponsiveMinersCount?: InputMaybe<IntWithAggregatesFilter>;
   updatedAt?: InputMaybe<DateTimeWithAggregatesFilter>;
   usedStake?: InputMaybe<DecimalWithAggregatesFilter>;
   withdrawalsCount?: InputMaybe<IntWithAggregatesFilter>;
-  workersCount?: InputMaybe<IntWithAggregatesFilter>;
 };
 
 export type StakePoolActivitiesSumAggregate = {
@@ -4759,12 +6398,15 @@ export type StakePoolActivitiesSumAggregate = {
   blockNumber?: Maybe<Scalars['BigInt']>;
   cap?: Maybe<Scalars['Decimal']>;
   commission?: Maybe<Scalars['Decimal']>;
+  coolingDownMinersCount?: Maybe<Scalars['Int']>;
   eventId?: Maybe<Scalars['BigInt']>;
   freeStake?: Maybe<Scalars['Decimal']>;
   id?: Maybe<Scalars['BigInt']>;
+  idleMinersCount?: Maybe<Scalars['Int']>;
   instantApr?: Maybe<Scalars['Decimal']>;
-  miningWorkersCount?: Maybe<Scalars['Int']>;
+  minersCount?: Maybe<Scalars['Int']>;
   ownerReward?: Maybe<Scalars['Decimal']>;
+  readyMinersCount?: Maybe<Scalars['Int']>;
   releasingStake?: Maybe<Scalars['Decimal']>;
   remainingStake?: Maybe<Scalars['Decimal']>;
   rewardAcc?: Maybe<Scalars['Decimal']>;
@@ -4773,21 +6415,24 @@ export type StakePoolActivitiesSumAggregate = {
   tokenomicVersion?: Maybe<Scalars['Int']>;
   totalShares?: Maybe<Scalars['Decimal']>;
   totalStake?: Maybe<Scalars['Decimal']>;
+  unresponsiveMinersCount?: Maybe<Scalars['Int']>;
   usedStake?: Maybe<Scalars['Decimal']>;
   withdrawalsCount?: Maybe<Scalars['Int']>;
-  workersCount?: Maybe<Scalars['Int']>;
 };
 
 export type StakePoolActivitiesSumOrderByAggregateInput = {
   blockNumber?: InputMaybe<SortOrder>;
   cap?: InputMaybe<SortOrder>;
   commission?: InputMaybe<SortOrder>;
+  coolingDownMinersCount?: InputMaybe<SortOrder>;
   eventId?: InputMaybe<SortOrder>;
   freeStake?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
+  idleMinersCount?: InputMaybe<SortOrder>;
   instantApr?: InputMaybe<SortOrder>;
-  miningWorkersCount?: InputMaybe<SortOrder>;
+  minersCount?: InputMaybe<SortOrder>;
   ownerReward?: InputMaybe<SortOrder>;
+  readyMinersCount?: InputMaybe<SortOrder>;
   releasingStake?: InputMaybe<SortOrder>;
   remainingStake?: InputMaybe<SortOrder>;
   rewardAcc?: InputMaybe<SortOrder>;
@@ -4796,22 +6441,25 @@ export type StakePoolActivitiesSumOrderByAggregateInput = {
   tokenomicVersion?: InputMaybe<SortOrder>;
   totalShares?: InputMaybe<SortOrder>;
   totalStake?: InputMaybe<SortOrder>;
+  unresponsiveMinersCount?: InputMaybe<SortOrder>;
   usedStake?: InputMaybe<SortOrder>;
   withdrawalsCount?: InputMaybe<SortOrder>;
-  workersCount?: InputMaybe<SortOrder>;
 };
 
 export type StakePoolActivitiesUpdateInput = {
   blockNumber?: InputMaybe<BigIntFieldUpdateOperationsInput>;
   cap?: InputMaybe<NullableDecimalFieldUpdateOperationsInput>;
   commission?: InputMaybe<DecimalFieldUpdateOperationsInput>;
+  coolingDownMinersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   events?: InputMaybe<EventsUpdateOneWithoutStakePoolActivitiesInput>;
   freeStake?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   id?: InputMaybe<BigIntFieldUpdateOperationsInput>;
+  idleMinersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   instantApr?: InputMaybe<DecimalFieldUpdateOperationsInput>;
-  miningWorkersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
+  minersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   ownerReward?: InputMaybe<DecimalFieldUpdateOperationsInput>;
+  readyMinersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   releasingStake?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   remainingStake?: InputMaybe<NullableDecimalFieldUpdateOperationsInput>;
   rewardAcc?: InputMaybe<DecimalFieldUpdateOperationsInput>;
@@ -4822,22 +6470,25 @@ export type StakePoolActivitiesUpdateInput = {
   totalShares?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   totalStake?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   type?: InputMaybe<StringFieldUpdateOperationsInput>;
+  unresponsiveMinersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   usedStake?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   withdrawalsCount?: InputMaybe<IntFieldUpdateOperationsInput>;
-  workersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
 };
 
 export type StakePoolActivitiesUpdateManyMutationInput = {
   blockNumber?: InputMaybe<BigIntFieldUpdateOperationsInput>;
   cap?: InputMaybe<NullableDecimalFieldUpdateOperationsInput>;
   commission?: InputMaybe<DecimalFieldUpdateOperationsInput>;
+  coolingDownMinersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   freeStake?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   id?: InputMaybe<BigIntFieldUpdateOperationsInput>;
+  idleMinersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   instantApr?: InputMaybe<DecimalFieldUpdateOperationsInput>;
-  miningWorkersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
+  minersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   ownerReward?: InputMaybe<DecimalFieldUpdateOperationsInput>;
+  readyMinersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   releasingStake?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   remainingStake?: InputMaybe<NullableDecimalFieldUpdateOperationsInput>;
   rewardAcc?: InputMaybe<DecimalFieldUpdateOperationsInput>;
@@ -4847,10 +6498,10 @@ export type StakePoolActivitiesUpdateManyMutationInput = {
   totalShares?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   totalStake?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   type?: InputMaybe<StringFieldUpdateOperationsInput>;
+  unresponsiveMinersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   usedStake?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   withdrawalsCount?: InputMaybe<IntFieldUpdateOperationsInput>;
-  workersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
 };
 
 export type StakePoolActivitiesUpdateManyWithWhereWithoutEventsInput = {
@@ -4905,12 +6556,15 @@ export type StakePoolActivitiesUpdateWithoutEventsInput = {
   blockNumber?: InputMaybe<BigIntFieldUpdateOperationsInput>;
   cap?: InputMaybe<NullableDecimalFieldUpdateOperationsInput>;
   commission?: InputMaybe<DecimalFieldUpdateOperationsInput>;
+  coolingDownMinersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   freeStake?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   id?: InputMaybe<BigIntFieldUpdateOperationsInput>;
+  idleMinersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   instantApr?: InputMaybe<DecimalFieldUpdateOperationsInput>;
-  miningWorkersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
+  minersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   ownerReward?: InputMaybe<DecimalFieldUpdateOperationsInput>;
+  readyMinersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   releasingStake?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   remainingStake?: InputMaybe<NullableDecimalFieldUpdateOperationsInput>;
   rewardAcc?: InputMaybe<DecimalFieldUpdateOperationsInput>;
@@ -4921,23 +6575,26 @@ export type StakePoolActivitiesUpdateWithoutEventsInput = {
   totalShares?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   totalStake?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   type?: InputMaybe<StringFieldUpdateOperationsInput>;
+  unresponsiveMinersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   usedStake?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   withdrawalsCount?: InputMaybe<IntFieldUpdateOperationsInput>;
-  workersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
 };
 
 export type StakePoolActivitiesUpdateWithoutStakePoolsInput = {
   blockNumber?: InputMaybe<BigIntFieldUpdateOperationsInput>;
   cap?: InputMaybe<NullableDecimalFieldUpdateOperationsInput>;
   commission?: InputMaybe<DecimalFieldUpdateOperationsInput>;
+  coolingDownMinersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   events?: InputMaybe<EventsUpdateOneWithoutStakePoolActivitiesInput>;
   freeStake?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   id?: InputMaybe<BigIntFieldUpdateOperationsInput>;
+  idleMinersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   instantApr?: InputMaybe<DecimalFieldUpdateOperationsInput>;
-  miningWorkersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
+  minersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   ownerReward?: InputMaybe<DecimalFieldUpdateOperationsInput>;
+  readyMinersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   releasingStake?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   remainingStake?: InputMaybe<NullableDecimalFieldUpdateOperationsInput>;
   rewardAcc?: InputMaybe<DecimalFieldUpdateOperationsInput>;
@@ -4947,10 +6604,10 @@ export type StakePoolActivitiesUpdateWithoutStakePoolsInput = {
   totalShares?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   totalStake?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   type?: InputMaybe<StringFieldUpdateOperationsInput>;
+  unresponsiveMinersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   usedStake?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   withdrawalsCount?: InputMaybe<IntFieldUpdateOperationsInput>;
-  workersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
 };
 
 export type StakePoolActivitiesUpsertWithWhereUniqueWithoutEventsInput = {
@@ -4972,14 +6629,17 @@ export type StakePoolActivitiesWhereInput = {
   blockNumber?: InputMaybe<BigIntFilter>;
   cap?: InputMaybe<DecimalNullableFilter>;
   commission?: InputMaybe<DecimalFilter>;
+  coolingDownMinersCount?: InputMaybe<IntFilter>;
   createdAt?: InputMaybe<DateTimeFilter>;
   eventId?: InputMaybe<BigIntNullableFilter>;
   events?: InputMaybe<EventsRelationFilter>;
   freeStake?: InputMaybe<DecimalFilter>;
   id?: InputMaybe<BigIntFilter>;
+  idleMinersCount?: InputMaybe<IntFilter>;
   instantApr?: InputMaybe<DecimalFilter>;
-  miningWorkersCount?: InputMaybe<IntFilter>;
+  minersCount?: InputMaybe<IntFilter>;
   ownerReward?: InputMaybe<DecimalFilter>;
+  readyMinersCount?: InputMaybe<IntFilter>;
   releasingStake?: InputMaybe<DecimalFilter>;
   remainingStake?: InputMaybe<DecimalNullableFilter>;
   rewardAcc?: InputMaybe<DecimalFilter>;
@@ -4991,10 +6651,10 @@ export type StakePoolActivitiesWhereInput = {
   totalShares?: InputMaybe<DecimalFilter>;
   totalStake?: InputMaybe<DecimalFilter>;
   type?: InputMaybe<StringFilter>;
+  unresponsiveMinersCount?: InputMaybe<IntFilter>;
   updatedAt?: InputMaybe<DateTimeFilter>;
   usedStake?: InputMaybe<DecimalFilter>;
   withdrawalsCount?: InputMaybe<IntFilter>;
-  workersCount?: InputMaybe<IntFilter>;
 };
 
 export type StakePoolActivitiesWhereUniqueInput = {
@@ -6511,8 +8171,8 @@ export type StakePoolWithdrawals = {
   endEventId?: Maybe<Scalars['BigInt']>;
   endTimestamp?: Maybe<Scalars['DateTime']>;
   estimatesEndTime: Scalars['DateTime'];
-  eventsEventsTostakePoolWithdrawalsEndEventId?: Maybe<Events>;
-  eventsEventsTostakePoolWithdrawalsStartEventId?: Maybe<Events>;
+  eventsEventsToStakePoolWithdrawalsEndEventId?: Maybe<Events>;
+  eventsEventsToStakePoolWithdrawalsStartEventId?: Maybe<Events>;
   id: Scalars['BigInt'];
   shares: Scalars['Decimal'];
   stake: Scalars['Decimal'];
@@ -6598,8 +8258,8 @@ export type StakePoolWithdrawalsCreateInput = {
   endBlockNumber?: InputMaybe<Scalars['BigInt']>;
   endTimestamp?: InputMaybe<Scalars['DateTime']>;
   estimatesEndTime?: InputMaybe<Scalars['DateTime']>;
-  eventsEventsTostakePoolWithdrawalsEndEventId?: InputMaybe<EventsCreateNestedOneWithoutStakePoolWithdrawalsEventsTostakePoolWithdrawalsEndEventIdsInput>;
-  eventsEventsTostakePoolWithdrawalsStartEventId?: InputMaybe<EventsCreateNestedOneWithoutStakePoolWithdrawalsEventsTostakePoolWithdrawalsStartEventIdsInput>;
+  eventsEventsToStakePoolWithdrawalsEndEventId?: InputMaybe<EventsCreateNestedOneWithoutStakePoolWithdrawalsEventsToStakePoolWithdrawalsEndEventIdsInput>;
+  eventsEventsToStakePoolWithdrawalsStartEventId?: InputMaybe<EventsCreateNestedOneWithoutStakePoolWithdrawalsEventsToStakePoolWithdrawalsStartEventIdsInput>;
   id?: InputMaybe<Scalars['BigInt']>;
   shares: Scalars['Decimal'];
   stake?: InputMaybe<Scalars['Decimal']>;
@@ -6634,7 +8294,7 @@ export type StakePoolWithdrawalsCreateManyAccountsInputEnvelope = {
   skipDuplicates?: InputMaybe<Scalars['Boolean']>;
 };
 
-export type StakePoolWithdrawalsCreateManyEventsEventsTostakePoolWithdrawalsEndEventIdInput = {
+export type StakePoolWithdrawalsCreateManyEventsEventsToStakePoolWithdrawalsEndEventIdInput = {
   createdAt: Scalars['DateTime'];
   endBlockNumber?: InputMaybe<Scalars['BigInt']>;
   endTimestamp?: InputMaybe<Scalars['DateTime']>;
@@ -6652,12 +8312,12 @@ export type StakePoolWithdrawalsCreateManyEventsEventsTostakePoolWithdrawalsEndE
   userId: Scalars['BigInt'];
 };
 
-export type StakePoolWithdrawalsCreateManyEventsEventsTostakePoolWithdrawalsEndEventIdInputEnvelope = {
-  data: Array<StakePoolWithdrawalsCreateManyEventsEventsTostakePoolWithdrawalsEndEventIdInput>;
+export type StakePoolWithdrawalsCreateManyEventsEventsToStakePoolWithdrawalsEndEventIdInputEnvelope = {
+  data: Array<StakePoolWithdrawalsCreateManyEventsEventsToStakePoolWithdrawalsEndEventIdInput>;
   skipDuplicates?: InputMaybe<Scalars['Boolean']>;
 };
 
-export type StakePoolWithdrawalsCreateManyEventsEventsTostakePoolWithdrawalsStartEventIdInput = {
+export type StakePoolWithdrawalsCreateManyEventsEventsToStakePoolWithdrawalsStartEventIdInput = {
   createdAt: Scalars['DateTime'];
   endBlockNumber?: InputMaybe<Scalars['BigInt']>;
   endEventId?: InputMaybe<Scalars['BigInt']>;
@@ -6675,8 +8335,8 @@ export type StakePoolWithdrawalsCreateManyEventsEventsTostakePoolWithdrawalsStar
   userId: Scalars['BigInt'];
 };
 
-export type StakePoolWithdrawalsCreateManyEventsEventsTostakePoolWithdrawalsStartEventIdInputEnvelope = {
-  data: Array<StakePoolWithdrawalsCreateManyEventsEventsTostakePoolWithdrawalsStartEventIdInput>;
+export type StakePoolWithdrawalsCreateManyEventsEventsToStakePoolWithdrawalsStartEventIdInputEnvelope = {
+  data: Array<StakePoolWithdrawalsCreateManyEventsEventsToStakePoolWithdrawalsStartEventIdInput>;
   skipDuplicates?: InputMaybe<Scalars['Boolean']>;
 };
 
@@ -6729,18 +8389,18 @@ export type StakePoolWithdrawalsCreateNestedManyWithoutAccountsInput = {
   createMany?: InputMaybe<StakePoolWithdrawalsCreateManyAccountsInputEnvelope>;
 };
 
-export type StakePoolWithdrawalsCreateNestedManyWithoutEventsEventsTostakePoolWithdrawalsEndEventIdInput = {
+export type StakePoolWithdrawalsCreateNestedManyWithoutEventsEventsToStakePoolWithdrawalsEndEventIdInput = {
   connect?: InputMaybe<Array<StakePoolWithdrawalsWhereUniqueInput>>;
-  connectOrCreate?: InputMaybe<Array<StakePoolWithdrawalsCreateOrConnectWithoutEventsEventsTostakePoolWithdrawalsEndEventIdInput>>;
-  create?: InputMaybe<Array<StakePoolWithdrawalsCreateWithoutEventsEventsTostakePoolWithdrawalsEndEventIdInput>>;
-  createMany?: InputMaybe<StakePoolWithdrawalsCreateManyEventsEventsTostakePoolWithdrawalsEndEventIdInputEnvelope>;
+  connectOrCreate?: InputMaybe<Array<StakePoolWithdrawalsCreateOrConnectWithoutEventsEventsToStakePoolWithdrawalsEndEventIdInput>>;
+  create?: InputMaybe<Array<StakePoolWithdrawalsCreateWithoutEventsEventsToStakePoolWithdrawalsEndEventIdInput>>;
+  createMany?: InputMaybe<StakePoolWithdrawalsCreateManyEventsEventsToStakePoolWithdrawalsEndEventIdInputEnvelope>;
 };
 
-export type StakePoolWithdrawalsCreateNestedManyWithoutEventsEventsTostakePoolWithdrawalsStartEventIdInput = {
+export type StakePoolWithdrawalsCreateNestedManyWithoutEventsEventsToStakePoolWithdrawalsStartEventIdInput = {
   connect?: InputMaybe<Array<StakePoolWithdrawalsWhereUniqueInput>>;
-  connectOrCreate?: InputMaybe<Array<StakePoolWithdrawalsCreateOrConnectWithoutEventsEventsTostakePoolWithdrawalsStartEventIdInput>>;
-  create?: InputMaybe<Array<StakePoolWithdrawalsCreateWithoutEventsEventsTostakePoolWithdrawalsStartEventIdInput>>;
-  createMany?: InputMaybe<StakePoolWithdrawalsCreateManyEventsEventsTostakePoolWithdrawalsStartEventIdInputEnvelope>;
+  connectOrCreate?: InputMaybe<Array<StakePoolWithdrawalsCreateOrConnectWithoutEventsEventsToStakePoolWithdrawalsStartEventIdInput>>;
+  create?: InputMaybe<Array<StakePoolWithdrawalsCreateWithoutEventsEventsToStakePoolWithdrawalsStartEventIdInput>>;
+  createMany?: InputMaybe<StakePoolWithdrawalsCreateManyEventsEventsToStakePoolWithdrawalsStartEventIdInputEnvelope>;
 };
 
 export type StakePoolWithdrawalsCreateNestedManyWithoutStakePoolsInput = {
@@ -6755,13 +8415,13 @@ export type StakePoolWithdrawalsCreateOrConnectWithoutAccountsInput = {
   where: StakePoolWithdrawalsWhereUniqueInput;
 };
 
-export type StakePoolWithdrawalsCreateOrConnectWithoutEventsEventsTostakePoolWithdrawalsEndEventIdInput = {
-  create: StakePoolWithdrawalsCreateWithoutEventsEventsTostakePoolWithdrawalsEndEventIdInput;
+export type StakePoolWithdrawalsCreateOrConnectWithoutEventsEventsToStakePoolWithdrawalsEndEventIdInput = {
+  create: StakePoolWithdrawalsCreateWithoutEventsEventsToStakePoolWithdrawalsEndEventIdInput;
   where: StakePoolWithdrawalsWhereUniqueInput;
 };
 
-export type StakePoolWithdrawalsCreateOrConnectWithoutEventsEventsTostakePoolWithdrawalsStartEventIdInput = {
-  create: StakePoolWithdrawalsCreateWithoutEventsEventsTostakePoolWithdrawalsStartEventIdInput;
+export type StakePoolWithdrawalsCreateOrConnectWithoutEventsEventsToStakePoolWithdrawalsStartEventIdInput = {
+  create: StakePoolWithdrawalsCreateWithoutEventsEventsToStakePoolWithdrawalsStartEventIdInput;
   where: StakePoolWithdrawalsWhereUniqueInput;
 };
 
@@ -6775,8 +8435,8 @@ export type StakePoolWithdrawalsCreateWithoutAccountsInput = {
   endBlockNumber?: InputMaybe<Scalars['BigInt']>;
   endTimestamp?: InputMaybe<Scalars['DateTime']>;
   estimatesEndTime?: InputMaybe<Scalars['DateTime']>;
-  eventsEventsTostakePoolWithdrawalsEndEventId?: InputMaybe<EventsCreateNestedOneWithoutStakePoolWithdrawalsEventsTostakePoolWithdrawalsEndEventIdsInput>;
-  eventsEventsTostakePoolWithdrawalsStartEventId?: InputMaybe<EventsCreateNestedOneWithoutStakePoolWithdrawalsEventsTostakePoolWithdrawalsStartEventIdsInput>;
+  eventsEventsToStakePoolWithdrawalsEndEventId?: InputMaybe<EventsCreateNestedOneWithoutStakePoolWithdrawalsEventsToStakePoolWithdrawalsEndEventIdsInput>;
+  eventsEventsToStakePoolWithdrawalsStartEventId?: InputMaybe<EventsCreateNestedOneWithoutStakePoolWithdrawalsEventsToStakePoolWithdrawalsStartEventIdsInput>;
   id?: InputMaybe<Scalars['BigInt']>;
   shares: Scalars['Decimal'];
   stake?: InputMaybe<Scalars['Decimal']>;
@@ -6788,13 +8448,13 @@ export type StakePoolWithdrawalsCreateWithoutAccountsInput = {
   userAddress?: InputMaybe<Scalars['String']>;
 };
 
-export type StakePoolWithdrawalsCreateWithoutEventsEventsTostakePoolWithdrawalsEndEventIdInput = {
+export type StakePoolWithdrawalsCreateWithoutEventsEventsToStakePoolWithdrawalsEndEventIdInput = {
   accounts: AccountsCreateNestedOneWithoutStakePoolWithdrawalsInput;
   createdAt: Scalars['DateTime'];
   endBlockNumber?: InputMaybe<Scalars['BigInt']>;
   endTimestamp?: InputMaybe<Scalars['DateTime']>;
   estimatesEndTime?: InputMaybe<Scalars['DateTime']>;
-  eventsEventsTostakePoolWithdrawalsStartEventId?: InputMaybe<EventsCreateNestedOneWithoutStakePoolWithdrawalsEventsTostakePoolWithdrawalsStartEventIdsInput>;
+  eventsEventsToStakePoolWithdrawalsStartEventId?: InputMaybe<EventsCreateNestedOneWithoutStakePoolWithdrawalsEventsToStakePoolWithdrawalsStartEventIdsInput>;
   id?: InputMaybe<Scalars['BigInt']>;
   shares: Scalars['Decimal'];
   stake?: InputMaybe<Scalars['Decimal']>;
@@ -6806,13 +8466,13 @@ export type StakePoolWithdrawalsCreateWithoutEventsEventsTostakePoolWithdrawalsE
   userAddress?: InputMaybe<Scalars['String']>;
 };
 
-export type StakePoolWithdrawalsCreateWithoutEventsEventsTostakePoolWithdrawalsStartEventIdInput = {
+export type StakePoolWithdrawalsCreateWithoutEventsEventsToStakePoolWithdrawalsStartEventIdInput = {
   accounts: AccountsCreateNestedOneWithoutStakePoolWithdrawalsInput;
   createdAt: Scalars['DateTime'];
   endBlockNumber?: InputMaybe<Scalars['BigInt']>;
   endTimestamp?: InputMaybe<Scalars['DateTime']>;
   estimatesEndTime?: InputMaybe<Scalars['DateTime']>;
-  eventsEventsTostakePoolWithdrawalsEndEventId?: InputMaybe<EventsCreateNestedOneWithoutStakePoolWithdrawalsEventsTostakePoolWithdrawalsEndEventIdsInput>;
+  eventsEventsToStakePoolWithdrawalsEndEventId?: InputMaybe<EventsCreateNestedOneWithoutStakePoolWithdrawalsEventsToStakePoolWithdrawalsEndEventIdsInput>;
   id?: InputMaybe<Scalars['BigInt']>;
   shares: Scalars['Decimal'];
   stake?: InputMaybe<Scalars['Decimal']>;
@@ -6830,8 +8490,8 @@ export type StakePoolWithdrawalsCreateWithoutStakePoolsInput = {
   endBlockNumber?: InputMaybe<Scalars['BigInt']>;
   endTimestamp?: InputMaybe<Scalars['DateTime']>;
   estimatesEndTime?: InputMaybe<Scalars['DateTime']>;
-  eventsEventsTostakePoolWithdrawalsEndEventId?: InputMaybe<EventsCreateNestedOneWithoutStakePoolWithdrawalsEventsTostakePoolWithdrawalsEndEventIdsInput>;
-  eventsEventsTostakePoolWithdrawalsStartEventId?: InputMaybe<EventsCreateNestedOneWithoutStakePoolWithdrawalsEventsTostakePoolWithdrawalsStartEventIdsInput>;
+  eventsEventsToStakePoolWithdrawalsEndEventId?: InputMaybe<EventsCreateNestedOneWithoutStakePoolWithdrawalsEventsToStakePoolWithdrawalsEndEventIdsInput>;
+  eventsEventsToStakePoolWithdrawalsStartEventId?: InputMaybe<EventsCreateNestedOneWithoutStakePoolWithdrawalsEventsToStakePoolWithdrawalsStartEventIdsInput>;
   id?: InputMaybe<Scalars['BigInt']>;
   shares: Scalars['Decimal'];
   stake?: InputMaybe<Scalars['Decimal']>;
@@ -6986,8 +8646,8 @@ export type StakePoolWithdrawalsOrderByWithRelationInput = {
   endEventId?: InputMaybe<SortOrder>;
   endTimestamp?: InputMaybe<SortOrder>;
   estimatesEndTime?: InputMaybe<SortOrder>;
-  eventsEventsTostakePoolWithdrawalsEndEventId?: InputMaybe<EventsOrderByWithRelationInput>;
-  eventsEventsTostakePoolWithdrawalsStartEventId?: InputMaybe<EventsOrderByWithRelationInput>;
+  eventsEventsToStakePoolWithdrawalsEndEventId?: InputMaybe<EventsOrderByWithRelationInput>;
+  eventsEventsToStakePoolWithdrawalsStartEventId?: InputMaybe<EventsOrderByWithRelationInput>;
   id?: InputMaybe<SortOrder>;
   shares?: InputMaybe<SortOrder>;
   stake?: InputMaybe<SortOrder>;
@@ -7096,8 +8756,8 @@ export type StakePoolWithdrawalsUpdateInput = {
   endBlockNumber?: InputMaybe<NullableBigIntFieldUpdateOperationsInput>;
   endTimestamp?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
   estimatesEndTime?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  eventsEventsTostakePoolWithdrawalsEndEventId?: InputMaybe<EventsUpdateOneWithoutStakePoolWithdrawalsEventsTostakePoolWithdrawalsEndEventIdsInput>;
-  eventsEventsTostakePoolWithdrawalsStartEventId?: InputMaybe<EventsUpdateOneWithoutStakePoolWithdrawalsEventsTostakePoolWithdrawalsStartEventIdsInput>;
+  eventsEventsToStakePoolWithdrawalsEndEventId?: InputMaybe<EventsUpdateOneWithoutStakePoolWithdrawalsEventsToStakePoolWithdrawalsEndEventIdsInput>;
+  eventsEventsToStakePoolWithdrawalsStartEventId?: InputMaybe<EventsUpdateOneWithoutStakePoolWithdrawalsEventsToStakePoolWithdrawalsStartEventIdsInput>;
   id?: InputMaybe<BigIntFieldUpdateOperationsInput>;
   shares?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   stake?: InputMaybe<DecimalFieldUpdateOperationsInput>;
@@ -7129,12 +8789,12 @@ export type StakePoolWithdrawalsUpdateManyWithWhereWithoutAccountsInput = {
   where: StakePoolWithdrawalsScalarWhereInput;
 };
 
-export type StakePoolWithdrawalsUpdateManyWithWhereWithoutEventsEventsTostakePoolWithdrawalsEndEventIdInput = {
+export type StakePoolWithdrawalsUpdateManyWithWhereWithoutEventsEventsToStakePoolWithdrawalsEndEventIdInput = {
   data: StakePoolWithdrawalsUpdateManyMutationInput;
   where: StakePoolWithdrawalsScalarWhereInput;
 };
 
-export type StakePoolWithdrawalsUpdateManyWithWhereWithoutEventsEventsTostakePoolWithdrawalsStartEventIdInput = {
+export type StakePoolWithdrawalsUpdateManyWithWhereWithoutEventsEventsToStakePoolWithdrawalsStartEventIdInput = {
   data: StakePoolWithdrawalsUpdateManyMutationInput;
   where: StakePoolWithdrawalsScalarWhereInput;
 };
@@ -7158,32 +8818,32 @@ export type StakePoolWithdrawalsUpdateManyWithoutAccountsInput = {
   upsert?: InputMaybe<Array<StakePoolWithdrawalsUpsertWithWhereUniqueWithoutAccountsInput>>;
 };
 
-export type StakePoolWithdrawalsUpdateManyWithoutEventsEventsTostakePoolWithdrawalsEndEventIdInput = {
+export type StakePoolWithdrawalsUpdateManyWithoutEventsEventsToStakePoolWithdrawalsEndEventIdInput = {
   connect?: InputMaybe<Array<StakePoolWithdrawalsWhereUniqueInput>>;
-  connectOrCreate?: InputMaybe<Array<StakePoolWithdrawalsCreateOrConnectWithoutEventsEventsTostakePoolWithdrawalsEndEventIdInput>>;
-  create?: InputMaybe<Array<StakePoolWithdrawalsCreateWithoutEventsEventsTostakePoolWithdrawalsEndEventIdInput>>;
-  createMany?: InputMaybe<StakePoolWithdrawalsCreateManyEventsEventsTostakePoolWithdrawalsEndEventIdInputEnvelope>;
+  connectOrCreate?: InputMaybe<Array<StakePoolWithdrawalsCreateOrConnectWithoutEventsEventsToStakePoolWithdrawalsEndEventIdInput>>;
+  create?: InputMaybe<Array<StakePoolWithdrawalsCreateWithoutEventsEventsToStakePoolWithdrawalsEndEventIdInput>>;
+  createMany?: InputMaybe<StakePoolWithdrawalsCreateManyEventsEventsToStakePoolWithdrawalsEndEventIdInputEnvelope>;
   delete?: InputMaybe<Array<StakePoolWithdrawalsWhereUniqueInput>>;
   deleteMany?: InputMaybe<Array<StakePoolWithdrawalsScalarWhereInput>>;
   disconnect?: InputMaybe<Array<StakePoolWithdrawalsWhereUniqueInput>>;
   set?: InputMaybe<Array<StakePoolWithdrawalsWhereUniqueInput>>;
-  update?: InputMaybe<Array<StakePoolWithdrawalsUpdateWithWhereUniqueWithoutEventsEventsTostakePoolWithdrawalsEndEventIdInput>>;
-  updateMany?: InputMaybe<Array<StakePoolWithdrawalsUpdateManyWithWhereWithoutEventsEventsTostakePoolWithdrawalsEndEventIdInput>>;
-  upsert?: InputMaybe<Array<StakePoolWithdrawalsUpsertWithWhereUniqueWithoutEventsEventsTostakePoolWithdrawalsEndEventIdInput>>;
+  update?: InputMaybe<Array<StakePoolWithdrawalsUpdateWithWhereUniqueWithoutEventsEventsToStakePoolWithdrawalsEndEventIdInput>>;
+  updateMany?: InputMaybe<Array<StakePoolWithdrawalsUpdateManyWithWhereWithoutEventsEventsToStakePoolWithdrawalsEndEventIdInput>>;
+  upsert?: InputMaybe<Array<StakePoolWithdrawalsUpsertWithWhereUniqueWithoutEventsEventsToStakePoolWithdrawalsEndEventIdInput>>;
 };
 
-export type StakePoolWithdrawalsUpdateManyWithoutEventsEventsTostakePoolWithdrawalsStartEventIdInput = {
+export type StakePoolWithdrawalsUpdateManyWithoutEventsEventsToStakePoolWithdrawalsStartEventIdInput = {
   connect?: InputMaybe<Array<StakePoolWithdrawalsWhereUniqueInput>>;
-  connectOrCreate?: InputMaybe<Array<StakePoolWithdrawalsCreateOrConnectWithoutEventsEventsTostakePoolWithdrawalsStartEventIdInput>>;
-  create?: InputMaybe<Array<StakePoolWithdrawalsCreateWithoutEventsEventsTostakePoolWithdrawalsStartEventIdInput>>;
-  createMany?: InputMaybe<StakePoolWithdrawalsCreateManyEventsEventsTostakePoolWithdrawalsStartEventIdInputEnvelope>;
+  connectOrCreate?: InputMaybe<Array<StakePoolWithdrawalsCreateOrConnectWithoutEventsEventsToStakePoolWithdrawalsStartEventIdInput>>;
+  create?: InputMaybe<Array<StakePoolWithdrawalsCreateWithoutEventsEventsToStakePoolWithdrawalsStartEventIdInput>>;
+  createMany?: InputMaybe<StakePoolWithdrawalsCreateManyEventsEventsToStakePoolWithdrawalsStartEventIdInputEnvelope>;
   delete?: InputMaybe<Array<StakePoolWithdrawalsWhereUniqueInput>>;
   deleteMany?: InputMaybe<Array<StakePoolWithdrawalsScalarWhereInput>>;
   disconnect?: InputMaybe<Array<StakePoolWithdrawalsWhereUniqueInput>>;
   set?: InputMaybe<Array<StakePoolWithdrawalsWhereUniqueInput>>;
-  update?: InputMaybe<Array<StakePoolWithdrawalsUpdateWithWhereUniqueWithoutEventsEventsTostakePoolWithdrawalsStartEventIdInput>>;
-  updateMany?: InputMaybe<Array<StakePoolWithdrawalsUpdateManyWithWhereWithoutEventsEventsTostakePoolWithdrawalsStartEventIdInput>>;
-  upsert?: InputMaybe<Array<StakePoolWithdrawalsUpsertWithWhereUniqueWithoutEventsEventsTostakePoolWithdrawalsStartEventIdInput>>;
+  update?: InputMaybe<Array<StakePoolWithdrawalsUpdateWithWhereUniqueWithoutEventsEventsToStakePoolWithdrawalsStartEventIdInput>>;
+  updateMany?: InputMaybe<Array<StakePoolWithdrawalsUpdateManyWithWhereWithoutEventsEventsToStakePoolWithdrawalsStartEventIdInput>>;
+  upsert?: InputMaybe<Array<StakePoolWithdrawalsUpsertWithWhereUniqueWithoutEventsEventsToStakePoolWithdrawalsStartEventIdInput>>;
 };
 
 export type StakePoolWithdrawalsUpdateManyWithoutStakePoolsInput = {
@@ -7205,13 +8865,13 @@ export type StakePoolWithdrawalsUpdateWithWhereUniqueWithoutAccountsInput = {
   where: StakePoolWithdrawalsWhereUniqueInput;
 };
 
-export type StakePoolWithdrawalsUpdateWithWhereUniqueWithoutEventsEventsTostakePoolWithdrawalsEndEventIdInput = {
-  data: StakePoolWithdrawalsUpdateWithoutEventsEventsTostakePoolWithdrawalsEndEventIdInput;
+export type StakePoolWithdrawalsUpdateWithWhereUniqueWithoutEventsEventsToStakePoolWithdrawalsEndEventIdInput = {
+  data: StakePoolWithdrawalsUpdateWithoutEventsEventsToStakePoolWithdrawalsEndEventIdInput;
   where: StakePoolWithdrawalsWhereUniqueInput;
 };
 
-export type StakePoolWithdrawalsUpdateWithWhereUniqueWithoutEventsEventsTostakePoolWithdrawalsStartEventIdInput = {
-  data: StakePoolWithdrawalsUpdateWithoutEventsEventsTostakePoolWithdrawalsStartEventIdInput;
+export type StakePoolWithdrawalsUpdateWithWhereUniqueWithoutEventsEventsToStakePoolWithdrawalsStartEventIdInput = {
+  data: StakePoolWithdrawalsUpdateWithoutEventsEventsToStakePoolWithdrawalsStartEventIdInput;
   where: StakePoolWithdrawalsWhereUniqueInput;
 };
 
@@ -7225,8 +8885,8 @@ export type StakePoolWithdrawalsUpdateWithoutAccountsInput = {
   endBlockNumber?: InputMaybe<NullableBigIntFieldUpdateOperationsInput>;
   endTimestamp?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
   estimatesEndTime?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  eventsEventsTostakePoolWithdrawalsEndEventId?: InputMaybe<EventsUpdateOneWithoutStakePoolWithdrawalsEventsTostakePoolWithdrawalsEndEventIdsInput>;
-  eventsEventsTostakePoolWithdrawalsStartEventId?: InputMaybe<EventsUpdateOneWithoutStakePoolWithdrawalsEventsTostakePoolWithdrawalsStartEventIdsInput>;
+  eventsEventsToStakePoolWithdrawalsEndEventId?: InputMaybe<EventsUpdateOneWithoutStakePoolWithdrawalsEventsToStakePoolWithdrawalsEndEventIdsInput>;
+  eventsEventsToStakePoolWithdrawalsStartEventId?: InputMaybe<EventsUpdateOneWithoutStakePoolWithdrawalsEventsToStakePoolWithdrawalsStartEventIdsInput>;
   id?: InputMaybe<BigIntFieldUpdateOperationsInput>;
   shares?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   stake?: InputMaybe<DecimalFieldUpdateOperationsInput>;
@@ -7238,13 +8898,13 @@ export type StakePoolWithdrawalsUpdateWithoutAccountsInput = {
   userAddress?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
 };
 
-export type StakePoolWithdrawalsUpdateWithoutEventsEventsTostakePoolWithdrawalsEndEventIdInput = {
+export type StakePoolWithdrawalsUpdateWithoutEventsEventsToStakePoolWithdrawalsEndEventIdInput = {
   accounts?: InputMaybe<AccountsUpdateOneRequiredWithoutStakePoolWithdrawalsInput>;
   createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   endBlockNumber?: InputMaybe<NullableBigIntFieldUpdateOperationsInput>;
   endTimestamp?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
   estimatesEndTime?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  eventsEventsTostakePoolWithdrawalsStartEventId?: InputMaybe<EventsUpdateOneWithoutStakePoolWithdrawalsEventsTostakePoolWithdrawalsStartEventIdsInput>;
+  eventsEventsToStakePoolWithdrawalsStartEventId?: InputMaybe<EventsUpdateOneWithoutStakePoolWithdrawalsEventsToStakePoolWithdrawalsStartEventIdsInput>;
   id?: InputMaybe<BigIntFieldUpdateOperationsInput>;
   shares?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   stake?: InputMaybe<DecimalFieldUpdateOperationsInput>;
@@ -7256,13 +8916,13 @@ export type StakePoolWithdrawalsUpdateWithoutEventsEventsTostakePoolWithdrawalsE
   userAddress?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
 };
 
-export type StakePoolWithdrawalsUpdateWithoutEventsEventsTostakePoolWithdrawalsStartEventIdInput = {
+export type StakePoolWithdrawalsUpdateWithoutEventsEventsToStakePoolWithdrawalsStartEventIdInput = {
   accounts?: InputMaybe<AccountsUpdateOneRequiredWithoutStakePoolWithdrawalsInput>;
   createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   endBlockNumber?: InputMaybe<NullableBigIntFieldUpdateOperationsInput>;
   endTimestamp?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
   estimatesEndTime?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  eventsEventsTostakePoolWithdrawalsEndEventId?: InputMaybe<EventsUpdateOneWithoutStakePoolWithdrawalsEventsTostakePoolWithdrawalsEndEventIdsInput>;
+  eventsEventsToStakePoolWithdrawalsEndEventId?: InputMaybe<EventsUpdateOneWithoutStakePoolWithdrawalsEventsToStakePoolWithdrawalsEndEventIdsInput>;
   id?: InputMaybe<BigIntFieldUpdateOperationsInput>;
   shares?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   stake?: InputMaybe<DecimalFieldUpdateOperationsInput>;
@@ -7280,8 +8940,8 @@ export type StakePoolWithdrawalsUpdateWithoutStakePoolsInput = {
   endBlockNumber?: InputMaybe<NullableBigIntFieldUpdateOperationsInput>;
   endTimestamp?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
   estimatesEndTime?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  eventsEventsTostakePoolWithdrawalsEndEventId?: InputMaybe<EventsUpdateOneWithoutStakePoolWithdrawalsEventsTostakePoolWithdrawalsEndEventIdsInput>;
-  eventsEventsTostakePoolWithdrawalsStartEventId?: InputMaybe<EventsUpdateOneWithoutStakePoolWithdrawalsEventsTostakePoolWithdrawalsStartEventIdsInput>;
+  eventsEventsToStakePoolWithdrawalsEndEventId?: InputMaybe<EventsUpdateOneWithoutStakePoolWithdrawalsEventsToStakePoolWithdrawalsEndEventIdsInput>;
+  eventsEventsToStakePoolWithdrawalsStartEventId?: InputMaybe<EventsUpdateOneWithoutStakePoolWithdrawalsEventsToStakePoolWithdrawalsStartEventIdsInput>;
   id?: InputMaybe<BigIntFieldUpdateOperationsInput>;
   shares?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   stake?: InputMaybe<DecimalFieldUpdateOperationsInput>;
@@ -7298,15 +8958,15 @@ export type StakePoolWithdrawalsUpsertWithWhereUniqueWithoutAccountsInput = {
   where: StakePoolWithdrawalsWhereUniqueInput;
 };
 
-export type StakePoolWithdrawalsUpsertWithWhereUniqueWithoutEventsEventsTostakePoolWithdrawalsEndEventIdInput = {
-  create: StakePoolWithdrawalsCreateWithoutEventsEventsTostakePoolWithdrawalsEndEventIdInput;
-  update: StakePoolWithdrawalsUpdateWithoutEventsEventsTostakePoolWithdrawalsEndEventIdInput;
+export type StakePoolWithdrawalsUpsertWithWhereUniqueWithoutEventsEventsToStakePoolWithdrawalsEndEventIdInput = {
+  create: StakePoolWithdrawalsCreateWithoutEventsEventsToStakePoolWithdrawalsEndEventIdInput;
+  update: StakePoolWithdrawalsUpdateWithoutEventsEventsToStakePoolWithdrawalsEndEventIdInput;
   where: StakePoolWithdrawalsWhereUniqueInput;
 };
 
-export type StakePoolWithdrawalsUpsertWithWhereUniqueWithoutEventsEventsTostakePoolWithdrawalsStartEventIdInput = {
-  create: StakePoolWithdrawalsCreateWithoutEventsEventsTostakePoolWithdrawalsStartEventIdInput;
-  update: StakePoolWithdrawalsUpdateWithoutEventsEventsTostakePoolWithdrawalsStartEventIdInput;
+export type StakePoolWithdrawalsUpsertWithWhereUniqueWithoutEventsEventsToStakePoolWithdrawalsStartEventIdInput = {
+  create: StakePoolWithdrawalsCreateWithoutEventsEventsToStakePoolWithdrawalsStartEventIdInput;
+  update: StakePoolWithdrawalsUpdateWithoutEventsEventsToStakePoolWithdrawalsStartEventIdInput;
   where: StakePoolWithdrawalsWhereUniqueInput;
 };
 
@@ -7326,8 +8986,8 @@ export type StakePoolWithdrawalsWhereInput = {
   endEventId?: InputMaybe<BigIntNullableFilter>;
   endTimestamp?: InputMaybe<DateTimeNullableFilter>;
   estimatesEndTime?: InputMaybe<DateTimeFilter>;
-  eventsEventsTostakePoolWithdrawalsEndEventId?: InputMaybe<EventsRelationFilter>;
-  eventsEventsTostakePoolWithdrawalsStartEventId?: InputMaybe<EventsRelationFilter>;
+  eventsEventsToStakePoolWithdrawalsEndEventId?: InputMaybe<EventsRelationFilter>;
+  eventsEventsToStakePoolWithdrawalsStartEventId?: InputMaybe<EventsRelationFilter>;
   id?: InputMaybe<BigIntFilter>;
   shares?: InputMaybe<DecimalFilter>;
   stake?: InputMaybe<DecimalFilter>;
@@ -7352,18 +9012,21 @@ export type StakePools = {
   accounts: Accounts;
   cap?: Maybe<Scalars['Decimal']>;
   commission: Scalars['Decimal'];
+  coolingDownMinersCount: Scalars['Int'];
   createdAt: Scalars['DateTime'];
   freeStake: Scalars['Decimal'];
   id: Scalars['BigInt'];
+  idleMinersCount: Scalars['Int'];
   instantApr: Scalars['Decimal'];
   lastUpdatedBlockNumber: Scalars['BigInt'];
   lastUpdatedTimestamp: Scalars['DateTime'];
   miners: Array<Miners>;
-  miningWorkersCount: Scalars['Int'];
+  minersCount: Scalars['Int'];
   ownerAddress: Scalars['String'];
   ownerId: Scalars['BigInt'];
   ownerReward: Scalars['Decimal'];
   pid: Scalars['BigInt'];
+  readyMinersCount: Scalars['Int'];
   releasingStake: Scalars['Decimal'];
   remainingStake?: Maybe<Scalars['Decimal']>;
   rewardAcc: Scalars['Decimal'];
@@ -7373,12 +9036,12 @@ export type StakePools = {
   stakersCount: Scalars['Int'];
   totalShares: Scalars['Decimal'];
   totalStake: Scalars['Decimal'];
+  unresponsiveMinersCount: Scalars['Int'];
   updatedAt: Scalars['DateTime'];
   usedStake: Scalars['Decimal'];
   withdrawalsCount: Scalars['Int'];
   workerActivities: Array<WorkerActivities>;
   workers: Array<Workers>;
-  workersCount: Scalars['Int'];
 };
 
 
@@ -7445,45 +9108,51 @@ export type StakePoolsAvgAggregate = {
   __typename?: 'StakePoolsAvgAggregate';
   cap?: Maybe<Scalars['Decimal']>;
   commission?: Maybe<Scalars['Decimal']>;
+  coolingDownMinersCount?: Maybe<Scalars['Float']>;
   freeStake?: Maybe<Scalars['Decimal']>;
   id?: Maybe<Scalars['Float']>;
+  idleMinersCount?: Maybe<Scalars['Float']>;
   instantApr?: Maybe<Scalars['Decimal']>;
   lastUpdatedBlockNumber?: Maybe<Scalars['Float']>;
-  miningWorkersCount?: Maybe<Scalars['Float']>;
+  minersCount?: Maybe<Scalars['Float']>;
   ownerId?: Maybe<Scalars['Float']>;
   ownerReward?: Maybe<Scalars['Decimal']>;
   pid?: Maybe<Scalars['Float']>;
+  readyMinersCount?: Maybe<Scalars['Float']>;
   releasingStake?: Maybe<Scalars['Decimal']>;
   remainingStake?: Maybe<Scalars['Decimal']>;
   rewardAcc?: Maybe<Scalars['Decimal']>;
   stakersCount?: Maybe<Scalars['Float']>;
   totalShares?: Maybe<Scalars['Decimal']>;
   totalStake?: Maybe<Scalars['Decimal']>;
+  unresponsiveMinersCount?: Maybe<Scalars['Float']>;
   usedStake?: Maybe<Scalars['Decimal']>;
   withdrawalsCount?: Maybe<Scalars['Float']>;
-  workersCount?: Maybe<Scalars['Float']>;
 };
 
 export type StakePoolsAvgOrderByAggregateInput = {
   cap?: InputMaybe<SortOrder>;
   commission?: InputMaybe<SortOrder>;
+  coolingDownMinersCount?: InputMaybe<SortOrder>;
   freeStake?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
+  idleMinersCount?: InputMaybe<SortOrder>;
   instantApr?: InputMaybe<SortOrder>;
   lastUpdatedBlockNumber?: InputMaybe<SortOrder>;
-  miningWorkersCount?: InputMaybe<SortOrder>;
+  minersCount?: InputMaybe<SortOrder>;
   ownerId?: InputMaybe<SortOrder>;
   ownerReward?: InputMaybe<SortOrder>;
   pid?: InputMaybe<SortOrder>;
+  readyMinersCount?: InputMaybe<SortOrder>;
   releasingStake?: InputMaybe<SortOrder>;
   remainingStake?: InputMaybe<SortOrder>;
   rewardAcc?: InputMaybe<SortOrder>;
   stakersCount?: InputMaybe<SortOrder>;
   totalShares?: InputMaybe<SortOrder>;
   totalStake?: InputMaybe<SortOrder>;
+  unresponsiveMinersCount?: InputMaybe<SortOrder>;
   usedStake?: InputMaybe<SortOrder>;
   withdrawalsCount?: InputMaybe<SortOrder>;
-  workersCount?: InputMaybe<SortOrder>;
 };
 
 export type StakePoolsCount = {
@@ -7501,70 +9170,79 @@ export type StakePoolsCountAggregate = {
   _all: Scalars['Int'];
   cap: Scalars['Int'];
   commission: Scalars['Int'];
+  coolingDownMinersCount: Scalars['Int'];
   createdAt: Scalars['Int'];
   freeStake: Scalars['Int'];
   id: Scalars['Int'];
+  idleMinersCount: Scalars['Int'];
   instantApr: Scalars['Int'];
   lastUpdatedBlockNumber: Scalars['Int'];
   lastUpdatedTimestamp: Scalars['Int'];
-  miningWorkersCount: Scalars['Int'];
+  minersCount: Scalars['Int'];
   ownerAddress: Scalars['Int'];
   ownerId: Scalars['Int'];
   ownerReward: Scalars['Int'];
   pid: Scalars['Int'];
+  readyMinersCount: Scalars['Int'];
   releasingStake: Scalars['Int'];
   remainingStake: Scalars['Int'];
   rewardAcc: Scalars['Int'];
   stakersCount: Scalars['Int'];
   totalShares: Scalars['Int'];
   totalStake: Scalars['Int'];
+  unresponsiveMinersCount: Scalars['Int'];
   updatedAt: Scalars['Int'];
   usedStake: Scalars['Int'];
   withdrawalsCount: Scalars['Int'];
-  workersCount: Scalars['Int'];
 };
 
 export type StakePoolsCountOrderByAggregateInput = {
   cap?: InputMaybe<SortOrder>;
   commission?: InputMaybe<SortOrder>;
+  coolingDownMinersCount?: InputMaybe<SortOrder>;
   createdAt?: InputMaybe<SortOrder>;
   freeStake?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
+  idleMinersCount?: InputMaybe<SortOrder>;
   instantApr?: InputMaybe<SortOrder>;
   lastUpdatedBlockNumber?: InputMaybe<SortOrder>;
   lastUpdatedTimestamp?: InputMaybe<SortOrder>;
-  miningWorkersCount?: InputMaybe<SortOrder>;
+  minersCount?: InputMaybe<SortOrder>;
   ownerAddress?: InputMaybe<SortOrder>;
   ownerId?: InputMaybe<SortOrder>;
   ownerReward?: InputMaybe<SortOrder>;
   pid?: InputMaybe<SortOrder>;
+  readyMinersCount?: InputMaybe<SortOrder>;
   releasingStake?: InputMaybe<SortOrder>;
   remainingStake?: InputMaybe<SortOrder>;
   rewardAcc?: InputMaybe<SortOrder>;
   stakersCount?: InputMaybe<SortOrder>;
   totalShares?: InputMaybe<SortOrder>;
   totalStake?: InputMaybe<SortOrder>;
+  unresponsiveMinersCount?: InputMaybe<SortOrder>;
   updatedAt?: InputMaybe<SortOrder>;
   usedStake?: InputMaybe<SortOrder>;
   withdrawalsCount?: InputMaybe<SortOrder>;
-  workersCount?: InputMaybe<SortOrder>;
 };
 
 export type StakePoolsCreateInput = {
   accounts: AccountsCreateNestedOneWithoutStakePoolsInput;
   cap?: InputMaybe<Scalars['Decimal']>;
   commission?: InputMaybe<Scalars['Decimal']>;
+  coolingDownMinersCount?: InputMaybe<Scalars['Int']>;
   createdAt: Scalars['DateTime'];
   freeStake?: InputMaybe<Scalars['Decimal']>;
   id?: InputMaybe<Scalars['BigInt']>;
+  idleMinersCount?: InputMaybe<Scalars['Int']>;
   instantApr?: InputMaybe<Scalars['Decimal']>;
   lastUpdatedBlockNumber?: InputMaybe<Scalars['BigInt']>;
   lastUpdatedTimestamp: Scalars['DateTime'];
   miners?: InputMaybe<MinersCreateNestedManyWithoutStakePoolsInput>;
-  miningWorkersCount?: InputMaybe<Scalars['Int']>;
+  minersCount?: InputMaybe<Scalars['Int']>;
   ownerAddress: Scalars['String'];
   ownerReward?: InputMaybe<Scalars['Decimal']>;
   pid: Scalars['BigInt'];
+  readyMinersCount?: InputMaybe<Scalars['Int']>;
   releasingStake?: InputMaybe<Scalars['Decimal']>;
   remainingStake?: InputMaybe<Scalars['Decimal']>;
   rewardAcc?: InputMaybe<Scalars['Decimal']>;
@@ -7574,37 +9252,40 @@ export type StakePoolsCreateInput = {
   stakersCount?: InputMaybe<Scalars['Int']>;
   totalShares?: InputMaybe<Scalars['Decimal']>;
   totalStake?: InputMaybe<Scalars['Decimal']>;
+  unresponsiveMinersCount?: InputMaybe<Scalars['Int']>;
   updatedAt: Scalars['DateTime'];
   usedStake?: InputMaybe<Scalars['Decimal']>;
   withdrawalsCount?: InputMaybe<Scalars['Int']>;
   workerActivities?: InputMaybe<WorkerActivitiesCreateNestedManyWithoutStakePoolsInput>;
   workers?: InputMaybe<WorkersCreateNestedManyWithoutStakePoolsInput>;
-  workersCount?: InputMaybe<Scalars['Int']>;
 };
 
 export type StakePoolsCreateManyAccountsInput = {
   cap?: InputMaybe<Scalars['Decimal']>;
   commission?: InputMaybe<Scalars['Decimal']>;
+  coolingDownMinersCount?: InputMaybe<Scalars['Int']>;
   createdAt: Scalars['DateTime'];
   freeStake?: InputMaybe<Scalars['Decimal']>;
   id?: InputMaybe<Scalars['BigInt']>;
+  idleMinersCount?: InputMaybe<Scalars['Int']>;
   instantApr?: InputMaybe<Scalars['Decimal']>;
   lastUpdatedBlockNumber?: InputMaybe<Scalars['BigInt']>;
   lastUpdatedTimestamp: Scalars['DateTime'];
-  miningWorkersCount?: InputMaybe<Scalars['Int']>;
+  minersCount?: InputMaybe<Scalars['Int']>;
   ownerAddress: Scalars['String'];
   ownerReward?: InputMaybe<Scalars['Decimal']>;
   pid: Scalars['BigInt'];
+  readyMinersCount?: InputMaybe<Scalars['Int']>;
   releasingStake?: InputMaybe<Scalars['Decimal']>;
   remainingStake?: InputMaybe<Scalars['Decimal']>;
   rewardAcc?: InputMaybe<Scalars['Decimal']>;
   stakersCount?: InputMaybe<Scalars['Int']>;
   totalShares?: InputMaybe<Scalars['Decimal']>;
   totalStake?: InputMaybe<Scalars['Decimal']>;
+  unresponsiveMinersCount?: InputMaybe<Scalars['Int']>;
   updatedAt: Scalars['DateTime'];
   usedStake?: InputMaybe<Scalars['Decimal']>;
   withdrawalsCount?: InputMaybe<Scalars['Int']>;
-  workersCount?: InputMaybe<Scalars['Int']>;
 };
 
 export type StakePoolsCreateManyAccountsInputEnvelope = {
@@ -7615,27 +9296,30 @@ export type StakePoolsCreateManyAccountsInputEnvelope = {
 export type StakePoolsCreateManyInput = {
   cap?: InputMaybe<Scalars['Decimal']>;
   commission?: InputMaybe<Scalars['Decimal']>;
+  coolingDownMinersCount?: InputMaybe<Scalars['Int']>;
   createdAt: Scalars['DateTime'];
   freeStake?: InputMaybe<Scalars['Decimal']>;
   id?: InputMaybe<Scalars['BigInt']>;
+  idleMinersCount?: InputMaybe<Scalars['Int']>;
   instantApr?: InputMaybe<Scalars['Decimal']>;
   lastUpdatedBlockNumber?: InputMaybe<Scalars['BigInt']>;
   lastUpdatedTimestamp: Scalars['DateTime'];
-  miningWorkersCount?: InputMaybe<Scalars['Int']>;
+  minersCount?: InputMaybe<Scalars['Int']>;
   ownerAddress: Scalars['String'];
   ownerId: Scalars['BigInt'];
   ownerReward?: InputMaybe<Scalars['Decimal']>;
   pid: Scalars['BigInt'];
+  readyMinersCount?: InputMaybe<Scalars['Int']>;
   releasingStake?: InputMaybe<Scalars['Decimal']>;
   remainingStake?: InputMaybe<Scalars['Decimal']>;
   rewardAcc?: InputMaybe<Scalars['Decimal']>;
   stakersCount?: InputMaybe<Scalars['Int']>;
   totalShares?: InputMaybe<Scalars['Decimal']>;
   totalStake?: InputMaybe<Scalars['Decimal']>;
+  unresponsiveMinersCount?: InputMaybe<Scalars['Int']>;
   updatedAt: Scalars['DateTime'];
   usedStake?: InputMaybe<Scalars['Decimal']>;
   withdrawalsCount?: InputMaybe<Scalars['Int']>;
-  workersCount?: InputMaybe<Scalars['Int']>;
 };
 
 export type StakePoolsCreateNestedManyWithoutAccountsInput = {
@@ -7719,17 +9403,20 @@ export type StakePoolsCreateOrConnectWithoutWorkersInput = {
 export type StakePoolsCreateWithoutAccountsInput = {
   cap?: InputMaybe<Scalars['Decimal']>;
   commission?: InputMaybe<Scalars['Decimal']>;
+  coolingDownMinersCount?: InputMaybe<Scalars['Int']>;
   createdAt: Scalars['DateTime'];
   freeStake?: InputMaybe<Scalars['Decimal']>;
   id?: InputMaybe<Scalars['BigInt']>;
+  idleMinersCount?: InputMaybe<Scalars['Int']>;
   instantApr?: InputMaybe<Scalars['Decimal']>;
   lastUpdatedBlockNumber?: InputMaybe<Scalars['BigInt']>;
   lastUpdatedTimestamp: Scalars['DateTime'];
   miners?: InputMaybe<MinersCreateNestedManyWithoutStakePoolsInput>;
-  miningWorkersCount?: InputMaybe<Scalars['Int']>;
+  minersCount?: InputMaybe<Scalars['Int']>;
   ownerAddress: Scalars['String'];
   ownerReward?: InputMaybe<Scalars['Decimal']>;
   pid: Scalars['BigInt'];
+  readyMinersCount?: InputMaybe<Scalars['Int']>;
   releasingStake?: InputMaybe<Scalars['Decimal']>;
   remainingStake?: InputMaybe<Scalars['Decimal']>;
   rewardAcc?: InputMaybe<Scalars['Decimal']>;
@@ -7739,28 +9426,31 @@ export type StakePoolsCreateWithoutAccountsInput = {
   stakersCount?: InputMaybe<Scalars['Int']>;
   totalShares?: InputMaybe<Scalars['Decimal']>;
   totalStake?: InputMaybe<Scalars['Decimal']>;
+  unresponsiveMinersCount?: InputMaybe<Scalars['Int']>;
   updatedAt: Scalars['DateTime'];
   usedStake?: InputMaybe<Scalars['Decimal']>;
   withdrawalsCount?: InputMaybe<Scalars['Int']>;
   workerActivities?: InputMaybe<WorkerActivitiesCreateNestedManyWithoutStakePoolsInput>;
   workers?: InputMaybe<WorkersCreateNestedManyWithoutStakePoolsInput>;
-  workersCount?: InputMaybe<Scalars['Int']>;
 };
 
 export type StakePoolsCreateWithoutMinersInput = {
   accounts: AccountsCreateNestedOneWithoutStakePoolsInput;
   cap?: InputMaybe<Scalars['Decimal']>;
   commission?: InputMaybe<Scalars['Decimal']>;
+  coolingDownMinersCount?: InputMaybe<Scalars['Int']>;
   createdAt: Scalars['DateTime'];
   freeStake?: InputMaybe<Scalars['Decimal']>;
   id?: InputMaybe<Scalars['BigInt']>;
+  idleMinersCount?: InputMaybe<Scalars['Int']>;
   instantApr?: InputMaybe<Scalars['Decimal']>;
   lastUpdatedBlockNumber?: InputMaybe<Scalars['BigInt']>;
   lastUpdatedTimestamp: Scalars['DateTime'];
-  miningWorkersCount?: InputMaybe<Scalars['Int']>;
+  minersCount?: InputMaybe<Scalars['Int']>;
   ownerAddress: Scalars['String'];
   ownerReward?: InputMaybe<Scalars['Decimal']>;
   pid: Scalars['BigInt'];
+  readyMinersCount?: InputMaybe<Scalars['Int']>;
   releasingStake?: InputMaybe<Scalars['Decimal']>;
   remainingStake?: InputMaybe<Scalars['Decimal']>;
   rewardAcc?: InputMaybe<Scalars['Decimal']>;
@@ -7770,29 +9460,32 @@ export type StakePoolsCreateWithoutMinersInput = {
   stakersCount?: InputMaybe<Scalars['Int']>;
   totalShares?: InputMaybe<Scalars['Decimal']>;
   totalStake?: InputMaybe<Scalars['Decimal']>;
+  unresponsiveMinersCount?: InputMaybe<Scalars['Int']>;
   updatedAt: Scalars['DateTime'];
   usedStake?: InputMaybe<Scalars['Decimal']>;
   withdrawalsCount?: InputMaybe<Scalars['Int']>;
   workerActivities?: InputMaybe<WorkerActivitiesCreateNestedManyWithoutStakePoolsInput>;
   workers?: InputMaybe<WorkersCreateNestedManyWithoutStakePoolsInput>;
-  workersCount?: InputMaybe<Scalars['Int']>;
 };
 
 export type StakePoolsCreateWithoutStakePoolActivitiesInput = {
   accounts: AccountsCreateNestedOneWithoutStakePoolsInput;
   cap?: InputMaybe<Scalars['Decimal']>;
   commission?: InputMaybe<Scalars['Decimal']>;
+  coolingDownMinersCount?: InputMaybe<Scalars['Int']>;
   createdAt: Scalars['DateTime'];
   freeStake?: InputMaybe<Scalars['Decimal']>;
   id?: InputMaybe<Scalars['BigInt']>;
+  idleMinersCount?: InputMaybe<Scalars['Int']>;
   instantApr?: InputMaybe<Scalars['Decimal']>;
   lastUpdatedBlockNumber?: InputMaybe<Scalars['BigInt']>;
   lastUpdatedTimestamp: Scalars['DateTime'];
   miners?: InputMaybe<MinersCreateNestedManyWithoutStakePoolsInput>;
-  miningWorkersCount?: InputMaybe<Scalars['Int']>;
+  minersCount?: InputMaybe<Scalars['Int']>;
   ownerAddress: Scalars['String'];
   ownerReward?: InputMaybe<Scalars['Decimal']>;
   pid: Scalars['BigInt'];
+  readyMinersCount?: InputMaybe<Scalars['Int']>;
   releasingStake?: InputMaybe<Scalars['Decimal']>;
   remainingStake?: InputMaybe<Scalars['Decimal']>;
   rewardAcc?: InputMaybe<Scalars['Decimal']>;
@@ -7801,29 +9494,32 @@ export type StakePoolsCreateWithoutStakePoolActivitiesInput = {
   stakersCount?: InputMaybe<Scalars['Int']>;
   totalShares?: InputMaybe<Scalars['Decimal']>;
   totalStake?: InputMaybe<Scalars['Decimal']>;
+  unresponsiveMinersCount?: InputMaybe<Scalars['Int']>;
   updatedAt: Scalars['DateTime'];
   usedStake?: InputMaybe<Scalars['Decimal']>;
   withdrawalsCount?: InputMaybe<Scalars['Int']>;
   workerActivities?: InputMaybe<WorkerActivitiesCreateNestedManyWithoutStakePoolsInput>;
   workers?: InputMaybe<WorkersCreateNestedManyWithoutStakePoolsInput>;
-  workersCount?: InputMaybe<Scalars['Int']>;
 };
 
 export type StakePoolsCreateWithoutStakePoolStakersInput = {
   accounts: AccountsCreateNestedOneWithoutStakePoolsInput;
   cap?: InputMaybe<Scalars['Decimal']>;
   commission?: InputMaybe<Scalars['Decimal']>;
+  coolingDownMinersCount?: InputMaybe<Scalars['Int']>;
   createdAt: Scalars['DateTime'];
   freeStake?: InputMaybe<Scalars['Decimal']>;
   id?: InputMaybe<Scalars['BigInt']>;
+  idleMinersCount?: InputMaybe<Scalars['Int']>;
   instantApr?: InputMaybe<Scalars['Decimal']>;
   lastUpdatedBlockNumber?: InputMaybe<Scalars['BigInt']>;
   lastUpdatedTimestamp: Scalars['DateTime'];
   miners?: InputMaybe<MinersCreateNestedManyWithoutStakePoolsInput>;
-  miningWorkersCount?: InputMaybe<Scalars['Int']>;
+  minersCount?: InputMaybe<Scalars['Int']>;
   ownerAddress: Scalars['String'];
   ownerReward?: InputMaybe<Scalars['Decimal']>;
   pid: Scalars['BigInt'];
+  readyMinersCount?: InputMaybe<Scalars['Int']>;
   releasingStake?: InputMaybe<Scalars['Decimal']>;
   remainingStake?: InputMaybe<Scalars['Decimal']>;
   rewardAcc?: InputMaybe<Scalars['Decimal']>;
@@ -7832,29 +9528,32 @@ export type StakePoolsCreateWithoutStakePoolStakersInput = {
   stakersCount?: InputMaybe<Scalars['Int']>;
   totalShares?: InputMaybe<Scalars['Decimal']>;
   totalStake?: InputMaybe<Scalars['Decimal']>;
+  unresponsiveMinersCount?: InputMaybe<Scalars['Int']>;
   updatedAt: Scalars['DateTime'];
   usedStake?: InputMaybe<Scalars['Decimal']>;
   withdrawalsCount?: InputMaybe<Scalars['Int']>;
   workerActivities?: InputMaybe<WorkerActivitiesCreateNestedManyWithoutStakePoolsInput>;
   workers?: InputMaybe<WorkersCreateNestedManyWithoutStakePoolsInput>;
-  workersCount?: InputMaybe<Scalars['Int']>;
 };
 
 export type StakePoolsCreateWithoutStakePoolWithdrawalsInput = {
   accounts: AccountsCreateNestedOneWithoutStakePoolsInput;
   cap?: InputMaybe<Scalars['Decimal']>;
   commission?: InputMaybe<Scalars['Decimal']>;
+  coolingDownMinersCount?: InputMaybe<Scalars['Int']>;
   createdAt: Scalars['DateTime'];
   freeStake?: InputMaybe<Scalars['Decimal']>;
   id?: InputMaybe<Scalars['BigInt']>;
+  idleMinersCount?: InputMaybe<Scalars['Int']>;
   instantApr?: InputMaybe<Scalars['Decimal']>;
   lastUpdatedBlockNumber?: InputMaybe<Scalars['BigInt']>;
   lastUpdatedTimestamp: Scalars['DateTime'];
   miners?: InputMaybe<MinersCreateNestedManyWithoutStakePoolsInput>;
-  miningWorkersCount?: InputMaybe<Scalars['Int']>;
+  minersCount?: InputMaybe<Scalars['Int']>;
   ownerAddress: Scalars['String'];
   ownerReward?: InputMaybe<Scalars['Decimal']>;
   pid: Scalars['BigInt'];
+  readyMinersCount?: InputMaybe<Scalars['Int']>;
   releasingStake?: InputMaybe<Scalars['Decimal']>;
   remainingStake?: InputMaybe<Scalars['Decimal']>;
   rewardAcc?: InputMaybe<Scalars['Decimal']>;
@@ -7863,29 +9562,32 @@ export type StakePoolsCreateWithoutStakePoolWithdrawalsInput = {
   stakersCount?: InputMaybe<Scalars['Int']>;
   totalShares?: InputMaybe<Scalars['Decimal']>;
   totalStake?: InputMaybe<Scalars['Decimal']>;
+  unresponsiveMinersCount?: InputMaybe<Scalars['Int']>;
   updatedAt: Scalars['DateTime'];
   usedStake?: InputMaybe<Scalars['Decimal']>;
   withdrawalsCount?: InputMaybe<Scalars['Int']>;
   workerActivities?: InputMaybe<WorkerActivitiesCreateNestedManyWithoutStakePoolsInput>;
   workers?: InputMaybe<WorkersCreateNestedManyWithoutStakePoolsInput>;
-  workersCount?: InputMaybe<Scalars['Int']>;
 };
 
 export type StakePoolsCreateWithoutWorkerActivitiesInput = {
   accounts: AccountsCreateNestedOneWithoutStakePoolsInput;
   cap?: InputMaybe<Scalars['Decimal']>;
   commission?: InputMaybe<Scalars['Decimal']>;
+  coolingDownMinersCount?: InputMaybe<Scalars['Int']>;
   createdAt: Scalars['DateTime'];
   freeStake?: InputMaybe<Scalars['Decimal']>;
   id?: InputMaybe<Scalars['BigInt']>;
+  idleMinersCount?: InputMaybe<Scalars['Int']>;
   instantApr?: InputMaybe<Scalars['Decimal']>;
   lastUpdatedBlockNumber?: InputMaybe<Scalars['BigInt']>;
   lastUpdatedTimestamp: Scalars['DateTime'];
   miners?: InputMaybe<MinersCreateNestedManyWithoutStakePoolsInput>;
-  miningWorkersCount?: InputMaybe<Scalars['Int']>;
+  minersCount?: InputMaybe<Scalars['Int']>;
   ownerAddress: Scalars['String'];
   ownerReward?: InputMaybe<Scalars['Decimal']>;
   pid: Scalars['BigInt'];
+  readyMinersCount?: InputMaybe<Scalars['Int']>;
   releasingStake?: InputMaybe<Scalars['Decimal']>;
   remainingStake?: InputMaybe<Scalars['Decimal']>;
   rewardAcc?: InputMaybe<Scalars['Decimal']>;
@@ -7895,28 +9597,31 @@ export type StakePoolsCreateWithoutWorkerActivitiesInput = {
   stakersCount?: InputMaybe<Scalars['Int']>;
   totalShares?: InputMaybe<Scalars['Decimal']>;
   totalStake?: InputMaybe<Scalars['Decimal']>;
+  unresponsiveMinersCount?: InputMaybe<Scalars['Int']>;
   updatedAt: Scalars['DateTime'];
   usedStake?: InputMaybe<Scalars['Decimal']>;
   withdrawalsCount?: InputMaybe<Scalars['Int']>;
   workers?: InputMaybe<WorkersCreateNestedManyWithoutStakePoolsInput>;
-  workersCount?: InputMaybe<Scalars['Int']>;
 };
 
 export type StakePoolsCreateWithoutWorkersInput = {
   accounts: AccountsCreateNestedOneWithoutStakePoolsInput;
   cap?: InputMaybe<Scalars['Decimal']>;
   commission?: InputMaybe<Scalars['Decimal']>;
+  coolingDownMinersCount?: InputMaybe<Scalars['Int']>;
   createdAt: Scalars['DateTime'];
   freeStake?: InputMaybe<Scalars['Decimal']>;
   id?: InputMaybe<Scalars['BigInt']>;
+  idleMinersCount?: InputMaybe<Scalars['Int']>;
   instantApr?: InputMaybe<Scalars['Decimal']>;
   lastUpdatedBlockNumber?: InputMaybe<Scalars['BigInt']>;
   lastUpdatedTimestamp: Scalars['DateTime'];
   miners?: InputMaybe<MinersCreateNestedManyWithoutStakePoolsInput>;
-  miningWorkersCount?: InputMaybe<Scalars['Int']>;
+  minersCount?: InputMaybe<Scalars['Int']>;
   ownerAddress: Scalars['String'];
   ownerReward?: InputMaybe<Scalars['Decimal']>;
   pid: Scalars['BigInt'];
+  readyMinersCount?: InputMaybe<Scalars['Int']>;
   releasingStake?: InputMaybe<Scalars['Decimal']>;
   remainingStake?: InputMaybe<Scalars['Decimal']>;
   rewardAcc?: InputMaybe<Scalars['Decimal']>;
@@ -7926,11 +9631,11 @@ export type StakePoolsCreateWithoutWorkersInput = {
   stakersCount?: InputMaybe<Scalars['Int']>;
   totalShares?: InputMaybe<Scalars['Decimal']>;
   totalStake?: InputMaybe<Scalars['Decimal']>;
+  unresponsiveMinersCount?: InputMaybe<Scalars['Int']>;
   updatedAt: Scalars['DateTime'];
   usedStake?: InputMaybe<Scalars['Decimal']>;
   withdrawalsCount?: InputMaybe<Scalars['Int']>;
   workerActivities?: InputMaybe<WorkerActivitiesCreateNestedManyWithoutStakePoolsInput>;
-  workersCount?: InputMaybe<Scalars['Int']>;
 };
 
 export type StakePoolsGroupBy = {
@@ -7942,27 +9647,30 @@ export type StakePoolsGroupBy = {
   _sum?: Maybe<StakePoolsSumAggregate>;
   cap?: Maybe<Scalars['Decimal']>;
   commission: Scalars['Decimal'];
+  coolingDownMinersCount: Scalars['Int'];
   createdAt: Scalars['DateTime'];
   freeStake: Scalars['Decimal'];
   id: Scalars['BigInt'];
+  idleMinersCount: Scalars['Int'];
   instantApr: Scalars['Decimal'];
   lastUpdatedBlockNumber: Scalars['BigInt'];
   lastUpdatedTimestamp: Scalars['DateTime'];
-  miningWorkersCount: Scalars['Int'];
+  minersCount: Scalars['Int'];
   ownerAddress: Scalars['String'];
   ownerId: Scalars['BigInt'];
   ownerReward: Scalars['Decimal'];
   pid: Scalars['BigInt'];
+  readyMinersCount: Scalars['Int'];
   releasingStake: Scalars['Decimal'];
   remainingStake?: Maybe<Scalars['Decimal']>;
   rewardAcc: Scalars['Decimal'];
   stakersCount: Scalars['Int'];
   totalShares: Scalars['Decimal'];
   totalStake: Scalars['Decimal'];
+  unresponsiveMinersCount: Scalars['Int'];
   updatedAt: Scalars['DateTime'];
   usedStake: Scalars['Decimal'];
   withdrawalsCount: Scalars['Int'];
-  workersCount: Scalars['Int'];
 };
 
 export type StakePoolsListRelationFilter = {
@@ -7975,106 +9683,118 @@ export type StakePoolsMaxAggregate = {
   __typename?: 'StakePoolsMaxAggregate';
   cap?: Maybe<Scalars['Decimal']>;
   commission?: Maybe<Scalars['Decimal']>;
+  coolingDownMinersCount?: Maybe<Scalars['Int']>;
   createdAt?: Maybe<Scalars['DateTime']>;
   freeStake?: Maybe<Scalars['Decimal']>;
   id?: Maybe<Scalars['BigInt']>;
+  idleMinersCount?: Maybe<Scalars['Int']>;
   instantApr?: Maybe<Scalars['Decimal']>;
   lastUpdatedBlockNumber?: Maybe<Scalars['BigInt']>;
   lastUpdatedTimestamp?: Maybe<Scalars['DateTime']>;
-  miningWorkersCount?: Maybe<Scalars['Int']>;
+  minersCount?: Maybe<Scalars['Int']>;
   ownerAddress?: Maybe<Scalars['String']>;
   ownerId?: Maybe<Scalars['BigInt']>;
   ownerReward?: Maybe<Scalars['Decimal']>;
   pid?: Maybe<Scalars['BigInt']>;
+  readyMinersCount?: Maybe<Scalars['Int']>;
   releasingStake?: Maybe<Scalars['Decimal']>;
   remainingStake?: Maybe<Scalars['Decimal']>;
   rewardAcc?: Maybe<Scalars['Decimal']>;
   stakersCount?: Maybe<Scalars['Int']>;
   totalShares?: Maybe<Scalars['Decimal']>;
   totalStake?: Maybe<Scalars['Decimal']>;
+  unresponsiveMinersCount?: Maybe<Scalars['Int']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
   usedStake?: Maybe<Scalars['Decimal']>;
   withdrawalsCount?: Maybe<Scalars['Int']>;
-  workersCount?: Maybe<Scalars['Int']>;
 };
 
 export type StakePoolsMaxOrderByAggregateInput = {
   cap?: InputMaybe<SortOrder>;
   commission?: InputMaybe<SortOrder>;
+  coolingDownMinersCount?: InputMaybe<SortOrder>;
   createdAt?: InputMaybe<SortOrder>;
   freeStake?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
+  idleMinersCount?: InputMaybe<SortOrder>;
   instantApr?: InputMaybe<SortOrder>;
   lastUpdatedBlockNumber?: InputMaybe<SortOrder>;
   lastUpdatedTimestamp?: InputMaybe<SortOrder>;
-  miningWorkersCount?: InputMaybe<SortOrder>;
+  minersCount?: InputMaybe<SortOrder>;
   ownerAddress?: InputMaybe<SortOrder>;
   ownerId?: InputMaybe<SortOrder>;
   ownerReward?: InputMaybe<SortOrder>;
   pid?: InputMaybe<SortOrder>;
+  readyMinersCount?: InputMaybe<SortOrder>;
   releasingStake?: InputMaybe<SortOrder>;
   remainingStake?: InputMaybe<SortOrder>;
   rewardAcc?: InputMaybe<SortOrder>;
   stakersCount?: InputMaybe<SortOrder>;
   totalShares?: InputMaybe<SortOrder>;
   totalStake?: InputMaybe<SortOrder>;
+  unresponsiveMinersCount?: InputMaybe<SortOrder>;
   updatedAt?: InputMaybe<SortOrder>;
   usedStake?: InputMaybe<SortOrder>;
   withdrawalsCount?: InputMaybe<SortOrder>;
-  workersCount?: InputMaybe<SortOrder>;
 };
 
 export type StakePoolsMinAggregate = {
   __typename?: 'StakePoolsMinAggregate';
   cap?: Maybe<Scalars['Decimal']>;
   commission?: Maybe<Scalars['Decimal']>;
+  coolingDownMinersCount?: Maybe<Scalars['Int']>;
   createdAt?: Maybe<Scalars['DateTime']>;
   freeStake?: Maybe<Scalars['Decimal']>;
   id?: Maybe<Scalars['BigInt']>;
+  idleMinersCount?: Maybe<Scalars['Int']>;
   instantApr?: Maybe<Scalars['Decimal']>;
   lastUpdatedBlockNumber?: Maybe<Scalars['BigInt']>;
   lastUpdatedTimestamp?: Maybe<Scalars['DateTime']>;
-  miningWorkersCount?: Maybe<Scalars['Int']>;
+  minersCount?: Maybe<Scalars['Int']>;
   ownerAddress?: Maybe<Scalars['String']>;
   ownerId?: Maybe<Scalars['BigInt']>;
   ownerReward?: Maybe<Scalars['Decimal']>;
   pid?: Maybe<Scalars['BigInt']>;
+  readyMinersCount?: Maybe<Scalars['Int']>;
   releasingStake?: Maybe<Scalars['Decimal']>;
   remainingStake?: Maybe<Scalars['Decimal']>;
   rewardAcc?: Maybe<Scalars['Decimal']>;
   stakersCount?: Maybe<Scalars['Int']>;
   totalShares?: Maybe<Scalars['Decimal']>;
   totalStake?: Maybe<Scalars['Decimal']>;
+  unresponsiveMinersCount?: Maybe<Scalars['Int']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
   usedStake?: Maybe<Scalars['Decimal']>;
   withdrawalsCount?: Maybe<Scalars['Int']>;
-  workersCount?: Maybe<Scalars['Int']>;
 };
 
 export type StakePoolsMinOrderByAggregateInput = {
   cap?: InputMaybe<SortOrder>;
   commission?: InputMaybe<SortOrder>;
+  coolingDownMinersCount?: InputMaybe<SortOrder>;
   createdAt?: InputMaybe<SortOrder>;
   freeStake?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
+  idleMinersCount?: InputMaybe<SortOrder>;
   instantApr?: InputMaybe<SortOrder>;
   lastUpdatedBlockNumber?: InputMaybe<SortOrder>;
   lastUpdatedTimestamp?: InputMaybe<SortOrder>;
-  miningWorkersCount?: InputMaybe<SortOrder>;
+  minersCount?: InputMaybe<SortOrder>;
   ownerAddress?: InputMaybe<SortOrder>;
   ownerId?: InputMaybe<SortOrder>;
   ownerReward?: InputMaybe<SortOrder>;
   pid?: InputMaybe<SortOrder>;
+  readyMinersCount?: InputMaybe<SortOrder>;
   releasingStake?: InputMaybe<SortOrder>;
   remainingStake?: InputMaybe<SortOrder>;
   rewardAcc?: InputMaybe<SortOrder>;
   stakersCount?: InputMaybe<SortOrder>;
   totalShares?: InputMaybe<SortOrder>;
   totalStake?: InputMaybe<SortOrder>;
+  unresponsiveMinersCount?: InputMaybe<SortOrder>;
   updatedAt?: InputMaybe<SortOrder>;
   usedStake?: InputMaybe<SortOrder>;
   withdrawalsCount?: InputMaybe<SortOrder>;
-  workersCount?: InputMaybe<SortOrder>;
 };
 
 export type StakePoolsOrderByRelationAggregateInput = {
@@ -8089,45 +9809,51 @@ export type StakePoolsOrderByWithAggregationInput = {
   _sum?: InputMaybe<StakePoolsSumOrderByAggregateInput>;
   cap?: InputMaybe<SortOrder>;
   commission?: InputMaybe<SortOrder>;
+  coolingDownMinersCount?: InputMaybe<SortOrder>;
   createdAt?: InputMaybe<SortOrder>;
   freeStake?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
+  idleMinersCount?: InputMaybe<SortOrder>;
   instantApr?: InputMaybe<SortOrder>;
   lastUpdatedBlockNumber?: InputMaybe<SortOrder>;
   lastUpdatedTimestamp?: InputMaybe<SortOrder>;
-  miningWorkersCount?: InputMaybe<SortOrder>;
+  minersCount?: InputMaybe<SortOrder>;
   ownerAddress?: InputMaybe<SortOrder>;
   ownerId?: InputMaybe<SortOrder>;
   ownerReward?: InputMaybe<SortOrder>;
   pid?: InputMaybe<SortOrder>;
+  readyMinersCount?: InputMaybe<SortOrder>;
   releasingStake?: InputMaybe<SortOrder>;
   remainingStake?: InputMaybe<SortOrder>;
   rewardAcc?: InputMaybe<SortOrder>;
   stakersCount?: InputMaybe<SortOrder>;
   totalShares?: InputMaybe<SortOrder>;
   totalStake?: InputMaybe<SortOrder>;
+  unresponsiveMinersCount?: InputMaybe<SortOrder>;
   updatedAt?: InputMaybe<SortOrder>;
   usedStake?: InputMaybe<SortOrder>;
   withdrawalsCount?: InputMaybe<SortOrder>;
-  workersCount?: InputMaybe<SortOrder>;
 };
 
 export type StakePoolsOrderByWithRelationInput = {
   accounts?: InputMaybe<AccountsOrderByWithRelationInput>;
   cap?: InputMaybe<SortOrder>;
   commission?: InputMaybe<SortOrder>;
+  coolingDownMinersCount?: InputMaybe<SortOrder>;
   createdAt?: InputMaybe<SortOrder>;
   freeStake?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
+  idleMinersCount?: InputMaybe<SortOrder>;
   instantApr?: InputMaybe<SortOrder>;
   lastUpdatedBlockNumber?: InputMaybe<SortOrder>;
   lastUpdatedTimestamp?: InputMaybe<SortOrder>;
   miners?: InputMaybe<MinersOrderByRelationAggregateInput>;
-  miningWorkersCount?: InputMaybe<SortOrder>;
+  minersCount?: InputMaybe<SortOrder>;
   ownerAddress?: InputMaybe<SortOrder>;
   ownerId?: InputMaybe<SortOrder>;
   ownerReward?: InputMaybe<SortOrder>;
   pid?: InputMaybe<SortOrder>;
+  readyMinersCount?: InputMaybe<SortOrder>;
   releasingStake?: InputMaybe<SortOrder>;
   remainingStake?: InputMaybe<SortOrder>;
   rewardAcc?: InputMaybe<SortOrder>;
@@ -8137,12 +9863,12 @@ export type StakePoolsOrderByWithRelationInput = {
   stakersCount?: InputMaybe<SortOrder>;
   totalShares?: InputMaybe<SortOrder>;
   totalStake?: InputMaybe<SortOrder>;
+  unresponsiveMinersCount?: InputMaybe<SortOrder>;
   updatedAt?: InputMaybe<SortOrder>;
   usedStake?: InputMaybe<SortOrder>;
   withdrawalsCount?: InputMaybe<SortOrder>;
   workerActivities?: InputMaybe<WorkerActivitiesOrderByRelationAggregateInput>;
   workers?: InputMaybe<WorkersOrderByRelationAggregateInput>;
-  workersCount?: InputMaybe<SortOrder>;
 };
 
 export type StakePoolsRelationFilter = {
@@ -8153,27 +9879,30 @@ export type StakePoolsRelationFilter = {
 export enum StakePoolsScalarFieldEnum {
   Cap = 'cap',
   Commission = 'commission',
+  CoolingDownMinersCount = 'coolingDownMinersCount',
   CreatedAt = 'createdAt',
   FreeStake = 'freeStake',
   Id = 'id',
+  IdleMinersCount = 'idleMinersCount',
   InstantApr = 'instantApr',
   LastUpdatedBlockNumber = 'lastUpdatedBlockNumber',
   LastUpdatedTimestamp = 'lastUpdatedTimestamp',
-  MiningWorkersCount = 'miningWorkersCount',
+  MinersCount = 'minersCount',
   OwnerAddress = 'ownerAddress',
   OwnerId = 'ownerId',
   OwnerReward = 'ownerReward',
   Pid = 'pid',
+  ReadyMinersCount = 'readyMinersCount',
   ReleasingStake = 'releasingStake',
   RemainingStake = 'remainingStake',
   RewardAcc = 'rewardAcc',
   StakersCount = 'stakersCount',
   TotalShares = 'totalShares',
   TotalStake = 'totalStake',
+  UnresponsiveMinersCount = 'unresponsiveMinersCount',
   UpdatedAt = 'updatedAt',
   UsedStake = 'usedStake',
-  WithdrawalsCount = 'withdrawalsCount',
-  WorkersCount = 'workersCount'
+  WithdrawalsCount = 'withdrawalsCount'
 }
 
 export type StakePoolsScalarWhereInput = {
@@ -8182,27 +9911,30 @@ export type StakePoolsScalarWhereInput = {
   OR?: InputMaybe<Array<StakePoolsScalarWhereInput>>;
   cap?: InputMaybe<DecimalNullableFilter>;
   commission?: InputMaybe<DecimalFilter>;
+  coolingDownMinersCount?: InputMaybe<IntFilter>;
   createdAt?: InputMaybe<DateTimeFilter>;
   freeStake?: InputMaybe<DecimalFilter>;
   id?: InputMaybe<BigIntFilter>;
+  idleMinersCount?: InputMaybe<IntFilter>;
   instantApr?: InputMaybe<DecimalFilter>;
   lastUpdatedBlockNumber?: InputMaybe<BigIntFilter>;
   lastUpdatedTimestamp?: InputMaybe<DateTimeFilter>;
-  miningWorkersCount?: InputMaybe<IntFilter>;
+  minersCount?: InputMaybe<IntFilter>;
   ownerAddress?: InputMaybe<StringFilter>;
   ownerId?: InputMaybe<BigIntFilter>;
   ownerReward?: InputMaybe<DecimalFilter>;
   pid?: InputMaybe<BigIntFilter>;
+  readyMinersCount?: InputMaybe<IntFilter>;
   releasingStake?: InputMaybe<DecimalFilter>;
   remainingStake?: InputMaybe<DecimalNullableFilter>;
   rewardAcc?: InputMaybe<DecimalFilter>;
   stakersCount?: InputMaybe<IntFilter>;
   totalShares?: InputMaybe<DecimalFilter>;
   totalStake?: InputMaybe<DecimalFilter>;
+  unresponsiveMinersCount?: InputMaybe<IntFilter>;
   updatedAt?: InputMaybe<DateTimeFilter>;
   usedStake?: InputMaybe<DecimalFilter>;
   withdrawalsCount?: InputMaybe<IntFilter>;
-  workersCount?: InputMaybe<IntFilter>;
 };
 
 export type StakePoolsScalarWhereWithAggregatesInput = {
@@ -8211,89 +9943,101 @@ export type StakePoolsScalarWhereWithAggregatesInput = {
   OR?: InputMaybe<Array<StakePoolsScalarWhereWithAggregatesInput>>;
   cap?: InputMaybe<DecimalNullableWithAggregatesFilter>;
   commission?: InputMaybe<DecimalWithAggregatesFilter>;
+  coolingDownMinersCount?: InputMaybe<IntWithAggregatesFilter>;
   createdAt?: InputMaybe<DateTimeWithAggregatesFilter>;
   freeStake?: InputMaybe<DecimalWithAggregatesFilter>;
   id?: InputMaybe<BigIntWithAggregatesFilter>;
+  idleMinersCount?: InputMaybe<IntWithAggregatesFilter>;
   instantApr?: InputMaybe<DecimalWithAggregatesFilter>;
   lastUpdatedBlockNumber?: InputMaybe<BigIntWithAggregatesFilter>;
   lastUpdatedTimestamp?: InputMaybe<DateTimeWithAggregatesFilter>;
-  miningWorkersCount?: InputMaybe<IntWithAggregatesFilter>;
+  minersCount?: InputMaybe<IntWithAggregatesFilter>;
   ownerAddress?: InputMaybe<StringWithAggregatesFilter>;
   ownerId?: InputMaybe<BigIntWithAggregatesFilter>;
   ownerReward?: InputMaybe<DecimalWithAggregatesFilter>;
   pid?: InputMaybe<BigIntWithAggregatesFilter>;
+  readyMinersCount?: InputMaybe<IntWithAggregatesFilter>;
   releasingStake?: InputMaybe<DecimalWithAggregatesFilter>;
   remainingStake?: InputMaybe<DecimalNullableWithAggregatesFilter>;
   rewardAcc?: InputMaybe<DecimalWithAggregatesFilter>;
   stakersCount?: InputMaybe<IntWithAggregatesFilter>;
   totalShares?: InputMaybe<DecimalWithAggregatesFilter>;
   totalStake?: InputMaybe<DecimalWithAggregatesFilter>;
+  unresponsiveMinersCount?: InputMaybe<IntWithAggregatesFilter>;
   updatedAt?: InputMaybe<DateTimeWithAggregatesFilter>;
   usedStake?: InputMaybe<DecimalWithAggregatesFilter>;
   withdrawalsCount?: InputMaybe<IntWithAggregatesFilter>;
-  workersCount?: InputMaybe<IntWithAggregatesFilter>;
 };
 
 export type StakePoolsSumAggregate = {
   __typename?: 'StakePoolsSumAggregate';
   cap?: Maybe<Scalars['Decimal']>;
   commission?: Maybe<Scalars['Decimal']>;
+  coolingDownMinersCount?: Maybe<Scalars['Int']>;
   freeStake?: Maybe<Scalars['Decimal']>;
   id?: Maybe<Scalars['BigInt']>;
+  idleMinersCount?: Maybe<Scalars['Int']>;
   instantApr?: Maybe<Scalars['Decimal']>;
   lastUpdatedBlockNumber?: Maybe<Scalars['BigInt']>;
-  miningWorkersCount?: Maybe<Scalars['Int']>;
+  minersCount?: Maybe<Scalars['Int']>;
   ownerId?: Maybe<Scalars['BigInt']>;
   ownerReward?: Maybe<Scalars['Decimal']>;
   pid?: Maybe<Scalars['BigInt']>;
+  readyMinersCount?: Maybe<Scalars['Int']>;
   releasingStake?: Maybe<Scalars['Decimal']>;
   remainingStake?: Maybe<Scalars['Decimal']>;
   rewardAcc?: Maybe<Scalars['Decimal']>;
   stakersCount?: Maybe<Scalars['Int']>;
   totalShares?: Maybe<Scalars['Decimal']>;
   totalStake?: Maybe<Scalars['Decimal']>;
+  unresponsiveMinersCount?: Maybe<Scalars['Int']>;
   usedStake?: Maybe<Scalars['Decimal']>;
   withdrawalsCount?: Maybe<Scalars['Int']>;
-  workersCount?: Maybe<Scalars['Int']>;
 };
 
 export type StakePoolsSumOrderByAggregateInput = {
   cap?: InputMaybe<SortOrder>;
   commission?: InputMaybe<SortOrder>;
+  coolingDownMinersCount?: InputMaybe<SortOrder>;
   freeStake?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
+  idleMinersCount?: InputMaybe<SortOrder>;
   instantApr?: InputMaybe<SortOrder>;
   lastUpdatedBlockNumber?: InputMaybe<SortOrder>;
-  miningWorkersCount?: InputMaybe<SortOrder>;
+  minersCount?: InputMaybe<SortOrder>;
   ownerId?: InputMaybe<SortOrder>;
   ownerReward?: InputMaybe<SortOrder>;
   pid?: InputMaybe<SortOrder>;
+  readyMinersCount?: InputMaybe<SortOrder>;
   releasingStake?: InputMaybe<SortOrder>;
   remainingStake?: InputMaybe<SortOrder>;
   rewardAcc?: InputMaybe<SortOrder>;
   stakersCount?: InputMaybe<SortOrder>;
   totalShares?: InputMaybe<SortOrder>;
   totalStake?: InputMaybe<SortOrder>;
+  unresponsiveMinersCount?: InputMaybe<SortOrder>;
   usedStake?: InputMaybe<SortOrder>;
   withdrawalsCount?: InputMaybe<SortOrder>;
-  workersCount?: InputMaybe<SortOrder>;
 };
 
 export type StakePoolsUpdateInput = {
   accounts?: InputMaybe<AccountsUpdateOneRequiredWithoutStakePoolsInput>;
   cap?: InputMaybe<NullableDecimalFieldUpdateOperationsInput>;
   commission?: InputMaybe<DecimalFieldUpdateOperationsInput>;
+  coolingDownMinersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   freeStake?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   id?: InputMaybe<BigIntFieldUpdateOperationsInput>;
+  idleMinersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   instantApr?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   lastUpdatedBlockNumber?: InputMaybe<BigIntFieldUpdateOperationsInput>;
   lastUpdatedTimestamp?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   miners?: InputMaybe<MinersUpdateManyWithoutStakePoolsInput>;
-  miningWorkersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
+  minersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   ownerAddress?: InputMaybe<StringFieldUpdateOperationsInput>;
   ownerReward?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   pid?: InputMaybe<BigIntFieldUpdateOperationsInput>;
+  readyMinersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   releasingStake?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   remainingStake?: InputMaybe<NullableDecimalFieldUpdateOperationsInput>;
   rewardAcc?: InputMaybe<DecimalFieldUpdateOperationsInput>;
@@ -8303,37 +10047,40 @@ export type StakePoolsUpdateInput = {
   stakersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   totalShares?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   totalStake?: InputMaybe<DecimalFieldUpdateOperationsInput>;
+  unresponsiveMinersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   usedStake?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   withdrawalsCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   workerActivities?: InputMaybe<WorkerActivitiesUpdateManyWithoutStakePoolsInput>;
   workers?: InputMaybe<WorkersUpdateManyWithoutStakePoolsInput>;
-  workersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
 };
 
 export type StakePoolsUpdateManyMutationInput = {
   cap?: InputMaybe<NullableDecimalFieldUpdateOperationsInput>;
   commission?: InputMaybe<DecimalFieldUpdateOperationsInput>;
+  coolingDownMinersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   freeStake?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   id?: InputMaybe<BigIntFieldUpdateOperationsInput>;
+  idleMinersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   instantApr?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   lastUpdatedBlockNumber?: InputMaybe<BigIntFieldUpdateOperationsInput>;
   lastUpdatedTimestamp?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  miningWorkersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
+  minersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   ownerAddress?: InputMaybe<StringFieldUpdateOperationsInput>;
   ownerReward?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   pid?: InputMaybe<BigIntFieldUpdateOperationsInput>;
+  readyMinersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   releasingStake?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   remainingStake?: InputMaybe<NullableDecimalFieldUpdateOperationsInput>;
   rewardAcc?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   stakersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   totalShares?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   totalStake?: InputMaybe<DecimalFieldUpdateOperationsInput>;
+  unresponsiveMinersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   usedStake?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   withdrawalsCount?: InputMaybe<IntFieldUpdateOperationsInput>;
-  workersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
 };
 
 export type StakePoolsUpdateManyWithWhereWithoutAccountsInput = {
@@ -8417,17 +10164,20 @@ export type StakePoolsUpdateWithWhereUniqueWithoutAccountsInput = {
 export type StakePoolsUpdateWithoutAccountsInput = {
   cap?: InputMaybe<NullableDecimalFieldUpdateOperationsInput>;
   commission?: InputMaybe<DecimalFieldUpdateOperationsInput>;
+  coolingDownMinersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   freeStake?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   id?: InputMaybe<BigIntFieldUpdateOperationsInput>;
+  idleMinersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   instantApr?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   lastUpdatedBlockNumber?: InputMaybe<BigIntFieldUpdateOperationsInput>;
   lastUpdatedTimestamp?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   miners?: InputMaybe<MinersUpdateManyWithoutStakePoolsInput>;
-  miningWorkersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
+  minersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   ownerAddress?: InputMaybe<StringFieldUpdateOperationsInput>;
   ownerReward?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   pid?: InputMaybe<BigIntFieldUpdateOperationsInput>;
+  readyMinersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   releasingStake?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   remainingStake?: InputMaybe<NullableDecimalFieldUpdateOperationsInput>;
   rewardAcc?: InputMaybe<DecimalFieldUpdateOperationsInput>;
@@ -8437,28 +10187,31 @@ export type StakePoolsUpdateWithoutAccountsInput = {
   stakersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   totalShares?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   totalStake?: InputMaybe<DecimalFieldUpdateOperationsInput>;
+  unresponsiveMinersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   usedStake?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   withdrawalsCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   workerActivities?: InputMaybe<WorkerActivitiesUpdateManyWithoutStakePoolsInput>;
   workers?: InputMaybe<WorkersUpdateManyWithoutStakePoolsInput>;
-  workersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
 };
 
 export type StakePoolsUpdateWithoutMinersInput = {
   accounts?: InputMaybe<AccountsUpdateOneRequiredWithoutStakePoolsInput>;
   cap?: InputMaybe<NullableDecimalFieldUpdateOperationsInput>;
   commission?: InputMaybe<DecimalFieldUpdateOperationsInput>;
+  coolingDownMinersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   freeStake?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   id?: InputMaybe<BigIntFieldUpdateOperationsInput>;
+  idleMinersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   instantApr?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   lastUpdatedBlockNumber?: InputMaybe<BigIntFieldUpdateOperationsInput>;
   lastUpdatedTimestamp?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  miningWorkersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
+  minersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   ownerAddress?: InputMaybe<StringFieldUpdateOperationsInput>;
   ownerReward?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   pid?: InputMaybe<BigIntFieldUpdateOperationsInput>;
+  readyMinersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   releasingStake?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   remainingStake?: InputMaybe<NullableDecimalFieldUpdateOperationsInput>;
   rewardAcc?: InputMaybe<DecimalFieldUpdateOperationsInput>;
@@ -8468,29 +10221,32 @@ export type StakePoolsUpdateWithoutMinersInput = {
   stakersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   totalShares?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   totalStake?: InputMaybe<DecimalFieldUpdateOperationsInput>;
+  unresponsiveMinersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   usedStake?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   withdrawalsCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   workerActivities?: InputMaybe<WorkerActivitiesUpdateManyWithoutStakePoolsInput>;
   workers?: InputMaybe<WorkersUpdateManyWithoutStakePoolsInput>;
-  workersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
 };
 
 export type StakePoolsUpdateWithoutStakePoolActivitiesInput = {
   accounts?: InputMaybe<AccountsUpdateOneRequiredWithoutStakePoolsInput>;
   cap?: InputMaybe<NullableDecimalFieldUpdateOperationsInput>;
   commission?: InputMaybe<DecimalFieldUpdateOperationsInput>;
+  coolingDownMinersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   freeStake?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   id?: InputMaybe<BigIntFieldUpdateOperationsInput>;
+  idleMinersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   instantApr?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   lastUpdatedBlockNumber?: InputMaybe<BigIntFieldUpdateOperationsInput>;
   lastUpdatedTimestamp?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   miners?: InputMaybe<MinersUpdateManyWithoutStakePoolsInput>;
-  miningWorkersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
+  minersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   ownerAddress?: InputMaybe<StringFieldUpdateOperationsInput>;
   ownerReward?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   pid?: InputMaybe<BigIntFieldUpdateOperationsInput>;
+  readyMinersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   releasingStake?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   remainingStake?: InputMaybe<NullableDecimalFieldUpdateOperationsInput>;
   rewardAcc?: InputMaybe<DecimalFieldUpdateOperationsInput>;
@@ -8499,29 +10255,32 @@ export type StakePoolsUpdateWithoutStakePoolActivitiesInput = {
   stakersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   totalShares?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   totalStake?: InputMaybe<DecimalFieldUpdateOperationsInput>;
+  unresponsiveMinersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   usedStake?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   withdrawalsCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   workerActivities?: InputMaybe<WorkerActivitiesUpdateManyWithoutStakePoolsInput>;
   workers?: InputMaybe<WorkersUpdateManyWithoutStakePoolsInput>;
-  workersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
 };
 
 export type StakePoolsUpdateWithoutStakePoolStakersInput = {
   accounts?: InputMaybe<AccountsUpdateOneRequiredWithoutStakePoolsInput>;
   cap?: InputMaybe<NullableDecimalFieldUpdateOperationsInput>;
   commission?: InputMaybe<DecimalFieldUpdateOperationsInput>;
+  coolingDownMinersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   freeStake?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   id?: InputMaybe<BigIntFieldUpdateOperationsInput>;
+  idleMinersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   instantApr?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   lastUpdatedBlockNumber?: InputMaybe<BigIntFieldUpdateOperationsInput>;
   lastUpdatedTimestamp?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   miners?: InputMaybe<MinersUpdateManyWithoutStakePoolsInput>;
-  miningWorkersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
+  minersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   ownerAddress?: InputMaybe<StringFieldUpdateOperationsInput>;
   ownerReward?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   pid?: InputMaybe<BigIntFieldUpdateOperationsInput>;
+  readyMinersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   releasingStake?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   remainingStake?: InputMaybe<NullableDecimalFieldUpdateOperationsInput>;
   rewardAcc?: InputMaybe<DecimalFieldUpdateOperationsInput>;
@@ -8530,29 +10289,32 @@ export type StakePoolsUpdateWithoutStakePoolStakersInput = {
   stakersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   totalShares?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   totalStake?: InputMaybe<DecimalFieldUpdateOperationsInput>;
+  unresponsiveMinersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   usedStake?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   withdrawalsCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   workerActivities?: InputMaybe<WorkerActivitiesUpdateManyWithoutStakePoolsInput>;
   workers?: InputMaybe<WorkersUpdateManyWithoutStakePoolsInput>;
-  workersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
 };
 
 export type StakePoolsUpdateWithoutStakePoolWithdrawalsInput = {
   accounts?: InputMaybe<AccountsUpdateOneRequiredWithoutStakePoolsInput>;
   cap?: InputMaybe<NullableDecimalFieldUpdateOperationsInput>;
   commission?: InputMaybe<DecimalFieldUpdateOperationsInput>;
+  coolingDownMinersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   freeStake?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   id?: InputMaybe<BigIntFieldUpdateOperationsInput>;
+  idleMinersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   instantApr?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   lastUpdatedBlockNumber?: InputMaybe<BigIntFieldUpdateOperationsInput>;
   lastUpdatedTimestamp?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   miners?: InputMaybe<MinersUpdateManyWithoutStakePoolsInput>;
-  miningWorkersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
+  minersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   ownerAddress?: InputMaybe<StringFieldUpdateOperationsInput>;
   ownerReward?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   pid?: InputMaybe<BigIntFieldUpdateOperationsInput>;
+  readyMinersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   releasingStake?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   remainingStake?: InputMaybe<NullableDecimalFieldUpdateOperationsInput>;
   rewardAcc?: InputMaybe<DecimalFieldUpdateOperationsInput>;
@@ -8561,29 +10323,32 @@ export type StakePoolsUpdateWithoutStakePoolWithdrawalsInput = {
   stakersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   totalShares?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   totalStake?: InputMaybe<DecimalFieldUpdateOperationsInput>;
+  unresponsiveMinersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   usedStake?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   withdrawalsCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   workerActivities?: InputMaybe<WorkerActivitiesUpdateManyWithoutStakePoolsInput>;
   workers?: InputMaybe<WorkersUpdateManyWithoutStakePoolsInput>;
-  workersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
 };
 
 export type StakePoolsUpdateWithoutWorkerActivitiesInput = {
   accounts?: InputMaybe<AccountsUpdateOneRequiredWithoutStakePoolsInput>;
   cap?: InputMaybe<NullableDecimalFieldUpdateOperationsInput>;
   commission?: InputMaybe<DecimalFieldUpdateOperationsInput>;
+  coolingDownMinersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   freeStake?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   id?: InputMaybe<BigIntFieldUpdateOperationsInput>;
+  idleMinersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   instantApr?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   lastUpdatedBlockNumber?: InputMaybe<BigIntFieldUpdateOperationsInput>;
   lastUpdatedTimestamp?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   miners?: InputMaybe<MinersUpdateManyWithoutStakePoolsInput>;
-  miningWorkersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
+  minersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   ownerAddress?: InputMaybe<StringFieldUpdateOperationsInput>;
   ownerReward?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   pid?: InputMaybe<BigIntFieldUpdateOperationsInput>;
+  readyMinersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   releasingStake?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   remainingStake?: InputMaybe<NullableDecimalFieldUpdateOperationsInput>;
   rewardAcc?: InputMaybe<DecimalFieldUpdateOperationsInput>;
@@ -8593,28 +10358,31 @@ export type StakePoolsUpdateWithoutWorkerActivitiesInput = {
   stakersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   totalShares?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   totalStake?: InputMaybe<DecimalFieldUpdateOperationsInput>;
+  unresponsiveMinersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   usedStake?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   withdrawalsCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   workers?: InputMaybe<WorkersUpdateManyWithoutStakePoolsInput>;
-  workersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
 };
 
 export type StakePoolsUpdateWithoutWorkersInput = {
   accounts?: InputMaybe<AccountsUpdateOneRequiredWithoutStakePoolsInput>;
   cap?: InputMaybe<NullableDecimalFieldUpdateOperationsInput>;
   commission?: InputMaybe<DecimalFieldUpdateOperationsInput>;
+  coolingDownMinersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   freeStake?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   id?: InputMaybe<BigIntFieldUpdateOperationsInput>;
+  idleMinersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   instantApr?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   lastUpdatedBlockNumber?: InputMaybe<BigIntFieldUpdateOperationsInput>;
   lastUpdatedTimestamp?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   miners?: InputMaybe<MinersUpdateManyWithoutStakePoolsInput>;
-  miningWorkersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
+  minersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   ownerAddress?: InputMaybe<StringFieldUpdateOperationsInput>;
   ownerReward?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   pid?: InputMaybe<BigIntFieldUpdateOperationsInput>;
+  readyMinersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   releasingStake?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   remainingStake?: InputMaybe<NullableDecimalFieldUpdateOperationsInput>;
   rewardAcc?: InputMaybe<DecimalFieldUpdateOperationsInput>;
@@ -8624,11 +10392,11 @@ export type StakePoolsUpdateWithoutWorkersInput = {
   stakersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   totalShares?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   totalStake?: InputMaybe<DecimalFieldUpdateOperationsInput>;
+  unresponsiveMinersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   usedStake?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   withdrawalsCount?: InputMaybe<IntFieldUpdateOperationsInput>;
   workerActivities?: InputMaybe<WorkerActivitiesUpdateManyWithoutStakePoolsInput>;
-  workersCount?: InputMaybe<IntFieldUpdateOperationsInput>;
 };
 
 export type StakePoolsUpsertWithWhereUniqueWithoutAccountsInput = {
@@ -8674,18 +10442,21 @@ export type StakePoolsWhereInput = {
   accounts?: InputMaybe<AccountsRelationFilter>;
   cap?: InputMaybe<DecimalNullableFilter>;
   commission?: InputMaybe<DecimalFilter>;
+  coolingDownMinersCount?: InputMaybe<IntFilter>;
   createdAt?: InputMaybe<DateTimeFilter>;
   freeStake?: InputMaybe<DecimalFilter>;
   id?: InputMaybe<BigIntFilter>;
+  idleMinersCount?: InputMaybe<IntFilter>;
   instantApr?: InputMaybe<DecimalFilter>;
   lastUpdatedBlockNumber?: InputMaybe<BigIntFilter>;
   lastUpdatedTimestamp?: InputMaybe<DateTimeFilter>;
   miners?: InputMaybe<MinersListRelationFilter>;
-  miningWorkersCount?: InputMaybe<IntFilter>;
+  minersCount?: InputMaybe<IntFilter>;
   ownerAddress?: InputMaybe<StringFilter>;
   ownerId?: InputMaybe<BigIntFilter>;
   ownerReward?: InputMaybe<DecimalFilter>;
   pid?: InputMaybe<BigIntFilter>;
+  readyMinersCount?: InputMaybe<IntFilter>;
   releasingStake?: InputMaybe<DecimalFilter>;
   remainingStake?: InputMaybe<DecimalNullableFilter>;
   rewardAcc?: InputMaybe<DecimalFilter>;
@@ -8695,12 +10466,12 @@ export type StakePoolsWhereInput = {
   stakersCount?: InputMaybe<IntFilter>;
   totalShares?: InputMaybe<DecimalFilter>;
   totalStake?: InputMaybe<DecimalFilter>;
+  unresponsiveMinersCount?: InputMaybe<IntFilter>;
   updatedAt?: InputMaybe<DateTimeFilter>;
   usedStake?: InputMaybe<DecimalFilter>;
   withdrawalsCount?: InputMaybe<IntFilter>;
   workerActivities?: InputMaybe<WorkerActivitiesListRelationFilter>;
   workers?: InputMaybe<WorkersListRelationFilter>;
-  workersCount?: InputMaybe<IntFilter>;
 };
 
 export type StakePoolsWhereUniqueInput = {
@@ -9040,6 +10811,10 @@ export type WorkerActivities = {
   blockNumber: Scalars['BigInt'];
   confidenceLevel: Scalars['Int'];
   createdAt: Scalars['DateTime'];
+  currentMinerAccountAddress?: Maybe<Scalars['String']>;
+  currentMinerId?: Maybe<Scalars['BigInt']>;
+  currentPid?: Maybe<Scalars['Int']>;
+  currentStakePoolId?: Maybe<Scalars['BigInt']>;
   ecdhPublicKey?: Maybe<Scalars['String']>;
   eventId?: Maybe<Scalars['BigInt']>;
   events?: Maybe<Events>;
@@ -9047,26 +10822,15 @@ export type WorkerActivities = {
   id: Scalars['BigInt'];
   infoLastUpdatedAt: Scalars['DateTime'];
   initialScore: Scalars['Int'];
-  minerAccountAddress?: Maybe<Scalars['String']>;
+  miners?: Maybe<Miners>;
   operatorAddress?: Maybe<Scalars['String']>;
   operatorId?: Maybe<Scalars['BigInt']>;
-  pInit: Scalars['Int'];
-  pInstant: Scalars['Int'];
-  pid?: Maybe<Scalars['BigInt']>;
   runtimeVersion: Scalars['Int'];
-  sMax: Scalars['Decimal'];
-  sMin: Scalars['Decimal'];
-  shares: Scalars['Decimal'];
-  stakePoolId?: Maybe<Scalars['BigInt']>;
   stakePools?: Maybe<StakePools>;
-  state: Scalars['String'];
   timestamp: Scalars['DateTime'];
   tokenomicVersion: Scalars['Int'];
-  totalReward: Scalars['Decimal'];
   type: Scalars['String'];
   updatedAt: Scalars['DateTime'];
-  v: Scalars['Decimal'];
-  ve: Scalars['Decimal'];
   workerId: Scalars['BigInt'];
   workers: Workers;
 };
@@ -9075,46 +10839,32 @@ export type WorkerActivitiesAvgAggregate = {
   __typename?: 'WorkerActivitiesAvgAggregate';
   blockNumber?: Maybe<Scalars['Float']>;
   confidenceLevel?: Maybe<Scalars['Float']>;
+  currentMinerId?: Maybe<Scalars['Float']>;
+  currentPid?: Maybe<Scalars['Float']>;
+  currentStakePoolId?: Maybe<Scalars['Float']>;
   eventId?: Maybe<Scalars['Float']>;
   features?: Maybe<Scalars['Float']>;
   id?: Maybe<Scalars['Float']>;
   initialScore?: Maybe<Scalars['Float']>;
   operatorId?: Maybe<Scalars['Float']>;
-  pInit?: Maybe<Scalars['Float']>;
-  pInstant?: Maybe<Scalars['Float']>;
-  pid?: Maybe<Scalars['Float']>;
   runtimeVersion?: Maybe<Scalars['Float']>;
-  sMax?: Maybe<Scalars['Decimal']>;
-  sMin?: Maybe<Scalars['Decimal']>;
-  shares?: Maybe<Scalars['Decimal']>;
-  stakePoolId?: Maybe<Scalars['Float']>;
   tokenomicVersion?: Maybe<Scalars['Float']>;
-  totalReward?: Maybe<Scalars['Decimal']>;
-  v?: Maybe<Scalars['Decimal']>;
-  ve?: Maybe<Scalars['Decimal']>;
   workerId?: Maybe<Scalars['Float']>;
 };
 
 export type WorkerActivitiesAvgOrderByAggregateInput = {
   blockNumber?: InputMaybe<SortOrder>;
   confidenceLevel?: InputMaybe<SortOrder>;
+  currentMinerId?: InputMaybe<SortOrder>;
+  currentPid?: InputMaybe<SortOrder>;
+  currentStakePoolId?: InputMaybe<SortOrder>;
   eventId?: InputMaybe<SortOrder>;
   features?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
   initialScore?: InputMaybe<SortOrder>;
   operatorId?: InputMaybe<SortOrder>;
-  pInit?: InputMaybe<SortOrder>;
-  pInstant?: InputMaybe<SortOrder>;
-  pid?: InputMaybe<SortOrder>;
   runtimeVersion?: InputMaybe<SortOrder>;
-  sMax?: InputMaybe<SortOrder>;
-  sMin?: InputMaybe<SortOrder>;
-  shares?: InputMaybe<SortOrder>;
-  stakePoolId?: InputMaybe<SortOrder>;
   tokenomicVersion?: InputMaybe<SortOrder>;
-  totalReward?: InputMaybe<SortOrder>;
-  v?: InputMaybe<SortOrder>;
-  ve?: InputMaybe<SortOrder>;
   workerId?: InputMaybe<SortOrder>;
 };
 
@@ -9124,31 +10874,23 @@ export type WorkerActivitiesCountAggregate = {
   blockNumber: Scalars['Int'];
   confidenceLevel: Scalars['Int'];
   createdAt: Scalars['Int'];
+  currentMinerAccountAddress: Scalars['Int'];
+  currentMinerId: Scalars['Int'];
+  currentPid: Scalars['Int'];
+  currentStakePoolId: Scalars['Int'];
   ecdhPublicKey: Scalars['Int'];
   eventId: Scalars['Int'];
   features: Scalars['Int'];
   id: Scalars['Int'];
   infoLastUpdatedAt: Scalars['Int'];
   initialScore: Scalars['Int'];
-  minerAccountAddress: Scalars['Int'];
   operatorAddress: Scalars['Int'];
   operatorId: Scalars['Int'];
-  pInit: Scalars['Int'];
-  pInstant: Scalars['Int'];
-  pid: Scalars['Int'];
   runtimeVersion: Scalars['Int'];
-  sMax: Scalars['Int'];
-  sMin: Scalars['Int'];
-  shares: Scalars['Int'];
-  stakePoolId: Scalars['Int'];
-  state: Scalars['Int'];
   timestamp: Scalars['Int'];
   tokenomicVersion: Scalars['Int'];
-  totalReward: Scalars['Int'];
   type: Scalars['Int'];
   updatedAt: Scalars['Int'];
-  v: Scalars['Int'];
-  ve: Scalars['Int'];
   workerId: Scalars['Int'];
 };
 
@@ -9156,31 +10898,23 @@ export type WorkerActivitiesCountOrderByAggregateInput = {
   blockNumber?: InputMaybe<SortOrder>;
   confidenceLevel?: InputMaybe<SortOrder>;
   createdAt?: InputMaybe<SortOrder>;
+  currentMinerAccountAddress?: InputMaybe<SortOrder>;
+  currentMinerId?: InputMaybe<SortOrder>;
+  currentPid?: InputMaybe<SortOrder>;
+  currentStakePoolId?: InputMaybe<SortOrder>;
   ecdhPublicKey?: InputMaybe<SortOrder>;
   eventId?: InputMaybe<SortOrder>;
   features?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
   infoLastUpdatedAt?: InputMaybe<SortOrder>;
   initialScore?: InputMaybe<SortOrder>;
-  minerAccountAddress?: InputMaybe<SortOrder>;
   operatorAddress?: InputMaybe<SortOrder>;
   operatorId?: InputMaybe<SortOrder>;
-  pInit?: InputMaybe<SortOrder>;
-  pInstant?: InputMaybe<SortOrder>;
-  pid?: InputMaybe<SortOrder>;
   runtimeVersion?: InputMaybe<SortOrder>;
-  sMax?: InputMaybe<SortOrder>;
-  sMin?: InputMaybe<SortOrder>;
-  shares?: InputMaybe<SortOrder>;
-  stakePoolId?: InputMaybe<SortOrder>;
-  state?: InputMaybe<SortOrder>;
   timestamp?: InputMaybe<SortOrder>;
   tokenomicVersion?: InputMaybe<SortOrder>;
-  totalReward?: InputMaybe<SortOrder>;
   type?: InputMaybe<SortOrder>;
   updatedAt?: InputMaybe<SortOrder>;
-  v?: InputMaybe<SortOrder>;
-  ve?: InputMaybe<SortOrder>;
   workerId?: InputMaybe<SortOrder>;
 };
 
@@ -9189,30 +10923,22 @@ export type WorkerActivitiesCreateInput = {
   blockNumber: Scalars['BigInt'];
   confidenceLevel?: InputMaybe<Scalars['Int']>;
   createdAt: Scalars['DateTime'];
+  currentMinerAccountAddress?: InputMaybe<Scalars['String']>;
+  currentPid?: InputMaybe<Scalars['Int']>;
   ecdhPublicKey?: InputMaybe<Scalars['String']>;
   events?: InputMaybe<EventsCreateNestedOneWithoutWorkerActivitiesInput>;
   features?: InputMaybe<WorkerActivitiesCreatefeaturesInput>;
   id?: InputMaybe<Scalars['BigInt']>;
   infoLastUpdatedAt: Scalars['DateTime'];
   initialScore?: InputMaybe<Scalars['Int']>;
-  minerAccountAddress?: InputMaybe<Scalars['String']>;
+  miners?: InputMaybe<MinersCreateNestedOneWithoutWorkerActivitiesInput>;
   operatorAddress?: InputMaybe<Scalars['String']>;
-  pInit?: InputMaybe<Scalars['Int']>;
-  pInstant?: InputMaybe<Scalars['Int']>;
-  pid?: InputMaybe<Scalars['BigInt']>;
   runtimeVersion?: InputMaybe<Scalars['Int']>;
-  sMax?: InputMaybe<Scalars['Decimal']>;
-  sMin?: InputMaybe<Scalars['Decimal']>;
-  shares?: InputMaybe<Scalars['Decimal']>;
   stakePools?: InputMaybe<StakePoolsCreateNestedOneWithoutWorkerActivitiesInput>;
-  state?: InputMaybe<Scalars['String']>;
   timestamp: Scalars['DateTime'];
   tokenomicVersion: Scalars['Int'];
-  totalReward?: InputMaybe<Scalars['Decimal']>;
   type: Scalars['String'];
   updatedAt: Scalars['DateTime'];
-  v?: InputMaybe<Scalars['Decimal']>;
-  ve?: InputMaybe<Scalars['Decimal']>;
   workers: WorkersCreateNestedOneWithoutWorkerActivitiesInput;
 };
 
@@ -9220,30 +10946,22 @@ export type WorkerActivitiesCreateManyAccountsInput = {
   blockNumber: Scalars['BigInt'];
   confidenceLevel?: InputMaybe<Scalars['Int']>;
   createdAt: Scalars['DateTime'];
+  currentMinerAccountAddress?: InputMaybe<Scalars['String']>;
+  currentMinerId?: InputMaybe<Scalars['BigInt']>;
+  currentPid?: InputMaybe<Scalars['Int']>;
+  currentStakePoolId?: InputMaybe<Scalars['BigInt']>;
   ecdhPublicKey?: InputMaybe<Scalars['String']>;
   eventId?: InputMaybe<Scalars['BigInt']>;
   features?: InputMaybe<WorkerActivitiesCreateManyfeaturesInput>;
   id?: InputMaybe<Scalars['BigInt']>;
   infoLastUpdatedAt: Scalars['DateTime'];
   initialScore?: InputMaybe<Scalars['Int']>;
-  minerAccountAddress?: InputMaybe<Scalars['String']>;
   operatorAddress?: InputMaybe<Scalars['String']>;
-  pInit?: InputMaybe<Scalars['Int']>;
-  pInstant?: InputMaybe<Scalars['Int']>;
-  pid?: InputMaybe<Scalars['BigInt']>;
   runtimeVersion?: InputMaybe<Scalars['Int']>;
-  sMax?: InputMaybe<Scalars['Decimal']>;
-  sMin?: InputMaybe<Scalars['Decimal']>;
-  shares?: InputMaybe<Scalars['Decimal']>;
-  stakePoolId?: InputMaybe<Scalars['BigInt']>;
-  state?: InputMaybe<Scalars['String']>;
   timestamp: Scalars['DateTime'];
   tokenomicVersion: Scalars['Int'];
-  totalReward?: InputMaybe<Scalars['Decimal']>;
   type: Scalars['String'];
   updatedAt: Scalars['DateTime'];
-  v?: InputMaybe<Scalars['Decimal']>;
-  ve?: InputMaybe<Scalars['Decimal']>;
   workerId: Scalars['BigInt'];
 };
 
@@ -9256,30 +10974,22 @@ export type WorkerActivitiesCreateManyEventsInput = {
   blockNumber: Scalars['BigInt'];
   confidenceLevel?: InputMaybe<Scalars['Int']>;
   createdAt: Scalars['DateTime'];
+  currentMinerAccountAddress?: InputMaybe<Scalars['String']>;
+  currentMinerId?: InputMaybe<Scalars['BigInt']>;
+  currentPid?: InputMaybe<Scalars['Int']>;
+  currentStakePoolId?: InputMaybe<Scalars['BigInt']>;
   ecdhPublicKey?: InputMaybe<Scalars['String']>;
   features?: InputMaybe<WorkerActivitiesCreateManyfeaturesInput>;
   id?: InputMaybe<Scalars['BigInt']>;
   infoLastUpdatedAt: Scalars['DateTime'];
   initialScore?: InputMaybe<Scalars['Int']>;
-  minerAccountAddress?: InputMaybe<Scalars['String']>;
   operatorAddress?: InputMaybe<Scalars['String']>;
   operatorId?: InputMaybe<Scalars['BigInt']>;
-  pInit?: InputMaybe<Scalars['Int']>;
-  pInstant?: InputMaybe<Scalars['Int']>;
-  pid?: InputMaybe<Scalars['BigInt']>;
   runtimeVersion?: InputMaybe<Scalars['Int']>;
-  sMax?: InputMaybe<Scalars['Decimal']>;
-  sMin?: InputMaybe<Scalars['Decimal']>;
-  shares?: InputMaybe<Scalars['Decimal']>;
-  stakePoolId?: InputMaybe<Scalars['BigInt']>;
-  state?: InputMaybe<Scalars['String']>;
   timestamp: Scalars['DateTime'];
   tokenomicVersion: Scalars['Int'];
-  totalReward?: InputMaybe<Scalars['Decimal']>;
   type: Scalars['String'];
   updatedAt: Scalars['DateTime'];
-  v?: InputMaybe<Scalars['Decimal']>;
-  ve?: InputMaybe<Scalars['Decimal']>;
   workerId: Scalars['BigInt'];
 };
 
@@ -9292,62 +11002,74 @@ export type WorkerActivitiesCreateManyInput = {
   blockNumber: Scalars['BigInt'];
   confidenceLevel?: InputMaybe<Scalars['Int']>;
   createdAt: Scalars['DateTime'];
+  currentMinerAccountAddress?: InputMaybe<Scalars['String']>;
+  currentMinerId?: InputMaybe<Scalars['BigInt']>;
+  currentPid?: InputMaybe<Scalars['Int']>;
+  currentStakePoolId?: InputMaybe<Scalars['BigInt']>;
   ecdhPublicKey?: InputMaybe<Scalars['String']>;
   eventId?: InputMaybe<Scalars['BigInt']>;
   features?: InputMaybe<WorkerActivitiesCreateManyfeaturesInput>;
   id?: InputMaybe<Scalars['BigInt']>;
   infoLastUpdatedAt: Scalars['DateTime'];
   initialScore?: InputMaybe<Scalars['Int']>;
-  minerAccountAddress?: InputMaybe<Scalars['String']>;
   operatorAddress?: InputMaybe<Scalars['String']>;
   operatorId?: InputMaybe<Scalars['BigInt']>;
-  pInit?: InputMaybe<Scalars['Int']>;
-  pInstant?: InputMaybe<Scalars['Int']>;
-  pid?: InputMaybe<Scalars['BigInt']>;
   runtimeVersion?: InputMaybe<Scalars['Int']>;
-  sMax?: InputMaybe<Scalars['Decimal']>;
-  sMin?: InputMaybe<Scalars['Decimal']>;
-  shares?: InputMaybe<Scalars['Decimal']>;
-  stakePoolId?: InputMaybe<Scalars['BigInt']>;
-  state?: InputMaybe<Scalars['String']>;
   timestamp: Scalars['DateTime'];
   tokenomicVersion: Scalars['Int'];
-  totalReward?: InputMaybe<Scalars['Decimal']>;
   type: Scalars['String'];
   updatedAt: Scalars['DateTime'];
-  v?: InputMaybe<Scalars['Decimal']>;
-  ve?: InputMaybe<Scalars['Decimal']>;
   workerId: Scalars['BigInt'];
+};
+
+export type WorkerActivitiesCreateManyMinersInput = {
+  blockNumber: Scalars['BigInt'];
+  confidenceLevel?: InputMaybe<Scalars['Int']>;
+  createdAt: Scalars['DateTime'];
+  currentMinerAccountAddress?: InputMaybe<Scalars['String']>;
+  currentPid?: InputMaybe<Scalars['Int']>;
+  currentStakePoolId?: InputMaybe<Scalars['BigInt']>;
+  ecdhPublicKey?: InputMaybe<Scalars['String']>;
+  eventId?: InputMaybe<Scalars['BigInt']>;
+  features?: InputMaybe<WorkerActivitiesCreateManyfeaturesInput>;
+  id?: InputMaybe<Scalars['BigInt']>;
+  infoLastUpdatedAt: Scalars['DateTime'];
+  initialScore?: InputMaybe<Scalars['Int']>;
+  operatorAddress?: InputMaybe<Scalars['String']>;
+  operatorId?: InputMaybe<Scalars['BigInt']>;
+  runtimeVersion?: InputMaybe<Scalars['Int']>;
+  timestamp: Scalars['DateTime'];
+  tokenomicVersion: Scalars['Int'];
+  type: Scalars['String'];
+  updatedAt: Scalars['DateTime'];
+  workerId: Scalars['BigInt'];
+};
+
+export type WorkerActivitiesCreateManyMinersInputEnvelope = {
+  data: Array<WorkerActivitiesCreateManyMinersInput>;
+  skipDuplicates?: InputMaybe<Scalars['Boolean']>;
 };
 
 export type WorkerActivitiesCreateManyStakePoolsInput = {
   blockNumber: Scalars['BigInt'];
   confidenceLevel?: InputMaybe<Scalars['Int']>;
   createdAt: Scalars['DateTime'];
+  currentMinerAccountAddress?: InputMaybe<Scalars['String']>;
+  currentMinerId?: InputMaybe<Scalars['BigInt']>;
+  currentPid?: InputMaybe<Scalars['Int']>;
   ecdhPublicKey?: InputMaybe<Scalars['String']>;
   eventId?: InputMaybe<Scalars['BigInt']>;
   features?: InputMaybe<WorkerActivitiesCreateManyfeaturesInput>;
   id?: InputMaybe<Scalars['BigInt']>;
   infoLastUpdatedAt: Scalars['DateTime'];
   initialScore?: InputMaybe<Scalars['Int']>;
-  minerAccountAddress?: InputMaybe<Scalars['String']>;
   operatorAddress?: InputMaybe<Scalars['String']>;
   operatorId?: InputMaybe<Scalars['BigInt']>;
-  pInit?: InputMaybe<Scalars['Int']>;
-  pInstant?: InputMaybe<Scalars['Int']>;
-  pid?: InputMaybe<Scalars['BigInt']>;
   runtimeVersion?: InputMaybe<Scalars['Int']>;
-  sMax?: InputMaybe<Scalars['Decimal']>;
-  sMin?: InputMaybe<Scalars['Decimal']>;
-  shares?: InputMaybe<Scalars['Decimal']>;
-  state?: InputMaybe<Scalars['String']>;
   timestamp: Scalars['DateTime'];
   tokenomicVersion: Scalars['Int'];
-  totalReward?: InputMaybe<Scalars['Decimal']>;
   type: Scalars['String'];
   updatedAt: Scalars['DateTime'];
-  v?: InputMaybe<Scalars['Decimal']>;
-  ve?: InputMaybe<Scalars['Decimal']>;
   workerId: Scalars['BigInt'];
 };
 
@@ -9360,31 +11082,23 @@ export type WorkerActivitiesCreateManyWorkersInput = {
   blockNumber: Scalars['BigInt'];
   confidenceLevel?: InputMaybe<Scalars['Int']>;
   createdAt: Scalars['DateTime'];
+  currentMinerAccountAddress?: InputMaybe<Scalars['String']>;
+  currentMinerId?: InputMaybe<Scalars['BigInt']>;
+  currentPid?: InputMaybe<Scalars['Int']>;
+  currentStakePoolId?: InputMaybe<Scalars['BigInt']>;
   ecdhPublicKey?: InputMaybe<Scalars['String']>;
   eventId?: InputMaybe<Scalars['BigInt']>;
   features?: InputMaybe<WorkerActivitiesCreateManyfeaturesInput>;
   id?: InputMaybe<Scalars['BigInt']>;
   infoLastUpdatedAt: Scalars['DateTime'];
   initialScore?: InputMaybe<Scalars['Int']>;
-  minerAccountAddress?: InputMaybe<Scalars['String']>;
   operatorAddress?: InputMaybe<Scalars['String']>;
   operatorId?: InputMaybe<Scalars['BigInt']>;
-  pInit?: InputMaybe<Scalars['Int']>;
-  pInstant?: InputMaybe<Scalars['Int']>;
-  pid?: InputMaybe<Scalars['BigInt']>;
   runtimeVersion?: InputMaybe<Scalars['Int']>;
-  sMax?: InputMaybe<Scalars['Decimal']>;
-  sMin?: InputMaybe<Scalars['Decimal']>;
-  shares?: InputMaybe<Scalars['Decimal']>;
-  stakePoolId?: InputMaybe<Scalars['BigInt']>;
-  state?: InputMaybe<Scalars['String']>;
   timestamp: Scalars['DateTime'];
   tokenomicVersion: Scalars['Int'];
-  totalReward?: InputMaybe<Scalars['Decimal']>;
   type: Scalars['String'];
   updatedAt: Scalars['DateTime'];
-  v?: InputMaybe<Scalars['Decimal']>;
-  ve?: InputMaybe<Scalars['Decimal']>;
 };
 
 export type WorkerActivitiesCreateManyWorkersInputEnvelope = {
@@ -9408,6 +11122,13 @@ export type WorkerActivitiesCreateNestedManyWithoutEventsInput = {
   connectOrCreate?: InputMaybe<Array<WorkerActivitiesCreateOrConnectWithoutEventsInput>>;
   create?: InputMaybe<Array<WorkerActivitiesCreateWithoutEventsInput>>;
   createMany?: InputMaybe<WorkerActivitiesCreateManyEventsInputEnvelope>;
+};
+
+export type WorkerActivitiesCreateNestedManyWithoutMinersInput = {
+  connect?: InputMaybe<Array<WorkerActivitiesWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<WorkerActivitiesCreateOrConnectWithoutMinersInput>>;
+  create?: InputMaybe<Array<WorkerActivitiesCreateWithoutMinersInput>>;
+  createMany?: InputMaybe<WorkerActivitiesCreateManyMinersInputEnvelope>;
 };
 
 export type WorkerActivitiesCreateNestedManyWithoutStakePoolsInput = {
@@ -9434,6 +11155,11 @@ export type WorkerActivitiesCreateOrConnectWithoutEventsInput = {
   where: WorkerActivitiesWhereUniqueInput;
 };
 
+export type WorkerActivitiesCreateOrConnectWithoutMinersInput = {
+  create: WorkerActivitiesCreateWithoutMinersInput;
+  where: WorkerActivitiesWhereUniqueInput;
+};
+
 export type WorkerActivitiesCreateOrConnectWithoutStakePoolsInput = {
   create: WorkerActivitiesCreateWithoutStakePoolsInput;
   where: WorkerActivitiesWhereUniqueInput;
@@ -9448,30 +11174,22 @@ export type WorkerActivitiesCreateWithoutAccountsInput = {
   blockNumber: Scalars['BigInt'];
   confidenceLevel?: InputMaybe<Scalars['Int']>;
   createdAt: Scalars['DateTime'];
+  currentMinerAccountAddress?: InputMaybe<Scalars['String']>;
+  currentPid?: InputMaybe<Scalars['Int']>;
   ecdhPublicKey?: InputMaybe<Scalars['String']>;
   events?: InputMaybe<EventsCreateNestedOneWithoutWorkerActivitiesInput>;
   features?: InputMaybe<WorkerActivitiesCreatefeaturesInput>;
   id?: InputMaybe<Scalars['BigInt']>;
   infoLastUpdatedAt: Scalars['DateTime'];
   initialScore?: InputMaybe<Scalars['Int']>;
-  minerAccountAddress?: InputMaybe<Scalars['String']>;
+  miners?: InputMaybe<MinersCreateNestedOneWithoutWorkerActivitiesInput>;
   operatorAddress?: InputMaybe<Scalars['String']>;
-  pInit?: InputMaybe<Scalars['Int']>;
-  pInstant?: InputMaybe<Scalars['Int']>;
-  pid?: InputMaybe<Scalars['BigInt']>;
   runtimeVersion?: InputMaybe<Scalars['Int']>;
-  sMax?: InputMaybe<Scalars['Decimal']>;
-  sMin?: InputMaybe<Scalars['Decimal']>;
-  shares?: InputMaybe<Scalars['Decimal']>;
   stakePools?: InputMaybe<StakePoolsCreateNestedOneWithoutWorkerActivitiesInput>;
-  state?: InputMaybe<Scalars['String']>;
   timestamp: Scalars['DateTime'];
   tokenomicVersion: Scalars['Int'];
-  totalReward?: InputMaybe<Scalars['Decimal']>;
   type: Scalars['String'];
   updatedAt: Scalars['DateTime'];
-  v?: InputMaybe<Scalars['Decimal']>;
-  ve?: InputMaybe<Scalars['Decimal']>;
   workers: WorkersCreateNestedOneWithoutWorkerActivitiesInput;
 };
 
@@ -9480,29 +11198,44 @@ export type WorkerActivitiesCreateWithoutEventsInput = {
   blockNumber: Scalars['BigInt'];
   confidenceLevel?: InputMaybe<Scalars['Int']>;
   createdAt: Scalars['DateTime'];
+  currentMinerAccountAddress?: InputMaybe<Scalars['String']>;
+  currentPid?: InputMaybe<Scalars['Int']>;
   ecdhPublicKey?: InputMaybe<Scalars['String']>;
   features?: InputMaybe<WorkerActivitiesCreatefeaturesInput>;
   id?: InputMaybe<Scalars['BigInt']>;
   infoLastUpdatedAt: Scalars['DateTime'];
   initialScore?: InputMaybe<Scalars['Int']>;
-  minerAccountAddress?: InputMaybe<Scalars['String']>;
+  miners?: InputMaybe<MinersCreateNestedOneWithoutWorkerActivitiesInput>;
   operatorAddress?: InputMaybe<Scalars['String']>;
-  pInit?: InputMaybe<Scalars['Int']>;
-  pInstant?: InputMaybe<Scalars['Int']>;
-  pid?: InputMaybe<Scalars['BigInt']>;
   runtimeVersion?: InputMaybe<Scalars['Int']>;
-  sMax?: InputMaybe<Scalars['Decimal']>;
-  sMin?: InputMaybe<Scalars['Decimal']>;
-  shares?: InputMaybe<Scalars['Decimal']>;
   stakePools?: InputMaybe<StakePoolsCreateNestedOneWithoutWorkerActivitiesInput>;
-  state?: InputMaybe<Scalars['String']>;
   timestamp: Scalars['DateTime'];
   tokenomicVersion: Scalars['Int'];
-  totalReward?: InputMaybe<Scalars['Decimal']>;
   type: Scalars['String'];
   updatedAt: Scalars['DateTime'];
-  v?: InputMaybe<Scalars['Decimal']>;
-  ve?: InputMaybe<Scalars['Decimal']>;
+  workers: WorkersCreateNestedOneWithoutWorkerActivitiesInput;
+};
+
+export type WorkerActivitiesCreateWithoutMinersInput = {
+  accounts?: InputMaybe<AccountsCreateNestedOneWithoutWorkerActivitiesInput>;
+  blockNumber: Scalars['BigInt'];
+  confidenceLevel?: InputMaybe<Scalars['Int']>;
+  createdAt: Scalars['DateTime'];
+  currentMinerAccountAddress?: InputMaybe<Scalars['String']>;
+  currentPid?: InputMaybe<Scalars['Int']>;
+  ecdhPublicKey?: InputMaybe<Scalars['String']>;
+  events?: InputMaybe<EventsCreateNestedOneWithoutWorkerActivitiesInput>;
+  features?: InputMaybe<WorkerActivitiesCreatefeaturesInput>;
+  id?: InputMaybe<Scalars['BigInt']>;
+  infoLastUpdatedAt: Scalars['DateTime'];
+  initialScore?: InputMaybe<Scalars['Int']>;
+  operatorAddress?: InputMaybe<Scalars['String']>;
+  runtimeVersion?: InputMaybe<Scalars['Int']>;
+  stakePools?: InputMaybe<StakePoolsCreateNestedOneWithoutWorkerActivitiesInput>;
+  timestamp: Scalars['DateTime'];
+  tokenomicVersion: Scalars['Int'];
+  type: Scalars['String'];
+  updatedAt: Scalars['DateTime'];
   workers: WorkersCreateNestedOneWithoutWorkerActivitiesInput;
 };
 
@@ -9511,29 +11244,21 @@ export type WorkerActivitiesCreateWithoutStakePoolsInput = {
   blockNumber: Scalars['BigInt'];
   confidenceLevel?: InputMaybe<Scalars['Int']>;
   createdAt: Scalars['DateTime'];
+  currentMinerAccountAddress?: InputMaybe<Scalars['String']>;
+  currentPid?: InputMaybe<Scalars['Int']>;
   ecdhPublicKey?: InputMaybe<Scalars['String']>;
   events?: InputMaybe<EventsCreateNestedOneWithoutWorkerActivitiesInput>;
   features?: InputMaybe<WorkerActivitiesCreatefeaturesInput>;
   id?: InputMaybe<Scalars['BigInt']>;
   infoLastUpdatedAt: Scalars['DateTime'];
   initialScore?: InputMaybe<Scalars['Int']>;
-  minerAccountAddress?: InputMaybe<Scalars['String']>;
+  miners?: InputMaybe<MinersCreateNestedOneWithoutWorkerActivitiesInput>;
   operatorAddress?: InputMaybe<Scalars['String']>;
-  pInit?: InputMaybe<Scalars['Int']>;
-  pInstant?: InputMaybe<Scalars['Int']>;
-  pid?: InputMaybe<Scalars['BigInt']>;
   runtimeVersion?: InputMaybe<Scalars['Int']>;
-  sMax?: InputMaybe<Scalars['Decimal']>;
-  sMin?: InputMaybe<Scalars['Decimal']>;
-  shares?: InputMaybe<Scalars['Decimal']>;
-  state?: InputMaybe<Scalars['String']>;
   timestamp: Scalars['DateTime'];
   tokenomicVersion: Scalars['Int'];
-  totalReward?: InputMaybe<Scalars['Decimal']>;
   type: Scalars['String'];
   updatedAt: Scalars['DateTime'];
-  v?: InputMaybe<Scalars['Decimal']>;
-  ve?: InputMaybe<Scalars['Decimal']>;
   workers: WorkersCreateNestedOneWithoutWorkerActivitiesInput;
 };
 
@@ -9542,30 +11267,22 @@ export type WorkerActivitiesCreateWithoutWorkersInput = {
   blockNumber: Scalars['BigInt'];
   confidenceLevel?: InputMaybe<Scalars['Int']>;
   createdAt: Scalars['DateTime'];
+  currentMinerAccountAddress?: InputMaybe<Scalars['String']>;
+  currentPid?: InputMaybe<Scalars['Int']>;
   ecdhPublicKey?: InputMaybe<Scalars['String']>;
   events?: InputMaybe<EventsCreateNestedOneWithoutWorkerActivitiesInput>;
   features?: InputMaybe<WorkerActivitiesCreatefeaturesInput>;
   id?: InputMaybe<Scalars['BigInt']>;
   infoLastUpdatedAt: Scalars['DateTime'];
   initialScore?: InputMaybe<Scalars['Int']>;
-  minerAccountAddress?: InputMaybe<Scalars['String']>;
+  miners?: InputMaybe<MinersCreateNestedOneWithoutWorkerActivitiesInput>;
   operatorAddress?: InputMaybe<Scalars['String']>;
-  pInit?: InputMaybe<Scalars['Int']>;
-  pInstant?: InputMaybe<Scalars['Int']>;
-  pid?: InputMaybe<Scalars['BigInt']>;
   runtimeVersion?: InputMaybe<Scalars['Int']>;
-  sMax?: InputMaybe<Scalars['Decimal']>;
-  sMin?: InputMaybe<Scalars['Decimal']>;
-  shares?: InputMaybe<Scalars['Decimal']>;
   stakePools?: InputMaybe<StakePoolsCreateNestedOneWithoutWorkerActivitiesInput>;
-  state?: InputMaybe<Scalars['String']>;
   timestamp: Scalars['DateTime'];
   tokenomicVersion: Scalars['Int'];
-  totalReward?: InputMaybe<Scalars['Decimal']>;
   type: Scalars['String'];
   updatedAt: Scalars['DateTime'];
-  v?: InputMaybe<Scalars['Decimal']>;
-  ve?: InputMaybe<Scalars['Decimal']>;
 };
 
 export type WorkerActivitiesCreatefeaturesInput = {
@@ -9582,31 +11299,23 @@ export type WorkerActivitiesGroupBy = {
   blockNumber: Scalars['BigInt'];
   confidenceLevel: Scalars['Int'];
   createdAt: Scalars['DateTime'];
+  currentMinerAccountAddress?: Maybe<Scalars['String']>;
+  currentMinerId?: Maybe<Scalars['BigInt']>;
+  currentPid?: Maybe<Scalars['Int']>;
+  currentStakePoolId?: Maybe<Scalars['BigInt']>;
   ecdhPublicKey?: Maybe<Scalars['String']>;
   eventId?: Maybe<Scalars['BigInt']>;
   features?: Maybe<Array<Scalars['Int']>>;
   id: Scalars['BigInt'];
   infoLastUpdatedAt: Scalars['DateTime'];
   initialScore: Scalars['Int'];
-  minerAccountAddress?: Maybe<Scalars['String']>;
   operatorAddress?: Maybe<Scalars['String']>;
   operatorId?: Maybe<Scalars['BigInt']>;
-  pInit: Scalars['Int'];
-  pInstant: Scalars['Int'];
-  pid?: Maybe<Scalars['BigInt']>;
   runtimeVersion: Scalars['Int'];
-  sMax: Scalars['Decimal'];
-  sMin: Scalars['Decimal'];
-  shares: Scalars['Decimal'];
-  stakePoolId?: Maybe<Scalars['BigInt']>;
-  state: Scalars['String'];
   timestamp: Scalars['DateTime'];
   tokenomicVersion: Scalars['Int'];
-  totalReward: Scalars['Decimal'];
   type: Scalars['String'];
   updatedAt: Scalars['DateTime'];
-  v: Scalars['Decimal'];
-  ve: Scalars['Decimal'];
   workerId: Scalars['BigInt'];
 };
 
@@ -9621,30 +11330,22 @@ export type WorkerActivitiesMaxAggregate = {
   blockNumber?: Maybe<Scalars['BigInt']>;
   confidenceLevel?: Maybe<Scalars['Int']>;
   createdAt?: Maybe<Scalars['DateTime']>;
+  currentMinerAccountAddress?: Maybe<Scalars['String']>;
+  currentMinerId?: Maybe<Scalars['BigInt']>;
+  currentPid?: Maybe<Scalars['Int']>;
+  currentStakePoolId?: Maybe<Scalars['BigInt']>;
   ecdhPublicKey?: Maybe<Scalars['String']>;
   eventId?: Maybe<Scalars['BigInt']>;
   id?: Maybe<Scalars['BigInt']>;
   infoLastUpdatedAt?: Maybe<Scalars['DateTime']>;
   initialScore?: Maybe<Scalars['Int']>;
-  minerAccountAddress?: Maybe<Scalars['String']>;
   operatorAddress?: Maybe<Scalars['String']>;
   operatorId?: Maybe<Scalars['BigInt']>;
-  pInit?: Maybe<Scalars['Int']>;
-  pInstant?: Maybe<Scalars['Int']>;
-  pid?: Maybe<Scalars['BigInt']>;
   runtimeVersion?: Maybe<Scalars['Int']>;
-  sMax?: Maybe<Scalars['Decimal']>;
-  sMin?: Maybe<Scalars['Decimal']>;
-  shares?: Maybe<Scalars['Decimal']>;
-  stakePoolId?: Maybe<Scalars['BigInt']>;
-  state?: Maybe<Scalars['String']>;
   timestamp?: Maybe<Scalars['DateTime']>;
   tokenomicVersion?: Maybe<Scalars['Int']>;
-  totalReward?: Maybe<Scalars['Decimal']>;
   type?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
-  v?: Maybe<Scalars['Decimal']>;
-  ve?: Maybe<Scalars['Decimal']>;
   workerId?: Maybe<Scalars['BigInt']>;
 };
 
@@ -9652,30 +11353,22 @@ export type WorkerActivitiesMaxOrderByAggregateInput = {
   blockNumber?: InputMaybe<SortOrder>;
   confidenceLevel?: InputMaybe<SortOrder>;
   createdAt?: InputMaybe<SortOrder>;
+  currentMinerAccountAddress?: InputMaybe<SortOrder>;
+  currentMinerId?: InputMaybe<SortOrder>;
+  currentPid?: InputMaybe<SortOrder>;
+  currentStakePoolId?: InputMaybe<SortOrder>;
   ecdhPublicKey?: InputMaybe<SortOrder>;
   eventId?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
   infoLastUpdatedAt?: InputMaybe<SortOrder>;
   initialScore?: InputMaybe<SortOrder>;
-  minerAccountAddress?: InputMaybe<SortOrder>;
   operatorAddress?: InputMaybe<SortOrder>;
   operatorId?: InputMaybe<SortOrder>;
-  pInit?: InputMaybe<SortOrder>;
-  pInstant?: InputMaybe<SortOrder>;
-  pid?: InputMaybe<SortOrder>;
   runtimeVersion?: InputMaybe<SortOrder>;
-  sMax?: InputMaybe<SortOrder>;
-  sMin?: InputMaybe<SortOrder>;
-  shares?: InputMaybe<SortOrder>;
-  stakePoolId?: InputMaybe<SortOrder>;
-  state?: InputMaybe<SortOrder>;
   timestamp?: InputMaybe<SortOrder>;
   tokenomicVersion?: InputMaybe<SortOrder>;
-  totalReward?: InputMaybe<SortOrder>;
   type?: InputMaybe<SortOrder>;
   updatedAt?: InputMaybe<SortOrder>;
-  v?: InputMaybe<SortOrder>;
-  ve?: InputMaybe<SortOrder>;
   workerId?: InputMaybe<SortOrder>;
 };
 
@@ -9684,30 +11377,22 @@ export type WorkerActivitiesMinAggregate = {
   blockNumber?: Maybe<Scalars['BigInt']>;
   confidenceLevel?: Maybe<Scalars['Int']>;
   createdAt?: Maybe<Scalars['DateTime']>;
+  currentMinerAccountAddress?: Maybe<Scalars['String']>;
+  currentMinerId?: Maybe<Scalars['BigInt']>;
+  currentPid?: Maybe<Scalars['Int']>;
+  currentStakePoolId?: Maybe<Scalars['BigInt']>;
   ecdhPublicKey?: Maybe<Scalars['String']>;
   eventId?: Maybe<Scalars['BigInt']>;
   id?: Maybe<Scalars['BigInt']>;
   infoLastUpdatedAt?: Maybe<Scalars['DateTime']>;
   initialScore?: Maybe<Scalars['Int']>;
-  minerAccountAddress?: Maybe<Scalars['String']>;
   operatorAddress?: Maybe<Scalars['String']>;
   operatorId?: Maybe<Scalars['BigInt']>;
-  pInit?: Maybe<Scalars['Int']>;
-  pInstant?: Maybe<Scalars['Int']>;
-  pid?: Maybe<Scalars['BigInt']>;
   runtimeVersion?: Maybe<Scalars['Int']>;
-  sMax?: Maybe<Scalars['Decimal']>;
-  sMin?: Maybe<Scalars['Decimal']>;
-  shares?: Maybe<Scalars['Decimal']>;
-  stakePoolId?: Maybe<Scalars['BigInt']>;
-  state?: Maybe<Scalars['String']>;
   timestamp?: Maybe<Scalars['DateTime']>;
   tokenomicVersion?: Maybe<Scalars['Int']>;
-  totalReward?: Maybe<Scalars['Decimal']>;
   type?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
-  v?: Maybe<Scalars['Decimal']>;
-  ve?: Maybe<Scalars['Decimal']>;
   workerId?: Maybe<Scalars['BigInt']>;
 };
 
@@ -9715,30 +11400,22 @@ export type WorkerActivitiesMinOrderByAggregateInput = {
   blockNumber?: InputMaybe<SortOrder>;
   confidenceLevel?: InputMaybe<SortOrder>;
   createdAt?: InputMaybe<SortOrder>;
+  currentMinerAccountAddress?: InputMaybe<SortOrder>;
+  currentMinerId?: InputMaybe<SortOrder>;
+  currentPid?: InputMaybe<SortOrder>;
+  currentStakePoolId?: InputMaybe<SortOrder>;
   ecdhPublicKey?: InputMaybe<SortOrder>;
   eventId?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
   infoLastUpdatedAt?: InputMaybe<SortOrder>;
   initialScore?: InputMaybe<SortOrder>;
-  minerAccountAddress?: InputMaybe<SortOrder>;
   operatorAddress?: InputMaybe<SortOrder>;
   operatorId?: InputMaybe<SortOrder>;
-  pInit?: InputMaybe<SortOrder>;
-  pInstant?: InputMaybe<SortOrder>;
-  pid?: InputMaybe<SortOrder>;
   runtimeVersion?: InputMaybe<SortOrder>;
-  sMax?: InputMaybe<SortOrder>;
-  sMin?: InputMaybe<SortOrder>;
-  shares?: InputMaybe<SortOrder>;
-  stakePoolId?: InputMaybe<SortOrder>;
-  state?: InputMaybe<SortOrder>;
   timestamp?: InputMaybe<SortOrder>;
   tokenomicVersion?: InputMaybe<SortOrder>;
-  totalReward?: InputMaybe<SortOrder>;
   type?: InputMaybe<SortOrder>;
   updatedAt?: InputMaybe<SortOrder>;
-  v?: InputMaybe<SortOrder>;
-  ve?: InputMaybe<SortOrder>;
   workerId?: InputMaybe<SortOrder>;
 };
 
@@ -9755,31 +11432,23 @@ export type WorkerActivitiesOrderByWithAggregationInput = {
   blockNumber?: InputMaybe<SortOrder>;
   confidenceLevel?: InputMaybe<SortOrder>;
   createdAt?: InputMaybe<SortOrder>;
+  currentMinerAccountAddress?: InputMaybe<SortOrder>;
+  currentMinerId?: InputMaybe<SortOrder>;
+  currentPid?: InputMaybe<SortOrder>;
+  currentStakePoolId?: InputMaybe<SortOrder>;
   ecdhPublicKey?: InputMaybe<SortOrder>;
   eventId?: InputMaybe<SortOrder>;
   features?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
   infoLastUpdatedAt?: InputMaybe<SortOrder>;
   initialScore?: InputMaybe<SortOrder>;
-  minerAccountAddress?: InputMaybe<SortOrder>;
   operatorAddress?: InputMaybe<SortOrder>;
   operatorId?: InputMaybe<SortOrder>;
-  pInit?: InputMaybe<SortOrder>;
-  pInstant?: InputMaybe<SortOrder>;
-  pid?: InputMaybe<SortOrder>;
   runtimeVersion?: InputMaybe<SortOrder>;
-  sMax?: InputMaybe<SortOrder>;
-  sMin?: InputMaybe<SortOrder>;
-  shares?: InputMaybe<SortOrder>;
-  stakePoolId?: InputMaybe<SortOrder>;
-  state?: InputMaybe<SortOrder>;
   timestamp?: InputMaybe<SortOrder>;
   tokenomicVersion?: InputMaybe<SortOrder>;
-  totalReward?: InputMaybe<SortOrder>;
   type?: InputMaybe<SortOrder>;
   updatedAt?: InputMaybe<SortOrder>;
-  v?: InputMaybe<SortOrder>;
-  ve?: InputMaybe<SortOrder>;
   workerId?: InputMaybe<SortOrder>;
 };
 
@@ -9788,6 +11457,10 @@ export type WorkerActivitiesOrderByWithRelationInput = {
   blockNumber?: InputMaybe<SortOrder>;
   confidenceLevel?: InputMaybe<SortOrder>;
   createdAt?: InputMaybe<SortOrder>;
+  currentMinerAccountAddress?: InputMaybe<SortOrder>;
+  currentMinerId?: InputMaybe<SortOrder>;
+  currentPid?: InputMaybe<SortOrder>;
+  currentStakePoolId?: InputMaybe<SortOrder>;
   ecdhPublicKey?: InputMaybe<SortOrder>;
   eventId?: InputMaybe<SortOrder>;
   events?: InputMaybe<EventsOrderByWithRelationInput>;
@@ -9795,26 +11468,15 @@ export type WorkerActivitiesOrderByWithRelationInput = {
   id?: InputMaybe<SortOrder>;
   infoLastUpdatedAt?: InputMaybe<SortOrder>;
   initialScore?: InputMaybe<SortOrder>;
-  minerAccountAddress?: InputMaybe<SortOrder>;
+  miners?: InputMaybe<MinersOrderByWithRelationInput>;
   operatorAddress?: InputMaybe<SortOrder>;
   operatorId?: InputMaybe<SortOrder>;
-  pInit?: InputMaybe<SortOrder>;
-  pInstant?: InputMaybe<SortOrder>;
-  pid?: InputMaybe<SortOrder>;
   runtimeVersion?: InputMaybe<SortOrder>;
-  sMax?: InputMaybe<SortOrder>;
-  sMin?: InputMaybe<SortOrder>;
-  shares?: InputMaybe<SortOrder>;
-  stakePoolId?: InputMaybe<SortOrder>;
   stakePools?: InputMaybe<StakePoolsOrderByWithRelationInput>;
-  state?: InputMaybe<SortOrder>;
   timestamp?: InputMaybe<SortOrder>;
   tokenomicVersion?: InputMaybe<SortOrder>;
-  totalReward?: InputMaybe<SortOrder>;
   type?: InputMaybe<SortOrder>;
   updatedAt?: InputMaybe<SortOrder>;
-  v?: InputMaybe<SortOrder>;
-  ve?: InputMaybe<SortOrder>;
   workerId?: InputMaybe<SortOrder>;
   workers?: InputMaybe<WorkersOrderByWithRelationInput>;
 };
@@ -9823,31 +11485,23 @@ export enum WorkerActivitiesScalarFieldEnum {
   BlockNumber = 'blockNumber',
   ConfidenceLevel = 'confidenceLevel',
   CreatedAt = 'createdAt',
+  CurrentMinerAccountAddress = 'currentMinerAccountAddress',
+  CurrentMinerId = 'currentMinerId',
+  CurrentPid = 'currentPid',
+  CurrentStakePoolId = 'currentStakePoolId',
   EcdhPublicKey = 'ecdhPublicKey',
   EventId = 'eventId',
   Features = 'features',
   Id = 'id',
   InfoLastUpdatedAt = 'infoLastUpdatedAt',
   InitialScore = 'initialScore',
-  MinerAccountAddress = 'minerAccountAddress',
   OperatorAddress = 'operatorAddress',
   OperatorId = 'operatorId',
-  PInit = 'pInit',
-  PInstant = 'pInstant',
-  Pid = 'pid',
   RuntimeVersion = 'runtimeVersion',
-  SMax = 'sMax',
-  SMin = 'sMin',
-  Shares = 'shares',
-  StakePoolId = 'stakePoolId',
-  State = 'state',
   Timestamp = 'timestamp',
   TokenomicVersion = 'tokenomicVersion',
-  TotalReward = 'totalReward',
   Type = 'type',
   UpdatedAt = 'updatedAt',
-  V = 'v',
-  Ve = 've',
   WorkerId = 'workerId'
 }
 
@@ -9858,31 +11512,23 @@ export type WorkerActivitiesScalarWhereInput = {
   blockNumber?: InputMaybe<BigIntFilter>;
   confidenceLevel?: InputMaybe<IntFilter>;
   createdAt?: InputMaybe<DateTimeFilter>;
+  currentMinerAccountAddress?: InputMaybe<StringNullableFilter>;
+  currentMinerId?: InputMaybe<BigIntNullableFilter>;
+  currentPid?: InputMaybe<IntNullableFilter>;
+  currentStakePoolId?: InputMaybe<BigIntNullableFilter>;
   ecdhPublicKey?: InputMaybe<StringNullableFilter>;
   eventId?: InputMaybe<BigIntNullableFilter>;
   features?: InputMaybe<IntNullableListFilter>;
   id?: InputMaybe<BigIntFilter>;
   infoLastUpdatedAt?: InputMaybe<DateTimeFilter>;
   initialScore?: InputMaybe<IntFilter>;
-  minerAccountAddress?: InputMaybe<StringNullableFilter>;
   operatorAddress?: InputMaybe<StringNullableFilter>;
   operatorId?: InputMaybe<BigIntNullableFilter>;
-  pInit?: InputMaybe<IntFilter>;
-  pInstant?: InputMaybe<IntFilter>;
-  pid?: InputMaybe<BigIntNullableFilter>;
   runtimeVersion?: InputMaybe<IntFilter>;
-  sMax?: InputMaybe<DecimalFilter>;
-  sMin?: InputMaybe<DecimalFilter>;
-  shares?: InputMaybe<DecimalFilter>;
-  stakePoolId?: InputMaybe<BigIntNullableFilter>;
-  state?: InputMaybe<StringFilter>;
   timestamp?: InputMaybe<DateTimeFilter>;
   tokenomicVersion?: InputMaybe<IntFilter>;
-  totalReward?: InputMaybe<DecimalFilter>;
   type?: InputMaybe<StringFilter>;
   updatedAt?: InputMaybe<DateTimeFilter>;
-  v?: InputMaybe<DecimalFilter>;
-  ve?: InputMaybe<DecimalFilter>;
   workerId?: InputMaybe<BigIntFilter>;
 };
 
@@ -9893,31 +11539,23 @@ export type WorkerActivitiesScalarWhereWithAggregatesInput = {
   blockNumber?: InputMaybe<BigIntWithAggregatesFilter>;
   confidenceLevel?: InputMaybe<IntWithAggregatesFilter>;
   createdAt?: InputMaybe<DateTimeWithAggregatesFilter>;
+  currentMinerAccountAddress?: InputMaybe<StringNullableWithAggregatesFilter>;
+  currentMinerId?: InputMaybe<BigIntNullableWithAggregatesFilter>;
+  currentPid?: InputMaybe<IntNullableWithAggregatesFilter>;
+  currentStakePoolId?: InputMaybe<BigIntNullableWithAggregatesFilter>;
   ecdhPublicKey?: InputMaybe<StringNullableWithAggregatesFilter>;
   eventId?: InputMaybe<BigIntNullableWithAggregatesFilter>;
   features?: InputMaybe<IntNullableListFilter>;
   id?: InputMaybe<BigIntWithAggregatesFilter>;
   infoLastUpdatedAt?: InputMaybe<DateTimeWithAggregatesFilter>;
   initialScore?: InputMaybe<IntWithAggregatesFilter>;
-  minerAccountAddress?: InputMaybe<StringNullableWithAggregatesFilter>;
   operatorAddress?: InputMaybe<StringNullableWithAggregatesFilter>;
   operatorId?: InputMaybe<BigIntNullableWithAggregatesFilter>;
-  pInit?: InputMaybe<IntWithAggregatesFilter>;
-  pInstant?: InputMaybe<IntWithAggregatesFilter>;
-  pid?: InputMaybe<BigIntNullableWithAggregatesFilter>;
   runtimeVersion?: InputMaybe<IntWithAggregatesFilter>;
-  sMax?: InputMaybe<DecimalWithAggregatesFilter>;
-  sMin?: InputMaybe<DecimalWithAggregatesFilter>;
-  shares?: InputMaybe<DecimalWithAggregatesFilter>;
-  stakePoolId?: InputMaybe<BigIntNullableWithAggregatesFilter>;
-  state?: InputMaybe<StringWithAggregatesFilter>;
   timestamp?: InputMaybe<DateTimeWithAggregatesFilter>;
   tokenomicVersion?: InputMaybe<IntWithAggregatesFilter>;
-  totalReward?: InputMaybe<DecimalWithAggregatesFilter>;
   type?: InputMaybe<StringWithAggregatesFilter>;
   updatedAt?: InputMaybe<DateTimeWithAggregatesFilter>;
-  v?: InputMaybe<DecimalWithAggregatesFilter>;
-  ve?: InputMaybe<DecimalWithAggregatesFilter>;
   workerId?: InputMaybe<BigIntWithAggregatesFilter>;
 };
 
@@ -9925,46 +11563,32 @@ export type WorkerActivitiesSumAggregate = {
   __typename?: 'WorkerActivitiesSumAggregate';
   blockNumber?: Maybe<Scalars['BigInt']>;
   confidenceLevel?: Maybe<Scalars['Int']>;
+  currentMinerId?: Maybe<Scalars['BigInt']>;
+  currentPid?: Maybe<Scalars['Int']>;
+  currentStakePoolId?: Maybe<Scalars['BigInt']>;
   eventId?: Maybe<Scalars['BigInt']>;
   features?: Maybe<Array<Scalars['Int']>>;
   id?: Maybe<Scalars['BigInt']>;
   initialScore?: Maybe<Scalars['Int']>;
   operatorId?: Maybe<Scalars['BigInt']>;
-  pInit?: Maybe<Scalars['Int']>;
-  pInstant?: Maybe<Scalars['Int']>;
-  pid?: Maybe<Scalars['BigInt']>;
   runtimeVersion?: Maybe<Scalars['Int']>;
-  sMax?: Maybe<Scalars['Decimal']>;
-  sMin?: Maybe<Scalars['Decimal']>;
-  shares?: Maybe<Scalars['Decimal']>;
-  stakePoolId?: Maybe<Scalars['BigInt']>;
   tokenomicVersion?: Maybe<Scalars['Int']>;
-  totalReward?: Maybe<Scalars['Decimal']>;
-  v?: Maybe<Scalars['Decimal']>;
-  ve?: Maybe<Scalars['Decimal']>;
   workerId?: Maybe<Scalars['BigInt']>;
 };
 
 export type WorkerActivitiesSumOrderByAggregateInput = {
   blockNumber?: InputMaybe<SortOrder>;
   confidenceLevel?: InputMaybe<SortOrder>;
+  currentMinerId?: InputMaybe<SortOrder>;
+  currentPid?: InputMaybe<SortOrder>;
+  currentStakePoolId?: InputMaybe<SortOrder>;
   eventId?: InputMaybe<SortOrder>;
   features?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
   initialScore?: InputMaybe<SortOrder>;
   operatorId?: InputMaybe<SortOrder>;
-  pInit?: InputMaybe<SortOrder>;
-  pInstant?: InputMaybe<SortOrder>;
-  pid?: InputMaybe<SortOrder>;
   runtimeVersion?: InputMaybe<SortOrder>;
-  sMax?: InputMaybe<SortOrder>;
-  sMin?: InputMaybe<SortOrder>;
-  shares?: InputMaybe<SortOrder>;
-  stakePoolId?: InputMaybe<SortOrder>;
   tokenomicVersion?: InputMaybe<SortOrder>;
-  totalReward?: InputMaybe<SortOrder>;
-  v?: InputMaybe<SortOrder>;
-  ve?: InputMaybe<SortOrder>;
   workerId?: InputMaybe<SortOrder>;
 };
 
@@ -9973,30 +11597,22 @@ export type WorkerActivitiesUpdateInput = {
   blockNumber?: InputMaybe<BigIntFieldUpdateOperationsInput>;
   confidenceLevel?: InputMaybe<IntFieldUpdateOperationsInput>;
   createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  currentMinerAccountAddress?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  currentPid?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
   ecdhPublicKey?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   events?: InputMaybe<EventsUpdateOneWithoutWorkerActivitiesInput>;
   features?: InputMaybe<WorkerActivitiesUpdatefeaturesInput>;
   id?: InputMaybe<BigIntFieldUpdateOperationsInput>;
   infoLastUpdatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   initialScore?: InputMaybe<IntFieldUpdateOperationsInput>;
-  minerAccountAddress?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  miners?: InputMaybe<MinersUpdateOneWithoutWorkerActivitiesInput>;
   operatorAddress?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
-  pInit?: InputMaybe<IntFieldUpdateOperationsInput>;
-  pInstant?: InputMaybe<IntFieldUpdateOperationsInput>;
-  pid?: InputMaybe<NullableBigIntFieldUpdateOperationsInput>;
   runtimeVersion?: InputMaybe<IntFieldUpdateOperationsInput>;
-  sMax?: InputMaybe<DecimalFieldUpdateOperationsInput>;
-  sMin?: InputMaybe<DecimalFieldUpdateOperationsInput>;
-  shares?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   stakePools?: InputMaybe<StakePoolsUpdateOneWithoutWorkerActivitiesInput>;
-  state?: InputMaybe<StringFieldUpdateOperationsInput>;
   timestamp?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   tokenomicVersion?: InputMaybe<IntFieldUpdateOperationsInput>;
-  totalReward?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   type?: InputMaybe<StringFieldUpdateOperationsInput>;
   updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  v?: InputMaybe<DecimalFieldUpdateOperationsInput>;
-  ve?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   workers?: InputMaybe<WorkersUpdateOneRequiredWithoutWorkerActivitiesInput>;
 };
 
@@ -10004,28 +11620,19 @@ export type WorkerActivitiesUpdateManyMutationInput = {
   blockNumber?: InputMaybe<BigIntFieldUpdateOperationsInput>;
   confidenceLevel?: InputMaybe<IntFieldUpdateOperationsInput>;
   createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  currentMinerAccountAddress?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  currentPid?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
   ecdhPublicKey?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   features?: InputMaybe<WorkerActivitiesUpdatefeaturesInput>;
   id?: InputMaybe<BigIntFieldUpdateOperationsInput>;
   infoLastUpdatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   initialScore?: InputMaybe<IntFieldUpdateOperationsInput>;
-  minerAccountAddress?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   operatorAddress?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
-  pInit?: InputMaybe<IntFieldUpdateOperationsInput>;
-  pInstant?: InputMaybe<IntFieldUpdateOperationsInput>;
-  pid?: InputMaybe<NullableBigIntFieldUpdateOperationsInput>;
   runtimeVersion?: InputMaybe<IntFieldUpdateOperationsInput>;
-  sMax?: InputMaybe<DecimalFieldUpdateOperationsInput>;
-  sMin?: InputMaybe<DecimalFieldUpdateOperationsInput>;
-  shares?: InputMaybe<DecimalFieldUpdateOperationsInput>;
-  state?: InputMaybe<StringFieldUpdateOperationsInput>;
   timestamp?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   tokenomicVersion?: InputMaybe<IntFieldUpdateOperationsInput>;
-  totalReward?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   type?: InputMaybe<StringFieldUpdateOperationsInput>;
   updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  v?: InputMaybe<DecimalFieldUpdateOperationsInput>;
-  ve?: InputMaybe<DecimalFieldUpdateOperationsInput>;
 };
 
 export type WorkerActivitiesUpdateManyWithWhereWithoutAccountsInput = {
@@ -10034,6 +11641,11 @@ export type WorkerActivitiesUpdateManyWithWhereWithoutAccountsInput = {
 };
 
 export type WorkerActivitiesUpdateManyWithWhereWithoutEventsInput = {
+  data: WorkerActivitiesUpdateManyMutationInput;
+  where: WorkerActivitiesScalarWhereInput;
+};
+
+export type WorkerActivitiesUpdateManyWithWhereWithoutMinersInput = {
   data: WorkerActivitiesUpdateManyMutationInput;
   where: WorkerActivitiesScalarWhereInput;
 };
@@ -10076,6 +11688,20 @@ export type WorkerActivitiesUpdateManyWithoutEventsInput = {
   upsert?: InputMaybe<Array<WorkerActivitiesUpsertWithWhereUniqueWithoutEventsInput>>;
 };
 
+export type WorkerActivitiesUpdateManyWithoutMinersInput = {
+  connect?: InputMaybe<Array<WorkerActivitiesWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<WorkerActivitiesCreateOrConnectWithoutMinersInput>>;
+  create?: InputMaybe<Array<WorkerActivitiesCreateWithoutMinersInput>>;
+  createMany?: InputMaybe<WorkerActivitiesCreateManyMinersInputEnvelope>;
+  delete?: InputMaybe<Array<WorkerActivitiesWhereUniqueInput>>;
+  deleteMany?: InputMaybe<Array<WorkerActivitiesScalarWhereInput>>;
+  disconnect?: InputMaybe<Array<WorkerActivitiesWhereUniqueInput>>;
+  set?: InputMaybe<Array<WorkerActivitiesWhereUniqueInput>>;
+  update?: InputMaybe<Array<WorkerActivitiesUpdateWithWhereUniqueWithoutMinersInput>>;
+  updateMany?: InputMaybe<Array<WorkerActivitiesUpdateManyWithWhereWithoutMinersInput>>;
+  upsert?: InputMaybe<Array<WorkerActivitiesUpsertWithWhereUniqueWithoutMinersInput>>;
+};
+
 export type WorkerActivitiesUpdateManyWithoutStakePoolsInput = {
   connect?: InputMaybe<Array<WorkerActivitiesWhereUniqueInput>>;
   connectOrCreate?: InputMaybe<Array<WorkerActivitiesCreateOrConnectWithoutStakePoolsInput>>;
@@ -10114,6 +11740,11 @@ export type WorkerActivitiesUpdateWithWhereUniqueWithoutEventsInput = {
   where: WorkerActivitiesWhereUniqueInput;
 };
 
+export type WorkerActivitiesUpdateWithWhereUniqueWithoutMinersInput = {
+  data: WorkerActivitiesUpdateWithoutMinersInput;
+  where: WorkerActivitiesWhereUniqueInput;
+};
+
 export type WorkerActivitiesUpdateWithWhereUniqueWithoutStakePoolsInput = {
   data: WorkerActivitiesUpdateWithoutStakePoolsInput;
   where: WorkerActivitiesWhereUniqueInput;
@@ -10128,30 +11759,22 @@ export type WorkerActivitiesUpdateWithoutAccountsInput = {
   blockNumber?: InputMaybe<BigIntFieldUpdateOperationsInput>;
   confidenceLevel?: InputMaybe<IntFieldUpdateOperationsInput>;
   createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  currentMinerAccountAddress?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  currentPid?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
   ecdhPublicKey?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   events?: InputMaybe<EventsUpdateOneWithoutWorkerActivitiesInput>;
   features?: InputMaybe<WorkerActivitiesUpdatefeaturesInput>;
   id?: InputMaybe<BigIntFieldUpdateOperationsInput>;
   infoLastUpdatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   initialScore?: InputMaybe<IntFieldUpdateOperationsInput>;
-  minerAccountAddress?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  miners?: InputMaybe<MinersUpdateOneWithoutWorkerActivitiesInput>;
   operatorAddress?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
-  pInit?: InputMaybe<IntFieldUpdateOperationsInput>;
-  pInstant?: InputMaybe<IntFieldUpdateOperationsInput>;
-  pid?: InputMaybe<NullableBigIntFieldUpdateOperationsInput>;
   runtimeVersion?: InputMaybe<IntFieldUpdateOperationsInput>;
-  sMax?: InputMaybe<DecimalFieldUpdateOperationsInput>;
-  sMin?: InputMaybe<DecimalFieldUpdateOperationsInput>;
-  shares?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   stakePools?: InputMaybe<StakePoolsUpdateOneWithoutWorkerActivitiesInput>;
-  state?: InputMaybe<StringFieldUpdateOperationsInput>;
   timestamp?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   tokenomicVersion?: InputMaybe<IntFieldUpdateOperationsInput>;
-  totalReward?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   type?: InputMaybe<StringFieldUpdateOperationsInput>;
   updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  v?: InputMaybe<DecimalFieldUpdateOperationsInput>;
-  ve?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   workers?: InputMaybe<WorkersUpdateOneRequiredWithoutWorkerActivitiesInput>;
 };
 
@@ -10160,29 +11783,44 @@ export type WorkerActivitiesUpdateWithoutEventsInput = {
   blockNumber?: InputMaybe<BigIntFieldUpdateOperationsInput>;
   confidenceLevel?: InputMaybe<IntFieldUpdateOperationsInput>;
   createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  currentMinerAccountAddress?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  currentPid?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
   ecdhPublicKey?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   features?: InputMaybe<WorkerActivitiesUpdatefeaturesInput>;
   id?: InputMaybe<BigIntFieldUpdateOperationsInput>;
   infoLastUpdatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   initialScore?: InputMaybe<IntFieldUpdateOperationsInput>;
-  minerAccountAddress?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  miners?: InputMaybe<MinersUpdateOneWithoutWorkerActivitiesInput>;
   operatorAddress?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
-  pInit?: InputMaybe<IntFieldUpdateOperationsInput>;
-  pInstant?: InputMaybe<IntFieldUpdateOperationsInput>;
-  pid?: InputMaybe<NullableBigIntFieldUpdateOperationsInput>;
   runtimeVersion?: InputMaybe<IntFieldUpdateOperationsInput>;
-  sMax?: InputMaybe<DecimalFieldUpdateOperationsInput>;
-  sMin?: InputMaybe<DecimalFieldUpdateOperationsInput>;
-  shares?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   stakePools?: InputMaybe<StakePoolsUpdateOneWithoutWorkerActivitiesInput>;
-  state?: InputMaybe<StringFieldUpdateOperationsInput>;
   timestamp?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   tokenomicVersion?: InputMaybe<IntFieldUpdateOperationsInput>;
-  totalReward?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   type?: InputMaybe<StringFieldUpdateOperationsInput>;
   updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  v?: InputMaybe<DecimalFieldUpdateOperationsInput>;
-  ve?: InputMaybe<DecimalFieldUpdateOperationsInput>;
+  workers?: InputMaybe<WorkersUpdateOneRequiredWithoutWorkerActivitiesInput>;
+};
+
+export type WorkerActivitiesUpdateWithoutMinersInput = {
+  accounts?: InputMaybe<AccountsUpdateOneWithoutWorkerActivitiesInput>;
+  blockNumber?: InputMaybe<BigIntFieldUpdateOperationsInput>;
+  confidenceLevel?: InputMaybe<IntFieldUpdateOperationsInput>;
+  createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  currentMinerAccountAddress?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  currentPid?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
+  ecdhPublicKey?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  events?: InputMaybe<EventsUpdateOneWithoutWorkerActivitiesInput>;
+  features?: InputMaybe<WorkerActivitiesUpdatefeaturesInput>;
+  id?: InputMaybe<BigIntFieldUpdateOperationsInput>;
+  infoLastUpdatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  initialScore?: InputMaybe<IntFieldUpdateOperationsInput>;
+  operatorAddress?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  runtimeVersion?: InputMaybe<IntFieldUpdateOperationsInput>;
+  stakePools?: InputMaybe<StakePoolsUpdateOneWithoutWorkerActivitiesInput>;
+  timestamp?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  tokenomicVersion?: InputMaybe<IntFieldUpdateOperationsInput>;
+  type?: InputMaybe<StringFieldUpdateOperationsInput>;
+  updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   workers?: InputMaybe<WorkersUpdateOneRequiredWithoutWorkerActivitiesInput>;
 };
 
@@ -10191,29 +11829,21 @@ export type WorkerActivitiesUpdateWithoutStakePoolsInput = {
   blockNumber?: InputMaybe<BigIntFieldUpdateOperationsInput>;
   confidenceLevel?: InputMaybe<IntFieldUpdateOperationsInput>;
   createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  currentMinerAccountAddress?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  currentPid?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
   ecdhPublicKey?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   events?: InputMaybe<EventsUpdateOneWithoutWorkerActivitiesInput>;
   features?: InputMaybe<WorkerActivitiesUpdatefeaturesInput>;
   id?: InputMaybe<BigIntFieldUpdateOperationsInput>;
   infoLastUpdatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   initialScore?: InputMaybe<IntFieldUpdateOperationsInput>;
-  minerAccountAddress?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  miners?: InputMaybe<MinersUpdateOneWithoutWorkerActivitiesInput>;
   operatorAddress?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
-  pInit?: InputMaybe<IntFieldUpdateOperationsInput>;
-  pInstant?: InputMaybe<IntFieldUpdateOperationsInput>;
-  pid?: InputMaybe<NullableBigIntFieldUpdateOperationsInput>;
   runtimeVersion?: InputMaybe<IntFieldUpdateOperationsInput>;
-  sMax?: InputMaybe<DecimalFieldUpdateOperationsInput>;
-  sMin?: InputMaybe<DecimalFieldUpdateOperationsInput>;
-  shares?: InputMaybe<DecimalFieldUpdateOperationsInput>;
-  state?: InputMaybe<StringFieldUpdateOperationsInput>;
   timestamp?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   tokenomicVersion?: InputMaybe<IntFieldUpdateOperationsInput>;
-  totalReward?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   type?: InputMaybe<StringFieldUpdateOperationsInput>;
   updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  v?: InputMaybe<DecimalFieldUpdateOperationsInput>;
-  ve?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   workers?: InputMaybe<WorkersUpdateOneRequiredWithoutWorkerActivitiesInput>;
 };
 
@@ -10222,30 +11852,22 @@ export type WorkerActivitiesUpdateWithoutWorkersInput = {
   blockNumber?: InputMaybe<BigIntFieldUpdateOperationsInput>;
   confidenceLevel?: InputMaybe<IntFieldUpdateOperationsInput>;
   createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  currentMinerAccountAddress?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  currentPid?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
   ecdhPublicKey?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   events?: InputMaybe<EventsUpdateOneWithoutWorkerActivitiesInput>;
   features?: InputMaybe<WorkerActivitiesUpdatefeaturesInput>;
   id?: InputMaybe<BigIntFieldUpdateOperationsInput>;
   infoLastUpdatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   initialScore?: InputMaybe<IntFieldUpdateOperationsInput>;
-  minerAccountAddress?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  miners?: InputMaybe<MinersUpdateOneWithoutWorkerActivitiesInput>;
   operatorAddress?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
-  pInit?: InputMaybe<IntFieldUpdateOperationsInput>;
-  pInstant?: InputMaybe<IntFieldUpdateOperationsInput>;
-  pid?: InputMaybe<NullableBigIntFieldUpdateOperationsInput>;
   runtimeVersion?: InputMaybe<IntFieldUpdateOperationsInput>;
-  sMax?: InputMaybe<DecimalFieldUpdateOperationsInput>;
-  sMin?: InputMaybe<DecimalFieldUpdateOperationsInput>;
-  shares?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   stakePools?: InputMaybe<StakePoolsUpdateOneWithoutWorkerActivitiesInput>;
-  state?: InputMaybe<StringFieldUpdateOperationsInput>;
   timestamp?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   tokenomicVersion?: InputMaybe<IntFieldUpdateOperationsInput>;
-  totalReward?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   type?: InputMaybe<StringFieldUpdateOperationsInput>;
   updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  v?: InputMaybe<DecimalFieldUpdateOperationsInput>;
-  ve?: InputMaybe<DecimalFieldUpdateOperationsInput>;
 };
 
 export type WorkerActivitiesUpdatefeaturesInput = {
@@ -10262,6 +11884,12 @@ export type WorkerActivitiesUpsertWithWhereUniqueWithoutAccountsInput = {
 export type WorkerActivitiesUpsertWithWhereUniqueWithoutEventsInput = {
   create: WorkerActivitiesCreateWithoutEventsInput;
   update: WorkerActivitiesUpdateWithoutEventsInput;
+  where: WorkerActivitiesWhereUniqueInput;
+};
+
+export type WorkerActivitiesUpsertWithWhereUniqueWithoutMinersInput = {
+  create: WorkerActivitiesCreateWithoutMinersInput;
+  update: WorkerActivitiesUpdateWithoutMinersInput;
   where: WorkerActivitiesWhereUniqueInput;
 };
 
@@ -10285,6 +11913,10 @@ export type WorkerActivitiesWhereInput = {
   blockNumber?: InputMaybe<BigIntFilter>;
   confidenceLevel?: InputMaybe<IntFilter>;
   createdAt?: InputMaybe<DateTimeFilter>;
+  currentMinerAccountAddress?: InputMaybe<StringNullableFilter>;
+  currentMinerId?: InputMaybe<BigIntNullableFilter>;
+  currentPid?: InputMaybe<IntNullableFilter>;
+  currentStakePoolId?: InputMaybe<BigIntNullableFilter>;
   ecdhPublicKey?: InputMaybe<StringNullableFilter>;
   eventId?: InputMaybe<BigIntNullableFilter>;
   events?: InputMaybe<EventsRelationFilter>;
@@ -10292,26 +11924,15 @@ export type WorkerActivitiesWhereInput = {
   id?: InputMaybe<BigIntFilter>;
   infoLastUpdatedAt?: InputMaybe<DateTimeFilter>;
   initialScore?: InputMaybe<IntFilter>;
-  minerAccountAddress?: InputMaybe<StringNullableFilter>;
+  miners?: InputMaybe<MinersRelationFilter>;
   operatorAddress?: InputMaybe<StringNullableFilter>;
   operatorId?: InputMaybe<BigIntNullableFilter>;
-  pInit?: InputMaybe<IntFilter>;
-  pInstant?: InputMaybe<IntFilter>;
-  pid?: InputMaybe<BigIntNullableFilter>;
   runtimeVersion?: InputMaybe<IntFilter>;
-  sMax?: InputMaybe<DecimalFilter>;
-  sMin?: InputMaybe<DecimalFilter>;
-  shares?: InputMaybe<DecimalFilter>;
-  stakePoolId?: InputMaybe<BigIntNullableFilter>;
   stakePools?: InputMaybe<StakePoolsRelationFilter>;
-  state?: InputMaybe<StringFilter>;
   timestamp?: InputMaybe<DateTimeFilter>;
   tokenomicVersion?: InputMaybe<IntFilter>;
-  totalReward?: InputMaybe<DecimalFilter>;
   type?: InputMaybe<StringFilter>;
   updatedAt?: InputMaybe<DateTimeFilter>;
-  v?: InputMaybe<DecimalFilter>;
-  ve?: InputMaybe<DecimalFilter>;
   workerId?: InputMaybe<BigIntFilter>;
   workers?: InputMaybe<WorkersRelationFilter>;
 };
@@ -10324,10 +11945,12 @@ export type Workers = {
   __typename?: 'Workers';
   _count?: Maybe<WorkersCount>;
   accounts?: Maybe<Accounts>;
-  addedAtBlockNumber: Scalars['BigInt'];
-  addedAtUpdatedTimestamp: Scalars['DateTime'];
   confidenceLevel: Scalars['Int'];
   createdAt: Scalars['DateTime'];
+  currentMinerAccountAddress?: Maybe<Scalars['String']>;
+  currentMinerId?: Maybe<Scalars['BigInt']>;
+  currentPid?: Maybe<Scalars['Int']>;
+  currentStakePoolId?: Maybe<Scalars['BigInt']>;
   ecdhPublicKey?: Maybe<Scalars['String']>;
   features: Array<Scalars['Int']>;
   id: Scalars['BigInt'];
@@ -10335,32 +11958,19 @@ export type Workers = {
   initialScore: Scalars['Int'];
   lastUpdatedBlockNumber: Scalars['BigInt'];
   lastUpdatedTimestamp: Scalars['DateTime'];
-  minerAccountAddress?: Maybe<Scalars['String']>;
-  miners: Array<Miners>;
+  minersMinersToWorkersCurrentMinerId?: Maybe<Miners>;
+  minersMinersWorkerIdToWorkers: Array<Miners>;
   operatorAddress?: Maybe<Scalars['String']>;
   operatorId?: Maybe<Scalars['BigInt']>;
-  pInit: Scalars['Int'];
-  pInstant: Scalars['Int'];
-  pid?: Maybe<Scalars['BigInt']>;
   publicKey: Scalars['String'];
-  removedAtBlockNumber?: Maybe<Scalars['BigInt']>;
-  removedAtUpdatedTimestamp?: Maybe<Scalars['DateTime']>;
   runtimeVersion: Scalars['Int'];
-  sMax: Scalars['Decimal'];
-  sMin: Scalars['Decimal'];
-  shares: Scalars['Decimal'];
-  stakePoolId?: Maybe<Scalars['BigInt']>;
   stakePools?: Maybe<StakePools>;
-  state: Scalars['String'];
-  totalReward: Scalars['Decimal'];
   updatedAt: Scalars['DateTime'];
-  v: Scalars['Decimal'];
-  ve: Scalars['Decimal'];
   workerActivities: Array<WorkerActivities>;
 };
 
 
-export type WorkersMinersArgs = {
+export type WorkersMinersMinersWorkerIdToWorkersArgs = {
   cursor?: InputMaybe<MinersWhereUniqueInput>;
   distinct?: InputMaybe<Array<MinersScalarFieldEnum>>;
   orderBy?: InputMaybe<Array<MinersOrderByWithRelationInput>>;
@@ -10381,62 +11991,46 @@ export type WorkersWorkerActivitiesArgs = {
 
 export type WorkersAvgAggregate = {
   __typename?: 'WorkersAvgAggregate';
-  addedAtBlockNumber?: Maybe<Scalars['Float']>;
   confidenceLevel?: Maybe<Scalars['Float']>;
+  currentMinerId?: Maybe<Scalars['Float']>;
+  currentPid?: Maybe<Scalars['Float']>;
+  currentStakePoolId?: Maybe<Scalars['Float']>;
   features?: Maybe<Scalars['Float']>;
   id?: Maybe<Scalars['Float']>;
   initialScore?: Maybe<Scalars['Float']>;
   lastUpdatedBlockNumber?: Maybe<Scalars['Float']>;
   operatorId?: Maybe<Scalars['Float']>;
-  pInit?: Maybe<Scalars['Float']>;
-  pInstant?: Maybe<Scalars['Float']>;
-  pid?: Maybe<Scalars['Float']>;
-  removedAtBlockNumber?: Maybe<Scalars['Float']>;
   runtimeVersion?: Maybe<Scalars['Float']>;
-  sMax?: Maybe<Scalars['Decimal']>;
-  sMin?: Maybe<Scalars['Decimal']>;
-  shares?: Maybe<Scalars['Decimal']>;
-  stakePoolId?: Maybe<Scalars['Float']>;
-  totalReward?: Maybe<Scalars['Decimal']>;
-  v?: Maybe<Scalars['Decimal']>;
-  ve?: Maybe<Scalars['Decimal']>;
 };
 
 export type WorkersAvgOrderByAggregateInput = {
-  addedAtBlockNumber?: InputMaybe<SortOrder>;
   confidenceLevel?: InputMaybe<SortOrder>;
+  currentMinerId?: InputMaybe<SortOrder>;
+  currentPid?: InputMaybe<SortOrder>;
+  currentStakePoolId?: InputMaybe<SortOrder>;
   features?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
   initialScore?: InputMaybe<SortOrder>;
   lastUpdatedBlockNumber?: InputMaybe<SortOrder>;
   operatorId?: InputMaybe<SortOrder>;
-  pInit?: InputMaybe<SortOrder>;
-  pInstant?: InputMaybe<SortOrder>;
-  pid?: InputMaybe<SortOrder>;
-  removedAtBlockNumber?: InputMaybe<SortOrder>;
   runtimeVersion?: InputMaybe<SortOrder>;
-  sMax?: InputMaybe<SortOrder>;
-  sMin?: InputMaybe<SortOrder>;
-  shares?: InputMaybe<SortOrder>;
-  stakePoolId?: InputMaybe<SortOrder>;
-  totalReward?: InputMaybe<SortOrder>;
-  v?: InputMaybe<SortOrder>;
-  ve?: InputMaybe<SortOrder>;
 };
 
 export type WorkersCount = {
   __typename?: 'WorkersCount';
-  miners: Scalars['Int'];
+  minersMinersWorkerIdToWorkers: Scalars['Int'];
   workerActivities: Scalars['Int'];
 };
 
 export type WorkersCountAggregate = {
   __typename?: 'WorkersCountAggregate';
   _all: Scalars['Int'];
-  addedAtBlockNumber: Scalars['Int'];
-  addedAtUpdatedTimestamp: Scalars['Int'];
   confidenceLevel: Scalars['Int'];
   createdAt: Scalars['Int'];
+  currentMinerAccountAddress: Scalars['Int'];
+  currentMinerId: Scalars['Int'];
+  currentPid: Scalars['Int'];
+  currentStakePoolId: Scalars['Int'];
   ecdhPublicKey: Scalars['Int'];
   features: Scalars['Int'];
   id: Scalars['Int'];
@@ -10444,32 +12038,20 @@ export type WorkersCountAggregate = {
   initialScore: Scalars['Int'];
   lastUpdatedBlockNumber: Scalars['Int'];
   lastUpdatedTimestamp: Scalars['Int'];
-  minerAccountAddress: Scalars['Int'];
   operatorAddress: Scalars['Int'];
   operatorId: Scalars['Int'];
-  pInit: Scalars['Int'];
-  pInstant: Scalars['Int'];
-  pid: Scalars['Int'];
   publicKey: Scalars['Int'];
-  removedAtBlockNumber: Scalars['Int'];
-  removedAtUpdatedTimestamp: Scalars['Int'];
   runtimeVersion: Scalars['Int'];
-  sMax: Scalars['Int'];
-  sMin: Scalars['Int'];
-  shares: Scalars['Int'];
-  stakePoolId: Scalars['Int'];
-  state: Scalars['Int'];
-  totalReward: Scalars['Int'];
   updatedAt: Scalars['Int'];
-  v: Scalars['Int'];
-  ve: Scalars['Int'];
 };
 
 export type WorkersCountOrderByAggregateInput = {
-  addedAtBlockNumber?: InputMaybe<SortOrder>;
-  addedAtUpdatedTimestamp?: InputMaybe<SortOrder>;
   confidenceLevel?: InputMaybe<SortOrder>;
   createdAt?: InputMaybe<SortOrder>;
+  currentMinerAccountAddress?: InputMaybe<SortOrder>;
+  currentMinerId?: InputMaybe<SortOrder>;
+  currentPid?: InputMaybe<SortOrder>;
+  currentStakePoolId?: InputMaybe<SortOrder>;
   ecdhPublicKey?: InputMaybe<SortOrder>;
   features?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
@@ -10477,33 +12059,19 @@ export type WorkersCountOrderByAggregateInput = {
   initialScore?: InputMaybe<SortOrder>;
   lastUpdatedBlockNumber?: InputMaybe<SortOrder>;
   lastUpdatedTimestamp?: InputMaybe<SortOrder>;
-  minerAccountAddress?: InputMaybe<SortOrder>;
   operatorAddress?: InputMaybe<SortOrder>;
   operatorId?: InputMaybe<SortOrder>;
-  pInit?: InputMaybe<SortOrder>;
-  pInstant?: InputMaybe<SortOrder>;
-  pid?: InputMaybe<SortOrder>;
   publicKey?: InputMaybe<SortOrder>;
-  removedAtBlockNumber?: InputMaybe<SortOrder>;
-  removedAtUpdatedTimestamp?: InputMaybe<SortOrder>;
   runtimeVersion?: InputMaybe<SortOrder>;
-  sMax?: InputMaybe<SortOrder>;
-  sMin?: InputMaybe<SortOrder>;
-  shares?: InputMaybe<SortOrder>;
-  stakePoolId?: InputMaybe<SortOrder>;
-  state?: InputMaybe<SortOrder>;
-  totalReward?: InputMaybe<SortOrder>;
   updatedAt?: InputMaybe<SortOrder>;
-  v?: InputMaybe<SortOrder>;
-  ve?: InputMaybe<SortOrder>;
 };
 
 export type WorkersCreateInput = {
   accounts?: InputMaybe<AccountsCreateNestedOneWithoutWorkersInput>;
-  addedAtBlockNumber: Scalars['BigInt'];
-  addedAtUpdatedTimestamp: Scalars['DateTime'];
   confidenceLevel?: InputMaybe<Scalars['Int']>;
   createdAt: Scalars['DateTime'];
+  currentMinerAccountAddress?: InputMaybe<Scalars['String']>;
+  currentPid?: InputMaybe<Scalars['Int']>;
   ecdhPublicKey?: InputMaybe<Scalars['String']>;
   features?: InputMaybe<WorkersCreatefeaturesInput>;
   id?: InputMaybe<Scalars['BigInt']>;
@@ -10511,33 +12079,23 @@ export type WorkersCreateInput = {
   initialScore?: InputMaybe<Scalars['Int']>;
   lastUpdatedBlockNumber: Scalars['BigInt'];
   lastUpdatedTimestamp: Scalars['DateTime'];
-  minerAccountAddress?: InputMaybe<Scalars['String']>;
-  miners?: InputMaybe<MinersCreateNestedManyWithoutWorkersInput>;
+  minersMinersToWorkersCurrentMinerId?: InputMaybe<MinersCreateNestedOneWithoutWorkersMinersToWorkersCurrentMinerIdsInput>;
+  minersMinersWorkerIdToWorkers?: InputMaybe<MinersCreateNestedManyWithoutWorkersMinersWorkerIdToWorkersInput>;
   operatorAddress?: InputMaybe<Scalars['String']>;
-  pInit?: InputMaybe<Scalars['Int']>;
-  pInstant?: InputMaybe<Scalars['Int']>;
-  pid?: InputMaybe<Scalars['BigInt']>;
   publicKey: Scalars['String'];
-  removedAtBlockNumber?: InputMaybe<Scalars['BigInt']>;
-  removedAtUpdatedTimestamp?: InputMaybe<Scalars['DateTime']>;
   runtimeVersion?: InputMaybe<Scalars['Int']>;
-  sMax?: InputMaybe<Scalars['Decimal']>;
-  sMin?: InputMaybe<Scalars['Decimal']>;
-  shares?: InputMaybe<Scalars['Decimal']>;
   stakePools?: InputMaybe<StakePoolsCreateNestedOneWithoutWorkersInput>;
-  state?: InputMaybe<Scalars['String']>;
-  totalReward?: InputMaybe<Scalars['Decimal']>;
   updatedAt: Scalars['DateTime'];
-  v?: InputMaybe<Scalars['Decimal']>;
-  ve?: InputMaybe<Scalars['Decimal']>;
   workerActivities?: InputMaybe<WorkerActivitiesCreateNestedManyWithoutWorkersInput>;
 };
 
 export type WorkersCreateManyAccountsInput = {
-  addedAtBlockNumber: Scalars['BigInt'];
-  addedAtUpdatedTimestamp: Scalars['DateTime'];
   confidenceLevel?: InputMaybe<Scalars['Int']>;
   createdAt: Scalars['DateTime'];
+  currentMinerAccountAddress?: InputMaybe<Scalars['String']>;
+  currentMinerId?: InputMaybe<Scalars['BigInt']>;
+  currentPid?: InputMaybe<Scalars['Int']>;
+  currentStakePoolId?: InputMaybe<Scalars['BigInt']>;
   ecdhPublicKey?: InputMaybe<Scalars['String']>;
   features?: InputMaybe<WorkersCreateManyfeaturesInput>;
   id?: InputMaybe<Scalars['BigInt']>;
@@ -10545,24 +12103,10 @@ export type WorkersCreateManyAccountsInput = {
   initialScore?: InputMaybe<Scalars['Int']>;
   lastUpdatedBlockNumber: Scalars['BigInt'];
   lastUpdatedTimestamp: Scalars['DateTime'];
-  minerAccountAddress?: InputMaybe<Scalars['String']>;
   operatorAddress?: InputMaybe<Scalars['String']>;
-  pInit?: InputMaybe<Scalars['Int']>;
-  pInstant?: InputMaybe<Scalars['Int']>;
-  pid?: InputMaybe<Scalars['BigInt']>;
   publicKey: Scalars['String'];
-  removedAtBlockNumber?: InputMaybe<Scalars['BigInt']>;
-  removedAtUpdatedTimestamp?: InputMaybe<Scalars['DateTime']>;
   runtimeVersion?: InputMaybe<Scalars['Int']>;
-  sMax?: InputMaybe<Scalars['Decimal']>;
-  sMin?: InputMaybe<Scalars['Decimal']>;
-  shares?: InputMaybe<Scalars['Decimal']>;
-  stakePoolId?: InputMaybe<Scalars['BigInt']>;
-  state?: InputMaybe<Scalars['String']>;
-  totalReward?: InputMaybe<Scalars['Decimal']>;
   updatedAt: Scalars['DateTime'];
-  v?: InputMaybe<Scalars['Decimal']>;
-  ve?: InputMaybe<Scalars['Decimal']>;
 };
 
 export type WorkersCreateManyAccountsInputEnvelope = {
@@ -10571,10 +12115,12 @@ export type WorkersCreateManyAccountsInputEnvelope = {
 };
 
 export type WorkersCreateManyInput = {
-  addedAtBlockNumber: Scalars['BigInt'];
-  addedAtUpdatedTimestamp: Scalars['DateTime'];
   confidenceLevel?: InputMaybe<Scalars['Int']>;
   createdAt: Scalars['DateTime'];
+  currentMinerAccountAddress?: InputMaybe<Scalars['String']>;
+  currentMinerId?: InputMaybe<Scalars['BigInt']>;
+  currentPid?: InputMaybe<Scalars['Int']>;
+  currentStakePoolId?: InputMaybe<Scalars['BigInt']>;
   ecdhPublicKey?: InputMaybe<Scalars['String']>;
   features?: InputMaybe<WorkersCreateManyfeaturesInput>;
   id?: InputMaybe<Scalars['BigInt']>;
@@ -10582,32 +12128,44 @@ export type WorkersCreateManyInput = {
   initialScore?: InputMaybe<Scalars['Int']>;
   lastUpdatedBlockNumber: Scalars['BigInt'];
   lastUpdatedTimestamp: Scalars['DateTime'];
-  minerAccountAddress?: InputMaybe<Scalars['String']>;
   operatorAddress?: InputMaybe<Scalars['String']>;
   operatorId?: InputMaybe<Scalars['BigInt']>;
-  pInit?: InputMaybe<Scalars['Int']>;
-  pInstant?: InputMaybe<Scalars['Int']>;
-  pid?: InputMaybe<Scalars['BigInt']>;
   publicKey: Scalars['String'];
-  removedAtBlockNumber?: InputMaybe<Scalars['BigInt']>;
-  removedAtUpdatedTimestamp?: InputMaybe<Scalars['DateTime']>;
   runtimeVersion?: InputMaybe<Scalars['Int']>;
-  sMax?: InputMaybe<Scalars['Decimal']>;
-  sMin?: InputMaybe<Scalars['Decimal']>;
-  shares?: InputMaybe<Scalars['Decimal']>;
-  stakePoolId?: InputMaybe<Scalars['BigInt']>;
-  state?: InputMaybe<Scalars['String']>;
-  totalReward?: InputMaybe<Scalars['Decimal']>;
   updatedAt: Scalars['DateTime'];
-  v?: InputMaybe<Scalars['Decimal']>;
-  ve?: InputMaybe<Scalars['Decimal']>;
+};
+
+export type WorkersCreateManyMinersMinersToWorkersCurrentMinerIdInput = {
+  confidenceLevel?: InputMaybe<Scalars['Int']>;
+  createdAt: Scalars['DateTime'];
+  currentMinerAccountAddress?: InputMaybe<Scalars['String']>;
+  currentPid?: InputMaybe<Scalars['Int']>;
+  currentStakePoolId?: InputMaybe<Scalars['BigInt']>;
+  ecdhPublicKey?: InputMaybe<Scalars['String']>;
+  features?: InputMaybe<WorkersCreateManyfeaturesInput>;
+  id?: InputMaybe<Scalars['BigInt']>;
+  infoLastUpdatedAt: Scalars['DateTime'];
+  initialScore?: InputMaybe<Scalars['Int']>;
+  lastUpdatedBlockNumber: Scalars['BigInt'];
+  lastUpdatedTimestamp: Scalars['DateTime'];
+  operatorAddress?: InputMaybe<Scalars['String']>;
+  operatorId?: InputMaybe<Scalars['BigInt']>;
+  publicKey: Scalars['String'];
+  runtimeVersion?: InputMaybe<Scalars['Int']>;
+  updatedAt: Scalars['DateTime'];
+};
+
+export type WorkersCreateManyMinersMinersToWorkersCurrentMinerIdInputEnvelope = {
+  data: Array<WorkersCreateManyMinersMinersToWorkersCurrentMinerIdInput>;
+  skipDuplicates?: InputMaybe<Scalars['Boolean']>;
 };
 
 export type WorkersCreateManyStakePoolsInput = {
-  addedAtBlockNumber: Scalars['BigInt'];
-  addedAtUpdatedTimestamp: Scalars['DateTime'];
   confidenceLevel?: InputMaybe<Scalars['Int']>;
   createdAt: Scalars['DateTime'];
+  currentMinerAccountAddress?: InputMaybe<Scalars['String']>;
+  currentMinerId?: InputMaybe<Scalars['BigInt']>;
+  currentPid?: InputMaybe<Scalars['Int']>;
   ecdhPublicKey?: InputMaybe<Scalars['String']>;
   features?: InputMaybe<WorkersCreateManyfeaturesInput>;
   id?: InputMaybe<Scalars['BigInt']>;
@@ -10615,24 +12173,11 @@ export type WorkersCreateManyStakePoolsInput = {
   initialScore?: InputMaybe<Scalars['Int']>;
   lastUpdatedBlockNumber: Scalars['BigInt'];
   lastUpdatedTimestamp: Scalars['DateTime'];
-  minerAccountAddress?: InputMaybe<Scalars['String']>;
   operatorAddress?: InputMaybe<Scalars['String']>;
   operatorId?: InputMaybe<Scalars['BigInt']>;
-  pInit?: InputMaybe<Scalars['Int']>;
-  pInstant?: InputMaybe<Scalars['Int']>;
-  pid?: InputMaybe<Scalars['BigInt']>;
   publicKey: Scalars['String'];
-  removedAtBlockNumber?: InputMaybe<Scalars['BigInt']>;
-  removedAtUpdatedTimestamp?: InputMaybe<Scalars['DateTime']>;
   runtimeVersion?: InputMaybe<Scalars['Int']>;
-  sMax?: InputMaybe<Scalars['Decimal']>;
-  sMin?: InputMaybe<Scalars['Decimal']>;
-  shares?: InputMaybe<Scalars['Decimal']>;
-  state?: InputMaybe<Scalars['String']>;
-  totalReward?: InputMaybe<Scalars['Decimal']>;
   updatedAt: Scalars['DateTime'];
-  v?: InputMaybe<Scalars['Decimal']>;
-  ve?: InputMaybe<Scalars['Decimal']>;
 };
 
 export type WorkersCreateManyStakePoolsInputEnvelope = {
@@ -10651,6 +12196,13 @@ export type WorkersCreateNestedManyWithoutAccountsInput = {
   createMany?: InputMaybe<WorkersCreateManyAccountsInputEnvelope>;
 };
 
+export type WorkersCreateNestedManyWithoutMinersMinersToWorkersCurrentMinerIdInput = {
+  connect?: InputMaybe<Array<WorkersWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<WorkersCreateOrConnectWithoutMinersMinersToWorkersCurrentMinerIdInput>>;
+  create?: InputMaybe<Array<WorkersCreateWithoutMinersMinersToWorkersCurrentMinerIdInput>>;
+  createMany?: InputMaybe<WorkersCreateManyMinersMinersToWorkersCurrentMinerIdInputEnvelope>;
+};
+
 export type WorkersCreateNestedManyWithoutStakePoolsInput = {
   connect?: InputMaybe<Array<WorkersWhereUniqueInput>>;
   connectOrCreate?: InputMaybe<Array<WorkersCreateOrConnectWithoutStakePoolsInput>>;
@@ -10658,10 +12210,10 @@ export type WorkersCreateNestedManyWithoutStakePoolsInput = {
   createMany?: InputMaybe<WorkersCreateManyStakePoolsInputEnvelope>;
 };
 
-export type WorkersCreateNestedOneWithoutMinersInput = {
+export type WorkersCreateNestedOneWithoutMinersMinersWorkerIdToWorkersInput = {
   connect?: InputMaybe<WorkersWhereUniqueInput>;
-  connectOrCreate?: InputMaybe<WorkersCreateOrConnectWithoutMinersInput>;
-  create?: InputMaybe<WorkersCreateWithoutMinersInput>;
+  connectOrCreate?: InputMaybe<WorkersCreateOrConnectWithoutMinersMinersWorkerIdToWorkersInput>;
+  create?: InputMaybe<WorkersCreateWithoutMinersMinersWorkerIdToWorkersInput>;
 };
 
 export type WorkersCreateNestedOneWithoutWorkerActivitiesInput = {
@@ -10675,8 +12227,13 @@ export type WorkersCreateOrConnectWithoutAccountsInput = {
   where: WorkersWhereUniqueInput;
 };
 
-export type WorkersCreateOrConnectWithoutMinersInput = {
-  create: WorkersCreateWithoutMinersInput;
+export type WorkersCreateOrConnectWithoutMinersMinersToWorkersCurrentMinerIdInput = {
+  create: WorkersCreateWithoutMinersMinersToWorkersCurrentMinerIdInput;
+  where: WorkersWhereUniqueInput;
+};
+
+export type WorkersCreateOrConnectWithoutMinersMinersWorkerIdToWorkersInput = {
+  create: WorkersCreateWithoutMinersMinersWorkerIdToWorkersInput;
   where: WorkersWhereUniqueInput;
 };
 
@@ -10691,10 +12248,10 @@ export type WorkersCreateOrConnectWithoutWorkerActivitiesInput = {
 };
 
 export type WorkersCreateWithoutAccountsInput = {
-  addedAtBlockNumber: Scalars['BigInt'];
-  addedAtUpdatedTimestamp: Scalars['DateTime'];
   confidenceLevel?: InputMaybe<Scalars['Int']>;
   createdAt: Scalars['DateTime'];
+  currentMinerAccountAddress?: InputMaybe<Scalars['String']>;
+  currentPid?: InputMaybe<Scalars['Int']>;
   ecdhPublicKey?: InputMaybe<Scalars['String']>;
   features?: InputMaybe<WorkersCreatefeaturesInput>;
   id?: InputMaybe<Scalars['BigInt']>;
@@ -10702,34 +12259,22 @@ export type WorkersCreateWithoutAccountsInput = {
   initialScore?: InputMaybe<Scalars['Int']>;
   lastUpdatedBlockNumber: Scalars['BigInt'];
   lastUpdatedTimestamp: Scalars['DateTime'];
-  minerAccountAddress?: InputMaybe<Scalars['String']>;
-  miners?: InputMaybe<MinersCreateNestedManyWithoutWorkersInput>;
+  minersMinersToWorkersCurrentMinerId?: InputMaybe<MinersCreateNestedOneWithoutWorkersMinersToWorkersCurrentMinerIdsInput>;
+  minersMinersWorkerIdToWorkers?: InputMaybe<MinersCreateNestedManyWithoutWorkersMinersWorkerIdToWorkersInput>;
   operatorAddress?: InputMaybe<Scalars['String']>;
-  pInit?: InputMaybe<Scalars['Int']>;
-  pInstant?: InputMaybe<Scalars['Int']>;
-  pid?: InputMaybe<Scalars['BigInt']>;
   publicKey: Scalars['String'];
-  removedAtBlockNumber?: InputMaybe<Scalars['BigInt']>;
-  removedAtUpdatedTimestamp?: InputMaybe<Scalars['DateTime']>;
   runtimeVersion?: InputMaybe<Scalars['Int']>;
-  sMax?: InputMaybe<Scalars['Decimal']>;
-  sMin?: InputMaybe<Scalars['Decimal']>;
-  shares?: InputMaybe<Scalars['Decimal']>;
   stakePools?: InputMaybe<StakePoolsCreateNestedOneWithoutWorkersInput>;
-  state?: InputMaybe<Scalars['String']>;
-  totalReward?: InputMaybe<Scalars['Decimal']>;
   updatedAt: Scalars['DateTime'];
-  v?: InputMaybe<Scalars['Decimal']>;
-  ve?: InputMaybe<Scalars['Decimal']>;
   workerActivities?: InputMaybe<WorkerActivitiesCreateNestedManyWithoutWorkersInput>;
 };
 
-export type WorkersCreateWithoutMinersInput = {
+export type WorkersCreateWithoutMinersMinersToWorkersCurrentMinerIdInput = {
   accounts?: InputMaybe<AccountsCreateNestedOneWithoutWorkersInput>;
-  addedAtBlockNumber: Scalars['BigInt'];
-  addedAtUpdatedTimestamp: Scalars['DateTime'];
   confidenceLevel?: InputMaybe<Scalars['Int']>;
   createdAt: Scalars['DateTime'];
+  currentMinerAccountAddress?: InputMaybe<Scalars['String']>;
+  currentPid?: InputMaybe<Scalars['Int']>;
   ecdhPublicKey?: InputMaybe<Scalars['String']>;
   features?: InputMaybe<WorkersCreatefeaturesInput>;
   id?: InputMaybe<Scalars['BigInt']>;
@@ -10737,33 +12282,43 @@ export type WorkersCreateWithoutMinersInput = {
   initialScore?: InputMaybe<Scalars['Int']>;
   lastUpdatedBlockNumber: Scalars['BigInt'];
   lastUpdatedTimestamp: Scalars['DateTime'];
-  minerAccountAddress?: InputMaybe<Scalars['String']>;
+  minersMinersWorkerIdToWorkers?: InputMaybe<MinersCreateNestedManyWithoutWorkersMinersWorkerIdToWorkersInput>;
   operatorAddress?: InputMaybe<Scalars['String']>;
-  pInit?: InputMaybe<Scalars['Int']>;
-  pInstant?: InputMaybe<Scalars['Int']>;
-  pid?: InputMaybe<Scalars['BigInt']>;
   publicKey: Scalars['String'];
-  removedAtBlockNumber?: InputMaybe<Scalars['BigInt']>;
-  removedAtUpdatedTimestamp?: InputMaybe<Scalars['DateTime']>;
   runtimeVersion?: InputMaybe<Scalars['Int']>;
-  sMax?: InputMaybe<Scalars['Decimal']>;
-  sMin?: InputMaybe<Scalars['Decimal']>;
-  shares?: InputMaybe<Scalars['Decimal']>;
   stakePools?: InputMaybe<StakePoolsCreateNestedOneWithoutWorkersInput>;
-  state?: InputMaybe<Scalars['String']>;
-  totalReward?: InputMaybe<Scalars['Decimal']>;
   updatedAt: Scalars['DateTime'];
-  v?: InputMaybe<Scalars['Decimal']>;
-  ve?: InputMaybe<Scalars['Decimal']>;
+  workerActivities?: InputMaybe<WorkerActivitiesCreateNestedManyWithoutWorkersInput>;
+};
+
+export type WorkersCreateWithoutMinersMinersWorkerIdToWorkersInput = {
+  accounts?: InputMaybe<AccountsCreateNestedOneWithoutWorkersInput>;
+  confidenceLevel?: InputMaybe<Scalars['Int']>;
+  createdAt: Scalars['DateTime'];
+  currentMinerAccountAddress?: InputMaybe<Scalars['String']>;
+  currentPid?: InputMaybe<Scalars['Int']>;
+  ecdhPublicKey?: InputMaybe<Scalars['String']>;
+  features?: InputMaybe<WorkersCreatefeaturesInput>;
+  id?: InputMaybe<Scalars['BigInt']>;
+  infoLastUpdatedAt: Scalars['DateTime'];
+  initialScore?: InputMaybe<Scalars['Int']>;
+  lastUpdatedBlockNumber: Scalars['BigInt'];
+  lastUpdatedTimestamp: Scalars['DateTime'];
+  minersMinersToWorkersCurrentMinerId?: InputMaybe<MinersCreateNestedOneWithoutWorkersMinersToWorkersCurrentMinerIdsInput>;
+  operatorAddress?: InputMaybe<Scalars['String']>;
+  publicKey: Scalars['String'];
+  runtimeVersion?: InputMaybe<Scalars['Int']>;
+  stakePools?: InputMaybe<StakePoolsCreateNestedOneWithoutWorkersInput>;
+  updatedAt: Scalars['DateTime'];
   workerActivities?: InputMaybe<WorkerActivitiesCreateNestedManyWithoutWorkersInput>;
 };
 
 export type WorkersCreateWithoutStakePoolsInput = {
   accounts?: InputMaybe<AccountsCreateNestedOneWithoutWorkersInput>;
-  addedAtBlockNumber: Scalars['BigInt'];
-  addedAtUpdatedTimestamp: Scalars['DateTime'];
   confidenceLevel?: InputMaybe<Scalars['Int']>;
   createdAt: Scalars['DateTime'];
+  currentMinerAccountAddress?: InputMaybe<Scalars['String']>;
+  currentPid?: InputMaybe<Scalars['Int']>;
   ecdhPublicKey?: InputMaybe<Scalars['String']>;
   features?: InputMaybe<WorkersCreatefeaturesInput>;
   id?: InputMaybe<Scalars['BigInt']>;
@@ -10771,33 +12326,21 @@ export type WorkersCreateWithoutStakePoolsInput = {
   initialScore?: InputMaybe<Scalars['Int']>;
   lastUpdatedBlockNumber: Scalars['BigInt'];
   lastUpdatedTimestamp: Scalars['DateTime'];
-  minerAccountAddress?: InputMaybe<Scalars['String']>;
-  miners?: InputMaybe<MinersCreateNestedManyWithoutWorkersInput>;
+  minersMinersToWorkersCurrentMinerId?: InputMaybe<MinersCreateNestedOneWithoutWorkersMinersToWorkersCurrentMinerIdsInput>;
+  minersMinersWorkerIdToWorkers?: InputMaybe<MinersCreateNestedManyWithoutWorkersMinersWorkerIdToWorkersInput>;
   operatorAddress?: InputMaybe<Scalars['String']>;
-  pInit?: InputMaybe<Scalars['Int']>;
-  pInstant?: InputMaybe<Scalars['Int']>;
-  pid?: InputMaybe<Scalars['BigInt']>;
   publicKey: Scalars['String'];
-  removedAtBlockNumber?: InputMaybe<Scalars['BigInt']>;
-  removedAtUpdatedTimestamp?: InputMaybe<Scalars['DateTime']>;
   runtimeVersion?: InputMaybe<Scalars['Int']>;
-  sMax?: InputMaybe<Scalars['Decimal']>;
-  sMin?: InputMaybe<Scalars['Decimal']>;
-  shares?: InputMaybe<Scalars['Decimal']>;
-  state?: InputMaybe<Scalars['String']>;
-  totalReward?: InputMaybe<Scalars['Decimal']>;
   updatedAt: Scalars['DateTime'];
-  v?: InputMaybe<Scalars['Decimal']>;
-  ve?: InputMaybe<Scalars['Decimal']>;
   workerActivities?: InputMaybe<WorkerActivitiesCreateNestedManyWithoutWorkersInput>;
 };
 
 export type WorkersCreateWithoutWorkerActivitiesInput = {
   accounts?: InputMaybe<AccountsCreateNestedOneWithoutWorkersInput>;
-  addedAtBlockNumber: Scalars['BigInt'];
-  addedAtUpdatedTimestamp: Scalars['DateTime'];
   confidenceLevel?: InputMaybe<Scalars['Int']>;
   createdAt: Scalars['DateTime'];
+  currentMinerAccountAddress?: InputMaybe<Scalars['String']>;
+  currentPid?: InputMaybe<Scalars['Int']>;
   ecdhPublicKey?: InputMaybe<Scalars['String']>;
   features?: InputMaybe<WorkersCreatefeaturesInput>;
   id?: InputMaybe<Scalars['BigInt']>;
@@ -10805,25 +12348,13 @@ export type WorkersCreateWithoutWorkerActivitiesInput = {
   initialScore?: InputMaybe<Scalars['Int']>;
   lastUpdatedBlockNumber: Scalars['BigInt'];
   lastUpdatedTimestamp: Scalars['DateTime'];
-  minerAccountAddress?: InputMaybe<Scalars['String']>;
-  miners?: InputMaybe<MinersCreateNestedManyWithoutWorkersInput>;
+  minersMinersToWorkersCurrentMinerId?: InputMaybe<MinersCreateNestedOneWithoutWorkersMinersToWorkersCurrentMinerIdsInput>;
+  minersMinersWorkerIdToWorkers?: InputMaybe<MinersCreateNestedManyWithoutWorkersMinersWorkerIdToWorkersInput>;
   operatorAddress?: InputMaybe<Scalars['String']>;
-  pInit?: InputMaybe<Scalars['Int']>;
-  pInstant?: InputMaybe<Scalars['Int']>;
-  pid?: InputMaybe<Scalars['BigInt']>;
   publicKey: Scalars['String'];
-  removedAtBlockNumber?: InputMaybe<Scalars['BigInt']>;
-  removedAtUpdatedTimestamp?: InputMaybe<Scalars['DateTime']>;
   runtimeVersion?: InputMaybe<Scalars['Int']>;
-  sMax?: InputMaybe<Scalars['Decimal']>;
-  sMin?: InputMaybe<Scalars['Decimal']>;
-  shares?: InputMaybe<Scalars['Decimal']>;
   stakePools?: InputMaybe<StakePoolsCreateNestedOneWithoutWorkersInput>;
-  state?: InputMaybe<Scalars['String']>;
-  totalReward?: InputMaybe<Scalars['Decimal']>;
   updatedAt: Scalars['DateTime'];
-  v?: InputMaybe<Scalars['Decimal']>;
-  ve?: InputMaybe<Scalars['Decimal']>;
 };
 
 export type WorkersCreatefeaturesInput = {
@@ -10837,10 +12368,12 @@ export type WorkersGroupBy = {
   _max?: Maybe<WorkersMaxAggregate>;
   _min?: Maybe<WorkersMinAggregate>;
   _sum?: Maybe<WorkersSumAggregate>;
-  addedAtBlockNumber: Scalars['BigInt'];
-  addedAtUpdatedTimestamp: Scalars['DateTime'];
   confidenceLevel: Scalars['Int'];
   createdAt: Scalars['DateTime'];
+  currentMinerAccountAddress?: Maybe<Scalars['String']>;
+  currentMinerId?: Maybe<Scalars['BigInt']>;
+  currentPid?: Maybe<Scalars['Int']>;
+  currentStakePoolId?: Maybe<Scalars['BigInt']>;
   ecdhPublicKey?: Maybe<Scalars['String']>;
   features?: Maybe<Array<Scalars['Int']>>;
   id: Scalars['BigInt'];
@@ -10848,25 +12381,11 @@ export type WorkersGroupBy = {
   initialScore: Scalars['Int'];
   lastUpdatedBlockNumber: Scalars['BigInt'];
   lastUpdatedTimestamp: Scalars['DateTime'];
-  minerAccountAddress?: Maybe<Scalars['String']>;
   operatorAddress?: Maybe<Scalars['String']>;
   operatorId?: Maybe<Scalars['BigInt']>;
-  pInit: Scalars['Int'];
-  pInstant: Scalars['Int'];
-  pid?: Maybe<Scalars['BigInt']>;
   publicKey: Scalars['String'];
-  removedAtBlockNumber?: Maybe<Scalars['BigInt']>;
-  removedAtUpdatedTimestamp?: Maybe<Scalars['DateTime']>;
   runtimeVersion: Scalars['Int'];
-  sMax: Scalars['Decimal'];
-  sMin: Scalars['Decimal'];
-  shares: Scalars['Decimal'];
-  stakePoolId?: Maybe<Scalars['BigInt']>;
-  state: Scalars['String'];
-  totalReward: Scalars['Decimal'];
   updatedAt: Scalars['DateTime'];
-  v: Scalars['Decimal'];
-  ve: Scalars['Decimal'];
 };
 
 export type WorkersListRelationFilter = {
@@ -10877,132 +12396,84 @@ export type WorkersListRelationFilter = {
 
 export type WorkersMaxAggregate = {
   __typename?: 'WorkersMaxAggregate';
-  addedAtBlockNumber?: Maybe<Scalars['BigInt']>;
-  addedAtUpdatedTimestamp?: Maybe<Scalars['DateTime']>;
   confidenceLevel?: Maybe<Scalars['Int']>;
   createdAt?: Maybe<Scalars['DateTime']>;
+  currentMinerAccountAddress?: Maybe<Scalars['String']>;
+  currentMinerId?: Maybe<Scalars['BigInt']>;
+  currentPid?: Maybe<Scalars['Int']>;
+  currentStakePoolId?: Maybe<Scalars['BigInt']>;
   ecdhPublicKey?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['BigInt']>;
   infoLastUpdatedAt?: Maybe<Scalars['DateTime']>;
   initialScore?: Maybe<Scalars['Int']>;
   lastUpdatedBlockNumber?: Maybe<Scalars['BigInt']>;
   lastUpdatedTimestamp?: Maybe<Scalars['DateTime']>;
-  minerAccountAddress?: Maybe<Scalars['String']>;
   operatorAddress?: Maybe<Scalars['String']>;
   operatorId?: Maybe<Scalars['BigInt']>;
-  pInit?: Maybe<Scalars['Int']>;
-  pInstant?: Maybe<Scalars['Int']>;
-  pid?: Maybe<Scalars['BigInt']>;
   publicKey?: Maybe<Scalars['String']>;
-  removedAtBlockNumber?: Maybe<Scalars['BigInt']>;
-  removedAtUpdatedTimestamp?: Maybe<Scalars['DateTime']>;
   runtimeVersion?: Maybe<Scalars['Int']>;
-  sMax?: Maybe<Scalars['Decimal']>;
-  sMin?: Maybe<Scalars['Decimal']>;
-  shares?: Maybe<Scalars['Decimal']>;
-  stakePoolId?: Maybe<Scalars['BigInt']>;
-  state?: Maybe<Scalars['String']>;
-  totalReward?: Maybe<Scalars['Decimal']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
-  v?: Maybe<Scalars['Decimal']>;
-  ve?: Maybe<Scalars['Decimal']>;
 };
 
 export type WorkersMaxOrderByAggregateInput = {
-  addedAtBlockNumber?: InputMaybe<SortOrder>;
-  addedAtUpdatedTimestamp?: InputMaybe<SortOrder>;
   confidenceLevel?: InputMaybe<SortOrder>;
   createdAt?: InputMaybe<SortOrder>;
+  currentMinerAccountAddress?: InputMaybe<SortOrder>;
+  currentMinerId?: InputMaybe<SortOrder>;
+  currentPid?: InputMaybe<SortOrder>;
+  currentStakePoolId?: InputMaybe<SortOrder>;
   ecdhPublicKey?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
   infoLastUpdatedAt?: InputMaybe<SortOrder>;
   initialScore?: InputMaybe<SortOrder>;
   lastUpdatedBlockNumber?: InputMaybe<SortOrder>;
   lastUpdatedTimestamp?: InputMaybe<SortOrder>;
-  minerAccountAddress?: InputMaybe<SortOrder>;
   operatorAddress?: InputMaybe<SortOrder>;
   operatorId?: InputMaybe<SortOrder>;
-  pInit?: InputMaybe<SortOrder>;
-  pInstant?: InputMaybe<SortOrder>;
-  pid?: InputMaybe<SortOrder>;
   publicKey?: InputMaybe<SortOrder>;
-  removedAtBlockNumber?: InputMaybe<SortOrder>;
-  removedAtUpdatedTimestamp?: InputMaybe<SortOrder>;
   runtimeVersion?: InputMaybe<SortOrder>;
-  sMax?: InputMaybe<SortOrder>;
-  sMin?: InputMaybe<SortOrder>;
-  shares?: InputMaybe<SortOrder>;
-  stakePoolId?: InputMaybe<SortOrder>;
-  state?: InputMaybe<SortOrder>;
-  totalReward?: InputMaybe<SortOrder>;
   updatedAt?: InputMaybe<SortOrder>;
-  v?: InputMaybe<SortOrder>;
-  ve?: InputMaybe<SortOrder>;
 };
 
 export type WorkersMinAggregate = {
   __typename?: 'WorkersMinAggregate';
-  addedAtBlockNumber?: Maybe<Scalars['BigInt']>;
-  addedAtUpdatedTimestamp?: Maybe<Scalars['DateTime']>;
   confidenceLevel?: Maybe<Scalars['Int']>;
   createdAt?: Maybe<Scalars['DateTime']>;
+  currentMinerAccountAddress?: Maybe<Scalars['String']>;
+  currentMinerId?: Maybe<Scalars['BigInt']>;
+  currentPid?: Maybe<Scalars['Int']>;
+  currentStakePoolId?: Maybe<Scalars['BigInt']>;
   ecdhPublicKey?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['BigInt']>;
   infoLastUpdatedAt?: Maybe<Scalars['DateTime']>;
   initialScore?: Maybe<Scalars['Int']>;
   lastUpdatedBlockNumber?: Maybe<Scalars['BigInt']>;
   lastUpdatedTimestamp?: Maybe<Scalars['DateTime']>;
-  minerAccountAddress?: Maybe<Scalars['String']>;
   operatorAddress?: Maybe<Scalars['String']>;
   operatorId?: Maybe<Scalars['BigInt']>;
-  pInit?: Maybe<Scalars['Int']>;
-  pInstant?: Maybe<Scalars['Int']>;
-  pid?: Maybe<Scalars['BigInt']>;
   publicKey?: Maybe<Scalars['String']>;
-  removedAtBlockNumber?: Maybe<Scalars['BigInt']>;
-  removedAtUpdatedTimestamp?: Maybe<Scalars['DateTime']>;
   runtimeVersion?: Maybe<Scalars['Int']>;
-  sMax?: Maybe<Scalars['Decimal']>;
-  sMin?: Maybe<Scalars['Decimal']>;
-  shares?: Maybe<Scalars['Decimal']>;
-  stakePoolId?: Maybe<Scalars['BigInt']>;
-  state?: Maybe<Scalars['String']>;
-  totalReward?: Maybe<Scalars['Decimal']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
-  v?: Maybe<Scalars['Decimal']>;
-  ve?: Maybe<Scalars['Decimal']>;
 };
 
 export type WorkersMinOrderByAggregateInput = {
-  addedAtBlockNumber?: InputMaybe<SortOrder>;
-  addedAtUpdatedTimestamp?: InputMaybe<SortOrder>;
   confidenceLevel?: InputMaybe<SortOrder>;
   createdAt?: InputMaybe<SortOrder>;
+  currentMinerAccountAddress?: InputMaybe<SortOrder>;
+  currentMinerId?: InputMaybe<SortOrder>;
+  currentPid?: InputMaybe<SortOrder>;
+  currentStakePoolId?: InputMaybe<SortOrder>;
   ecdhPublicKey?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
   infoLastUpdatedAt?: InputMaybe<SortOrder>;
   initialScore?: InputMaybe<SortOrder>;
   lastUpdatedBlockNumber?: InputMaybe<SortOrder>;
   lastUpdatedTimestamp?: InputMaybe<SortOrder>;
-  minerAccountAddress?: InputMaybe<SortOrder>;
   operatorAddress?: InputMaybe<SortOrder>;
   operatorId?: InputMaybe<SortOrder>;
-  pInit?: InputMaybe<SortOrder>;
-  pInstant?: InputMaybe<SortOrder>;
-  pid?: InputMaybe<SortOrder>;
   publicKey?: InputMaybe<SortOrder>;
-  removedAtBlockNumber?: InputMaybe<SortOrder>;
-  removedAtUpdatedTimestamp?: InputMaybe<SortOrder>;
   runtimeVersion?: InputMaybe<SortOrder>;
-  sMax?: InputMaybe<SortOrder>;
-  sMin?: InputMaybe<SortOrder>;
-  shares?: InputMaybe<SortOrder>;
-  stakePoolId?: InputMaybe<SortOrder>;
-  state?: InputMaybe<SortOrder>;
-  totalReward?: InputMaybe<SortOrder>;
   updatedAt?: InputMaybe<SortOrder>;
-  v?: InputMaybe<SortOrder>;
-  ve?: InputMaybe<SortOrder>;
 };
 
 export type WorkersOrderByRelationAggregateInput = {
@@ -11015,10 +12486,12 @@ export type WorkersOrderByWithAggregationInput = {
   _max?: InputMaybe<WorkersMaxOrderByAggregateInput>;
   _min?: InputMaybe<WorkersMinOrderByAggregateInput>;
   _sum?: InputMaybe<WorkersSumOrderByAggregateInput>;
-  addedAtBlockNumber?: InputMaybe<SortOrder>;
-  addedAtUpdatedTimestamp?: InputMaybe<SortOrder>;
   confidenceLevel?: InputMaybe<SortOrder>;
   createdAt?: InputMaybe<SortOrder>;
+  currentMinerAccountAddress?: InputMaybe<SortOrder>;
+  currentMinerId?: InputMaybe<SortOrder>;
+  currentPid?: InputMaybe<SortOrder>;
+  currentStakePoolId?: InputMaybe<SortOrder>;
   ecdhPublicKey?: InputMaybe<SortOrder>;
   features?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
@@ -11026,33 +12499,21 @@ export type WorkersOrderByWithAggregationInput = {
   initialScore?: InputMaybe<SortOrder>;
   lastUpdatedBlockNumber?: InputMaybe<SortOrder>;
   lastUpdatedTimestamp?: InputMaybe<SortOrder>;
-  minerAccountAddress?: InputMaybe<SortOrder>;
   operatorAddress?: InputMaybe<SortOrder>;
   operatorId?: InputMaybe<SortOrder>;
-  pInit?: InputMaybe<SortOrder>;
-  pInstant?: InputMaybe<SortOrder>;
-  pid?: InputMaybe<SortOrder>;
   publicKey?: InputMaybe<SortOrder>;
-  removedAtBlockNumber?: InputMaybe<SortOrder>;
-  removedAtUpdatedTimestamp?: InputMaybe<SortOrder>;
   runtimeVersion?: InputMaybe<SortOrder>;
-  sMax?: InputMaybe<SortOrder>;
-  sMin?: InputMaybe<SortOrder>;
-  shares?: InputMaybe<SortOrder>;
-  stakePoolId?: InputMaybe<SortOrder>;
-  state?: InputMaybe<SortOrder>;
-  totalReward?: InputMaybe<SortOrder>;
   updatedAt?: InputMaybe<SortOrder>;
-  v?: InputMaybe<SortOrder>;
-  ve?: InputMaybe<SortOrder>;
 };
 
 export type WorkersOrderByWithRelationInput = {
   accounts?: InputMaybe<AccountsOrderByWithRelationInput>;
-  addedAtBlockNumber?: InputMaybe<SortOrder>;
-  addedAtUpdatedTimestamp?: InputMaybe<SortOrder>;
   confidenceLevel?: InputMaybe<SortOrder>;
   createdAt?: InputMaybe<SortOrder>;
+  currentMinerAccountAddress?: InputMaybe<SortOrder>;
+  currentMinerId?: InputMaybe<SortOrder>;
+  currentPid?: InputMaybe<SortOrder>;
+  currentStakePoolId?: InputMaybe<SortOrder>;
   ecdhPublicKey?: InputMaybe<SortOrder>;
   features?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
@@ -11060,27 +12521,14 @@ export type WorkersOrderByWithRelationInput = {
   initialScore?: InputMaybe<SortOrder>;
   lastUpdatedBlockNumber?: InputMaybe<SortOrder>;
   lastUpdatedTimestamp?: InputMaybe<SortOrder>;
-  minerAccountAddress?: InputMaybe<SortOrder>;
-  miners?: InputMaybe<MinersOrderByRelationAggregateInput>;
+  minersMinersToWorkersCurrentMinerId?: InputMaybe<MinersOrderByWithRelationInput>;
+  minersMinersWorkerIdToWorkers?: InputMaybe<MinersOrderByRelationAggregateInput>;
   operatorAddress?: InputMaybe<SortOrder>;
   operatorId?: InputMaybe<SortOrder>;
-  pInit?: InputMaybe<SortOrder>;
-  pInstant?: InputMaybe<SortOrder>;
-  pid?: InputMaybe<SortOrder>;
   publicKey?: InputMaybe<SortOrder>;
-  removedAtBlockNumber?: InputMaybe<SortOrder>;
-  removedAtUpdatedTimestamp?: InputMaybe<SortOrder>;
   runtimeVersion?: InputMaybe<SortOrder>;
-  sMax?: InputMaybe<SortOrder>;
-  sMin?: InputMaybe<SortOrder>;
-  shares?: InputMaybe<SortOrder>;
-  stakePoolId?: InputMaybe<SortOrder>;
   stakePools?: InputMaybe<StakePoolsOrderByWithRelationInput>;
-  state?: InputMaybe<SortOrder>;
-  totalReward?: InputMaybe<SortOrder>;
   updatedAt?: InputMaybe<SortOrder>;
-  v?: InputMaybe<SortOrder>;
-  ve?: InputMaybe<SortOrder>;
   workerActivities?: InputMaybe<WorkerActivitiesOrderByRelationAggregateInput>;
 };
 
@@ -11090,10 +12538,12 @@ export type WorkersRelationFilter = {
 };
 
 export enum WorkersScalarFieldEnum {
-  AddedAtBlockNumber = 'addedAtBlockNumber',
-  AddedAtUpdatedTimestamp = 'addedAtUpdatedTimestamp',
   ConfidenceLevel = 'confidenceLevel',
   CreatedAt = 'createdAt',
+  CurrentMinerAccountAddress = 'currentMinerAccountAddress',
+  CurrentMinerId = 'currentMinerId',
+  CurrentPid = 'currentPid',
+  CurrentStakePoolId = 'currentStakePoolId',
   EcdhPublicKey = 'ecdhPublicKey',
   Features = 'features',
   Id = 'id',
@@ -11101,35 +12551,23 @@ export enum WorkersScalarFieldEnum {
   InitialScore = 'initialScore',
   LastUpdatedBlockNumber = 'lastUpdatedBlockNumber',
   LastUpdatedTimestamp = 'lastUpdatedTimestamp',
-  MinerAccountAddress = 'minerAccountAddress',
   OperatorAddress = 'operatorAddress',
   OperatorId = 'operatorId',
-  PInit = 'pInit',
-  PInstant = 'pInstant',
-  Pid = 'pid',
   PublicKey = 'publicKey',
-  RemovedAtBlockNumber = 'removedAtBlockNumber',
-  RemovedAtUpdatedTimestamp = 'removedAtUpdatedTimestamp',
   RuntimeVersion = 'runtimeVersion',
-  SMax = 'sMax',
-  SMin = 'sMin',
-  Shares = 'shares',
-  StakePoolId = 'stakePoolId',
-  State = 'state',
-  TotalReward = 'totalReward',
-  UpdatedAt = 'updatedAt',
-  V = 'v',
-  Ve = 've'
+  UpdatedAt = 'updatedAt'
 }
 
 export type WorkersScalarWhereInput = {
   AND?: InputMaybe<Array<WorkersScalarWhereInput>>;
   NOT?: InputMaybe<Array<WorkersScalarWhereInput>>;
   OR?: InputMaybe<Array<WorkersScalarWhereInput>>;
-  addedAtBlockNumber?: InputMaybe<BigIntFilter>;
-  addedAtUpdatedTimestamp?: InputMaybe<DateTimeFilter>;
   confidenceLevel?: InputMaybe<IntFilter>;
   createdAt?: InputMaybe<DateTimeFilter>;
+  currentMinerAccountAddress?: InputMaybe<StringNullableFilter>;
+  currentMinerId?: InputMaybe<BigIntNullableFilter>;
+  currentPid?: InputMaybe<IntNullableFilter>;
+  currentStakePoolId?: InputMaybe<BigIntNullableFilter>;
   ecdhPublicKey?: InputMaybe<StringNullableFilter>;
   features?: InputMaybe<IntNullableListFilter>;
   id?: InputMaybe<BigIntFilter>;
@@ -11137,35 +12575,23 @@ export type WorkersScalarWhereInput = {
   initialScore?: InputMaybe<IntFilter>;
   lastUpdatedBlockNumber?: InputMaybe<BigIntFilter>;
   lastUpdatedTimestamp?: InputMaybe<DateTimeFilter>;
-  minerAccountAddress?: InputMaybe<StringNullableFilter>;
   operatorAddress?: InputMaybe<StringNullableFilter>;
   operatorId?: InputMaybe<BigIntNullableFilter>;
-  pInit?: InputMaybe<IntFilter>;
-  pInstant?: InputMaybe<IntFilter>;
-  pid?: InputMaybe<BigIntNullableFilter>;
   publicKey?: InputMaybe<StringFilter>;
-  removedAtBlockNumber?: InputMaybe<BigIntNullableFilter>;
-  removedAtUpdatedTimestamp?: InputMaybe<DateTimeNullableFilter>;
   runtimeVersion?: InputMaybe<IntFilter>;
-  sMax?: InputMaybe<DecimalFilter>;
-  sMin?: InputMaybe<DecimalFilter>;
-  shares?: InputMaybe<DecimalFilter>;
-  stakePoolId?: InputMaybe<BigIntNullableFilter>;
-  state?: InputMaybe<StringFilter>;
-  totalReward?: InputMaybe<DecimalFilter>;
   updatedAt?: InputMaybe<DateTimeFilter>;
-  v?: InputMaybe<DecimalFilter>;
-  ve?: InputMaybe<DecimalFilter>;
 };
 
 export type WorkersScalarWhereWithAggregatesInput = {
   AND?: InputMaybe<Array<WorkersScalarWhereWithAggregatesInput>>;
   NOT?: InputMaybe<Array<WorkersScalarWhereWithAggregatesInput>>;
   OR?: InputMaybe<Array<WorkersScalarWhereWithAggregatesInput>>;
-  addedAtBlockNumber?: InputMaybe<BigIntWithAggregatesFilter>;
-  addedAtUpdatedTimestamp?: InputMaybe<DateTimeWithAggregatesFilter>;
   confidenceLevel?: InputMaybe<IntWithAggregatesFilter>;
   createdAt?: InputMaybe<DateTimeWithAggregatesFilter>;
+  currentMinerAccountAddress?: InputMaybe<StringNullableWithAggregatesFilter>;
+  currentMinerId?: InputMaybe<BigIntNullableWithAggregatesFilter>;
+  currentPid?: InputMaybe<IntNullableWithAggregatesFilter>;
+  currentStakePoolId?: InputMaybe<BigIntNullableWithAggregatesFilter>;
   ecdhPublicKey?: InputMaybe<StringNullableWithAggregatesFilter>;
   features?: InputMaybe<IntNullableListFilter>;
   id?: InputMaybe<BigIntWithAggregatesFilter>;
@@ -11173,78 +12599,46 @@ export type WorkersScalarWhereWithAggregatesInput = {
   initialScore?: InputMaybe<IntWithAggregatesFilter>;
   lastUpdatedBlockNumber?: InputMaybe<BigIntWithAggregatesFilter>;
   lastUpdatedTimestamp?: InputMaybe<DateTimeWithAggregatesFilter>;
-  minerAccountAddress?: InputMaybe<StringNullableWithAggregatesFilter>;
   operatorAddress?: InputMaybe<StringNullableWithAggregatesFilter>;
   operatorId?: InputMaybe<BigIntNullableWithAggregatesFilter>;
-  pInit?: InputMaybe<IntWithAggregatesFilter>;
-  pInstant?: InputMaybe<IntWithAggregatesFilter>;
-  pid?: InputMaybe<BigIntNullableWithAggregatesFilter>;
   publicKey?: InputMaybe<StringWithAggregatesFilter>;
-  removedAtBlockNumber?: InputMaybe<BigIntNullableWithAggregatesFilter>;
-  removedAtUpdatedTimestamp?: InputMaybe<DateTimeNullableWithAggregatesFilter>;
   runtimeVersion?: InputMaybe<IntWithAggregatesFilter>;
-  sMax?: InputMaybe<DecimalWithAggregatesFilter>;
-  sMin?: InputMaybe<DecimalWithAggregatesFilter>;
-  shares?: InputMaybe<DecimalWithAggregatesFilter>;
-  stakePoolId?: InputMaybe<BigIntNullableWithAggregatesFilter>;
-  state?: InputMaybe<StringWithAggregatesFilter>;
-  totalReward?: InputMaybe<DecimalWithAggregatesFilter>;
   updatedAt?: InputMaybe<DateTimeWithAggregatesFilter>;
-  v?: InputMaybe<DecimalWithAggregatesFilter>;
-  ve?: InputMaybe<DecimalWithAggregatesFilter>;
 };
 
 export type WorkersSumAggregate = {
   __typename?: 'WorkersSumAggregate';
-  addedAtBlockNumber?: Maybe<Scalars['BigInt']>;
   confidenceLevel?: Maybe<Scalars['Int']>;
+  currentMinerId?: Maybe<Scalars['BigInt']>;
+  currentPid?: Maybe<Scalars['Int']>;
+  currentStakePoolId?: Maybe<Scalars['BigInt']>;
   features?: Maybe<Array<Scalars['Int']>>;
   id?: Maybe<Scalars['BigInt']>;
   initialScore?: Maybe<Scalars['Int']>;
   lastUpdatedBlockNumber?: Maybe<Scalars['BigInt']>;
   operatorId?: Maybe<Scalars['BigInt']>;
-  pInit?: Maybe<Scalars['Int']>;
-  pInstant?: Maybe<Scalars['Int']>;
-  pid?: Maybe<Scalars['BigInt']>;
-  removedAtBlockNumber?: Maybe<Scalars['BigInt']>;
   runtimeVersion?: Maybe<Scalars['Int']>;
-  sMax?: Maybe<Scalars['Decimal']>;
-  sMin?: Maybe<Scalars['Decimal']>;
-  shares?: Maybe<Scalars['Decimal']>;
-  stakePoolId?: Maybe<Scalars['BigInt']>;
-  totalReward?: Maybe<Scalars['Decimal']>;
-  v?: Maybe<Scalars['Decimal']>;
-  ve?: Maybe<Scalars['Decimal']>;
 };
 
 export type WorkersSumOrderByAggregateInput = {
-  addedAtBlockNumber?: InputMaybe<SortOrder>;
   confidenceLevel?: InputMaybe<SortOrder>;
+  currentMinerId?: InputMaybe<SortOrder>;
+  currentPid?: InputMaybe<SortOrder>;
+  currentStakePoolId?: InputMaybe<SortOrder>;
   features?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
   initialScore?: InputMaybe<SortOrder>;
   lastUpdatedBlockNumber?: InputMaybe<SortOrder>;
   operatorId?: InputMaybe<SortOrder>;
-  pInit?: InputMaybe<SortOrder>;
-  pInstant?: InputMaybe<SortOrder>;
-  pid?: InputMaybe<SortOrder>;
-  removedAtBlockNumber?: InputMaybe<SortOrder>;
   runtimeVersion?: InputMaybe<SortOrder>;
-  sMax?: InputMaybe<SortOrder>;
-  sMin?: InputMaybe<SortOrder>;
-  shares?: InputMaybe<SortOrder>;
-  stakePoolId?: InputMaybe<SortOrder>;
-  totalReward?: InputMaybe<SortOrder>;
-  v?: InputMaybe<SortOrder>;
-  ve?: InputMaybe<SortOrder>;
 };
 
 export type WorkersUpdateInput = {
   accounts?: InputMaybe<AccountsUpdateOneWithoutWorkersInput>;
-  addedAtBlockNumber?: InputMaybe<BigIntFieldUpdateOperationsInput>;
-  addedAtUpdatedTimestamp?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   confidenceLevel?: InputMaybe<IntFieldUpdateOperationsInput>;
   createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  currentMinerAccountAddress?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  currentPid?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
   ecdhPublicKey?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   features?: InputMaybe<WorkersUpdatefeaturesInput>;
   id?: InputMaybe<BigIntFieldUpdateOperationsInput>;
@@ -11252,33 +12646,21 @@ export type WorkersUpdateInput = {
   initialScore?: InputMaybe<IntFieldUpdateOperationsInput>;
   lastUpdatedBlockNumber?: InputMaybe<BigIntFieldUpdateOperationsInput>;
   lastUpdatedTimestamp?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  minerAccountAddress?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
-  miners?: InputMaybe<MinersUpdateManyWithoutWorkersInput>;
+  minersMinersToWorkersCurrentMinerId?: InputMaybe<MinersUpdateOneWithoutWorkersMinersToWorkersCurrentMinerIdsInput>;
+  minersMinersWorkerIdToWorkers?: InputMaybe<MinersUpdateManyWithoutWorkersMinersWorkerIdToWorkersInput>;
   operatorAddress?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
-  pInit?: InputMaybe<IntFieldUpdateOperationsInput>;
-  pInstant?: InputMaybe<IntFieldUpdateOperationsInput>;
-  pid?: InputMaybe<NullableBigIntFieldUpdateOperationsInput>;
   publicKey?: InputMaybe<StringFieldUpdateOperationsInput>;
-  removedAtBlockNumber?: InputMaybe<NullableBigIntFieldUpdateOperationsInput>;
-  removedAtUpdatedTimestamp?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
   runtimeVersion?: InputMaybe<IntFieldUpdateOperationsInput>;
-  sMax?: InputMaybe<DecimalFieldUpdateOperationsInput>;
-  sMin?: InputMaybe<DecimalFieldUpdateOperationsInput>;
-  shares?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   stakePools?: InputMaybe<StakePoolsUpdateOneWithoutWorkersInput>;
-  state?: InputMaybe<StringFieldUpdateOperationsInput>;
-  totalReward?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  v?: InputMaybe<DecimalFieldUpdateOperationsInput>;
-  ve?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   workerActivities?: InputMaybe<WorkerActivitiesUpdateManyWithoutWorkersInput>;
 };
 
 export type WorkersUpdateManyMutationInput = {
-  addedAtBlockNumber?: InputMaybe<BigIntFieldUpdateOperationsInput>;
-  addedAtUpdatedTimestamp?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   confidenceLevel?: InputMaybe<IntFieldUpdateOperationsInput>;
   createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  currentMinerAccountAddress?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  currentPid?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
   ecdhPublicKey?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   features?: InputMaybe<WorkersUpdatefeaturesInput>;
   id?: InputMaybe<BigIntFieldUpdateOperationsInput>;
@@ -11286,26 +12668,18 @@ export type WorkersUpdateManyMutationInput = {
   initialScore?: InputMaybe<IntFieldUpdateOperationsInput>;
   lastUpdatedBlockNumber?: InputMaybe<BigIntFieldUpdateOperationsInput>;
   lastUpdatedTimestamp?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  minerAccountAddress?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   operatorAddress?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
-  pInit?: InputMaybe<IntFieldUpdateOperationsInput>;
-  pInstant?: InputMaybe<IntFieldUpdateOperationsInput>;
-  pid?: InputMaybe<NullableBigIntFieldUpdateOperationsInput>;
   publicKey?: InputMaybe<StringFieldUpdateOperationsInput>;
-  removedAtBlockNumber?: InputMaybe<NullableBigIntFieldUpdateOperationsInput>;
-  removedAtUpdatedTimestamp?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
   runtimeVersion?: InputMaybe<IntFieldUpdateOperationsInput>;
-  sMax?: InputMaybe<DecimalFieldUpdateOperationsInput>;
-  sMin?: InputMaybe<DecimalFieldUpdateOperationsInput>;
-  shares?: InputMaybe<DecimalFieldUpdateOperationsInput>;
-  state?: InputMaybe<StringFieldUpdateOperationsInput>;
-  totalReward?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  v?: InputMaybe<DecimalFieldUpdateOperationsInput>;
-  ve?: InputMaybe<DecimalFieldUpdateOperationsInput>;
 };
 
 export type WorkersUpdateManyWithWhereWithoutAccountsInput = {
+  data: WorkersUpdateManyMutationInput;
+  where: WorkersScalarWhereInput;
+};
+
+export type WorkersUpdateManyWithWhereWithoutMinersMinersToWorkersCurrentMinerIdInput = {
   data: WorkersUpdateManyMutationInput;
   where: WorkersScalarWhereInput;
 };
@@ -11329,6 +12703,20 @@ export type WorkersUpdateManyWithoutAccountsInput = {
   upsert?: InputMaybe<Array<WorkersUpsertWithWhereUniqueWithoutAccountsInput>>;
 };
 
+export type WorkersUpdateManyWithoutMinersMinersToWorkersCurrentMinerIdInput = {
+  connect?: InputMaybe<Array<WorkersWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<WorkersCreateOrConnectWithoutMinersMinersToWorkersCurrentMinerIdInput>>;
+  create?: InputMaybe<Array<WorkersCreateWithoutMinersMinersToWorkersCurrentMinerIdInput>>;
+  createMany?: InputMaybe<WorkersCreateManyMinersMinersToWorkersCurrentMinerIdInputEnvelope>;
+  delete?: InputMaybe<Array<WorkersWhereUniqueInput>>;
+  deleteMany?: InputMaybe<Array<WorkersScalarWhereInput>>;
+  disconnect?: InputMaybe<Array<WorkersWhereUniqueInput>>;
+  set?: InputMaybe<Array<WorkersWhereUniqueInput>>;
+  update?: InputMaybe<Array<WorkersUpdateWithWhereUniqueWithoutMinersMinersToWorkersCurrentMinerIdInput>>;
+  updateMany?: InputMaybe<Array<WorkersUpdateManyWithWhereWithoutMinersMinersToWorkersCurrentMinerIdInput>>;
+  upsert?: InputMaybe<Array<WorkersUpsertWithWhereUniqueWithoutMinersMinersToWorkersCurrentMinerIdInput>>;
+};
+
 export type WorkersUpdateManyWithoutStakePoolsInput = {
   connect?: InputMaybe<Array<WorkersWhereUniqueInput>>;
   connectOrCreate?: InputMaybe<Array<WorkersCreateOrConnectWithoutStakePoolsInput>>;
@@ -11343,14 +12731,6 @@ export type WorkersUpdateManyWithoutStakePoolsInput = {
   upsert?: InputMaybe<Array<WorkersUpsertWithWhereUniqueWithoutStakePoolsInput>>;
 };
 
-export type WorkersUpdateOneRequiredWithoutMinersInput = {
-  connect?: InputMaybe<WorkersWhereUniqueInput>;
-  connectOrCreate?: InputMaybe<WorkersCreateOrConnectWithoutMinersInput>;
-  create?: InputMaybe<WorkersCreateWithoutMinersInput>;
-  update?: InputMaybe<WorkersUpdateWithoutMinersInput>;
-  upsert?: InputMaybe<WorkersUpsertWithoutMinersInput>;
-};
-
 export type WorkersUpdateOneRequiredWithoutWorkerActivitiesInput = {
   connect?: InputMaybe<WorkersWhereUniqueInput>;
   connectOrCreate?: InputMaybe<WorkersCreateOrConnectWithoutWorkerActivitiesInput>;
@@ -11359,8 +12739,23 @@ export type WorkersUpdateOneRequiredWithoutWorkerActivitiesInput = {
   upsert?: InputMaybe<WorkersUpsertWithoutWorkerActivitiesInput>;
 };
 
+export type WorkersUpdateOneWithoutMinersMinersWorkerIdToWorkersInput = {
+  connect?: InputMaybe<WorkersWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<WorkersCreateOrConnectWithoutMinersMinersWorkerIdToWorkersInput>;
+  create?: InputMaybe<WorkersCreateWithoutMinersMinersWorkerIdToWorkersInput>;
+  delete?: InputMaybe<Scalars['Boolean']>;
+  disconnect?: InputMaybe<Scalars['Boolean']>;
+  update?: InputMaybe<WorkersUpdateWithoutMinersMinersWorkerIdToWorkersInput>;
+  upsert?: InputMaybe<WorkersUpsertWithoutMinersMinersWorkerIdToWorkersInput>;
+};
+
 export type WorkersUpdateWithWhereUniqueWithoutAccountsInput = {
   data: WorkersUpdateWithoutAccountsInput;
+  where: WorkersWhereUniqueInput;
+};
+
+export type WorkersUpdateWithWhereUniqueWithoutMinersMinersToWorkersCurrentMinerIdInput = {
+  data: WorkersUpdateWithoutMinersMinersToWorkersCurrentMinerIdInput;
   where: WorkersWhereUniqueInput;
 };
 
@@ -11370,10 +12765,10 @@ export type WorkersUpdateWithWhereUniqueWithoutStakePoolsInput = {
 };
 
 export type WorkersUpdateWithoutAccountsInput = {
-  addedAtBlockNumber?: InputMaybe<BigIntFieldUpdateOperationsInput>;
-  addedAtUpdatedTimestamp?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   confidenceLevel?: InputMaybe<IntFieldUpdateOperationsInput>;
   createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  currentMinerAccountAddress?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  currentPid?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
   ecdhPublicKey?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   features?: InputMaybe<WorkersUpdatefeaturesInput>;
   id?: InputMaybe<BigIntFieldUpdateOperationsInput>;
@@ -11381,34 +12776,22 @@ export type WorkersUpdateWithoutAccountsInput = {
   initialScore?: InputMaybe<IntFieldUpdateOperationsInput>;
   lastUpdatedBlockNumber?: InputMaybe<BigIntFieldUpdateOperationsInput>;
   lastUpdatedTimestamp?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  minerAccountAddress?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
-  miners?: InputMaybe<MinersUpdateManyWithoutWorkersInput>;
+  minersMinersToWorkersCurrentMinerId?: InputMaybe<MinersUpdateOneWithoutWorkersMinersToWorkersCurrentMinerIdsInput>;
+  minersMinersWorkerIdToWorkers?: InputMaybe<MinersUpdateManyWithoutWorkersMinersWorkerIdToWorkersInput>;
   operatorAddress?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
-  pInit?: InputMaybe<IntFieldUpdateOperationsInput>;
-  pInstant?: InputMaybe<IntFieldUpdateOperationsInput>;
-  pid?: InputMaybe<NullableBigIntFieldUpdateOperationsInput>;
   publicKey?: InputMaybe<StringFieldUpdateOperationsInput>;
-  removedAtBlockNumber?: InputMaybe<NullableBigIntFieldUpdateOperationsInput>;
-  removedAtUpdatedTimestamp?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
   runtimeVersion?: InputMaybe<IntFieldUpdateOperationsInput>;
-  sMax?: InputMaybe<DecimalFieldUpdateOperationsInput>;
-  sMin?: InputMaybe<DecimalFieldUpdateOperationsInput>;
-  shares?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   stakePools?: InputMaybe<StakePoolsUpdateOneWithoutWorkersInput>;
-  state?: InputMaybe<StringFieldUpdateOperationsInput>;
-  totalReward?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  v?: InputMaybe<DecimalFieldUpdateOperationsInput>;
-  ve?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   workerActivities?: InputMaybe<WorkerActivitiesUpdateManyWithoutWorkersInput>;
 };
 
-export type WorkersUpdateWithoutMinersInput = {
+export type WorkersUpdateWithoutMinersMinersToWorkersCurrentMinerIdInput = {
   accounts?: InputMaybe<AccountsUpdateOneWithoutWorkersInput>;
-  addedAtBlockNumber?: InputMaybe<BigIntFieldUpdateOperationsInput>;
-  addedAtUpdatedTimestamp?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   confidenceLevel?: InputMaybe<IntFieldUpdateOperationsInput>;
   createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  currentMinerAccountAddress?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  currentPid?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
   ecdhPublicKey?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   features?: InputMaybe<WorkersUpdatefeaturesInput>;
   id?: InputMaybe<BigIntFieldUpdateOperationsInput>;
@@ -11416,33 +12799,43 @@ export type WorkersUpdateWithoutMinersInput = {
   initialScore?: InputMaybe<IntFieldUpdateOperationsInput>;
   lastUpdatedBlockNumber?: InputMaybe<BigIntFieldUpdateOperationsInput>;
   lastUpdatedTimestamp?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  minerAccountAddress?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  minersMinersWorkerIdToWorkers?: InputMaybe<MinersUpdateManyWithoutWorkersMinersWorkerIdToWorkersInput>;
   operatorAddress?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
-  pInit?: InputMaybe<IntFieldUpdateOperationsInput>;
-  pInstant?: InputMaybe<IntFieldUpdateOperationsInput>;
-  pid?: InputMaybe<NullableBigIntFieldUpdateOperationsInput>;
   publicKey?: InputMaybe<StringFieldUpdateOperationsInput>;
-  removedAtBlockNumber?: InputMaybe<NullableBigIntFieldUpdateOperationsInput>;
-  removedAtUpdatedTimestamp?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
   runtimeVersion?: InputMaybe<IntFieldUpdateOperationsInput>;
-  sMax?: InputMaybe<DecimalFieldUpdateOperationsInput>;
-  sMin?: InputMaybe<DecimalFieldUpdateOperationsInput>;
-  shares?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   stakePools?: InputMaybe<StakePoolsUpdateOneWithoutWorkersInput>;
-  state?: InputMaybe<StringFieldUpdateOperationsInput>;
-  totalReward?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  v?: InputMaybe<DecimalFieldUpdateOperationsInput>;
-  ve?: InputMaybe<DecimalFieldUpdateOperationsInput>;
+  workerActivities?: InputMaybe<WorkerActivitiesUpdateManyWithoutWorkersInput>;
+};
+
+export type WorkersUpdateWithoutMinersMinersWorkerIdToWorkersInput = {
+  accounts?: InputMaybe<AccountsUpdateOneWithoutWorkersInput>;
+  confidenceLevel?: InputMaybe<IntFieldUpdateOperationsInput>;
+  createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  currentMinerAccountAddress?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  currentPid?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
+  ecdhPublicKey?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  features?: InputMaybe<WorkersUpdatefeaturesInput>;
+  id?: InputMaybe<BigIntFieldUpdateOperationsInput>;
+  infoLastUpdatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  initialScore?: InputMaybe<IntFieldUpdateOperationsInput>;
+  lastUpdatedBlockNumber?: InputMaybe<BigIntFieldUpdateOperationsInput>;
+  lastUpdatedTimestamp?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  minersMinersToWorkersCurrentMinerId?: InputMaybe<MinersUpdateOneWithoutWorkersMinersToWorkersCurrentMinerIdsInput>;
+  operatorAddress?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  publicKey?: InputMaybe<StringFieldUpdateOperationsInput>;
+  runtimeVersion?: InputMaybe<IntFieldUpdateOperationsInput>;
+  stakePools?: InputMaybe<StakePoolsUpdateOneWithoutWorkersInput>;
+  updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   workerActivities?: InputMaybe<WorkerActivitiesUpdateManyWithoutWorkersInput>;
 };
 
 export type WorkersUpdateWithoutStakePoolsInput = {
   accounts?: InputMaybe<AccountsUpdateOneWithoutWorkersInput>;
-  addedAtBlockNumber?: InputMaybe<BigIntFieldUpdateOperationsInput>;
-  addedAtUpdatedTimestamp?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   confidenceLevel?: InputMaybe<IntFieldUpdateOperationsInput>;
   createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  currentMinerAccountAddress?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  currentPid?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
   ecdhPublicKey?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   features?: InputMaybe<WorkersUpdatefeaturesInput>;
   id?: InputMaybe<BigIntFieldUpdateOperationsInput>;
@@ -11450,33 +12843,21 @@ export type WorkersUpdateWithoutStakePoolsInput = {
   initialScore?: InputMaybe<IntFieldUpdateOperationsInput>;
   lastUpdatedBlockNumber?: InputMaybe<BigIntFieldUpdateOperationsInput>;
   lastUpdatedTimestamp?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  minerAccountAddress?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
-  miners?: InputMaybe<MinersUpdateManyWithoutWorkersInput>;
+  minersMinersToWorkersCurrentMinerId?: InputMaybe<MinersUpdateOneWithoutWorkersMinersToWorkersCurrentMinerIdsInput>;
+  minersMinersWorkerIdToWorkers?: InputMaybe<MinersUpdateManyWithoutWorkersMinersWorkerIdToWorkersInput>;
   operatorAddress?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
-  pInit?: InputMaybe<IntFieldUpdateOperationsInput>;
-  pInstant?: InputMaybe<IntFieldUpdateOperationsInput>;
-  pid?: InputMaybe<NullableBigIntFieldUpdateOperationsInput>;
   publicKey?: InputMaybe<StringFieldUpdateOperationsInput>;
-  removedAtBlockNumber?: InputMaybe<NullableBigIntFieldUpdateOperationsInput>;
-  removedAtUpdatedTimestamp?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
   runtimeVersion?: InputMaybe<IntFieldUpdateOperationsInput>;
-  sMax?: InputMaybe<DecimalFieldUpdateOperationsInput>;
-  sMin?: InputMaybe<DecimalFieldUpdateOperationsInput>;
-  shares?: InputMaybe<DecimalFieldUpdateOperationsInput>;
-  state?: InputMaybe<StringFieldUpdateOperationsInput>;
-  totalReward?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  v?: InputMaybe<DecimalFieldUpdateOperationsInput>;
-  ve?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   workerActivities?: InputMaybe<WorkerActivitiesUpdateManyWithoutWorkersInput>;
 };
 
 export type WorkersUpdateWithoutWorkerActivitiesInput = {
   accounts?: InputMaybe<AccountsUpdateOneWithoutWorkersInput>;
-  addedAtBlockNumber?: InputMaybe<BigIntFieldUpdateOperationsInput>;
-  addedAtUpdatedTimestamp?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   confidenceLevel?: InputMaybe<IntFieldUpdateOperationsInput>;
   createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  currentMinerAccountAddress?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  currentPid?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
   ecdhPublicKey?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   features?: InputMaybe<WorkersUpdatefeaturesInput>;
   id?: InputMaybe<BigIntFieldUpdateOperationsInput>;
@@ -11484,25 +12865,13 @@ export type WorkersUpdateWithoutWorkerActivitiesInput = {
   initialScore?: InputMaybe<IntFieldUpdateOperationsInput>;
   lastUpdatedBlockNumber?: InputMaybe<BigIntFieldUpdateOperationsInput>;
   lastUpdatedTimestamp?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  minerAccountAddress?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
-  miners?: InputMaybe<MinersUpdateManyWithoutWorkersInput>;
+  minersMinersToWorkersCurrentMinerId?: InputMaybe<MinersUpdateOneWithoutWorkersMinersToWorkersCurrentMinerIdsInput>;
+  minersMinersWorkerIdToWorkers?: InputMaybe<MinersUpdateManyWithoutWorkersMinersWorkerIdToWorkersInput>;
   operatorAddress?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
-  pInit?: InputMaybe<IntFieldUpdateOperationsInput>;
-  pInstant?: InputMaybe<IntFieldUpdateOperationsInput>;
-  pid?: InputMaybe<NullableBigIntFieldUpdateOperationsInput>;
   publicKey?: InputMaybe<StringFieldUpdateOperationsInput>;
-  removedAtBlockNumber?: InputMaybe<NullableBigIntFieldUpdateOperationsInput>;
-  removedAtUpdatedTimestamp?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
   runtimeVersion?: InputMaybe<IntFieldUpdateOperationsInput>;
-  sMax?: InputMaybe<DecimalFieldUpdateOperationsInput>;
-  sMin?: InputMaybe<DecimalFieldUpdateOperationsInput>;
-  shares?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   stakePools?: InputMaybe<StakePoolsUpdateOneWithoutWorkersInput>;
-  state?: InputMaybe<StringFieldUpdateOperationsInput>;
-  totalReward?: InputMaybe<DecimalFieldUpdateOperationsInput>;
   updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  v?: InputMaybe<DecimalFieldUpdateOperationsInput>;
-  ve?: InputMaybe<DecimalFieldUpdateOperationsInput>;
 };
 
 export type WorkersUpdatefeaturesInput = {
@@ -11516,15 +12885,21 @@ export type WorkersUpsertWithWhereUniqueWithoutAccountsInput = {
   where: WorkersWhereUniqueInput;
 };
 
+export type WorkersUpsertWithWhereUniqueWithoutMinersMinersToWorkersCurrentMinerIdInput = {
+  create: WorkersCreateWithoutMinersMinersToWorkersCurrentMinerIdInput;
+  update: WorkersUpdateWithoutMinersMinersToWorkersCurrentMinerIdInput;
+  where: WorkersWhereUniqueInput;
+};
+
 export type WorkersUpsertWithWhereUniqueWithoutStakePoolsInput = {
   create: WorkersCreateWithoutStakePoolsInput;
   update: WorkersUpdateWithoutStakePoolsInput;
   where: WorkersWhereUniqueInput;
 };
 
-export type WorkersUpsertWithoutMinersInput = {
-  create: WorkersCreateWithoutMinersInput;
-  update: WorkersUpdateWithoutMinersInput;
+export type WorkersUpsertWithoutMinersMinersWorkerIdToWorkersInput = {
+  create: WorkersCreateWithoutMinersMinersWorkerIdToWorkersInput;
+  update: WorkersUpdateWithoutMinersMinersWorkerIdToWorkersInput;
 };
 
 export type WorkersUpsertWithoutWorkerActivitiesInput = {
@@ -11537,10 +12912,12 @@ export type WorkersWhereInput = {
   NOT?: InputMaybe<Array<WorkersWhereInput>>;
   OR?: InputMaybe<Array<WorkersWhereInput>>;
   accounts?: InputMaybe<AccountsRelationFilter>;
-  addedAtBlockNumber?: InputMaybe<BigIntFilter>;
-  addedAtUpdatedTimestamp?: InputMaybe<DateTimeFilter>;
   confidenceLevel?: InputMaybe<IntFilter>;
   createdAt?: InputMaybe<DateTimeFilter>;
+  currentMinerAccountAddress?: InputMaybe<StringNullableFilter>;
+  currentMinerId?: InputMaybe<BigIntNullableFilter>;
+  currentPid?: InputMaybe<IntNullableFilter>;
+  currentStakePoolId?: InputMaybe<BigIntNullableFilter>;
   ecdhPublicKey?: InputMaybe<StringNullableFilter>;
   features?: InputMaybe<IntNullableListFilter>;
   id?: InputMaybe<BigIntFilter>;
@@ -11548,27 +12925,14 @@ export type WorkersWhereInput = {
   initialScore?: InputMaybe<IntFilter>;
   lastUpdatedBlockNumber?: InputMaybe<BigIntFilter>;
   lastUpdatedTimestamp?: InputMaybe<DateTimeFilter>;
-  minerAccountAddress?: InputMaybe<StringNullableFilter>;
-  miners?: InputMaybe<MinersListRelationFilter>;
+  minersMinersToWorkersCurrentMinerId?: InputMaybe<MinersRelationFilter>;
+  minersMinersWorkerIdToWorkers?: InputMaybe<MinersListRelationFilter>;
   operatorAddress?: InputMaybe<StringNullableFilter>;
   operatorId?: InputMaybe<BigIntNullableFilter>;
-  pInit?: InputMaybe<IntFilter>;
-  pInstant?: InputMaybe<IntFilter>;
-  pid?: InputMaybe<BigIntNullableFilter>;
   publicKey?: InputMaybe<StringFilter>;
-  removedAtBlockNumber?: InputMaybe<BigIntNullableFilter>;
-  removedAtUpdatedTimestamp?: InputMaybe<DateTimeNullableFilter>;
   runtimeVersion?: InputMaybe<IntFilter>;
-  sMax?: InputMaybe<DecimalFilter>;
-  sMin?: InputMaybe<DecimalFilter>;
-  shares?: InputMaybe<DecimalFilter>;
-  stakePoolId?: InputMaybe<BigIntNullableFilter>;
   stakePools?: InputMaybe<StakePoolsRelationFilter>;
-  state?: InputMaybe<StringFilter>;
-  totalReward?: InputMaybe<DecimalFilter>;
   updatedAt?: InputMaybe<DateTimeFilter>;
-  v?: InputMaybe<DecimalFilter>;
-  ve?: InputMaybe<DecimalFilter>;
   workerActivities?: InputMaybe<WorkerActivitiesListRelationFilter>;
 };
 
@@ -11590,7 +12954,7 @@ export type StakePoolsQueryVariables = Exact<{
 }>;
 
 
-export type StakePoolsQuery = { __typename?: 'Query', findManyStakePools: Array<{ __typename?: 'StakePools', pid: string, ownerAddress: string, commission: string, ownerReward: string, cap?: string | null | undefined, rewardAcc: string, totalShares: string, totalStake: string, freeStake: string, releasingStake: string, usedStake: string, remainingStake?: string | null | undefined, stakersCount: number, workersCount: number, miningWorkersCount: number, instantApr: string, stakePoolStakers?: Array<{ __typename?: 'StakePoolStakers', address?: string | null | undefined, shares: string, locked: string, availableRewards: string, rewardDebt: string, stake: string, pendingRewards: string, stakeRewards: string, claimableRewards: string, instantClaimableRewards: string, isOwner: boolean }>, accounts: { __typename?: 'Accounts', identity?: string | null | undefined, identityVerified: boolean }, stakePoolWithdrawals?: Array<{ __typename?: 'StakePoolWithdrawals', shares: string, startTime: any, estimatesEndTime: any, stake: string, userAddress?: string | null | undefined }> }>, aggregateStakePools: { __typename?: 'AggregateStakePools', _count?: { __typename?: 'StakePoolsCountAggregate', _all: number } | null | undefined } };
+export type StakePoolsQuery = { __typename?: 'Query', findManyStakePools: Array<{ __typename?: 'StakePools', pid: string, ownerAddress: string, commission: string, ownerReward: string, cap?: string | null | undefined, rewardAcc: string, totalShares: string, totalStake: string, freeStake: string, releasingStake: string, usedStake: string, remainingStake?: string | null | undefined, stakersCount: number, minersCount: number, instantApr: string, stakePoolStakers?: Array<{ __typename?: 'StakePoolStakers', address?: string | null | undefined, shares: string, locked: string, availableRewards: string, rewardDebt: string, stake: string, pendingRewards: string, stakeRewards: string, claimableRewards: string, instantClaimableRewards: string, isOwner: boolean }>, accounts: { __typename?: 'Accounts', identity?: string | null | undefined, identityVerified: boolean }, stakePoolWithdrawals?: Array<{ __typename?: 'StakePoolWithdrawals', shares: string, startTime: any, estimatesEndTime: any, stake: string, userAddress?: string | null | undefined }> }>, aggregateStakePools: { __typename?: 'AggregateStakePools', _count?: { __typename?: 'StakePoolsCountAggregate', _all: number } | null | undefined } };
 
 export type TotalStakeQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -11601,6 +12965,16 @@ export type StatesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type StatesQuery = { __typename?: 'Query', findManyStates: Array<{ __typename?: 'States', integerValue?: number | null | undefined, datetimeValue?: any | null | undefined }> };
+
+export type WorkersQueryVariables = Exact<{
+  where?: InputMaybe<WorkersWhereInput>;
+  orderBy?: InputMaybe<Array<WorkersOrderByWithRelationInput> | WorkersOrderByWithRelationInput>;
+  take?: InputMaybe<Scalars['Int']>;
+  skip?: InputMaybe<Scalars['Int']>;
+}>;
+
+
+export type WorkersQuery = { __typename?: 'Query', findManyWorkers: Array<{ __typename?: 'Workers', publicKey: string, minersMinersToWorkersCurrentMinerId?: { __typename?: 'Miners', state: string, v: string, ve: string, pInit: number, pInstant: number, totalReward: string, shares: string } | null | undefined, stakePools?: { __typename?: 'StakePools', pid: string } | null | undefined }>, aggregateWorkers: { __typename?: 'AggregateWorkers', _count?: { __typename?: 'WorkersCountAggregate', _all: number } | null | undefined } };
 
 
 export const StakePoolsDocument = `
@@ -11619,8 +12993,7 @@ export const StakePoolsDocument = `
     usedStake
     remainingStake
     stakersCount
-    workersCount
-    miningWorkersCount
+    minersCount
     instantApr
     stakePoolStakers(where: $stakePoolStakersWhere) @include(if: $withStakePoolStakers) {
       address
@@ -11711,5 +13084,43 @@ export const useStatesQuery = <
     useQuery<StatesQuery, TError, TData>(
       variables === undefined ? ['States'] : ['States', variables],
       fetcher<StatesQuery, StatesQueryVariables>(client, StatesDocument, variables, headers),
+      options
+    );
+export const WorkersDocument = `
+    query Workers($where: WorkersWhereInput, $orderBy: [WorkersOrderByWithRelationInput!], $take: Int, $skip: Int) {
+  findManyWorkers(where: $where, orderBy: $orderBy, take: $take, skip: $skip) {
+    publicKey
+    minersMinersToWorkersCurrentMinerId {
+      state
+      v
+      ve
+      pInit
+      pInstant
+      totalReward
+      shares
+    }
+    stakePools {
+      pid
+    }
+  }
+  aggregateWorkers(where: $where) {
+    _count {
+      _all
+    }
+  }
+}
+    `;
+export const useWorkersQuery = <
+      TData = WorkersQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: WorkersQueryVariables,
+      options?: UseQueryOptions<WorkersQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<WorkersQuery, TError, TData>(
+      variables === undefined ? ['Workers'] : ['Workers', variables],
+      fetcher<WorkersQuery, WorkersQueryVariables>(client, WorkersDocument, variables, headers),
       options
     );

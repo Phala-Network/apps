@@ -54,7 +54,7 @@ type ModalKey =
   | 'withdraw'
   | 'setCommission'
 // | 'reclaimAll'
-type MenuItem = {label: string; key: ModalKey}
+type MenuItem = {label: string; key: ModalKey; disabled?: boolean}
 
 const modalKeyMap: Readonly<
   Record<
@@ -149,7 +149,7 @@ const StakePoolTableV2 = ({
           // For development
           process.env.NODE_ENV !== 'development' &&
             kind === 'mining' && {ownerAddress: {equals: address}},
-          workersFilter && {workersCount: {gt: 0}},
+          workersFilter && {minersCount: {gt: 0}},
           aprFilter && {instantApr: {gt: '0'}},
           commissionFilter && {commission: {lt: '1'}},
           myDelegateAvailable && {
@@ -304,8 +304,8 @@ const StakePoolTableV2 = ({
           {(stakePool: StakePools) => stakePool.pid}
         </TableBuilderColumn>
         {kind === 'mining' && (
-          <TableBuilderColumn id="workersCount" header="Worker" sortable>
-            {(stakePool: StakePools) => stakePool.workersCount}
+          <TableBuilderColumn id="minersCount" header="Worker" sortable>
+            {(stakePool: StakePools) => stakePool.minersCount}
           </TableBuilderColumn>
         )}
         {kind !== 'mining' && (
@@ -329,7 +329,7 @@ const StakePoolTableV2 = ({
             sortable
           >
             {(stakePool: StakePools) =>
-              `${toFixed(new Decimal(stakePool.instantApr).div(100), 2)}%`
+              `${toFixed(new Decimal(stakePool.instantApr).times(100), 2)}%`
             }
           </TableBuilderColumn>
         )}
