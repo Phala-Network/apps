@@ -1,11 +1,8 @@
 import {useApiPromise} from '@phala/react-libs'
-import type {
-  AccountId,
-  Balance,
-  LockIdentifier,
-} from '@polkadot/types/interfaces'
+import type {AccountId, LockIdentifier} from '@polkadot/types/interfaces'
 import {useEffect, useState} from 'react'
 import {hexToString} from '@polkadot/util'
+import {Decimal} from 'decimal.js'
 
 function lookupLock(lockId: LockIdentifier): string {
   const lockHex = lockId.toHex()
@@ -23,9 +20,9 @@ export default function useLockedBalance(
   address?: string | AccountId | Uint8Array
 ) {
   const {api, readystate} = useApiPromise()
-  const [delegateBalance, setDelegateBalance] = useState<Balance>()
+  const [delegateBalance, setDelegateBalance] = useState<Decimal>()
   const [crowdloanVestingBalance, setCrowdloanVestingBalance] =
-    useState<Balance>()
+    useState<Decimal>()
   const initialized = readystate === 'ready'
 
   useEffect(() => {
@@ -40,16 +37,18 @@ export default function useLockedBalance(
         data.forEach(({id, amount}) => {
           const idStr = lookupLock(id).trim()
           if (idStr === 'vesting') {
-            setCrowdloanVestingBalance(amount)
+            setCrowdloanVestingBalance(new Decimal(amount.toString()))
           }
           if (idStr === 'phala/sp') {
-            setDelegateBalance(amount)
+            setDelegateBalance(new Decimal(amount.toString()))
           }
         })
       })
       .then((_unsubscribe) => (unsubscribe = _unsubscribe))
 
     return () => {
+      setDelegateBalance(new Decimal(0))
+      setCrowdloanVestingBalance(new Decimal(0))
       unsubscribe?.()
     }
   }, [api, initialized, address])

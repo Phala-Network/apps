@@ -1,3 +1,4 @@
+import Decimal from 'decimal.js'
 import {useMemo} from 'react'
 import styled from 'styled-components'
 import AccountBanner from './components/AccountBanner'
@@ -13,9 +14,19 @@ const Index = () => {
     return [kphaData]
   }, [kphaData])
 
+  const totalValue = useMemo(() => {
+    const sum = tableData.reduce((prev, curr) => {
+      if (curr.value) {
+        return prev.add(new Decimal(curr.value))
+      }
+      return prev.add(new Decimal(0))
+    }, new Decimal(0))
+    return sum.toString()
+  }, [tableData])
+
   return (
     <Wrapper>
-      <AccountBanner totalValue={'1.34'} />
+      <AccountBanner totalValue={totalValue} />
       <AssetList tableData={tableData} />
     </Wrapper>
   )

@@ -86,7 +86,7 @@ const AccountBanner: React.FC<Props> = ({totalValue}) => {
             <PhalaIcon />
           </Icon>
         ) : (
-          <Dollar>{totalValue ? `$ ${totalValue}` : '-'}</Dollar>
+          <Dollar>{Number(totalValue) ? `$ ${totalValue}` : '-'}</Dollar>
         )}
       </div>
     </Wrapper>

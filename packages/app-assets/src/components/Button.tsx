@@ -18,6 +18,9 @@ const Index: React.FC<ButtonProps> = (props) => {
             fontWeight: 500,
             fontSize: '16px',
             lineHeight: '16px',
+            ':hover': {
+              backgroundColor: '#D1FF52',
+            },
           }),
         },
       }}

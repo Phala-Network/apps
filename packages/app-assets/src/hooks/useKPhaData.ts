@@ -45,16 +45,16 @@ const useKPhaData = () => {
   }, [polkadotTransferBalanceDecimal])
 
   const delegateValue = useMemo(() => {
-    if (!delegateBalance) return '-'
-    const delegateNumber = new Decimal(delegateBalance.toString()).div(10 ** 12)
+    if (!delegateBalance) return ''
+    if (delegateBalance.equals(0)) return ''
+    const delegateNumber = delegateBalance.div(10 ** 12)
     return `${toFixed(delegateNumber)} PHA`
   }, [delegateBalance])
 
   const crowdloanVestingValue = useMemo(() => {
-    if (!crowdloanVestingBalance) return '-'
-    const crowdloanVestingNumber = new Decimal(
-      crowdloanVestingBalance.toString()
-    ).div(10 ** 12)
+    if (!crowdloanVestingBalance) return ''
+    if (crowdloanVestingBalance.equals(0)) return ''
+    const crowdloanVestingNumber = crowdloanVestingBalance.div(10 ** 12)
     return `${toFixed(crowdloanVestingNumber)} PHA`
   }, [crowdloanVestingBalance])
 
