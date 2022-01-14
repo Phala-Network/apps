@@ -1,8 +1,10 @@
 import {usePolkadotAccountAtom} from '@phala/app-store'
 import {
-  Button,
-  Modal,
   PhalaStakePoolTransactionFeeLabel,
+  ModalWrapper,
+  ModalTitleWrapper,
+  ModalFooterWrapper,
+  ModalButtonWrapper,
 } from '@phala/react-components'
 import {useAllBalances} from '@phala/react-hooks'
 import {
@@ -36,6 +38,14 @@ const Info = styled.div`
     font-family: Lato;
     font-weight: bold;
   }
+`
+const Spacer = styled.div`
+  margin-top: 20px;
+`
+const ButtonContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-column-gap: 20px;
 `
 
 const ClaimModal: React.FC<Props> = ({visible, onClose}) => {
@@ -80,25 +90,8 @@ const ClaimModal: React.FC<Props> = ({visible, onClose}) => {
   const canClaim = Boolean(vestedClaimable) && !vestedClaimable?.isZero()
 
   return (
-    <Modal
-      visible={visible}
-      onClose={onClose}
-      title="Claim PHA"
-      actionsExtra={<PhalaStakePoolTransactionFeeLabel action={action} />}
-      actions={[
-        <Button onClick={onClose} key="reject">
-          Cancel
-        </Button>,
-        <Button
-          disabled={loading || !canClaim}
-          onClick={confirm}
-          key="confirm"
-          type="primary"
-        >
-          {loading ? 'Confirming' : 'Confirm'}
-        </Button>,
-      ]}
-    >
+    <ModalWrapper visible={visible} onClose={onClose}>
+      <ModalTitleWrapper>Claim PHA</ModalTitleWrapper>
       <Text>
         You have unlocked{' '}
         {format(vestedClaimable && vestedBalance?.sub(vestedClaimable))} PHA,
@@ -110,7 +103,21 @@ const ClaimModal: React.FC<Props> = ({visible, onClose}) => {
           <span>Claim now:</span> {format(vestedClaimable)} PHA
         </Info>
       )}
-    </Modal>
+      <Spacer></Spacer>
+      <PhalaStakePoolTransactionFeeLabel action={action} />
+      <ModalFooterWrapper>
+        <ButtonContainer>
+          <ModalButtonWrapper onClick={onClose}>Cancel</ModalButtonWrapper>
+          <ModalButtonWrapper
+            disabled={loading || !canClaim}
+            onClick={confirm}
+            type="submit"
+          >
+            {loading ? 'Confirming' : 'Confirm'}
+          </ModalButtonWrapper>
+        </ButtonContainer>
+      </ModalFooterWrapper>
+    </ModalWrapper>
   )
 }
 
