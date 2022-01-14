@@ -32,7 +32,7 @@ const Title = styled.div`
 `
 
 export type DataType = {
-  name: 'K-PHA' | 'other'
+  name: string
   icon: string
   balance: string
   value: string

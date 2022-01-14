@@ -66,7 +66,6 @@ const useKPhaData = () => {
     crowdloanVesting: crowdloanVestingValue,
     delegate: delegateValue,
     value: dollarValue,
-    isKPHA: true,
   }
 }
 
