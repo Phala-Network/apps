@@ -8,10 +8,9 @@ const Index: React.FC<ButtonProps> = (props) => {
       overrides={{
         BaseButton: {
           style: () => ({
-            border: `1px solid #D1FF52`,
-            backgroundColor: '#D1FF52',
+            backgroundColor: '#EEEEEE',
             borderRadius: '14px',
-            padding: '6px 18px',
+            padding: '8px 20px',
             color: '#111111',
             fontFamily: 'Montserrat',
             fontStyle: 'normal',

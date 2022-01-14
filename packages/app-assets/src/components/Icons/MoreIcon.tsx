@@ -1,0 +1,33 @@
+export const MoreIcon = () => {
+  return (
+    <svg
+      width="36"
+      height="36"
+      viewBox="0 0 36 36"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <circle
+        cx="18"
+        cy="25"
+        r="2"
+        transform="rotate(-90 18 25)"
+        fill="#111111"
+      />
+      <circle
+        cx="18"
+        cy="18"
+        r="2"
+        transform="rotate(-90 18 18)"
+        fill="#111111"
+      />
+      <circle
+        cx="18"
+        cy="11"
+        r="2"
+        transform="rotate(-90 18 11)"
+        fill="#111111"
+      />
+    </svg>
+  )
+}

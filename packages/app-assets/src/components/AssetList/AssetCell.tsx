@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useMemo} from 'react'
 import styled from 'styled-components'
 import {down} from 'styled-breakpoints'
 import {DataType} from './index'
@@ -33,11 +33,10 @@ const ImgWrapper = styled.img<{isKPHA?: boolean}>`
   }
 `
 
-const AssetCell: React.FC<Pick<DataType, 'name' | 'icon' | 'isKPHA'>> = ({
-  name,
-  icon,
-  isKPHA,
-}) => {
+const AssetCell: React.FC<Pick<DataType, 'name' | 'icon'>> = ({name, icon}) => {
+  const isKPHA = useMemo(() => {
+    return name === 'K-PHA'
+  }, [name])
   return (
     <Wrapper>
       <ImgWrapper isKPHA={isKPHA} src={icon} alt={name} />

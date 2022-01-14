@@ -1,18 +1,26 @@
 import React from 'react'
 import styled from 'styled-components'
-import Button from '../Button'
 import {DataType} from './index'
+import Button from '../Button'
+import MoreButton from '../MoreButton'
 
-type Props = {
-  row?: DataType
-}
+const Wrapper = styled.div`
+  display: flex;
+`
 
-const Wrapper = styled.div``
+const Spacer = styled.div`
+  margin-right: 20px;
+`
 
-const ButtonCell: React.FC<Props> = () => {
+const ButtonCell: React.FC<Pick<DataType, 'name'>> = () => {
+  const handleTransfer = () => {
+    //
+  }
   return (
     <Wrapper>
-      <Button>Transfer</Button>
+      <Button onClick={handleTransfer}>Transfer</Button>
+      <Spacer />
+      <MoreButton />
     </Wrapper>
   )
 }

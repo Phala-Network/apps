@@ -32,11 +32,10 @@ const Title = styled.div`
 `
 
 export type DataType = {
-  name: string
+  name: 'K-PHA' | 'other'
   icon: string
   balance: string
   value: string
-  isKPHA?: boolean
   transferrable?: string
   crowdloanVesting?: string
   delegate?: string
@@ -103,9 +102,7 @@ const AssetList: React.FC<Props> = ({tableData}) => {
         }}
       >
         <TableBuilderColumn header="Asset">
-          {(row) => (
-            <AssetCell name={row.name} icon={row.icon} isKPHA={row.isKPHA} />
-          )}
+          {(row) => <AssetCell name={row.name} icon={row.icon} />}
         </TableBuilderColumn>
         <TableBuilderColumn header="Balance">
           {(row) => (
@@ -124,7 +121,7 @@ const AssetList: React.FC<Props> = ({tableData}) => {
         )}
 
         <TableBuilderColumn>
-          {(row) => <ButtonCell row={row} />}
+          {(row) => <ButtonCell name={row.name} />}
         </TableBuilderColumn>
       </TableBuilder>
     </Wrapper>
