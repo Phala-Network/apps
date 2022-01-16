@@ -1,6 +1,5 @@
 import {usePolkadotAccountAtom} from '@phala/app-store'
 import {
-  // Input,
   PolkadotTransactionFeeLabel,
   ModalWrapper,
   ModalTitleWrapper,
@@ -16,54 +15,20 @@ import {validateAddress} from '@phala/utils'
 import Decimal from 'decimal.js'
 import React, {useCallback, useState} from 'react'
 import {toast} from 'react-toastify'
-import styled from 'styled-components'
-import {Input, SIZE} from 'baseui/input'
+import {Input} from 'baseui/input'
+import {
+  Spacer,
+  ButtonContainer,
+  InputWrapper,
+  BalanceText,
+  MaxButton,
+  inputStyle,
+} from './styledComponents'
 
 type Props = {
   visible: boolean
   onClose: () => void
 }
-
-const Spacer = styled.div`
-  margin-top: 20px;
-`
-
-const ButtonContainer = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-column-gap: 20px;
-`
-
-const InputWrapper = styled.div`
-  padding: 12px 20px;
-  background-color: #eee;
-`
-
-const BalanceText = styled.div`
-  background-color: #eee;
-  display: flex;
-  justify-content: flex-end;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 14px;
-  line-height: 16px;
-  color: #8c8c8c;
-  padding-top: 10px;
-  padding-bottom: 2px;
-`
-
-const MaxButton = styled.span`
-  display: inline-block;
-  border-bottom: '1px solid #8C8C8C';
-  font-family: Montserrat;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 16px;
-  background: #ffffff;
-  border-radius: 14px;
-  padding: 6px 18px;
-`
 
 const TransferModal: React.FC<Props> = ({visible, onClose}) => {
   const [address, setAddress] = useState('')
@@ -117,28 +82,8 @@ const TransferModal: React.FC<Props> = ({visible, onClose}) => {
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             setAddress(e.target.value)
           }
-          size={SIZE.default}
           placeholder="Wallet address"
-          overrides={{
-            InputContainer: {
-              style: () => ({
-                backgroundColor: '#eee',
-                paddingBottom: '10px',
-                borderBottom: '1px solid #8C8C8C',
-              }),
-            },
-            Input: {
-              style: () => ({
-                paddingLeft: 0,
-                backgroundColor: '#eee',
-                fontStyle: 'normal',
-                fontWeight: 'normal',
-                fontSize: '14px',
-                lineHeight: '16px',
-                color: '#111111',
-              }),
-            },
-          }}
+          overrides={inputStyle}
         />
       </InputWrapper>
       <Spacer></Spacer>
@@ -148,27 +93,10 @@ const TransferModal: React.FC<Props> = ({visible, onClose}) => {
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             setAmount(e.target.value)
           }
-          size={SIZE.default}
+          type="number"
           placeholder="Amount(PHA)"
           overrides={{
-            InputContainer: {
-              style: () => ({
-                backgroundColor: '#eee',
-                paddingBottom: '10px',
-                borderBottom: '1px solid #8C8C8C',
-              }),
-            },
-            Input: {
-              style: () => ({
-                paddingLeft: 0,
-                backgroundColor: '#eee',
-                fontStyle: 'normal',
-                fontWeight: 'normal',
-                fontSize: '14px',
-                lineHeight: '16px',
-                color: '#111111',
-              }),
-            },
+            ...inputStyle,
             EndEnhancer: {
               style: () => ({
                 borderBottom: '1px solid #8C8C8C',
