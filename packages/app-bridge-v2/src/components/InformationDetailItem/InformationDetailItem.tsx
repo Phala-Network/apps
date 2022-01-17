@@ -52,7 +52,13 @@ export const InformationDetailItem: FC<TransferPanelProps> = (props) => {
       <Line />
 
       <Body>
-        <Address>{address}</Address>
+        <Address
+          style={{
+            paddingLeft: isShowNetworkIcon ? 74 : 20,
+          }}
+        >
+          {address}
+        </Address>
       </Body>
     </Root>
   )
