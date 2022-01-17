@@ -2,33 +2,56 @@ import {TableBuilder, TableBuilderColumn} from 'baseui/table-semantic'
 import {StatefulPopover} from 'baseui/popover'
 import {StatefulMenu} from 'baseui/menu'
 import {useCallback, useState} from 'react'
-// import {Info} from 'react-feather'
+import {Info} from 'react-feather'
 import {
   SortOrder,
-  useWorkersQuery,
-  Workers,
-  WorkersOrderByWithRelationInput,
-  // StakePoolsOrderByWithRelationInput,
+  useMinersQuery,
+  Miners,
+  MinersOrderByWithRelationInput,
 } from '../../hooks/graphql'
 import {client} from '../../utils/GraphQLClient'
-import {isSSR, isTruthy, trimAddress} from '@phala/utils'
+import {
+  formatCurrency,
+  isSSR,
+  isTruthy,
+  toFixed,
+  trimAddress,
+} from '@phala/utils'
 import PopoverButton from '../PopoverButton'
 import {usePolkadotAccountAtom} from '@phala/app-store'
 import Pagination from '../Pagination'
-import {Modal} from 'baseui/modal'
+import {Modal, ModalProps} from 'baseui/modal'
 import TableSkeleton from '../TableSkeleton'
 import {StatefulTooltip, StatefulTooltipProps} from 'baseui/tooltip'
-import {Info} from 'react-feather'
 import {Block} from 'baseui/block'
 import {tooltipContent} from './tooltipContent'
-// import {StatefulTooltip, StatefulTooltipProps} from 'baseui/tooltip'
-// import Decimal from 'decimal.js'
-// import {Block} from 'baseui/block'
+import Decimal from 'decimal.js'
 
 // FIXME: should be loadable, but meet some problems when configuring gatsby-plugin-loadable-components-ssr
+import StartModalBody from './StartModalBody'
+import StopModalBody from './StopModalBody'
+import RemoveModalBody from './RemoveModalBody'
+import ReclaimModalBody from './ReclaimModalBody'
+import {isFuture} from 'date-fns'
 
 type ModalKey = 'start' | 'stop' | 'remove' | 'reclaim'
 type MenuItem = {label: string; key: ModalKey; disabled?: boolean}
+
+const modalKeyMap: Readonly<
+  Record<
+    ModalKey,
+    (
+      props: {
+        miner: Miners
+      } & Pick<ModalProps, 'onClose'>
+    ) => JSX.Element
+  >
+> = {
+  start: StartModalBody,
+  stop: StopModalBody,
+  remove: RemoveModalBody,
+  reclaim: ReclaimModalBody,
+}
 
 const TooltipHeader = ({
   children,
@@ -38,7 +61,7 @@ const TooltipHeader = ({
     {children}
     <StatefulTooltip
       placement="bottomLeft"
-      overrides={{Body: {style: {maxWidth: '400px'}}}}
+      overrides={{Body: {style: {maxWidth: '400px', whiteSpace: 'pre-wrap'}}}}
       {...props}
     >
       <Info size={16} style={{marginLeft: 5}} />
@@ -46,26 +69,28 @@ const TooltipHeader = ({
   </Block>
 )
 
-const StakePoolTableV2 = (): JSX.Element => {
+const WorkerTableV2 = (): JSX.Element => {
   const pageSize = 10
   const [polkadotAccount] = usePolkadotAccountAtom()
   const address = polkadotAccount?.address
   const [sortColumn, setSortColumn] =
-    useState<keyof WorkersOrderByWithRelationInput>('publicKey')
-  const [sortAsc, setSortAsc] = useState(false)
+    useState<keyof MinersOrderByWithRelationInput>('pid')
+  const [sortAsc, setSortAsc] = useState(true)
   const [currentPage, setCurrentPage] = useState(1)
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   const [openModalKey, setOpenModalKey] = useState<ModalKey | null>(null)
-  const [operatingWorker, setOperatingWorker] = useState<Workers | null>(null)
+  const [operatingMiner, setOperatingMiner] = useState<Miners | null>(null)
 
-  const {data, isLoading} = useWorkersQuery(
+  const {data, isLoading} = useMinersQuery(
     client,
     {
       take: pageSize,
       skip: pageSize * (currentPage - 1),
       orderBy: {[sortColumn]: sortAsc ? SortOrder.Asc : SortOrder.Desc},
       where: {
+        active: {equals: true},
+        current: {equals: true},
         ...(process.env.NODE_ENV !== 'development' && {
           stakePools: {
             is: {
@@ -83,13 +108,13 @@ const StakePoolTableV2 = (): JSX.Element => {
     }
   )
 
-  const totalCount = data?.aggregateWorkers._count?._all ?? 0
+  const totalCount = data?.aggregateMiners._count?._all ?? 0
 
   const onSort = (columnId: string): void => {
     if (sortColumn === columnId) {
       setSortAsc(!sortAsc)
     } else {
-      setSortColumn(columnId as keyof WorkersOrderByWithRelationInput)
+      setSortColumn(columnId as keyof MinersOrderByWithRelationInput)
       setSortAsc(true)
     }
     setCurrentPage(1)
@@ -99,13 +124,15 @@ const StakePoolTableV2 = (): JSX.Element => {
     setIsModalOpen(false)
   }, [])
 
+  const ModalBody = openModalKey && modalKeyMap[openModalKey]
+
   return (
     <div>
       <div>
         <TableBuilder
           isLoading={isLoading}
           loadingMessage={<TableSkeleton />}
-          data={data?.findManyWorkers || []}
+          data={data?.findManyMiners || []}
           sortColumn={sortColumn}
           sortOrder={sortAsc ? 'ASC' : 'DESC'}
           onSort={onSort}
@@ -130,10 +157,10 @@ const StakePoolTableV2 = (): JSX.Element => {
             },
           }}
         >
-          <TableBuilderColumn id="publicKey" header="Public Key">
-            {({publicKey}: Workers) => (
-              <StatefulTooltip content={publicKey}>
-                {trimAddress(publicKey)}
+          <TableBuilderColumn id="workerPublicKey" header="Public Key">
+            {({workerPublicKey}: Miners) => (
+              <StatefulTooltip content={workerPublicKey}>
+                {trimAddress(workerPublicKey)}
               </StatefulTooltip>
             )}
           </TableBuilderColumn>
@@ -142,9 +169,48 @@ const StakePoolTableV2 = (): JSX.Element => {
             header={
               <TooltipHeader content={tooltipContent.pid}>Pid</TooltipHeader>
             }
+            sortable
           >
-            {({currentPid}: Workers) => currentPid}
+            {({pid}: Miners) => pid}
           </TableBuilderColumn>
+          <TableBuilderColumn id="v" header="V" sortable>
+            {({v}: Miners) => toFixed(new Decimal(v), 4)}
+          </TableBuilderColumn>
+          <TableBuilderColumn id="ve" header="Ve" sortable>
+            {({ve}: Miners) => toFixed(new Decimal(ve), 4)}
+          </TableBuilderColumn>
+          <TableBuilderColumn id="pInstant" header="P Instant" sortable>
+            {({pInstant}: Miners) => pInstant}
+          </TableBuilderColumn>
+          <TableBuilderColumn id="pInit" header="P Initial" sortable>
+            {({pInit}: Miners) => pInit}
+          </TableBuilderColumn>
+          <TableBuilderColumn
+            id="state"
+            header={
+              <TooltipHeader content={tooltipContent.state}>
+                State
+              </TooltipHeader>
+            }
+            sortable
+          >
+            {({state}: Miners) => state}
+          </TableBuilderColumn>
+          <TableBuilderColumn
+            id="totalReward"
+            header={
+              <TooltipHeader content={tooltipContent.mined}>
+                Mined
+              </TooltipHeader>
+            }
+            sortable
+          >
+            {({totalReward}: Miners) => `${formatCurrency(totalReward)} PHA`}
+          </TableBuilderColumn>
+          <TableBuilderColumn id="stake" header="Stake" sortable>
+            {({stakes}: Miners) => `${formatCurrency(stakes)} PHA`}
+          </TableBuilderColumn>
+
           <TableBuilderColumn
             overrides={{
               TableBodyCell: {
@@ -156,12 +222,32 @@ const StakePoolTableV2 = (): JSX.Element => {
               },
             }}
           >
-            {(worker: Workers) => {
+            {(miner: Miners) => {
+              const {state, estimatesReclaimableAt} = miner
               const allItems: (false | MenuItem)[] = [
-                {label: 'Start', key: 'start'},
-                {label: 'Stop', key: 'stop'},
-                {label: 'Remove', key: 'remove'},
-                {label: 'Reclaim', key: 'reclaim'},
+                {
+                  label: 'Start',
+                  key: 'start',
+                  disabled: state !== 'Ready',
+                },
+                {
+                  label: 'Stop',
+                  key: 'stop',
+                  disabled:
+                    state !== 'MiningIdle' && state !== 'MiningUnresponsive',
+                },
+                {
+                  label: 'Remove',
+                  key: 'remove',
+                  disabled: state !== 'Ready' && state !== 'MiningCoolingDown',
+                },
+                {
+                  label: 'Reclaim',
+                  key: 'reclaim',
+                  disabled:
+                    !estimatesReclaimableAt ||
+                    isFuture(new Date(estimatesReclaimableAt)),
+                },
               ]
 
               return (
@@ -174,7 +260,7 @@ const StakePoolTableV2 = (): JSX.Element => {
                       onItemSelect={({item}: {item: MenuItem}) => {
                         setIsModalOpen(true)
                         setOpenModalKey(item.key)
-                        setOperatingWorker(worker) // Pass object directly is Bad design
+                        setOperatingMiner(miner) // Pass object directly is Bad design
                         close()
                       }}
                     />
@@ -195,14 +281,16 @@ const StakePoolTableV2 = (): JSX.Element => {
         pageSize={pageSize}
       />
 
-      {!isSSR() && operatingWorker && (
+      {!isSSR() && operatingMiner && (
         <Modal isOpen={isModalOpen} onClose={closeModal}>
           {/* TODO: add suspense wrapper here with loadable modal components */}
-          {openModalKey}
+          {ModalBody && (
+            <ModalBody miner={operatingMiner} onClose={closeModal} />
+          )}
         </Modal>
       )}
     </div>
   )
 }
 
-export default StakePoolTableV2
+export default WorkerTableV2

@@ -7,7 +7,7 @@ import {
   ModalButton,
   ModalProps,
 } from 'baseui/modal'
-import {ParagraphLarge} from 'baseui/typography'
+import {ParagraphSmall} from 'baseui/typography'
 import {FormControl} from 'baseui/form-control'
 import type {StakePools} from '../../hooks/graphql'
 import {useDelegableBalance} from '../../hooks/useDelegableBalance'
@@ -55,7 +55,7 @@ const DelegateModalBody = ({
       <ModalHeader>Delegate</ModalHeader>
       <ModalBody>
         <FormControl label="Pid">
-          <ParagraphLarge as="div">{pid}</ParagraphLarge>
+          <ParagraphSmall as="div">{pid}</ParagraphSmall>
         </FormControl>
         <FormControl
           label="Amount"
@@ -83,9 +83,10 @@ const DelegateModalBody = ({
         >
           {/* FIXME: add amount validation */}
           <Input
+            size="compact"
             autoFocus
             type="number"
-            placeholder="Amount (PHA)"
+            endEnhancer="PHA"
             min={0}
             onChange={(e) => setAmount(e.currentTarget.value)}
           />

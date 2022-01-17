@@ -9,29 +9,37 @@ import {
 } from 'baseui/modal'
 import {ParagraphSmall} from 'baseui/typography'
 import {FormControl} from 'baseui/form-control'
-import type {StakePools} from '../../hooks/graphql'
+import type {Miners} from '../../hooks/graphql'
 import Decimal from 'decimal.js'
+import {formatCurrency} from '@phala/utils'
 import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
 import {
   useApiPromise,
   useDecimalJsTokenDecimalMultiplier,
 } from '@phala/react-libs'
 
-const SetCommissionModalBody = ({
-  stakePool,
+const StartModalBody = ({
+  miner,
   onClose,
-}: {stakePool: StakePools} & Pick<ModalProps, 'onClose'>): JSX.Element => {
-  const {pid, commission: currentCommission} = stakePool
+}: {miner: Miners} & Pick<ModalProps, 'onClose'>): JSX.Element => {
+  const {
+    pid,
+    workerPublicKey,
+    sMin,
+    sMax,
+    stakePools: {freeStake},
+  } = miner
   const {api} = useApiPromise()
-  const [commission, setCommission] = useState('')
+  const [amount, setAmount] = useState('')
   const waitSignAndSend = useWaitSignAndSend()
   const decimals = useDecimalJsTokenDecimalMultiplier(api)
   const onConfirm = () => {
     if (api && decimals) {
       waitSignAndSend(
-        api.tx.phalaStakePool?.setPayoutPref?.(
-          stakePool.pid,
-          new Decimal(commission).times(10 ** 4).toString()
+        api.tx.phalaStakePool?.startMining?.(
+          pid,
+          workerPublicKey,
+          new Decimal(amount).times(decimals).floor().toString()
         ),
         (status) => {
           if (status.isReady) {
@@ -44,18 +52,29 @@ const SetCommissionModalBody = ({
 
   return (
     <>
-      <ModalHeader>Set Commission</ModalHeader>
+      <ModalHeader>Start Mining</ModalHeader>
       <ModalBody>
+        <ParagraphSmall>
+          Start a miner on behalf of the stake pool
+        </ParagraphSmall>
         <FormControl label="Pid">
           <ParagraphSmall as="div">{pid}</ParagraphSmall>
         </FormControl>
+        <FormControl label="Worker Public Key">
+          <ParagraphSmall as="div" $style={{wordBreak: 'break-all'}}>
+            {workerPublicKey}
+          </ParagraphSmall>
+        </FormControl>
         <FormControl
-          label="New Commission"
+          label="Amount"
           caption={
-            <span>
-              Current Commission:{' '}
-              {new Decimal(currentCommission).times(100).toString()}%
-            </span>
+            <>
+              Smin: {formatCurrency(sMin)} PHA
+              <br />
+              Smax: {formatCurrency(sMax)} PHA
+              <br />
+              Pool Free Delegation: {formatCurrency(freeStake)} PHA
+            </>
           }
         >
           {/* FIXME: add amount validation */}
@@ -63,16 +82,14 @@ const SetCommissionModalBody = ({
             size="compact"
             autoFocus
             type="number"
-            endEnhancer="%"
-            placeholder="0 - 100"
+            placeholder="Amount (PHA)"
             min={0}
-            max={100}
-            onChange={(e) => setCommission(e.currentTarget.value)}
+            onChange={(e) => setAmount(e.currentTarget.value)}
           />
         </FormControl>
       </ModalBody>
       <ModalFooter>
-        <ModalButton disabled={!commission} onClick={onConfirm}>
+        <ModalButton disabled={!amount} onClick={onConfirm}>
           Confirm
         </ModalButton>
       </ModalFooter>
@@ -80,4 +97,4 @@ const SetCommissionModalBody = ({
   )
 }
 
-export default SetCommissionModalBody
+export default StartModalBody

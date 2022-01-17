@@ -7,7 +7,7 @@ import {
   ModalButton,
   ModalProps,
 } from 'baseui/modal'
-import {ParagraphLarge} from 'baseui/typography'
+import {ParagraphSmall} from 'baseui/typography'
 import {FormControl} from 'baseui/form-control'
 import type {StakePools} from '../../hooks/graphql'
 import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
@@ -43,11 +43,12 @@ const AddWorkerModalBody = ({
       <ModalHeader>Add Worker</ModalHeader>
       <ModalBody>
         <FormControl label="Pid">
-          <ParagraphLarge as="div">{pid}</ParagraphLarge>
+          <ParagraphSmall as="div">{pid}</ParagraphSmall>
         </FormControl>
         {/* FIXME: add validation */}
         <FormControl label="Worker Public Key">
           <Input
+            size="compact"
             autoFocus
             placeholder="0x"
             onChange={(e) => setPubkey(e.currentTarget.value)}

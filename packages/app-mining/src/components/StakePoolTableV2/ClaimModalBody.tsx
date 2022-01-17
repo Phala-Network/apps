@@ -7,7 +7,7 @@ import {
   ModalButton,
   ModalProps,
 } from 'baseui/modal'
-import {ParagraphLarge, ParagraphSmall} from 'baseui/typography'
+import {ParagraphSmall} from 'baseui/typography'
 import {FormControl} from 'baseui/form-control'
 import type {StakePools} from '../../hooks/graphql'
 import {formatCurrency, validateAddress} from '@phala/utils'
@@ -51,17 +51,17 @@ const ClaimModalBody = ({
           Claim all the pending rewards of the sender and send to the target
         </ParagraphSmall>
         <FormControl label="Pid">
-          <ParagraphLarge as="div">{pid}</ParagraphLarge>
+          <ParagraphSmall as="div">{pid}</ParagraphSmall>
         </FormControl>
 
         <FormControl label="Rewards">
-          <ParagraphLarge as="div">
+          <ParagraphSmall as="div">
             {stakePool.stakePoolStakers[0] &&
               formatCurrency(
                 stakePool.stakePoolStakers[0].claimableRewards as string
               )}{' '}
             PHA
-          </ParagraphLarge>
+          </ParagraphSmall>
         </FormControl>
 
         <FormControl
@@ -69,6 +69,7 @@ const ClaimModalBody = ({
           error={isAddressError ? 'Invalid address' : null}
         >
           <Input
+            size="compact"
             value={address}
             autoFocus
             placeholder="Target Address"

@@ -7,12 +7,7 @@ import {
   ModalFooter,
   ModalButton,
 } from 'baseui/modal'
-import {
-  HeadingSmall,
-  LabelSmall,
-  ParagraphLarge,
-  ParagraphSmall,
-} from 'baseui/typography'
+import {HeadingSmall, LabelSmall, ParagraphSmall} from 'baseui/typography'
 import {FormControl} from 'baseui/form-control'
 import {useStakePoolsQuery} from '../hooks/graphql'
 import {formatCurrency, validateAddress} from '@phala/utils'
@@ -138,16 +133,16 @@ const ClaimAll = (): JSX.Element => {
             Claim all the pending rewards of the sender and send to the target
           </ParagraphSmall>
           <FormControl label="Pids">
-            <ParagraphLarge as="div">
+            <ParagraphSmall as="div">
               {claimableStakePoolPids.join(', ')}
-            </ParagraphLarge>
+            </ParagraphSmall>
           </FormControl>
 
           <FormControl label="Rewards">
-            <ParagraphLarge as="div">
+            <ParagraphSmall as="div">
               {totalClaimableRewards && formatCurrency(totalClaimableRewards)}{' '}
               PHA
-            </ParagraphLarge>
+            </ParagraphSmall>
           </FormControl>
 
           <FormControl

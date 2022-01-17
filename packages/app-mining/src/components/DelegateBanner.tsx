@@ -19,7 +19,7 @@ const DelegateBanner = (): JSX.Element => {
         <LabelMedium>Total Delegated</LabelMedium>
         <HeadingMedium as="div">
           {value ? (
-            `${formatCurrency(value)} PHA`
+            `${formatCurrency(value, 0)} PHA`
           ) : (
             <Skeleton animation height="36px" width="300px" />
           )}

@@ -34,6 +34,7 @@ import WithdrawModalBody from './WithdrawModalBody'
 import SetCapModalBody from './SetCapModalBody'
 import SetCommissionModalBody from './SetCommissionModalBody'
 import AddWorkerModalBody from './AddWorkerModalBody'
+import ReclaimAllModalBody from './ReclaimAllModalBody'
 
 const TableHeader = styled.div`
   display: flex;
@@ -53,7 +54,7 @@ type ModalKey =
   | 'delegate'
   | 'withdraw'
   | 'setCommission'
-// | 'reclaimAll'
+  | 'reclaimAll'
 type MenuItem = {label: string; key: ModalKey; disabled?: boolean}
 
 const modalKeyMap: Readonly<
@@ -72,6 +73,7 @@ const modalKeyMap: Readonly<
   setCap: SetCapModalBody,
   setCommission: SetCommissionModalBody,
   addWorker: AddWorkerModalBody,
+  reclaimAll: ReclaimAllModalBody,
 }
 
 const TooltipHeader = ({
@@ -95,6 +97,7 @@ const StakePoolTableV2 = ({
 }: {
   kind: 'delegate' | 'myDelegate' | 'mining'
 }): JSX.Element => {
+  const [currentTime] = useState(new Date().toISOString())
   const pageSize = kind === 'mining' ? 10 : 20
   const [polkadotAccount] = usePolkadotAccountAtom()
   const address = polkadotAccount?.address
@@ -119,14 +122,15 @@ const StakePoolTableV2 = ({
     client,
     {
       take: pageSize,
-      withStakePoolStakers: kind === 'myDelegate',
-      withStakePoolWithdrawals: kind === 'myDelegate',
+      withStakePoolStakers: kind === 'myDelegate' || kind === 'mining',
+      withStakePoolWithdrawals: kind === 'delegate' || kind === 'mining',
+      withMiners: kind === 'myDelegate' || kind === 'mining',
       skip: pageSize * (currentPage - 1),
       orderBy: {[sortColumn]: sortAsc ? SortOrder.Asc : SortOrder.Desc},
       where: {
         ...(searchString && {
           OR: [
-            /^\d+$/.test(searchString) && {pid: {equals: searchString}},
+            /^\d+$/.test(searchString) && {pid: {equals: Number(searchString)}},
             {
               ownerAddress: {
                 contains: searchString,
@@ -169,7 +173,7 @@ const StakePoolTableV2 = ({
           },
         ].filter(isTruthy),
       },
-      ...(myDelegateAvailable && {
+      ...((myDelegateAvailable || kind === 'mining') && {
         stakePoolStakersWhere: {
           address: {
             equals: address,
@@ -178,6 +182,11 @@ const StakePoolTableV2 = ({
         stakePoolWithdrawalsWhere: {
           userAddress: {
             equals: address,
+          },
+        },
+        minersWhere: {
+          estimatesReclaimableAt: {
+            lte: currentTime,
           },
         },
       }),
@@ -475,7 +484,16 @@ const StakePoolTableV2 = ({
               },
               kind === 'myDelegate' && {label: 'Claim', key: 'claim'},
               {label: 'Delegate', key: 'delegate'},
-              kind === 'myDelegate' && {label: 'Withdraw', key: 'withdraw'},
+              (kind === 'myDelegate' || kind === 'mining') && {
+                label: 'Withdraw',
+                key: 'withdraw',
+                disabled: !stakePool.stakePoolStakers.length,
+              },
+              (kind === 'myDelegate' || kind === 'mining') && {
+                label: 'Reclaim All',
+                key: 'reclaimAll',
+                disabled: !stakePool.miners.length,
+              },
             ]
 
             return (

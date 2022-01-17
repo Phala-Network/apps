@@ -7,7 +7,7 @@ import {
   ModalButton,
   ModalProps,
 } from 'baseui/modal'
-import {ParagraphLarge} from 'baseui/typography'
+import {ParagraphSmall} from 'baseui/typography'
 import {FormControl} from 'baseui/form-control'
 import type {StakePools} from '../../hooks/graphql'
 import Decimal from 'decimal.js'
@@ -48,7 +48,7 @@ const SetCapModalBody = ({
       <ModalHeader>Set Cap</ModalHeader>
       <ModalBody>
         <FormControl label="Pid">
-          <ParagraphLarge as="div">{pid}</ParagraphLarge>
+          <ParagraphSmall as="div">{pid}</ParagraphSmall>
         </FormControl>
         <FormControl
           label="New Cap"
@@ -63,6 +63,7 @@ const SetCapModalBody = ({
         >
           {/* FIXME: add cap validation */}
           <Input
+            size="compact"
             autoFocus
             type="number"
             endEnhancer="PHA"
