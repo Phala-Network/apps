@@ -3,7 +3,8 @@
     [
       "babel-preset-gatsby",
       {
-        "reactRuntime": "automatic"
+        "reactRuntime": "automatic",
+        "exclude": ["transform-exponentiation-operator"]
       }
     ]
   ]
