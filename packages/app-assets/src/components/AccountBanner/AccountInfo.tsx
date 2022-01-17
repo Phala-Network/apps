@@ -54,11 +54,17 @@ const AddressWrapper = styled.div`
   grid-area: Address;
   padding-top: 16px;
 
+  svg {
+    fill: #8c8c8c;
+    :hover {
+      fill: #aad829;
+    }
+  }
+
   ${down('sm')} {
     padding-top: 8px;
   }
 `
-
 const Address = styled.a`
   font-style: normal;
   font-weight: normal;
@@ -66,13 +72,19 @@ const Address = styled.a`
   line-height: 16px;
   color: #aad829;
   display: inline-block;
-  padding-right: 10px;
+  margin-right: 10px;
   position: relative;
   transform: translateY(-4px);
 
   ${down('sm')} {
     font-size: 12px;
     line-height: 16px;
+  }
+`
+const HrefAddress = styled(Address)`
+  :hover {
+    padding-bottom: 2px;
+    border-bottom: 1px solid #aad829;
   }
 `
 
@@ -117,13 +129,13 @@ const AccountInfo: React.FC = () => {
           {!polkadotAccount ? (
             <Address>{addressVale}</Address>
           ) : (
-            <Address
+            <HrefAddress
               href={`https://khala.subscan.io/account/${polkadotAccount?.address}`}
               target="_blank"
               rel="noopener noreferrer"
             >
               {addressVale}
-            </Address>
+            </HrefAddress>
           )}
 
           {!polkadotAccount ? null : (
