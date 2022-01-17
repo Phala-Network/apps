@@ -11,7 +11,8 @@ const Index = () => {
   const kphaData = useKPhaData()
 
   const tableData: DataType[] = useMemo(() => {
-    return [kphaData]
+    if (kphaData.value !== '') return [kphaData]
+    return []
   }, [kphaData])
 
   const totalValue = useMemo(() => {

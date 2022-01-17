@@ -53,10 +53,23 @@ const AssetList: React.FC<Props> = ({tableData}) => {
       <Title>ASSETS</Title>
       <TableBuilder
         data={tableData}
+        emptyMessage="Please Connect Wallet"
         overrides={{
           Root: {
             style: () => ({
               boxShadow: '0px 16px 48px rgba(0, 0, 0, 0.1)',
+            }),
+          },
+          TableEmptyMessage: {
+            style: () => ({
+              fontFamily: 'Montserrat',
+              fontStyle: 'normal',
+              fontWeight: 500,
+              fontSize: '20px',
+              lineHeight: '256px',
+              textAlign: 'center',
+              color: '#CECECE',
+              height: '256px',
             }),
           },
           TableHeadCell: {
