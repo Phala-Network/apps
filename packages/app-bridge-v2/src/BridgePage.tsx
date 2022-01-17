@@ -1,5 +1,4 @@
 import {Button, ToasterContainer} from '@phala/react-components'
-import {BaseProvider, LightTheme} from 'baseui'
 import {PLACEMENT} from 'baseui/toast'
 import {FC, useState} from 'react'
 import {Helmet} from 'react-helmet'
@@ -31,69 +30,67 @@ export const BridgePage: FC = () => {
   }
 
   return (
-    <BaseProvider theme={LightTheme}>
-      <QueryClientProvider contextSharing={true} client={queryClient}>
-        <Root>
-          <Helmet>
-            <title>Bridge</title>
-          </Helmet>
+    <QueryClientProvider contextSharing={true} client={queryClient}>
+      <Root>
+        <Helmet>
+          <title>Bridge</title>
+        </Helmet>
 
-          <MainContent>
-            <Header />
+        <MainContent>
+          <Header />
 
-            <BlockItem>
-              <TransferFromPanel />
+          <BlockItem>
+            <TransferFromPanel />
 
-              <ExchangeIcon onClick={switchData} />
+            <ExchangeIcon onClick={switchData} />
 
-              <TransferToPanel />
-            </BlockItem>
+            <TransferToPanel />
+          </BlockItem>
 
-            <BlockItem>
-              <ExtraInfoPanel infos={extraInfo} />
-            </BlockItem>
+          <BlockItem>
+            <ExtraInfoPanel infos={extraInfo} />
+          </BlockItem>
 
-            <BlockItem>
-              <SubmitButton onSubmit={submit} />
-            </BlockItem>
-          </MainContent>
+          <BlockItem>
+            <SubmitButton onSubmit={submit} />
+          </BlockItem>
+        </MainContent>
 
-          <TransferModal
-            transactionInfo={transactionInfo}
-            onClose={() => {
-              setIsOpenTransferModal(false)
-            }}
-            isOpen={isOpenTransferModal}
-          />
+        <TransferModal
+          transactionInfo={transactionInfo}
+          onClose={() => {
+            setIsOpenTransferModal(false)
+          }}
+          isOpen={isOpenTransferModal}
+        />
 
-          <InformationModal
-            onClose={() => {
-              setIsOpenInformationModal(false)
-            }}
-            isOpen={isOpenInformationModal}
-          />
+        <InformationModal
+          onClose={() => {
+            setIsOpenInformationModal(false)
+          }}
+          isOpen={isOpenInformationModal}
+        />
 
-          <Button
-            onClick={() => {
-              setIsOpenTransferModal(true)
-            }}
-          >
-            提交窗口
-          </Button>
+        <Button
+          onClick={() => {
+            setIsOpenTransferModal(true)
+          }}
+        >
+          提交窗口
+        </Button>
 
-          <Button
-            onClick={() => {
-              setIsOpenInformationModal(true)
-            }}
-          >
-            信息窗口
-          </Button>
+        <Button
+          onClick={() => {
+            setIsOpenInformationModal(true)
+          }}
+        >
+          信息窗口
+        </Button>
 
-          <ToasterContainer placement={PLACEMENT.topRight} />
+        <ToasterContainer placement={PLACEMENT.topRight} />
 
-          <Transactions />
-        </Root>
-      </QueryClientProvider>
-    </BaseProvider>
+        <Transactions />
+      </Root>
+    </QueryClientProvider>
   )
 }

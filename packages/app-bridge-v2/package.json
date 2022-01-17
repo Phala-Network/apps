@@ -14,7 +14,6 @@
     "@phala/utils": "workspace:0.0.1",
     "@polkadot/util": "^8.1.2",
     "@polkadot/util-crypto": "^8.1.2",
-    "baseui": "^10.6.0",
     "buffer": "^6.0.3",
     "currency.js": "^2.0.4",
     "rc-input-number": "^7.3.0"
