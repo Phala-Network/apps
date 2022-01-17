@@ -289,12 +289,12 @@ importers:
       '@phala/utils': link:../utils
       '@polkadot/util': 8.2.2
       '@polkadot/util-crypto': 8.2.2
+      baseui: 10.6.0_@types+react@17.0.37
       buffer: 6.0.3
       currency.js: 2.0.4
       rc-input-number: 7.3.4
     devDependencies:
       '@polkadot/api': 7.2.1
-      baseui: 10.6.0_@types+react@17.0.37
       bn.js: 5.2.0
       decimal.js: 10.3.1
       ethers: 5.5.2
@@ -9692,6 +9692,7 @@ packages:
       timezone-support: 2.0.2
     transitivePeerDependencies:
       - '@types/react'
+    dev: false
 
   /batch-processor/1.0.0:
     resolution: {integrity: sha1-dclcMrdI4IUNEMKxaPa9vpiRrOg=}
@@ -21148,6 +21149,7 @@ packages:
     dependencies:
       react-is: 16.13.1
       warning: 4.0.3
+    dev: false
 
   /prop-types-extra/1.1.1_react@17.0.2:
     resolution: {integrity: sha512-59+AHNnHYCdiC+vMwY52WmvP5dM3QLeoumYuEyceQDi9aEhtwN9zIQ2ZNo25sMyXnbh32h+P1ezDsUpUH3JAew==}
@@ -21596,6 +21598,7 @@ packages:
       react: ^15.3.0 || ^16.0.0 || ^17.0.0
     dependencies:
       '@babel/runtime': 7.16.7
+    dev: false
 
   /react-clientside-effect/1.2.5_react@17.0.2:
     resolution: {integrity: sha512-2bL8qFW1TGBHozGGbVeyvnggRpMjibeZM2536AKNENLECutp2yfs44IL8Hmpn8qjFQ2K7A9PnYf3vc7aQq/cPA==}
@@ -21742,6 +21745,7 @@ packages:
       file-selector: 0.1.19
       prop-types: 15.7.2
       prop-types-extra: 1.1.1
+    dev: false
 
   /react-dropzone/9.0.0_react@17.0.2:
     resolution: {integrity: sha512-wZ2o9B2qkdE3RumWhfyZT9swgJYJPeU5qHEcMU8weYpmLex1eeWX0CC32/Y0VutB+BBi2D+iePV/YZIiB4kZGw==}
@@ -21815,6 +21819,7 @@ packages:
       use-sidecar: 1.0.5
     transitivePeerDependencies:
       - '@types/react'
+    dev: false
 
   /react-focus-lock/2.6.0_cfedea9b3ed0faf0dded75c187406c5e:
     resolution: {integrity: sha512-2yB5KWyaefbvFDgqvsg/KpIjbqVlhIY2c/dyDcokDLhB3Ib7I4bjsrta5OkI5euUoIu5xBTyBwIQZPykUJAr1g==}
@@ -21866,6 +21871,7 @@ packages:
     dependencies:
       invariant: 2.2.4
       warning: 4.0.3
+    dev: false
 
   /react-input-mask/2.0.4_react-dom@17.0.2+react@17.0.2:
     resolution: {integrity: sha512-1hwzMr/aO9tXfiroiVCx5EtKohKwLk/NT8QlJXHQ4N+yJJFyUuMT+zfTpLBwX/lK3PkuMlievIffncpMZ3HGRQ==}
@@ -21903,6 +21909,7 @@ packages:
     peerDependencies:
       react: ^16.3.0-0 || ^17.0.0-0
       react-dom: ^16.3.0-0 || ^17.0.0-0
+    dev: false
 
   /react-movable/2.5.4_react-dom@17.0.2+react@17.0.2:
     resolution: {integrity: sha512-F+Ml4Il9S7uyY2Nr/UzwnXxWewwsHdQkmwgzAjk+Dsz73sy2yCJk7GkQkdqmh8W6XXTlviepz1VA0eHUWh9MZQ==}
@@ -22002,6 +22009,7 @@ packages:
     peerDependencies:
       react: ^16.8.0-0 || ^17.0.0-0
       react-dom: ^16.8.0-0 || ^17.0.0-0
+    dev: false
 
   /react-range/1.8.11_react-dom@17.0.2+react@17.0.2:
     resolution: {integrity: sha512-LaF5xwYy6u0Rnp0hRBBLKqJx0DmNpW2GqMSoj8OJ0IYiCM7GmSNf0UKxmN4cN0BCb2EwzD3zA9nw6Fkug2c3mg==}
@@ -22188,6 +22196,7 @@ packages:
     dependencies:
       '@types/react': 17.0.37
       tslib: 1.14.1
+    dev: false
 
   /react-uid/2.3.1_cfedea9b3ed0faf0dded75c187406c5e:
     resolution: {integrity: sha512-6C5pwNYP1udgp5feQ9MTBZBKD4su9nhD2aYCFY1bB0Bpask8wYKYz0ZhAtAJ4lcmTDC5kY1ByGTQMFDHQW6p0w==}
@@ -22209,6 +22218,7 @@ packages:
     peerDependencies:
       react: ^15.3.0 || ^16.0.0-alpha || ^17.0.0
       react-dom: ^15.3.0 || ^16.0.0-alpha || ^17.0.0
+    dev: false
 
   /react-virtualized-auto-sizer/1.0.6_react-dom@17.0.2+react@17.0.2:
     resolution: {integrity: sha512-7tQ0BmZqfVF6YYEWcIGuoR3OdYe8I/ZFbNclFlGOC3pMqunkYF/oL30NCjSGl9sMEb17AnzixDz98Kqc3N76HQ==}
@@ -22232,6 +22242,7 @@ packages:
       loose-envify: 1.4.0
       prop-types: 15.7.2
       react-lifecycles-compat: 3.0.4
+    dev: false
 
   /react-virtualized/9.22.3_react-dom@17.0.2+react@17.0.2:
     resolution: {integrity: sha512-MKovKMxWTcwPSxE1kK1HcheQTWfuCxAuBoSTf2gwyMM21NdX/PXUhnoP8Uc5dRKd+nKm8v41R36OellhdCpkrw==}
@@ -22257,6 +22268,7 @@ packages:
     dependencies:
       '@babel/runtime': 7.16.7
       memoize-one: 5.2.1
+    dev: false
 
   /react-window/1.8.6_react-dom@17.0.2+react@17.0.2:
     resolution: {integrity: sha512-8VwEEYyjz6DCnGBsd+MgkD0KJ2/OXFULyDtorIiTz+QzwoP94tBoA7CnbtyXMm+cCeAUER5KJcPtWl9cpKbOBg==}
@@ -25365,6 +25377,7 @@ packages:
         optional: true
     dependencies:
       '@types/react': 17.0.37
+    dev: false
 
   /use-callback-ref/1.2.5_cfedea9b3ed0faf0dded75c187406c5e:
     resolution: {integrity: sha512-gN3vgMISAgacF7sqsLPByqoePooY3n2emTH59Ur5d/M8eg4WTWu1xp8i8DHjohftIyEx0S08RiYxbffr4j8Peg==}
@@ -25423,6 +25436,7 @@ packages:
     dependencies:
       detect-node-es: 1.1.0
       tslib: 1.14.1
+    dev: false
 
   /use-sidecar/1.0.5_react@17.0.2:
     resolution: {integrity: sha512-k9jnrjYNwN6xYLj1iaGhonDghfvmeTmYjAiGvOr7clwKfPjMXJf4/HOr7oT5tJwYafgp2tG2l3eZEOfoELiMcA==}
