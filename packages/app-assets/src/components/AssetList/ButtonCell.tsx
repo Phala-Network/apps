@@ -11,6 +11,8 @@ import ClaimModal from '../ClaimModal'
 
 const Wrapper = styled.div`
   display: flex;
+  justify-content: flex-end;
+  padding-right: 40px;
 `
 
 const Spacer = styled.div`
