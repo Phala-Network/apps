@@ -36,11 +36,6 @@ export const Transactions: React.FC = () => {
 
   return (
     <FloatModal title="Transactions Panel">
-      {/* 
-        <ClearButton onClick={() => setTransactionsInfo([])}>
-          Clear
-        </ClearButton> 
-      */}
       <TransactionsList records={records} />
     </FloatModal>
   )
