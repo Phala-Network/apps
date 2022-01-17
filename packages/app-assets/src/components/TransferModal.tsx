@@ -11,9 +11,10 @@ import {
   useDecimalJsTokenDecimalMultiplier,
   waitSignAndSend,
 } from '@phala/react-libs'
-import {validateAddress} from '@phala/utils'
+import {usePolkadotAccountTransferrableBalanceDecimal} from '@phala/react-hooks'
+import {validateAddress, toFixed} from '@phala/utils'
 import Decimal from 'decimal.js'
-import React, {useCallback, useState} from 'react'
+import React, {useCallback, useState, useMemo} from 'react'
 import {toast} from 'react-toastify'
 import {Input} from 'baseui/input'
 import {
@@ -37,6 +38,21 @@ const TransferModal: React.FC<Props> = ({visible, onClose}) => {
   const {api} = useApiPromise()
   const [polkadotAccount] = usePolkadotAccountAtom()
   const decimals = useDecimalJsTokenDecimalMultiplier(api)
+
+  const polkadotAccountAddress = polkadotAccount?.address
+  const polkadotTransferBalanceDecimal =
+    usePolkadotAccountTransferrableBalanceDecimal(polkadotAccountAddress)
+  const isShowMaxButton = polkadotTransferBalanceDecimal.greaterThan(0)
+
+  const transferrableValue = useMemo(() => {
+    if (!polkadotTransferBalanceDecimal) return '-'
+    return `${toFixed(polkadotTransferBalanceDecimal)} PHA`
+  }, [polkadotTransferBalanceDecimal])
+
+  const handleMax = () => {
+    if (!polkadotTransferBalanceDecimal) return
+    setAmount(polkadotTransferBalanceDecimal.toString())
+  }
 
   const confirm = useCallback(async () => {
     if (api && polkadotAccount && decimals) {
@@ -105,9 +121,13 @@ const TransferModal: React.FC<Props> = ({visible, onClose}) => {
               }),
             },
           }}
-          endEnhancer={() => <MaxButton>Max</MaxButton>}
+          endEnhancer={() =>
+            isShowMaxButton ? (
+              <MaxButton onClick={handleMax}>Max</MaxButton>
+            ) : null
+          }
         />
-        <BalanceText>Balance: 1.1111 PHA</BalanceText>
+        <BalanceText>{`Balance: ${transferrableValue}`}</BalanceText>
       </InputWrapper>
       <Spacer></Spacer>
       <PolkadotTransactionFeeLabel

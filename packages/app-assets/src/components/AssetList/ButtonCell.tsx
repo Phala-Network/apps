@@ -2,6 +2,7 @@ import React, {useMemo, useState} from 'react'
 import styled from 'styled-components'
 import {down} from 'styled-breakpoints'
 import {useBreakpoint} from 'styled-breakpoints/react-styled'
+import {navigate} from 'gatsby'
 import {DataType} from './index'
 import Button from '../Button'
 import Popover from '../Popover'
@@ -53,7 +54,7 @@ const ButtonCell: React.FC<Pick<DataType, 'name'>> = ({name}) => {
   }, [name])
 
   const handleBridge = () => {
-    //
+    navigate('/bridge/')
   }
   return (
     <Wrapper>
@@ -96,8 +97,6 @@ const ButtonCell: React.FC<Pick<DataType, 'name'>> = ({name}) => {
           </div>
         )}
       />
-      {/* FIXME: hooks running should be prevented when modal is invisible */}
-      {/* FIXME: modal should be load asynchronously */}
       {claimModalVisible && (
         <ClaimModal
           visible={true}
