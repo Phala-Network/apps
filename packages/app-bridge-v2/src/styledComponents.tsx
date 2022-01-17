@@ -15,7 +15,7 @@ export const Root = styled.div`
 export const MainContent = styled.div`
   ${up('md')} {
     width: 672px;
-    margin: 0;
+    margin: 0 auto;
   }
 `
 
