@@ -61,7 +61,9 @@ export const SubmitButton: FC<SubmitButtonProps> = (props) => {
   }
 
   return (
-    <Button {...props} onClick={onSubmitCheck}>
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    <Button style={{width: '100%'}} {...props} onClick={onSubmitCheck}>
       Submit
     </Button>
   )
