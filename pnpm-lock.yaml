@@ -81,7 +81,7 @@ importers:
       '@types/styletron-standard': ^2.0.2
       '@types/uuid': ^8.3.3
       axios: ^0.21.4
-      babel-loader: 8.1.0
+      babel-loader: ^8.2.3
       babel-plugin-styled-components: ^2.0.2
       babel-preset-gatsby: ^2.5.1
       baseui: ^10.6.0
@@ -141,7 +141,7 @@ importers:
       '@sentry/tracing': 6.16.1
       '@types/uuid': 8.3.4
       axios: 0.21.4
-      babel-loader: 8.1.0_@babel+core@7.16.7
+      babel-loader: 8.2.3_@babel+core@7.16.7
       babel-plugin-styled-components: 2.0.2_styled-components@5.3.3
       babel-preset-gatsby: 2.5.1_359d7e8787d4fc0dd90e6a4f63ab735f
       baseui: 10.7.2_18b9fae9192809454029c5aad07d3a92
@@ -7989,6 +7989,7 @@ packages:
       mkdirp: 0.5.5
       pify: 4.0.1
       schema-utils: 2.7.1
+    dev: true
 
   /babel-loader/8.2.3_70acdf73bf8b5ce90b5f0f8b0b09e0d8:
     resolution: {integrity: sha512-n4Zeta8NC3QAsuyiizu0GkmRcQ6clkV9WFUnUf1iXP//IeSKbWjofW3UHyZVwlOB4y039YQKefawyTn64Zwbuw==}
@@ -8003,6 +8004,20 @@ packages:
       make-dir: 3.1.0
       schema-utils: 2.7.1
       webpack: 5.66.0
+    dev: false
+
+  /babel-loader/8.2.3_@babel+core@7.16.7:
+    resolution: {integrity: sha512-n4Zeta8NC3QAsuyiizu0GkmRcQ6clkV9WFUnUf1iXP//IeSKbWjofW3UHyZVwlOB4y039YQKefawyTn64Zwbuw==}
+    engines: {node: '>= 8.9'}
+    peerDependencies:
+      '@babel/core': ^7.0.0
+      webpack: '>=2'
+    dependencies:
+      '@babel/core': 7.16.7
+      find-cache-dir: 3.3.2
+      loader-utils: 1.4.0
+      make-dir: 3.1.0
+      schema-utils: 2.7.1
     dev: false
 
   /babel-plugin-add-module-exports/1.0.4:
@@ -10035,7 +10050,7 @@ packages:
       postcss-modules-values: 3.0.0
       postcss-value-parser: 4.2.0
       schema-utils: 2.7.1
-      semver: 7.3.2
+      semver: 7.3.5
       webpack: 4.44.2
     dev: false
 
@@ -15885,7 +15900,7 @@ packages:
       jest-resolve: 26.6.2
       natural-compare: 1.4.0
       pretty-format: 26.6.2
-      semver: 7.3.2
+      semver: 7.3.5
     dev: false
 
   /jest-util/26.6.2:
@@ -21660,7 +21675,7 @@ packages:
       loader-utils: 2.0.2
       neo-async: 2.6.2
       schema-utils: 3.1.1
-      semver: 7.3.2
+      semver: 7.3.5
       webpack: 4.44.2
     dev: false
 
