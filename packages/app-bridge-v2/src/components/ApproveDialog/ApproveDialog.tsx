@@ -1,34 +1,31 @@
 import {ethereums} from '@phala/app-config'
-import {
-  Button,
-  FeeLabel,
-  Modal,
-  ModalAction,
-  ModalActions,
-} from '@phala/react-components'
+import {FeeLabel} from '@phala/react-components'
 import {
   useErc20Contract,
   useEthereumBridgeApproveFee,
   useEthers,
   useTransactionReceiptQuery,
 } from '@phala/react-libs'
+import {Block} from 'baseui/block'
+import {KIND as ButtonKind} from 'baseui/button'
+import {
+  Modal,
+  ModalBody,
+  ModalButton,
+  ModalFooter,
+  ModalHeader,
+  ROLE,
+  SIZE,
+} from 'baseui/modal'
 import {ethers} from 'ethers'
 import React, {useEffect, useState} from 'react'
-import styled from 'styled-components'
+import {buttonOverrides} from '../../style/buttonOverrides'
+import {modalOverrides} from '../../style/modalOverrides'
 
 type Props = {
   visible: boolean
   onClose(): void
 }
-
-const Content = styled.div`
-  font-size: 12px;
-  line-height: 14px;
-  color: #878787;
-  font-family: Lato;
-  font-style: normal;
-  font-weight: normal;
-`
 
 const ApproveDialog: React.FC<Props> = (props) => {
   const {visible, onClose} = props
@@ -73,24 +70,46 @@ const ApproveDialog: React.FC<Props> = (props) => {
   }, [receipt, onClose])
 
   return (
-    <Modal visible={visible} title="Approve PHA">
-      <Content>
+    <Modal
+      closeable={true}
+      onClose={onClose}
+      isOpen={visible}
+      animate
+      autoFocus
+      size={SIZE.default}
+      role={ROLE.dialog}
+      overrides={modalOverrides}
+    >
+      <ModalHeader>Approve PHA</ModalHeader>
+
+      <ModalBody>
         In order for the bridge to move your ERC20 tokens to Khala Network, it
         first needs your approval. This is only required once per ERC20 token!
-      </Content>
-      <br />
-      <FeeLabel label="Fee" fee={(fee?.toFixed(6) || '') + ' ETH'} />
+      </ModalBody>
 
-      <ModalActions>
-        <ModalAction full>
-          <Button onClick={onClose}>Reject</Button>
-        </ModalAction>
-        <ModalAction full>
-          <Button loading={isSubmitting} type="primary" onClick={startApprove}>
-            Confirm
-          </Button>
-        </ModalAction>
-      </ModalActions>
+      <ModalFooter>
+        <Block
+          display="flex"
+          justifyContent="space-between"
+          alignItems="center"
+        >
+          <FeeLabel label="Fee" fee={(fee?.toFixed(6) || '') + ' ETH'} />
+
+          <Block>
+            <ModalButton onClick={onClose} kind={ButtonKind.tertiary}>
+              Reject
+            </ModalButton>
+
+            <ModalButton
+              overrides={buttonOverrides}
+              isLoading={isSubmitting}
+              onClick={startApprove}
+            >
+              Confirm
+            </ModalButton>
+          </Block>
+        </Block>
+      </ModalFooter>
     </Modal>
   )
 }
