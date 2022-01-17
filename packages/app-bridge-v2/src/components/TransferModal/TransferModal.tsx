@@ -35,6 +35,21 @@ export const TransferModal: FC<TransferModalProps> = (props) => {
 
   const is = useCheckTransferType()
 
+  let content = null
+
+  if (isOpen) {
+    content = (
+      <ModalBody>
+        {is(PHA, Khala, Ethereum) && (
+          <TransferPHAFromKhalaToEthereum onCloseTransfer={onClose} />
+        )}
+        {is(PHA, Ethereum, Khala) && (
+          <TransferPHAFromEthereumToKhala onCloseTransfer={onClose} />
+        )}
+      </ModalBody>
+    )
+  }
+
   return (
     <Modal
       onClose={onClose}
@@ -47,14 +62,7 @@ export const TransferModal: FC<TransferModalProps> = (props) => {
     >
       <ModalHeader>Bridge Confirmation</ModalHeader>
 
-      <ModalBody>
-        {is(PHA, Khala, Ethereum) && (
-          <TransferPHAFromKhalaToEthereum onCloseTransfer={onClose} />
-        )}
-        {is(PHA, Ethereum, Khala) && (
-          <TransferPHAFromEthereumToKhala onCloseTransfer={onClose} />
-        )}
-      </ModalBody>
+      {content}
     </Modal>
   )
 }
