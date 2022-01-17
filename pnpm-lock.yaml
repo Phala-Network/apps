@@ -83,7 +83,7 @@ importers:
       axios: ^0.21.4
       babel-loader: 8.1.0
       babel-plugin-styled-components: ^2.0.2
-      babel-preset-gatsby: ^1.14.0
+      babel-preset-gatsby: ^2.5.1
       baseui: ^10.6.0
       bn.js: ^5.2.0
       core-js: ^3.19.3
@@ -143,7 +143,7 @@ importers:
       axios: 0.21.4
       babel-loader: 8.1.0_@babel+core@7.16.7
       babel-plugin-styled-components: 2.0.2_styled-components@5.3.3
-      babel-preset-gatsby: 1.14.0_359d7e8787d4fc0dd90e6a4f63ab735f
+      babel-preset-gatsby: 2.5.1_359d7e8787d4fc0dd90e6a4f63ab735f
       baseui: 10.7.2_18b9fae9192809454029c5aad07d3a92
       bn.js: 5.2.0
       core-js: 3.20.3
@@ -4161,7 +4161,7 @@ packages:
       '@types/resolve': 0.0.8
       builtin-modules: 3.2.0
       is-module: 1.0.0
-      resolve: 1.18.1
+      resolve: 1.21.0
       rollup: 1.32.1
     dev: false
 
@@ -8189,7 +8189,7 @@ packages:
     dependencies:
       '@babel/core': 7.16.7
       '@babel/runtime': 7.16.7
-      gatsby: 4.5.2_7e1f5852c7eac780cdc9b6b37d75a595
+      gatsby: 4.5.2_b97d23c57ad98e15bbe9b8bfb079883e
       gatsby-core-utils: 3.5.1
     dev: false
 
@@ -8303,34 +8303,6 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
-
-  /babel-preset-gatsby/1.14.0_359d7e8787d4fc0dd90e6a4f63ab735f:
-    resolution: {integrity: sha512-weu2mSxvlzWUUaSfO67AS005W2+UncMgyTwkGWMoqeNe4MaZxWMtEimxBRVDPHvhW/VQIzeh3aL+gjZ2v9P4oQ==}
-    engines: {node: '>=12.13.0'}
-    peerDependencies:
-      '@babel/core': ^7.11.6
-      core-js: ^3.0.0
-    dependencies:
-      '@babel/core': 7.16.7
-      '@babel/plugin-proposal-class-properties': 7.16.7_@babel+core@7.16.7
-      '@babel/plugin-proposal-nullish-coalescing-operator': 7.16.7_@babel+core@7.16.7
-      '@babel/plugin-proposal-optional-chaining': 7.16.7_@babel+core@7.16.7
-      '@babel/plugin-syntax-dynamic-import': 7.8.3_@babel+core@7.16.7
-      '@babel/plugin-transform-classes': 7.16.7_@babel+core@7.16.7
-      '@babel/plugin-transform-runtime': 7.16.8_@babel+core@7.16.7
-      '@babel/plugin-transform-spread': 7.16.7_@babel+core@7.16.7
-      '@babel/preset-env': 7.16.8_@babel+core@7.16.7
-      '@babel/preset-react': 7.16.7_@babel+core@7.16.7
-      '@babel/runtime': 7.16.7
-      babel-plugin-dynamic-import-node: 2.3.3
-      babel-plugin-macros: 2.8.0
-      babel-plugin-transform-react-remove-prop-types: 0.4.24
-      core-js: 3.20.3
-      gatsby-core-utils: 2.14.0
-      gatsby-legacy-polyfills: 1.14.0
-    transitivePeerDependencies:
-      - supports-color
-    dev: false
 
   /babel-preset-gatsby/2.5.1_359d7e8787d4fc0dd90e6a4f63ab735f:
     resolution: {integrity: sha512-MALUfqOD+cUYUozkCrr3EJAXRIqZEJXIRglMP36f+n4shQPvMsCaEzo2LVXf+0xqcbIV7y7jke2vvM7TPDTQ8g==}
@@ -12866,13 +12838,6 @@ packages:
       '@babel/runtime': 7.16.7
     dev: false
 
-  /gatsby-legacy-polyfills/1.14.0:
-    resolution: {integrity: sha512-IGto7YurB4cEm6r07Lr/hSPZZvrkT1/0YdGpZQp7rC6CdSLqyWO9X5CS9F111NJyJhLusHCr9ZuRJG5cA0SYxQ==}
-    dependencies:
-      '@babel/runtime': 7.16.7
-      core-js-compat: 3.9.0
-    dev: false
-
   /gatsby-legacy-polyfills/2.5.0:
     resolution: {integrity: sha512-AtHkcpa7S9E9aAOn0ca9eP3fVh5VVE5s8iD+LMx3zzZGcxZBdh6z7FVx8qWxsQXCO33Be4U/r49EFLc3koti+A==}
     dependencies:
@@ -12951,7 +12916,7 @@ packages:
       '@sindresorhus/slugify': 1.1.2
       chokidar: 3.5.2
       fs-exists-cached: 1.0.0
-      gatsby: 4.5.2_7e1f5852c7eac780cdc9b6b37d75a595
+      gatsby: 4.5.2_b97d23c57ad98e15bbe9b8bfb079883e
       gatsby-core-utils: 3.5.1
       gatsby-page-utils: 2.5.1
       gatsby-plugin-utils: 2.5.0_gatsby@4.5.2
@@ -13059,7 +13024,7 @@ packages:
       '@babel/preset-typescript': 7.16.7_@babel+core@7.16.7
       '@babel/runtime': 7.16.7
       babel-plugin-remove-graphql-queries: 4.5.1_@babel+core@7.16.7+gatsby@4.5.2
-      gatsby: 4.5.2_7e1f5852c7eac780cdc9b6b37d75a595
+      gatsby: 4.5.2_b97d23c57ad98e15bbe9b8bfb079883e
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -13071,7 +13036,7 @@ packages:
       gatsby: ^4.0.0-next
     dependencies:
       '@babel/runtime': 7.16.7
-      gatsby: 4.5.2_7e1f5852c7eac780cdc9b6b37d75a595
+      gatsby: 4.5.2_b97d23c57ad98e15bbe9b8bfb079883e
       joi: 17.5.0
     dev: false
 
@@ -15818,7 +15783,7 @@ packages:
       jest-pnp-resolver: 1.2.2_jest-resolve@26.6.2
       jest-util: 26.6.2
       read-pkg-up: 7.0.1
-      resolve: 1.18.1
+      resolve: 1.21.0
       slash: 3.0.0
     dev: false
 
