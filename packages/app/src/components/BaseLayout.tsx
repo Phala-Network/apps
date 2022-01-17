@@ -28,7 +28,6 @@ const ContentWrap = styled.div<{compact?: boolean}>`
           `
         : css`
             width: 100%;
-            max-width: 1700px;
           `}
   }
 `

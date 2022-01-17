@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import {up} from 'styled-breakpoints'
 import {Helmet} from 'react-helmet'
 import {Link} from 'gatsby'
 import {HeadingMedium} from 'baseui/typography'
@@ -13,6 +14,10 @@ const Wrapper = styled.div`
   overflow-x: auto;
   margin: 10px 40px 70px;
   flex: 1;
+  ${up('md')} {
+    margin: 10px auto 70px;
+    max-width: 1700px;
+  }
 `
 
 const Heading = styled.div`

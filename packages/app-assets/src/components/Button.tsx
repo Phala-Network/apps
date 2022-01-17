@@ -1,16 +1,18 @@
 import React from 'react'
-import {Button, SHAPE, ButtonProps} from 'baseui/button'
+import {Button, ButtonProps} from 'baseui/button'
 const Index: React.FC<ButtonProps> = (props) => {
   const {children, ...params} = props
   return (
     <Button
-      shape={SHAPE.pill}
       overrides={{
         BaseButton: {
           style: () => ({
             backgroundColor: '#EEEEEE',
-            borderRadius: '14px',
-            padding: '8px 20px',
+            borderTopLeftRadius: '14px',
+            borderTopRightRadius: '14px',
+            borderBottomLeftRadius: '14px',
+            borderBottomRightRadius: '14px',
+            padding: '7px 19px',
             color: '#111111',
             fontFamily: 'Montserrat',
             fontStyle: 'normal',
