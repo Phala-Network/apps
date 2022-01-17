@@ -6,16 +6,21 @@ import {Backdrop} from '../Backdrop'
 import {FloatModalHeader} from './FloatModalHeader'
 
 const Root = styled.div`
-  width: 210px;
+  width: 220px;
   height: 44px;
   margin-left: auto;
   bottom: 48px;
   transform: translate3d(0, 0, 0);
-  background: #000000;
-  color: white;
+  /* Gn 001 */
+  color: #d1ff52;
   box-sizing: border-box;
   z-index: 950;
   transition: all 0.2s ease;
+  /* Bk 001 */
+  background: #111111;
+  /* Gn 002 */
+  border: 2px solid #aad829;
+  box-sizing: border-box;
 
   ${down('sm')} {
     position: fixed;

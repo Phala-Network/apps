@@ -86,11 +86,11 @@ export const BridgePage: FC = () => {
         >
           信息窗口
         </Button>
-
-        <ToasterContainer placement={PLACEMENT.topRight} />
-
-        <Transactions />
       </Root>
+
+      <Transactions />
+
+      <ToasterContainer placement={PLACEMENT.topRight} />
     </QueryClientProvider>
   )
 }

@@ -30,9 +30,9 @@ export const Transactions: React.FC = () => {
     }
   }, [data, depositor])
 
-  if (records?.length === 0) {
-    return null
-  }
+  // if (records?.length === 0) {
+  //   return null
+  // }
 
   return (
     <FloatModal title="Transactions Panel">
