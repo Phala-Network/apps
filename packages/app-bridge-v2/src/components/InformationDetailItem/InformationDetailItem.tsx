@@ -13,7 +13,7 @@ import {
   Type,
 } from './styledComponents'
 
-interface TransferPanelProps {
+export interface TransferPanelProps {
   label: string
   address?: string
   coin?: string
