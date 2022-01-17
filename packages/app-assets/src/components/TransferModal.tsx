@@ -51,7 +51,8 @@ const TransferModal: React.FC<Props> = ({visible, onClose}) => {
 
   const handleMax = () => {
     if (!polkadotTransferBalanceDecimal) return
-    setAmount(polkadotTransferBalanceDecimal.toString())
+    const maxValue = polkadotTransferBalanceDecimal.sub('0.003').toString()
+    setAmount(maxValue)
   }
 
   const confirm = useCallback(async () => {

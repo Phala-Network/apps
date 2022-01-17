@@ -44,19 +44,19 @@ const BalanceCell: React.FC<
       <div>
         {transferrable ? (
           <ValueItem>
-            <span>transferrable</span>
+            <span>Transferrable</span>
             <span>{transferrable}</span>
           </ValueItem>
         ) : null}
         {crowdloanVesting ? (
           <ValueItem>
-            <span>crowdloanVesting</span>
+            <span>CrowdloanVesting</span>
             <span>{crowdloanVesting}</span>
           </ValueItem>
         ) : null}
         {delegate ? (
           <ValueItem>
-            <span>delegate</span>
+            <span>Delegation</span>
             <span>{delegate}</span>
           </ValueItem>
         ) : null}
