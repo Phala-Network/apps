@@ -114,6 +114,22 @@ const TransferModal: React.FC<Props> = ({visible, onClose}) => {
           placeholder="Amount(PHA)"
           overrides={{
             ...inputStyle,
+            Input: {
+              style: () => ({
+                paddingLeft: 0,
+                paddingBottom: '16px',
+                color: '#111',
+                fontStyle: 'normal',
+                fontWeight: 500,
+                fontSize: '32px',
+                lineHeight: '32px',
+                '::placeholder': {
+                  transform: 'scale(0.5)',
+                  transformOrigin: 'center left',
+                  fontWeight: 'normal',
+                },
+              }),
+            },
             EndEnhancer: {
               style: () => ({
                 borderBottom: '1px solid #8C8C8C',
