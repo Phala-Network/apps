@@ -5,6 +5,7 @@
   "sideEffects": false,
   "main": "src/index.ts",
   "dependencies": {
+    "@phala/app-bridge-graph": "workspace:^0.0.1",
     "@phala/app-config": "workspace:^0.0.1",
     "@phala/app-store": "workspace:^0.0.1",
     "@phala/react-components": "workspace:^0.0.1",

@@ -3,7 +3,7 @@ import {RequestDocument} from 'graphql-request/dist/types'
 
 export function useRequest(document: RequestDocument) {
   return graphqlRequest(
-    'https://api.subquery.network/sq/jasl/khala-chainbridge',
+    'https://api.thegraph.com/subgraphs/name/tolak/khala-rinkeby-chainbridge',
     document
   )
 }

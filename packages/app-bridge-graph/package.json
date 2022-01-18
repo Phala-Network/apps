@@ -1,9 +1,7 @@
 {
   "name": "@phala/app-bridge-graph",
   "version": "0.0.1",
-  "main": "dist/index.js",
-  "module": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "src/index.ts",
   "scripts": {
     "develop": "tsc --watch",
     "start": "tsc --watch",

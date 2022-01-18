@@ -267,6 +267,7 @@ importers:
 
   packages/app-bridge-v2:
     specifiers:
+      '@phala/app-bridge-graph': workspace:^0.0.1
       '@phala/app-config': workspace:^0.0.1
       '@phala/app-store': workspace:^0.0.1
       '@phala/react-components': workspace:^0.0.1
@@ -289,6 +290,7 @@ importers:
       styled-breakpoints: ^10.0.1
       styled-components: ^5.3.3
     dependencies:
+      '@phala/app-bridge-graph': link:../app-bridge-graph
       '@phala/app-config': link:../app-config
       '@phala/app-store': link:../app-store
       '@phala/react-components': link:../react-components
