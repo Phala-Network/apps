@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import {formatCurrency} from '@phala/utils'
 import {DataType} from './index'
 
 const Wrapper = styled.div`
@@ -12,7 +13,7 @@ const Wrapper = styled.div`
 `
 
 const ValueCell: React.FC<Pick<DataType, 'value'>> = ({value}) => {
-  return <Wrapper>{value ? `$ ${value}` : '-'}</Wrapper>
+  return <Wrapper>{value ? `$ ${formatCurrency(value)}` : '-'}</Wrapper>
 }
 
 export default ValueCell

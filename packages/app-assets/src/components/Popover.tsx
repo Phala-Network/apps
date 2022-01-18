@@ -5,7 +5,7 @@ import {MoreIcon} from './Icons/MoreIcon'
 const Popover: React.FC<StatefulPopoverProps> = (props) => {
   return (
     <StatefulPopover
-      placement={PLACEMENT.bottom}
+      placement={PLACEMENT.auto}
       showArrow
       overrides={{
         Arrow: {

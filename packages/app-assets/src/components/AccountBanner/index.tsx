@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import {down} from 'styled-breakpoints'
 import {useSSR} from '@phala/react-hooks'
 import {usePolkadotAccountAtom} from '@phala/app-store'
+import {formatCurrency} from '@phala/utils'
 import bannerBg from '../Icons/banner-bg.png'
 import AccountInfo from './AccountInfo'
 import {PhalaIcon} from '../Icons/PhalaIcon'
@@ -86,7 +87,9 @@ const AccountBanner: React.FC<Props> = ({totalValue}) => {
             <PhalaIcon />
           </Icon>
         ) : (
-          <Dollar>{Number(totalValue) ? `$ ${totalValue}` : '-'}</Dollar>
+          <Dollar>
+            {Number(totalValue) ? `$ ${formatCurrency(totalValue)}` : '-'}
+          </Dollar>
         )}
       </div>
     </Wrapper>

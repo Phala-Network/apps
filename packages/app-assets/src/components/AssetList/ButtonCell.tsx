@@ -25,12 +25,13 @@ export const LineWrap = styled.div`
   align-items: center;
   justify-content: space-between;
   box-sizing: border-box;
-  padding: 10px 16px;
+  height: 48px;
+  padding: 16px 23px 16px 21px;
   font-family: Montserrat;
   font-style: normal;
   font-weight: 400;
-  font-size: 14px;
-  line-height: 14px;
+  font-size: 16px;
+  line-height: 16px;
   color: #111111;
   outline: none;
 
