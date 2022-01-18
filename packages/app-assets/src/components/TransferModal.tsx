@@ -42,7 +42,7 @@ const TransferModal: React.FC<Props> = ({visible, onClose}) => {
   const polkadotAccountAddress = polkadotAccount?.address
   const polkadotTransferBalanceDecimal =
     usePolkadotAccountTransferrableBalanceDecimal(polkadotAccountAddress)
-  const isShowMaxButton = polkadotTransferBalanceDecimal.greaterThan(0)
+  const isShowMaxButton = polkadotTransferBalanceDecimal.greaterThan('0.003')
 
   const transferrableValue = useMemo(() => {
     if (!polkadotTransferBalanceDecimal) return '-'
