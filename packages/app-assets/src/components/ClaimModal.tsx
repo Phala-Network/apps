@@ -24,23 +24,22 @@ type Props = {
 }
 
 const Text = styled.div`
-  font-size: 12px;
-  color: #878787;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 16px;
+  color: #111111;
 `
 
 const Info = styled.div`
-  font-size: 12px;
-  margin-top: 32px;
-  font-family: PT Mono;
-
-  span {
-    font-family: Lato;
-    font-weight: bold;
-  }
-`
-const Spacer = styled.div`
-  margin-top: 20px;
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 20px;
+  color: #111111;
+  margin-bottom: 20px;
 `
 const ButtonContainer = styled.div`
   display: grid;
@@ -103,7 +102,6 @@ const ClaimModal: React.FC<Props> = ({visible, onClose}) => {
           <span>Claim now:</span> {format(vestedClaimable)} PHA
         </Info>
       )}
-      <Spacer></Spacer>
       <PhalaStakePoolTransactionFeeLabel action={action} />
       <ModalFooterWrapper>
         <ButtonContainer>

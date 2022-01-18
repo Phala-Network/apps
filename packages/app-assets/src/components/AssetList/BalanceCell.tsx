@@ -32,6 +32,7 @@ const ValueItem = styled.div`
   ${down('sm')} {
     font-size: 14px;
     margin-bottom: 14px;
+    width: 220px;
   }
 `
 
