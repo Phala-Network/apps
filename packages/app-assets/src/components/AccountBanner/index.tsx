@@ -72,9 +72,7 @@ type Props = {
 
 const AccountBanner: React.FC<Props> = ({totalValue}) => {
   const [polkadotAccount] = usePolkadotAccountAtom()
-  const {isServer} = useSSR()
-
-  if (isServer) return null
+  const {isBrowser} = useSSR()
 
   return (
     <Wrapper>
@@ -82,15 +80,16 @@ const AccountBanner: React.FC<Props> = ({totalValue}) => {
         <AccountInfo />
       </Left>
       <div>
-        {!polkadotAccount ? (
-          <Icon>
-            <PhalaIcon />
-          </Icon>
-        ) : (
+        {isBrowser && polkadotAccount ? (
           <Dollar>
             {Number(totalValue) ? `$ ${formatCurrency(totalValue)}` : '-'}
           </Dollar>
-        )}
+        ) : null}
+        {isBrowser && !polkadotAccount ? (
+          <Icon>
+            <PhalaIcon />
+          </Icon>
+        ) : null}
       </div>
     </Wrapper>
   )

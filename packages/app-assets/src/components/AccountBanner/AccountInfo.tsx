@@ -7,6 +7,7 @@ import {trimAddress} from '@phala/utils'
 import {PolkadotAccountModal} from '@phala/react-components'
 import {useClipboard} from '@phala/react-hooks'
 import {toast} from 'react-toastify'
+import {useSSR} from '@phala/react-hooks'
 import {CopyIcon} from '../Icons/CopyIcon'
 import Button from '../Button'
 
@@ -95,6 +96,8 @@ const AccountInfo: React.FC = () => {
   const isMobile = useBreakpoint(down('sm'))
   const isPad = useBreakpoint(down('md'))
 
+  const {isBrowser} = useSSR()
+
   const addressVale = useMemo(() => {
     if (!polkadotAccount) {
       return 'Earn , Transfer , Operate in the world of Web3'
@@ -126,9 +129,7 @@ const AccountInfo: React.FC = () => {
           </ButtonWrapper>
         )}
         <AddressWrapper>
-          {!polkadotAccount ? (
-            <Address>{addressVale}</Address>
-          ) : (
+          {isBrowser && polkadotAccount ? (
             <HrefAddress
               href={`https://khala.subscan.io/account/${polkadotAccount?.address}`}
               target="_blank"
@@ -136,7 +137,10 @@ const AccountInfo: React.FC = () => {
             >
               {addressVale}
             </HrefAddress>
-          )}
+          ) : null}
+          {isBrowser && !polkadotAccount ? (
+            <Address>{addressVale}</Address>
+          ) : null}
 
           {!polkadotAccount ? null : (
             <CopyIcon
