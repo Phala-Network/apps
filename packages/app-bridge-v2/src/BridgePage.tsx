@@ -1,7 +1,4 @@
-import {
-  useKhalaChainbridgeTransactions,
-  useSubquery,
-} from '@phala/app-bridge-graph'
+import {useBridgeOutBoundingRecords} from '@phala/app-bridge-graph'
 import {Button, ToasterContainer} from '@phala/react-components'
 import {PLACEMENT} from 'baseui/toast'
 import {FC, useState} from 'react'
@@ -29,11 +26,9 @@ export const BridgePage: FC = () => {
   const switchData = useSwitchToAndFormData()
   const extraInfo = useExtraInfo()
 
-  const data = useKhalaChainbridgeTransactions()
-  const data1 = useSubquery()
+  const data = useBridgeOutBoundingRecords()
 
-  data.then(console.error)
-  data1.then(console.error)
+  console.error(data)
 
   const submit = () => {
     setIsOpenTransferModal(true)
