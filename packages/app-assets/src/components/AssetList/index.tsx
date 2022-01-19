@@ -13,7 +13,7 @@ const Wrapper = styled.div`
 
   ${up('md')} {
     margin: 0 auto;
-    max-width: 1700px;
+    max-width: 1270px;
   }
   ${down('sm')} {
     padding: 22px 10px;

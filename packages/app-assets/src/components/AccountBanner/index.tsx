@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import {down} from 'styled-breakpoints'
+import {down, up} from 'styled-breakpoints'
 import {useSSR} from '@phala/react-hooks'
 import {usePolkadotAccountAtom} from '@phala/app-store'
 import {formatCurrency} from '@phala/utils'
@@ -14,12 +14,24 @@ const Wrapper = styled.div`
   background-repeat: no-repeat;
   background-position: right;
   background-size: contain;
-  display: flex;
   height: 240px;
 
   ${down('sm')} {
-    flex-direction: column;
     height: 192px;
+  }
+`
+
+const Content = styled.div`
+  display: flex;
+  height: 100%;
+
+  ${up('md')} {
+    margin: 0 auto;
+    max-width: 1440px;
+  }
+
+  ${down('sm')} {
+    flex-direction: column;
   }
 `
 
@@ -36,7 +48,7 @@ const Left = styled.div`
 
 const Icon = styled.div`
   padding-top: 33px;
-  padding-right: 96px;
+  padding-right: 95px;
 
   ${down('lg')} {
     padding-right: 50px;
@@ -55,7 +67,7 @@ const Dollar = styled.div`
   line-height: 36px;
   color: #ffffff;
   padding-top: 113px;
-  padding-right: 84px;
+  padding-right: 85px;
 
   ${down('sm')} {
     font-size: 36px;
@@ -76,21 +88,23 @@ const AccountBanner: React.FC<Props> = ({totalValue}) => {
 
   return (
     <Wrapper>
-      <Left>
-        <AccountInfo />
-      </Left>
-      <div>
-        {isBrowser && polkadotAccount ? (
-          <Dollar>
-            {Number(totalValue) ? `$ ${formatCurrency(totalValue)}` : '-'}
-          </Dollar>
-        ) : null}
-        {isBrowser && !polkadotAccount ? (
-          <Icon>
-            <PhalaIcon />
-          </Icon>
-        ) : null}
-      </div>
+      <Content>
+        <Left>
+          <AccountInfo />
+        </Left>
+        <div>
+          {isBrowser && polkadotAccount ? (
+            <Dollar>
+              {Number(totalValue) ? `$ ${formatCurrency(totalValue)}` : '-'}
+            </Dollar>
+          ) : null}
+          {isBrowser && !polkadotAccount ? (
+            <Icon>
+              <PhalaIcon />
+            </Icon>
+          ) : null}
+        </div>
+      </Content>
     </Wrapper>
   )
 }

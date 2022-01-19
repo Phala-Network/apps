@@ -96,7 +96,7 @@ const AccountInfo: React.FC = () => {
   const isMobile = useBreakpoint(down('sm'))
   const isPad = useBreakpoint(down('md'))
 
-  const {isBrowser} = useSSR()
+  const {isServer} = useSSR()
 
   const addressVale = useMemo(() => {
     if (!polkadotAccount) {
@@ -115,6 +115,8 @@ const AccountInfo: React.FC = () => {
       toast('Copied to clipboard')
     }
   }
+
+  if (isServer) return null
   return (
     <>
       <Wrapper>
@@ -129,7 +131,9 @@ const AccountInfo: React.FC = () => {
           </ButtonWrapper>
         )}
         <AddressWrapper>
-          {isBrowser && polkadotAccount ? (
+          {!polkadotAccount ? (
+            <Address>{addressVale}</Address>
+          ) : (
             <HrefAddress
               href={`https://khala.subscan.io/account/${polkadotAccount?.address}`}
               target="_blank"
@@ -137,10 +141,7 @@ const AccountInfo: React.FC = () => {
             >
               {addressVale}
             </HrefAddress>
-          ) : null}
-          {isBrowser && !polkadotAccount ? (
-            <Address>{addressVale}</Address>
-          ) : null}
+          )}
 
           {!polkadotAccount ? null : (
             <CopyIcon
