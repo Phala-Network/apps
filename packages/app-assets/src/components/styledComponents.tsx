@@ -70,6 +70,9 @@ export const inputStyle = {
       fontSize: '14px',
       lineHeight: '16px',
       color: '#111111',
+      '::placeholder': {
+        color: '#8C8C8C',
+      },
     }),
   },
 }

@@ -64,7 +64,6 @@ const ButtonCell: React.FC<Pick<DataType, 'name'>> = ({name}) => {
       {isMobile ? null : (
         <Button onClick={() => setVisibleTransferModal(true)}>Transfer</Button>
       )}
-
       <Spacer />
       <Popover
         content={({close}) => (

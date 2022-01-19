@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import {down} from 'styled-breakpoints'
+import {down, up} from 'styled-breakpoints'
 import {useBreakpoint} from 'styled-breakpoints/react-styled'
 import {TableBuilder, TableBuilderColumn} from 'baseui/table-semantic'
 import AssetCell from './AssetCell'
@@ -11,6 +11,10 @@ import ValueCell from './ValueCell'
 const Wrapper = styled.div`
   padding: 30px 85px;
 
+  ${up('md')} {
+    margin: 0 auto;
+    max-width: 1700px;
+  }
   ${down('sm')} {
     padding: 22px 10px;
   }

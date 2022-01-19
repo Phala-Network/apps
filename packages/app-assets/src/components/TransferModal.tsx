@@ -124,7 +124,8 @@ const TransferModal: React.FC<Props> = ({visible, onClose}) => {
                 fontSize: '32px',
                 lineHeight: '32px',
                 '::placeholder': {
-                  transform: 'scale(0.5)',
+                  color: '#8C8C8C',
+                  transform: 'scale(0.45)',
                   transformOrigin: 'center left',
                   fontWeight: 'normal',
                 },

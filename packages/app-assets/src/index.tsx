@@ -1,6 +1,7 @@
 import Decimal from 'decimal.js'
 import {useMemo} from 'react'
 import styled from 'styled-components'
+import {Helmet} from 'react-helmet'
 import AccountBanner from './components/AccountBanner'
 import AssetList, {DataType} from './components/AssetList'
 import useKPhaData from './hooks/useKPhaData'
@@ -27,6 +28,9 @@ const Index = () => {
 
   return (
     <Wrapper>
+      <Helmet>
+        <title>Dashboard</title>
+      </Helmet>
       <AccountBanner totalValue={totalValue} />
       <AssetList tableData={tableData} />
     </Wrapper>
