@@ -109,7 +109,7 @@ const AssetList: React.FC<Props> = ({tableData}) => {
               paddingLeft: '40px',
               paddingRight: 0,
               ':last-of-type': {
-                paddingTop: '14px',
+                paddingTop: '10px',
               },
               [$theme.mediaQuery.small]: {
                 paddingLeft: '30px',
