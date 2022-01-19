@@ -482,7 +482,10 @@ const StakePoolTableV2 = ({
                 label: 'Set Commission',
                 key: 'setCommission',
               },
-              kind === 'myDelegate' && {label: 'Claim', key: 'claim'},
+              (kind === 'myDelegate' || kind === 'mining') && {
+                label: 'Claim',
+                key: 'claim',
+              },
               {label: 'Delegate', key: 'delegate'},
               (kind === 'myDelegate' || kind === 'mining') && {
                 label: 'Withdraw',
