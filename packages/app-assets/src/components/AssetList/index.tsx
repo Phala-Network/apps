@@ -24,8 +24,8 @@ const Title = styled.div`
   font-family: Montserrat;
   font-style: normal;
   font-weight: 500;
-  font-size: 36px;
-  line-height: 36px;
+  font-size: 20px;
+  line-height: 20px;
   color: #111111;
   margin-bottom: 20px;
 
@@ -83,8 +83,8 @@ const AssetList: React.FC<Props> = ({tableData}) => {
               fontFamily: 'Montserrat',
               fontStyle: 'normal',
               fontWeight: 500,
-              fontSize: '20px',
-              lineHeight: '20px',
+              fontSize: '16px',
+              lineHeight: '16px',
               color: '#111111',
               paddingTop: '18px',
               paddingBottom: '18px',

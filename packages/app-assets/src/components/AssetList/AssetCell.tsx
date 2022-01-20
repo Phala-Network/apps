@@ -12,8 +12,8 @@ const Name = styled.span<{isKPHA?: boolean}>`
   font-family: Montserrat;
   font-style: normal;
   font-weight: 500;
-  font-size: ${(props) => (props.isKPHA ? '20px' : '16px')};
-  line-height: ${(props) => (props.isKPHA ? '20px' : '16px')};
+  font-size: 16px;
+  line-height: 16px;
   color: #111111;
   margin-left: 20px;
   min-width: 53px;
