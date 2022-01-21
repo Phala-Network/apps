@@ -275,10 +275,14 @@ const InputDataStep: React.FC<Props> = (props) => {
           {ethereumAccount && isFromEthereum && (
             <ErrorBoundary fallbackRender={() => null}>
               <EthereumAllowance
-                placeholder={<Button type="primary">Approve</Button>}
+                placeholder={
+                  <Button disabled type="primary">
+                    Approve
+                  </Button>
+                }
                 account={ethereumAccount.address}
               >
-                <Button type="primary" onClick={submit}>
+                <Button disabled type="primary" onClick={submit}>
                   Next
                 </Button>
               </EthereumAllowance>
@@ -286,7 +290,7 @@ const InputDataStep: React.FC<Props> = (props) => {
           )}
 
           {!ethereumAccount && isFromEthereum && (
-            <Button type="primary" onClick={ethereumWeb3connect}>
+            <Button disabled type="primary" onClick={ethereumWeb3connect}>
               Connect Wallet
             </Button>
           )}
