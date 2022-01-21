@@ -101,7 +101,6 @@ const StakePoolTableV2 = ({
   const pageSize = kind === 'mining' ? 10 : 20
   const [polkadotAccount] = usePolkadotAccountAtom()
   const address = polkadotAccount?.address
-  const myDelegateAvailable: boolean = kind === 'myDelegate' && Boolean(address)
   const [searchString, setSearchString] = useState('')
   const [sortColumn, setSortColumn] = useState<
     keyof StakePoolsOrderByWithRelationInput
@@ -156,7 +155,7 @@ const StakePoolTableV2 = ({
           workersFilter && {minersCount: {gt: 0}},
           aprFilter && {instantApr: {gt: '0'}},
           commissionFilter && {commission: {lt: '1'}},
-          myDelegateAvailable && {
+          kind === 'myDelegate' && {
             stakePoolStakers: {
               some: {
                 address: {equals: address},
@@ -173,7 +172,7 @@ const StakePoolTableV2 = ({
           },
         ].filter(isTruthy),
       },
-      ...((myDelegateAvailable || kind === 'mining') && {
+      ...((kind === 'myDelegate' || kind === 'mining') && {
         stakePoolStakersWhere: {
           address: {
             equals: address,
@@ -193,7 +192,7 @@ const StakePoolTableV2 = ({
     },
     {
       keepPreviousData: true,
-      enabled: kind !== 'myDelegate' || myDelegateAvailable,
+      enabled: kind === 'delegate' || Boolean(polkadotAccount?.address),
     }
   )
 
