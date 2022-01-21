@@ -13194,6 +13194,13 @@ export type MinersQueryVariables = Exact<{
 
 export type MinersQuery = { __typename?: 'Query', findManyMiners: Array<{ __typename?: 'Miners', workerPublicKey: string, pid: number, state: string, v: string, ve: string, pInit: number, pInstant: number, totalReward: string, shares: string, sMin: string, sMax: string, stakes: string, estimatesReclaimableAt?: any | null | undefined, stakePools: { __typename?: 'StakePools', freeStake: string } }>, aggregateMiners: { __typename?: 'AggregateMiners', _count?: { __typename?: 'MinersCountAggregate', _all: number } | null | undefined } };
 
+export type StakePoolQueryVariables = Exact<{
+  where: StakePoolsWhereUniqueInput;
+}>;
+
+
+export type StakePoolQuery = { __typename?: 'Query', findUniqueStakePools?: { __typename?: 'StakePools', pid: number, ownerAddress: string, commission: string, ownerReward: string, cap?: string | null | undefined, rewardAcc: string, totalShares: string, totalStake: string, freeStake: string, releasingStake: string, remainingStake?: string | null | undefined, instantApr: string, stakersCount: number, withdrawalsCount: number, minersCount: number } | null | undefined };
+
 
 export const StakePoolsDocument = `
     query StakePools($where: StakePoolsWhereInput, $orderBy: [StakePoolsOrderByWithRelationInput!], $take: Int, $skip: Int, $withStakePoolStakers: Boolean = false, $stakePoolStakersWhere: StakePoolStakersWhereInput, $withStakePoolWithdrawals: Boolean = false, $stakePoolWithdrawalsWhere: StakePoolWithdrawalsWhereInput, $withMiners: Boolean = false, $minersWhere: MinersWhereInput) {
@@ -13348,5 +13355,40 @@ export const useMinersQuery = <
     useQuery<MinersQuery, TError, TData>(
       variables === undefined ? ['Miners'] : ['Miners', variables],
       fetcher<MinersQuery, MinersQueryVariables>(client, MinersDocument, variables, headers),
+      options
+    );
+export const StakePoolDocument = `
+    query StakePool($where: StakePoolsWhereUniqueInput!) {
+  findUniqueStakePools(where: $where) {
+    pid
+    ownerAddress
+    commission
+    ownerReward
+    cap
+    rewardAcc
+    totalShares
+    totalStake
+    freeStake
+    releasingStake
+    remainingStake
+    instantApr
+    stakersCount
+    withdrawalsCount
+    minersCount
+  }
+}
+    `;
+export const useStakePoolQuery = <
+      TData = StakePoolQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: StakePoolQueryVariables,
+      options?: UseQueryOptions<StakePoolQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<StakePoolQuery, TError, TData>(
+      ['StakePool', variables],
+      fetcher<StakePoolQuery, StakePoolQueryVariables>(client, StakePoolDocument, variables, headers),
       options
     );
