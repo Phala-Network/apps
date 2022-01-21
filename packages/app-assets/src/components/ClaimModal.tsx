@@ -57,6 +57,9 @@ const ClaimModal: React.FC<Props> = ({visible, onClose}) => {
 
   const format = useCallback<(bn: BN | undefined) => string>(
     (bn) => {
+      // HACK: derived vestedClaimable may be negative
+      if (bn?.isNeg()) return '0'
+
       if (bn && decimals) {
         return bnToDecimal(bn, decimals).toString()
       }
