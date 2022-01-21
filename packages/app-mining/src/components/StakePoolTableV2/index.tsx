@@ -151,6 +151,8 @@ const StakePoolTableV2 = ({
         AND: [
           // For development
           process.env.NODE_ENV !== 'development' &&
+            polkadotAccount?.address !==
+              '42FEJpvDMyTxHPTjGXt5TDC5FSefVqwrhADngAZC9UYqCFht' &&
             kind === 'mining' && {ownerAddress: {equals: address}},
           workersFilter && {minersCount: {gt: 0}},
           aprFilter && {instantApr: {gt: '0'}},
