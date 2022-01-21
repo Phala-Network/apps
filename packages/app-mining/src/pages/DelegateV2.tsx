@@ -1,5 +1,6 @@
 import {Helmet} from 'react-helmet'
 import styled from 'styled-components'
+import {up} from 'styled-breakpoints'
 import {Card} from 'baseui/card'
 import DelegateBanner from '../components/DelegateBanner'
 import StakePoolTableV2 from '../components/StakePoolTableV2'
@@ -9,6 +10,10 @@ const Wrapper = styled.div`
   overflow-x: auto;
   margin: 10px 40px 70px;
   flex: 1;
+  ${up('md')} {
+    margin: 10px auto 70px;
+    max-width: 1700px;
+  }
 `
 
 export const DelegateV2 = (): JSX.Element => {

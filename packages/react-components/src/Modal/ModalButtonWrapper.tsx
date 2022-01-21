@@ -3,14 +3,14 @@ import {ModalButton} from 'baseui/modal'
 import {ButtonProps} from 'baseui/button'
 
 export const ModalButtonWrapper: React.FC<ButtonProps> = (props) => {
-  const {children, ...params} = props
+  const {children, type, ...params} = props
   return (
     <ModalButton
       overrides={{
         BaseButton: {
           style: () => ({
             width: '100%',
-            backgroundColor: '#EEEEEE',
+            backgroundColor: type === 'submit' ? '#D1FF52' : '#EEEEEE',
             fontFamily: 'Montserrat',
             fontStyle: 'normal',
             fontWeight: 500,
