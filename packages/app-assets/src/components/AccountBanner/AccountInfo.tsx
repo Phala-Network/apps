@@ -8,7 +8,7 @@ import {PolkadotAccountModal} from '@phala/react-components'
 import {useClipboard} from '@phala/react-hooks'
 import {toast} from 'react-toastify'
 import {useSSR} from '@phala/react-hooks'
-import {CopyIcon} from '../Icons/CopyIcon'
+import CopyIcon from '../Icons/CopyIcon.svg'
 import Button from '../Button'
 
 const Wrapper = styled.div`

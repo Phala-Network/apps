@@ -1,6 +1,6 @@
 import {StatefulPopover, PLACEMENT, StatefulPopoverProps} from 'baseui/popover'
 import {Button, KIND} from 'baseui/button'
-import {MoreIcon} from './Icons/MoreIcon'
+import MoreIcon from './Icons/MoreIcon.svg'
 
 const Popover: React.FC<StatefulPopoverProps> = (props) => {
   return (

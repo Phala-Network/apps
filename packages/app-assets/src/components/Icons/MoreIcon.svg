@@ -1,6 +1,4 @@
-export const MoreIcon = () => {
-  return (
-    <svg
+<svg
       width="36"
       height="36"
       viewBox="0 0 36 36"
@@ -29,5 +27,3 @@ export const MoreIcon = () => {
         fill="#111111"
       />
     </svg>
-  )
-}
