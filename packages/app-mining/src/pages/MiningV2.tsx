@@ -10,7 +10,13 @@ import ClaimAll from '../components/ClaimAll'
 
 export const MiningV2 = (): JSX.Element => {
   return (
-    <Block>
+    <Block
+      maxWidth="1700px"
+      margin="0 auto"
+      paddingLeft="scale650"
+      paddingRight="scale650"
+      paddingBottom="scale2400"
+    >
       <Helmet>
         <title>Mining</title>
       </Helmet>

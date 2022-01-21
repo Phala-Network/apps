@@ -11,7 +11,13 @@ import {Block} from 'baseui/block'
 
 export const MyDelegateV2 = () => {
   return (
-    <Block>
+    <Block
+      maxWidth="1700px"
+      margin="0 auto"
+      paddingLeft="scale650"
+      paddingRight="scale650"
+      paddingBottom="scale2400"
+    >
       <Helmet>
         <title>My Delegate</title>
       </Helmet>

@@ -7,7 +7,13 @@ import {Block} from 'baseui/block'
 
 export const DelegateV2 = (): JSX.Element => {
   return (
-    <Block>
+    <Block
+      maxWidth="1700px"
+      margin="0 auto"
+      paddingLeft="scale650"
+      paddingRight="scale650"
+      paddingBottom="scale2400"
+    >
       <Helmet>
         <title>Delegate</title>
       </Helmet>
