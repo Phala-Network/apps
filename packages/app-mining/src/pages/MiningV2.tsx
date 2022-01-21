@@ -6,6 +6,7 @@ import CreatePoolButton from '../components/CreatePoolButton'
 import StakePoolTableV2 from '../components/StakePoolTableV2'
 import WorkerTableV2 from '../components/WorkerTableV2'
 import StatusBarV2 from '../components/StatusBarV2'
+import ClaimAll from '../components/ClaimAll'
 
 export const MiningV2 = (): JSX.Element => {
   return (
@@ -32,7 +33,10 @@ export const MiningV2 = (): JSX.Element => {
           alignItems="center"
         >
           <HeadingMedium as="div">Stake Pool</HeadingMedium>
-          <CreatePoolButton />
+          <Block display="flex">
+            <ClaimAll marginRight="scale400" />
+            <CreatePoolButton />
+          </Block>
         </Block>
         <StakePoolTableV2 kind="mining" />
       </Card>

@@ -16,7 +16,7 @@ import type {TableItem} from './Delegate/MyDelegateTable'
 const ClaimAllModal = (props: {
   onClose: () => void
   stakePools: TableItem[]
-}): JSX.Element => {
+}) => {
   const {onClose, stakePools} = props
   const {api} = useApiPromise()
   const format = useFormat()

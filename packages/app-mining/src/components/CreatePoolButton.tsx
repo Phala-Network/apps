@@ -12,7 +12,7 @@ import {ParagraphSmall} from 'baseui/typography'
 import {useState} from 'react'
 import useWaitSignAndSend from '../hooks/useWaitSignAndSend'
 
-const Body = ({onClose}: Pick<ModalProps, 'onClose'>): JSX.Element => {
+const Body = ({onClose}: Pick<ModalProps, 'onClose'>) => {
   const {api} = useApiPromise()
   const waitSignAndSend = useWaitSignAndSend()
   const onConfirm = () => {
@@ -36,7 +36,7 @@ const Body = ({onClose}: Pick<ModalProps, 'onClose'>): JSX.Element => {
   )
 }
 
-const CreatePoolButton = (): JSX.Element => {
+const CreatePoolButton = () => {
   const [isOpen, setIsOpen] = useState(false)
   const onClose = () => setIsOpen(false)
   return (
