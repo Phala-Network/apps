@@ -123,7 +123,7 @@ const StakePoolTableV2 = ({
     {
       take: pageSize,
       withStakePoolStakers: kind === 'myDelegate' || kind === 'mining',
-      withStakePoolWithdrawals: kind === 'delegate' || kind === 'mining',
+      withStakePoolWithdrawals: kind === 'myDelegate' || kind === 'mining',
       withMiners: kind === 'myDelegate' || kind === 'mining',
       skip: pageSize * (currentPage - 1),
       orderBy: {[sortColumn]: sortAsc ? SortOrder.Asc : SortOrder.Desc},
