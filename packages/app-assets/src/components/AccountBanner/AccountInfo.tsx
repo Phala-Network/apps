@@ -100,7 +100,7 @@ const AccountInfo: React.FC = () => {
 
   const addressVale = useMemo(() => {
     if (!polkadotAccount) {
-      return 'Earn , Transfer , Operate in the world of Web3'
+      return 'To host, connect, and gain in the world of Web3'
     }
     if (isPad) return trimAddress(polkadotAccount.address)
     return polkadotAccount.address
@@ -121,7 +121,7 @@ const AccountInfo: React.FC = () => {
     <>
       <Wrapper>
         <Name>
-          {!polkadotAccount ? 'Participate in Phala' : polkadotAccount.name}
+          {!polkadotAccount ? 'Portal to Web3' : polkadotAccount.name}
         </Name>
         {!polkadotAccount && isMobile ? null : (
           <ButtonWrapper>
