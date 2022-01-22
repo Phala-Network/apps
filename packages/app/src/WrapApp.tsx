@@ -34,7 +34,7 @@ const WrapApp: React.FC = ({children}) => {
     })
   )
 
-  const defaultNetwork = 'poc4-dev'
+  const defaultNetwork = 'khala'
 
   // eslint-disable-next-line no-console
   console.info('defaultNetwork', defaultNetwork)
