@@ -5,16 +5,16 @@ import {MobileToastContextProvider} from '@phala/react-components'
 import {Provider as LibProvider} from '@phala/react-libs'
 import {isProduction} from '@phala/utils'
 import * as Sentry from '@sentry/react'
+import {BaseProvider} from 'baseui'
+import {SnackbarProvider} from 'baseui/snackbar'
+import {toaster, ToasterContainer} from 'baseui/toast'
 import React, {StrictMode, useLayoutEffect, useRef} from 'react'
 import {QueryClient, QueryClientProvider} from 'react-query'
 import {ReactQueryDevtools} from 'react-query/devtools'
 import {ThemeProvider} from 'styled-components'
-import {BaseProvider} from 'baseui'
 import './fonts.css'
-import theme, {baseTheme} from './theme'
-import {SnackbarProvider} from 'baseui/snackbar'
-import {toaster, ToasterContainer} from 'baseui/toast'
 import useZendesk from './hooks/useZendesk'
+import theme, {baseTheme} from './theme'
 
 const WrapApp: React.FC = ({children}) => {
   const client = useRef(
@@ -34,7 +34,7 @@ const WrapApp: React.FC = ({children}) => {
     })
   )
 
-  const defaultNetwork = 'khala'
+  const defaultNetwork = 'poc4-dev'
 
   // eslint-disable-next-line no-console
   console.info('defaultNetwork', defaultNetwork)
