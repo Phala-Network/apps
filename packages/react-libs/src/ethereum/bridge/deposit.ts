@@ -67,7 +67,6 @@ export const useErc20Deposit = (
 
       const dest = api
         .createType('XcmV1MultiLocation', {
-          // parents = 0 means we send to xcm local network(e.g. Khala network here)
           parents: 0,
           interior: api.createType('Junctions', {
             X1: api.createType('XcmV1Junction', {
