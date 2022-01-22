@@ -1,5 +1,4 @@
 import {
-  Announcement,
   InputDataStep,
   InputDataStepResult,
   SubmitStepModal,
@@ -46,10 +45,10 @@ const BridgePage: React.FC = () => {
       <QueryClientProvider contextSharing={true} client={queryClient}>
         <RightContent>
           {/* TODO: need a message api */}
-          <Announcement>
+          {/* <Announcement>
             The bridge is currently under maintenance and temporarily
             unavailable. It&apos;s supposed to take 24 hours.
-          </Announcement>
+          </Announcement> */}
 
           <WhiteCard>
             <InputDataStep layout={'flex'} onNext={showSubmitModal} />
