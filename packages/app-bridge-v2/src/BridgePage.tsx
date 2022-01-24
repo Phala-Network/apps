@@ -1,5 +1,5 @@
 import {useBridgeOutBoundingRecords} from '@phala/app-bridge-graph'
-import {Button, ToasterContainer} from '@phala/react-components'
+import {ToasterContainer} from '@phala/react-components'
 import {PLACEMENT} from 'baseui/toast'
 import {FC, useState} from 'react'
 import {Helmet} from 'react-helmet'
@@ -75,22 +75,6 @@ export const BridgePage: FC = () => {
           }}
           isOpen={isOpenInformationModal}
         />
-
-        <Button
-          onClick={() => {
-            setIsOpenTransferModal(true)
-          }}
-        >
-          提交窗口
-        </Button>
-
-        <Button
-          onClick={() => {
-            setIsOpenInformationModal(true)
-          }}
-        >
-          信息窗口
-        </Button>
       </Root>
 
       <Transactions />
