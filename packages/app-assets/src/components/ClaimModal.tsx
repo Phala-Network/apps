@@ -1,8 +1,10 @@
 import {usePolkadotAccountAtom} from '@phala/app-store'
 import {
-  Button,
-  Modal,
   PhalaStakePoolTransactionFeeLabel,
+  ModalWrapper,
+  ModalTitleWrapper,
+  ModalFooterWrapper,
+  ModalButtonWrapper,
 } from '@phala/react-components'
 import {useAllBalances} from '@phala/react-hooks'
 import {
@@ -22,20 +24,27 @@ type Props = {
 }
 
 const Text = styled.div`
-  font-size: 12px;
-  color: #878787;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 16px;
+  color: #111111;
 `
 
 const Info = styled.div`
-  font-size: 12px;
-  margin-top: 32px;
-  font-family: PT Mono;
-
-  span {
-    font-family: Lato;
-    font-weight: bold;
-  }
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 20px;
+  color: #111111;
+  margin-bottom: 20px;
+`
+const ButtonContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-column-gap: 20px;
 `
 
 const ClaimModal: React.FC<Props> = ({visible, onClose}) => {
@@ -83,25 +92,8 @@ const ClaimModal: React.FC<Props> = ({visible, onClose}) => {
   const canClaim = Boolean(vestedClaimable) && !vestedClaimable?.isZero()
 
   return (
-    <Modal
-      visible={visible}
-      onClose={onClose}
-      title="Claim PHA"
-      actionsExtra={<PhalaStakePoolTransactionFeeLabel action={action} />}
-      actions={[
-        <Button onClick={onClose} key="reject">
-          Cancel
-        </Button>,
-        <Button
-          disabled={loading || !canClaim}
-          onClick={confirm}
-          key="confirm"
-          type="primary"
-        >
-          {loading ? 'Confirming' : 'Confirm'}
-        </Button>,
-      ]}
-    >
+    <ModalWrapper visible={visible} onClose={onClose}>
+      <ModalTitleWrapper>Claim PHA</ModalTitleWrapper>
       <Text>
         You have unlocked{' '}
         {format(vestedClaimable && vestedBalance?.sub(vestedClaimable))} PHA,
@@ -113,7 +105,20 @@ const ClaimModal: React.FC<Props> = ({visible, onClose}) => {
           <span>Claim now:</span> {format(vestedClaimable)} PHA
         </Info>
       )}
-    </Modal>
+      <PhalaStakePoolTransactionFeeLabel action={action} />
+      <ModalFooterWrapper>
+        <ButtonContainer>
+          <ModalButtonWrapper onClick={onClose}>Cancel</ModalButtonWrapper>
+          <ModalButtonWrapper
+            disabled={loading || !canClaim}
+            onClick={confirm}
+            type="submit"
+          >
+            {loading ? 'Confirming' : 'Confirm'}
+          </ModalButtonWrapper>
+        </ButtonContainer>
+      </ModalFooterWrapper>
+    </ModalWrapper>
   )
 }
 

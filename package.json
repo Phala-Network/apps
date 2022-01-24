@@ -50,5 +50,11 @@
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": "eslint --cache --fix"
   },
-  "packageManager": "pnpm@6.23.6"
+  "packageManager": "pnpm@6.23.6",
+  "browserslist": [
+    "last 10 chrome version",
+    "last 10 firefox version",
+    "last 2 safari version",
+    "last 10 edge version"
+  ]
 }

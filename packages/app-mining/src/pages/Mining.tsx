@@ -1,6 +1,7 @@
 import {useMemo} from 'react'
 import {Helmet} from 'react-helmet'
 import styled from 'styled-components'
+import {up} from 'styled-breakpoints'
 import useWorkers from '../hooks/useWorkers'
 import StakePoolTable from '../components/StakePoolTable'
 import WorkerTable from '../components/WorkerTable'
@@ -10,6 +11,12 @@ const Wrapper = styled.div`
   flex: 1;
   overflow-x: auto;
   margin: 48px 30px;
+  width: 100%;
+  max-width: 1700px;
+  ${up('md')} {
+    margin: 48px auto;
+    max-width: 1700px;
+  }
 `
 
 const Block = styled.div`

@@ -1,29 +1,35 @@
 import {usePolkadotAccountAtom} from '@phala/app-store'
 import {
-  Button,
-  Input,
-  Modal,
   PolkadotTransactionFeeLabel,
+  ModalWrapper,
+  ModalTitleWrapper,
+  ModalFooterWrapper,
+  ModalButtonWrapper,
 } from '@phala/react-components'
 import {
   useApiPromise,
   useDecimalJsTokenDecimalMultiplier,
   waitSignAndSend,
 } from '@phala/react-libs'
-import {validateAddress} from '@phala/utils'
+import {usePolkadotAccountTransferrableBalanceDecimal} from '@phala/react-hooks'
+import {validateAddress, toFixed} from '@phala/utils'
 import Decimal from 'decimal.js'
-import React, {useCallback, useState} from 'react'
+import React, {useCallback, useState, useMemo} from 'react'
 import {toast} from 'react-toastify'
-import styled from 'styled-components'
+import {Input} from 'baseui/input'
+import {
+  Spacer,
+  ButtonContainer,
+  InputWrapper,
+  BalanceText,
+  MaxButton,
+  inputStyle,
+} from './styledComponents'
 
 type Props = {
   visible: boolean
   onClose: () => void
 }
-
-const Spacer = styled.div`
-  margin-top: 20px;
-`
 
 const TransferModal: React.FC<Props> = ({visible, onClose}) => {
   const [address, setAddress] = useState('')
@@ -32,6 +38,22 @@ const TransferModal: React.FC<Props> = ({visible, onClose}) => {
   const {api} = useApiPromise()
   const [polkadotAccount] = usePolkadotAccountAtom()
   const decimals = useDecimalJsTokenDecimalMultiplier(api)
+
+  const polkadotAccountAddress = polkadotAccount?.address
+  const polkadotTransferBalanceDecimal =
+    usePolkadotAccountTransferrableBalanceDecimal(polkadotAccountAddress)
+  const isShowMaxButton = polkadotTransferBalanceDecimal.greaterThan('0.003')
+
+  const transferrableValue = useMemo(() => {
+    if (!polkadotTransferBalanceDecimal) return '-'
+    return `${toFixed(polkadotTransferBalanceDecimal)} PHA`
+  }, [polkadotTransferBalanceDecimal])
+
+  const handleMax = () => {
+    if (!polkadotTransferBalanceDecimal) return
+    const maxValue = polkadotTransferBalanceDecimal.sub('0.003').toString()
+    setAmount(maxValue)
+  }
 
   const confirm = useCallback(async () => {
     if (api && polkadotAccount && decimals) {
@@ -69,51 +91,85 @@ const TransferModal: React.FC<Props> = ({visible, onClose}) => {
   }, [api, polkadotAccount, onClose, address, amount, decimals])
 
   return (
-    <Modal
-      visible={visible}
-      onClose={onClose}
-      title="Transfer"
-      actionsExtra={
-        <PolkadotTransactionFeeLabel
-          key="PolkadotTransactionFeeLabel"
-          sender={polkadotAccount?.address}
-          recipient={address}
-          amount={amount}
+    <ModalWrapper visible={visible} onClose={onClose}>
+      <ModalTitleWrapper>Transfer PHA</ModalTitleWrapper>
+      <InputWrapper>
+        <Input
+          value={address}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setAddress(e.target.value)
+          }
+          placeholder="Wallet address"
+          overrides={inputStyle}
         />
-      }
-      actions={[
-        <Button onClick={onClose} key="reject">
-          Cancel
-        </Button>,
-        <Button
-          disabled={loading}
-          onClick={() => {
-            setLoading(true)
-            confirm().finally(() => setLoading(false))
+      </InputWrapper>
+      <Spacer></Spacer>
+      <InputWrapper>
+        <Input
+          value={amount}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setAmount(e.target.value)
+          }
+          type="number"
+          placeholder="Amount(PHA)"
+          overrides={{
+            ...inputStyle,
+            Input: {
+              style: () => ({
+                paddingLeft: 0,
+                paddingBottom: '16px',
+                color: '#111',
+                fontStyle: 'normal',
+                fontWeight: 500,
+                fontSize: '32px',
+                lineHeight: '32px',
+                '::placeholder': {
+                  color: '#8C8C8C',
+                  transform: 'scale(0.45)',
+                  transformOrigin: 'center left',
+                  fontWeight: 'normal',
+                },
+              }),
+            },
+            EndEnhancer: {
+              style: () => ({
+                borderBottom: '1px solid #8C8C8C',
+                paddingRight: 0,
+                backgroundColor: '#eee',
+              }),
+            },
           }}
-          key="confirm"
-          type="primary"
-        >
-          {loading ? 'Confirming' : 'Confirm'}
-        </Button>,
-      ]}
-    >
-      <Input
-        size="large"
-        placeholder="Address"
-        value={address}
-        onChange={setAddress}
-      ></Input>
+          endEnhancer={() =>
+            isShowMaxButton ? (
+              <MaxButton onClick={handleMax}>Max</MaxButton>
+            ) : null
+          }
+        />
+        <BalanceText>{`Balance: ${transferrableValue}`}</BalanceText>
+      </InputWrapper>
       <Spacer></Spacer>
-      <Input
-        size="large"
-        after="PHA"
-        placeholder="Amount"
-        value={amount}
-        onChange={setAmount}
-      ></Input>
-      <Spacer></Spacer>
-    </Modal>
+      <PolkadotTransactionFeeLabel
+        key="PolkadotTransactionFeeLabel"
+        sender={polkadotAccount?.address}
+        recipient={address}
+        amount={amount}
+      />
+      <ModalFooterWrapper>
+        <ButtonContainer>
+          <ModalButtonWrapper onClick={onClose}>Cancel</ModalButtonWrapper>
+          <ModalButtonWrapper
+            disabled={loading}
+            onClick={() => {
+              setLoading(true)
+              confirm().finally(() => setLoading(false))
+            }}
+            type="submit"
+          >
+            {loading ? 'Confirming' : 'Confirm'}
+          </ModalButtonWrapper>
+        </ButtonContainer>
+      </ModalFooterWrapper>
+    </ModalWrapper>
   )
 }
 
