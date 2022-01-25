@@ -10,44 +10,49 @@ export function useBridgeOutBoundingRecords() {
       'https://api.thegraph.com/subgraphs/name/tolak/khala-rinkeby-chainbridge',
       gql`
         {
-          txes(first: 5) {
-            id
-            hash
-            sender
-          }
-          bridgeOutboundingRecords(first: 5) {
+          bridgeOutboundingRecords(first: 10) {
             id
             createdAt
             destChainId
             depositNonce
+            resourceId
+            amount
+            recipient
+            sendTx
+            sender
           }
         }
       `
-    ).then(setData)
+    ).then((data) => {
+      const {bridgeOutboundingRecords} = data
+
+      setData(bridgeOutboundingRecords)
+    })
 
     graphqlRequest(
       'https://api.subquery.network/sq/Phala-Network/khala-chainbridge__UGhhb',
       gql`
         query {
-          bridgeInboundingRecords(first: 5) {
-            nodes {
-              id
-              createdAt
-              originChainId
-              depositNonce
-            }
-          }
-          bridgeOutboundingRecords(first: 5) {
+          bridgeOutboundingRecords(first: 10) {
             nodes {
               id
               createdAt
               destChainId
               depositNonce
+              resourceId
+              amount
+              recipient
+              sendTx
+              sender
             }
           }
         }
       `
-    ).then(setData2)
+    ).then((data) => {
+      const {nodes} = data.bridgeOutboundingRecords
+
+      setData2(nodes)
+    })
   }, [])
 
   return [data, data2]
