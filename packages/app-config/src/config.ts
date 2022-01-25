@@ -41,7 +41,7 @@ export const ethereums: Record<string, EthereumNetworkOptions> = {
     erc20: '0x6c5ba91642f10282b576d91922ae6448c9d52f4e',
     erc20AssetHandler: '0x6eD3bc069Cf4F87DE05c04C352E8356492EC6eFE',
     erc20ResourceId:
-      '0x00000000000000000000000000000063a7e2be78898ba83824b0c0cc8dfb6001',
+      '0x00e6dfb61a2fb903df487c401663825643bb825d41695e63df8af6162ab145a6',
     peerChainIds: {
       khala: 1,
     },
