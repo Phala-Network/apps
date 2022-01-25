@@ -12,11 +12,13 @@ import DelegateTopBar from '../components/DelegateTopBarV2'
 
 const Wrapper = styled.div`
   overflow-x: auto;
-  margin: 10px 40px 70px;
+  padding: 10px 40px 70px;
   flex: 1;
+  width: 100%;
+  box-sizing: border-box;
   ${up('md')} {
-    margin: 10px auto 70px;
-    max-width: 1700px;
+    margin: 0 auto;
+    max-width: 1780px;
   }
 `
 
