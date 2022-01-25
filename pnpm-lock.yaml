@@ -271,7 +271,6 @@ importers:
       '@phala/app-config': workspace:^0.0.1
       '@phala/app-store': workspace:^0.0.1
       '@phala/react-components': workspace:^0.0.1
-      '@phala/react-graph-chainbridge': workspace:^0.0.1
       '@phala/react-hooks': workspace:^0.0.1
       '@phala/react-libs': workspace:^0.0.1
       '@phala/utils': workspace:0.0.1
@@ -294,7 +293,6 @@ importers:
       '@phala/app-config': link:../app-config
       '@phala/app-store': link:../app-store
       '@phala/react-components': link:../react-components
-      '@phala/react-graph-chainbridge': link:../react-graph-chainbridge
       '@phala/react-hooks': link:../react-hooks
       '@phala/react-libs': link:../react-libs
       '@phala/utils': link:../utils

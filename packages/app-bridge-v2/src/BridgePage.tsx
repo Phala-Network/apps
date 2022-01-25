@@ -1,4 +1,3 @@
-import {useBridgeOutBoundingRecords} from '@phala/app-bridge-graph'
 import {ToasterContainer} from '@phala/react-components'
 import {PLACEMENT} from 'baseui/toast'
 import {FC, useState} from 'react'
@@ -25,10 +24,6 @@ export const BridgePage: FC = () => {
   const [isOpenInformationModal, setIsOpenInformationModal] = useState(false)
   const switchData = useSwitchToAndFormData()
   const extraInfo = useExtraInfo()
-
-  const data = useBridgeOutBoundingRecords()
-
-  console.error(data)
 
   const submit = () => {
     setIsOpenTransferModal(true)
