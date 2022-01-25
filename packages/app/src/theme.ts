@@ -38,8 +38,8 @@ const overrides = {
   breakpoints,
   mediaQuery,
   lighting: {
-    shallowAbove: '0px -4px 16px rgba(0, 0, 0, 0.06)',
-    shallowBelow: '0px 4px 16px rgba(0, 0, 0, 0.06)',
+    shallowAbove: '0px -4px 16px rgba(0, 0, 0, 0.05)',
+    shallowBelow: '0px 4px 16px rgba(0, 0, 0, 0.05)',
   },
   typography,
 }

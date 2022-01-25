@@ -12,11 +12,10 @@ import {
   StakePoolsOrderByWithRelationInput,
 } from '../../hooks/graphql'
 import {client} from '../../utils/GraphQLClient'
-import {OwnerCell, TokenCell} from './Cells'
 import styled from 'styled-components'
 import {StatefulInput} from 'baseui/input'
 import {debounce} from 'lodash-es'
-import {isSSR, isTruthy, toFixed} from '@phala/utils'
+import {formatCurrency, isSSR, isTruthy, toFixed} from '@phala/utils'
 import PopoverButton from '../PopoverButton'
 import {usePolkadotAccountAtom} from '@phala/app-store'
 import Pagination from '../Pagination'
@@ -26,6 +25,7 @@ import {tooltipContent} from './tooltipContent'
 import Decimal from 'decimal.js'
 import {Block} from 'baseui/block'
 import TableSkeleton from '../TableSkeleton'
+import Owner from '../Owner'
 
 // FIXME: should be loadable, but meet some problems when configuring gatsby-plugin-loadable-components-ssr
 import DelegateModalBody from './DelegateModalBody'
@@ -97,7 +97,13 @@ const StakePoolTableV2 = ({
 }: {
   kind: 'delegate' | 'myDelegate' | 'mining'
 }): JSX.Element => {
-  const [currentTime] = useState(new Date().toISOString())
+  const [currentTime] = useState(() => {
+    const now = new Date()
+    now.setMinutes(0)
+    now.setSeconds(0)
+    now.setMilliseconds(0)
+    return now.toISOString()
+  })
   const pageSize = kind === 'mining' ? 10 : 20
   const [polkadotAccount] = usePolkadotAccountAtom()
   const address = polkadotAccount?.address
@@ -327,7 +333,7 @@ const StakePoolTableV2 = ({
               </TooltipHeader>
             }
           >
-            {(stakePool: StakePools) => <OwnerCell stakePool={stakePool} />}
+            {(stakePool: StakePools) => <Owner stakePool={stakePool} />}
           </TableBuilderColumn>
         )}
         {kind !== 'mining' && (
@@ -353,7 +359,7 @@ const StakePoolTableV2 = ({
           sortable
         >
           {({remainingStake}: StakePools) =>
-            remainingStake ? <TokenCell value={remainingStake} /> : '∞'
+            remainingStake ? `${formatCurrency(remainingStake)} PHA` : '∞'
           }
         </TableBuilderColumn>
         <TableBuilderColumn
@@ -379,9 +385,9 @@ const StakePoolTableV2 = ({
             }
             sortable
           >
-            {(stakePool: StakePools) => (
-              <TokenCell value={stakePool.totalStake} />
-            )}
+            {(stakePool: StakePools) =>
+              `${formatCurrency(stakePool.totalStake)} PHA`
+            }
           </TableBuilderColumn>
         )}
         <TableBuilderColumn
@@ -393,7 +399,9 @@ const StakePoolTableV2 = ({
           }
           sortable
         >
-          {(stakePool: StakePools) => <TokenCell value={stakePool.freeStake} />}
+          {(stakePool: StakePools) =>
+            `${formatCurrency(stakePool.freeStake)} PHA`
+          }
         </TableBuilderColumn>
         {kind === 'mining' && (
           <TableBuilderColumn
@@ -405,9 +413,9 @@ const StakePoolTableV2 = ({
             }
             sortable
           >
-            {(stakePool: StakePools) => (
-              <TokenCell value={stakePool.releasingStake} />
-            )}
+            {(stakePool: StakePools) =>
+              `${formatCurrency(stakePool.releasingStake)} PHA`
+            }
           </TableBuilderColumn>
         )}
         {kind === 'myDelegate' && (
@@ -421,7 +429,7 @@ const StakePoolTableV2 = ({
           >
             {(stakePool: StakePools) => {
               const value = stakePool.stakePoolStakers?.[0]?.stake
-              return value ? <TokenCell value={value} /> : '-'
+              return value ? `${formatCurrency(value)} PHA` : '-'
             }}
           </TableBuilderColumn>
         )}
@@ -445,7 +453,7 @@ const StakePoolTableV2 = ({
                 new Decimal(0)
               )
 
-              return <TokenCell value={totalWithdrawal} />
+              return `${formatCurrency(totalWithdrawal)} PHA`
             }}
           </TableBuilderColumn>
         )}
@@ -460,7 +468,7 @@ const StakePoolTableV2 = ({
           >
             {(stakePool: StakePools) => {
               const value = stakePool.stakePoolStakers?.[0]?.claimableRewards
-              return value ? <TokenCell value={value} /> : '-'
+              return value ? `${formatCurrency(value)} PHA` : '-'
             }}
           </TableBuilderColumn>
         )}
