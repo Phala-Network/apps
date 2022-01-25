@@ -21,6 +21,7 @@ const Owner = ({
   <Block display="flex" alignItems="center">
     <StatefulTooltip content={ownerAddress} placement="bottomLeft">
       <StyledLink
+        onClick={(e) => e.stopPropagation()}
         href={`https://khala.subscan.io/account/${ownerAddress}`}
         target="_blank"
         rel="noopener noreferrer"

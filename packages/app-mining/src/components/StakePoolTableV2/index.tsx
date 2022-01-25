@@ -26,6 +26,7 @@ import Decimal from 'decimal.js'
 import {Block} from 'baseui/block'
 import TableSkeleton from '../TableSkeleton'
 import Owner from '../Owner'
+import {navigate} from 'gatsby'
 
 // FIXME: should be loadable, but meet some problems when configuring gatsby-plugin-loadable-components-ssr
 import DelegateModalBody from './DelegateModalBody'
@@ -306,6 +307,24 @@ const StakePoolTableV2 = ({
           TableLoadingMessage: {
             style: {
               padding: '10px 0',
+            },
+          },
+          TableBodyRow: {
+            style: {cursor: 'pointer'},
+            props: (props: {$row: StakePools}) => {
+              return {
+                ...props,
+                onClick: (e: MouseEvent) => {
+                  // Prevent navigating when clicking other elements
+                  const tagName = (e.target as HTMLElement).tagName
+                  if (tagName !== 'TR' && tagName !== 'TD') return
+                  // Prevent navigating when selecting text
+                  const selection = window.getSelection()
+                  if (selection && selection.toString().length) return
+
+                  navigate(`/stake-pool/${props.$row.pid}`)
+                },
+              }
             },
           },
         }}
