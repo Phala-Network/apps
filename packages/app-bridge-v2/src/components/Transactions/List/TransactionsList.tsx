@@ -33,6 +33,7 @@ export const TransactionsList: React.FC<Props> = (props) => {
   return (
     <TransactionsListRoot>
       {records.map((record: any, index: number) => {
+        // console.log('record', record)
         return <TransactionsListItem record={record} key={index} />
       })}
     </TransactionsListRoot>

@@ -259,7 +259,10 @@ importers:
     specifiers:
       graphql: ^15.5.3
       graphql-request: ^3.5.0
+      luxon: ^2.3.0
       react-query: ^3.27.0
+    dependencies:
+      luxon: 2.3.0
     devDependencies:
       graphql: 15.8.0
       graphql-request: 3.7.0_graphql@15.8.0
@@ -16921,6 +16924,11 @@ packages:
     resolution: {integrity: sha1-Jzi9nw089PhEkMVzbEhpmsYyzaM=}
     dependencies:
       es5-ext: 0.10.53
+    dev: false
+
+  /luxon/2.3.0:
+    resolution: {integrity: sha512-gv6jZCV+gGIrVKhO90yrsn8qXPKD8HYZJtrUDSfEbow8Tkw84T9OnCyJhWvnJIaIF/tBuiAjZuQHUt1LddX2mg==}
+    engines: {node: '>=12'}
     dev: false
 
   /magic-string/0.25.7:
