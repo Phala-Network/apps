@@ -10,12 +10,12 @@ import useSelfStakePools from '../hooks/useSelfStakePools'
 const Wrapper = styled.div`
   flex: 1;
   overflow-x: auto;
-  margin: 48px 30px;
+  padding: 48px 30px;
   width: 100%;
-  max-width: 1700px;
+  box-sizing: border-box;
   ${up('md')} {
-    margin: 48px auto;
-    max-width: 1700px;
+    margin: 0 auto;
+    max-width: 1760px;
   }
 `
 
