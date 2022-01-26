@@ -9,7 +9,7 @@ export type ItemInfoBlockProps = {
 }
 
 const ItemInfoBlockRoot = styled.div`
-  font-family: PT Mono;
+  font-family: Montserrat;
   font-weight: normal;
   font-size: 10px;
   line-height: 11px;
@@ -18,13 +18,13 @@ const ItemInfoBlockRoot = styled.div`
 
 const B = styled.b`
   font-weight: bold;
-  font-family: 'Lato';
+  font-family: 'Montserrat';
 `
 
 const NetworkName = styled.span`
   text-transform: capitalize;
   font-weight: bold;
-  font-family: 'Lato';
+  font-family: 'Montserrat';
 `
 
 export const ItemInfoBlock: React.FC<ItemInfoBlockProps> = (props) => {

@@ -7,17 +7,16 @@ export const AmountDisplay = styled.div`
   /* Gy 001 */
   background: #eeeeee;
 
-  padding-left: 20px;
+  padding-left: 14px;
 
   font-style: normal;
   font-weight: normal;
-  font-size: 14px;
+  font-size: 16px;
   /* identical to box height, or 114% */
 
   display: flex;
   align-items: center;
 
   /* Gy 003 */
-
   color: #8c8c8c;
 `

@@ -27,7 +27,7 @@ export const Label = styled.div`
 `
 
 export const Network = styled.div`
-  font-family: Noto Sans;
+  font-family: Montserrat;
   font-style: normal;
   font-weight: normal;
   font-size: 16px;
