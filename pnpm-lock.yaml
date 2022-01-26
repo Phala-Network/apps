@@ -75,7 +75,6 @@ importers:
       '@types/react-helmet': ^6.1.4
       '@types/react-table': ^7.7.9
       '@types/styled-components': ^5.1.18
-      '@types/styletron-engine-atomic': ^1.1.1
       '@types/styletron-react': ^5.0.3
       '@types/styletron-standard': ^2.0.2
       '@types/uuid': ^8.3.3
@@ -93,7 +92,6 @@ importers:
       gatsby-plugin-react-helmet: ^4.14.0
       gatsby-plugin-react-svg: ^3.1.0
       gatsby-plugin-styled-components: ^5.4.0
-      gatsby-plugin-styletron: ^7.4.0
       gatsby-plugin-typescript: ^3.14.0
       node-polyfill-webpack-plugin: ^1.1.4
       rc-tooltip: ^5.1.1
@@ -106,7 +104,7 @@ importers:
       react-scripts: 4.0.3
       react-toastify: ^7.0.4
       styled-breakpoints: ^10.0.1
-      styletron-engine-atomic: ^1.4.8
+      styletron-engine-monolithic: ^0.0.6
       styletron-react: ^6.0.2
       svg-react-loader: ^0.4.6
       typescript: ^4.5.2
@@ -151,7 +149,6 @@ importers:
       gatsby-plugin-react-helmet: 4.14.0_gatsby@4.3.0+react-helmet@6.1.0
       gatsby-plugin-react-svg: 3.1.0_gatsby@4.3.0
       gatsby-plugin-styled-components: 5.4.0_22b28609bf3d17558c7616336ed13c57
-      gatsby-plugin-styletron: 7.4.0_282faf4ca753576567a5a209ec7037a9
       gatsby-plugin-typescript: 3.14.0_gatsby@4.3.0
       node-polyfill-webpack-plugin: 1.1.4
       rc-tooltip: 5.1.1_react-dom@17.0.2+react@17.0.2
@@ -164,7 +161,7 @@ importers:
       react-scripts: 4.0.3_react@17.0.2+typescript@4.5.2
       react-toastify: 7.0.4_react-dom@17.0.2+react@17.0.2
       styled-breakpoints: 10.0.1_react@17.0.2
-      styletron-engine-atomic: 1.4.8
+      styletron-engine-monolithic: 0.0.6
       styletron-react: 6.0.2_react@17.0.2
       svg-react-loader: 0.4.6
       typescript: 4.5.2
@@ -176,7 +173,6 @@ importers:
       '@types/react-helmet': 6.1.4
       '@types/react-table': 7.7.9
       '@types/styled-components': 5.1.19
-      '@types/styletron-engine-atomic': 1.1.1
       '@types/styletron-react': 5.0.3
       '@types/styletron-standard': 2.0.2
 
@@ -7518,12 +7514,6 @@ packages:
       '@types/react': 17.0.37
       csstype: 3.0.10
 
-  /@types/styletron-engine-atomic/1.1.1:
-    resolution: {integrity: sha512-Jthl51uLiVZHkY0HRBGtDOjjtI4H0nYaERZtzzdDgnJSa+PqQG55ScMQPmSAu6ikzYWp6+jJbbtuIX+TqVfFeg==}
-    dependencies:
-      '@types/styletron-standard': 2.0.2
-    dev: true
-
   /@types/styletron-react/5.0.3:
     resolution: {integrity: sha512-mNM8WrFrCYWXNxudjdMMeHZmGdXLfVF/fQmj1Qnz7E99niL2d7IcQubbx731FX3YEVGoF9Au1J6uBkPoEzqypw==}
     dependencies:
@@ -14068,22 +14058,6 @@ packages:
       react-dom: 17.0.2_react@17.0.2
     dev: false
 
-  /gatsby-plugin-styletron/7.4.0_282faf4ca753576567a5a209ec7037a9:
-    resolution: {integrity: sha512-t8lInSPTkL+A4L9KsIkWkNtqMzl105Pu79arLVcnFK9p5VHK0r5gavyn8Nuklv0i4PlARmuNPgAFUxlorG1Veg==}
-    engines: {node: '>=14.15.0'}
-    peerDependencies:
-      gatsby: ^4.0.0-next
-      react: ^16.9.0 || ^17.0.0
-      styletron-engine-atomic: ^1.4.8
-      styletron-react: ^5.2.7 || ^6.0.0
-    dependencies:
-      '@babel/runtime': 7.16.3
-      gatsby: 4.3.0_3d8392ef988879db7b1ef93206ebbe58
-      react: 17.0.2
-      styletron-engine-atomic: 1.4.8
-      styletron-react: 6.0.2_react@17.0.2
-    dev: false
-
   /gatsby-plugin-typescript/3.14.0_gatsby@4.3.0:
     resolution: {integrity: sha512-gQVkLFPvO9g+O+DdY9nw+1SAelF2yOQ+CqpFJ9aDllf/JUyxNbajND7nbYkLCiDja86yi3ZNCkZR2yp8qWZnpQ==}
     engines: {node: '>=12.13.0'}
@@ -18513,7 +18487,8 @@ packages:
   /mock-socket/9.1.0:
     resolution: {integrity: sha512-zNsH8h0D7buVMDZ2X1GyFYso9A1X1Co/TDfFs0AIKhSLkJeh381HYESNl/mL6BzmQpNOxZVnNhEDS1OWBrS+cQ==}
     engines: {node: '>= 8'}
-    
+    dev: false
+
   /mockdate/3.0.5:
     resolution: {integrity: sha512-iniQP4rj1FhBdBYS/+eQv7j1tadJ9lJtdzgOpvsOHng/GbcDh2Fhdeq+ZRldrPYdXvCyfFUmFeEwEGXZB5I/AQ==}
     dev: false
@@ -23838,8 +23813,8 @@ packages:
       postcss-selector-parser: 6.0.6
     dev: false
 
-  /styletron-engine-atomic/1.4.8:
-    resolution: {integrity: sha512-KLyDkigcIrIMzUlX0usBfO/BBwnh1yC/48+DqP4LSZn8UgGP00oStxoezAH8pYhal1amvBJ7tLVs7tNZDUTAdg==}
+  /styletron-engine-monolithic/0.0.6:
+    resolution: {integrity: sha512-nndwidxFaT4zSXT9GIAPjuTfJ7k+7mi/cwq28EZMLgBXXTG+7nM8ORd4QCn8gnRF5ydr8EpYYzQq6rQPp5BFew==}
     dependencies:
       inline-style-prefixer: 5.1.2
       styletron-standard: 3.0.5

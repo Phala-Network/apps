@@ -10,13 +10,8 @@ module.exports = {
   },
   plugins: [
     'local-plugin-layout', // This plugin's place decides providers order, which is highly important
+    'local-plugin-styletron',
     `gatsby-plugin-pnpm`,
-    {
-      resolve: 'gatsby-plugin-styletron',
-      options: {
-        prefix: '_',
-      },
-    },
     `gatsby-plugin-react-helmet`,
     `gatsby-plugin-typescript`,
     `gatsby-plugin-styled-components`,
