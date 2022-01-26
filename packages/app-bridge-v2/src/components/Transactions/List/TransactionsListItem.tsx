@@ -1,6 +1,5 @@
-import {ResultStepModal} from '@phala/react-components'
 import {useBridgePhalaRecordInfo} from '@phala/react-libs'
-import React, {useMemo, useState} from 'react'
+import React, {useMemo} from 'react'
 import styled from 'styled-components'
 import {ArrowIcon} from './ArrowIcon'
 import {ItemInfoBlock} from './ItemInfoBlock'
@@ -27,10 +26,8 @@ const ItemRoot = styled.div`
 
 const TransactionsListItem: React.FC<TransactionsListItemProps> = (props) => {
   const {record} = props
-  const {depositor} = record
-  const [modalVisible, setModalVisible] = useState(false)
-  const {events, hash, convertedAmount, destinationRecipient} =
-    useBridgePhalaRecordInfo(record)
+  const {sender, recipient, destChainId} = record
+  const {events, convertedAmount} = useBridgePhalaRecordInfo(record)
 
   const status = useMemo(() => {
     if (events?.execution !== undefined) {
@@ -42,37 +39,40 @@ const TransactionsListItem: React.FC<TransactionsListItemProps> = (props) => {
 
   if (!record) return null
 
-  const onSubmit = () => {
-    setModalVisible(false)
-  }
+  let fromNetwork = ''
+  let toNetwork = ''
 
-  const openModal = () => {
-    setModalVisible(true)
+  if (destChainId === 1) {
+    fromNetwork = 'Khala'
+    toNetwork = 'Ethereum'
+  } else {
+    fromNetwork = 'Ethereum'
+    toNetwork = 'Khala'
   }
 
   return (
     <>
-      <ItemRoot onClick={openModal}>
+      <ItemRoot>
         <TransactionStatus status={status} />
 
         <ItemInfoBlock
-          network="Ethereum"
+          network={fromNetwork}
           amount={convertedAmount || ''}
-          address={depositor || ''}
+          address={sender || ''}
         ></ItemInfoBlock>
 
         <ArrowIcon />
 
         <ItemInfoBlock
-          network="Khala"
+          network={toNetwork}
           amount={convertedAmount || ''}
-          address={destinationRecipient}
+          address={recipient}
         ></ItemInfoBlock>
 
         <JumpIcon />
       </ItemRoot>
 
-      <ResultStepModal
+      {/* <ResultStepModal
         record={record}
         transactionInfo={{
           from: {
@@ -82,7 +82,7 @@ const TransactionsListItem: React.FC<TransactionsListItemProps> = (props) => {
             network: 'Ethereum',
           },
           to: {
-            address: destinationRecipient,
+            address: recipient,
             amount: parseFloat(convertedAmount),
             type: 'PHA',
             network: 'Khala',
@@ -91,7 +91,7 @@ const TransactionsListItem: React.FC<TransactionsListItemProps> = (props) => {
         }}
         onClose={onSubmit}
         visible={modalVisible}
-      />
+      /> */}
     </>
   )
 }

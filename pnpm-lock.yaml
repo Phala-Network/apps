@@ -257,11 +257,13 @@ importers:
 
   packages/app-bridge-graph:
     specifiers:
+      '@types/luxon': ^2.0.9
       graphql: ^15.5.3
       graphql-request: ^3.5.0
       luxon: ^2.3.0
       react-query: ^3.27.0
     dependencies:
+      '@types/luxon': 2.0.9
       luxon: 2.3.0
     devDependencies:
       graphql: 15.8.0
@@ -6362,6 +6364,10 @@ packages:
 
   /@types/lodash/4.14.178:
     resolution: {integrity: sha512-0d5Wd09ItQWH1qFbEyQ7oTQ3GZrMfth5JkbN3EvTKLXcHLRDSXeLnlvlOn0wvxVIwK5o2M8JzP/OWz7T3NRsbw==}
+
+  /@types/luxon/2.0.9:
+    resolution: {integrity: sha512-ZuzIc7aN+i2ZDMWIiSmMdubR9EMMSTdEzF6R+FckP4p6xdnOYKqknTo/k+xXQvciSXlNGIwA4OPU5X7JIFzYdA==}
+    dev: false
 
   /@types/mdast/3.0.10:
     resolution: {integrity: sha512-W864tg/Osz1+9f4lrGTZpCSO5/z4608eUp19tbozkq2HJK6i3z1kT0H9tlADXuYIb1YYOBByU4Jsqkk75q48qA==}

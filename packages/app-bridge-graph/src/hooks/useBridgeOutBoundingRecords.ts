@@ -1,9 +1,11 @@
 import {default as graphqlRequest, gql} from 'graphql-request'
+import {DateTime} from 'luxon'
 import {useEffect, useState} from 'react'
 
 export function useBridgeOutBoundingRecords() {
-  const [data, setData] = useState<any>()
-  const [data2, setData2] = useState<any>()
+  const [data, setData] = useState<any>([])
+  const [data2, setData2] = useState<any>([])
+  const [result, setResult] = useState<any>()
 
   useEffect(() => {
     graphqlRequest(
@@ -26,7 +28,16 @@ export function useBridgeOutBoundingRecords() {
     ).then((data) => {
       const {bridgeOutboundingRecords} = data
 
-      setData(bridgeOutboundingRecords)
+      const temp = bridgeOutboundingRecords.map((item: any) => {
+        const datetime = DateTime.fromSeconds(parseInt(item.createdAt))
+
+        return {
+          ...item,
+          datetime,
+        }
+      })
+
+      setData(temp)
     })
 
     graphqlRequest(
@@ -51,9 +62,25 @@ export function useBridgeOutBoundingRecords() {
     ).then((data) => {
       const {nodes} = data.bridgeOutboundingRecords
 
-      setData2(nodes)
+      const temp = nodes.map((item: any) => {
+        const datetime = DateTime.fromISO(item.createdAt)
+
+        return {
+          ...item,
+          datetime,
+        }
+      })
+
+      setData2(temp)
     })
   }, [])
 
-  return [data, data2]
+  useEffect(() => {
+    const result = [...data, ...data2].sort((a: any, b: any) => {
+      return a.datetime.toMillis() - b.datetime.toMillis()
+    })
+    setResult(result)
+  }, [data, data2])
+
+  return result
 }

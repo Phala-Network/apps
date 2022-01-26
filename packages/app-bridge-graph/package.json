@@ -21,6 +21,7 @@
     "react-query": "^3.27.0"
   },
   "dependencies": {
+    "@types/luxon": "^2.0.9",
     "luxon": "^2.3.0"
   }
 }

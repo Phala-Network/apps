@@ -2,6 +2,7 @@
     "words": [
         "baseui",
         "currencyjs",
+        "datetime",
         "echarts",
         "jotai",
         "Karura",
