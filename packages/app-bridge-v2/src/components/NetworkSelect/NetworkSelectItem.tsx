@@ -19,6 +19,7 @@ const Root = styled.div<{isValue?: boolean}>`
 
 const Name = styled.div`
   text-align: center;
+  font-weight: normal;
   margin-left: 10px;
   flex: 1;
 `

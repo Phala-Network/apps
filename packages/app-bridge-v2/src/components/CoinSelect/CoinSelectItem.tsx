@@ -21,6 +21,7 @@ const Name = styled.div`
   text-align: center;
   margin-left: 10px;
   flex: 1;
+  font-weight: normal;
 `
 
 export const CoinSelectItem: FC<Props> = (props) => {
