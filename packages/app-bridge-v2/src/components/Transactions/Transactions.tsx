@@ -10,7 +10,7 @@ export const Transactions: React.FC = () => {
   // const depositor = '0x766d4b6fd707c45518eb49878142a88378a7443c'
   // const depositor = '0x775946638c9341a48ccf65e46b73367d0aba2616'
 
-  console.error('data2', records)
+  // console.error('data2', records)
 
   if (records?.length === 0) {
     return null

@@ -44,7 +44,7 @@
     "bn.js": "^5.2.0",
     "core-js": "^3.19.3",
     "decimal.js": "^10.3.1",
-    "ethers": "^5.5.2",
+    "ethers": "^5.5.3",
     "gatsby": "^4.3.0",
     "gatsby-plugin-google-gtag": "^3.14.0",
     "gatsby-plugin-pnpm": "^1.2.9",

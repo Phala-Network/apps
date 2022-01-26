@@ -1,5 +1,6 @@
+import {useEthereumAccountAtom} from '@phala/app-store'
 import {Block} from 'baseui/block'
-import {FC} from 'react'
+import {FC, useEffect} from 'react'
 import {Network} from '../../config'
 import {
   useAmount,
@@ -8,6 +9,7 @@ import {
   useFromNetwork,
 } from '../../store'
 import {TransactionInfoItem} from '../../types'
+import {useBridgePage} from '../../useBridgePage'
 import {AddressInput} from '../AddressInput'
 import {AmountInput} from '../AmountInput'
 import {CoinSelect} from '../CoinSelect'
@@ -27,6 +29,14 @@ export const TransferFromPanel: FC<TransferFromPanelProps> = () => {
   const [network, setNetwork] = useFromNetwork()
   const [coin, setCoin] = useFromCoin()
   const [amount, setAmount] = useAmount()
+  const {isFromEthereum} = useBridgePage()
+  const [ethereumAccount] = useEthereumAccountAtom()
+
+  useEffect(() => {
+    if (isFromEthereum && ethereumAccount) {
+      setAddress(ethereumAccount.address)
+    }
+  }, [ethereumAccount, isFromEthereum, setAddress])
 
   return (
     <TransferPanel label="From">
@@ -59,8 +69,11 @@ export const TransferFromPanel: FC<TransferFromPanelProps> = () => {
 
       <AddressArea>
         <AddressInput
+          disabled={isFromEthereum}
           value={address}
-          onChange={(e: any) => setAddress(e.target?.value)}
+          onChange={(e: any) => {
+            setAddress(e.target?.value)
+          }}
           endEnhancer={<AccountStatusControl />}
         />
       </AddressArea>
