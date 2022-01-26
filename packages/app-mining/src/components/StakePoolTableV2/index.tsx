@@ -12,29 +12,29 @@ import {
   StakePoolsOrderByWithRelationInput,
 } from '../../hooks/graphql'
 import {client} from '../../utils/GraphQLClient'
-import {OwnerCell, PercentCell, TokenCell} from './Cells'
 import styled from 'styled-components'
 import {StatefulInput} from 'baseui/input'
 import {debounce} from 'lodash-es'
-import SpinnerWrapper from '../SpinnerWrapper'
-import {isSSR, isTruthy} from '@phala/utils'
+import {formatCurrency, isSSR, isTruthy, toFixed} from '@phala/utils'
 import PopoverButton from '../PopoverButton'
 import {usePolkadotAccountAtom} from '@phala/app-store'
 import Pagination from '../Pagination'
-import {Modal} from 'baseui/modal'
+import {Modal, ModalProps} from 'baseui/modal'
 import {StatefulTooltip, StatefulTooltipProps} from 'baseui/tooltip'
 import {tooltipContent} from './tooltipContent'
+import Decimal from 'decimal.js'
+import {Block} from 'baseui/block'
+import TableSkeleton from '../TableSkeleton'
+import Owner from '../Owner'
 
 // FIXME: should be loadable, but meet some problems when configuring gatsby-plugin-loadable-components-ssr
 import DelegateModalBody from './DelegateModalBody'
 import ClaimModalBody from './ClaimModalBody'
 import WithdrawModalBody from './WithdrawModalBody'
-import Decimal from 'decimal.js'
-import {Block} from 'baseui/block'
-
-const SearchInput = styled.div`
-  width: 420px;
-`
+import SetCapModalBody from './SetCapModalBody'
+import SetCommissionModalBody from './SetCommissionModalBody'
+import AddWorkerModalBody from './AddWorkerModalBody'
+import ReclaimAllModalBody from './ReclaimAllModalBody'
 
 const TableHeader = styled.div`
   display: flex;
@@ -55,8 +55,26 @@ type ModalKey =
   | 'withdraw'
   | 'setCommission'
   | 'reclaimAll'
-type MenuItem = {label: string; key: ModalKey}
-const PAGE_SIZE = 20
+type MenuItem = {label: string; key: ModalKey; disabled?: boolean}
+
+const modalKeyMap: Readonly<
+  Record<
+    ModalKey,
+    (
+      props: {
+        stakePool: StakePools
+      } & Pick<ModalProps, 'onClose'>
+    ) => JSX.Element
+  >
+> = {
+  delegate: DelegateModalBody,
+  claim: ClaimModalBody,
+  withdraw: WithdrawModalBody,
+  setCap: SetCapModalBody,
+  setCommission: SetCommissionModalBody,
+  addWorker: AddWorkerModalBody,
+  reclaimAll: ReclaimAllModalBody,
+}
 
 const TooltipHeader = ({
   children,
@@ -79,13 +97,20 @@ const StakePoolTableV2 = ({
 }: {
   kind: 'delegate' | 'myDelegate' | 'mining'
 }): JSX.Element => {
+  const [currentTime] = useState(() => {
+    const now = new Date()
+    now.setSeconds(0)
+    now.setMilliseconds(0)
+    return now.toISOString()
+  })
+  const pageSize = kind === 'mining' ? 10 : 20
   const [polkadotAccount] = usePolkadotAccountAtom()
   const address = polkadotAccount?.address
-  const myDelegateAvailable: boolean = kind === 'myDelegate' && Boolean(address)
   const [searchString, setSearchString] = useState('')
-  const [sortColumn, setSortColumn] =
-    useState<keyof StakePoolsOrderByWithRelationInput>('instantApr')
-  const [sortAsc, setSortAsc] = useState(false)
+  const [sortColumn, setSortColumn] = useState<
+    keyof StakePoolsOrderByWithRelationInput
+  >(kind === 'mining' ? 'pid' : 'instantApr')
+  const [sortAsc, setSortAsc] = useState(kind !== 'delegate')
   const [currentPage, setCurrentPage] = useState(1)
 
   const [workersFilter, setWorkersFilter] = useState(kind === 'delegate')
@@ -97,18 +122,19 @@ const StakePoolTableV2 = ({
   const [openModalKey, setOpenModalKey] = useState<ModalKey | null>(null)
   const [operatingPool, setOperatingPool] = useState<StakePools | null>(null)
 
-  const {data, isFetching} = useStakePoolsQuery(
+  const {data, isLoading} = useStakePoolsQuery(
     client,
     {
-      take: PAGE_SIZE,
-      withStakePoolStakers: kind === 'myDelegate',
-      withStakePoolWithdrawals: kind === 'myDelegate',
-      skip: PAGE_SIZE * (currentPage - 1),
+      take: pageSize,
+      withStakePoolStakers: kind === 'myDelegate' || kind === 'mining',
+      withStakePoolWithdrawals: kind === 'myDelegate' || kind === 'mining',
+      withMiners: kind === 'myDelegate' || kind === 'mining',
+      skip: pageSize * (currentPage - 1),
       orderBy: {[sortColumn]: sortAsc ? SortOrder.Asc : SortOrder.Desc},
       where: {
         ...(searchString && {
           OR: [
-            /^\d+$/.test(searchString) && {pid: {equals: searchString}},
+            /^\d+$/.test(searchString) && {pid: {equals: Number(searchString)}},
             {
               ownerAddress: {
                 contains: searchString,
@@ -128,10 +154,13 @@ const StakePoolTableV2 = ({
           ].filter(isTruthy),
         }),
         AND: [
-          workersFilter && {workersCount: {gt: 0}},
+          // For development
+          process.env.NODE_ENV !== 'development' &&
+            kind === 'mining' && {ownerAddress: {equals: address}},
+          workersFilter && {minersCount: {gt: 0}},
           aprFilter && {instantApr: {gt: '0'}},
           commissionFilter && {commission: {lt: '1'}},
-          myDelegateAvailable && {
+          kind === 'myDelegate' && {
             stakePoolStakers: {
               some: {
                 address: {equals: address},
@@ -148,7 +177,7 @@ const StakePoolTableV2 = ({
           },
         ].filter(isTruthy),
       },
-      ...(myDelegateAvailable && {
+      ...((kind === 'myDelegate' || kind === 'mining') && {
         stakePoolStakersWhere: {
           address: {
             equals: address,
@@ -159,11 +188,16 @@ const StakePoolTableV2 = ({
             equals: address,
           },
         },
+        minersWhere: {
+          estimatesReclaimableAt: {
+            lte: currentTime,
+          },
+        },
       }),
     },
     {
       keepPreviousData: true,
-      enabled: kind !== 'myDelegate' || myDelegateAvailable,
+      enabled: kind === 'delegate' || Boolean(polkadotAccount?.address),
     }
   )
 
@@ -188,20 +222,28 @@ const StakePoolTableV2 = ({
     setIsModalOpen(false)
   }, [])
 
+  const ModalBody = openModalKey && modalKeyMap[openModalKey]
+
   return (
     <div>
       {kind === 'delegate' && (
         <TableHeader>
-          <SearchInput>
-            <StatefulInput
-              clearable
-              placeholder="Search Pid or Owner Address"
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                debouncedSetSearchString(e.target.value)
-              }
-              endEnhancer={<Search size={18} />}
-            />
-          </SearchInput>
+          <StatefulInput
+            size="compact"
+            clearable
+            placeholder="Search Pid or Owner Address"
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              debouncedSetSearchString(e.target.value)
+            }
+            endEnhancer={<Search size={18} />}
+            overrides={{
+              Root: {
+                style: {
+                  width: '420px',
+                },
+              },
+            }}
+          />
           <Checkbox
             checked={workersFilter}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -237,249 +279,285 @@ const StakePoolTableV2 = ({
         </TableHeader>
       )}
 
-      <div>
-        <SpinnerWrapper isLoading={isFetching}>
-          <TableBuilder
-            data={data?.findManyStakePools || []}
-            sortColumn={sortColumn}
-            sortOrder={sortAsc ? 'ASC' : 'DESC'}
-            onSort={onSort}
-            emptyMessage="No Results"
-            overrides={{
-              TableBodyCell: {
-                style: {
-                  whiteSpace: 'nowrap',
-                },
+      <TableBuilder
+        isLoading={isLoading}
+        loadingMessage={<TableSkeleton />}
+        data={data?.findManyStakePools || []}
+        sortColumn={sortColumn}
+        sortOrder={sortAsc ? 'ASC' : 'DESC'}
+        onSort={onSort}
+        emptyMessage="No Results"
+        overrides={{
+          TableBodyCell: {
+            style: {
+              whiteSpace: 'nowrap',
+            },
+          },
+          TableHeadCellSortable: {
+            style: {
+              svg: {
+                right: 'initial',
               },
-              TableHeadCellSortable: {
-                style: {
-                  svg: {
-                    right: 'initial',
-                  },
+            },
+          },
+          TableLoadingMessage: {
+            style: {
+              padding: '10px 0',
+            },
+          },
+          TableBodyRow: {
+            style: {cursor: 'pointer'},
+            props: (props: {$row: StakePools}) => {
+              return {
+                ...props,
+                onClick: (e: MouseEvent) => {
+                  // Prevent navigating when clicking other elements
+                  const tagName = (e.target as HTMLElement).tagName
+                  if (tagName !== 'TR' && tagName !== 'TD') return
+                  // Prevent navigating when selecting text
+                  const selection = window.getSelection()
+                  if (selection && selection.toString().length) return
+
+                  window.open(`/stake-pool/${props.$row.pid}`)
                 },
-              },
-            }}
+              }
+            },
+          },
+        }}
+      >
+        <TableBuilderColumn
+          id="pid"
+          header={
+            <TooltipHeader content={tooltipContent.pid}>Pid</TooltipHeader>
+          }
+          sortable
+        >
+          {(stakePool: StakePools) => stakePool.pid}
+        </TableBuilderColumn>
+        {kind === 'mining' && (
+          <TableBuilderColumn id="minersCount" header="Worker" sortable>
+            {(stakePool: StakePools) => stakePool.minersCount}
+          </TableBuilderColumn>
+        )}
+        {kind !== 'mining' && (
+          <TableBuilderColumn
+            id="owner"
+            header={
+              <TooltipHeader content={tooltipContent.owner}>
+                Owner
+              </TooltipHeader>
+            }
           >
-            <TableBuilderColumn
-              id="pid"
-              header={
-                <TooltipHeader content={tooltipContent.pid}>Pid</TooltipHeader>
-              }
-              sortable
-            >
-              {(stakePool: StakePools) => stakePool.pid}
-            </TableBuilderColumn>
-            <TableBuilderColumn
-              id="owner"
-              header={
-                <TooltipHeader content={tooltipContent.owner}>
-                  Owner
-                </TooltipHeader>
-              }
-            >
-              {(stakePool: StakePools) => <OwnerCell stakePool={stakePool} />}
-            </TableBuilderColumn>
-            <TableBuilderColumn
-              id="instantApr"
-              header={
-                <TooltipHeader content={tooltipContent.apr}>APR</TooltipHeader>
-              }
-              sortable
-            >
-              {(stakePool: StakePools) => (
-                <PercentCell value={stakePool.instantApr} />
-              )}
-            </TableBuilderColumn>
-            <TableBuilderColumn
-              id="remainingStake"
-              header={
-                <TooltipHeader content={tooltipContent.remaining}>
-                  Remaining
-                </TooltipHeader>
-              }
-              sortable
-            >
-              {({remainingStake}: StakePools) =>
-                remainingStake ? <TokenCell value={remainingStake} /> : '∞'
-              }
-            </TableBuilderColumn>
-            <TableBuilderColumn
-              id="commission"
-              header={
-                <TooltipHeader content={tooltipContent.commission}>
-                  Commission
-                </TooltipHeader>
-              }
-              sortable
-            >
-              {(stakePool: StakePools) => (
-                <PercentCell value={stakePool.commission} />
-              )}
-            </TableBuilderColumn>
-            {kind !== 'myDelegate' && (
-              <TableBuilderColumn
-                id="totalStake"
-                header={
-                  <TooltipHeader content={tooltipContent.delegated}>
-                    Delegated
-                  </TooltipHeader>
-                }
-                sortable
-              >
-                {(stakePool: StakePools) => (
-                  <TokenCell value={stakePool.totalStake} />
-                )}
-              </TableBuilderColumn>
-            )}
-            <TableBuilderColumn
-              id="freeStake"
-              header={
-                <TooltipHeader content={tooltipContent.freeDelegation}>
-                  Free Delegation
-                </TooltipHeader>
-              }
-              sortable
-            >
-              {(stakePool: StakePools) => (
-                <TokenCell value={stakePool.freeStake} />
-              )}
-            </TableBuilderColumn>
-            {kind === 'mining' && (
-              <TableBuilderColumn
-                id="releasingStake"
-                header={
-                  <TooltipHeader content={tooltipContent.releasingStake}>
-                    Releasing Stake
-                  </TooltipHeader>
-                }
-                sortable
-              >
-                {(stakePool: StakePools) => (
-                  <TokenCell value={stakePool.releasingStake} />
-                )}
-              </TableBuilderColumn>
-            )}
-            {kind === 'mining' && (
-              <TableBuilderColumn id="workersCount" header="Worker" sortable>
-                {(stakePool: StakePools) => stakePool.workersCount}
-              </TableBuilderColumn>
-            )}
-            {kind === 'myDelegate' && (
-              <TableBuilderColumn
-                id="yourDelegation"
-                header={
-                  <TooltipHeader content={tooltipContent.yourDelegation}>
-                    Your Delegation
-                  </TooltipHeader>
-                }
-              >
-                {(stakePool: StakePools) => {
-                  const value = stakePool.stakePoolStakers?.[0]?.stake
-                  return value ? <TokenCell value={value} /> : '-'
-                }}
-              </TableBuilderColumn>
-            )}
-            {kind === 'myDelegate' && (
-              <TableBuilderColumn
-                id="yourWithdrawing"
-                header={
-                  <TooltipHeader content={tooltipContent.yourWithdrawing}>
-                    Your Withdrawing
-                  </TooltipHeader>
-                }
-              >
-                {(stakePool: StakePools) => {
-                  const totalWithdrawal = stakePool.stakePoolWithdrawals.reduce(
-                    (acc, cur) => {
-                      if (cur.userAddress === address) {
-                        return acc.add(cur.stake)
-                      }
-                      return acc
-                    },
-                    new Decimal(0)
-                  )
-
-                  return <TokenCell value={totalWithdrawal} />
-                }}
-              </TableBuilderColumn>
-            )}
-            {kind === 'myDelegate' && (
-              <TableBuilderColumn
-                id="claimableRewards"
-                header={
-                  <TooltipHeader content={tooltipContent.claimableRewards}>
-                    Claimable Rewards
-                  </TooltipHeader>
-                }
-              >
-                {(stakePool: StakePools) => {
-                  const value =
-                    stakePool.stakePoolStakers?.[0]?.claimableRewards
-                  return value ? <TokenCell value={value} /> : '-'
-                }}
-              </TableBuilderColumn>
-            )}
-            <TableBuilderColumn
-              overrides={{
-                TableBodyCell: {
-                  style: {
-                    paddingTop: 0,
-                    paddingBottom: 0,
-                    verticalAlign: 'middle',
-                  },
+            {(stakePool: StakePools) => <Owner stakePool={stakePool} />}
+          </TableBuilderColumn>
+        )}
+        {kind !== 'mining' && (
+          <TableBuilderColumn
+            id="instantApr"
+            header={
+              <TooltipHeader content={tooltipContent.apr}>APR</TooltipHeader>
+            }
+            sortable
+          >
+            {(stakePool: StakePools) =>
+              `${toFixed(new Decimal(stakePool.instantApr).times(100), 2)}%`
+            }
+          </TableBuilderColumn>
+        )}
+        <TableBuilderColumn
+          id="remainingStake"
+          header={
+            <TooltipHeader content={tooltipContent.remaining}>
+              Remaining
+            </TooltipHeader>
+          }
+          sortable
+        >
+          {({remainingStake}: StakePools) =>
+            remainingStake ? `${formatCurrency(remainingStake)} PHA` : '∞'
+          }
+        </TableBuilderColumn>
+        <TableBuilderColumn
+          id="commission"
+          header={
+            <TooltipHeader content={tooltipContent.commission}>
+              Commission
+            </TooltipHeader>
+          }
+          sortable
+        >
+          {(stakePool: StakePools) =>
+            `${new Decimal(stakePool.commission).times(100)}%`
+          }
+        </TableBuilderColumn>
+        {kind !== 'myDelegate' && (
+          <TableBuilderColumn
+            id="totalStake"
+            header={
+              <TooltipHeader content={tooltipContent.delegated}>
+                Delegated
+              </TooltipHeader>
+            }
+            sortable
+          >
+            {(stakePool: StakePools) =>
+              `${formatCurrency(stakePool.totalStake)} PHA`
+            }
+          </TableBuilderColumn>
+        )}
+        <TableBuilderColumn
+          id="freeStake"
+          header={
+            <TooltipHeader content={tooltipContent.freeDelegation}>
+              Free Delegation
+            </TooltipHeader>
+          }
+          sortable
+        >
+          {(stakePool: StakePools) =>
+            `${formatCurrency(stakePool.freeStake)} PHA`
+          }
+        </TableBuilderColumn>
+        {kind === 'mining' && (
+          <TableBuilderColumn
+            id="releasingStake"
+            header={
+              <TooltipHeader content={tooltipContent.releasingStake}>
+                Releasing Stake
+              </TooltipHeader>
+            }
+            sortable
+          >
+            {(stakePool: StakePools) =>
+              `${formatCurrency(stakePool.releasingStake)} PHA`
+            }
+          </TableBuilderColumn>
+        )}
+        {kind === 'myDelegate' && (
+          <TableBuilderColumn
+            id="yourDelegation"
+            header={
+              <TooltipHeader content={tooltipContent.yourDelegation}>
+                Your Delegation
+              </TooltipHeader>
+            }
+          >
+            {(stakePool: StakePools) => {
+              const value = stakePool.stakePoolStakers?.[0]?.stake
+              return value ? `${formatCurrency(value)} PHA` : '-'
+            }}
+          </TableBuilderColumn>
+        )}
+        {kind === 'myDelegate' && (
+          <TableBuilderColumn
+            id="yourWithdrawing"
+            header={
+              <TooltipHeader content={tooltipContent.yourWithdrawing}>
+                Your Withdrawing
+              </TooltipHeader>
+            }
+          >
+            {(stakePool: StakePools) => {
+              const totalWithdrawal = stakePool.stakePoolWithdrawals.reduce(
+                (acc, cur) => {
+                  if (cur.userAddress === address) {
+                    return acc.add(cur.stake)
+                  }
+                  return acc
                 },
-              }}
-            >
-              {(stakePool: StakePools) => {
-                const allItems: (false | MenuItem)[] = [
-                  kind === 'myDelegate' && {label: 'Claim', key: 'claim'},
-                  {label: 'Delegate', key: 'delegate'},
-                  kind === 'myDelegate' && {label: 'Withdraw', key: 'withdraw'},
-                ]
+                new Decimal(0)
+              )
 
-                return (
-                  <StatefulPopover
-                    placement="bottom"
-                    accessibilityType="menu"
-                    content={({close}) => (
-                      <StatefulMenu
-                        items={allItems.filter(isTruthy)}
-                        onItemSelect={({item}: {item: MenuItem}) => {
-                          setIsModalOpen(true)
-                          setOpenModalKey(item.key)
-                          setOperatingPool(stakePool) // Pass object directly is Bad design
-                          close()
-                        }}
-                      />
-                    )}
-                  >
-                    <PopoverButton />
-                  </StatefulPopover>
-                )
-              }}
-            </TableBuilderColumn>
-          </TableBuilder>
-        </SpinnerWrapper>
-      </div>
+              return `${formatCurrency(totalWithdrawal)} PHA`
+            }}
+          </TableBuilderColumn>
+        )}
+        {kind === 'myDelegate' && (
+          <TableBuilderColumn
+            id="claimableRewards"
+            header={
+              <TooltipHeader content={tooltipContent.claimableRewards}>
+                Claimable Rewards
+              </TooltipHeader>
+            }
+          >
+            {(stakePool: StakePools) => {
+              const value = stakePool.stakePoolStakers?.[0]?.claimableRewards
+              return value ? `${formatCurrency(value)} PHA` : '-'
+            }}
+          </TableBuilderColumn>
+        )}
+        <TableBuilderColumn
+          overrides={{
+            TableBodyCell: {
+              style: {
+                paddingTop: 0,
+                paddingBottom: 0,
+                verticalAlign: 'middle',
+              },
+            },
+          }}
+        >
+          {(stakePool: StakePools) => {
+            const allItems: (false | MenuItem)[] = [
+              kind === 'mining' && {label: 'Add Worker', key: 'addWorker'},
+              kind === 'mining' && {label: 'Set Cap', key: 'setCap'},
+              kind === 'mining' && {
+                label: 'Set Commission',
+                key: 'setCommission',
+              },
+              (kind === 'myDelegate' || kind === 'mining') && {
+                label: 'Claim',
+                key: 'claim',
+              },
+              {label: 'Delegate', key: 'delegate'},
+              (kind === 'myDelegate' || kind === 'mining') && {
+                label: 'Withdraw',
+                key: 'withdraw',
+                disabled: !stakePool.stakePoolStakers.length,
+              },
+              (kind === 'myDelegate' || kind === 'mining') && {
+                label: 'Reclaim All',
+                key: 'reclaimAll',
+                disabled: !stakePool.miners.length,
+              },
+            ]
+
+            return (
+              <StatefulPopover
+                placement="bottom"
+                accessibilityType="menu"
+                content={({close}) => (
+                  <StatefulMenu
+                    items={allItems.filter(isTruthy)}
+                    onItemSelect={({item}: {item: MenuItem}) => {
+                      setIsModalOpen(true)
+                      setOpenModalKey(item.key)
+                      setOperatingPool(stakePool) // Pass object directly is Bad design
+                      close()
+                    }}
+                  />
+                )}
+              >
+                <PopoverButton />
+              </StatefulPopover>
+            )
+          }}
+        </TableBuilderColumn>
+      </TableBuilder>
 
       <Pagination
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
         totalCount={totalCount}
-        pageSize={PAGE_SIZE}
+        pageSize={pageSize}
       />
 
       {!isSSR() && operatingPool && (
         <Modal isOpen={isModalOpen} onClose={closeModal}>
           {/* TODO: add suspense wrapper here with loadable modal components */}
-          {openModalKey === 'delegate' && (
-            <DelegateModalBody stakePool={operatingPool} onClose={closeModal} />
-          )}
-          {openModalKey === 'claim' && (
-            <ClaimModalBody stakePool={operatingPool} onClose={closeModal} />
-          )}
-          {openModalKey === 'withdraw' && (
-            <WithdrawModalBody stakePool={operatingPool} onClose={closeModal} />
+          {ModalBody && (
+            <ModalBody stakePool={operatingPool} onClose={closeModal} />
           )}
         </Modal>
       )}

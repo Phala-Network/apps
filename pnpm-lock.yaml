@@ -8,7 +8,7 @@ importers:
       '@types/react': ^17.0.37
       '@typescript-eslint/eslint-plugin': ^5.8.0
       '@typescript-eslint/parser': ^5.8.0
-      baseui: ^10.6.0
+      baseui: ^10.7.1
       eslint: ^8.5.0
       eslint-config-prettier: ^8.3.0
       eslint-plugin-prettier: ^4.0.0
@@ -26,7 +26,7 @@ importers:
     dependencies:
       '@types/node': 16.11.12
       '@types/react': 17.0.37
-      baseui: 10.6.0_@types+react@17.0.37
+      baseui: 10.7.1_@types+react@17.0.37
       npm-run-all: 4.1.5
       styled-components: 5.3.3
       typescript: 4.5.2
@@ -75,7 +75,6 @@ importers:
       '@types/react-helmet': ^6.1.4
       '@types/react-table': ^7.7.9
       '@types/styled-components': ^5.1.18
-      '@types/styletron-engine-atomic': ^1.1.1
       '@types/styletron-react': ^5.0.3
       '@types/styletron-standard': ^2.0.2
       '@types/uuid': ^8.3.3
@@ -93,7 +92,6 @@ importers:
       gatsby-plugin-react-helmet: ^4.14.0
       gatsby-plugin-react-svg: ^3.1.0
       gatsby-plugin-styled-components: ^5.4.0
-      gatsby-plugin-styletron: ^7.3.0
       gatsby-plugin-typescript: ^3.14.0
       node-polyfill-webpack-plugin: ^1.1.4
       rc-tooltip: ^5.1.1
@@ -106,7 +104,7 @@ importers:
       react-scripts: 4.0.3
       react-toastify: ^7.0.4
       styled-breakpoints: ^10.0.1
-      styletron-engine-atomic: ^1.4.8
+      styletron-engine-monolithic: ^0.0.6
       styletron-react: ^6.0.2
       svg-react-loader: ^0.4.6
       typescript: ^4.5.2
@@ -139,7 +137,7 @@ importers:
       '@types/uuid': 8.3.3
       axios: 0.21.4
       babel-loader: 8.1.0_@babel+core@7.16.0
-      babel-plugin-styled-components: 2.0.2_styled-components@5.3.3
+      babel-plugin-styled-components: 2.0.2
       babel-preset-gatsby: 1.14.0_4e6e979ffc4bb99b480c5bc39b9b1eb6
       bn.js: 5.2.0
       core-js: 3.19.3
@@ -150,8 +148,7 @@ importers:
       gatsby-plugin-pnpm: 1.2.9_gatsby@4.3.0
       gatsby-plugin-react-helmet: 4.14.0_gatsby@4.3.0+react-helmet@6.1.0
       gatsby-plugin-react-svg: 3.1.0_gatsby@4.3.0
-      gatsby-plugin-styled-components: 5.4.0_c14e7378efa7aa2a7898ec0066cdcd9f
-      gatsby-plugin-styletron: 7.4.0_282faf4ca753576567a5a209ec7037a9
+      gatsby-plugin-styled-components: 5.4.0_22b28609bf3d17558c7616336ed13c57
       gatsby-plugin-typescript: 3.14.0_gatsby@4.3.0
       node-polyfill-webpack-plugin: 1.1.4
       rc-tooltip: 5.1.1_react-dom@17.0.2+react@17.0.2
@@ -161,10 +158,10 @@ importers:
       react-helmet: 6.1.0_react@17.0.2
       react-is: 16.13.1
       react-query: 3.34.5_react-dom@17.0.2+react@17.0.2
-      react-scripts: 4.0.3_96aa1e21580199deb639650b4dfe8231
+      react-scripts: 4.0.3_react@17.0.2+typescript@4.5.2
       react-toastify: 7.0.4_react-dom@17.0.2+react@17.0.2
-      styled-breakpoints: 10.0.1_c17876e09d792e0c7b0f44e49f814625
-      styletron-engine-atomic: 1.4.8
+      styled-breakpoints: 10.0.1_react@17.0.2
+      styletron-engine-monolithic: 0.0.6
       styletron-react: 6.0.2_react@17.0.2
       svg-react-loader: 0.4.6
       typescript: 4.5.2
@@ -176,7 +173,6 @@ importers:
       '@types/react-helmet': 6.1.4
       '@types/react-table': 7.7.9
       '@types/styled-components': 5.1.19
-      '@types/styletron-engine-atomic': 1.1.1
       '@types/styletron-react': 5.0.3
       '@types/styletron-standard': 2.0.2
 
@@ -4274,7 +4270,7 @@ packages:
       slash: 3.0.0
     dev: false
 
-  /@jest/core/26.6.3_ts-node@10.4.0:
+  /@jest/core/26.6.3:
     resolution: {integrity: sha512-xvV1kKbhfUqFVuZ8Cyo+JPpipAHHAV3kcDBftiduK8EICXmTFddryy3P7NfZt8Pv37rA9nEJBKCCkglCPt/Xjw==}
     engines: {node: '>= 10.14.2'}
     dependencies:
@@ -4289,14 +4285,14 @@ packages:
       exit: 0.1.2
       graceful-fs: 4.2.8
       jest-changed-files: 26.6.2
-      jest-config: 26.6.3_ts-node@10.4.0
+      jest-config: 26.6.3
       jest-haste-map: 26.6.2
       jest-message-util: 26.6.2
       jest-regex-util: 26.0.0
       jest-resolve: 26.6.2
       jest-resolve-dependencies: 26.6.3
-      jest-runner: 26.6.3_ts-node@10.4.0
-      jest-runtime: 26.6.3_ts-node@10.4.0
+      jest-runner: 26.6.3
+      jest-runtime: 26.6.3
       jest-snapshot: 26.6.2
       jest-util: 26.6.2
       jest-validate: 26.6.2
@@ -4398,15 +4394,15 @@ packages:
       collect-v8-coverage: 1.0.1
     dev: false
 
-  /@jest/test-sequencer/26.6.3_ts-node@10.4.0:
+  /@jest/test-sequencer/26.6.3:
     resolution: {integrity: sha512-YHlVIjP5nfEyjlrSr8t/YdNfU/1XEt7c5b4OxcXCjyRhjzLYu/rO69/WHPuYcbCWkz8kAeZVZp2N2+IOLLEPGw==}
     engines: {node: '>= 10.14.2'}
     dependencies:
       '@jest/test-result': 26.6.2
       graceful-fs: 4.2.8
       jest-haste-map: 26.6.2
-      jest-runner: 26.6.3_ts-node@10.4.0
-      jest-runtime: 26.6.3_ts-node@10.4.0
+      jest-runner: 26.6.3
+      jest-runtime: 26.6.3
     transitivePeerDependencies:
       - bufferutil
       - canvas
@@ -7518,12 +7514,6 @@ packages:
       '@types/react': 17.0.37
       csstype: 3.0.10
 
-  /@types/styletron-engine-atomic/1.1.1:
-    resolution: {integrity: sha512-Jthl51uLiVZHkY0HRBGtDOjjtI4H0nYaERZtzzdDgnJSa+PqQG55ScMQPmSAu6ikzYWp6+jJbbtuIX+TqVfFeg==}
-    dependencies:
-      '@types/styletron-standard': 2.0.2
-    dev: true
-
   /@types/styletron-react/5.0.3:
     resolution: {integrity: sha512-mNM8WrFrCYWXNxudjdMMeHZmGdXLfVF/fQmj1Qnz7E99niL2d7IcQubbx731FX3YEVGoF9Au1J6uBkPoEzqypw==}
     dependencies:
@@ -9197,7 +9187,7 @@ packages:
     dependencies:
       '@babel/core': 7.16.0
       '@babel/runtime': 7.16.3
-      gatsby: 4.3.0_e122c54355b87019702265d6ca26c4ad
+      gatsby: 4.3.0_3d8392ef988879db7b1ef93206ebbe58
       gatsby-core-utils: 3.3.0
     dev: false
 
@@ -9213,7 +9203,7 @@ packages:
       styled-components: 5.3.3
     dev: false
 
-  /babel-plugin-styled-components/2.0.2_styled-components@5.3.3:
+  /babel-plugin-styled-components/2.0.2:
     resolution: {integrity: sha512-7eG5NE8rChnNTDxa6LQfynwgHTVOYYaHJbUYSlOhk8QBXIQiMBKq4gyfHBBKPrxUcVBXVJL61ihduCpCQbuNbw==}
     peerDependencies:
       styled-components: '>= 2'
@@ -9222,7 +9212,6 @@ packages:
       '@babel/helper-module-imports': 7.16.0
       babel-plugin-syntax-jsx: 6.18.0
       lodash: 4.17.21
-      styled-components: 5.3.3
     dev: false
 
   /babel-plugin-syntax-jsx/6.18.0:
@@ -9485,8 +9474,8 @@ packages:
     engines: {node: ^4.5.0 || >= 5.9}
     dev: false
 
-  /baseui/10.6.0_@types+react@17.0.37:
-    resolution: {integrity: sha512-sJ/BLrY6NSBZ8SwedMrOjLkka5KpMu27eCoXNLuyAIXPwHL3P0WBzYT2ESUeGSWzH0r0ETytkhwDWa64/KyETA==}
+  /baseui/10.7.1_@types+react@17.0.37:
+    resolution: {integrity: sha512-MfeKeJKhiXJ0yGmleYzcwQOwcWEfudEMLTXzOJ29ZHr1XAQK5Yu354Txs5JZtn8WzPJff/e4fHJG1CbLFuXJVw==}
     engines: {node: '>=10.x'}
     requiresBuild: true
     peerDependencies:
@@ -9500,6 +9489,7 @@ packages:
       glob: 7.2.0
       just-extend: 4.2.1
       memoize-one: 5.2.1
+      mockdate: 3.0.5
       polished: 3.7.2
       popper.js: 1.16.1
       react-dropzone: 9.0.0
@@ -10752,7 +10742,7 @@ packages:
 
   /core-js/2.6.12:
     resolution: {integrity: sha512-Kb2wC0fvsWfQrgk8HU5lW6U/Lcs8+9aaYcy4ZFc6DDlo4nZ7n70dEgE5rtR0oG6ufKDUnrwfWL1mXR5ljDatrQ==}
-    deprecated: core-js@<3.3 is no longer maintained and not recommended for usage due to the number of issues. Because of the V8 engine whims, feature detection in old core-js versions could cause a slowdown up to 100x even if nothing is polyfilled. Please, upgrade your dependencies to the actual version of core-js.
+    deprecated: core-js@<3.4 is no longer maintained and not recommended for usage due to the number of issues. Because of the V8 engine whims, feature detection in old core-js versions could cause a slowdown up to 100x even if nothing is polyfilled. Please, upgrade your dependencies to the actual version of core-js.
     requiresBuild: true
     dev: false
 
@@ -14009,7 +13999,7 @@ packages:
       '@sindresorhus/slugify': 1.1.2
       chokidar: 3.5.2
       fs-exists-cached: 1.0.0
-      gatsby: 4.3.0_e122c54355b87019702265d6ca26c4ad
+      gatsby: 4.3.0_3d8392ef988879db7b1ef93206ebbe58
       gatsby-core-utils: 3.3.0
       gatsby-page-utils: 2.3.0
       gatsby-plugin-utils: 2.3.0_gatsby@4.3.0
@@ -14051,7 +14041,7 @@ packages:
       svg-react-loader: 0.4.6
     dev: false
 
-  /gatsby-plugin-styled-components/5.4.0_c14e7378efa7aa2a7898ec0066cdcd9f:
+  /gatsby-plugin-styled-components/5.4.0_22b28609bf3d17558c7616336ed13c57:
     resolution: {integrity: sha512-YsQJW4nuhuSIRrLRwexXWmrqIgirFWfYVtdhPTIHcrq5VCDW2OkMw/Kn+WNpHt1GUmP+3piKfKtofeF61xKwuw==}
     engines: {node: '>=14.15.0'}
     peerDependencies:
@@ -14062,27 +14052,10 @@ packages:
       styled-components: '>=2.0.0'
     dependencies:
       '@babel/runtime': 7.16.3
-      babel-plugin-styled-components: 2.0.2_styled-components@5.3.3
+      babel-plugin-styled-components: 2.0.2
       gatsby: 4.3.0_3d8392ef988879db7b1ef93206ebbe58
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
-      styled-components: 5.3.3
-    dev: false
-
-  /gatsby-plugin-styletron/7.4.0_282faf4ca753576567a5a209ec7037a9:
-    resolution: {integrity: sha512-t8lInSPTkL+A4L9KsIkWkNtqMzl105Pu79arLVcnFK9p5VHK0r5gavyn8Nuklv0i4PlARmuNPgAFUxlorG1Veg==}
-    engines: {node: '>=14.15.0'}
-    peerDependencies:
-      gatsby: ^4.0.0-next
-      react: ^16.9.0 || ^17.0.0
-      styletron-engine-atomic: ^1.4.8
-      styletron-react: ^5.2.7 || ^6.0.0
-    dependencies:
-      '@babel/runtime': 7.16.3
-      gatsby: 4.3.0_3d8392ef988879db7b1ef93206ebbe58
-      react: 17.0.2
-      styletron-engine-atomic: 1.4.8
-      styletron-react: 6.0.2_react@17.0.2
     dev: false
 
   /gatsby-plugin-typescript/3.14.0_gatsby@4.3.0:
@@ -14116,7 +14089,7 @@ packages:
       '@babel/preset-typescript': 7.16.0_@babel+core@7.16.0
       '@babel/runtime': 7.16.3
       babel-plugin-remove-graphql-queries: 4.3.0_@babel+core@7.16.0+gatsby@4.3.0
-      gatsby: 4.3.0_e122c54355b87019702265d6ca26c4ad
+      gatsby: 4.3.0_3d8392ef988879db7b1ef93206ebbe58
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -14128,7 +14101,7 @@ packages:
       gatsby: ^4.0.0-next
     dependencies:
       '@babel/runtime': 7.16.3
-      gatsby: 4.3.0_e122c54355b87019702265d6ca26c4ad
+      gatsby: 4.3.0_3d8392ef988879db7b1ef93206ebbe58
       joi: 17.5.0
     dev: false
 
@@ -16626,7 +16599,7 @@ packages:
       throat: 5.0.0
     dev: false
 
-  /jest-circus/26.6.0_ts-node@10.4.0:
+  /jest-circus/26.6.0:
     resolution: {integrity: sha512-L2/Y9szN6FJPWFK8kzWXwfp+FOR7xq0cUL4lIsdbIdwz3Vh6P1nrpcqOleSzr28zOtSHQNV9Z7Tl+KkuK7t5Ng==}
     engines: {node: '>= 10.14.2'}
     dependencies:
@@ -16644,8 +16617,8 @@ packages:
       jest-each: 26.6.2
       jest-matcher-utils: 26.6.2
       jest-message-util: 26.6.2
-      jest-runner: 26.6.3_ts-node@10.4.0
-      jest-runtime: 26.6.3_ts-node@10.4.0
+      jest-runner: 26.6.3
+      jest-runtime: 26.6.3
       jest-snapshot: 26.6.2
       jest-util: 26.6.2
       pretty-format: 26.6.2
@@ -16659,12 +16632,12 @@ packages:
       - utf-8-validate
     dev: false
 
-  /jest-cli/26.6.3_ts-node@10.4.0:
+  /jest-cli/26.6.3:
     resolution: {integrity: sha512-GF9noBSa9t08pSyl3CY4frMrqp+aQXFGFkf5hEPbh/pIUFYWMK6ZLTfbmadxJVcJrdRoChlWQsA2VkJcDFK8hg==}
     engines: {node: '>= 10.14.2'}
     hasBin: true
     dependencies:
-      '@jest/core': 26.6.3_ts-node@10.4.0
+      '@jest/core': 26.6.3
       '@jest/test-result': 26.6.2
       '@jest/types': 26.6.2
       chalk: 4.1.2
@@ -16672,7 +16645,7 @@ packages:
       graceful-fs: 4.2.8
       import-local: 3.0.3
       is-ci: 2.0.0
-      jest-config: 26.6.3_ts-node@10.4.0
+      jest-config: 26.6.3
       jest-util: 26.6.2
       jest-validate: 26.6.2
       prompts: 2.4.0
@@ -16685,7 +16658,7 @@ packages:
       - utf-8-validate
     dev: false
 
-  /jest-config/26.6.3_ts-node@10.4.0:
+  /jest-config/26.6.3:
     resolution: {integrity: sha512-t5qdIj/bCj2j7NFVHb2nFB4aUdfucDn3JRKgrZnplb8nieAirAzRSHP8uDEd+qV6ygzg9Pz4YG7UTJf94LPSyg==}
     engines: {node: '>= 10.14.2'}
     peerDependencies:
@@ -16695,7 +16668,7 @@ packages:
         optional: true
     dependencies:
       '@babel/core': 7.16.0
-      '@jest/test-sequencer': 26.6.3_ts-node@10.4.0
+      '@jest/test-sequencer': 26.6.3
       '@jest/types': 26.6.2
       babel-jest: 26.6.3_@babel+core@7.16.0
       chalk: 4.1.2
@@ -16705,14 +16678,13 @@ packages:
       jest-environment-jsdom: 26.6.2
       jest-environment-node: 26.6.2
       jest-get-type: 26.3.0
-      jest-jasmine2: 26.6.3_ts-node@10.4.0
+      jest-jasmine2: 26.6.3
       jest-regex-util: 26.0.0
       jest-resolve: 26.6.2
       jest-util: 26.6.2
       jest-validate: 26.6.2
       micromatch: 4.0.4
       pretty-format: 26.6.2
-      ts-node: 10.4.0_d1ba71cee4528a43e185cc3d6fa907dc
     transitivePeerDependencies:
       - bufferutil
       - canvas
@@ -16818,7 +16790,7 @@ packages:
     optionalDependencies:
       fsevents: 2.3.2
 
-  /jest-jasmine2/26.6.3_ts-node@10.4.0:
+  /jest-jasmine2/26.6.3:
     resolution: {integrity: sha512-kPKUrQtc8aYwBV7CqBg5pu+tmYXlvFlSFYn18ev4gPFtrRzB15N2gW/Roew3187q2w2eHuu0MU9TJz6w0/nPEg==}
     engines: {node: '>= 10.14.2'}
     dependencies:
@@ -16835,7 +16807,7 @@ packages:
       jest-each: 26.6.2
       jest-matcher-utils: 26.6.2
       jest-message-util: 26.6.2
-      jest-runtime: 26.6.3_ts-node@10.4.0
+      jest-runtime: 26.6.3
       jest-snapshot: 26.6.2
       jest-util: 26.6.2
       pretty-format: 26.6.2
@@ -16954,7 +16926,7 @@ packages:
       slash: 3.0.0
     dev: false
 
-  /jest-runner/26.6.3_ts-node@10.4.0:
+  /jest-runner/26.6.3:
     resolution: {integrity: sha512-atgKpRHnaA2OvByG/HpGA4g6CSPS/1LK0jK3gATJAoptC1ojltpmVlYC3TYgdmGp+GLuhzpH30Gvs36szSL2JQ==}
     engines: {node: '>= 10.14.2'}
     dependencies:
@@ -16967,13 +16939,13 @@ packages:
       emittery: 0.7.2
       exit: 0.1.2
       graceful-fs: 4.2.8
-      jest-config: 26.6.3_ts-node@10.4.0
+      jest-config: 26.6.3
       jest-docblock: 26.0.0
       jest-haste-map: 26.6.2
       jest-leak-detector: 26.6.2
       jest-message-util: 26.6.2
       jest-resolve: 26.6.2
-      jest-runtime: 26.6.3_ts-node@10.4.0
+      jest-runtime: 26.6.3
       jest-util: 26.6.2
       jest-worker: 26.6.2
       source-map-support: 0.5.21
@@ -16986,7 +16958,7 @@ packages:
       - utf-8-validate
     dev: false
 
-  /jest-runtime/26.6.3_ts-node@10.4.0:
+  /jest-runtime/26.6.3:
     resolution: {integrity: sha512-lrzyR3N8sacTAMeonbqpnSka1dHNux2uk0qqDXVkMv2c/A3wYnvQ4EXuI013Y6+gSKSCxdaczvf4HF0mVXHRdw==}
     engines: {node: '>= 10.14.2'}
     hasBin: true
@@ -17006,7 +16978,7 @@ packages:
       exit: 0.1.2
       glob: 7.2.0
       graceful-fs: 4.2.8
-      jest-config: 26.6.3_ts-node@10.4.0
+      jest-config: 26.6.3
       jest-haste-map: 26.6.2
       jest-message-util: 26.6.2
       jest-mock: 26.6.2
@@ -17086,7 +17058,7 @@ packages:
     dependencies:
       ansi-escapes: 4.3.2
       chalk: 4.1.2
-      jest: 26.6.0_ts-node@10.4.0
+      jest: 26.6.0
       jest-regex-util: 26.0.0
       jest-watcher: 26.6.2
       slash: 3.0.0
@@ -17132,14 +17104,14 @@ packages:
       supports-color: 8.1.1
     dev: false
 
-  /jest/26.6.0_ts-node@10.4.0:
+  /jest/26.6.0:
     resolution: {integrity: sha512-jxTmrvuecVISvKFFhOkjsWRZV7sFqdSUAd1ajOKY+/QE/aLBVstsJ/dX8GczLzwiT6ZEwwmZqtCUHLHHQVzcfA==}
     engines: {node: '>= 10.14.2'}
     hasBin: true
     dependencies:
-      '@jest/core': 26.6.3_ts-node@10.4.0
+      '@jest/core': 26.6.3
       import-local: 3.0.3
-      jest-cli: 26.6.3_ts-node@10.4.0
+      jest-cli: 26.6.3
     transitivePeerDependencies:
       - bufferutil
       - canvas
@@ -18515,6 +18487,10 @@ packages:
   /mock-socket/9.1.0:
     resolution: {integrity: sha512-zNsH8h0D7buVMDZ2X1GyFYso9A1X1Co/TDfFs0AIKhSLkJeh381HYESNl/mL6BzmQpNOxZVnNhEDS1OWBrS+cQ==}
     engines: {node: '>= 8'}
+    dev: false
+
+  /mockdate/3.0.5:
+    resolution: {integrity: sha512-iniQP4rj1FhBdBYS/+eQv7j1tadJ9lJtdzgOpvsOHng/GbcDh2Fhdeq+ZRldrPYdXvCyfFUmFeEwEGXZB5I/AQ==}
     dev: false
 
   /moment/2.29.1:
@@ -21741,7 +21717,7 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: false
 
-  /react-scripts/4.0.3_96aa1e21580199deb639650b4dfe8231:
+  /react-scripts/4.0.3_react@17.0.2+typescript@4.5.2:
     resolution: {integrity: sha512-S5eO4vjUzUisvkIPB7jVsKtuH2HhWcASREYWHAQ1FP5HyCv3xgn+wpILAEWkmy+A+tTNbSZClhxjT3qz6g4L1A==}
     engines: {node: ^10.12.0 || >=12.0.0}
     hasBin: true
@@ -21782,8 +21758,8 @@ packages:
       fs-extra: 9.1.0
       html-webpack-plugin: 4.5.0_webpack@4.44.2
       identity-obj-proxy: 3.0.0
-      jest: 26.6.0_ts-node@10.4.0
-      jest-circus: 26.6.0_ts-node@10.4.0
+      jest: 26.6.0
+      jest-circus: 26.6.0
       jest-resolve: 26.6.0
       jest-watch-typeahead: 0.6.1_jest@26.6.0
       mini-css-extract-plugin: 0.11.3_webpack@4.44.2
@@ -23741,6 +23717,23 @@ packages:
       styled-components: 5.3.3
     dev: false
 
+  /styled-breakpoints/10.0.1_react@17.0.2:
+    resolution: {integrity: sha512-J1YiOAZlcA0ZtQ6Tm/O4iEoO2FBJ61PNLJPCjWKVKErqVldnxMcVR89Jm67eMQH/o9Rtq1Mzm5UhWdzljq0ARQ==}
+    peerDependencies:
+      '@emotion/react': ^11.0.0
+      react: ^17.x.x
+      styled-components: ^5.0.0
+    peerDependenciesMeta:
+      '@emotion/react':
+        optional: true
+      react:
+        optional: true
+      styled-components:
+        optional: true
+    dependencies:
+      react: 17.0.2
+    dev: false
+
   /styled-breakpoints/10.0.1_styled-components@5.3.3:
     resolution: {integrity: sha512-J1YiOAZlcA0ZtQ6Tm/O4iEoO2FBJ61PNLJPCjWKVKErqVldnxMcVR89Jm67eMQH/o9Rtq1Mzm5UhWdzljq0ARQ==}
     peerDependencies:
@@ -23820,8 +23813,8 @@ packages:
       postcss-selector-parser: 6.0.6
     dev: false
 
-  /styletron-engine-atomic/1.4.8:
-    resolution: {integrity: sha512-KLyDkigcIrIMzUlX0usBfO/BBwnh1yC/48+DqP4LSZn8UgGP00oStxoezAH8pYhal1amvBJ7tLVs7tNZDUTAdg==}
+  /styletron-engine-monolithic/0.0.6:
+    resolution: {integrity: sha512-nndwidxFaT4zSXT9GIAPjuTfJ7k+7mi/cwq28EZMLgBXXTG+7nM8ORd4QCn8gnRF5ydr8EpYYzQq6rQPp5BFew==}
     dependencies:
       inline-style-prefixer: 5.1.2
       styletron-standard: 3.0.5
