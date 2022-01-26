@@ -22,12 +22,6 @@ export type Network = {
 }
 
 export const networks: Network[] = [
-  {
-    label: Khala,
-    name: Khala,
-    id: Khala,
-    blockchainType: blockchainTypes.polkadot,
-  },
   // {
   //   label: Karura,
   //   name: Karura,
@@ -45,6 +39,12 @@ export const networks: Network[] = [
     name: Ethereum,
     id: Ethereum,
     blockchainType: blockchainTypes.ethereum,
+  },
+  {
+    label: Khala,
+    name: Khala,
+    id: Khala,
+    blockchainType: blockchainTypes.polkadot,
   },
 ]
 
