@@ -1,14 +1,11 @@
 import {formatCurrency, trimAddress} from '@phala/utils'
 import {Block} from 'baseui/block'
 import {Card} from 'baseui/card'
-// import {StyledLink} from 'baseui/link'
-// import {Skeleton} from 'baseui/skeleton'
 import {TableBuilder, TableBuilderColumn} from 'baseui/table-semantic'
 import {HeadingSmall, HeadingXLarge} from 'baseui/typography'
 import {formatDuration, intervalToDuration, isAfter} from 'date-fns'
 import {PageProps} from 'gatsby'
 import Helmet from 'react-helmet'
-// import {VerifiedIcon} from '../components/Owner'
 import TableSkeleton from '../components/TableSkeleton'
 import {StakePoolWithdrawals, useStakePoolQuery} from '../hooks/graphql'
 import {client} from '../utils/GraphQLClient'
@@ -20,11 +17,7 @@ export const StakePool = ({params: {pid}}: PageProps) => {
     },
   })
 
-  const {
-    // ownerAddress,
-    // accounts: {identityVerified = false, identity = null} = {},
-    stakePoolWithdrawals,
-  } = data?.findUniqueStakePools || {}
+  const {stakePoolWithdrawals} = data?.findUniqueStakePools || {}
 
   return (
     <>
@@ -45,31 +38,6 @@ export const StakePool = ({params: {pid}}: PageProps) => {
       </Block>
 
       <Block maxWidth="1024px" margin="0 auto">
-        {/* <Card>
-          <HeadingSmall as="div">Owner</HeadingSmall>
-          <Block>
-            {ownerAddress ? (
-              <>
-                {identity && (
-                  <Block display="inline-flex" alignItems="center">
-                    {identity}
-                    {identityVerified && <VerifiedIcon />}
-                  </Block>
-                )}
-                <StyledLink
-                  href={`https://khala.subscan.io/account/${ownerAddress}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {ownerAddress}
-                </StyledLink>
-              </>
-            ) : (
-              <Skeleton animation />
-            )}
-          </Block>
-        </Card> */}
-
         <Card
           overrides={{
             Root: {

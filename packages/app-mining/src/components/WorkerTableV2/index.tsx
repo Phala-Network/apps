@@ -26,13 +26,13 @@ import {StatefulTooltip, StatefulTooltipProps} from 'baseui/tooltip'
 import {Block} from 'baseui/block'
 import {tooltipContent} from './tooltipContent'
 import Decimal from 'decimal.js'
+import {isFuture} from 'date-fns'
 
 // FIXME: should be loadable, but meet some problems when configuring gatsby-plugin-loadable-components-ssr
 import StartModalBody from './StartModalBody'
 import StopModalBody from './StopModalBody'
 import RemoveModalBody from './RemoveModalBody'
 import ReclaimModalBody from './ReclaimModalBody'
-import {isFuture} from 'date-fns'
 
 type ModalKey = 'start' | 'stop' | 'remove' | 'reclaim'
 type MenuItem = {label: string; key: ModalKey; disabled?: boolean}

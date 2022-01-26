@@ -26,7 +26,6 @@ import Decimal from 'decimal.js'
 import {Block} from 'baseui/block'
 import TableSkeleton from '../TableSkeleton'
 import Owner from '../Owner'
-import {navigate} from 'gatsby'
 
 // FIXME: should be loadable, but meet some problems when configuring gatsby-plugin-loadable-components-ssr
 import DelegateModalBody from './DelegateModalBody'
@@ -100,7 +99,6 @@ const StakePoolTableV2 = ({
 }): JSX.Element => {
   const [currentTime] = useState(() => {
     const now = new Date()
-    now.setMinutes(0)
     now.setSeconds(0)
     now.setMilliseconds(0)
     return now.toISOString()
@@ -158,8 +156,6 @@ const StakePoolTableV2 = ({
         AND: [
           // For development
           process.env.NODE_ENV !== 'development' &&
-            polkadotAccount?.address !==
-              '42FEJpvDMyTxHPTjGXt5TDC5FSefVqwrhADngAZC9UYqCFht' &&
             kind === 'mining' && {ownerAddress: {equals: address}},
           workersFilter && {minersCount: {gt: 0}},
           aprFilter && {instantApr: {gt: '0'}},
@@ -322,7 +318,7 @@ const StakePoolTableV2 = ({
                   const selection = window.getSelection()
                   if (selection && selection.toString().length) return
 
-                  navigate(`/stake-pool/${props.$row.pid}`)
+                  window.open(`/stake-pool/${props.$row.pid}`)
                 },
               }
             },
