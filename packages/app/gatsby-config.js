@@ -29,6 +29,7 @@ module.exports = {
         },
       },
     },
+    'gatsby-plugin-netlify',
     process.env.NODE_ENV === 'production' && {
       resolve: '@sentry/gatsby',
       options: {
