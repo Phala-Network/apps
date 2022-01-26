@@ -8,8 +8,6 @@ const FloatModalHeaderRoot = styled.div<{active: boolean}>`
   flex-direction: row;
   align-items: center;
   padding: 8px 16px;
-  background: ${(props) => (props.active ? '#d1ff52' : 'black')};
-  color: ${(props) => (props.active ? 'black' : '#d1ff52')};
   z-index: 1;
   cursor: pointer;
   width: fit-content;

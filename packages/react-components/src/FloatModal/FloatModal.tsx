@@ -21,21 +21,16 @@ const Root = styled.div`
   /* Gn 002 */
   border: 2px solid #aad829;
   box-sizing: border-box;
+  position: relative;
 
   ${down('sm')} {
     position: fixed;
     left: 16px;
-    bottom: 16px;
+    bottom: 90px;
     border: none;
   }
 
   &.active {
-    width: 420px;
-    height: 191px;
-    box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.3);
-    background: white;
-    color: black;
-
     ${down('sm')} {
       width: 100%;
       left: 0;

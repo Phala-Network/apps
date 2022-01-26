@@ -18,7 +18,7 @@ export const ArrowIcon: React.FC = () => {
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
-        <path d="M4.2 1L7 4M7 4L4.2 7M7 4H0" stroke="black" />
+        <path d="M4.2 1L7 4M7 4L4.2 7M7 4H0" stroke="white" />
       </svg>
     </ArrowIconRoot>
   )

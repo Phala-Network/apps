@@ -9,15 +9,26 @@ type Props = {
 
 const TransactionsListRoot = styled.div`
   ${scrollbar}
-  margin-top: 6px;
-  margin-right: 16px;
-  height: 136px;
   overflow-y: auto;
   opacity: 0;
   animation: 0.35s linear 0.15s opacity both;
+  position: absolute;
+  bottom: 50px;
+  right: -2px;
+  color: white;
+  /* Bk 001 */
+  background: #111111;
+  /* Gn 002 */
+  border: 2px solid #aad829;
+  width: 500px;
+  height: 280px;
+  padding: 20px;
+  box-sizing: border-box;
 
   ${down('sm')} {
-    margin-right: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
   }
 
   @keyframes opacity {
@@ -33,7 +44,6 @@ export const TransactionsList: React.FC<Props> = (props) => {
   return (
     <TransactionsListRoot>
       {records.map((record: any, index: number) => {
-        // console.log('record', record)
         return <TransactionsListItem record={record} key={index} />
       })}
     </TransactionsListRoot>

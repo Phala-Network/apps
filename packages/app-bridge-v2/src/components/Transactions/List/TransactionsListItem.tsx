@@ -16,22 +16,13 @@ const ItemRoot = styled.div`
   display: flex;
   align-items: center;
   margin-right: 12px;
-  color: black;
   text-decoration: none;
   cursor: pointer;
+  border-bottom: 1px solid #ffffff83;
 
   &:hover {
     text-decoration: underline;
   }
-`
-
-const Line = styled.div`
-  position: absolute;
-  top: 0;
-  left: 40px;
-  right: 0;
-  height: 1px;
-  background-color: black;
 `
 
 const TransactionsListItem: React.FC<TransactionsListItemProps> = (props) => {
@@ -79,8 +70,6 @@ const TransactionsListItem: React.FC<TransactionsListItemProps> = (props) => {
         ></ItemInfoBlock>
 
         <JumpIcon />
-
-        <Line />
       </ItemRoot>
 
       <ResultStepModal
