@@ -1,11 +1,17 @@
-import React, {useMemo} from 'react'
-import styled from 'styled-components'
+import React from 'react'
+import styled, {css} from 'styled-components'
 import {down} from 'styled-breakpoints'
 import {DataType} from './index'
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<{isKPHA?: boolean}>`
   display: flex;
   align-items: center;
+
+  ${(props) =>
+    !props.isKPHA &&
+    css`
+      height: 36px;
+    `}
 `
 
 const Name = styled.span<{isKPHA?: boolean}>`
@@ -19,8 +25,6 @@ const Name = styled.span<{isKPHA?: boolean}>`
   min-width: 53px;
 
   ${down('sm')} {
-    font-size: 16px;
-    line-height: 16px;
     margin-left: 0;
   }
 `
@@ -33,12 +37,13 @@ const ImgWrapper = styled.img<{isKPHA?: boolean}>`
   }
 `
 
-const AssetCell: React.FC<Pick<DataType, 'name' | 'icon'>> = ({name, icon}) => {
-  const isKPHA = useMemo(() => {
-    return name === 'K-PHA'
-  }, [name])
+const AssetCell: React.FC<Pick<DataType, 'name' | 'icon' | 'isKPHA'>> = ({
+  name,
+  icon,
+  isKPHA,
+}) => {
   return (
-    <Wrapper>
+    <Wrapper isKPHA={isKPHA}>
       <ImgWrapper isKPHA={isKPHA} src={icon} alt={name} />
       <Name isKPHA={isKPHA}>{name}</Name>
     </Wrapper>

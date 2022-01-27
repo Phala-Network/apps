@@ -1,9 +1,17 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, {css} from 'styled-components'
 import {down} from 'styled-breakpoints'
 import {DataType} from './index'
 
-const Wrapper = styled.div``
+const Wrapper = styled.div<{isKPHA?: boolean}>`
+  ${(props) =>
+    !props.isKPHA &&
+    css`
+      height: 36px;
+      display: flex;
+      align-items: center;
+    `}
+`
 
 const Balance = styled.div`
   font-family: Montserrat;
@@ -37,10 +45,13 @@ const ValueItem = styled.div`
 `
 
 const BalanceCell: React.FC<
-  Pick<DataType, 'balance' | 'transferrable' | 'crowdloanVesting' | 'delegate'>
-> = ({balance, transferrable, crowdloanVesting, delegate}) => {
+  Pick<
+    DataType,
+    'balance' | 'transferrable' | 'crowdloanVesting' | 'delegate' | 'isKPHA'
+  >
+> = ({balance, transferrable, crowdloanVesting, delegate, isKPHA}) => {
   return (
-    <Wrapper>
+    <Wrapper isKPHA={isKPHA}>
       <Balance>{balance}</Balance>
       <div>
         {transferrable ? (

@@ -8,11 +8,18 @@ import useKPhaData from './hooks/useKPhaData'
 
 const Wrapper = styled.div``
 
+const testData = {
+  name: 'BNC',
+  icon: '/images/Phala.svg',
+  balance: '0.00',
+  value: new Decimal(2).toString(),
+}
+
 const Index = () => {
   const kphaData = useKPhaData()
 
   const tableData: DataType[] = useMemo(() => {
-    if (kphaData.value !== '') return [kphaData]
+    if (kphaData.value !== '') return [kphaData, testData]
     return []
   }, [kphaData])
 

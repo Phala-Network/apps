@@ -1,5 +1,5 @@
-import React, {useMemo, useState} from 'react'
-import styled from 'styled-components'
+import React, {useState} from 'react'
+import styled, {css} from 'styled-components'
 import {down} from 'styled-breakpoints'
 import {useBreakpoint} from 'styled-breakpoints/react-styled'
 import {navigate} from 'gatsby'
@@ -9,11 +9,17 @@ import Popover from '../Popover'
 import TransferModal from '../TransferModal'
 import ClaimModal from '../ClaimModal'
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<{isKPHA?: boolean}>`
   display: flex;
   justify-content: flex-end;
   align-items: center;
   padding-right: 40px;
+  ${(props) =>
+    !props.isKPHA &&
+    css`
+      height: 36px;
+      padding-top: 10px;
+    `}
 `
 
 const Spacer = styled.div`
@@ -49,19 +55,16 @@ export const LineWrap = styled.div`
   }
 `
 
-const ButtonCell: React.FC<Pick<DataType, 'name'>> = ({name}) => {
+const ButtonCell: React.FC<Pick<DataType, 'isKPHA'>> = ({isKPHA}) => {
   const [visibleTransferModal, setVisibleTransferModal] = useState(false)
   const [claimModalVisible, setClaimModalVisible] = useState(false)
   const isMobile = useBreakpoint(down('sm'))
-  const isKPHA = useMemo(() => {
-    return name === 'K-PHA'
-  }, [name])
 
   const handleBridge = () => {
     navigate('/bridge/')
   }
   return (
-    <Wrapper>
+    <Wrapper isKPHA={isKPHA}>
       {isMobile ? null : (
         <Button onClick={() => setVisibleTransferModal(true)}>Transfer</Button>
       )}

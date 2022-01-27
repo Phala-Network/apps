@@ -43,6 +43,7 @@ export type DataType = {
   transferrable?: string
   crowdloanVesting?: string
   delegate?: string
+  isKPHA?: boolean
 }
 
 type Props = {
@@ -125,7 +126,9 @@ const AssetList: React.FC<Props> = ({tableData}) => {
         }}
       >
         <TableBuilderColumn header="Asset">
-          {(row) => <AssetCell name={row.name} icon={row.icon} />}
+          {(row) => (
+            <AssetCell name={row.name} icon={row.icon} isKPHA={row.isKPHA} />
+          )}
         </TableBuilderColumn>
         <TableBuilderColumn header="Balance">
           {(row) => (
@@ -134,17 +137,18 @@ const AssetList: React.FC<Props> = ({tableData}) => {
               transferrable={row.transferrable}
               crowdloanVesting={row.crowdloanVesting}
               delegate={row.delegate}
+              isKPHA={row.isKPHA}
             />
           )}
         </TableBuilderColumn>
         {isMobile ? null : (
           <TableBuilderColumn header="Value">
-            {(row) => <ValueCell value={row.value} />}
+            {(row) => <ValueCell value={row.value} isKPHA={row.isKPHA} />}
           </TableBuilderColumn>
         )}
 
         <TableBuilderColumn>
-          {(row) => <ButtonCell name={row.name} />}
+          {(row) => <ButtonCell isKPHA={row.isKPHA} />}
         </TableBuilderColumn>
       </TableBuilder>
     </Wrapper>
