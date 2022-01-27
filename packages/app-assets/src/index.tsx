@@ -3,25 +3,13 @@ import {useMemo} from 'react'
 import styled from 'styled-components'
 import {Helmet} from 'react-helmet'
 import AccountBanner from './components/AccountBanner'
-import AssetList, {DataType} from './components/AssetList'
-import useKPhaData from './hooks/useKPhaData'
+import AssetList from './components/AssetList'
+import useTableData from './hooks/useTableData'
 
 const Wrapper = styled.div``
 
-const testData = {
-  name: 'BNC',
-  icon: '/images/Phala.svg',
-  balance: '0.00',
-  value: new Decimal(2).toString(),
-}
-
 const Index = () => {
-  const kphaData = useKPhaData()
-
-  const tableData: DataType[] = useMemo(() => {
-    if (kphaData.value !== '') return [kphaData, testData]
-    return []
-  }, [kphaData])
+  const tableData = useTableData()
 
   const totalValue = useMemo(() => {
     const sum = tableData.reduce((prev, curr) => {

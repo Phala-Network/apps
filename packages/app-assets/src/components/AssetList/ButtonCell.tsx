@@ -82,24 +82,25 @@ const ButtonCell: React.FC<Pick<DataType, 'isKPHA'>> = ({isKPHA}) => {
                 Transfer
               </LineWrap>
             ) : null}
-            <LineWrap
-              onClick={() => {
-                close()
-                setClaimModalVisible(true)
-              }}
-            >
-              Claim
-            </LineWrap>
             {isKPHA ? (
               <LineWrap
                 onClick={() => {
                   close()
-                  handleBridge()
+                  setClaimModalVisible(true)
                 }}
               >
-                Bridge
+                Claim
               </LineWrap>
             ) : null}
+
+            <LineWrap
+              onClick={() => {
+                close()
+                handleBridge()
+              }}
+            >
+              Bridge
+            </LineWrap>
           </div>
         )}
       />
