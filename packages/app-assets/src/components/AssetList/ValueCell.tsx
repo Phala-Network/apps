@@ -10,11 +10,13 @@ const Wrapper = styled.div<{isKPHA?: boolean}>`
   font-size: 16px;
   line-height: 16px;
   color: #111111;
+  padding: 24px 0 20px;
 
   ${(props) =>
     !props.isKPHA &&
     css`
       height: 36px;
+      padding: 10px 0;
       display: flex;
       align-items: center;
     `}

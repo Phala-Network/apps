@@ -13,12 +13,12 @@ const Wrapper = styled.div<{isKPHA?: boolean}>`
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  padding-right: 40px;
+  padding: 14px 40px 20px 0;
   ${(props) =>
     !props.isKPHA &&
     css`
       height: 36px;
-      padding-top: 10px;
+      padding: 10px 40px 10px 0;
     `}
 `
 

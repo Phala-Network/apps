@@ -4,10 +4,12 @@ import {down} from 'styled-breakpoints'
 import {DataType} from './index'
 
 const Wrapper = styled.div<{isKPHA?: boolean}>`
+  padding: 24px 0 20px;
   ${(props) =>
     !props.isKPHA &&
     css`
       height: 36px;
+      padding: 10px 0;
       display: flex;
       align-items: center;
     `}

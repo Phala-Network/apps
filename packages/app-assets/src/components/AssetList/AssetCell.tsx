@@ -6,11 +6,13 @@ import {DataType} from './index'
 const Wrapper = styled.div<{isKPHA?: boolean}>`
   display: flex;
   align-items: center;
+  padding: 24px 0 20px;
 
   ${(props) =>
     !props.isKPHA &&
     css`
       height: 36px;
+      padding: 10px 0;
     `}
 `
 
