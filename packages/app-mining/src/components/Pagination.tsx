@@ -1,18 +1,8 @@
 // TODO: move this component to common folder
-import styled from 'styled-components'
 import {Pagination as BasePagination} from 'baseui/pagination'
 import {ParagraphSmall} from 'baseui/typography'
+import {Block} from 'baseui/block'
 
-const Wrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-
-  /* gap polyfill */
-  & > *:not(:first-child) {
-    margin-left: 20px;
-  }
-`
 const Pagination = ({
   pageSize = 20,
   totalCount,
@@ -27,8 +17,12 @@ const Pagination = ({
   const numPages = Math.ceil(totalCount / pageSize)
 
   return (
-    <Wrapper>
-      {totalCount > 1 && <ParagraphSmall>{totalCount} records</ParagraphSmall>}
+    <Block display="flex" justifyContent="flex-end" alignItems="center">
+      {totalCount > 1 && (
+        <Block marginRight="scale400">
+          <ParagraphSmall as="div">{totalCount} records</ParagraphSmall>
+        </Block>
+      )}
       {numPages > 1 && (
         <BasePagination
           numPages={numPages}
@@ -38,7 +32,7 @@ const Pagination = ({
           }}
         />
       )}
-    </Wrapper>
+    </Block>
   )
 }
 

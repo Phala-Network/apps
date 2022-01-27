@@ -1,6 +1,7 @@
 import {BigNumber, ethers} from 'ethers'
 import {isHexString} from 'ethers/lib/utils'
 import {useMemo} from 'react'
+import {useApiPromise} from '../..'
 import {useNetworkContext} from '../../polkadot/hooks/useSubstrateNetwork'
 import {useEthers} from '../contexts/useEthers'
 import {useEthereumNetworkOptions} from '../queries/useEthereumNetworkOptions'
@@ -23,6 +24,7 @@ export const useErc20Deposit = (
   const {options: config} = useEthereumNetworkOptions()
   const {data: network} = useEthersNetworkQuery()
   const {provider} = useEthers()
+  const {api} = useApiPromise()
 
   const bridge = useMemo(() => {
     return contract !== undefined && provider !== undefined
@@ -32,6 +34,7 @@ export const useErc20Deposit = (
 
   return useMemo(() => {
     if (
+      api === undefined ||
       bridge === undefined ||
       config === undefined ||
       network === undefined ||
@@ -62,20 +65,37 @@ export const useErc20Deposit = (
         throw new Error('Validation failed: recipient should be hex string')
       }
 
-      const amountPayload = ethers.utils
-        .hexZeroPad(amount.toHexString(), 32)
-        .substr(2)
-      const recipientPayload = recipient.substr(2)
-      const recipientSize = ethers.utils
-        .hexZeroPad(ethers.utils.hexlify(recipientPayload.length / 2), 32)
-        .substr(2)
+      const dest = api
+        .createType('XcmV1MultiLocation', {
+          parents: 0,
+          interior: api.createType('Junctions', {
+            X1: api.createType('XcmV1Junction', {
+              AccountId32: {
+                network: api.createType('XcmV0JunctionNetworkId', 'Any'),
+                id: recipient,
+              },
+            }),
+          }),
+        })
+        .toHex()
 
-      const payload = `0x${amountPayload}${recipientSize}${recipientPayload}`
+      const data =
+        '0x' +
+        ethers.utils
+          .hexZeroPad(
+            ethers.BigNumber.from(amount.toString()).toHexString(),
+            32
+          )
+          .substr(2) +
+        ethers.utils
+          .hexZeroPad(ethers.utils.hexlify((dest.length - 2) / 2), 32)
+          .substr(2) +
+        dest.substr(2)
 
       return await (bridge.functions['deposit'](
         destChainId,
         config.erc20ResourceId,
-        payload,
+        data,
         {
           gasLimit: 350000,
         }

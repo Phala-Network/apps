@@ -18,7 +18,7 @@ const ActionButton: React.FC<Props> = (props) => {
     useState(false)
 
   let render = (
-    <Button disabled type="primary" onClick={onClick}>
+    <Button type="primary" onClick={onClick}>
       Next
     </Button>
   )
@@ -27,7 +27,6 @@ const ActionButton: React.FC<Props> = (props) => {
     render = (
       <>
         <Button
-          disabled
           onClick={() => setPolkadotAccountModalViable(true)}
           type="primary"
         >{`Connect Polkadot{.js}`}</Button>
@@ -44,7 +43,6 @@ const ActionButton: React.FC<Props> = (props) => {
     render = (
       <>
         <Button
-          disabled
           onClick={() => setEthereumAccountModalViable(true)}
           type="primary"
         >

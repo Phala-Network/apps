@@ -1,25 +1,16 @@
-import {formatCurrency, toFixed, trimAddress} from '@phala/utils'
 import {StyledLink} from 'baseui/link'
 import {Block} from 'baseui/block'
-import Decimal from 'decimal.js'
-import type {StakePools} from '../../hooks/graphql'
+import type {StakePools} from '../hooks/graphql'
 import {StatefulTooltip} from 'baseui/tooltip'
 import {CheckCircle} from 'react-feather'
 import styled from 'styled-components'
+import {trimAddress} from '@phala/utils'
 
-const VerifiedIcon = styled(CheckCircle)`
+export const VerifiedIcon = styled(CheckCircle).attrs({size: 16})`
   margin-left: 5px;
 `
 
-export const PercentCell = ({value}: {value: string}): JSX.Element => (
-  <>{toFixed(new Decimal(value).times(100), 2)}%</>
-)
-
-export const TokenCell = ({value}: {value: string | Decimal}): JSX.Element => (
-  <>{formatCurrency(value)} PHA</>
-)
-
-export const OwnerCell = ({
+const Owner = ({
   stakePool: {
     ownerAddress,
     accounts: {identityVerified, identity},
@@ -30,6 +21,7 @@ export const OwnerCell = ({
   <Block display="flex" alignItems="center">
     <StatefulTooltip content={ownerAddress} placement="bottomLeft">
       <StyledLink
+        onClick={(e) => e.stopPropagation()}
         href={`https://khala.subscan.io/account/${ownerAddress}`}
         target="_blank"
         rel="noopener noreferrer"
@@ -39,8 +31,10 @@ export const OwnerCell = ({
     </StatefulTooltip>
     {identityVerified && (
       <StatefulTooltip content="Verified">
-        <VerifiedIcon size={16} />
+        <VerifiedIcon />
       </StatefulTooltip>
     )}
   </Block>
 )
+
+export default Owner

@@ -9,8 +9,7 @@ import {
 } from 'baseui/modal'
 import {ParagraphSmall} from 'baseui/typography'
 import {FormControl} from 'baseui/form-control'
-import type {StakePools} from '../../hooks/graphql'
-import {useDelegableBalance} from '../../hooks/useDelegableBalance'
+import type {Miners} from '../../hooks/graphql'
 import Decimal from 'decimal.js'
 import {formatCurrency} from '@phala/utils'
 import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
@@ -18,23 +17,28 @@ import {
   useApiPromise,
   useDecimalJsTokenDecimalMultiplier,
 } from '@phala/react-libs'
-import {Skeleton} from 'baseui/skeleton'
 
-const DelegateModalBody = ({
-  stakePool,
+const StartModalBody = ({
+  miner,
   onClose,
-}: {stakePool: StakePools} & Pick<ModalProps, 'onClose'>): JSX.Element => {
-  const {pid, remainingStake} = stakePool
+}: {miner: Miners} & Pick<ModalProps, 'onClose'>): JSX.Element => {
+  const {
+    pid,
+    workerPublicKey,
+    sMin,
+    sMax,
+    stakePools: {freeStake},
+  } = miner
   const {api} = useApiPromise()
-  const delegableBalance = useDelegableBalance()
   const [amount, setAmount] = useState('')
   const waitSignAndSend = useWaitSignAndSend()
   const decimals = useDecimalJsTokenDecimalMultiplier(api)
   const onConfirm = () => {
     if (api && decimals) {
       waitSignAndSend(
-        api.tx.phalaStakePool?.contribute?.(
+        api.tx.phalaStakePool?.startMining?.(
           pid,
+          workerPublicKey,
           new Decimal(amount).times(decimals).floor().toString()
         ),
         (status) => {
@@ -46,38 +50,30 @@ const DelegateModalBody = ({
     }
   }
 
-  const remaining = remainingStake
-    ? `${formatCurrency(remainingStake)} PHA`
-    : '∞'
-
   return (
     <>
-      <ModalHeader>Delegate</ModalHeader>
+      <ModalHeader>Start Mining</ModalHeader>
       <ModalBody>
+        <ParagraphSmall>
+          Start a miner on behalf of the stake pool
+        </ParagraphSmall>
         <FormControl label="Pid">
           <ParagraphSmall as="div">{pid}</ParagraphSmall>
+        </FormControl>
+        <FormControl label="Worker Public Key">
+          <ParagraphSmall as="div" $style={{wordBreak: 'break-all'}}>
+            {workerPublicKey}
+          </ParagraphSmall>
         </FormControl>
         <FormControl
           label="Amount"
           caption={
             <>
-              Pool Remaining: {remaining}
+              Smin: {formatCurrency(sMin)} PHA
               <br />
-              Delegable Balance:{' '}
-              {delegableBalance && decimals ? (
-                `${formatCurrency(delegableBalance.div(decimals))} PHA`
-              ) : (
-                <Skeleton
-                  animation
-                  rows={1}
-                  width="96px"
-                  overrides={{
-                    Root: {
-                      style: {display: 'inline-block', verticalAlign: 'middle'},
-                    },
-                  }}
-                />
-              )}
+              Smax: {formatCurrency(sMax)} PHA
+              <br />
+              Pool Free Delegation: {formatCurrency(freeStake)} PHA
             </>
           }
         >
@@ -86,7 +82,7 @@ const DelegateModalBody = ({
             size="compact"
             autoFocus
             type="number"
-            endEnhancer="PHA"
+            placeholder="Amount (PHA)"
             min={0}
             onChange={(e) => setAmount(e.currentTarget.value)}
           />
@@ -101,4 +97,4 @@ const DelegateModalBody = ({
   )
 }
 
-export default DelegateModalBody
+export default StartModalBody
