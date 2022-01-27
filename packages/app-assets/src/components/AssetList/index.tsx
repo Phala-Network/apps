@@ -35,7 +35,10 @@ const Title = styled.div`
   }
 `
 
+export type TokenType = 'PHA' | 'BNC' | 'ZLK'
+
 export type DataType = {
+  token: TokenType
   name: string
   icon: string
   balance: string
@@ -145,7 +148,7 @@ const AssetList: React.FC<Props> = ({tableData}) => {
         )}
 
         <TableBuilderColumn>
-          {(row) => <ButtonCell isKPHA={row.isKPHA} />}
+          {(row) => <ButtonCell isKPHA={row.isKPHA} token={row.token} />}
         </TableBuilderColumn>
       </TableBuilder>
     </Wrapper>

@@ -55,7 +55,10 @@ export const LineWrap = styled.div`
   }
 `
 
-const ButtonCell: React.FC<Pick<DataType, 'isKPHA'>> = ({isKPHA}) => {
+const ButtonCell: React.FC<Pick<DataType, 'isKPHA' | 'token'>> = ({
+  isKPHA,
+  token,
+}) => {
   const [visibleTransferModal, setVisibleTransferModal] = useState(false)
   const [claimModalVisible, setClaimModalVisible] = useState(false)
   const isMobile = useBreakpoint(down('sm'))
@@ -112,6 +115,7 @@ const ButtonCell: React.FC<Pick<DataType, 'isKPHA'>> = ({isKPHA}) => {
       )}
       {visibleTransferModal && (
         <TransferModal
+          token={token}
           visible={true}
           onClose={() => setVisibleTransferModal(false)}
         ></TransferModal>

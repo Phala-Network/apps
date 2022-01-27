@@ -59,6 +59,7 @@ const useKPhaData = () => {
   }, [crowdloanVestingBalance])
 
   return {
+    token: 'PHA',
     name: 'K-PHA',
     icon: '/images/Phala.svg',
     balance: balanceValue,

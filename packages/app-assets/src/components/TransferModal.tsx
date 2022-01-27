@@ -26,12 +26,18 @@ import {
   inputStyle,
 } from './styledComponents'
 
+const ASSET_ID_MAP = {
+  BNC: 2,
+  ZLK: 1,
+}
+
 type Props = {
   visible: boolean
   onClose: () => void
+  token: 'BNC' | 'ZLK'
 }
 
-const TransferModal: React.FC<Props> = ({visible, onClose}) => {
+const TransferModal: React.FC<Props> = ({visible, onClose, token}) => {
   const [address, setAddress] = useState('')
   const [amount, setAmount] = useState('')
   const [loading, setLoading] = useState(false)
@@ -74,11 +80,20 @@ const TransferModal: React.FC<Props> = ({visible, onClose}) => {
       try {
         const {web3FromAddress} = await import('@polkadot/extension-dapp')
 
+        let extrinsic = api.tx.balances.transfer(address, amountString)
+        if (token in ASSET_ID_MAP) {
+          extrinsic = api.tx.assets.transfer(
+            ASSET_ID_MAP[token],
+            address,
+            amountString
+          )
+        }
+
         const signer = (await web3FromAddress(polkadotAccount.address)).signer
         await waitSignAndSend({
           account: polkadotAccount.address,
           api,
-          extrinsic: api.tx.balances.transfer(address, amountString),
+          extrinsic,
           signer,
         })
 
@@ -88,11 +103,11 @@ const TransferModal: React.FC<Props> = ({visible, onClose}) => {
         toast.error((err as Error)?.message)
       }
     }
-  }, [api, polkadotAccount, onClose, address, amount, decimals])
+  }, [api, polkadotAccount, onClose, address, amount, decimals, token])
 
   return (
     <ModalWrapper visible={visible} onClose={onClose}>
-      <ModalTitleWrapper>Transfer PHA</ModalTitleWrapper>
+      <ModalTitleWrapper>{`Transfer ${token}`}</ModalTitleWrapper>
       <InputWrapper>
         <Input
           value={address}
@@ -111,7 +126,7 @@ const TransferModal: React.FC<Props> = ({visible, onClose}) => {
             setAmount(e.target.value)
           }
           type="number"
-          placeholder="Amount(PHA)"
+          placeholder={`Amount(${token})`}
           overrides={{
             ...inputStyle,
             Input: {
