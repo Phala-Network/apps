@@ -194,7 +194,12 @@ const WorkerTableV2 = (): JSX.Element => {
             }
             sortable
           >
-            {({state}: Miners) => state}
+            {({state}: Miners) => {
+              if (state === 'MiningIdle') return 'Mining'
+              if (state === 'MiningUnresponsive') return 'Unresponsive'
+              if (state === 'MiningCoolingDown') return 'CoolingDown'
+              return state
+            }}
           </TableBuilderColumn>
           <TableBuilderColumn
             id="totalReward"
