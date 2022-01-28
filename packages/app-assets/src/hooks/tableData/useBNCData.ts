@@ -21,7 +21,7 @@ const useBNCData = (): DataType => {
 
   const bncValue = useMemo(() => {
     if (!balance) return ''
-    return toFixed(balance.mul(BNCPrice), 2)
+    return toFixed(balance.div(10 ** 12).mul(BNCPrice), 2)
   }, [balance, BNCPrice])
 
   return {

@@ -21,11 +21,11 @@ const useZLKData = (): DataType => {
 
   const zlkValue = useMemo(() => {
     if (!balance) return ''
-    return toFixed(balance.mul(ZLKPrice), 2)
+    return toFixed(balance.div(10 ** 12).mul(ZLKPrice), 2)
   }, [balance, ZLKPrice])
 
   return {
-    token: 'ZLK',
+    token: TOKEN,
     name: 'ZLK',
     icon: 'https://assets.coingecko.com/coins/images/20884/small/zenlink.PNG?1637824309',
     balance: zlkBalance,

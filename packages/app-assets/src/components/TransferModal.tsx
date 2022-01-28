@@ -11,8 +11,11 @@ import {
   useDecimalJsTokenDecimalMultiplier,
   waitSignAndSend,
 } from '@phala/react-libs'
-import {usePolkadotAccountTransferrableBalanceDecimal} from '@phala/react-hooks'
-import {validateAddress, toFixed} from '@phala/utils'
+import {
+  usePolkadotAccountTransferrableBalanceDecimal,
+  useAssetBalance,
+} from '@phala/react-hooks'
+import {validateAddress, formatCurrency} from '@phala/utils'
 import Decimal from 'decimal.js'
 import React, {useCallback, useState, useMemo} from 'react'
 import {toast} from 'react-toastify'
@@ -28,7 +31,6 @@ import {
 import {TokenType} from '../components/AssetList'
 
 const ASSET_ID_MAP = {
-  PHA: null,
   BNC: 2,
   ZLK: 1,
 }
@@ -50,16 +52,27 @@ const TransferModal: React.FC<Props> = ({visible, onClose, token}) => {
   const polkadotAccountAddress = polkadotAccount?.address
   const polkadotTransferBalanceDecimal =
     usePolkadotAccountTransferrableBalanceDecimal(polkadotAccountAddress)
+  const assetBalance = useAssetBalance(token, polkadotAccountAddress)
   const isShowMaxButton = polkadotTransferBalanceDecimal.greaterThan('0.003')
 
   const transferrableValue = useMemo(() => {
-    if (!polkadotTransferBalanceDecimal) return '-'
-    return `${toFixed(polkadotTransferBalanceDecimal)} PHA`
-  }, [polkadotTransferBalanceDecimal])
+    if (token === 'PHA') {
+      if (!polkadotTransferBalanceDecimal) return '-'
+      return `${formatCurrency(polkadotTransferBalanceDecimal, 4)} PHA`
+    }
+    if (!assetBalance) return '-'
+    return `${formatCurrency(assetBalance.div(10 ** 12), 4)} ${token}`
+  }, [polkadotTransferBalanceDecimal, token, assetBalance])
 
   const handleMax = () => {
-    if (!polkadotTransferBalanceDecimal) return
-    const maxValue = polkadotTransferBalanceDecimal.sub('0.003').toString()
+    if (token === 'PHA') {
+      if (!polkadotTransferBalanceDecimal) return
+      const maxValue = polkadotTransferBalanceDecimal.sub('0.003').toString()
+      setAmount(maxValue)
+      return
+    }
+    if (!assetBalance) return
+    const maxValue = assetBalance.div(10 ** 12).toString()
     setAmount(maxValue)
   }
 
@@ -83,8 +96,8 @@ const TransferModal: React.FC<Props> = ({visible, onClose, token}) => {
         const {web3FromAddress} = await import('@polkadot/extension-dapp')
 
         let extrinsic = api.tx.balances.transfer(address, amountString)
-        if (token in ASSET_ID_MAP && typeof ASSET_ID_MAP[token] === 'number') {
-          const id = ASSET_ID_MAP[token] as number
+        if (token !== 'PHA' && token in ASSET_ID_MAP) {
+          const id = ASSET_ID_MAP[token]
           extrinsic = api.tx.assets.transfer(id, address, amountString)
         }
 

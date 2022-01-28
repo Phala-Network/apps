@@ -3,7 +3,7 @@ import type {AccountId} from '@polkadot/types/interfaces'
 import {useEffect, useState} from 'react'
 import {Decimal} from 'decimal.js'
 
-type TokenType = 'BNC' | 'ZLK'
+type TokenType = 'PHA' | 'BNC' | 'ZLK'
 
 const ASSET_ID_MAP = {
   BNC: 2,
@@ -18,7 +18,13 @@ export default function useAssetBalance(
   const [assetBalance, setAssetBalance] = useState<Decimal>()
   const initialized = readystate === 'ready'
   useEffect(() => {
-    if (!address || !initialized || !api || !(token in ASSET_ID_MAP)) {
+    if (
+      !address ||
+      !initialized ||
+      !api ||
+      token === 'PHA' ||
+      !(token in ASSET_ID_MAP)
+    ) {
       return
     }
 
