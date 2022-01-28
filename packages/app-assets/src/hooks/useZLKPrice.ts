@@ -1,17 +1,17 @@
 import axios from 'axios'
 import {useEffect, useState} from 'react'
 
-type PHAPriceResponse = {
+type ZLKPriceResponse = {
   price: number
 }
 
-const usePHAPrice = (): number => {
+const useZLKPrice = (): number => {
   const [price, setPrice] = useState(0)
 
   useEffect(() => {
     axios
-      .get<PHAPriceResponse>(
-        'https://app-misc-api.phala.network/coin_market_charts/PHA'
+      .get<ZLKPriceResponse>(
+        'https://app-misc-api.phala.network/coin_market_charts/ZLK'
       )
       .then(({data}) => {
         if (data) {
@@ -23,4 +23,4 @@ const usePHAPrice = (): number => {
   return price
 }
 
-export default usePHAPrice
+export default useZLKPrice

@@ -1,12 +1,14 @@
 import {useMemo} from 'react'
 import {usePolkadotAccountAtom} from '@phala/app-store'
-import {Decimal} from 'decimal.js'
 import {useAssetBalance} from '@phala/react-hooks'
-import {formatCurrency} from '@phala/utils'
+import {toFixed, formatCurrency} from '@phala/utils'
+import {DataType} from '../../components/AssetList'
+import useBNCPrice from '../useBNCPrice'
 
 const TOKEN = 'BNC'
 
-const useBNCData = () => {
+const useBNCData = (): DataType => {
+  const BNCPrice = useBNCPrice()
   const [polkadotAccount] = usePolkadotAccountAtom()
   const polkadotAccountAddress = polkadotAccount?.address
   const balance = useAssetBalance(TOKEN, polkadotAccountAddress)
@@ -17,12 +19,17 @@ const useBNCData = () => {
     return `${formatCurrency(delegateNumber, 4)} ${TOKEN}`
   }, [balance])
 
+  const bncValue = useMemo(() => {
+    if (!balance) return ''
+    return toFixed(balance.mul(BNCPrice), 2)
+  }, [balance, BNCPrice])
+
   return {
     token: TOKEN,
     name: 'BNC',
     icon: 'https://assets.coingecko.com/coins/images/19259/small/bifrost.png?1634809529',
     balance: bncBalance,
-    value: new Decimal(2).toString(),
+    value: bncValue,
   }
 }
 

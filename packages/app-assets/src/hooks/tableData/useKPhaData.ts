@@ -7,9 +7,10 @@ import {
 } from '@phala/react-hooks'
 import {toFixed, formatCurrency} from '@phala/utils'
 import {Decimal} from 'decimal.js'
-import usePHAPrice from './usePHAPrice'
+import usePHAPrice from '../usePHAPrice'
+import {DataType} from '../../components/AssetList'
 
-const useKPhaData = () => {
+const useKPhaData = (): DataType => {
   const PHAPrice = usePHAPrice()
   const [polkadotAccount] = usePolkadotAccountAtom()
   const polkadotAccountAddress = polkadotAccount?.address

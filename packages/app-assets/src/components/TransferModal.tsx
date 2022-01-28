@@ -25,8 +25,10 @@ import {
   MaxButton,
   inputStyle,
 } from './styledComponents'
+import {TokenType} from '../components/AssetList'
 
 const ASSET_ID_MAP = {
+  PHA: null,
   BNC: 2,
   ZLK: 1,
 }
@@ -34,7 +36,7 @@ const ASSET_ID_MAP = {
 type Props = {
   visible: boolean
   onClose: () => void
-  token: 'BNC' | 'ZLK'
+  token: TokenType
 }
 
 const TransferModal: React.FC<Props> = ({visible, onClose, token}) => {
@@ -81,12 +83,9 @@ const TransferModal: React.FC<Props> = ({visible, onClose, token}) => {
         const {web3FromAddress} = await import('@polkadot/extension-dapp')
 
         let extrinsic = api.tx.balances.transfer(address, amountString)
-        if (token in ASSET_ID_MAP) {
-          extrinsic = api.tx.assets.transfer(
-            ASSET_ID_MAP[token],
-            address,
-            amountString
-          )
+        if (token in ASSET_ID_MAP && typeof ASSET_ID_MAP[token] === 'number') {
+          const id = ASSET_ID_MAP[token] as number
+          extrinsic = api.tx.assets.transfer(id, address, amountString)
         }
 
         const signer = (await web3FromAddress(polkadotAccount.address)).signer

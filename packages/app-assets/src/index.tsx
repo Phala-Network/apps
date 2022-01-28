@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import {Helmet} from 'react-helmet'
 import AccountBanner from './components/AccountBanner'
 import AssetList from './components/AssetList'
-import useTableData from './hooks/useTableData'
+import useTableData from './hooks/tableData/useTableData'
 
 const Wrapper = styled.div``
 

@@ -1,12 +1,14 @@
 import {useMemo} from 'react'
 import {usePolkadotAccountAtom} from '@phala/app-store'
-import {Decimal} from 'decimal.js'
 import {useAssetBalance} from '@phala/react-hooks'
-import {formatCurrency} from '@phala/utils'
+import {toFixed, formatCurrency} from '@phala/utils'
+import {DataType} from '../../components/AssetList'
+import useZLKPrice from '../useZLKPrice'
 
 const TOKEN = 'ZLK'
 
-const useZLKData = () => {
+const useZLKData = (): DataType => {
+  const ZLKPrice = useZLKPrice()
   const [polkadotAccount] = usePolkadotAccountAtom()
   const polkadotAccountAddress = polkadotAccount?.address
   const balance = useAssetBalance(TOKEN, polkadotAccountAddress)
@@ -17,12 +19,17 @@ const useZLKData = () => {
     return `${formatCurrency(delegateNumber, 4)} ${TOKEN}`
   }, [balance])
 
+  const zlkValue = useMemo(() => {
+    if (!balance) return ''
+    return toFixed(balance.mul(ZLKPrice), 2)
+  }, [balance, ZLKPrice])
+
   return {
     token: 'ZLK',
     name: 'ZLK',
     icon: 'https://assets.coingecko.com/coins/images/20884/small/zenlink.PNG?1637824309',
     balance: zlkBalance,
-    value: new Decimal(2).toString(),
+    value: zlkValue,
   }
 }
 

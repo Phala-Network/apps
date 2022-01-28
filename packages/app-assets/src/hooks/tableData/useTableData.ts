@@ -1,10 +1,10 @@
 import {useMemo} from 'react'
-import {DataType} from '../components/AssetList/index'
+import {DataType} from '../../components/AssetList/index'
 import useKPhaData from './useKPhaData'
 import useBNCData from './useBNCData'
 import useZLKData from './useZLKData'
 
-const useTableData = () => {
+const useTableData = (): DataType[] => {
   const kphaData = useKPhaData()
   const BNCData = useBNCData()
   const ZLKData = useZLKData()
