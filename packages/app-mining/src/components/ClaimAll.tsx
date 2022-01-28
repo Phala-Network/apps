@@ -9,7 +9,7 @@ import {
 } from 'baseui/modal'
 import {HeadingSmall, LabelSmall, ParagraphSmall} from 'baseui/typography'
 import {FormControl} from 'baseui/form-control'
-import {useStakePoolsQuery} from '../hooks/graphql'
+import {SortOrder, useStakePoolsQuery} from '../hooks/graphql'
 import {formatCurrency, validateAddress} from '@phala/utils'
 import useWaitSignAndSend from '../hooks/useWaitSignAndSend'
 import {
@@ -34,6 +34,7 @@ const ClaimAll = (props: BlockProps) => {
   const {data, isLoading} = useStakePoolsQuery(
     client,
     {
+      orderBy: {pid: SortOrder.Asc},
       withStakePoolStakers: true,
       stakePoolStakersWhere: {
         address: {
@@ -58,6 +59,9 @@ const ClaimAll = (props: BlockProps) => {
             },
           },
           {
+            ownerReward: {
+              gte: '0.0001',
+            },
             ownerAddress: {
               equals: polkadotAccount?.address,
             },
