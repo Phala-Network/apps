@@ -44,7 +44,6 @@ const enableApiPromise = async (
     types,
   })
   logDebug('WebSocket API is ready:', api.runtimeVersion)
-  api
 
   await api.isReady
 
