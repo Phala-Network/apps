@@ -18,6 +18,11 @@ const GlobalStyle = createGlobalStyle`
     -webkit-appearance: none;
     margin: 0;
   }
+
+  // HACK: baseui form label does not use font preset in theme
+  label[data-baseweb=form-control-label] {
+    font-weight: 600;
+  }
 `
 
 export default GlobalStyle

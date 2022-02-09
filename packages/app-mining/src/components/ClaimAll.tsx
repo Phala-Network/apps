@@ -7,14 +7,9 @@ import {
   ModalFooter,
   ModalButton,
 } from 'baseui/modal'
-import {
-  HeadingSmall,
-  LabelSmall,
-  ParagraphLarge,
-  ParagraphSmall,
-} from 'baseui/typography'
+import {HeadingSmall, LabelSmall, ParagraphSmall} from 'baseui/typography'
 import {FormControl} from 'baseui/form-control'
-import {useStakePoolsQuery} from '../hooks/graphql'
+import {SortOrder, useStakePoolsQuery} from '../hooks/graphql'
 import {formatCurrency, validateAddress} from '@phala/utils'
 import useWaitSignAndSend from '../hooks/useWaitSignAndSend'
 import {
@@ -25,10 +20,10 @@ import {usePolkadotAccountAtom} from '@phala/app-store'
 import {Button} from 'baseui/button'
 import {client} from '../utils/GraphQLClient'
 import {Skeleton} from 'baseui/skeleton'
-import {Block} from 'baseui/block'
+import {Block, BlockProps} from 'baseui/block'
 import Decimal from 'decimal.js'
 
-const ClaimAll = (): JSX.Element => {
+const ClaimAll = (props: BlockProps) => {
   const [polkadotAccount] = usePolkadotAccountAtom()
   const {api} = useApiPromise()
   const [address, setAddress] = useState('')
@@ -39,29 +34,42 @@ const ClaimAll = (): JSX.Element => {
   const {data, isLoading} = useStakePoolsQuery(
     client,
     {
+      orderBy: {pid: SortOrder.Asc},
       withStakePoolStakers: true,
       stakePoolStakersWhere: {
         address: {
           equals: polkadotAccount?.address,
         },
         claimableRewards: {
-          gte: '0.01',
+          gte: '0.0001',
         },
       },
       where: {
-        stakePoolStakers: {
-          some: {
-            address: {
-              equals: polkadotAccount?.address,
-            },
-            claimableRewards: {
-              gte: '0.01',
+        OR: [
+          {
+            stakePoolStakers: {
+              some: {
+                address: {
+                  equals: polkadotAccount?.address,
+                },
+                claimableRewards: {
+                  gte: '0.0001',
+                },
+              },
             },
           },
-        },
+          {
+            ownerReward: {
+              gte: '0.0001',
+            },
+            ownerAddress: {
+              equals: polkadotAccount?.address,
+            },
+          },
+        ],
       },
     },
-    {enabled: Boolean(polkadotAccount?.address)}
+    {enabled: Boolean(polkadotAccount?.address), refetchOnMount: true}
   )
 
   const closeModal = useCallback(() => setIsModalOpen(false), [])
@@ -70,16 +78,21 @@ const ClaimAll = (): JSX.Element => {
     if (!data) return null
 
     return data.findManyStakePools.reduce((acc, cur) => {
+      let curRewards = new Decimal(0)
       const claimableRewards = cur.stakePoolStakers?.[0]?.claimableRewards
       if (claimableRewards) {
-        return acc.add(new Decimal(claimableRewards))
+        curRewards = curRewards.add(new Decimal(claimableRewards))
       }
 
-      return acc
-    }, new Decimal(0))
-  }, [data])
+      if (cur.ownerAddress === polkadotAccount?.address) {
+        curRewards = curRewards.add(new Decimal(cur.ownerReward))
+      }
 
-  const claimableStakePoolPids = useMemo<string[]>(() => {
+      return acc.add(curRewards)
+    }, new Decimal(0))
+  }, [data, polkadotAccount?.address])
+
+  const claimableStakePoolPids = useMemo<number[]>(() => {
     return data?.findManyStakePools.map((stakePool) => stakePool.pid) || []
   }, [data])
 
@@ -108,7 +121,7 @@ const ClaimAll = (): JSX.Element => {
 
   return (
     <>
-      <Block display="flex" alignItems="center">
+      <Block display="flex" alignItems="center" {...props}>
         {polkadotAccount?.address && (
           <Block marginRight="20px">
             <LabelSmall as="div">Claimable Rewards</LabelSmall>
@@ -138,16 +151,16 @@ const ClaimAll = (): JSX.Element => {
             Claim all the pending rewards of the sender and send to the target
           </ParagraphSmall>
           <FormControl label="Pids">
-            <ParagraphLarge as="div">
+            <ParagraphSmall as="div">
               {claimableStakePoolPids.join(', ')}
-            </ParagraphLarge>
+            </ParagraphSmall>
           </FormControl>
 
           <FormControl label="Rewards">
-            <ParagraphLarge as="div">
+            <ParagraphSmall as="div">
               {totalClaimableRewards && formatCurrency(totalClaimableRewards)}{' '}
               PHA
-            </ParagraphLarge>
+            </ParagraphSmall>
           </FormControl>
 
           <FormControl

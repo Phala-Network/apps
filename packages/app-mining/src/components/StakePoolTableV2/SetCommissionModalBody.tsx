@@ -10,32 +10,28 @@ import {
 import {ParagraphSmall} from 'baseui/typography'
 import {FormControl} from 'baseui/form-control'
 import type {StakePools} from '../../hooks/graphql'
-import {useDelegableBalance} from '../../hooks/useDelegableBalance'
 import Decimal from 'decimal.js'
-import {formatCurrency} from '@phala/utils'
 import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
 import {
   useApiPromise,
   useDecimalJsTokenDecimalMultiplier,
 } from '@phala/react-libs'
-import {Skeleton} from 'baseui/skeleton'
 
-const DelegateModalBody = ({
+const SetCommissionModalBody = ({
   stakePool,
   onClose,
 }: {stakePool: StakePools} & Pick<ModalProps, 'onClose'>): JSX.Element => {
-  const {pid, remainingStake} = stakePool
+  const {pid, commission: currentCommission} = stakePool
   const {api} = useApiPromise()
-  const delegableBalance = useDelegableBalance()
-  const [amount, setAmount] = useState('')
+  const [commission, setCommission] = useState('')
   const waitSignAndSend = useWaitSignAndSend()
   const decimals = useDecimalJsTokenDecimalMultiplier(api)
   const onConfirm = () => {
     if (api && decimals) {
       waitSignAndSend(
-        api.tx.phalaStakePool?.contribute?.(
-          pid,
-          new Decimal(amount).times(decimals).floor().toString()
+        api.tx.phalaStakePool?.setPayoutPref?.(
+          stakePool.pid,
+          new Decimal(commission).times(10 ** 4).toString()
         ),
         (status) => {
           if (status.isReady) {
@@ -46,39 +42,20 @@ const DelegateModalBody = ({
     }
   }
 
-  const remaining = remainingStake
-    ? `${formatCurrency(remainingStake)} PHA`
-    : '∞'
-
   return (
     <>
-      <ModalHeader>Delegate</ModalHeader>
+      <ModalHeader>Set Commission</ModalHeader>
       <ModalBody>
         <FormControl label="Pid">
           <ParagraphSmall as="div">{pid}</ParagraphSmall>
         </FormControl>
         <FormControl
-          label="Amount"
+          label="New Commission"
           caption={
-            <>
-              Pool Remaining: {remaining}
-              <br />
-              Delegable Balance:{' '}
-              {delegableBalance && decimals ? (
-                `${formatCurrency(delegableBalance.div(decimals))} PHA`
-              ) : (
-                <Skeleton
-                  animation
-                  rows={1}
-                  width="96px"
-                  overrides={{
-                    Root: {
-                      style: {display: 'inline-block', verticalAlign: 'middle'},
-                    },
-                  }}
-                />
-              )}
-            </>
+            <span>
+              Current Commission:{' '}
+              {new Decimal(currentCommission).times(100).toString()}%
+            </span>
           }
         >
           {/* FIXME: add amount validation */}
@@ -86,14 +63,16 @@ const DelegateModalBody = ({
             size="compact"
             autoFocus
             type="number"
-            endEnhancer="PHA"
+            endEnhancer="%"
+            placeholder="0 - 100"
             min={0}
-            onChange={(e) => setAmount(e.currentTarget.value)}
+            max={100}
+            onChange={(e) => setCommission(e.currentTarget.value)}
           />
         </FormControl>
       </ModalBody>
       <ModalFooter>
-        <ModalButton disabled={!amount} onClick={onConfirm}>
+        <ModalButton disabled={!commission} onClick={onConfirm}>
           Confirm
         </ModalButton>
       </ModalFooter>
@@ -101,4 +80,4 @@ const DelegateModalBody = ({
   )
 }
 
-export default DelegateModalBody
+export default SetCommissionModalBody

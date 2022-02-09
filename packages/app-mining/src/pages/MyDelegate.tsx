@@ -4,7 +4,7 @@ import {up} from 'styled-breakpoints'
 import styled from 'styled-components'
 import MyDelegateTable from '../components/Delegate/MyDelegateTable'
 import {Link} from 'gatsby'
-import DelegateTopBar from '../components/DelegateTopBar'
+import StatusBar from '../components/StatusBar'
 
 const Wrapper = styled.div`
   overflow-x: auto;
@@ -31,7 +31,7 @@ export const MyDelegate = () => {
       <Helmet>
         <title>My Delegate</title>
       </Helmet>
-      <DelegateTopBar />
+      <StatusBar />
       <Header>
         <Link to="/v1/delegate">
           <Button size="small">Back</Button>

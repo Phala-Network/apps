@@ -4,19 +4,22 @@ import {navigate} from 'gatsby'
 import UpdateInfo from './UpdateInfo'
 import {StyledLink} from 'baseui/link'
 
-const DelegateTopBarV2 = (): JSX.Element => {
+const StatusBarV2 = (): JSX.Element => {
   const {pathname} = useLocation()
   return (
-    <Block display="flex" justifyContent="flex-end" alignItems="center">
+    <Block
+      display="flex"
+      justifyContent="flex-end"
+      alignItems="center"
+      marginTop="scale100"
+      marginBottom="scale100"
+    >
       <UpdateInfo />
       <StyledLink
         href="#"
         onClick={(e) => {
           e.preventDefault()
           navigate(`/v1${pathname}`)
-        }}
-        $style={{
-          margin: '0 10px',
         }}
       >
         Switch to Old Version
@@ -25,4 +28,4 @@ const DelegateTopBarV2 = (): JSX.Element => {
   )
 }
 
-export default DelegateTopBarV2
+export default StatusBarV2

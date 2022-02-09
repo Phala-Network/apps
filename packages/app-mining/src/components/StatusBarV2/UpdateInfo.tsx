@@ -7,8 +7,8 @@ import {LabelSmall} from 'baseui/typography'
 import {formatDistanceToNow} from 'date-fns'
 import {useEffect, useState} from 'react'
 import {Info} from 'react-feather'
-import {useStatesQuery} from '../hooks/graphql'
-import {client} from '../utils/GraphQLClient'
+import {useStatesQuery} from '../../hooks/graphql'
+import {client} from '../../utils/GraphQLClient'
 
 const UpdateInfo = (): JSX.Element => {
   const {data, isLoading} = useStatesQuery(client)

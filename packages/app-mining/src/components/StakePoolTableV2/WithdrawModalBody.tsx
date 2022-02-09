@@ -8,7 +8,7 @@ import {
   ModalProps,
 } from 'baseui/modal'
 import {Notification} from 'baseui/notification'
-import {ParagraphLarge} from 'baseui/typography'
+import {ParagraphSmall} from 'baseui/typography'
 import {FormControl} from 'baseui/form-control'
 import type {StakePools} from '../../hooks/graphql'
 import Decimal from 'decimal.js'
@@ -66,7 +66,7 @@ const WithdrawModalBody = ({
       <ModalHeader>Withdraw</ModalHeader>
       <ModalBody>
         <FormControl label="Pid">
-          <ParagraphLarge as="div">{pid}</ParagraphLarge>
+          <ParagraphSmall as="div">{pid}</ParagraphSmall>
         </FormControl>
         <FormControl
           label="Amount"
@@ -76,6 +76,7 @@ const WithdrawModalBody = ({
         >
           {/* FIXME: add amount validation */}
           <Input
+            size="compact"
             autoFocus
             value={amount}
             type="number"
