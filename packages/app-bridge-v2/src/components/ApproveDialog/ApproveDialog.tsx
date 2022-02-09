@@ -27,7 +27,7 @@ type Props = {
   onClose(): void
 }
 
-const ApproveDialog: React.FC<Props> = (props) => {
+export const ApproveDialog: React.FC<Props> = (props) => {
   const {visible, onClose} = props
   const {contract} = useErc20Contract()
   const {provider, signer} = useEthers()
@@ -113,5 +113,3 @@ const ApproveDialog: React.FC<Props> = (props) => {
     </Modal>
   )
 }
-
-export default ApproveDialog
