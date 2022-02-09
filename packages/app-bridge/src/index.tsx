@@ -1,4 +1,5 @@
 import {
+  Announcement,
   InputDataStep,
   InputDataStepResult,
   SubmitStepModal,
@@ -45,10 +46,31 @@ const BridgePage: React.FC = () => {
       <QueryClientProvider contextSharing={true} client={queryClient}>
         <RightContent>
           {/* TODO: need a message api */}
-          {/* <Announcement>
-            The bridge is currently under maintenance and temporarily
-            unavailable. It&apos;s supposed to take 24 hours.
-          </Announcement> */}
+          <Announcement>
+            Bridge&apos;s transaction tracking feature is under upgrade and
+            maintenance. After you submit your transaction. Please go to{' '}
+            <a
+              href="https://khala.subscan.io/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Subscan
+            </a>{' '}
+            and{' '}
+            <a href="https://etherscan.io/" target="_blank" rel="noreferrer">
+              Etherscan
+            </a>{' '}
+            to check the progress of your transaction. If you have any
+            questions. Please come to our{' '}
+            <a
+              href="https://discord.com/invite/phala"
+              target="_blank"
+              rel="noreferrer"
+            >
+              discord
+            </a>{' '}
+            channel for support.
+          </Announcement>
 
           <WhiteCard>
             <InputDataStep layout={'flex'} onNext={showSubmitModal} />
