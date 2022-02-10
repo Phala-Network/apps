@@ -1,7 +1,13 @@
 import {Input} from 'baseui/input'
 import {ComponentProps, FC} from 'react'
 
-export const AddressInput: FC<ComponentProps<typeof Input>> = (props) => {
+type AddressInputProps = ComponentProps<typeof Input> & {
+  styleOverrides?: any
+}
+
+export const AddressInput: FC<AddressInputProps> = (props) => {
+  const {styleOverrides = {}, ...others} = props
+
   return (
     <Input
       placeholder="Wallet address"
@@ -14,10 +20,11 @@ export const AddressInput: FC<ComponentProps<typeof Input>> = (props) => {
             borderRightWidth: '0',
             borderTopWidth: '0',
             borderBottomWidth: '0',
+            ...styleOverrides,
           },
         },
       }}
-      {...props}
+      {...others}
     />
   )
 }

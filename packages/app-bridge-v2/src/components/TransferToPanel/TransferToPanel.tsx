@@ -47,7 +47,22 @@ export const TransferToPanel: FC = () => {
           value={address}
           onChange={(e: any) => setAddress(e.target?.value)}
           endEnhancer={<FillMyAddress />}
+          styleOverrides={{
+            height: '68px',
+          }}
         />
+        <Block
+          position={'relative'}
+          marginTop={['-10px']}
+          paddingLeft={['14px']}
+          paddingRight={['22px']}
+        >
+          <Block
+            $style={{
+              borderTop: '1px solid #8C8C8C',
+            }}
+          />
+        </Block>
       </Block>
     </TransferPanel>
   )
