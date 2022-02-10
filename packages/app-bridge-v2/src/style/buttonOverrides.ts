@@ -1,6 +1,6 @@
 export const buttonOverrides = {
   BaseButton: {
-    style: () => ({
+    style: {
       /* Gn 001 */
       backgroundColor: '#D1FF52',
       /* Bk 001 */
@@ -10,6 +10,6 @@ export const buttonOverrides = {
         backgroundColor: '#dcff7b',
         color: '#111111',
       },
-    }),
+    },
   },
 }
