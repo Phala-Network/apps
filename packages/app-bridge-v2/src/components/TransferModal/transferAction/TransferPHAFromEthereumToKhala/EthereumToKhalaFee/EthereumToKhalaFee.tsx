@@ -4,13 +4,14 @@ import styled from 'styled-components'
 
 const Root = styled.div`
   display: flex;
-  font-size: 14px;
+  color: #111111;
+  align-items: center;
 `
 
 const Label = styled.span`
-  font-weight: bold;
-  margin-right: 5px;
-  display: block;
+  font-size: 16px;
+  line-height: 16px;
+  margin-right: 12px;
 `
 
 export const EthereumToKhalaFee: FC = (props) => {

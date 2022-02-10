@@ -125,9 +125,11 @@ export const TransferPHAFromKhalaToEthereum: React.FC<
 
         <Spacer></Spacer>
 
-        <Block>
+        <Block display={'flex'} alignItems={'center'}>
+          <Block marginRight={['30px']}>
+            <FeeLabel fee={transactionFee || '-'} label={'Fee'} />
+          </Block>
           <KhalaToEthereumFee />
-          <FeeLabel fee={transactionFee} label={'Fee'} />
         </Block>
 
         <Spacer></Spacer>
