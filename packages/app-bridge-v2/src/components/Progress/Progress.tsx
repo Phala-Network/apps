@@ -1,3 +1,4 @@
+import {Block} from 'baseui/block'
 import {NumberedStep, ProgressSteps} from 'baseui/progress-steps'
 import {FC} from 'react'
 import styled from 'styled-components'
@@ -67,6 +68,12 @@ export const Progress: FC<ProgressProps> = (props) => {
                     padding: 0,
                   },
                 },
+                Description: {
+                  style: {
+                    margin: 0,
+                    padding: 0,
+                  },
+                },
               }}
               // eslint-disable-next-line @typescript-eslint/ban-ts-comment
               // @ts-ignore
@@ -75,9 +82,11 @@ export const Progress: FC<ProgressProps> = (props) => {
               key={item.text}
             >
               {isCurrent && !isLast && (
-                <Icon>
-                  <TimeIcon />
-                </Icon>
+                <Block marginTop={['-12px']}>
+                  <Icon>
+                    <TimeIcon />
+                  </Icon>
+                </Block>
               )}
             </NumberedStep>
           )
