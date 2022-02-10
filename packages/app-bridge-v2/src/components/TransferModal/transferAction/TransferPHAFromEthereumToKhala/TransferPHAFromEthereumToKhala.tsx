@@ -1,11 +1,4 @@
-import {
-  Alert,
-  Button,
-  ModalAction,
-  ModalActions,
-  Spacer,
-  toast,
-} from '@phala/react-components'
+import {Alert, Spacer, toast} from '@phala/react-components'
 import {
   useErc20BalanceQuery,
   useErc20Deposit,
@@ -13,9 +6,14 @@ import {
 } from '@phala/react-libs'
 import {u8aToHex} from '@polkadot/util'
 import {decodeAddress} from '@polkadot/util-crypto'
+import {Block} from 'baseui/block'
+import {KIND} from 'baseui/button'
+import {ModalBody, ModalButton, ModalFooter} from 'baseui/modal'
 import {ethers} from 'ethers'
-import React, {useEffect, useState} from 'react'
+import React, {Fragment, useEffect, useState} from 'react'
 import {useAllTransferData} from '../../../../store'
+import {buttonOverrides} from '../../../../style/buttonOverrides'
+import {Button} from '../../../Button'
 import {CurrentTransferInformationDetailItems} from '../../../CurrentTransferInformationDetailItems'
 import {EthereumProgress} from './EthereumProgress'
 import {EthereumToKhalaFee} from './EthereumToKhalaFee'
@@ -92,48 +90,92 @@ export const TransferPHAFromEthereumToKhala: React.FC<
 
   return (
     <>
-      <CurrentTransferInformationDetailItems />
+      <ModalBody>
+        <CurrentTransferInformationDetailItems />
 
-      <Spacer></Spacer>
+        <Spacer></Spacer>
 
-      {currentTransactionHash ? (
-        <Alert>
-          <EthereumProgress transactionHash={currentTransactionHash} />
-        </Alert>
-      ) : (
-        <Alert>
-          Please be patient as the transaction may take a few minutes.
-        </Alert>
-      )}
+        <EthereumToKhalaFee />
+
+        <Spacer></Spacer>
+
+        {currentTransactionHash ? (
+          <Alert>
+            <EthereumProgress transactionHash={currentTransactionHash} />
+          </Alert>
+        ) : (
+          <Alert>
+            Please be patient as the transaction may take a few minutes.
+          </Alert>
+        )}
+      </ModalBody>
 
       {transactionsInfoSuccess && (
-        <ModalActions>
-          <ModalAction>
-            <Button type="primary" onClick={onCloseTransfer}>
-              Done
-            </Button>
-          </ModalAction>
-        </ModalActions>
+        <ModalFooter>
+          <Button
+            overrides={{
+              BaseButton: {
+                style: {
+                  width: '100%',
+                  ...buttonOverrides.BaseButton.style,
+                },
+              },
+            }}
+            onClick={onCloseTransfer}
+          >
+            Done
+          </Button>
+        </ModalFooter>
       )}
 
       {!transactionsInfoSuccess && (
-        <ModalActions>
-          <div style={{flex: 1}}>
-            <EthereumToKhalaFee />
-          </div>
+        <ModalFooter>
+          <Block
+            display="flex"
+            justifyContent="space-between"
+            alignItems="stretch"
+          >
+            {onCloseTransfer && !isSubmitting && !isReceiptLoading && (
+              <Fragment>
+                <Block flex={1}>
+                  <ModalButton
+                    overrides={{
+                      BaseButton: {
+                        style: {
+                          backgroundColor: '#EEEEEE',
+                          width: '100%',
+                        },
+                      },
+                    }}
+                    onClick={onCloseTransfer}
+                    kind={KIND.tertiary}
+                  >
+                    Back
+                  </ModalButton>
+                </Block>
 
-          {onCloseTransfer && !isSubmitting && !isReceiptLoading && (
-            <ModalAction>
-              <Button onClick={onCloseTransfer}>Back</Button>
-            </ModalAction>
-          )}
+                <Block width={['20px']} />
+              </Fragment>
+            )}
 
-          <ModalAction>
-            <Button loading={isSubmitting} type="primary" onClick={submit}>
-              {isSubmitting ? 'Submitting' : 'Submit'}
-            </Button>
-          </ModalAction>
-        </ModalActions>
+            <Block flex={1}>
+              <Button
+                overrides={{
+                  BaseButton: {
+                    style: {
+                      width: '100%',
+                      ...buttonOverrides.BaseButton.style,
+                    },
+                  },
+                }}
+                isLoading={isSubmitting}
+                onClick={submit}
+              >
+                {isSubmitting ? 'Submitting' : 'Submit'}
+              </Button>
+            </Block>
+          </Block>
+        </ModalFooter>
       )}
     </>
   )

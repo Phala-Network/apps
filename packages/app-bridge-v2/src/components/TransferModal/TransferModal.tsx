@@ -1,5 +1,5 @@
-import {Modal, ModalBody, ModalHeader, ROLE, SIZE} from 'baseui/modal'
-import {FC} from 'react'
+import {Modal, ModalHeader, ROLE, SIZE} from 'baseui/modal'
+import {FC, Fragment} from 'react'
 import {Ethereum, Khala, PHA} from '../../config'
 import {useAllTransferData} from '../../store'
 import {modalOverrides} from '../../style/modalOverrides'
@@ -39,14 +39,14 @@ export const TransferModal: FC<TransferModalProps> = (props) => {
 
   if (isOpen) {
     content = (
-      <ModalBody>
+      <Fragment>
         {is(PHA, Khala, Ethereum) && (
           <TransferPHAFromKhalaToEthereum onCloseTransfer={onClose} />
         )}
         {is(PHA, Ethereum, Khala) && (
           <TransferPHAFromEthereumToKhala onCloseTransfer={onClose} />
         )}
-      </ModalBody>
+      </Fragment>
     )
   }
 

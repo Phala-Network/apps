@@ -1,12 +1,9 @@
 // import {useKhalaBridgeFee} from '../..'
 import {
   Alert,
-  Button,
   Checkbox,
   FeeLabel,
   KhalaToEthereumFee,
-  ModalAction,
-  ModalActions,
   Spacer,
   toast,
 } from '@phala/react-components'
@@ -18,13 +15,18 @@ import {
   useTransactionFee,
   useTransferSubmit,
 } from '@phala/react-libs'
+import {Block} from 'baseui/block'
+// import useTransactionInfo from '../../hooks/useTransactionInfo'
+import {KIND as ButtonKind} from 'baseui/button'
+import {ModalBody, ModalButton, ModalFooter} from 'baseui/modal'
 import {getAddress} from 'ethers/lib/utils'
-import React, {useMemo, useState} from 'react'
+import React, {Fragment, useMemo, useState} from 'react'
 // import {Link} from '../../../Announcement/styledComponents'
 import {useKhalaBridgeFee} from '../../../../hooks/useKhalaBridgeFee'
 import {useAllTransferData} from '../../../../store'
+import {buttonOverrides} from '../../../../style/buttonOverrides'
+import {Button} from '../../../Button'
 import {CurrentTransferInformationDetailItems} from '../../../CurrentTransferInformationDetailItems'
-// import useTransactionInfo from '../../hooks/useTransactionInfo'
 
 interface TransferPHAFromKhalaToEthereumProps {
   onCloseTransfer(): void
@@ -118,62 +120,71 @@ export const TransferPHAFromKhalaToEthereum: React.FC<
         }}
       /> */}
 
-      <CurrentTransferInformationDetailItems />
+      <ModalBody>
+        <CurrentTransferInformationDetailItems />
 
-      <Spacer></Spacer>
+        <Spacer></Spacer>
 
-      <Alert>
-        {progressIndex === -1 ? (
-          <span>
-            This transaction will charge an additional{' '}
-            <span style={{fontWeight: 'bold'}}>
-              {fee?.toFixed(2) || '-'} PHA
-            </span>{' '}
-            bridge fee to cover the Ethereum gas fee (up to 120 GWei price). The
-            transaction may take some time ranged from a few seconds to a few
-            hours, depending on if the Ethereum blockchain is congested. In the
-            case of congestion, it may be necessary to wait for more than 24h.
-          </span>
-        ) : (
-          <span>
-            The transaction may take some time ranged from a few seconds to a
-            few hours, depending on if the Ethereum blockchain is congested. In
-            the case of congestion, it may be necessary to wait for more than
-            24h. You can follow each step of the transaction through{' '}
-            <Link
-              target="_blank"
-              href={`https://khala.subscan.io/account/${fromAddress}?tab=transfer`}
-            >
-              Khala&apos;s explorer
-            </Link>{' '}
-            and{' '}
-            <Link
-              target="_blank"
-              href={`https://etherscan.io/address/${toAddress}#tokentxns`}
-            >
-              Ethereum&apos;s explorer
-            </Link>{' '}
-            once you confirm it. If it has not arrived after 24 hours, you can
-            post on the{' '}
-            <Link
-              target="_blank"
-              href={`https://forum.phala.network/c/support/function/33`}
-            >
-              forum
-            </Link>{' '}
-            or leave a message on{' '}
-            <Link
-              target="_blank"
-              href={`https://discord.com/invite/SvdKgHfhTG#product-feedback`}
-            >
-              Discord #product-feedback
-            </Link>{' '}
-            for support.
-          </span>
-        )}
-      </Alert>
+        <Block>
+          <KhalaToEthereumFee />
+          <FeeLabel fee={transactionFee} label={'Fee'} />
+        </Block>
 
-      {/* <Alert>
+        <Spacer></Spacer>
+
+        <Alert>
+          {progressIndex === -1 ? (
+            <span>
+              This transaction will charge an additional{' '}
+              <span style={{fontWeight: 'bold'}}>
+                {fee?.toFixed(2) || '-'} PHA
+              </span>{' '}
+              bridge fee to cover the Ethereum gas fee (up to 120 GWei price).
+              The transaction may take some time ranged from a few seconds to a
+              few hours, depending on if the Ethereum blockchain is congested.
+              In the case of congestion, it may be necessary to wait for more
+              than 24h.
+            </span>
+          ) : (
+            <span>
+              The transaction may take some time ranged from a few seconds to a
+              few hours, depending on if the Ethereum blockchain is congested.
+              In the case of congestion, it may be necessary to wait for more
+              than 24h. You can follow each step of the transaction through{' '}
+              <Link
+                target="_blank"
+                href={`https://khala.subscan.io/account/${fromAddress}?tab=transfer`}
+              >
+                Khala&apos;s explorer
+              </Link>{' '}
+              and{' '}
+              <Link
+                target="_blank"
+                href={`https://etherscan.io/address/${toAddress}#tokentxns`}
+              >
+                Ethereum&apos;s explorer
+              </Link>{' '}
+              once you confirm it. If it has not arrived after 24 hours, you can
+              post on the{' '}
+              <Link
+                target="_blank"
+                href={`https://forum.phala.network/c/support/function/33`}
+              >
+                forum
+              </Link>{' '}
+              or leave a message on{' '}
+              <Link
+                target="_blank"
+                href={`https://discord.com/invite/SvdKgHfhTG#product-feedback`}
+              >
+                Discord #product-feedback
+              </Link>{' '}
+              for support.
+            </span>
+          )}
+        </Alert>
+
+        {/* <Alert>
         {progressIndex >= 0 && (
           <KhalaProcess
             khalaAddress={fromAddress}
@@ -183,63 +194,98 @@ export const TransferPHAFromKhalaToEthereum: React.FC<
         )}
       </Alert> */}
 
-      {progressIndex === -1 && (
-        <label
-          style={{
-            display: 'flex',
-            fontSize: 14,
-            padding: '8px 0',
-            margin: '8px 0',
-          }}
-        >
-          <div>
-            <Checkbox
-              checked={checkBoxChecked}
-              onChange={setCheckBoxChecked}
-            ></Checkbox>
-          </div>
-          <div style={{padding: '2px 2px'}}>
-            I understood the transaction can take long time and the bridge fee
-            is used to cover the Ethereum gas fee.
-          </div>
-        </label>
-      )}
+        {progressIndex === -1 && (
+          <label
+            style={{
+              display: 'flex',
+              fontSize: 14,
+              padding: '8px 0',
+              margin: '8px 0',
+            }}
+          >
+            <div>
+              <Checkbox
+                checked={checkBoxChecked}
+                onChange={setCheckBoxChecked}
+              ></Checkbox>
+            </div>
+            <div style={{padding: '2px 2px'}}>
+              I understood the transaction can take long time and the bridge fee
+              is used to cover the Ethereum gas fee.
+            </div>
+          </label>
+        )}
+      </ModalBody>
 
       {submittedHashBoolean && (
-        <ModalActions>
-          <ModalAction>
-            <Button
-              type="primary"
-              onClick={() => {
-                onCloseTransfer?.()
-                setProgressIndex(-1)
-              }}
-            >
-              Done
-            </Button>
-          </ModalAction>
-        </ModalActions>
+        <ModalFooter>
+          <Button
+            overrides={{
+              BaseButton: {
+                style: {
+                  width: '100%',
+                  ...buttonOverrides.BaseButton.style,
+                },
+              },
+            }}
+            onClick={() => {
+              onCloseTransfer?.()
+              setProgressIndex(-1)
+            }}
+          >
+            Collapse
+          </Button>
+        </ModalFooter>
       )}
 
       {!submittedHashBoolean && (
-        <ModalActions>
-          <div style={{flex: 1}}>
-            <KhalaToEthereumFee />
-            <FeeLabel fee={transactionFee} label={'Fee'} />
-          </div>
+        <ModalFooter>
+          <Block
+            display="flex"
+            justifyContent="space-between"
+            alignItems="stretch"
+          >
+            {onCloseTransfer && !isSubmitting && (
+              <Fragment>
+                <Block flex={1}>
+                  <ModalButton
+                    overrides={{
+                      BaseButton: {
+                        style: {
+                          backgroundColor: '#EEEEEE',
+                          width: '100%',
+                        },
+                      },
+                    }}
+                    onClick={onCloseTransfer}
+                    kind={ButtonKind.tertiary}
+                  >
+                    Back
+                  </ModalButton>
+                </Block>
 
-          {onCloseTransfer && !isSubmitting && (
-            <ModalAction>
-              <Button onClick={onCloseTransfer}>Back</Button>
-            </ModalAction>
-          )}
+                <Block width={['20px']} />
+              </Fragment>
+            )}
 
-          <ModalAction>
-            <Button loading={isSubmitting} type="primary" onClick={submit}>
-              {isSubmitting ? 'Submitting' : 'Submit'}
-            </Button>
-          </ModalAction>
-        </ModalActions>
+            <Block flex={1}>
+              <Button
+                overrides={{
+                  BaseButton: {
+                    style: {
+                      width: '100%',
+                      ...buttonOverrides.BaseButton.style,
+                    },
+                  },
+                }}
+                isLoading={isSubmitting}
+                onClick={submit}
+              >
+                {isSubmitting ? 'Submitting' : 'Submit'}
+              </Button>
+            </Block>
+          </Block>
+        </ModalFooter>
       )}
     </>
   )
