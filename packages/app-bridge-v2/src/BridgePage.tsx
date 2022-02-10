@@ -1,4 +1,4 @@
-import {ToasterContainer} from '@phala/react-components'
+import {Button, ToasterContainer} from '@phala/react-components'
 import {PLACEMENT} from 'baseui/toast'
 import {FC, useState} from 'react'
 import {Helmet} from 'react-helmet'
@@ -74,6 +74,10 @@ export const BridgePage: FC = () => {
       {/* <Transactions /> */}
 
       <ToasterContainer placement={PLACEMENT.topRight} />
+
+      <Button onClick={() => setIsOpenInformationModal(true)}>
+        InformationModal
+      </Button>
     </QueryClientProvider>
   )
 }

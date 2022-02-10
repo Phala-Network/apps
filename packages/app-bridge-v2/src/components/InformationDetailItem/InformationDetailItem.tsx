@@ -20,16 +20,22 @@ export interface TransferPanelProps {
   amount?: string
   network?: string
   isShowNetworkIcon?: boolean
+  isTrimAddress?: boolean
+}
+
+function trim(str: string) {
+  return `${str.slice(0, 18)}…${str.slice(-8)}`
 }
 
 export const InformationDetailItem: FC<TransferPanelProps> = (props) => {
   const {
     coin,
     label,
-    address,
+    address = '',
     amount,
     network,
     isShowNetworkIcon = true,
+    isTrimAddress = false,
   } = props
 
   return (
@@ -57,7 +63,7 @@ export const InformationDetailItem: FC<TransferPanelProps> = (props) => {
             paddingLeft: isShowNetworkIcon ? 74 : 20,
           }}
         >
-          {address}
+          {isTrimAddress ? trim(address) : address}
         </Address>
       </Body>
     </Root>

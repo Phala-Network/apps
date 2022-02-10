@@ -58,7 +58,7 @@ export const InformationModal: FC<InformationModalProps> = (props) => {
       isOpen={isOpen}
       animate
       autoFocus
-      size={SIZE.default}
+      size={SIZE.auto}
       role={ROLE.dialog}
       overrides={modalOverrides}
     >
@@ -66,8 +66,16 @@ export const InformationModal: FC<InformationModalProps> = (props) => {
 
       <ModalBody>
         <InformationDetailArea>
-          <InformationDetailItem isShowNetworkIcon={false} {...from} />
-          <InformationDetailItem isShowNetworkIcon={false} {...to} />
+          <InformationDetailItem
+            isTrimAddress={true}
+            isShowNetworkIcon={false}
+            {...from}
+          />
+          <InformationDetailItem
+            isTrimAddress={true}
+            isShowNetworkIcon={false}
+            {...to}
+          />
         </InformationDetailArea>
         <EthereumProgress transactionHash={'9898sss'} />
       </ModalBody>
