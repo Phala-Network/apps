@@ -78,6 +78,10 @@ export const BridgePage: FC = () => {
       <Button onClick={() => setIsOpenInformationModal(true)}>
         InformationModal
       </Button>
+
+      <Button onClick={() => setIsOpenTransferModal(true)}>
+        TransferModal
+      </Button>
     </QueryClientProvider>
   )
 }

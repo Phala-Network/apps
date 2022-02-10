@@ -53,6 +53,7 @@ export const TransferModal: FC<TransferModalProps> = (props) => {
   return (
     <Modal
       onClose={onClose}
+      closeable={false}
       isOpen={isOpen}
       animate
       autoFocus
