@@ -60,7 +60,15 @@ export const TransferModal: FC<TransferModalProps> = (props) => {
       role={ROLE.dialog}
       overrides={modalOverrides}
     >
-      <ModalHeader>Bridge Confirmation</ModalHeader>
+      <ModalHeader>
+        <span
+          style={{
+            fontSize: '32px',
+          }}
+        >
+          Bridge Confirmation
+        </span>
+      </ModalHeader>
 
       {content}
     </Modal>

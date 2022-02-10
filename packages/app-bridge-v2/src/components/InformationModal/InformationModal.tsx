@@ -8,6 +8,7 @@ import {
 } from 'baseui/modal'
 import {FC} from 'react'
 import {useAllTransferData} from '../../store'
+import {buttonOverrides} from '../../style/buttonOverrides'
 import {modalOverrides} from '../../style/modalOverrides'
 import {Button} from '../Button'
 import {
@@ -62,7 +63,15 @@ export const InformationModal: FC<InformationModalProps> = (props) => {
       role={ROLE.dialog}
       overrides={modalOverrides}
     >
-      <ModalHeader>Bridge Confirmation</ModalHeader>
+      <ModalHeader>
+        <span
+          style={{
+            fontSize: '32px',
+          }}
+        >
+          Bridge Confirmation
+        </span>
+      </ModalHeader>
 
       <ModalBody>
         <InformationDetailArea>
@@ -81,7 +90,19 @@ export const InformationModal: FC<InformationModalProps> = (props) => {
       </ModalBody>
 
       <ModalFooter>
-        <Button onClick={onClose}>Collapse</Button>
+        <Button
+          overrides={{
+            BaseButton: {
+              style: {
+                width: '100%',
+                ...buttonOverrides.BaseButton.style,
+              },
+            },
+          }}
+          onClick={onClose}
+        >
+          Collapse
+        </Button>
       </ModalFooter>
     </Modal>
   )
