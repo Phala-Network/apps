@@ -76,11 +76,11 @@ export const BridgePage: FC = () => {
       <ToasterContainer placement={PLACEMENT.topRight} />
 
       <Button onClick={() => setIsOpenInformationModal(true)}>
-        InformationModal
+        Open InformationModal
       </Button>
 
       <Button onClick={() => setIsOpenTransferModal(true)}>
-        TransferModal
+        Open TransferModal
       </Button>
     </QueryClientProvider>
   )
