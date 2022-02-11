@@ -6,31 +6,31 @@ import {Backdrop} from '../Backdrop'
 import {FloatModalHeader} from './FloatModalHeader'
 
 const Root = styled.div`
-  width: 210px;
+  width: 220px;
   height: 44px;
   margin-left: auto;
   bottom: 48px;
   transform: translate3d(0, 0, 0);
-  background: #000000;
-  color: white;
+  /* Gn 001 */
+  color: #d1ff52;
   box-sizing: border-box;
   z-index: 950;
   transition: all 0.2s ease;
+  /* Bk 001 */
+  background: #111111;
+  /* Gn 002 */
+  border: 2px solid #aad829;
+  box-sizing: border-box;
+  position: relative;
 
   ${down('sm')} {
     position: fixed;
     left: 16px;
-    bottom: 16px;
+    bottom: 90px;
     border: none;
   }
 
   &.active {
-    width: 420px;
-    height: 191px;
-    box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.3);
-    background: white;
-    color: black;
-
     ${down('sm')} {
       width: 100%;
       left: 0;

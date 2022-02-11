@@ -9,7 +9,7 @@ const Root = styled.div`
   font-style: normal;
   font-weight: normal;
   font-size: 12px;
-  line-height: 14px;
+  line-height: 16px;
   padding: 12px;
   display: grid;
   grid-template-columns: 20px 1fr;

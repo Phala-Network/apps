@@ -1,9 +1,9 @@
+import {useLocation} from '@reach/router'
 import React from 'react'
 import {down, up} from 'styled-breakpoints'
 import styled, {css} from 'styled-components'
-import {useLocation} from '@reach/router'
-import Navbar from './Navbar'
 import MobileNavbar from './MobileNavbar'
+import Navbar from './Navbar'
 
 const HomePageWrap = styled.div`
   padding-top: 80px;

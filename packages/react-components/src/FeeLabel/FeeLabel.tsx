@@ -3,7 +3,6 @@ import styled from 'styled-components'
 
 const Root = styled.div`
   display: flex;
-  font-size: 14px;
   font-style: normal;
   font-weight: normal;
   font-size: 16px;

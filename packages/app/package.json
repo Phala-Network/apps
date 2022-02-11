@@ -15,6 +15,7 @@
     "@phala/app-analytics": "workspace:0.0.1",
     "@phala/app-assets": "workspace:0.0.1",
     "@phala/app-bridge": "workspace:0.0.1",
+    "@phala/app-bridge-v2": "workspace:0.0.1",
     "@phala/app-config": "workspace:0.0.1",
     "@phala/app-data-analytics": "workspace:0.0.1",
     "@phala/app-mining": "workspace:0.0.1",
@@ -36,13 +37,14 @@
     "@sentry/tracing": "^6.16.0",
     "@types/uuid": "^8.3.3",
     "axios": "^0.21.4",
-    "babel-loader": "8.1.0",
+    "babel-loader": "^8.2.3",
     "babel-plugin-styled-components": "^2.0.2",
-    "babel-preset-gatsby": "^1.14.0",
+    "babel-preset-gatsby": "^2.5.1",
+    "baseui": "^10.6.0",
     "bn.js": "^5.2.0",
     "core-js": "^3.19.3",
     "decimal.js": "^10.3.1",
-    "ethers": "^5.5.2",
+    "ethers": "^5.5.3",
     "gatsby": "^4.3.0",
     "gatsby-plugin-google-gtag": "^3.14.0",
     "gatsby-plugin-netlify": "^4.0.0",
@@ -78,5 +80,11 @@
     "@types/styled-components": "^5.1.18",
     "@types/styletron-react": "^5.0.3",
     "@types/styletron-standard": "^2.0.2"
-  }
+  },
+  "browserslist": [
+    "last 10 chrome version",
+    "last 10 firefox version",
+    "last 2 safari version",
+    "last 10 edge version"
+  ]
 }
