@@ -270,6 +270,12 @@ importers:
       graphql-request: 3.7.0_graphql@15.8.0
       react-query: 3.34.14
 
+  packages/app-bridge-transaction:
+    specifiers:
+      react: ^17.0.2
+    dependencies:
+      react: 17.0.2
+
   packages/app-bridge-v2:
     specifiers:
       '@phala/app-bridge-graph': workspace:^0.0.1
