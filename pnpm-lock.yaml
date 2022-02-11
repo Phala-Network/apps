@@ -272,9 +272,15 @@ importers:
 
   packages/app-bridge-transaction:
     specifiers:
+      baseui: ^10.8.0
       react: ^17.0.2
+      react-dom: ^17.0.2
+      styletron-react: ^6.0.2
     dependencies:
+      baseui: 10.8.0_922dc2fade36242d2b10e18aedbdd60f
       react: 17.0.2
+      react-dom: 17.0.2_react@17.0.2
+      styletron-react: 6.0.2_react@17.0.2
 
   packages/app-bridge-v2:
     specifiers:
