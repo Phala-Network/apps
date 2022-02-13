@@ -1,1 +1,0 @@
-export {getCMSLog} from './getCMSLog'
