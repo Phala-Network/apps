@@ -1,9 +1,0 @@
-{
-  "name": "@phala/react-cms",
-  "version": "0.0.1",
-  "sideEffects": false,
-  "main": "src/index.ts",
-  "dependencies": {
-    "graphql-request": "^3.5.0"
-  }
-}

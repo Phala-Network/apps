@@ -21,7 +21,6 @@
     "@phala/app-mining": "workspace:0.0.1",
     "@phala/app-store": "workspace:0.0.1",
     "@phala/app-types": "workspace:0.0.1",
-    "@phala/react-cms": "workspace:0.0.1",
     "@phala/react-components": "workspace:0.0.1",
     "@phala/react-hooks": "workspace:0.0.1",
     "@phala/react-libs": "workspace:0.0.1",
