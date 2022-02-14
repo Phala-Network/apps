@@ -33,7 +33,7 @@ export const ModalWrapper: React.FC<IModalProps> = (props) => {
       isOpen={visible}
       overrides={{
         Dialog: {
-          style: ({$theme}) => ({
+          style: () => ({
             boxSizing: 'border-box',
             width: '615px',
             outline: `2px #AAD829 solid`,
@@ -42,7 +42,7 @@ export const ModalWrapper: React.FC<IModalProps> = (props) => {
             borderBottomLeftRadius: '0px',
             borderBottomRightRadius: '0px',
             padding: '40px',
-            [$theme.mediaQuery.medium]: {
+            ['@media screen and (max-width: 768px)']: {
               padding: '20px',
             },
           }),

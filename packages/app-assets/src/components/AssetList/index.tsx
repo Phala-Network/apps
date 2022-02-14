@@ -77,7 +77,7 @@ const AssetList: React.FC<Props> = ({tableData}) => {
             }),
           },
           TableHeadCell: {
-            style: ({$theme}) => ({
+            style: () => ({
               border: 'none',
               backgroundColor: '#D1FF52',
               fontFamily: 'Montserrat',
@@ -90,7 +90,7 @@ const AssetList: React.FC<Props> = ({tableData}) => {
               paddingBottom: '18px',
               paddingLeft: '40px',
               paddingRight: 0,
-              [$theme.mediaQuery.small]: {
+              ['@media screen and (max-width: 576px)']: {
                 fontSize: '16px',
                 lineHeight: '16px',
                 paddingTop: '20px',
@@ -103,7 +103,7 @@ const AssetList: React.FC<Props> = ({tableData}) => {
             }),
           },
           TableBodyCell: {
-            style: ({$theme}) => ({
+            style: () => ({
               paddingTop: '20px',
               paddingBottom: '20px',
               paddingLeft: '40px',
@@ -111,7 +111,7 @@ const AssetList: React.FC<Props> = ({tableData}) => {
               ':last-of-type': {
                 paddingTop: '10px',
               },
-              [$theme.mediaQuery.small]: {
+              ['@media screen and (max-width: 576px)']: {
                 paddingLeft: '30px',
                 ':first-of-type': {
                   paddingLeft: '10px',
