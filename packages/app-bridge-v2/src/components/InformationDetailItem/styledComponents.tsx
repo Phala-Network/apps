@@ -7,7 +7,7 @@ export const Root = styled.div`
 export const Body = styled.div`
   /* Gy 001 */
   background: #eeeeee;
-  height: 55px;
+  /* height: 55px; */
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -53,7 +53,8 @@ export const Address = styled.span`
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
-  line-height: 16px;
+  line-height: 55px;
+  height: 55px;
   /* Bk 001 */
   color: #111111;
   padding-right: 20px;
