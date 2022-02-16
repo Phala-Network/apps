@@ -1,7 +1,9 @@
-export const littleRoundButtonOverrides = {
+import {ButtonOverrides} from 'baseui/button'
+
+export const littleRoundButtonOverrides: ButtonOverrides = {
   BaseButton: {
     style: {
-      width: '160px',
+      whiteSpace: 'nowrap',
       lineHeight: '16px',
       height: '28px',
       borderTopLeftRadius: '14px',

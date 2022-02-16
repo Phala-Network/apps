@@ -8225,7 +8225,7 @@ packages:
     dependencies:
       '@babel/core': 7.17.2
       '@babel/runtime': 7.17.2
-      gatsby: 4.7.1_81edf3926e0f5b690d6bf41c81c0a74a
+      gatsby: 4.7.1_bf2bcca2796a3eb2c3651ae4af1d62f3
       gatsby-core-utils: 3.7.0
     dev: false
 
@@ -12947,7 +12947,7 @@ packages:
       '@sindresorhus/slugify': 1.1.2
       chokidar: 3.5.3
       fs-exists-cached: 1.0.0
-      gatsby: 4.7.1_81edf3926e0f5b690d6bf41c81c0a74a
+      gatsby: 4.7.1_bf2bcca2796a3eb2c3651ae4af1d62f3
       gatsby-core-utils: 3.7.0
       gatsby-page-utils: 2.7.0
       gatsby-plugin-utils: 3.1.0_gatsby@4.7.1
@@ -13021,7 +13021,7 @@ packages:
       '@babel/preset-typescript': 7.16.7_@babel+core@7.17.2
       '@babel/runtime': 7.17.2
       babel-plugin-remove-graphql-queries: 4.7.0_@babel+core@7.17.2+gatsby@4.7.1
-      gatsby: 4.7.1_81edf3926e0f5b690d6bf41c81c0a74a
+      gatsby: 4.7.1_bf2bcca2796a3eb2c3651ae4af1d62f3
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -13033,7 +13033,7 @@ packages:
       gatsby: ^4.0.0-next
     dependencies:
       '@babel/runtime': 7.17.2
-      gatsby: 4.7.1_81edf3926e0f5b690d6bf41c81c0a74a
+      gatsby: 4.7.1_bf2bcca2796a3eb2c3651ae4af1d62f3
       joi: 17.6.0
     dev: false
 

@@ -1,3 +1,4 @@
+import {down} from 'styled-breakpoints'
 import styled from 'styled-components'
 
 export const Link = styled.a`
@@ -10,22 +11,25 @@ export const Link = styled.a`
 `
 
 export const Container = styled.div`
-  width: 100%;
+  background: #f3ffd3;
   display: flex;
   align-items: center;
-  background: white;
   padding: 12px 24px;
   box-sizing: border-box;
+  margin: 0 -95px 18px -95px;
+
+  ${down('md')} {
+    margin: 0 0 18px 0;
+  }
 `
 
 export const Content = styled.div`
   flex: 1;
-  font-family: PingFang SC;
   font-style: normal;
   font-weight: normal;
   font-size: 12px;
-  line-height: 17px;
-  color: #202020;
+  line-height: 16px;
+  color: #111111;
 `
 
 export const NotificationIcon = styled.div`

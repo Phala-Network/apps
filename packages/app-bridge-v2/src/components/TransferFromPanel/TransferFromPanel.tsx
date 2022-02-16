@@ -18,6 +18,7 @@ import {NetworkSelect} from '../NetworkSelect'
 import {TransferPanel} from '../TransferPanel'
 import {AccountStatusControl} from './AccountStatusControl'
 import {BalanceLabel} from './BalanceLabel'
+import {PolkadotAddressInput} from './PolkadotAddressInput'
 import {AddressArea, InputArea} from './styledComponents'
 
 interface TransferFromPanelProps {
@@ -68,14 +69,16 @@ export const TransferFromPanel: FC<TransferFromPanelProps> = () => {
       </InputArea>
 
       <AddressArea>
-        <AddressInput
-          disabled={isFromEthereum}
-          value={address}
-          onChange={(e: any) => {
-            setAddress(e.target?.value)
-          }}
-          endEnhancer={<AccountStatusControl />}
-        />
+        {isFromEthereum && (
+          <AddressInput
+            disabled={isFromEthereum}
+            value={address}
+            onChange={(e: any) => setAddress(e.target?.value)}
+            endEnhancer={<AccountStatusControl />}
+          />
+        )}
+
+        {!isFromEthereum && <PolkadotAddressInput />}
       </AddressArea>
     </TransferPanel>
   )
