@@ -23,7 +23,9 @@ export const AccountStatusControl: FC = () => {
                 overrides={{
                   BaseButton: {
                     style: {
-                      ...littleRoundButtonOverrides.BaseButton.style,
+                      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                      // @ts-ignore
+                      ...littleRoundButtonOverrides?.BaseButton?.style,
                       width: '100px',
                     },
                   },
