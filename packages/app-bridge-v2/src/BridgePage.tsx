@@ -1,4 +1,4 @@
-import {Button, ToasterContainer} from '@phala/react-components'
+import {Announcement, Button, ToasterContainer} from '@phala/react-components'
 import {PLACEMENT} from 'baseui/toast'
 import {FC, useState} from 'react'
 import {Helmet} from 'react-helmet'
@@ -36,6 +36,32 @@ export const BridgePage: FC = () => {
         </Helmet>
 
         <MainContent>
+          <Announcement>
+            Bridge&apos;s transaction tracking feature is under upgrade and
+            maintenance. After you submit your transaction. Please go to{' '}
+            <a
+              href="https://khala.subscan.io/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Subscan
+            </a>{' '}
+            and{' '}
+            <a href="https://etherscan.io/" target="_blank" rel="noreferrer">
+              Etherscan
+            </a>{' '}
+            to check the progress of your transaction. If you have any
+            questions. Please come to our{' '}
+            <a
+              href="https://discord.com/invite/phala"
+              target="_blank"
+              rel="noreferrer"
+            >
+              discord
+            </a>{' '}
+            channel for support.
+          </Announcement>
+
           <Header />
 
           <BlockItem>
