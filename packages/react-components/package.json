@@ -33,21 +33,8 @@
     "react-toastify": "^7.0.4",
     "styled-breakpoints": "^10.0.1"
   },
-  "scripts": {
-    "start-storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
-  },
   "devDependencies": {
     "@babel/core": "^7.16.0",
-    "@storybook/addon-actions": "^6.3.8",
-    "@storybook/addon-essentials": "^6.3.8",
-    "@storybook/addon-links": "^6.3.8",
-    "@storybook/addon-postcss": "^2.0.0",
-    "@storybook/components": "^6.3.8",
-    "@storybook/core-events": "^6.3.8",
-    "@storybook/preset-create-react-app": "^3.2.0",
-    "@storybook/react": "^6.3.8",
-    "@storybook/theming": "^6.3.8",
     "@types/react-table": "^7.7.9",
     "babel-loader": "8.1.0",
     "react": "^17.0.2",
