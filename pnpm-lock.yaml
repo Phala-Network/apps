@@ -86,7 +86,7 @@ importers:
       core-js: ^3.19.3
       decimal.js: ^10.3.1
       ethers: ^5.5.3
-      gatsby: ^4.3.0
+      gatsby: ^4.7.1
       gatsby-plugin-google-gtag: ^4.7.0
       gatsby-plugin-netlify: ^4.1.0
       gatsby-plugin-pnpm: ^1.2.10
@@ -7912,7 +7912,7 @@ packages:
   /axios/0.21.4:
     resolution: {integrity: sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==}
     dependencies:
-      follow-redirects: 1.14.8_debug@3.2.7
+      follow-redirects: 1.14.8
     transitivePeerDependencies:
       - debug
     dev: false
@@ -12485,6 +12485,16 @@ packages:
       tslib: 2.3.1
     dev: false
 
+  /follow-redirects/1.14.8:
+    resolution: {integrity: sha512-1x0S9UVJHsQprFcEC/qnNzBLcIxsjAV905f/UkQxbclCsoTWlacCNOpQa/anodLl2uaEKFhfWOvM2Qg77+15zA==}
+    engines: {node: '>=4.0'}
+    peerDependencies:
+      debug: '*'
+    peerDependenciesMeta:
+      debug:
+        optional: true
+    dev: false
+
   /follow-redirects/1.14.8_debug@3.2.7:
     resolution: {integrity: sha512-1x0S9UVJHsQprFcEC/qnNzBLcIxsjAV905f/UkQxbclCsoTWlacCNOpQa/anodLl2uaEKFhfWOvM2Qg77+15zA==}
     engines: {node: '>=4.0'}
@@ -14473,7 +14483,7 @@ packages:
     engines: {node: '>=8.0.0'}
     dependencies:
       eventemitter3: 4.0.7
-      follow-redirects: 1.14.8_debug@3.2.7
+      follow-redirects: 1.14.8
       requires-port: 1.0.0
     transitivePeerDependencies:
       - debug
