@@ -8,10 +8,6 @@ const Root = styled.div`
   margin: 16px 0;
 `
 
-const ProgressItem = styled.div<{isActive: boolean}>`
-  color: ${({isActive}) => (isActive ? '#AAD829' : '#494949')};
-`
-
 const Link = styled.a`
   text-decoration: underline;
   color: inherit;
@@ -32,6 +28,7 @@ export interface ProgressProps {
   steps: {
     text: string
     link?: string
+    second?: number
   }[]
   progressIndex: number
 }
@@ -46,9 +43,22 @@ export const Progress: FC<ProgressProps> = (props) => {
         {items.map((item, index) => {
           const isCurrent = progressIndex === index
           const isActive = progressIndex >= index
+          const isFinished = progressIndex > index
           const isLast = index === items.length - 1
+          let color = '#CECECE'
+
+          if (isCurrent) {
+            color = '#000000'
+          } else if (isFinished) {
+            color = '#AAD829'
+          }
+
           const titleNode = (
-            <ProgressItem isActive={isCurrent}>
+            <div
+              style={{
+                color,
+              }}
+            >
               {item.link ? (
                 <Link href={item.link} target="_blank">
                   {item.text}
@@ -56,7 +66,9 @@ export const Progress: FC<ProgressProps> = (props) => {
               ) : (
                 item.text
               )}
-            </ProgressItem>
+
+              {isFinished && item.second && <span> ... {item.second}s</span>}
+            </div>
           )
 
           return (
