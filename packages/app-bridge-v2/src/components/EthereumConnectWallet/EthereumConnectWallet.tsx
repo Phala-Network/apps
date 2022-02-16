@@ -21,7 +21,7 @@ export const EthereumConnectWallet: FC<EthereumConnectWalletProps> = (
 
   useEffect(() => {
     const [account] = accounts
-    if (!accounts || !isReady) {
+    if (!account || !isReady) {
       return
     }
 

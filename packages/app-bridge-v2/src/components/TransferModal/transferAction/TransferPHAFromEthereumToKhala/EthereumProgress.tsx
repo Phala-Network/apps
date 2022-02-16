@@ -21,6 +21,7 @@ export const EthereumProgress: React.FC<EthereumProgressParams> = (props) => {
   const steps = [
     {
       text: 'Transaction Send',
+      second: 48,
     },
     {
       text: 'Ethereum Confirmed',

@@ -22,6 +22,7 @@ import React, {useEffect, useState} from 'react'
 import {buttonOverrides} from '../../style/buttonOverrides'
 import {modalOverrides} from '../../style/modalOverrides'
 import {Button} from '../Button'
+import {Body, Footer} from './styledComponents'
 
 type Props = {
   visible: boolean
@@ -84,56 +85,60 @@ export const ApproveDialog: React.FC<Props> = (props) => {
       <ModalHeader>Approve PHA</ModalHeader>
 
       <ModalBody>
-        In order for the bridge to move your ERC20 tokens to Khala Network, it
-        first needs your approval. This is only required once per ERC20 token!
+        <Body>
+          In order for the bridge to move your ERC20 tokens to Khala Network, it
+          first needs your approval. This is only required once per ERC20 token!
+        </Body>
         <Block marginTop={['20px']}>
           <FeeLabel label="Fee" fee={(fee?.toFixed(6) || '') + ' ETH'} />
         </Block>
       </ModalBody>
 
-      <ModalFooter>
-        <Block
-          display="flex"
-          justifyContent="space-between"
-          alignItems="stretch"
-        >
-          <Block flex={1}>
-            <ModalButton
-              overrides={{
-                BaseButton: {
-                  style: {
-                    backgroundColor: '#EEEEEE',
-                    width: '100%',
+      <Footer>
+        <ModalFooter>
+          <Block
+            display="flex"
+            justifyContent="space-between"
+            alignItems="stretch"
+          >
+            <Block flex={1}>
+              <ModalButton
+                overrides={{
+                  BaseButton: {
+                    style: {
+                      backgroundColor: '#EEEEEE',
+                      width: '100%',
+                    },
                   },
-                },
-              }}
-              onClick={onClose}
-              kind={ButtonKind.tertiary}
-            >
-              Reject
-            </ModalButton>
-          </Block>
+                }}
+                onClick={onClose}
+                kind={ButtonKind.tertiary}
+              >
+                Reject
+              </ModalButton>
+            </Block>
 
-          <Block width={['20px']} />
+            <Block width={['20px']} />
 
-          <Block flex={1}>
-            <Button
-              overrides={{
-                BaseButton: {
-                  style: {
-                    width: '100%',
-                    ...buttonOverrides.BaseButton.style,
+            <Block flex={1}>
+              <Button
+                overrides={{
+                  BaseButton: {
+                    style: {
+                      width: '100%',
+                      ...buttonOverrides.BaseButton.style,
+                    },
                   },
-                },
-              }}
-              isLoading={isSubmitting}
-              onClick={startApprove}
-            >
-              Confirm
-            </Button>
+                }}
+                isLoading={isSubmitting}
+                onClick={startApprove}
+              >
+                Confirm
+              </Button>
+            </Block>
           </Block>
-        </Block>
-      </ModalFooter>
+        </ModalFooter>
+      </Footer>
     </Modal>
   )
 }

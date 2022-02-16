@@ -1,14 +1,12 @@
 import {ethereumGraphEndpoint} from '@phala/app-config'
 import {Provider as AppStoreProvider} from '@phala/app-store'
-import {getCMSLog} from '@phala/react-cms'
 import {MobileToastContextProvider} from '@phala/react-components'
 import {Provider as LibProvider} from '@phala/react-libs'
 import {isProduction} from '@phala/utils'
-import * as Sentry from '@sentry/react'
 import {BaseProvider} from 'baseui'
 import {SnackbarProvider} from 'baseui/snackbar'
 import {toaster, ToasterContainer} from 'baseui/toast'
-import React, {StrictMode, useLayoutEffect, useRef} from 'react'
+import React, {StrictMode, useRef} from 'react'
 import {QueryClient, QueryClientProvider} from 'react-query'
 import {ReactQueryDevtools} from 'react-query/devtools'
 import {ThemeProvider} from 'styled-components'
@@ -49,10 +47,6 @@ const WrapApp: React.FC = ({children}) => {
   }
 
   useZendesk()
-
-  useLayoutEffect(() => {
-    getCMSLog().catch((e) => Sentry.captureException(e))
-  }, [])
 
   return (
     <StrictMode>

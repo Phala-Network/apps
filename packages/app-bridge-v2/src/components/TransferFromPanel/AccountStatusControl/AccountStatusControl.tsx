@@ -1,4 +1,4 @@
-import {useEthereumAccountAtom, usePolkadotAccountAtom} from '@phala/app-store'
+import {useEthereumAccountAtom} from '@phala/app-store'
 import {Button} from 'baseui/button'
 import {FC} from 'react'
 import {ErrorBoundary} from 'react-error-boundary'
@@ -7,16 +7,13 @@ import {useBridgePage} from '../../../useBridgePage'
 import {Approved} from '../../Approved'
 import {EthereumAllowance} from '../../EthereumAllowance'
 import {EthereumConnectWallet} from '../../EthereumConnectWallet'
-import {PolkadotConnectWallet} from '../../PolkadotConnectWallet'
 
 export const AccountStatusControl: FC = () => {
   const [ethereumAccount] = useEthereumAccountAtom()
-  const [polkadotAccount] = usePolkadotAccountAtom()
   const {isFromEthereum} = useBridgePage()
 
   return (
     <div>
-      {!isFromEthereum && !polkadotAccount && <PolkadotConnectWallet />}
       {!ethereumAccount && isFromEthereum && <EthereumConnectWallet />}
       {ethereumAccount && isFromEthereum && (
         <ErrorBoundary fallbackRender={() => null}>
@@ -26,7 +23,9 @@ export const AccountStatusControl: FC = () => {
                 overrides={{
                   BaseButton: {
                     style: {
-                      ...littleRoundButtonOverrides.BaseButton.style,
+                      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                      // @ts-ignore
+                      ...littleRoundButtonOverrides?.BaseButton?.style,
                       width: '100px',
                     },
                   },

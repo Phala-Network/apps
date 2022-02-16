@@ -23,6 +23,11 @@ export const AddressInput: FC<AddressInputProps> = (props) => {
             ...styleOverrides,
           },
         },
+        Input: {
+          style: {
+            fontFamily: 'system-ui,sans-serif',
+          },
+        },
       }}
       {...others}
     />
