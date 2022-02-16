@@ -27,11 +27,11 @@ export const Label = styled.div`
 `
 
 export const Network = styled.div`
-  font-family: Montserrat;
   font-style: normal;
   font-weight: normal;
   font-size: 16px;
-  line-height: 16px;
+  line-height: 55px;
+  height: 55px;
   display: flex;
   align-items: center;
   text-align: center;
@@ -41,7 +41,6 @@ export const Network = styled.div`
 `
 
 export const Amount = styled.span`
-  font-family: Montserrat;
   font-style: normal;
   font-weight: normal;
   font-size: 20px;
