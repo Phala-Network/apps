@@ -19,8 +19,8 @@ export const NetworkIcon: FC<NetworkIconProps> = (props) => {
   return (
     <img
       style={{
-        width: 54,
-        height: 54,
+        width: 55,
+        height: 55,
         display: 'block',
       }}
       src={images[network]}

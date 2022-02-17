@@ -7,7 +7,7 @@ export const Root = styled.div`
 export const Body = styled.div`
   /* Gy 001 */
   background: #eeeeee;
-  /* height: 55px; */
+  height: 55px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -30,8 +30,6 @@ export const Network = styled.div`
   font-style: normal;
   font-weight: normal;
   font-size: 16px;
-  line-height: 55px;
-  height: 55px;
   display: flex;
   align-items: center;
   text-align: center;
