@@ -1,12 +1,5 @@
 // import {useKhalaBridgeFee} from '../..'
-import {
-  Alert,
-  Checkbox,
-  FeeLabel,
-  KhalaToEthereumFee,
-  Spacer,
-  toast,
-} from '@phala/react-components'
+import {Alert, Checkbox, FeeLabel, Spacer, toast} from '@phala/react-components'
 import {Link} from '@phala/react-components/src/Announcement/styledComponents'
 import {
   decimalToBalance,
@@ -27,6 +20,7 @@ import {useAllTransferData} from '../../../../store'
 import {buttonOverrides} from '../../../../style/buttonOverrides'
 import {Button} from '../../../Button'
 import {CurrentTransferInformationDetailItems} from '../../../CurrentTransferInformationDetailItems'
+import {KhalaToEthereumFee} from '../../../KhalaToEthereumFee'
 
 interface TransferPHAFromKhalaToEthereumProps {
   onCloseTransfer(): void
