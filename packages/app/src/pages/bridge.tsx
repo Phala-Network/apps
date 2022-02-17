@@ -1,1 +1,3 @@
-export {default as default} from '@phala/app-bridge'
+import {BridgePage} from '@phala/app-bridge'
+
+export default BridgePage

@@ -51,7 +51,6 @@ importers:
       '@phala/app-analytics': workspace:0.0.1
       '@phala/app-assets': workspace:0.0.1
       '@phala/app-bridge': workspace:0.0.1
-      '@phala/app-bridge-v2': workspace:0.0.1
       '@phala/app-config': workspace:0.0.1
       '@phala/app-data-analytics': workspace:0.0.1
       '@phala/app-mining': workspace:0.0.1
@@ -117,7 +116,6 @@ importers:
       '@phala/app-analytics': link:../app-analytics
       '@phala/app-assets': link:../app-assets
       '@phala/app-bridge': link:../app-bridge
-      '@phala/app-bridge-v2': link:../app-bridge-v2
       '@phala/app-config': link:../app-config
       '@phala/app-data-analytics': link:../app-data-analytics
       '@phala/app-mining': link:../app-mining
@@ -222,52 +220,6 @@ importers:
 
   packages/app-bridge:
     specifiers:
-      '@phala/app-data-analytics': workspace:0.0.1
-      '@phala/app-store': workspace:0.0.1
-      '@phala/app-types': workspace:0.0.1
-      '@phala/react-components': workspace:0.0.1
-      '@phala/react-graph-chainbridge': workspace:0.0.1
-      '@phala/react-hooks': workspace:0.0.1
-      '@phala/react-libs': workspace:0.0.1
-      '@phala/utils': workspace:0.0.1
-      '@polkadot/util': ^8.1.2
-      '@polkadot/util-crypto': ^8.1.2
-      bn.js: ^5.2.0
-      react-query: 3.34.5
-      styled-breakpoints: ^10.0.1
-    dependencies:
-      '@phala/app-data-analytics': link:../app-data-analytics
-      '@phala/app-store': link:../app-store
-      '@phala/app-types': link:../app-types
-      '@phala/react-components': link:../react-components
-      '@phala/react-graph-chainbridge': link:../react-graph-chainbridge
-      '@phala/react-hooks': link:../react-hooks
-      '@phala/react-libs': link:../react-libs
-      '@phala/utils': link:../utils
-      '@polkadot/util': 8.3.3
-      '@polkadot/util-crypto': 8.3.3
-      bn.js: 5.2.0
-      styled-breakpoints: 10.2.3_styled-components@5.3.3
-    devDependencies:
-      react-query: 3.34.5
-
-  packages/app-bridge-graph:
-    specifiers:
-      '@types/luxon': ^2.0.9
-      graphql: ^15.5.3
-      graphql-request: ^3.5.0
-      luxon: ^2.3.0
-      react-query: ^3.27.0
-    dependencies:
-      '@types/luxon': 2.0.9
-      luxon: 2.3.0
-    devDependencies:
-      graphql: 15.8.0
-      graphql-request: 3.7.0_graphql@15.8.0
-      react-query: 3.34.14
-
-  packages/app-bridge-v2:
-    specifiers:
       '@phala/app-bridge-graph': workspace:^0.0.1
       '@phala/app-config': workspace:^0.0.1
       '@phala/app-store': workspace:^0.0.1
@@ -313,6 +265,21 @@ importers:
       react-query: 3.34.5
       styled-breakpoints: 10.2.3_styled-components@5.3.3
       styled-components: 5.3.3
+
+  packages/app-bridge-graph:
+    specifiers:
+      '@types/luxon': ^2.0.9
+      graphql: ^15.5.3
+      graphql-request: ^3.5.0
+      luxon: ^2.3.0
+      react-query: ^3.27.0
+    dependencies:
+      '@types/luxon': 2.0.9
+      luxon: 2.3.0
+    devDependencies:
+      graphql: 15.8.0
+      graphql-request: 3.7.0_graphql@15.8.0
+      react-query: 3.34.14
 
   packages/app-config:
     specifiers:
@@ -466,7 +433,7 @@ importers:
       react-is: 16.13.1
       react-table: 7.7.0_react@17.0.2
       react-toastify: 7.0.4_react-dom@17.0.2+react@17.0.2
-      styled-breakpoints: 10.2.3_react@17.0.2
+      styled-breakpoints: 10.2.3_c17876e09d792e0c7b0f44e49f814625
     devDependencies:
       '@babel/core': 7.17.2
       '@types/react-table': 7.7.9
@@ -6012,7 +5979,7 @@ packages:
   /axios/0.21.4:
     resolution: {integrity: sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==}
     dependencies:
-      follow-redirects: 1.14.8
+      follow-redirects: 1.14.8_debug@3.2.7
     transitivePeerDependencies:
       - debug
     dev: false
@@ -10344,16 +10311,6 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       tslib: 2.3.1
-    dev: false
-
-  /follow-redirects/1.14.8:
-    resolution: {integrity: sha512-1x0S9UVJHsQprFcEC/qnNzBLcIxsjAV905f/UkQxbclCsoTWlacCNOpQa/anodLl2uaEKFhfWOvM2Qg77+15zA==}
-    engines: {node: '>=4.0'}
-    peerDependencies:
-      debug: '*'
-    peerDependenciesMeta:
-      debug:
-        optional: true
     dev: false
 
   /follow-redirects/1.14.8_debug@3.2.7:
@@ -19749,23 +19706,6 @@ packages:
     dependencies:
       react: 17.0.2
       styled-components: 5.3.3
-    dev: false
-
-  /styled-breakpoints/10.2.3_react@17.0.2:
-    resolution: {integrity: sha512-6gxfj7aGC8cLSNRnnGgYOwD4Pe2RhzfqD/nzBSoKdgg0SX/esYBAxg3Jd4TT3d7ug1TFsrGU213aFaugqWh4qg==}
-    peerDependencies:
-      '@emotion/react': ^11.0.0
-      react: ^17.x.x
-      styled-components: ^5.0.0
-    peerDependenciesMeta:
-      '@emotion/react':
-        optional: true
-      react:
-        optional: true
-      styled-components:
-        optional: true
-    dependencies:
-      react: 17.0.2
     dev: false
 
   /styled-breakpoints/10.2.3_styled-components@5.3.3:
