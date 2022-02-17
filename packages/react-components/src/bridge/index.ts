@@ -1,8 +1,0 @@
-export {default as BridgeModal} from './BridgeModal'
-export {default as EthereumAllowance} from './EthereumAllowance'
-export {default as FormLayout} from './FormLayout'
-export {default as InputDataStep} from './InputDataStep'
-export type {InputDataStepResult} from './InputDataStep'
-export * from './KhalaToEthereumFee'
-export {default as ResultStepModal} from './ResultStep/ResultStepModal'
-export {default as SubmitStepModal} from './SubmitStep/SubmitStepModal'
