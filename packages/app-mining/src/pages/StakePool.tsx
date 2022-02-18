@@ -43,8 +43,7 @@ export const StakePool = ({params: {pid}}: PageProps) => {
             Root: {
               style: ({$theme}) => ({
                 borderRadius: '0',
-                border: 'none',
-                boxShadow: $theme.lighting.shallowBelow,
+                borderWidth: '1px',
                 marginTop: $theme.sizing.scale950,
               }),
             },
