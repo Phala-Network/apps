@@ -1,4 +1,4 @@
-import {useMemo, useState} from 'react'
+import {useMemo, useState, VFC} from 'react'
 import {Input} from 'baseui/input'
 import {
   ModalHeader,
@@ -10,7 +10,6 @@ import {
 import {Notification} from 'baseui/notification'
 import {ParagraphSmall} from 'baseui/typography'
 import {FormControl} from 'baseui/form-control'
-import type {StakePools} from '../../hooks/graphql'
 import Decimal from 'decimal.js'
 import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
 import {
@@ -20,25 +19,28 @@ import {
 import {Button} from 'baseui/button'
 import {formatCurrency} from '@phala/utils'
 import {usePolkadotAccountAtom} from '@phala/app-store'
+import {StakePool} from '.'
 
-const WithdrawModalBody = ({
-  stakePool,
-  onClose,
-}: {stakePool: StakePools} & Pick<ModalProps, 'onClose'>): JSX.Element => {
-  const {pid} = stakePool
+const WithdrawModalBody: VFC<
+  {
+    stakePool: Pick<StakePool, 'pid'> &
+      Partial<Pick<StakePool, 'stakePoolStakers' | 'stakePoolWithdrawals'>>
+  } & Pick<ModalProps, 'onClose'>
+> = ({stakePool, onClose}) => {
+  const {pid, stakePoolStakers, stakePoolWithdrawals} = stakePool
   const {api} = useApiPromise()
   const [amount, setAmount] = useState('')
   const [polkadotAccount] = usePolkadotAccountAtom()
   const waitSignAndSend = useWaitSignAndSend()
   const decimals = useDecimalJsTokenDecimalMultiplier(api)
   const onConfirm = () => {
-    if (api && decimals && stakePool.stakePoolStakers[0]) {
+    if (api && decimals && stakePoolStakers?.[0]) {
       waitSignAndSend(
         api.tx.phalaStakePool?.withdraw?.(
           pid,
           new Decimal(amount)
-            .div(new Decimal(stakePool.stakePoolStakers[0].stake))
-            .times(new Decimal(stakePool.stakePoolStakers[0].shares))
+            .div(new Decimal(stakePoolStakers[0].stake))
+            .times(new Decimal(stakePoolStakers[0].shares))
             .times(decimals)
             .floor()
             .toString()
@@ -54,12 +56,15 @@ const WithdrawModalBody = ({
   const hasWithdrawing = useMemo<boolean>(
     () =>
       Boolean(
-        stakePool.stakePoolWithdrawals.find(
+        stakePoolWithdrawals?.find(
           (withdrawal) => withdrawal.userAddress === polkadotAccount?.address
         )
       ),
-    [stakePool, polkadotAccount]
+    [stakePoolWithdrawals, polkadotAccount]
   )
+
+  if (stakePoolStakers === undefined || stakePoolWithdrawals === undefined)
+    return null
 
   return (
     <>
@@ -71,7 +76,7 @@ const WithdrawModalBody = ({
         <FormControl
           label="Amount"
           caption={`Your Delegation: ${formatCurrency(
-            stakePool.stakePoolStakers[0]?.stake as string
+            stakePoolStakers[0]?.stake as string
           )} PHA`}
         >
           {/* FIXME: add amount validation */}
@@ -86,8 +91,8 @@ const WithdrawModalBody = ({
                 size="mini"
                 kind="minimal"
                 onClick={() => {
-                  if (stakePool.stakePoolStakers[0]) {
-                    setAmount(stakePool.stakePoolStakers[0].stake)
+                  if (stakePoolStakers[0]) {
+                    setAmount(stakePoolStakers[0].stake)
                   }
                 }}
               >

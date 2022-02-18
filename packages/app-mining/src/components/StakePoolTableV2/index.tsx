@@ -1,12 +1,12 @@
 import {TableBuilder, TableBuilderColumn} from 'baseui/table-semantic'
 import {StatefulPopover} from 'baseui/popover'
 import {StatefulMenu} from 'baseui/menu'
-import {useCallback, useState} from 'react'
+import {useCallback, useState, VFC} from 'react'
 import {Info, Search} from 'react-feather'
 import {Checkbox} from 'baseui/checkbox'
 import {
   SortOrder,
-  StakePools,
+  StakePoolsQuery,
   QueryMode,
   useStakePoolsQuery,
   StakePoolsOrderByWithRelationInput,
@@ -15,26 +15,17 @@ import {client} from '../../utils/GraphQLClient'
 import styled from 'styled-components'
 import {StatefulInput} from 'baseui/input'
 import {debounce} from 'lodash-es'
-import {formatCurrency, isSSR, isTruthy, toFixed} from '@phala/utils'
+import {formatCurrency, isTruthy, toFixed} from '@phala/utils'
 import PopoverButton from '../PopoverButton'
 import {usePolkadotAccountAtom} from '@phala/app-store'
 import Pagination from '../Pagination'
-import {Modal, ModalProps} from 'baseui/modal'
 import {StatefulTooltip, StatefulTooltipProps} from 'baseui/tooltip'
 import {tooltipContent} from './tooltipContent'
 import Decimal from 'decimal.js'
 import {Block} from 'baseui/block'
 import TableSkeleton from '../TableSkeleton'
 import Owner from '../Owner'
-
-// FIXME: should be loadable, but meet some problems when configuring gatsby-plugin-loadable-components-ssr
-import DelegateModalBody from './DelegateModalBody'
-import ClaimModalBody from './ClaimModalBody'
-import WithdrawModalBody from './WithdrawModalBody'
-import SetCapModalBody from './SetCapModalBody'
-import SetCommissionModalBody from './SetCommissionModalBody'
-import AddWorkerModalBody from './AddWorkerModalBody'
-import ReclaimAllModalBody from './ReclaimAllModalBody'
+import StakePoolModal, {StakePoolModalKey} from '../StakePoolModal'
 
 const TableHeader = styled.div`
   display: flex;
@@ -47,34 +38,8 @@ const TableHeader = styled.div`
   }
 `
 
-type ModalKey =
-  | 'addWorker'
-  | 'setCap'
-  | 'claim'
-  | 'delegate'
-  | 'withdraw'
-  | 'setCommission'
-  | 'reclaimAll'
-type MenuItem = {label: string; key: ModalKey; disabled?: boolean}
-
-const modalKeyMap: Readonly<
-  Record<
-    ModalKey,
-    (
-      props: {
-        stakePool: StakePools
-      } & Pick<ModalProps, 'onClose'>
-    ) => JSX.Element
-  >
-> = {
-  delegate: DelegateModalBody,
-  claim: ClaimModalBody,
-  withdraw: WithdrawModalBody,
-  setCap: SetCapModalBody,
-  setCommission: SetCommissionModalBody,
-  addWorker: AddWorkerModalBody,
-  reclaimAll: ReclaimAllModalBody,
-}
+type MenuItem = {label: string; key: StakePoolModalKey; disabled?: boolean}
+type StakePool = StakePoolsQuery['findManyStakePools'][number]
 
 const TooltipHeader = ({
   children,
@@ -92,11 +57,9 @@ const TooltipHeader = ({
   </Block>
 )
 
-const StakePoolTableV2 = ({
-  kind,
-}: {
+const StakePoolTableV2: VFC<{
   kind: 'delegate' | 'myDelegate' | 'mining'
-}): JSX.Element => {
+}> = ({kind}) => {
   const [currentTime] = useState(() => {
     const now = new Date()
     now.setSeconds(0)
@@ -118,9 +81,9 @@ const StakePoolTableV2 = ({
   const [commissionFilter, setCommissionFilter] = useState(kind === 'delegate')
   const [remainingFilter, setRemainingFilter] = useState(kind === 'delegate')
 
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
-  const [openModalKey, setOpenModalKey] = useState<ModalKey | null>(null)
-  const [operatingPool, setOperatingPool] = useState<StakePools | null>(null)
+  const [stakePoolModalKey, setStakePoolModalKey] =
+    useState<StakePoolModalKey | null>(null)
+  const [operatingPool, setOperatingPool] = useState<StakePool | null>(null)
 
   const {data, isLoading} = useStakePoolsQuery(
     client,
@@ -219,10 +182,8 @@ const StakePoolTableV2 = ({
   )
 
   const closeModal = useCallback(() => {
-    setIsModalOpen(false)
+    setStakePoolModalKey(null)
   }, [])
-
-  const ModalBody = openModalKey && modalKeyMap[openModalKey]
 
   return (
     <div>
@@ -307,7 +268,7 @@ const StakePoolTableV2 = ({
           },
           TableBodyRow: {
             style: {cursor: 'pointer'},
-            props: (props: {$row: StakePools}) => {
+            props: (props: {$row: StakePool}) => {
               return {
                 ...props,
                 onClick: (e: MouseEvent) => {
@@ -332,11 +293,11 @@ const StakePoolTableV2 = ({
           }
           sortable
         >
-          {(stakePool: StakePools) => stakePool.pid}
+          {(stakePool: StakePool) => stakePool.pid}
         </TableBuilderColumn>
         {kind === 'mining' && (
           <TableBuilderColumn id="minersCount" header="Worker" sortable>
-            {(stakePool: StakePools) => stakePool.minersCount}
+            {(stakePool: StakePool) => stakePool.minersCount}
           </TableBuilderColumn>
         )}
         {kind !== 'mining' && (
@@ -348,7 +309,7 @@ const StakePoolTableV2 = ({
               </TooltipHeader>
             }
           >
-            {(stakePool: StakePools) => <Owner stakePool={stakePool} />}
+            {(stakePool: StakePool) => <Owner stakePool={stakePool} />}
           </TableBuilderColumn>
         )}
         {kind !== 'mining' && (
@@ -359,7 +320,7 @@ const StakePoolTableV2 = ({
             }
             sortable
           >
-            {(stakePool: StakePools) =>
+            {(stakePool: StakePool) =>
               `${toFixed(new Decimal(stakePool.instantApr).times(100), 2)}%`
             }
           </TableBuilderColumn>
@@ -373,7 +334,7 @@ const StakePoolTableV2 = ({
           }
           sortable
         >
-          {({remainingStake}: StakePools) =>
+          {({remainingStake}: StakePool) =>
             remainingStake ? `${formatCurrency(remainingStake)} PHA` : '∞'
           }
         </TableBuilderColumn>
@@ -386,7 +347,7 @@ const StakePoolTableV2 = ({
           }
           sortable
         >
-          {(stakePool: StakePools) =>
+          {(stakePool: StakePool) =>
             `${new Decimal(stakePool.commission).times(100)}%`
           }
         </TableBuilderColumn>
@@ -400,7 +361,7 @@ const StakePoolTableV2 = ({
             }
             sortable
           >
-            {(stakePool: StakePools) =>
+            {(stakePool: StakePool) =>
               `${formatCurrency(stakePool.totalStake)} PHA`
             }
           </TableBuilderColumn>
@@ -414,7 +375,7 @@ const StakePoolTableV2 = ({
           }
           sortable
         >
-          {(stakePool: StakePools) =>
+          {(stakePool: StakePool) =>
             `${formatCurrency(stakePool.freeStake)} PHA`
           }
         </TableBuilderColumn>
@@ -428,7 +389,7 @@ const StakePoolTableV2 = ({
             }
             sortable
           >
-            {(stakePool: StakePools) =>
+            {(stakePool: StakePool) =>
               `${formatCurrency(stakePool.releasingStake)} PHA`
             }
           </TableBuilderColumn>
@@ -442,7 +403,7 @@ const StakePoolTableV2 = ({
               </TooltipHeader>
             }
           >
-            {(stakePool: StakePools) => {
+            {(stakePool: StakePool) => {
               const value = stakePool.stakePoolStakers?.[0]?.stake
               return value ? `${formatCurrency(value)} PHA` : '-'
             }}
@@ -457,16 +418,14 @@ const StakePoolTableV2 = ({
               </TooltipHeader>
             }
           >
-            {(stakePool: StakePools) => {
-              const totalWithdrawal = stakePool.stakePoolWithdrawals.reduce(
-                (acc, cur) => {
+            {(stakePool: StakePool) => {
+              const totalWithdrawal =
+                stakePool.stakePoolWithdrawals?.reduce((acc, cur) => {
                   if (cur.userAddress === address) {
                     return acc.add(cur.stake)
                   }
                   return acc
-                },
-                new Decimal(0)
-              )
+                }, new Decimal(0)) || new Decimal(0)
 
               return `${formatCurrency(totalWithdrawal)} PHA`
             }}
@@ -481,7 +440,7 @@ const StakePoolTableV2 = ({
               </TooltipHeader>
             }
           >
-            {(stakePool: StakePools) => {
+            {(stakePool: StakePool) => {
               const value = stakePool.stakePoolStakers?.[0]?.claimableRewards
               return value ? `${formatCurrency(value)} PHA` : '-'
             }}
@@ -498,7 +457,7 @@ const StakePoolTableV2 = ({
             },
           }}
         >
-          {(stakePool: StakePools) => {
+          {(stakePool: StakePool) => {
             const allItems: (false | MenuItem)[] = [
               kind === 'mining' && {label: 'Add Worker', key: 'addWorker'},
               kind === 'mining' && {label: 'Set Cap', key: 'setCap'},
@@ -514,12 +473,12 @@ const StakePoolTableV2 = ({
               (kind === 'myDelegate' || kind === 'mining') && {
                 label: 'Withdraw',
                 key: 'withdraw',
-                disabled: !stakePool.stakePoolStakers.length,
+                disabled: !stakePool.stakePoolStakers?.length,
               },
               (kind === 'myDelegate' || kind === 'mining') && {
                 label: 'Reclaim All',
                 key: 'reclaimAll',
-                disabled: !stakePool.miners.length,
+                disabled: !stakePool.miners?.length,
               },
             ]
 
@@ -531,8 +490,7 @@ const StakePoolTableV2 = ({
                   <StatefulMenu
                     items={allItems.filter(isTruthy)}
                     onItemSelect={({item}: {item: MenuItem}) => {
-                      setIsModalOpen(true)
-                      setOpenModalKey(item.key)
+                      setStakePoolModalKey(item.key)
                       setOperatingPool(stakePool) // Pass object directly is Bad design
                       close()
                     }}
@@ -553,14 +511,11 @@ const StakePoolTableV2 = ({
         pageSize={pageSize}
       />
 
-      {!isSSR() && operatingPool && (
-        <Modal isOpen={isModalOpen} onClose={closeModal}>
-          {/* TODO: add suspense wrapper here with loadable modal components */}
-          {ModalBody && (
-            <ModalBody stakePool={operatingPool} onClose={closeModal} />
-          )}
-        </Modal>
-      )}
+      <StakePoolModal
+        modalKey={stakePoolModalKey}
+        stakePool={operatingPool}
+        onClose={closeModal}
+      />
     </div>
   )
 }

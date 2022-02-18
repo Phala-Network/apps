@@ -7,27 +7,28 @@ import {
 } from 'baseui/modal'
 import {ParagraphSmall} from 'baseui/typography'
 import {FormControl} from 'baseui/form-control'
-import type {StakePools} from '../../hooks/graphql'
 import {formatCurrency, trimAddress} from '@phala/utils'
 import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
 import {
   useApiPromise,
   useDecimalJsTokenDecimalMultiplier,
 } from '@phala/react-libs'
-import {useMemo} from 'react'
+import {useMemo, VFC} from 'react'
 import Decimal from 'decimal.js'
 import {StatefulTooltip} from 'baseui/tooltip'
+import {StakePool} from '.'
 
-const ReclaimAllModalBody = ({
-  stakePool,
-  onClose,
-}: {stakePool: StakePools} & Pick<ModalProps, 'onClose'>): JSX.Element => {
+const ReclaimAllModalBody: VFC<
+  {
+    stakePool: Pick<StakePool, 'pid'> & Partial<Pick<StakePool, 'miners'>>
+  } & Pick<ModalProps, 'onClose'>
+> = ({stakePool, onClose}) => {
   const {pid, miners} = stakePool
   const {api} = useApiPromise()
   const waitSignAndSend = useWaitSignAndSend()
   const decimals = useDecimalJsTokenDecimalMultiplier(api)
   const onConfirm = () => {
-    if (api && decimals) {
+    if (api && decimals && miners) {
       waitSignAndSend(
         api.tx.utility.batch(
           miners.map(({workerPublicKey}) =>
@@ -42,16 +43,21 @@ const ReclaimAllModalBody = ({
       )
     }
   }
+
   const reclaimableStake = useMemo(
     () =>
-      `${formatCurrency(
-        miners.reduce(
-          (acc, cur) => acc.add(new Decimal(cur.stakes)),
-          new Decimal(0)
-        )
-      )} PHA`,
+      miners
+        ? `${formatCurrency(
+            miners.reduce(
+              (acc, cur) => acc.add(new Decimal(cur.stakes)),
+              new Decimal(0)
+            )
+          )} PHA`
+        : '',
     [miners]
   )
+
+  if (!miners) return null
 
   return (
     <>

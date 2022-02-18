@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import {useState, VFC} from 'react'
 import {Input} from 'baseui/input'
 import {
   ModalHeader,
@@ -9,7 +9,6 @@ import {
 } from 'baseui/modal'
 import {ParagraphSmall} from 'baseui/typography'
 import {FormControl} from 'baseui/form-control'
-import type {StakePools} from '../../hooks/graphql'
 import {formatCurrency, validateAddress} from '@phala/utils'
 import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
 import {
@@ -18,12 +17,15 @@ import {
 } from '@phala/react-libs'
 import {usePolkadotAccountAtom} from '@phala/app-store'
 import {Button} from 'baseui/button'
+import {StakePool} from '.'
 
-const ClaimModalBody = ({
-  stakePool,
-  onClose,
-}: {stakePool: StakePools} & Pick<ModalProps, 'onClose'>): JSX.Element => {
-  const {pid} = stakePool
+const ClaimModalBody: VFC<
+  {
+    stakePool: Pick<StakePool, 'pid'> &
+      Partial<Pick<StakePool, 'stakePoolStakers'>>
+  } & Pick<ModalProps, 'onClose'>
+> = ({stakePool, onClose}) => {
+  const {pid, stakePoolStakers} = stakePool
   const [polkadotAccount] = usePolkadotAccountAtom()
   const {api} = useApiPromise()
   const [address, setAddress] = useState('')
@@ -33,7 +35,7 @@ const ClaimModalBody = ({
   const onConfirm = () => {
     if (api && decimals) {
       waitSignAndSend(
-        api.tx.phalaStakePool?.claimRewards?.(stakePool.pid, address),
+        api.tx.phalaStakePool?.claimRewards?.(pid, address),
         (status) => {
           if (status.isReady) {
             onClose?.({closeSource: 'closeButton'})
@@ -42,6 +44,8 @@ const ClaimModalBody = ({
       )
     }
   }
+
+  if (!stakePoolStakers) return null
 
   return (
     <>
@@ -56,9 +60,9 @@ const ClaimModalBody = ({
 
         <FormControl label="Rewards">
           <ParagraphSmall as="div">
-            {stakePool.stakePoolStakers[0] &&
+            {stakePoolStakers[0] &&
               formatCurrency(
-                stakePool.stakePoolStakers[0].claimableRewards as string
+                stakePoolStakers[0].claimableRewards as string
               )}{' '}
             PHA
           </ParagraphSmall>

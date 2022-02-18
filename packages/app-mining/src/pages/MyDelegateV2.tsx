@@ -26,11 +26,10 @@ export const MyDelegateV2 = () => {
       <Card
         overrides={{
           Root: {
-            style: ({$theme}) => ({
+            style: {
               borderRadius: '0',
-              border: 'none',
-              boxShadow: $theme.lighting.shallowBelow,
-            }),
+              borderWidth: '1px',
+            },
           },
         }}
       >

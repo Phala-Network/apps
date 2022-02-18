@@ -1,16 +1,20 @@
 import {formatCurrency, trimAddress} from '@phala/utils'
 import {Block} from 'baseui/block'
+import {Button} from 'baseui/button'
 import {Card} from 'baseui/card'
 import {TableBuilder, TableBuilderColumn} from 'baseui/table-semantic'
 import {HeadingSmall, HeadingXLarge} from 'baseui/typography'
 import {formatDuration, intervalToDuration, isAfter} from 'date-fns'
 import {PageProps} from 'gatsby'
+import {useCallback, useState} from 'react'
 import Helmet from 'react-helmet'
+import StakePoolModal, {StakePoolModalKey} from '../components/StakePoolModal'
 import TableSkeleton from '../components/TableSkeleton'
 import {StakePoolWithdrawals, useStakePoolQuery} from '../hooks/graphql'
 import {client} from '../utils/GraphQLClient'
 
 export const StakePool = ({params: {pid}}: PageProps) => {
+  const [modalKey, setModalKey] = useState<StakePoolModalKey | null>(null)
   const {data, isLoading} = useStakePoolQuery(client, {
     where: {
       pid: Number(pid),
@@ -18,6 +22,10 @@ export const StakePool = ({params: {pid}}: PageProps) => {
   })
 
   const {stakePoolWithdrawals} = data?.findUniqueStakePools || {}
+
+  const closeModal = useCallback(() => {
+    setModalKey(null)
+  }, [])
 
   return (
     <>
@@ -27,6 +35,8 @@ export const StakePool = ({params: {pid}}: PageProps) => {
 
       <Block>
         <Block
+          display="flex"
+          justifyContent="space-between"
           paddingTop="scale1200"
           paddingLeft="scale400"
           paddingRight="scale400"
@@ -34,6 +44,8 @@ export const StakePool = ({params: {pid}}: PageProps) => {
           margin="0 auto"
         >
           <HeadingXLarge as="div">Stake Pool #{pid}</HeadingXLarge>
+
+          <Button onClick={() => setModalKey('delegate')}>Delegate</Button>
         </Block>
       </Block>
 
@@ -101,6 +113,12 @@ export const StakePool = ({params: {pid}}: PageProps) => {
           </TableBuilder>
         </Card>
       </Block>
+
+      <StakePoolModal
+        stakePool={data?.findUniqueStakePools}
+        onClose={closeModal}
+        modalKey={modalKey}
+      />
     </>
   )
 }

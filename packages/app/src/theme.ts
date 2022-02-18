@@ -47,6 +47,7 @@ const overrides = {
 export const baseTheme = createLightTheme(
   {
     accent: '#D1FF52',
+    primaryA: '#1A1A1A',
   },
   overrides
 )
