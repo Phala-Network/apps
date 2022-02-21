@@ -1,27 +1,83 @@
-import {formatCurrency, trimAddress} from '@phala/utils'
+import {usePolkadotAccountAtom} from '@phala/app-store'
+import {formatCurrency, toFixed, trimAddress} from '@phala/utils'
 import {Block} from 'baseui/block'
 import {Button} from 'baseui/button'
 import {Card} from 'baseui/card'
+import {Skeleton} from 'baseui/skeleton'
 import {TableBuilder, TableBuilderColumn} from 'baseui/table-semantic'
 import {HeadingSmall, HeadingXLarge} from 'baseui/typography'
 import {formatDuration, intervalToDuration, isAfter} from 'date-fns'
+import Decimal from 'decimal.js'
 import {PageProps} from 'gatsby'
-import {useCallback, useState} from 'react'
+import {FC, ReactNode, useCallback, useState} from 'react'
+import {Settings} from 'react-feather'
 import Helmet from 'react-helmet'
 import StakePoolModal, {StakePoolModalKey} from '../components/StakePoolModal'
 import TableSkeleton from '../components/TableSkeleton'
 import {StakePoolWithdrawals, useStakePoolQuery} from '../hooks/graphql'
 import {client} from '../utils/GraphQLClient'
 
+const DataCard: FC<{label: string; action?: ReactNode}> = ({
+  label,
+  action,
+  children,
+}) => {
+  return (
+    <Card
+      overrides={{
+        Root: {
+          style: () => ({
+            borderRadius: '0',
+            borderWidth: '1px',
+          }),
+        },
+        Body: {
+          style: ({$theme}) => ({
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            height: $theme.sizing.scale2400,
+          }),
+        },
+      }}
+    >
+      <Block display="flex">
+        <Block flex="1">
+          {children === undefined ? (
+            <>
+              <Skeleton animation height="32px" width="100%" />
+            </>
+          ) : typeof children === 'string' || typeof children === 'number' ? (
+            <HeadingSmall as="div">{children}</HeadingSmall>
+          ) : (
+            children
+          )}
+        </Block>
+        {action && <Block>{action}</Block>}
+      </Block>
+      <Block color="contentSecondary">{label}</Block>
+    </Card>
+  )
+}
+
 export const StakePool = ({params: {pid}}: PageProps) => {
   const [modalKey, setModalKey] = useState<StakePoolModalKey | null>(null)
+  const [polkadotAccount] = usePolkadotAccountAtom()
   const {data, isLoading} = useStakePoolQuery(client, {
     where: {
       pid: Number(pid),
     },
   })
 
-  const {stakePoolWithdrawals} = data?.findUniqueStakePools || {}
+  const {
+    stakePoolWithdrawals,
+    instantApr,
+    commission,
+    remainingStake,
+    ownerAddress,
+  } = data?.findUniqueStakePools || {}
+
+  const isOwner = ownerAddress === polkadotAccount?.address
 
   const closeModal = useCallback(() => {
     setModalKey(null)
@@ -40,6 +96,7 @@ export const StakePool = ({params: {pid}}: PageProps) => {
           paddingTop="scale1200"
           paddingLeft="scale400"
           paddingRight="scale400"
+          paddingBottom="scale1200"
           maxWidth="1024px"
           margin="0 auto"
         >
@@ -50,18 +107,70 @@ export const StakePool = ({params: {pid}}: PageProps) => {
       </Block>
 
       <Block maxWidth="1024px" margin="0 auto">
+        <Block
+          display="grid"
+          gridTemplateColumns="repeat(3, 1fr)"
+          gridGap="scale400"
+        >
+          {/* <DataCard label="Owner"></DataCard> */}
+          <DataCard label="APR">
+            {instantApr && `${toFixed(new Decimal(instantApr).times(100), 2)}%`}
+          </DataCard>
+          <DataCard label="Remaining">
+            {remainingStake && `${formatCurrency(remainingStake)} PHA`}
+          </DataCard>
+          <DataCard
+            label="Commission"
+            action={
+              isOwner && (
+                <Button
+                  kind="minimal"
+                  size="mini"
+                  shape="circle"
+                  onClick={() => setModalKey('setCommission')}
+                >
+                  <Settings size={16} />
+                </Button>
+              )
+            }
+          >
+            {commission && `${toFixed(new Decimal(commission).times(100), 2)}%`}
+          </DataCard>
+        </Block>
+
         <Card
+          title="Stake Info"
           overrides={{
             Root: {
               style: ({$theme}) => ({
                 borderRadius: '0',
                 borderWidth: '1px',
-                marginTop: $theme.sizing.scale950,
+                marginTop: $theme.sizing.scale800,
+              }),
+            },
+            Body: {
+              style: {
+                display: 'flex',
+              },
+            },
+          }}
+        >
+          <Block></Block>
+          <Block></Block>
+        </Card>
+
+        <Card
+          title="Withdraw Queue"
+          overrides={{
+            Root: {
+              style: ({$theme}) => ({
+                borderRadius: '0',
+                borderWidth: '1px',
+                marginTop: $theme.sizing.scale800,
               }),
             },
           }}
         >
-          <HeadingSmall as="div">Withdraw Queue</HeadingSmall>
           <TableBuilder
             isLoading={isLoading}
             loadingMessage={<TableSkeleton />}
