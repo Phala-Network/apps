@@ -38,7 +38,7 @@ const BaseLayout: React.FC = (props) => {
 
   return (
     <HomePageWrap>
-      <ContentWrap compact={/^\/(bridge|analytics)/.test(pathname)}>
+      <ContentWrap compact={/^\/(bridge|analytics|end-game)/.test(pathname)}>
         {children}
       </ContentWrap>
       <Navbar />
