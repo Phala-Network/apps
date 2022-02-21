@@ -5,7 +5,7 @@ import {Button} from 'baseui/button'
 import {Card} from 'baseui/card'
 import {Skeleton} from 'baseui/skeleton'
 import {TableBuilder, TableBuilderColumn} from 'baseui/table-semantic'
-import {HeadingSmall, HeadingXLarge} from 'baseui/typography'
+import {HeadingSmall, HeadingXLarge, HeadingXSmall} from 'baseui/typography'
 import {formatDuration, intervalToDuration, isAfter} from 'date-fns'
 import Decimal from 'decimal.js'
 import {PageProps} from 'gatsby'
@@ -48,7 +48,7 @@ const DataCard: FC<{label: string; action?: ReactNode}> = ({
               <Skeleton animation height="32px" width="100%" />
             </>
           ) : typeof children === 'string' || typeof children === 'number' ? (
-            <HeadingSmall as="div">{children}</HeadingSmall>
+            <HeadingXSmall as="div">{children}</HeadingXSmall>
           ) : (
             children
           )}
@@ -138,8 +138,10 @@ export const StakePool = ({params: {pid}}: PageProps) => {
           </DataCard>
         </Block>
 
+        <HeadingSmall marginTop="scale800" marginBottom="scale600">
+          Stake Info
+        </HeadingSmall>
         <Card
-          title="Stake Info"
           overrides={{
             Root: {
               style: ({$theme}) => ({
@@ -159,15 +161,16 @@ export const StakePool = ({params: {pid}}: PageProps) => {
           <Block></Block>
         </Card>
 
+        <HeadingSmall marginTop="scale800" marginBottom="scale600">
+          Withdraw Queue
+        </HeadingSmall>
         <Card
-          title="Withdraw Queue"
           overrides={{
             Root: {
-              style: ({$theme}) => ({
+              style: {
                 borderRadius: '0',
                 borderWidth: '1px',
-                marginTop: $theme.sizing.scale800,
-              }),
+              },
             },
           }}
         >

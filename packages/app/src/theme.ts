@@ -24,8 +24,8 @@ const mediaQuery: MediaQuery = {
 const typography = Object.keys(LightTheme.typography).reduce<
   Record<string, unknown>
 >((acc, key) => {
-  // Override Headings font weight to 600
-  if (key.includes('Heading')) {
+  // Override non-small Headings font weight to 600
+  if (/.*Heading.*(Large|Medium)/.test(key)) {
     acc[key] = {
       fontWeight: 600,
     }
