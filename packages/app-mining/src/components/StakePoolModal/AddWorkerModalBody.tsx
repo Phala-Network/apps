@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import {useState, VFC} from 'react'
 import {Input} from 'baseui/input'
 import {
   ModalHeader,
@@ -9,31 +9,25 @@ import {
 } from 'baseui/modal'
 import {ParagraphSmall} from 'baseui/typography'
 import {FormControl} from 'baseui/form-control'
-import type {StakePools} from '../../hooks/graphql'
-import Decimal from 'decimal.js'
 import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
 import {
   useApiPromise,
   useDecimalJsTokenDecimalMultiplier,
 } from '@phala/react-libs'
-import {formatCurrency} from '@phala/utils'
+import {StakePool} from '.'
 
-const SetCapModalBody = ({
-  stakePool,
-  onClose,
-}: {stakePool: StakePools} & Pick<ModalProps, 'onClose'>): JSX.Element => {
-  const {pid, cap: currentCap, totalStake} = stakePool
+const AddWorkerModalBody: VFC<
+  {stakePool: Pick<StakePool, 'pid'>} & Pick<ModalProps, 'onClose'>
+> = ({stakePool, onClose}) => {
+  const {pid} = stakePool
   const {api} = useApiPromise()
-  const [cap, setCap] = useState('')
+  const [pubkey, setPubkey] = useState('')
   const waitSignAndSend = useWaitSignAndSend()
   const decimals = useDecimalJsTokenDecimalMultiplier(api)
   const onConfirm = () => {
     if (api && decimals) {
       waitSignAndSend(
-        api.tx.phalaStakePool?.setCap?.(
-          pid,
-          new Decimal(cap).times(decimals).floor().toString()
-        ),
+        api.tx.phalaStakePool?.addWorker?.(pid, pubkey),
         (status) => {
           if (status.isReady) {
             onClose?.({closeSource: 'closeButton'})
@@ -45,35 +39,23 @@ const SetCapModalBody = ({
 
   return (
     <>
-      <ModalHeader>Set Cap</ModalHeader>
+      <ModalHeader>Add Worker</ModalHeader>
       <ModalBody>
         <FormControl label="Pid">
           <ParagraphSmall as="div">{pid}</ParagraphSmall>
         </FormControl>
-        <FormControl
-          label="New Cap"
-          caption={
-            <>
-              Current Cap:{' '}
-              {currentCap ? `${formatCurrency(currentCap)} PHA` : '∞'}
-              <br />
-              Delegated: {formatCurrency(totalStake)} PHA
-            </>
-          }
-        >
-          {/* FIXME: add cap validation */}
+        {/* FIXME: add validation */}
+        <FormControl label="Worker Public Key">
           <Input
             size="compact"
             autoFocus
-            type="number"
-            endEnhancer="PHA"
-            min={0}
-            onChange={(e) => setCap(e.currentTarget.value)}
+            placeholder="0x"
+            onChange={(e) => setPubkey(e.currentTarget.value)}
           />
         </FormControl>
       </ModalBody>
       <ModalFooter>
-        <ModalButton disabled={!cap} onClick={onConfirm}>
+        <ModalButton disabled={!pubkey} onClick={onConfirm}>
           Confirm
         </ModalButton>
       </ModalFooter>
@@ -81,4 +63,4 @@ const SetCapModalBody = ({
   )
 }
 
-export default SetCapModalBody
+export default AddWorkerModalBody

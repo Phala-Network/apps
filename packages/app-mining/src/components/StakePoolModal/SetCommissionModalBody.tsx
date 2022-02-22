@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import {useState, VFC} from 'react'
 import {Input} from 'baseui/input'
 import {
   ModalHeader,
@@ -9,18 +9,19 @@ import {
 } from 'baseui/modal'
 import {ParagraphSmall} from 'baseui/typography'
 import {FormControl} from 'baseui/form-control'
-import type {StakePools} from '../../hooks/graphql'
 import Decimal from 'decimal.js'
 import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
 import {
   useApiPromise,
   useDecimalJsTokenDecimalMultiplier,
 } from '@phala/react-libs'
+import {StakePool} from '.'
 
-const SetCommissionModalBody = ({
-  stakePool,
-  onClose,
-}: {stakePool: StakePools} & Pick<ModalProps, 'onClose'>): JSX.Element => {
+const SetCommissionModalBody: VFC<
+  {
+    stakePool: Pick<StakePool, 'pid'> & Partial<Pick<StakePool, 'commission'>>
+  } & Pick<ModalProps, 'onClose'>
+> = ({stakePool, onClose}) => {
   const {pid, commission: currentCommission} = stakePool
   const {api} = useApiPromise()
   const [commission, setCommission] = useState('')
@@ -30,7 +31,7 @@ const SetCommissionModalBody = ({
     if (api && decimals) {
       waitSignAndSend(
         api.tx.phalaStakePool?.setPayoutPref?.(
-          stakePool.pid,
+          pid,
           new Decimal(commission).times(10 ** 4).toString()
         ),
         (status) => {
@@ -41,6 +42,8 @@ const SetCommissionModalBody = ({
       )
     }
   }
+
+  if (currentCommission === undefined) return null
 
   return (
     <>

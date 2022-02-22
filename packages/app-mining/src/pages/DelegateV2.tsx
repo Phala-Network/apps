@@ -25,8 +25,7 @@ export const DelegateV2 = (): JSX.Element => {
           Root: {
             style: ({$theme}) => ({
               borderRadius: '0',
-              border: 'none',
-              boxShadow: $theme.lighting.shallowBelow,
+              ...$theme.borders.border200,
             }),
           },
         }}

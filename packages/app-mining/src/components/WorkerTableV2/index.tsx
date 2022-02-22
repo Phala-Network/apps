@@ -287,7 +287,11 @@ const WorkerTableV2 = (): JSX.Element => {
       />
 
       {!isSSR() && operatingMiner && (
-        <Modal isOpen={isModalOpen} onClose={closeModal}>
+        <Modal
+          isOpen={isModalOpen}
+          onClose={closeModal}
+          overrides={{Dialog: {style: {borderRadius: 0}}}}
+        >
           {/* TODO: add suspense wrapper here with loadable modal components */}
           {ModalBody && (
             <ModalBody miner={operatingMiner} onClose={closeModal} />

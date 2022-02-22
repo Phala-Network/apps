@@ -28,8 +28,7 @@ export const MyDelegateV2 = () => {
           Root: {
             style: ({$theme}) => ({
               borderRadius: '0',
-              border: 'none',
-              boxShadow: $theme.lighting.shallowBelow,
+              ...$theme.borders.border200,
             }),
           },
         }}

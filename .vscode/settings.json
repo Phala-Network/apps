@@ -20,7 +20,8 @@
     "tranfer",
     "typedefs",
     "unsub",
-    "uuidv"
+    "uuidv",
+    "stakers"
   ],
   "typescript.tsdk": "node_modules/typescript/lib"
 }

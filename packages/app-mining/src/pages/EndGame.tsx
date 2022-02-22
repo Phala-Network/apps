@@ -158,8 +158,8 @@ const StatCard: VFC<{
           style: ({$theme}) => ({
             width: `calc(25% - ${$theme.sizing.scale300})`,
             borderRadius: 0,
-            borderWidth: '1px',
             marginTop: $theme.sizing.scale600,
+            ...$theme.borders.border200,
             [$theme.mediaQuery.large]: {
               width: `calc(50% - ${$theme.sizing.scale300})`,
             },
@@ -250,7 +250,7 @@ export const EndGame: VFC = () => {
             Root: {
               style: ({$theme}) => ({
                 borderRadius: '0',
-                borderWidth: '1px',
+                ...$theme.borders.border200,
                 marginTop: $theme.sizing.scale600,
               }),
             },

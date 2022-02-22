@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import {useState, VFC} from 'react'
 import {Input} from 'baseui/input'
 import {
   ModalHeader,
@@ -9,7 +9,6 @@ import {
 } from 'baseui/modal'
 import {ParagraphSmall} from 'baseui/typography'
 import {FormControl} from 'baseui/form-control'
-import type {StakePools} from '../../hooks/graphql'
 import {useDelegableBalance} from '../../hooks/useDelegableBalance'
 import Decimal from 'decimal.js'
 import {formatCurrency} from '@phala/utils'
@@ -19,11 +18,14 @@ import {
   useDecimalJsTokenDecimalMultiplier,
 } from '@phala/react-libs'
 import {Skeleton} from 'baseui/skeleton'
+import {StakePool} from '.'
 
-const DelegateModalBody = ({
-  stakePool,
-  onClose,
-}: {stakePool: StakePools} & Pick<ModalProps, 'onClose'>): JSX.Element => {
+const DelegateModalBody: VFC<
+  {
+    stakePool: Pick<StakePool, 'pid'> &
+      Partial<Pick<StakePool, 'remainingStake'>>
+  } & Pick<ModalProps, 'onClose'>
+> = ({stakePool, onClose}) => {
   const {pid, remainingStake} = stakePool
   const {api} = useApiPromise()
   const delegableBalance = useDelegableBalance()
@@ -45,6 +47,8 @@ const DelegateModalBody = ({
       )
     }
   }
+
+  if (remainingStake === undefined) return null
 
   const remaining = remainingStake
     ? `${formatCurrency(remainingStake)} PHA`

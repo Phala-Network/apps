@@ -5,7 +5,7 @@ const GlobalStyle = createGlobalStyle`
     font-family: system-ui, sans-serif;
     margin: 0;
     padding: 0;
-    background: #ECECEC;
+    background: #EFEFEF;
     -webkit-tap-highlight-color: transparent;
   }
 

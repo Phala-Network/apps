@@ -144,7 +144,20 @@ const ClaimAll = (props: BlockProps) => {
         </Button>
       </Block>
 
-      <Modal isOpen={isModalOpen} onClose={closeModal}>
+      <Modal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        overrides={{
+          Dialog: {
+            style: ({$theme}) => ({
+              borderRadius: 0,
+              borderWidth: '2px',
+              borderColor: $theme.colors.accent,
+              borderStyle: 'solid',
+            }),
+          },
+        }}
+      >
         <ModalHeader>Claim All</ModalHeader>
         <ModalBody>
           <ParagraphSmall>

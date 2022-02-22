@@ -5,19 +5,22 @@ import {StatefulTooltip} from 'baseui/tooltip'
 import {CheckCircle} from 'react-feather'
 import styled from 'styled-components'
 import {trimAddress} from '@phala/utils'
+import {VFC} from 'react'
 
 export const VerifiedIcon = styled(CheckCircle).attrs({size: 16})`
   margin-left: 5px;
 `
 
-const Owner = ({
+const Owner: VFC<{
+  stakePool: Pick<StakePools, 'ownerAddress'> & {
+    accounts: Pick<StakePools['accounts'], 'identity' | 'identityVerified'>
+  }
+}> = ({
   stakePool: {
     ownerAddress,
     accounts: {identityVerified, identity},
   },
-}: {
-  stakePool: StakePools
-}): JSX.Element => (
+}) => (
   <Block display="flex" alignItems="center">
     <StatefulTooltip content={ownerAddress} placement="bottomLeft">
       <StyledLink
