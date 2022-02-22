@@ -7206,7 +7206,7 @@ export type StakePoolQueryVariables = Exact<{
 }>;
 
 
-export type StakePoolQuery = { __typename?: 'Query', findUniqueStakePools?: { __typename?: 'StakePools', pid: number, ownerAddress: string, commission: string, ownerReward: string, cap?: string | null | undefined, rewardAcc: string, totalShares: string, totalStake: string, freeStake: string, releasingStake: string, remainingStake?: string | null | undefined, instantApr: string, stakersCount: number, withdrawalsCount: number, minersCount: number, accounts: { __typename?: 'Accounts', identity?: string | null | undefined, identityVerified: boolean }, stakePoolWithdrawals: Array<{ __typename?: 'StakePoolWithdrawals', shares: string, startTime: any, estimatesEndTime: any, stake: string, userAddress?: string | null | undefined }> } | null | undefined };
+export type StakePoolQuery = { __typename?: 'Query', findUniqueStakePools?: { __typename?: 'StakePools', pid: number, ownerAddress: string, commission: string, ownerReward: string, cap?: string | null | undefined, rewardAcc: string, totalShares: string, totalStake: string, freeStake: string, releasingStake: string, remainingStake?: string | null | undefined, instantApr: string, stakersCount: number, withdrawalsCount: number, minersCount: number, idleMinersCount: number, accounts: { __typename?: 'Accounts', identity?: string | null | undefined, identityVerified: boolean }, stakePoolWithdrawals: Array<{ __typename?: 'StakePoolWithdrawals', shares: string, startTime: any, estimatesEndTime: any, stake: string, userAddress?: string | null | undefined }> } | null | undefined };
 
 
 export const StakePoolsDocument = `
@@ -7393,6 +7393,7 @@ export const StakePoolDocument = `
       stake
       userAddress
     }
+    idleMinersCount
   }
 }
     `;

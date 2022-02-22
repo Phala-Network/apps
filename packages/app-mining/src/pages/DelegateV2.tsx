@@ -23,10 +23,10 @@ export const DelegateV2 = (): JSX.Element => {
       <Card
         overrides={{
           Root: {
-            style: {
+            style: ({$theme}) => ({
               borderRadius: '0',
-              borderWidth: '1px',
-            },
+              ...$theme.borders.border200,
+            }),
           },
         }}
       >

@@ -1,66 +1,24 @@
 import {usePolkadotAccountAtom} from '@phala/app-store'
-import {formatCurrency, toFixed, trimAddress} from '@phala/utils'
+import {toFixed, trimAddress} from '@phala/utils'
 import {Block} from 'baseui/block'
 import {Button} from 'baseui/button'
 import {Card} from 'baseui/card'
-import {Skeleton} from 'baseui/skeleton'
-import {TableBuilder, TableBuilderColumn} from 'baseui/table-semantic'
-import {HeadingSmall, HeadingXLarge, HeadingXSmall} from 'baseui/typography'
-import {formatDuration, intervalToDuration, isAfter} from 'date-fns'
+import {StyledLink} from 'baseui/link'
+import {HeadingLarge, HeadingSmall, ParagraphXSmall} from 'baseui/typography'
 import Decimal from 'decimal.js'
 import {PageProps} from 'gatsby'
-import {FC, ReactNode, useCallback, useState} from 'react'
-import {Settings} from 'react-feather'
+import {useCallback, useState, VFC} from 'react'
 import Helmet from 'react-helmet'
+import {VerifiedIcon} from '../components/Owner'
 import StakePoolModal, {StakePoolModalKey} from '../components/StakePoolModal'
-import TableSkeleton from '../components/TableSkeleton'
-import {StakePoolWithdrawals, useStakePoolQuery} from '../hooks/graphql'
+import {useStakePoolQuery} from '../hooks/graphql'
 import {client} from '../utils/GraphQLClient'
+import InfoCard from '../components/StakePool/InfoCard'
+import WithdrawQueue from '../components/StakePool/WithdrawQueue'
+import StakeInfo from '../components/StakePool/StakeInfo'
+import SettingButton from '../components/StakePool/SettingButton'
 
-const DataCard: FC<{label: string; action?: ReactNode}> = ({
-  label,
-  action,
-  children,
-}) => {
-  return (
-    <Card
-      overrides={{
-        Root: {
-          style: () => ({
-            borderRadius: '0',
-            borderWidth: '1px',
-          }),
-        },
-        Body: {
-          style: ({$theme}) => ({
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
-            height: $theme.sizing.scale2400,
-          }),
-        },
-      }}
-    >
-      <Block display="flex">
-        <Block flex="1">
-          {children === undefined ? (
-            <>
-              <Skeleton animation height="32px" width="100%" />
-            </>
-          ) : typeof children === 'string' || typeof children === 'number' ? (
-            <HeadingXSmall as="div">{children}</HeadingXSmall>
-          ) : (
-            children
-          )}
-        </Block>
-        {action && <Block>{action}</Block>}
-      </Block>
-      <Block color="contentSecondary">{label}</Block>
-    </Card>
-  )
-}
-
-export const StakePool = ({params: {pid}}: PageProps) => {
+export const StakePool: VFC<PageProps> = ({params: {pid}}) => {
   const [modalKey, setModalKey] = useState<StakePoolModalKey | null>(null)
   const [polkadotAccount] = usePolkadotAccountAtom()
   const {data, isLoading} = useStakePoolQuery(client, {
@@ -68,20 +26,24 @@ export const StakePool = ({params: {pid}}: PageProps) => {
       pid: Number(pid),
     },
   })
-
-  const {
-    stakePoolWithdrawals,
-    instantApr,
-    commission,
-    remainingStake,
-    ownerAddress,
-  } = data?.findUniqueStakePools || {}
-
-  const isOwner = ownerAddress === polkadotAccount?.address
-
   const closeModal = useCallback(() => {
     setModalKey(null)
   }, [])
+
+  const stakePool = data?.findUniqueStakePools
+
+  const {
+    stakePoolWithdrawals = [],
+    instantApr,
+    commission,
+    ownerAddress,
+    accounts,
+    stakersCount,
+    minersCount,
+    idleMinersCount,
+  } = stakePool || {}
+
+  const isOwner = true || ownerAddress === polkadotAccount?.address
 
   return (
     <>
@@ -89,141 +51,134 @@ export const StakePool = ({params: {pid}}: PageProps) => {
         <title>Stake Pool #{pid}</title>
       </Helmet>
 
-      <Block>
+      <Block paddingLeft="scale400" paddingRight="scale400">
         <Block
           display="flex"
           justifyContent="space-between"
+          alignItems="center"
           paddingTop="scale1200"
-          paddingLeft="scale400"
-          paddingRight="scale400"
           paddingBottom="scale1200"
           maxWidth="1024px"
           margin="0 auto"
         >
-          <HeadingXLarge as="div">Stake Pool #{pid}</HeadingXLarge>
+          <HeadingLarge as="div">Stake Pool #{pid}</HeadingLarge>
 
           <Button onClick={() => setModalKey('delegate')}>Delegate</Button>
         </Block>
-      </Block>
 
-      <Block maxWidth="1024px" margin="0 auto">
-        <Block
-          display="grid"
-          gridTemplateColumns="repeat(3, 1fr)"
-          gridGap="scale400"
-        >
-          {/* <DataCard label="Owner"></DataCard> */}
-          <DataCard label="APR">
-            {instantApr && `${toFixed(new Decimal(instantApr).times(100), 2)}%`}
-          </DataCard>
-          <DataCard label="Remaining">
-            {remainingStake && `${formatCurrency(remainingStake)} PHA`}
-          </DataCard>
-          <DataCard
-            label="Commission"
-            action={
-              isOwner && (
-                <Button
-                  kind="minimal"
-                  size="mini"
-                  shape="circle"
-                  onClick={() => setModalKey('setCommission')}
-                >
-                  <Settings size={16} />
-                </Button>
-              )
-            }
+        <Block maxWidth="1024px" margin="0 auto">
+          <Block
+            display="grid"
+            gridTemplateColumns="1.5fr 1fr 1fr 1fr 1fr"
+            gridGap="scale400"
+            $style={({$theme}: any) => ({
+              [$theme.mediaQuery.medium]: {
+                gridTemplateColumns: '1fr 1fr',
+              },
+            })}
           >
-            {commission && `${toFixed(new Decimal(commission).times(100), 2)}%`}
-          </DataCard>
-        </Block>
+            <InfoCard
+              label="Owner"
+              extra={
+                ownerAddress && (
+                  <ParagraphXSmall as="div">
+                    <StyledLink
+                      href={`https://khala.subscan.io/account/${ownerAddress}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {trimAddress(ownerAddress)}
+                    </StyledLink>
+                  </ParagraphXSmall>
+                )
+              }
+            >
+              {ownerAddress && accounts && (
+                <>
+                  {accounts.identity || trimAddress(ownerAddress)}
+                  {accounts.identityVerified && <VerifiedIcon />}
+                </>
+              )}
+            </InfoCard>
+            <InfoCard label="APR">
+              {instantApr &&
+                `${toFixed(new Decimal(instantApr).times(100), 2)}%`}
+            </InfoCard>
+            <InfoCard
+              label="Commission"
+              action={
+                isOwner && (
+                  <SettingButton onClick={() => setModalKey('setCommission')} />
+                )
+              }
+            >
+              {commission &&
+                `${toFixed(new Decimal(commission).times(100), 2)}%`}
+            </InfoCard>
+            <InfoCard
+              label="Worker"
+              extra={
+                minersCount && (
+                  <ParagraphXSmall as="div" color="contentSecondary">
+                    {idleMinersCount} Mining
+                  </ParagraphXSmall>
+                )
+              }
+            >
+              {minersCount}
+            </InfoCard>
+            <InfoCard label="Delegator">{stakersCount}</InfoCard>
+          </Block>
 
-        <HeadingSmall marginTop="scale800" marginBottom="scale600">
-          Stake Info
-        </HeadingSmall>
-        <Card
-          overrides={{
-            Root: {
-              style: ({$theme}) => ({
-                borderRadius: '0',
-                borderWidth: '1px',
-                marginTop: $theme.sizing.scale800,
-              }),
-            },
-            Body: {
-              style: {
-                display: 'flex',
-              },
-            },
-          }}
-        >
-          <Block></Block>
-          <Block></Block>
-        </Card>
-
-        <HeadingSmall marginTop="scale800" marginBottom="scale600">
-          Withdraw Queue
-        </HeadingSmall>
-        <Card
-          overrides={{
-            Root: {
-              style: {
-                borderRadius: '0',
-                borderWidth: '1px',
-              },
-            },
-          }}
-        >
-          <TableBuilder
-            isLoading={isLoading}
-            loadingMessage={<TableSkeleton />}
-            data={stakePoolWithdrawals || []}
-            emptyMessage="No Results"
+          <HeadingSmall marginTop="scale1200" marginBottom="scale400">
+            Stake Info
+          </HeadingSmall>
+          <Card
             overrides={{
-              TableBodyCell: {
-                style: {
-                  whiteSpace: 'nowrap',
-                },
+              Root: {
+                style: ({$theme}) => ({
+                  borderRadius: '0',
+                  ...$theme.borders.border200,
+                }),
               },
-              TableHeadCellSortable: {
-                style: {
-                  svg: {
-                    right: 'initial',
+              Body: {
+                style: ({$theme}) => ({
+                  display: 'grid',
+                  gridTemplateColumns: '1fr 1fr',
+                  gap: $theme.sizing.scale800,
+                  [$theme.mediaQuery.medium]: {
+                    gridTemplateColumns: '1fr',
                   },
-                },
-              },
-              TableLoadingMessage: {
-                style: {
-                  padding: '10px 0',
-                },
+                }),
               },
             }}
           >
-            <TableBuilderColumn header="Delegator">
-              {({userAddress}: StakePoolWithdrawals) =>
-                userAddress && trimAddress(userAddress)
-              }
-            </TableBuilderColumn>
-            <TableBuilderColumn header="Delegation">
-              {({stake}: StakePoolWithdrawals) =>
-                `${formatCurrency(stake)} PHA`
-              }
-            </TableBuilderColumn>
-            <TableBuilderColumn header="Countdown">
-              {({estimatesEndTime}: StakePoolWithdrawals) => {
-                const start = new Date()
-                const end = new Date(estimatesEndTime)
-                return formatDuration(
-                  intervalToDuration({
-                    start,
-                    end: isAfter(end, start) ? end : start,
-                  }),
-                  {format: ['days', 'hours', 'minutes'], zero: true}
-                )
-              }}
-            </TableBuilderColumn>
-          </TableBuilder>
-        </Card>
+            <StakeInfo
+              stakePool={stakePool}
+              isOwner={isOwner}
+              onSetCap={() => setModalKey('setCap')}
+            />
+          </Card>
+
+          <HeadingSmall marginTop="scale1200" marginBottom="scale400">
+            Withdraw Queue
+          </HeadingSmall>
+          <Card
+            overrides={{
+              Root: {
+                style: ({$theme}) => ({
+                  borderRadius: '0',
+                  ...$theme.borders.border200,
+                }),
+              },
+            }}
+          >
+            <WithdrawQueue
+              stakePoolWithdrawals={stakePoolWithdrawals}
+              isLoading={isLoading}
+            />
+          </Card>
+        </Block>
       </Block>
 
       <StakePoolModal
