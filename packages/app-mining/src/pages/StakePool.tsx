@@ -43,7 +43,7 @@ export const StakePool: VFC<PageProps> = ({params: {pid}}) => {
     idleMinersCount,
   } = stakePool || {}
 
-  const isOwner = true || ownerAddress === polkadotAccount?.address
+  const isOwner = ownerAddress === polkadotAccount?.address
 
   return (
     <>

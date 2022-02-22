@@ -6,6 +6,7 @@ import Decimal from 'decimal.js'
 import {FC, ReactNode, useMemo, VFC} from 'react'
 import styled from 'styled-components'
 import {StakePoolQuery} from '../../hooks/graphql'
+import SettingButton from './SettingButton'
 
 type StakePool = StakePoolQuery['findUniqueStakePools']
 
@@ -32,7 +33,7 @@ const Item: FC<{label: string; action?: ReactNode}> = ({
       paddingTop="scale400"
       paddingBottom="scale400"
     >
-      <Block>
+      <Block display="flex" alignItems="center">
         <ParagraphSmall as="div" color="contentSecondary">
           {label}
         </ParagraphSmall>
@@ -51,7 +52,7 @@ const StakeInfo: VFC<{
   stakePool: StakePool
   isOwner: boolean
   onSetCap: () => void
-}> = ({stakePool}) => {
+}> = ({stakePool, isOwner, onSetCap}) => {
   const {
     cap,
     remainingStake,
@@ -73,7 +74,12 @@ const StakeInfo: VFC<{
   return (
     <>
       <StyledBlock>
-        <Item label="Cap">{cap}</Item>
+        <Item
+          label="Cap"
+          action={isOwner && <SettingButton onClick={onSetCap} />}
+        >
+          {cap}
+        </Item>
         <Item label="Remaining">{remainingStake}</Item>
         <Item label="Delegated">
           {totalStake &&
