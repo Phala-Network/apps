@@ -9,7 +9,7 @@ type StakePoolWithdrawals = NonNullable<
   StakePoolQuery['findUniqueStakePools']
 >['stakePoolWithdrawals']
 
-type StakePoolWithdrawal = StakePoolWithdrawals[0]
+type StakePoolWithdrawal = StakePoolWithdrawals[number]
 
 const WithdrawQueue: VFC<{
   stakePoolWithdrawals: StakePoolWithdrawals

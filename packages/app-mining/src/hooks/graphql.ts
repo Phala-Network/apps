@@ -7179,7 +7179,7 @@ export type StakePoolsQueryVariables = Exact<{
 }>;
 
 
-export type StakePoolsQuery = { __typename?: 'Query', findManyStakePools: Array<{ __typename?: 'StakePools', pid: number, ownerAddress: string, commission: string, ownerReward: string, cap?: string | null | undefined, rewardAcc: string, totalShares: string, totalStake: string, freeStake: string, releasingStake: string, usedStake: string, remainingStake?: string | null | undefined, stakersCount: number, minersCount: number, instantApr: string, stakePoolStakers?: Array<{ __typename?: 'StakePoolStakers', address?: string | null | undefined, shares: string, locked: string, availableRewards: string, rewardDebt: string, stake: string, pendingRewards: string, stakeRewards: string, claimableRewards: string, instantClaimableRewards: string, isOwner: boolean }>, accounts: { __typename?: 'Accounts', identity?: string | null | undefined, identityVerified: boolean }, stakePoolWithdrawals?: Array<{ __typename?: 'StakePoolWithdrawals', shares: string, startTime: any, estimatesEndTime: any, stake: string, userAddress?: string | null | undefined }>, miners?: Array<{ __typename?: 'Miners', estimatesReclaimableAt?: any | null | undefined, workerPublicKey: string, stakes: string }> }>, aggregateStakePools: { __typename?: 'AggregateStakePools', _count?: { __typename?: 'StakePoolsCountAggregate', _all: number } | null | undefined } };
+export type StakePoolsQuery = { __typename?: 'Query', findManyStakePools: Array<{ __typename?: 'StakePools', pid: number, ownerAddress: string, commission: string, ownerReward: string, cap?: string | null | undefined, rewardAcc: string, totalShares: string, totalStake: string, freeStake: string, releasingStake: string, usedStake: string, remainingStake?: string | null | undefined, stakersCount: number, minersCount: number, instantApr: string, withdrawalsCount: number, stakePoolStakers?: Array<{ __typename?: 'StakePoolStakers', address?: string | null | undefined, shares: string, locked: string, availableRewards: string, rewardDebt: string, stake: string, pendingRewards: string, stakeRewards: string, claimableRewards: string, instantClaimableRewards: string, isOwner: boolean }>, accounts: { __typename?: 'Accounts', identity?: string | null | undefined, identityVerified: boolean }, stakePoolWithdrawals?: Array<{ __typename?: 'StakePoolWithdrawals', shares: string, startTime: any, estimatesEndTime: any, stake: string, userAddress?: string | null | undefined }>, miners?: Array<{ __typename?: 'Miners', estimatesReclaimableAt?: any | null | undefined, workerPublicKey: string, stakes: string }> }>, aggregateStakePools: { __typename?: 'AggregateStakePools', _count?: { __typename?: 'StakePoolsCountAggregate', _all: number } | null | undefined } };
 
 export type TotalStakeQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -7256,6 +7256,7 @@ export const StakePoolsDocument = `
       workerPublicKey
       stakes
     }
+    withdrawalsCount
   }
   aggregateStakePools(where: $where) {
     _count {

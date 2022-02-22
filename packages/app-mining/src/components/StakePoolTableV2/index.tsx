@@ -2,7 +2,7 @@ import {TableBuilder, TableBuilderColumn} from 'baseui/table-semantic'
 import {StatefulPopover} from 'baseui/popover'
 import {StatefulMenu} from 'baseui/menu'
 import {useCallback, useState, VFC} from 'react'
-import {Info, Search} from 'react-feather'
+import {AlertTriangle, Info, Search} from 'react-feather'
 import {Checkbox} from 'baseui/checkbox'
 import {
   SortOrder,
@@ -444,6 +444,30 @@ const StakePoolTableV2: VFC<{
               const value = stakePool.stakePoolStakers?.[0]?.claimableRewards
               return value ? `${formatCurrency(value)} PHA` : '-'
             }}
+          </TableBuilderColumn>
+        )}
+        {kind === 'mining' && (
+          <TableBuilderColumn
+            overrides={{
+              TableBodyCell: {
+                style: {
+                  paddingTop: 0,
+                  paddingBottom: 0,
+                  verticalAlign: 'middle',
+                },
+              },
+            }}
+          >
+            {(stakePool: StakePool) =>
+              stakePool.withdrawalsCount > 0 && (
+                <StatefulTooltip
+                  overrides={{Body: {style: {maxWidth: '400px'}}}}
+                  content="There is a withdrawal application in the StakePool, please supplement the delegation or stop workers to release the stake."
+                >
+                  <AlertTriangle />
+                </StatefulTooltip>
+              )
+            }
           </TableBuilderColumn>
         )}
         <TableBuilderColumn
