@@ -81,13 +81,13 @@ const StakeInfo: VFC<{
           {cap}
         </Item>
         <Item label="Remaining">{remainingStake}</Item>
-        <Item label="Delegated">
+        <Item label="Delegated">{totalStake}</Item>
+        <Item label="Free">{freeStake}</Item>
+        <Item label="Stake">
           {totalStake &&
             freeStake &&
             new Decimal(totalStake).minus(freeStake).toString()}
         </Item>
-        <Item label="Free">{freeStake}</Item>
-        <Item label="Stake">{totalStake}</Item>
       </StyledBlock>
 
       <StyledBlock>
