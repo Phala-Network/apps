@@ -1,7 +1,7 @@
 import {useEffect, useMemo, useRef, VFC} from 'react'
 import {Card} from 'baseui/card'
 import {Block} from 'baseui/block'
-import {HeadingLarge, HeadingSmall} from 'baseui/typography'
+import {HeadingLarge, HeadingSmall, ParagraphSmall} from 'baseui/typography'
 import {useQuery} from 'react-query'
 import {camelizeKeys} from 'humps'
 import {Skeleton} from 'baseui/skeleton'
@@ -15,6 +15,16 @@ import {
 } from 'baseui/data-table'
 import {useMotionValue, animate} from 'framer-motion'
 import Helmet from 'react-helmet'
+import styled from 'styled-components'
+
+const TableWrapper = styled.div`
+  height: 960px;
+  margin-top: -56px;
+
+  div:first-child > div > div {
+    justify-content: flex-end;
+  }
+`
 
 type Worker = {
   id: number
@@ -30,9 +40,7 @@ type Worker = {
   idleRatio: string
   discordId: string | null
   name: string
-  city: string
-  region: string
-  country: string
+  location: string
   registeredAt: string
   overallScore: number
   gleamScore: number
@@ -46,6 +54,7 @@ type Stats = {
   idleRatio: string
   totalMinedReward: string
 }
+type RowT = Worker & {discordLink: string | null; rank: number}
 
 async function customizedFetch<T extends Record<string, unknown>>(
   url: string
@@ -58,69 +67,65 @@ async function customizedFetch<T extends Record<string, unknown>>(
 const columns = [
   NumericalColumn({
     title: 'Rank',
-    mapDataToValue: (data: Worker & {rank: number}) => data.rank,
+    mapDataToValue: (data: RowT) => data.rank,
   }),
   CustomColumn({
     title: 'Owner',
-    mapDataToValue: ({ownerAddress}: Worker) => ownerAddress,
+    mapDataToValue: ({ownerAddress, discordId}: RowT) =>
+      `${ownerAddress}+${discordId}`,
     sortable: false,
-    renderCell: (props: {value: string}) => (
-      <Block
-        $style={{
-          display: '-webkit-box',
-          WebkitLineClamp: 1,
-          WebkitBoxOrient: 'vertical',
-          overflow: 'hidden',
-        }}
-      >
-        <StyledLink
-          href={`https://khala.subscan.io/account/${props.value}`}
-          target="_blank"
-          rel="noreferrer"
-        >
-          {trimAddress(props.value)}
-        </StyledLink>
-      </Block>
-    ),
+    renderCell: (props: {value: string}) => {
+      const [address, discordId] = props.value.split('+')
+      return (
+        <Block display="flex" alignItems="center">
+          <StyledLink
+            href={`https://khala.subscan.io/account/${address}`}
+            target="_blank"
+            rel="noreferrer"
+            $style={{fontFamily: 'monospace'}}
+          >
+            {address && trimAddress(address)}
+          </StyledLink>
+          <ParagraphSmall as="div" marginLeft="scale400">
+            {discordId}
+          </ParagraphSmall>
+        </Block>
+      )
+    },
     textQueryFilter: function (textQuery: string, data: string) {
       return data.toLowerCase().includes(textQuery.toLowerCase())
     },
   }),
-  StringColumn({
-    title: 'Discord ID',
-    mapDataToValue: (data: Worker) => data.discordId || '-',
-    sortable: false,
-  }),
   NumericalColumn({
     title: 'Pid',
-    mapDataToValue: (data: Worker) => data.pid,
+    mapDataToValue: (data: RowT) => data.pid,
     sortable: false,
-  }),
-  NumericalColumn({
-    title: 'Up-Time',
-    mapDataToValue: (data: Worker) => data.idleBlocksCount,
-  }),
-  StringColumn({
-    title: 'Up-Time Rate',
-    mapDataToValue: (data: Worker) => `${data.idleRatio}%`,
-  }),
-  NumericalColumn({
-    title: 'Contribution Score',
-    mapDataToValue: (data: Worker) => data.contributionScore,
   }),
   StringColumn({
     title: 'State',
-    mapDataToValue: ({state}: Worker) => {
+    mapDataToValue: ({state}: RowT) => {
       if (state === 'MiningIdle') return 'Mining'
       if (state === 'MiningUnresponsive') return 'Unresponsive'
       if (state === 'MiningCoolingDown') return 'CoolingDown'
-      return state
+      return state || '-'
     },
     sortable: false,
+    searchable: false,
+  }),
+  StringColumn({
+    title: 'Up-Time',
+    mapDataToValue: (data: RowT) =>
+      `${data.idleBlocksCount}(${data.idleRatio}%)`,
+    searchable: false,
   }),
   NumericalColumn({
+    title: 'Contribution',
+    mapDataToValue: (data: RowT) => data.contributionScore,
+  }),
+
+  NumericalColumn({
     title: 'Score',
-    mapDataToValue: (data: Worker) => data.overallScore,
+    mapDataToValue: (data: RowT) => data.overallScore,
   }),
 ]
 
@@ -191,12 +196,16 @@ export const EndGame: VFC = () => {
     customizedFetch<Stats>('https://mining-game-api.phala.network/api/stats')
   )
 
-  const rows = useMemo(
+  const rows = useMemo<{id: number; data: RowT}[] | undefined>(
     () =>
-      workers?.map((worker, index) => ({
-        id: worker.id,
-        data: {...worker, rank: index + 1},
-      })),
+      workers?.map((worker, index) => {
+        const discordLink = worker.discordId
+        const discordId = discordLink?.match(/#.+/)?.[0]?.slice(1) || null
+        return {
+          id: worker.id,
+          data: {...worker, rank: index + 1, discordLink, discordId},
+        }
+      }),
     [workers]
   )
 
@@ -204,7 +213,9 @@ export const EndGame: VFC = () => {
     if (workers) {
       const set = new Set()
       workers.forEach((worker) => {
-        set.add(worker.city)
+        if (worker.location) {
+          set.add(worker.location)
+        }
       })
       return set.size
     }
@@ -213,14 +224,14 @@ export const EndGame: VFC = () => {
 
   return (
     <>
-      <Helmet title="End Game" />
+      <Helmet title="END-GAME" />
       <Block paddingLeft="scale400" paddingRight="scale400">
         <Block
           paddingTop="scale1000"
           paddingBottom="scale1000"
           marginTop="scale600"
         >
-          <HeadingLarge as="div">END GAME</HeadingLarge>
+          <HeadingLarge as="div">END-GAME</HeadingLarge>
         </Block>
 
         <Block display="flex" flexWrap justifyContent="space-between">
@@ -232,7 +243,7 @@ export const EndGame: VFC = () => {
           <StatCard
             value={stats && Number(stats.idleRatio)}
             label="Participation Rate"
-            formatter={(value) => `${value.toFixed(2)}%`}
+            formatter={(value) => `${(value * 100).toFixed(2)}%`}
           />
           <StatCard
             value={stats && Number(stats.totalMinedReward)}
@@ -257,13 +268,14 @@ export const EndGame: VFC = () => {
           }}
           title="Leaderboard"
         >
-          <Block height="600px">
+          <TableWrapper>
             <StatefulDataTable
+              filterable={false}
               columns={columns}
               rows={rows || []}
               loading={isWorkersLoading}
             />
-          </Block>
+          </TableWrapper>
         </Card>
       </Block>
     </>
