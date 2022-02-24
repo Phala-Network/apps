@@ -22,7 +22,10 @@ const Item: FC<{label: string; action?: ReactNode}> = ({
   children,
 }) => {
   const value = useMemo(
-    () => typeof children === 'string' && `${formatCurrency(children)} PHA`,
+    () =>
+      children === null
+        ? '∞'
+        : typeof children === 'string' && `${formatCurrency(children)} PHA`,
     [children]
   )
 
