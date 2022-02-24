@@ -118,7 +118,7 @@ export const StakePool: VFC<PageProps> = ({params: {pid}}) => {
             <InfoCard
               label="Worker"
               extra={
-                minersCount && (
+                Boolean(idleMinersCount) && (
                   <ParagraphXSmall as="div" color="contentSecondary">
                     {idleMinersCount} Mining
                   </ParagraphXSmall>
