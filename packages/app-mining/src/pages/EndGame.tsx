@@ -16,13 +16,36 @@ import {
 import {useMotionValue, animate} from 'framer-motion'
 import Helmet from 'react-helmet'
 import styled from 'styled-components'
+import {ComposableMap, Geographies, Geography, Marker} from 'react-simple-maps'
 
-const TableWrapper = styled.div`
+const geoUrl =
+  'https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json'
+
+const TableWrapper = styled(Block)`
   height: 960px;
   margin-top: -56px;
 
   div:first-child > div > div {
     justify-content: flex-end;
+  }
+`
+
+const MapWrapper = styled(Block)`
+  flex: 1;
+  margin-top: 12px;
+  margin-bottom: -12px;
+  path:focus {
+    outline: none;
+  }
+`
+
+const StatWrapper = styled(Block)`
+  margin-left: 12px;
+  margin-top: 8px;
+  width: 192px;
+
+  > div + div {
+    margin-top: 28px;
   }
 `
 
@@ -86,7 +109,7 @@ const columns = [
           >
             {address && trimAddress(address)}
           </StyledLink>
-          <ParagraphSmall as="div" marginLeft="scale400">
+          <ParagraphSmall as="div" marginLeft="scale400" marginTop="scale400">
             {discordId}
           </ParagraphSmall>
         </Block>
@@ -157,30 +180,16 @@ const StatCard: VFC<{
     }
   }, [value, x])
   return (
-    <Card
-      overrides={{
-        Root: {
-          style: ({$theme}) => ({
-            width: `calc(25% - ${$theme.sizing.scale300})`,
-            borderRadius: 0,
-            marginTop: $theme.sizing.scale600,
-            ...$theme.borders.border200,
-            [$theme.mediaQuery.large]: {
-              width: `calc(50% - ${$theme.sizing.scale300})`,
-            },
-          }),
-        },
-      }}
-    >
-      <Block>
-        {isLoading ? (
-          <Skeleton animation height="32px" />
-        ) : (
-          <HeadingSmall as="div" ref={valueRef}></HeadingSmall>
-        )}
-        <span>{label}</span>
-      </Block>
-    </Card>
+    <Block>
+      {isLoading ? (
+        <Skeleton animation height="32px" />
+      ) : (
+        <HeadingSmall as="div" ref={valueRef}></HeadingSmall>
+      )}
+      <ParagraphSmall as="div" color="contentTertiary">
+        {label}
+      </ParagraphSmall>
+    </Block>
   )
 }
 
@@ -222,6 +231,29 @@ export const EndGame: VFC = () => {
     return
   }, [workers])
 
+  const markers = useMemo<
+    {name: string; coordinates: [number, number]}[]
+  >(() => {
+    // TODO: use worker geo
+    return [
+      {
+        name: 'Buenos Aires',
+        coordinates: [-58.3816, -34.6037],
+      },
+      {name: 'La Paz', coordinates: [-68.1193, -16.4897]},
+      {name: 'Brasilia', coordinates: [-47.8825, -15.7942]},
+      {name: 'Santiago', coordinates: [-70.6693, -33.4489]},
+      {name: 'Bogota', coordinates: [-74.0721, 4.711]},
+      {name: 'Quito', coordinates: [-78.4678, -0.1807]},
+      {name: 'Georgetown', coordinates: [-58.1551, 6.8013]},
+      {name: 'Asuncion', coordinates: [-57.5759, -25.2637]},
+      {name: 'Paramaribo', coordinates: [-55.2038, 5.852]},
+      {name: 'Montevideo', coordinates: [-56.1645, -34.9011]},
+      {name: 'Caracas', coordinates: [-66.9036, 10.4806]},
+      {name: 'Lima', coordinates: [-77.0428, -12.0464]},
+    ]
+  }, [])
+
   return (
     <>
       <Helmet title="END-GAME" />
@@ -234,28 +266,70 @@ export const EndGame: VFC = () => {
           <HeadingLarge as="div">END-GAME</HeadingLarge>
         </Block>
 
-        <Block display="flex" flexWrap justifyContent="space-between">
-          <StatCard
-            value={stats?.totalWorkersCount}
-            label="Total Miners"
-            formatter={(value) => value.toFixed(0)}
-          />
-          <StatCard
-            value={stats && Number(stats.idleRatio)}
-            label="Participation Rate"
-            formatter={(value) => `${(value * 100).toFixed(2)}%`}
-          />
-          <StatCard
-            value={stats && Number(stats.totalMinedReward)}
-            label="Total Mined"
-            formatter={(value) => `${formatCurrency(value, 2)} PHA`}
-          />
-          <StatCard
-            value={locations}
-            label="Server Locations"
-            formatter={(value) => value.toFixed(0)}
-          />
-        </Block>
+        <Card
+          overrides={{
+            Root: {
+              style: ({$theme}) => ({
+                borderRadius: '0',
+                ...$theme.borders.border200,
+              }),
+            },
+            Body: {
+              style: {
+                display: 'flex',
+              },
+            },
+          }}
+        >
+          <StatWrapper>
+            <StatCard
+              value={stats?.totalWorkersCount}
+              label="Total Miners"
+              formatter={(value) => value.toFixed(0)}
+            />
+            <StatCard
+              value={stats && Number(stats.idleRatio)}
+              label="Participation Rate"
+              formatter={(value) => `${(value * 100).toFixed(2)}%`}
+            />
+            <StatCard
+              value={stats && Number(stats.totalMinedReward)}
+              label="Total Mined"
+              formatter={(value) => `${formatCurrency(value, 2)} PHA`}
+            />
+            <StatCard
+              value={locations}
+              label="Server Locations"
+              formatter={(value) => value.toFixed(0)}
+            />
+          </StatWrapper>
+
+          <MapWrapper>
+            <ComposableMap height={450} width={960}>
+              <Geographies geography={geoUrl}>
+                {({geographies}) =>
+                  geographies
+                    .filter((geo) => geo.properties.REGION_UN !== 'Antarctica')
+                    .map((geo) => (
+                      <Geography
+                        key={geo.rsmKey}
+                        geography={geo}
+                        fill="#bbb"
+                        stroke="#bbb"
+                      />
+                    ))
+                }
+              </Geographies>
+
+              {markers.map(({name, coordinates}) => (
+                <Marker key={name} coordinates={coordinates}>
+                  <rect width="9" height="9" fill="#aad829" />
+                </Marker>
+              ))}
+            </ComposableMap>
+          </MapWrapper>
+        </Card>
+
         <Card
           overrides={{
             Root: {
