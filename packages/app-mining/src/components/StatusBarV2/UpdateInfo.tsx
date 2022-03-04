@@ -13,8 +13,8 @@ import {client} from '../../utils/GraphQLClient'
 const UpdateInfo = (): JSX.Element => {
   const {data, isLoading} = useStatesQuery(client)
   const [distance, setDistance] = useState('')
-  const updateTime = data?.findManyStates[2]?.datetimeValue
-  const blockNumber = data?.findManyStates[3]?.integerValue
+  const updateTime = data?.findManyStates[3]?.datetimeValue
+  const blockNumber = data?.findManyStates[4]?.integerValue
 
   useEffect(() => {
     if (updateTime) {

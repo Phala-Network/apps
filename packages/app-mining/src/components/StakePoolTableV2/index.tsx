@@ -72,7 +72,7 @@ const StakePoolTableV2: VFC<{
   const [searchString, setSearchString] = useState('')
   const [sortColumn, setSortColumn] = useState<
     keyof StakePoolsOrderByWithRelationInput
-  >(kind === 'mining' ? 'pid' : 'instantApr')
+  >(kind === 'mining' ? 'pid' : 'theoreticalApr')
   const [sortAsc, setSortAsc] = useState(kind !== 'delegate')
   const [currentPage, setCurrentPage] = useState(1)
 
@@ -121,13 +121,13 @@ const StakePoolTableV2: VFC<{
           process.env.NODE_ENV !== 'development' &&
             kind === 'mining' && {ownerAddress: {equals: address}},
           workersFilter && {minersCount: {gt: 0}},
-          aprFilter && {instantApr: {gt: '0'}},
+          aprFilter && {theoreticalApr: {gt: '0'}},
           commissionFilter && {commission: {lt: '1'}},
           kind === 'myDelegate' && {
             stakePoolStakers: {
               some: {
                 address: {equals: address},
-                OR: [{claimableRewards: {gt: '0'}}, {shares: {gt: '0'}}],
+                OR: [{claimableReward: {gt: '0'}}, {shares: {gt: '0'}}],
               },
             },
           },
@@ -314,14 +314,14 @@ const StakePoolTableV2: VFC<{
         )}
         {kind !== 'mining' && (
           <TableBuilderColumn
-            id="instantApr"
+            id="theoreticalApr"
             header={
               <TooltipHeader content={tooltipContent.apr}>APR</TooltipHeader>
             }
             sortable
           >
             {(stakePool: StakePool) =>
-              `${toFixed(new Decimal(stakePool.instantApr).times(100), 2)}%`
+              `${toFixed(new Decimal(stakePool.theoreticalApr).times(100), 2)}%`
             }
           </TableBuilderColumn>
         )}
@@ -433,15 +433,15 @@ const StakePoolTableV2: VFC<{
         )}
         {kind === 'myDelegate' && (
           <TableBuilderColumn
-            id="claimableRewards"
+            id="claimableReward"
             header={
-              <TooltipHeader content={tooltipContent.claimableRewards}>
+              <TooltipHeader content={tooltipContent.claimableReward}>
                 Claimable Rewards
               </TooltipHeader>
             }
           >
             {(stakePool: StakePool) => {
-              const value = stakePool.stakePoolStakers?.[0]?.claimableRewards
+              const value = stakePool.stakePoolStakers?.[0]?.claimableReward
               return value ? `${formatCurrency(value)} PHA` : '-'
             }}
           </TableBuilderColumn>

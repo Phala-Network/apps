@@ -28,5 +28,5 @@ export const tooltipContent = {
       </StyledLink>
     </>
   ),
-  claimableRewards: 'Rewards that are collectable',
+  claimableReward: 'Rewards that are collectable',
 }

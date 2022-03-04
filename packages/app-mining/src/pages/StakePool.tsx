@@ -34,7 +34,7 @@ export const StakePool: VFC<PageProps> = ({params: {pid}}) => {
 
   const {
     stakePoolWithdrawals = [],
-    instantApr,
+    theoreticalApr,
     commission,
     ownerAddress,
     accounts,
@@ -102,8 +102,8 @@ export const StakePool: VFC<PageProps> = ({params: {pid}}) => {
               )}
             </InfoCard>
             <InfoCard label="APR">
-              {instantApr &&
-                `${toFixed(new Decimal(instantApr).times(100), 2)}%`}
+              {theoreticalApr &&
+                `${toFixed(new Decimal(theoreticalApr).times(100), 2)}%`}
             </InfoCard>
             <InfoCard
               label="Commission"
