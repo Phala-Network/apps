@@ -40,7 +40,7 @@ const ClaimAll = (props: BlockProps) => {
         address: {
           equals: polkadotAccount?.address,
         },
-        claimableRewards: {
+        claimableReward: {
           gte: '0.0001',
         },
       },
@@ -52,7 +52,7 @@ const ClaimAll = (props: BlockProps) => {
                 address: {
                   equals: polkadotAccount?.address,
                 },
-                claimableRewards: {
+                claimableReward: {
                   gte: '0.0001',
                 },
               },
@@ -74,14 +74,14 @@ const ClaimAll = (props: BlockProps) => {
 
   const closeModal = useCallback(() => setIsModalOpen(false), [])
 
-  const totalClaimableRewards = useMemo<Decimal | null>(() => {
+  const totalclaimableReward = useMemo<Decimal | null>(() => {
     if (!data) return null
 
     return data.findManyStakePools.reduce((acc, cur) => {
       let curRewards = new Decimal(0)
-      const claimableRewards = cur.stakePoolStakers?.[0]?.claimableRewards
-      if (claimableRewards) {
-        curRewards = curRewards.add(new Decimal(claimableRewards))
+      const claimableReward = cur.stakePoolStakers?.[0]?.claimableReward
+      if (claimableReward) {
+        curRewards = curRewards.add(new Decimal(claimableReward))
       }
 
       if (cur.ownerAddress === polkadotAccount?.address) {
@@ -126,10 +126,10 @@ const ClaimAll = (props: BlockProps) => {
           <Block marginRight="20px">
             <LabelSmall as="div">Claimable Rewards</LabelSmall>
             <HeadingSmall as="div">
-              {isLoading || !totalClaimableRewards ? (
+              {isLoading || !totalclaimableReward ? (
                 <Skeleton animation height="32px" width="200px" />
               ) : (
-                `${formatCurrency(totalClaimableRewards)} PHA`
+                `${formatCurrency(totalclaimableReward)} PHA`
               )}
             </HeadingSmall>
           </Block>
@@ -138,7 +138,7 @@ const ClaimAll = (props: BlockProps) => {
         <Button
           onClick={() => setIsModalOpen(true)}
           kind="secondary"
-          disabled={!totalClaimableRewards || totalClaimableRewards.eq(0)}
+          disabled={!totalclaimableReward || totalclaimableReward.eq(0)}
         >
           Claim All
         </Button>
@@ -171,8 +171,7 @@ const ClaimAll = (props: BlockProps) => {
 
           <FormControl label="Rewards">
             <ParagraphSmall as="div">
-              {totalClaimableRewards && formatCurrency(totalClaimableRewards)}{' '}
-              PHA
+              {totalclaimableReward && formatCurrency(totalclaimableReward)} PHA
             </ParagraphSmall>
           </FormControl>
 

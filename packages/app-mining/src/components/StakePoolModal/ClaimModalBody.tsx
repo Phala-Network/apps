@@ -62,7 +62,7 @@ const ClaimModalBody: VFC<
           <ParagraphSmall as="div">
             {stakePoolStakers[0] &&
               formatCurrency(
-                stakePoolStakers[0].claimableRewards as string
+                stakePoolStakers[0].claimableReward as string
               )}{' '}
             PHA
           </ParagraphSmall>
