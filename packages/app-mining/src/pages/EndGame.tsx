@@ -45,6 +45,10 @@ const MapWrapper = styled(Block)`
   path:focus {
     outline: none;
   }
+  rect {
+    transform-origin: center;
+    transform-box: fill-box;
+  }
 `
 
 const StatWrapper = styled(Block)`
@@ -358,7 +362,37 @@ export const EndGame: VFC = () => {
 
               {markers.map(({name, coordinates}) => (
                 <Marker key={name} coordinates={coordinates}>
-                  <rect width="9" height="9" fill="#cdfa50" />
+                  <rect
+                    width="8"
+                    height="8"
+                    fill="none"
+                    stroke="#cdfa50"
+                    strokeWidth="0.5"
+                  >
+                    <animateTransform
+                      attributeName="transform"
+                      type="scale"
+                      additive="sum"
+                      values="1;2.5;2.5"
+                      keyTimes="0;0.6;1"
+                      keySplines="0.2 0 0.8 1"
+                      begin="0s"
+                      dur="1s"
+                      repeatCount="indefinite"
+                    />
+                    <animate
+                      attributeName="opacity"
+                      repeatCount="indefinite"
+                      dur="1s"
+                      values="1;0"
+                      keyTimes="0;1"
+                      keySplines="0.2 0 0.8 1"
+                      calcMode="spline"
+                      begin="0s"
+                    ></animate>
+                  </rect>
+
+                  <rect width="8" height="8" fill="#cdfa50" />
                 </Marker>
               ))}
             </ComposableMap>
