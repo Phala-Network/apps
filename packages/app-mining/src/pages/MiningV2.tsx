@@ -9,9 +9,8 @@ import StatusBarV2 from '../components/StatusBarV2'
 import ClaimAll from '../components/ClaimAll'
 import endGameBanner from '../static/end-game-banner.png'
 import styled from 'styled-components'
-import {Link} from 'gatsby'
 
-const EndGameBanner = styled(Link)`
+const EndGameBanner = styled.a`
   display: block;
   margin-top: 16px;
 
@@ -34,7 +33,7 @@ export const MiningV2 = (): JSX.Element => {
       <Helmet>
         <title>Mining</title>
       </Helmet>
-      <EndGameBanner to="/end-game/">
+      <EndGameBanner href="/end-game/" target="_blank" rel="noreferrer">
         <img src={endGameBanner} alt="End Game Banner" />
       </EndGameBanner>
       <StatusBarV2 />
