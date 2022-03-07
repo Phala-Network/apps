@@ -1,7 +1,12 @@
 import {useEffect, useMemo, useRef, VFC} from 'react'
 import {Card} from 'baseui/card'
 import {Block} from 'baseui/block'
-import {HeadingLarge, HeadingSmall, ParagraphSmall} from 'baseui/typography'
+import {
+  HeadingLarge,
+  HeadingSmall,
+  ParagraphSmall,
+  ParagraphXSmall,
+} from 'baseui/typography'
 import {useQuery} from 'react-query'
 import {camelizeKeys} from 'humps'
 import {Skeleton} from 'baseui/skeleton'
@@ -13,10 +18,13 @@ import {
   StringColumn,
   CustomColumn,
 } from 'baseui/data-table'
+import {ButtonGroup} from 'baseui/button-group'
 import {useMotionValue, animate} from 'framer-motion'
 import Helmet from 'react-helmet'
 import styled from 'styled-components'
 import {ComposableMap, Geographies, Geography, Marker} from 'react-simple-maps'
+import {Button} from 'baseui/button'
+import {ExternalLink} from 'react-feather'
 
 const geoUrl =
   'https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json'
@@ -37,6 +45,10 @@ const MapWrapper = styled(Block)`
   path:focus {
     outline: none;
   }
+  rect {
+    transform-origin: center;
+    transform-box: fill-box;
+  }
 `
 
 const StatWrapper = styled(Block)`
@@ -47,6 +59,10 @@ const StatWrapper = styled(Block)`
   > div + div {
     margin-top: 28px;
   }
+`
+
+const ButtonExternalLink = styled(ExternalLink)`
+  margin-left: 8px;
 `
 
 type Worker = {
@@ -67,7 +83,8 @@ type Worker = {
   registeredAt: string
   overallScore: number
   gleamScore: number
-  contributionScore: number
+  contribution1Score: number
+  contribution2Score: number
   createdAt: string
   updatedAt: string
 }
@@ -109,9 +126,9 @@ const columns = [
           >
             {address && trimAddress(address)}
           </StyledLink>
-          <ParagraphSmall as="div" marginLeft="scale400" marginTop="scale400">
+          <ParagraphXSmall as="div" marginLeft="scale400">
             {discordId}
-          </ParagraphSmall>
+          </ParagraphXSmall>
         </Block>
       )
     },
@@ -143,7 +160,8 @@ const columns = [
   }),
   NumericalColumn({
     title: 'Contribution',
-    mapDataToValue: (data: RowT) => data.contributionScore,
+    mapDataToValue: (data: RowT) =>
+      data.contribution1Score + data.contribution2Score,
   }),
 
   NumericalColumn({
@@ -261,9 +279,30 @@ export const EndGame: VFC = () => {
         <Block
           paddingTop="scale1000"
           paddingBottom="scale1000"
-          marginTop="scale600"
+          marginTop="scale400"
+          display="flex"
+          alignItems="center"
+          justifyContent="space-between"
         >
           <HeadingLarge as="div">END-GAME</HeadingLarge>
+          <ButtonGroup size="compact">
+            <Button
+              onClick={() =>
+                window.open('https://gleam.io/5N19s/vendetta-1605-endgame')
+              }
+            >
+              JOIN <ButtonExternalLink size={14} />
+            </Button>
+            <Button
+              onClick={() =>
+                window.open(
+                  'https://medium.com/phala-network/vendetta-1605-end-game-official-setup-guide-2274d5fd4877'
+                )
+              }
+            >
+              LEARN <ButtonExternalLink size={14} />
+            </Button>
+          </ButtonGroup>
         </Block>
 
         <Card
@@ -323,7 +362,37 @@ export const EndGame: VFC = () => {
 
               {markers.map(({name, coordinates}) => (
                 <Marker key={name} coordinates={coordinates}>
-                  <rect width="9" height="9" fill="#aad829" />
+                  <rect
+                    width="8"
+                    height="8"
+                    fill="none"
+                    stroke="#cdfa50"
+                    strokeWidth="0.5"
+                  >
+                    <animateTransform
+                      attributeName="transform"
+                      type="scale"
+                      additive="sum"
+                      values="1;2.5;2.5"
+                      keyTimes="0;0.6;1"
+                      keySplines="0.2 0 0.8 1"
+                      begin="0s"
+                      dur="1s"
+                      repeatCount="indefinite"
+                    />
+                    <animate
+                      attributeName="opacity"
+                      repeatCount="indefinite"
+                      dur="1s"
+                      values="1;0"
+                      keyTimes="0;1"
+                      keySplines="0.2 0 0.8 1"
+                      calcMode="spline"
+                      begin="0s"
+                    ></animate>
+                  </rect>
+
+                  <rect width="8" height="8" fill="#cdfa50" />
                 </Marker>
               ))}
             </ComposableMap>

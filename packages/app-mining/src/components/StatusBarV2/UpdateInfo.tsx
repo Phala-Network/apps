@@ -13,8 +13,8 @@ import {client} from '../../utils/GraphQLClient'
 const UpdateInfo = (): JSX.Element => {
   const {data, isLoading} = useStatesQuery(client)
   const [distance, setDistance] = useState('')
-  const updateTime = data?.findManyStates[2]?.datetimeValue
-  const blockNumber = data?.findManyStates[3]?.integerValue
+  const updateTime = data?.findManyStates[3]?.datetimeValue
+  const blockNumber = data?.findManyStates[4]?.integerValue
 
   useEffect(() => {
     if (updateTime) {
@@ -40,7 +40,7 @@ const UpdateInfo = (): JSX.Element => {
         <Info size={16} />
       </StatefulTooltip>
       <LabelSmall $style={{marginLeft: '5px'}}>
-        Last Update: {distance && `${distance} ago`}
+        Last Update: {Boolean(distance) && `${distance} ago`}
       </LabelSmall>
       {isLoading && <Skeleton animation height="34px" width="200px" />}
       {blockNumber && <Tag closeable={false}>#{blockNumber}</Tag>}

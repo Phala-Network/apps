@@ -7,6 +7,19 @@ import StakePoolTableV2 from '../components/StakePoolTableV2'
 import WorkerTableV2 from '../components/WorkerTableV2'
 import StatusBarV2 from '../components/StatusBarV2'
 import ClaimAll from '../components/ClaimAll'
+import endGameBanner from '../static/end-game-banner.png'
+import styled from 'styled-components'
+
+const EndGameBanner = styled.a`
+  display: block;
+  margin-top: 16px;
+
+  img {
+    width: 100%;
+    display: block;
+    user-select: none;
+  }
+`
 
 export const MiningV2 = (): JSX.Element => {
   return (
@@ -20,6 +33,9 @@ export const MiningV2 = (): JSX.Element => {
       <Helmet>
         <title>Mining</title>
       </Helmet>
+      <EndGameBanner href="/end-game/" target="_blank" rel="noreferrer">
+        <img src={endGameBanner} alt="End Game Banner" />
+      </EndGameBanner>
       <StatusBarV2 />
       <Card
         overrides={{
