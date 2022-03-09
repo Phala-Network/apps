@@ -19,7 +19,7 @@ const getWorkerShare = (worker: Worker) => {
   const confidenceScore = confidenceScoreMap[confidenceLevel]
   const share = v
     .pow(2)
-    .add(new Decimal(pInstant).mul(2).mul(confidenceScore ** 2))
+    .add(new Decimal(pInstant).mul(2).mul(confidenceScore).pow(2))
     .sqrt()
 
   return share
