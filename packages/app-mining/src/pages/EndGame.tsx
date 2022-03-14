@@ -87,6 +87,10 @@ type Worker = {
   contribution2Score: number
   createdAt: string
   updatedAt: string
+  geo: {
+    lat: number
+    lng: number
+  } | null
 }
 type WorkersQuery = {workers: Worker[]}
 type Stats = {
@@ -252,56 +256,18 @@ export const EndGame: VFC = () => {
   const markers = useMemo<
     {name: string; coordinates: [number, number]}[]
   >(() => {
-    return [
-      {
-        name: 'Los Angeles, CA, USA',
-        coordinates: [-118.2436849, 34.0522342],
+    if (!workers) return []
+
+    return workers.reduce<{name: string; coordinates: [number, number]}[]>(
+      (acc, cur) => {
+        if (!cur.geo || acc.find((x) => x.name === cur.location)) return acc
+
+        acc.push({name: cur.location, coordinates: [cur.geo.lng, cur.geo.lat]})
+        return acc
       },
-      {name: 'Valencia, Spain', coordinates: [-0.3762881, 39.4699075]},
-      {
-        name: 'Seoul, South Korea',
-        coordinates: [126.9779692, 37.566535],
-      },
-      {name: 'Hong Kong', coordinates: [114.1693611, 22.3193039]},
-      {name: 'Seychelles', coordinates: [55.491977, -4.679574]},
-      {name: 'Singapore', coordinates: [103.819836, 1.352083]},
-      {
-        name: 'Oakland, CA, USA',
-        coordinates: [-122.2711639, 37.8043514],
-      },
-      {name: 'South Korea', coordinates: [127.766922, 35.907757]},
-      {
-        name: 'Guangzhou, Guangdong Province, China',
-        coordinates: [113.26436, 23.1290799],
-      },
-      {
-        name: 'Yau Ma Tei, Hong Kong',
-        coordinates: [114.1714423, 22.3068537],
-      },
-      {
-        name: 'Cirebon, Cirebon City, West Java, Indonesia',
-        coordinates: [108.5523164, -6.7320229],
-      },
-      {
-        name: 'Semarang, Semarang City, Central Java, Indonesia',
-        coordinates: [110.4381254, -7.0051453],
-      },
-      {name: 'Osaka, Japan', coordinates: [135.5022535, 34.6937249]},
-      {name: 'Moscow, Russia', coordinates: [37.6173, 55.755826]},
-      {
-        name: 'Lishui, Zhejiang, China',
-        coordinates: [119.92293, 28.4671999],
-      },
-      {
-        name: 'Yangyang-gun, Gangwon-do, South Korea',
-        coordinates: [128.6188503, 38.0753925],
-      },
-      {
-        name: 'Yongin-si, Gyeonggi-do, South Korea',
-        coordinates: [127.1775537, 37.2410864],
-      },
-    ]
-  }, [])
+      []
+    )
+  }, [workers])
 
   return (
     <>
