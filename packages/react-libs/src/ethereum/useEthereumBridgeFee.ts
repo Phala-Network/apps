@@ -17,12 +17,14 @@ export const useEthereumBridgeFee = () => {
   const [gasPrice, setGasPrice] = useState<number | undefined>()
   const {provider} = useEthers()
 
-  provider?.getGasPrice().then((gasPrice) => {
-    setGasPrice(parseFloat(ethers.utils.formatUnits(gasPrice, 'gwei')))
-  })
+  useEffect(() => {
+    provider?.getGasPrice().then((gasPrice) => {
+      setGasPrice(parseFloat(ethers.utils.formatUnits(gasPrice, 'gwei')))
+    })
+  }, [provider])
 
   const estimateGas = useCallback(async () => {
-    const amount = ethers.utils.parseUnits('1', 18)
+    const amount = ethers.utils.parseUnits('0', 18)
 
     if (
       gasPrice === undefined ||

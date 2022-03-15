@@ -75,7 +75,6 @@ export const Web3Provider = ({
       })
     }
 
-    // FIXME: off method is not documented, just try to use it
     return () => {
       provider?.off?.('accountsChanged')
       provider?.off?.('chainChanged')
