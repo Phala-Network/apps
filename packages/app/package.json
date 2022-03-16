@@ -43,6 +43,7 @@
     "decimal.js": "^10.3.1",
     "ethers": "^5.5.3",
     "gatsby": "^4.7.1",
+    "gatsby-plugin-env-variables": "^2.2.0",
     "gatsby-plugin-google-gtag": "^4.7.0",
     "gatsby-plugin-netlify": "^4.1.0",
     "gatsby-plugin-pnpm": "^1.2.10",

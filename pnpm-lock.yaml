@@ -86,6 +86,7 @@ importers:
       decimal.js: ^10.3.1
       ethers: ^5.5.3
       gatsby: ^4.7.1
+      gatsby-plugin-env-variables: ^2.2.0
       gatsby-plugin-google-gtag: ^4.7.0
       gatsby-plugin-netlify: ^4.1.0
       gatsby-plugin-pnpm: ^1.2.10
@@ -144,6 +145,7 @@ importers:
       decimal.js: 10.3.1
       ethers: 5.5.4
       gatsby: 4.7.1_81edf3926e0f5b690d6bf41c81c0a74a
+      gatsby-plugin-env-variables: 2.2.0_gatsby@4.7.1
       gatsby-plugin-google-gtag: 4.7.0_610a62b8c798b96af4e6fe9f6ad7d9c3
       gatsby-plugin-netlify: 4.1.0_gatsby@4.7.1+webpack@5.68.0
       gatsby-plugin-pnpm: 1.2.10_gatsby@4.7.1
@@ -6217,7 +6219,7 @@ packages:
     dependencies:
       '@babel/core': 7.17.2
       '@babel/runtime': 7.17.2
-      gatsby: 4.7.1_bf2bcca2796a3eb2c3651ae4af1d62f3
+      gatsby: 4.7.1_81edf3926e0f5b690d6bf41c81c0a74a
       gatsby-core-utils: 3.7.0
     dev: false
 
@@ -10678,6 +10680,14 @@ packages:
       micromatch: 4.0.4
     dev: false
 
+  /gatsby-plugin-env-variables/2.2.0_gatsby@4.7.1:
+    resolution: {integrity: sha512-znnUNqNmGE4qIq+nTaQeiTz54PQw3QRPflWWWtQg5V9ke3QcamEDVbJ1S1a2Afl5pXO7qCiXNaMMb8NFnNHdLw==}
+    peerDependencies:
+      gatsby: ^4.0.0 || ^3.0.0 || ^2.0.0
+    dependencies:
+      gatsby: 4.7.1_81edf3926e0f5b690d6bf41c81c0a74a
+    dev: false
+
   /gatsby-plugin-google-gtag/4.7.0_610a62b8c798b96af4e6fe9f6ad7d9c3:
     resolution: {integrity: sha512-h+ZZp49lEaKKB367bmgYPVhTXwwW1s5zZq4Gm1EBJSuOx3Obo17TXXedbxIAQhggiHfIRvt+J/dr5yzcDxlzZQ==}
     engines: {node: '>=14.15.0'}
@@ -10721,7 +10731,7 @@ packages:
       '@sindresorhus/slugify': 1.1.2
       chokidar: 3.5.3
       fs-exists-cached: 1.0.0
-      gatsby: 4.7.1_bf2bcca2796a3eb2c3651ae4af1d62f3
+      gatsby: 4.7.1_81edf3926e0f5b690d6bf41c81c0a74a
       gatsby-core-utils: 3.7.0
       gatsby-page-utils: 2.7.0
       gatsby-plugin-utils: 3.1.0_gatsby@4.7.1
@@ -10795,7 +10805,7 @@ packages:
       '@babel/preset-typescript': 7.16.7_@babel+core@7.17.2
       '@babel/runtime': 7.17.2
       babel-plugin-remove-graphql-queries: 4.7.0_@babel+core@7.17.2+gatsby@4.7.1
-      gatsby: 4.7.1_bf2bcca2796a3eb2c3651ae4af1d62f3
+      gatsby: 4.7.1_81edf3926e0f5b690d6bf41c81c0a74a
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -10807,7 +10817,7 @@ packages:
       gatsby: ^4.0.0-next
     dependencies:
       '@babel/runtime': 7.17.2
-      gatsby: 4.7.1_bf2bcca2796a3eb2c3651ae4af1d62f3
+      gatsby: 4.7.1_81edf3926e0f5b690d6bf41c81c0a74a
       joi: 17.6.0
     dev: false
 

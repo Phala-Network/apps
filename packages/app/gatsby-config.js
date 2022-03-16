@@ -30,6 +30,13 @@ module.exports = {
       },
     },
     'gatsby-plugin-netlify',
+    {
+      resolve: `gatsby-plugin-env-variables`,
+      options: {
+        // https://docs.netlify.com/configure-builds/environment-variables/#read-only-variables
+        allowList: ['CONTEXT'],
+      },
+    },
     process.env.NODE_ENV === 'production' && {
       resolve: '@sentry/gatsby',
       options: {
