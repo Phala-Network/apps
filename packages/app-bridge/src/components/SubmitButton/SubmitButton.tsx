@@ -38,10 +38,6 @@ export const SubmitButton: FC<SubmitButtonProps> = (props) => {
       !new RegExp(/0x[0-9a-fA-F]{40}/).test(recipient)
     ) {
       errorString = 'Need enter the correct recipient'
-    } else if (isFromKhala && !fee) {
-      errorString = 'Please wait fee check'
-    } else if (isFromKhala && fee?.toString() === '0') {
-      errorString = 'Please wait fee check'
     } else if (new Decimal(amountTo).greaterThan(maxAmountDecimal)) {
       errorString = 'Insufficient balance'
     } else if (
