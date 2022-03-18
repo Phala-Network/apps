@@ -6,6 +6,7 @@ import {ComponentProps, FC} from 'react'
 import {useAllTransferData} from '../../store'
 import {useBridgePage} from '../../useBridgePage'
 import {Button} from '../Button'
+import {useKhalaBridgeFee} from '../KhalaToEthereumFee'
 
 interface SubmitButtonProps extends ComponentProps<typeof Button> {
   onSubmit: (transferData: any) => void
@@ -16,7 +17,8 @@ export const SubmitButton: FC<SubmitButtonProps> = (props) => {
   const {currentAddress, isFromEthereum, isFromKhala, maxAmountDecimal} =
     useBridgePage()
   const allTransferData = useAllTransferData()
-  const fee = useEthereumBridgeFee()
+  const ethereumBridgeFee = useEthereumBridgeFee()
+  const khalaBridgeFee = useKhalaBridgeFee()
   const {amount, toAddress} = allTransferData
 
   const onSubmitCheck = () => {
@@ -38,16 +40,28 @@ export const SubmitButton: FC<SubmitButtonProps> = (props) => {
       !new RegExp(/0x[0-9a-fA-F]{40}/).test(recipient)
     ) {
       errorString = 'Need enter the correct recipient'
+    } else if (
+      (isFromKhala && !khalaBridgeFee.fee) ||
+      (isFromEthereum && !ethereumBridgeFee)
+    ) {
+      errorString = 'Please wait fee check'
     } else if (new Decimal(amountTo).greaterThan(maxAmountDecimal)) {
       errorString = 'Insufficient balance'
     } else if (
       isFromKhala &&
-      fee &&
-      new Decimal(amountTo).greaterThan(maxAmountDecimal.sub(fee))
+      khalaBridgeFee.fee &&
+      new Decimal(amountTo).greaterThan(
+        maxAmountDecimal.sub(khalaBridgeFee.fee)
+      )
     ) {
       errorString = 'Insufficient balance'
+    } else if (
+      isFromKhala &&
+      khalaBridgeFee.fee &&
+      new Decimal(amountTo).lessThan(khalaBridgeFee.fee)
+    ) {
+      errorString = 'The transaction amount should be greater than bridge fee'
     }
-
     if (errorString) {
       toast(errorString, 'error')
       return

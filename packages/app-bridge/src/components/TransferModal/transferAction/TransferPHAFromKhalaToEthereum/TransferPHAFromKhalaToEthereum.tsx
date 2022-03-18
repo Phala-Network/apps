@@ -5,22 +5,24 @@ import {
   decimalToBalance,
   useApiPromise,
   useDecimalJsTokenDecimalMultiplier,
-  useTransactionFee,
+  // useTransactionFee,
   useTransferSubmit,
 } from '@phala/react-libs'
 import {Block} from 'baseui/block'
 // import useTransactionInfo from '../../hooks/useTransactionInfo'
 import {KIND as ButtonKind} from 'baseui/button'
+import {StyledLink} from 'baseui/link'
 import {ModalBody, ModalButton, ModalFooter} from 'baseui/modal'
+import Decimal from 'decimal.js'
 import {getAddress} from 'ethers/lib/utils'
-import React, {Fragment, useMemo, useState} from 'react'
+import React, {Fragment, useEffect, useMemo, useState} from 'react'
 // import {Link} from '../../../Announcement/styledComponents'
 import {useKhalaBridgeFee} from '../../../../hooks/useKhalaBridgeFee'
 import {useAllTransferData} from '../../../../store'
 import {buttonOverrides} from '../../../../style/buttonOverrides'
 import {Button} from '../../../Button'
 import {CurrentTransferInformationDetailItems} from '../../../CurrentTransferInformationDetailItems'
-import {KhalaToEthereumFee} from '../../../KhalaToEthereumFee'
+// import {KhalaToEthereumFee} from '../../../KhalaToEthereumFee'
 
 interface TransferPHAFromKhalaToEthereumProps {
   onCloseTransfer(): void
@@ -43,18 +45,27 @@ export const TransferPHAFromKhalaToEthereum: React.FC<
   const [progressIndex, setProgressIndex] = useState(-1)
   const fee = useKhalaBridgeFee()
   const [checkBoxChecked, setCheckBoxChecked] = useState<boolean>(false)
-
-  const transactionFee = useTransactionFee(
-    fromAddress,
-    toAddress,
-    amountDecimal?.toNumber()
-  )
+  const [transactionFee, setTransactionFee] = useState('')
+  const [transactionHash, setTransactionHash] = useState('')
 
   const amount = useMemo(() => {
-    if (!amountDecimal || !api || !decimals) return
+    if (!amountDecimal || !api || !decimals || !fee) return
 
-    return decimalToBalance(amountDecimal, decimals, api)
-  }, [amountDecimal, api, decimals])
+    return decimalToBalance(amountDecimal.minus(fee), decimals, api)
+  }, [amountDecimal, api, decimals, fee])
+
+  useEffect(() => {
+    const accountToAddress = getAddress(toAddress)
+
+    api?.tx.bridgeTransfer
+      ?.transferNative?.(amount, accountToAddress, 1)
+      .paymentInfo(fromAddress)
+      .then(({partialFee}) => {
+        setTransactionFee(
+          `${new Decimal(partialFee.toString()).div(10 ** 12).toFixed(8)} PHA`
+        )
+      })
+  }, [amount, api, fromAddress, toAddress])
 
   const submit = async () => {
     if (!checkBoxChecked) {
@@ -71,7 +82,7 @@ export const TransferPHAFromKhalaToEthereum: React.FC<
 
       const accountToAddress = getAddress(toAddress)
 
-      await transferSubmit?.(
+      const hash = await transferSubmit?.(
         amount,
         accountToAddress,
         fromAddress,
@@ -89,6 +100,9 @@ export const TransferPHAFromKhalaToEthereum: React.FC<
           }
         }
       )
+      if (hash) {
+        setTransactionHash(hash.toString())
+      }
     } catch (e) {
       console.error(e)
     } finally {
@@ -115,33 +129,31 @@ export const TransferPHAFromKhalaToEthereum: React.FC<
       /> */}
 
       <ModalBody>
-        <CurrentTransferInformationDetailItems />
+        <CurrentTransferInformationDetailItems bridgeFee={fee} />
 
         <Spacer></Spacer>
 
-        <Block display={'flex'} alignItems={'center'}>
-          <Block marginRight={['30px']}>
-            <FeeLabel fee={transactionFee || '-'} label={'Fee'} />
-          </Block>
-          <KhalaToEthereumFee />
-        </Block>
-
-        <Spacer></Spacer>
-
-        <Alert>
-          {progressIndex === -1 ? (
-            <span>
-              This transaction will charge an additional{' '}
-              <span style={{fontWeight: 'bold'}}>
-                {fee?.toFixed(2) || '-'} PHA
-              </span>{' '}
-              bridge fee to cover the Ethereum gas fee (up to 120 GWei price).
+        {progressIndex === -1 ? (
+          <>
+            <Alert>
+              <span>
+                This transaction will charge a{' '}
+                <span style={{fontWeight: 'bold'}}>
+                  {fee?.toFixed(2) || '-'} PHA
+                </span>{' '}
+                bridge fee to cover the Ethereum gas fee (up to 120 GWei price).
+              </span>
+            </Alert>
+            <Spacer />
+            <Alert>
               The transaction may take some time ranged from a few seconds to a
               few hours, depending on if the Ethereum blockchain is congested.
               In the case of congestion, it may be necessary to wait for more
               than 24h.
-            </span>
-          ) : (
+            </Alert>
+          </>
+        ) : (
+          <Alert>
             <span>
               The transaction may take some time ranged from a few seconds to a
               few hours, depending on if the Ethereum blockchain is congested.
@@ -177,8 +189,8 @@ export const TransferPHAFromKhalaToEthereum: React.FC<
               </Link>{' '}
               for support.
             </span>
-          )}
-        </Alert>
+          </Alert>
+        )}
 
         {/* <Alert>
         {progressIndex >= 0 && (
@@ -210,6 +222,29 @@ export const TransferPHAFromKhalaToEthereum: React.FC<
               is used to cover the Ethereum gas fee.
             </div>
           </label>
+        )}
+
+        {progressIndex === -1 && (
+          <FeeLabel fee={transactionFee || '-'} label={'Fee'} />
+        )}
+
+        {transactionHash && (
+          <>
+            <Spacer></Spacer>
+            <Alert>
+              <span>
+                Transaction has been sent, it may take some time ranged from a
+                few seconds to a few hours. Transaction：
+                <StyledLink
+                  href={`https://khala.subscan.io/extrinsic/${transactionHash}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {transactionHash}
+                </StyledLink>
+              </span>
+            </Alert>
+          </>
         )}
       </ModalBody>
 
