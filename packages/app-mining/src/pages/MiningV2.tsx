@@ -7,7 +7,7 @@ import StakePoolTableV2 from '../components/StakePoolTableV2'
 import WorkerTableV2 from '../components/WorkerTableV2'
 import StatusBarV2 from '../components/StatusBarV2'
 import ClaimAll from '../components/ClaimAll'
-import endGameBanner from '../static/end-game-banner.png'
+import endGameBanner from '../static/end-game-banner.jpg'
 import styled from 'styled-components'
 
 const EndGameBanner = styled.a`
