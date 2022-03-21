@@ -12,7 +12,7 @@ import {TransferFromPanel} from './components/TransferFromPanel'
 import {TransferModal} from './components/TransferModal'
 import {TransferToPanel} from './components/TransferToPanel'
 import {useExtraInfo} from './hooks/useExtraInfo'
-import {useAllTransferData, useSwitchToAndFormData} from './store'
+import {useAllTransferData} from './store'
 import {BlockItem, MainContent, Root} from './styledComponents'
 
 const queryClient = new QueryClient()
@@ -21,7 +21,6 @@ export const BridgePage: FC = () => {
   const transactionInfo = useAllTransferData()
   const [isOpenTransferModal, setIsOpenTransferModal] = useState(false)
   const [isOpenInformationModal, setIsOpenInformationModal] = useState(false)
-  const switchData = useSwitchToAndFormData()
   const extraInfo = useExtraInfo()
 
   const submit = () => {
@@ -67,7 +66,7 @@ export const BridgePage: FC = () => {
           <BlockItem>
             <TransferFromPanel />
 
-            <ExchangeIcon onClick={switchData} />
+            <ExchangeIcon />
 
             <TransferToPanel />
           </BlockItem>

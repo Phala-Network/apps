@@ -3,6 +3,7 @@ import {useEthereumBridgeFee} from '@phala/react-libs'
 import {validateAddress} from '@phala/utils'
 import Decimal from 'decimal.js'
 import {ComponentProps, FC} from 'react'
+import {karuraBridgeFee} from '../../config'
 import {useAllTransferData} from '../../store'
 import {useBridgePage} from '../../useBridgePage'
 import {Button} from '../Button'
@@ -14,8 +15,13 @@ interface SubmitButtonProps extends ComponentProps<typeof Button> {
 
 export const SubmitButton: FC<SubmitButtonProps> = (props) => {
   const {onSubmit} = props
-  const {currentAddress, isFromEthereum, isFromKhala, maxAmountDecimal} =
-    useBridgePage()
+  const {
+    currentAddress,
+    isFromEthereum,
+    isFromKhala,
+    maxAmountDecimal,
+    isToKarura,
+  } = useBridgePage()
   const allTransferData = useAllTransferData()
   const ethereumBridgeFee = useEthereumBridgeFee()
   const khalaBridgeFee = useKhalaBridgeFee()
@@ -31,7 +37,7 @@ export const SubmitButton: FC<SubmitButtonProps> = (props) => {
       errorString = 'Need enter amount'
     } else if (!recipient) {
       errorString = 'Need enter recipient'
-    } else if (isFromEthereum && !validateAddress(recipient)) {
+    } else if ((isFromEthereum || isToKarura) && !validateAddress(recipient)) {
       errorString = 'Need enter the correct recipient'
     } else if (!accountFrom) {
       errorString = 'Need login'
@@ -48,17 +54,22 @@ export const SubmitButton: FC<SubmitButtonProps> = (props) => {
     } else if (new Decimal(amountTo).greaterThan(maxAmountDecimal)) {
       errorString = 'Insufficient balance'
     } else if (
-      isFromKhala &&
-      khalaBridgeFee.fee &&
-      new Decimal(amountTo).greaterThan(
-        maxAmountDecimal.sub(khalaBridgeFee.fee)
-      )
+      (isFromKhala &&
+        khalaBridgeFee.fee &&
+        new Decimal(amountTo).greaterThan(
+          maxAmountDecimal.sub(khalaBridgeFee.fee)
+        )) ||
+      (isToKarura &&
+        new Decimal(amountTo).greaterThan(
+          maxAmountDecimal.sub(karuraBridgeFee)
+        ))
     ) {
       errorString = 'Insufficient balance'
     } else if (
-      isFromKhala &&
-      khalaBridgeFee.fee &&
-      new Decimal(amountTo).lessThan(khalaBridgeFee.fee)
+      (isFromKhala &&
+        khalaBridgeFee.fee &&
+        new Decimal(amountTo).lessThan(khalaBridgeFee.fee)) ||
+      (isToKarura && new Decimal(amountTo).lessThan(karuraBridgeFee))
     ) {
       errorString = 'The transaction amount should be greater than bridge fee'
     }

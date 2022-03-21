@@ -2,6 +2,8 @@ export const khalaChainId = 1
 export const khalaParaId = 2004
 export const karuraParaId = 2000
 
+export const karuraBridgeFee = 0.015
+
 export const keyringType = 'sr25519'
 
 export const blockchainTypes = {
@@ -14,20 +16,9 @@ export const Karura = 'Karura'
 export const Evm = 'Evm'
 export const Ethereum = 'Ethereum'
 
-export type Network = {
-  id: string
-  name: string
-  blockchainType: string
-  label: string
-}
+export type Network = typeof networks[number]
 
-export const networks: Network[] = [
-  // {
-  //   label: Karura,
-  //   name: Karura,
-  //   id: Karura,
-  //   blockchainType: blockchainTypes.polkadot,
-  // },
+export const networks = [
   // {
   //   label: Evm,
   //   name: Evm,
@@ -46,7 +37,13 @@ export const networks: Network[] = [
     id: Khala,
     blockchainType: blockchainTypes.polkadot,
   },
-]
+  {
+    label: Karura,
+    name: Karura,
+    id: Karura,
+    blockchainType: blockchainTypes.polkadot,
+  },
+] as const
 
 export const PHA = 'PHA'
 export const KHR = 'KHR'

@@ -24,7 +24,11 @@ export function useBridgePage() {
     usePolkadotAccountTransferrableBalanceDecimal(polkadotAccountAddress)
 
   const isFromEthereum = blockchainType === blockchainTypes.ethereum
-  const isFromKhala = !isFromEthereum
+  // HACK: backforward compatibility
+  const isFromKhala =
+    transactionInfo.fromNetwork === 'Khala' &&
+    transactionInfo.toNetwork === 'Ethereum'
+  const isToKarura = transactionInfo.toNetwork === 'Karura'
   const currentAddress = isFromEthereum
     ? ethereumAccountAddress
     : polkadotAccountAddress
@@ -49,5 +53,6 @@ export function useBridgePage() {
     currentAddress,
     isShowRecipient,
     isShowMaxButton,
+    isToKarura,
   } as const
 }

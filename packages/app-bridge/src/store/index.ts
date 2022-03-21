@@ -13,11 +13,16 @@ const _fromNetwork = atom<Network[]>([networks[0]])
 const fromNetwork = atom(
   (get) => get(_fromNetwork),
   (get, set, newPrice: Network[]) => {
-    const toNetworkValue = get(_toNetwork)
+    const toNetworkValue = get(toNetwork)
     const fromNetworkValue = get(_fromNetwork)
 
-    if (toNetworkValue[0]?.name === newPrice[0]?.name) {
-      set(_toNetwork, fromNetworkValue)
+    // HACK: hardcode from karura is not allowed now
+    if (newPrice[0]?.id === 'Ethereum' && toNetworkValue[0]?.id === 'Karura') {
+      set(toNetwork, [networks[1]])
+    }
+
+    if (toNetworkValue[0]?.id === newPrice[0]?.id) {
+      set(toNetwork, fromNetworkValue)
       set(_fromNetwork, newPrice)
     } else {
       set(_fromNetwork, newPrice)
@@ -29,23 +34,8 @@ const fromCoin = atom<Value>([coins[0]])
 
 const toAddress = atom<string>('')
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-const _toNetwork = atom<Network[]>([networks[1]])
-const toNetwork = atom(
-  (get) => get(_toNetwork),
-  (get, set, newPrice: Network[]) => {
-    const toNetworkValue = get(_toNetwork)
-    const fromNetworkValue = get(_fromNetwork)
+const toNetwork = atom<Network[]>([networks[1]])
 
-    if (fromNetworkValue[0]?.name === newPrice[0]?.name) {
-      set(_toNetwork, newPrice)
-      set(_fromNetwork, toNetworkValue)
-    } else {
-      set(_toNetwork, newPrice)
-    }
-  }
-)
 const toCoin = atom<Value>([coins[0]])
 
 export const useFromAddress = () => useAtom(fromAddress)

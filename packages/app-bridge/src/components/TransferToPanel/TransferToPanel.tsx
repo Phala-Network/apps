@@ -18,6 +18,7 @@ export const TransferToPanel: FC = () => {
       <Block display="flex">
         <Block flex={1}>
           <NetworkSelect
+            kind="to"
             value={network}
             onChange={(params) => {
               setNetwork(params.value as Network[])
