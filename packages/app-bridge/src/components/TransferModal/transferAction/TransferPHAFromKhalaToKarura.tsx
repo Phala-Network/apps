@@ -142,12 +142,7 @@ export const TransferPHAFromKhalaToKarura: React.FC<
               </span>
             </Alert>
             <Spacer />
-            <Alert>
-              The transaction may take some time ranged from a few seconds to a
-              few hours, depending on if the Ethereum blockchain is congested.
-              In the case of congestion, it may be necessary to wait for more
-              than 24h.
-            </Alert>
+            <Alert>The transaction may take within 1 minute.</Alert>
           </>
         )}
 
@@ -163,8 +158,8 @@ export const TransferPHAFromKhalaToKarura: React.FC<
             <Spacer></Spacer>
             <Alert>
               <span>
-                Transaction has been sent, it may take some time ranged from a
-                few seconds to a few hours. Transaction：
+                Transaction has been sent, it may take within 1 minute.
+                Transaction：
                 <StyledLink
                   href={`https://khala.subscan.io/extrinsic/${transactionHash}`}
                   target="_blank"
