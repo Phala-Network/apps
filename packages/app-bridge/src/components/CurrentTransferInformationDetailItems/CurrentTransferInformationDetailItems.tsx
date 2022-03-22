@@ -4,17 +4,18 @@ import {useAllTransferData} from '../../store'
 import {InformationDetailItem} from '../InformationDetailItem'
 
 export const CurrentTransferInformationDetailItems: VFC<{
-  bridgeFee?: Decimal
+  bridgeFee?: Decimal | number
 }> = ({bridgeFee}) => {
   const allTransferData = useAllTransferData()
 
+  let toAmount = allTransferData.amountDecimal
+
   // HACK: bridgeFee should be included in amount
-  const toAmount =
-    bridgeFee &&
-    allTransferData.fromNetwork === 'Khala' &&
-    allTransferData.toNetwork === 'Ethereum'
-      ? allTransferData.amountDecimal.minus(bridgeFee)
-      : allTransferData.amountDecimal
+  if (bridgeFee) {
+    if (allTransferData.fromNetwork === 'Khala') {
+      toAmount = toAmount.minus(bridgeFee)
+    }
+  }
 
   return (
     <div>

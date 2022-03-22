@@ -39,6 +39,7 @@ export const selectOverrides: SelectOverrides = {
       fontSize: 16,
       backgroundColor: 'black',
       color: 'white',
+      cursor: 'inherit',
     },
   },
   Dropdown: {

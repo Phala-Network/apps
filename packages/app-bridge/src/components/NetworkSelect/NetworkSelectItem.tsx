@@ -11,6 +11,7 @@ const Root = styled.div<{isValue?: boolean}>`
   display: flex;
   align-items: center;
   color: white;
+  user-select: none;
 
   &:hover {
     color: ${(props) => (props.isValue ? 'white' : 'black')};

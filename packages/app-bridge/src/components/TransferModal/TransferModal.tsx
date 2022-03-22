@@ -1,11 +1,12 @@
 import {Modal, ModalHeader, ROLE, SIZE} from 'baseui/modal'
 import {FC, Fragment} from 'react'
-import {Ethereum, Khala, PHA} from '../../config'
+import {Ethereum, Karura, Khala, PHA} from '../../config'
 import {useAllTransferData} from '../../store'
 import {modalOverrides} from '../../style/modalOverrides'
 import {TransactionInfo} from '../../types'
 import {TransferPHAFromEthereumToKhala} from './transferAction/TransferPHAFromEthereumToKhala'
 import {TransferPHAFromKhalaToEthereum} from './transferAction/TransferPHAFromKhalaToEthereum'
+import {TransferPHAFromKhalaToKarura} from './transferAction/TransferPHAFromKhalaToKarura'
 
 interface TransferModalProps {
   isOpen: boolean
@@ -45,6 +46,9 @@ export const TransferModal: FC<TransferModalProps> = (props) => {
         )}
         {is(PHA, Ethereum, Khala) && (
           <TransferPHAFromEthereumToKhala onCloseTransfer={onClose} />
+        )}
+        {is(PHA, Khala, Karura) && (
+          <TransferPHAFromKhalaToKarura onCloseTransfer={onClose} />
         )}
       </Fragment>
     )
