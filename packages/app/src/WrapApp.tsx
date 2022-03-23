@@ -51,9 +51,9 @@ const WrapApp: React.FC = ({children}) => {
   return (
     <StrictMode>
       <div>
-        <AppStoreProvider>
-          <LibProvider {...productionConfig}>
-            <QueryClientProvider contextSharing={true} client={client.current}>
+        <QueryClientProvider contextSharing={true} client={client.current}>
+          <AppStoreProvider>
+            <LibProvider {...productionConfig}>
               <ThemeProvider theme={theme}>
                 <MobileToastContextProvider>
                   <BaseProvider theme={baseTheme}>
@@ -73,9 +73,9 @@ const WrapApp: React.FC = ({children}) => {
                 </MobileToastContextProvider>
               </ThemeProvider>
               <ReactQueryDevtools />
-            </QueryClientProvider>
-          </LibProvider>
-        </AppStoreProvider>
+            </LibProvider>
+          </AppStoreProvider>
+        </QueryClientProvider>
       </div>
     </StrictMode>
   )

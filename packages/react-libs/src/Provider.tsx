@@ -1,5 +1,4 @@
-import {FC, useRef} from 'react'
-import {QueryClient, QueryClientProvider} from 'react-query'
+import {FC} from 'react'
 import {EthersProvider} from './ethereum/contexts/useEthers'
 import {Web3Provider as EthereumWeb3Provider} from './ethereum/contexts/useWeb3'
 import {EthereumGraphQLProvider} from './ethereum/GraphQLClientContext'
@@ -22,25 +21,22 @@ export const Provider: FC<ProviderProps> = (props) => {
     defaultNetwork = 'khala',
     children,
   } = props
-  const client = useRef(new QueryClient())
 
   return (
-    <QueryClientProvider contextSharing={true} client={client.current}>
-      <SubstrateGraphQLProvider endpoint={substrateGraphEndpoint}>
-        <EthereumGraphQLProvider endpoint={ethereumGraphEndpoint}>
-          <EthereumWeb3Provider>
-            <EthersProvider>
-              <NetworkContextProvider defaultNetwork={defaultNetwork}>
-                <ApiPromiseProvider>
-                  <PolkadotWeb3Provider originName="ChainBridge Operator">
-                    {children}
-                  </PolkadotWeb3Provider>
-                </ApiPromiseProvider>
-              </NetworkContextProvider>
-            </EthersProvider>
-          </EthereumWeb3Provider>
-        </EthereumGraphQLProvider>
-      </SubstrateGraphQLProvider>
-    </QueryClientProvider>
+    <SubstrateGraphQLProvider endpoint={substrateGraphEndpoint}>
+      <EthereumGraphQLProvider endpoint={ethereumGraphEndpoint}>
+        <EthereumWeb3Provider>
+          <EthersProvider>
+            <NetworkContextProvider defaultNetwork={defaultNetwork}>
+              <ApiPromiseProvider>
+                <PolkadotWeb3Provider originName="ChainBridge Operator">
+                  {children}
+                </PolkadotWeb3Provider>
+              </ApiPromiseProvider>
+            </NetworkContextProvider>
+          </EthersProvider>
+        </EthereumWeb3Provider>
+      </EthereumGraphQLProvider>
+    </SubstrateGraphQLProvider>
   )
 }

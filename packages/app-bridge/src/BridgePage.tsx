@@ -2,7 +2,6 @@ import {Announcement, ToasterContainer} from '@phala/react-components'
 import {PLACEMENT} from 'baseui/toast'
 import {FC, useState} from 'react'
 import {Helmet} from 'react-helmet'
-import {QueryClient, QueryClientProvider} from 'react-query'
 import {ExchangeIcon} from './components/ExchangeIcon'
 import {ExtraInfoPanel} from './components/ExtraInfoPanel'
 import {Header} from './components/Header'
@@ -15,8 +14,6 @@ import {useExtraInfo} from './hooks/useExtraInfo'
 import {useAllTransferData} from './store'
 import {BlockItem, MainContent, Root} from './styledComponents'
 
-const queryClient = new QueryClient()
-
 export const BridgePage: FC = () => {
   const transactionInfo = useAllTransferData()
   const [isOpenTransferModal, setIsOpenTransferModal] = useState(false)
@@ -28,7 +25,7 @@ export const BridgePage: FC = () => {
   }
 
   return (
-    <QueryClientProvider contextSharing={true} client={queryClient}>
+    <>
       <Root>
         <Helmet>
           <title>Bridge</title>
@@ -107,6 +104,6 @@ export const BridgePage: FC = () => {
       <Button onClick={() => setIsOpenTransferModal(true)}>
         Open TransferModal
       </Button> */}
-    </QueryClientProvider>
+    </>
   )
 }
