@@ -243,6 +243,7 @@ importers:
       graphql-request: ^3.5.0
       rc-input-number: ^7.3.0
       react-error-boundary: ^3.1.4
+      react-feather: ^2.0.9
       styled-breakpoints: ^10.0.1
       styled-components: ^5.3.3
     dependencies:
@@ -265,6 +266,7 @@ importers:
       graphql-request: 3.7.0
       rc-input-number: 7.3.4
       react-error-boundary: 3.1.4
+      react-feather: 2.0.9
       styled-breakpoints: 10.2.3_styled-components@5.3.3
       styled-components: 5.3.3
 
@@ -17832,6 +17834,14 @@ packages:
 
   /react-fast-compare/3.2.0:
     resolution: {integrity: sha512-rtGImPZ0YyLrscKI9xTpV8psd6I8VAtjKCzQDlzyDvqJA8XOW78TXYQwNRNd8g8JZnDu8q9Fu/1v4HPAVwVdHA==}
+    dev: false
+
+  /react-feather/2.0.9:
+    resolution: {integrity: sha512-yMfCGRkZdXwIs23Zw/zIWCJO3m3tlaUvtHiXlW+3FH7cIT6fiK1iJ7RJWugXq7Fso8ZaQyUm92/GOOHXvkiVUw==}
+    peerDependencies:
+      react: ^16.8.6 || ^17
+    dependencies:
+      prop-types: 15.8.1
     dev: false
 
   /react-feather/2.0.9_react@17.0.2:

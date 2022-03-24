@@ -535,6 +535,7 @@ export type CurrencyDepositsQueryVariables = Exact<{
   first?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
   filter?: InputMaybe<CurrencyDepositFilter>;
+  orderBy?: InputMaybe<Array<CurrencyDepositsOrderBy> | CurrencyDepositsOrderBy>;
 }>;
 
 
@@ -542,8 +543,13 @@ export type CurrencyDepositsQuery = { __typename?: 'Query', currencyDeposits?: {
 
 
 export const CurrencyDepositsDocument = `
-    query CurrencyDeposits($first: Int, $offset: Int, $filter: CurrencyDepositFilter) {
-  currencyDeposits(first: $first, offset: $offset, filter: $filter) {
+    query CurrencyDeposits($first: Int, $offset: Int, $filter: CurrencyDepositFilter, $orderBy: [CurrencyDepositsOrderBy!]) {
+  currencyDeposits(
+    first: $first
+    offset: $offset
+    filter: $filter
+    orderBy: $orderBy
+  ) {
     nodes {
       nodeId
       id

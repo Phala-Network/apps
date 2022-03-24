@@ -1129,43 +1129,94 @@ export type _Metadata = {
   targetHeight?: Maybe<Scalars['Int']>;
 };
 
-export type BridgeOutboundingRecordsQueryVariables = Exact<{
-  filter?: InputMaybe<BridgeOutboundingRecordFilter>;
+export type XcmDepositedsQueryVariables = Exact<{
+  first?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Array<XcmDepositedsOrderBy> | XcmDepositedsOrderBy>;
+  filter?: InputMaybe<XcmDepositedFilter>;
 }>;
 
 
-export type BridgeOutboundingRecordsQuery = { __typename?: 'Query', bridgeOutboundingRecords?: { __typename?: 'BridgeOutboundingRecordsConnection', nodes: Array<{ __typename?: 'BridgeOutboundingRecord', nodeId: string, id: string, createdAt: string, destChainId: number, depositNonce: string, resourceId: string, amount?: string | null, recipient?: string | null, sendTx?: string | null, sender?: string | null } | null> } | null };
+export type XcmDepositedsQuery = { __typename?: 'Query', xcmDepositeds?: { __typename?: 'XcmDepositedsConnection', nodes: Array<{ __typename?: 'XcmDeposited', nodeId: string, id: string, createdAt: string, asset: string, amount?: string | null, recipient: string, isForward?: boolean | null } | null> } | null };
+
+export type BridgeInboundingRecordsQueryVariables = Exact<{
+  first?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Array<BridgeInboundingRecordsOrderBy> | BridgeInboundingRecordsOrderBy>;
+  filter?: InputMaybe<BridgeInboundingRecordFilter>;
+}>;
 
 
-export const BridgeOutboundingRecordsDocument = `
-    query BridgeOutboundingRecords($filter: BridgeOutboundingRecordFilter) {
-  bridgeOutboundingRecords(filter: $filter) {
+export type BridgeInboundingRecordsQuery = { __typename?: 'Query', bridgeInboundingRecords?: { __typename?: 'BridgeInboundingRecordsConnection', nodes: Array<{ __typename?: 'BridgeInboundingRecord', nodeId: string, id: string, createdAt: string, originChainId: number, depositNonce: string, resourceId: string, status: string, voteTxs: any, executeTx?: string | null } | null> } | null };
+
+
+export const XcmDepositedsDocument = `
+    query XcmDepositeds($first: Int, $offset: Int, $orderBy: [XcmDepositedsOrderBy!], $filter: XcmDepositedFilter) {
+  xcmDepositeds(
+    first: $first
+    offset: $offset
+    orderBy: $orderBy
+    filter: $filter
+  ) {
     nodes {
       nodeId
       id
       createdAt
-      destChainId
-      depositNonce
-      resourceId
+      asset
       amount
       recipient
-      sendTx
-      sender
+      isForward
     }
   }
 }
     `;
-export const useBridgeOutboundingRecordsQuery = <
-      TData = BridgeOutboundingRecordsQuery,
+export const useXcmDepositedsQuery = <
+      TData = XcmDepositedsQuery,
       TError = unknown
     >(
       client: GraphQLClient,
-      variables?: BridgeOutboundingRecordsQueryVariables,
-      options?: UseQueryOptions<BridgeOutboundingRecordsQuery, TError, TData>,
+      variables?: XcmDepositedsQueryVariables,
+      options?: UseQueryOptions<XcmDepositedsQuery, TError, TData>,
       headers?: RequestInit['headers']
     ) =>
-    useQuery<BridgeOutboundingRecordsQuery, TError, TData>(
-      variables === undefined ? ['BridgeOutboundingRecords'] : ['BridgeOutboundingRecords', variables],
-      fetcher<BridgeOutboundingRecordsQuery, BridgeOutboundingRecordsQueryVariables>(client, BridgeOutboundingRecordsDocument, variables, headers),
+    useQuery<XcmDepositedsQuery, TError, TData>(
+      variables === undefined ? ['XcmDepositeds'] : ['XcmDepositeds', variables],
+      fetcher<XcmDepositedsQuery, XcmDepositedsQueryVariables>(client, XcmDepositedsDocument, variables, headers),
+      options
+    );
+export const BridgeInboundingRecordsDocument = `
+    query BridgeInboundingRecords($first: Int, $offset: Int, $orderBy: [BridgeInboundingRecordsOrderBy!], $filter: BridgeInboundingRecordFilter) {
+  bridgeInboundingRecords(
+    first: $first
+    offset: $offset
+    orderBy: $orderBy
+    filter: $filter
+  ) {
+    nodes {
+      nodeId
+      id
+      createdAt
+      originChainId
+      depositNonce
+      resourceId
+      status
+      voteTxs
+      executeTx
+    }
+  }
+}
+    `;
+export const useBridgeInboundingRecordsQuery = <
+      TData = BridgeInboundingRecordsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: BridgeInboundingRecordsQueryVariables,
+      options?: UseQueryOptions<BridgeInboundingRecordsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<BridgeInboundingRecordsQuery, TError, TData>(
+      variables === undefined ? ['BridgeInboundingRecords'] : ['BridgeInboundingRecords', variables],
+      fetcher<BridgeInboundingRecordsQuery, BridgeInboundingRecordsQueryVariables>(client, BridgeInboundingRecordsDocument, variables, headers),
       options
     );
