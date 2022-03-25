@@ -2,7 +2,7 @@ import axios from 'axios'
 import {useEffect, useState} from 'react'
 
 type PHAPriceResponse = {
-  price: number
+  price: string
 }
 
 const usePHAPrice = (): number => {
@@ -12,11 +12,11 @@ const usePHAPrice = (): number => {
   useEffect(() => {
     axios
       .get<PHAPriceResponse>(
-        'https://crowdloan-api.phala.network/coin_market_charts/PHA'
+        'https://api.binance.com/api/v3/ticker/price?symbol=PHAUSDT'
       )
       .then(({data}) => {
         if (data) {
-          setPrice(data.price)
+          setPrice(Number(data.price))
         }
       })
   }, [])
