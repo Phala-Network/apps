@@ -3,7 +3,7 @@ import {useEthereumBridgeFee} from '@phala/react-libs'
 import {validateAddress} from '@phala/utils'
 import Decimal from 'decimal.js'
 import {ComponentProps, FC} from 'react'
-import {karuraBridgeFee} from '../../config'
+import {toKaruraXcmFee} from '../../config'
 import {useAllTransferData} from '../../store'
 import {useBridgePage} from '../../useBridgePage'
 import {Button} from '../Button'
@@ -60,16 +60,14 @@ export const SubmitButton: FC<SubmitButtonProps> = (props) => {
           maxAmountDecimal.sub(khalaBridgeFee.fee)
         )) ||
       (isToKarura &&
-        new Decimal(amountTo).greaterThan(
-          maxAmountDecimal.sub(karuraBridgeFee)
-        ))
+        new Decimal(amountTo).greaterThan(maxAmountDecimal.sub(toKaruraXcmFee)))
     ) {
       errorString = 'Insufficient balance'
     } else if (
       (isFromKhala &&
         khalaBridgeFee.fee &&
         new Decimal(amountTo).lessThan(khalaBridgeFee.fee)) ||
-      (isToKarura && new Decimal(amountTo).lessThan(karuraBridgeFee))
+      (isToKarura && new Decimal(amountTo).lessThan(toKaruraXcmFee))
     ) {
       errorString = 'The transaction amount should be greater than bridge fee'
     }

@@ -2,7 +2,8 @@ export const khalaChainId = 1
 export const khalaParaId = 2004
 export const karuraParaId = 2000
 
-export const karuraBridgeFee = 0.0512
+export const toKaruraXcmFee = 0.0512
+export const toKhalaXcmFee = 0.064
 
 export const keyringType = 'sr25519'
 

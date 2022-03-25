@@ -18,10 +18,13 @@ export const NetworkSelect: FC<NetworkSelectProps> = (props) => {
       const fromId = fromNetwork[0]?.id
       // HACK: hardcode for now
       return (
-        (props.kind === 'from' && id !== 'Karura') ||
+        props.kind === 'from' ||
         (props.kind === 'to' &&
           id !== fromId &&
-          ((fromId === 'Ethereum' && id === 'Khala') || fromId === 'Khala'))
+          !(
+            (fromId === 'Ethereum' && id === 'Karura') ||
+            (fromId === 'Karura' && id === 'Ethereum')
+          ))
       )
     })
   }, [props.kind, fromNetwork])

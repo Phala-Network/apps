@@ -14,7 +14,7 @@ import {KIND as ButtonKind} from 'baseui/button'
 import {ModalBody, ModalButton, ModalFooter} from 'baseui/modal'
 import Decimal from 'decimal.js'
 import React, {Fragment, useEffect, useMemo, useState} from 'react'
-import {karuraBridgeFee, karuraParaId} from '../../../config'
+import {toKaruraXcmFee, karuraParaId} from '../../../config'
 import {useAllTransferData} from '../../../store'
 import {buttonOverrides} from '../../../style/buttonOverrides'
 import {Button} from '../../Button'
@@ -121,7 +121,7 @@ export const TransferPHAFromKhalaToKarura: React.FC<
   return (
     <>
       <ModalBody>
-        <CurrentTransferInformationDetailItems bridgeFee={karuraBridgeFee} />
+        <CurrentTransferInformationDetailItems bridgeFee={toKaruraXcmFee} />
 
         <Spacer></Spacer>
 
@@ -131,7 +131,7 @@ export const TransferPHAFromKhalaToKarura: React.FC<
               <span>
                 This transaction will charge a{' '}
                 <span style={{fontWeight: 'bold'}}>
-                  {formatCurrency(karuraBridgeFee)} PHA
+                  {formatCurrency(toKaruraXcmFee)} PHA
                 </span>{' '}
                 bridge fee to cover the resource cost of the destination chain.
               </span>
