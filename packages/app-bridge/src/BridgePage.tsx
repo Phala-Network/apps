@@ -1,4 +1,5 @@
 import {Announcement, ToasterContainer} from '@phala/react-components'
+import {StyledLink} from 'baseui/link'
 import {PLACEMENT} from 'baseui/toast'
 import {FC, useState} from 'react'
 import {Helmet} from 'react-helmet'
@@ -28,33 +29,39 @@ export const BridgePage: FC = () => {
     <>
       <Root>
         <Helmet>
-          <title>Bridge</title>
+          <title>SubBridge</title>
         </Helmet>
 
         <MainContent>
           <Announcement>
-            Bridge&apos;s transaction tracking feature is under upgrade and
-            maintenance. After you submit your transaction. Please go to{' '}
-            <a
+            After you submit your transaction. Please go to{' '}
+            <StyledLink
               href="https://khala.subscan.io/"
               target="_blank"
               rel="noreferrer"
             >
               Subscan
-            </a>{' '}
+            </StyledLink>{' '}
             and{' '}
-            <a href="https://etherscan.io/" target="_blank" rel="noreferrer">
+            <StyledLink
+              href="https://etherscan.io/"
+              target="_blank"
+              rel="noreferrer"
+            >
               Etherscan
-            </a>{' '}
-            to check the progress of your transaction. If you have any
-            questions. Please come to our{' '}
-            <a
+            </StyledLink>{' '}
+            to check the progress of your transaction. Or you can check this{' '}
+            <StyledLink href="/bridge/track" target="_blank" rel="noreferrer">
+              page
+            </StyledLink>
+            . If you have any questions. Please come to our{' '}
+            <StyledLink
               href="https://discord.com/invite/phala"
               target="_blank"
               rel="noreferrer"
             >
               discord
-            </a>{' '}
+            </StyledLink>{' '}
             channel for support.
           </Announcement>
 

@@ -7,6 +7,7 @@ import Helmet from 'react-helmet'
 import {Button} from 'baseui/button'
 import {useStyletron} from 'baseui'
 import {FormControl} from 'baseui/form-control'
+import {HeadingLarge} from 'baseui/typography'
 import {formatCurrency, validateAddress} from '@phala/utils'
 // import {ethers} from 'ethers'
 import {encodeAddress} from '@polkadot/util-crypto'
@@ -19,6 +20,8 @@ import {
   XcmDepositedsOrderBy,
 } from './hooks/khalaSubquery'
 import Decimal from 'decimal.js'
+import {Announcement} from '@phala/react-components'
+import {Block} from 'baseui/block'
 
 type DataT = {
   createdAt: string
@@ -148,62 +151,80 @@ export const TrackPage: VFC = () => {
   return (
     <>
       <Helmet title="Bridge Records" />
-      <Card
-        overrides={{
-          Root: {
-            style: ({$theme}) => ({
-              borderRadius: '0',
-              marginTop: $theme.sizing.scale800,
-              ...$theme.borders.border200,
-            }),
-          },
-        }}
-      >
-        <form
-          className={css({display: 'flex', alignItems: 'flex-start'})}
-          onSubmit={onSubmit}
-        >
-          <FormControl error={errorString}>
-            <StatefulInput
-              autoFocus
-              placeholder="Search by recipient"
-              name="searchString"
-            />
-          </FormControl>
-          <Button
-            type="submit"
-            $style={({$theme}: any) => ({
-              marginLeft: $theme.sizing.scale400,
-            })}
-          >
-            Search
-          </Button>
-        </form>
 
-        <TableBuilder
-          isLoading={isLoading}
-          data={transformedData}
-          emptyMessage="No Results"
+      <Block marginTop="scale800">
+        <Announcement>
+          You can search for your bridge transfer transaction through the dest
+          chain address. If there is no result, it is not received. Currently
+          only Ethereum to Khala and Khala to Karura transactions are
+          searchable. If you have any questions. Please come to our{' '}
+          <a
+            href="https://discord.com/invite/phala"
+            target="_blank"
+            rel="noreferrer"
+          >
+            discord
+          </a>{' '}
+          channel for support.
+        </Announcement>
+        <HeadingLarge>SubBridge Track</HeadingLarge>
+        <Card
+          overrides={{
+            Root: {
+              style: ({$theme}) => ({
+                borderRadius: '0',
+                marginTop: $theme.sizing.scale800,
+                ...$theme.borders.border200,
+              }),
+            },
+          }}
         >
-          <TableBuilderColumn id="recipient" header="Recipient">
-            {(data: DataT) => data.recipient}
-          </TableBuilderColumn>
-          <TableBuilderColumn id="amount" header="Amount">
-            {(data: DataT) => {
-              if (!data.amount) return '-'
-              return `${formatCurrency(
-                new Decimal(data.amount).div(10 ** 12),
-                12
-              )} PHA` // Hardcoded currency
-            }}
-          </TableBuilderColumn>
-          <TableBuilderColumn id="createdAt" header="Date">
-            {(data: DataT) => {
-              return new Date(data.createdAt).toLocaleString()
-            }}
-          </TableBuilderColumn>
-        </TableBuilder>
-      </Card>
+          <form
+            className={css({display: 'flex', alignItems: 'flex-start'})}
+            onSubmit={onSubmit}
+          >
+            <FormControl error={errorString}>
+              <StatefulInput
+                autoFocus
+                placeholder="Search by recipient"
+                name="searchString"
+              />
+            </FormControl>
+            <Button
+              type="submit"
+              $style={({$theme}: any) => ({
+                marginLeft: $theme.sizing.scale400,
+              })}
+            >
+              Search
+            </Button>
+          </form>
+
+          <TableBuilder
+            isLoading={isLoading}
+            data={transformedData}
+            emptyMessage="No Results"
+          >
+            <TableBuilderColumn id="recipient" header="Recipient">
+              {(data: DataT) => data.recipient}
+            </TableBuilderColumn>
+            <TableBuilderColumn id="amount" header="Amount">
+              {(data: DataT) => {
+                if (!data.amount) return '-'
+                return `${formatCurrency(
+                  new Decimal(data.amount).div(10 ** 12),
+                  12
+                )} PHA` // Hardcoded currency
+              }}
+            </TableBuilderColumn>
+            <TableBuilderColumn id="createdAt" header="Date">
+              {(data: DataT) => {
+                return new Date(data.createdAt).toLocaleString()
+              }}
+            </TableBuilderColumn>
+          </TableBuilder>
+        </Card>
+      </Block>
     </>
   )
 }
