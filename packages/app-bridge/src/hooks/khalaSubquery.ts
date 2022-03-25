@@ -86,6 +86,212 @@ export type BooleanFilter = {
   notIn?: InputMaybe<Array<Scalars['Boolean']>>;
 };
 
+export type BridgeDeposited = Node & {
+  __typename?: 'BridgeDeposited';
+  amount?: Maybe<Scalars['BigFloat']>;
+  asset: Scalars['String'];
+  createdAt: Scalars['Datetime'];
+  id: Scalars['String'];
+  /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
+  nodeId: Scalars['ID'];
+  recipient: Scalars['String'];
+};
+
+export type BridgeDepositedAggregates = {
+  __typename?: 'BridgeDepositedAggregates';
+  keys?: Maybe<Array<Scalars['String']>>;
+};
+
+/** A filter to be used against `BridgeDeposited` object types. All fields are combined with a logical ‘and.’ */
+export type BridgeDepositedFilter = {
+  /** Filter by the object’s `amount` field. */
+  amount?: InputMaybe<BigFloatFilter>;
+  /** Checks for all expressions in this list. */
+  and?: InputMaybe<Array<BridgeDepositedFilter>>;
+  /** Filter by the object’s `asset` field. */
+  asset?: InputMaybe<StringFilter>;
+  /** Filter by the object’s `createdAt` field. */
+  createdAt?: InputMaybe<DatetimeFilter>;
+  /** Filter by the object’s `id` field. */
+  id?: InputMaybe<StringFilter>;
+  /** Negates the expression. */
+  not?: InputMaybe<BridgeDepositedFilter>;
+  /** Checks for any expressions in this list. */
+  or?: InputMaybe<Array<BridgeDepositedFilter>>;
+  /** Filter by the object’s `recipient` field. */
+  recipient?: InputMaybe<StringFilter>;
+};
+
+/** A connection to a list of `BridgeDeposited` values. */
+export type BridgeDepositedsConnection = {
+  __typename?: 'BridgeDepositedsConnection';
+  /** Aggregates across the matching connection (ignoring before/after/first/last/offset) */
+  aggregates?: Maybe<BridgeDepositedAggregates>;
+  /** A list of edges which contains the `BridgeDeposited` and cursor to aid in pagination. */
+  edges: Array<BridgeDepositedsEdge>;
+  /** Grouped aggregates across the matching connection (ignoring before/after/first/last/offset) */
+  groupedAggregates?: Maybe<Array<BridgeDepositedAggregates>>;
+  /** A list of `BridgeDeposited` objects. */
+  nodes: Array<Maybe<BridgeDeposited>>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `BridgeDeposited` you could get from the connection. */
+  totalCount: Scalars['Int'];
+};
+
+
+/** A connection to a list of `BridgeDeposited` values. */
+export type BridgeDepositedsConnectionGroupedAggregatesArgs = {
+  groupBy: Array<BridgeDepositedsGroupBy>;
+  having?: InputMaybe<BridgeDepositedsHavingInput>;
+};
+
+/** A `BridgeDeposited` edge in the connection. */
+export type BridgeDepositedsEdge = {
+  __typename?: 'BridgeDepositedsEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']>;
+  /** The `BridgeDeposited` at the end of the edge. */
+  node?: Maybe<BridgeDeposited>;
+};
+
+/** Grouping methods for `BridgeDeposited` for usage during aggregation. */
+export enum BridgeDepositedsGroupBy {
+  Amount = 'AMOUNT',
+  Asset = 'ASSET',
+  CreatedAt = 'CREATED_AT',
+  Recipient = 'RECIPIENT'
+}
+
+/** Conditions for `BridgeDeposited` aggregates. */
+export type BridgeDepositedsHavingInput = {
+  AND?: InputMaybe<Array<BridgeDepositedsHavingInput>>;
+  OR?: InputMaybe<Array<BridgeDepositedsHavingInput>>;
+};
+
+/** Methods to use when ordering `BridgeDeposited`. */
+export enum BridgeDepositedsOrderBy {
+  AmountAsc = 'AMOUNT_ASC',
+  AmountDesc = 'AMOUNT_DESC',
+  AssetAsc = 'ASSET_ASC',
+  AssetDesc = 'ASSET_DESC',
+  CreatedAtAsc = 'CREATED_AT_ASC',
+  CreatedAtDesc = 'CREATED_AT_DESC',
+  IdAsc = 'ID_ASC',
+  IdDesc = 'ID_DESC',
+  Natural = 'NATURAL',
+  PrimaryKeyAsc = 'PRIMARY_KEY_ASC',
+  PrimaryKeyDesc = 'PRIMARY_KEY_DESC',
+  RecipientAsc = 'RECIPIENT_ASC',
+  RecipientDesc = 'RECIPIENT_DESC'
+}
+
+export type BridgeForwarded = Node & {
+  __typename?: 'BridgeForwarded';
+  amount?: Maybe<Scalars['BigFloat']>;
+  asset: Scalars['String'];
+  createdAt: Scalars['Datetime'];
+  dest: Scalars['String'];
+  id: Scalars['String'];
+  /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
+  nodeId: Scalars['ID'];
+  recipient: Scalars['String'];
+};
+
+export type BridgeForwardedAggregates = {
+  __typename?: 'BridgeForwardedAggregates';
+  keys?: Maybe<Array<Scalars['String']>>;
+};
+
+/** A filter to be used against `BridgeForwarded` object types. All fields are combined with a logical ‘and.’ */
+export type BridgeForwardedFilter = {
+  /** Filter by the object’s `amount` field. */
+  amount?: InputMaybe<BigFloatFilter>;
+  /** Checks for all expressions in this list. */
+  and?: InputMaybe<Array<BridgeForwardedFilter>>;
+  /** Filter by the object’s `asset` field. */
+  asset?: InputMaybe<StringFilter>;
+  /** Filter by the object’s `createdAt` field. */
+  createdAt?: InputMaybe<DatetimeFilter>;
+  /** Filter by the object’s `dest` field. */
+  dest?: InputMaybe<StringFilter>;
+  /** Filter by the object’s `id` field. */
+  id?: InputMaybe<StringFilter>;
+  /** Negates the expression. */
+  not?: InputMaybe<BridgeForwardedFilter>;
+  /** Checks for any expressions in this list. */
+  or?: InputMaybe<Array<BridgeForwardedFilter>>;
+  /** Filter by the object’s `recipient` field. */
+  recipient?: InputMaybe<StringFilter>;
+};
+
+/** A connection to a list of `BridgeForwarded` values. */
+export type BridgeForwardedsConnection = {
+  __typename?: 'BridgeForwardedsConnection';
+  /** Aggregates across the matching connection (ignoring before/after/first/last/offset) */
+  aggregates?: Maybe<BridgeForwardedAggregates>;
+  /** A list of edges which contains the `BridgeForwarded` and cursor to aid in pagination. */
+  edges: Array<BridgeForwardedsEdge>;
+  /** Grouped aggregates across the matching connection (ignoring before/after/first/last/offset) */
+  groupedAggregates?: Maybe<Array<BridgeForwardedAggregates>>;
+  /** A list of `BridgeForwarded` objects. */
+  nodes: Array<Maybe<BridgeForwarded>>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `BridgeForwarded` you could get from the connection. */
+  totalCount: Scalars['Int'];
+};
+
+
+/** A connection to a list of `BridgeForwarded` values. */
+export type BridgeForwardedsConnectionGroupedAggregatesArgs = {
+  groupBy: Array<BridgeForwardedsGroupBy>;
+  having?: InputMaybe<BridgeForwardedsHavingInput>;
+};
+
+/** A `BridgeForwarded` edge in the connection. */
+export type BridgeForwardedsEdge = {
+  __typename?: 'BridgeForwardedsEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']>;
+  /** The `BridgeForwarded` at the end of the edge. */
+  node?: Maybe<BridgeForwarded>;
+};
+
+/** Grouping methods for `BridgeForwarded` for usage during aggregation. */
+export enum BridgeForwardedsGroupBy {
+  Amount = 'AMOUNT',
+  Asset = 'ASSET',
+  CreatedAt = 'CREATED_AT',
+  Dest = 'DEST',
+  Recipient = 'RECIPIENT'
+}
+
+/** Conditions for `BridgeForwarded` aggregates. */
+export type BridgeForwardedsHavingInput = {
+  AND?: InputMaybe<Array<BridgeForwardedsHavingInput>>;
+  OR?: InputMaybe<Array<BridgeForwardedsHavingInput>>;
+};
+
+/** Methods to use when ordering `BridgeForwarded`. */
+export enum BridgeForwardedsOrderBy {
+  AmountAsc = 'AMOUNT_ASC',
+  AmountDesc = 'AMOUNT_DESC',
+  AssetAsc = 'ASSET_ASC',
+  AssetDesc = 'ASSET_DESC',
+  CreatedAtAsc = 'CREATED_AT_ASC',
+  CreatedAtDesc = 'CREATED_AT_DESC',
+  DestAsc = 'DEST_ASC',
+  DestDesc = 'DEST_DESC',
+  IdAsc = 'ID_ASC',
+  IdDesc = 'ID_DESC',
+  Natural = 'NATURAL',
+  PrimaryKeyAsc = 'PRIMARY_KEY_ASC',
+  PrimaryKeyDesc = 'PRIMARY_KEY_DESC',
+  RecipientAsc = 'RECIPIENT_ASC',
+  RecipientDesc = 'RECIPIENT_DESC'
+}
+
 export type BridgeInboundingRecord = Node & {
   __typename?: 'BridgeInboundingRecord';
   createdAt: Scalars['Datetime'];
@@ -439,6 +645,16 @@ export type PageInfo = {
 export type Query = Node & {
   __typename?: 'Query';
   _metadata?: Maybe<_Metadata>;
+  bridgeDeposited?: Maybe<BridgeDeposited>;
+  /** Reads a single `BridgeDeposited` using its globally unique `ID`. */
+  bridgeDepositedByNodeId?: Maybe<BridgeDeposited>;
+  /** Reads and enables pagination through a set of `BridgeDeposited`. */
+  bridgeDepositeds?: Maybe<BridgeDepositedsConnection>;
+  bridgeForwarded?: Maybe<BridgeForwarded>;
+  /** Reads a single `BridgeForwarded` using its globally unique `ID`. */
+  bridgeForwardedByNodeId?: Maybe<BridgeForwarded>;
+  /** Reads and enables pagination through a set of `BridgeForwarded`. */
+  bridgeForwardeds?: Maybe<BridgeForwardedsConnection>;
   bridgeInboundingRecord?: Maybe<BridgeInboundingRecord>;
   /** Reads a single `BridgeInboundingRecord` using its globally unique `ID`. */
   bridgeInboundingRecordByNodeId?: Maybe<BridgeInboundingRecord>;
@@ -478,6 +694,54 @@ export type Query = Node & {
   xcmWithdrawnByNodeId?: Maybe<XcmWithdrawn>;
   /** Reads and enables pagination through a set of `XcmWithdrawn`. */
   xcmWithdrawns?: Maybe<XcmWithdrawnsConnection>;
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryBridgeDepositedArgs = {
+  id: Scalars['String'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryBridgeDepositedByNodeIdArgs = {
+  nodeId: Scalars['ID'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryBridgeDepositedsArgs = {
+  after?: InputMaybe<Scalars['Cursor']>;
+  before?: InputMaybe<Scalars['Cursor']>;
+  filter?: InputMaybe<BridgeDepositedFilter>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Array<BridgeDepositedsOrderBy>>;
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryBridgeForwardedArgs = {
+  id: Scalars['String'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryBridgeForwardedByNodeIdArgs = {
+  nodeId: Scalars['ID'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryBridgeForwardedsArgs = {
+  after?: InputMaybe<Scalars['Cursor']>;
+  before?: InputMaybe<Scalars['Cursor']>;
+  filter?: InputMaybe<BridgeForwardedFilter>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Array<BridgeForwardedsOrderBy>>;
 };
 
 
@@ -1139,15 +1403,15 @@ export type XcmDepositedsQueryVariables = Exact<{
 
 export type XcmDepositedsQuery = { __typename?: 'Query', xcmDepositeds?: { __typename?: 'XcmDepositedsConnection', nodes: Array<{ __typename?: 'XcmDeposited', nodeId: string, id: string, createdAt: string, asset: string, amount?: string | null, recipient: string, isForward?: boolean | null } | null> } | null };
 
-export type BridgeInboundingRecordsQueryVariables = Exact<{
+export type BridgeDepositedQueryVariables = Exact<{
   first?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<Array<BridgeInboundingRecordsOrderBy> | BridgeInboundingRecordsOrderBy>;
-  filter?: InputMaybe<BridgeInboundingRecordFilter>;
+  orderBy?: InputMaybe<Array<BridgeDepositedsOrderBy> | BridgeDepositedsOrderBy>;
+  filter?: InputMaybe<BridgeDepositedFilter>;
 }>;
 
 
-export type BridgeInboundingRecordsQuery = { __typename?: 'Query', bridgeInboundingRecords?: { __typename?: 'BridgeInboundingRecordsConnection', nodes: Array<{ __typename?: 'BridgeInboundingRecord', nodeId: string, id: string, createdAt: string, originChainId: number, depositNonce: string, resourceId: string, status: string, voteTxs: any, executeTx?: string | null } | null> } | null };
+export type BridgeDepositedQuery = { __typename?: 'Query', bridgeDepositeds?: { __typename?: 'BridgeDepositedsConnection', nodes: Array<{ __typename?: 'BridgeDeposited', nodeId: string, recipient: string, asset: string, id: string, createdAt: string, amount?: string | null } | null> } | null };
 
 
 export const XcmDepositedsDocument = `
@@ -1184,9 +1448,9 @@ export const useXcmDepositedsQuery = <
       fetcher<XcmDepositedsQuery, XcmDepositedsQueryVariables>(client, XcmDepositedsDocument, variables, headers),
       options
     );
-export const BridgeInboundingRecordsDocument = `
-    query BridgeInboundingRecords($first: Int, $offset: Int, $orderBy: [BridgeInboundingRecordsOrderBy!], $filter: BridgeInboundingRecordFilter) {
-  bridgeInboundingRecords(
+export const BridgeDepositedDocument = `
+    query BridgeDeposited($first: Int, $offset: Int, $orderBy: [BridgeDepositedsOrderBy!], $filter: BridgeDepositedFilter) {
+  bridgeDepositeds(
     first: $first
     offset: $offset
     orderBy: $orderBy
@@ -1194,29 +1458,26 @@ export const BridgeInboundingRecordsDocument = `
   ) {
     nodes {
       nodeId
+      recipient
+      asset
       id
       createdAt
-      originChainId
-      depositNonce
-      resourceId
-      status
-      voteTxs
-      executeTx
+      amount
     }
   }
 }
     `;
-export const useBridgeInboundingRecordsQuery = <
-      TData = BridgeInboundingRecordsQuery,
+export const useBridgeDepositedQuery = <
+      TData = BridgeDepositedQuery,
       TError = unknown
     >(
       client: GraphQLClient,
-      variables?: BridgeInboundingRecordsQueryVariables,
-      options?: UseQueryOptions<BridgeInboundingRecordsQuery, TError, TData>,
+      variables?: BridgeDepositedQueryVariables,
+      options?: UseQueryOptions<BridgeDepositedQuery, TError, TData>,
       headers?: RequestInit['headers']
     ) =>
-    useQuery<BridgeInboundingRecordsQuery, TError, TData>(
-      variables === undefined ? ['BridgeInboundingRecords'] : ['BridgeInboundingRecords', variables],
-      fetcher<BridgeInboundingRecordsQuery, BridgeInboundingRecordsQueryVariables>(client, BridgeInboundingRecordsDocument, variables, headers),
+    useQuery<BridgeDepositedQuery, TError, TData>(
+      variables === undefined ? ['BridgeDeposited'] : ['BridgeDeposited', variables],
+      fetcher<BridgeDepositedQuery, BridgeDepositedQueryVariables>(client, BridgeDepositedDocument, variables, headers),
       options
     );

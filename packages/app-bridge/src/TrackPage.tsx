@@ -16,6 +16,8 @@ import {
   useCurrencyDepositsQuery,
 } from './hooks/karuraSubquery'
 import {
+  useBridgeDepositedQuery,
+  BridgeDepositedsOrderBy,
   useXcmDepositedsQuery,
   XcmDepositedsOrderBy,
 } from './hooks/khalaSubquery'
@@ -40,6 +42,7 @@ export const TrackPage: VFC = () => {
   const [errorString, setErrorString] = useState('')
   const [karuraXcmRecipient, setKaruraXcmRecipient] = useState('')
   const [khalaXcmRecipient, setKhalaXcmRecipient] = useState('')
+  const [khalaBridgeRecipient, setKhalaBridgeXcmRecipient] = useState('')
   // const [ethereumRecipient, setEthereumRecipient] = useState('')
   const [css] = useStyletron()
 
@@ -81,6 +84,25 @@ export const TrackPage: VFC = () => {
       }
     )
 
+  const {data: khalaBridgeData, isLoading: isKhalaBridgeLoading} =
+    useBridgeDepositedQuery(
+      khalaClient,
+      {
+        filter: {
+          asset: {
+            equalTo: '{"parents":0,"interior":{"here":null}}', // PHA
+          },
+          recipient: {
+            equalTo: khalaBridgeRecipient,
+          },
+        },
+        orderBy: BridgeDepositedsOrderBy.CreatedAtDesc,
+      },
+      {
+        enabled: Boolean(khalaBridgeRecipient),
+      }
+    )
+
   const transformedData = useMemo<DataT[]>(() => {
     const data: DataT[] = []
     if (khalaXcmData?.xcmDepositeds?.nodes.length) {
@@ -107,13 +129,26 @@ export const TrackPage: VFC = () => {
       )
     }
 
+    if (khalaBridgeData?.bridgeDepositeds?.nodes.length) {
+      data.push(
+        ...khalaBridgeData.bridgeDepositeds.nodes
+          .filter(<T,>(node: T): node is NonNullable<T> => node !== null)
+          .map((node) => ({
+            createdAt: node.createdAt,
+            amount: node.amount,
+            recipient: node.recipient,
+          }))
+      )
+    }
+
     return data.sort(
       (a, b) =>
         new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
     )
-  }, [khalaXcmData, karuraXcmData])
+  }, [khalaXcmData, karuraXcmData, khalaBridgeData])
 
-  const isLoading = isKaruraXcmLoading || isKhalaXcmLoading
+  const isLoading =
+    isKaruraXcmLoading || isKhalaXcmLoading || isKhalaBridgeLoading
 
   const onSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault()
@@ -134,6 +169,7 @@ export const TrackPage: VFC = () => {
     ) {
       setKaruraXcmRecipient(encodeAddress(value, 8))
       setKhalaXcmRecipient(encodeAddress(value, 42)) // Khala subquery use 42 instead of 30
+      setKhalaBridgeXcmRecipient(encodeAddress(value, 30))
     }
     // else if (
     //   // Ethereum address
