@@ -1,28 +1,22 @@
-// import {useKhalaBridgeFee} from '../..'
 import {Alert, Checkbox, FeeLabel, Spacer, toast} from '@phala/react-components'
 import {Link} from '@phala/react-components/src/Announcement/styledComponents'
 import {
   decimalToBalance,
   useApiPromise,
   useDecimalJsTokenDecimalMultiplier,
-  // useTransactionFee,
   useTransferSubmit,
 } from '@phala/react-libs'
 import {Block} from 'baseui/block'
-// import useTransactionInfo from '../../hooks/useTransactionInfo'
 import {KIND as ButtonKind} from 'baseui/button'
-import {StyledLink} from 'baseui/link'
 import {ModalBody, ModalButton, ModalFooter} from 'baseui/modal'
 import Decimal from 'decimal.js'
 import {getAddress} from 'ethers/lib/utils'
 import React, {Fragment, useEffect, useMemo, useState} from 'react'
-// import {Link} from '../../../Announcement/styledComponents'
 import {useKhalaBridgeFee} from '../../../../hooks/useKhalaBridgeFee'
 import {useAllTransferData} from '../../../../store'
 import {buttonOverrides} from '../../../../style/buttonOverrides'
 import {Button} from '../../../Button'
 import {CurrentTransferInformationDetailItems} from '../../../CurrentTransferInformationDetailItems'
-// import {KhalaToEthereumFee} from '../../../KhalaToEthereumFee'
 
 interface TransferPHAFromKhalaToEthereumProps {
   onCloseTransfer(): void
@@ -46,7 +40,6 @@ export const TransferPHAFromKhalaToEthereum: React.FC<
   const fee = useKhalaBridgeFee()
   const [checkBoxChecked, setCheckBoxChecked] = useState<boolean>(false)
   const [transactionFee, setTransactionFee] = useState('')
-  const [transactionHash, setTransactionHash] = useState('')
 
   const amount = useMemo(() => {
     if (!amountDecimal || !api || !decimals || !fee) return
@@ -82,7 +75,7 @@ export const TransferPHAFromKhalaToEthereum: React.FC<
 
       const accountToAddress = getAddress(toAddress)
 
-      const hash = await transferSubmit?.(
+      await transferSubmit?.(
         amount,
         accountToAddress,
         fromAddress,
@@ -100,9 +93,6 @@ export const TransferPHAFromKhalaToEthereum: React.FC<
           }
         }
       )
-      if (hash) {
-        setTransactionHash(hash.toString())
-      }
     } catch (e) {
       console.error(e)
     } finally {
@@ -112,22 +102,6 @@ export const TransferPHAFromKhalaToEthereum: React.FC<
 
   return (
     <>
-      {/* from amount add bridge fee is the finally amount */}
-      {/* <BaseInfo
-        layout={layout}
-        fromTooltip={`${transactionInfo.from.amount} PHA + ${fee} PHA`}
-        data={{
-          ...transactionInfo,
-          from: {
-            ...transactionInfo.from,
-
-            amount: new Decimal(fee ?? 0)
-              .add(transactionInfo.from.amount)
-              .toNumber(),
-          },
-        }}
-      /> */}
-
       <ModalBody>
         <CurrentTransferInformationDetailItems bridgeFee={fee} />
 
@@ -192,16 +166,6 @@ export const TransferPHAFromKhalaToEthereum: React.FC<
           </Alert>
         )}
 
-        {/* <Alert>
-        {progressIndex >= 0 && (
-          <KhalaProcess
-            khalaAddress={fromAddress}
-            etherscanAddress={toAddress}
-            progressIndex={progressIndex}
-          />
-        )}
-      </Alert> */}
-
         {progressIndex === -1 && (
           <label
             style={{
@@ -228,20 +192,13 @@ export const TransferPHAFromKhalaToEthereum: React.FC<
           <FeeLabel fee={transactionFee || '-'} label={'Fee'} />
         )}
 
-        {transactionHash && (
+        {progressIndex > 1 && (
           <>
             <Spacer></Spacer>
             <Alert>
               <span>
                 Transaction has been sent, it may take some time ranged from a
-                few seconds to a few hours. Transaction：
-                <StyledLink
-                  href={`https://khala.subscan.io/extrinsic/${transactionHash}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {transactionHash}
-                </StyledLink>
+                few seconds to a few hours.
               </span>
             </Alert>
           </>

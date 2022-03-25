@@ -11,7 +11,6 @@ import {u8aToHex} from '@polkadot/util'
 import {decodeAddress} from '@polkadot/util-crypto'
 import {Block} from 'baseui/block'
 import {KIND as ButtonKind} from 'baseui/button'
-import {StyledLink} from 'baseui/link'
 import {ModalBody, ModalButton, ModalFooter} from 'baseui/modal'
 import Decimal from 'decimal.js'
 import React, {Fragment, useEffect, useMemo, useState} from 'react'
@@ -40,7 +39,6 @@ export const TransferPHAFromKhalaToKarura: React.FC<
   const [isSubmitting, setSubmitting] = useState<boolean>(false)
   const [progressIndex, setProgressIndex] = useState(-1)
   const [transactionFee, setTransactionFee] = useState('')
-  const [transactionHash, setTransactionHash] = useState('')
 
   const amount = useMemo(() => {
     if (!amountDecimal || !api || !decimals) return
@@ -94,7 +92,7 @@ export const TransferPHAFromKhalaToKarura: React.FC<
 
       const signer = (await web3FromAddress(fromAddress)).signer
 
-      const hash = await waitSignAndSend?.({
+      await waitSignAndSend?.({
         api,
         account: fromAddress,
         extrinsic,
@@ -113,9 +111,6 @@ export const TransferPHAFromKhalaToKarura: React.FC<
           }
         },
       })
-      if (hash) {
-        setTransactionHash(hash.toString())
-      }
     } catch (e) {
       console.error(e)
     } finally {
@@ -153,20 +148,12 @@ export const TransferPHAFromKhalaToKarura: React.FC<
           </>
         )}
 
-        {transactionHash && (
+        {progressIndex > 1 && (
           <>
             <Spacer></Spacer>
             <Alert>
               <span>
                 Transaction has been sent, it may take within 1 minute.
-                Transaction：
-                <StyledLink
-                  href={`https://khala.subscan.io/extrinsic/${transactionHash}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {transactionHash}
-                </StyledLink>
               </span>
             </Alert>
           </>
