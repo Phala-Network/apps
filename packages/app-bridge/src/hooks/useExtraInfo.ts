@@ -9,5 +9,10 @@ export function useExtraInfo(): {
 
   const bridgeFee = useBridgeFee(transactionInfo.fromNetwork)
 
-  return [{label: 'Bridge Fee', value: bridgeFee}]
+  return [
+    {
+      label: transactionInfo.fromNetwork === 'Ethereum' ? 'Fee' : 'Bridge Fee',
+      value: bridgeFee || '-',
+    },
+  ]
 }
