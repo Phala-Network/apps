@@ -15,6 +15,7 @@ const Root = styled.div`
   grid-template-columns: 20px 1fr;
   grid-gap: 8px;
   align-items: center;
+  word-break: break-all;
 `
 
 export const Alert: React.FC<ComponentProps<typeof Root>> = (props) => {

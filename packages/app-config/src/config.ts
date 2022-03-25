@@ -9,19 +9,21 @@ export const ethereumGraphEndpoint = {
 }
 
 export const ethereums: Record<string, EthereumNetworkOptions> = {
-  // 42: {
-  //   bridge: '0xC84456ecA286194A201F844993C220150Cf22C63',
-  //   erc20: '0x6c5ba91642f10282b576d91922ae6448c9d52f4e',
-  //   erc20AssetHandler: '0x6eD3bc069Cf4F87DE05c04C352E8356492EC6eFE',
-  //   erc20ResourceId:
-  //     '0x00000000000000000000000000000063a7e2be78898ba83824b0c0cc8dfb6001',
-  //   peerChainIds: {
-  //     'khala-pc-test': 1,
-  //   },
-  //   graph: {
-  //     endpoint: 'https://graphs-api.phala.network/subgraphs/name/chainbridge',
-  //   },
-  // },
+  // Rinkeby
+  4: {
+    bridge: '0x0712Cf53B9fA1A33018d180a4AbcC7f1803F55f4',
+    erc20: '0xd06F0F098948cBdFcB9ED8d85688637478724855',
+    erc20AssetHandler: '0x30f8549A46afa69f3F9b46e3C28F456796E6Cf37',
+    erc20ResourceId:
+      '0x00e6dfb61a2fb903df487c401663825643bb825d41695e63df8af6162ab145a6',
+    peerChainIds: {
+      khala: 1, // TODO: add thala testnet
+    },
+    graph: {
+      endpoint: '',
+    },
+  },
+
   42: {
     bridge: '0xe5F54e020f3E4964Ba11D269Cdda602A78d09917',
     erc20: '0x512f7a3c14b6ee86c2015bc8ac1fe97e657f75f2',
@@ -36,6 +38,8 @@ export const ethereums: Record<string, EthereumNetworkOptions> = {
         'https://explorer.subquery.network/subquery/Phala-Network/khala-chainbridge',
     },
   },
+
+  // Mainnet
   1: {
     bridge: '0xC84456ecA286194A201F844993C220150Cf22C63',
     erc20: '0x6c5ba91642f10282b576d91922ae6448c9d52f4e',

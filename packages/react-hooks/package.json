@@ -7,9 +7,9 @@
     "@phala/app-config": "workspace:0.0.1",
     "@phala/react-libs": "workspace:0.0.1",
     "@phala/utils": "workspace:0.0.1",
-    "@polkadot/api": "^6.12.1",
-    "@polkadot/api-derive": "^6.12.1",
-    "@polkadot/types": "^6.12.1",
+    "@polkadot/api": "^7.13.1",
+    "@polkadot/api-derive": "^7.13.1",
+    "@polkadot/types": "^7.13.1",
     "@polkadot/util": "^8.1.2",
     "@sentry/react": "^6.16.0",
     "@types/react": "^17.0.37",
@@ -17,7 +17,6 @@
     "decimal.js": "^10.3.1",
     "ethers": "^5.5.3",
     "react": "^17.0.2",
-    "react-query": "3.34.5",
     "styled-breakpoints": "^10.0.1",
     "vconsole": "^3.9.1"
   }

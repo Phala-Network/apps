@@ -51,6 +51,16 @@ const NODES: NodeType[] = [
     name: 'Khala via Onfinality',
     address: 'wss://khala.api.onfinality.io/public-ws',
   },
+  ...(process.env.NODE_ENV === 'development' ||
+  process.env.CONTEXT === 'deploy-preview' ||
+  process.env.CONTEXT === 'branch-deploy'
+    ? [
+        {
+          name: 'Thala Testnet',
+          address: 'ws://35.215.179.221:9944',
+        },
+      ]
+    : []),
 ]
 
 const SelectNode: React.FC = () => {
