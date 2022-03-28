@@ -20,6 +20,9 @@ const fromNetwork = atom(
     if (newPrice[0]?.id === 'Ethereum' && toNetworkValue[0]?.id === 'Karura') {
       set(toNetwork, [networks[1]])
     }
+    if (newPrice[0]?.id === 'Karura' && toNetworkValue[0]?.id === 'Ethereum') {
+      set(toNetwork, [networks[1]])
+    }
 
     if (toNetworkValue[0]?.id === newPrice[0]?.id) {
       set(toNetwork, fromNetworkValue)

@@ -1,10 +1,5 @@
 import {Alert, FeeLabel, Spacer} from '@phala/react-components'
-import {
-  decimalToBalance,
-  useApiPromise,
-  useDecimalJsTokenDecimalMultiplier,
-  waitSignAndSend,
-} from '@phala/react-libs'
+import {decimalToBalance, waitSignAndSend} from '@phala/react-libs'
 import {formatCurrency} from '@phala/utils'
 import {u8aToHex} from '@polkadot/util'
 import {decodeAddress} from '@polkadot/util-crypto'
@@ -13,26 +8,26 @@ import {KIND as ButtonKind} from 'baseui/button'
 import {ModalBody, ModalButton, ModalFooter} from 'baseui/modal'
 import Decimal from 'decimal.js'
 import React, {Fragment, useEffect, useMemo, useState} from 'react'
-import {toKaruraXcmFee, karuraParaId} from '../../../config'
+import {khalaParaId, toKhalaXcmFee} from '../../../config'
+import {useKaruraApi} from '../../../hooks/useKaruraApi'
 import {useAllTransferData} from '../../../store'
 import {buttonOverrides} from '../../../style/buttonOverrides'
 import {Button} from '../../Button'
 import {CurrentTransferInformationDetailItems} from '../../CurrentTransferInformationDetailItems'
 
-interface TransferPHAFromKhalaToKaruraProps {
+interface TransferPHAFromKaruraToKhalaProps {
   onCloseTransfer(): void
 }
 
-export const TransferPHAFromKhalaToKarura: React.FC<
-  TransferPHAFromKhalaToKaruraProps
+export const TransferPHAFromKaruraToKhala: React.FC<
+  TransferPHAFromKaruraToKhalaProps
 > = (props) => {
   const {onCloseTransfer} = props
   const allTransactionsInfo = useAllTransferData()
   const fromAddress = allTransactionsInfo.fromAddress
   const toAddress = allTransactionsInfo.toAddress
   const amountDecimal = allTransactionsInfo.amountDecimal
-  const {api} = useApiPromise()
-  const decimals = useDecimalJsTokenDecimalMultiplier(api)
+  const karuraApi = useKaruraApi()
   const [submittedHashBoolean, setSubmittedHashBoolean] =
     useState<boolean>(false)
   const [isSubmitting, setSubmitting] = useState<boolean>(false)
@@ -40,47 +35,59 @@ export const TransferPHAFromKhalaToKarura: React.FC<
   const [transactionFee, setTransactionFee] = useState('')
 
   const amount = useMemo(() => {
-    if (!amountDecimal || !api || !decimals) return
+    if (!amountDecimal || !karuraApi) return
 
-    return decimalToBalance(amountDecimal, decimals, api)
-  }, [amountDecimal, api, decimals])
+    return decimalToBalance(amountDecimal, new Decimal(10 ** 12), karuraApi)
+  }, [amountDecimal, karuraApi])
 
   const extrinsic = useMemo(() => {
-    if (api) {
-      return api.tx.xcmTransfer?.transferNative?.(
-        api.createType('XcmV1MultiLocation', {
-          parents: 1,
-          interior: api.createType('Junctions', {
-            X2: [
-              api.createType('XcmV1Junction', {
-                Parachain: api.createType('Compact<U32>', karuraParaId),
-              }),
-              api.createType('XcmV1Junction', {
-                AccountId32: {
-                  network: api.createType('XcmV0JunctionNetworkId', 'Any'),
-                  id: u8aToHex(decodeAddress(toAddress)),
-                },
-              }),
-            ],
-          }),
+    if (karuraApi) {
+      return karuraApi.tx.xTokens?.transfer?.(
+        karuraApi.createType('AcalaPrimitivesCurrencyCurrencyId', {
+          // 170 is PHA registered in kurura runtime
+          Token: karuraApi.createType(
+            'AcalaPrimitivesCurrencyTokenSymbol',
+            170
+          ),
         }),
         amount,
+        karuraApi.createType('XcmVersionedMultiLocation', {
+          V1: karuraApi.createType('XcmV1MultiLocation', {
+            parents: 1,
+            interior: karuraApi.createType('Junctions', {
+              X2: [
+                karuraApi.createType('XcmV1Junction', {
+                  Parachain: karuraApi.createType('Compact<U32>', khalaParaId),
+                }),
+                karuraApi.createType('XcmV1Junction', {
+                  AccountId32: {
+                    network: karuraApi.createType(
+                      'XcmV0JunctionNetworkId',
+                      'Any'
+                    ),
+                    id: u8aToHex(decodeAddress(toAddress)),
+                  },
+                }),
+              ],
+            }),
+          }),
+        }),
         6000000000
       )
     }
     return
-  }, [amount, api, toAddress])
+  }, [amount, karuraApi, toAddress])
 
   useEffect(() => {
     extrinsic?.paymentInfo(fromAddress).then(({partialFee}) => {
       setTransactionFee(
-        `${new Decimal(partialFee.toString()).div(10 ** 12).toFixed(8)} PHA`
+        `${new Decimal(partialFee.toString()).div(10 ** 12).toFixed(8)} KAR`
       )
     })
   }, [fromAddress, extrinsic])
 
   const submit = async () => {
-    if (!api || !extrinsic) {
+    if (!karuraApi || !extrinsic) {
       return
     }
 
@@ -92,7 +99,7 @@ export const TransferPHAFromKhalaToKarura: React.FC<
       const signer = (await web3FromAddress(fromAddress)).signer
 
       await waitSignAndSend?.({
-        api,
+        api: karuraApi,
         account: fromAddress,
         extrinsic,
         signer,
@@ -120,7 +127,7 @@ export const TransferPHAFromKhalaToKarura: React.FC<
   return (
     <>
       <ModalBody>
-        <CurrentTransferInformationDetailItems bridgeFee={toKaruraXcmFee} />
+        <CurrentTransferInformationDetailItems bridgeFee={toKhalaXcmFee} />
 
         <Spacer></Spacer>
 
@@ -130,7 +137,7 @@ export const TransferPHAFromKhalaToKarura: React.FC<
               <span>
                 This transaction will charge a{' '}
                 <span style={{fontWeight: 'bold'}}>
-                  {formatCurrency(toKaruraXcmFee)} PHA
+                  {formatCurrency(toKhalaXcmFee)} PHA
                 </span>{' '}
                 bridge fee to cover the resource cost of the destination chain.
               </span>
