@@ -5,10 +5,12 @@ import {
 } from '@phala/react-hooks'
 import {Decimal} from 'decimal.js'
 import {blockchainTypes} from './config'
+import {useKaruraPHABalance} from './hooks/useKaruraApi'
 import {useAllTransferData} from './store'
 
 export function useBridgePage() {
   const transactionInfo = useAllTransferData()
+  const {fromNetwork} = transactionInfo
 
   const blockchainType =
     transactionInfo?.fromBlockchainType || blockchainTypes.ethereum
@@ -22,20 +24,19 @@ export function useBridgePage() {
   )
   const polkadotAccountBalanceDecimal =
     usePolkadotAccountTransferrableBalanceDecimal(polkadotAccountAddress)
+  const karuraPHABalance = useKaruraPHABalance()
 
   const isFromEthereum = blockchainType === blockchainTypes.ethereum
-  // HACK: backforward compatibility
-  const isFromKhala =
-    transactionInfo.fromNetwork === 'Khala' &&
-    transactionInfo.toNetwork === 'Ethereum'
-  const isToKarura = transactionInfo.toNetwork === 'Karura'
   const currentAddress = isFromEthereum
     ? ethereumAccountAddress
     : polkadotAccountAddress
 
-  const currentBalance = isFromEthereum
-    ? ethereumAccountBalanceDecimal
-    : polkadotAccountBalanceDecimal
+  const currentBalance =
+    fromNetwork === 'Karura'
+      ? karuraPHABalance
+      : fromNetwork === 'Ethereum'
+      ? ethereumAccountBalanceDecimal
+      : polkadotAccountBalanceDecimal
 
   const maxAmountDecimal = new Decimal(currentBalance)
 
@@ -47,12 +48,10 @@ export function useBridgePage() {
 
   return {
     maxAmountDecimal,
-    isFromKhala,
     isFromEthereum,
     currentBalance,
     currentAddress,
     isShowRecipient,
     isShowMaxButton,
-    isToKarura,
   } as const
 }

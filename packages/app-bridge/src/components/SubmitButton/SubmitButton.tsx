@@ -3,7 +3,7 @@ import {useEthereumBridgeFee} from '@phala/react-libs'
 import {validateAddress} from '@phala/utils'
 import Decimal from 'decimal.js'
 import {ComponentProps, FC} from 'react'
-import {toKaruraXcmFee} from '../../config'
+import {toKaruraXcmFee, toKhalaXcmFee} from '../../config'
 import {useAllTransferData} from '../../store'
 import {useBridgePage} from '../../useBridgePage'
 import {Button} from '../Button'
@@ -15,17 +15,12 @@ interface SubmitButtonProps extends ComponentProps<typeof Button> {
 
 export const SubmitButton: FC<SubmitButtonProps> = (props) => {
   const {onSubmit} = props
-  const {
-    currentAddress,
-    isFromEthereum,
-    isFromKhala,
-    maxAmountDecimal,
-    isToKarura,
-  } = useBridgePage()
+  const {currentAddress, maxAmountDecimal} = useBridgePage()
   const allTransferData = useAllTransferData()
   const ethereumBridgeFee = useEthereumBridgeFee()
   const khalaBridgeFee = useKhalaBridgeFee()
-  const {amount, toAddress} = allTransferData
+  const {amount, toAddress, fromNetwork, toNetwork, toBlockchainType} =
+    allTransferData
 
   const onSubmitCheck = () => {
     const accountFrom = currentAddress
@@ -37,37 +32,52 @@ export const SubmitButton: FC<SubmitButtonProps> = (props) => {
       errorString = 'Need enter amount'
     } else if (!recipient) {
       errorString = 'Need enter recipient'
-    } else if ((isFromEthereum || isToKarura) && !validateAddress(recipient)) {
+    } else if (toBlockchainType === 'polkadot' && !validateAddress(recipient)) {
       errorString = 'Need enter the correct recipient'
     } else if (!accountFrom) {
       errorString = 'Need login'
     } else if (
-      isFromKhala &&
+      toBlockchainType === 'ethereum' &&
       !new RegExp(/0x[0-9a-fA-F]{40}/).test(recipient)
     ) {
       errorString = 'Need enter the correct recipient'
     } else if (
-      (isFromKhala && !khalaBridgeFee.fee) ||
-      (isFromEthereum && !ethereumBridgeFee)
+      (fromNetwork === 'Khala' &&
+        toNetwork === 'Ethereum' &&
+        !khalaBridgeFee.fee) ||
+      (fromNetwork === 'Ethereum' &&
+        toNetwork === 'Khala' &&
+        !ethereumBridgeFee)
     ) {
       errorString = 'Please wait fee check'
     } else if (new Decimal(amountTo).greaterThan(maxAmountDecimal)) {
       errorString = 'Insufficient balance'
     } else if (
-      (isFromKhala &&
+      (fromNetwork === 'Khala' &&
+        toNetwork === 'Ethereum' &&
         khalaBridgeFee.fee &&
         new Decimal(amountTo).greaterThan(
           maxAmountDecimal.sub(khalaBridgeFee.fee)
         )) ||
-      (isToKarura &&
-        new Decimal(amountTo).greaterThan(maxAmountDecimal.sub(toKaruraXcmFee)))
+      (fromNetwork === 'Khala' &&
+        toNetwork === 'Karura' &&
+        new Decimal(amountTo)) ||
+      (fromNetwork === 'Karura' &&
+        toNetwork === 'Khala' &&
+        new Decimal(amountTo).greaterThan(maxAmountDecimal))
     ) {
       errorString = 'Insufficient balance'
     } else if (
-      (isFromKhala &&
+      (fromNetwork === 'Khala' &&
+        toNetwork === 'Ethereum' &&
         khalaBridgeFee.fee &&
-        new Decimal(amountTo).lessThan(khalaBridgeFee.fee)) ||
-      (isToKarura && new Decimal(amountTo).lessThan(toKaruraXcmFee))
+        new Decimal(amountTo).lessThanOrEqualTo(khalaBridgeFee.fee)) ||
+      (fromNetwork === 'Khala' &&
+        toNetwork === 'Karura' &&
+        new Decimal(amountTo).lessThanOrEqualTo(toKaruraXcmFee)) ||
+      (fromNetwork === 'Karura' &&
+        toNetwork === 'Khala' &&
+        new Decimal(amountTo).lessThanOrEqualTo(toKhalaXcmFee))
     ) {
       errorString = 'The transaction amount should be greater than bridge fee'
     }

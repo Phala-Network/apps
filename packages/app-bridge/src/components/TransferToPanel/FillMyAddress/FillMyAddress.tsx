@@ -3,9 +3,8 @@ import {validateAddress} from '@phala/utils'
 import {useEffect, useState} from 'react'
 import {down} from 'styled-breakpoints'
 import {useBreakpoint} from 'styled-breakpoints/react-styled'
-import {useToAddress} from '../../../store'
+import {useAllTransferData, useToAddress} from '../../../store'
 import {littleRoundButtonOverrides} from '../../../style/littleRoundButtonOverrides'
-import {useBridgePage} from '../../../useBridgePage'
 import {Button} from '../../Button'
 
 export const FillMyAddress = () => {
@@ -14,10 +13,11 @@ export const FillMyAddress = () => {
   const polkadotAccountAddress = polkadotAccount?.address
   const [ethereumAccount] = useEthereumAccountAtom()
   const ethereumAccountAddress = ethereumAccount?.address
-  const {isFromEthereum} = useBridgePage()
-  const isShowRecipient = isFromEthereum
-    ? !!polkadotAccountAddress
-    : !!ethereumAccountAddress
+  const {toBlockchainType} = useAllTransferData()
+  const isShowRecipient =
+    toBlockchainType === 'polkadot'
+      ? !!polkadotAccountAddress
+      : !!ethereumAccountAddress
   const isMobile = useBreakpoint(down('sm'))
   const [toAddress, setToAddress] = useToAddress()
 
@@ -26,9 +26,10 @@ export const FillMyAddress = () => {
   }, [toAddress])
 
   function setMyAddress() {
-    const address = isFromEthereum
-      ? polkadotAccountAddress
-      : ethereumAccountAddress
+    const address =
+      toBlockchainType === 'polkadot'
+        ? polkadotAccountAddress
+        : ethereumAccountAddress
 
     setToAddress(address || '')
   }

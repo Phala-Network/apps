@@ -12,7 +12,10 @@ export const CurrentTransferInformationDetailItems: VFC<{
 
   // HACK: bridgeFee should be included in amount
   if (bridgeFee) {
-    if (allTransferData.fromNetwork === 'Khala') {
+    if (
+      allTransferData.fromNetwork === 'Khala' ||
+      allTransferData.fromNetwork === 'Karura'
+    ) {
       toAmount = toAmount.minus(bridgeFee)
     }
   }

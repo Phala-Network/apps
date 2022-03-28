@@ -1,11 +1,11 @@
 import {useEthereumBridgeFee} from '@phala/react-libs'
 import {useKhalaBridgeFee} from '.'
-import {Karura, toKaruraXcmFee, toKhalaXcmFee, Khala} from '../config'
-import {useToNetwork} from '../store'
+import {toKaruraXcmFee, toKhalaXcmFee, Khala} from '../config'
+import {useAllTransferData} from '../store'
 import {formatCurrency} from '../utils/formatCurrency'
 
 export function useBridgeFee(network: string = Khala) {
-  const [toNetwork] = useToNetwork()
+  const {toNetwork} = useAllTransferData()
   const ethereumBridgeFee = useEthereumBridgeFee()
   const khalaBridgeFee = useKhalaBridgeFee()
 
@@ -13,12 +13,12 @@ export function useBridgeFee(network: string = Khala) {
     formatCurrency(ethereumBridgeFee, 'ETH') || '- ETH'
   const khalaBridgeFeeText = formatCurrency(khalaBridgeFee, 'PHA') || '- PHA'
 
-  if (network === Karura && toNetwork[0]?.id === 'Khala') {
+  if (network === 'Karura' && toNetwork === 'Khala') {
     return formatCurrency(toKhalaXcmFee, 'PHA')
   }
 
   return network === Khala
-    ? toNetwork[0]?.id === 'Karura'
+    ? toNetwork === 'Karura'
       ? // HACK: hardcode
         formatCurrency(toKaruraXcmFee, 'PHA')
       : khalaBridgeFeeText

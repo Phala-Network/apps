@@ -5,6 +5,7 @@ import {useAllTransferData} from '../../store'
 import {modalOverrides} from '../../style/modalOverrides'
 import {TransactionInfo} from '../../types'
 import {TransferPHAFromEthereumToKhala} from './transferAction/TransferPHAFromEthereumToKhala'
+import {TransferPHAFromKaruraToKhala} from './transferAction/TransferPHAFromKaruraToKhala'
 import {TransferPHAFromKhalaToEthereum} from './transferAction/TransferPHAFromKhalaToEthereum'
 import {TransferPHAFromKhalaToKarura} from './transferAction/TransferPHAFromKhalaToKarura'
 
@@ -49,6 +50,9 @@ export const TransferModal: FC<TransferModalProps> = (props) => {
         )}
         {is(PHA, Khala, Karura) && (
           <TransferPHAFromKhalaToKarura onCloseTransfer={onClose} />
+        )}
+        {is(PHA, Karura, Khala) && (
+          <TransferPHAFromKaruraToKhala onCloseTransfer={onClose} />
         )}
       </Fragment>
     )
