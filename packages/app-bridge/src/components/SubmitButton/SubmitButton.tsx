@@ -61,7 +61,7 @@ export const SubmitButton: FC<SubmitButtonProps> = (props) => {
         )) ||
       (fromNetwork === 'Khala' &&
         toNetwork === 'Karura' &&
-        new Decimal(amountTo)) ||
+        new Decimal(amountTo).greaterThan(maxAmountDecimal)) ||
       (fromNetwork === 'Karura' &&
         toNetwork === 'Khala' &&
         new Decimal(amountTo).greaterThan(maxAmountDecimal))
