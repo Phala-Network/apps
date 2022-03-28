@@ -61,8 +61,15 @@ export const SubmitButton: FC<SubmitButtonProps> = (props) => {
         )) ||
       (fromNetwork === 'Khala' &&
         toNetwork === 'Karura' &&
-        new Decimal(amountTo).greaterThan(maxAmountDecimal)) ||
+        new Decimal(amountTo).greaterThan(
+          maxAmountDecimal.sub(toKaruraXcmFee)
+        )) ||
       (fromNetwork === 'Karura' &&
+        toNetwork === 'Khala' &&
+        new Decimal(amountTo).greaterThan(
+          maxAmountDecimal.sub(toKhalaXcmFee)
+        )) ||
+      (fromNetwork === 'Ethereum' &&
         toNetwork === 'Khala' &&
         new Decimal(amountTo).greaterThan(maxAmountDecimal))
     ) {
