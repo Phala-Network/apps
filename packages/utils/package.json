@@ -4,9 +4,9 @@
   "sideEffects": false,
   "main": "src/index.ts",
   "dependencies": {
-    "@polkadot/keyring": "^8.1.2",
-    "@polkadot/util": "^8.1.2",
-    "@polkadot/util-crypto": "^8.1.2",
+    "@polkadot/keyring": "^8.7.1",
+    "@polkadot/util": "^8.7.1",
+    "@polkadot/util-crypto": "^8.7.1",
     "@types/node": "^16.11.12",
     "decimal.js": "^10.3.1"
   },

@@ -17,6 +17,7 @@ import InfoCard from '../components/StakePool/InfoCard'
 import WithdrawQueue from '../components/StakePool/WithdrawQueue'
 import StakeInfo from '../components/StakePool/StakeInfo'
 import SettingButton from '../components/StakePool/SettingButton'
+import Chart from '../components/StakePool/Chart'
 
 export const StakePool: VFC<PageProps> = ({params: {pid}}) => {
   const [modalKey, setModalKey] = useState<StakePoolModalKey | null>(null)
@@ -159,6 +160,22 @@ export const StakePool: VFC<PageProps> = ({params: {pid}}) => {
               isOwner={isOwner}
               onSetCap={() => setModalKey('setCap')}
             />
+          </Card>
+
+          <HeadingSmall marginTop="scale1200" marginBottom="scale400">
+            Chart
+          </HeadingSmall>
+          <Card
+            overrides={{
+              Root: {
+                style: ({$theme}) => ({
+                  borderRadius: '0',
+                  ...$theme.borders.border200,
+                }),
+              },
+            }}
+          >
+            <Chart pid={pid} />
           </Card>
 
           <HeadingSmall marginTop="scale1200" marginBottom="scale400">
