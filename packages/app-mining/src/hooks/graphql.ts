@@ -1307,6 +1307,33 @@ export type EventsWhereUniqueInput = {
   id?: InputMaybe<Scalars['BigInt']>;
 };
 
+export type FloatFilter = {
+  equals?: InputMaybe<Scalars['Float']>;
+  gt?: InputMaybe<Scalars['Float']>;
+  gte?: InputMaybe<Scalars['Float']>;
+  in?: InputMaybe<Array<Scalars['Float']>>;
+  lt?: InputMaybe<Scalars['Float']>;
+  lte?: InputMaybe<Scalars['Float']>;
+  not?: InputMaybe<NestedFloatFilter>;
+  notIn?: InputMaybe<Array<Scalars['Float']>>;
+};
+
+export type FloatWithAggregatesFilter = {
+  _avg?: InputMaybe<NestedFloatFilter>;
+  _count?: InputMaybe<NestedIntFilter>;
+  _max?: InputMaybe<NestedFloatFilter>;
+  _min?: InputMaybe<NestedFloatFilter>;
+  _sum?: InputMaybe<NestedFloatFilter>;
+  equals?: InputMaybe<Scalars['Float']>;
+  gt?: InputMaybe<Scalars['Float']>;
+  gte?: InputMaybe<Scalars['Float']>;
+  in?: InputMaybe<Array<Scalars['Float']>>;
+  lt?: InputMaybe<Scalars['Float']>;
+  lte?: InputMaybe<Scalars['Float']>;
+  not?: InputMaybe<NestedFloatWithAggregatesFilter>;
+  notIn?: InputMaybe<Array<Scalars['Float']>>;
+};
+
 export type IntFilter = {
   equals?: InputMaybe<Scalars['Int']>;
   gt?: InputMaybe<Scalars['Int']>;
@@ -2850,6 +2877,22 @@ export type NestedFloatNullableFilter = {
   notIn?: InputMaybe<Array<Scalars['Float']>>;
 };
 
+export type NestedFloatWithAggregatesFilter = {
+  _avg?: InputMaybe<NestedFloatFilter>;
+  _count?: InputMaybe<NestedIntFilter>;
+  _max?: InputMaybe<NestedFloatFilter>;
+  _min?: InputMaybe<NestedFloatFilter>;
+  _sum?: InputMaybe<NestedFloatFilter>;
+  equals?: InputMaybe<Scalars['Float']>;
+  gt?: InputMaybe<Scalars['Float']>;
+  gte?: InputMaybe<Scalars['Float']>;
+  in?: InputMaybe<Array<Scalars['Float']>>;
+  lt?: InputMaybe<Scalars['Float']>;
+  lte?: InputMaybe<Scalars['Float']>;
+  not?: InputMaybe<NestedFloatWithAggregatesFilter>;
+  notIn?: InputMaybe<Array<Scalars['Float']>>;
+};
+
 export type NestedIntFilter = {
   equals?: InputMaybe<Scalars['Int']>;
   gt?: InputMaybe<Scalars['Int']>;
@@ -3889,6 +3932,7 @@ export enum SortOrder {
 
 export type StakePoolActivities = {
   __typename?: 'StakePoolActivities';
+  averageBlockTimeSinceLastActivity: Scalars['Float'];
   blockNumber: Scalars['BigInt'];
   cap?: Maybe<Scalars['Decimal']>;
   commission: Scalars['Decimal'];
@@ -3921,6 +3965,7 @@ export type StakePoolActivities = {
 
 export type StakePoolActivitiesAvgAggregate = {
   __typename?: 'StakePoolActivitiesAvgAggregate';
+  averageBlockTimeSinceLastActivity?: Maybe<Scalars['Float']>;
   blockNumber?: Maybe<Scalars['Float']>;
   cap?: Maybe<Scalars['Decimal']>;
   commission?: Maybe<Scalars['Decimal']>;
@@ -3947,6 +3992,7 @@ export type StakePoolActivitiesAvgAggregate = {
 };
 
 export type StakePoolActivitiesAvgOrderByAggregateInput = {
+  averageBlockTimeSinceLastActivity?: InputMaybe<SortOrder>;
   blockNumber?: InputMaybe<SortOrder>;
   cap?: InputMaybe<SortOrder>;
   commission?: InputMaybe<SortOrder>;
@@ -3975,6 +4021,7 @@ export type StakePoolActivitiesAvgOrderByAggregateInput = {
 export type StakePoolActivitiesCountAggregate = {
   __typename?: 'StakePoolActivitiesCountAggregate';
   _all: Scalars['Int'];
+  averageBlockTimeSinceLastActivity: Scalars['Int'];
   blockNumber: Scalars['Int'];
   cap: Scalars['Int'];
   commission: Scalars['Int'];
@@ -4005,6 +4052,7 @@ export type StakePoolActivitiesCountAggregate = {
 };
 
 export type StakePoolActivitiesCountOrderByAggregateInput = {
+  averageBlockTimeSinceLastActivity?: InputMaybe<SortOrder>;
   blockNumber?: InputMaybe<SortOrder>;
   cap?: InputMaybe<SortOrder>;
   commission?: InputMaybe<SortOrder>;
@@ -4041,6 +4089,7 @@ export type StakePoolActivitiesGroupBy = {
   _max?: Maybe<StakePoolActivitiesMaxAggregate>;
   _min?: Maybe<StakePoolActivitiesMinAggregate>;
   _sum?: Maybe<StakePoolActivitiesSumAggregate>;
+  averageBlockTimeSinceLastActivity: Scalars['Float'];
   blockNumber: Scalars['BigInt'];
   cap?: Maybe<Scalars['Decimal']>;
   commission: Scalars['Decimal'];
@@ -4078,6 +4127,7 @@ export type StakePoolActivitiesListRelationFilter = {
 
 export type StakePoolActivitiesMaxAggregate = {
   __typename?: 'StakePoolActivitiesMaxAggregate';
+  averageBlockTimeSinceLastActivity?: Maybe<Scalars['Float']>;
   blockNumber?: Maybe<Scalars['BigInt']>;
   cap?: Maybe<Scalars['Decimal']>;
   commission?: Maybe<Scalars['Decimal']>;
@@ -4108,6 +4158,7 @@ export type StakePoolActivitiesMaxAggregate = {
 };
 
 export type StakePoolActivitiesMaxOrderByAggregateInput = {
+  averageBlockTimeSinceLastActivity?: InputMaybe<SortOrder>;
   blockNumber?: InputMaybe<SortOrder>;
   cap?: InputMaybe<SortOrder>;
   commission?: InputMaybe<SortOrder>;
@@ -4139,6 +4190,7 @@ export type StakePoolActivitiesMaxOrderByAggregateInput = {
 
 export type StakePoolActivitiesMinAggregate = {
   __typename?: 'StakePoolActivitiesMinAggregate';
+  averageBlockTimeSinceLastActivity?: Maybe<Scalars['Float']>;
   blockNumber?: Maybe<Scalars['BigInt']>;
   cap?: Maybe<Scalars['Decimal']>;
   commission?: Maybe<Scalars['Decimal']>;
@@ -4169,6 +4221,7 @@ export type StakePoolActivitiesMinAggregate = {
 };
 
 export type StakePoolActivitiesMinOrderByAggregateInput = {
+  averageBlockTimeSinceLastActivity?: InputMaybe<SortOrder>;
   blockNumber?: InputMaybe<SortOrder>;
   cap?: InputMaybe<SortOrder>;
   commission?: InputMaybe<SortOrder>;
@@ -4208,6 +4261,7 @@ export type StakePoolActivitiesOrderByWithAggregationInput = {
   _max?: InputMaybe<StakePoolActivitiesMaxOrderByAggregateInput>;
   _min?: InputMaybe<StakePoolActivitiesMinOrderByAggregateInput>;
   _sum?: InputMaybe<StakePoolActivitiesSumOrderByAggregateInput>;
+  averageBlockTimeSinceLastActivity?: InputMaybe<SortOrder>;
   blockNumber?: InputMaybe<SortOrder>;
   cap?: InputMaybe<SortOrder>;
   commission?: InputMaybe<SortOrder>;
@@ -4238,6 +4292,7 @@ export type StakePoolActivitiesOrderByWithAggregationInput = {
 };
 
 export type StakePoolActivitiesOrderByWithRelationInput = {
+  averageBlockTimeSinceLastActivity?: InputMaybe<SortOrder>;
   blockNumber?: InputMaybe<SortOrder>;
   cap?: InputMaybe<SortOrder>;
   commission?: InputMaybe<SortOrder>;
@@ -4269,6 +4324,7 @@ export type StakePoolActivitiesOrderByWithRelationInput = {
 };
 
 export enum StakePoolActivitiesScalarFieldEnum {
+  AverageBlockTimeSinceLastActivity = 'averageBlockTimeSinceLastActivity',
   BlockNumber = 'blockNumber',
   Cap = 'cap',
   Commission = 'commission',
@@ -4302,6 +4358,7 @@ export type StakePoolActivitiesScalarWhereWithAggregatesInput = {
   AND?: InputMaybe<Array<StakePoolActivitiesScalarWhereWithAggregatesInput>>;
   NOT?: InputMaybe<Array<StakePoolActivitiesScalarWhereWithAggregatesInput>>;
   OR?: InputMaybe<Array<StakePoolActivitiesScalarWhereWithAggregatesInput>>;
+  averageBlockTimeSinceLastActivity?: InputMaybe<FloatWithAggregatesFilter>;
   blockNumber?: InputMaybe<BigIntWithAggregatesFilter>;
   cap?: InputMaybe<DecimalNullableWithAggregatesFilter>;
   commission?: InputMaybe<DecimalWithAggregatesFilter>;
@@ -4333,6 +4390,7 @@ export type StakePoolActivitiesScalarWhereWithAggregatesInput = {
 
 export type StakePoolActivitiesSumAggregate = {
   __typename?: 'StakePoolActivitiesSumAggregate';
+  averageBlockTimeSinceLastActivity?: Maybe<Scalars['Float']>;
   blockNumber?: Maybe<Scalars['BigInt']>;
   cap?: Maybe<Scalars['Decimal']>;
   commission?: Maybe<Scalars['Decimal']>;
@@ -4359,6 +4417,7 @@ export type StakePoolActivitiesSumAggregate = {
 };
 
 export type StakePoolActivitiesSumOrderByAggregateInput = {
+  averageBlockTimeSinceLastActivity?: InputMaybe<SortOrder>;
   blockNumber?: InputMaybe<SortOrder>;
   cap?: InputMaybe<SortOrder>;
   commission?: InputMaybe<SortOrder>;
@@ -4388,6 +4447,7 @@ export type StakePoolActivitiesWhereInput = {
   AND?: InputMaybe<Array<StakePoolActivitiesWhereInput>>;
   NOT?: InputMaybe<Array<StakePoolActivitiesWhereInput>>;
   OR?: InputMaybe<Array<StakePoolActivitiesWhereInput>>;
+  averageBlockTimeSinceLastActivity?: InputMaybe<FloatFilter>;
   blockNumber?: InputMaybe<BigIntFilter>;
   cap?: InputMaybe<DecimalNullableFilter>;
   commission?: InputMaybe<DecimalFilter>;
@@ -5803,6 +5863,7 @@ export type StakePools = {
   __typename?: 'StakePools';
   _count?: Maybe<StakePoolsCount>;
   accounts: Accounts;
+  averageBlockTimeSinceLastActivity: Scalars['Float'];
   cap?: Maybe<Scalars['Decimal']>;
   commission: Scalars['Decimal'];
   coolingDownMinersCount: Scalars['Int'];
@@ -5899,6 +5960,7 @@ export type StakePoolsWorkersArgs = {
 
 export type StakePoolsAvgAggregate = {
   __typename?: 'StakePoolsAvgAggregate';
+  averageBlockTimeSinceLastActivity?: Maybe<Scalars['Float']>;
   cap?: Maybe<Scalars['Decimal']>;
   commission?: Maybe<Scalars['Decimal']>;
   coolingDownMinersCount?: Maybe<Scalars['Float']>;
@@ -5924,6 +5986,7 @@ export type StakePoolsAvgAggregate = {
 };
 
 export type StakePoolsAvgOrderByAggregateInput = {
+  averageBlockTimeSinceLastActivity?: InputMaybe<SortOrder>;
   cap?: InputMaybe<SortOrder>;
   commission?: InputMaybe<SortOrder>;
   coolingDownMinersCount?: InputMaybe<SortOrder>;
@@ -5961,6 +6024,7 @@ export type StakePoolsCount = {
 export type StakePoolsCountAggregate = {
   __typename?: 'StakePoolsCountAggregate';
   _all: Scalars['Int'];
+  averageBlockTimeSinceLastActivity: Scalars['Int'];
   cap: Scalars['Int'];
   commission: Scalars['Int'];
   coolingDownMinersCount: Scalars['Int'];
@@ -5990,6 +6054,7 @@ export type StakePoolsCountAggregate = {
 };
 
 export type StakePoolsCountOrderByAggregateInput = {
+  averageBlockTimeSinceLastActivity?: InputMaybe<SortOrder>;
   cap?: InputMaybe<SortOrder>;
   commission?: InputMaybe<SortOrder>;
   coolingDownMinersCount?: InputMaybe<SortOrder>;
@@ -6025,6 +6090,7 @@ export type StakePoolsGroupBy = {
   _max?: Maybe<StakePoolsMaxAggregate>;
   _min?: Maybe<StakePoolsMinAggregate>;
   _sum?: Maybe<StakePoolsSumAggregate>;
+  averageBlockTimeSinceLastActivity: Scalars['Float'];
   cap?: Maybe<Scalars['Decimal']>;
   commission: Scalars['Decimal'];
   coolingDownMinersCount: Scalars['Int'];
@@ -6061,6 +6127,7 @@ export type StakePoolsListRelationFilter = {
 
 export type StakePoolsMaxAggregate = {
   __typename?: 'StakePoolsMaxAggregate';
+  averageBlockTimeSinceLastActivity?: Maybe<Scalars['Float']>;
   cap?: Maybe<Scalars['Decimal']>;
   commission?: Maybe<Scalars['Decimal']>;
   coolingDownMinersCount?: Maybe<Scalars['Int']>;
@@ -6090,6 +6157,7 @@ export type StakePoolsMaxAggregate = {
 };
 
 export type StakePoolsMaxOrderByAggregateInput = {
+  averageBlockTimeSinceLastActivity?: InputMaybe<SortOrder>;
   cap?: InputMaybe<SortOrder>;
   commission?: InputMaybe<SortOrder>;
   coolingDownMinersCount?: InputMaybe<SortOrder>;
@@ -6120,6 +6188,7 @@ export type StakePoolsMaxOrderByAggregateInput = {
 
 export type StakePoolsMinAggregate = {
   __typename?: 'StakePoolsMinAggregate';
+  averageBlockTimeSinceLastActivity?: Maybe<Scalars['Float']>;
   cap?: Maybe<Scalars['Decimal']>;
   commission?: Maybe<Scalars['Decimal']>;
   coolingDownMinersCount?: Maybe<Scalars['Int']>;
@@ -6149,6 +6218,7 @@ export type StakePoolsMinAggregate = {
 };
 
 export type StakePoolsMinOrderByAggregateInput = {
+  averageBlockTimeSinceLastActivity?: InputMaybe<SortOrder>;
   cap?: InputMaybe<SortOrder>;
   commission?: InputMaybe<SortOrder>;
   coolingDownMinersCount?: InputMaybe<SortOrder>;
@@ -6187,6 +6257,7 @@ export type StakePoolsOrderByWithAggregationInput = {
   _max?: InputMaybe<StakePoolsMaxOrderByAggregateInput>;
   _min?: InputMaybe<StakePoolsMinOrderByAggregateInput>;
   _sum?: InputMaybe<StakePoolsSumOrderByAggregateInput>;
+  averageBlockTimeSinceLastActivity?: InputMaybe<SortOrder>;
   cap?: InputMaybe<SortOrder>;
   commission?: InputMaybe<SortOrder>;
   coolingDownMinersCount?: InputMaybe<SortOrder>;
@@ -6217,6 +6288,7 @@ export type StakePoolsOrderByWithAggregationInput = {
 
 export type StakePoolsOrderByWithRelationInput = {
   accounts?: InputMaybe<AccountsOrderByWithRelationInput>;
+  averageBlockTimeSinceLastActivity?: InputMaybe<SortOrder>;
   cap?: InputMaybe<SortOrder>;
   commission?: InputMaybe<SortOrder>;
   coolingDownMinersCount?: InputMaybe<SortOrder>;
@@ -6257,6 +6329,7 @@ export type StakePoolsRelationFilter = {
 };
 
 export enum StakePoolsScalarFieldEnum {
+  AverageBlockTimeSinceLastActivity = 'averageBlockTimeSinceLastActivity',
   Cap = 'cap',
   Commission = 'commission',
   CoolingDownMinersCount = 'coolingDownMinersCount',
@@ -6289,6 +6362,7 @@ export type StakePoolsScalarWhereWithAggregatesInput = {
   AND?: InputMaybe<Array<StakePoolsScalarWhereWithAggregatesInput>>;
   NOT?: InputMaybe<Array<StakePoolsScalarWhereWithAggregatesInput>>;
   OR?: InputMaybe<Array<StakePoolsScalarWhereWithAggregatesInput>>;
+  averageBlockTimeSinceLastActivity?: InputMaybe<FloatWithAggregatesFilter>;
   cap?: InputMaybe<DecimalNullableWithAggregatesFilter>;
   commission?: InputMaybe<DecimalWithAggregatesFilter>;
   coolingDownMinersCount?: InputMaybe<IntWithAggregatesFilter>;
@@ -6319,6 +6393,7 @@ export type StakePoolsScalarWhereWithAggregatesInput = {
 
 export type StakePoolsSumAggregate = {
   __typename?: 'StakePoolsSumAggregate';
+  averageBlockTimeSinceLastActivity?: Maybe<Scalars['Float']>;
   cap?: Maybe<Scalars['Decimal']>;
   commission?: Maybe<Scalars['Decimal']>;
   coolingDownMinersCount?: Maybe<Scalars['Int']>;
@@ -6344,6 +6419,7 @@ export type StakePoolsSumAggregate = {
 };
 
 export type StakePoolsSumOrderByAggregateInput = {
+  averageBlockTimeSinceLastActivity?: InputMaybe<SortOrder>;
   cap?: InputMaybe<SortOrder>;
   commission?: InputMaybe<SortOrder>;
   coolingDownMinersCount?: InputMaybe<SortOrder>;
@@ -6373,6 +6449,7 @@ export type StakePoolsWhereInput = {
   NOT?: InputMaybe<Array<StakePoolsWhereInput>>;
   OR?: InputMaybe<Array<StakePoolsWhereInput>>;
   accounts?: InputMaybe<AccountsRelationFilter>;
+  averageBlockTimeSinceLastActivity?: InputMaybe<FloatFilter>;
   cap?: InputMaybe<DecimalNullableFilter>;
   commission?: InputMaybe<DecimalFilter>;
   coolingDownMinersCount?: InputMaybe<IntFilter>;
@@ -7557,7 +7634,7 @@ export type StakePoolQueryVariables = Exact<{
 }>;
 
 
-export type StakePoolQuery = { __typename?: 'Query', findUniqueStakePools?: { __typename?: 'StakePools', pid: number, ownerAddress: string, commission: string, ownerReward: string, cap?: string | null, rewardAcc: string, totalShares: string, totalStake: string, freeStake: string, releasingStake: string, remainingStake?: string | null, theoreticalApr: string, stakersCount: number, withdrawalsCount: number, minersCount: number, idleMinersCount: number, accounts: { __typename?: 'Accounts', identity?: string | null, identityVerified: boolean }, stakePoolWithdrawals: Array<{ __typename?: 'StakePoolWithdrawals', shares: string, startTime: any, estimatesEndTime: any, stake: string, userAddress?: string | null }> } | null };
+export type StakePoolQuery = { __typename?: 'Query', findUniqueStakePools?: { __typename?: 'StakePools', pid: number, ownerAddress: string, commission: string, ownerReward: string, cap?: string | null, rewardAcc: string, totalShares: string, totalStake: string, freeStake: string, releasingStake: string, remainingStake?: string | null, theoreticalApr: string, stakersCount: number, withdrawalsCount: number, minersCount: number, idleMinersCount: number, id: string, accounts: { __typename?: 'Accounts', identity?: string | null, identityVerified: boolean }, stakePoolWithdrawals: Array<{ __typename?: 'StakePoolWithdrawals', shares: string, startTime: any, estimatesEndTime: any, stake: string, userAddress?: string | null }> } | null };
 
 
 export const StakePoolsDocument = `
@@ -7746,6 +7823,7 @@ export const StakePoolDocument = `
       userAddress
     }
     idleMinersCount
+    id
   }
 }
     `;

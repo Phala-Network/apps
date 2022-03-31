@@ -11,15 +11,13 @@ module.exports = {
   plugins: [
     'local-plugin-layout', // This plugin's place decides providers order, which is highly important
     'local-plugin-styletron',
-    `gatsby-plugin-pnpm`,
-    `gatsby-plugin-react-helmet`,
-    `gatsby-plugin-typescript`,
-    `gatsby-plugin-styled-components`,
+    'gatsby-plugin-pnpm',
+    'gatsby-plugin-react-helmet',
+    'gatsby-plugin-typescript',
+    'gatsby-plugin-styled-components',
     {
-      resolve: `gatsby-plugin-google-gtag`,
-      options: {
-        trackingIds: ['G-E0PDMEJQ0T'],
-      },
+      resolve: 'gatsby-plugin-google-gtag',
+      options: {trackingIds: ['G-E0PDMEJQ0T']},
     },
     {
       resolve: 'gatsby-plugin-react-svg',
@@ -31,7 +29,7 @@ module.exports = {
     },
     'gatsby-plugin-netlify',
     {
-      resolve: `gatsby-plugin-env-variables`,
+      resolve: 'gatsby-plugin-env-variables',
       options: {
         // https://docs.netlify.com/configure-builds/environment-variables/#read-only-variables
         allowList: ['CONTEXT'],

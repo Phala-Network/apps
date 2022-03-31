@@ -17,15 +17,26 @@ import InfoCard from '../components/StakePool/InfoCard'
 import WithdrawQueue from '../components/StakePool/WithdrawQueue'
 import StakeInfo from '../components/StakePool/StakeInfo'
 import SettingButton from '../components/StakePool/SettingButton'
+import Chart from '../components/StakePool/Chart'
 
-export const StakePool: VFC<PageProps> = ({params: {pid}}) => {
+interface StakePoolProps extends PageProps {
+  pid?: string
+}
+
+export const StakePool: VFC<StakePoolProps> = ({pid}) => {
   const [modalKey, setModalKey] = useState<StakePoolModalKey | null>(null)
   const [polkadotAccount] = usePolkadotAccountAtom()
-  const {data, isLoading} = useStakePoolQuery(client, {
-    where: {
-      pid: Number(pid),
+  const {data, isLoading} = useStakePoolQuery(
+    client,
+    {
+      where: {
+        pid: Number(pid),
+      },
     },
-  })
+    {
+      enabled: Boolean(pid),
+    }
+  )
   const closeModal = useCallback(() => {
     setModalKey(null)
   }, [])
@@ -159,6 +170,27 @@ export const StakePool: VFC<PageProps> = ({params: {pid}}) => {
               isOwner={isOwner}
               onSetCap={() => setModalKey('setCap')}
             />
+          </Card>
+
+          <HeadingSmall marginTop="scale1200" marginBottom="scale400">
+            Chart
+          </HeadingSmall>
+          <Card
+            overrides={{
+              Root: {
+                style: ({$theme}) => ({
+                  borderRadius: '0',
+                  ...$theme.borders.border200,
+                }),
+              },
+              Body: {
+                style: {
+                  marginBottom: 0,
+                },
+              },
+            }}
+          >
+            <Chart pid={pid} />
           </Card>
 
           <HeadingSmall marginTop="scale1200" marginBottom="scale400">
