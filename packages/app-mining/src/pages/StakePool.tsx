@@ -20,17 +20,23 @@ import SettingButton from '../components/StakePool/SettingButton'
 import Chart from '../components/StakePool/Chart'
 
 interface StakePoolProps extends PageProps {
-  pid: string
+  pid?: string
 }
 
 export const StakePool: VFC<StakePoolProps> = ({pid}) => {
   const [modalKey, setModalKey] = useState<StakePoolModalKey | null>(null)
   const [polkadotAccount] = usePolkadotAccountAtom()
-  const {data, isLoading} = useStakePoolQuery(client, {
-    where: {
-      pid: Number(pid),
+  const {data, isLoading} = useStakePoolQuery(
+    client,
+    {
+      where: {
+        pid: Number(pid),
+      },
     },
-  })
+    {
+      enabled: Boolean(pid),
+    }
+  )
   const closeModal = useCallback(() => {
     setModalKey(null)
   }, [])
