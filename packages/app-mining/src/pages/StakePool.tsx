@@ -19,7 +19,13 @@ import StakeInfo from '../components/StakePool/StakeInfo'
 import SettingButton from '../components/StakePool/SettingButton'
 import Chart from '../components/StakePool/Chart'
 
-export const StakePool: VFC<PageProps> = ({params: {pid}}) => {
+interface StakePoolProps extends PageProps {
+  params: {
+    pid: string
+  }
+}
+
+export const StakePool: VFC<StakePoolProps> = ({params: {pid}}) => {
   const [modalKey, setModalKey] = useState<StakePoolModalKey | null>(null)
   const [polkadotAccount] = usePolkadotAccountAtom()
   const {data, isLoading} = useStakePoolQuery(client, {
@@ -172,6 +178,11 @@ export const StakePool: VFC<PageProps> = ({params: {pid}}) => {
                   borderRadius: '0',
                   ...$theme.borders.border200,
                 }),
+              },
+              Body: {
+                style: {
+                  marginBottom: 0,
+                },
               },
             }}
           >
