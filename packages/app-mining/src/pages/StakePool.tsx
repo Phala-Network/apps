@@ -186,7 +186,7 @@ export const StakePool: VFC<StakePoolProps> = ({params: {pid}}) => {
               },
             }}
           >
-            <Chart pid={pid} />
+            {Boolean(pid) && <Chart pid={pid} />}
           </Card>
 
           <HeadingSmall marginTop="scale1200" marginBottom="scale400">
