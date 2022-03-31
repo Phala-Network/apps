@@ -3,6 +3,7 @@ import {decimalToBalance, waitSignAndSend} from '@phala/react-libs'
 import {formatCurrency} from '@phala/utils'
 import {u8aToHex} from '@polkadot/util'
 import {decodeAddress} from '@polkadot/util-crypto'
+import {useStyletron} from 'baseui'
 import {Block} from 'baseui/block'
 import {KIND as ButtonKind} from 'baseui/button'
 import {ModalBody, ModalButton, ModalFooter} from 'baseui/modal'
@@ -22,6 +23,7 @@ interface TransferPHAFromKaruraToKhalaProps {
 export const TransferPHAFromKaruraToKhala: React.FC<
   TransferPHAFromKaruraToKhalaProps
 > = (props) => {
+  const [css] = useStyletron()
   const {onCloseTransfer} = props
   const allTransactionsInfo = useAllTransferData()
   const fromAddress = allTransactionsInfo.fromAddress
@@ -134,12 +136,15 @@ export const TransferPHAFromKaruraToKhala: React.FC<
         {progressIndex === -1 && (
           <>
             <Alert>
-              <span>
-                This transaction will charge a{' '}
+              <span className={css({wordBreak: 'break-word'})}>
+                A destination chain transfer fee of{' '}
                 <span style={{fontWeight: 'bold'}}>
                   {formatCurrency(toKhalaXcmFee)} PHA
                 </span>{' '}
-                bridge fee to cover the resource cost of the destination chain.
+                will be charged for transferring from Karura to Khala. The
+                bridge itself is completely free. This fee is only used to pay
+                the xcm fee of the Khala chain, not including the transaction
+                fee of the Karura chain.
               </span>
             </Alert>
             <Spacer />
@@ -158,9 +163,7 @@ export const TransferPHAFromKaruraToKhala: React.FC<
           <>
             <Spacer></Spacer>
             <Alert>
-              <span>
-                Transaction has been sent, it may take within 1 minute.
-              </span>
+              <span>The transaction may take up to 1 minute to complete. </span>
             </Alert>
           </>
         )}
