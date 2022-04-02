@@ -9,6 +9,7 @@ import StatusBarV2 from '../components/StatusBarV2'
 import ClaimAll from '../components/ClaimAll'
 import endGameBanner from '../static/end-game-banner.jpg'
 import styled from 'styled-components'
+import GeminiNotification from '../components/GeminiNotification'
 
 const EndGameBanner = styled.a`
   display: block;
@@ -33,9 +34,13 @@ export const MiningV2 = (): JSX.Element => {
       <Helmet>
         <title>Mining</title>
       </Helmet>
+
       <EndGameBanner href="/end-game/" target="_blank" rel="noreferrer">
         <img src={endGameBanner} alt="End Game Banner" />
       </EndGameBanner>
+
+      <GeminiNotification />
+
       <StatusBarV2 />
       <Card
         overrides={{
