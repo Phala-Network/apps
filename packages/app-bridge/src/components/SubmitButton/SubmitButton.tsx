@@ -1,5 +1,8 @@
 import {toast} from '@phala/react-components'
-import {useEthereumBridgeFee} from '@phala/react-libs'
+import {
+  useErc20AssetHandlerAllowanceQuery,
+  useEthereumBridgeFee,
+} from '@phala/react-libs'
 import {validateAddress} from '@phala/utils'
 import Decimal from 'decimal.js'
 import {ComponentProps, FC} from 'react'
@@ -19,6 +22,11 @@ export const SubmitButton: FC<SubmitButtonProps> = (props) => {
   const allTransferData = useAllTransferData()
   const ethereumBridgeFee = useEthereumBridgeFee()
   const khalaBridgeFee = useKhalaBridgeFee()
+  const {data: allowance} = useErc20AssetHandlerAllowanceQuery(
+    allTransferData.fromNetwork === 'Ethereum'
+      ? allTransferData.fromAddress
+      : undefined
+  )
   const {amount, toAddress, fromNetwork, toNetwork, toBlockchainType} =
     allTransferData
 
@@ -87,6 +95,8 @@ export const SubmitButton: FC<SubmitButtonProps> = (props) => {
         new Decimal(amountTo).lessThanOrEqualTo(toKhalaXcmFee))
     ) {
       errorString = 'The transaction amount should be greater than bridge fee'
+    } else if (fromNetwork === 'Ethereum' && (!allowance || allowance.lte(0))) {
+      errorString = 'Please approve first'
     }
     if (errorString) {
       toast(errorString, 'error')
