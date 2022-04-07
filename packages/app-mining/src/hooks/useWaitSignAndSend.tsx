@@ -1,4 +1,4 @@
-import {usePolkadotAccountAtom} from '@phala/app-store'
+import {useCurrentAccount} from '@phala/app-store'
 import {useApiPromise, waitSignAndSend} from '@phala/react-libs'
 import {SubmittableExtrinsic} from '@polkadot/api/types'
 import {ExtrinsicStatus} from '@polkadot/types/interfaces'
@@ -17,7 +17,7 @@ const useWaitSignAndSend = (): ((
   | void
 >) => {
   const {enqueue, dequeue} = useSnackbar()
-  const [polkadotAccount] = usePolkadotAccountAtom()
+  const [polkadotAccount] = useCurrentAccount()
   const {api} = useApiPromise()
 
   return async (extrinsic, onstatus) => {

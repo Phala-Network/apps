@@ -1,4 +1,4 @@
-import {usePolkadotAccountAtom} from '@phala/app-store'
+import {useCurrentAccount} from '@phala/app-store'
 import {
   PhalaStakePoolTransactionFeeLabel,
   ModalWrapper,
@@ -50,7 +50,7 @@ const ButtonContainer = styled.div`
 const ClaimModal: React.FC<Props> = ({visible, onClose}) => {
   const [loading, setLoading] = useState(false)
   const {api} = useApiPromise()
-  const polkadotAccount = usePolkadotAccountAtom()[0]?.address
+  const polkadotAccount = useCurrentAccount()[0]?.address
   const allBalances = useAllBalances(polkadotAccount)
   const decimals = useDecimalJsTokenDecimalMultiplier(api)
   const {vestingLocked, vestedClaimable, vestedBalance} = allBalances || {}

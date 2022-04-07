@@ -1,56 +1,62 @@
-import {Account} from '@phala/app-types'
-import React from 'react'
-import styled from 'styled-components'
-import {
-  ModalWrapper,
-  ModalButtonWrapper,
-  ModalFooterWrapper,
-  ModalTitleWrapper,
-} from '../Modal'
-import scrollbar from '../scrollbar'
-import AccountOption from './AccountOption'
+import {useCurrentAccount} from '@phala/app-store'
+import {Modal, ModalProps} from 'baseui/modal'
+import {useEffect, useState, VFC} from 'react'
+import AccountModalBody from './AccountModalBody'
+import WalletModalBody from './WalletModalBody'
 
-export type SelectAccountModalProps = {
-  visible: boolean
-  onClose: () => void
-  accounts: Account[]
-  currentAccount?: Account
-  onSelect: (account: Account) => void
-}
+export type SelectAccountModalProps = Required<
+  Pick<ModalProps, 'isOpen' | 'onClose'>
+>
 
-const Content = styled.div`
-  display: grid;
-  grid-gap: 20px;
-  max-height: 300px;
-  overflow-y: auto;
+export const SelectAccountModal: VFC<SelectAccountModalProps> = (props) => {
+  const [polkadotAccount] = useCurrentAccount()
+  const {isOpen, onClose} = props
 
-  ${scrollbar}
-`
+  const [isWalletOpen, setIsWalletOpen] = useState(false)
+  const [isAccountOpen, setIsAccountOpen] = useState(false)
 
-export const SelectAccountModal: React.FC<SelectAccountModalProps> = (
-  props
-) => {
-  const {visible, currentAccount, accounts, onClose, onSelect} = props
+  useEffect(() => {
+    if (polkadotAccount) {
+      setIsAccountOpen(isOpen)
+    } else {
+      setIsWalletOpen(isOpen)
+    }
+  }, [isOpen, polkadotAccount])
 
   return (
-    <ModalWrapper onClose={onClose} visible={visible}>
-      <ModalTitleWrapper>Select An Account</ModalTitleWrapper>
-      <Content>
-        {accounts.map((item) => (
-          <AccountOption
-            key={item.address}
-            active={currentAccount?.address === item.address}
-            onClick={(account) => {
-              onSelect(account)
-              onClose()
-            }}
-            {...item}
-          ></AccountOption>
-        ))}
-      </Content>
-      <ModalFooterWrapper>
-        <ModalButtonWrapper onClick={props.onClose}>Cancel</ModalButtonWrapper>
-      </ModalFooterWrapper>
-    </ModalWrapper>
+    <>
+      <Modal
+        isOpen={isWalletOpen}
+        onClose={onClose}
+        overrides={{
+          Dialog: {
+            style: ({$theme}) => ({
+              borderRadius: 0,
+              borderWidth: '2px',
+              borderColor: $theme.colors.accent,
+              borderStyle: 'solid',
+            }),
+          },
+        }}
+      >
+        <WalletModalBody />
+      </Modal>
+      <Modal
+        isOpen={isAccountOpen}
+        onClose={onClose}
+        overrides={{
+          Dialog: {
+            style: ({$theme}) => ({
+              borderRadius: 0,
+              borderWidth: '2px',
+              borderColor: $theme.colors.accent,
+              borderStyle: 'solid',
+            }),
+          },
+        }}
+      >
+        <AccountModalBody />
+      </Modal>
+    </>
   )
 }

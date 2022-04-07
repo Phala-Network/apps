@@ -1,4 +1,4 @@
-import {useEthereumAccountAtom, usePolkadotAccountAtom} from '@phala/app-store'
+import {useEthereumAccountAtom, useCurrentAccount} from '@phala/app-store'
 import {validateAddress} from '@phala/utils'
 import {useEffect, useState} from 'react'
 import {down} from 'styled-breakpoints'
@@ -9,7 +9,7 @@ import {Button} from '../../Button'
 
 export const FillMyAddress = () => {
   const [addressValid, setAddressValid] = useState(false)
-  const [polkadotAccount] = usePolkadotAccountAtom()
+  const [polkadotAccount] = useCurrentAccount()
   const polkadotAccountAddress = polkadotAccount?.address
   const [ethereumAccount] = useEthereumAccountAtom()
   const ethereumAccountAddress = ethereumAccount?.address

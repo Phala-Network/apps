@@ -21,7 +21,8 @@
     "typedefs",
     "unsub",
     "uuidv",
-    "stakers"
+    "stakers",
+    "dotsama"
   ],
   "typescript.tsdk": "node_modules/typescript/lib"
 }

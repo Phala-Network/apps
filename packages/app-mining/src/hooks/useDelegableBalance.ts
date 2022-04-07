@@ -1,5 +1,5 @@
 import {useState, useEffect, useMemo} from 'react'
-import {usePolkadotAccountAtom} from '@phala/app-store'
+import {useCurrentAccount} from '@phala/app-store'
 import {useBalance} from '@phala/react-hooks'
 import {useApiPromise} from '@phala/react-libs'
 import Decimal from 'decimal.js'
@@ -15,7 +15,7 @@ const PHALA_SP = '0x7068616c612f7370'
 export const useDelegableBalance = () => {
   const [locked, setLocked] = useState<Decimal>()
   const {api} = useApiPromise()
-  const [polkadotAccount] = usePolkadotAccountAtom()
+  const [polkadotAccount] = useCurrentAccount()
   const balance = useBalance(polkadotAccount?.address)
   useEffect(() => {
     let unsub: () => void

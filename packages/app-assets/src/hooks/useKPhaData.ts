@@ -1,5 +1,5 @@
 import {useMemo} from 'react'
-import {usePolkadotAccountAtom} from '@phala/app-store'
+import {useCurrentAccount} from '@phala/app-store'
 import {
   useBalance,
   useLockedBalance,
@@ -11,7 +11,7 @@ import usePHAPrice from './usePHAPrice'
 
 const useKPhaData = () => {
   const PHAPrice = usePHAPrice()
-  const [polkadotAccount] = usePolkadotAccountAtom()
+  const [polkadotAccount] = useCurrentAccount()
   const polkadotAccountAddress = polkadotAccount?.address
   const polkadotAccountBalance = useBalance(polkadotAccountAddress)
   const polkadotTransferBalanceDecimal =

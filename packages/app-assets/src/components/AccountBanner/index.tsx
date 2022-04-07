@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import {down, up} from 'styled-breakpoints'
 import {useSSR} from '@phala/react-hooks'
-import {usePolkadotAccountAtom} from '@phala/app-store'
+import {useCurrentAccount} from '@phala/app-store'
 import {formatCurrency} from '@phala/utils'
 import bannerBg from '../Icons/banner-bg.png'
 import AccountInfo from './AccountInfo'
@@ -83,7 +83,7 @@ type Props = {
 }
 
 const AccountBanner: React.FC<Props> = ({totalValue}) => {
-  const [polkadotAccount] = usePolkadotAccountAtom()
+  const [polkadotAccount] = useCurrentAccount()
   const {isBrowser} = useSSR()
 
   return (

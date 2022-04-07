@@ -1,10 +1,8 @@
-import {usePolkadotAccountAtom} from '@phala/app-store'
-import {PolkadotAccountModal} from '@phala/react-components'
-import {usePolkadotWeb3} from '@phala/react-libs'
-import React, {useCallback, useEffect, useState} from 'react'
+import {useCurrentAccount} from '@phala/app-store'
+import {SelectAccountModal} from '@phala/react-components'
+import React, {useCallback, useState} from 'react'
 import styled from 'styled-components'
 import {useSSR} from '@phala/react-hooks'
-import EmptyAccountModal from './EmptyAccountModal'
 
 const Wrapper = styled.div`
   user-select: none;
@@ -44,34 +42,12 @@ const ConnectButton = styled.div.attrs({children: 'Connect Wallet'})`
 `
 
 const MobilePolkadotTicket: React.FC = () => {
-  const {accounts} = usePolkadotWeb3()
-  const [polkadotAccount, setPolkadotAccount] = usePolkadotAccountAtom()
+  const [currentAccount] = useCurrentAccount()
   const [accountModalVisible, setAccountModalVisible] = useState(false)
-  const [emptyAccountModalVisible, setEmptyAccountModalVisible] =
-    useState(false)
-
-  // FIXME: move this hook to a separate file
-  useEffect(() => {
-    if (
-      accounts[0] &&
-      accounts.length &&
-      !accounts?.find(({address}) => address === polkadotAccount?.address)
-    ) {
-      const account = accounts[0]
-      setPolkadotAccount({
-        name: account.meta.name || 'Account',
-        address: account.address,
-      })
-    }
-  }, [accounts, polkadotAccount, setPolkadotAccount])
 
   const onClick = useCallback(() => {
-    if (accounts.length) {
-      setAccountModalVisible(true)
-    } else {
-      setEmptyAccountModalVisible(true)
-    }
-  }, [accounts.length])
+    setAccountModalVisible(true)
+  }, [])
 
   const {isServer} = useSSR()
 
@@ -79,23 +55,18 @@ const MobilePolkadotTicket: React.FC = () => {
 
   return (
     <Wrapper>
-      {polkadotAccount ? (
+      {currentAccount ? (
         <AccountInfo onClick={() => setAccountModalVisible(true)}>
-          {polkadotAccount.name}
+          {currentAccount.name}
         </AccountInfo>
       ) : (
         <ConnectButton onClick={onClick}></ConnectButton>
       )}
 
-      <PolkadotAccountModal
-        visible={accountModalVisible}
+      <SelectAccountModal
+        isOpen={accountModalVisible}
         onClose={() => setAccountModalVisible(false)}
-      ></PolkadotAccountModal>
-
-      <EmptyAccountModal
-        visible={emptyAccountModalVisible}
-        onClose={() => setEmptyAccountModalVisible(false)}
-      ></EmptyAccountModal>
+      ></SelectAccountModal>
     </Wrapper>
   )
 }

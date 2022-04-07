@@ -1,4 +1,4 @@
-import {useEthereumAccountAtom, usePolkadotAccountAtom} from '@phala/app-store'
+import {useEthereumAccountAtom, useCurrentAccount} from '@phala/app-store'
 import {
   useEthereumAccountBalanceDecimal,
   usePolkadotAccountTransferrableBalanceDecimal,
@@ -14,7 +14,7 @@ export function useBridgePage() {
 
   const blockchainType =
     transactionInfo?.fromBlockchainType || blockchainTypes.ethereum
-  const [polkadotAccount] = usePolkadotAccountAtom()
+  const [polkadotAccount] = useCurrentAccount()
   const polkadotAccountAddress = polkadotAccount?.address
   const [ethereumAccount] = useEthereumAccountAtom()
   const ethereumAccountAddress = ethereumAccount?.address

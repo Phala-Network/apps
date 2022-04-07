@@ -1,5 +1,5 @@
-import {usePolkadotAccountAtom} from '@phala/app-store'
-import {BalanceLabel, PolkadotAccountModal} from '@phala/react-components'
+import {useCurrentAccount} from '@phala/app-store'
+import {BalanceLabel, SelectAccountModal} from '@phala/react-components'
 import {useBalance} from '@phala/react-hooks'
 import {formatPolkadotBalance} from '@phala/utils'
 import Decimal from 'decimal.js'
@@ -26,10 +26,9 @@ const TicketName = styled(_TicketName)`
 
 const PolkadotTicket: React.FC = () => {
   const theme = useTheme()
-  const [polkadotAccount] = usePolkadotAccountAtom()
-  const [selectAccountModalViable, setSelectAccountModalViable] =
-    useState(false)
-  const openAccountSelectModal = () => setSelectAccountModalViable(true)
+  const [polkadotAccount] = useCurrentAccount()
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const openAccountSelectModal = () => setIsModalOpen(true)
   const balance = useBalance(polkadotAccount?.address)
 
   const [value, unit] = formatPolkadotBalance(balance?.toString() || '0')
@@ -63,9 +62,9 @@ const PolkadotTicket: React.FC = () => {
         />
       )}
 
-      <PolkadotAccountModal
-        onClose={() => setSelectAccountModalViable(false)}
-        visible={selectAccountModalViable}
+      <SelectAccountModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
       />
     </>
   )

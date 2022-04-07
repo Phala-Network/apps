@@ -1,4 +1,4 @@
-import {usePolkadotAccountAtom} from '@phala/app-store'
+import {useCurrentAccount} from '@phala/app-store'
 import {
   PolkadotTransactionFeeLabel,
   ModalWrapper,
@@ -36,7 +36,7 @@ const TransferModal: React.FC<Props> = ({visible, onClose}) => {
   const [amount, setAmount] = useState('')
   const [loading, setLoading] = useState(false)
   const {api} = useApiPromise()
-  const [polkadotAccount] = usePolkadotAccountAtom()
+  const [polkadotAccount] = useCurrentAccount()
   const decimals = useDecimalJsTokenDecimalMultiplier(api)
 
   const polkadotAccountAddress = polkadotAccount?.address

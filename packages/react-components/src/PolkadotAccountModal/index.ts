@@ -1,1 +1,0 @@
-export {PolkadotAccountModal} from './PolkadotAccountModal'

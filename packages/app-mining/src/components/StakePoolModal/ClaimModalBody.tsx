@@ -15,7 +15,7 @@ import {
   useApiPromise,
   useDecimalJsTokenDecimalMultiplier,
 } from '@phala/react-libs'
-import {usePolkadotAccountAtom} from '@phala/app-store'
+import {useCurrentAccount} from '@phala/app-store'
 import {Button} from 'baseui/button'
 import {StakePool} from '.'
 
@@ -26,7 +26,7 @@ const ClaimModalBody: VFC<
   } & Pick<ModalProps, 'onClose'>
 > = ({stakePool, onClose}) => {
   const {pid, stakePoolStakers} = stakePool
-  const [polkadotAccount] = usePolkadotAccountAtom()
+  const [polkadotAccount] = useCurrentAccount()
   const {api} = useApiPromise()
   const [address, setAddress] = useState('')
   const [isAddressError, setIsAddressError] = useState(false)

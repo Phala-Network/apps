@@ -1,4 +1,4 @@
-import {usePolkadotAccountAtom} from '@phala/app-store'
+import {useCurrentAccount} from '@phala/app-store'
 import {useTransactionFee} from '@phala/react-libs'
 import {FC} from 'react'
 import {FeeLabel} from '../FeeLabel'
@@ -10,7 +10,7 @@ interface PolkadotTransactionFeeLabelProps {
 }
 
 const Component: FC<PolkadotTransactionFeeLabelProps> = (props) => {
-  const [polkadotAccount] = usePolkadotAccountAtom()
+  const [polkadotAccount] = useCurrentAccount()
   const {
     sender = polkadotAccount?.address ||
       '44qokWaaP4L2QqzMQ8UQtUFpRdRWwmVMbUTCpq6dNzSHXqLD',

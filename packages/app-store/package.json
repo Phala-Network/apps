@@ -1,9 +1,11 @@
 {
   "name": "@phala/app-store",
   "version": "0.0.1",
+  "type": "module",
   "sideEffects": false,
   "main": "src/index.ts",
   "dependencies": {
-    "@phala/app-types": "workspace:0.0.1"
+    "@phala/app-types": "workspace:0.0.1",
+    "@phala/wallets": "workspace:^0.0.1"
   }
 }

@@ -17,7 +17,7 @@ import {StatefulInput} from 'baseui/input'
 import {debounce} from 'lodash-es'
 import {formatCurrency, isTruthy, toFixed} from '@phala/utils'
 import PopoverButton from '../PopoverButton'
-import {usePolkadotAccountAtom} from '@phala/app-store'
+import {useCurrentAccount} from '@phala/app-store'
 import Pagination from '../Pagination'
 import {StatefulTooltip} from 'baseui/tooltip'
 import {tooltipContent} from './tooltipContent'
@@ -51,7 +51,7 @@ const StakePoolTableV2: VFC<{
     return now.toISOString()
   })
   const pageSize = kind === 'mining' ? 10 : 20
-  const [polkadotAccount] = usePolkadotAccountAtom()
+  const [polkadotAccount] = useCurrentAccount()
   const address = polkadotAccount?.address
   const [searchString, setSearchString] = useState('')
   const [sortColumn, setSortColumn] = useState<
