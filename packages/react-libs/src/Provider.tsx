@@ -5,7 +5,6 @@ import {EthereumGraphQLProvider} from './ethereum/GraphQLClientContext'
 import {SubstrateGraphQLProvider} from './polkadot/GraphQLClientContext'
 import {ApiPromiseProvider} from './polkadot/hooks/useApiPromise'
 import {NetworkContextProvider} from './polkadot/hooks/useSubstrateNetwork'
-import {Web3Provider as PolkadotWeb3Provider} from './polkadot/hooks/useWeb3'
 
 export interface ProviderProps {
   ethereumGraphEndpoint: string
@@ -28,11 +27,7 @@ export const Provider: FC<ProviderProps> = (props) => {
         <EthereumWeb3Provider>
           <EthersProvider>
             <NetworkContextProvider defaultNetwork={defaultNetwork}>
-              <ApiPromiseProvider>
-                <PolkadotWeb3Provider originName="ChainBridge Operator">
-                  {children}
-                </PolkadotWeb3Provider>
-              </ApiPromiseProvider>
+              <ApiPromiseProvider>{children}</ApiPromiseProvider>
             </NetworkContextProvider>
           </EthersProvider>
         </EthereumWeb3Provider>

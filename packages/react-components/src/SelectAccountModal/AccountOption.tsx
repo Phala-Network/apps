@@ -1,4 +1,4 @@
-import {Account} from '@phala/app-types'
+import {WalletAccount} from '@phala/wallets/types'
 import React from 'react'
 import styled from 'styled-components'
 import {Copy} from '../Copy'
@@ -7,7 +7,7 @@ type Props = {
   name?: string
   address: string
   active?: boolean
-  onClick: (account: Account) => void
+  onClick: (account: WalletAccount) => void
 }
 
 const Name = styled.div`

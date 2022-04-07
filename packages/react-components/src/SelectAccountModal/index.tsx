@@ -1,62 +1,61 @@
-import {useCurrentAccount} from '@phala/app-store'
-import {Modal, ModalProps} from 'baseui/modal'
-import {useEffect, useState, VFC} from 'react'
-import AccountModalBody from './AccountModalBody'
-import WalletModalBody from './WalletModalBody'
+import {useCurrentAccount, useWallet} from '@phala/app-store'
+import {Wallet} from '@phala/wallets/types'
+import {ModalProps} from 'baseui/modal'
+import {toaster} from 'baseui/toast'
+import {VFC} from 'react'
+import AccountModal from './AccountModal'
+import WalletModal from './WalletModal'
 
-export type SelectAccountModalProps = Required<
-  Pick<ModalProps, 'isOpen' | 'onClose'>
->
-
-export const SelectAccountModal: VFC<SelectAccountModalProps> = (props) => {
-  const [polkadotAccount] = useCurrentAccount()
+export const SelectAccountModal: VFC<
+  Required<Pick<ModalProps, 'isOpen' | 'onClose'>>
+> = (props) => {
+  const [currentAccount, setCurrentAccount] = useCurrentAccount()
+  const [wallet, setWallet] = useWallet()
   const {isOpen, onClose} = props
 
-  const [isWalletOpen, setIsWalletOpen] = useState(false)
-  const [isAccountOpen, setIsAccountOpen] = useState(false)
+  const showWalletModal = !currentAccount && !wallet
 
-  useEffect(() => {
-    if (polkadotAccount) {
-      setIsAccountOpen(isOpen)
-    } else {
-      setIsWalletOpen(isOpen)
+  const onSelectWallet = async (wallet: Wallet) => {
+    try {
+      await wallet.enable()
+      setWallet(wallet)
+    } catch (err) {
+      if (err instanceof Error) {
+        toaster.negative(err.message, {})
+      }
+      throw err
     }
-  }, [isOpen, polkadotAccount])
+  }
+
+  const onSelectAccount = (address: string) => {
+    setCurrentAccount(address)
+    onClose({})
+  }
+
+  const onDisconnect = () => {
+    setCurrentAccount(null)
+    setWallet(null)
+  }
 
   return (
     <>
-      <Modal
-        isOpen={isWalletOpen}
+      <WalletModal
+        isOpen={isOpen && showWalletModal}
+        onSelect={onSelectWallet}
         onClose={onClose}
-        overrides={{
-          Dialog: {
-            style: ({$theme}) => ({
-              borderRadius: 0,
-              borderWidth: '2px',
-              borderColor: $theme.colors.accent,
-              borderStyle: 'solid',
-            }),
-          },
+      />
+      <AccountModal
+        isOpen={isOpen && !showWalletModal}
+        onSelect={onSelectAccount}
+        onDisconnect={onDisconnect}
+        onClose={(args) => {
+          // If no account is selected, clear wallet and start over next time
+          if (!currentAccount) {
+            setWallet(null)
+          }
+          onClose(args)
         }}
-      >
-        <WalletModalBody />
-      </Modal>
-      <Modal
-        isOpen={isAccountOpen}
-        onClose={onClose}
-        overrides={{
-          Dialog: {
-            style: ({$theme}) => ({
-              borderRadius: 0,
-              borderWidth: '2px',
-              borderColor: $theme.colors.accent,
-              borderStyle: 'solid',
-            }),
-          },
-        }}
-      >
-        <AccountModalBody />
-      </Modal>
+      />
     </>
   )
 }

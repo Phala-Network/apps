@@ -1,34 +1,28 @@
 import {Wallet} from '@phala/wallets/types'
-import {ModalBody, ModalHeader} from 'baseui/modal'
+import {Modal, ModalBody, ModalHeader, ModalProps} from 'baseui/modal'
 import {useEffect, useState, VFC} from 'react'
 import {Block} from 'baseui/block'
 import {ArrowRight, Download} from 'react-feather'
 import {useStyletron} from 'baseui'
-import {useAccounts} from '@phala/app-store'
 
-const WalletModalBody: VFC = () => {
+type Props = {
+  onSelect?: (wallet: Wallet) => void
+}
+
+const Body: VFC<Props> = ({onSelect}) => {
   const [css, theme] = useStyletron()
   const [wallets, setWallets] = useState<Wallet[]>()
-  const [, setAccounts] = useAccounts()
   useEffect(() => {
     import('@phala/wallets').then(({getWallets}) => {
       setWallets(getWallets())
     })
   }, [])
 
-  const enableWallet = async (wallet: Wallet) => {
-    await wallet.enable()
-    const walletAccounts = await wallet.getAccounts()
-    if (walletAccounts) {
-      setAccounts(walletAccounts)
-    }
-  }
-
   return (
     <>
-      <ModalHeader>Connect Wallet</ModalHeader>
+      <ModalHeader>Select Wallet</ModalHeader>
       <ModalBody>
-        <Block color="primaryA">
+        <Block>
           {wallets &&
             wallets.map((wallet) => {
               // NOTE: logo.src is imported svg, it is react component instead of string because of svg-react-loader
@@ -37,17 +31,20 @@ const WalletModalBody: VFC = () => {
               }>
               return (
                 <Block
-                  height="48px"
-                  marginTop="scale400"
+                  padding="scale600"
+                  marginTop="scale600"
+                  backgroundColor="backgroundSecondary"
                   display="flex"
                   alignItems="center"
                   $style={{
-                    ...theme.borders.border200,
                     cursor: 'pointer',
+                    ':hover': {
+                      backgroundColor: theme.colors.backgroundTertiary,
+                    },
                   }}
                   onClick={() => {
                     if (wallet.installed) {
-                      enableWallet(wallet)
+                      onSelect?.(wallet)
                     } else {
                       window.open(wallet.installUrl)
                     }
@@ -66,6 +63,7 @@ const WalletModalBody: VFC = () => {
                     className={css({
                       flex: 1,
                       marginLeft: theme.sizing.scale600,
+                      fontWeight: 600,
                     })}
                   >
                     {wallet.title}
@@ -75,7 +73,11 @@ const WalletModalBody: VFC = () => {
                     <ArrowRight size={18} />
                   ) : (
                     <Block display="flex" alignItems="center" flex="none">
-                      <span>Install</span>
+                      <span
+                        className={css({marginRight: theme.sizing.scale400})}
+                      >
+                        Install
+                      </span>
                       <Download size={18} />
                     </Block>
                   )}
@@ -88,4 +90,27 @@ const WalletModalBody: VFC = () => {
   )
 }
 
-export default WalletModalBody
+const WalletModal: VFC<
+  Required<Pick<ModalProps, 'isOpen' | 'onClose'>> & Props
+> = ({isOpen, onClose, onSelect}) => {
+  return (
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+      overrides={{
+        Dialog: {
+          style: ({$theme}) => ({
+            borderRadius: 0,
+            borderWidth: '2px',
+            borderColor: $theme.colors.accent,
+            borderStyle: 'solid',
+          }),
+        },
+      }}
+    >
+      <Body onSelect={onSelect} />
+    </Modal>
+  )
+}
+
+export default WalletModal
