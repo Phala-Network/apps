@@ -11,8 +11,8 @@ import usePHAPrice from './usePHAPrice'
 
 const useKPhaData = () => {
   const PHAPrice = usePHAPrice()
-  const [polkadotAccount] = useCurrentAccount()
-  const polkadotAccountAddress = polkadotAccount?.address
+  const [currentAccount] = useCurrentAccount()
+  const polkadotAccountAddress = currentAccount?.address
   const polkadotAccountBalance = useBalance(polkadotAccountAddress)
   const polkadotTransferBalanceDecimal =
     usePolkadotAccountTransferrableBalanceDecimal(polkadotAccountAddress)
@@ -35,7 +35,7 @@ const useKPhaData = () => {
   }, [polkadotAccountBalanceNumber])
 
   const dollarValue = useMemo(() => {
-    if (!polkadotAccountBalanceNumber) return ''
+    if (!polkadotAccountBalanceNumber || !PHAPrice) return ''
     return toFixed(polkadotAccountBalanceNumber.mul(PHAPrice), 2)
   }, [polkadotAccountBalanceNumber, PHAPrice])
 

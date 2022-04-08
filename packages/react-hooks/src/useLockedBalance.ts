@@ -26,15 +26,21 @@ export default function useLockedBalance(
   const initialized = readystate === 'ready'
 
   useEffect(() => {
-    if (!address || !initialized || !api) {
+    if (!address) {
+      setDelegateBalance(undefined)
+      setCrowdloanVestingBalance(undefined)
       return
     }
-
+    if (!initialized || !api) {
+      return
+    }
+    let unmounted = false
     let unsubscribe: () => void
 
     api.query.balances
       .locks(address, (data) => {
         data.forEach(({id, amount}) => {
+          if (unmounted) return
           const idStr = lookupLock(id).trim()
           if (idStr === 'vesting') {
             setCrowdloanVestingBalance(new Decimal(amount.toString()))
@@ -47,8 +53,9 @@ export default function useLockedBalance(
       .then((_unsubscribe) => (unsubscribe = _unsubscribe))
 
     return () => {
-      setDelegateBalance(new Decimal(0))
-      setCrowdloanVestingBalance(new Decimal(0))
+      setDelegateBalance(undefined)
+      setCrowdloanVestingBalance(undefined)
+      unmounted = true
       unsubscribe?.()
     }
   }, [api, initialized, address])

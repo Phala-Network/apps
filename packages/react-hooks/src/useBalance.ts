@@ -10,7 +10,11 @@ export default function useBalance(
   const initialized = readystate === 'ready'
 
   useEffect(() => {
-    if (!address || !initialized || !api) {
+    if (!address) {
+      setBalance(undefined)
+      return
+    }
+    if (!initialized || !api) {
       return
     }
 
@@ -23,6 +27,7 @@ export default function useBalance(
       .then((_unsubscribe) => (unsubscribe = _unsubscribe))
 
     return () => {
+      setBalance(undefined)
       unsubscribe?.()
     }
   }, [api, initialized, address])
