@@ -13,9 +13,15 @@ const Body: VFC<Props> = ({onSelect}) => {
   const [css, theme] = useStyletron()
   const [wallets, setWallets] = useState<Wallet[]>()
   useEffect(() => {
+    let unmounted = false
     import('@phala/wallets').then(({getWallets}) => {
-      setWallets(getWallets())
+      if (!unmounted) {
+        setWallets(getWallets())
+      }
     })
+    return () => {
+      unmounted = true
+    }
   }, [])
 
   return (

@@ -12,7 +12,7 @@
     "@phala/react-libs": "workspace:0.0.1",
     "@phala/utils": "workspace:0.0.1",
     "@phala/wallets": "workspace:^0.0.1",
-    "@polkadot/api": "^7.14.3",
+    "@polkadot/api": "^7.15.1",
     "@polkadot/react-identicon": "^1.4.1",
     "@polkadot/util": "^8.7.1",
     "@polkadot/util-crypto": "^8.7.1",

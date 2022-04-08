@@ -7,7 +7,7 @@
   "type": "module",
   "sideEffects": false,
   "dependencies": {
-    "@polkadot/api": "^7.14.3",
-    "@polkadot/extension-inject": "^0.42.9"
+    "@polkadot/api": "^7.15.1",
+    "@polkadot/extension-inject": "^0.42.10"
   }
 }
