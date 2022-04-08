@@ -33,8 +33,9 @@ import StartModalBody from './StartModalBody'
 import StopModalBody from './StopModalBody'
 import RemoveModalBody from './RemoveModalBody'
 import ReclaimModalBody from './ReclaimModalBody'
+import ChangeStakeModalBody from './ChangeStakeModalBody'
 
-type ModalKey = 'start' | 'stop' | 'remove' | 'reclaim'
+type ModalKey = 'start' | 'changeStake' | 'stop' | 'remove' | 'reclaim'
 type MenuItem = {label: string; key: ModalKey; disabled?: boolean}
 
 const modalKeyMap: Readonly<
@@ -51,6 +52,7 @@ const modalKeyMap: Readonly<
   stop: StopModalBody,
   remove: RemoveModalBody,
   reclaim: ReclaimModalBody,
+  changeStake: ChangeStakeModalBody,
 }
 
 const TooltipHeader = ({
@@ -234,6 +236,12 @@ const WorkerTableV2 = (): JSX.Element => {
                   label: 'Start',
                   key: 'start',
                   disabled: state !== 'Ready',
+                },
+                {
+                  label: 'Change Stake',
+                  key: 'changeStake',
+                  disabled:
+                    state !== 'MiningIdle' && state !== 'MiningUnresponsive',
                 },
                 {
                   label: 'Stop',

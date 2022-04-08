@@ -59,6 +59,10 @@ const NODES: NodeType[] = [
           name: 'Thala Testnet',
           address: 'ws://35.215.179.221:9944',
         },
+        {
+          name: 'pc-test-3',
+          address: 'wss://pc-test-3.phala.network/khala/ws',
+        },
       ]
     : []),
 ]

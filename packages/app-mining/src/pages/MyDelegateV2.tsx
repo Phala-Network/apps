@@ -8,6 +8,7 @@ import {Card} from 'baseui/card'
 import ClaimAll from '../components/ClaimAll'
 import StatusBar from '../components/StatusBarV2'
 import {Block} from 'baseui/block'
+import MyDelegateNotification from '../components/MyDelegateNotification'
 
 export const MyDelegateV2 = () => {
   return (
@@ -22,6 +23,8 @@ export const MyDelegateV2 = () => {
         <title>My Delegate</title>
       </Helmet>
       <StatusBar />
+
+      <MyDelegateNotification />
 
       <Card
         overrides={{
