@@ -23,7 +23,7 @@ const MyDelegateNotification: VFC = () => {
       <Block display="flex" alignItems="center">
         <Info size={16} className={css({marginRight: '12px', flex: 'none'})} />
         <span>
-          After you delegate, claim or withdraw, you can go to the
+          After you delegate, claim or withdraw, you can go to the{' '}
           <StyledLink
             href="https://khala.subscan.io/"
             target="_blank"
