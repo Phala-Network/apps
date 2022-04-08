@@ -65,6 +65,7 @@ importers:
       '@phala/react-libs': workspace:0.0.1
       '@phala/typedefs': ^0.2.29
       '@phala/utils': workspace:0.0.1
+      '@phala/wallets': workspace:^0.0.1
       '@polkadot/api': ^7.15.1
       '@polkadot/extension-dapp': ^0.42.10
       '@polkadot/types': ^7.15.1
@@ -130,6 +131,7 @@ importers:
       '@phala/react-libs': link:../react-libs
       '@phala/typedefs': 0.2.30
       '@phala/utils': link:../utils
+      '@phala/wallets': link:../wallets
       '@polkadot/api': 7.15.1
       '@polkadot/extension-dapp': 0.42.10_@polkadot+api@7.15.1
       '@polkadot/types': 7.15.1
@@ -7025,7 +7027,7 @@ packages:
     dependencies:
       '@babel/core': 7.17.2
       '@babel/runtime': 7.17.8
-      gatsby: 4.10.3_0aee0dfc40e26e863f63dcc19c1cf47b
+      gatsby: 4.10.3_81edf3926e0f5b690d6bf41c81c0a74a
       gatsby-core-utils: 3.10.1
     dev: false
 
@@ -11913,7 +11915,7 @@ packages:
       '@sindresorhus/slugify': 1.1.2
       chokidar: 3.5.3
       fs-exists-cached: 1.0.0
-      gatsby: 4.10.3_0aee0dfc40e26e863f63dcc19c1cf47b
+      gatsby: 4.10.3_81edf3926e0f5b690d6bf41c81c0a74a
       gatsby-core-utils: 3.10.1
       gatsby-page-utils: 2.10.1
       gatsby-plugin-utils: 3.4.2_gatsby@4.10.3+graphql@15.8.0
@@ -11988,7 +11990,7 @@ packages:
       '@babel/preset-typescript': 7.16.7_@babel+core@7.17.2
       '@babel/runtime': 7.17.2
       babel-plugin-remove-graphql-queries: 4.10.1_@babel+core@7.17.2+gatsby@4.10.3
-      gatsby: 4.10.3_0aee0dfc40e26e863f63dcc19c1cf47b
+      gatsby: 4.10.3_81edf3926e0f5b690d6bf41c81c0a74a
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -12019,7 +12021,7 @@ packages:
     dependencies:
       '@babel/runtime': 7.17.8
       fs-extra: 10.0.0
-      gatsby: 4.10.3_0aee0dfc40e26e863f63dcc19c1cf47b
+      gatsby: 4.10.3_81edf3926e0f5b690d6bf41c81c0a74a
       gatsby-core-utils: 3.10.1
       gatsby-sharp: 0.4.0
       graphql-compose: 9.0.8_graphql@15.8.0
