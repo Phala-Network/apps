@@ -2,7 +2,7 @@ import {TableBuilder, TableBuilderColumn} from 'baseui/table-semantic'
 import {StatefulPopover} from 'baseui/popover'
 import {StatefulMenu} from 'baseui/menu'
 import {useCallback, useState, VFC} from 'react'
-import {AlertTriangle, Info, Search} from 'react-feather'
+import {AlertTriangle, Search} from 'react-feather'
 import {Checkbox} from 'baseui/checkbox'
 import {
   SortOrder,
@@ -19,13 +19,13 @@ import {formatCurrency, isTruthy, toFixed} from '@phala/utils'
 import PopoverButton from '../PopoverButton'
 import {usePolkadotAccountAtom} from '@phala/app-store'
 import Pagination from '../Pagination'
-import {StatefulTooltip, StatefulTooltipProps} from 'baseui/tooltip'
+import {StatefulTooltip} from 'baseui/tooltip'
 import {tooltipContent} from './tooltipContent'
 import Decimal from 'decimal.js'
-import {Block} from 'baseui/block'
 import TableSkeleton from '../TableSkeleton'
 import Owner from '../Owner'
 import StakePoolModal, {StakePoolModalKey} from '../StakePoolModal'
+import TooltipHeader from '../../TooltipHeader'
 
 const TableHeader = styled.div`
   display: flex;
@@ -40,22 +40,6 @@ const TableHeader = styled.div`
 
 type MenuItem = {label: string; key: StakePoolModalKey; disabled?: boolean}
 type StakePool = StakePoolsQuery['findManyStakePools'][number]
-
-const TooltipHeader = ({
-  children,
-  ...props
-}: StatefulTooltipProps): JSX.Element => (
-  <Block display="flex" alignItems="center">
-    {children}
-    <StatefulTooltip
-      placement="bottomLeft"
-      overrides={{Body: {style: {maxWidth: '400px'}}}}
-      {...props}
-    >
-      <Info size={16} style={{marginLeft: 5}} />
-    </StatefulTooltip>
-  </Block>
-)
 
 const StakePoolTableV2: VFC<{
   kind: 'delegate' | 'myDelegate' | 'mining'
