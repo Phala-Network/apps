@@ -72,7 +72,7 @@ const Body: VFC<Props> = ({onSelect, onDisconnect}) => {
                   {isCurrentAccount && (
                     <Button
                       size="compact"
-                      kind="minimal"
+                      kind="tertiary"
                       onClick={onDisconnect}
                     >
                       Disconnect
@@ -93,9 +93,12 @@ const Body: VFC<Props> = ({onSelect, onDisconnect}) => {
   )
 }
 
-const AccountModal: VFC<
-  Required<Pick<ModalProps, 'isOpen' | 'onClose'>> & Props
-> = ({isOpen, onClose, onSelect, onDisconnect}) => {
+const AccountModal: VFC<ModalProps & Props> = ({
+  isOpen,
+  onClose,
+  onSelect,
+  onDisconnect,
+}) => {
   return (
     <Modal
       isOpen={isOpen}

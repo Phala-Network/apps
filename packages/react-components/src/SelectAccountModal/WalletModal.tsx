@@ -96,9 +96,7 @@ const Body: VFC<Props> = ({onSelect}) => {
   )
 }
 
-const WalletModal: VFC<
-  Required<Pick<ModalProps, 'isOpen' | 'onClose'>> & Props
-> = ({isOpen, onClose, onSelect}) => {
+const WalletModal: VFC<ModalProps & Props> = ({isOpen, onClose, onSelect}) => {
   return (
     <Modal
       isOpen={isOpen}

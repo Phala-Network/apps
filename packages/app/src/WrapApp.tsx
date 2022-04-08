@@ -1,5 +1,4 @@
 import {ethereumGraphEndpoint} from '@phala/app-config'
-import {Provider as AppStoreProvider} from '@phala/app-store'
 import {MobileToastContextProvider} from '@phala/react-components'
 import {Provider as LibProvider} from '@phala/react-libs'
 import {isProduction} from '@phala/utils'
@@ -55,29 +54,27 @@ const WrapApp: React.FC = ({children}) => {
     <StrictMode>
       <div>
         <QueryClientProvider contextSharing={true} client={client.current}>
-          <AppStoreProvider>
-            <LibProvider {...productionConfig}>
-              <ThemeProvider theme={theme}>
-                <MobileToastContextProvider>
-                  <BaseProvider theme={baseTheme}>
-                    <SnackbarProvider>{children}</SnackbarProvider>
-                    <ToasterContainer
-                      autoHideDuration={3000}
-                      overrides={{
-                        ToastBody: {
-                          style: {
-                            maxWidth: '100%',
-                            width: '400px',
-                          },
+          <LibProvider {...productionConfig}>
+            <ThemeProvider theme={theme}>
+              <MobileToastContextProvider>
+                <BaseProvider theme={baseTheme}>
+                  <SnackbarProvider>{children}</SnackbarProvider>
+                  <ToasterContainer
+                    autoHideDuration={3000}
+                    overrides={{
+                      ToastBody: {
+                        style: {
+                          maxWidth: '100%',
+                          width: '400px',
                         },
-                      }}
-                    />
-                  </BaseProvider>
-                </MobileToastContextProvider>
-              </ThemeProvider>
-              <ReactQueryDevtools />
-            </LibProvider>
-          </AppStoreProvider>
+                      },
+                    }}
+                  />
+                </BaseProvider>
+              </MobileToastContextProvider>
+            </ThemeProvider>
+            <ReactQueryDevtools />
+          </LibProvider>
         </QueryClientProvider>
       </div>
     </StrictMode>

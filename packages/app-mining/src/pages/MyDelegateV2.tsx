@@ -43,7 +43,7 @@ export const MyDelegateV2 = () => {
         >
           <Block display="flex" alignItems="center">
             <Link to="/delegate/">
-              <Button size="compact" kind="minimal">
+              <Button size="compact" kind="tertiary">
                 <ChevronLeft />
               </Button>
             </Link>

@@ -89,7 +89,7 @@ const WithdrawModalBody: VFC<
             endEnhancer={
               <Button
                 size="mini"
-                kind="minimal"
+                kind="tertiary"
                 onClick={() => {
                   if (stakePoolStakers[0]) {
                     setAmount(stakePoolStakers[0].stake)

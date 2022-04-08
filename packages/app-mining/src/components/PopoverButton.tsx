@@ -6,7 +6,7 @@ const PopoverButton = forwardRef<HTMLButtonElement, ButtonProps>(
   (props, ref) => {
     return (
       <Button
-        kind="minimal"
+        kind="tertiary"
         size="mini"
         shape="circle"
         overrides={{

@@ -26,7 +26,7 @@ const DelegateBanner = (): JSX.Element => {
         </HeadingMedium>
       </div>
       <Link to="/delegate/my-delegate">
-        <Button kind="minimal">
+        <Button kind="tertiary">
           My Delegate
           <ChevronRight />
         </Button>

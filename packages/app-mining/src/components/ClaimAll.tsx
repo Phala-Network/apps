@@ -193,7 +193,7 @@ const ClaimAll = (props: BlockProps) => {
               endEnhancer={
                 polkadotAccount && (
                   <Button
-                    kind="minimal"
+                    kind="tertiary"
                     size="mini"
                     onClick={() => {
                       setAddress(polkadotAccount.address)
