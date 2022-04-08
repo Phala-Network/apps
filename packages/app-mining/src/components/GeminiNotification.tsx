@@ -36,8 +36,8 @@ const GeminiNotification: VFC = () => {
       <Block display="flex" alignItems="center">
         <Info size={16} className={css({marginRight: '12px', flex: 'none'})} />
         <span>
-          Gemini Tokenomics will launch at block height #1467000,{' '}
-          {blockNumber && `${Math.max(1467000 - blockNumber, 0)} blocks left, `}
+          Gemini Tokenomics will launch at block height #1467050,{' '}
+          {blockNumber && `${Math.max(1467050 - blockNumber, 0)} blocks left, `}
           it is estimated to be April 8.{' '}
           <StyledLink
             href="https://medium.com/phala-network/must-read-before-gemini-upgrade-580e0ea4b56b"
