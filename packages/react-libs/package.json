@@ -11,7 +11,6 @@
     "@phala/utils": "workspace:0.0.1",
     "@polkadot/api": "^7.14.3",
     "@polkadot/extension-dapp": "^0.42.9",
-    "@polkadot/extension-inject": "^0.42.9",
     "@polkadot/types": "^7.14.3",
     "@polkadot/util": "^8.7.1",
     "@polkadot/util-crypto": "^8.7.1",
