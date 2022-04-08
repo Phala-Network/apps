@@ -106,7 +106,6 @@ importers:
       react-helmet: ^6.1.0
       react-is: ^16.13.1
       react-scripts: 4.0.3
-      react-toastify: ^7.0.4
       styled-breakpoints: ^10.0.1
       styletron-engine-monolithic: ^0.0.6
       styletron-react: ^6.0.2
@@ -164,7 +163,6 @@ importers:
       react-helmet: 6.1.0_react@17.0.2
       react-is: 16.13.1
       react-scripts: 4.0.3_56838baf741a11b0bd9c1a4d37dbde64
-      react-toastify: 7.0.4_react-dom@17.0.2+react@17.0.2
       styled-breakpoints: 10.2.3_c8c0129994fb7969362fc89b324d3aea
       styletron-engine-monolithic: 0.0.6
       styletron-react: 6.0.2_react@17.0.2
@@ -386,7 +384,6 @@ importers:
       react-feather: ^2.0.9
       react-is: ^16.13.1
       react-table: ^7.7.0
-      react-toastify: ^7.0.4
       styled-breakpoints: ^10.0.1
     dependencies:
       '@phala/app-config': link:../app-config
@@ -417,7 +414,6 @@ importers:
       react-feather: 2.0.9_react@17.0.2
       react-is: 16.13.1
       react-table: 7.7.0_react@17.0.2
-      react-toastify: 7.0.4_react-dom@17.0.2+react@17.0.2
       styled-breakpoints: 10.2.3_c8c0129994fb7969362fc89b324d3aea
     devDependencies:
       '@babel/core': 7.17.2
@@ -19247,17 +19243,6 @@ packages:
       react: ^16.8.3 || ^17.0.0-0
     dependencies:
       react: 17.0.2
-    dev: false
-
-  /react-toastify/7.0.4_react-dom@17.0.2+react@17.0.2:
-    resolution: {integrity: sha512-Rol7+Cn39hZp5hQ/k6CbMNE2CKYV9E5OQdC/hBLtIQU2xz7DdAm7xil4NITQTHR6zEbE5RVFbpgSwTD7xRGLeQ==}
-    peerDependencies:
-      react: '>=16'
-      react-dom: '>=16'
-    dependencies:
-      clsx: 1.1.1
-      react: 17.0.2
-      react-dom: 17.0.2_react@17.0.2
     dev: false
 
   /react-uid/2.3.1_@types+react@17.0.43:

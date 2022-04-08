@@ -14,8 +14,8 @@ import {
   vest,
 } from '@phala/react-libs'
 import {BN} from '@polkadot/util'
+import {toaster} from 'baseui/toast'
 import React, {useCallback, useMemo, useState} from 'react'
-import {toast} from 'react-toastify'
 import styled from 'styled-components'
 
 type Props = {
@@ -80,7 +80,7 @@ const ClaimModal: React.FC<Props> = ({visible, onClose}) => {
 
       vest({api, sender: polkadotAccount})
         .then(() => {
-          toast('Success')
+          toaster.positive('Success', {})
           onClose()
         })
         .catch(() => {

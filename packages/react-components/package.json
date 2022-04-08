@@ -32,7 +32,6 @@
     "react-feather": "^2.0.9",
     "react-is": "^16.13.1",
     "react-table": "^7.7.0",
-    "react-toastify": "^7.0.4",
     "styled-breakpoints": "^10.0.1"
   },
   "devDependencies": {

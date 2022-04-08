@@ -6,10 +6,10 @@ import {useCurrentAccount} from '@phala/app-store'
 import {trimAddress} from '@phala/utils'
 import {SelectAccountModal} from '@phala/react-components'
 import {useClipboard} from '@phala/react-hooks'
-import {toast} from 'react-toastify'
 import {useSSR} from '@phala/react-hooks'
 import CopyIcon from '../Icons/CopyIcon.svg'
 import Button from '../Button'
+import {toaster} from 'baseui/toast'
 
 const Wrapper = styled.div`
   box-sizing: border-box;
@@ -112,7 +112,7 @@ const AccountInfo: React.FC = () => {
     e.stopPropagation()
     if (polkadotAccount) {
       copy(polkadotAccount.address)
-      toast('Copied to clipboard')
+      toaster.info('Copied to clipboard', {})
     }
   }
 

@@ -59,7 +59,6 @@
     "react-helmet": "^6.1.0",
     "react-is": "^16.13.1",
     "react-scripts": "4.0.3",
-    "react-toastify": "^7.0.4",
     "styled-breakpoints": "^10.0.1",
     "styletron-engine-monolithic": "^0.0.6",
     "styletron-react": "^6.0.2",
