@@ -63,7 +63,11 @@ export const StakePool: VFC<StakePoolProps> = ({pid}) => {
         <title>Stake Pool #{pid}</title>
       </Helmet>
 
-      <Block paddingLeft="scale400" paddingRight="scale400">
+      <Block
+        paddingLeft="scale400"
+        paddingRight="scale400"
+        marginBottom="scale1200"
+      >
         <Block
           display="flex"
           justifyContent="space-between"

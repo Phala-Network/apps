@@ -3,7 +3,9 @@ import {TableBuilder, TableBuilderColumn} from 'baseui/table-semantic'
 import {formatDuration, intervalToDuration, isAfter} from 'date-fns'
 import {VFC} from 'react'
 import {StakePoolQuery} from '../../hooks/graphql'
+import TooltipHeader from '../../TooltipHeader'
 import TableSkeleton from '../TableSkeleton'
+import {tooltipContent} from './tooltipContent'
 
 type StakePoolWithdrawals = NonNullable<
   StakePoolQuery['findUniqueStakePools']
@@ -46,10 +48,16 @@ const WithdrawQueue: VFC<{
           userAddress && trimAddress(userAddress)
         }
       </TableBuilderColumn>
-      <TableBuilderColumn header="Delegation">
+      <TableBuilderColumn header="Withdrawing">
         {({stake}: StakePoolWithdrawal) => `${formatCurrency(stake)} PHA`}
       </TableBuilderColumn>
-      <TableBuilderColumn header="Countdown">
+      <TableBuilderColumn
+        header={
+          <TooltipHeader content={tooltipContent.countdown}>
+            Countdown
+          </TooltipHeader>
+        }
+      >
         {({estimatesEndTime}: StakePoolWithdrawal) => {
           const start = new Date()
           const end = new Date(estimatesEndTime)
@@ -60,6 +68,19 @@ const WithdrawQueue: VFC<{
             }),
             {format: ['days', 'hours', 'minutes'], zero: true}
           )
+        }}
+      </TableBuilderColumn>
+      <TableBuilderColumn
+        header={
+          <TooltipHeader content={tooltipContent.latestWithdrawal}>
+            Latest Withdrawal
+          </TooltipHeader>
+        }
+      >
+        {({estimatesEndTime}: StakePoolWithdrawal) => {
+          const date = new Date(estimatesEndTime)
+          date.setDate(date.getDate() + 7)
+          return date.toLocaleDateString()
         }}
       </TableBuilderColumn>
     </TableBuilder>
