@@ -322,19 +322,21 @@ const StakePoolTableV2: VFC<{
             remainingStake ? `${formatCurrency(remainingStake)} PHA` : '∞'
           }
         </TableBuilderColumn>
-        <TableBuilderColumn
-          id="commission"
-          header={
-            <TooltipHeader content={tooltipContent.commission}>
-              Commission
-            </TooltipHeader>
-          }
-          sortable
-        >
-          {(stakePool: StakePool) =>
-            `${new Decimal(stakePool.commission).times(100)}%`
-          }
-        </TableBuilderColumn>
+        {kind !== 'myDelegate' && (
+          <TableBuilderColumn
+            id="commission"
+            header={
+              <TooltipHeader content={tooltipContent.commission}>
+                Commission
+              </TooltipHeader>
+            }
+            sortable
+          >
+            {(stakePool: StakePool) =>
+              `${new Decimal(stakePool.commission).times(100)}%`
+            }
+          </TableBuilderColumn>
+        )}
         {kind !== 'myDelegate' && (
           <TableBuilderColumn
             id="totalStake"

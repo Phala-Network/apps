@@ -34,7 +34,7 @@ const UpdateInfo = (): JSX.Element => {
   return (
     <Block display="flex" alignItems="center" height="34px">
       <StatefulTooltip
-        content="Usually updated every 15 mins"
+        content="Usually updated every 20 mins"
         placement="bottomLeft"
       >
         <Info size={16} />
