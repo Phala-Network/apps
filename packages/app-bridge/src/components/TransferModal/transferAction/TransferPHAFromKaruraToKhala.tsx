@@ -1,3 +1,4 @@
+import {useCurrentAccount} from '@phala/app-store'
 import {Alert, FeeLabel, Spacer} from '@phala/react-components'
 import {decimalToBalance, waitSignAndSend} from '@phala/react-libs'
 import {formatCurrency} from '@phala/utils'
@@ -26,7 +27,7 @@ export const TransferPHAFromKaruraToKhala: React.FC<
   const [css] = useStyletron()
   const {onCloseTransfer} = props
   const allTransactionsInfo = useAllTransferData()
-  const fromAddress = allTransactionsInfo.fromAddress
+  const [currentAccount] = useCurrentAccount()
   const toAddress = allTransactionsInfo.toAddress
   const amountDecimal = allTransactionsInfo.amountDecimal
   const karuraApi = useKaruraApi()
@@ -81,30 +82,27 @@ export const TransferPHAFromKaruraToKhala: React.FC<
   }, [amount, karuraApi, toAddress])
 
   useEffect(() => {
-    extrinsic?.paymentInfo(fromAddress).then(({partialFee}) => {
+    if (!currentAccount?.address) return
+    extrinsic?.paymentInfo(currentAccount.address).then(({partialFee}) => {
       setTransactionFee(
         `${new Decimal(partialFee.toString()).div(10 ** 12).toFixed(8)} KAR`
       )
     })
-  }, [fromAddress, extrinsic])
+  }, [currentAccount?.address, extrinsic])
 
   const submit = async () => {
-    if (!karuraApi || !extrinsic) {
+    if (!karuraApi || !extrinsic || !currentAccount?.wallet?.signer) {
       return
     }
 
     try {
       setSubmitting(true)
-      const web3FromAddress = (await import('@polkadot/extension-dapp'))
-        .web3FromAddress
-
-      const signer = (await web3FromAddress(fromAddress)).signer
 
       await waitSignAndSend?.({
         api: karuraApi,
-        account: fromAddress,
+        account: currentAccount.address,
         extrinsic,
-        signer,
+        signer: currentAccount.wallet.signer,
         onstatus: (status) => {
           if (status.isReady) {
             setProgressIndex(0)

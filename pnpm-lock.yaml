@@ -67,7 +67,6 @@ importers:
       '@phala/utils': workspace:0.0.1
       '@phala/wallets': workspace:^0.0.1
       '@polkadot/api': ^7.15.1
-      '@polkadot/extension-dapp': ^0.42.10
       '@polkadot/types': ^7.15.1
       '@polkadot/util': ^8.7.1
       '@polkadot/util-crypto': ^8.7.1
@@ -133,7 +132,6 @@ importers:
       '@phala/utils': link:../utils
       '@phala/wallets': link:../wallets
       '@polkadot/api': 7.15.1
-      '@polkadot/extension-dapp': 0.42.10_@polkadot+api@7.15.1
       '@polkadot/types': 7.15.1
       '@polkadot/util': 8.7.1
       '@polkadot/util-crypto': 8.7.1
@@ -234,7 +232,6 @@ importers:
       '@phala/react-libs': workspace:0.0.1
       '@phala/utils': workspace:0.0.1
       '@polkadot/api': ^7.15.1
-      '@polkadot/extension-dapp': ^0.42.10
       '@polkadot/util': ^8.7.1
       '@polkadot/util-crypto': ^8.7.1
       bn.js: ^5.2.0
@@ -257,7 +254,6 @@ importers:
       '@phala/react-libs': link:../react-libs
       '@phala/utils': link:../utils
       '@polkadot/api': 7.15.1
-      '@polkadot/extension-dapp': 0.42.10_@polkadot+api@7.15.1
       '@polkadot/util': 8.7.1
       '@polkadot/util-crypto': 8.7.1
       bn.js: 5.2.0
@@ -293,7 +289,6 @@ importers:
       '@phala/react-libs': workspace:0.0.1
       '@phala/utils': workspace:0.0.1
       '@polkadot/api': ^7.15.1
-      '@polkadot/extension-dapp': ^0.42.10
       '@polkadot/util': ^8.7.1
       '@types/humps': ^2.0.1
       '@types/lodash-es': ^4.17.5
@@ -322,7 +317,6 @@ importers:
       '@phala/react-libs': link:../react-libs
       '@phala/utils': link:../utils
       '@polkadot/api': 7.15.1
-      '@polkadot/extension-dapp': 0.42.10_@polkadot+api@7.15.1
       '@polkadot/util': 8.7.1
       date-fns: 2.28.0
       decimal.js: 10.3.1
@@ -501,7 +495,6 @@ importers:
       '@phala/typedefs': ^0.2.29
       '@phala/utils': workspace:0.0.1
       '@polkadot/api': ^7.15.1
-      '@polkadot/extension-dapp': ^0.42.10
       '@polkadot/types': ^7.15.1
       '@polkadot/util': ^8.7.1
       '@polkadot/util-crypto': ^8.7.1
@@ -524,7 +517,6 @@ importers:
       '@phala/typedefs': 0.2.30
       '@phala/utils': link:../utils
       '@polkadot/api': 7.15.1
-      '@polkadot/extension-dapp': 0.42.10_@polkadot+api@7.15.1
       '@polkadot/types': 7.15.1
       '@polkadot/util': 8.7.1
       '@polkadot/util-crypto': 8.7.1
@@ -4209,21 +4201,6 @@ packages:
       - supports-color
     dev: false
 
-  /@polkadot/extension-dapp/0.42.10_@polkadot+api@7.15.1:
-    resolution: {integrity: sha512-ad3qwl62V2WwggmQdB5C9HmmF4aOfD8m+eJYvBnqkl0Xc/ZANgIwt0u5kViImacyiuvrtKR/VCyMOGn9zrzicQ==}
-    peerDependencies:
-      '@polkadot/api': '*'
-    dependencies:
-      '@babel/runtime': 7.17.8
-      '@polkadot/api': 7.15.1
-      '@polkadot/extension-inject': 0.42.10_@polkadot+api@7.15.1
-      '@polkadot/util': 8.7.1
-      '@polkadot/util-crypto': 8.7.1
-    transitivePeerDependencies:
-      - encoding
-      - supports-color
-    dev: false
-
   /@polkadot/extension-inject/0.42.10_@polkadot+api@7.15.1:
     resolution: {integrity: sha512-I+TYiIESx8OXYlTMM0HArtqCTimZA8c5hz/jbxW+IzEQDe9POTMTHrvdXQEHRUL/xnsy+r28jEagnb5FeYjySA==}
     peerDependencies:
@@ -7027,7 +7004,7 @@ packages:
     dependencies:
       '@babel/core': 7.17.2
       '@babel/runtime': 7.17.8
-      gatsby: 4.10.3_81edf3926e0f5b690d6bf41c81c0a74a
+      gatsby: 4.10.3_0aee0dfc40e26e863f63dcc19c1cf47b
       gatsby-core-utils: 3.10.1
     dev: false
 
@@ -11915,7 +11892,7 @@ packages:
       '@sindresorhus/slugify': 1.1.2
       chokidar: 3.5.3
       fs-exists-cached: 1.0.0
-      gatsby: 4.10.3_81edf3926e0f5b690d6bf41c81c0a74a
+      gatsby: 4.10.3_0aee0dfc40e26e863f63dcc19c1cf47b
       gatsby-core-utils: 3.10.1
       gatsby-page-utils: 2.10.1
       gatsby-plugin-utils: 3.4.2_gatsby@4.10.3+graphql@15.8.0
@@ -11990,7 +11967,7 @@ packages:
       '@babel/preset-typescript': 7.16.7_@babel+core@7.17.2
       '@babel/runtime': 7.17.2
       babel-plugin-remove-graphql-queries: 4.10.1_@babel+core@7.17.2+gatsby@4.10.3
-      gatsby: 4.10.3_81edf3926e0f5b690d6bf41c81c0a74a
+      gatsby: 4.10.3_0aee0dfc40e26e863f63dcc19c1cf47b
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -12021,7 +11998,7 @@ packages:
     dependencies:
       '@babel/runtime': 7.17.8
       fs-extra: 10.0.0
-      gatsby: 4.10.3_81edf3926e0f5b690d6bf41c81c0a74a
+      gatsby: 4.10.3_0aee0dfc40e26e863f63dcc19c1cf47b
       gatsby-core-utils: 3.10.1
       gatsby-sharp: 0.4.0
       graphql-compose: 9.0.8_graphql@15.8.0

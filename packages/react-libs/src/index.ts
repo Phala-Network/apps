@@ -1,6 +1,4 @@
 export {default as Web3Modal} from 'web3modal'
-export {useBridgePhalaRecordInfo} from './chainbridge/phala/useBridgePhalaRecordInfo'
-export {useBridgeProposalQuery} from './chainbridge/phala/useBridgeProposalQuery'
 export {useErc20Deposit} from './ethereum/bridge/deposit'
 export {useBridgeContract} from './ethereum/bridge/useBridgeContract'
 export {useEthers} from './ethereum/contexts/useEthers'

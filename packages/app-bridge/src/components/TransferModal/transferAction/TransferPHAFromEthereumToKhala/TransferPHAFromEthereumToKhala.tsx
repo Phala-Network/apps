@@ -15,10 +15,7 @@ import {useAllTransferData} from '../../../../store'
 import {buttonOverrides} from '../../../../style/buttonOverrides'
 import {Button} from '../../../Button'
 import {CurrentTransferInformationDetailItems} from '../../../CurrentTransferInformationDetailItems'
-// import {EthereumProgress} from './EthereumProgress'
 import {EthereumToKhalaFee} from './EthereumToKhalaFee'
-// import useTransactionInfo from '../hooks/useTransactionInfo'
-// import BaseInfo from './BaseInfo'
 import {StyledLink} from 'baseui/link'
 
 interface TransferPHAFromEthereumToKhalaProps {
@@ -64,8 +61,6 @@ export const TransferPHAFromEthereumToKhala: React.FC<
       }
 
       setCurrentTransactionInfo(newTransactionInfo)
-
-      // setTransactionsInfo([newTransactionInfo, ...transactionsInfo])
     } catch (error) {
       if (error instanceof Error) {
         console.error(error)
@@ -102,7 +97,6 @@ export const TransferPHAFromEthereumToKhala: React.FC<
 
         {currentTransactionHash ? (
           <Alert>
-            {/* <EthereumProgress transactionHash={currentTransactionHash} /> */}
             {/* Temporary copywriting */}
             <span>
               Transaction has been sent, it may take some time ranged from a few

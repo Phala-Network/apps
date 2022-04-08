@@ -1,3 +1,4 @@
+import {useCurrentAccount} from '@phala/app-store'
 import {Alert, FeeLabel, Spacer} from '@phala/react-components'
 import {
   decimalToBalance,
@@ -30,7 +31,7 @@ export const TransferPHAFromKhalaToKarura: React.FC<
   const [css] = useStyletron()
   const {onCloseTransfer} = props
   const allTransactionsInfo = useAllTransferData()
-  const fromAddress = allTransactionsInfo.fromAddress
+  const [currentAccount] = useCurrentAccount()
   const toAddress = allTransactionsInfo.toAddress
   const amountDecimal = allTransactionsInfo.amountDecimal
   const {api} = useApiPromise()
@@ -74,30 +75,33 @@ export const TransferPHAFromKhalaToKarura: React.FC<
   }, [amount, api, toAddress])
 
   useEffect(() => {
-    extrinsic?.paymentInfo(fromAddress).then(({partialFee}) => {
-      setTransactionFee(
-        `${new Decimal(partialFee.toString()).div(10 ** 12).toFixed(8)} PHA`
-      )
-    })
-  }, [fromAddress, extrinsic])
+    let unmounted = false
+    if (currentAccount?.address) {
+      extrinsic?.paymentInfo(currentAccount.address).then(({partialFee}) => {
+        if (unmounted) return
+        setTransactionFee(
+          `${new Decimal(partialFee.toString()).div(10 ** 12).toFixed(8)} PHA`
+        )
+      })
+    }
+    return () => {
+      unmounted = true
+    }
+  }, [currentAccount?.address, extrinsic])
 
   const submit = async () => {
-    if (!api || !extrinsic) {
+    if (!api || !extrinsic || !currentAccount?.wallet?.signer) {
       return
     }
 
     try {
       setSubmitting(true)
-      const web3FromAddress = (await import('@polkadot/extension-dapp'))
-        .web3FromAddress
-
-      const signer = (await web3FromAddress(fromAddress)).signer
 
       await waitSignAndSend?.({
         api,
-        account: fromAddress,
+        account: currentAccount.address,
         extrinsic,
-        signer,
+        signer: currentAccount.wallet.signer,
         onstatus: (status) => {
           if (status.isReady) {
             setProgressIndex(0)

@@ -17,20 +17,17 @@ const useWaitSignAndSend = (): ((
   | void
 >) => {
   const {enqueue, dequeue} = useSnackbar()
-  const [polkadotAccount] = useCurrentAccount()
+  const [currentAccount] = useCurrentAccount()
   const {api} = useApiPromise()
 
   return async (extrinsic, onstatus) => {
-    if (!api || !polkadotAccount || !extrinsic) return
-    const web3FromAddress = (await import('@polkadot/extension-dapp'))
-      .web3FromAddress
-    const signer = (await web3FromAddress(polkadotAccount.address)).signer
+    if (!api || !currentAccount?.wallet?.signer || !extrinsic) return
 
     return waitSignAndSend({
       api,
-      account: polkadotAccount.address,
+      account: currentAccount.address,
       extrinsic,
-      signer,
+      signer: currentAccount.wallet.signer,
       onstatus: (status) => {
         if (status.isReady) {
           enqueue(
