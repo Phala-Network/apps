@@ -33,7 +33,7 @@ export const AmountInput: FC<ComponentProps<typeof InputNumber>> = (props) => {
     <Root>
       <InputContainer>
         <InputNumber
-          max={999999}
+          max={1000000000}
           min={0.000001}
           placeholder="Amount"
           {...props}
