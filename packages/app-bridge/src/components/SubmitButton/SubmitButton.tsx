@@ -1,9 +1,9 @@
-import {toast} from '@phala/react-components'
 import {
   useErc20AssetHandlerAllowanceQuery,
   useEthereumBridgeFee,
 } from '@phala/react-libs'
 import {validateAddress} from '@phala/utils'
+import {toaster} from 'baseui/toast'
 import Decimal from 'decimal.js'
 import {ComponentProps, FC} from 'react'
 import {toKaruraXcmFee, toKhalaXcmFee} from '../../config'
@@ -99,7 +99,7 @@ export const SubmitButton: FC<SubmitButtonProps> = (props) => {
       errorString = 'Please approve first'
     }
     if (errorString) {
-      toast(errorString, 'error')
+      toaster.negative(errorString, {})
       return
     }
 

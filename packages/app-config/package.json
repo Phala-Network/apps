@@ -5,7 +5,7 @@
   "main": "src/index.ts",
   "dependencies": {
     "@phala/typedefs": "^0.2.29",
-    "@polkadot/types": "^7.14.3",
+    "@polkadot/types": "^7.15.1",
     "@types/node": "^16.11.12"
   }
 }

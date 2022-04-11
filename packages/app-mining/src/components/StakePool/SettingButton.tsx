@@ -5,7 +5,7 @@ import {Settings} from 'react-feather'
 const SettingButton: VFC<Pick<ButtonProps, 'onClick'>> = ({onClick}) => {
   return (
     <Button
-      kind="minimal"
+      kind="tertiary"
       size="mini"
       shape="circle"
       onClick={onClick}

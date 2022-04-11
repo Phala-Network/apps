@@ -1,0 +1,13 @@
+{
+  "name": "@phala/wallets",
+  "description": "A copy of Koniverse/SubConnect",
+  "private": true,
+  "version": "0.0.1",
+  "main": "wallets.ts",
+  "type": "module",
+  "sideEffects": false,
+  "dependencies": {
+    "@polkadot/api": "^7.15.1",
+    "@polkadot/extension-inject": "^0.42.10"
+  }
+}

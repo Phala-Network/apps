@@ -1,4 +1,4 @@
-import {usePolkadotAccountAtom} from '@phala/app-store'
+import {useCurrentAccount} from '@phala/app-store'
 import {
   Alert,
   InputNumber,
@@ -17,7 +17,7 @@ import ActionModal, {Label, Value} from './ActionModal'
 import type {StakePoolModalProps} from './StakePoolTable'
 
 const WithdrawModal = (props: StakePoolModalProps): JSX.Element => {
-  const [polkadotAccount] = usePolkadotAccountAtom()
+  const [polkadotAccount] = useCurrentAccount()
   const {onClose, stakePool} = props
   const {api} = useApiPromise()
   const waitSignAndSend = useWaitSignAndSend()

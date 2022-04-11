@@ -26,24 +26,18 @@ const ApiPromiseContext = createContext<IApiPromiseContext>({
   initialized: false,
 })
 
-// eslint-disable-next-line no-console
-const logDebug = console.debug.bind(console, '[ApiPromiseContext]')
-const logError = console.error.bind(console, '[ApiPromiseContext]')
-
 const enableApiPromise = async (
   endpoint: string,
   types: RegistryTypes
 ): Promise<ApiPromise> => {
   const {cryptoWaitReady} = await import('@polkadot/util-crypto')
   await cryptoWaitReady()
-  logDebug('Polkadot crypto is ready')
 
   const {ApiPromise} = await import('@polkadot/api')
   const api = await ApiPromise.create({
     provider: new WsProvider(endpoint),
     types,
   })
-  logDebug('WebSocket API is ready:', api.runtimeVersion)
 
   await api.isReady
 
@@ -83,8 +77,7 @@ export const ApiPromiseProvider = ({
           setState('ready')
           return api
         })
-        .catch((reason) => {
-          logError('Failed to enable Polkadot API:', reason)
+        .catch(() => {
           setState('failed')
         })
     }

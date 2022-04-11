@@ -1,4 +1,4 @@
-import {usePolkadotAccountAtom} from '@phala/app-store'
+import {useCurrentAccount} from '@phala/app-store'
 import {
   Alert,
   Input,
@@ -21,7 +21,7 @@ const ClaimAllModal = (props: {
   const {api} = useApiPromise()
   const format = useFormat()
   const waitSignAndSend = useWaitSignAndSend()
-  const [polkadotAccount] = usePolkadotAccountAtom()
+  const [polkadotAccount] = useCurrentAccount()
   const [address, setAddress] = useState<string>('')
 
   const rewards = useMemo<string>(

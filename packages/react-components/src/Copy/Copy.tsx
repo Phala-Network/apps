@@ -1,6 +1,6 @@
 import {useClipboard} from '@phala/react-hooks'
+import {toaster} from 'baseui/toast'
 import React, {ComponentProps, MouseEventHandler} from 'react'
-import {toast} from 'react-toastify'
 import {CopyIcon} from './styledComponets'
 
 type Props = {
@@ -15,7 +15,7 @@ export const Copy: React.FC<Props> = (props) => {
   const onClick: MouseEventHandler<HTMLElement> = (e) => {
     e.stopPropagation()
     copy(value)
-    toast('Copied to clipboard')
+    toaster.info('Copied to clipboard', {})
   }
 
   return (

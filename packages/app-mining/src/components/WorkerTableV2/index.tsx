@@ -18,7 +18,7 @@ import {
   trimAddress,
 } from '@phala/utils'
 import PopoverButton from '../PopoverButton'
-import {usePolkadotAccountAtom} from '@phala/app-store'
+import {useCurrentAccount} from '@phala/app-store'
 import Pagination from '../Pagination'
 import {Modal, ModalProps} from 'baseui/modal'
 import TableSkeleton from '../TableSkeleton'
@@ -73,7 +73,7 @@ const TooltipHeader = ({
 
 const WorkerTableV2 = (): JSX.Element => {
   const pageSize = 10
-  const [polkadotAccount] = usePolkadotAccountAtom()
+  const [polkadotAccount] = useCurrentAccount()
   const address = polkadotAccount?.address
   const [sortColumn, setSortColumn] =
     useState<keyof MinersOrderByWithRelationInput>('pid')

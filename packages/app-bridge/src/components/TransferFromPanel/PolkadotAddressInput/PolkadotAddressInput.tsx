@@ -1,4 +1,4 @@
-import {usePolkadotAccountAtom} from '@phala/app-store'
+import {useCurrentAccount} from '@phala/app-store'
 import {Block} from 'baseui/block'
 import {FC, useEffect} from 'react'
 import {useFromAddress} from '../../../store'
@@ -10,7 +10,7 @@ export interface PolkadotAddressInputProps {
 }
 
 export const PolkadotAddressInput: FC<PolkadotAddressInputProps> = () => {
-  const [polkadotAccount] = usePolkadotAccountAtom()
+  const [polkadotAccount] = useCurrentAccount()
   const [, setFromAddress] = useFromAddress()
 
   useEffect(() => {

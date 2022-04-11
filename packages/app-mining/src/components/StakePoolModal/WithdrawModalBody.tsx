@@ -18,7 +18,7 @@ import {
 } from '@phala/react-libs'
 import {Button} from 'baseui/button'
 import {formatCurrency} from '@phala/utils'
-import {usePolkadotAccountAtom} from '@phala/app-store'
+import {useCurrentAccount} from '@phala/app-store'
 import {StakePool} from '.'
 
 const WithdrawModalBody: VFC<
@@ -30,7 +30,7 @@ const WithdrawModalBody: VFC<
   const {pid, stakePoolStakers, stakePoolWithdrawals} = stakePool
   const {api} = useApiPromise()
   const [amount, setAmount] = useState('')
-  const [polkadotAccount] = usePolkadotAccountAtom()
+  const [polkadotAccount] = useCurrentAccount()
   const waitSignAndSend = useWaitSignAndSend()
   const decimals = useDecimalJsTokenDecimalMultiplier(api)
   const onConfirm = () => {
@@ -89,7 +89,7 @@ const WithdrawModalBody: VFC<
             endEnhancer={
               <Button
                 size="mini"
-                kind="minimal"
+                kind="tertiary"
                 onClick={() => {
                   if (stakePoolStakers[0]) {
                     setAmount(stakePoolStakers[0].stake)

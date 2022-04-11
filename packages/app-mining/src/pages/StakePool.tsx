@@ -1,4 +1,4 @@
-import {usePolkadotAccountAtom} from '@phala/app-store'
+import {useCurrentAccount} from '@phala/app-store'
 import {toFixed, trimAddress} from '@phala/utils'
 import {Block} from 'baseui/block'
 import {Button} from 'baseui/button'
@@ -25,7 +25,7 @@ interface StakePoolProps extends PageProps {
 
 export const StakePool: VFC<StakePoolProps> = ({pid}) => {
   const [modalKey, setModalKey] = useState<StakePoolModalKey | null>(null)
-  const [polkadotAccount] = usePolkadotAccountAtom()
+  const [polkadotAccount] = useCurrentAccount()
   const {data, isLoading} = useStakePoolQuery(
     client,
     {

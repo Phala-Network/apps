@@ -16,12 +16,12 @@
     "readystate",
     "styletron",
     "svgs",
-    "toastify",
     "tranfer",
     "typedefs",
     "unsub",
     "uuidv",
-    "stakers"
+    "stakers",
+    "dotsama"
   ],
   "typescript.tsdk": "node_modules/typescript/lib"
 }

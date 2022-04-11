@@ -3,7 +3,7 @@ import {useAtom} from 'jotai'
 import {atomWithStorage} from 'jotai/utils'
 
 export const transactionsInfoAtom = atomWithStorage<TransactionInfo[]>(
-  'transactionsInfo',
+  'jotai:transactionsInfo',
   []
 )
 

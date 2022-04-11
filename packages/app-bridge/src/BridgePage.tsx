@@ -1,12 +1,10 @@
-import {Announcement, ToasterContainer} from '@phala/react-components'
+import {Announcement} from '@phala/react-components'
 import {StyledLink} from 'baseui/link'
-import {PLACEMENT} from 'baseui/toast'
 import {FC, useState} from 'react'
 import {Helmet} from 'react-helmet'
 import {ExchangeIcon} from './components/ExchangeIcon'
 import {ExtraInfoPanel} from './components/ExtraInfoPanel'
 import {Header} from './components/Header'
-import {InformationModal} from './components/InformationModal'
 import {SubmitButton} from './components/SubmitButton'
 import {TransferFromPanel} from './components/TransferFromPanel'
 import {TransferModal} from './components/TransferModal'
@@ -18,7 +16,6 @@ import {BlockItem, MainContent, Root} from './styledComponents'
 export const BridgePage: FC = () => {
   const transactionInfo = useAllTransferData()
   const [isOpenTransferModal, setIsOpenTransferModal] = useState(false)
-  const [isOpenInformationModal, setIsOpenInformationModal] = useState(false)
   const extraInfo = useExtraInfo()
 
   const submit = () => {
@@ -91,26 +88,7 @@ export const BridgePage: FC = () => {
           }}
           isOpen={isOpenTransferModal}
         />
-
-        <InformationModal
-          onClose={() => {
-            setIsOpenInformationModal(false)
-          }}
-          isOpen={isOpenInformationModal}
-        />
       </Root>
-
-      {/* <Transactions /> */}
-
-      <ToasterContainer placement={PLACEMENT.topRight} />
-
-      {/* <Button onClick={() => setIsOpenInformationModal(true)}>
-        Open InformationModal
-      </Button>
-
-      <Button onClick={() => setIsOpenTransferModal(true)}>
-        Open TransferModal
-      </Button> */}
     </>
   )
 }

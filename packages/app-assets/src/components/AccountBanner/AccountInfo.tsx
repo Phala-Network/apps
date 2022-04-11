@@ -2,14 +2,14 @@ import React, {useMemo, useState, MouseEventHandler} from 'react'
 import styled from 'styled-components'
 import {down} from 'styled-breakpoints'
 import {useBreakpoint} from 'styled-breakpoints/react-styled'
-import {usePolkadotAccountAtom} from '@phala/app-store'
+import {useCurrentAccount} from '@phala/app-store'
 import {trimAddress} from '@phala/utils'
-import {PolkadotAccountModal} from '@phala/react-components'
+import {SelectAccountModal} from '@phala/react-components'
 import {useClipboard} from '@phala/react-hooks'
-import {toast} from 'react-toastify'
 import {useSSR} from '@phala/react-hooks'
 import CopyIcon from '../Icons/CopyIcon.svg'
 import Button from '../Button'
+import {toaster} from 'baseui/toast'
 
 const Wrapper = styled.div`
   box-sizing: border-box;
@@ -92,7 +92,7 @@ const HrefAddress = styled(Address)`
 const AccountInfo: React.FC = () => {
   const [selectAccountModalViable, setSelectAccountModalViable] =
     useState(false)
-  const [polkadotAccount] = usePolkadotAccountAtom()
+  const [polkadotAccount] = useCurrentAccount()
   const isMobile = useBreakpoint(down('sm'))
   const isPad = useBreakpoint(down('md'))
 
@@ -112,7 +112,7 @@ const AccountInfo: React.FC = () => {
     e.stopPropagation()
     if (polkadotAccount) {
       copy(polkadotAccount.address)
-      toast('Copied to clipboard')
+      toaster.info('Copied to clipboard', {})
     }
   }
 
@@ -152,9 +152,9 @@ const AccountInfo: React.FC = () => {
           )}
         </AddressWrapper>
       </Wrapper>
-      <PolkadotAccountModal
+      <SelectAccountModal
         onClose={() => setSelectAccountModalViable(false)}
-        visible={selectAccountModalViable}
+        isOpen={selectAccountModalViable}
       />
     </>
   )

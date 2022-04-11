@@ -1,7 +1,11 @@
-import {TableBuilder, TableBuilderColumn} from 'baseui/table-semantic'
+import {
+  StyledTableBodyRow,
+  TableBuilder,
+  TableBuilderColumn,
+} from 'baseui/table-semantic'
 import {StatefulPopover} from 'baseui/popover'
 import {StatefulMenu} from 'baseui/menu'
-import {useCallback, useState, VFC} from 'react'
+import {ReactChildren, useCallback, useState, VFC} from 'react'
 import {AlertTriangle, Search} from 'react-feather'
 import {Checkbox} from 'baseui/checkbox'
 import {
@@ -17,7 +21,7 @@ import {StatefulInput} from 'baseui/input'
 import {debounce} from 'lodash-es'
 import {formatCurrency, isTruthy, toFixed} from '@phala/utils'
 import PopoverButton from '../PopoverButton'
-import {usePolkadotAccountAtom} from '@phala/app-store'
+import {useCurrentAccount} from '@phala/app-store'
 import Pagination from '../Pagination'
 import {StatefulTooltip} from 'baseui/tooltip'
 import {tooltipContent} from './tooltipContent'
@@ -26,6 +30,7 @@ import TableSkeleton from '../TableSkeleton'
 import Owner from '../Owner'
 import StakePoolModal, {StakePoolModalKey} from '../StakePoolModal'
 import TooltipHeader from '../../TooltipHeader'
+import {$StyleProp} from 'styletron-react'
 
 const TableHeader = styled.div`
   display: flex;
@@ -51,7 +56,7 @@ const StakePoolTableV2: VFC<{
     return now.toISOString()
   })
   const pageSize = kind === 'mining' ? 10 : 20
-  const [polkadotAccount] = usePolkadotAccountAtom()
+  const [polkadotAccount] = useCurrentAccount()
   const address = polkadotAccount?.address
   const [searchString, setSearchString] = useState('')
   const [sortColumn, setSortColumn] = useState<
@@ -252,20 +257,27 @@ const StakePoolTableV2: VFC<{
           },
           TableBodyRow: {
             style: {cursor: 'pointer'},
-            props: (props: {$row: StakePool}) => {
-              return {
-                ...props,
-                onClick: (e: MouseEvent) => {
-                  // Prevent navigating when clicking other elements
-                  const tagName = (e.target as HTMLElement).tagName
-                  if (tagName !== 'TR' && tagName !== 'TD') return
-                  // Prevent navigating when selecting text
-                  const selection = window.getSelection()
-                  if (selection && selection.toString().length) return
-
-                  window.open(`/stake-pool/${props.$row.pid}`)
-                },
-              }
+            component: (props: {
+              $style: $StyleProp<any>
+              children: ReactChildren
+              $row: StakePool
+            }) => {
+              return (
+                <StyledTableBodyRow
+                  $style={props.$style}
+                  onClick={(e: MouseEvent) => {
+                    // Prevent navigating when clicking other elements
+                    const tagName = (e.target as HTMLElement).tagName
+                    if (tagName !== 'TR' && tagName !== 'TD') return
+                    // Prevent navigating when selecting text
+                    const selection = window.getSelection()
+                    if (selection && selection.toString().length) return
+                    window.open(`/stake-pool/${props.$row.pid}`)
+                  }}
+                >
+                  {props.children}
+                </StyledTableBodyRow>
+              )
             },
           },
         }}

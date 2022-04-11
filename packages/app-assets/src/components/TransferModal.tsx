@@ -1,4 +1,4 @@
-import {usePolkadotAccountAtom} from '@phala/app-store'
+import {useCurrentAccount} from '@phala/app-store'
 import {
   PolkadotTransactionFeeLabel,
   ModalWrapper,
@@ -14,8 +14,7 @@ import {
 import {usePolkadotAccountTransferrableBalanceDecimal} from '@phala/react-hooks'
 import {validateAddress, toFixed} from '@phala/utils'
 import Decimal from 'decimal.js'
-import React, {useCallback, useState, useMemo} from 'react'
-import {toast} from 'react-toastify'
+import React, {useState, useMemo} from 'react'
 import {Input} from 'baseui/input'
 import {
   Spacer,
@@ -25,6 +24,7 @@ import {
   MaxButton,
   inputStyle,
 } from './styledComponents'
+import {toaster} from 'baseui/toast'
 
 type Props = {
   visible: boolean
@@ -36,7 +36,7 @@ const TransferModal: React.FC<Props> = ({visible, onClose}) => {
   const [amount, setAmount] = useState('')
   const [loading, setLoading] = useState(false)
   const {api} = useApiPromise()
-  const [polkadotAccount] = usePolkadotAccountAtom()
+  const [polkadotAccount] = useCurrentAccount()
   const decimals = useDecimalJsTokenDecimalMultiplier(api)
 
   const polkadotAccountAddress = polkadotAccount?.address
@@ -55,40 +55,37 @@ const TransferModal: React.FC<Props> = ({visible, onClose}) => {
     setAmount(maxValue)
   }
 
-  const confirm = useCallback(async () => {
-    if (api && polkadotAccount && decimals) {
+  const confirm = async () => {
+    if (api && polkadotAccount && polkadotAccount.wallet?.signer && decimals) {
       let amountString: string
 
       if (!validateAddress(address)) {
-        toast.error('Invalid address')
+        toaster.negative('Invalid address', {})
         return
       }
 
       try {
         amountString = new Decimal(amount).mul(decimals).toString()
       } catch (err) {
-        toast.error('Invalid amount')
+        toaster.negative('Invalid amount', {})
         return
       }
 
       try {
-        const {web3FromAddress} = await import('@polkadot/extension-dapp')
-
-        const signer = (await web3FromAddress(polkadotAccount.address)).signer
         await waitSignAndSend({
           account: polkadotAccount.address,
           api,
           extrinsic: api.tx.balances.transfer(address, amountString),
-          signer,
+          signer: polkadotAccount.wallet.signer,
         })
 
-        toast.success('Success')
+        toaster.positive('Success', {})
         onClose()
       } catch (err) {
-        toast.error((err as Error)?.message)
+        toaster.negative((err as Error)?.message, {})
       }
     }
-  }, [api, polkadotAccount, onClose, address, amount, decimals])
+  }
 
   return (
     <ModalWrapper visible={visible} onClose={onClose}>

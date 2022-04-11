@@ -2,7 +2,6 @@ import {toFixed} from '@phala/utils'
 import {useMemo, useState} from 'react'
 import {Column} from 'react-table'
 import type {UseQueryResult} from 'react-query'
-import {toast} from 'react-toastify'
 import useFormat from '../../hooks/useFormat'
 import useModalVisible, {ModalKey} from '../../hooks/useModalVisible'
 import type {Worker} from '../../hooks/useWorkers'
@@ -14,6 +13,7 @@ import ItemMenu from '../ItemMenu'
 import useMiningEnabled from '../../hooks/useMiningEnabled'
 import ReclaimModal from './ReclaimModal'
 import {canWorkerBeReclaimed} from '../../utils/canWorkerBeReclaimed'
+import {toaster} from 'baseui/toast'
 
 type TableItem = Worker & {pid: number}
 
@@ -136,7 +136,10 @@ const WorkerTable = ({
               ]}
               onClick={(key) => {
                 if (key === 'start' && miningEnabled === false) {
-                  toast.warning('Mining feature not enabled, please wait.')
+                  toaster.warning(
+                    'Mining feature not enabled, please wait.',
+                    {}
+                  )
                   return
                 }
                 open(key)

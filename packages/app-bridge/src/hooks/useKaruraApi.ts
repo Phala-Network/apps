@@ -1,4 +1,4 @@
-import {usePolkadotAccountAtom} from '@phala/app-store'
+import {useCurrentAccount} from '@phala/app-store'
 import {ApiPromise, WsProvider} from '@polkadot/api'
 import Decimal from 'decimal.js'
 import {atom, useAtomValue} from 'jotai'
@@ -25,7 +25,7 @@ karuraApiAtom.onMount = (setAtom) => {
 export const useKaruraApi = () => useAtomValue(karuraApiAtom)
 
 export const useKaruraPHABalance = () => {
-  const [polkadotAccount] = usePolkadotAccountAtom()
+  const [polkadotAccount] = useCurrentAccount()
   const karuraApi = useKaruraApi()
 
   const {data} = useQuery(

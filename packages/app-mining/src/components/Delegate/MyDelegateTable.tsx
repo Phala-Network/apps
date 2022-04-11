@@ -2,7 +2,7 @@ import {useMemo, useState} from 'react'
 import type {Column} from 'react-table'
 import Decimal from 'decimal.js'
 import styled from 'styled-components'
-import {usePolkadotAccountAtom} from '@phala/app-store'
+import {useCurrentAccount} from '@phala/app-store'
 import {Button, Table} from '@phala/react-components'
 import {useIsMobile} from '@phala/react-hooks'
 import {toFixed} from '@phala/utils'
@@ -60,7 +60,7 @@ const MyDelegateTable = (): JSX.Element => {
   const {getAPR} = useGetARP()
   const [pid, setPid] = useState<number | null>(null)
   const format = useFormat()
-  const [polkadotAccount] = usePolkadotAccountAtom()
+  const [polkadotAccount] = useCurrentAccount()
   const {modalVisible, open, close} = useModalVisible()
   const {
     data: stakePools,

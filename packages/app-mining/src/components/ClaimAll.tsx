@@ -16,7 +16,7 @@ import {
   useApiPromise,
   useDecimalJsTokenDecimalMultiplier,
 } from '@phala/react-libs'
-import {usePolkadotAccountAtom} from '@phala/app-store'
+import {useCurrentAccount} from '@phala/app-store'
 import {Button} from 'baseui/button'
 import {client} from '../utils/GraphQLClient'
 import {Skeleton} from 'baseui/skeleton'
@@ -24,7 +24,7 @@ import {Block, BlockProps} from 'baseui/block'
 import Decimal from 'decimal.js'
 
 const ClaimAll = (props: BlockProps) => {
-  const [polkadotAccount] = usePolkadotAccountAtom()
+  const [polkadotAccount] = useCurrentAccount()
   const {api} = useApiPromise()
   const [address, setAddress] = useState('')
   const [isAddressError, setIsAddressError] = useState(false)
@@ -193,7 +193,7 @@ const ClaimAll = (props: BlockProps) => {
               endEnhancer={
                 polkadotAccount && (
                   <Button
-                    kind="minimal"
+                    kind="tertiary"
                     size="mini"
                     onClick={() => {
                       setAddress(polkadotAccount.address)

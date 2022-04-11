@@ -1,8 +1,8 @@
-import {usePolkadotAccountAtom} from '@phala/app-store'
+import {useCurrentAccount} from '@phala/app-store'
 import useUserStakeInfo from './useUserStakeInfo'
 
 const useSelfUserStakeInfo = (pid: number) => {
-  const [polkadotAccount] = usePolkadotAccountAtom()
+  const [polkadotAccount] = useCurrentAccount()
 
   return useUserStakeInfo(polkadotAccount?.address, pid)
 }

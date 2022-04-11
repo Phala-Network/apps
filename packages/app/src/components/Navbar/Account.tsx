@@ -1,8 +1,8 @@
 import {useState, useMemo} from 'react'
 import styled from 'styled-components'
 import {down} from 'styled-breakpoints'
-import {BalanceLabel, PolkadotAccountModal} from '@phala/react-components'
-import {usePolkadotAccountAtom} from '@phala/app-store'
+import {BalanceLabel, SelectAccountModal} from '@phala/react-components'
+import {useCurrentAccount} from '@phala/app-store'
 import {trimAddress} from '@phala/utils'
 import {useBalance, useSSR} from '@phala/react-hooks'
 import {
@@ -105,7 +105,7 @@ const Account: React.FC = () => {
   const [selectAccountModalViable, setSelectAccountModalViable] =
     useState(false)
   const openAccountSelectModal = () => setSelectAccountModalViable(true)
-  const [polkadotAccount] = usePolkadotAccountAtom()
+  const [polkadotAccount] = useCurrentAccount()
   const balance = useBalance(polkadotAccount?.address)
   const {api} = useApiPromise()
   const decimals = useDecimalJsTokenDecimalMultiplier(api)
@@ -135,9 +135,9 @@ const Account: React.FC = () => {
           </AccountInfo>
         </AccountLable>
       )}
-      <PolkadotAccountModal
+      <SelectAccountModal
         onClose={() => setSelectAccountModalViable(false)}
-        visible={selectAccountModalViable}
+        isOpen={selectAccountModalViable}
       />
     </>
   )

@@ -1,9 +1,9 @@
-import {usePolkadotAccountAtom} from '@phala/app-store'
+import {useCurrentAccount} from '@phala/app-store'
 import {isDev} from '@phala/utils'
 import useStakePools from './useStakePools'
 
 const useSelfStakePools = (): ReturnType<typeof useStakePools> => {
-  const [polkadotAccount] = usePolkadotAccountAtom()
+  const [polkadotAccount] = useCurrentAccount()
   return useStakePools({
     select: (stakePools) => {
       if (!polkadotAccount || !stakePools) return null
