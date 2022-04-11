@@ -1,10 +1,11 @@
+import {useCurrentAccount} from '@phala/app-store'
 import {Alert, Checkbox, FeeLabel, Spacer, toast} from '@phala/react-components'
 import {Link} from '@phala/react-components/src/Announcement/styledComponents'
 import {
   decimalToBalance,
   useApiPromise,
   useDecimalJsTokenDecimalMultiplier,
-  useTransferSubmit,
+  waitSignAndSend,
 } from '@phala/react-libs'
 import {Block} from 'baseui/block'
 import {KIND as ButtonKind} from 'baseui/button'
@@ -27,12 +28,10 @@ export const TransferPHAFromKhalaToEthereum: React.FC<
 > = (props) => {
   const {onCloseTransfer} = props
   const allTransactionsInfo = useAllTransferData()
-  const fromAddress = allTransactionsInfo.fromAddress
   const toAddress = allTransactionsInfo.toAddress
   const amountDecimal = allTransactionsInfo.amountDecimal
   const {api} = useApiPromise()
   const decimals = useDecimalJsTokenDecimalMultiplier(api)
-  const transferSubmit = useTransferSubmit(1)
   const [submittedHashBoolean, setSubmittedHashBoolean] =
     useState<boolean>(false)
   const [isSubmitting, setSubmitting] = useState<boolean>(false)
@@ -40,6 +39,7 @@ export const TransferPHAFromKhalaToEthereum: React.FC<
   const fee = useKhalaBridgeFee()
   const [checkBoxChecked, setCheckBoxChecked] = useState<boolean>(false)
   const [transactionFee, setTransactionFee] = useState('')
+  const [currentAccount] = useCurrentAccount()
 
   const amount = useMemo(() => {
     if (!amountDecimal || !api || !decimals || !fee) return
@@ -47,18 +47,21 @@ export const TransferPHAFromKhalaToEthereum: React.FC<
     return decimalToBalance(amountDecimal.minus(fee), decimals, api)
   }, [amountDecimal, api, decimals, fee])
 
-  useEffect(() => {
+  const extrinsic = useMemo(() => {
     const accountToAddress = getAddress(toAddress)
 
-    api?.tx.bridgeTransfer
-      ?.transferNative?.(amount, accountToAddress, 1)
-      .paymentInfo(fromAddress)
-      .then(({partialFee}) => {
+    return api?.tx.bridgeTransfer?.transferNative?.(amount, accountToAddress, 1)
+  }, [amount, api, toAddress])
+
+  useEffect(() => {
+    if (extrinsic && currentAccount?.address) {
+      extrinsic.paymentInfo(currentAccount.address).then(({partialFee}) => {
         setTransactionFee(
           `${new Decimal(partialFee.toString()).div(10 ** 12).toFixed(8)} PHA`
         )
       })
-  }, [amount, api, fromAddress, toAddress])
+    }
+  }, [extrinsic, currentAccount?.address])
 
   const submit = async () => {
     if (!checkBoxChecked) {
@@ -66,20 +69,19 @@ export const TransferPHAFromKhalaToEthereum: React.FC<
       return
     }
 
-    if (!toAddress || !amount || !fromAddress) {
+    if (!extrinsic || !currentAccount?.wallet?.signer || !api) {
       return
     }
 
     try {
       setSubmitting(true)
 
-      const accountToAddress = getAddress(toAddress)
-
-      await transferSubmit?.(
-        amount,
-        accountToAddress,
-        fromAddress,
-        (status) => {
+      waitSignAndSend({
+        account: currentAccount?.address,
+        extrinsic,
+        api,
+        signer: currentAccount.wallet.signer,
+        onstatus: (status) => {
           if (status.isReady) {
             setProgressIndex(0)
           } else if (status.isBroadcast) {
@@ -91,8 +93,8 @@ export const TransferPHAFromKhalaToEthereum: React.FC<
             setProgressIndex(3)
             setSubmittedHashBoolean(true)
           }
-        }
-      )
+        },
+      })
     } catch (e) {
       console.error(e)
     } finally {

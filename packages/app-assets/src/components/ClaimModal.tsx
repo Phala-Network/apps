@@ -11,7 +11,7 @@ import {
   bnToDecimal,
   useApiPromise,
   useDecimalJsTokenDecimalMultiplier,
-  vest,
+  waitSignAndSend,
 } from '@phala/react-libs'
 import {BN} from '@polkadot/util'
 import {toaster} from 'baseui/toast'
@@ -50,8 +50,8 @@ const ButtonContainer = styled.div`
 const ClaimModal: React.FC<Props> = ({visible, onClose}) => {
   const [loading, setLoading] = useState(false)
   const {api} = useApiPromise()
-  const polkadotAccount = useCurrentAccount()[0]?.address
-  const allBalances = useAllBalances(polkadotAccount)
+  const [currentAccount] = useCurrentAccount()
+  const allBalances = useAllBalances(currentAccount?.address)
   const decimals = useDecimalJsTokenDecimalMultiplier(api)
   const {vestingLocked, vestedClaimable, vestedBalance} = allBalances || {}
 
@@ -68,17 +68,22 @@ const ClaimModal: React.FC<Props> = ({visible, onClose}) => {
     [decimals]
   )
 
-  const action = useMemo(() => {
+  const extrinsic = useMemo(() => {
     if (!api) return
 
-    return api.tx.vesting.vest()
+    return api.tx.vesting?.vest?.()
   }, [api])
 
-  const confirm = useCallback(() => {
-    if (api && polkadotAccount) {
+  const confirm = () => {
+    if (api && extrinsic && currentAccount?.wallet?.signer) {
       setLoading(true)
 
-      vest({api, sender: polkadotAccount})
+      waitSignAndSend({
+        account: currentAccount.address,
+        api,
+        extrinsic,
+        signer: currentAccount.wallet.signer,
+      })
         .then(() => {
           toaster.positive('Success', {})
           onClose()
@@ -87,7 +92,7 @@ const ClaimModal: React.FC<Props> = ({visible, onClose}) => {
           setLoading(false)
         })
     }
-  }, [api, polkadotAccount, onClose])
+  }
 
   const canClaim = Boolean(vestedClaimable) && !vestedClaimable?.isZero()
 
@@ -105,7 +110,7 @@ const ClaimModal: React.FC<Props> = ({visible, onClose}) => {
           <span>Claim now:</span> {format(vestedClaimable)} PHA
         </Info>
       )}
-      <PhalaStakePoolTransactionFeeLabel action={action} />
+      <PhalaStakePoolTransactionFeeLabel action={extrinsic} />
       <ModalFooterWrapper>
         <ButtonContainer>
           <ModalButtonWrapper onClick={onClose}>Cancel</ModalButtonWrapper>

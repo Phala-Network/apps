@@ -13,8 +13,6 @@ export {useTransactionReceiptQuery} from './ethereum/queries/useTransactionRecei
 export {useEthereumAccountBalanceETHDecimal} from './ethereum/useEthereumAccountBalanceETHDecimal'
 export {useEthereumBridgeApproveFee} from './ethereum/useEthereumBridgeApproveFee'
 export {useEthereumBridgeFee} from './ethereum/useEthereumBridgeFee'
-export {useTransferSubmit} from './polkadot/extrinsics/bridgeTransfer'
-export {vest} from './polkadot/extrinsics/vest'
 export {useSubstrateGraphQL} from './polkadot/GraphQLClientContext'
 export {useApiPromise} from './polkadot/hooks/useApiPromise'
 export {usePhalaStakePoolTransactionFee} from './polkadot/hooks/usePhalaStakePoolTransactionFee'
