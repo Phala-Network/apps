@@ -1,4 +1,4 @@
-import {useLastWalletExtensionName, useWallet} from '@phala/app-store'
+import {useLastWalletExtensionName, useWallet} from '@phala/store'
 import {useEffect} from 'react'
 
 /**

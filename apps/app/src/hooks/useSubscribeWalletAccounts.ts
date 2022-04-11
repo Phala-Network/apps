@@ -1,4 +1,4 @@
-import {useAccounts, useWallet} from '@phala/app-store'
+import {useAccounts, useWallet} from '@phala/store'
 import {useEffect} from 'react'
 import {encodeAddress} from '@polkadot/util-crypto'
 import {WalletAccount} from '@phala/wallets/types'

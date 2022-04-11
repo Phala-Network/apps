@@ -28,11 +28,12 @@ node_modules
 /.next/
 /out/
 /build
+/apps/app/public
 
 # Cache
 **/tsconfig.tsbuildinfo
 **/.eslintcache
-**/.cache/*
+.cache
 
 # Misc
 .DS_Store

@@ -1,4 +1,4 @@
-import {useAccounts, useCurrentAccount} from '@phala/app-store'
+import {useAccounts, useCurrentAccount} from '@phala/store'
 import {useStyletron} from 'baseui'
 import {Block} from 'baseui/block'
 import {Button} from 'baseui/button'

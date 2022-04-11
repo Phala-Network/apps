@@ -1,4 +1,4 @@
-import {useCurrentAccount} from '@phala/app-store'
+import {useCurrentAccount} from '@phala/store'
 import {Block} from 'baseui/block'
 import {FC, useEffect} from 'react'
 import {useFromAddress} from '../../../store'

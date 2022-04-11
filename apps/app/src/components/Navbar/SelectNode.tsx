@@ -1,7 +1,7 @@
 import {useEffect} from 'react'
 import styled from 'styled-components'
 import {down} from 'styled-breakpoints'
-import {useCustomEndpointAtom} from '@phala/app-store'
+import {useCustomEndpointAtom} from '@phala/store'
 import {StatefulPopover, PLACEMENT} from 'baseui/popover'
 import DropdownIcon from '../../icons/dropdown.svg'
 import CheckIcon from '../../icons/check.svg'

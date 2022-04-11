@@ -1,4 +1,4 @@
-import {useCurrentAccount} from '@phala/app-store'
+import {useCurrentAccount} from '@phala/store'
 import {ApiPromise, WsProvider} from '@polkadot/api'
 import Decimal from 'decimal.js'
 import {atom, useAtomValue} from 'jotai'

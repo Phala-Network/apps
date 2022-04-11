@@ -3798,10 +3798,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@phala/app-assets@workspace:packages/app-assets"
   dependencies:
-    "@phala/app-store": "workspace:0.0.1"
     "@phala/react-components": "workspace:0.0.1"
     "@phala/react-hooks": "workspace:0.0.1"
     "@phala/react-libs": "workspace:0.0.1"
+    "@phala/store": "workspace:0.0.1"
     "@phala/utils": "workspace:0.0.1"
     "@polkadot/util": ^8.7.1
     "@types/react": ^17.0.43
@@ -3818,11 +3818,11 @@ __metadata:
   resolution: "@phala/app-bridge@workspace:packages/app-bridge"
   dependencies:
     "@phala/app-config": "workspace:0.0.1"
-    "@phala/app-store": "workspace:0.0.1"
     "@phala/react-components": "workspace:0.0.1"
     "@phala/react-graph-chainbridge": "workspace:0.0.1"
     "@phala/react-hooks": "workspace:0.0.1"
     "@phala/react-libs": "workspace:0.0.1"
+    "@phala/store": "workspace:0.0.1"
     "@phala/utils": "workspace:0.0.1"
     "@polkadot/api": ^7.15.1
     "@polkadot/util": ^8.7.1
@@ -3861,10 +3861,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@phala/app-mining@workspace:packages/app-mining"
   dependencies:
-    "@phala/app-store": "workspace:0.0.1"
     "@phala/react-components": "workspace:0.0.1"
     "@phala/react-hooks": "workspace:0.0.1"
     "@phala/react-libs": "workspace:0.0.1"
+    "@phala/store": "workspace:0.0.1"
     "@phala/utils": "workspace:0.0.1"
     "@polkadot/api": ^7.15.1
     "@polkadot/util": ^8.7.1
@@ -3891,15 +3891,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@phala/app-store@workspace:0.0.1, @phala/app-store@workspace:packages/app-store":
-  version: 0.0.0-use.local
-  resolution: "@phala/app-store@workspace:packages/app-store"
-  dependencies:
-    "@phala/app-types": "workspace:0.0.1"
-    "@phala/wallets": "workspace:^0.0.1"
-  languageName: unknown
-  linkType: soft
-
 "@phala/app-types@workspace:0.0.1, @phala/app-types@workspace:packages/app-types":
   version: 0.0.0-use.local
   resolution: "@phala/app-types@workspace:packages/app-types"
@@ -3917,11 +3908,11 @@ __metadata:
     "@phala/app-config": "workspace:0.0.1"
     "@phala/app-data-analytics": "workspace:0.0.1"
     "@phala/app-mining": "workspace:0.0.1"
-    "@phala/app-store": "workspace:0.0.1"
     "@phala/app-types": "workspace:0.0.1"
     "@phala/react-components": "workspace:0.0.1"
     "@phala/react-hooks": "workspace:0.0.1"
     "@phala/react-libs": "workspace:0.0.1"
+    "@phala/store": "workspace:0.0.1"
     "@phala/typedefs": ^0.2.29
     "@phala/utils": "workspace:0.0.1"
     "@phala/wallets": "workspace:^0.0.1"
@@ -3981,11 +3972,11 @@ __metadata:
   dependencies:
     "@babel/core": ^7.16.0
     "@phala/app-config": "workspace:0.0.1"
-    "@phala/app-store": "workspace:0.0.1"
     "@phala/app-types": "workspace:0.0.1"
     "@phala/react-graph-chainbridge": "workspace:0.0.1"
     "@phala/react-hooks": "workspace:0.0.1"
     "@phala/react-libs": "workspace:0.0.1"
+    "@phala/store": "workspace:0.0.1"
     "@phala/utils": "workspace:0.0.1"
     "@phala/wallets": "workspace:^0.0.1"
     "@polkadot/api": ^7.15.1
@@ -4061,8 +4052,8 @@ __metadata:
   resolution: "@phala/react-libs@workspace:packages/react-libs"
   dependencies:
     "@phala/app-config": "workspace:0.0.1"
-    "@phala/app-store": "workspace:0.0.1"
     "@phala/react-graph-chainbridge": "workspace:0.0.1"
+    "@phala/store": "workspace:0.0.1"
     "@phala/typedefs": ^0.2.29
     "@phala/utils": "workspace:0.0.1"
     "@polkadot/api": ^7.15.1
@@ -4081,6 +4072,15 @@ __metadata:
     react: ^17.0.2
     uuid: ^8.3.2
     web3modal: ^1.9.5
+  languageName: unknown
+  linkType: soft
+
+"@phala/store@workspace:0.0.1, @phala/store@workspace:packages/store":
+  version: 0.0.0-use.local
+  resolution: "@phala/store@workspace:packages/store"
+  dependencies:
+    "@phala/app-types": "workspace:0.0.1"
+    "@phala/wallets": "workspace:^0.0.1"
   languageName: unknown
   linkType: soft
 

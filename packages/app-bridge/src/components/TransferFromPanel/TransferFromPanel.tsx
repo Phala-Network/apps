@@ -1,4 +1,4 @@
-import {useEthereumAccountAtom} from '@phala/app-store'
+import {useEthereumAccountAtom} from '@phala/store'
 import {Block} from 'baseui/block'
 import {FC, useEffect} from 'react'
 import {Network} from '../../config'

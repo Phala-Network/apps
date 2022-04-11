@@ -1,4 +1,4 @@
-import {useCurrentAccount} from '@phala/app-store'
+import {useCurrentAccount} from '@phala/store'
 import {BalanceLabel, SelectAccountModal} from '@phala/react-components'
 import {useBalance} from '@phala/react-hooks'
 import {formatPolkadotBalance} from '@phala/utils'

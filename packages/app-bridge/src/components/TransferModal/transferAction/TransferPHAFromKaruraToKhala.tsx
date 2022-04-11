@@ -1,4 +1,4 @@
-import {useCurrentAccount} from '@phala/app-store'
+import {useCurrentAccount} from '@phala/store'
 import {Alert, FeeLabel, Spacer} from '@phala/react-components'
 import {decimalToBalance, waitSignAndSend} from '@phala/react-libs'
 import {formatCurrency} from '@phala/utils'

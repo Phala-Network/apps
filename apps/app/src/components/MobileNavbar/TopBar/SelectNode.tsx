@@ -1,6 +1,6 @@
 import {useState} from 'react'
 import styled from 'styled-components'
-import {useCustomEndpointAtom} from '@phala/app-store'
+import {useCustomEndpointAtom} from '@phala/store'
 import {Drawer, ANCHOR, SIZE} from 'baseui/drawer'
 import CheckIcon from '../../../icons/check.svg'
 import Khala from '../../../icons/khala_new.svg'

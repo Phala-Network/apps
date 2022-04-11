@@ -1,4 +1,4 @@
-import {useEthereumAccountAtom} from '@phala/app-store'
+import {useEthereumAccountAtom} from '@phala/store'
 import {useAccountsQuery, useEthereumWeb3, useEthers} from '@phala/react-libs'
 import {Button} from 'baseui/button'
 import {FC, useEffect} from 'react'

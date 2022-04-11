@@ -1,4 +1,4 @@
-import {useCurrentAccount} from '@phala/app-store'
+import {useCurrentAccount} from '@phala/store'
 import {SelectAccountModal} from '@phala/react-components'
 import React, {useCallback, useState} from 'react'
 import styled from 'styled-components'

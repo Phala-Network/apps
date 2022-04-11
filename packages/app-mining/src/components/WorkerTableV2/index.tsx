@@ -18,7 +18,7 @@ import {
   trimAddress,
 } from '@phala/utils'
 import PopoverButton from '../PopoverButton'
-import {useCurrentAccount} from '@phala/app-store'
+import {useCurrentAccount} from '@phala/store'
 import Pagination from '../Pagination'
 import {Modal, ModalProps} from 'baseui/modal'
 import TableSkeleton from '../TableSkeleton'

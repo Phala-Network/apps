@@ -1,5 +1,5 @@
 import {useMemo} from 'react'
-import {useCurrentAccount} from '@phala/app-store'
+import {useCurrentAccount} from '@phala/store'
 import {
   useBalance,
   useLockedBalance,

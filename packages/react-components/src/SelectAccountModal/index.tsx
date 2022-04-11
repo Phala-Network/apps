@@ -1,4 +1,4 @@
-import {useCurrentAccount, useWallet} from '@phala/app-store'
+import {useCurrentAccount, useWallet} from '@phala/store'
 import {Wallet} from '@phala/wallets/types'
 import {ModalProps} from 'baseui/modal'
 import {toaster} from 'baseui/toast'

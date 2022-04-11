@@ -1,4 +1,4 @@
-import {useEthereumAccountAtom} from '@phala/app-store'
+import {useEthereumAccountAtom} from '@phala/store'
 import {useEthersNetworkQuery} from '@phala/react-libs'
 import {captureException} from '@sentry/react'
 import {Decimal} from 'decimal.js'

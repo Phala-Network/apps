@@ -1,4 +1,4 @@
-import {useEthereumAccountAtom, useCurrentAccount} from '@phala/app-store'
+import {useEthereumAccountAtom, useCurrentAccount} from '@phala/store'
 import {
   useEthereumAccountBalanceDecimal,
   usePolkadotAccountTransferrableBalanceDecimal,

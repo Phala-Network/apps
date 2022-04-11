@@ -2,7 +2,7 @@ import {useState, useMemo} from 'react'
 import styled from 'styled-components'
 import {down} from 'styled-breakpoints'
 import {BalanceLabel, SelectAccountModal} from '@phala/react-components'
-import {useCurrentAccount} from '@phala/app-store'
+import {useCurrentAccount} from '@phala/store'
 import {trimAddress} from '@phala/utils'
 import {useBalance, useSSR} from '@phala/react-hooks'
 import {

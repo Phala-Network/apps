@@ -1,4 +1,4 @@
-import {useEthereumAccountAtom} from '@phala/app-store'
+import {useEthereumAccountAtom} from '@phala/store'
 import {useErc20BalanceQuery} from '@phala/react-libs'
 import {Decimal} from 'decimal.js'
 import {ethers} from 'ethers'
