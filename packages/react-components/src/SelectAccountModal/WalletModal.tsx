@@ -9,14 +9,22 @@ type Props = {
   onSelect?: (wallet: Wallet) => void
 }
 
+const walletsOrder = ['talisman', 'polkadot-js', 'subwallet-js']
+
 const Body: VFC<Props> = ({onSelect}) => {
   const [css, theme] = useStyletron()
   const [wallets, setWallets] = useState<Wallet[]>()
   useEffect(() => {
     let unmounted = false
     import('@phala/wallets').then(({getWallets}) => {
+      const sortedWallets = getWallets().sort((a, b) => {
+        return (
+          walletsOrder.indexOf(a.extensionName) -
+          walletsOrder.indexOf(b.extensionName)
+        )
+      })
       if (!unmounted) {
-        setWallets(getWallets())
+        setWallets(sortedWallets)
       }
     })
     return () => {
