@@ -2,25 +2,31 @@
   "name": "phala-apps",
   "version": "0.0.1",
   "private": true,
-  "scripts": {
-    "dev:app": "yarn workspace @phala/app dev",
-    "build:app": "yarn workspace @phala/app build",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
-    "lint:fix": "eslint . --fix --ext .js,.jsx,.ts,.tsx",
-    "prepare": "husky install"
+  "homepage": "https://github.com/Phala-Network/apps#readme",
+  "bugs": {
+    "url": "https://github.com/Phala-Network/apps/issues"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Phala-Network/apps.git"
   },
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/Phala-Network/apps/issues"
-  },
-  "homepage": "https://github.com/Phala-Network/apps#readme",
   "workspaces": [
     "apps/*",
     "packages/*"
+  ],
+  "scripts": {
+    "build:app": "yarn workspace @phala/app build",
+    "dev:app": "yarn workspace @phala/app dev",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "lint:fix": "eslint . --fix --ext .js,.jsx,.ts,.tsx",
+    "prepare": "husky install"
+  },
+  "browserslist": [
+    "last 10 chrome version",
+    "last 10 firefox version",
+    "last 2 safari version",
+    "last 10 edge version"
   ],
   "dependencies": {
     "@types/node": "^16.11.26",
@@ -39,14 +45,7 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.29.4",
     "eslint-plugin-react-hooks": "^4.4.0",
-    "prettier": "^2.6.2",
-    "prettier-eslint": "^13.0.0"
+    "prettier": "^2.6.2"
   },
-  "browserslist": [
-    "last 10 chrome version",
-    "last 10 firefox version",
-    "last 2 safari version",
-    "last 10 edge version"
-  ],
   "packageManager": "yarn@3.2.0"
 }

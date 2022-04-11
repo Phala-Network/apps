@@ -1,5 +1,4 @@
 {
-  "typescript.tsdk": "./node_modules/typescript/lib",
   "cSpell.words": [
     "chainbridge",
     "codegen",
@@ -16,6 +15,9 @@
     "typedefs",
     "unsub",
     "stakers",
-    "dotsama"
-  ]
+    "dotsama",
+    "baseui",
+    "khala"
+  ],
+  "typescript.tsdk": "./node_modules/typescript/lib"
 }
