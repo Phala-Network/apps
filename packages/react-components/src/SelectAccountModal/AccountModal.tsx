@@ -23,7 +23,7 @@ const Body: VFC<Props> = ({onSelect, onDisconnect}) => {
       <ModalHeader>Select An Account</ModalHeader>
       <ModalBody>
         {accounts && accounts.length > 0 ? (
-          <Block maxHeight="512px">
+          <Block maxHeight="230px" overflow="auto">
             {accounts.map((account) => {
               const isCurrentAccount =
                 account.address === currentAccount?.address

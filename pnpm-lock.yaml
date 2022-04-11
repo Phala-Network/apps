@@ -83,7 +83,7 @@ importers:
       '@types/uuid': ^8.3.3
       axios: ^0.21.4
       babel-loader: ^8.2.3
-      babel-plugin-styled-components: ^2.0.2
+      babel-plugin-styled-components: ^2.0.7
       babel-preset-gatsby: ^2.5.1
       bn.js: ^5.2.0
       core-js: ^3.19.3
@@ -140,7 +140,7 @@ importers:
       '@types/uuid': 8.3.4
       axios: 0.21.4
       babel-loader: 8.2.3_900eac683bef8a6b239b47efcf24e8a9
-      babel-plugin-styled-components: 2.0.2_styled-components@5.3.5
+      babel-plugin-styled-components: 2.0.7_styled-components@5.3.5
       babel-preset-gatsby: 2.7.0_6dc547de66e02b5a373703532837452e
       bn.js: 5.2.0
       core-js: 3.21.0
@@ -153,7 +153,7 @@ importers:
       gatsby-plugin-pnpm: 1.2.10_gatsby@4.10.3
       gatsby-plugin-react-helmet: 5.11.0_gatsby@4.10.3+react-helmet@6.1.0
       gatsby-plugin-react-svg: 3.1.0_gatsby@4.10.3
-      gatsby-plugin-styled-components: 5.11.0_b1128ccf3e7dad3e682fc0cad7b8eb5b
+      gatsby-plugin-styled-components: 5.11.0_6e15f2a4a0bf37f5642b6abd96003c16
       gatsby-plugin-typescript: 4.11.1_gatsby@4.10.3
       node-polyfill-webpack-plugin: 1.1.4_webpack@5.68.0
       rc-tooltip: 5.1.1_react-dom@17.0.2+react@17.0.2
@@ -7041,6 +7041,19 @@ packages:
       styled-components: 5.3.5
     dev: false
 
+  /babel-plugin-styled-components/2.0.7_styled-components@5.3.5:
+    resolution: {integrity: sha512-i7YhvPgVqRKfoQ66toiZ06jPNA3p6ierpfUuEWxNF+fV27Uv5gxBkf8KZLHUCc1nFA9j6+80pYoIpqCeyW3/bA==}
+    peerDependencies:
+      styled-components: '>= 2'
+    dependencies:
+      '@babel/helper-annotate-as-pure': 7.16.7
+      '@babel/helper-module-imports': 7.16.7
+      babel-plugin-syntax-jsx: 6.18.0
+      lodash: 4.17.21
+      picomatch: 2.3.1
+      styled-components: 5.3.5
+    dev: false
+
   /babel-plugin-syntax-jsx/6.18.0:
     resolution: {integrity: sha1-CvMqmm4Tyno/1QaeYtew9Y0NiUY=}
     dev: false
@@ -11932,7 +11945,7 @@ packages:
       svg-react-loader: 0.4.6
     dev: false
 
-  /gatsby-plugin-styled-components/5.11.0_b1128ccf3e7dad3e682fc0cad7b8eb5b:
+  /gatsby-plugin-styled-components/5.11.0_6e15f2a4a0bf37f5642b6abd96003c16:
     resolution: {integrity: sha512-DkbF6sh+JJJc66PZBvaxOWzf3mHFQ5YQKtgnfBZZ8V1WdlXTEVqHyg4evRDjDVAIFQyp6SHnyduKsJN3rtjCSw==}
     engines: {node: '>=14.15.0'}
     peerDependencies:
@@ -11943,7 +11956,7 @@ packages:
       styled-components: '>=2.0.0'
     dependencies:
       '@babel/runtime': 7.17.8
-      babel-plugin-styled-components: 2.0.2_styled-components@5.3.5
+      babel-plugin-styled-components: 2.0.7_styled-components@5.3.5
       gatsby: 4.10.3_81edf3926e0f5b690d6bf41c81c0a74a
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
