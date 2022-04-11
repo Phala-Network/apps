@@ -1,11 +1,11 @@
-const React = require('react')
-const App = require('../../src/WrapApp').default
-const WrapPage = require('../../src/WrapPage').default
+import * as React from 'react'
+import App from '../../src/WrapApp'
+import WrapPage from '../../src/WrapPage'
 
-exports.wrapRootElement = ({element}) => {
+export const wrapRootElement = ({element}) => {
   return <App>{element}</App>
 }
 
-exports.wrapPageElement = ({props, element}) => (
+export const wrapPageElement = ({props, element}) => (
   <WrapPage {...props}>{element}</WrapPage>
 )

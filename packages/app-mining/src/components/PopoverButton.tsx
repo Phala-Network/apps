@@ -20,4 +20,6 @@ const PopoverButton = forwardRef<HTMLButtonElement, ButtonProps>(
   }
 )
 
+PopoverButton.displayName = 'PopoverButton'
+
 export default PopoverButton

@@ -18,9 +18,8 @@
   "scripts": {
     "build:app": "yarn workspace @phala/app build",
     "dev:app": "yarn workspace @phala/app dev",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
-    "lint:fix": "eslint . --fix --ext .js,.jsx,.ts,.tsx",
-    "prepare": "husky install"
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx .",
+    "lint:fix": "eslint --fix --ext .js,.jsx,.ts,.tsx ."
   },
   "browserslist": [
     "last 10 chrome version",

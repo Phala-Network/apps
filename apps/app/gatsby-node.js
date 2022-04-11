@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const NodePolyfillPlugin = require('node-polyfill-webpack-plugin')
 
 exports.onCreateBabelConfig = ({actions}) => {
