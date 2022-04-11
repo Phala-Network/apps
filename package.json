@@ -3,16 +3,9 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "build": "cd ./packages/app && pnpm run build",
-    "build:deps": "pnpm recursive --filter ./packages --filter !./packages/app run build",
-    "develop": "cd ./packages/app && pnpm run develop",
-    "develop:deps": "pnpm --parallel --filter ./packages  --filter !./packages/app run develop",
-    "preinstall": "npx only-allow pnpm",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "lint:fix": "eslint . --fix --ext .js,.jsx,.ts,.tsx",
-    "format": "prettier-eslint --list-different --write \"./packages/**/*.tsx\"",
-    "prepare": "husky install",
-    "life": "git clean -xdf && pnpm install && pnpm run develop"
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
@@ -23,6 +16,10 @@
     "url": "https://github.com/Phala-Network/apps/issues"
   },
   "homepage": "https://github.com/Phala-Network/apps#readme",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "dependencies": {
     "@types/node": "^16.11.26",
     "@types/react": "^17.0.43",
@@ -51,11 +48,11 @@
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": "eslint --cache --fix"
   },
-  "packageManager": "pnpm@6.32.3",
   "browserslist": [
     "last 10 chrome version",
     "last 10 firefox version",
     "last 2 safari version",
     "last 10 edge version"
-  ]
+  ],
+  "packageManager": "yarn@3.2.0"
 }

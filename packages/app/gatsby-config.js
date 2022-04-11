@@ -12,7 +12,6 @@ module.exports = {
   plugins: [
     'local-plugin-layout', // This plugin's place decides providers order, which is highly important
     'local-plugin-styletron',
-    'gatsby-plugin-pnpm',
     'gatsby-plugin-react-helmet',
     'gatsby-plugin-typescript',
     'gatsby-plugin-styled-components',
