@@ -1,27 +1,21 @@
 {
-  "typescript.preferences.importModuleSpecifierEnding": "minimal",
-  "typescript.preferences.importModuleSpecifier": "project-relative",
+  "typescript.tsdk": "./node_modules/typescript/lib",
   "cSpell.words": [
     "chainbridge",
     "codegen",
-    "csstype",
     "ethereums",
     "extrinsics",
     "hexlify",
     "iframes",
     "languagedetector",
     "onstatus",
-    "pnpm",
     "preinstall",
     "readystate",
     "styletron",
     "svgs",
-    "tranfer",
     "typedefs",
     "unsub",
-    "uuidv",
     "stakers",
     "dotsama"
-  ],
-  "typescript.tsdk": "node_modules/typescript/lib"
+  ]
 }

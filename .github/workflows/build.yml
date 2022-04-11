@@ -53,17 +53,3 @@ jobs:
 
       - name: Run app build
         run: pnpm run build
-
-      # - name: Deploy to Netlify
-      #   uses: nwtgck/actions-netlify@v1.2
-      #   with:
-      #     publish-dir: './packages/app/public'
-      #     production-branch: master
-      #     deploy-message: 'Deploy from GitHub Actions'
-      #     enable-pull-request-comment: false
-      #     enable-commit-comment: true
-      #     overwrites-pull-request-comment: true
-      #   env:
-      #     NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-      #     NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-      #   timeout-minutes: 1
