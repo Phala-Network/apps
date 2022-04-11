@@ -1,17 +1,12 @@
 import {useEffect, useMemo, useRef, VFC} from 'react'
 import {Card} from 'baseui/card'
 import {Block} from 'baseui/block'
-import {
-  HeadingLarge,
-  HeadingSmall,
-  ParagraphSmall,
-  ParagraphXSmall,
-} from 'baseui/typography'
+import {HeadingLarge, HeadingSmall, ParagraphSmall} from 'baseui/typography'
 import {useQuery} from 'react-query'
 import {camelizeKeys} from 'humps'
 import {Skeleton} from 'baseui/skeleton'
 import {StyledLink} from 'baseui/link'
-import {formatCurrency, trimAddress} from '@phala/utils'
+import {formatCurrency} from '@phala/utils'
 import {
   StatefulDataTable,
   NumericalColumn,
@@ -121,19 +116,14 @@ const columns = [
     renderCell: (props: {value: string}) => {
       const [address, discordId] = props.value.split('+')
       return (
-        <Block display="flex" alignItems="center">
-          <StyledLink
-            href={`https://khala.subscan.io/account/${address}`}
-            target="_blank"
-            rel="noreferrer"
-            $style={{fontFamily: 'monospace'}}
-          >
-            {address && trimAddress(address)}
-          </StyledLink>
-          <ParagraphXSmall as="div" marginLeft="scale400">
-            {discordId}
-          </ParagraphXSmall>
-        </Block>
+        <StyledLink
+          href={`https://khala.subscan.io/account/${address}`}
+          target="_blank"
+          rel="noreferrer"
+          $style={{whiteSpace: 'nowrap'}}
+        >
+          {discordId}
+        </StyledLink>
       )
     },
     textQueryFilter: function (textQuery: string, data: string) {
