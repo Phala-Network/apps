@@ -1,4 +1,4 @@
-import {Alert, Spacer, toast} from '@phala/react-components'
+import {Alert, Spacer} from '@phala/react-components'
 import {
   useErc20BalanceQuery,
   useErc20Deposit,
@@ -17,6 +17,7 @@ import {Button} from '../../../Button'
 import {CurrentTransferInformationDetailItems} from '../../../CurrentTransferInformationDetailItems'
 import {EthereumToKhalaFee} from './EthereumToKhalaFee'
 import {StyledLink} from 'baseui/link'
+import {toaster} from 'baseui/toast'
 
 interface TransferPHAFromEthereumToKhalaProps {
   onCloseTransfer(): void
@@ -64,7 +65,7 @@ export const TransferPHAFromEthereumToKhala: React.FC<
     } catch (error) {
       if (error instanceof Error) {
         console.error(error)
-        toast(error.message)
+        toaster.negative(error.message, {})
       }
 
       setSubmitting(false)

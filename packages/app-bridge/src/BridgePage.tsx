@@ -1,6 +1,5 @@
-import {Announcement, ToasterContainer} from '@phala/react-components'
+import {Announcement} from '@phala/react-components'
 import {StyledLink} from 'baseui/link'
-import {PLACEMENT} from 'baseui/toast'
 import {FC, useState} from 'react'
 import {Helmet} from 'react-helmet'
 import {ExchangeIcon} from './components/ExchangeIcon'
@@ -90,8 +89,6 @@ export const BridgePage: FC = () => {
           isOpen={isOpenTransferModal}
         />
       </Root>
-
-      <ToasterContainer placement={PLACEMENT.topRight} />
     </>
   )
 }

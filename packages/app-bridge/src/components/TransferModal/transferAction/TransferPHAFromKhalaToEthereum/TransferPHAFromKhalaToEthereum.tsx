@@ -1,5 +1,5 @@
 import {useCurrentAccount} from '@phala/app-store'
-import {Alert, Checkbox, FeeLabel, Spacer, toast} from '@phala/react-components'
+import {Alert, Checkbox, FeeLabel, Spacer} from '@phala/react-components'
 import {Link} from '@phala/react-components/src/Announcement/styledComponents'
 import {
   decimalToBalance,
@@ -10,6 +10,7 @@ import {
 import {Block} from 'baseui/block'
 import {KIND as ButtonKind} from 'baseui/button'
 import {ModalBody, ModalButton, ModalFooter} from 'baseui/modal'
+import {toaster} from 'baseui/toast'
 import Decimal from 'decimal.js'
 import {getAddress} from 'ethers/lib/utils'
 import React, {Fragment, useEffect, useMemo, useState} from 'react'
@@ -65,7 +66,7 @@ export const TransferPHAFromKhalaToEthereum: React.FC<
 
   const submit = async () => {
     if (!checkBoxChecked) {
-      toast('Please check the risk warning.')
+      toaster.warning('Please check the risk warning.', {})
       return
     }
 
@@ -137,7 +138,7 @@ export const TransferPHAFromKhalaToEthereum: React.FC<
               than 24h. You can follow each step of the transaction through{' '}
               <Link
                 target="_blank"
-                href={`https://khala.subscan.io/account/${fromAddress}?tab=transfer`}
+                href={`https://khala.subscan.io/account/${currentAccount?.address}?tab=transfer`}
               >
                 Khala&apos;s explorer
               </Link>{' '}

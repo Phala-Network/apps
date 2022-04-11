@@ -1,5 +1,4 @@
 import {ethereumGraphEndpoint} from '@phala/app-config'
-import {MobileToastContextProvider} from '@phala/react-components'
 import {Provider as LibProvider} from '@phala/react-libs'
 import {isProduction} from '@phala/utils'
 import {BaseProvider} from 'baseui'
@@ -56,22 +55,20 @@ const WrapApp: React.FC = ({children}) => {
         <QueryClientProvider contextSharing={true} client={client.current}>
           <LibProvider {...productionConfig}>
             <ThemeProvider theme={theme}>
-              <MobileToastContextProvider>
-                <BaseProvider theme={baseTheme}>
-                  <SnackbarProvider>{children}</SnackbarProvider>
-                  <ToasterContainer
-                    autoHideDuration={3000}
-                    overrides={{
-                      ToastBody: {
-                        style: {
-                          maxWidth: '100%',
-                          width: '400px',
-                        },
+              <BaseProvider theme={baseTheme}>
+                <SnackbarProvider>{children}</SnackbarProvider>
+                <ToasterContainer
+                  autoHideDuration={3000}
+                  overrides={{
+                    ToastBody: {
+                      style: {
+                        maxWidth: '100%',
+                        width: '400px',
                       },
-                    }}
-                  />
-                </BaseProvider>
-              </MobileToastContextProvider>
+                    },
+                  }}
+                />
+              </BaseProvider>
             </ThemeProvider>
             <ReactQueryDevtools />
           </LibProvider>
