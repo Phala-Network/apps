@@ -1,7 +1,10 @@
 {
   "name": "@phala/app-data-analytics",
   "version": "0.0.1",
-  "type": "module",
   "sideEffects": false,
-  "main": "src/index.ts"
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "typecheck": "tsc --project ./tsconfig.json --noEmit"
+  }
 }

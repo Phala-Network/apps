@@ -1,11 +1,14 @@
 {
   "name": "@phala/app-analytics",
   "version": "0.0.1",
-  "type": "module",
   "sideEffects": false,
+  "type": "module",
   "main": "src/index.ts",
+  "scripts": {
+    "typecheck": "tsc --project ./tsconfig.json --noEmit"
+  },
   "dependencies": {
-    "@phala/react-components": "workspace:0.0.1",
+    "@phala/react-components": "workspace:^",
     "echarts": "^5.2.0",
     "echarts-for-react": "^3.0.1",
     "styled-breakpoints": "^10.0.1"

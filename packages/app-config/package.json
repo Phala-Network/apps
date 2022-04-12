@@ -3,6 +3,9 @@
   "version": "0.0.1",
   "sideEffects": false,
   "main": "src/index.ts",
+  "scripts": {
+    "typecheck": "tsc --project ./tsconfig.json --noEmit"
+  },
   "dependencies": {
     "@phala/typedefs": "^0.2.29",
     "@polkadot/types": "^7.15.1",

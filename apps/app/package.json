@@ -4,26 +4,32 @@
   "main": "index.js",
   "scripts": {
     "build": "yarn clean && gatsby build",
+    "clean": "gatsby clean",
     "dev": "gatsby develop -H 0.0.0.0",
     "serve": "gatsby serve -H 0.0.0.0",
-    "clean": "gatsby clean"
+    "typecheck": "tsc --project ./tsconfig.json --noEmit"
   },
+  "browserslist": [
+    "last 10 chrome version",
+    "last 10 firefox version",
+    "last 2 safari version",
+    "last 10 edge version"
+  ],
   "dependencies": {
     "@babel/core": "^7.16.0",
-    "@phala/app-analytics": "workspace:0.0.1",
-    "@phala/app-assets": "workspace:0.0.1",
-    "@phala/app-bridge": "workspace:0.0.1",
-    "@phala/app-config": "workspace:0.0.1",
-    "@phala/app-data-analytics": "workspace:0.0.1",
-    "@phala/app-mining": "workspace:0.0.1",
-    "@phala/app-types": "workspace:0.0.1",
-    "@phala/react-components": "workspace:0.0.1",
-    "@phala/react-hooks": "workspace:0.0.1",
-    "@phala/react-libs": "workspace:0.0.1",
-    "@phala/store": "workspace:0.0.1",
+    "@phala/app-analytics": "workspace:^",
+    "@phala/app-assets": "workspace:^",
+    "@phala/app-bridge": "workspace:^",
+    "@phala/app-config": "workspace:^",
+    "@phala/app-data-analytics": "workspace:^",
+    "@phala/app-mining": "workspace:^",
+    "@phala/react-components": "workspace:^",
+    "@phala/react-hooks": "workspace:^",
+    "@phala/react-libs": "workspace:^",
+    "@phala/store": "workspace:^",
     "@phala/typedefs": "^0.2.29",
-    "@phala/utils": "workspace:0.0.1",
-    "@phala/wallets": "workspace:^0.0.1",
+    "@phala/utils": "workspace:^",
+    "@phala/wallets": "workspace:^",
     "@polkadot/api": "^7.15.1",
     "@polkadot/types": "^7.15.1",
     "@polkadot/util": "^8.7.1",
@@ -73,11 +79,5 @@
     "@types/styled-components": "^5.1.18",
     "@types/styletron-react": "^5.0.3",
     "@types/styletron-standard": "^2.0.2"
-  },
-  "browserslist": [
-    "last 10 chrome version",
-    "last 10 firefox version",
-    "last 2 safari version",
-    "last 10 edge version"
-  ]
+  }
 }

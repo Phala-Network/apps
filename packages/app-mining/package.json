@@ -3,12 +3,15 @@
   "version": "0.0.1",
   "type": "module",
   "main": "src/index.ts",
+  "scripts": {
+    "typecheck": "tsc --project ./tsconfig.json --noEmit"
+  },
   "dependencies": {
-    "@phala/react-components": "workspace:0.0.1",
-    "@phala/react-hooks": "workspace:0.0.1",
-    "@phala/react-libs": "workspace:0.0.1",
-    "@phala/store": "workspace:0.0.1",
-    "@phala/utils": "workspace:0.0.1",
+    "@phala/react-components": "workspace:^",
+    "@phala/react-hooks": "workspace:^",
+    "@phala/react-libs": "workspace:^",
+    "@phala/store": "workspace:^",
+    "@phala/utils": "workspace:^",
     "@polkadot/api": "^7.15.1",
     "@polkadot/util": "^8.7.1",
     "date-fns": "^2.23.0",

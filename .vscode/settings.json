@@ -19,5 +19,11 @@
     "baseui",
     "khala"
   ],
+  // Enable after each package is configured
+  // "eslint.workingDirectories": [
+  //   {
+  //     "mode": "auto"
+  //   }
+  // ],
   "typescript.tsdk": "./node_modules/typescript/lib"
 }

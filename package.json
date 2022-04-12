@@ -18,8 +18,13 @@
   "scripts": {
     "build:app": "yarn workspace @phala/app build",
     "dev:app": "yarn workspace @phala/app dev",
+    "postinstall": "husky install",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx .",
-    "lint:fix": "eslint --fix --ext .js,.jsx,.ts,.tsx ."
+    "lint:fix": "eslint --fix --ext .js,.jsx,.ts,.tsx .",
+    "typecheck": "yarn workspaces foreach -ptv run typecheck"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": "eslint --cache --fix"
   },
   "browserslist": [
     "last 10 chrome version",
@@ -44,6 +49,8 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.29.4",
     "eslint-plugin-react-hooks": "^4.4.0",
+    "husky": ">=6",
+    "lint-staged": ">=10",
     "prettier": "^2.6.2"
   },
   "packageManager": "yarn@3.2.0"
