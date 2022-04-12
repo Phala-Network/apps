@@ -1,10 +1,7 @@
-/**
- * Configure your Gatsby site with this file.
- *
- * See: https://www.gatsbyjs.com/docs/gatsby-config/
- */
+import type {GatsbyConfig} from 'gatsby'
 
-module.exports = {
+const config: GatsbyConfig = {
+  jsxRuntime: 'automatic',
   flags: {
     FAST_DEV: true,
     FAST_REFRESH: true,
@@ -42,5 +39,7 @@ module.exports = {
         sampleRate: 1,
       },
     },
-  ].filter(Boolean),
+  ].filter(<T>(x: T): x is T extends false ? never : T => Boolean(x)),
 }
+
+export default config

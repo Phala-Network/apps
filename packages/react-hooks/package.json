@@ -20,7 +20,7 @@
     "decimal.js": "^10.3.1",
     "ethers": "^5.5.3",
     "react": "^17.0.2",
-    "styled-breakpoints": "^10.0.1",
-    "vconsole": "^3.9.1"
+    "react-query": "^3.34.19",
+    "styled-breakpoints": "^10.0.1"
   }
 }
