@@ -1,4 +1,4 @@
-import {useCurrentAccount} from '@phala/app-store'
+import {useCurrentAccount} from '@phala/store'
 import {toFixed, trimAddress} from '@phala/utils'
 import {Block} from 'baseui/block'
 import {Button} from 'baseui/button'

@@ -2,60 +2,56 @@
   "name": "phala-apps",
   "version": "0.0.1",
   "private": true,
-  "scripts": {
-    "build": "cd ./packages/app && pnpm run build",
-    "build:deps": "pnpm recursive --filter ./packages --filter !./packages/app run build",
-    "develop": "cd ./packages/app && pnpm run develop",
-    "develop:deps": "pnpm --parallel --filter ./packages  --filter !./packages/app run develop",
-    "preinstall": "npx only-allow pnpm",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
-    "lint:fix": "eslint . --fix --ext .js,.jsx,.ts,.tsx",
-    "format": "prettier-eslint --list-different --write \"./packages/**/*.tsx\"",
-    "prepare": "husky install",
-    "life": "git clean -xdf && pnpm install && pnpm run develop"
+  "homepage": "https://github.com/Phala-Network/apps#readme",
+  "bugs": {
+    "url": "https://github.com/Phala-Network/apps/issues"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Phala-Network/apps.git"
   },
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/Phala-Network/apps/issues"
-  },
-  "homepage": "https://github.com/Phala-Network/apps#readme",
-  "dependencies": {
-    "@types/node": "^16.11.26",
-    "@types/react": "^17.0.43",
-    "baseui": "11.0.0",
-    "jotai": "^1.6.2",
-    "npm-run-all": "^4.1.5",
-    "react-query": "3.34.19",
-    "styled-components": "^5.3.5",
-    "typescript": "^4.5.5"
-  },
-  "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^5.11.0",
-    "@typescript-eslint/parser": "^5.11.0",
-    "eslint": "^8.8.0",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-prettier": "^4.0.0",
-    "eslint-plugin-react": "^7.28.0",
-    "eslint-plugin-react-hooks": "^4.3.0",
-    "husky": "^7.0.4",
-    "lint-staged": "^11.2.6",
-    "prettier": "^2.5.1",
-    "prettier-eslint": "^13.0.0",
-    "prettier-eslint-cli": "^5.0.1",
-    "ts-node": "^10.5.0"
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "build:app": "yarn workspace @phala/app build",
+    "dev:app": "yarn workspace @phala/app dev",
+    "postinstall": "husky install",
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx .",
+    "lint:fix": "eslint --fix --ext .js,.jsx,.ts,.tsx .",
+    "typecheck": "yarn workspaces foreach -ptv run typecheck"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": "eslint --cache --fix"
   },
-  "packageManager": "pnpm@6.32.3",
   "browserslist": [
     "last 10 chrome version",
     "last 10 firefox version",
     "last 2 safari version",
     "last 10 edge version"
-  ]
+  ],
+  "dependencies": {
+    "@types/node": "^16.11.26",
+    "@types/react": "^17.0.44",
+    "baseui": "11.0.0",
+    "jotai": "^1.6.2",
+    "react-query": "3.34.19",
+    "styled-components": "^5.3.5",
+    "typescript": "^4.5.5"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.18.0",
+    "@typescript-eslint/parser": "^5.18.0",
+    "eslint": "^8.13.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-react": "^7.29.4",
+    "eslint-plugin-react-hooks": "^4.4.0",
+    "husky": ">=6",
+    "lint-staged": ">=10",
+    "prettier": "^2.6.2"
+  },
+  "packageManager": "yarn@3.2.0"
 }

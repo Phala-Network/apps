@@ -1,6 +1,0 @@
-{
-  "name": "@phala/app-types",
-  "version": "0.0.1",
-  "sideEffects": false,
-  "main": "src/index.ts"
-}

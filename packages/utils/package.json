@@ -3,6 +3,9 @@
   "version": "0.0.1",
   "sideEffects": false,
   "main": "src/index.ts",
+  "scripts": {
+    "typecheck": "tsc --project ./tsconfig.json --noEmit"
+  },
   "dependencies": {
     "@polkadot/keyring": "^8.7.1",
     "@polkadot/util": "^8.7.1",

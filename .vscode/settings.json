@@ -1,27 +1,29 @@
 {
-  "typescript.preferences.importModuleSpecifierEnding": "minimal",
-  "typescript.preferences.importModuleSpecifier": "project-relative",
   "cSpell.words": [
     "chainbridge",
     "codegen",
-    "csstype",
     "ethereums",
     "extrinsics",
     "hexlify",
     "iframes",
     "languagedetector",
     "onstatus",
-    "pnpm",
     "preinstall",
     "readystate",
     "styletron",
     "svgs",
-    "tranfer",
     "typedefs",
     "unsub",
-    "uuidv",
     "stakers",
-    "dotsama"
+    "dotsama",
+    "baseui",
+    "khala"
   ],
-  "typescript.tsdk": "node_modules/typescript/lib"
+  // Enable after each package is configured
+  // "eslint.workingDirectories": [
+  //   {
+  //     "mode": "auto"
+  //   }
+  // ],
+  "typescript.tsdk": "./node_modules/typescript/lib"
 }

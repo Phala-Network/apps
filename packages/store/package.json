@@ -1,0 +1,13 @@
+{
+  "name": "@phala/store",
+  "version": "0.0.1",
+  "sideEffects": false,
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "typecheck": "tsc --project ./tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@phala/wallets": "workspace:^"
+  }
+}

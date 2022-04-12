@@ -1,5 +1,5 @@
 import {useState, useEffect, useMemo} from 'react'
-import {useCurrentAccount} from '@phala/app-store'
+import {useCurrentAccount} from '@phala/store'
 import {useBalance} from '@phala/react-hooks'
 import {useApiPromise} from '@phala/react-libs'
 import Decimal from 'decimal.js'

@@ -1,4 +1,4 @@
-import {useEthereumAccountAtom} from '@phala/app-store'
+import {useEthereumAccountAtom} from '@phala/store'
 import {Button} from 'baseui/button'
 import {FC} from 'react'
 import {ErrorBoundary} from 'react-error-boundary'

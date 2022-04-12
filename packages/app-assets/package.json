@@ -1,15 +1,18 @@
 {
   "name": "@phala/app-assets",
   "version": "0.0.1",
-  "type": "module",
   "sideEffects": false,
+  "type": "module",
   "main": "src/index.tsx",
+  "scripts": {
+    "typecheck": "tsc --project ./tsconfig.json --noEmit"
+  },
   "dependencies": {
-    "@phala/app-store": "workspace:0.0.1",
-    "@phala/react-components": "workspace:0.0.1",
-    "@phala/react-hooks": "workspace:0.0.1",
-    "@phala/react-libs": "workspace:0.0.1",
-    "@phala/utils": "workspace:0.0.1",
+    "@phala/react-components": "workspace:^",
+    "@phala/react-hooks": "workspace:^",
+    "@phala/react-libs": "workspace:^",
+    "@phala/store": "workspace:^",
+    "@phala/utils": "workspace:^",
     "@polkadot/util": "^8.7.1",
     "@types/react": "^17.0.43",
     "axios": "^0.21.4",

@@ -3,12 +3,14 @@
   "version": "0.0.1",
   "sideEffects": false,
   "main": "src/index.ts",
+  "scripts": {
+    "typecheck": "tsc --project ./tsconfig.json --noEmit"
+  },
   "dependencies": {
-    "@phala/app-config": "workspace:0.0.1",
-    "@phala/app-store": "workspace:0.0.1",
-    "@phala/react-graph-chainbridge": "workspace:0.0.1",
+    "@phala/app-config": "workspace:^",
+    "@phala/store": "workspace:^",
     "@phala/typedefs": "^0.2.29",
-    "@phala/utils": "workspace:0.0.1",
+    "@phala/utils": "workspace:^",
     "@polkadot/api": "^7.15.1",
     "@polkadot/types": "^7.15.1",
     "@polkadot/util": "^8.7.1",

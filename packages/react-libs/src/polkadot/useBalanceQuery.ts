@@ -11,7 +11,7 @@ export function useBalanceQuery(
   const {api} = useApiPromise()
   return useQuery([BalanceQueryKey, account, api === undefined], async () =>
     account !== undefined
-      ? (await api?.query.system.account(account))?.data.free
+      ? ((await api?.query.system.account(account)) as any)?.data.free
       : undefined
   )
 }

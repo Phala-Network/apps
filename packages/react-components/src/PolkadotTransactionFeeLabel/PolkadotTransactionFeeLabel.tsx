@@ -1,4 +1,4 @@
-import {useCurrentAccount} from '@phala/app-store'
+import {useCurrentAccount} from '@phala/store'
 import {useTransactionFee} from '@phala/react-libs'
 import {FC} from 'react'
 import {FeeLabel} from '../FeeLabel'

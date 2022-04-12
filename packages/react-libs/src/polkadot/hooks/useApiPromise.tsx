@@ -9,7 +9,7 @@ import {
   useState,
   useRef,
 } from 'react'
-import {useCustomEndpointAtom} from '@phala/app-store'
+import {useCustomEndpointAtom} from '@phala/store'
 import {useNetworkContext} from './useSubstrateNetwork'
 
 type Readystate = 'unavailable' | 'init' | 'ready' | 'failed'

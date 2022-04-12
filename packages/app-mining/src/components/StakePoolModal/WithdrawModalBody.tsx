@@ -18,7 +18,7 @@ import {
 } from '@phala/react-libs'
 import {Button} from 'baseui/button'
 import {formatCurrency} from '@phala/utils'
-import {useCurrentAccount} from '@phala/app-store'
+import {useCurrentAccount} from '@phala/store'
 import {StakePool} from '.'
 
 const WithdrawModalBody: VFC<

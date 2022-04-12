@@ -1,4 +1,4 @@
-import {useCurrentAccount} from '@phala/app-store'
+import {useCurrentAccount} from '@phala/store'
 import {Alert, Checkbox, FeeLabel, Spacer} from '@phala/react-components'
 import {Link} from '@phala/react-components/src/Announcement/styledComponents'
 import {

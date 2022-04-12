@@ -1,4 +1,4 @@
-import {useCurrentAccount} from '@phala/app-store'
+import {useCurrentAccount} from '@phala/store'
 import {SelectAccountModal} from '@phala/react-components'
 import {useState} from 'react'
 import {littleRoundButtonOverrides} from '../../style/littleRoundButtonOverrides'

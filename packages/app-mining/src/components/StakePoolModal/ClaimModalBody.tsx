@@ -15,7 +15,7 @@ import {
   useApiPromise,
   useDecimalJsTokenDecimalMultiplier,
 } from '@phala/react-libs'
-import {useCurrentAccount} from '@phala/app-store'
+import {useCurrentAccount} from '@phala/store'
 import {Button} from 'baseui/button'
 import {StakePool} from '.'
 

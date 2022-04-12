@@ -1,4 +1,4 @@
-import {useCurrentAccount} from '@phala/app-store'
+import {useCurrentAccount} from '@phala/store'
 import {usePhalaStakePoolTransactionFee} from '@phala/react-libs'
 import {SubmittableExtrinsic} from '@polkadot/api/types'
 import {FC} from 'react'
