@@ -31,8 +31,7 @@
     "react-simple-maps": "^2.3.0",
     "styled-breakpoints": "^10.2.3",
     "styled-components": "^5.3.5",
-    "styletron-react": "^6.0.2",
-    "typescript": "^4.6.3"
+    "styletron-react": "^6.0.2"
   },
   "devDependencies": {
     "@types/humps": "^2.0.1",
