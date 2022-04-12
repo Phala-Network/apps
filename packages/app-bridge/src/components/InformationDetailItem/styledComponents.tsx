@@ -16,7 +16,6 @@ export const Body = styled.div`
 export const Label = styled.div`
   font-family: Montserrat;
   font-style: normal;
-  font-weight: normal;
   font-size: 18px;
   line-height: 20px;
   height: 30px;
@@ -28,7 +27,6 @@ export const Label = styled.div`
 
 export const Network = styled.div`
   font-style: normal;
-  font-weight: normal;
   font-size: 16px;
   display: flex;
   align-items: center;
@@ -48,7 +46,6 @@ export const Amount = styled.span`
 
 export const Address = styled.span`
   font-style: normal;
-  font-weight: normal;
   font-size: 14px;
   line-height: 55px;
   height: 55px;
@@ -69,7 +66,6 @@ export const Line = styled.div`
 export const Type = styled.span`
   font-family: Montserrat;
   font-style: normal;
-  font-weight: normal;
   font-size: 16px;
   /* Bk 001 */
   color: #111111;

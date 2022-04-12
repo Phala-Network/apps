@@ -3102,6 +3102,7 @@ __metadata:
     ethers: ^5.6.2
     gatsby: ^4.11.3
     gatsby-plugin-env-variables: ^2.2.0
+    gatsby-plugin-google-fonts: ^1.0.1
     gatsby-plugin-google-gtag: ^4.11.0
     gatsby-plugin-netlify: ^4.2.0
     gatsby-plugin-react-helmet: ^5.11.0
@@ -9532,6 +9533,13 @@ __metadata:
   peerDependencies:
     gatsby: ^4.0.0 || ^3.0.0 || ^2.0.0
   checksum: b1da3f261b0f8ee00601aeb39430ec188881cb221504176a304a06debe21855e9cd4b3898a256885831d397d0e25ce982a1ef249afc1f68a8b419b48a1c5a684
+  languageName: node
+  linkType: hard
+
+"gatsby-plugin-google-fonts@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "gatsby-plugin-google-fonts@npm:1.0.1"
+  checksum: 775aee252ee1bf7d77ae6ffd8cd44e14ee3badfab4f46c3ed2a438527894cbffe9383464073e33ae5b2442d70b2434df1358749f5c2e575538143508ff68a1b5
   languageName: node
   linkType: hard
 

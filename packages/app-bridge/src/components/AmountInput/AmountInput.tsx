@@ -16,7 +16,6 @@ const InputContainer = styled.div`
     outline: none;
     font-family: Montserrat;
     font-style: normal;
-    font-weight: normal;
     font-size: 32px;
     line-height: 32px;
     /* identical to box height, or 100% */

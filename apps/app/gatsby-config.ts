@@ -31,6 +31,14 @@ const config: GatsbyConfig = {
         allowList: ['CONTEXT'],
       },
     },
+    {
+      resolve: 'gatsby-plugin-google-fonts',
+      options: {
+        // don't load Montserrat:400 because it's too light
+        fonts: ['Lato', 'Montserrat:500,600,700', 'PT Mono'],
+        display: 'swap',
+      },
+    },
     process.env.NODE_ENV === 'production' && {
       resolve: '@sentry/gatsby',
       options: {

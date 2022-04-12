@@ -18,7 +18,6 @@ export const Item = styled.div`
 export const ItemTitle = styled.div`
   font-family: Montserrat;
   font-style: normal;
-  font-weight: normal;
   font-size: 16px;
   line-height: 16px;
   /* identical to box height, or 100% */
@@ -32,7 +31,6 @@ export const ItemTitle = styled.div`
 export const ItemValue = styled.div`
   font-family: Montserrat;
   font-style: normal;
-  font-weight: normal;
   font-size: 16px;
   line-height: 16px;
   /* identical to box height, or 100% */

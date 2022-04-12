@@ -30,7 +30,8 @@ const Name = styled.div`
   grid-area: Name;
   font-family: Montserrat;
   font-style: normal;
-  font-weight: 500;
+  font-weight: 600;
+
   font-size: 36px;
   line-height: 36px;
   color: #ffffff;

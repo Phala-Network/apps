@@ -18,7 +18,6 @@ const AccountInfo = styled.div`
   padding: 0 16px;
   font-family: Montserrat;
   font-style: normal;
-  font-weight: 400;
   font-size: 16px;
   line-height: 16px;
   background: #eeeeee;
@@ -35,7 +34,6 @@ const ConnectButton = styled.div.attrs({children: 'Connect Wallet'})`
   background: #d1ff52;
   font-family: Montserrat;
   font-style: normal;
-  font-weight: 400;
   font-size: 16px;
   line-height: 16px;
   color: #111111;

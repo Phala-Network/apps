@@ -23,7 +23,7 @@ const Wrapper = styled.div`
 const Title = styled.div`
   font-family: Montserrat;
   font-style: normal;
-  font-weight: 500;
+  font-weight: 600;
   font-size: 20px;
   line-height: 20px;
   color: #111111;
@@ -68,7 +68,6 @@ const AssetList: React.FC<Props> = ({tableData}) => {
             style: () => ({
               fontFamily: 'Montserrat',
               fontStyle: 'normal',
-              fontWeight: 500,
               fontSize: '20px',
               lineHeight: '256px',
               textAlign: 'center',
@@ -82,7 +81,6 @@ const AssetList: React.FC<Props> = ({tableData}) => {
               backgroundColor: '#D1FF52',
               fontFamily: 'Montserrat',
               fontStyle: 'normal',
-              fontWeight: 500,
               fontSize: '16px',
               lineHeight: '16px',
               color: '#111111',

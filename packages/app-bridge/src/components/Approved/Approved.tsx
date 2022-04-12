@@ -4,7 +4,6 @@ import styled from 'styled-components'
 const Root = styled.div`
   font-family: Montserrat;
   font-style: normal;
-  font-weight: normal;
   font-size: 16px;
   line-height: 16px;
   /* identical to box height, or 100% */

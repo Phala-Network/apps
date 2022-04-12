@@ -4,7 +4,6 @@ import {down} from 'styled-breakpoints'
 export const ModalTitleWrapper = styled.div`
   font-family: Montserrat;
   font-style: normal;
-  font-weight: 500;
   font-size: 32px;
   line-height: 32px;
   margin: 0;
