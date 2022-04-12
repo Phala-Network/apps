@@ -2,13 +2,14 @@
   "name": "@phala/app-config",
   "version": "0.0.1",
   "sideEffects": false,
+  "type": "module",
   "main": "src/index.ts",
   "scripts": {
     "typecheck": "tsc --project ./tsconfig.json --noEmit"
   },
   "dependencies": {
-    "@phala/typedefs": "^0.2.29",
-    "@polkadot/types": "^7.15.1",
-    "@types/node": "^16.11.12"
+    "@phala/typedefs": "^0.2.30",
+    "@polkadot/types": "^8.0.2",
+    "@types/node": "^16.11.26"
   }
 }

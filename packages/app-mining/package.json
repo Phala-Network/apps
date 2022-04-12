@@ -1,6 +1,7 @@
 {
   "name": "@phala/app-mining",
   "version": "0.0.1",
+  "sideEffects": false,
   "type": "module",
   "main": "src/index.ts",
   "scripts": {
@@ -12,15 +13,15 @@
     "@phala/react-libs": "workspace:^",
     "@phala/store": "workspace:^",
     "@phala/utils": "workspace:^",
-    "@polkadot/api": "^7.15.1",
-    "@polkadot/util": "^8.7.1",
+    "@polkadot/api": "^8.0.2",
+    "@polkadot/util": "^9.0.1",
     "baseui": "11.0.0",
-    "date-fns": "^2.23.0",
+    "date-fns": "^2.28.0",
     "decimal.js": "^10.3.1",
-    "ethers": "^5.5.3",
-    "framer-motion": "^6.2.6",
+    "ethers": "^5.6.2",
+    "framer-motion": "^6.2.10",
     "gatsby": "^4.11.3",
-    "graphql-request": "^3.5.0",
+    "graphql-request": "^3.7.0",
     "humps": "^2.0.1",
     "jotai": "^1.6.3",
     "lodash-es": "^4.17.21",
@@ -28,10 +29,10 @@
     "react-feather": "^2.0.9",
     "react-query": "^3.34.19",
     "react-simple-maps": "^2.3.0",
-    "styled-breakpoints": "^10.0.1",
+    "styled-breakpoints": "^10.2.3",
     "styled-components": "^5.3.5",
     "styletron-react": "^6.0.2",
-    "typescript": "^4.5.2"
+    "typescript": "^4.6.3"
   },
   "devDependencies": {
     "@types/humps": "^2.0.1",
@@ -40,5 +41,9 @@
     "@types/react-simple-maps": "^1.0.8",
     "@types/styletron-react": "^5.0.3",
     "@types/styletron-standard": "^2.0.2"
+  },
+  "peerDependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
   }
 }

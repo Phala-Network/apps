@@ -4,7 +4,6 @@ const config: GatsbyConfig = {
   jsxRuntime: 'automatic',
   flags: {
     FAST_DEV: true,
-    FAST_REFRESH: true,
   },
   plugins: [
     'local-plugin-layout', // This plugin's place decides providers order, which is highly important
