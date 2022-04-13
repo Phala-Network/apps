@@ -3162,7 +3162,6 @@ __metadata:
     styled-components: ^5.3.5
     styletron-engine-monolithic: ^0.0.6
     styletron-react: ^6.0.2
-    webpack: ^5.72.0
   languageName: unknown
   linkType: soft
 
@@ -6266,14 +6265,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"caniuse-lite@npm:^1.0.0, caniuse-lite@npm:^1.0.30001125, caniuse-lite@npm:^1.0.30001317":
-  version: 1.0.30001327
-  resolution: "caniuse-lite@npm:1.0.30001327"
-  checksum: 789076fb889bd03515c4a3e2bfa09cd5b28439645173445147eb6ddfd8105c755e46dfda3de4b75edd2b71490864188bbfe8a2efe920c7998960b4e98916f518
-  languageName: node
-  linkType: hard
-
-"caniuse-lite@npm:^1.0.30001283":
+"caniuse-lite@npm:^1.0.0, caniuse-lite@npm:^1.0.30001125, caniuse-lite@npm:^1.0.30001283, caniuse-lite@npm:^1.0.30001317":
   version: 1.0.30001331
   resolution: "caniuse-lite@npm:1.0.30001331"
   checksum: b869b4222f08593ca6c3272e000dcf38c0db7fa100912f4dd5bb2992927721db0cfda0e6766099258187eb371270fe0f2d6f3cad6c4dfd12bd71e9f19dbce2c3
@@ -16756,6 +16748,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"styled-breakpoints@npm:^11.0.5":
+  version: 11.0.5
+  resolution: "styled-breakpoints@npm:11.0.5"
+  peerDependencies:
+    "@emotion/react": ^11.0.0
+    react: ^17.x.x
+    styled-components: ^5.0.0
+  peerDependenciesMeta:
+    "@emotion/react":
+      optional: true
+    react:
+      optional: true
+    styled-components:
+      optional: true
+  checksum: 0f1d0be003d3c601b9ac4fcb69453d9c92decad0aa8afb75c879332dd58a3ba85061e09dcc936501e487d92287a9b4908b35f5c4a3fe696924a7f8f62c9e3b6e
+  languageName: node
+  linkType: hard
+
 "styled-components@npm:^5.3.3, styled-components@npm:^5.3.5":
   version: 5.3.5
   resolution: "styled-components@npm:5.3.5"
@@ -17844,7 +17854,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"webpack@npm:^5.61.0, webpack@npm:^5.72.0":
+"webpack@npm:^5.61.0":
   version: 5.72.0
   resolution: "webpack@npm:5.72.0"
   dependencies:

@@ -9,10 +9,9 @@
     "typecheck": "tsc --project ./tsconfig.json --noEmit"
   },
   "browserslist": [
-    "last 10 chrome version",
-    "last 10 firefox version",
-    "last 2 safari version",
-    "last 10 edge version"
+    "last 2 Chrome versions",
+    "last 2 Firefox versions",
+    "last 2 Safari major versions"
   ],
   "dependencies": {
     "@phala/app-bridge": "workspace:^",
@@ -50,8 +49,7 @@
     "styled-breakpoints": "^10.2.3",
     "styled-components": "^5.3.5",
     "styletron-engine-monolithic": "^0.0.6",
-    "styletron-react": "^6.0.2",
-    "webpack": "^5.72.0"
+    "styletron-react": "^6.0.2"
   },
   "devDependencies": {
     "@types/node": "^16.11.26",
