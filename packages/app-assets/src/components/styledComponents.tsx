@@ -33,7 +33,8 @@ export const MaxButton = styled.span`
   border-bottom: '1px solid #8C8C8C';
   font-family: Montserrat;
   font-style: normal;
-  font-weight: 500;
+  font-weight: 600;
+
   font-size: 16px;
   line-height: 16px;
   background: #ffffff;

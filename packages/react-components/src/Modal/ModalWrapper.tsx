@@ -4,8 +4,7 @@ import {Modal, ModalProps} from 'baseui/modal'
 
 const ModalTitle = styled.div`
   font-family: Montserrat;
-  font-style: normal;
-  font-weight: 500;
+  font-weight: 600;
   font-size: 20px;
   line-height: 20px;
   padding-bottom: 30px;

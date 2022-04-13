@@ -1,4 +1,3 @@
-import * as React from 'react'
 import App from '../../src/WrapApp'
 import WrapPage from '../../src/WrapPage'
 

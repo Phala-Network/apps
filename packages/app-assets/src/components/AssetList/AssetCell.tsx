@@ -11,7 +11,7 @@ const Wrapper = styled.div`
 const Name = styled.span<{isKPHA?: boolean}>`
   font-family: Montserrat;
   font-style: normal;
-  font-weight: 500;
+  font-weight: 600;
   font-size: 16px;
   line-height: 16px;
   color: #111111;

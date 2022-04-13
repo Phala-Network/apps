@@ -13,7 +13,7 @@ export const ModalButtonWrapper: React.FC<ButtonProps> = (props) => {
             backgroundColor: type === 'submit' ? '#D1FF52' : '#EEEEEE',
             fontFamily: 'Montserrat',
             fontStyle: 'normal',
-            fontWeight: 500,
+            fontWeight: 600,
             fontSize: '20px',
             lineHeight: '20px',
             paddingTop: '16px',

@@ -1,13 +1,9 @@
-/**
- * Configure your Gatsby site with this file.
- *
- * See: https://www.gatsbyjs.com/docs/gatsby-config/
- */
+import type {GatsbyConfig} from 'gatsby'
 
-module.exports = {
+const config: GatsbyConfig = {
+  jsxRuntime: 'automatic',
   flags: {
     FAST_DEV: true,
-    FAST_REFRESH: true,
   },
   plugins: [
     'local-plugin-layout', // This plugin's place decides providers order, which is highly important
@@ -35,6 +31,14 @@ module.exports = {
         allowList: ['CONTEXT'],
       },
     },
+    {
+      resolve: 'gatsby-plugin-google-fonts',
+      options: {
+        // don't load Montserrat:400 because it's too light
+        fonts: ['Lato', 'Montserrat:500,600,700', 'PT Mono'],
+        display: 'swap',
+      },
+    },
     process.env.NODE_ENV === 'production' && {
       resolve: '@sentry/gatsby',
       options: {
@@ -42,5 +46,7 @@ module.exports = {
         sampleRate: 1,
       },
     },
-  ].filter(Boolean),
+  ].filter(<T>(x: T): x is T extends false ? never : T => Boolean(x)),
 }
+
+export default config

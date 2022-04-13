@@ -17,7 +17,7 @@ const Index: React.FC<ButtonProps> = (props) => {
             color: '#111111',
             fontFamily: 'Montserrat',
             fontStyle: 'normal',
-            fontWeight: 500,
+            fontWeight: 600,
             fontSize: '16px',
             lineHeight: '16px',
             height: '28px',

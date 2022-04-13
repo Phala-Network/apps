@@ -29,5 +29,9 @@ jobs:
       - name: Linter
         run: yarn lint
 
+      # Enable typecheck when it is ready
+      # - name: Typecheck
+      #   run: yarn typecheck
+
       - name: Build App
         run: yarn build:app

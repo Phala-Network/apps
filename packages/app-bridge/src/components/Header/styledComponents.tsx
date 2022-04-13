@@ -4,7 +4,6 @@ export const Description = styled.span`
   /* 正文 L */
   font-family: Montserrat;
   font-style: normal;
-  font-weight: normal;
   font-size: 16px;
   line-height: 16px;
 
@@ -18,7 +17,7 @@ export const Title = styled.h1`
   /* 大标题 M */
   font-family: Montserrat;
   font-style: normal;
-  font-weight: normal;
+  font-weight: 600;
   font-size: 36px;
   line-height: 36px;
 

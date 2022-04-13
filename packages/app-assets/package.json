@@ -13,12 +13,19 @@
     "@phala/react-libs": "workspace:^",
     "@phala/store": "workspace:^",
     "@phala/utils": "workspace:^",
-    "@polkadot/util": "^8.7.1",
+    "@polkadot/util": "^9.0.1",
     "@types/react": "^17.0.43",
-    "axios": "^0.21.4",
+    "axios": "^0.26.1",
+    "baseui": "11.0.0",
     "decimal.js": "^10.3.1",
-    "ethers": "^5.5.3",
+    "ethers": "^5.6.2",
     "react": "^17.0.2",
-    "styled-breakpoints": "^10.0.1"
+    "react-query": "^3.34.19",
+    "styled-breakpoints": "^10.2.3",
+    "styled-components": "^5.3.5"
+  },
+  "peerDependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
   }
 }

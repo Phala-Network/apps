@@ -8,7 +8,6 @@ const Wrapper = styled.div`
 const Link = styled(GatsbyLink).attrs({activeClassName: 'active'})`
   font-family: Montserrat;
   font-style: normal;
-  font-weight: 400;
   font-size: 16px;
   line-height: 16px;
   color: #111111;

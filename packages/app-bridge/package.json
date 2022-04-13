@@ -14,19 +14,26 @@
     "@phala/react-libs": "workspace:^",
     "@phala/store": "workspace:^",
     "@phala/utils": "workspace:^",
-    "@polkadot/api": "^7.15.1",
-    "@polkadot/util": "^8.7.1",
-    "@polkadot/util-crypto": "^8.7.1",
+    "@polkadot/api": "^8.0.2",
+    "@polkadot/util": "^9.0.1",
+    "@polkadot/util-crypto": "^9.0.1",
+    "baseui": "11.0.0",
     "bn.js": "^5.2.0",
     "buffer": "^6.0.3",
     "currency.js": "^2.0.4",
     "decimal.js": "^10.3.1",
-    "ethers": "^5.5.3",
-    "graphql-request": "^3.5.0",
+    "ethers": "^5.6.2",
+    "graphql-request": "^3.7.0",
+    "jotai": "^1.6.3",
     "rc-input-number": "^7.3.0",
     "react-error-boundary": "^3.1.4",
     "react-feather": "^2.0.9",
-    "styled-breakpoints": "^10.0.1",
-    "styled-components": "^5.3.3"
+    "react-query": "^3.34.19",
+    "styled-breakpoints": "^10.2.3",
+    "styled-components": "^5.3.5"
+  },
+  "peerDependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
   }
 }

@@ -1,5 +1,4 @@
 // Modified from https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-styletron
-import * as React from 'react'
 import {Server as Styletron} from 'styletron-engine-monolithic'
 import {Provider} from 'styletron-react'
 
