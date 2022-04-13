@@ -16,8 +16,6 @@
     "packages/*"
   ],
   "scripts": {
-    "build:app": "yarn workspace @phala/app build",
-    "dev:app": "yarn workspace @phala/app dev",
     "postinstall": "husky install",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx .",
     "lint:fix": "eslint --fix --ext .js,.jsx,.ts,.tsx .",
@@ -26,12 +24,6 @@
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": "eslint --cache --fix"
   },
-  "browserslist": [
-    "last 10 chrome version",
-    "last 10 firefox version",
-    "last 2 safari version",
-    "last 10 edge version"
-  ],
   "dependencies": {
     "@types/node": "^16.11.26",
     "typescript": "^4.6.3"

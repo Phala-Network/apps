@@ -39,14 +39,14 @@ const config: GatsbyConfig = {
         display: 'swap',
       },
     },
-    process.env.NODE_ENV === 'production' && {
+    {
       resolve: '@sentry/gatsby',
       options: {
         dsn: 'https://ba6cd9ff61544ca6a96f3ca1d90445f2@o812739.ingest.sentry.io/5879132',
         sampleRate: 1,
       },
     },
-  ].filter(<T>(x: T): x is T extends false ? never : T => Boolean(x)),
+  ],
 }
 
 export default config
