@@ -3015,12 +3015,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@phala/app-data-analytics@workspace:^, @phala/app-data-analytics@workspace:packages/app-data-analytics":
-  version: 0.0.0-use.local
-  resolution: "@phala/app-data-analytics@workspace:packages/app-data-analytics"
-  languageName: unknown
-  linkType: soft
-
 "@phala/app-mining@workspace:^, @phala/app-mining@workspace:packages/app-mining":
   version: 0.0.0-use.local
   resolution: "@phala/app-mining@workspace:packages/app-mining"
@@ -3069,22 +3063,15 @@ __metadata:
     "@phala/app-assets": "workspace:^"
     "@phala/app-bridge": "workspace:^"
     "@phala/app-config": "workspace:^"
-    "@phala/app-data-analytics": "workspace:^"
     "@phala/app-mining": "workspace:^"
     "@phala/react-components": "workspace:^"
     "@phala/react-hooks": "workspace:^"
     "@phala/react-libs": "workspace:^"
     "@phala/store": "workspace:^"
-    "@phala/typedefs": ^0.2.30
     "@phala/utils": "workspace:^"
     "@phala/wallets": "workspace:^"
-    "@polkadot/api": ^8.0.2
-    "@polkadot/types": ^8.0.2
-    "@polkadot/util": ^9.0.1
     "@polkadot/util-crypto": ^9.0.1
     "@sentry/gatsby": ^6.19.6
-    "@sentry/react": ^6.19.6
-    "@sentry/tracing": ^6.19.6
     "@types/node": ^16.11.26
     "@types/react": ^17.0.43
     "@types/react-helmet": ^6.1.4
@@ -3092,13 +3079,9 @@ __metadata:
     "@types/styled-components": ^5.1.18
     "@types/styletron-react": ^5.0.3
     "@types/styletron-standard": ^2.0.2
-    "@types/uuid": ^8.3.3
-    axios: ^0.26.1
     babel-plugin-styled-components: ^2.0.7
     baseui: ^11.0.0
-    bn.js: ^5.2.0
     decimal.js: ^10.3.1
-    ethers: ^5.6.2
     gatsby: ^4.11.3
     gatsby-plugin-env-variables: ^2.2.0
     gatsby-plugin-google-fonts: ^1.0.1
@@ -3109,17 +3092,14 @@ __metadata:
     gatsby-plugin-styled-components: ^5.11.0
     gatsby-plugin-typescript: ^4.11.1
     jotai: ^1.6.3
-    rc-tooltip: ^5.1.1
     react: ^17.0.2
     react-dom: ^17.0.2
-    react-error-boundary: ^3.1.4
     react-helmet: ^6.1.0
     react-query: ^3.34.19
     styled-breakpoints: ^10.2.3
     styled-components: ^5.3.5
     styletron-engine-monolithic: ^0.0.6
     styletron-react: ^6.0.2
-    uuid: ^8.3.2
     webpack: ^5.72.0
   languageName: unknown
   linkType: soft
@@ -3152,7 +3132,6 @@ __metadata:
     rc-input-number: ^7.3.0
     rc-menu: ^9.0.12
     rc-tooltip: ^5.1.1
-    react-error-boundary: ^3.1.4
     react-feather: ^2.0.9
     react-table: ^7.7.0
     styled-breakpoints: ^10.2.3
@@ -3176,7 +3155,6 @@ __metadata:
     "@polkadot/util": ^9.0.1
     "@sentry/react": ^6.19.6
     "@types/react": ^17.0.43
-    axios: ^0.26.1
     decimal.js: ^10.3.1
     ethers: ^5.6.2
     react: ^17.0.2
@@ -3828,7 +3806,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sentry/tracing@npm:6.19.6, @sentry/tracing@npm:^6.19.6":
+"@sentry/tracing@npm:6.19.6":
   version: 6.19.6
   resolution: "@sentry/tracing@npm:6.19.6"
   dependencies:
