@@ -2942,8 +2942,8 @@ __metadata:
     styled-breakpoints: ^10.2.3
     styled-components: ^5.3.5
   peerDependencies:
-    react: ^17.0.2
-    react-dom: ^17.0.2
+    react: ^18.0.0
+    react-dom: ^18.0.0
   languageName: unknown
   linkType: soft
 
@@ -2967,8 +2967,8 @@ __metadata:
     styled-breakpoints: ^10.2.3
     styled-components: ^5.3.5
   peerDependencies:
-    react: ^17.0.2
-    react-dom: ^17.0.2
+    react: ^18.0.0
+    react-dom: ^18.0.0
   languageName: unknown
   linkType: soft
 
@@ -3000,8 +3000,8 @@ __metadata:
     styled-breakpoints: ^10.2.3
     styled-components: ^5.3.5
   peerDependencies:
-    react: ^17.0.2
-    react-dom: ^17.0.2
+    react: ^18.0.0
+    react-dom: ^18.0.0
   languageName: unknown
   linkType: soft
 
@@ -3050,8 +3050,8 @@ __metadata:
     styled-components: ^5.3.5
     styletron-react: ^6.0.2
   peerDependencies:
-    react: ^17.0.2
-    react-dom: ^17.0.2
+    react: ^18.0.0
+    react-dom: ^18.0.0
   languageName: unknown
   linkType: soft
 
@@ -3137,8 +3137,8 @@ __metadata:
     styled-breakpoints: ^10.2.3
     styled-components: ^5.3.5
   peerDependencies:
-    react: ^17.0.2
-    react-dom: ^17.0.2
+    react: ^18.0.0
+    react-dom: ^18.0.0
   languageName: unknown
   linkType: soft
 
