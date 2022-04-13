@@ -1,4 +1,4 @@
-import {useState, VFC} from 'react'
+import {useState, FC} from 'react'
 import {Input} from 'baseui/input'
 import {
   ModalHeader,
@@ -16,12 +16,13 @@ import {
 } from '@phala/react-libs'
 import {StakePool} from '.'
 
-const AddWorkerModalBody: VFC<
+const AddWorkerModalBody: FC<
   {stakePool: Pick<StakePool, 'pid'>} & Pick<ModalProps, 'onClose'>
 > = ({stakePool, onClose}) => {
   const {pid} = stakePool
   const {api} = useApiPromise()
   const [pubkey, setPubkey] = useState('')
+  const [error, setError] = useState<string | null>(null)
   const waitSignAndSend = useWaitSignAndSend()
   const decimals = useDecimalJsTokenDecimalMultiplier(api)
   const onConfirm = () => {
@@ -44,18 +45,25 @@ const AddWorkerModalBody: VFC<
         <FormControl label="Pid">
           <ParagraphSmall as="div">{pid}</ParagraphSmall>
         </FormControl>
-        {/* FIXME: add validation */}
-        <FormControl label="Worker Public Key">
+        <FormControl label="Worker Public Key" error={error}>
           <Input
             size="compact"
             autoFocus
             placeholder="0x"
-            onChange={(e) => setPubkey(e.currentTarget.value)}
+            onChange={(e) => {
+              const value = e.currentTarget.value
+              if (!value.startsWith('0x')) {
+                setError('Should start with 0x')
+              } else {
+                setError(null)
+              }
+              setPubkey(value)
+            }}
           />
         </FormControl>
       </ModalBody>
       <ModalFooter>
-        <ModalButton disabled={!pubkey} onClick={onConfirm}>
+        <ModalButton disabled={!pubkey || Boolean(error)} onClick={onConfirm}>
           Confirm
         </ModalButton>
       </ModalFooter>
