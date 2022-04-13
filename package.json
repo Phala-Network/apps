@@ -17,8 +17,8 @@
   ],
   "scripts": {
     "postinstall": "husky install",
-    "lint": "eslint --ext .js,.jsx,.ts,.tsx .",
-    "lint:fix": "eslint --fix --ext .js,.jsx,.ts,.tsx .",
+    "lint": "eslint --cache --ext .js,.jsx,.ts,.tsx .",
+    "lint:fix": "eslint --cache --fix --ext .js,.jsx,.ts,.tsx .",
     "typecheck": "yarn workspaces foreach -ptv run typecheck"
   },
   "lint-staged": {
