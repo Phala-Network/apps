@@ -19,9 +19,9 @@
     "@polkadot/util": "^9.0.1",
     "@polkadot/util-crypto": "^9.0.1",
     "@types/node": "^16.11.26",
-    "@types/react": "^17.0.43",
-    "@types/react-dom": "^17.0.14",
-    "@types/styled-components": "^5.1.18",
+    "@types/react": "^18.0.3",
+    "@types/react-dom": "^18.0.0",
+    "@types/styled-components": "^5.1.25",
     "baseui": "11.0.0",
     "csstype": "^3.0.8",
     "currency.js": "^2.0.4",
@@ -40,7 +40,7 @@
     "@types/react-table": "^7.7.9"
   },
   "peerDependencies": {
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
   }
 }

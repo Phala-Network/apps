@@ -10,7 +10,6 @@ export {useErc20AssetHandlerAllowanceQuery} from './ethereum/queries/useErc20All
 export {useErc20BalanceQuery} from './ethereum/queries/useErc20BalanceQuery'
 export {useEthersNetworkQuery} from './ethereum/queries/useEthersNetworkQuery'
 export {useTransactionReceiptQuery} from './ethereum/queries/useTransactionReceiptQuery'
-export {useEthereumAccountBalanceETHDecimal} from './ethereum/useEthereumAccountBalanceETHDecimal'
 export {useEthereumBridgeApproveFee} from './ethereum/useEthereumBridgeApproveFee'
 export {useEthereumBridgeFee} from './ethereum/useEthereumBridgeFee'
 export {useSubstrateGraphQL} from './polkadot/GraphQLClientContext'
