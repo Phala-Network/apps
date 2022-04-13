@@ -35,17 +35,18 @@ jobs:
           restore-keys: |
             yarn-cache-folder-
 
-      - name: Restore gatsby build from cache
-        uses: actions/cache@v3
-        with:
-          path: |
-            ${{ github.workspace }}/apps/app/.cache
-            ${{ github.workspace }}/**/tsconfig.tsbuildinfo
-            ${{ github.workspace }}/**/.eslintcache
+      # FIXME: Not fully test yet
+      # - name: Restore gatsby build from cache
+      #   uses: actions/cache@v3
+      #   with:
+      #     path: |
+      #       ${{ github.workspace }}/apps/app/.cache
+      #       ${{ github.workspace }}/**/tsconfig.tsbuildinfo
+      #       ${{ github.workspace }}/**/.eslintcache
 
-          key: ${{ runner.os }}-app-${{ hashFiles('**/yarn.lock') }}-${{ hashFiles('apps/app/src/**.[jt]sx?', 'apps/app/src/**.json') }}
-          restore-keys: |
-            ${{ runner.os }}-app-${{ hashFiles('**/yarn.lock') }}-
+      #     key: ${{ runner.os }}-app-${{ hashFiles('**/yarn.lock') }}-${{ hashFiles('apps/app/src/**.[jt]sx?', 'apps/app/src/**.json') }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-app-${{ hashFiles('**/yarn.lock') }}-
 
       - name: Install dependencies
         run: yarn install --immutable
@@ -53,7 +54,7 @@ jobs:
       - name: Linter
         run: yarn lint
 
-      # Enable typecheck when it is ready
+      # FIXME: Enable typecheck when it is ready
       # - name: Typecheck
       #   run: yarn typecheck
 
