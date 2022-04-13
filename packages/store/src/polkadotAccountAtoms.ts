@@ -1,9 +1,9 @@
+import type {WalletAccount} from '@talisman-connect/wallets'
 import {atom, useAtom} from 'jotai'
 import {atomWithStorage} from 'jotai/utils'
-import {WalletAccount} from '@phala/wallets/types'
 
-const accountsAtom = atom<WalletAccount[] | null>(null)
-accountsAtom.debugLabel = 'accounts'
+export const polkadotAccountsAtom = atom<WalletAccount[] | null>(null)
+polkadotAccountsAtom.debugLabel = 'polkadotAccounts'
 
 const lastAccountAddressAtom = atomWithStorage<string | null>(
   'jotai:last_account_address',
@@ -11,12 +11,12 @@ const lastAccountAddressAtom = atomWithStorage<string | null>(
 )
 lastAccountAddressAtom.debugLabel = 'lastAccountAddress'
 
-const currentAccountAtom = atom<WalletAccount | null, string | null>(
+export const polkadotAccountAtom = atom<WalletAccount | null, string | null>(
   (get) => {
     const lastPolkadotAccount = get(lastAccountAddressAtom)
     if (!lastPolkadotAccount) return null
     return (
-      get(accountsAtom)?.find(
+      get(polkadotAccountsAtom)?.find(
         (account) => account.address === get(lastAccountAddressAtom)
       ) || null
     )
@@ -25,7 +25,8 @@ const currentAccountAtom = atom<WalletAccount | null, string | null>(
     set(lastAccountAddressAtom, account)
   }
 )
-currentAccountAtom.debugLabel = 'currentAccount'
+polkadotAccountAtom.debugLabel = 'polkadotAccountAtom'
 
-export const useCurrentAccount = () => useAtom(currentAccountAtom)
-export const useAccounts = () => useAtom(accountsAtom)
+// TODO: remove hooks below in @phala/app
+export const useCurrentAccount = () => useAtom(polkadotAccountAtom)
+export const useAccounts = () => useAtom(polkadotAccountsAtom)

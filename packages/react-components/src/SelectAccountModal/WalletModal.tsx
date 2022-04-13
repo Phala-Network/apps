@@ -1,9 +1,9 @@
-import {Wallet} from '@phala/wallets/types'
+import {Wallet} from '@talisman-connect/wallets'
+import {useStyletron} from 'baseui'
+import {Block} from 'baseui/block'
 import {Modal, ModalBody, ModalHeader, ModalProps} from 'baseui/modal'
 import {useEffect, useState, VFC} from 'react'
-import {Block} from 'baseui/block'
 import {ArrowRight, Download} from 'react-feather'
-import {useStyletron} from 'baseui'
 
 type Props = {
   onSelect?: (wallet: Wallet) => void
@@ -16,7 +16,7 @@ const Body: VFC<Props> = ({onSelect}) => {
   const [wallets, setWallets] = useState<Wallet[]>()
   useEffect(() => {
     let unmounted = false
-    import('@phala/wallets').then(({getWallets}) => {
+    import('@talisman-connect/wallets').then(({getWallets}) => {
       const sortedWallets = getWallets().sort((a, b) => {
         return (
           walletsOrder.indexOf(a.extensionName) -

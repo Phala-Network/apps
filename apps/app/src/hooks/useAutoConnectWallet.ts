@@ -13,14 +13,14 @@ export const useAutoConnectWallet = () => {
     let unmounted = false
     let timeout: NodeJS.Timeout
 
-    import('@phala/wallets').then(({getWalletBySource}) => {
+    import('@talisman-connect/wallets').then(({getWalletBySource}) => {
       if (unmounted) return
       // HACK: always wait for extension injection for 0.5s before getting wallet
       timeout = setTimeout(() => {
         const wallet = getWalletBySource(lastWalletExtensionName)
 
         if (wallet) {
-          ;(wallet.enable() as Promise<void>)
+          ;(wallet.enable('Phala App') as Promise<void>)
             .then(() => {
               if (unmounted) return
               setWallet(wallet)

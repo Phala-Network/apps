@@ -13,12 +13,11 @@
     "@phala/react-libs": "workspace:^",
     "@phala/store": "workspace:^",
     "@phala/utils": "workspace:^",
-    "@polkadot/api": "^8.1.1",
+    "@polkadot/api": "^8.2.1",
     "@polkadot/util": "^9.0.1",
     "baseui": "11.0.0",
     "date-fns": "^2.28.0",
     "decimal.js": "^10.3.1",
-    "ethers": "^5.6.2",
     "framer-motion": "^6.2.10",
     "gatsby": "^4.12.1",
     "graphql-request": "^3.7.0",
@@ -42,7 +41,6 @@
     "@types/styletron-standard": "^2.0.2"
   },
   "peerDependencies": {
-    "react": "^18.0.0",
     "react-dom": "^18.0.0"
   }
 }

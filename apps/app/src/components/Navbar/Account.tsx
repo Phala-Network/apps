@@ -1,16 +1,16 @@
-import {useState, useMemo, FC} from 'react'
-import styled from 'styled-components'
-import {down} from 'styled-breakpoints'
 import {BalanceLabel, SelectAccountModal} from '@phala/react-components'
-import {useCurrentAccount} from '@phala/store'
-import {trimAddress} from '@phala/utils'
 import {useBalance, useSSR} from '@phala/react-hooks'
 import {
   useApiPromise,
   useDecimalJsTokenDecimalMultiplier,
 } from '@phala/react-libs'
-import Decimal from 'decimal.js'
+import {useCurrentAccount} from '@phala/store'
+import {trimAddress} from '@phala/utils'
 import {Block} from 'baseui/block'
+import Decimal from 'decimal.js'
+import {FC, useMemo, useState} from 'react'
+import {down} from 'styled-breakpoints'
+import styled from 'styled-components'
 
 const Connect = styled.div`
   cursor: pointer;
@@ -150,6 +150,7 @@ const Account: React.FC = () => {
         </AccountLabel>
       )}
       <SelectAccountModal
+        dappName="Phala App"
         onClose={() => setSelectAccountModalViable(false)}
         isOpen={selectAccountModalViable}
       />

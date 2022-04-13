@@ -1,5 +1,4 @@
 import {useCurrentAccount} from '@phala/store'
-import {isDev} from '@phala/utils'
 import useStakePools from './useStakePools'
 
 const useSelfStakePools = (): ReturnType<typeof useStakePools> => {
@@ -7,8 +6,6 @@ const useSelfStakePools = (): ReturnType<typeof useStakePools> => {
   return useStakePools({
     select: (stakePools) => {
       if (!polkadotAccount || !stakePools) return null
-
-      if (isDev()) return stakePools
 
       return stakePools.filter(
         (stakePool) => stakePool.owner === polkadotAccount.address

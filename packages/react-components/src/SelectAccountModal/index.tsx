@@ -1,5 +1,5 @@
 import {useCurrentAccount, useWallet} from '@phala/store'
-import {Wallet} from '@phala/wallets/types'
+import {Wallet} from '@talisman-connect/wallets'
 import {ModalProps} from 'baseui/modal'
 import {toaster} from 'baseui/toast'
 import {VFC} from 'react'
@@ -7,7 +7,7 @@ import AccountModal from './AccountModal'
 import WalletModal from './WalletModal'
 
 export const SelectAccountModal: VFC<
-  Required<Pick<ModalProps, 'isOpen' | 'onClose'>>
+  Required<Pick<ModalProps, 'isOpen' | 'onClose'>> & {dappName: string}
 > = (props) => {
   const [currentAccount, setCurrentAccount] = useCurrentAccount()
   const [wallet, setWallet] = useWallet()
@@ -17,7 +17,7 @@ export const SelectAccountModal: VFC<
 
   const onSelectWallet = async (wallet: Wallet) => {
     try {
-      await wallet.enable()
+      await wallet.enable('Phala App')
       setWallet(wallet)
     } catch (err) {
       if (err instanceof Error) {

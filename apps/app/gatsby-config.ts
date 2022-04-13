@@ -1,6 +1,11 @@
 import type {GatsbyConfig} from 'gatsby'
 
 const config: GatsbyConfig = {
+  siteMetadata: {
+    title: 'Phala App',
+    siteUrl: 'https://app.phala.network',
+    description: 'To host, connect, and gain in the world of Web3',
+  },
   jsxRuntime: 'automatic',
   flags: {
     FAST_DEV: true,

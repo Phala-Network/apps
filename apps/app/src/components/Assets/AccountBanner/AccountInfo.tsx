@@ -1,15 +1,14 @@
-import React, {useMemo, useState, MouseEventHandler} from 'react'
-import styled from 'styled-components'
-import {down} from 'styled-breakpoints'
-import {useBreakpoint} from 'styled-breakpoints/react-styled'
+import {SelectAccountModal} from '@phala/react-components'
+import {useClipboard, useSSR} from '@phala/react-hooks'
 import {useCurrentAccount} from '@phala/store'
 import {trimAddress} from '@phala/utils'
-import {SelectAccountModal} from '@phala/react-components'
-import {useClipboard} from '@phala/react-hooks'
-import {useSSR} from '@phala/react-hooks'
-import CopyIcon from '../Icons/CopyIcon.svg'
-import Button from '../Button'
 import {toaster} from 'baseui/toast'
+import React, {MouseEventHandler, useMemo, useState} from 'react'
+import {down} from 'styled-breakpoints'
+import {useBreakpoint} from 'styled-breakpoints/react-styled'
+import styled from 'styled-components'
+import Button from '../Button'
+import CopyIcon from '../Icons/CopyIcon.svg'
 
 const Wrapper = styled.div`
   box-sizing: border-box;
@@ -154,6 +153,7 @@ const AccountInfo: React.FC = () => {
         </AddressWrapper>
       </Wrapper>
       <SelectAccountModal
+        dappName="Phala App"
         onClose={() => setSelectAccountModalViable(false)}
         isOpen={selectAccountModalViable}
       />
