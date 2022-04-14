@@ -66,3 +66,7 @@ yarn-error.log*
 # Deployment platforms
 
 .vercel
+
+# Local config files
+
+.unimportedrc.json

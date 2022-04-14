@@ -24,7 +24,7 @@ const ContentWrap = styled.div<{compact?: boolean}>`
     ${(props) =>
       props.compact
         ? css`
-            width: 960px;
+            width: 1200px;
           `
         : css`
             width: 100%;

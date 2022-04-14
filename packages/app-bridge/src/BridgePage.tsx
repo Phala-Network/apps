@@ -1,6 +1,9 @@
-import {Announcement} from '@phala/react-components'
+import {useStyletron} from 'baseui'
+import {Block} from 'baseui/block'
 import {StyledLink} from 'baseui/link'
+import {Notification} from 'baseui/notification'
 import {FC, useState} from 'react'
+import {Info} from 'react-feather'
 import {Helmet} from 'react-helmet'
 import {ExchangeIcon} from './components/ExchangeIcon'
 import {ExtraInfoPanel} from './components/ExtraInfoPanel'
@@ -14,6 +17,7 @@ import {useAllTransferData} from './store'
 import {BlockItem, MainContent, Root} from './styledComponents'
 
 export const BridgePage: FC = () => {
+  const [css] = useStyletron()
   const transactionInfo = useAllTransferData()
   const [isOpenTransferModal, setIsOpenTransferModal] = useState(false)
   const extraInfo = useExtraInfo()
@@ -28,40 +32,85 @@ export const BridgePage: FC = () => {
         <Helmet>
           <title>SubBridge</title>
         </Helmet>
+        <Notification
+          closeable
+          overrides={{
+            Body: {
+              style: {
+                borderRadius: 0,
+                backgroundColor: '#f3ffd3',
+                width: 'auto',
+              },
+            },
+          }}
+        >
+          <Block display="flex" alignItems="center">
+            <Info
+              size={16}
+              className={css({marginRight: '12px', flex: 'none'})}
+            />
+            <span>
+              The Khala team is going to schedule a SubBridge Ethereum smart
+              contract upgrade at 11:00 (UTC) on April 18. The upgrade involves
+              moving the bridge PHA reservation to the newly deployed smart
+              contract. At that time, the two-way bridge between Ethereum and
+              Khala will be suspended for a period of time until further notice.
+            </span>
+          </Block>
+        </Notification>
+
+        <Notification
+          closeable
+          overrides={{
+            Body: {
+              style: {
+                borderRadius: 0,
+                backgroundColor: '#f3ffd3',
+                width: 'auto',
+              },
+            },
+          }}
+        >
+          <Block display="flex" alignItems="center">
+            <Info
+              size={16}
+              className={css({marginRight: '12px', flex: 'none'})}
+            />
+            <span>
+              After you submit your transaction. Please go to{' '}
+              <StyledLink
+                href="https://khala.subscan.io/"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Subscan
+              </StyledLink>{' '}
+              and{' '}
+              <StyledLink
+                href="https://etherscan.io/"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Etherscan
+              </StyledLink>{' '}
+              to check the progress of your transaction. Or you can check this{' '}
+              <StyledLink href="/bridge/track" target="_blank" rel="noreferrer">
+                page
+              </StyledLink>
+              . If you have any questions. Please come to our{' '}
+              <StyledLink
+                href="https://discord.com/invite/phala"
+                target="_blank"
+                rel="noreferrer"
+              >
+                discord
+              </StyledLink>{' '}
+              channel for support.
+            </span>
+          </Block>
+        </Notification>
 
         <MainContent>
-          <Announcement>
-            After you submit your transaction. Please go to{' '}
-            <StyledLink
-              href="https://khala.subscan.io/"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Subscan
-            </StyledLink>{' '}
-            and{' '}
-            <StyledLink
-              href="https://etherscan.io/"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Etherscan
-            </StyledLink>{' '}
-            to check the progress of your transaction. Or you can check this{' '}
-            <StyledLink href="/bridge/track" target="_blank" rel="noreferrer">
-              page
-            </StyledLink>
-            . If you have any questions. Please come to our{' '}
-            <StyledLink
-              href="https://discord.com/invite/phala"
-              target="_blank"
-              rel="noreferrer"
-            >
-              discord
-            </StyledLink>{' '}
-            channel for support.
-          </Announcement>
-
           <Header />
 
           <BlockItem>

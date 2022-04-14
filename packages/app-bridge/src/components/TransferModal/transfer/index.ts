@@ -1,5 +1,0 @@
-export * from './transferAssetsKhalaAccounts'
-export * from './transferKARFromKaruraToKhala'
-export * from './transferKARFromKhalaToKarura'
-export * from './transferPHAFromKaruraToKhala'
-export * from './transferPHAFromKhalaToKarura'
