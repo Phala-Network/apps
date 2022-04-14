@@ -2,9 +2,10 @@ import {Helmet} from 'react-helmet'
 import {ComponentsGlobalStyle} from '@phala/react-components'
 import BaseLayout from './components/BaseLayout'
 import GlobalStyle from './GlobalStyle'
+import {StrictMode} from 'react'
 
 const WrapPage: React.FC = ({children}) => (
-  <>
+  <StrictMode>
     <Helmet titleTemplate="%s | Phala App">
       <meta
         name="viewport"
@@ -14,7 +15,7 @@ const WrapPage: React.FC = ({children}) => (
     <GlobalStyle />
     <ComponentsGlobalStyle />
     <BaseLayout>{children}</BaseLayout>
-  </>
+  </StrictMode>
 )
 
 export default WrapPage

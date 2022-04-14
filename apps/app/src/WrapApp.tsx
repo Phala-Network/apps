@@ -4,7 +4,7 @@ import {isProduction} from '@phala/utils'
 import {BaseProvider} from 'baseui'
 import {SnackbarProvider} from 'baseui/snackbar'
 import {toaster, ToasterContainer} from 'baseui/toast'
-import React, {StrictMode, useRef} from 'react'
+import React, {useRef} from 'react'
 import {QueryClient, QueryClientProvider} from 'react-query'
 import {ReactQueryDevtools} from 'react-query/devtools'
 import {ThemeProvider} from 'styled-components'
@@ -49,31 +49,27 @@ const WrapApp: React.FC = ({children}) => {
   useAtomsDevtools('Phala App')
 
   return (
-    <StrictMode>
-      <div>
-        <QueryClientProvider contextSharing={true} client={client.current}>
-          <LibProvider {...productionConfig}>
-            <ThemeProvider theme={theme}>
-              <BaseProvider theme={baseTheme}>
-                <SnackbarProvider>{children}</SnackbarProvider>
-                <ToasterContainer
-                  autoHideDuration={3000}
-                  overrides={{
-                    ToastBody: {
-                      style: {
-                        maxWidth: '100%',
-                        width: '400px',
-                      },
-                    },
-                  }}
-                />
-              </BaseProvider>
-            </ThemeProvider>
-            <ReactQueryDevtools />
-          </LibProvider>
-        </QueryClientProvider>
-      </div>
-    </StrictMode>
+    <QueryClientProvider contextSharing={true} client={client.current}>
+      <LibProvider {...productionConfig}>
+        <ThemeProvider theme={theme}>
+          <BaseProvider theme={baseTheme}>
+            <SnackbarProvider>{children}</SnackbarProvider>
+            <ToasterContainer
+              autoHideDuration={3000}
+              overrides={{
+                ToastBody: {
+                  style: {
+                    maxWidth: '100%',
+                    width: '400px',
+                  },
+                },
+              }}
+            />
+          </BaseProvider>
+        </ThemeProvider>
+        <ReactQueryDevtools />
+      </LibProvider>
+    </QueryClientProvider>
   )
 }
 

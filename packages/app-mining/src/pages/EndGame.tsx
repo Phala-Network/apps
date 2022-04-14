@@ -15,7 +15,7 @@ import {
 } from 'baseui/data-table'
 import {ButtonGroup} from 'baseui/button-group'
 import {useMotionValue, animate} from 'framer-motion'
-import Helmet from 'react-helmet'
+import {Helmet} from 'react-helmet'
 import styled from 'styled-components'
 import {ComposableMap, Geographies, Geography, Marker} from 'react-simple-maps'
 import {Button} from 'baseui/button'

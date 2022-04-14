@@ -67,13 +67,3 @@ export const coins = [
   //   id: ETH,
   // },
 ] as const
-
-export const Transfers = {
-  transferPHAFromKhalaToKarura: 'transferPHAFromKhalaToKarura',
-  transferPHAFromKaruraToKhala: 'transferPHAFromKaruraToKhala',
-  transferKARFromKaruraToKhala: 'transferKARFromKaruraToKhala',
-  transferKARFromKhalaToKarura: 'transferKARFromKhalaToKarura',
-  transferAssetsKhalaAccounts: 'transferAssetsKhalaAccounts',
-  transferPhaFromEvmToKhala: 'transferPhaFromEvmToKhala',
-  transferPhaFromEvmToKarura: 'transferPhaFromEvmToKarura',
-}

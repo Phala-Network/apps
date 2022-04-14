@@ -1,7 +1,7 @@
 import {useErc20AssetHandlerAllowanceQuery} from '@phala/react-libs'
 import {ethers} from 'ethers'
 import React, {cloneElement, FC, useMemo, useState} from 'react'
-import {ApproveDialog} from '../ApproveDialog/ApproveDialog'
+import {ApproveDialog} from '../ApproveDialog'
 
 type Props = {
   account?: string
