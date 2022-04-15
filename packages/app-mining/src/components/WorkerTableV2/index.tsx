@@ -26,7 +26,7 @@ import {StatefulTooltip, StatefulTooltipProps} from 'baseui/tooltip'
 import {Block} from 'baseui/block'
 import {tooltipContent} from './tooltipContent'
 import Decimal from 'decimal.js'
-import {isFuture} from 'date-fns'
+import {formatDuration, intervalToDuration, isAfter, isFuture} from 'date-fns'
 
 // FIXME: should be loadable, but meet some problems when configuring gatsby-plugin-loadable-components-ssr
 import StartModalBody from './StartModalBody'
@@ -34,6 +34,7 @@ import StopModalBody from './StopModalBody'
 import RemoveModalBody from './RemoveModalBody'
 import ReclaimModalBody from './ReclaimModalBody'
 import ChangeStakeModalBody from './ChangeStakeModalBody'
+import {ParagraphXSmall} from 'baseui/typography'
 
 type ModalKey = 'start' | 'changeStake' | 'stop' | 'remove' | 'reclaim'
 type MenuItem = {label: string; key: ModalKey; disabled?: boolean}
@@ -196,10 +197,33 @@ const WorkerTableV2 = (): JSX.Element => {
             }
             sortable
           >
-            {({state}: Miners) => {
+            {({state, estimatesReclaimableAt}: Miners) => {
               if (state === 'MiningIdle') return 'Mining'
               if (state === 'MiningUnresponsive') return 'Unresponsive'
-              if (state === 'MiningCoolingDown') return 'CoolingDown'
+              if (state === 'MiningCoolingDown') {
+                if (!estimatesReclaimableAt) return 'CoolingDown'
+                const start = new Date()
+                const end = new Date(estimatesReclaimableAt)
+                const duration = formatDuration(
+                  intervalToDuration({
+                    start,
+                    end: isAfter(end, start) ? end : start,
+                  }),
+                  {format: ['days', 'hours', 'minutes'], zero: true}
+                )
+                return (
+                  <>
+                    <Block marginTop="-10px">CoolingDown</Block>
+                    <ParagraphXSmall
+                      as="div"
+                      marginBottom="-10px"
+                      color="contentSecondary"
+                    >
+                      {duration}
+                    </ParagraphXSmall>
+                  </>
+                )
+              }
               return state
             }}
           </TableBuilderColumn>
