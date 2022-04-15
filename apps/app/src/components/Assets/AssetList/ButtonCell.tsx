@@ -60,6 +60,7 @@ const ButtonCell: React.FC<Pick<DataType, 'name'>> = ({name}) => {
 
   const handleBridge = () => {
     navigate('/bridge/')
+    window.open('//subbridge.phala.network')
   }
   return (
     <Wrapper>

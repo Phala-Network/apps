@@ -43,7 +43,6 @@ const Links: React.FC = () => {
       <Link to="/">Dashboard</Link>
       {currentNetworkNode.id !== 'phala-rewards-demo' && (
         <>
-          <Link to="/bridge/">SubBridge</Link>
           <Link to="/delegate/" partiallyActive>
             Delegate
           </Link>

@@ -14,7 +14,6 @@
     "last 2 Safari major versions"
   ],
   "dependencies": {
-    "@phala/app-bridge": "workspace:^",
     "@phala/app-config": "workspace:^",
     "@phala/app-mining": "workspace:^",
     "@phala/react-components": "workspace:^",

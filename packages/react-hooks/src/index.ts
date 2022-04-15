@@ -1,6 +1,5 @@
 export {default as useAllBalances} from './useAllBalances'
 export {default as useBalance} from './useBalance'
-export {default as useCheckEthereumNetwork} from './useCheckEthereumNetwork'
 export {default as useClickAway} from './useClickAway'
 export {default as useClipboard} from './useClipboard'
 export {default as useCurrentState} from './useCurrentState'
