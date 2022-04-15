@@ -54,14 +54,14 @@ const CheckMore: React.FC = () => {
     <StatefulPopover
       content={({close}) => (
         <>
-          <LineWrap
+          {/* <LineWrap
             onClick={() => {
               navigate('/analytics/')
               close()
             }}
           >
             Analytics
-          </LineWrap>
+          </LineWrap> */}
           {LINKS.map(({name, link}) => (
             <LineWrap onClick={close} href={link} key={name} target="_blank">
               <ExternalName>{name}</ExternalName>
