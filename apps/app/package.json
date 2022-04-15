@@ -15,7 +15,6 @@
     "last 10 edge version"
   ],
   "dependencies": {
-    "@phala/app-analytics": "workspace:^",
     "@phala/app-assets": "workspace:^",
     "@phala/app-bridge": "workspace:^",
     "@phala/app-config": "workspace:^",
