@@ -6,6 +6,7 @@ import Links from './Links'
 import SelectNode from './SelectNode'
 import Account from './Account'
 import CheckMore from './CheckMore'
+import {Block} from 'baseui/block'
 
 const Wrapper = styled.div`
   display: flex;
@@ -18,14 +19,20 @@ const Wrapper = styled.div`
   background-color: #fff;
   padding: 0 40px;
 
+  ${down('md')} {
+    padding: 0 20px;
+  }
+
   ${down('sm')} {
-    display: none;
+    height: 72px;
+    padding: 0 10px;
   }
 `
 
 const Content = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
   width: 100%;
 `
 
@@ -33,11 +40,15 @@ const Index: React.FC = () => {
   return (
     <Wrapper>
       <Content>
-        <Logo />
-        <Links />
-        <SelectNode />
-        <Account />
-        <CheckMore />
+        <Block display="flex" alignItems="center" flex="none">
+          <Logo />
+          <Links />
+        </Block>
+        <Block display="flex" alignItems="center" flex="none">
+          <SelectNode />
+          <Account />
+          <CheckMore />
+        </Block>
       </Content>
     </Wrapper>
   )

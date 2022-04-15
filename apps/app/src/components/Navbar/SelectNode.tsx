@@ -15,7 +15,7 @@ const Button = styled.button`
   align-items: flex-start;
   width: 119px;
   height: 36px;
-  padding: 10px 16px 10px 26px;
+  padding: 10px 10px 10px 16px;
   background: #eeeeee;
   border: none;
   font-family: Montserrat;
@@ -32,7 +32,7 @@ const Button = styled.button`
 
   ${down('lg')} {
     width: 100px;
-    padding: 10px 8px 10px 13px;
+    padding: 10px 8px 10px 12px;
     font-size: 14px;
     line-height: 14px;
     margin-right: 10px;

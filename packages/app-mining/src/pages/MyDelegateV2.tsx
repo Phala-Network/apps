@@ -40,6 +40,7 @@ export const MyDelegateV2 = () => {
           display="flex"
           justifyContent="space-between"
           marginBottom="scale600"
+          flexWrap
         >
           <Block display="flex" alignItems="center">
             <Link to="/delegate/">

@@ -14,7 +14,12 @@ const DelegateBanner = (): JSX.Element => {
   const value = data?.aggregateStakePools._sum?.totalStake
 
   return (
-    <Block display="flex" justifyContent="space-between" alignItems="center">
+    <Block
+      display="flex"
+      justifyContent="space-between"
+      alignItems="center"
+      flexWrap
+    >
       <div>
         <LabelMedium>Total Delegated</LabelMedium>
         <HeadingMedium as="div">

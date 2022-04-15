@@ -3,8 +3,11 @@ import styled from 'styled-components'
 import {down} from 'styled-breakpoints'
 
 const Wrapper = styled.div`
-  flex: 1;
   display: flex;
+
+  ${down('sm')} {
+    display: none;
+  }
 `
 
 const Link = styled(GatsbyLink).attrs({activeClassName: 'active'})`
@@ -14,12 +17,9 @@ const Link = styled(GatsbyLink).attrs({activeClassName: 'active'})`
   line-height: 16px;
   color: #111111;
   text-decoration: none;
-  margin-left: 56px;
+  margin-left: 28px;
 
-  &:hover {
-    color: #aad829;
-  }
-
+  &:hover,
   &.active {
     color: #aad829;
   }
@@ -30,8 +30,8 @@ const Link = styled(GatsbyLink).attrs({activeClassName: 'active'})`
     margin-left: 20px;
   }
 
-  @media screen and (max-width: 1300px) {
-    margin-left: 25px;
+  ${down('md')} {
+    margin-left: 14px;
   }
 `
 
