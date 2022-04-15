@@ -31,20 +31,30 @@ import Owner from '../Owner'
 import StakePoolModal, {StakePoolModalKey} from '../StakePoolModal'
 import TooltipHeader from '../../TooltipHeader'
 import {$StyleProp} from 'styletron-react'
+import {Block} from 'baseui/block'
+import {atomWithStorage} from 'jotai/utils'
+import {useAtom} from 'jotai'
 
 const TableHeader = styled.div`
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
+  margin: -20px 0 0 -20px;
 
   /* gap polyfill */
-  & > *:not(:first-child) {
-    margin-left: 20px;
+  & > * {
+    margin: 20px 0 0 20px;
     flex: none;
   }
 `
 
 type MenuItem = {label: string; key: StakePoolModalKey; disabled?: boolean}
 type StakePool = StakePoolsQuery['findManyStakePools'][number]
+
+const remainingValueAtom = atomWithStorage<string>(
+  'jotai:delegate_remaining_filter_value',
+  '100'
+)
 
 const StakePoolTableV2: VFC<{
   kind: 'delegate' | 'myDelegate' | 'mining'
@@ -69,6 +79,7 @@ const StakePoolTableV2: VFC<{
   const [aprFilter, setAprFilter] = useState(false)
   const [commissionFilter, setCommissionFilter] = useState(kind === 'delegate')
   const [remainingFilter, setRemainingFilter] = useState(kind === 'delegate')
+  const [remainingValue, setRemainingValue] = useAtom(remainingValueAtom)
 
   const [stakePoolModalKey, setStakePoolModalKey] =
     useState<StakePoolModalKey | null>(null)
@@ -123,7 +134,7 @@ const StakePoolTableV2: VFC<{
           remainingFilter && {
             // remainingStake null means ∞
             OR: [
-              {remainingStake: {gt: '0.01'}},
+              {remainingStake: {gt: remainingValue}},
               {remainingStake: {equals: null}},
             ],
           },
@@ -149,7 +160,10 @@ const StakePoolTableV2: VFC<{
     },
     {
       keepPreviousData: true,
-      enabled: kind === 'delegate' || Boolean(polkadotAccount?.address),
+      enabled:
+        (kind === 'delegate' && Boolean(remainingValue)) ||
+        (kind === 'myDelegate' && Boolean(polkadotAccount?.address)) ||
+        kind === 'mining',
     }
   )
 
@@ -167,6 +181,11 @@ const StakePoolTableV2: VFC<{
 
   const debouncedSetSearchString = useCallback(
     debounce(setSearchString, 500),
+    []
+  )
+
+  const debouncedSetRemainingValue = useCallback(
+    debounce(setRemainingValue, 500),
     []
   )
 
@@ -190,6 +209,7 @@ const StakePoolTableV2: VFC<{
               Root: {
                 style: {
                   width: '420px',
+                  maxWidth: 'calc(100% - 20px)',
                 },
               },
             }}
@@ -223,8 +243,35 @@ const StakePoolTableV2: VFC<{
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setRemainingFilter(e.target.checked)
             }
+            overrides={{
+              Checkmark: {
+                style: {
+                  alignSelf: 'center',
+                },
+              },
+            }}
           >
-            {'Remaining > 0'}
+            <Block display="flex" alignItems="center">
+              <Block flex="none" marginRight="scale200">
+                {'Remaining > '}
+              </Block>
+              <StatefulInput
+                overrides={{
+                  Root: {
+                    style: {width: '128px'},
+                  },
+                }}
+                initialState={{value: remainingValue}}
+                type="number"
+                size="compact"
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  const value = e.target.value
+                  if (value) {
+                    debouncedSetRemainingValue(value)
+                  }
+                }}
+              />
+            </Block>
           </Checkbox>
         </TableHeader>
       )}
