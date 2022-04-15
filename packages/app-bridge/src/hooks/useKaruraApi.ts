@@ -9,7 +9,7 @@ const karuraApiAtom = atom<ApiPromise | null>(null)
 karuraApiAtom.onMount = (setAtom) => {
   let karuraApi: ApiPromise
   ApiPromise.create({
-    provider: new WsProvider('wss://karura-rpc-1.aca-api.network'),
+    provider: new WsProvider('wss://karura-rpc-0.aca-api.network'),
   }).then((api) => {
     karuraApi = api
     setAtom(api)
@@ -44,5 +44,5 @@ export const useKaruraPHABalance = () => {
     }
   )
 
-  return data || new Decimal(0)
+  return data
 }

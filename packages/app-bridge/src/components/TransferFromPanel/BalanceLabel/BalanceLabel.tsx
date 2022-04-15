@@ -17,7 +17,8 @@ const Root = styled.div`
 export const BalanceLabel: FC = () => {
   const {currentBalance} = useBridgePage()
 
-  const result = formatCurrency(currentBalance, 'PHA')
+  const result =
+    currentBalance === undefined ? '…' : formatCurrency(currentBalance, 'PHA')
 
   return <Root>Balance: {result}</Root>
 }

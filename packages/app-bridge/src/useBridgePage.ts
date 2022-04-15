@@ -38,7 +38,7 @@ export function useBridgePage() {
       ? ethereumAccountBalanceDecimal
       : polkadotAccountBalanceDecimal
 
-  const maxAmountDecimal = new Decimal(currentBalance)
+  const maxAmountDecimal = new Decimal(currentBalance || 0)
 
   const isShowRecipient = isFromEthereum
     ? !!polkadotAccountAddress

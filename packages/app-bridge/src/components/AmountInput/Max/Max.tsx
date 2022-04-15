@@ -9,7 +9,7 @@ export const Max: FC = () => {
   const [, setAmount] = useAmount()
   const {currentBalance, isFromEthereum} = useBridgePage()
 
-  const maxAmountDecimal = new Decimal(currentBalance)
+  const maxAmountDecimal = new Decimal(currentBalance || 0)
 
   const isShowMaxButton = maxAmountDecimal.greaterThan(0) && isFromEthereum
 
