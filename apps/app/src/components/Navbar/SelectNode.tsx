@@ -1,19 +1,16 @@
-import {useEffect} from 'react'
 import styled from 'styled-components'
 import {down} from 'styled-breakpoints'
-import {useCustomEndpointAtom} from '@phala/store'
 import {StatefulPopover, PLACEMENT} from 'baseui/popover'
 import DropdownIcon from '../../icons/dropdown.svg'
 import CheckIcon from '../../icons/check.svg'
-import useCustomEndpoint from '../../hooks/useCustomEndpoint'
 import {LineWrap} from './styledComponent'
+import {NETWORK_NODES} from '../../config/networkNode'
+import {useCurrentNetworkNode} from '../../store/networkNode'
 
 const Button = styled.button`
   cursor: pointer;
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
-  width: 119px;
   height: 36px;
   padding: 10px 10px 10px 16px;
   background: #eeeeee;
@@ -25,13 +22,16 @@ const Button = styled.button`
   transition: all 0.2s;
   margin-right: 20px;
 
+  & > span {
+    margin-right: 12px;
+  }
+
   :hover,
   :focus {
     background: #d1ff52;
   }
 
   ${down('lg')} {
-    width: 100px;
     padding: 10px 8px 10px 12px;
     font-size: 14px;
     line-height: 14px;
@@ -43,58 +43,23 @@ const NodeName = styled.span`
   margin-right: 25px;
 `
 
-type NodeType = {name: string; address: string}
-const NODES: NodeType[] = [
-  {name: 'Khala via Phala', address: 'wss://khala-api.phala.network/ws'},
-  {
-    name: 'Khala via Onfinality',
-    address: 'wss://khala.api.onfinality.io/public-ws',
-  },
-  ...(process.env.NODE_ENV === 'development' ||
-  process.env.CONTEXT === 'deploy-preview' ||
-  process.env.CONTEXT === 'branch-deploy'
-    ? [
-        {
-          name: 'Thala Testnet',
-          address: 'ws://35.215.179.221:9944',
-        },
-        {
-          name: 'pc-test-3',
-          address: 'wss://pc-test-3.phala.network/khala/ws',
-        },
-      ]
-    : []),
-]
-
 const SelectNode: React.FC = () => {
-  const urlEndpoint = useCustomEndpoint()
-  const [customEndpoint, setCustomEndpoint] = useCustomEndpointAtom()
-
-  // set the custom endpoint from the url search param
-  useEffect(() => {
-    if (urlEndpoint) {
-      setCustomEndpoint(urlEndpoint)
-    }
-  }, [urlEndpoint, setCustomEndpoint])
-
-  const handleClick = (item: NodeType) => {
-    setCustomEndpoint(item.address)
-  }
+  const [currentNetworkNode, setCurrentNetworkNode] = useCurrentNetworkNode()
 
   return (
     <StatefulPopover
       content={({close}) => (
         <>
-          {NODES.map((item) => (
+          {NETWORK_NODES.map(({id, name}) => (
             <LineWrap
-              key={item.name}
+              key={id}
               onClick={() => {
-                handleClick(item)
+                setCurrentNetworkNode(id)
                 close()
               }}
             >
-              <NodeName>{item.name}</NodeName>
-              {customEndpoint === item.address ? <CheckIcon /> : null}
+              <NodeName>{name}</NodeName>
+              {currentNetworkNode.id === id ? <CheckIcon /> : null}
             </LineWrap>
           ))}
         </>
@@ -118,7 +83,9 @@ const SelectNode: React.FC = () => {
       }}
     >
       <Button>
-        <span>Khala</span>
+        <span>
+          {currentNetworkNode.id === 'phala-rewards-demo' ? 'Phala' : 'Khala'}
+        </span>
         <DropdownIcon />
       </Button>
     </StatefulPopover>
