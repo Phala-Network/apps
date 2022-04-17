@@ -139,13 +139,13 @@ const Account: React.FC = () => {
             <span className="unit">PHA</span>
           </Balance>
           <AccountInfo onClick={openAccountSelectModal}>
-            <Name>{currentAccount?.name}</Name>
-            <Address>{trimAddress(currentAccount.address)}</Address>
             {WalletIcon && (
-              <Block marginLeft="scale200" width="20px">
+              <Block marginRight="scale400" width="20px">
                 <WalletIcon />
               </Block>
             )}
+            <Name>{currentAccount?.name}</Name>
+            <Address>{trimAddress(currentAccount.address)}</Address>
           </AccountInfo>
         </AccountLabel>
       )}

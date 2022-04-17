@@ -8,6 +8,7 @@ import Button from '../Button'
 import Popover from '../Popover'
 import TransferModal from '../TransferModal'
 import ClaimModal from '../ClaimModal'
+import {useCurrentNetworkNode} from '../../../store/networkNode'
 
 const Wrapper = styled.div`
   display: flex;
@@ -49,10 +50,11 @@ export const LineWrap = styled.div`
 `
 
 const ButtonCell: React.FC<Pick<DataType, 'name'>> = ({name}) => {
+  const [currentNetworkNode] = useCurrentNetworkNode()
   const [visibleTransferModal, setVisibleTransferModal] = useState(false)
   const [claimModalVisible, setClaimModalVisible] = useState(false)
   const isMobile = useBreakpoint(down('sm'))
-  const isKPHA = useMemo(() => {
+  const isPHA = useMemo(() => {
     return name === 'K-PHA'
   }, [name])
 
@@ -61,14 +63,14 @@ const ButtonCell: React.FC<Pick<DataType, 'name'>> = ({name}) => {
   }
   return (
     <Wrapper>
-      {isMobile ? null : (
+      {!isMobile && currentNetworkNode.id !== 'phala-rewards-demo' && (
         <Button onClick={() => setVisibleTransferModal(true)}>Transfer</Button>
       )}
       <Spacer />
       <Popover
         content={({close}) => (
           <div>
-            {isMobile ? (
+            {isMobile && currentNetworkNode.id !== 'phala-rewards-demo' && (
               <LineWrap
                 onClick={() => {
                   close()
@@ -77,7 +79,7 @@ const ButtonCell: React.FC<Pick<DataType, 'name'>> = ({name}) => {
               >
                 Transfer
               </LineWrap>
-            ) : null}
+            )}
             <LineWrap
               onClick={() => {
                 close()
@@ -86,7 +88,7 @@ const ButtonCell: React.FC<Pick<DataType, 'name'>> = ({name}) => {
             >
               Claim
             </LineWrap>
-            {isKPHA ? (
+            {isPHA && currentNetworkNode.id !== 'phala-rewards-demo' && (
               <LineWrap
                 onClick={() => {
                   close()
@@ -95,7 +97,7 @@ const ButtonCell: React.FC<Pick<DataType, 'name'>> = ({name}) => {
               >
                 Bridge
               </LineWrap>
-            ) : null}
+            )}
           </div>
         )}
       />

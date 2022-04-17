@@ -8,7 +8,7 @@ const Wrapper = styled.div`
   align-items: center;
 `
 
-const Name = styled.span<{isKPHA?: boolean}>`
+const Name = styled.span<{isPHA?: boolean}>`
   font-family: Montserrat;
   font-style: normal;
   font-weight: 600;
@@ -25,8 +25,8 @@ const Name = styled.span<{isKPHA?: boolean}>`
   }
 `
 
-const ImgWrapper = styled.img<{isKPHA?: boolean}>`
-  height: ${(props) => (props.isKPHA ? '48px' : '24px')};
+const ImgWrapper = styled.img<{isPHA?: boolean}>`
+  height: ${(props) => (props.isPHA ? '48px' : '24px')};
   width: auto;
   ${down('sm')} {
     display: none;
@@ -34,13 +34,13 @@ const ImgWrapper = styled.img<{isKPHA?: boolean}>`
 `
 
 const AssetCell: React.FC<Pick<DataType, 'name' | 'icon'>> = ({name, icon}) => {
-  const isKPHA = useMemo(() => {
-    return name === 'K-PHA'
+  const isPHA = useMemo(() => {
+    return name === 'K-PHA' || name === 'PHA'
   }, [name])
   return (
     <Wrapper>
-      <ImgWrapper isKPHA={isKPHA} src={icon} alt={name} />
-      <Name isKPHA={isKPHA}>{name}</Name>
+      <ImgWrapper isPHA={isPHA} src={icon} alt={name} />
+      <Name isPHA={isPHA}>{name}</Name>
     </Wrapper>
   )
 }

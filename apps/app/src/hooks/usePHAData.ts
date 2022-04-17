@@ -8,10 +8,12 @@ import {
 import {toFixed, formatCurrency} from '@phala/utils'
 import {Decimal} from 'decimal.js'
 import usePHAPrice from './usePHAPrice'
+import {useCurrentNetworkNode} from '../store/networkNode'
 
-const useKPhaData = () => {
+const usePHAData = () => {
   const PHAPrice = usePHAPrice()
   const [currentAccount] = useCurrentAccount()
+  const [currentNetworkNode] = useCurrentNetworkNode()
   const polkadotAccountAddress = currentAccount?.address
   const polkadotAccountBalance = useBalance(polkadotAccountAddress)
   const polkadotTransferBalanceDecimal =
@@ -59,7 +61,7 @@ const useKPhaData = () => {
   }, [crowdloanVestingBalance])
 
   return {
-    name: 'K-PHA',
+    name: currentNetworkNode.kind === 'phala' ? 'PHA' : 'K-PHA',
     icon: '/images/Phala.svg',
     balance: balanceValue,
     transferrable: transferrableValue,
@@ -69,4 +71,4 @@ const useKPhaData = () => {
   }
 }
 
-export default useKPhaData
+export default usePHAData

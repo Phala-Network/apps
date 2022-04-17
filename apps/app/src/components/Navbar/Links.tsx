@@ -1,6 +1,7 @@
 import {Link as GatsbyLink} from 'gatsby'
 import styled from 'styled-components'
 import {down} from 'styled-breakpoints'
+import {useCurrentNetworkNode} from '../../store/networkNode'
 
 const Wrapper = styled.div`
   display: flex;
@@ -36,14 +37,21 @@ const Link = styled(GatsbyLink).attrs({activeClassName: 'active'})`
 `
 
 const Links: React.FC = () => {
+  const [currentNetworkNode] = useCurrentNetworkNode()
   return (
     <Wrapper>
       <Link to="/">Dashboard</Link>
-      <Link to="/bridge/">SubBridge</Link>
-      <Link to="/delegate/" partiallyActive={true}>
-        Delegate
-      </Link>
-      <Link to="/mining/">Mining</Link>
+      {currentNetworkNode.id !== 'phala-rewards-demo' && (
+        <>
+          <Link to="/bridge/">SubBridge</Link>
+          <Link to="/delegate/" partiallyActive>
+            Delegate
+          </Link>
+          <Link to="/mining/" partiallyActive>
+            Mining
+          </Link>
+        </>
+      )}
     </Wrapper>
   )
 }

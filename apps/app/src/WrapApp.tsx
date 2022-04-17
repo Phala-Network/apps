@@ -37,11 +37,6 @@ const WrapApp: React.FC<{children: ReactNode}> = ({children}) => {
       })
   )
 
-  useZendesk()
-  useAutoConnectWallet()
-  useSubscribeWalletAccounts()
-  useAtomsDevtools('Phala App')
-
   return (
     <QueryClientProvider contextSharing={true} client={client}>
       <EthereumWeb3Provider>

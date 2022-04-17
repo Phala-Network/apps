@@ -83,9 +83,7 @@ const SelectNode: React.FC = () => {
       }}
     >
       <Button>
-        <span>
-          {currentNetworkNode.id === 'phala-rewards-demo' ? 'Phala' : 'Khala'}
-        </span>
+        <span>{currentNetworkNode.kind === 'phala' ? 'Phala' : 'Khala'}</span>
         <DropdownIcon />
       </Button>
     </StatefulPopover>
