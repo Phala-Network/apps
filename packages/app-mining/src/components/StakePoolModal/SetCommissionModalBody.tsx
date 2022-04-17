@@ -1,4 +1,4 @@
-import {useState, VFC} from 'react'
+import {useMemo, useState, VFC} from 'react'
 import {Input} from 'baseui/input'
 import {
   ModalHeader,
@@ -16,6 +16,8 @@ import {
   useDecimalJsTokenDecimalMultiplier,
 } from '@phala/react-libs'
 import {StakePool} from '.'
+import {PhalaStakePoolTransactionFeeLabel} from '@phala/react-components'
+import {Block} from 'baseui/block'
 
 const SetCommissionModalBody: VFC<
   {
@@ -27,21 +29,23 @@ const SetCommissionModalBody: VFC<
   const [commission, setCommission] = useState('')
   const waitSignAndSend = useWaitSignAndSend()
   const decimals = useDecimalJsTokenDecimalMultiplier(api)
+
   const onConfirm = () => {
-    if (api && decimals) {
-      waitSignAndSend(
-        api.tx.phalaStakePool?.setPayoutPref?.(
-          pid,
-          new Decimal(commission).times(10 ** 4).toString()
-        ),
-        (status) => {
-          if (status.isReady) {
-            onClose?.({closeSource: 'closeButton'})
-          }
-        }
+    waitSignAndSend(extrinsic, (status) => {
+      if (status.isReady) {
+        onClose?.({closeSource: 'closeButton'})
+      }
+    })
+  }
+
+  const extrinsic = useMemo(() => {
+    if (api && decimals && commission) {
+      return api.tx.phalaStakePool?.setPayoutPref?.(
+        pid,
+        new Decimal(commission).times(10 ** 4).toString()
       )
     }
-  }
+  }, [api, commission, decimals, pid])
 
   if (currentCommission === undefined) return null
 
@@ -75,9 +79,16 @@ const SetCommissionModalBody: VFC<
         </FormControl>
       </ModalBody>
       <ModalFooter>
-        <ModalButton disabled={!commission} onClick={onConfirm}>
-          Confirm
-        </ModalButton>
+        <Block
+          display="flex"
+          alignItems="center"
+          justifyContent="space-between"
+        >
+          <PhalaStakePoolTransactionFeeLabel action={extrinsic} />
+          <ModalButton disabled={!commission} onClick={onConfirm}>
+            Confirm
+          </ModalButton>
+        </Block>
       </ModalFooter>
     </>
   )

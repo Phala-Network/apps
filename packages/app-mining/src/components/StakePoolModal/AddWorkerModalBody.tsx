@@ -1,4 +1,4 @@
-import {useState, FC} from 'react'
+import {useMemo, useState, FC} from 'react'
 import {Input} from 'baseui/input'
 import {
   ModalHeader,
@@ -15,28 +15,33 @@ import {
   useDecimalJsTokenDecimalMultiplier,
 } from '@phala/react-libs'
 import {StakePool} from '.'
+import {PhalaStakePoolTransactionFeeLabel} from '@phala/react-components'
+import {Block} from 'baseui/block'
 
 const AddWorkerModalBody: FC<
   {stakePool: Pick<StakePool, 'pid'>} & Pick<ModalProps, 'onClose'>
 > = ({stakePool, onClose}) => {
   const {pid} = stakePool
   const {api} = useApiPromise()
-  const [pubkey, setPubkey] = useState('')
+  const [pubKey, setPubKey] = useState('')
   const [error, setError] = useState<string | null>(null)
   const waitSignAndSend = useWaitSignAndSend()
   const decimals = useDecimalJsTokenDecimalMultiplier(api)
+  // Expected at least 32 bytes (256 bits), so it should be 31 * 2 + 1 === 63
+  const isValidPubKey = /0x[0-9a-fA-F]{63,}/.test(pubKey)
   const onConfirm = () => {
-    if (api && decimals) {
-      waitSignAndSend(
-        api.tx.phalaStakePool?.addWorker?.(pid, pubkey),
-        (status) => {
-          if (status.isReady) {
-            onClose?.({closeSource: 'closeButton'})
-          }
-        }
-      )
-    }
+    waitSignAndSend(extrinsic, (status) => {
+      if (status.isReady) {
+        onClose?.({closeSource: 'closeButton'})
+      }
+    })
   }
+
+  const extrinsic = useMemo(() => {
+    if (api && decimals && isValidPubKey) {
+      return api?.tx.phalaStakePool?.addWorker?.(pid, pubKey)
+    }
+  }, [api, decimals, pid, isValidPubKey, pubKey])
 
   return (
     <>
@@ -57,15 +62,25 @@ const AddWorkerModalBody: FC<
               } else {
                 setError(null)
               }
-              setPubkey(value)
+              setPubKey(value)
             }}
           />
         </FormControl>
       </ModalBody>
       <ModalFooter>
-        <ModalButton disabled={!pubkey || Boolean(error)} onClick={onConfirm}>
-          Confirm
-        </ModalButton>
+        <Block
+          display="flex"
+          alignItems="center"
+          justifyContent="space-between"
+        >
+          <PhalaStakePoolTransactionFeeLabel action={extrinsic} />
+          <ModalButton
+            disabled={!isValidPubKey || Boolean(error)}
+            onClick={onConfirm}
+          >
+            Confirm
+          </ModalButton>
+        </Block>
       </ModalFooter>
     </>
   )

@@ -11,6 +11,9 @@ import type {Miners} from '../../hooks/graphql'
 import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
 import {useApiPromise} from '@phala/react-libs'
 import {formatCurrency} from '@phala/utils'
+import {PhalaStakePoolTransactionFeeLabel} from '@phala/react-components'
+import {useMemo} from 'react'
+import {Block} from 'baseui/block'
 
 const ReclaimModalBody = ({
   miner,
@@ -20,17 +23,18 @@ const ReclaimModalBody = ({
   const {api} = useApiPromise()
   const waitSignAndSend = useWaitSignAndSend()
   const onConfirm = () => {
-    if (api) {
-      waitSignAndSend(
-        api.tx.phalaStakePool?.reclaimPoolWorker?.(pid, workerPublicKey),
-        (status) => {
-          if (status.isReady) {
-            onClose?.({closeSource: 'closeButton'})
-          }
-        }
-      )
-    }
+    waitSignAndSend(extrinsic, (status) => {
+      if (status.isReady) {
+        onClose?.({closeSource: 'closeButton'})
+      }
+    })
   }
+
+  const extrinsic = useMemo(() => {
+    if (api) {
+      return api.tx.phalaStakePool?.reclaimPoolWorker?.(pid, workerPublicKey)
+    }
+  }, [api, pid, workerPublicKey])
 
   return (
     <>
@@ -52,7 +56,14 @@ const ReclaimModalBody = ({
         </FormControl>
       </ModalBody>
       <ModalFooter>
-        <ModalButton onClick={onConfirm}>Confirm</ModalButton>
+        <Block
+          display="flex"
+          alignItems="center"
+          justifyContent="space-between"
+        >
+          <PhalaStakePoolTransactionFeeLabel action={extrinsic} />
+          <ModalButton onClick={onConfirm}>Confirm</ModalButton>
+        </Block>
       </ModalFooter>
     </>
   )

@@ -1,4 +1,4 @@
-import {useState, VFC} from 'react'
+import {useMemo, useState, VFC} from 'react'
 import {Input} from 'baseui/input'
 import {
   ModalHeader,
@@ -17,6 +17,8 @@ import {
 } from '@phala/react-libs'
 import {formatCurrency} from '@phala/utils'
 import {StakePool} from '.'
+import {PhalaStakePoolTransactionFeeLabel} from '@phala/react-components'
+import {Block} from 'baseui/block'
 
 const SetCapModalBody: VFC<
   {
@@ -30,20 +32,21 @@ const SetCapModalBody: VFC<
   const waitSignAndSend = useWaitSignAndSend()
   const decimals = useDecimalJsTokenDecimalMultiplier(api)
   const onConfirm = () => {
-    if (api && decimals) {
-      waitSignAndSend(
-        api.tx.phalaStakePool?.setCap?.(
-          pid,
-          new Decimal(cap).times(decimals).floor().toString()
-        ),
-        (status) => {
-          if (status.isReady) {
-            onClose?.({closeSource: 'closeButton'})
-          }
-        }
+    waitSignAndSend(extrinsic, (status) => {
+      if (status.isReady) {
+        onClose?.({closeSource: 'closeButton'})
+      }
+    })
+  }
+
+  const extrinsic = useMemo(() => {
+    if (api && decimals && cap) {
+      return api.tx.phalaStakePool?.setCap?.(
+        pid,
+        new Decimal(cap).times(decimals).floor().toString()
       )
     }
-  }
+  }, [api, cap, decimals, pid])
 
   if (totalStake === undefined || currentCap === undefined) return null
 
@@ -77,9 +80,16 @@ const SetCapModalBody: VFC<
         </FormControl>
       </ModalBody>
       <ModalFooter>
-        <ModalButton disabled={!cap} onClick={onConfirm}>
-          Confirm
-        </ModalButton>
+        <Block
+          display="flex"
+          alignItems="center"
+          justifyContent="space-between"
+        >
+          <PhalaStakePoolTransactionFeeLabel action={extrinsic} />
+          <ModalButton disabled={!cap} onClick={onConfirm}>
+            Confirm
+          </ModalButton>
+        </Block>
       </ModalFooter>
     </>
   )
