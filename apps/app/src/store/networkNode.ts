@@ -1,6 +1,11 @@
 import {atom, useAtom} from 'jotai'
 import {atomWithStorage} from 'jotai/utils'
-import {NetworkNode, NETWORK_NODES, NetworkNodeId} from '../config/networkNode'
+import {
+  NetworkNode,
+  NETWORK_NODES,
+  NetworkNodeId,
+  DEFAULT_NETWORK_NODE_ID,
+} from '../config/networkNode'
 
 const lastNetworkNodeAtom = atomWithStorage<NetworkNodeId | null>(
   'jotai:last_network_node',
@@ -14,9 +19,12 @@ const currentNetworkNodeAtom = atom<NetworkNode, NetworkNodeId>(
       (node) => node.id === lastNetworkNodeId
     )
 
-    if (!networkNode) return NETWORK_NODES[0]
-
-    return networkNode
+    return (
+      networkNode ??
+      (NETWORK_NODES.find(
+        (node) => node.id === DEFAULT_NETWORK_NODE_ID
+      ) as NetworkNode)
+    )
   },
   (get, set, update) => {
     set(lastNetworkNodeAtom, update)

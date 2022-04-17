@@ -6,24 +6,27 @@ export type NetworkNodeId =
   | 'khala-via-phala'
   | 'khala-via-onfinality'
   | 'pc-test-3'
+
 export type NetworkNode = {
   id: NetworkNodeId
   name: string
-  endpoint: string
+  endpoint: `ws://${string}` | `wss://${string}`
   types: RegistryTypes
 }
 
+export const DEFAULT_NETWORK_NODE_ID: NetworkNodeId = 'khala-via-phala'
+
 export const NETWORK_NODES: readonly NetworkNode[] = [
-  {
-    id: 'khala-via-phala',
-    name: 'Khala via Phala',
-    endpoint: 'wss://khala-api.phala.network/ws',
-    types: khala,
-  },
   {
     id: 'phala-rewards-demo',
     name: 'Phala',
     endpoint: 'wss://api.phala.network/ws',
+    types: khala,
+  },
+  {
+    id: 'khala-via-phala',
+    name: 'Khala via Phala',
+    endpoint: 'wss://khala-api.phala.network/ws',
     types: khala,
   },
   {
