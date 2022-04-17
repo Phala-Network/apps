@@ -9,6 +9,6 @@
   },
   "dependencies": {
     "@phala/wallets": "workspace:^",
-    "jotai": "^1.6.3"
+    "jotai": "^1.6.4"
   }
 }

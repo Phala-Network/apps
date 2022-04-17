@@ -2,7 +2,6 @@ import {ethers} from 'ethers'
 import {isHexString} from 'ethers/lib/utils'
 import {useCallback, useEffect, useState} from 'react'
 import {useEthers} from '..'
-import {useNetworkContext} from '../polkadot/hooks/useSubstrateNetwork'
 import {useBridgeContract} from './bridge/useBridgeContract'
 import {useEthereumNetworkOptions} from './queries/useEthereumNetworkOptions'
 import {useEthersNetworkQuery} from './queries/useEthersNetworkQuery'
@@ -10,7 +9,6 @@ import {useEthersNetworkQuery} from './queries/useEthersNetworkQuery'
 export const useEthereumBridgeFee = () => {
   const recipient = '0x4b510EDb1f076f1664a1416Eb34a1a7880D2DAA7'
   const {contract} = useBridgeContract()
-  const {network: substrateName} = useNetworkContext()
   const {options: config} = useEthereumNetworkOptions()
   const {data: network} = useEthersNetworkQuery()
   const [fee, setFee] = useState<number | undefined>()
@@ -29,15 +27,12 @@ export const useEthereumBridgeFee = () => {
     if (
       gasPrice === undefined ||
       config === undefined ||
-      network === undefined ||
-      substrateName === undefined
+      network === undefined
     ) {
       return undefined
     }
 
-    const destChainId = config.peerChainIds[substrateName as string] as
-      | number
-      | undefined
+    const destChainId = config.peerChainIds.khala as number | undefined
 
     if (destChainId === undefined) {
       throw new Error(
@@ -75,14 +70,7 @@ export const useEthereumBridgeFee = () => {
     }
 
     return 0
-  }, [
-    config,
-    contract?.estimateGas,
-    network,
-    recipient,
-    substrateName,
-    gasPrice,
-  ])
+  }, [config, contract?.estimateGas, network, recipient, gasPrice])
 
   useEffect(() => {
     estimateGas()

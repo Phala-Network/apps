@@ -2,14 +2,13 @@ import {ApiPromise, WsProvider} from '@polkadot/api'
 import {RegistryTypes} from '@polkadot/types/types'
 import {
   createContext,
-  PropsWithChildren,
-  ReactElement,
   useContext,
   useEffect,
   useState,
   useRef,
+  ReactNode,
+  FC,
 } from 'react'
-import {useNetworkContext} from './useSubstrateNetwork'
 
 type Readystate = 'unavailable' | 'init' | 'ready' | 'failed'
 
@@ -43,23 +42,18 @@ const enableApiPromise = async (
   return api
 }
 
-export const ApiPromiseProvider = ({
-  children,
-}: PropsWithChildren<unknown>): ReactElement => {
+export const ApiPromiseProvider: FC<{
+  endpoint: string
+  children: ReactNode
+  registryTypes: RegistryTypes
+}> = ({children, endpoint, registryTypes}) => {
   const waitEnable = useRef<Promise<ApiPromise | void>>()
   const [api, setApi] = useState<ApiPromise>()
   const [readystate, setState] = useState<Readystate>('unavailable')
-  const {options} = useNetworkContext()
-  const endpoint = options?.endpoint
-  const registryTypes = options?.typedefs
   const [activeEndpoint, setActiveEndpoint] = useState<string | undefined>()
 
   useEffect(() => {
-    if (endpoint === undefined || registryTypes === undefined) {
-      // do nothing while no network is selected
-      return
-    }
-
+    let unmounted = false
     setApi(undefined)
     setState('init')
 
@@ -70,6 +64,7 @@ export const ApiPromiseProvider = ({
       }
       waitEnable.current = enableApiPromise(endpoint, registryTypes)
         .then((api) => {
+          if (unmounted) return
           setApi(api)
           setActiveEndpoint(endpoint)
           setState('ready')
@@ -81,6 +76,10 @@ export const ApiPromiseProvider = ({
     }
 
     updateApi()
+
+    return () => {
+      unmounted = true
+    }
   }, [endpoint, registryTypes])
 
   const value = {

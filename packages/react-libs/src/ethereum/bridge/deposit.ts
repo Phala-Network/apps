@@ -2,7 +2,6 @@ import {BigNumber, ethers} from 'ethers'
 import {isHexString} from 'ethers/lib/utils'
 import {useMemo} from 'react'
 import {useApiPromise} from '../..'
-import {useNetworkContext} from '../../polkadot/hooks/useSubstrateNetwork'
 import {useEthers} from '../contexts/useEthers'
 import {useEthereumNetworkOptions} from '../queries/useEthereumNetworkOptions'
 import {useEthersNetworkQuery} from '../queries/useEthersNetworkQuery'
@@ -20,7 +19,6 @@ export const useErc20Deposit = (
   sender?: string
 ): DepositSubmitFn | undefined => {
   const {contract} = useBridgeContract()
-  const {network: substrateName} = useNetworkContext()
   const {options: config} = useEthereumNetworkOptions()
   const {data: network} = useEthersNetworkQuery()
   const {provider} = useEthers()
@@ -38,15 +36,12 @@ export const useErc20Deposit = (
       bridge === undefined ||
       config === undefined ||
       network === undefined ||
-      sender === undefined ||
-      substrateName === undefined
+      sender === undefined
     ) {
       return undefined
     }
 
-    const destChainId = config.peerChainIds[substrateName as string] as
-      | number
-      | undefined
+    const destChainId = config.peerChainIds.khala as number | undefined
 
     return async (amount, recipient) => {
       if (destChainId === undefined) {
@@ -101,5 +96,5 @@ export const useErc20Deposit = (
         }
       ) as Promise<ethers.providers.TransactionResponse>)
     }
-  }, [bridge, config, network, sender, substrateName])
+  }, [bridge, config, network, sender])
 }
