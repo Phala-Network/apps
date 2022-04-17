@@ -2,7 +2,6 @@ import {TableBuilder, TableBuilderColumn} from 'baseui/table-semantic'
 import {StatefulPopover} from 'baseui/popover'
 import {StatefulMenu} from 'baseui/menu'
 import {useCallback, useState} from 'react'
-import {Info} from 'react-feather'
 import {
   SortOrder,
   useMinersQuery,
@@ -22,7 +21,7 @@ import {useCurrentAccount} from '@phala/store'
 import Pagination from '../Pagination'
 import {Modal, ModalProps} from 'baseui/modal'
 import TableSkeleton from '../TableSkeleton'
-import {StatefulTooltip, StatefulTooltipProps} from 'baseui/tooltip'
+import {StatefulTooltip} from 'baseui/tooltip'
 import {Block} from 'baseui/block'
 import {tooltipContent} from './tooltipContent'
 import Decimal from 'decimal.js'
@@ -35,6 +34,7 @@ import RemoveModalBody from './RemoveModalBody'
 import ReclaimModalBody from './ReclaimModalBody'
 import ChangeStakeModalBody from './ChangeStakeModalBody'
 import {ParagraphXSmall} from 'baseui/typography'
+import TooltipHeader from '../TooltipHeader'
 
 type ModalKey = 'start' | 'changeStake' | 'stop' | 'remove' | 'reclaim'
 type MenuItem = {label: string; key: ModalKey; disabled?: boolean}
@@ -55,22 +55,6 @@ const modalKeyMap: Readonly<
   reclaim: ReclaimModalBody,
   changeStake: ChangeStakeModalBody,
 }
-
-const TooltipHeader = ({
-  children,
-  ...props
-}: StatefulTooltipProps): JSX.Element => (
-  <Block display="flex" alignItems="center">
-    {children}
-    <StatefulTooltip
-      placement="bottomLeft"
-      overrides={{Body: {style: {maxWidth: '400px', whiteSpace: 'pre-wrap'}}}}
-      {...props}
-    >
-      <Info size={16} style={{marginLeft: 5}} />
-    </StatefulTooltip>
-  </Block>
-)
 
 const WorkerTableV2 = (): JSX.Element => {
   const pageSize = 10
