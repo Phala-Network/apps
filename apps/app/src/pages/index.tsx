@@ -1,1 +1,1 @@
-export {default as default} from '@phala/app-assets'
+export {default} from '../components/Assets'

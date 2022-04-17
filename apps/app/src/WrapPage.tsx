@@ -2,9 +2,9 @@ import {Helmet} from 'react-helmet'
 import {ComponentsGlobalStyle} from '@phala/react-components'
 import BaseLayout from './components/BaseLayout'
 import GlobalStyle from './GlobalStyle'
-import {StrictMode} from 'react'
+import {ReactNode, StrictMode} from 'react'
 
-const WrapPage: React.FC = ({children}) => (
+const WrapPage: React.FC<{children: ReactNode}> = ({children}) => (
   <StrictMode>
     <Helmet titleTemplate="%s | Phala App">
       <meta

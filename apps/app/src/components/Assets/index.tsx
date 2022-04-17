@@ -2,9 +2,9 @@ import Decimal from 'decimal.js'
 import {useMemo} from 'react'
 import styled from 'styled-components'
 import {Helmet} from 'react-helmet'
-import AccountBanner from './components/AccountBanner'
-import AssetList, {DataType} from './components/AssetList'
-import useKPhaData from './hooks/useKPhaData'
+import AccountBanner from './AccountBanner'
+import AssetList, {DataType} from './AssetList'
+import useKPhaData from '../../hooks/useKPhaData'
 
 const Wrapper = styled.div``
 

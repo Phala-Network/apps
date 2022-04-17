@@ -2932,31 +2932,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@phala/app-assets@workspace:^, @phala/app-assets@workspace:packages/app-assets":
-  version: 0.0.0-use.local
-  resolution: "@phala/app-assets@workspace:packages/app-assets"
-  dependencies:
-    "@phala/react-components": "workspace:^"
-    "@phala/react-hooks": "workspace:^"
-    "@phala/react-libs": "workspace:^"
-    "@phala/store": "workspace:^"
-    "@phala/utils": "workspace:^"
-    "@polkadot/util": ^9.0.1
-    "@types/react": ^18.0.3
-    axios: ^0.26.1
-    baseui: 11.0.0
-    decimal.js: ^10.3.1
-    ethers: ^5.6.2
-    react: ^18.0.0
-    react-query: ^3.35.0
-    styled-breakpoints: ^10.2.3
-    styled-components: ^5.3.5
-  peerDependencies:
-    react: ^18.0.0
-    react-dom: ^18.0.0
-  languageName: unknown
-  linkType: soft
-
 "@phala/app-bridge@workspace:^, @phala/app-bridge@workspace:packages/app-bridge":
   version: 0.0.0-use.local
   resolution: "@phala/app-bridge@workspace:packages/app-bridge"
@@ -3044,7 +3019,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@phala/app@workspace:apps/app"
   dependencies:
-    "@phala/app-assets": "workspace:^"
     "@phala/app-bridge": "workspace:^"
     "@phala/app-config": "workspace:^"
     "@phala/app-mining": "workspace:^"
@@ -3056,6 +3030,7 @@ __metadata:
     "@phala/utils": "workspace:^"
     "@phala/wallets": "workspace:^"
     "@polkadot/types": ^8.1.1
+    "@polkadot/util": ^9.0.1
     "@polkadot/util-crypto": ^9.0.1
     "@sentry/gatsby": ^6.19.6
     "@types/node": ^16.11.26
@@ -3065,6 +3040,7 @@ __metadata:
     "@types/styled-components": ^5.1.25
     "@types/styletron-react": ^5.0.3
     "@types/styletron-standard": ^2.0.2
+    axios: ^0.26.1
     babel-plugin-styled-components: ^2.0.7
     baseui: ^11.0.0
     decimal.js: ^10.3.1

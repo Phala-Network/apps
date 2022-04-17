@@ -15,7 +15,6 @@
     "last 10 edge version"
   ],
   "dependencies": {
-    "@phala/app-assets": "workspace:^",
     "@phala/app-bridge": "workspace:^",
     "@phala/app-config": "workspace:^",
     "@phala/app-mining": "workspace:^",
@@ -27,8 +26,10 @@
     "@phala/utils": "workspace:^",
     "@phala/wallets": "workspace:^",
     "@polkadot/types": "^8.1.1",
+    "@polkadot/util": "^9.0.1",
     "@polkadot/util-crypto": "^9.0.1",
     "@sentry/gatsby": "^6.19.6",
+    "axios": "^0.26.1",
     "babel-plugin-styled-components": "^2.0.7",
     "baseui": "^11.0.0",
     "decimal.js": "^10.3.1",
