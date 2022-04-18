@@ -23,7 +23,7 @@ export const NETWORK_NODES: readonly NetworkNode[] = [
   {
     id: 'phala-rewards-demo',
     name: 'Phala',
-    endpoint: 'wss://api.phala.network/ws',
+    endpoint: 'wss://phala-rewards-demo.phala.network/ws',
     types: khala,
     kind: 'phala',
   },
