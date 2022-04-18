@@ -29,7 +29,7 @@ import Decimal from 'decimal.js'
 import TableSkeleton from '../TableSkeleton'
 import Owner from '../Owner'
 import StakePoolModal, {StakePoolModalKey} from '../StakePoolModal'
-import TooltipHeader from '../../TooltipHeader'
+import TooltipHeader from '../TooltipHeader'
 import {$StyleProp} from 'styletron-react'
 import {Block} from 'baseui/block'
 import {atomWithStorage} from 'jotai/utils'
@@ -238,41 +238,33 @@ const StakePoolTableV2: VFC<{
           >
             {'Commission < 100%'}
           </Checkbox>
-          <Checkbox
-            checked={remainingFilter}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setRemainingFilter(e.target.checked)
-            }
-            overrides={{
-              Checkmark: {
-                style: {
-                  alignSelf: 'center',
+          <Block display="flex" alignItems="center">
+            <Checkbox
+              checked={remainingFilter}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setRemainingFilter(e.target.checked)
+              }
+            >
+              {'Remaining > '}
+            </Checkbox>
+
+            <StatefulInput
+              overrides={{
+                Root: {
+                  style: {width: '128px', marginLeft: '8px'},
                 },
-              },
-            }}
-          >
-            <Block display="flex" alignItems="center">
-              <Block flex="none" marginRight="scale200">
-                {'Remaining > '}
-              </Block>
-              <StatefulInput
-                overrides={{
-                  Root: {
-                    style: {width: '128px'},
-                  },
-                }}
-                initialState={{value: remainingValue}}
-                type="number"
-                size="compact"
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  const value = e.target.value
-                  if (value) {
-                    debouncedSetRemainingValue(value)
-                  }
-                }}
-              />
-            </Block>
-          </Checkbox>
+              }}
+              initialState={{value: remainingValue}}
+              type="number"
+              size="compact"
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                const value = e.target.value
+                if (value) {
+                  debouncedSetRemainingValue(value)
+                }
+              }}
+            />
+          </Block>
         </TableHeader>
       )}
 

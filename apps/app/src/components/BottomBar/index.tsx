@@ -1,27 +1,30 @@
 import React from 'react'
 import styled from 'styled-components'
-import Logo from './Logo'
-import SelectNode from './SelectNode'
-import Account from './Account'
+import Links from './Links'
+import CheckMore from './CheckMore'
+import {up} from 'styled-breakpoints'
 
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
   position: fixed;
-  top: 0;
+  bottom: 0;
   left: 0;
   right: 0;
   height: 72px;
   background-color: #fff;
-  padding: 0 10px;
+
+  ${up('md')} {
+    display: none;
+  }
 `
 
 const BottomBar: React.FC = () => {
   return (
     <Wrapper>
-      <Logo />
-      <SelectNode />
-      <Account />
+      <Links />
+      <CheckMore />
     </Wrapper>
   )
 }

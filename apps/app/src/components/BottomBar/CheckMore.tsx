@@ -1,9 +1,9 @@
 import React, {useState} from 'react'
 import styled from 'styled-components'
 import {Drawer, ANCHOR, SIZE} from 'baseui/drawer'
-import MoreIcon from '../../../icons/more.svg'
-import ExternalLink from '../../../icons/external_link.svg'
-import {LineWrap} from '../../Navbar/styledComponent'
+import MoreIcon from '../../icons/more.svg'
+import ExternalLink from '../../icons/external_link.svg'
+import {LineWrap} from '../Navbar/styledComponent'
 
 const MoreButton = styled.button`
   cursor: pointer;

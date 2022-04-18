@@ -1,9 +1,9 @@
-import {navigate} from 'gatsby'
 import styled from 'styled-components'
 import {StatefulPopover, PLACEMENT} from 'baseui/popover'
 import MoreIcon from '../../icons/more.svg'
 import ExternalLink from '../../icons/external_link.svg'
 import {LineWrap} from './styledComponent'
+import {down} from 'styled-breakpoints'
 
 const MoreButton = styled.button`
   cursor: pointer;
@@ -19,6 +19,10 @@ const MoreButton = styled.button`
   :hover,
   :focus {
     background: #d1ff52;
+  }
+
+  ${down('sm')} {
+    display: none;
   }
 `
 

@@ -17,6 +17,7 @@ import {BN} from '@polkadot/util'
 import {toaster} from 'baseui/toast'
 import React, {useCallback, useMemo, useState} from 'react'
 import styled from 'styled-components'
+import {useCurrentNetworkNode} from '../../store/networkNode'
 
 type Props = {
   visible: boolean
@@ -53,6 +54,7 @@ const ClaimModal: React.FC<Props> = ({visible, onClose}) => {
   const [currentAccount] = useCurrentAccount()
   const allBalances = useAllBalances(currentAccount?.address)
   const decimals = useDecimalJsTokenDecimalMultiplier(api)
+  const [currentNetworkNode] = useCurrentNetworkNode()
   const {vestingLocked, vestedClaimable, vestedBalance} = allBalances || {}
 
   const format = useCallback<(bn: BN | undefined) => string>(
@@ -94,7 +96,10 @@ const ClaimModal: React.FC<Props> = ({visible, onClose}) => {
     }
   }
 
-  const canClaim = Boolean(vestedClaimable) && !vestedClaimable?.isZero()
+  const canClaim =
+    Boolean(vestedClaimable) &&
+    !vestedClaimable?.isZero() &&
+    currentNetworkNode.id !== 'phala-rewards-demo'
 
   return (
     <ModalWrapper visible={visible} onClose={onClose}>

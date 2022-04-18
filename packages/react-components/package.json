@@ -14,7 +14,7 @@
     "@phala/store": "workspace:^",
     "@phala/utils": "workspace:^",
     "@phala/wallets": "workspace:^",
-    "@polkadot/api": "^8.0.2",
+    "@polkadot/api": "^8.1.1",
     "@polkadot/react-identicon": "^2.0.1",
     "@polkadot/util": "^9.0.1",
     "@polkadot/util-crypto": "^9.0.1",

@@ -1,8 +1,8 @@
 import {useLocation} from '@reach/router'
-import React from 'react'
+import React, {ReactNode} from 'react'
 import {down, up} from 'styled-breakpoints'
 import styled, {css} from 'styled-components'
-import MobileNavbar from './MobileNavbar'
+import BottomBar from './BottomBar'
 import Navbar from './Navbar'
 
 const HomePageWrap = styled.div`
@@ -32,7 +32,7 @@ const ContentWrap = styled.div<{compact?: boolean}>`
   }
 `
 
-const BaseLayout: React.FC = (props) => {
+const BaseLayout: React.FC<{children: ReactNode}> = (props) => {
   const {children} = props
   const {pathname} = useLocation()
 
@@ -42,7 +42,7 @@ const BaseLayout: React.FC = (props) => {
         {children}
       </ContentWrap>
       <Navbar />
-      <MobileNavbar />
+      <BottomBar />
     </HomePageWrap>
   )
 }

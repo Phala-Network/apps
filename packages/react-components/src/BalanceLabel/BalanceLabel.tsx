@@ -3,7 +3,7 @@ import {Decimal} from 'decimal.js'
 import React from 'react'
 
 export type BalanceLabelProps = {
-  value: Decimal
+  value: Decimal | undefined
   precision?: number
   type?: string
 }
@@ -39,10 +39,10 @@ export const BalanceLabel: React.FC<BalanceLabelProps> = (props) => {
     if (balanceDisplay[balanceDisplay.length - 1] === '.') {
       balanceDisplay = balanceDisplay.slice(0, -1)
     }
-  }
 
-  if (value.equals(zero)) {
-    balanceDisplay = '0'
+    if (value.equals(zero)) {
+      balanceDisplay = '0'
+    }
   }
 
   const result = `${balanceDisplay} ${type}`.trim()

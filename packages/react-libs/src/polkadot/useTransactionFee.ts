@@ -39,7 +39,13 @@ export function useTransactionFee(
     }
 
     api?.tx?.balances
-      .transfer(recipient, amountFormatted)
+      .transfer(
+        recipient,
+        new Decimal(amountFormatted)
+          .times(10 ** 12)
+          .toFixed(0)
+          .toString()
+      )
       .paymentInfo(sender)
       .then(({partialFee}) => {
         setFee(

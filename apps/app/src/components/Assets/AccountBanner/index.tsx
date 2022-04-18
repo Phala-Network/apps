@@ -7,6 +7,7 @@ import {formatCurrency} from '@phala/utils'
 import bannerBg from '../Icons/banner-bg.png'
 import AccountInfo from './AccountInfo'
 import {PhalaIcon} from '../Icons/PhalaIcon'
+import Decimal from 'decimal.js'
 
 const Wrapper = styled.div`
   background-color: #111111;
@@ -79,7 +80,7 @@ const Dollar = styled.div`
 `
 
 type Props = {
-  totalValue: string
+  totalValue: Decimal | null
 }
 
 const AccountBanner: React.FC<Props> = ({totalValue}) => {
@@ -93,11 +94,12 @@ const AccountBanner: React.FC<Props> = ({totalValue}) => {
           <AccountInfo />
         </Left>
         <div>
-          {isBrowser && polkadotAccount ? (
+          {polkadotAccount && (
             <Dollar>
-              {Number(totalValue) ? `$ ${formatCurrency(totalValue)}` : '-'}
+              {totalValue ? `$ ${formatCurrency(totalValue)}` : '-'}
             </Dollar>
-          ) : null}
+          )}
+
           {isBrowser && !polkadotAccount ? (
             <Icon>
               <PhalaIcon />

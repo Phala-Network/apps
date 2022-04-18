@@ -1,4 +1,4 @@
-import {useState, useMemo} from 'react'
+import {useState, useMemo, FC} from 'react'
 import styled from 'styled-components'
 import {down} from 'styled-breakpoints'
 import {BalanceLabel, SelectAccountModal} from '@phala/react-components'
@@ -10,6 +10,7 @@ import {
   useDecimalJsTokenDecimalMultiplier,
 } from '@phala/react-libs'
 import Decimal from 'decimal.js'
+import {Block} from 'baseui/block'
 
 const Connect = styled.div`
   cursor: pointer;
@@ -34,7 +35,7 @@ const Connect = styled.div`
   }
 `
 
-const AccountLable = styled.div`
+const AccountLabel = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -43,7 +44,7 @@ const AccountLable = styled.div`
   font-size: 16px;
   line-height: 16px;
   background: #eeeeee;
-  margin-right: 20px;
+  margin-right: 16px;
   height: 36px;
 
   ${down('lg')} {
@@ -51,10 +52,14 @@ const AccountLable = styled.div`
     line-height: 14px;
     margin-right: 10px;
   }
+
+  ${down('md')} {
+    margin-right: 0;
+  }
 `
 
 const Balance = styled.span`
-  padding: 0 16px;
+  padding: 0 12px;
   max-width: 200px;
   overflow: hidden;
 
@@ -74,15 +79,17 @@ const AccountInfo = styled.div`
   border: 1px solid #cecece;
   box-sizing: border-box;
   height: 100%;
-  padding: 0 16px;
+  padding: 0 12px;
 
-  ${down('lg')} {
-    padding: 0 10px;
+  svg {
+    width: 100%;
+    display: block;
   }
 `
+
 const Name = styled.span`
-  margin-right: 16px;
-  max-width: 50px;
+  margin-right: 12px;
+  max-width: 64px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -103,35 +110,44 @@ const Account: React.FC = () => {
   const [selectAccountModalViable, setSelectAccountModalViable] =
     useState(false)
   const openAccountSelectModal = () => setSelectAccountModalViable(true)
-  const [polkadotAccount] = useCurrentAccount()
-  const balance = useBalance(polkadotAccount?.address)
+  const [currentAccount] = useCurrentAccount()
+  const balance = useBalance(currentAccount?.address)
   const {api} = useApiPromise()
   const decimals = useDecimalJsTokenDecimalMultiplier(api)
 
   const balanceValue = useMemo(() => {
-    if (!api || !balance || !decimals) return new Decimal(0)
+    if (!api || !balance || !decimals) return
     return new Decimal(balance.toString() || '0').div(decimals)
   }, [api, balance, decimals])
 
   const {isServer} = useSSR()
 
+  const WalletIcon = currentAccount?.wallet?.logo.src as unknown as
+    | FC
+    | undefined
+
   if (isServer) return null
 
   return (
     <>
-      {!polkadotAccount ? (
+      {!currentAccount ? (
         <Connect onClick={openAccountSelectModal}>{`Connect Wallet`}</Connect>
       ) : (
-        <AccountLable>
+        <AccountLabel>
           <Balance>
             <BalanceLabel value={balanceValue} />
             <span className="unit">PHA</span>
           </Balance>
           <AccountInfo onClick={openAccountSelectModal}>
-            <Name>{polkadotAccount?.name}</Name>
-            <Address>{trimAddress(polkadotAccount.address)}</Address>
+            {WalletIcon && (
+              <Block marginRight="scale400" width="20px">
+                <WalletIcon />
+              </Block>
+            )}
+            <Name>{currentAccount?.name}</Name>
+            <Address>{trimAddress(currentAccount.address)}</Address>
           </AccountInfo>
-        </AccountLable>
+        </AccountLabel>
       )}
       <SelectAccountModal
         onClose={() => setSelectAccountModalViable(false)}

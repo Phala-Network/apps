@@ -3,7 +3,7 @@ import {TableBuilder, TableBuilderColumn} from 'baseui/table-semantic'
 import {formatDuration, intervalToDuration, isAfter} from 'date-fns'
 import {VFC} from 'react'
 import {StakePoolQuery} from '../../hooks/graphql'
-import TooltipHeader from '../../TooltipHeader'
+import TooltipHeader from '../TooltipHeader'
 import TableSkeleton from '../TableSkeleton'
 import {tooltipContent} from './tooltipContent'
 
