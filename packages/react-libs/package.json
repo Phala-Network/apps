@@ -8,7 +8,6 @@
     "typecheck": "tsc --project ./tsconfig.json --noEmit"
   },
   "dependencies": {
-    "@phala/app-config": "workspace:^",
     "@phala/store": "workspace:^",
     "@phala/utils": "workspace:^",
     "@polkadot/api": "^8.1.1",
@@ -22,11 +21,8 @@
     "bn.js": "^5.2.0",
     "decimal.js": "^10.3.1",
     "ethers": "^5.6.2",
-    "graphql": "^15.5.3",
-    "graphql-request": "^3.7.0",
     "react": "^18.0.0",
     "react-query": "^3.35.0",
-    "uuid": "^8.3.2",
-    "web3modal": "^1.9.6"
+    "uuid": "^8.3.2"
   }
 }

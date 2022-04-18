@@ -8,7 +8,6 @@
     "typecheck": "tsc --project ./tsconfig.json --noEmit"
   },
   "dependencies": {
-    "@phala/app-config": "workspace:^",
     "@phala/react-libs": "workspace:^",
     "@phala/utils": "workspace:^",
     "@polkadot/api": "^8.1.1",

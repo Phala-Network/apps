@@ -1,8 +1,4 @@
-import {
-  ApiPromiseProvider,
-  EthereumWeb3Provider,
-  EthersProvider,
-} from '@phala/react-libs'
+import {ApiPromiseProvider} from '@phala/react-libs'
 import {BaseProvider} from 'baseui'
 import {SnackbarProvider} from 'baseui/snackbar'
 import {toaster, ToasterContainer} from 'baseui/toast'
@@ -35,32 +31,28 @@ const WrapApp: React.FC<{children: ReactNode}> = ({children}) => {
 
   return (
     <QueryClientProvider contextSharing={true} client={client}>
-      <EthereumWeb3Provider>
-        <EthersProvider>
-          <ApiPromiseProvider
-            endpoint={currentNetworkNode.endpoint}
-            registryTypes={currentNetworkNode.types}
-          >
-            <ThemeProvider theme={theme}>
-              <BaseProvider theme={baseTheme}>
-                <SnackbarProvider>{children}</SnackbarProvider>
-                <ToasterContainer
-                  autoHideDuration={3000}
-                  overrides={{
-                    ToastBody: {
-                      style: {
-                        maxWidth: '100%',
-                        width: '400px',
-                      },
-                    },
-                  }}
-                />
-              </BaseProvider>
-            </ThemeProvider>
-            <ReactQueryDevtools />
-          </ApiPromiseProvider>
-        </EthersProvider>
-      </EthereumWeb3Provider>
+      <ApiPromiseProvider
+        endpoint={currentNetworkNode.endpoint}
+        registryTypes={currentNetworkNode.types}
+      >
+        <ThemeProvider theme={theme}>
+          <BaseProvider theme={baseTheme}>
+            <SnackbarProvider>{children}</SnackbarProvider>
+            <ToasterContainer
+              autoHideDuration={3000}
+              overrides={{
+                ToastBody: {
+                  style: {
+                    maxWidth: '100%',
+                    width: '400px',
+                  },
+                },
+              }}
+            />
+          </BaseProvider>
+        </ThemeProvider>
+        <ReactQueryDevtools />
+      </ApiPromiseProvider>
     </QueryClientProvider>
   )
 }
