@@ -4,12 +4,12 @@ import {Skeleton} from 'baseui/skeleton'
 import {HeadingXSmall, ParagraphSmall} from 'baseui/typography'
 import {FC, ReactNode} from 'react'
 
-const InfoCard: FC<{label: string; action?: ReactNode; extra?: ReactNode}> = ({
-  label,
-  action,
-  extra,
-  children,
-}) => {
+const InfoCard: FC<{
+  label: string
+  action?: ReactNode
+  extra?: ReactNode
+  children: ReactNode
+}> = ({label, action, extra, children}) => {
   return (
     <Card
       overrides={{
