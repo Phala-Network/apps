@@ -1,1 +1,0 @@
-export {EthereumInstallModal} from './EthereumInstallModal'
