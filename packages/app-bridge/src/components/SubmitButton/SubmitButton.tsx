@@ -36,6 +36,11 @@ export const SubmitButton: FC<SubmitButtonProps> = (props) => {
     const recipient = toAddress
     let errorString = ''
 
+    if (fromNetwork === 'Ethereum' || toNetwork === 'Ethereum') {
+      errorString =
+        'During the contract upgrade, the bridge is temporarily unavailable.'
+    }
+
     if (!amountTo || amountTo <= 0) {
       errorString = 'Need enter amount'
     } else if (!recipient) {
