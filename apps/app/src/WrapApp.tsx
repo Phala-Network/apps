@@ -10,11 +10,7 @@ import React, {ReactNode, useState} from 'react'
 import {QueryClient, QueryClientProvider} from 'react-query'
 import {ReactQueryDevtools} from 'react-query/devtools'
 import {ThemeProvider} from 'styled-components'
-import {useSubscribeWalletAccounts} from './hooks/useSubscribeWalletAccounts'
-import useZendesk from './hooks/useZendesk'
 import theme, {baseTheme} from './theme'
-import {useAtomsDevtools} from 'jotai/devtools'
-import {useAutoConnectWallet} from './hooks/useAutoConnectWallet'
 import {useCurrentNetworkNode} from './store/networkNode'
 
 const WrapApp: React.FC<{children: ReactNode}> = ({children}) => {
