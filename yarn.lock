@@ -17028,24 +17028,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"styled-breakpoints@npm:^11.0.5":
-  version: 11.0.5
-  resolution: "styled-breakpoints@npm:11.0.5"
-  peerDependencies:
-    "@emotion/react": ^11.0.0
-    react: ^17.x.x
-    styled-components: ^5.0.0
-  peerDependenciesMeta:
-    "@emotion/react":
-      optional: true
-    react:
-      optional: true
-    styled-components:
-      optional: true
-  checksum: 0f1d0be003d3c601b9ac4fcb69453d9c92decad0aa8afb75c879332dd58a3ba85061e09dcc936501e487d92287a9b4908b35f5c4a3fe696924a7f8f62c9e3b6e
-  languageName: node
-  linkType: hard
-
 "styled-components@npm:^5.3.3, styled-components@npm:^5.3.5":
   version: 5.3.5
   resolution: "styled-components@npm:5.3.5"
