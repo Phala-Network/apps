@@ -32,32 +32,6 @@ export const BridgePage: FC = () => {
         <Helmet>
           <title>SubBridge</title>
         </Helmet>
-        <Notification
-          closeable
-          overrides={{
-            Body: {
-              style: {
-                borderRadius: 0,
-                backgroundColor: '#f3ffd3',
-                width: 'auto',
-              },
-            },
-          }}
-        >
-          <Block display="flex" alignItems="center">
-            <Info
-              size={16}
-              className={css({marginRight: '12px', flex: 'none'})}
-            />
-            <span>
-              The Khala team is going to schedule a SubBridge Ethereum smart
-              contract upgrade at 11:00 (UTC) on April 18. The upgrade involves
-              moving the bridge PHA reservation to the newly deployed smart
-              contract. At that time, the two-way bridge between Ethereum and
-              Khala will be suspended for a period of time until further notice.
-            </span>
-          </Block>
-        </Notification>
 
         <Notification
           closeable

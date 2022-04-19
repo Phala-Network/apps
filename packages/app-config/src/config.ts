@@ -41,9 +41,9 @@ export const ethereums: Record<string, EthereumNetworkOptions> = {
 
   // Mainnet
   1: {
-    bridge: '0xC84456ecA286194A201F844993C220150Cf22C63',
+    bridge: '0x8F92e7353b180937895E0C5937d616E8ea1A2Bb9',
     erc20: '0x6c5ba91642f10282b576d91922ae6448c9d52f4e',
-    erc20AssetHandler: '0x6eD3bc069Cf4F87DE05c04C352E8356492EC6eFE',
+    erc20AssetHandler: '0xEEc0fb4913119567cDfC0c5fc2Bf8f9F9B226c2d',
     erc20ResourceId:
       '0x00e6dfb61a2fb903df487c401663825643bb825d41695e63df8af6162ab145a6',
     peerChainIds: {
