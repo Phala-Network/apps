@@ -4,6 +4,7 @@ import MoreIcon from '../../icons/more.svg'
 import ExternalLink from '../../icons/external_link.svg'
 import {LineWrap} from './styledComponent'
 import {down} from 'styled-breakpoints'
+import {navigate} from 'gatsby'
 
 const MoreButton = styled.button`
   cursor: pointer;
@@ -58,14 +59,14 @@ const CheckMore: React.FC = () => {
     <StatefulPopover
       content={({close}) => (
         <>
-          {/* <LineWrap
+          <LineWrap
             onClick={() => {
               navigate('/analytics/')
               close()
             }}
           >
             Analytics
-          </LineWrap> */}
+          </LineWrap>
           {LINKS.map(({name, link}) => (
             <LineWrap onClick={close} href={link} key={name} target="_blank">
               <ExternalName>{name}</ExternalName>
