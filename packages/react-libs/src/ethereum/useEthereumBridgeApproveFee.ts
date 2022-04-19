@@ -32,7 +32,7 @@ export function useEthereumBridgeApproveFee() {
       contractSigned.estimateGas
         .approve?.(
           network.erc20AssetHandler,
-          ethers.utils.parseUnits('11451419810', 18)
+          ethers.utils.parseUnits('1000000000', 18)
         )
         .then((result) =>
           setFee((result?.toNumber() * (gasPrice ?? 150) * 1e9) / 1e18)

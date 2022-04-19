@@ -54,7 +54,7 @@ export const ApproveDialog: React.FC<Props> = (props) => {
 
       const approveResult = await contractSigned.functions['approve']?.(
         network.erc20AssetHandler,
-        ethers.utils.parseUnits('11451419810', 18)
+        ethers.utils.parseUnits('1000000000', 18)
       )
 
       setApproveHash(approveResult.hash)
