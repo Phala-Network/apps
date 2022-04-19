@@ -11,23 +11,28 @@ export const useAutoConnectWallet = () => {
   useEffect(() => {
     if (wallet || !lastWalletExtensionName) return
     let unmounted = false
+    let timeout: NodeJS.Timeout
 
     import('@phala/wallets').then(({getWalletBySource}) => {
       if (unmounted) return
-      const wallet = getWalletBySource(lastWalletExtensionName)
+      // HACK: always wait for extension injection for 0.5s before getting wallet
+      timeout = setTimeout(() => {
+        const wallet = getWalletBySource(lastWalletExtensionName)
 
-      if (wallet) {
-        ;(wallet.enable() as Promise<void>)
-          .then(() => {
-            if (unmounted) return
-            setWallet(wallet)
-          })
-          // Silent auto connect errors
-          .catch(() => null)
-      }
+        if (wallet) {
+          ;(wallet.enable() as Promise<void>)
+            .then(() => {
+              if (unmounted) return
+              setWallet(wallet)
+            })
+            // Silent auto connect errors
+            .catch(() => null)
+        }
+      }, 500)
     })
 
     return () => {
+      clearTimeout(timeout)
       unmounted = true
     }
   }, [lastWalletExtensionName, setWallet, wallet])
