@@ -61,10 +61,7 @@ export const SubmitButton: FC<SubmitButtonProps> = (props) => {
     } else if (
       (fromNetwork === 'Khala' &&
         toNetwork === 'Ethereum' &&
-        khalaBridgeFee.fee &&
-        new Decimal(amountTo).greaterThan(
-          maxAmountDecimal.sub(khalaBridgeFee.fee)
-        )) ||
+        new Decimal(amountTo).greaterThan(maxAmountDecimal)) ||
       (fromNetwork === 'Khala' &&
         toNetwork === 'Karura' &&
         new Decimal(amountTo).greaterThan(
