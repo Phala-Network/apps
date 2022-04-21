@@ -58,8 +58,6 @@ export const SubmitButton: FC<SubmitButtonProps> = (props) => {
         !ethereumBridgeFee)
     ) {
       errorString = 'Please wait fee check'
-    } else if (new Decimal(amountTo).greaterThan(maxAmountDecimal)) {
-      errorString = 'Insufficient balance'
     } else if (
       (fromNetwork === 'Khala' &&
         toNetwork === 'Ethereum' &&
