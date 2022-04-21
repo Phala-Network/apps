@@ -77,7 +77,7 @@ export const TransferPHAFromKhalaToEthereum: React.FC<
     try {
       setSubmitting(true)
 
-      waitSignAndSend({
+      await waitSignAndSend({
         account: currentAccount?.address,
         extrinsic,
         api,
