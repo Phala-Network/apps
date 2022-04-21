@@ -41,6 +41,13 @@ export const NETWORK_NODES: readonly NetworkNode[] = [
     types: khala,
     kind: 'khala',
   },
+  {
+    id: 'thala',
+    name: 'thala',
+    endpoint: 'wss://bridge-testnet-api.phala.network/thala/ws',
+    types: khala,
+    kind: 'khala',
+  },
   (process.env.NODE_ENV === 'development' ||
     process.env.CONTEXT === 'deploy-preview' ||
     process.env.CONTEXT === 'branch-deploy') &&
