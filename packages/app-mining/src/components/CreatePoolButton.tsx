@@ -1,4 +1,6 @@
+import {PhalaStakePoolTransactionFeeLabel} from '@phala/react-components'
 import {useApiPromise} from '@phala/react-libs'
+import {Block} from 'baseui/block'
 import {Button} from 'baseui/button'
 import {
   Modal,
@@ -9,20 +11,26 @@ import {
   ModalProps,
 } from 'baseui/modal'
 import {ParagraphSmall} from 'baseui/typography'
-import {useState} from 'react'
+import {useMemo, useState} from 'react'
 import useWaitSignAndSend from '../hooks/useWaitSignAndSend'
 
 const Body = ({onClose}: Pick<ModalProps, 'onClose'>) => {
   const {api} = useApiPromise()
   const waitSignAndSend = useWaitSignAndSend()
   const onConfirm = () => {
-    if (!api) return
-    waitSignAndSend(api.tx.phalaStakePool?.create?.(), (status) => {
+    waitSignAndSend(extrinsic, (status) => {
       if (status.isReady) {
         onClose?.({closeSource: 'closeButton'})
       }
     })
   }
+
+  const extrinsic = useMemo(() => {
+    if (api) {
+      return api.tx.phalaStakePool?.create?.()
+    }
+  }, [api])
+
   return (
     <>
       <ModalHeader>Create Pool</ModalHeader>
@@ -30,7 +38,14 @@ const Body = ({onClose}: Pick<ModalProps, 'onClose'>) => {
         <ParagraphSmall>You will create a new stake pool.</ParagraphSmall>
       </ModalBody>
       <ModalFooter>
-        <ModalButton onClick={onConfirm}>Confirm</ModalButton>
+        <Block
+          display="flex"
+          alignItems="center"
+          justifyContent="space-between"
+        >
+          <PhalaStakePoolTransactionFeeLabel action={extrinsic} />
+          <ModalButton onClick={onConfirm}>Confirm</ModalButton>
+        </Block>
       </ModalFooter>
     </>
   )

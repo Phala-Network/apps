@@ -12,7 +12,11 @@ export function usePhalaStakePoolTransactionFee(
     if (action && polkadotAccount) {
       action.paymentInfo(polkadotAccount).then(({partialFee}) => {
         setFee(
-          new Decimal(partialFee.toString()).div(10 ** 12).toFixed(8) + ' PHA'
+          new Decimal(partialFee.toString())
+            .div(10 ** 12)
+            .toFixed(8)
+            .replace(/\.?0+$/, '') + // Remove Trailing Zeros
+            ' PHA'
         )
       })
     }
