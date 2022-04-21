@@ -51,7 +51,7 @@ export const TransferPHAFromKhalaToEthereum: React.FC<
   const extrinsic = useMemo(() => {
     const accountToAddress = getAddress(toAddress)
 
-    return api?.tx.bridgeTransfer?.transferNative?.(amount, accountToAddress, 1)
+    return api?.tx.bridgeTransfer?.transferNative?.(amount, accountToAddress, 0)
   }, [amount, api, toAddress])
 
   useEffect(() => {
