@@ -1,4 +1,4 @@
-import {useState, VFC} from 'react'
+import {useMemo, useState, VFC} from 'react'
 import {Input} from 'baseui/input'
 import {
   ModalHeader,
@@ -19,6 +19,8 @@ import {
 } from '@phala/react-libs'
 import {Skeleton} from 'baseui/skeleton'
 import {StakePool} from '.'
+import {Block} from 'baseui/block'
+import {PhalaStakePoolTransactionFeeLabel} from '@phala/react-components'
 
 const DelegateModalBody: VFC<
   {
@@ -33,20 +35,21 @@ const DelegateModalBody: VFC<
   const waitSignAndSend = useWaitSignAndSend()
   const decimals = useDecimalJsTokenDecimalMultiplier(api)
   const onConfirm = () => {
-    if (api && decimals) {
-      waitSignAndSend(
-        api.tx.phalaStakePool?.contribute?.(
-          pid,
-          new Decimal(amount).times(decimals).floor().toString()
-        ),
-        (status) => {
-          if (status.isReady) {
-            onClose?.({closeSource: 'closeButton'})
-          }
-        }
+    waitSignAndSend(extrinsic, (status) => {
+      if (status.isReady) {
+        onClose?.({closeSource: 'closeButton'})
+      }
+    })
+  }
+
+  const extrinsic = useMemo(() => {
+    if (api && amount && decimals) {
+      return api.tx.phalaStakePool?.contribute?.(
+        pid,
+        new Decimal(amount).times(decimals).floor().toString()
       )
     }
-  }
+  }, [api, pid, amount, decimals])
 
   if (remainingStake === undefined) return null
 
@@ -97,9 +100,16 @@ const DelegateModalBody: VFC<
         </FormControl>
       </ModalBody>
       <ModalFooter>
-        <ModalButton disabled={!amount} onClick={onConfirm}>
-          Confirm
-        </ModalButton>
+        <Block
+          display="flex"
+          alignItems="center"
+          justifyContent="space-between"
+        >
+          <PhalaStakePoolTransactionFeeLabel action={extrinsic} />
+          <ModalButton disabled={!amount} onClick={onConfirm}>
+            Confirm
+          </ModalButton>
+        </Block>
       </ModalFooter>
     </>
   )

@@ -1,4 +1,4 @@
-import {useState, VFC} from 'react'
+import {useMemo, useState, VFC} from 'react'
 import {Input} from 'baseui/input'
 import {
   ModalHeader,
@@ -18,6 +18,8 @@ import {
 import {useCurrentAccount} from '@phala/store'
 import {Button} from 'baseui/button'
 import {StakePool} from '.'
+import {PhalaStakePoolTransactionFeeLabel} from '@phala/react-components'
+import {Block} from 'baseui/block'
 
 const ClaimModalBody: VFC<
   {
@@ -29,21 +31,22 @@ const ClaimModalBody: VFC<
   const [polkadotAccount] = useCurrentAccount()
   const {api} = useApiPromise()
   const [address, setAddress] = useState('')
-  const [isAddressError, setIsAddressError] = useState(false)
+  const isAddressError = !validateAddress(address)
   const waitSignAndSend = useWaitSignAndSend()
   const decimals = useDecimalJsTokenDecimalMultiplier(api)
   const onConfirm = () => {
-    if (api && decimals) {
-      waitSignAndSend(
-        api.tx.phalaStakePool?.claimRewards?.(pid, address),
-        (status) => {
-          if (status.isReady) {
-            onClose?.({closeSource: 'closeButton'})
-          }
-        }
-      )
-    }
+    waitSignAndSend(extrinsic, (status) => {
+      if (status.isReady) {
+        onClose?.({closeSource: 'closeButton'})
+      }
+    })
   }
+
+  const extrinsic = useMemo(() => {
+    if (api && decimals && !isAddressError) {
+      return api.tx.phalaStakePool?.claimRewards?.(pid, address)
+    }
+  }, [api, decimals, pid, address, isAddressError])
 
   if (!stakePoolStakers) return null
 
@@ -91,7 +94,6 @@ const ClaimModalBody: VFC<
                   size="mini"
                   onClick={() => {
                     setAddress(polkadotAccount.address)
-                    setIsAddressError(!validateAddress(polkadotAccount.address))
                   }}
                 >
                   My Address
@@ -99,18 +101,23 @@ const ClaimModalBody: VFC<
               )
             }
             onChange={(e) => setAddress(e.currentTarget.value)}
-            onBlur={() => {
-              if (address) {
-                setIsAddressError(!validateAddress(address))
-              }
-            }}
           />
         </FormControl>
       </ModalBody>
       <ModalFooter>
-        <ModalButton disabled={!address || isAddressError} onClick={onConfirm}>
-          Confirm
-        </ModalButton>
+        <Block
+          display="flex"
+          alignItems="center"
+          justifyContent="space-between"
+        >
+          <PhalaStakePoolTransactionFeeLabel action={extrinsic} />
+          <ModalButton
+            disabled={!address || isAddressError}
+            onClick={onConfirm}
+          >
+            Confirm
+          </ModalButton>
+        </Block>
       </ModalFooter>
     </>
   )

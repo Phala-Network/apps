@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import {useMemo, useState} from 'react'
 import {Input} from 'baseui/input'
 import {
   ModalHeader,
@@ -17,8 +17,9 @@ import {
   useApiPromise,
   useDecimalJsTokenDecimalMultiplier,
 } from '@phala/react-libs'
-import {toaster} from 'baseui/toast'
 import {Notification} from 'baseui/notification'
+import {PhalaStakePoolTransactionFeeLabel} from '@phala/react-components'
+import {Block} from 'baseui/block'
 
 const ChangeStakeModalBody = ({
   miner,
@@ -35,33 +36,28 @@ const ChangeStakeModalBody = ({
   const [amount, setAmount] = useState('')
   const waitSignAndSend = useWaitSignAndSend()
   const decimals = useDecimalJsTokenDecimalMultiplier(api)
-  const onConfirm = () => {
-    if (
-      new Decimal(amount).lessThanOrEqualTo(stakes) ||
-      new Decimal(amount).greaterThan(sMax)
-    ) {
-      toaster.negative(
-        'New stake should be larger than the current stake, but not larger than Smax. The increase of stake should not be greater than pool free delegation.',
-        {}
-      )
-      return
-    }
+  const isNewAmountNotInRange =
+    !amount ||
+    new Decimal(amount).lessThanOrEqualTo(stakes) ||
+    new Decimal(amount).greaterThan(sMax)
 
-    if (api && decimals) {
-      waitSignAndSend(
-        api.tx.phalaStakePool?.restartMining?.(
-          pid,
-          workerPublicKey,
-          new Decimal(amount).times(decimals).floor().toString()
-        ),
-        (status) => {
-          if (status.isReady) {
-            onClose?.({closeSource: 'closeButton'})
-          }
-        }
+  const onConfirm = () => {
+    waitSignAndSend(extrinsic, (status) => {
+      if (status.isReady) {
+        onClose?.({closeSource: 'closeButton'})
+      }
+    })
+  }
+
+  const extrinsic = useMemo(() => {
+    if (!isNewAmountNotInRange && api && decimals && amount) {
+      return api.tx.phalaStakePool?.restartMining?.(
+        pid,
+        workerPublicKey,
+        new Decimal(amount).times(decimals).floor().toString()
       )
     }
-  }
+  }, [amount, api, decimals, isNewAmountNotInRange, pid, workerPublicKey])
 
   return (
     <>
@@ -108,9 +104,16 @@ const ChangeStakeModalBody = ({
         </Notification>
       </ModalBody>
       <ModalFooter>
-        <ModalButton disabled={!amount} onClick={onConfirm}>
-          Confirm
-        </ModalButton>
+        <Block
+          display="flex"
+          alignItems="center"
+          justifyContent="space-between"
+        >
+          <PhalaStakePoolTransactionFeeLabel action={extrinsic} />
+          <ModalButton disabled={isNewAmountNotInRange} onClick={onConfirm}>
+            Confirm
+          </ModalButton>
+        </Block>
       </ModalFooter>
     </>
   )

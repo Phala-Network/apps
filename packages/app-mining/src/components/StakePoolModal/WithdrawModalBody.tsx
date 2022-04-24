@@ -20,6 +20,8 @@ import {Button} from 'baseui/button'
 import {formatCurrency} from '@phala/utils'
 import {useCurrentAccount} from '@phala/store'
 import {StakePool} from '.'
+import {PhalaStakePoolTransactionFeeLabel} from '@phala/react-components'
+import {Block} from 'baseui/block'
 
 const WithdrawModalBody: VFC<
   {
@@ -34,24 +36,11 @@ const WithdrawModalBody: VFC<
   const waitSignAndSend = useWaitSignAndSend()
   const decimals = useDecimalJsTokenDecimalMultiplier(api)
   const onConfirm = () => {
-    if (api && decimals && stakePoolStakers?.[0]) {
-      waitSignAndSend(
-        api.tx.phalaStakePool?.withdraw?.(
-          pid,
-          new Decimal(amount)
-            .div(new Decimal(stakePoolStakers[0].stake))
-            .times(new Decimal(stakePoolStakers[0].shares))
-            .times(decimals)
-            .floor()
-            .toString()
-        ),
-        (status) => {
-          if (status.isReady) {
-            onClose?.({closeSource: 'closeButton'})
-          }
-        }
-      )
-    }
+    waitSignAndSend(extrinsic, (status) => {
+      if (status.isReady) {
+        onClose?.({closeSource: 'closeButton'})
+      }
+    })
   }
   const hasWithdrawing = useMemo<boolean>(
     () =>
@@ -62,6 +51,20 @@ const WithdrawModalBody: VFC<
       ),
     [stakePoolWithdrawals, polkadotAccount]
   )
+
+  const extrinsic = useMemo(() => {
+    if (api && amount && decimals && stakePoolStakers?.[0]) {
+      return api.tx.phalaStakePool?.withdraw?.(
+        pid,
+        new Decimal(amount)
+          .div(new Decimal(stakePoolStakers[0].stake))
+          .times(new Decimal(stakePoolStakers[0].shares))
+          .times(decimals)
+          .floor()
+          .toString()
+      )
+    }
+  }, [api, stakePoolStakers, decimals, amount, pid])
 
   if (stakePoolStakers === undefined || stakePoolWithdrawals === undefined)
     return null
@@ -116,9 +119,16 @@ const WithdrawModalBody: VFC<
         </Notification>
       </ModalBody>
       <ModalFooter>
-        <ModalButton disabled={!amount} onClick={onConfirm}>
-          Confirm
-        </ModalButton>
+        <Block
+          display="flex"
+          alignItems="center"
+          justifyContent="space-between"
+        >
+          <PhalaStakePoolTransactionFeeLabel action={extrinsic} />
+          <ModalButton disabled={!amount} onClick={onConfirm}>
+            Confirm
+          </ModalButton>
+        </Block>
       </ModalFooter>
     </>
   )

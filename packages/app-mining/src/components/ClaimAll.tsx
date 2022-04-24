@@ -22,6 +22,7 @@ import {client} from '../utils/GraphQLClient'
 import {Skeleton} from 'baseui/skeleton'
 import {Block, BlockProps} from 'baseui/block'
 import Decimal from 'decimal.js'
+import {PhalaStakePoolTransactionFeeLabel} from '@phala/react-components'
 
 const ClaimAll = (props: BlockProps) => {
   const [polkadotAccount] = useCurrentAccount()
@@ -97,20 +98,11 @@ const ClaimAll = (props: BlockProps) => {
   }, [data])
 
   const onConfirm = () => {
-    if (api && decimals) {
-      waitSignAndSend(
-        api.tx.utility.batchAll?.(
-          claimableStakePoolPids.map(
-            (pid) => api.tx.phalaStakePool?.claimRewards?.(pid, address) as any
-          )
-        ),
-        (status) => {
-          if (status.isReady) {
-            closeModal()
-          }
-        }
-      )
-    }
+    waitSignAndSend(extrinsic, (status) => {
+      if (status.isReady) {
+        closeModal()
+      }
+    })
   }
 
   useEffect(() => {
@@ -118,6 +110,16 @@ const ClaimAll = (props: BlockProps) => {
       setAddress('')
     }
   }, [isModalOpen])
+
+  const extrinsic = useMemo(() => {
+    if (api && decimals) {
+      return api.tx.utility.batchAll?.(
+        claimableStakePoolPids.map(
+          (pid) => api.tx.phalaStakePool?.claimRewards?.(pid, address) as any
+        )
+      )
+    }
+  }, [address, api, claimableStakePoolPids, decimals])
 
   return (
     <>
@@ -216,12 +218,19 @@ const ClaimAll = (props: BlockProps) => {
           </FormControl>
         </ModalBody>
         <ModalFooter>
-          <ModalButton
-            disabled={!address || isAddressError}
-            onClick={onConfirm}
+          <Block
+            display="flex"
+            alignItems="center"
+            justifyContent="space-between"
           >
-            Confirm
-          </ModalButton>
+            <PhalaStakePoolTransactionFeeLabel action={extrinsic} />
+            <ModalButton
+              disabled={!address || isAddressError}
+              onClick={onConfirm}
+            >
+              Confirm
+            </ModalButton>
+          </Block>
         </ModalFooter>
       </Modal>
     </>

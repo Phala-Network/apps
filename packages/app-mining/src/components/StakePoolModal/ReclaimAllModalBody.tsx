@@ -17,6 +17,8 @@ import {useMemo, VFC} from 'react'
 import Decimal from 'decimal.js'
 import {StatefulTooltip} from 'baseui/tooltip'
 import {StakePool} from '.'
+import {PhalaStakePoolTransactionFeeLabel} from '@phala/react-components'
+import {Block} from 'baseui/block'
 
 const ReclaimAllModalBody: VFC<
   {
@@ -28,20 +30,11 @@ const ReclaimAllModalBody: VFC<
   const waitSignAndSend = useWaitSignAndSend()
   const decimals = useDecimalJsTokenDecimalMultiplier(api)
   const onConfirm = () => {
-    if (api && decimals && miners) {
-      waitSignAndSend(
-        api.tx.utility.batch(
-          miners.map(({workerPublicKey}) =>
-            api.tx.phalaStakePool?.reclaimPoolWorker?.(pid, workerPublicKey)
-          ) as any // FIXME: remove any when polkadot types is ready
-        ),
-        (status) => {
-          if (status.isReady) {
-            onClose?.({closeSource: 'closeButton'})
-          }
-        }
-      )
-    }
+    waitSignAndSend(extrinsic, (status) => {
+      if (status.isReady) {
+        onClose?.({closeSource: 'closeButton'})
+      }
+    })
   }
 
   const reclaimableStake = useMemo(
@@ -56,6 +49,16 @@ const ReclaimAllModalBody: VFC<
         : '',
     [miners]
   )
+
+  const extrinsic = useMemo(() => {
+    if (api && decimals && miners) {
+      return api.tx.utility.batch(
+        miners.map(({workerPublicKey}) =>
+          api.tx.phalaStakePool?.reclaimPoolWorker?.(pid, workerPublicKey)
+        ) as any // FIXME: remove any when polkadot types is ready
+      )
+    }
+  }, [api, decimals, miners, pid])
 
   if (!miners) return null
 
@@ -91,7 +94,14 @@ const ReclaimAllModalBody: VFC<
         </FormControl>
       </ModalBody>
       <ModalFooter>
-        <ModalButton onClick={onConfirm}>Confirm</ModalButton>
+        <Block
+          display="flex"
+          alignItems="center"
+          justifyContent="space-between"
+        >
+          <PhalaStakePoolTransactionFeeLabel action={extrinsic} />
+          <ModalButton onClick={onConfirm}>Confirm</ModalButton>
+        </Block>
       </ModalFooter>
     </>
   )

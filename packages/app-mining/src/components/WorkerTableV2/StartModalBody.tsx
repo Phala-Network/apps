@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import {useMemo, useState} from 'react'
 import {Input} from 'baseui/input'
 import {
   ModalHeader,
@@ -17,6 +17,8 @@ import {
   useApiPromise,
   useDecimalJsTokenDecimalMultiplier,
 } from '@phala/react-libs'
+import {PhalaStakePoolTransactionFeeLabel} from '@phala/react-components'
+import {Block} from 'baseui/block'
 
 const StartModalBody = ({
   miner,
@@ -34,21 +36,21 @@ const StartModalBody = ({
   const waitSignAndSend = useWaitSignAndSend()
   const decimals = useDecimalJsTokenDecimalMultiplier(api)
   const onConfirm = () => {
-    if (api && decimals) {
-      waitSignAndSend(
-        api.tx.phalaStakePool?.startMining?.(
-          pid,
-          workerPublicKey,
-          new Decimal(amount).times(decimals).floor().toString()
-        ),
-        (status) => {
-          if (status.isReady) {
-            onClose?.({closeSource: 'closeButton'})
-          }
-        }
+    waitSignAndSend(extrinsic, (status) => {
+      if (status.isReady) {
+        onClose?.({closeSource: 'closeButton'})
+      }
+    })
+  }
+  const extrinsic = useMemo(() => {
+    if (api && decimals && amount) {
+      return api.tx.phalaStakePool?.startMining?.(
+        pid,
+        workerPublicKey,
+        new Decimal(amount).times(decimals).floor().toString()
       )
     }
-  }
+  }, [amount, api, decimals, pid, workerPublicKey])
 
   return (
     <>
@@ -89,9 +91,16 @@ const StartModalBody = ({
         </FormControl>
       </ModalBody>
       <ModalFooter>
-        <ModalButton disabled={!amount} onClick={onConfirm}>
-          Confirm
-        </ModalButton>
+        <Block
+          display="flex"
+          alignItems="center"
+          justifyContent="space-between"
+        >
+          <PhalaStakePoolTransactionFeeLabel action={extrinsic} />
+          <ModalButton disabled={!amount} onClick={onConfirm}>
+            Confirm
+          </ModalButton>
+        </Block>
       </ModalFooter>
     </>
   )
