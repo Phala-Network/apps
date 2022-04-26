@@ -42,6 +42,7 @@
     "gatsby-plugin-react-svg": "^3.1.0",
     "gatsby-plugin-styled-components": "^5.12.1",
     "gatsby-plugin-typescript": "^4.12.1",
+    "iframe-resizer-react": "^1.1.0",
     "jotai": "^1.6.4",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",

@@ -3053,6 +3053,7 @@ __metadata:
     gatsby-plugin-react-svg: ^3.1.0
     gatsby-plugin-styled-components: ^5.12.1
     gatsby-plugin-typescript: ^4.12.1
+    iframe-resizer-react: ^1.1.0
     jotai: ^1.6.4
     react: ^18.0.0
     react-dom: ^18.0.0
@@ -10536,6 +10537,27 @@ __metadata:
   languageName: node
   linkType: hard
 
+"iframe-resizer-react@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "iframe-resizer-react@npm:1.1.0"
+  dependencies:
+    iframe-resizer: ^4.3.0
+    warning: ^4.0.3
+  peerDependencies:
+    prop-types: ">=15.7.2"
+    react: ">=16.8.0"
+    react-dom: ">=16.8.0"
+  checksum: 64ddf99d0246da71c5ef34fd6a9b35d14e9346bda0ff0e9f0f011041822eb99f477b8b8167a82126efdfc3a84eb428262518f9ade7601f0f208b69d4cdadb9f7
+  languageName: node
+  linkType: hard
+
+"iframe-resizer@npm:^4.3.0":
+  version: 4.3.2
+  resolution: "iframe-resizer@npm:4.3.2"
+  checksum: 762d934f4fbe7e4b76c0f4574c2a47ef0e3fc6c82564f512ec41e62b62501052d271fb8ca5d268535509c0088132493c0ac78312af0fe3f11bf65cd964dd11a0
+  languageName: node
+  linkType: hard
+
 "ignore@npm:^4.0.6":
   version: 4.0.6
   resolution: "ignore@npm:4.0.6"
@@ -17320,7 +17342,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"warning@npm:^4.0.0, warning@npm:^4.0.2":
+"warning@npm:^4.0.0, warning@npm:^4.0.2, warning@npm:^4.0.3":
   version: 4.0.3
   resolution: "warning@npm:4.0.3"
   dependencies:
