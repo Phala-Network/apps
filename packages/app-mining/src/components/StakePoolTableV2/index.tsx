@@ -1,39 +1,39 @@
+import {useCurrentAccount} from '@phala/store'
+import {formatCurrency, isTruthy, toFixed} from '@phala/utils'
+import {Block} from 'baseui/block'
+import {Checkbox} from 'baseui/checkbox'
+import {StatefulInput} from 'baseui/input'
+import {StatefulMenu} from 'baseui/menu'
+import {StatefulPopover} from 'baseui/popover'
 import {
   StyledTableBodyRow,
   TableBuilder,
   TableBuilderColumn,
 } from 'baseui/table-semantic'
-import {StatefulPopover} from 'baseui/popover'
-import {StatefulMenu} from 'baseui/menu'
+import {StatefulTooltip} from 'baseui/tooltip'
+import Decimal from 'decimal.js'
+import {useAtom} from 'jotai'
+import {atomWithStorage} from 'jotai/utils'
+import {debounce} from 'lodash-es'
 import {ReactChildren, useCallback, useState, VFC} from 'react'
 import {AlertTriangle, Search} from 'react-feather'
-import {Checkbox} from 'baseui/checkbox'
+import styled from 'styled-components'
+import {$StyleProp} from 'styletron-react'
 import {
-  SortOrder,
-  StakePoolsQuery,
   QueryMode,
-  useStakePoolsQuery,
+  SortOrder,
   StakePoolsOrderByWithRelationInput,
+  StakePoolsQuery,
+  useStakePoolsQuery,
 } from '../../hooks/graphql'
 import {client} from '../../utils/GraphQLClient'
-import styled from 'styled-components'
-import {StatefulInput} from 'baseui/input'
-import {debounce} from 'lodash-es'
-import {formatCurrency, isTruthy, toFixed} from '@phala/utils'
-import PopoverButton from '../PopoverButton'
-import {useCurrentAccount} from '@phala/store'
-import Pagination from '../Pagination'
-import {StatefulTooltip} from 'baseui/tooltip'
-import {tooltipContent} from './tooltipContent'
-import Decimal from 'decimal.js'
-import TableSkeleton from '../TableSkeleton'
 import Owner from '../Owner'
+import Pagination from '../Pagination'
+import PopoverButton from '../PopoverButton'
 import StakePoolModal, {StakePoolModalKey} from '../StakePoolModal'
+import TableSkeleton from '../TableSkeleton'
 import TooltipHeader from '../TooltipHeader'
-import {$StyleProp} from 'styletron-react'
-import {Block} from 'baseui/block'
-import {atomWithStorage} from 'jotai/utils'
-import {useAtom} from 'jotai'
+import {tooltipContent} from './tooltipContent'
 
 const TableHeader = styled.div`
   display: flex;
@@ -162,8 +162,8 @@ const StakePoolTableV2: VFC<{
       keepPreviousData: true,
       enabled:
         (kind === 'delegate' && Boolean(remainingValue)) ||
-        (kind === 'myDelegate' && Boolean(polkadotAccount?.address)) ||
-        kind === 'mining',
+        ((kind === 'myDelegate' || kind === 'mining') &&
+          Boolean(polkadotAccount?.address)),
     }
   )
 
