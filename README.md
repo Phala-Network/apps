@@ -1,5 +1,11 @@
 # Phala Apps
 
-[![CI-app](https://github.com/Phala-Network/apps/workflows/CI-app/badge.svg?branch=master)](https://github.com/Phala-Network/apps/actions/workflows/ci-app.yml)
-[![Netlify Status](https://api.netlify.com/api/v1/badges/927fa773-d939-4450-acc3-22650c7e9524/deploy-status)](https://app.netlify.com/sites/app-phala-network/deploys)
-[![StackShare](http://img.shields.io/badge/tech-stack-0690fa.svg?style=flat)](https://stackshare.io/kingsleydon/phala-fe)
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/Phala-Network/apps/CI-app?style=for-the-badge)](https://github.com/Phala-Network/apps/actions/workflows/ci-app.yml)
+![Netlify](https://img.shields.io/netlify/927fa773-d939-4450-acc3-22650c7e9524?style=for-the-badge)
+[![Discord](https://img.shields.io/discord/697726436211163147?color=%235865F2&label=discord&style=for-the-badge)](https://discord.gg/phala)
+
+## Feedback
+
+If you encounter problems, for rapid response it is recommended to join our [discord](https://discord.gg/phala) and give feedback in [📮｜product-issue-feedback](https://discord.com/channels/697726436211163147/895331964972843028).
+
+Also, a GitHub issue is welcome.
