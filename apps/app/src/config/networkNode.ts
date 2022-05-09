@@ -5,6 +5,7 @@ export type NetworkNodeId =
   | 'phala-rewards-demo'
   | 'khala-via-phala'
   | 'khala-via-onfinality'
+  | 'khala-via-dwellir'
   | 'pc-test-3'
 
 export type NetworkNodeKind = 'khala' | 'phala'
@@ -38,6 +39,13 @@ export const NETWORK_NODES: readonly NetworkNode[] = [
     id: 'khala-via-onfinality',
     name: 'Khala via Onfinality',
     endpoint: 'wss://khala.api.onfinality.io/public-ws',
+    types: khala,
+    kind: 'khala',
+  },
+  {
+    id: 'khala-via-dwellir',
+    name: 'Khala via Dwellir',
+    endpoint: 'wss://khala-rpc.dwellir.com',
     types: khala,
     kind: 'khala',
   },
