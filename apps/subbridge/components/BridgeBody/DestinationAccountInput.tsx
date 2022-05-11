@@ -14,6 +14,9 @@ import {useAtom} from 'jotai'
 import {RESET} from 'jotai/utils'
 import {FC, useEffect, useLayoutEffect, useMemo, useRef, useState} from 'react'
 
+const useIsomorphicLayoutEffect =
+  typeof window !== 'undefined' ? useLayoutEffect : useEffect
+
 const DestinationAccountInput: FC<BoxProps> = (props) => {
   const inputRef = useRef<HTMLInputElement>()
   const [manually, setManually] = useState(false)
@@ -29,7 +32,7 @@ const DestinationAccountInput: FC<BoxProps> = (props) => {
     isWalletConnected && fromChain.kind === toChain.kind
   const useSameAccountEnabled = useSameAccountAvailable && !manually
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (useSameAccountEnabled) {
       if (fromChain.kind === 'evm' && evmAccount) {
         setDestinationAccount(evmAccount)
