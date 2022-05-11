@@ -1,14 +1,13 @@
 import React, {useMemo, useState} from 'react'
-import styled from 'styled-components'
 import {down} from 'styled-breakpoints'
 import {useBreakpoint} from 'styled-breakpoints/react-styled'
-import {navigate} from 'gatsby'
-import {DataType} from './index'
+import styled from 'styled-components'
+import {useCurrentNetworkNode} from '../../../store/networkNode'
 import Button from '../Button'
+import ClaimModal from '../ClaimModal'
 import Popover from '../Popover'
 import TransferModal from '../TransferModal'
-import ClaimModal from '../ClaimModal'
-import {useCurrentNetworkNode} from '../../../store/networkNode'
+import {DataType} from './index'
 
 const Wrapper = styled.div`
   display: flex;
@@ -59,7 +58,7 @@ const ButtonCell: React.FC<Pick<DataType, 'name'>> = ({name}) => {
   }, [name])
 
   const handleBridge = () => {
-    navigate('/bridge/')
+    window.open('https://subbridge.io')
   }
   return (
     <Wrapper>

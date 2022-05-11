@@ -1,7 +1,7 @@
 import {useAccounts, useWallet} from '@phala/store'
-import {useEffect} from 'react'
 import {encodeAddress} from '@polkadot/util-crypto'
-import {WalletAccount} from '@phala/wallets/types'
+import {WalletAccount} from '@talisman-connect/wallets'
+import {useEffect} from 'react'
 
 const transformAccounts = (accounts: WalletAccount[]): WalletAccount[] => {
   return accounts.map((account) => ({
@@ -19,19 +19,19 @@ export const useSubscribeWalletAccounts = () => {
     let unsub: () => void
     if (wallet) {
       // Some wallets don't implement subscribeAccounts correctly, so call getAccounts anyway
-      wallet.getAccounts().then((accounts) => {
-        setAccounts(accounts ? transformAccounts(accounts) : null)
+      // wallet.getAccounts().then((accounts) => {
+      // setAccounts(accounts ? transformAccounts(accounts) : null)
 
-        wallet
-          .subscribeAccounts((accounts) => {
-            if (accounts) {
-              setAccounts(transformAccounts(accounts))
-            }
-          })
-          .then((_unsub) => {
-            _unsub && (unsub = _unsub)
-          })
+      ;(
+        wallet.subscribeAccounts((accounts) => {
+          if (accounts) {
+            setAccounts(transformAccounts(accounts))
+          }
+        }) as Promise<() => void>
+      ).then((_unsub) => {
+        _unsub && (unsub = _unsub)
       })
+      // })
     }
 
     return () => {

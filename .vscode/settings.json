@@ -1,14 +1,8 @@
 {
   "cSpell.words": [
     "chainbridge",
-    "codegen",
-    "ethereums",
     "extrinsics",
-    "hexlify",
-    "iframes",
-    "languagedetector",
     "onstatus",
-    "preinstall",
     "readystate",
     "styletron",
     "svgs",
@@ -17,13 +11,21 @@
     "stakers",
     "dotsama",
     "baseui",
-    "khala"
+    "khala",
+    "subbridge",
+    "phala",
+    "karura",
+    "polkadot",
+    "laggy"
   ],
-  // Enable after each package is configured
-  // "eslint.workingDirectories": [
-  //   {
-  //     "mode": "auto"
-  //   }
-  // ],
+  "eslint.workingDirectories": [
+    {
+      "mode": "auto"
+    }
+  ],
+  "javascript.format.insertSpaceAfterOpeningAndBeforeClosingEmptyBraces": false,
+  "javascript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": false,
+  "typescript.format.insertSpaceAfterOpeningAndBeforeClosingEmptyBraces": false,
+  "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": false,
   "typescript.tsdk": "./node_modules/typescript/lib"
 }

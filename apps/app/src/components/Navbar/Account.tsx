@@ -1,16 +1,17 @@
-import {useState, useMemo, FC} from 'react'
-import styled from 'styled-components'
-import {down} from 'styled-breakpoints'
 import {BalanceLabel, SelectAccountModal} from '@phala/react-components'
-import {useCurrentAccount} from '@phala/store'
-import {trimAddress} from '@phala/utils'
 import {useBalance, useSSR} from '@phala/react-hooks'
 import {
   useApiPromise,
   useDecimalJsTokenDecimalMultiplier,
 } from '@phala/react-libs'
-import Decimal from 'decimal.js'
+import {useCurrentAccount} from '@phala/store'
+import {trimAddress} from '@phala/utils'
+import {useStyletron} from 'baseui'
 import {Block} from 'baseui/block'
+import Decimal from 'decimal.js'
+import {useMemo, useState} from 'react'
+import {down} from 'styled-breakpoints'
+import styled from 'styled-components'
 
 const Connect = styled.div`
   cursor: pointer;
@@ -107,6 +108,7 @@ const Address = styled.span`
 `
 
 const Account: React.FC = () => {
+  const [css] = useStyletron()
   const [selectAccountModalViable, setSelectAccountModalViable] =
     useState(false)
   const openAccountSelectModal = () => setSelectAccountModalViable(true)
@@ -122,9 +124,7 @@ const Account: React.FC = () => {
 
   const {isServer} = useSSR()
 
-  const WalletIcon = currentAccount?.wallet?.logo.src as unknown as
-    | FC
-    | undefined
+  const walletIcon = currentAccount?.wallet?.logo.src
 
   if (isServer) return null
 
@@ -139,9 +139,15 @@ const Account: React.FC = () => {
             <span className="unit">PHA</span>
           </Balance>
           <AccountInfo onClick={openAccountSelectModal}>
-            {WalletIcon && (
-              <Block marginRight="scale400" width="20px">
-                <WalletIcon />
+            {walletIcon && (
+              <Block marginRight="scale400">
+                <img
+                  src={walletIcon}
+                  className={css({
+                    width: '20px',
+                    display: 'block',
+                  })}
+                />
               </Block>
             )}
             <Name>{currentAccount?.name}</Name>
@@ -150,6 +156,7 @@ const Account: React.FC = () => {
         </AccountLabel>
       )}
       <SelectAccountModal
+        dappName="Phala App"
         onClose={() => setSelectAccountModalViable(false)}
         isOpen={selectAccountModalViable}
       />

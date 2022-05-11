@@ -5,6 +5,7 @@
 
 .env.local
 .env.*.local
+.env.development
 
 # security: atlassian/changeset
 
@@ -25,9 +26,6 @@ node_modules
 .out/
 
 # Build directories (next.js...)
-/.next/
-/out/
-/build
 /apps/app/public
 
 # Cache
