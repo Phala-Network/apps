@@ -8,13 +8,7 @@ export type UseClipboardResult = {
   copy: (text: string) => void
 }
 
-const defaultOptions: UseClipboardOptions = {
-  onError: () => console.warn('Failed to copy.', 'use-clipboard'),
-}
-
-const useClipboard = (
-  options: UseClipboardOptions = defaultOptions
-): UseClipboardResult => {
+const useClipboard = (): UseClipboardResult => {
   const el = usePortal('clipboard')
 
   const copyText = (el: HTMLElement | null, text: string) => {
@@ -33,7 +27,7 @@ const useClipboard = (
     try {
       window.document.execCommand('copy')
     } catch (e) {
-      options.onError && options.onError()
+      // noop
     }
 
     selection.removeAllRanges()

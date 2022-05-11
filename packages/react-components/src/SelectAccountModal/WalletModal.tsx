@@ -2,7 +2,7 @@ import {Wallet} from '@talisman-connect/wallets'
 import {useStyletron} from 'baseui'
 import {Block} from 'baseui/block'
 import {Modal, ModalBody, ModalHeader, ModalProps} from 'baseui/modal'
-import {useEffect, useState, VFC} from 'react'
+import {FC, useEffect, useState} from 'react'
 import {ArrowRight, Download} from 'react-feather'
 
 type Props = {
@@ -11,7 +11,7 @@ type Props = {
 
 const walletsOrder = ['talisman', 'polkadot-js', 'subwallet-js']
 
-const Body: VFC<Props> = ({onSelect}) => {
+const Body: FC<Props> = ({onSelect}) => {
   const [css, theme] = useStyletron()
   const [wallets, setWallets] = useState<Wallet[]>()
   useEffect(() => {
@@ -39,10 +39,7 @@ const Body: VFC<Props> = ({onSelect}) => {
         <Block>
           {wallets &&
             wallets.map((wallet) => {
-              // NOTE: logo.src is imported svg, it is react component instead of string because of svg-react-loader
-              const Logo = wallet.logo.src as unknown as VFC<{
-                className: string
-              }>
+              const logo = wallet.logo.src
               return (
                 <Block
                   padding="scale600"
@@ -65,13 +62,16 @@ const Body: VFC<Props> = ({onSelect}) => {
                   }}
                   key={wallet.extensionName}
                 >
-                  <Logo
-                    className={css({
-                      width: '36px',
-                      height: '36px',
-                      flex: 'none',
-                    })}
-                  />
+                  {logo && (
+                    <img
+                      src={logo}
+                      className={css({
+                        width: '36px',
+                        height: '36px',
+                        flex: 'none',
+                      })}
+                    />
+                  )}
 
                   <span
                     className={css({
@@ -104,7 +104,7 @@ const Body: VFC<Props> = ({onSelect}) => {
   )
 }
 
-const WalletModal: VFC<ModalProps & Props> = ({isOpen, onClose, onSelect}) => {
+const WalletModal: FC<ModalProps & Props> = ({isOpen, onClose, onSelect}) => {
   return (
     <Modal
       isOpen={isOpen}
