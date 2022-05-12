@@ -28,7 +28,7 @@ export const BRIDGES: Readonly<Bridge[]> = [
     destChainTransactionFee: new Decimal(0),
   },
   {
-    fromChain: 'rinkeby',
+    fromChain: 'kovan',
     toChain: 'thala',
     asset: 'pha',
     estimatedTime: '< 1 min',
@@ -37,7 +37,7 @@ export const BRIDGES: Readonly<Bridge[]> = [
   },
   {
     fromChain: 'thala',
-    toChain: 'rinkeby',
+    toChain: 'kovan',
     asset: 'pha',
     estimatedTime: '> 24 hrs',
     destChainTransactionFee: new Decimal(0),

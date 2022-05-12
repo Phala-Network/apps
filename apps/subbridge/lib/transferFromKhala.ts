@@ -33,7 +33,7 @@ export const transferFromKhala = ({
 }) => {
   if (
     toChainId === 'ethereum' ||
-    (toChainId === 'rinkeby' && assetId === 'pha')
+    (toChainId === 'kovan' && assetId === 'pha')
   ) {
     return khalaApi.tx.xTransfer.transfer(
       khalaApi.createType('XcmV1MultiAsset', {

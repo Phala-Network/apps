@@ -10,6 +10,7 @@ import {
   toChainAtom,
 } from '@/store/bridge'
 import {polkadotAccountAtom} from '@phala/store'
+import {Callback, ISubmittableResult} from '@polkadot/types/types'
 import Decimal from 'decimal.js'
 import {useAtomValue} from 'jotai'
 import {useMemo} from 'react'
@@ -35,7 +36,7 @@ export const useTransfer = () => {
   )
   const isFromEthereumToKhala =
     (fromChain.id === 'ethereum' && toChain.id === 'khala') ||
-    (fromChain.id === 'rinkeby' && toChain.id === 'thala')
+    (fromChain.id === 'kovan' && toChain.id === 'thala')
   const isFromKhala = fromChain.id === 'thala' || fromChain.id === 'khala'
   const isFromKarura =
     fromChain.id === 'karura' || fromChain.id === 'karura-test'
@@ -43,7 +44,7 @@ export const useTransfer = () => {
   const rawAmount = useMemo(
     () =>
       amount
-        ? new Decimal(amount).times(Decimal.pow(10, decimals)).toString()
+        ? new Decimal(amount).times(Decimal.pow(10, decimals)).toFixed()
         : '0',
     [amount, decimals]
   )
@@ -57,7 +58,7 @@ export const useTransfer = () => {
         !asset.bridgeContract ||
         fromChain.kind !== 'evm'
       ) {
-        return
+        throw new Error('Transfer missing required parameters')
       }
 
       return transferFromEthereumToKhala({
@@ -72,7 +73,7 @@ export const useTransfer = () => {
   }
 
   if (isFromKarura) {
-    return async () => {
+    return async (statusCb?: Callback<ISubmittableResult>) => {
       if (
         !karuraApi ||
         !asset.karuraToken ||
@@ -80,7 +81,7 @@ export const useTransfer = () => {
         toChain.kind !== 'polkadot' ||
         !polkadotAccount?.wallet?.signer
       ) {
-        return
+        throw new Error('Transfer missing required parameters')
       }
       return transferFromKarura({
         karuraApi,
@@ -88,15 +89,21 @@ export const useTransfer = () => {
         amount: rawAmount,
         paraId: toChain.paraId,
         destinationAccount,
-      }).signAndSend(polkadotAccount.address, {
-        signer: polkadotAccount.wallet.signer,
-      })
+      }).signAndSend(
+        polkadotAccount.address,
+        {
+          signer: polkadotAccount.wallet.signer,
+        },
+        statusCb
+      )
     }
   }
 
   if (isFromKhala) {
-    return async () => {
-      if (!khalaApi || !polkadotAccount?.wallet?.signer) return
+    return async (statusCb?: Callback<ISubmittableResult>) => {
+      if (!khalaApi || !polkadotAccount?.wallet?.signer) {
+        throw new Error('Transfer missing required parameters')
+      }
 
       const extrinsic = transferFromKhala({
         khalaApi,
@@ -107,12 +114,14 @@ export const useTransfer = () => {
       })
 
       if (extrinsic) {
-        return extrinsic.signAndSend(polkadotAccount.address, {
-          signer: polkadotAccount.wallet.signer,
-        })
+        return extrinsic.signAndSend(
+          polkadotAccount.address,
+          {
+            signer: polkadotAccount.wallet.signer,
+          },
+          statusCb
+        )
       }
     }
   }
-
-  return null
 }

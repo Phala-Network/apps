@@ -2,8 +2,9 @@ import ethereumIcon from '@/assets/ethereum_chain_icon.jpg'
 import karuraIcon from '@/assets/karura_chain_icon.jpg'
 import khalaIcon from '@/assets/khala_chain_icon.jpg'
 import {StaticImageData} from 'next/image'
+import {AssetId} from './asset'
 
-export type EvmChainId = 'ethereum' | 'rinkeby'
+export type EvmChainId = 'ethereum' | 'kovan'
 export type PolkadotChainId = 'khala' | 'karura' | 'thala' | 'karura-test'
 export type ChainId = EvmChainId | PolkadotChainId
 export type ChainKind = 'evm' | 'polkadot'
@@ -28,6 +29,7 @@ export interface PolkadotChain extends BaseChain {
   endpoint: string | string[]
   ss58Format: number
   paraId: number
+  nativeAsset?: AssetId
 }
 
 export type Chain = EvmChain | PolkadotChain
@@ -47,6 +49,7 @@ export const CHAINS: Readonly<
     ],
     ss58Format: 30,
     paraId: 2004,
+    nativeAsset: 'pha',
   },
   karura: {
     id: 'karura',
@@ -73,13 +76,13 @@ export const CHAINS: Readonly<
     evmChainId: 1,
     currencySymbol: 'ETH',
   },
-  rinkeby: {
-    id: 'rinkeby',
-    name: 'Rinkeby',
+  kovan: {
+    id: 'kovan',
+    name: 'Kovan',
     icon: ethereumIcon,
     kind: 'evm',
-    evmChainId: 4,
-    currencySymbol: 'rETH',
+    evmChainId: 42,
+    currencySymbol: 'kETH',
     isTest: true,
   },
   thala: {
@@ -91,6 +94,7 @@ export const CHAINS: Readonly<
     ss58Format: 30,
     isTest: true,
     paraId: 2004,
+    nativeAsset: 'pha',
   },
   'karura-test': {
     id: 'karura-test',

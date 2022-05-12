@@ -11,7 +11,6 @@ export interface Asset {
   icon: StaticImageData
   decimals: Partial<Record<ChainId, number>> & {default: number}
   karuraToken?: KaruraToken
-  nativeChain: ChainId[]
   assetContract?: {
     [evmChainId: number]: {
       address: `0x${string}`
@@ -34,7 +33,6 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
     symbol: 'PHA',
     icon: phaIcon,
     karuraToken: 'PHA',
-    nativeChain: ['khala', 'thala'],
     assetContract: {
       1: {
         address: '0x6c5bA91642F10282b576d91922Ae6448C9d52f4E',
@@ -45,14 +43,14 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
         ],
         spender: '0xEEc0fb4913119567cDfC0c5fc2Bf8f9F9B226c2d',
       },
-      4: {
-        address: '0xd06F0F098948cBdFcB9ED8d85688637478724855',
+      42: {
+        address: '0x512f7a3c14b6ee86c2015bc8ac1fe97e657f75f2',
         abi: [
           'function allowance(address owner, address spender) external view returns (uint256)',
           'function approve(address spender, uint256 amount) external returns (bool)',
           'function balanceOf(address account) external view returns (uint256)',
         ],
-        spender: '0x30f8549A46afa69f3F9b46e3C28F456796E6Cf37',
+        spender: '0xF69b08D649B744A4d4781CB1B86E30Cc9Ac9991b',
       },
     },
     bridgeContract: {
@@ -65,8 +63,8 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
           'function deposit(uint8 destinationChainID, bytes32 resourceID, bytes calldata data)',
         ],
       },
-      4: {
-        address: '0x0712Cf53B9fA1A33018d180a4AbcC7f1803F55f4',
+      42: {
+        address: '0x82db1f1717487cADEAf6F0C74825495d6D89E08e',
         resourceId:
           '0x00e6dfb61a2fb903df487c401663825643bb825d41695e63df8af6162ab145a6',
         abi: [
@@ -75,6 +73,6 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
         ],
       },
     },
-    decimals: {ethereum: 18, rinkeby: 18, default: 12},
+    decimals: {ethereum: 18, kovan: 18, default: 12},
   },
 }
