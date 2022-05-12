@@ -1,13 +1,12 @@
 import {migrationAlertOpenAtom} from '@/store/common'
 import {Alert, AlertProps} from '@mui/material'
-import {isSSR} from '@phala/utils'
 import {useAtom} from 'jotai'
 import {FC} from 'react'
 
 const MigrationAlert: FC<AlertProps> = ({sx, ...props}) => {
   const [open, setOpen] = useAtom(migrationAlertOpenAtom)
 
-  if (!open || isSSR) return null
+  if (!open) return null
 
   return (
     <Alert
