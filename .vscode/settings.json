@@ -1,6 +1,5 @@
 {
   "cSpell.words": [
-    "chainbridge",
     "extrinsics",
     "onstatus",
     "readystate",
@@ -15,9 +14,13 @@
     "subbridge",
     "phala",
     "karura",
-    "polkadot",
-    "laggy"
+    "polkadot"
   ],
+  "editor.codeActionsOnSave": {
+    "source.addMissingImports": true,
+    "source.fixAll.eslint": true,
+    "source.sortImports": true
+  },
   "eslint.workingDirectories": [
     {
       "mode": "auto"

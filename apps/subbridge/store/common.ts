@@ -13,3 +13,8 @@ export const colorSchemeSettingAtom = atomWithStorage<ColorSchemeSetting>(
 export const isWalletConnectAtom = atom<boolean>((get) =>
   Boolean(get(fromAccountAtom))
 )
+
+export const migrationAlertOpenAtom = atomWithStorage(
+  'jotai:migration_alert_open',
+  true
+)
