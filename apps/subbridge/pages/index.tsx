@@ -1,4 +1,5 @@
 import BridgeBody from '@/components/BridgeBody'
+import {ClientOnly} from '@/components/ClientOnly'
 import MigrationAlert from '@/components/MigrationAlert'
 import {Box, Container, useTheme} from '@mui/material'
 import type {NextPage} from 'next'
@@ -28,7 +29,9 @@ const Home: NextPage = () => {
           mx: 'auto',
         }}
       >
-        <MigrationAlert sx={{mb: 2}} />
+        <ClientOnly>
+          <MigrationAlert sx={{mb: 2}} />
+        </ClientOnly>
 
         <BridgeBody />
       </Box>
