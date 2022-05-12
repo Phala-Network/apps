@@ -1,5 +1,6 @@
 import BridgeBody from '@/components/BridgeBody'
-import {Container, useTheme} from '@mui/material'
+import MigrationAlert from '@/components/MigrationAlert'
+import {Box, Container, useTheme} from '@mui/material'
 import type {NextPage} from 'next'
 import dynamic from 'next/dynamic'
 
@@ -11,19 +12,26 @@ const PolkadotWalletDialog = dynamic(
 const Home: NextPage = () => {
   const theme = useTheme()
   return (
-    <Container>
-      <BridgeBody
+    <Container
+      sx={{
+        pt: 12,
+        [theme.breakpoints.down('sm')]: {
+          pt: 9,
+        },
+      }}
+    >
+      <Box
         sx={{
-          mt: 12,
           maxWidth: `calc(${theme.breakpoints.values.sm}px - ${theme.spacing(
             3
           )} * 2)`,
           mx: 'auto',
-          [theme.breakpoints.down('sm')]: {
-            mt: 9,
-          },
         }}
-      />
+      >
+        <MigrationAlert sx={{mb: 2}} />
+
+        <BridgeBody />
+      </Box>
 
       <PolkadotWalletDialog />
     </Container>

@@ -1,14 +1,4 @@
-import {TableBuilder, TableBuilderColumn} from 'baseui/table-semantic'
-import {StatefulPopover} from 'baseui/popover'
-import {StatefulMenu} from 'baseui/menu'
-import {useCallback, useState} from 'react'
-import {
-  SortOrder,
-  useMinersQuery,
-  Miners,
-  MinersOrderByWithRelationInput,
-} from '../../hooks/graphql'
-import {client} from '../../utils/GraphQLClient'
+import {useCurrentAccount} from '@phala/store'
 import {
   formatCurrency,
   isSSR,
@@ -16,25 +6,34 @@ import {
   toFixed,
   trimAddress,
 } from '@phala/utils'
-import PopoverButton from '../PopoverButton'
-import {useCurrentAccount} from '@phala/store'
-import Pagination from '../Pagination'
-import {Modal, ModalProps} from 'baseui/modal'
-import TableSkeleton from '../TableSkeleton'
-import {StatefulTooltip} from 'baseui/tooltip'
 import {Block} from 'baseui/block'
-import {tooltipContent} from './tooltipContent'
-import Decimal from 'decimal.js'
+import {StatefulMenu} from 'baseui/menu'
+import {Modal, ModalProps} from 'baseui/modal'
+import {StatefulPopover} from 'baseui/popover'
+import {TableBuilder, TableBuilderColumn} from 'baseui/table-semantic'
+import {StatefulTooltip} from 'baseui/tooltip'
+import {ParagraphXSmall} from 'baseui/typography'
 import {formatDuration, intervalToDuration, isAfter, isFuture} from 'date-fns'
-
+import Decimal from 'decimal.js'
+import {useCallback, useState} from 'react'
+import {
+  Miners,
+  MinersOrderByWithRelationInput,
+  SortOrder,
+  useMinersQuery,
+} from '../../hooks/graphql'
+import {client} from '../../utils/GraphQLClient'
+import Pagination from '../Pagination'
+import PopoverButton from '../PopoverButton'
+import TableSkeleton from '../TableSkeleton'
+import TooltipHeader from '../TooltipHeader'
+import ChangeStakeModalBody from './ChangeStakeModalBody'
+import ReclaimModalBody from './ReclaimModalBody'
+import RemoveModalBody from './RemoveModalBody'
 // FIXME: should be loadable, but meet some problems when configuring gatsby-plugin-loadable-components-ssr
 import StartModalBody from './StartModalBody'
 import StopModalBody from './StopModalBody'
-import RemoveModalBody from './RemoveModalBody'
-import ReclaimModalBody from './ReclaimModalBody'
-import ChangeStakeModalBody from './ChangeStakeModalBody'
-import {ParagraphXSmall} from 'baseui/typography'
-import TooltipHeader from '../TooltipHeader'
+import {tooltipContent} from './tooltipContent'
 
 type ModalKey = 'start' | 'changeStake' | 'stop' | 'remove' | 'reclaim'
 type MenuItem = {label: string; key: ModalKey; disabled?: boolean}
@@ -302,7 +301,7 @@ const WorkerTableV2 = (): JSX.Element => {
         pageSize={pageSize}
       />
 
-      {!isSSR() && operatingMiner && (
+      {!isSSR && operatingMiner && (
         <Modal
           isOpen={isModalOpen}
           onClose={closeModal}
