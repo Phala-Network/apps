@@ -25,7 +25,7 @@ export const useBalance = (): Decimal | undefined => {
     (fromChain.id === 'karura' || fromChain.id === 'karura-test') &&
     asset.karuraToken !== undefined
   const fromNativeChain =
-    fromChain.kind === 'polkadot' && asset.nativeChain.includes(fromChain.id)
+    fromChain.kind === 'polkadot' && fromChain.nativeAsset === asset.id
   const fromEvm = fromChain.kind === 'evm'
 
   const {data: karuraTokenBalance} = useSWR(

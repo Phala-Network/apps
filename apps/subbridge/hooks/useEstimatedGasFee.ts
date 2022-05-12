@@ -30,7 +30,7 @@ export const useEstimatedGasFee = () => {
   )
   const isFromEthereumToKhala =
     (fromChain.id === 'ethereum' && toChain.id === 'khala') ||
-    (fromChain.id === 'rinkeby' && toChain.id === 'thala')
+    (fromChain.id === 'kovan' && toChain.id === 'thala')
   const isFromKarura =
     fromChain.id === 'karura' || fromChain.id === 'karura-test'
   const isFromKhala = fromChain.id === 'thala' || fromChain.id === 'khala'

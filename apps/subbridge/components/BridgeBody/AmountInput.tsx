@@ -32,7 +32,7 @@ const AmountInput: FC<BoxProps> = (props) => {
   )
 
   const fromNativeChain =
-    fromChain.kind === 'polkadot' && asset.nativeChain.includes(fromChain.id)
+    fromChain.kind === 'polkadot' && fromChain.nativeAsset === asset.id
 
   return (
     <Box {...props}>

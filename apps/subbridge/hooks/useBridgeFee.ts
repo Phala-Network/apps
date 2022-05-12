@@ -11,7 +11,7 @@ export const useBridgeFee = (): Decimal | undefined => {
   const khalaApi = usePolkadotApi(fromChain.id === 'thala' ? 'thala' : 'khala')
   const isFromKhalaToEthereum =
     (fromChain.id === 'khala' && toChain.id === 'ethereum') ||
-    (fromChain.id === 'thala' && toChain.id === 'rinkeby')
+    (fromChain.id === 'thala' && toChain.id === 'kovan')
 
   const {data: khalaToEthereumBridgeFee} = useSWR(
     khalaApi,

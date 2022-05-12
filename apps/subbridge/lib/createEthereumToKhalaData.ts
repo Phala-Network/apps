@@ -7,7 +7,7 @@ export const createEthereumToKhalaData = async (
   destinationAccount: string,
   amount: string
 ): Promise<string> => {
-  const {ethers} = await import('ethers')
+  const {ethers, BigNumber} = await import('ethers')
   const dest = khalaApi
     .createType('XcmV1MultiLocation', {
       parents: 0,
@@ -23,7 +23,7 @@ export const createEthereumToKhalaData = async (
     .toHex()
 
   const data = ethers.utils.hexConcat([
-    ethers.utils.hexZeroPad(ethers.BigNumber.from(amount).toHexString(), 32),
+    ethers.utils.hexZeroPad(BigNumber.from(amount).toHexString(), 32),
     ethers.utils.hexZeroPad(ethers.utils.hexlify((dest.length - 2) / 2), 32),
     dest,
   ])

@@ -34,6 +34,7 @@ import {encodeAddress} from '@polkadot/util-crypto'
 import Decimal from 'decimal.js'
 import {useAtom, useAtomValue} from 'jotai'
 import {RESET} from 'jotai/utils'
+import {useSnackbar} from 'notistack'
 import {FC, forwardRef, ReactNode, Ref, useMemo, useRef, useState} from 'react'
 import ExtraInfo from './BridgeBody/Extra'
 
@@ -204,6 +205,7 @@ const BridgeConfirmationDialog: FC<DialogProps> = ({onClose, ...props}) => {
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
   const transfer = useTransfer()
   const successRef = useRef(false)
+  const {enqueueSnackbar} = useSnackbar()
 
   const close = () => {
     onClose?.({}, 'backdropClick')
@@ -231,6 +233,7 @@ const BridgeConfirmationDialog: FC<DialogProps> = ({onClose, ...props}) => {
         onExited: () => {
           if (successRef.current) {
             setAmount(RESET)
+            enqueueSnackbar('Extrinsic submitted')
             successRef.current = false
           }
         },
