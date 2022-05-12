@@ -5,15 +5,10 @@ import {u8aToHex} from '@polkadot/util'
 import {decodeAddress} from '@polkadot/util-crypto'
 
 function getPhaAssetId(khalaApi: ApiPromise) {
-  const khalaParaId = 2004
   return khalaApi.createType('XcmV1MultiassetAssetId', {
     Concrete: khalaApi.createType('XcmV1MultiLocation', {
-      parents: 1,
-      interior: khalaApi.createType('Junctions', {
-        X1: khalaApi.createType('XcmV1Junction', {
-          Parachain: khalaApi.createType('Compact<U32>', khalaParaId),
-        }),
-      }),
+      parents: 0,
+      interior: khalaApi.createType('Junctions', 'Here'),
     }),
   })
 }
