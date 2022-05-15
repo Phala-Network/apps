@@ -1,25 +1,27 @@
-import {useMemo, useState, VFC} from 'react'
-import {Input} from 'baseui/input'
-import {
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  ModalButton,
-  ModalProps,
-} from 'baseui/modal'
-import {ParagraphSmall} from 'baseui/typography'
-import {FormControl} from 'baseui/form-control'
-import {formatCurrency, validateAddress} from '@phala/utils'
-import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
+import {PhalaStakePoolTransactionFeeLabel} from '@phala/react-components'
 import {
   useApiPromise,
-  useDecimalJsTokenDecimalMultiplier,
+  useDecimalJsTokenDecimalMultiplier
 } from '@phala/react-libs'
 import {useCurrentAccount} from '@phala/store'
-import {Button} from 'baseui/button'
-import {StakePool} from '.'
-import {PhalaStakePoolTransactionFeeLabel} from '@phala/react-components'
+import {formatCurrency, validateAddress} from '@phala/utils'
 import {Block} from 'baseui/block'
+import {Button} from 'baseui/button'
+import {FormControl} from 'baseui/form-control'
+import {Input} from 'baseui/input'
+import {
+  ModalBody,
+  ModalButton,
+  ModalFooter,
+  ModalHeader,
+  ModalProps
+} from 'baseui/modal'
+import {StatefulTooltip} from 'baseui/tooltip'
+import {ParagraphSmall} from 'baseui/typography'
+import {useMemo, useState, VFC} from 'react'
+import {AlertCircle} from 'react-feather'
+import {StakePool} from '.'
+import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
 
 const ClaimModalBody: VFC<
   {
@@ -62,13 +64,29 @@ const ClaimModalBody: VFC<
         </FormControl>
 
         <FormControl label="Rewards">
-          <ParagraphSmall as="div">
-            {stakePoolStakers[0] &&
-              formatCurrency(
-                stakePoolStakers[0].claimableReward as string
-              )}{' '}
-            PHA
-          </ParagraphSmall>
+          <Block display={'flex'} flexDirection={'row'}>
+            <ParagraphSmall as="div">
+              {stakePoolStakers[0] &&
+                formatCurrency(
+                  stakePoolStakers[0].claimableReward as string
+                )}{' '}
+              PHA
+            </ParagraphSmall>
+            <StatefulTooltip
+              content={() => (
+                <Block>
+                  The reward may include two parts: Delegator reward and Owner
+                  reward
+                </Block>
+              )}
+              triggerType={'hover'}
+            >
+              <AlertCircle
+                size={14}
+                style={{marginLeft: '6px', marginTop: '3px'}}
+              />
+            </StatefulTooltip>
+          </Block>
         </FormControl>
 
         <FormControl

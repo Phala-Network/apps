@@ -1,14 +1,15 @@
+import {useInterval} from '@phala/react-hooks'
 import {Block} from 'baseui/block'
 import {Card} from 'baseui/card'
 import {HeadingMedium} from 'baseui/typography'
 import {Helmet} from 'react-helmet'
+import styled from 'styled-components'
+import ClaimAll from '../components/ClaimAll'
 import CreatePoolButton from '../components/CreatePoolButton'
 import StakePoolTableV2 from '../components/StakePoolTableV2'
-import WorkerTableV2 from '../components/WorkerTableV2'
 import StatusBarV2 from '../components/StatusBarV2'
-import ClaimAll from '../components/ClaimAll'
+import WorkerTableV2 from '../components/WorkerTableV2'
 import endGameBanner from '../static/end-game-banner.jpg'
-import styled from 'styled-components'
 
 const EndGameBanner = styled.a`
   display: block;
@@ -22,6 +23,10 @@ const EndGameBanner = styled.a`
 `
 
 export const MiningV2 = (): JSX.Element => {
+  useInterval(() => {
+    window.location.reload()
+  }, 60 * 10 * 1000)
+
   return (
     <Block
       maxWidth="1700px"
@@ -58,7 +63,7 @@ export const MiningV2 = (): JSX.Element => {
         >
           <HeadingMedium as="div">Stake Pool</HeadingMedium>
           <Block display="flex">
-            <ClaimAll marginRight="scale400" />
+            <ClaimAll marginRight="scale400" kind={'mining'} />
             <CreatePoolButton />
           </Block>
         </Block>

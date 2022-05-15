@@ -9,15 +9,15 @@ import Decimal from 'decimal.js'
 import {PageProps} from 'gatsby'
 import {useCallback, useState, VFC} from 'react'
 import {Helmet} from 'react-helmet'
-import {VerifiedIcon} from '../components/Owner'
+import {UnVerifiedIcon, VerifiedIcon} from '../components/Owner'
+import Chart from '../components/StakePool/Chart'
+import InfoCard from '../components/StakePool/InfoCard'
+import SettingButton from '../components/StakePool/SettingButton'
+import StakeInfo from '../components/StakePool/StakeInfo'
+import WithdrawQueue from '../components/StakePool/WithdrawQueue'
 import StakePoolModal, {StakePoolModalKey} from '../components/StakePoolModal'
 import {useStakePoolQuery} from '../hooks/graphql'
 import {client} from '../utils/GraphQLClient'
-import InfoCard from '../components/StakePool/InfoCard'
-import WithdrawQueue from '../components/StakePool/WithdrawQueue'
-import StakeInfo from '../components/StakePool/StakeInfo'
-import SettingButton from '../components/StakePool/SettingButton'
-import Chart from '../components/StakePool/Chart'
 
 interface StakePoolProps extends PageProps {
   pid?: string
@@ -112,7 +112,11 @@ export const StakePool: VFC<StakePoolProps> = ({pid}) => {
               {ownerAddress && accounts && (
                 <>
                   {accounts.identity || trimAddress(ownerAddress)}
-                  {accounts.identityVerified && <VerifiedIcon />}
+                  {accounts.identityVerified ? (
+                    <VerifiedIcon />
+                  ) : (
+                    <UnVerifiedIcon />
+                  )}
                 </>
               )}
             </InfoCard>

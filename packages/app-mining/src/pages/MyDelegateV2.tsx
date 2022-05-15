@@ -1,16 +1,21 @@
-import {Helmet} from 'react-helmet'
-import {Link} from 'gatsby'
-import {HeadingMedium} from 'baseui/typography'
-import StakePoolTableV2 from '../components/StakePoolTableV2'
-import {Button} from 'baseui/button'
-import {ChevronLeft} from 'react-feather'
-import {Card} from 'baseui/card'
-import ClaimAll from '../components/ClaimAll'
-import StatusBar from '../components/StatusBarV2'
+import {useInterval} from '@phala/react-hooks'
 import {Block} from 'baseui/block'
+import {Button} from 'baseui/button'
+import {Card} from 'baseui/card'
+import {HeadingMedium} from 'baseui/typography'
+import {Link} from 'gatsby'
+import {ChevronLeft} from 'react-feather'
+import {Helmet} from 'react-helmet'
+import ClaimAll from '../components/ClaimAll'
 import MyDelegateNotification from '../components/MyDelegateNotification'
+import StakePoolTableV2 from '../components/StakePoolTableV2'
+import StatusBar from '../components/StatusBarV2'
 
 export const MyDelegateV2 = () => {
+  useInterval(() => {
+    window.location.reload()
+  }, 60 * 10 * 1000)
+
   return (
     <Block
       maxWidth="1700px"
