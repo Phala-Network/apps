@@ -1,6 +1,6 @@
 import React from 'react'
-import styled from 'styled-components'
 import {down} from 'styled-breakpoints'
+import styled from 'styled-components'
 import {DataType} from './index'
 
 const Wrapper = styled.div``
@@ -29,7 +29,7 @@ const ValueItem = styled.div`
     margin-top: 20px;
   }
 
-  ${down('sm')} {
+  ${down('md')} {
     font-size: 14px;
     margin-bottom: 14px;
     width: 220px;

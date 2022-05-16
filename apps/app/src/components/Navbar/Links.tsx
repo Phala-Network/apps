@@ -6,7 +6,7 @@ import {useCurrentNetworkNode} from '../../store/networkNode'
 const Wrapper = styled.div`
   display: flex;
 
-  ${down('sm')} {
+  ${down('md')} {
     display: none;
   }
 
@@ -24,13 +24,13 @@ const Wrapper = styled.div`
       color: #aad829;
     }
 
-    ${down('lg')} {
+    ${down('xl')} {
       font-size: 14px;
       line-height: 14px;
       margin-left: 20px;
     }
 
-    ${down('md')} {
+    ${down('lg')} {
       margin-left: 14px;
     }
   }

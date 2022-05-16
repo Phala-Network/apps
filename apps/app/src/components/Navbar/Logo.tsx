@@ -1,5 +1,5 @@
-import styled from 'styled-components'
 import {down} from 'styled-breakpoints'
+import styled from 'styled-components'
 import PhalaApp from '../../icons/phala_app.svg'
 
 const Wrapper = styled.div`
@@ -10,7 +10,7 @@ const Wrapper = styled.div`
     width: 100%;
   }
 
-  ${down('lg')} {
+  ${down('xl')} {
     width: 96px;
     margin-right: 0;
   }

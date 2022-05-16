@@ -1,10 +1,10 @@
-import styled from 'styled-components'
-import {StatefulPopover, PLACEMENT} from 'baseui/popover'
-import MoreIcon from '../../icons/more.svg'
-import ExternalLink from '../../icons/external_link.svg'
-import {LineWrap} from './styledComponent'
-import {down} from 'styled-breakpoints'
+import {PLACEMENT, StatefulPopover} from 'baseui/popover'
 import {navigate} from 'gatsby'
+import {down} from 'styled-breakpoints'
+import styled from 'styled-components'
+import ExternalLink from '../../icons/external_link.svg'
+import MoreIcon from '../../icons/more.svg'
+import {LineWrap} from './styledComponent'
 
 const MoreButton = styled.button`
   cursor: pointer;
@@ -22,7 +22,7 @@ const MoreButton = styled.button`
     background: #d1ff52;
   }
 
-  ${down('sm')} {
+  ${down('md')} {
     display: none;
   }
 `

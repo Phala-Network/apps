@@ -1,6 +1,6 @@
-import styled from 'styled-components'
-import {down} from 'styled-breakpoints'
 import {Modal, ModalProps} from 'baseui/modal'
+import {down} from 'styled-breakpoints'
+import styled from 'styled-components'
 
 const ModalTitle = styled.div`
   font-family: Montserrat;
@@ -9,7 +9,7 @@ const ModalTitle = styled.div`
   line-height: 20px;
   padding-bottom: 30px;
 
-  ${down('md')} {
+  ${down('lg')} {
     padding-bottom: 20px;
   }
 `

@@ -27,7 +27,7 @@ export const Content = styled.div`
     box-shadow: 16px 16px 0px rgba(0, 0, 0, 0.3);
   }
 
-  ${down('sm')} {
+  ${down('md')} {
     width: calc(100vw - 30px);
     box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.3);
 

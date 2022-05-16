@@ -20,7 +20,7 @@ const Content = styled.div`
   font-size: 24px;
   font-weight: bold;
 
-  ${down('sm')} {
+  ${down('md')} {
     font-size: 18px;
   }
 

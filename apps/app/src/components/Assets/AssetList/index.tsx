@@ -1,8 +1,8 @@
+import {TableBuilder, TableBuilderColumn} from 'baseui/table-semantic'
 import React from 'react'
-import styled from 'styled-components'
 import {down, up} from 'styled-breakpoints'
 import {useBreakpoint} from 'styled-breakpoints/react-styled'
-import {TableBuilder, TableBuilderColumn} from 'baseui/table-semantic'
+import styled from 'styled-components'
 import AssetCell from './AssetCell'
 import BalanceCell from './BalanceCell'
 import ButtonCell from './ButtonCell'
@@ -15,7 +15,7 @@ const Wrapper = styled.div`
     margin: 0 auto;
     max-width: 1270px;
   }
-  ${down('sm')} {
+  ${down('md')} {
     padding: 22px 10px;
   }
 `
@@ -29,7 +29,7 @@ const Title = styled.div`
   color: #111111;
   margin-bottom: 20px;
 
-  ${down('sm')} {
+  ${down('md')} {
     font-size: 20px;
     line-height: 20px;
   }
@@ -50,7 +50,7 @@ type Props = {
 }
 
 const AssetList: React.FC<Props> = ({tableData}) => {
-  const isMobile = useBreakpoint(down('sm'))
+  const isMobile = useBreakpoint(down('md'))
 
   return (
     <Wrapper>

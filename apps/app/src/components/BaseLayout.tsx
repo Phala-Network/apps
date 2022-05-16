@@ -11,7 +11,7 @@ const HomePageWrap = styled.div`
     display: flex;
   }
 
-  ${down('sm')} {
+  ${down('md')} {
     display: block;
     padding-top: 72px;
     padding-bottom: 72px;
