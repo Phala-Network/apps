@@ -1,16 +1,17 @@
-import {useCurrentAccount, useWallet} from '@phala/store'
+import {useCurrentAccount, walletAtom} from '@phala/store'
 import {Wallet} from '@talisman-connect/wallets'
 import {ModalProps} from 'baseui/modal'
 import {toaster} from 'baseui/toast'
-import {VFC} from 'react'
+import {useAtom} from 'jotai'
+import {FC} from 'react'
 import AccountModal from './AccountModal'
 import WalletModal from './WalletModal'
 
-export const SelectAccountModal: VFC<
+export const SelectAccountModal: FC<
   Required<Pick<ModalProps, 'isOpen' | 'onClose'>> & {dappName: string}
 > = (props) => {
   const [currentAccount, setCurrentAccount] = useCurrentAccount()
-  const [wallet, setWallet] = useWallet()
+  const [wallet, setWallet] = useAtom(walletAtom)
   const {isOpen, onClose} = props
 
   const showWalletModal = !currentAccount && !wallet

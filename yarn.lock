@@ -4267,6 +4267,7 @@ __metadata:
     baseui: 11.0.3
     currency.js: ^2.0.4
     decimal.js: ^10.3.1
+    jotai: ^1.6.6
     rc-dropdown: ^3.2.0
     rc-input-number: ^7.3.0
     rc-menu: ^9.0.12
@@ -5624,12 +5625,12 @@ __metadata:
 
 "@talisman-connect/wallets@patch:@talisman-connect/wallets@npm:1.1.3#.yarn/patches/@talisman-connect-wallets-npm-1.1.3-7cace4517b.patch::locator=phala-apps%40workspace%3A.":
   version: 1.1.3
-  resolution: "@talisman-connect/wallets@patch:@talisman-connect/wallets@npm%3A1.1.3#.yarn/patches/@talisman-connect-wallets-npm-1.1.3-7cace4517b.patch::version=1.1.3&hash=c131e7&locator=phala-apps%40workspace%3A."
+  resolution: "@talisman-connect/wallets@patch:@talisman-connect/wallets@npm%3A1.1.3#.yarn/patches/@talisman-connect-wallets-npm-1.1.3-7cace4517b.patch::version=1.1.3&hash=540e44&locator=phala-apps%40workspace%3A."
   dependencies:
     "@polkadot/api": ^8.2.1
     "@polkadot/extension-dapp": ^0.42.7
     "@polkadot/extension-inject": ^0.42.9
-  checksum: 191b3606932e623b94f0ade77de98d847057e013666e085d13870a104a58f1a5a10e4a7efed3d71f38e3e0eaf27d0d627c07066177d8440d526e14463ea963f5
+  checksum: 391322132536796910553677119791cdf0c141edfd0698828b4f1c500778bdbc4947d4a1ad3c8713f067c41600298301458cd05a39a7c5c133cfa047831d40a2
   languageName: node
   linkType: hard
 

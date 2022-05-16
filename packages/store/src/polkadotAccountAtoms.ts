@@ -29,4 +29,3 @@ polkadotAccountAtom.debugLabel = 'polkadotAccountAtom'
 
 // TODO: remove hooks below in @phala/app
 export const useCurrentAccount = () => useAtom(polkadotAccountAtom)
-export const useAccounts = () => useAtom(polkadotAccountsAtom)

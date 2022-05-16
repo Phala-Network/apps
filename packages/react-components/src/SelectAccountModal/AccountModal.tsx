@@ -1,20 +1,21 @@
-import {useAccounts, useCurrentAccount} from '@phala/store'
+import {polkadotAccountsAtom, useCurrentAccount} from '@phala/store'
+import {trimAddress} from '@phala/utils'
+import Identicon from '@polkadot/react-identicon'
 import {useStyletron} from 'baseui'
 import {Block} from 'baseui/block'
 import {Button} from 'baseui/button'
 import {Modal, ModalBody, ModalHeader, ModalProps} from 'baseui/modal'
-import {VFC} from 'react'
-import Identicon from '@polkadot/react-identicon'
 import {toaster} from 'baseui/toast'
-import {trimAddress} from '@phala/utils'
+import {useAtom} from 'jotai'
+import {FC} from 'react'
 
 type Props = {
   onSelect?: (address: string) => void
   onDisconnect?: () => void
 }
 
-const Body: VFC<Props> = ({onSelect, onDisconnect}) => {
-  const [accounts] = useAccounts()
+const Body: FC<Props> = ({onSelect, onDisconnect}) => {
+  const [accounts] = useAtom(polkadotAccountsAtom)
   const [currentAccount] = useCurrentAccount()
   const [css, theme] = useStyletron()
 
