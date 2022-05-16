@@ -1,24 +1,24 @@
-import {useMemo, useState} from 'react'
-import {Input} from 'baseui/input'
-import {
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  ModalButton,
-  ModalProps,
-} from 'baseui/modal'
-import {ParagraphSmall} from 'baseui/typography'
-import {FormControl} from 'baseui/form-control'
-import type {Miners} from '../../hooks/graphql'
-import Decimal from 'decimal.js'
-import {formatCurrency} from '@phala/utils'
-import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
+import {PhalaStakePoolTransactionFeeLabel} from '@phala/react-components'
 import {
   useApiPromise,
   useDecimalJsTokenDecimalMultiplier,
 } from '@phala/react-libs'
-import {PhalaStakePoolTransactionFeeLabel} from '@phala/react-components'
+import {formatCurrency} from '@phala/utils'
 import {Block} from 'baseui/block'
+import {FormControl} from 'baseui/form-control'
+import {Input} from 'baseui/input'
+import {
+  ModalBody,
+  ModalButton,
+  ModalFooter,
+  ModalHeader,
+  ModalProps,
+} from 'baseui/modal'
+import {ParagraphSmall} from 'baseui/typography'
+import Decimal from 'decimal.js'
+import {useMemo, useState} from 'react'
+import type {Miners} from '../../hooks/graphql'
+import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
 
 const StartModalBody = ({
   miner,
@@ -35,12 +35,22 @@ const StartModalBody = ({
   const [amount, setAmount] = useState('')
   const waitSignAndSend = useWaitSignAndSend()
   const decimals = useDecimalJsTokenDecimalMultiplier(api)
-  const onConfirm = () => {
-    waitSignAndSend(extrinsic, (status) => {
-      if (status.isReady) {
-        onClose?.({closeSource: 'closeButton'})
-      }
-    })
+  const [confirmLock, setConfirmLock] = useState(false)
+
+  const onConfirm = async () => {
+    setConfirmLock(true)
+    try {
+      await waitSignAndSend(extrinsic, (status) => {
+        if (status.isReady) {
+          onClose?.({closeSource: 'closeButton'})
+          setConfirmLock(false)
+        }
+      })
+    } catch (err) {
+      setConfirmLock(false)
+    } finally {
+      setConfirmLock(false)
+    }
   }
   const extrinsic = useMemo(() => {
     if (api && decimals && amount) {
@@ -97,7 +107,7 @@ const StartModalBody = ({
           justifyContent="space-between"
         >
           <PhalaStakePoolTransactionFeeLabel action={extrinsic} />
-          <ModalButton disabled={!amount} onClick={onConfirm}>
+          <ModalButton disabled={!amount || confirmLock} onClick={onConfirm}>
             Confirm
           </ModalButton>
         </Block>

@@ -1,19 +1,19 @@
+import {PhalaStakePoolTransactionFeeLabel} from '@phala/react-components'
+import {useApiPromise} from '@phala/react-libs'
+import {formatCurrency} from '@phala/utils'
+import {Block} from 'baseui/block'
+import {FormControl} from 'baseui/form-control'
 import {
-  ModalHeader,
   ModalBody,
-  ModalFooter,
   ModalButton,
+  ModalFooter,
+  ModalHeader,
   ModalProps,
 } from 'baseui/modal'
 import {ParagraphSmall} from 'baseui/typography'
-import {FormControl} from 'baseui/form-control'
+import {useMemo, useState} from 'react'
 import type {Miners} from '../../hooks/graphql'
 import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
-import {useApiPromise} from '@phala/react-libs'
-import {formatCurrency} from '@phala/utils'
-import {PhalaStakePoolTransactionFeeLabel} from '@phala/react-components'
-import {useMemo} from 'react'
-import {Block} from 'baseui/block'
 
 const ReclaimModalBody = ({
   miner,
@@ -22,12 +22,22 @@ const ReclaimModalBody = ({
   const {pid, workerPublicKey, stakes} = miner
   const {api} = useApiPromise()
   const waitSignAndSend = useWaitSignAndSend()
-  const onConfirm = () => {
-    waitSignAndSend(extrinsic, (status) => {
-      if (status.isReady) {
-        onClose?.({closeSource: 'closeButton'})
-      }
-    })
+  const [confirmLock, setConfirmLock] = useState(false)
+
+  const onConfirm = async () => {
+    setConfirmLock(true)
+    try {
+      await waitSignAndSend(extrinsic, (status) => {
+        if (status.isReady) {
+          onClose?.({closeSource: 'closeButton'})
+          setConfirmLock(false)
+        }
+      })
+    } catch (err) {
+      setConfirmLock(false)
+    } finally {
+      setConfirmLock(false)
+    }
   }
 
   const extrinsic = useMemo(() => {
@@ -62,7 +72,9 @@ const ReclaimModalBody = ({
           justifyContent="space-between"
         >
           <PhalaStakePoolTransactionFeeLabel action={extrinsic} />
-          <ModalButton onClick={onConfirm}>Confirm</ModalButton>
+          <ModalButton disabled={confirmLock} onClick={onConfirm}>
+            Confirm
+          </ModalButton>
         </Block>
       </ModalFooter>
     </>

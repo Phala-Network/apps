@@ -1,26 +1,26 @@
-import {useMemo, useState, VFC} from 'react'
-import {Input} from 'baseui/input'
-import {
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  ModalButton,
-  ModalProps,
-} from 'baseui/modal'
-import {ParagraphSmall} from 'baseui/typography'
-import {FormControl} from 'baseui/form-control'
-import {useDelegableBalance} from '../../hooks/useDelegableBalance'
-import Decimal from 'decimal.js'
-import {formatCurrency} from '@phala/utils'
-import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
+import {PhalaStakePoolTransactionFeeLabel} from '@phala/react-components'
 import {
   useApiPromise,
   useDecimalJsTokenDecimalMultiplier,
 } from '@phala/react-libs'
-import {Skeleton} from 'baseui/skeleton'
-import {StakePool} from '.'
+import {formatCurrency} from '@phala/utils'
 import {Block} from 'baseui/block'
-import {PhalaStakePoolTransactionFeeLabel} from '@phala/react-components'
+import {FormControl} from 'baseui/form-control'
+import {Input} from 'baseui/input'
+import {
+  ModalBody,
+  ModalButton,
+  ModalFooter,
+  ModalHeader,
+  ModalProps,
+} from 'baseui/modal'
+import {Skeleton} from 'baseui/skeleton'
+import {ParagraphSmall} from 'baseui/typography'
+import Decimal from 'decimal.js'
+import {useMemo, useState, VFC} from 'react'
+import {StakePool} from '.'
+import {useDelegableBalance} from '../../hooks/useDelegableBalance'
+import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
 
 const DelegateModalBody: VFC<
   {
@@ -34,14 +34,23 @@ const DelegateModalBody: VFC<
   const [amount, setAmount] = useState('')
   const waitSignAndSend = useWaitSignAndSend()
   const decimals = useDecimalJsTokenDecimalMultiplier(api)
-  const onConfirm = () => {
-    waitSignAndSend(extrinsic, (status) => {
-      if (status.isReady) {
-        onClose?.({closeSource: 'closeButton'})
-      }
-    })
-  }
+  const [confirmLock, setConfirmLock] = useState(false)
 
+  const onConfirm = async () => {
+    setConfirmLock(true)
+    try {
+      await waitSignAndSend(extrinsic, (status) => {
+        if (status.isReady) {
+          onClose?.({closeSource: 'closeButton'})
+          setConfirmLock(false)
+        }
+      })
+    } catch (err) {
+      setConfirmLock(false)
+    } finally {
+      setConfirmLock(false)
+    }
+  }
   const extrinsic = useMemo(() => {
     if (api && amount && decimals) {
       return api.tx.phalaStakePool?.contribute?.(
@@ -106,7 +115,7 @@ const DelegateModalBody: VFC<
           justifyContent="space-between"
         >
           <PhalaStakePoolTransactionFeeLabel action={extrinsic} />
-          <ModalButton disabled={!amount} onClick={onConfirm}>
+          <ModalButton disabled={!amount || confirmLock} onClick={onConfirm}>
             Confirm
           </ModalButton>
         </Block>

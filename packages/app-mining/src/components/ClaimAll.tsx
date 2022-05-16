@@ -1,7 +1,7 @@
 import {PhalaStakePoolTransactionFeeLabel} from '@phala/react-components'
 import {
   useApiPromise,
-  useDecimalJsTokenDecimalMultiplier
+  useDecimalJsTokenDecimalMultiplier,
 } from '@phala/react-libs'
 import {useCurrentAccount} from '@phala/store'
 import {formatCurrency, validateAddress} from '@phala/utils'
@@ -14,7 +14,7 @@ import {
   ModalBody,
   ModalButton,
   ModalFooter,
-  ModalHeader
+  ModalHeader,
 } from 'baseui/modal'
 import {Skeleton} from 'baseui/skeleton'
 import {StatefulTooltip} from 'baseui/tooltip'
@@ -84,20 +84,20 @@ const ClaimAll = (
     setConfirmLock(false)
   }, [])
 
-  const ownerReward = useMemo<Decimal | null>(() => {
-    if (!data) return null
-    return data.findManyStakePools.reduce((acc, cur) => {
-      let curRewards = new Decimal(0)
-      // const stakeReward = cur.stakePoolStakers?.[0]?.stakeReward
-      // if (stakeReward) {
-      //   curRewards = curRewards.add(new Decimal(stakeReward))
-      // }
-      if (cur.ownerAddress === polkadotAccount?.address) {
-        curRewards = curRewards.add(new Decimal(cur.ownerReward))
-      }
-      return acc.add(curRewards)
-    }, new Decimal(0))
-  }, [data, polkadotAccount?.address])
+  // const ownerReward = useMemo<Decimal | null>(() => {
+  //   if (!data) return null
+  //   return data.findManyStakePools.reduce((acc, cur) => {
+  //     let curRewards = new Decimal(0)
+  //     // const stakeReward = cur.stakePoolStakers?.[0]?.stakeReward
+  //     // if (stakeReward) {
+  //     //   curRewards = curRewards.add(new Decimal(stakeReward))
+  //     // }
+  //     if (cur.ownerAddress === polkadotAccount?.address) {
+  //       curRewards = curRewards.add(new Decimal(cur.ownerReward))
+  //     }
+  //     return acc.add(curRewards)
+  //   }, new Decimal(0))
+  // }, [data, polkadotAccount?.address])
 
   const totalclaimableReward = useMemo<Decimal | null>(() => {
     if (!data) return null

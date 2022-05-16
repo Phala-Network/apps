@@ -1,7 +1,7 @@
 import {PhalaStakePoolTransactionFeeLabel} from '@phala/react-components'
 import {
   useApiPromise,
-  useDecimalJsTokenDecimalMultiplier
+  useDecimalJsTokenDecimalMultiplier,
 } from '@phala/react-libs'
 import {useCurrentAccount} from '@phala/store'
 import {formatCurrency, validateAddress} from '@phala/utils'
@@ -14,7 +14,7 @@ import {
   ModalButton,
   ModalFooter,
   ModalHeader,
-  ModalProps
+  ModalProps,
 } from 'baseui/modal'
 import {StatefulTooltip} from 'baseui/tooltip'
 import {ParagraphSmall} from 'baseui/typography'
@@ -36,12 +36,23 @@ const ClaimModalBody: VFC<
   const isAddressError = !validateAddress(address)
   const waitSignAndSend = useWaitSignAndSend()
   const decimals = useDecimalJsTokenDecimalMultiplier(api)
-  const onConfirm = () => {
-    waitSignAndSend(extrinsic, (status) => {
-      if (status.isReady) {
-        onClose?.({closeSource: 'closeButton'})
-      }
-    })
+
+  const [confirmLock, setConfirmLock] = useState(false)
+
+  const onConfirm = async () => {
+    setConfirmLock(true)
+    try {
+      await waitSignAndSend(extrinsic, (status) => {
+        if (status.isReady) {
+          onClose?.({closeSource: 'closeButton'})
+          setConfirmLock(false)
+        }
+      })
+    } catch (err) {
+      setConfirmLock(false)
+    } finally {
+      setConfirmLock(false)
+    }
   }
 
   const extrinsic = useMemo(() => {
@@ -130,7 +141,7 @@ const ClaimModalBody: VFC<
         >
           <PhalaStakePoolTransactionFeeLabel action={extrinsic} />
           <ModalButton
-            disabled={!address || isAddressError}
+            disabled={!address || isAddressError || confirmLock}
             onClick={onConfirm}
           >
             Confirm

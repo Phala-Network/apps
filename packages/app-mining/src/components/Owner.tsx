@@ -39,15 +39,16 @@ const Owner: VFC<{
         {identity || trimAddress(ownerAddress)}
       </StyledLink>
     </StatefulTooltip>
-    {identityVerified ? (
+    {identity && identityVerified ? (
       <StatefulTooltip content="Verified">
         <VerifiedIcon />
       </StatefulTooltip>
-    ) : (
-      <StatefulTooltip content="UnVerified">
+    ) : null}
+    {identity && !identityVerified ? (
+      <StatefulTooltip content="Unknown">
         <UnVerifiedIcon />
       </StatefulTooltip>
-    )}
+    ) : null}
   </Block>
 )
 
