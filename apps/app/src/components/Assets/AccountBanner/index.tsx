@@ -1,13 +1,13 @@
-import React from 'react'
-import styled from 'styled-components'
-import {down, up} from 'styled-breakpoints'
 import {useSSR} from '@phala/react-hooks'
 import {useCurrentAccount} from '@phala/store'
 import {formatCurrency} from '@phala/utils'
-import bannerBg from '../Icons/banner-bg.png'
-import AccountInfo from './AccountInfo'
-import {PhalaIcon} from '../Icons/PhalaIcon'
 import Decimal from 'decimal.js'
+import React from 'react'
+import {down, up} from 'styled-breakpoints'
+import styled from 'styled-components'
+import bannerBg from '../Icons/banner-bg.png'
+import {PhalaIcon} from '../Icons/PhalaIcon'
+import AccountInfo from './AccountInfo'
 
 const Wrapper = styled.div`
   background-color: #111111;
@@ -17,7 +17,7 @@ const Wrapper = styled.div`
   background-size: contain;
   height: 240px;
 
-  ${down('sm')} {
+  ${down('md')} {
     height: 192px;
   }
 `
@@ -31,7 +31,7 @@ const Content = styled.div`
     max-width: 1440px;
   }
 
-  ${down('sm')} {
+  ${down('md')} {
     flex-direction: column;
   }
 `
@@ -41,7 +41,7 @@ const Left = styled.div`
   padding-top: 103px;
   padding-left: 85px;
 
-  ${down('sm')} {
+  ${down('md')} {
     padding-top: 30px;
     padding-left: 20px;
   }
@@ -51,11 +51,11 @@ const Icon = styled.div`
   padding-top: 33px;
   padding-right: 95px;
 
-  ${down('lg')} {
+  ${down('xl')} {
     padding-right: 50px;
   }
 
-  ${down('md')} {
+  ${down('lg')} {
     display: none;
   }
 `
@@ -70,7 +70,7 @@ const Dollar = styled.div`
   padding-top: 113px;
   padding-right: 85px;
 
-  ${down('sm')} {
+  ${down('md')} {
     font-size: 36px;
     line-height: 36px;
     padding-top: 0;

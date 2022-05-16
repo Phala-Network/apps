@@ -2,7 +2,7 @@ import {down} from 'styled-breakpoints'
 import {useBreakpoint} from 'styled-breakpoints/react-styled'
 
 export const PhalaIcon = () => {
-  const isMobile = useBreakpoint(down('sm'))
+  const isMobile = useBreakpoint(down('md'))
   if (isMobile) return null
   return (
     <svg

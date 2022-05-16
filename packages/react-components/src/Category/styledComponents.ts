@@ -6,7 +6,7 @@ export const Point = styled.div`
   height: 12px;
   background: #202020;
   border: 10px solid #ececec;
-  ${down('sm')} {
+  ${down('md')} {
     display: none;
   }
 `
@@ -14,7 +14,7 @@ export const Point = styled.div`
 export const CategoryWrap = styled.div`
   position: relative;
   padding: 16px 48px 40px 160px;
-  ${down('sm')} {
+  ${down('md')} {
     padding: 16px 24px;
   }
 `
@@ -30,7 +30,7 @@ export const CategoryHeader = styled.div`
   font-size: 10px;
   line-height: 12px;
   color: #202020;
-  ${down('sm')} {
+  ${down('md')} {
     font-size: 14px;
     position: unset;
   }
@@ -44,7 +44,7 @@ export const Title = styled.div`
 
 export const Description = styled.div`
   margin-top: 8px;
-  ${down('sm')} {
+  ${down('md')} {
     font-size: 12px;
   }
 `

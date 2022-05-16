@@ -43,7 +43,7 @@ export const LineWrap = styled.div`
     background-color: #d1ff52;
   }
 
-  ${down('sm')} {
+  ${down('md')} {
     padding: 8px 12px;
   }
 `
@@ -52,7 +52,7 @@ const ButtonCell: React.FC<Pick<DataType, 'name'>> = ({name}) => {
   const [currentNetworkNode] = useCurrentNetworkNode()
   const [visibleTransferModal, setVisibleTransferModal] = useState(false)
   const [claimModalVisible, setClaimModalVisible] = useState(false)
-  const isMobile = useBreakpoint(down('sm'))
+  const isMobile = useBreakpoint(down('md'))
   const isPHA = useMemo(() => {
     return name === 'K-PHA'
   }, [name])

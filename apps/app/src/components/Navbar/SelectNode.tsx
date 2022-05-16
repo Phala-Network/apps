@@ -1,11 +1,11 @@
-import styled from 'styled-components'
+import {PLACEMENT, StatefulPopover} from 'baseui/popover'
 import {down} from 'styled-breakpoints'
-import {StatefulPopover, PLACEMENT} from 'baseui/popover'
-import DropdownIcon from '../../icons/dropdown.svg'
-import CheckIcon from '../../icons/check.svg'
-import {LineWrap} from './styledComponent'
+import styled from 'styled-components'
 import {NETWORK_NODES} from '../../config/networkNode'
+import CheckIcon from '../../icons/check.svg'
+import DropdownIcon from '../../icons/dropdown.svg'
 import {useCurrentNetworkNode} from '../../store/networkNode'
+import {LineWrap} from './styledComponent'
 
 const Button = styled.button`
   cursor: pointer;
@@ -31,7 +31,7 @@ const Button = styled.button`
     background: #d1ff52;
   }
 
-  ${down('lg')} {
+  ${down('xl')} {
     padding: 10px 8px 10px 12px;
     font-size: 14px;
     line-height: 14px;

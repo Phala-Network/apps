@@ -1,7 +1,7 @@
 import React from 'react'
-import styled from 'styled-components'
 import {down} from 'styled-breakpoints'
-import {ModalWrapper, ModalButtonWrapper} from '../Modal'
+import styled from 'styled-components'
+import {ModalButtonWrapper, ModalWrapper} from '../Modal'
 
 const Content = styled.div`
   font-family: Montserrat;
@@ -14,7 +14,7 @@ const Content = styled.div`
 const ModalFooter = styled.div`
   padding: 30px 0 0;
 
-  ${down('md')} {
+  ${down('lg')} {
     padding: 20px 0 0;
   }
 `

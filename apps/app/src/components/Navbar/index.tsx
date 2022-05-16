@@ -1,12 +1,12 @@
+import {Block} from 'baseui/block'
 import React from 'react'
 import {down} from 'styled-breakpoints'
 import styled from 'styled-components'
-import Logo from './Logo'
-import Links from './Links'
-import SelectNode from './SelectNode'
 import Account from './Account'
 import CheckMore from './CheckMore'
-import {Block} from 'baseui/block'
+import Links from './Links'
+import Logo from './Logo'
+import SelectNode from './SelectNode'
 
 const Wrapper = styled.div`
   display: flex;
@@ -19,11 +19,11 @@ const Wrapper = styled.div`
   background-color: #fff;
   padding: 0 40px;
 
-  ${down('md')} {
+  ${down('lg')} {
     padding: 0 20px;
   }
 
-  ${down('sm')} {
+  ${down('md')} {
     height: 72px;
     padding: 0 10px;
   }
