@@ -110,14 +110,19 @@ export const StakePool: VFC<StakePoolProps> = ({pid}) => {
               }
             >
               {ownerAddress && accounts && (
-                <>
+                <Block
+                  display={'flex'}
+                  flexDirection={'row'}
+                  alignItems={'center'}
+                >
                   {accounts.identity || trimAddress(ownerAddress)}
-                  {accounts.identityVerified ? (
+                  {accounts.identity && accounts.identityVerified ? (
                     <VerifiedIcon />
-                  ) : (
+                  ) : null}
+                  {accounts.identity && !accounts.identityVerified ? (
                     <UnVerifiedIcon />
-                  )}
-                </>
+                  ) : null}
+                </Block>
               )}
             </InfoCard>
             <InfoCard label="APR">

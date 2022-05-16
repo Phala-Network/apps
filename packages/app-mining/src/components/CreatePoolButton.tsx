@@ -17,12 +17,23 @@ import useWaitSignAndSend from '../hooks/useWaitSignAndSend'
 const Body = ({onClose}: Pick<ModalProps, 'onClose'>) => {
   const {api} = useApiPromise()
   const waitSignAndSend = useWaitSignAndSend()
-  const onConfirm = () => {
-    waitSignAndSend(extrinsic, (status) => {
-      if (status.isReady) {
-        onClose?.({closeSource: 'closeButton'})
-      }
-    })
+
+  const [confirmLock, setConfirmLock] = useState(false)
+
+  const onConfirm = async () => {
+    setConfirmLock(true)
+    try {
+      await waitSignAndSend(extrinsic, (status) => {
+        if (status.isReady) {
+          onClose?.({closeSource: 'closeButton'})
+          setConfirmLock(false)
+        }
+      })
+    } catch (err) {
+      setConfirmLock(false)
+    } finally {
+      setConfirmLock(false)
+    }
   }
 
   const extrinsic = useMemo(() => {
@@ -44,7 +55,9 @@ const Body = ({onClose}: Pick<ModalProps, 'onClose'>) => {
           justifyContent="space-between"
         >
           <PhalaStakePoolTransactionFeeLabel action={extrinsic} />
-          <ModalButton onClick={onConfirm}>Confirm</ModalButton>
+          <ModalButton disabled={confirmLock} onClick={onConfirm}>
+            Confirm
+          </ModalButton>
         </Block>
       </ModalFooter>
     </>

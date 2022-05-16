@@ -36,12 +36,23 @@ const ClaimModalBody: VFC<
   const isAddressError = !validateAddress(address)
   const waitSignAndSend = useWaitSignAndSend()
   const decimals = useDecimalJsTokenDecimalMultiplier(api)
-  const onConfirm = () => {
-    waitSignAndSend(extrinsic, (status) => {
-      if (status.isReady) {
-        onClose?.({closeSource: 'closeButton'})
-      }
-    })
+
+  const [confirmLock, setConfirmLock] = useState(false)
+
+  const onConfirm = async () => {
+    setConfirmLock(true)
+    try {
+      await waitSignAndSend(extrinsic, (status) => {
+        if (status.isReady) {
+          onClose?.({closeSource: 'closeButton'})
+          setConfirmLock(false)
+        }
+      })
+    } catch (err) {
+      setConfirmLock(false)
+    } finally {
+      setConfirmLock(false)
+    }
   }
 
   const extrinsic = useMemo(() => {
@@ -130,7 +141,7 @@ const ClaimModalBody: VFC<
         >
           <PhalaStakePoolTransactionFeeLabel action={extrinsic} />
           <ModalButton
-            disabled={!address || isAddressError}
+            disabled={!address || isAddressError || confirmLock}
             onClick={onConfirm}
           >
             Confirm

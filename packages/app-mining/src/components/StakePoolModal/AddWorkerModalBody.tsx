@@ -1,22 +1,22 @@
-import {useMemo, useState, FC} from 'react'
-import {Input} from 'baseui/input'
-import {
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  ModalButton,
-  ModalProps,
-} from 'baseui/modal'
-import {ParagraphSmall} from 'baseui/typography'
-import {FormControl} from 'baseui/form-control'
-import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
+import {PhalaStakePoolTransactionFeeLabel} from '@phala/react-components'
 import {
   useApiPromise,
   useDecimalJsTokenDecimalMultiplier,
 } from '@phala/react-libs'
-import {StakePool} from '.'
-import {PhalaStakePoolTransactionFeeLabel} from '@phala/react-components'
 import {Block} from 'baseui/block'
+import {FormControl} from 'baseui/form-control'
+import {Input} from 'baseui/input'
+import {
+  ModalBody,
+  ModalButton,
+  ModalFooter,
+  ModalHeader,
+  ModalProps,
+} from 'baseui/modal'
+import {ParagraphSmall} from 'baseui/typography'
+import {FC, useMemo, useState} from 'react'
+import {StakePool} from '.'
+import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
 
 const AddWorkerModalBody: FC<
   {stakePool: Pick<StakePool, 'pid'>} & Pick<ModalProps, 'onClose'>
@@ -29,12 +29,23 @@ const AddWorkerModalBody: FC<
   const decimals = useDecimalJsTokenDecimalMultiplier(api)
   // Expected at least 32 bytes (256 bits), so it should be 31 * 2 + 1 === 63
   const isValidPubKey = /0x[0-9a-fA-F]{63,}/.test(pubKey)
-  const onConfirm = () => {
-    waitSignAndSend(extrinsic, (status) => {
-      if (status.isReady) {
-        onClose?.({closeSource: 'closeButton'})
-      }
-    })
+
+  const [confirmLock, setConfirmLock] = useState(false)
+
+  const onConfirm = async () => {
+    setConfirmLock(true)
+    try {
+      await waitSignAndSend(extrinsic, (status) => {
+        if (status.isReady) {
+          onClose?.({closeSource: 'closeButton'})
+          setConfirmLock(false)
+        }
+      })
+    } catch (err) {
+      setConfirmLock(false)
+    } finally {
+      setConfirmLock(false)
+    }
   }
 
   const extrinsic = useMemo(() => {
@@ -75,7 +86,7 @@ const AddWorkerModalBody: FC<
         >
           <PhalaStakePoolTransactionFeeLabel action={extrinsic} />
           <ModalButton
-            disabled={!isValidPubKey || Boolean(error)}
+            disabled={!isValidPubKey || Boolean(error) || confirmLock}
             onClick={onConfirm}
           >
             Confirm
