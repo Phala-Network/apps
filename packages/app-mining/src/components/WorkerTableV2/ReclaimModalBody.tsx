@@ -34,7 +34,7 @@ const ReclaimModalBody = ({
         }
       })
     } catch (err) {
-      setConfirmLock(false)
+      // setConfirmLock(false)
     } finally {
       setConfirmLock(false)
     }

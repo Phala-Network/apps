@@ -41,7 +41,7 @@ const SetCommissionModalBody: VFC<
         }
       })
     } catch (err) {
-      setConfirmLock(false)
+      // setConfirmLock(false)
     } finally {
       setConfirmLock(false)
     }

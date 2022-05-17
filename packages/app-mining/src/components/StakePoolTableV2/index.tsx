@@ -159,6 +159,7 @@ const StakePoolTableV2: VFC<{
       }),
     },
     {
+      refetchInterval: 60 * 10 * 1000,
       keepPreviousData: true,
       enabled:
         (kind === 'delegate' && Boolean(remainingValue)) ||

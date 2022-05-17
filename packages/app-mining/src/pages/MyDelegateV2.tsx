@@ -1,4 +1,3 @@
-import {useInterval} from '@phala/react-hooks'
 import {Block} from 'baseui/block'
 import {Button} from 'baseui/button'
 import {Card} from 'baseui/card'
@@ -12,10 +11,6 @@ import StakePoolTableV2 from '../components/StakePoolTableV2'
 import StatusBar from '../components/StatusBarV2'
 
 export const MyDelegateV2 = () => {
-  useInterval(() => {
-    window.location.reload()
-  }, 60 * 10 * 1000)
-
   return (
     <Block
       maxWidth="1700px"

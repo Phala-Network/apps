@@ -30,7 +30,7 @@ const Body = ({onClose}: Pick<ModalProps, 'onClose'>) => {
         }
       })
     } catch (err) {
-      setConfirmLock(false)
+      // setConfirmLock(false)
     } finally {
       setConfirmLock(false)
     }

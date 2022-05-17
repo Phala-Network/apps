@@ -42,7 +42,7 @@ const AddWorkerModalBody: FC<
         }
       })
     } catch (err) {
-      setConfirmLock(false)
+      // setConfirmLock(false)
     } finally {
       setConfirmLock(false)
     }

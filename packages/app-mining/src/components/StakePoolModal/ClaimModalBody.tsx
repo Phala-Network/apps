@@ -49,7 +49,7 @@ const ClaimModalBody: VFC<
         }
       })
     } catch (err) {
-      setConfirmLock(false)
+      // setConfirmLock(false)
     } finally {
       setConfirmLock(false)
     }
