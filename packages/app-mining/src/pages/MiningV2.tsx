@@ -1,4 +1,3 @@
-import {useInterval} from '@phala/react-hooks'
 import {Block} from 'baseui/block'
 import {Card} from 'baseui/card'
 import {HeadingMedium} from 'baseui/typography'
@@ -23,10 +22,6 @@ const EndGameBanner = styled.a`
 `
 
 export const MiningV2 = (): JSX.Element => {
-  useInterval(() => {
-    window.location.reload()
-  }, 60 * 10 * 1000)
-
   return (
     <Block
       maxWidth="1700px"

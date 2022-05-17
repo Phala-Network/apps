@@ -7,9 +7,11 @@ import {StyledLink} from 'baseui/link'
 import {HeadingLarge, HeadingSmall, ParagraphXSmall} from 'baseui/typography'
 import Decimal from 'decimal.js'
 import {PageProps} from 'gatsby'
+import {pid} from 'process'
 import {useCallback, useState, VFC} from 'react'
+import {CheckCircle, MinusCircle} from 'react-feather'
 import {Helmet} from 'react-helmet'
-import {UnVerifiedIcon, VerifiedIcon} from '../components/Owner'
+import styled from 'styled-components'
 import Chart from '../components/StakePool/Chart'
 import InfoCard from '../components/StakePool/InfoCard'
 import SettingButton from '../components/StakePool/SettingButton'
@@ -18,6 +20,21 @@ import WithdrawQueue from '../components/StakePool/WithdrawQueue'
 import StakePoolModal, {StakePoolModalKey} from '../components/StakePoolModal'
 import {useStakePoolQuery} from '../hooks/graphql'
 import {client} from '../utils/GraphQLClient'
+
+export const VerifiedIcon = styled(CheckCircle).attrs({size: 16})`
+  margin-left: 5px;
+  position: relative;
+  top: 2px;
+`
+
+export const UnVerifiedIcon = styled(MinusCircle).attrs({
+  size: 16,
+  color: 'rgb(112,112,112)',
+})`
+  margin-left: 5px;
+  position: relative;
+  top: 2px;
+`
 
 interface StakePoolProps extends PageProps {
   pid?: string
@@ -109,21 +126,15 @@ export const StakePool: VFC<StakePoolProps> = ({pid}) => {
                 )
               }
             >
-              {ownerAddress && accounts && (
-                <Block
-                  display={'flex'}
-                  flexDirection={'row'}
-                  alignItems={'center'}
-                >
-                  {accounts.identity || trimAddress(ownerAddress)}
-                  {accounts.identity && accounts.identityVerified ? (
-                    <VerifiedIcon />
-                  ) : null}
-                  {accounts.identity && !accounts.identityVerified ? (
-                    <UnVerifiedIcon />
-                  ) : null}
-                </Block>
-              )}
+              {ownerAddress &&
+                accounts &&
+                (accounts.identity || trimAddress(ownerAddress))}
+              {accounts && accounts.identity && accounts.identityVerified ? (
+                <VerifiedIcon />
+              ) : null}
+              {accounts && accounts.identity && !accounts.identityVerified ? (
+                <UnVerifiedIcon />
+              ) : null}
             </InfoCard>
             <InfoCard label="APR">
               {theoreticalApr &&

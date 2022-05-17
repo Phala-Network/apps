@@ -84,21 +84,6 @@ const ClaimAll = (
     setConfirmLock(false)
   }, [])
 
-  // const ownerReward = useMemo<Decimal | null>(() => {
-  //   if (!data) return null
-  //   return data.findManyStakePools.reduce((acc, cur) => {
-  //     let curRewards = new Decimal(0)
-  //     // const stakeReward = cur.stakePoolStakers?.[0]?.stakeReward
-  //     // if (stakeReward) {
-  //     //   curRewards = curRewards.add(new Decimal(stakeReward))
-  //     // }
-  //     if (cur.ownerAddress === polkadotAccount?.address) {
-  //       curRewards = curRewards.add(new Decimal(cur.ownerReward))
-  //     }
-  //     return acc.add(curRewards)
-  //   }, new Decimal(0))
-  // }, [data, polkadotAccount?.address])
-
   const totalclaimableReward = useMemo<Decimal | null>(() => {
     if (!data) return null
 
@@ -134,7 +119,7 @@ const ClaimAll = (
         }
       })
     } catch (err) {
-      setConfirmLock(false)
+      // setConfirmLock(false)
     } finally {
       setConfirmLock(false)
     }
