@@ -1,9 +1,10 @@
-import {Helmet} from 'react-helmet'
+import {Block} from 'baseui/block'
 import {Card} from 'baseui/card'
+// import {useState} from 'react'
+import {Helmet} from 'react-helmet'
 import DelegateBanner from '../components/DelegateBanner'
 import StakePoolTableV2 from '../components/StakePoolTableV2'
 import StatusBar from '../components/StatusBarV2'
-import {Block} from 'baseui/block'
 
 export const DelegateV2 = (): JSX.Element => {
   return (

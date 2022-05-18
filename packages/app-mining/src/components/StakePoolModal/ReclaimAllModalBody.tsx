@@ -1,24 +1,24 @@
-import {
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  ModalButton,
-  ModalProps,
-} from 'baseui/modal'
-import {ParagraphSmall} from 'baseui/typography'
-import {FormControl} from 'baseui/form-control'
-import {formatCurrency, trimAddress} from '@phala/utils'
-import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
+import {PhalaStakePoolTransactionFeeLabel} from '@phala/react-components'
 import {
   useApiPromise,
   useDecimalJsTokenDecimalMultiplier,
 } from '@phala/react-libs'
-import {useMemo, VFC} from 'react'
-import Decimal from 'decimal.js'
-import {StatefulTooltip} from 'baseui/tooltip'
-import {StakePool} from '.'
-import {PhalaStakePoolTransactionFeeLabel} from '@phala/react-components'
+import {formatCurrency, trimAddress} from '@phala/utils'
 import {Block} from 'baseui/block'
+import {FormControl} from 'baseui/form-control'
+import {
+  ModalBody,
+  ModalButton,
+  ModalFooter,
+  ModalHeader,
+  ModalProps,
+} from 'baseui/modal'
+import {StatefulTooltip} from 'baseui/tooltip'
+import {ParagraphSmall} from 'baseui/typography'
+import Decimal from 'decimal.js'
+import {useMemo, useState, VFC} from 'react'
+import {StakePool} from '.'
+import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
 
 const ReclaimAllModalBody: VFC<
   {
@@ -29,14 +29,23 @@ const ReclaimAllModalBody: VFC<
   const {api} = useApiPromise()
   const waitSignAndSend = useWaitSignAndSend()
   const decimals = useDecimalJsTokenDecimalMultiplier(api)
-  const onConfirm = () => {
-    waitSignAndSend(extrinsic, (status) => {
-      if (status.isReady) {
-        onClose?.({closeSource: 'closeButton'})
-      }
-    })
-  }
+  const [confirmLock, setConfirmLock] = useState(false)
 
+  const onConfirm = async () => {
+    setConfirmLock(true)
+    try {
+      await waitSignAndSend(extrinsic, (status) => {
+        if (status.isReady) {
+          onClose?.({closeSource: 'closeButton'})
+          setConfirmLock(false)
+        }
+      })
+    } catch (err) {
+      // setConfirmLock(false)
+    } finally {
+      setConfirmLock(false)
+    }
+  }
   const reclaimableStake = useMemo(
     () =>
       miners
@@ -100,7 +109,9 @@ const ReclaimAllModalBody: VFC<
           justifyContent="space-between"
         >
           <PhalaStakePoolTransactionFeeLabel action={extrinsic} />
-          <ModalButton onClick={onConfirm}>Confirm</ModalButton>
+          <ModalButton disabled={confirmLock} onClick={onConfirm}>
+            Confirm
+          </ModalButton>
         </Block>
       </ModalFooter>
     </>

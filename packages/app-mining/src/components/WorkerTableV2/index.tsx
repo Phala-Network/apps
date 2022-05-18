@@ -89,6 +89,7 @@ const WorkerTableV2 = (): JSX.Element => {
       },
     },
     {
+      refetchInterval: 60 * 10 * 1000,
       keepPreviousData: true,
       enabled: Boolean(address),
     }

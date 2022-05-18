@@ -1,23 +1,23 @@
-import {useMemo, useState, VFC} from 'react'
-import {Input} from 'baseui/input'
-import {
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  ModalButton,
-  ModalProps,
-} from 'baseui/modal'
-import {ParagraphSmall} from 'baseui/typography'
-import {FormControl} from 'baseui/form-control'
-import Decimal from 'decimal.js'
-import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
+import {PhalaStakePoolTransactionFeeLabel} from '@phala/react-components'
 import {
   useApiPromise,
   useDecimalJsTokenDecimalMultiplier,
 } from '@phala/react-libs'
-import {StakePool} from '.'
-import {PhalaStakePoolTransactionFeeLabel} from '@phala/react-components'
 import {Block} from 'baseui/block'
+import {FormControl} from 'baseui/form-control'
+import {Input} from 'baseui/input'
+import {
+  ModalBody,
+  ModalButton,
+  ModalFooter,
+  ModalHeader,
+  ModalProps,
+} from 'baseui/modal'
+import {ParagraphSmall} from 'baseui/typography'
+import Decimal from 'decimal.js'
+import {useMemo, useState, VFC} from 'react'
+import {StakePool} from '.'
+import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
 
 const SetCommissionModalBody: VFC<
   {
@@ -29,13 +29,22 @@ const SetCommissionModalBody: VFC<
   const [commission, setCommission] = useState('')
   const waitSignAndSend = useWaitSignAndSend()
   const decimals = useDecimalJsTokenDecimalMultiplier(api)
+  const [confirmLock, setConfirmLock] = useState(false)
 
-  const onConfirm = () => {
-    waitSignAndSend(extrinsic, (status) => {
-      if (status.isReady) {
-        onClose?.({closeSource: 'closeButton'})
-      }
-    })
+  const onConfirm = async () => {
+    setConfirmLock(true)
+    try {
+      await waitSignAndSend(extrinsic, (status) => {
+        if (status.isReady) {
+          onClose?.({closeSource: 'closeButton'})
+          setConfirmLock(false)
+        }
+      })
+    } catch (err) {
+      // setConfirmLock(false)
+    } finally {
+      setConfirmLock(false)
+    }
   }
 
   const extrinsic = useMemo(() => {
@@ -85,7 +94,10 @@ const SetCommissionModalBody: VFC<
           justifyContent="space-between"
         >
           <PhalaStakePoolTransactionFeeLabel action={extrinsic} />
-          <ModalButton disabled={!commission} onClick={onConfirm}>
+          <ModalButton
+            disabled={!commission || confirmLock}
+            onClick={onConfirm}
+          >
             Confirm
           </ModalButton>
         </Block>

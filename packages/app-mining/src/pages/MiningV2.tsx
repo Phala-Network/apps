@@ -41,7 +41,7 @@ export const MiningV2 = (): JSX.Element => {
         >
           <HeadingMedium as="div">Stake Pool</HeadingMedium>
           <Block display="flex">
-            <ClaimAll marginRight="scale400" />
+            <ClaimAll marginRight="scale400" kind={'mining'} />
             <CreatePoolButton />
           </Block>
         </Block>
