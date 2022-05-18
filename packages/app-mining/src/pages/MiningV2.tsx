@@ -2,11 +2,24 @@ import {Block} from 'baseui/block'
 import {Card} from 'baseui/card'
 import {HeadingMedium} from 'baseui/typography'
 import {Helmet} from 'react-helmet'
+import styled from 'styled-components'
 import ClaimAll from '../components/ClaimAll'
 import CreatePoolButton from '../components/CreatePoolButton'
 import StakePoolTableV2 from '../components/StakePoolTableV2'
 import StatusBarV2 from '../components/StatusBarV2'
 import WorkerTableV2 from '../components/WorkerTableV2'
+import endGameBanner from '../static/end-game-banner.jpg'
+
+const EndGameBanner = styled.a`
+  display: block;
+  margin-top: 16px;
+
+  img {
+    width: 100%;
+    display: block;
+    user-select: none;
+  }
+`
 
 export const MiningV2 = (): JSX.Element => {
   return (
@@ -20,7 +33,11 @@ export const MiningV2 = (): JSX.Element => {
       <Helmet>
         <title>Mining</title>
       </Helmet>
-
+      
+      <EndGameBanner href="/end-game/" target="_blank" rel="noreferrer">
+        <img src={endGameBanner} alt="End Game Banner" />
+      </EndGameBanner>
+      
       <StatusBarV2 />
       <Card
         overrides={{
