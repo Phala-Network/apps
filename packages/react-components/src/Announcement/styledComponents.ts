@@ -18,7 +18,7 @@ export const Container = styled.div`
   box-sizing: border-box;
   margin: 0 -95px 18px -95px;
 
-  ${down('md')} {
+  ${down('lg')} {
     margin: 0 0 18px 0;
   }
 `

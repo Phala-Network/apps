@@ -23,7 +23,7 @@ const Root = styled.div`
   box-sizing: border-box;
   position: relative;
 
-  ${down('sm')} {
+  ${down('md')} {
     position: fixed;
     left: 16px;
     bottom: 90px;
@@ -31,7 +31,7 @@ const Root = styled.div`
   }
 
   &.active {
-    ${down('sm')} {
+    ${down('md')} {
       width: 100%;
       left: 0;
       bottom: 0;

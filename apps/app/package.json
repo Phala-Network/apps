@@ -28,7 +28,7 @@
     "@talisman-connect/wallets": "^1.1.3",
     "axios": "^0.27.2",
     "babel-plugin-styled-components": "^2.0.7",
-    "baseui": "^11.0.2",
+    "baseui": "^11.0.3",
     "decimal.js": "^10.3.1",
     "gatsby": "^4.14.0",
     "gatsby-plugin-env-variables": "^2.2.0",
@@ -45,7 +45,7 @@
     "react-dom": "^18.1.0",
     "react-helmet": "^6.1.0",
     "react-query": "^3.39.0",
-    "styled-breakpoints": "^10.2.3",
+    "styled-breakpoints": "^11.1.0",
     "styled-components": "^5.3.5",
     "styletron-engine-monolithic": "^0.0.6",
     "styletron-react": "^6.0.2"

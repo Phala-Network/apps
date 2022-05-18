@@ -28,7 +28,7 @@ const Connect = styled.div`
   color: #111111;
   margin-right: 20px;
 
-  ${down('lg')} {
+  ${down('xl')} {
     font-size: 14px;
     line-height: 14px;
     padding: 0 10px;
@@ -48,13 +48,13 @@ const AccountLabel = styled.div`
   margin-right: 16px;
   height: 36px;
 
-  ${down('lg')} {
+  ${down('xl')} {
     font-size: 14px;
     line-height: 14px;
     margin-right: 10px;
   }
 
-  ${down('md')} {
+  ${down('lg')} {
     margin-right: 0;
   }
 `
@@ -68,7 +68,7 @@ const Balance = styled.span`
     padding-left: 5px;
   }
 
-  ${down('lg')} {
+  ${down('xl')} {
     display: none;
   }
 `
@@ -96,13 +96,13 @@ const Name = styled.span`
   text-overflow: ellipsis;
   box-sizing: border-box;
 
-  ${down('lg')} {
+  ${down('xl')} {
     margin-right: 0;
   }
 `
 
 const Address = styled.span`
-  ${down('lg')} {
+  ${down('xl')} {
     display: none;
   }
 `

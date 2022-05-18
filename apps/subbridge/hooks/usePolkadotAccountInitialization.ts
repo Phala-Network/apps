@@ -1,10 +1,14 @@
-import {lastWalletExtensionNameAtom, useAccounts, useWallet} from '@phala/store'
+import {
+  lastWalletExtensionNameAtom,
+  polkadotAccountsAtom,
+  walletAtom,
+} from '@phala/store'
 import {useAtom} from 'jotai'
 import {useEffect} from 'react'
 
 export const usePolkadotAccountInitialization = (): void => {
-  const [, setAccounts] = useAccounts()
-  const [wallet, setWallet] = useWallet()
+  const [, setAccounts] = useAtom(polkadotAccountsAtom)
+  const [wallet, setWallet] = useAtom(walletAtom)
   const [lastWalletExtensionName] = useAtom(lastWalletExtensionNameAtom)
 
   useEffect(() => {
@@ -35,6 +39,12 @@ export const usePolkadotAccountInitialization = (): void => {
     let unsub: () => void
     let unmounted = false
     if (wallet) {
+      // Some wallets don't implement subscribeAccounts correctly, so call getAccounts anyway
+      wallet.getAccounts().then((accounts) => {
+        if (!unmounted) {
+          setAccounts(accounts)
+        }
+      })
       ;(
         wallet.subscribeAccounts((accounts) => {
           if (accounts && !unmounted) {

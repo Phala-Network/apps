@@ -18,7 +18,7 @@ const Wrapper = styled.div`
   grid-template-columns: auto 1fr;
   grid-template-areas: 'Name Button' 'Address Address';
 
-  ${down('sm')} {
+  ${down('md')} {
     grid-template-rows: 20px 21px;
     grid-template-columns: 1fr auto;
     grid-template-areas: 'Name Button' 'Address .';
@@ -35,7 +35,7 @@ const Name = styled.div`
   line-height: 36px;
   color: #ffffff;
 
-  ${down('sm')} {
+  ${down('md')} {
     font-size: 20px;
     line-height: 20px;
   }
@@ -46,7 +46,7 @@ const ButtonWrapper = styled.div`
   padding-top: 4px;
   padding-right: 30px;
 
-  ${down('sm')} {
+  ${down('md')} {
     padding-top: 0;
   }
 `
@@ -62,7 +62,7 @@ const AddressWrapper = styled.div`
     }
   }
 
-  ${down('sm')} {
+  ${down('md')} {
     padding-top: 8px;
   }
 `
@@ -77,7 +77,7 @@ const Address = styled.a`
   position: relative;
   transform: translateY(-4px);
 
-  ${down('sm')} {
+  ${down('md')} {
     font-size: 12px;
     line-height: 16px;
   }
@@ -93,8 +93,8 @@ const AccountInfo: React.FC = () => {
   const [selectAccountModalViable, setSelectAccountModalViable] =
     useState(false)
   const [polkadotAccount] = useCurrentAccount()
-  const isMobile = useBreakpoint(down('sm'))
-  const isPad = useBreakpoint(down('md'))
+  const isMobile = useBreakpoint(down('md'))
+  const isPad = useBreakpoint(down('lg'))
 
   const {isServer} = useSSR()
 

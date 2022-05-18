@@ -1,5 +1,5 @@
-import styled from 'styled-components'
 import {down} from 'styled-breakpoints'
+import styled from 'styled-components'
 
 export const ModalTitleWrapper = styled.div`
   font-family: Montserrat;
@@ -9,7 +9,7 @@ export const ModalTitleWrapper = styled.div`
   margin: 0;
   padding: 20px 0 40px;
 
-  ${down('md')} {
+  ${down('lg')} {
     font-size: 20px;
     line-height: 20px;
     padding: 20px 0 20px;

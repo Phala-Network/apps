@@ -11,7 +11,7 @@ const HomePageWrap = styled.div`
     display: flex;
   }
 
-  ${down('sm')} {
+  ${down('md')} {
     display: block;
     padding-top: 72px;
     padding-bottom: 72px;
@@ -38,7 +38,7 @@ const BaseLayout: React.FC<{children: ReactNode}> = (props) => {
 
   return (
     <HomePageWrap>
-      <ContentWrap compact={/^\/(bridge|analytics|end-game)/.test(pathname)}>
+      <ContentWrap compact={/^\/(bridge|analytics)/.test(pathname)}>
         {children}
       </ContentWrap>
       <Navbar />

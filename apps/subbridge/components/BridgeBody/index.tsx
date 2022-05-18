@@ -89,7 +89,7 @@ const BridgeBody: FC<BoxProps> = (props) => {
 
             <IconButton onClick={handleSwitchChain}>
               <ArrowForward
-                sx={{[theme.breakpoints.down('sm')]: {display: 'none'}}}
+                sx={{[theme.breakpoints.down('md')]: {display: 'none'}}}
               />
               <ArrowDownward
                 sx={{[theme.breakpoints.up('sm')]: {display: 'none'}}}

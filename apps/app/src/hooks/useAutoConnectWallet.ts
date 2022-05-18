@@ -1,12 +1,13 @@
-import {useLastWalletExtensionName, useWallet} from '@phala/store'
+import {lastWalletExtensionNameAtom, walletAtom} from '@phala/store'
+import {useAtom} from 'jotai'
 import {useEffect} from 'react'
 
 /**
  * Hook to automatically connect to the last wallet extension
  */
 export const useAutoConnectWallet = () => {
-  const [wallet, setWallet] = useWallet()
-  const [lastWalletExtensionName] = useLastWalletExtensionName()
+  const [wallet, setWallet] = useAtom(walletAtom)
+  const [lastWalletExtensionName] = useAtom(lastWalletExtensionNameAtom)
 
   useEffect(() => {
     if (wallet || !lastWalletExtensionName) return

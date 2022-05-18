@@ -18,7 +18,7 @@ const SubbridgeLogo: FC<{className?: string}> = ({className}) => {
         css={{
           flex: 'none',
           width: 36,
-          [theme.breakpoints.down('sm')]: {
+          [theme.breakpoints.down('md')]: {
             width: 32,
           },
         }}
@@ -28,7 +28,7 @@ const SubbridgeLogo: FC<{className?: string}> = ({className}) => {
           flex: 'none',
           marginLeft: 13,
           width: 111,
-          [theme.breakpoints.down('sm')]: {
+          [theme.breakpoints.down('md')]: {
             display: 'none',
           },
         }}

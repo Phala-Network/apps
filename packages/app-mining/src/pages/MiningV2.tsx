@@ -33,11 +33,11 @@ export const MiningV2 = (): JSX.Element => {
       <Helmet>
         <title>Mining</title>
       </Helmet>
-
+      
       <EndGameBanner href="/end-game/" target="_blank" rel="noreferrer">
         <img src={endGameBanner} alt="End Game Banner" />
       </EndGameBanner>
-
+      
       <StatusBarV2 />
       <Card
         overrides={{

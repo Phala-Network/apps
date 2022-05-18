@@ -1,6 +1,6 @@
 import React, {useMemo} from 'react'
-import styled from 'styled-components'
 import {down} from 'styled-breakpoints'
+import styled from 'styled-components'
 import {DataType} from './index'
 
 const Wrapper = styled.div`
@@ -18,7 +18,7 @@ const Name = styled.span<{isPHA?: boolean}>`
   margin-left: 20px;
   min-width: 53px;
 
-  ${down('sm')} {
+  ${down('md')} {
     font-size: 16px;
     line-height: 16px;
     margin-left: 0;
@@ -28,7 +28,7 @@ const Name = styled.span<{isPHA?: boolean}>`
 const ImgWrapper = styled.img<{isPHA?: boolean}>`
   height: ${(props) => (props.isPHA ? '48px' : '24px')};
   width: auto;
-  ${down('sm')} {
+  ${down('md')} {
     display: none;
   }
 `
