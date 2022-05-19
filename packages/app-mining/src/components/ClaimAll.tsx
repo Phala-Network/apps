@@ -17,11 +17,9 @@ import {
   ModalHeader,
 } from 'baseui/modal'
 import {Skeleton} from 'baseui/skeleton'
-import {StatefulTooltip} from 'baseui/tooltip'
 import {HeadingSmall, LabelSmall, ParagraphSmall} from 'baseui/typography'
 import Decimal from 'decimal.js'
 import {useCallback, useEffect, useMemo, useState} from 'react'
-import {AlertCircle} from 'react-feather'
 import {SortOrder, useStakePoolsQuery} from '../hooks/graphql'
 import useWaitSignAndSend from '../hooks/useWaitSignAndSend'
 import {client} from '../utils/GraphQLClient'
@@ -89,16 +87,13 @@ const ClaimAll = (
 
     return data.findManyStakePools.reduce((acc, cur) => {
       let curRewards = new Decimal(0)
-      // old claimableReward  -> new [stakeReward /mining ownerReward]
-      if (props.kind === 'mining') {
-        if (cur.ownerAddress === polkadotAccount?.address) {
-          curRewards = curRewards.add(new Decimal(cur.ownerReward))
-        }
-      } else {
-        const stakeReward = cur.stakePoolStakers?.[0]?.stakeReward
-        if (stakeReward) {
-          curRewards = curRewards.add(new Decimal(stakeReward))
-        }
+      const claimableReward = cur.stakePoolStakers?.[0]?.claimableReward
+      if (claimableReward) {
+        curRewards = curRewards.add(new Decimal(claimableReward))
+      }
+
+      if (cur.ownerAddress === polkadotAccount?.address) {
+        curRewards = curRewards.add(new Decimal(cur.ownerReward))
       }
 
       return acc.add(curRewards)
@@ -146,7 +141,11 @@ const ClaimAll = (
         {polkadotAccount?.address && (
           <Block marginRight="20px">
             <LabelSmall as="div">
-              {props.kind === 'mining' ? 'Owner Rewards' : 'Delegator Rewards'}
+              {
+                // Claimable Rewards -> Owner Rewards &  Delegator Rewards
+                // props.kind === 'mining' ? 'Owner Rewards' : 'Delegator Rewards'
+                'Claimable Rewards'
+              }
             </LabelSmall>
             <HeadingSmall as="div">
               {isLoading || !totalclaimableReward ? (
@@ -198,20 +197,6 @@ const ClaimAll = (
                 {totalclaimableReward && formatCurrency(totalclaimableReward)}{' '}
                 PHA
               </ParagraphSmall>
-              <StatefulTooltip
-                content={() => (
-                  <Block>
-                    The reward may include two parts: Delegator reward and Owner
-                    reward
-                  </Block>
-                )}
-                triggerType={'hover'}
-              >
-                <AlertCircle
-                  size={14}
-                  style={{marginLeft: '6px', marginTop: '3px'}}
-                />
-              </StatefulTooltip>
             </Block>
           </FormControl>
 
