@@ -1,5 +1,5 @@
 import {SelectAccountModal} from '@phala/react-components'
-import {useClipboard, useSSR} from '@phala/react-hooks'
+import {useSSR} from '@phala/react-hooks'
 import {useCurrentAccount} from '@phala/store'
 import {trimAddress} from '@phala/utils'
 import {toaster} from 'baseui/toast'
@@ -106,13 +106,12 @@ const AccountInfo: React.FC = () => {
     return polkadotAccount.address
   }, [isPad, polkadotAccount])
 
-  const {copy} = useClipboard()
-
   const onClick: MouseEventHandler<SVGSVGElement> = (e) => {
     e.stopPropagation()
     if (polkadotAccount) {
-      copy(polkadotAccount.address)
-      toaster.info('Copied to clipboard', {})
+      navigator.clipboard.writeText(polkadotAccount.address).then(() => {
+        toaster.info('Copied to clipboard', {})
+      })
     }
   }
 
