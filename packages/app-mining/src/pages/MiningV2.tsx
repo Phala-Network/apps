@@ -68,7 +68,7 @@ export const MiningV2 = (): JSX.Element => {
         >
           <HeadingMedium as="div">Worker</HeadingMedium>
         </Block>
-        <WorkerTableV2 />
+        <WorkerTableV2 kind="mining" />
       </Card>
     </Block>
   )
