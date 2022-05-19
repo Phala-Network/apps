@@ -140,13 +140,7 @@ const ClaimAll = (
       <Block display="flex" alignItems="center" {...props}>
         {polkadotAccount?.address && (
           <Block marginRight="20px">
-            <LabelSmall as="div">
-              {
-                // Claimable Rewards -> Owner Rewards &  Delegator Rewards
-                // props.kind === 'mining' ? 'Owner Rewards' : 'Delegator Rewards'
-                'Claimable Rewards'
-              }
-            </LabelSmall>
+            <LabelSmall as="div">{'Claimable Rewards'}</LabelSmall>
             <HeadingSmall as="div">
               {isLoading || !totalclaimableReward ? (
                 <Skeleton animation height="32px" width="200px" />
