@@ -102,7 +102,7 @@ export const StakePool: FC<StakePoolProps> = ({pid}) => {
         <Block maxWidth="1024px" margin="0 auto">
           <Block
             display="grid"
-            gridTemplateColumns="1.5fr 1fr 1fr 1fr 1fr"
+            gridTemplateColumns="2fr 1fr 1fr 1fr 1fr"
             gridGap="scale400"
             $style={({$theme}: any) => ({
               [$theme.mediaQuery.medium]: {
