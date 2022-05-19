@@ -82,7 +82,7 @@ const ClaimAll = (
     setConfirmLock(false)
   }, [])
 
-  const totalclaimableReward = useMemo<Decimal | null>(() => {
+  const totalClaimableReward = useMemo<Decimal | null>(() => {
     if (!data) return null
 
     return data.findManyStakePools.reduce((acc, cur) => {
@@ -140,18 +140,12 @@ const ClaimAll = (
       <Block display="flex" alignItems="center" {...props}>
         {polkadotAccount?.address && (
           <Block marginRight="20px">
-            <LabelSmall as="div">
-              {
-                // Claimable Rewards -> Owner Rewards &  Delegator Rewards
-                // props.kind === 'mining' ? 'Owner Rewards' : 'Delegator Rewards'
-                'Claimable Rewards'
-              }
-            </LabelSmall>
+            <LabelSmall as="div">{'Claimable Rewards'}</LabelSmall>
             <HeadingSmall as="div">
-              {isLoading || !totalclaimableReward ? (
+              {isLoading || !totalClaimableReward ? (
                 <Skeleton animation height="32px" width="200px" />
               ) : (
-                `${formatCurrency(totalclaimableReward)} PHA`
+                `${formatCurrency(totalClaimableReward)} PHA`
               )}
             </HeadingSmall>
           </Block>
@@ -160,7 +154,7 @@ const ClaimAll = (
         <Button
           onClick={() => setIsModalOpen(true)}
           kind="secondary"
-          disabled={!totalclaimableReward || totalclaimableReward.eq(0)}
+          disabled={!totalClaimableReward || totalClaimableReward.eq(0)}
         >
           Claim All
         </Button>
@@ -194,7 +188,7 @@ const ClaimAll = (
           <FormControl label={'Rewards'}>
             <Block display={'flex'} flexDirection={'row'}>
               <ParagraphSmall as="div">
-                {totalclaimableReward && formatCurrency(totalclaimableReward)}{' '}
+                {totalClaimableReward && formatCurrency(totalClaimableReward)}{' '}
                 PHA
               </ParagraphSmall>
             </Block>
