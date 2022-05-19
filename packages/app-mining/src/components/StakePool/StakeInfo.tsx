@@ -3,7 +3,7 @@ import {Block} from 'baseui/block'
 import {Skeleton} from 'baseui/skeleton'
 import {ParagraphSmall} from 'baseui/typography'
 import Decimal from 'decimal.js'
-import {FC, ReactNode, useMemo, VFC} from 'react'
+import {FC, ReactNode, useMemo} from 'react'
 import styled from 'styled-components'
 import {StakePoolQuery} from '../../hooks/graphql'
 import SettingButton from './SettingButton'
@@ -16,7 +16,7 @@ const StyledBlock = styled(Block)`
   }
 `
 
-const Item: FC<{label: string; action?: ReactNode}> = ({
+const Item: FC<{label: string; action?: ReactNode; children: ReactNode}> = ({
   label,
   action,
   children,
@@ -51,7 +51,7 @@ const Item: FC<{label: string; action?: ReactNode}> = ({
   )
 }
 
-const StakeInfo: VFC<{
+const StakeInfo: FC<{
   stakePool: StakePool
   isOwner: boolean
   onSetCap: () => void
@@ -79,7 +79,13 @@ const StakeInfo: VFC<{
       <StyledBlock>
         <Item
           label="Cap"
-          action={isOwner && <SettingButton onClick={onSetCap} />}
+          action={
+            isOwner && (
+              <Block marginTop="-8px" marginBottom="-8px">
+                <SettingButton onClick={onSetCap} />
+              </Block>
+            )
+          }
         >
           {cap}
         </Item>

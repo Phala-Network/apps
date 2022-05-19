@@ -7,7 +7,7 @@ import {StyledLink} from 'baseui/link'
 import {HeadingLarge, HeadingSmall, ParagraphXSmall} from 'baseui/typography'
 import Decimal from 'decimal.js'
 import {PageProps} from 'gatsby'
-import {useCallback, useState, VFC} from 'react'
+import {FC, useCallback, useState} from 'react'
 import {CheckCircle, MinusCircle} from 'react-feather'
 import {Helmet} from 'react-helmet'
 import styled from 'styled-components'
@@ -17,6 +17,7 @@ import SettingButton from '../components/StakePool/SettingButton'
 import StakeInfo from '../components/StakePool/StakeInfo'
 import WithdrawQueue from '../components/StakePool/WithdrawQueue'
 import StakePoolModal, {StakePoolModalKey} from '../components/StakePoolModal'
+import WorkerTableV2 from '../components/WorkerTableV2'
 import {useStakePoolQuery} from '../hooks/graphql'
 import {client} from '../utils/GraphQLClient'
 
@@ -39,7 +40,7 @@ interface StakePoolProps extends PageProps {
   pid?: string
 }
 
-export const StakePool: VFC<StakePoolProps> = ({pid}) => {
+export const StakePool: FC<StakePoolProps> = ({pid}) => {
   const [modalKey, setModalKey] = useState<StakePoolModalKey | null>(null)
   const [polkadotAccount] = useCurrentAccount()
   const {data, isLoading} = useStakePoolQuery(
@@ -101,7 +102,7 @@ export const StakePool: VFC<StakePoolProps> = ({pid}) => {
         <Block maxWidth="1024px" margin="0 auto">
           <Block
             display="grid"
-            gridTemplateColumns="1.5fr 1fr 1fr 1fr 1fr"
+            gridTemplateColumns="2fr 1fr 1fr 1fr 1fr"
             gridGap="scale400"
             $style={({$theme}: any) => ({
               [$theme.mediaQuery.medium]: {
@@ -128,11 +129,12 @@ export const StakePool: VFC<StakePoolProps> = ({pid}) => {
               {ownerAddress &&
                 accounts &&
                 (accounts.identity || trimAddress(ownerAddress))}
-              {accounts && accounts.identity && accounts.identityVerified ? (
-                <VerifiedIcon />
-              ) : null}
-              {accounts && accounts.identity && !accounts.identityVerified ? (
-                <UnVerifiedIcon />
+              {accounts && accounts.identity ? (
+                accounts.identityVerified ? (
+                  <VerifiedIcon />
+                ) : (
+                  <UnVerifiedIcon />
+                )
               ) : null}
             </InfoCard>
             <InfoCard label="APR">
@@ -232,6 +234,26 @@ export const StakePool: VFC<StakePoolProps> = ({pid}) => {
             <WithdrawQueue
               stakePoolWithdrawals={stakePoolWithdrawals}
               isLoading={isLoading}
+            />
+          </Card>
+
+          <HeadingSmall marginTop="scale1200" marginBottom="scale400">
+            Workers
+          </HeadingSmall>
+          <Card
+            overrides={{
+              Root: {
+                style: ({$theme}) => ({
+                  borderRadius: '0',
+                  ...$theme.borders.border200,
+                }),
+              },
+            }}
+          >
+            <WorkerTableV2
+              kind="stakePool"
+              pid={pid ? Number(pid) : undefined}
+              isOwner={isOwner}
             />
           </Card>
         </Block>

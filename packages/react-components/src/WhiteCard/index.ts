@@ -1,1 +1,0 @@
-export {WhiteCard} from './WhiteCard'

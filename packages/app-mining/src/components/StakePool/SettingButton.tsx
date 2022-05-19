@@ -1,8 +1,8 @@
 import {Button, ButtonProps} from 'baseui/button'
-import {VFC} from 'react'
+import {FC} from 'react'
 import {Settings} from 'react-feather'
 
-const SettingButton: VFC<Pick<ButtonProps, 'onClick'>> = ({onClick}) => {
+const SettingButton: FC<Pick<ButtonProps, 'onClick'>> = ({onClick}) => {
   return (
     <Button
       kind="tertiary"
