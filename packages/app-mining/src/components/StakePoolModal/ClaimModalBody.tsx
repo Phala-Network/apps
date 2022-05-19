@@ -16,10 +16,8 @@ import {
   ModalHeader,
   ModalProps,
 } from 'baseui/modal'
-import {StatefulTooltip} from 'baseui/tooltip'
 import {ParagraphSmall} from 'baseui/typography'
 import {useMemo, useState, VFC} from 'react'
-import {AlertCircle} from 'react-feather'
 import {StakePool} from '.'
 import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
 
@@ -83,20 +81,6 @@ const ClaimModalBody: VFC<
                 )}{' '}
               PHA
             </ParagraphSmall>
-            <StatefulTooltip
-              content={() => (
-                <Block>
-                  The reward may include two parts: Delegator reward and Owner
-                  reward
-                </Block>
-              )}
-              triggerType={'hover'}
-            >
-              <AlertCircle
-                size={14}
-                style={{marginLeft: '6px', marginTop: '3px'}}
-              />
-            </StatefulTooltip>
           </Block>
         </FormControl>
 

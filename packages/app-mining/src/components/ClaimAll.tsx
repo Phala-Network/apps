@@ -17,11 +17,9 @@ import {
   ModalHeader,
 } from 'baseui/modal'
 import {Skeleton} from 'baseui/skeleton'
-import {StatefulTooltip} from 'baseui/tooltip'
 import {HeadingSmall, LabelSmall, ParagraphSmall} from 'baseui/typography'
 import Decimal from 'decimal.js'
 import {useCallback, useEffect, useMemo, useState} from 'react'
-import {AlertCircle} from 'react-feather'
 import {SortOrder, useStakePoolsQuery} from '../hooks/graphql'
 import useWaitSignAndSend from '../hooks/useWaitSignAndSend'
 import {client} from '../utils/GraphQLClient'
@@ -84,21 +82,18 @@ const ClaimAll = (
     setConfirmLock(false)
   }, [])
 
-  const totalclaimableReward = useMemo<Decimal | null>(() => {
+  const totalClaimableReward = useMemo<Decimal | null>(() => {
     if (!data) return null
 
     return data.findManyStakePools.reduce((acc, cur) => {
       let curRewards = new Decimal(0)
-      // old claimableReward  -> new [stakeReward /mining ownerReward]
-      if (props.kind === 'mining') {
-        if (cur.ownerAddress === polkadotAccount?.address) {
-          curRewards = curRewards.add(new Decimal(cur.ownerReward))
-        }
-      } else {
-        const stakeReward = cur.stakePoolStakers?.[0]?.stakeReward
-        if (stakeReward) {
-          curRewards = curRewards.add(new Decimal(stakeReward))
-        }
+      const claimableReward = cur.stakePoolStakers?.[0]?.claimableReward
+      if (claimableReward) {
+        curRewards = curRewards.add(new Decimal(claimableReward))
+      }
+
+      if (cur.ownerAddress === polkadotAccount?.address) {
+        curRewards = curRewards.add(new Decimal(cur.ownerReward))
       }
 
       return acc.add(curRewards)
@@ -145,14 +140,12 @@ const ClaimAll = (
       <Block display="flex" alignItems="center" {...props}>
         {polkadotAccount?.address && (
           <Block marginRight="20px">
-            <LabelSmall as="div">
-              {props.kind === 'mining' ? 'Owner Rewards' : 'Delegator Rewards'}
-            </LabelSmall>
+            <LabelSmall as="div">{'Claimable Rewards'}</LabelSmall>
             <HeadingSmall as="div">
-              {isLoading || !totalclaimableReward ? (
+              {isLoading || !totalClaimableReward ? (
                 <Skeleton animation height="32px" width="200px" />
               ) : (
-                `${formatCurrency(totalclaimableReward)} PHA`
+                `${formatCurrency(totalClaimableReward)} PHA`
               )}
             </HeadingSmall>
           </Block>
@@ -161,7 +154,7 @@ const ClaimAll = (
         <Button
           onClick={() => setIsModalOpen(true)}
           kind="secondary"
-          disabled={!totalclaimableReward || totalclaimableReward.eq(0)}
+          disabled={!totalClaimableReward || totalClaimableReward.eq(0)}
         >
           Claim All
         </Button>
@@ -195,23 +188,9 @@ const ClaimAll = (
           <FormControl label={'Rewards'}>
             <Block display={'flex'} flexDirection={'row'}>
               <ParagraphSmall as="div">
-                {totalclaimableReward && formatCurrency(totalclaimableReward)}{' '}
+                {totalClaimableReward && formatCurrency(totalClaimableReward)}{' '}
                 PHA
               </ParagraphSmall>
-              <StatefulTooltip
-                content={() => (
-                  <Block>
-                    The reward may include two parts: Delegator reward and Owner
-                    reward
-                  </Block>
-                )}
-                triggerType={'hover'}
-              >
-                <AlertCircle
-                  size={14}
-                  style={{marginLeft: '6px', marginTop: '3px'}}
-                />
-              </StatefulTooltip>
             </Block>
           </FormControl>
 
