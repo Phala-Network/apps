@@ -40,16 +40,18 @@ const Links: React.FC = () => {
   const [currentNetworkNode] = useCurrentNetworkNode()
   return (
     <Wrapper>
-      <Link to="/">Dashboard</Link>
+      <Link activeClassName="active" to="/">
+        Dashboard
+      </Link>
       <a href="https://subbridge.io" target="_blank" rel="noreferrer">
         SubBridge
       </a>
       {currentNetworkNode.id !== 'phala-rewards-demo' && (
         <>
-          <Link to="/delegate/" partiallyActive>
+          <Link activeClassName="active" to="/delegate/" partiallyActive>
             Delegate
           </Link>
-          <Link to="/mining/" partiallyActive>
+          <Link activeClassName="active" to="/mining/" partiallyActive>
             Mining
           </Link>
         </>
