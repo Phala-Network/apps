@@ -16,7 +16,7 @@ import Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
 import {atomWithStorage} from 'jotai/utils'
 import {debounce} from 'lodash-es'
-import {FC, ReactNode, useCallback, useState} from 'react'
+import {FC, ReactNode, useCallback, useEffect, useState} from 'react'
 import {AlertTriangle, Search} from 'react-feather'
 import styled from 'styled-components'
 import {$StyleProp} from 'styletron-react'
@@ -195,6 +195,12 @@ const StakePoolTableV2: FC<{
   const closeModal = useCallback(() => {
     setStakePoolModalKey(null)
   }, [])
+
+  useEffect(() => {
+    if (kind === 'mining' || kind === 'myDelegate') {
+      setCurrentPage(1)
+    }
+  }, [polkadotAccount?.address, kind])
 
   return (
     <div>
