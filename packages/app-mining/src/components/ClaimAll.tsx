@@ -74,7 +74,11 @@ const ClaimAll = (
         ],
       },
     },
-    {enabled: Boolean(polkadotAccount?.address), refetchOnMount: true}
+    {
+      enabled: Boolean(polkadotAccount?.address),
+      refetchOnMount: true,
+      refetchInterval: 60 * 10 * 1000,
+    }
   )
 
   const closeModal = useCallback(() => {

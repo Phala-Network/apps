@@ -1,5 +1,6 @@
 import {useCurrentAccount} from '@phala/store'
 import {formatCurrency, isTruthy, toFixed} from '@phala/utils'
+import {useStyletron} from 'baseui'
 import {Block} from 'baseui/block'
 import {Checkbox} from 'baseui/checkbox'
 import {StatefulInput} from 'baseui/input'
@@ -15,7 +16,7 @@ import Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
 import {atomWithStorage} from 'jotai/utils'
 import {debounce} from 'lodash-es'
-import {ReactChildren, useCallback, useState, VFC} from 'react'
+import {FC, ReactNode, useCallback, useState} from 'react'
 import {AlertTriangle, Search} from 'react-feather'
 import styled from 'styled-components'
 import {$StyleProp} from 'styletron-react'
@@ -56,15 +57,16 @@ const remainingValueAtom = atomWithStorage<string>(
   '100'
 )
 
-const StakePoolTableV2: VFC<{
+const StakePoolTableV2: FC<{
   kind: 'delegate' | 'myDelegate' | 'mining'
 }> = ({kind}) => {
   const [currentTime] = useState(() => {
     const now = new Date()
     now.setSeconds(0)
     now.setMilliseconds(0)
-    return now.toISOString()
+    return now
   })
+  const [css] = useStyletron()
   const pageSize = kind === 'mining' ? 10 : 20
   const [polkadotAccount] = useCurrentAccount()
   const address = polkadotAccount?.address
@@ -153,7 +155,7 @@ const StakePoolTableV2: VFC<{
         },
         minersWhere: {
           estimatesReclaimableAt: {
-            lte: currentTime,
+            lte: currentTime.toISOString(),
           },
         },
       }),
@@ -299,7 +301,7 @@ const StakePoolTableV2: VFC<{
             style: {cursor: 'pointer'},
             component: (props: {
               $style: $StyleProp<any>
-              children: ReactChildren
+              children: ReactNode
               $row: StakePool
             }) => {
               return (
@@ -384,9 +386,39 @@ const StakePoolTableV2: VFC<{
             }
             sortable
           >
-            {(stakePool: StakePool) =>
-              `${new Decimal(stakePool.commission).times(100)}%`
-            }
+            {({commission, stakePoolStats}: StakePool) => {
+              let showWarning = false
+              if (stakePoolStats[0]) {
+                const {commission, previousCommission, commissionUpdatedAt} =
+                  stakePoolStats[0]
+                if (
+                  commission &&
+                  previousCommission &&
+                  new Decimal(commission).lt(previousCommission) &&
+                  new Date(commissionUpdatedAt).getTime() >
+                    currentTime.getTime() - 1000 * 60 * 60 * 24 * 3
+                ) {
+                  showWarning = true
+                }
+              }
+              return (
+                <Block display="flex" alignItems="center">
+                  <span>{`${new Decimal(commission).times(100)}%`}</span>
+                  {showWarning && (
+                    <StatefulTooltip
+                      overrides={{Body: {style: {maxWidth: '400px'}}}}
+                      content={tooltipContent.commissionWarning}
+                    >
+                      <AlertTriangle
+                        color="#dea833"
+                        size={16}
+                        className={css({marginLeft: '4px'})}
+                      />
+                    </StatefulTooltip>
+                  )}
+                </Block>
+              )
+            }}
           </TableBuilderColumn>
         )}
         {kind !== 'myDelegate' && (
@@ -502,7 +534,7 @@ const StakePoolTableV2: VFC<{
                   overrides={{Body: {style: {maxWidth: '400px'}}}}
                   content="There is a withdrawal application in the StakePool, please supplement the delegation or stop workers to release the stake."
                 >
-                  <AlertTriangle />
+                  <AlertTriangle color="#dea833" />
                 </StatefulTooltip>
               )
             }

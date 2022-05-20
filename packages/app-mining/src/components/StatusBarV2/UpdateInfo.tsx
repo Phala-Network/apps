@@ -11,7 +11,13 @@ import {useStatesQuery} from '../../hooks/graphql'
 import {client} from '../../utils/GraphQLClient'
 
 const UpdateInfo = (): JSX.Element => {
-  const {data, isLoading} = useStatesQuery(client)
+  const {data, isLoading} = useStatesQuery(
+    client,
+    {},
+    {
+      refetchInterval: 60 * 10 * 1000,
+    }
+  )
   const [distance, setDistance] = useState('')
   const updateTime = data?.findManyStates[2]?.datetimeValue
   const blockNumber = data?.findManyStates[3]?.integerValue
