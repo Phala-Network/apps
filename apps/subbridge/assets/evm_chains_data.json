@@ -1,0 +1,16 @@
+{
+  "1285": {
+    "chainName": "Moonriver",
+    "rpcUrls": [
+      "https://rpc.api.moonriver.moonbeam.network",
+      "wss://wss.api.moonriver.moonbeam.network"
+    ],
+    "nativeCurrency": {
+      "name": "Moonriver",
+      "symbol": "MOVR",
+      "decimals": 18
+    },
+    "chainId": "0x505",
+    "blockExplorerUrls": ["https://moonriver.moonscan.io"]
+  }
+}
