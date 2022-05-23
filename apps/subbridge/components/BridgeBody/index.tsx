@@ -1,7 +1,9 @@
+import {AssetId} from '@/config/asset'
 import {ALL_FROM_CHAINS, BRIDGES} from '@/config/bridge'
 import {ChainId} from '@/config/chain'
 import {
   amountAtom,
+  assetAtom,
   destinationAccountAtom,
   fromChainAtom,
   toChainAtom,
@@ -10,56 +12,84 @@ import {ArrowDownward, ArrowForward} from '@mui/icons-material'
 import {Box, Collapse, IconButton, Paper, Stack, useTheme} from '@mui/material'
 import {BoxProps} from '@mui/system'
 import {useAtom, useAtomValue} from 'jotai'
-import {FC, useEffect, useRef, useState} from 'react'
+import {FC, useState} from 'react'
 import Action from './Action'
 import AmountInput from './AmountInput'
+import AssetSelect from './AssetSelect'
 import ChainSelect from './ChainSelect'
 import DestinationAccountInput from './DestinationAccountInput'
 import ExtraInfo from './Extra'
 
 const getToChainIds = (fromChainId: ChainId): ChainId[] =>
-  BRIDGES.filter((bridge) => bridge.fromChain === fromChainId).map(
-    (bridge) => bridge.toChain
+  Array.from(
+    new Set(
+      BRIDGES.filter((bridge) => bridge.fromChain === fromChainId).map(
+        (bridge) => bridge.toChain
+      )
+    )
+  )
+
+const getAssetIds = (fromChainId: ChainId, toChainId: ChainId): AssetId[] =>
+  Array.from(
+    new Set(
+      BRIDGES.filter(
+        (bridge) =>
+          bridge.fromChain === fromChainId && bridge.toChain === toChainId
+      ).map((bridge) => bridge.asset)
+    )
   )
 
 const BridgeBody: FC<BoxProps> = (props) => {
   const theme = useTheme()
   const [amount, setAmount] = useAtom(amountAtom)
+  const [asset, setAsset] = useAtom(assetAtom)
   const [fromChain, setFromChain] = useAtom(fromChainAtom)
   const [toChain, setToChain] = useAtom(toChainAtom)
   const [toChainIds, setToChainIds] = useState<ChainId[]>(
     getToChainIds(fromChain.id)
   )
-  const prevFromChainId = useRef<ChainId>(fromChain.id)
-  const prevToChainId = useRef<ChainId>(toChain.id)
+  const [assetIds, setAssetIds] = useState<AssetId[]>(
+    getAssetIds(fromChain.id, toChain.id)
+  )
   const destinationAccount = useAtomValue(destinationAccountAtom)
 
-  useEffect(() => {
+  const handleSelectFromChain = (newFromChainId: ChainId) => {
+    setFromChain(newFromChainId)
     setAmount('')
-    const newToChainIds = getToChainIds(fromChain.id)
+    const newToChainIds = getToChainIds(newFromChainId)
     setToChainIds(newToChainIds)
-    if (!newToChainIds.includes(prevToChainId.current)) {
+    let newToChainId = toChain.id
+    if (!newToChainIds.includes(toChain.id)) {
       if (
-        fromChain.id === prevToChainId.current &&
-        newToChainIds.includes(prevFromChainId.current)
+        newFromChainId === toChain.id &&
+        newToChainIds.includes(fromChain.id)
       ) {
-        setToChain(prevFromChainId.current)
+        newToChainId = fromChain.id
       } else {
-        setToChain(newToChainIds[0])
+        newToChainId = newToChainIds[0]
       }
     }
-  }, [setToChain, fromChain.id, setAmount])
+    setToChain(newToChainId)
+    const newAssetIds = getAssetIds(newFromChainId, newToChainId)
+    if (!newAssetIds.includes(asset.id)) {
+      setAsset(newAssetIds[0])
+    }
+    setAssetIds(newAssetIds)
+  }
 
-  // Mare sure ref update is at last
-  useEffect(() => {
-    prevFromChainId.current = fromChain.id
-  }, [fromChain.id])
-  useEffect(() => {
-    prevToChainId.current = toChain.id
-  }, [toChain.id])
+  const handleSelectToChain = (newToChainId: ChainId) => {
+    setToChain(newToChainId)
+    const newAssetIds = getAssetIds(fromChain.id, newToChainId)
+    if (!newAssetIds.includes(asset.id)) {
+      setAsset(newAssetIds[0])
+    }
+    setAssetIds(newAssetIds)
+  }
 
   const handleSwitchChain = () => {
-    setFromChain(toChain.id)
+    if (ALL_FROM_CHAINS.includes(toChain.id)) {
+      handleSelectFromChain(toChain.id)
+    }
   }
 
   return (
@@ -83,7 +113,7 @@ const BridgeBody: FC<BoxProps> = (props) => {
               value={fromChain.id}
               chainIds={ALL_FROM_CHAINS}
               onChange={(e) => {
-                setFromChain(e.target.value as ChainId)
+                handleSelectFromChain(e.target.value as ChainId)
               }}
             />
 
@@ -102,12 +132,16 @@ const BridgeBody: FC<BoxProps> = (props) => {
               chainIds={toChainIds}
               value={toChain.id}
               onChange={(e) => {
-                setToChain(e.target.value as ChainId)
+                handleSelectToChain(e.target.value as ChainId)
               }}
             />
           </Stack>
 
-          <AmountInput />
+          <AmountInput
+            endAdornment={
+              <AssetSelect sx={{flex: 'none'}} assetIds={assetIds} />
+            }
+          />
 
           <DestinationAccountInput />
 

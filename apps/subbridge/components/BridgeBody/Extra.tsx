@@ -107,7 +107,7 @@ const ExtraInfo: FC<PaperProps> = ({sx, ...props}) => {
         >
           {`${
             bridge.destChainTransactionFee
-              ? formatCurrency(bridge.destChainTransactionFee, 8)
+              ? formatCurrency(bridge.destChainTransactionFee, 12)
               : '0'
           } ${asset.symbol}`}
         </Info>

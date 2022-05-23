@@ -19,6 +19,22 @@ export const polkadotAvailableBalanceFetcher = async (
   )
 }
 
+export const khalaTokenBalanceFetcher = async (
+  khalaApi: ApiPromise,
+  address: string,
+  palletId: number,
+  decimals: number
+) => {
+  const balance = await khalaApi.query.assets.account(palletId, address)
+  const balanceJson = balance.toJSON()
+  if (!balanceJson) {
+    return new Decimal(0)
+  }
+  return new Decimal((balanceJson as {balance: number}).balance).div(
+    Decimal.pow(10, decimals)
+  )
+}
+
 export const karuraTokenBalanceFetcher = async (
   karuraApi: ApiPromise,
   address: string,
@@ -68,7 +84,7 @@ export const khalaPartialFeeFetcher = async (
     khalaApi,
     amount: '1',
     destinationAccount: toChain.kind === 'polkadot' ? ALICE : BLACK_HOLE,
-    toChainId: toChainId,
+    toChainId,
     assetId,
   })
   if (extrinsic) {

@@ -1,12 +1,18 @@
 import {
   ethereumToKhalaEstimatedGasFetcher,
   ethersGasPriceFetcher,
+  moonriverEstimatedGasFetcher,
 } from '@/lib/ethersFetcher'
 import {
   karuraPartialFeeFetcher,
   khalaPartialFeeFetcher,
 } from '@/lib/polkadotFetcher'
-import {assetAtom, fromChainAtom, toChainAtom} from '@/store/bridge'
+import {
+  assetAtom,
+  decimalsAtom,
+  fromChainAtom,
+  toChainAtom,
+} from '@/store/bridge'
 import {ethersProviderAtom} from '@/store/ethers'
 import Decimal from 'decimal.js'
 import {useAtomValue} from 'jotai'
@@ -20,6 +26,7 @@ export const useEstimatedGasFee = () => {
   const toChain = useAtomValue(toChainAtom)
   const asset = useAtomValue(assetAtom)
   const ethersProvider = useAtomValue(ethersProviderAtom)
+  const decimals = useAtomValue(decimalsAtom)
   const khalaApi = usePolkadotApi(
     fromChain.id === 'thala' || toChain.id === 'thala' ? 'thala' : 'khala'
   )
@@ -34,6 +41,7 @@ export const useEstimatedGasFee = () => {
   const isFromKarura =
     fromChain.id === 'karura' || fromChain.id === 'karura-test'
   const isFromKhala = fromChain.id === 'thala' || fromChain.id === 'khala'
+  const isFromMoonriver = fromChain.id === 'moonriver'
 
   const {data: ethereumGasPrice} = useSWR(
     [ethersProvider],
@@ -51,6 +59,13 @@ export const useEstimatedGasFee = () => {
         ]
       : null,
     ethereumToKhalaEstimatedGasFetcher
+  )
+
+  const {data: moonriverEstimatedGas} = useSWR(
+    isFromMoonriver && ethersBridgeContract && toChain.paraId && asset.xcAddress
+      ? [ethersBridgeContract, asset.xcAddress, toChain.paraId, decimals]
+      : null,
+    moonriverEstimatedGasFetcher
   )
 
   const {data: karuraPartialFee} = useSWR(
@@ -84,6 +99,10 @@ export const useEstimatedGasFee = () => {
 
   if (isFromKhala) {
     return khalaPartialFee
+  }
+
+  if (isFromMoonriver && moonriverEstimatedGas && ethereumGasPrice) {
+    return new Decimal(moonriverEstimatedGas.times(ethereumGasPrice.toString()))
   }
 
   return null

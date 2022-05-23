@@ -52,8 +52,12 @@ export const destinationAccountAtom = atomWithReset('')
 export const bridgeAtom = atom((get) => {
   const fromChain = get(fromChainAtom)
   const toChain = get(toChainAtom)
+  const asset = get(assetAtom)
   const bridge = BRIDGES.find(
-    (x) => x.fromChain === fromChain.id && x.toChain === toChain.id
+    (x) =>
+      x.fromChain === fromChain.id &&
+      x.toChain === toChain.id &&
+      x.asset === asset.id
   )
   return bridge ?? null
 })
