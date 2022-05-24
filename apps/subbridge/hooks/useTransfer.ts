@@ -53,7 +53,7 @@ export const useTransfer = () => {
 
   if (isFromEthereumToKhala) {
     return async () => {
-      const resourceId = asset.bridgeContract?.[fromChain.evmChainId].resourceId
+      const resourceId = asset.bridgeContract?.[fromChain.id]?.resourceId
       if (
         !bridgeContract ||
         !khalaApi ||

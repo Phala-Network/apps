@@ -23,7 +23,7 @@ const EvmAction: FC<{onConfirm: () => void}> = ({onConfirm}) => {
   const decimals = asset.decimals[fromChain.id] || asset.decimals.default
   const spender =
     fromChain.kind === 'evm'
-      ? asset.assetContract?.[fromChain.evmChainId].spender
+      ? asset.assetContract?.[fromChain.id]?.spender
       : undefined
   const {data: approved} = useSWR(
     ethersAssetContract && evmAccount && spender

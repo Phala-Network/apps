@@ -6,7 +6,7 @@ import phaEthereumBridgeAbi from '@/assets/pha_ethereum_bridge_abi.json'
 // import Decimal from 'decimal.js'
 import type {ethers} from 'ethers'
 import {StaticImageData} from 'next/image'
-import {ChainId} from './chain'
+import {ChainId, EvmChainId} from './chain'
 
 export type AssetId = 'pha' | 'movr'
 export type KaruraToken = 'PHA'
@@ -19,14 +19,14 @@ export interface Asset {
   palletId?: number
   karuraToken?: KaruraToken
   assetContract?: {
-    [evmChainId: number]: {
+    [chainId in EvmChainId]?: {
       address: `0x${string}`
       abi: ethers.ContractInterface
       spender?: `0x${string}`
     }
   }
   bridgeContract?: {
-    [evmChainId: number]: {
+    [chainId in EvmChainId]?: {
       address: `0x${string}`
       resourceId?: `0x${string}`
       abi: ethers.ContractInterface
@@ -43,35 +43,35 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
     karuraToken: 'PHA',
     xcAddress: '0xffffffff8e6b63d9e447b6d4c45bda8af9dc9603',
     assetContract: {
-      1: {
+      ethereum: {
         address: '0x6c5bA91642F10282b576d91922Ae6448C9d52f4E',
         abi: phaEthereumAssetAbi,
         spender: '0xEEc0fb4913119567cDfC0c5fc2Bf8f9F9B226c2d',
       },
-      42: {
+      kovan: {
         address: '0x512f7a3c14b6ee86c2015bc8ac1fe97e657f75f2',
         abi: phaEthereumAssetAbi,
         spender: '0xF69b08D649B744A4d4781CB1B86E30Cc9Ac9991b',
       },
-      1285: {
+      moonriver: {
         address: '0xffFfFFff8E6b63d9e447B6d4C45BDA8AF9dc9603',
         abi: phaEthereumAssetAbi,
       },
     },
     bridgeContract: {
-      1: {
+      ethereum: {
         address: '0x8F92e7353b180937895E0C5937d616E8ea1A2Bb9',
         resourceId:
           '0x00e6dfb61a2fb903df487c401663825643bb825d41695e63df8af6162ab145a6',
         abi: phaEthereumBridgeAbi,
       },
-      42: {
+      kovan: {
         address: '0x82db1f1717487cADEAf6F0C74825495d6D89E08e',
         resourceId:
           '0x00e6dfb61a2fb903df487c401663825643bb825d41695e63df8af6162ab145a6',
         abi: phaEthereumBridgeAbi,
       },
-      1285: {
+      moonriver: {
         address: '0x0000000000000000000000000000000000000804',
         abi: moonriverXtokensAbi,
       },
@@ -93,7 +93,7 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
     palletId: 6,
     xcAddress: '0x0000000000000000000000000000000000000802',
     bridgeContract: {
-      1285: {
+      moonriver: {
         address: '0x0000000000000000000000000000000000000804',
         abi: moonriverXtokensAbi,
       },

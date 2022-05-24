@@ -55,7 +55,7 @@ export const useEstimatedGasFee = () => {
       ? [
           ethersBridgeContract,
           khalaApi,
-          asset.bridgeContract[fromChain.evmChainId].resourceId,
+          asset.bridgeContract[fromChain.id]?.resourceId,
         ]
       : null,
     ethereumToKhalaEstimatedGasFetcher
