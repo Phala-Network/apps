@@ -66,13 +66,13 @@ export const ethereumToKhalaEstimatedGasFetcher = async (
 
 export const moonriverEstimatedGasFetcher = async (
   contract: ethers.Contract,
-  xcAddress: `0x${string}`,
+  xc20Address: `0x${string}`,
   paraId: number,
   decimals: number
 ): Promise<Decimal> => {
   const {ethers} = await import('ethers')
   const estimateGas = await contract.estimateGas.transfer(
-    xcAddress,
+    xc20Address,
     '1',
     {
       parents: 1,

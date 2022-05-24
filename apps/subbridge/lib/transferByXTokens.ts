@@ -7,29 +7,31 @@ import {u8aToHex} from '@polkadot/util'
 import {decodeAddress} from '@polkadot/util-crypto'
 import Decimal from 'decimal.js'
 
-export const transferFromKarura = ({
-  karuraApi,
+export const transferByXTokens = ({
+  polkadotApi,
   assetId,
   amount,
+  fromChainId,
   toChainId,
   destinationAccount,
 }: {
-  karuraApi: ApiPromise
+  polkadotApi: ApiPromise
   assetId: AssetId
+  fromChainId: ChainId
   toChainId: ChainId
   amount: string
   destinationAccount: string
 }): SubmittableExtrinsic<'promise', ISubmittableResult> => {
   const asset = ASSETS[assetId]
   const toChain = CHAINS[toChainId]
-  const decimals = asset.decimals.khala ?? asset.decimals.default
+  const decimals = asset.decimals[fromChainId] ?? asset.decimals.default
 
-  if (!asset.karuraToken || !toChain.paraId) {
+  if (!asset.ormlToken || !toChain.paraId) {
     throw new Error('Transfer missing required parameters')
   }
 
-  return karuraApi.tx.xTokens.transfer(
-    {Token: asset.karuraToken},
+  return polkadotApi.tx.xTokens.transfer(
+    {Token: asset.ormlToken},
     amount,
     {
       V1: {

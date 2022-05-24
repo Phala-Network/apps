@@ -23,12 +23,12 @@ export const transferFromMoonriver = async ({
   const toChain = CHAINS[toChainId]
   const decimals = asset.decimals.moonriver ?? asset.decimals.default
 
-  if (!asset.xcAddress || !toChain.paraId) {
+  if (!asset.xc20Address || !toChain.paraId) {
     throw new Error('Transfer missing required parameters')
   }
 
   return contract.transfer(
-    asset.xcAddress,
+    asset.xc20Address,
     amount,
     {
       parents: 1,

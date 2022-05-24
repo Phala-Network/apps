@@ -4,8 +4,8 @@ import {
   moonriverEstimatedGasFetcher,
 } from '@/lib/ethersFetcher'
 import {
-  karuraPartialFeeFetcher,
   khalaPartialFeeFetcher,
+  xTokensPartialFeeFetcher,
 } from '@/lib/polkadotFetcher'
 import {
   assetAtom,
@@ -18,7 +18,7 @@ import Decimal from 'decimal.js'
 import {useAtomValue} from 'jotai'
 import useSWR from 'swr'
 import {useEthersContract} from './useEthersContract'
-import {usePolkadotApi} from './usePolkadotApi'
+import {useCurrentPolkadotApi, usePolkadotApi} from './usePolkadotApi'
 
 export const useEstimatedGasFee = () => {
   const ethersBridgeContract = useEthersContract('bridgeContract')
@@ -30,16 +30,15 @@ export const useEstimatedGasFee = () => {
   const khalaApi = usePolkadotApi(
     fromChain.id === 'thala' || toChain.id === 'thala' ? 'thala' : 'khala'
   )
-  const karuraApi = usePolkadotApi(
-    fromChain.id === 'karura-test' || toChain.id === 'karura-test'
-      ? 'karura-test'
-      : 'karura'
-  )
+  const polkadotApi = useCurrentPolkadotApi()
   const isFromEthereumToKhala =
     (fromChain.id === 'ethereum' && toChain.id === 'khala') ||
     (fromChain.id === 'kovan' && toChain.id === 'thala')
-  const isFromKarura =
-    fromChain.id === 'karura' || fromChain.id === 'karura-test'
+  const isTransferringByXTokens =
+    fromChain.id === 'karura' ||
+    fromChain.id === 'karura-test' ||
+    fromChain.id === 'bifrost' ||
+    fromChain.id === 'bifrost-test'
   const isFromKhala = fromChain.id === 'thala' || fromChain.id === 'khala'
   const isFromMoonriver = fromChain.id === 'moonriver'
 
@@ -62,15 +61,20 @@ export const useEstimatedGasFee = () => {
   )
 
   const {data: moonriverEstimatedGas} = useSWR(
-    isFromMoonriver && ethersBridgeContract && toChain.paraId && asset.xcAddress
-      ? [ethersBridgeContract, asset.xcAddress, toChain.paraId, decimals]
+    isFromMoonriver &&
+      ethersBridgeContract &&
+      toChain.paraId &&
+      asset.xc20Address
+      ? [ethersBridgeContract, asset.xc20Address, toChain.paraId, decimals]
       : null,
     moonriverEstimatedGasFetcher
   )
 
-  const {data: karuraPartialFee} = useSWR(
-    isFromKarura && karuraApi ? [karuraApi, toChain.id, asset.id] : null,
-    karuraPartialFeeFetcher
+  const {data: xTokensPartialFee} = useSWR(
+    isTransferringByXTokens && polkadotApi
+      ? [polkadotApi, fromChain.id, toChain.id, asset.id]
+      : null,
+    xTokensPartialFeeFetcher
   )
 
   const {data: khalaPartialFee} = useSWR(
@@ -88,8 +92,8 @@ export const useEstimatedGasFee = () => {
     )
   }
 
-  if (isFromKarura) {
-    return karuraPartialFee
+  if (isTransferringByXTokens) {
+    return xTokensPartialFee
   }
 
   if (isFromKhala) {

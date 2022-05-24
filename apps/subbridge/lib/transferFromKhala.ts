@@ -7,6 +7,7 @@ import Decimal from 'decimal.js'
 
 const moonriverParaId = CHAINS.moonriver.paraId
 const karuraParaId = CHAINS.karura.paraId
+const bifrostParaId = CHAINS.bifrost.paraId
 
 function getExtrinsicAssetId(assetId: AssetId) {
   if (assetId === 'pha') {
@@ -34,10 +35,18 @@ function getExtrinsicAssetId(assetId: AssetId) {
       Concrete: {
         parents: 1,
         interior: {
-          X2: [
-            {Parachain: karuraParaId},
-            {GeneralKey: '0x0080'}, // 0x0080 is general key of KAR defined in karura runtime
-          ],
+          X2: [{Parachain: karuraParaId}, {GeneralKey: '0x0080'}],
+        },
+      },
+    }
+  }
+
+  if (assetId === 'bnc') {
+    return {
+      Concrete: {
+        parents: 1,
+        interior: {
+          X2: [{Parachain: bifrostParaId}, {GeneralKey: '0x0001'}],
         },
       },
     }

@@ -1,5 +1,5 @@
+import {transferByXTokens} from '@/lib/transferByXTokens'
 import {transferFromEthereumToKhala} from '@/lib/transferFromEthereum'
-import {transferFromKarura} from '@/lib/transferFromKarura'
 import {transferFromKhala} from '@/lib/transferFromKhala'
 import {transferFromMoonriver} from '@/lib/transferFromMoonriver'
 import {
@@ -16,7 +16,7 @@ import Decimal from 'decimal.js'
 import {useAtomValue} from 'jotai'
 import {useMemo} from 'react'
 import {useEthersContract} from './useEthersContract'
-import {usePolkadotApi} from './usePolkadotApi'
+import {useCurrentPolkadotApi, usePolkadotApi} from './usePolkadotApi'
 
 export const useTransfer = () => {
   const bridgeContract = useEthersContract('bridgeContract')
@@ -30,18 +30,18 @@ export const useTransfer = () => {
   const khalaApi = usePolkadotApi(
     fromChain.id === 'thala' || toChain.id === 'thala' ? 'thala' : 'khala'
   )
-  const karuraApi = usePolkadotApi(
-    fromChain.id === 'karura-test' || toChain.id === 'karura-test'
-      ? 'karura-test'
-      : 'karura'
-  )
+  const polkadotApi = useCurrentPolkadotApi()
   const isFromEthereumToKhala =
     (fromChain.id === 'ethereum' && toChain.id === 'khala') ||
     (fromChain.id === 'kovan' && toChain.id === 'thala')
   const isFromKhala = fromChain.id === 'thala' || fromChain.id === 'khala'
-  const isFromKarura =
-    fromChain.id === 'karura' || fromChain.id === 'karura-test'
-  const isFromMoonriver = fromChain.id === 'moonriver'
+  const isTransferringByXTokens =
+    fromChain.id === 'karura' ||
+    fromChain.id === 'karura-test' ||
+    fromChain.id === 'bifrost' ||
+    fromChain.id === 'bifrost-test'
+  const isFromMoonriver =
+    fromChain.id === 'moonriver' || fromChain.id === 'moonbase-alpha'
 
   const rawAmount = useMemo(
     () =>
@@ -75,15 +75,16 @@ export const useTransfer = () => {
     }
   }
 
-  if (isFromKarura) {
+  if (isTransferringByXTokens) {
     return async (statusCb?: Callback<ISubmittableResult>) => {
-      if (!karuraApi || !polkadotAccount?.wallet?.signer) {
+      if (!polkadotApi || !polkadotAccount?.wallet?.signer) {
         throw new Error('Transfer missing required parameters')
       }
-      return transferFromKarura({
-        karuraApi,
+      return transferByXTokens({
+        polkadotApi,
         assetId: asset.id,
         amount: rawAmount,
+        fromChainId: fromChain.id,
         toChainId: toChain.id,
         destinationAccount,
       }).signAndSend(

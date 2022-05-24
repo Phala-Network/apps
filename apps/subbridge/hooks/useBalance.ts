@@ -3,8 +3,8 @@ import {
   ethersContractBalanceFetcher,
 } from '@/lib/ethersFetcher'
 import {
-  karuraTokenBalanceFetcher,
   khalaTokenBalanceFetcher,
+  ormlTokenBalanceFetcher,
   polkadotAvailableBalanceFetcher,
 } from '@/lib/polkadotFetcher'
 import {assetAtom, decimalsAtom, fromChainAtom} from '@/store/bridge'
@@ -31,27 +31,36 @@ export const useBalance = (): Decimal | undefined => {
   const fromKarura =
     (fromChain.id === 'karura' || fromChain.id === 'karura-test') &&
     asset.id !== fromChain.nativeAsset &&
-    asset.karuraToken !== undefined
+    asset.ormlToken !== undefined
   const fromKhala =
     (fromChain.id === 'khala' || fromChain.id === 'thala') &&
     asset.id !== fromChain.nativeAsset &&
-    asset.palletAssetId !== undefined
+    asset.khalaPalletAssetId !== undefined
   const fromPolkadotNativeChain =
     fromChain.kind === 'polkadot' && fromChain.nativeAsset === asset.id
   const fromEvmNativeChain =
     fromChain.kind === 'evm' && fromChain.nativeAsset === asset.id
+  const fromBifrost =
+    (fromChain.id === 'bifrost' || fromChain.id === 'bifrost-test') &&
+    asset.id !== fromChain.nativeAsset &&
+    asset.ormlToken !== undefined
   const fromEvm = fromChain.kind === 'evm'
 
-  const {data: karuraTokenBalance} = useSWR(
-    fromKarura && polkadotAccount
-      ? [polkadotApi, polkadotAccount.address, asset.karuraToken, decimals]
+  const {data: ormlTokenBalance} = useSWR(
+    (fromKarura || fromBifrost) && polkadotAccount
+      ? [polkadotApi, polkadotAccount.address, asset.ormlToken, decimals]
       : null,
-    karuraTokenBalanceFetcher,
+    ormlTokenBalanceFetcher,
     {refreshInterval}
   )
   const {data: khalaTokenBalance} = useSWR(
     fromKhala && polkadotAccount
-      ? [polkadotApi, polkadotAccount.address, asset.palletAssetId, decimals]
+      ? [
+          polkadotApi,
+          polkadotAccount.address,
+          asset.khalaPalletAssetId,
+          decimals,
+        ]
       : null,
     khalaTokenBalanceFetcher,
     {refreshInterval}
@@ -79,7 +88,7 @@ export const useBalance = (): Decimal | undefined => {
   )
 
   const balance: Decimal | undefined =
-    (fromKarura && karuraTokenBalance) ||
+    ((fromKarura || fromBifrost) && ormlTokenBalance) ||
     (fromKhala && khalaTokenBalance) ||
     (fromEvmNativeChain && evmNativeBalance) ||
     (fromPolkadotNativeChain && polkadotNativeChainBalance) ||

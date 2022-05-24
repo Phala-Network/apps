@@ -1,11 +1,16 @@
 import {useEthersContract} from '@/hooks/useEthersContract'
 import {useSwitchNetwork} from '@/hooks/useSwitchNetwork'
 import {ethersContractAllowanceFetcher} from '@/lib/ethersFetcher'
-import {assetAtom, bridgeErrorMessageAtom, fromChainAtom} from '@/store/bridge'
+import {
+  assetAtom,
+  bridgeErrorMessageAtom,
+  decimalsAtom,
+  fromChainAtom,
+} from '@/store/bridge'
 import {evmAccountAtom, isNetworkWrongAtom} from '@/store/ethers'
 import {LoadingButton} from '@mui/lab'
 import {Button, Stack} from '@mui/material'
-import {useAtom} from 'jotai'
+import {useAtom, useAtomValue} from 'jotai'
 import {useSnackbar} from 'notistack'
 import {FC, useState} from 'react'
 import useSWR from 'swr'
@@ -20,7 +25,7 @@ const EvmAction: FC<{onConfirm: () => void}> = ({onConfirm}) => {
   const [isNetworkWrong] = useAtom(isNetworkWrongAtom)
   const [bridgeErrorMessage] = useAtom(bridgeErrorMessageAtom)
   const switchNetwork = useSwitchNetwork()
-  const decimals = asset.decimals[fromChain.id] || asset.decimals.default
+  const decimals = useAtomValue(decimalsAtom)
   const spender =
     fromChain.kind === 'evm'
       ? asset.assetContract?.[fromChain.id]?.spender

@@ -1,3 +1,4 @@
+import bifrostIcon from '@/assets/bifrost_chain_icon.png'
 import ethereumIcon from '@/assets/ethereum_chain_icon.jpg'
 import karuraIcon from '@/assets/karura_chain_icon.png'
 import khalaIcon from '@/assets/khala_chain_icon.jpg'
@@ -5,8 +6,14 @@ import moonriverIcon from '@/assets/moonriver_chain_icon.png'
 import {StaticImageData} from 'next/image'
 import {AssetId} from './asset'
 
-export type EvmChainId = 'ethereum' | 'kovan' | 'moonriver'
-export type PolkadotChainId = 'khala' | 'karura' | 'thala' | 'karura-test'
+export type EvmChainId = 'ethereum' | 'kovan' | 'moonriver' | 'moonbase-alpha'
+export type PolkadotChainId =
+  | 'khala'
+  | 'karura'
+  | 'thala'
+  | 'karura-test'
+  | 'bifrost'
+  | 'bifrost-test'
 export type ChainId = EvmChainId | PolkadotChainId
 export type ChainKind = 'evm' | 'polkadot'
 
@@ -121,5 +128,41 @@ export const CHAINS: Readonly<
     paraId: 2023,
     isSubstrateCompatible: true,
     nativeAsset: 'movr',
+  },
+  'moonbase-alpha': {
+    id: 'moonbase-alpha',
+    name: 'Moonbase Alpha',
+    icon: moonriverIcon,
+    kind: 'evm',
+    evmChainId: 1287,
+    currencySymbol: 'DEV',
+    isSubstrateCompatible: true,
+  },
+  bifrost: {
+    id: 'bifrost',
+    name: 'Bifrost',
+    icon: bifrostIcon,
+    kind: 'polkadot',
+    endpoint: [
+      'wss://bifrost-rpc.liebi.com/ws',
+      'wss://us.bifrost-rpc.liebi.com/ws',
+      'wss://eu.bifrost-rpc.liebi.com/ws',
+      'wss://bifrost-parachain.api.onfinality.io/public-ws',
+      'wss://bifrost-rpc.dwellir.com',
+    ],
+    ss58Format: 6,
+    paraId: 2001,
+    nativeAsset: 'bnc',
+  },
+  'bifrost-test': {
+    id: 'bifrost-test',
+    name: 'Bifrost Test',
+    icon: bifrostIcon,
+    kind: 'polkadot',
+    endpoint: 'wss://bridge-testnet-api.phala.network/bifrost/ws',
+    ss58Format: 6,
+    paraId: 2001,
+    nativeAsset: 'bnc',
+    isTest: true,
   },
 }

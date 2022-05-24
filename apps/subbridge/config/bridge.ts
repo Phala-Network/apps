@@ -116,6 +116,56 @@ export const BRIDGES: Readonly<Bridge[]> = [
     asset: 'kar',
     estimatedTime: '< 1 min',
   },
+  {
+    fromChain: 'bifrost',
+    toChain: 'khala',
+    asset: 'bnc',
+    estimatedTime: '< 1 min',
+  },
+  {
+    fromChain: 'khala',
+    toChain: 'bifrost',
+    asset: 'bnc',
+    estimatedTime: '< 1 min',
+    existentialDeposit: new Decimal('0.01'),
+  },
+  {
+    fromChain: 'bifrost',
+    toChain: 'khala',
+    asset: 'pha',
+    estimatedTime: '< 1 min',
+  },
+  {
+    fromChain: 'khala',
+    toChain: 'bifrost',
+    asset: 'pha',
+    estimatedTime: '< 1 min',
+  },
+  {
+    fromChain: 'bifrost-test',
+    toChain: 'thala',
+    asset: 'bnc',
+    estimatedTime: '< 1 min',
+  },
+  {
+    fromChain: 'thala',
+    toChain: 'bifrost-test',
+    asset: 'bnc',
+    estimatedTime: '< 1 min',
+    existentialDeposit: new Decimal('0.01'),
+  },
+  {
+    fromChain: 'bifrost-test',
+    toChain: 'thala',
+    asset: 'pha',
+    estimatedTime: '< 1 min',
+  },
+  {
+    fromChain: 'thala',
+    toChain: 'bifrost-test',
+    asset: 'pha',
+    estimatedTime: '< 1 min',
+  },
 ]
 
 export const ALL_FROM_CHAINS = [
