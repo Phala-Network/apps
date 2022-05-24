@@ -80,7 +80,7 @@ export const BRIDGES: Readonly<Bridge[]> = [
     asset: 'pha',
     estimatedTime: '< 1 min',
     destChainTransactionFee: new Decimal('0.064'),
-    existentialDeposit: new Decimal(0),
+    existentialDeposit: new Decimal(0.01),
   },
   {
     fromChain: 'khala',
