@@ -23,7 +23,7 @@ const EvmAction: FC<{onConfirm: () => void}> = ({onConfirm}) => {
   const decimals = asset.decimals[fromChain.id] || asset.decimals.default
   const spender =
     fromChain.kind === 'evm'
-      ? asset.assetContract?.[fromChain.evmChainId].spender
+      ? asset.assetContract?.[fromChain.id]?.spender
       : undefined
   const {data: approved} = useSWR(
     ethersAssetContract && evmAccount && spender
@@ -32,6 +32,7 @@ const EvmAction: FC<{onConfirm: () => void}> = ({onConfirm}) => {
     ethersContractAllowanceFetcher,
     {refreshInterval: (latestData) => (latestData ? 0 : 3000)}
   )
+  const noApprovalRequired = !spender
 
   const handleApprove = async () => {
     if (ethersAssetContract && spender) {
@@ -73,25 +74,34 @@ const EvmAction: FC<{onConfirm: () => void}> = ({onConfirm}) => {
         mx: 'auto',
       }}
     >
-      <LoadingButton
-        loading={(!approved && approveLoading) || approved === undefined}
-        size="large"
-        sx={{flex: 1}}
-        disabled={
-          approved === undefined || approved || !ethersAssetContract || !spender
-        }
-        onClick={handleApprove}
-      >
-        {approved ? 'Approved' : 'Approve'}
-      </LoadingButton>
+      {!noApprovalRequired && (
+        <LoadingButton
+          loading={(!approved && approveLoading) || approved === undefined}
+          size="large"
+          sx={{flex: 1}}
+          disabled={
+            approved === undefined ||
+            approved ||
+            !ethersAssetContract ||
+            !spender
+          }
+          onClick={handleApprove}
+        >
+          {approved ? 'Approved' : 'Approve'}
+        </LoadingButton>
+      )}
       <Button
         size="large"
         sx={{flex: 1}}
         variant="contained"
-        disabled={!approved || Boolean(bridgeErrorMessage)}
+        disabled={
+          (!approved && !noApprovalRequired) || Boolean(bridgeErrorMessage)
+        }
         onClick={onConfirm}
       >
-        {approved && bridgeErrorMessage ? bridgeErrorMessage : 'Transfer'}
+        {(approved || noApprovalRequired) && bridgeErrorMessage
+          ? bridgeErrorMessage
+          : 'Transfer'}
       </Button>
     </Stack>
   )

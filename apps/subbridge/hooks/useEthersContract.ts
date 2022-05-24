@@ -21,13 +21,11 @@ export const useEthersContract = (
   const [provider] = useAtom(ethersProviderAtom)
   const address =
     fromChain.kind === 'evm'
-      ? asset[contract]?.[fromChain.evmChainId].address
+      ? asset[contract]?.[fromChain.id]?.address
       : undefined
 
   const abi =
-    fromChain.kind === 'evm'
-      ? asset[contract]?.[fromChain.evmChainId].abi
-      : undefined
+    fromChain.kind === 'evm' ? asset[contract]?.[fromChain.id]?.abi : undefined
   const {data} = useSWRImmutable(
     provider && address && abi ? [provider, address, abi] : null,
     fetcher

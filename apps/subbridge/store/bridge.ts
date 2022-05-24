@@ -3,6 +3,7 @@ import {BRIDGES} from '@/config/bridge'
 import {Chain, ChainId, CHAINS} from '@/config/chain'
 import {BridgeError, BRIDGE_ERROR_MESSAGES} from '@/config/error'
 import {polkadotAccountAtom} from '@phala/store'
+import Decimal from 'decimal.js'
 import {atom} from 'jotai'
 import {atomWithReset} from 'jotai/utils'
 import {evmAccountAtom} from './ethers'
@@ -52,8 +53,12 @@ export const destinationAccountAtom = atomWithReset('')
 export const bridgeAtom = atom((get) => {
   const fromChain = get(fromChainAtom)
   const toChain = get(toChainAtom)
+  const asset = get(assetAtom)
   const bridge = BRIDGES.find(
-    (x) => x.fromChain === fromChain.id && x.toChain === toChain.id
+    (x) =>
+      x.fromChain === fromChain.id &&
+      x.toChain === toChain.id &&
+      x.asset === asset.id
   )
   return bridge ?? null
 })
@@ -67,4 +72,22 @@ export const decimalsAtom = atom<number>((get) => {
   const fromChain = get(fromChainAtom)
   const asset = get(assetAtom)
   return asset.decimals[fromChain.id] ?? asset.decimals.default
+})
+export const destChainTransactionFeeAtom = atom<Decimal>((get) => {
+  const fromChain = get(fromChainAtom)
+  const toChain = get(toChainAtom)
+  const asset = get(assetAtom)
+  const destChainTransactionFee = asset.destChainTransactionFee[toChain.id]
+
+  if (
+    // NOTE: ethereum to khala bridge is not xcm bridge
+    (((fromChain.id === 'ethereum' && toChain.id === 'khala') ||
+      (fromChain.id === 'kovan' && toChain.id === 'thala')) &&
+      asset.id === 'pha') ||
+    !destChainTransactionFee
+  ) {
+    return new Decimal(0)
+  }
+
+  return destChainTransactionFee
 })

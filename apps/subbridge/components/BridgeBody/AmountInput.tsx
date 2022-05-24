@@ -1,4 +1,3 @@
-import {ASSETS} from '@/config/asset'
 import {useBalance} from '@/hooks/useBalance'
 import {
   amountAtom,
@@ -8,17 +7,26 @@ import {
 } from '@/store/bridge'
 import {isWalletConnectAtom} from '@/store/common'
 import {isNetworkWrongAtom} from '@/store/ethers'
-import {Box, Link, Skeleton, TextField, Typography} from '@mui/material'
+import {
+  Box,
+  InputProps,
+  Link,
+  Skeleton,
+  TextField,
+  Typography,
+} from '@mui/material'
 import {BoxProps} from '@mui/system'
 import {formatCurrency} from '@phala/utils'
 import {useAtom} from 'jotai'
 import {FC} from 'react'
-import AssetSelect from './AssetSelect'
 
 const getDecimalPattern = (decimals: number) =>
   `^[0-9]+\\.?[0-9]{0,${decimals}}$`
 
-const AmountInput: FC<BoxProps> = (props) => {
+const AmountInput: FC<BoxProps & Pick<InputProps, 'endAdornment'>> = ({
+  endAdornment,
+  ...props
+}) => {
   const [asset] = useAtom(assetAtom)
   const [fromChain] = useAtom(fromChainAtom)
   const [amount, setAmount] = useAtom(amountAtom)
@@ -48,13 +56,7 @@ const AmountInput: FC<BoxProps> = (props) => {
           sx: {fontWeight: 600},
         }}
         InputProps={{
-          endAdornment: (
-            <AssetSelect
-              sx={{flex: 'none'}}
-              assetIds={[ASSETS.pha.id]}
-              value={ASSETS.pha.id}
-            />
-          ),
+          endAdornment,
         }}
         onChange={(e) => {
           if (!e.target.validity.patternMismatch) {

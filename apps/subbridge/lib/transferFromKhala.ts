@@ -1,16 +1,32 @@
-import {AssetId} from '@/config/asset'
+import {AssetId, ASSETS} from '@/config/asset'
 import {ChainId, CHAINS} from '@/config/chain'
 import type {ApiPromise} from '@polkadot/api'
 import {u8aToHex} from '@polkadot/util'
 import {decodeAddress} from '@polkadot/util-crypto'
+import Decimal from 'decimal.js'
 
-function getPhaAssetId(khalaApi: ApiPromise) {
-  return khalaApi.createType('XcmV1MultiassetAssetId', {
-    Concrete: khalaApi.createType('XcmV1MultiLocation', {
-      parents: 0,
-      interior: khalaApi.createType('Junctions', 'Here'),
-    }),
-  })
+const moonriverParaId = CHAINS.moonriver.paraId
+
+function getExtrinsicAssetId(assetId: AssetId) {
+  if (assetId === 'pha') {
+    return {
+      Concrete: {
+        parents: 0,
+        interior: 'Here',
+      },
+    }
+  }
+
+  if (assetId === 'movr') {
+    return {
+      Concrete: {
+        parents: 1,
+        interior: {
+          X2: [{Parachain: moonriverParaId}, {PalletInstance: 10}],
+        },
+      },
+    }
+  }
 }
 
 export const transferFromKhala = ({
@@ -26,64 +42,52 @@ export const transferFromKhala = ({
   destinationAccount: string
   assetId: AssetId
 }) => {
-  if (
-    toChainId === 'ethereum' ||
-    (toChainId === 'kovan' && assetId === 'pha')
-  ) {
-    return khalaApi.tx.xTransfer.transfer(
-      khalaApi.createType('XcmV1MultiAsset', {
-        id: getPhaAssetId(khalaApi),
-        fun: khalaApi.createType('XcmV1MultiassetFungibility', {
-          Fungible: khalaApi.createType('Compact<U128>', amount),
-        }),
-      }),
-      khalaApi.createType('XcmV1MultiLocation', {
-        parents: 0,
-        interior: khalaApi.createType('Junctions', {
-          X3: [
-            khalaApi.createType('XcmV1Junction', {
-              GeneralKey: '0x6362', // string "cb"
-            }),
-            khalaApi.createType('XcmV1Junction', {
-              GeneralIndex: 0, // 0 is chainid of ethereum
-            }),
-            khalaApi.createType('XcmV1Junction', {
-              GeneralKey: destinationAccount,
-            }),
-          ],
-        }),
-      }),
-      null // No need to specify a certain weight if transfer will not through XCM
-    )
-  }
+  const asset = ASSETS[assetId]
+  const toChain = CHAINS[toChainId]
+  const isToEthereum = toChainId === 'ethereum' || toChainId === 'kovan'
+  const decimals = asset.decimals.khala ?? asset.decimals.default
 
-  if (toChainId === 'karura' || toChainId === 'karura-test') {
-    const toChain = CHAINS[toChainId]
-
-    return khalaApi.tx.xTransfer.transfer(
-      khalaApi.createType('XcmV1MultiAsset', {
-        id: getPhaAssetId(khalaApi),
-        fun: khalaApi.createType('XcmV1MultiassetFungibility', {
-          Fungible: khalaApi.createType('Compact<U128>', amount),
-        }),
-      }),
-      khalaApi.createType('XcmV1MultiLocation', {
-        parents: 1,
-        interior: khalaApi.createType('Junctions', {
-          X2: [
-            khalaApi.createType('XcmV1Junction', {
-              Parachain: khalaApi.createType('Compact<U32>', toChain.paraId),
-            }),
-            khalaApi.createType('XcmV1Junction', {
-              AccountId32: {
-                network: khalaApi.createType('XcmV0JunctionNetworkId', 'Any'),
-                id: u8aToHex(decodeAddress(destinationAccount)),
-              },
-            }),
-          ],
-        }),
-      }),
-      6000000000
-    )
-  }
+  return khalaApi.tx.xTransfer.transfer(
+    {
+      id: getExtrinsicAssetId(assetId),
+      fun: {Fungible: amount},
+    },
+    isToEthereum
+      ? {
+          parents: 0,
+          interior: {
+            X3: [
+              {GeneralKey: '0x6362'}, // string "cb"
+              {GeneralIndex: 0}, // 0 is chainId of ethereum
+              {GeneralKey: destinationAccount},
+            ],
+          },
+        }
+      : {
+          parents: 1,
+          interior: {
+            X2: [
+              {Parachain: toChain.paraId},
+              toChain.kind === 'evm' && toChain.isSubstrateCompatible
+                ? {
+                    AccountKey20: {
+                      network: 'Any',
+                      key: destinationAccount,
+                    },
+                  }
+                : {
+                    AccountId32: {
+                      network: 'Any',
+                      id: u8aToHex(decodeAddress(destinationAccount)),
+                    },
+                  },
+            ],
+          },
+        },
+    isToEthereum
+      ? null // No need to specify a certain weight if transfer will not through XCM
+      : Decimal.pow(10, decimals - 3)
+          .times(6)
+          .toString()
+  )
 }

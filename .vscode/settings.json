@@ -1,21 +1,4 @@
 {
-  "cSpell.words": [
-    "extrinsics",
-    "onstatus",
-    "readystate",
-    "styletron",
-    "svgs",
-    "typedefs",
-    "unsub",
-    "stakers",
-    "dotsama",
-    "baseui",
-    "khala",
-    "subbridge",
-    "phala",
-    "karura",
-    "polkadot"
-  ],
   "editor.codeActionsOnSave": {
     "source.addMissingImports": true,
     "source.fixAll.eslint": true,

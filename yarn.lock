@@ -1714,7 +1714,24 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ethersproject/abi@npm:5.6.1, @ethersproject/abi@npm:^5.6.0":
+"@ethersproject/abi@npm:5.6.2":
+  version: 5.6.2
+  resolution: "@ethersproject/abi@npm:5.6.2"
+  dependencies:
+    "@ethersproject/address": ^5.6.0
+    "@ethersproject/bignumber": ^5.6.0
+    "@ethersproject/bytes": ^5.6.0
+    "@ethersproject/constants": ^5.6.0
+    "@ethersproject/hash": ^5.6.0
+    "@ethersproject/keccak256": ^5.6.0
+    "@ethersproject/logger": ^5.6.0
+    "@ethersproject/properties": ^5.6.0
+    "@ethersproject/strings": ^5.6.0
+  checksum: 3c45a31ec3204beaeab0f2d8e1661908df59f1249b4d445d2a7662fc9d4309b46a7b5d460f47bcd487e315d889b81c469b48484170b36fb18398dd1e34fb9d2b
+  languageName: node
+  linkType: hard
+
+"@ethersproject/abi@npm:^5.6.0":
   version: 5.6.1
   resolution: "@ethersproject/abi@npm:5.6.1"
   dependencies:
@@ -1746,7 +1763,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ethersproject/abstract-signer@npm:5.6.0, @ethersproject/abstract-signer@npm:^5.6.0":
+"@ethersproject/abstract-signer@npm:5.6.1":
+  version: 5.6.1
+  resolution: "@ethersproject/abstract-signer@npm:5.6.1"
+  dependencies:
+    "@ethersproject/abstract-provider": ^5.6.0
+    "@ethersproject/bignumber": ^5.6.0
+    "@ethersproject/bytes": ^5.6.0
+    "@ethersproject/logger": ^5.6.0
+    "@ethersproject/properties": ^5.6.0
+  checksum: dd593267493081ef98a88b10d5a46069b1e71d621ccce9570b5161f5e798e960d28660887562f40ba8808e78cb75c9df7c5a591966680890a6a1af66e21bcfe5
+  languageName: node
+  linkType: hard
+
+"@ethersproject/abstract-signer@npm:^5.6.0":
   version: 5.6.0
   resolution: "@ethersproject/abstract-signer@npm:5.6.0"
   dependencies:
@@ -1791,7 +1821,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ethersproject/bignumber@npm:5.6.0, @ethersproject/bignumber@npm:^5.6.0":
+"@ethersproject/bignumber@npm:5.6.1":
+  version: 5.6.1
+  resolution: "@ethersproject/bignumber@npm:5.6.1"
+  dependencies:
+    "@ethersproject/bytes": ^5.6.0
+    "@ethersproject/logger": ^5.6.0
+    bn.js: ^4.11.9
+  checksum: 3ec62d0587682cefd690e1c9fe8233308ac8a384d00163f015d26abde99ff1a5b049ce396ddb58e553c1cde5bf693884d2ab19d8af25b1c58f9e3814c9e87a0d
+  languageName: node
+  linkType: hard
+
+"@ethersproject/bignumber@npm:^5.6.0":
   version: 5.6.0
   resolution: "@ethersproject/bignumber@npm:5.6.0"
   dependencies:
@@ -1820,9 +1861,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ethersproject/contracts@npm:5.6.0":
-  version: 5.6.0
-  resolution: "@ethersproject/contracts@npm:5.6.0"
+"@ethersproject/contracts@npm:5.6.1":
+  version: 5.6.1
+  resolution: "@ethersproject/contracts@npm:5.6.1"
   dependencies:
     "@ethersproject/abi": ^5.6.0
     "@ethersproject/abstract-provider": ^5.6.0
@@ -1834,7 +1875,7 @@ __metadata:
     "@ethersproject/logger": ^5.6.0
     "@ethersproject/properties": ^5.6.0
     "@ethersproject/transactions": ^5.6.0
-  checksum: 9b149da295f0c063252185b94a907bbb3af2faac5a464947bca383a620b9cf8a4faa0e742c16d37a89d262547c645609ab91fbf87266a9e50ad4c17e65569e0d
+  checksum: 3e61f19e72acc60c763973baccaf75cb78fb7da0f403b92c8310d80107ba995e43d1625770dd91eb78e9501b7431874eb23ce34a57edf37918d8e939392bb221
   languageName: node
   linkType: hard
 
@@ -1854,7 +1895,27 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ethersproject/hdnode@npm:5.6.0, @ethersproject/hdnode@npm:^5.6.0":
+"@ethersproject/hdnode@npm:5.6.1":
+  version: 5.6.1
+  resolution: "@ethersproject/hdnode@npm:5.6.1"
+  dependencies:
+    "@ethersproject/abstract-signer": ^5.6.0
+    "@ethersproject/basex": ^5.6.0
+    "@ethersproject/bignumber": ^5.6.0
+    "@ethersproject/bytes": ^5.6.0
+    "@ethersproject/logger": ^5.6.0
+    "@ethersproject/pbkdf2": ^5.6.0
+    "@ethersproject/properties": ^5.6.0
+    "@ethersproject/sha2": ^5.6.0
+    "@ethersproject/signing-key": ^5.6.0
+    "@ethersproject/strings": ^5.6.0
+    "@ethersproject/transactions": ^5.6.0
+    "@ethersproject/wordlists": ^5.6.0
+  checksum: f1a49885833b616fd18bb9f41c4dca0bf2844522a752178bf277e3c19f80154ed4a5f29eaefd14d3825bd8cffd59e4097a796589059fe372a9748c3d4583836c
+  languageName: node
+  linkType: hard
+
+"@ethersproject/hdnode@npm:^5.6.0":
   version: 5.6.0
   resolution: "@ethersproject/hdnode@npm:5.6.0"
   dependencies:
@@ -1912,7 +1973,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ethersproject/networks@npm:5.6.2, @ethersproject/networks@npm:^5.6.0":
+"@ethersproject/networks@npm:5.6.3":
+  version: 5.6.3
+  resolution: "@ethersproject/networks@npm:5.6.3"
+  dependencies:
+    "@ethersproject/logger": ^5.6.0
+  checksum: 94d2981eeed0accb69124cfb9a807552ada98b370415c9d906018bd70a33bc5a1286ff01eb2a3ce213c12334fcc7ab635ad0429f25a687b9b8f34d26d21df74b
+  languageName: node
+  linkType: hard
+
+"@ethersproject/networks@npm:^5.6.0":
   version: 5.6.2
   resolution: "@ethersproject/networks@npm:5.6.2"
   dependencies:
@@ -1940,13 +2010,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ethersproject/providers@npm:5.6.5":
-  version: 5.6.5
-  resolution: "@ethersproject/providers@npm:5.6.5"
+"@ethersproject/providers@npm:5.6.7":
+  version: 5.6.7
+  resolution: "@ethersproject/providers@npm:5.6.7"
   dependencies:
     "@ethersproject/abstract-provider": ^5.6.0
     "@ethersproject/abstract-signer": ^5.6.0
     "@ethersproject/address": ^5.6.0
+    "@ethersproject/base64": ^5.6.0
     "@ethersproject/basex": ^5.6.0
     "@ethersproject/bignumber": ^5.6.0
     "@ethersproject/bytes": ^5.6.0
@@ -1963,7 +2034,7 @@ __metadata:
     "@ethersproject/web": ^5.6.0
     bech32: 1.1.4
     ws: 7.4.6
-  checksum: f8b37d72068e845f447f922cceddda73508ad539bb035e3f094b6feb7de2a8c6dde87ecd7ee2ec00712e7135145f7e9a902f0b845a0cb604313caf7cb6b440a7
+  checksum: 1cab6ffe739fdc56d242ecbc674d1e3465f090e25752a94bd29c405ab59fa5a8a63ae25147cb5d06da9e77ee592796eb54b794ccc6347d3a3dddda66dcce3d74
   languageName: node
   linkType: hard
 
@@ -2037,7 +2108,24 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ethersproject/transactions@npm:5.6.0, @ethersproject/transactions@npm:^5.6.0":
+"@ethersproject/transactions@npm:5.6.1":
+  version: 5.6.1
+  resolution: "@ethersproject/transactions@npm:5.6.1"
+  dependencies:
+    "@ethersproject/address": ^5.6.0
+    "@ethersproject/bignumber": ^5.6.0
+    "@ethersproject/bytes": ^5.6.0
+    "@ethersproject/constants": ^5.6.0
+    "@ethersproject/keccak256": ^5.6.0
+    "@ethersproject/logger": ^5.6.0
+    "@ethersproject/properties": ^5.6.0
+    "@ethersproject/rlp": ^5.6.0
+    "@ethersproject/signing-key": ^5.6.0
+  checksum: 9e3fb9e137d7022d77a246f4d3247485c8c7bc7ac30bc734f554e8df02f481f1b40b8fd5bddfc31f0c9a1c32552a7b2dde28043a5da603fa12b7d5d2f6d3b7aa
+  languageName: node
+  linkType: hard
+
+"@ethersproject/transactions@npm:^5.6.0":
   version: 5.6.0
   resolution: "@ethersproject/transactions@npm:5.6.0"
   dependencies:
@@ -2065,9 +2153,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ethersproject/wallet@npm:5.6.0":
-  version: 5.6.0
-  resolution: "@ethersproject/wallet@npm:5.6.0"
+"@ethersproject/wallet@npm:5.6.1":
+  version: 5.6.1
+  resolution: "@ethersproject/wallet@npm:5.6.1"
   dependencies:
     "@ethersproject/abstract-provider": ^5.6.0
     "@ethersproject/abstract-signer": ^5.6.0
@@ -2084,7 +2172,7 @@ __metadata:
     "@ethersproject/signing-key": ^5.6.0
     "@ethersproject/transactions": ^5.6.0
     "@ethersproject/wordlists": ^5.6.0
-  checksum: 2e0900f136ffd0418a161d708116d6b966596c001a7f55861ceeea28282ce6ad61180cce24589c9b4df001d096352d57128a401edfc613af9daed3724b2a0ec9
+  checksum: cfe9d9127ff2ffe54085fcf5b42e68874435f055125cfdeeb86039665437badc928f10786153fdc53d74c44e3c7201f55d5d2eb9ec944c0a79ceafadb3fd9080
   languageName: node
   linkType: hard
 
@@ -3153,15 +3241,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mui/base@npm:5.0.0-alpha.80":
-  version: 5.0.0-alpha.80
-  resolution: "@mui/base@npm:5.0.0-alpha.80"
+"@mui/base@npm:5.0.0-alpha.81":
+  version: 5.0.0-alpha.81
+  resolution: "@mui/base@npm:5.0.0-alpha.81"
   dependencies:
     "@babel/runtime": ^7.17.2
     "@emotion/is-prop-valid": ^1.1.2
-    "@mui/private-classnames": ^5.7.0
     "@mui/types": ^7.1.3
-    "@mui/utils": ^5.7.0
+    "@mui/utils": ^5.8.0
     "@popperjs/core": ^2.11.5
     clsx: ^1.1.1
     prop-types: ^15.8.1
@@ -3173,13 +3260,36 @@ __metadata:
   peerDependenciesMeta:
     "@types/react":
       optional: true
-  checksum: 72452894fe8857cf09696d724f02dbb84ed7abf26dfd11d0853ea835188d835ff08698e4ee51005f6a35f9d8a94942d34c569beafb5c591ec6a4132eb1f0b9b8
+  checksum: 3efe876322134a4e2e772296a07473f32e49f51698bf275ec0cabaff5e2faa149dece3977e7c7265e2a95e17e558ad800b56778102cb943bca761b6cefdc6170
   languageName: node
   linkType: hard
 
-"@mui/icons-material@npm:^5.6.2":
-  version: 5.6.2
-  resolution: "@mui/icons-material@npm:5.6.2"
+"@mui/base@npm:5.0.0-alpha.82":
+  version: 5.0.0-alpha.82
+  resolution: "@mui/base@npm:5.0.0-alpha.82"
+  dependencies:
+    "@babel/runtime": ^7.17.2
+    "@emotion/is-prop-valid": ^1.1.2
+    "@mui/types": ^7.1.3
+    "@mui/utils": ^5.8.0
+    "@popperjs/core": ^2.11.5
+    clsx: ^1.1.1
+    prop-types: ^15.8.1
+    react-is: ^17.0.2
+  peerDependencies:
+    "@types/react": ^17.0.0 || ^18.0.0
+    react: ^17.0.0 || ^18.0.0
+    react-dom: ^17.0.0 || ^18.0.0
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+  checksum: 707e88c48bc81c4f78b48a49042a918e7539451a744f51060c46668f3f50b8aac9b65bd87504629ce63c4da3ced23504c88849ac7b9f78c3748d8da1b92578ec
+  languageName: node
+  linkType: hard
+
+"@mui/icons-material@npm:^5.8.0":
+  version: 5.8.0
+  resolution: "@mui/icons-material@npm:5.8.0"
   dependencies:
     "@babel/runtime": ^7.17.2
   peerDependencies:
@@ -3189,18 +3299,18 @@ __metadata:
   peerDependenciesMeta:
     "@types/react":
       optional: true
-  checksum: eef561fc68c01f103a8edde897b95628d179f4b79bf59a8cfa005db3dde1c473b13a803534018e901d5df287820bf6d62097dcad1c10db531ef237b407cfb51e
+  checksum: 9bc4a5cd6a136666aab898acb782feb80a49fff71476ab53aa7831c7d4c1644065e132ae65b2bdb4fee65ca4974e23669b416f45df7e5378c0fd04f395222655
   languageName: node
   linkType: hard
 
-"@mui/lab@npm:5.0.0-alpha.81":
-  version: 5.0.0-alpha.81
-  resolution: "@mui/lab@npm:5.0.0-alpha.81"
+"@mui/lab@npm:5.0.0-alpha.82":
+  version: 5.0.0-alpha.82
+  resolution: "@mui/lab@npm:5.0.0-alpha.82"
   dependencies:
     "@babel/runtime": ^7.17.2
-    "@mui/base": 5.0.0-alpha.80
-    "@mui/system": ^5.7.0
-    "@mui/utils": ^5.7.0
+    "@mui/base": 5.0.0-alpha.81
+    "@mui/system": ^5.8.0
+    "@mui/utils": ^5.8.0
     "@mui/x-date-pickers": 5.0.0-alpha.0
     clsx: ^1.1.1
     prop-types: ^15.8.1
@@ -3227,20 +3337,19 @@ __metadata:
       optional: true
     moment:
       optional: true
-  checksum: ec7946ec6636bcbc9c36e4919b27857a6afbb1df87afa172080ddf7a8394a16f4c12124062216f4cca37c5ba4660bf3fc1b70b4d59674af2434cadc4c1d51115
+  checksum: cd8bcc751f347479e7c81d2c7f97fbf9769a8710b4ac77c2809403dbf330cb7876a2aae7af887687ab7ede216085b323b5fe0d577cece981bea64bfe1dfed0e7
   languageName: node
   linkType: hard
 
-"@mui/material@npm:^5.7.0":
-  version: 5.7.0
-  resolution: "@mui/material@npm:5.7.0"
+"@mui/material@npm:^5.8.1":
+  version: 5.8.1
+  resolution: "@mui/material@npm:5.8.1"
   dependencies:
     "@babel/runtime": ^7.17.2
-    "@mui/base": 5.0.0-alpha.80
-    "@mui/private-classnames": ^5.7.0
-    "@mui/system": ^5.7.0
+    "@mui/base": 5.0.0-alpha.82
+    "@mui/system": ^5.8.1
     "@mui/types": ^7.1.3
-    "@mui/utils": ^5.7.0
+    "@mui/utils": ^5.8.0
     "@types/react-transition-group": ^4.4.4
     clsx: ^1.1.1
     csstype: ^3.0.11
@@ -3261,23 +3370,16 @@ __metadata:
       optional: true
     "@types/react":
       optional: true
-  checksum: d5adafd763b9c639ad68744b35c0c0a28e11c4f3818b8d4f90e9930d196fa87db184344b34ba95f20cb2c4242fb01571c14954af5e84382c52052c27ec32dc9b
+  checksum: 51c34bc5bf693319477f36dce77437a8fcaad87f6a5692ce14fbe839dd19089e7e179148ede12407b6fd0880c0caf1b1f3457c0f94c1c1da21fd0fcc796a3f10
   languageName: node
   linkType: hard
 
-"@mui/private-classnames@npm:^5.7.0":
-  version: 5.7.0
-  resolution: "@mui/private-classnames@npm:5.7.0"
-  checksum: 32487617e548ce9e0895854aef2bed8df517af5c0c0bd716e31558f19d7dbce6101017790b1cad5cc84659a2ecfb58c555acf8292b51a3d9ffd08437cbc3b1c0
-  languageName: node
-  linkType: hard
-
-"@mui/private-theming@npm:^5.7.0":
-  version: 5.7.0
-  resolution: "@mui/private-theming@npm:5.7.0"
+"@mui/private-theming@npm:^5.8.0":
+  version: 5.8.0
+  resolution: "@mui/private-theming@npm:5.8.0"
   dependencies:
     "@babel/runtime": ^7.17.2
-    "@mui/utils": ^5.7.0
+    "@mui/utils": ^5.8.0
     prop-types: ^15.8.1
   peerDependencies:
     "@types/react": ^17.0.0 || ^18.0.0
@@ -3285,13 +3387,13 @@ __metadata:
   peerDependenciesMeta:
     "@types/react":
       optional: true
-  checksum: 197c318ad66b2f401f2cccf81d6b8c1358bb7f966977c2bd65d6667b057bb2be5f4ecd86d0055e9a2566faa76047fc7e47edab4059642abb4044dcfccee44cbb
+  checksum: 6107b579409913a5e0d6d79fbe074ae4ad55e57f7a485da4542a5772be86b835994311609e84e4e881ea187c5b8892e432bcce9ac98d4e69dd7ace55da675f8a
   languageName: node
   linkType: hard
 
-"@mui/styled-engine@npm:^5.7.0":
-  version: 5.7.0
-  resolution: "@mui/styled-engine@npm:5.7.0"
+"@mui/styled-engine@npm:^5.8.0":
+  version: 5.8.0
+  resolution: "@mui/styled-engine@npm:5.8.0"
   dependencies:
     "@babel/runtime": ^7.17.2
     "@emotion/cache": ^11.7.1
@@ -3305,19 +3407,19 @@ __metadata:
       optional: true
     "@emotion/styled":
       optional: true
-  checksum: c9a5d2101412c9f4652cc278c097aa7c75f0397dc848c4b5d58a3858036acabddac953a06b6282eeb9063024d193ed7a0e5a4d32128647e62061763a4d120524
+  checksum: f1140151cb06b72af774e6c14f537879bee0e699fff05cac5f9b1e4483d5202e161dc6d8e23ff7e31e3f660867056689b2225ab1d7ad69f45dc489d9ed058a92
   languageName: node
   linkType: hard
 
-"@mui/system@npm:^5.7.0":
-  version: 5.7.0
-  resolution: "@mui/system@npm:5.7.0"
+"@mui/system@npm:^5.8.0":
+  version: 5.8.0
+  resolution: "@mui/system@npm:5.8.0"
   dependencies:
     "@babel/runtime": ^7.17.2
-    "@mui/private-theming": ^5.7.0
-    "@mui/styled-engine": ^5.7.0
+    "@mui/private-theming": ^5.8.0
+    "@mui/styled-engine": ^5.8.0
     "@mui/types": ^7.1.3
-    "@mui/utils": ^5.7.0
+    "@mui/utils": ^5.8.0
     clsx: ^1.1.1
     csstype: ^3.0.11
     prop-types: ^15.8.1
@@ -3333,7 +3435,35 @@ __metadata:
       optional: true
     "@types/react":
       optional: true
-  checksum: 7af90dd8ee3f9b16bd6227ed3b3de0b0de1a1b77ec7c93ec54e960933bbead0f6fe98006288f98add273f196ae9290f19b9bd8298a6e79b326e46d539e36188a
+  checksum: 6e06086c55d4fa1d248c6672f4323a82ebce6ef5c831022471edccda0e19637b9484fd5216f6114ab6aef4b156a8430b9f23ead8c0b179b40ed392881a8ae860
+  languageName: node
+  linkType: hard
+
+"@mui/system@npm:^5.8.1":
+  version: 5.8.1
+  resolution: "@mui/system@npm:5.8.1"
+  dependencies:
+    "@babel/runtime": ^7.17.2
+    "@mui/private-theming": ^5.8.0
+    "@mui/styled-engine": ^5.8.0
+    "@mui/types": ^7.1.3
+    "@mui/utils": ^5.8.0
+    clsx: ^1.1.1
+    csstype: ^3.0.11
+    prop-types: ^15.8.1
+  peerDependencies:
+    "@emotion/react": ^11.5.0
+    "@emotion/styled": ^11.3.0
+    "@types/react": ^17.0.0 || ^18.0.0
+    react: ^17.0.0 || ^18.0.0
+  peerDependenciesMeta:
+    "@emotion/react":
+      optional: true
+    "@emotion/styled":
+      optional: true
+    "@types/react":
+      optional: true
+  checksum: 5ae495677c1db581d99fc845b3f632c875a360f8176479c1ad751ecf7449da059450713b6b3749fe7fa09b23cb528d1f49be31cd586f8eac4d52057a9d3d891e
   languageName: node
   linkType: hard
 
@@ -3349,7 +3479,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mui/utils@npm:^5.2.3, @mui/utils@npm:^5.7.0":
+"@mui/utils@npm:^5.2.3":
   version: 5.7.0
   resolution: "@mui/utils@npm:5.7.0"
   dependencies:
@@ -3361,6 +3491,21 @@ __metadata:
   peerDependencies:
     react: ^17.0.0 || ^18.0.0
   checksum: b2777938fb85b8819452ade6dce06a7760e7bf0624ab9ccb63394d158c30a0bb07a88df734a3d931bca4f80ab78648324bbebb8b1419c9b88904651bb4c2d6bc
+  languageName: node
+  linkType: hard
+
+"@mui/utils@npm:^5.8.0":
+  version: 5.8.0
+  resolution: "@mui/utils@npm:5.8.0"
+  dependencies:
+    "@babel/runtime": ^7.17.2
+    "@types/prop-types": ^15.7.5
+    "@types/react-is": ^16.7.1 || ^17.0.0
+    prop-types: ^15.8.1
+    react-is: ^17.0.2
+  peerDependencies:
+    react: ^17.0.0 || ^18.0.0
+  checksum: 488b4e709e3f86e7a627f2e61b4c8b3d6fcb606922666b829f5a24c77383ee5776446a30e7b5c10007d03e4e764c3190d608485113d5108e54f79308bddafefc
   languageName: node
   linkType: hard
 
@@ -4177,7 +4322,7 @@ __metadata:
     gatsby: ^4.14.0
     graphql-request: ^3.7.0
     humps: ^2.0.1
-    jotai: ^1.6.6
+    jotai: ^1.6.7
     lodash-es: ^4.17.21
     react: ^18.1.0
     react-feather: ^2.0.9
@@ -4228,7 +4373,7 @@ __metadata:
     gatsby-plugin-styled-components: ^5.14.0
     gatsby-plugin-typescript: ^4.14.0
     iframe-resizer-react: ^1.1.0
-    jotai: ^1.6.6
+    jotai: ^1.6.7
     react: ^18.1.0
     react-dom: ^18.1.0
     react-helmet: ^6.1.0
@@ -4267,7 +4412,7 @@ __metadata:
     baseui: 11.0.3
     currency.js: ^2.0.4
     decimal.js: ^10.3.1
-    jotai: ^1.6.6
+    jotai: ^1.6.7
     rc-dropdown: ^3.2.0
     rc-input-number: ^7.3.0
     rc-menu: ^9.0.12
@@ -4323,7 +4468,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@phala/store@workspace:packages/store"
   dependencies:
-    jotai: ^1.6.6
+    jotai: ^1.6.7
   peerDependencies:
     "@talisman-connect/wallets": ^1.1.3
     react: ">=17"
@@ -4342,9 +4487,9 @@ __metadata:
     "@emotion/styled": ^11.8.1
     "@metamask/detect-provider": ^1.2.0
     "@metamask/providers": ^8.1.1
-    "@mui/icons-material": ^5.6.2
-    "@mui/lab": 5.0.0-alpha.81
-    "@mui/material": ^5.7.0
+    "@mui/icons-material": ^5.8.0
+    "@mui/lab": 5.0.0-alpha.82
+    "@mui/material": ^5.8.1
     "@next/bundle-analyzer": ^12.1.6
     "@phala/store": "workspace:^"
     "@phala/utils": "workspace:^"
@@ -4361,11 +4506,11 @@ __metadata:
     decimal.js: ^10.3.1
     eslint: ^8.15.0
     eslint-config-next: ^12.1.6
-    ethers: ^5.6.5
-    jotai: ^1.6.6
+    ethers: ^5.6.7
+    jotai: ^1.6.7
     next: ^12.1.6
     next-transpile-modules: ^9.0.0
-    notistack: ^2.0.4
+    notistack: ^2.0.5
     react: 17.0.2
     react-dom: 17.0.2
     swr: ^1.3.0
@@ -10488,41 +10633,41 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ethers@npm:^5.6.5":
-  version: 5.6.5
-  resolution: "ethers@npm:5.6.5"
+"ethers@npm:^5.6.7":
+  version: 5.6.7
+  resolution: "ethers@npm:5.6.7"
   dependencies:
-    "@ethersproject/abi": 5.6.1
+    "@ethersproject/abi": 5.6.2
     "@ethersproject/abstract-provider": 5.6.0
-    "@ethersproject/abstract-signer": 5.6.0
+    "@ethersproject/abstract-signer": 5.6.1
     "@ethersproject/address": 5.6.0
     "@ethersproject/base64": 5.6.0
     "@ethersproject/basex": 5.6.0
-    "@ethersproject/bignumber": 5.6.0
+    "@ethersproject/bignumber": 5.6.1
     "@ethersproject/bytes": 5.6.1
     "@ethersproject/constants": 5.6.0
-    "@ethersproject/contracts": 5.6.0
+    "@ethersproject/contracts": 5.6.1
     "@ethersproject/hash": 5.6.0
-    "@ethersproject/hdnode": 5.6.0
+    "@ethersproject/hdnode": 5.6.1
     "@ethersproject/json-wallets": 5.6.0
     "@ethersproject/keccak256": 5.6.0
     "@ethersproject/logger": 5.6.0
-    "@ethersproject/networks": 5.6.2
+    "@ethersproject/networks": 5.6.3
     "@ethersproject/pbkdf2": 5.6.0
     "@ethersproject/properties": 5.6.0
-    "@ethersproject/providers": 5.6.5
+    "@ethersproject/providers": 5.6.7
     "@ethersproject/random": 5.6.0
     "@ethersproject/rlp": 5.6.0
     "@ethersproject/sha2": 5.6.0
     "@ethersproject/signing-key": 5.6.1
     "@ethersproject/solidity": 5.6.0
     "@ethersproject/strings": 5.6.0
-    "@ethersproject/transactions": 5.6.0
+    "@ethersproject/transactions": 5.6.1
     "@ethersproject/units": 5.6.0
-    "@ethersproject/wallet": 5.6.0
+    "@ethersproject/wallet": 5.6.1
     "@ethersproject/web": 5.6.0
     "@ethersproject/wordlists": 5.6.0
-  checksum: f2c2528452eea1fa3c6e735ea9acf8162555b681d712e770a2e11560a71f9c9ef4abbe686e68c4e2cfa4c51eda35fe06f1bac7dc030daf00747c229b8cab5812
+  checksum: 13b948ed95ce52ec46bae3bc2449beb7fa2ab2f0c4addf6955c2e5d0bc0619047afd1b6caa0fc02fbb1421f58a7b38effe2b4a301c5ca7a5ffd56f662a54c184
   languageName: node
   linkType: hard
 
@@ -13209,9 +13354,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jotai@npm:^1.6.6":
-  version: 1.6.6
-  resolution: "jotai@npm:1.6.6"
+"jotai@npm:^1.6.7":
+  version: 1.6.7
+  resolution: "jotai@npm:1.6.7"
   peerDependencies:
     "@babel/core": "*"
     "@babel/template": "*"
@@ -13242,7 +13387,7 @@ __metadata:
       optional: true
     xstate:
       optional: true
-  checksum: b8abaca7e0e6755c8cb260bdbf0ca17b0b25f2964108fcb2eaaa451e2caeeb3b07bd19d5bf96714953f02b7490c1f6382c0a195de73645879f8323e896afa987
+  checksum: 9d579c4f82665ba23d0269cb28516d2098d30cea72437a87182b5b1999450d00898b98409424b64dd25c175d0767e5300505583b805b862c00ac9c50bca0f913
   languageName: node
   linkType: hard
 
@@ -14999,9 +15144,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"notistack@npm:^2.0.4":
-  version: 2.0.4
-  resolution: "notistack@npm:2.0.4"
+"notistack@npm:^2.0.5":
+  version: 2.0.5
+  resolution: "notistack@npm:2.0.5"
   dependencies:
     clsx: ^1.1.0
     hoist-non-react-statics: ^3.3.0
@@ -15016,7 +15161,7 @@ __metadata:
       optional: true
     "@emotion/styled":
       optional: true
-  checksum: 11e47b3f0359847362d9a78fe5866a55080d073a8e395bc7a24c95c7c8230893510334425f143607124833c9344de08049c04a90e59d33e9dbf5c00fe6fb997e
+  checksum: afbf8bf8878c610b3ca58b70164784d2f5683f345bc4b670b5c4114a9155104f087a501422d7883ec8fd90299d6c66029f8bd6b11396baba157fad70c27e167a
   languageName: node
   linkType: hard
 

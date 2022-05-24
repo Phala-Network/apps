@@ -3,11 +3,11 @@ import {
   amountAtom,
   bridgeAtom,
   bridgeErrorAtom,
+  destChainTransactionFeeAtom,
   destinationAccountAtom,
   toChainAtom,
 } from '@/store/bridge'
 import {validateAddress} from '@phala/utils'
-import Decimal from 'decimal.js'
 import {useAtom, useAtomValue} from 'jotai'
 import {useEffect} from 'react'
 import {useBalance} from './useBalance'
@@ -21,6 +21,7 @@ export const useValidation = () => {
   const balance = useBalance()
   const bridgeFee = useBridgeFee()
   const bridge = useAtomValue(bridgeAtom)
+  const destChainTransactionFee = useAtomValue(destChainTransactionFeeAtom)
 
   useEffect(() => {
     let unmounted = false
@@ -43,10 +44,7 @@ export const useValidation = () => {
         return 'InsufficientBalance'
       }
 
-      let minAmount = new Decimal(0)
-      if (bridge?.destChainTransactionFee) {
-        minAmount = minAmount.add(bridge.destChainTransactionFee)
-      }
+      let minAmount = destChainTransactionFee
       if (bridge?.existentialDeposit) {
         minAmount = minAmount.add(bridge.existentialDeposit)
       }
@@ -76,8 +74,8 @@ export const useValidation = () => {
     amount,
     balance,
     toChain.kind,
-    bridge?.destChainTransactionFee,
     bridge?.existentialDeposit,
     bridgeFee,
+    destChainTransactionFee,
   ])
 }

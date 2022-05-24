@@ -24,7 +24,7 @@
     "baseui": "11.0.3",
     "currency.js": "^2.0.4",
     "decimal.js": "^10.3.1",
-    "jotai": "^1.6.6",
+    "jotai": "^1.6.7",
     "rc-dropdown": "^3.2.0",
     "rc-input-number": "^7.3.0",
     "rc-menu": "^9.0.12",

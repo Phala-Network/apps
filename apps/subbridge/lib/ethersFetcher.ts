@@ -1,4 +1,6 @@
 import {ApiPromise} from '@polkadot/api'
+import {hexStripPrefix, u8aToHex} from '@polkadot/util'
+import {decodeAddress} from '@polkadot/util-crypto'
 import Decimal from 'decimal.js'
 import type {BigNumber, ethers} from 'ethers'
 import {createEthereumToKhalaData} from './createEthereumToKhalaData'
@@ -41,6 +43,8 @@ export const ethersGasPriceFetcher = async (
   return new Decimal(ethers.utils.formatEther(await provider.getGasPrice()))
 }
 
+const ALICE = '5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY'
+
 export const ethereumToKhalaEstimatedGasFetcher = async (
   contract: ethers.Contract,
   khalaApi: ApiPromise,
@@ -52,9 +56,34 @@ export const ethereumToKhalaEstimatedGasFetcher = async (
     await createEthereumToKhalaData(
       khalaApi,
       // Try to use fixed amount to reduce requests
-      '5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY',
+      ALICE,
       '1'
     )
+  )
+
+  return new Decimal(estimateGas.toString())
+}
+
+export const moonriverEstimatedGasFetcher = async (
+  contract: ethers.Contract,
+  xcAddress: `0x${string}`,
+  paraId: number,
+  decimals: number
+): Promise<Decimal> => {
+  const {ethers} = await import('ethers')
+  const estimateGas = await contract.estimateGas.transfer(
+    xcAddress,
+    '1',
+    {
+      parents: 1,
+      interior: [
+        ethers.utils.hexZeroPad(ethers.utils.hexlify(paraId), 5),
+        `0x01${hexStripPrefix(u8aToHex(decodeAddress(ALICE)))}00`, // AccountKey32 Selector + Address in hex + Network = Any
+      ],
+    },
+    Decimal.pow(10, decimals - 3)
+      .times(6)
+      .toString()
   )
 
   return new Decimal(estimateGas.toString())

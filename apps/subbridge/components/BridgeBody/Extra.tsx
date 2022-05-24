@@ -1,7 +1,12 @@
 import {useBridgeFee} from '@/hooks/useBridgeFee'
 import {useEstimatedGasFee} from '@/hooks/useEstimatedGasFee'
 import {useCurrentPolkadotApi} from '@/hooks/usePolkadotApi'
-import {assetAtom, bridgeAtom, fromChainAtom} from '@/store/bridge'
+import {
+  assetAtom,
+  bridgeAtom,
+  destChainTransactionFeeAtom,
+  fromChainAtom,
+} from '@/store/bridge'
 import {
   Box,
   BoxProps,
@@ -74,6 +79,7 @@ const ExtraInfo: FC<PaperProps> = ({sx, ...props}) => {
   const estimatedGas = useEstimatedGasFee()
   const bridgeFee = useBridgeFee()
   const asset = useAtomValue(assetAtom)
+  const destChainTransactionFee = useAtomValue(destChainTransactionFeeAtom)
 
   if (!bridge) return null
 
@@ -105,11 +111,7 @@ const ExtraInfo: FC<PaperProps> = ({sx, ...props}) => {
           label="Destination Chain Fee"
           tooltip=" This fee is used to pay the XCM fee of the destination chain."
         >
-          {`${
-            bridge.destChainTransactionFee
-              ? formatCurrency(bridge.destChainTransactionFee, 8)
-              : '0'
-          } ${asset.symbol}`}
+          {`${formatCurrency(destChainTransactionFee, 12)} ${asset.symbol}`}
         </Info>
 
         <Divider />

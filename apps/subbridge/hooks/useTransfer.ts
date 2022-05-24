@@ -1,6 +1,7 @@
 import {transferFromEthereumToKhala} from '@/lib/transferFromEthereum'
 import {transferFromKarura} from '@/lib/transferFromKarura'
 import {transferFromKhala} from '@/lib/transferFromKhala'
+import {transferFromMoonriver} from '@/lib/transferFromMoonriver'
 import {
   amountAtom,
   assetAtom,
@@ -40,6 +41,7 @@ export const useTransfer = () => {
   const isFromKhala = fromChain.id === 'thala' || fromChain.id === 'khala'
   const isFromKarura =
     fromChain.id === 'karura' || fromChain.id === 'karura-test'
+  const isFromMoonriver = fromChain.id === 'moonriver'
 
   const rawAmount = useMemo(
     () =>
@@ -51,12 +53,13 @@ export const useTransfer = () => {
 
   if (isFromEthereumToKhala) {
     return async () => {
+      const resourceId = asset.bridgeContract?.[fromChain.id]?.resourceId
       if (
         !bridgeContract ||
         !khalaApi ||
         !amount ||
-        !asset.bridgeContract ||
-        fromChain.kind !== 'evm'
+        fromChain.kind !== 'evm' ||
+        !resourceId
       ) {
         throw new Error('Transfer missing required parameters')
       }
@@ -65,7 +68,7 @@ export const useTransfer = () => {
         contract: bridgeContract,
         khalaApi,
         destinationChainId: 1,
-        resourceId: asset.bridgeContract[fromChain.evmChainId].resourceId,
+        resourceId,
         destinationAccount,
         amount: rawAmount,
       })
@@ -122,6 +125,22 @@ export const useTransfer = () => {
           statusCb
         )
       }
+    }
+  }
+
+  if (isFromMoonriver) {
+    return async () => {
+      if (!bridgeContract) {
+        throw new Error('Transfer missing required parameters')
+      }
+
+      return transferFromMoonriver({
+        contract: bridgeContract,
+        assetId: asset.id,
+        amount: rawAmount,
+        destinationAccount,
+        toChainId: toChain.id,
+      })
     }
   }
 }

@@ -75,6 +75,7 @@ const DestinationAccountInput: FC<BoxProps> = (props) => {
   return (
     <Box {...props}>
       <TextField
+        placeholder={toChain.kind === 'evm' ? '0x' : ''}
         disabled={useSameAccountEnabled && Boolean(destinationAccount)}
         label="Destination Account"
         fullWidth

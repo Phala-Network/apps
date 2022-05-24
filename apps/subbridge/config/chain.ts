@@ -1,10 +1,11 @@
 import ethereumIcon from '@/assets/ethereum_chain_icon.jpg'
 import karuraIcon from '@/assets/karura_chain_icon.jpg'
 import khalaIcon from '@/assets/khala_chain_icon.jpg'
+import moonriverIcon from '@/assets/moonriver_chain_icon.png'
 import {StaticImageData} from 'next/image'
 import {AssetId} from './asset'
 
-export type EvmChainId = 'ethereum' | 'kovan'
+export type EvmChainId = 'ethereum' | 'kovan' | 'moonriver'
 export type PolkadotChainId = 'khala' | 'karura' | 'thala' | 'karura-test'
 export type ChainId = EvmChainId | PolkadotChainId
 export type ChainKind = 'evm' | 'polkadot'
@@ -14,6 +15,7 @@ interface BaseChain {
   icon: StaticImageData
   kind: ChainKind
   isTest?: boolean
+  nativeAsset?: AssetId
 }
 
 export interface EvmChain extends BaseChain {
@@ -21,6 +23,8 @@ export interface EvmChain extends BaseChain {
   kind: 'evm'
   evmChainId: number
   currencySymbol: string
+  isSubstrateCompatible?: boolean
+  paraId?: number // for compatible chains
 }
 
 export interface PolkadotChain extends BaseChain {
@@ -29,7 +33,6 @@ export interface PolkadotChain extends BaseChain {
   endpoint: string | string[]
   ss58Format: number
   paraId: number
-  nativeAsset?: AssetId
 }
 
 export type Chain = EvmChain | PolkadotChain
@@ -105,5 +108,16 @@ export const CHAINS: Readonly<
     ss58Format: 8,
     isTest: true,
     paraId: 2000,
+  },
+  moonriver: {
+    id: 'moonriver',
+    name: 'Moonriver',
+    icon: moonriverIcon,
+    kind: 'evm',
+    evmChainId: 1285,
+    currencySymbol: 'MOVR',
+    paraId: 2023,
+    isSubstrateCompatible: true,
+    nativeAsset: 'movr',
   },
 }

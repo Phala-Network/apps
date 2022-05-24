@@ -1,0 +1,4 @@
+[
+  "event Deposit(uint8 destinationChainID, bytes32 resourceID, uint64 depositNonce)",
+  "function deposit(uint8 destinationChainID, bytes32 resourceID, bytes calldata data)"
+]
