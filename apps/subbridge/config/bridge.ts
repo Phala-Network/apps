@@ -95,7 +95,7 @@ export const BRIDGES: Readonly<Bridge[]> = [
     toChain: 'khala',
     asset: 'movr',
     estimatedTime: '< 1 min',
-    destChainTransactionFee: new Decimal('0.000000001'),
+    destChainTransactionFee: new Decimal('0.000000000266666666'),
     existentialDeposit: new Decimal(0),
   },
   {
@@ -103,7 +103,7 @@ export const BRIDGES: Readonly<Bridge[]> = [
     toChain: 'moonriver',
     asset: 'movr',
     estimatedTime: '< 1 min',
-    destChainTransactionFee: new Decimal('0.0001'),
+    destChainTransactionFee: new Decimal('0.00008'),
     existentialDeposit: new Decimal(0),
   },
 ]
