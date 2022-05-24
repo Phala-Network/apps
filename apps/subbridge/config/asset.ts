@@ -1,3 +1,4 @@
+import karAssetIcon from '@/assets/kar_asset_icon.png'
 import moonriverXtokensAbi from '@/assets/moonriver_xtokens_abi.json'
 import movrAssetIcon from '@/assets/movr_asset_icon.png'
 import phaIcon from '@/assets/pha_asset_icon.png'
@@ -8,8 +9,8 @@ import type {ethers} from 'ethers'
 import {StaticImageData} from 'next/image'
 import {ChainId, EvmChainId} from './chain'
 
-export type AssetId = 'pha' | 'movr'
-export type KaruraToken = 'PHA'
+export type AssetId = 'pha' | 'movr' | 'kar'
+export type KaruraToken = 'PHA' | 'KAR'
 export interface Asset {
   id: AssetId
   symbol: string
@@ -103,6 +104,18 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
     destChainTransactionFee: {
       moonriver: new Decimal('0.00008'),
       khala: new Decimal('0.000000000266666666'),
+    },
+  },
+  kar: {
+    id: 'kar',
+    symbol: 'KAR',
+    icon: karAssetIcon,
+    karuraToken: 'KAR',
+    decimals: {default: 12},
+    palletAssetId: 1,
+    destChainTransactionFee: {
+      karura: new Decimal('0.0064'),
+      khala: new Decimal('0.008'),
     },
   },
 }

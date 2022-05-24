@@ -6,6 +6,7 @@ import {decodeAddress} from '@polkadot/util-crypto'
 import Decimal from 'decimal.js'
 
 const moonriverParaId = CHAINS.moonriver.paraId
+const karuraParaId = CHAINS.karura.paraId
 
 function getExtrinsicAssetId(assetId: AssetId) {
   if (assetId === 'pha') {
@@ -23,6 +24,20 @@ function getExtrinsicAssetId(assetId: AssetId) {
         parents: 1,
         interior: {
           X2: [{Parachain: moonriverParaId}, {PalletInstance: 10}],
+        },
+      },
+    }
+  }
+
+  if (assetId === 'kar') {
+    return {
+      Concrete: {
+        parents: 1,
+        interior: {
+          X2: [
+            {Parachain: karuraParaId},
+            {GeneralKey: '0x0080'}, // 0x0080 is general key of KAR defined in karura runtime
+          ],
         },
       },
     }

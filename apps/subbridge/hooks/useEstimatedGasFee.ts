@@ -69,12 +69,7 @@ export const useEstimatedGasFee = () => {
   )
 
   const {data: karuraPartialFee} = useSWR(
-    isFromKarura &&
-      karuraApi &&
-      asset.karuraToken &&
-      toChain.kind === 'polkadot'
-      ? [karuraApi, asset.karuraToken, toChain.paraId]
-      : null,
+    isFromKarura && karuraApi ? [karuraApi, toChain.id, asset.id] : null,
     karuraPartialFeeFetcher
   )
 

@@ -77,20 +77,14 @@ export const useTransfer = () => {
 
   if (isFromKarura) {
     return async (statusCb?: Callback<ISubmittableResult>) => {
-      if (
-        !karuraApi ||
-        !asset.karuraToken ||
-        !amount ||
-        toChain.kind !== 'polkadot' ||
-        !polkadotAccount?.wallet?.signer
-      ) {
+      if (!karuraApi || !polkadotAccount?.wallet?.signer) {
         throw new Error('Transfer missing required parameters')
       }
       return transferFromKarura({
         karuraApi,
-        token: asset.karuraToken,
+        assetId: asset.id,
         amount: rawAmount,
-        paraId: toChain.paraId,
+        toChainId: toChain.id,
         destinationAccount,
       }).signAndSend(
         polkadotAccount.address,

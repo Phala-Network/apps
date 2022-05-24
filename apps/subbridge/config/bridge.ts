@@ -77,21 +77,44 @@ export const BRIDGES: Readonly<Bridge[]> = [
     toChain: 'moonriver',
     asset: 'pha',
     estimatedTime: '< 1 min',
-    existentialDeposit: new Decimal(0),
   },
   {
     fromChain: 'moonriver',
     toChain: 'khala',
     asset: 'movr',
     estimatedTime: '< 1 min',
-    existentialDeposit: new Decimal(0),
   },
   {
     fromChain: 'khala',
     toChain: 'moonriver',
     asset: 'movr',
     estimatedTime: '< 1 min',
-    existentialDeposit: new Decimal(0),
+  },
+  {
+    fromChain: 'khala',
+    toChain: 'karura',
+    asset: 'kar',
+    estimatedTime: '< 1 min',
+    existentialDeposit: new Decimal('0.1'),
+  },
+  {
+    fromChain: 'thala',
+    toChain: 'karura-test',
+    asset: 'kar',
+    estimatedTime: '< 1 min',
+    existentialDeposit: new Decimal('0.1'),
+  },
+  {
+    fromChain: 'karura',
+    toChain: 'khala',
+    asset: 'kar',
+    estimatedTime: '< 1 min',
+  },
+  {
+    fromChain: 'karura-test',
+    toChain: 'thala',
+    asset: 'kar',
+    estimatedTime: '< 1 min',
   },
 ]
 

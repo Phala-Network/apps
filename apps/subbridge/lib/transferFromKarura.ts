@@ -1,32 +1,42 @@
-import {KaruraToken} from '@/config/asset'
+import {AssetId, ASSETS} from '@/config/asset'
+import {ChainId, CHAINS} from '@/config/chain'
 import type {ApiPromise} from '@polkadot/api'
 import type {SubmittableExtrinsic} from '@polkadot/api/types'
 import type {ISubmittableResult} from '@polkadot/types/types'
 import {u8aToHex} from '@polkadot/util'
 import {decodeAddress} from '@polkadot/util-crypto'
+import Decimal from 'decimal.js'
 
 export const transferFromKarura = ({
   karuraApi,
-  token,
+  assetId,
   amount,
-  paraId,
+  toChainId,
   destinationAccount,
 }: {
   karuraApi: ApiPromise
-  token: KaruraToken
+  assetId: AssetId
+  toChainId: ChainId
   amount: string
-  paraId: number
   destinationAccount: string
 }): SubmittableExtrinsic<'promise', ISubmittableResult> => {
+  const asset = ASSETS[assetId]
+  const toChain = CHAINS[toChainId]
+  const decimals = asset.decimals.khala ?? asset.decimals.default
+
+  if (!asset.karuraToken || !toChain.paraId) {
+    throw new Error('Transfer missing required parameters')
+  }
+
   return karuraApi.tx.xTokens.transfer(
-    {Token: token},
+    {Token: asset.karuraToken},
     amount,
     {
       V1: {
         parents: 1,
         interior: {
           X2: [
-            {Parachain: paraId},
+            {Parachain: toChain.paraId},
             {
               AccountId32: {
                 network: 'Any',
@@ -37,6 +47,8 @@ export const transferFromKarura = ({
         },
       },
     },
-    6000000000 // Hardcode
+    Decimal.pow(10, decimals - 3)
+      .times(6)
+      .toString()
   )
 }

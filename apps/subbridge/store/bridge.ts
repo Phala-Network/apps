@@ -81,9 +81,8 @@ export const destChainTransactionFeeAtom = atom<Decimal>((get) => {
 
   if (
     // NOTE: ethereum to khala bridge is not xcm bridge
-    (((fromChain.id === 'ethereum' && toChain.id === 'khala') ||
-      (fromChain.id === 'kovan' && toChain.id === 'thala')) &&
-      asset.id === 'pha') ||
+    (fromChain.kind === 'evm' && !fromChain.isSubstrateCompatible) ||
+    (toChain.kind === 'evm' && !toChain.isSubstrateCompatible) ||
     !destChainTransactionFee
   ) {
     return new Decimal(0)

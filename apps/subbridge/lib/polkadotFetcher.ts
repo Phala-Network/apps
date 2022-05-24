@@ -58,14 +58,14 @@ export const khalaToEthereumBridgeFeeFetcher = async (khalaApi: ApiPromise) => {
 
 export const karuraPartialFeeFetcher = async (
   karuraApi: ApiPromise,
-  token: KaruraToken,
-  paraId: number
+  toChainId: ChainId,
+  assetId: AssetId
 ) => {
   const {partialFee} = await transferFromKarura({
     karuraApi,
-    token,
+    assetId,
     amount: '1',
-    paraId,
+    toChainId,
     destinationAccount: ALICE,
   }).paymentInfo(ALICE)
 

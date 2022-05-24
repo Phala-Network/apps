@@ -75,7 +75,7 @@ export const useBalance = (): Decimal | undefined => {
       ? [ethersAssetContract, evmAccount, decimals]
       : null,
     ethersContractBalanceFetcher,
-    {refreshInterval: 12000}
+    {refreshInterval}
   )
 
   const balance: Decimal | undefined =

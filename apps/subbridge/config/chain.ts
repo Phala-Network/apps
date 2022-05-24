@@ -1,5 +1,5 @@
 import ethereumIcon from '@/assets/ethereum_chain_icon.jpg'
-import karuraIcon from '@/assets/karura_chain_icon.jpg'
+import karuraIcon from '@/assets/karura_chain_icon.png'
 import khalaIcon from '@/assets/khala_chain_icon.jpg'
 import moonriverIcon from '@/assets/moonriver_chain_icon.png'
 import {StaticImageData} from 'next/image'
@@ -70,6 +70,7 @@ export const CHAINS: Readonly<
     ],
     ss58Format: 8,
     paraId: 2000,
+    nativeAsset: 'kar',
   },
   ethereum: {
     id: 'ethereum',
@@ -108,6 +109,7 @@ export const CHAINS: Readonly<
     ss58Format: 8,
     isTest: true,
     paraId: 2000,
+    nativeAsset: 'kar',
   },
   moonriver: {
     id: 'moonriver',
