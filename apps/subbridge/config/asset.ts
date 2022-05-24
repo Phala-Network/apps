@@ -3,7 +3,7 @@ import movrAssetIcon from '@/assets/movr_asset_icon.png'
 import phaIcon from '@/assets/pha_asset_icon.png'
 import phaEthereumAssetAbi from '@/assets/pha_ethereum_asset_abi.json'
 import phaEthereumBridgeAbi from '@/assets/pha_ethereum_bridge_abi.json'
-// import Decimal from 'decimal.js'
+import Decimal from 'decimal.js'
 import type {ethers} from 'ethers'
 import {StaticImageData} from 'next/image'
 import {ChainId, EvmChainId} from './chain'
@@ -16,7 +16,7 @@ export interface Asset {
   icon: StaticImageData
   decimals: Partial<Record<ChainId, number>> & {default: number}
   xcAddress?: `0x${string}`
-  palletId?: number
+  palletAssetId?: number
   karuraToken?: KaruraToken
   assetContract?: {
     [chainId in EvmChainId]?: {
@@ -32,7 +32,7 @@ export interface Asset {
       abi: ethers.ContractInterface
     }
   }
-  // xcmFee: Partial<Record<ChainId, Decimal>>
+  destChainTransactionFee: Partial<Record<ChainId, Decimal>>
 }
 
 export const ASSETS: Readonly<Record<AssetId, Asset>> = {
@@ -77,20 +77,22 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
       },
     },
     decimals: {ethereum: 18, kovan: 18, default: 12},
-    // xcmFees: {
-    //   khala: new Decimal('0.064'),
-    //   bifrost: new Decimal('0.0256'),
-    //   karura: new Decimal('0.0512'),
-    //   moonriver: new Decimal('0.05868512'),
-    //   heiko: new Decimal('0.0384'),
-    // },
+    destChainTransactionFee: {
+      khala: new Decimal('0.064'),
+      thala: new Decimal('0.064'),
+      // bifrost: new Decimal('0.0256'),
+      karura: new Decimal('0.0512'),
+      'karura-test': new Decimal('0.0512'),
+      moonriver: new Decimal('0.05868512'),
+      // heiko: new Decimal('0.0384'),
+    },
   },
   movr: {
     id: 'movr',
     symbol: 'MOVR',
     icon: movrAssetIcon,
     decimals: {default: 18},
-    palletId: 6,
+    palletAssetId: 6,
     xcAddress: '0x0000000000000000000000000000000000000802',
     bridgeContract: {
       moonriver: {
@@ -98,9 +100,9 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
         abi: moonriverXtokensAbi,
       },
     },
-    // xcmFees: {
-    //   moonriver: new Decimal('0.0001'),
-    //   khala: new Decimal('0.000000001'),
-    // },
+    destChainTransactionFee: {
+      moonriver: new Decimal('0.00008'),
+      khala: new Decimal('0.000000000266666666'),
+    },
   },
 }

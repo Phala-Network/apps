@@ -5,7 +5,7 @@ import {useTransfer} from '@/hooks/useTransfer'
 import {
   amountAtom,
   assetAtom,
-  bridgeAtom,
+  destChainTransactionFeeAtom,
   destinationAccountAtom,
   fromAccountAtom,
   fromChainAtom,
@@ -157,20 +157,19 @@ const DialogBody: FC<BoxProps> = (props) => {
   const [amount] = useAtom(amountAtom)
   const [asset] = useAtom(assetAtom)
   const [destinationAccount] = useAtom(destinationAccountAtom)
+  const destChainTransactionFee = useAtomValue(destChainTransactionFeeAtom)
   const bridgeFee = useBridgeFee()
-  const bridge = useAtomValue(bridgeAtom)
 
   const toAmount = useMemo(() => {
-    if (!bridgeFee || !bridge?.destChainTransactionFee) {
+    if (!bridgeFee) {
       return null
     }
-    let value = new Decimal(amount).sub(bridgeFee)
+    const value = new Decimal(amount)
+      .sub(bridgeFee)
+      .sub(destChainTransactionFee)
 
-    if (bridge.destChainTransactionFee) {
-      value = value.sub(bridge.destChainTransactionFee)
-    }
     return value.toString()
-  }, [amount, bridgeFee, bridge?.destChainTransactionFee])
+  }, [amount, bridgeFee, destChainTransactionFee])
 
   if (!fromAccount) return null
 

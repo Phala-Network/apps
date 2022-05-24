@@ -35,7 +35,7 @@ export const useBalance = (): Decimal | undefined => {
   const fromKhala =
     (fromChain.id === 'khala' || fromChain.id === 'thala') &&
     asset.id !== fromChain.nativeAsset &&
-    asset.palletId !== undefined
+    asset.palletAssetId !== undefined
   const fromPolkadotNativeChain =
     fromChain.kind === 'polkadot' && fromChain.nativeAsset === asset.id
   const fromEvmNativeChain =
@@ -51,7 +51,7 @@ export const useBalance = (): Decimal | undefined => {
   )
   const {data: khalaTokenBalance} = useSWR(
     fromKhala && polkadotAccount
-      ? [polkadotApi, polkadotAccount.address, asset.palletId, decimals]
+      ? [polkadotApi, polkadotAccount.address, asset.palletAssetId, decimals]
       : null,
     khalaTokenBalanceFetcher,
     {refreshInterval}

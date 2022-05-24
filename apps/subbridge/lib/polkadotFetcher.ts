@@ -22,10 +22,10 @@ export const polkadotAvailableBalanceFetcher = async (
 export const khalaTokenBalanceFetcher = async (
   khalaApi: ApiPromise,
   address: string,
-  palletId: number,
+  palletAssetId: number,
   decimals: number
 ) => {
-  const balance = await khalaApi.query.assets.account(palletId, address)
+  const balance = await khalaApi.query.assets.account(palletAssetId, address)
   const balanceJson = balance.toJSON()
   if (!balanceJson) {
     return new Decimal(0)
