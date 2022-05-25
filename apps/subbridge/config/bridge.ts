@@ -19,17 +19,17 @@ export const BRIDGES: Readonly<Bridge[]> = [
     existentialDeposit: new Decimal('0.01'),
   },
   {
-    fromChain: 'khala',
-    toChain: 'ethereum',
-    asset: 'pha',
-    estimatedTime: '~ 10 mins',
-  },
-  {
     fromChain: 'kovan',
     toChain: 'thala',
     asset: 'pha',
     estimatedTime: '< 1 min',
     existentialDeposit: new Decimal('0.01'),
+  },
+  {
+    fromChain: 'khala',
+    toChain: 'ethereum',
+    asset: 'pha',
+    estimatedTime: '~ 10 mins',
   },
   {
     fromChain: 'thala',
@@ -45,18 +45,18 @@ export const BRIDGES: Readonly<Bridge[]> = [
     existentialDeposit: new Decimal('0.01'),
   },
   {
-    fromChain: 'khala',
-    toChain: 'karura',
-    asset: 'pha',
-    estimatedTime: '< 1 min',
-    existentialDeposit: new Decimal('0.04'),
-  },
-  {
     fromChain: 'karura-test',
     toChain: 'thala',
     asset: 'pha',
     estimatedTime: '< 1 min',
     existentialDeposit: new Decimal('0.01'),
+  },
+  {
+    fromChain: 'khala',
+    toChain: 'karura',
+    asset: 'pha',
+    estimatedTime: '< 1 min',
+    existentialDeposit: new Decimal('0.04'),
   },
   {
     fromChain: 'thala',

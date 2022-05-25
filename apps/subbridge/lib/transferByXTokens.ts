@@ -25,13 +25,16 @@ export const transferByXTokens = ({
   const asset = ASSETS[assetId]
   const toChain = CHAINS[toChainId]
   const decimals = asset.decimals[fromChainId] ?? asset.decimals.default
+  const isTransferringBNCFromBifrost =
+    (fromChainId === 'bifrost' || fromChainId === 'bifrost-test') &&
+    assetId === 'bnc'
 
   if (!asset.ormlToken || !toChain.paraId) {
     throw new Error('Transfer missing required parameters')
   }
 
   return polkadotApi.tx.xTokens.transfer(
-    {Token: asset.ormlToken},
+    {[isTransferringBNCFromBifrost ? 'Native' : 'Token']: asset.ormlToken},
     amount,
     {
       V1: {
