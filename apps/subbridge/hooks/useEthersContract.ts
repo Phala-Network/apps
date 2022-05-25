@@ -1,33 +1,67 @@
+import chainBridgeAbi from '@/assets/chainbridge_abi.json'
+import moonriverXTokensAbi from '@/assets/moonriver_xtokens_abi.json'
+import tokenStandardAbi from '@/assets/token_standard_abi.json'
 import {assetAtom, fromChainAtom} from '@/store/bridge'
-import {ethersProviderAtom} from '@/store/ethers'
 import type {ethers} from 'ethers'
-import {useAtom} from 'jotai'
+import {useAtomValue} from 'jotai'
 import useSWRImmutable from 'swr/immutable'
+import {useEthersProvider} from './useEthersProvider'
+
+type AbiKind = 'chainBridge' | 'moonriverXTokens' | 'tokenStandard'
+const abi: Record<AbiKind, ethers.ContractInterface> = {
+  chainBridge: chainBridgeAbi,
+  moonriverXTokens: moonriverXTokensAbi,
+  tokenStandard: tokenStandardAbi,
+}
 
 const fetcher = async (
   provider: ethers.providers.Web3Provider,
   address: string,
-  abi: ethers.ContractInterface
+  abiKind: AbiKind
 ) => {
   const {ethers} = await import('ethers')
-  return new ethers.Contract(address, abi, provider.getSigner())
+  return new ethers.Contract(address, abi[abiKind], provider.getSigner())
 }
 
-export const useEthersContract = (
-  contract: 'assetContract' | 'bridgeContract'
-) => {
-  const [fromChain] = useAtom(fromChainAtom)
-  const [asset] = useAtom(assetAtom)
-  const [provider] = useAtom(ethersProviderAtom)
+export const useEthersAssetContract = () => {
+  const fromChain = useAtomValue(fromChainAtom)
+  const asset = useAtomValue(assetAtom)
   const address =
     fromChain.kind === 'evm'
-      ? asset[contract]?.[fromChain.id]?.address
+      ? asset.erc20TokenContractAddress?.[fromChain.id]
       : undefined
-
-  const abi =
-    fromChain.kind === 'evm' ? asset[contract]?.[fromChain.id]?.abi : undefined
+  const provider = useEthersProvider()
   const {data} = useSWRImmutable(
-    provider && address && abi ? [provider, address, abi] : null,
+    provider && address ? [provider, address, 'tokenStandard'] : null,
+    fetcher
+  )
+
+  return data
+}
+
+export const useEthersXTokensContract = () => {
+  const fromChain = useAtomValue(fromChainAtom)
+  const provider = useEthersProvider()
+  const address =
+    fromChain.kind === 'evm' ? fromChain.xTokensContractAddress : undefined
+
+  const {data} = useSWRImmutable(
+    provider && address ? [provider, address, 'moonriverXTokens'] : null,
+    fetcher
+  )
+
+  return data
+}
+
+export const useEthersChainBridgeContract = () => {
+  const fromChain = useAtomValue(fromChainAtom)
+  const provider = useEthersProvider()
+  const address =
+    fromChain.kind === 'evm'
+      ? fromChain.chainBridgeContract?.address
+      : undefined
+  const {data} = useSWRImmutable(
+    provider && address ? [provider, address, 'chainBridge'] : null,
     fetcher
   )
 

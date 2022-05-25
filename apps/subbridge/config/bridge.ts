@@ -1,7 +1,13 @@
 import {AssetId} from './asset'
 import {ChainId} from './chain'
 
-type AssetConfig = {assetId: AssetId; estimatedTime: string}[]
+export type BridgeKind =
+  | 'evmChainBridge'
+  | 'evmXTokens'
+  | 'polkadotXTokens'
+  | 'khalaXTransfer'
+type AssetConfig = {assetId: AssetId; estimatedTime: string; kind: BridgeKind}[]
+
 export interface Bridge {
   fromChain: ChainId
   toChain: ChainId
@@ -9,57 +15,42 @@ export interface Bridge {
 }
 
 const ethereumToKhalaAssets: AssetConfig = [
-  {
-    assetId: 'pha',
-    estimatedTime: '< 1 min',
-  },
+  {assetId: 'pha', estimatedTime: '< 1 min', kind: 'evmChainBridge'},
 ]
 
 const khalaToEthereumAssets: AssetConfig = [
-  {
-    assetId: 'pha',
-    estimatedTime: '~ 10 mins',
-  },
+  {assetId: 'pha', estimatedTime: '~ 10 mins', kind: 'khalaXTransfer'},
 ]
 
 const khalaToKaruraAssets: AssetConfig = [
-  {
-    assetId: 'pha',
-    estimatedTime: '< 1 min',
-  },
-  {
-    assetId: 'kar',
-    estimatedTime: '< 1 min',
-  },
+  {assetId: 'pha', estimatedTime: '< 1 min', kind: 'khalaXTransfer'},
+  {assetId: 'kar', estimatedTime: '< 1 min', kind: 'khalaXTransfer'},
 ]
 
-const karuraToKhalaAssets = khalaToKaruraAssets
+const karuraToKhalaAssets: AssetConfig = [
+  {assetId: 'pha', estimatedTime: '< 1 min', kind: 'polkadotXTokens'},
+  {assetId: 'kar', estimatedTime: '< 1 min', kind: 'polkadotXTokens'},
+]
 
 const khalaToMoonriverAssets: AssetConfig = [
-  {
-    assetId: 'pha',
-    estimatedTime: '< 1 min',
-  },
-  {
-    assetId: 'movr',
-    estimatedTime: '< 1 min',
-  },
+  {assetId: 'pha', estimatedTime: '< 1 min', kind: 'khalaXTransfer'},
+  {assetId: 'movr', estimatedTime: '< 1 min', kind: 'khalaXTransfer'},
 ]
 
-const moonriverToKhalaAssets = khalaToMoonriverAssets
+const moonriverToKhalaAssets: AssetConfig = [
+  {assetId: 'pha', estimatedTime: '< 1 min', kind: 'evmXTokens'},
+  {assetId: 'movr', estimatedTime: '< 1 min', kind: 'evmXTokens'},
+]
 
 const khalaToBifrostAssets: AssetConfig = [
-  {
-    assetId: 'pha',
-    estimatedTime: '< 1 min',
-  },
-  {
-    assetId: 'bnc',
-    estimatedTime: '< 1 min',
-  },
+  {assetId: 'pha', estimatedTime: '< 1 min', kind: 'khalaXTransfer'},
+  {assetId: 'bnc', estimatedTime: '< 1 min', kind: 'khalaXTransfer'},
 ]
 
-const bifrostToKhalaAssets = khalaToBifrostAssets
+const bifrostToKhalaAssets: AssetConfig = [
+  {assetId: 'pha', estimatedTime: '< 1 min', kind: 'polkadotXTokens'},
+  {assetId: 'bnc', estimatedTime: '< 1 min', kind: 'polkadotXTokens'},
+]
 
 export const BRIDGES: Readonly<Bridge[]> = [
   {
@@ -131,6 +122,13 @@ export const BRIDGES: Readonly<Bridge[]> = [
     fromChain: 'thala',
     toChain: 'bifrost-test',
     assets: khalaToBifrostAssets,
+  },
+  {
+    fromChain: 'moonbase-alpha',
+    toChain: 'khala',
+    assets: [
+      {assetId: 'zlk', estimatedTime: '< 3 mins', kind: 'evmChainBridge'},
+    ],
   },
 ]
 

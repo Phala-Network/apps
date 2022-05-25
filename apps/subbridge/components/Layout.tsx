@@ -1,11 +1,11 @@
-import {useEthersInitialization} from '@/hooks/useEthersInitialization'
+import {useEthereumProviderInitialization} from '@/hooks/useEthereumProviderInitialization'
 import {usePolkadotAccountInitialization} from '@/hooks/usePolkadotAccountInitialization'
 import {useValidation} from '@/hooks/useValidation'
 import {FC, ReactNode} from 'react'
 import TopBar from './TopBar'
 
 const Layout: FC<{children: ReactNode}> = ({children}) => {
-  useEthersInitialization()
+  useEthereumProviderInitialization()
   usePolkadotAccountInitialization()
   useValidation()
 

@@ -1,5 +1,5 @@
 import {Asset, AssetId, ASSETS} from '@/config/asset'
-import {BRIDGES} from '@/config/bridge'
+import {BridgeKind, BRIDGES} from '@/config/bridge'
 import {Chain, ChainId, CHAINS} from '@/config/chain'
 import {BridgeError, BRIDGE_ERROR_MESSAGES} from '@/config/error'
 import {polkadotAccountAtom} from '@phala/store'
@@ -97,20 +97,20 @@ export const existentialDepositAtom = atom<Decimal>((get) => {
   return existentialDeposit
 })
 
-export const estimatedTimeAtom = atom<string | null>((get) => {
+export const bridgeInfoAtom = atom<{
+  kind: BridgeKind | null
+  estimatedTime: string | null
+}>((get) => {
   const fromChain = get(fromChainAtom)
   const toChain = get(toChainAtom)
   const asset = get(assetAtom)
-  const estimatedTime = BRIDGES.find(
+  const bridge = BRIDGES.find(
     (bridge) =>
       bridge.fromChain === fromChain.id && bridge.toChain === toChain.id
-  )?.assets.find(
-    (assetConfig) => assetConfig.assetId === asset.id
-  )?.estimatedTime
+  )?.assets.find((assetConfig) => assetConfig.assetId === asset.id)
 
-  if (estimatedTime === undefined) {
-    return null
+  return {
+    kind: bridge?.kind ?? null,
+    estimatedTime: bridge?.estimatedTime ?? null,
   }
-
-  return estimatedTime
 })

@@ -13,19 +13,23 @@ import {
   fromChainAtom,
   toChainAtom,
 } from '@/store/bridge'
-import {ethersProviderAtom} from '@/store/ethers'
 import Decimal from 'decimal.js'
 import {useAtomValue} from 'jotai'
 import useSWR from 'swr'
-import {useEthersContract} from './useEthersContract'
+import {
+  useEthersChainBridgeContract,
+  useEthersXTokensContract,
+} from './useEthersContract'
+import {useEthersProvider} from './useEthersProvider'
 import {useCurrentPolkadotApi, usePolkadotApi} from './usePolkadotApi'
 
 export const useEstimatedGasFee = () => {
-  const ethersBridgeContract = useEthersContract('bridgeContract')
+  const ethersChainBridgeContract = useEthersChainBridgeContract()
+  const ethersXTokensContract = useEthersXTokensContract()
   const fromChain = useAtomValue(fromChainAtom)
   const toChain = useAtomValue(toChainAtom)
   const asset = useAtomValue(assetAtom)
-  const ethersProvider = useAtomValue(ethersProviderAtom)
+  const ethersProvider = useEthersProvider()
   const decimals = useAtomValue(decimalsAtom)
   const khalaApi = usePolkadotApi(
     fromChain.id === 'thala' || toChain.id === 'thala' ? 'thala' : 'khala'
@@ -48,24 +52,20 @@ export const useEstimatedGasFee = () => {
   )
   const {data: ethereumToKhalaEstimatedGas} = useSWR(
     isFromEthereumToKhala &&
-      ethersBridgeContract &&
+      ethersChainBridgeContract &&
       khalaApi &&
-      asset.bridgeContract
-      ? [
-          ethersBridgeContract,
-          khalaApi,
-          asset.bridgeContract[fromChain.id]?.resourceId,
-        ]
+      asset.chainBridgeResourceId
+      ? [ethersChainBridgeContract, khalaApi, asset.chainBridgeResourceId]
       : null,
     ethereumToKhalaEstimatedGasFetcher
   )
 
   const {data: moonriverEstimatedGas} = useSWR(
     isFromMoonriver &&
-      ethersBridgeContract &&
+      ethersXTokensContract &&
       toChain.paraId &&
       asset.xc20Address
-      ? [ethersBridgeContract, asset.xc20Address, toChain.paraId, decimals]
+      ? [ethersXTokensContract, asset.xc20Address, toChain.paraId, decimals]
       : null,
     moonriverEstimatedGasFetcher
   )

@@ -5,6 +5,7 @@ import {transferFromMoonriver} from '@/lib/transferFromMoonriver'
 import {
   amountAtom,
   assetAtom,
+  bridgeInfoAtom,
   decimalsAtom,
   destinationAccountAtom,
   fromChainAtom,
@@ -15,11 +16,15 @@ import {Callback, ISubmittableResult} from '@polkadot/types/types'
 import Decimal from 'decimal.js'
 import {useAtomValue} from 'jotai'
 import {useMemo} from 'react'
-import {useEthersContract} from './useEthersContract'
+import {
+  useEthersChainBridgeContract,
+  useEthersXTokensContract,
+} from './useEthersContract'
 import {useCurrentPolkadotApi, usePolkadotApi} from './usePolkadotApi'
 
 export const useTransfer = () => {
-  const bridgeContract = useEthersContract('bridgeContract')
+  const ethersChainBridgeContract = useEthersChainBridgeContract()
+  const ethersXTokensBridgeContract = useEthersXTokensContract()
   const asset = useAtomValue(assetAtom)
   const fromChain = useAtomValue(fromChainAtom)
   const toChain = useAtomValue(toChainAtom)
@@ -27,21 +32,11 @@ export const useTransfer = () => {
   const amount = useAtomValue(amountAtom)
   const decimals = useAtomValue(decimalsAtom)
   const polkadotAccount = useAtomValue(polkadotAccountAtom)
+  const {kind: bridgeKind} = useAtomValue(bridgeInfoAtom)
   const khalaApi = usePolkadotApi(
     fromChain.id === 'thala' || toChain.id === 'thala' ? 'thala' : 'khala'
   )
   const polkadotApi = useCurrentPolkadotApi()
-  const isFromEthereumToKhala =
-    (fromChain.id === 'ethereum' && toChain.id === 'khala') ||
-    (fromChain.id === 'kovan' && toChain.id === 'thala')
-  const isFromKhala = fromChain.id === 'thala' || fromChain.id === 'khala'
-  const isTransferringByXTokens =
-    fromChain.id === 'karura' ||
-    fromChain.id === 'karura-test' ||
-    fromChain.id === 'bifrost' ||
-    fromChain.id === 'bifrost-test'
-  const isFromMoonriver =
-    fromChain.id === 'moonriver' || fromChain.id === 'moonbase-alpha'
 
   const rawAmount = useMemo(
     () =>
@@ -51,11 +46,11 @@ export const useTransfer = () => {
     [amount, decimals]
   )
 
-  if (isFromEthereumToKhala) {
+  if (bridgeKind === 'evmChainBridge') {
     return async () => {
-      const resourceId = asset.bridgeContract?.[fromChain.id]?.resourceId
+      const resourceId = asset.chainBridgeResourceId
       if (
-        !bridgeContract ||
+        !ethersChainBridgeContract ||
         !khalaApi ||
         !amount ||
         fromChain.kind !== 'evm' ||
@@ -65,7 +60,7 @@ export const useTransfer = () => {
       }
 
       return transferFromEthereumToKhala({
-        contract: bridgeContract,
+        contract: ethersChainBridgeContract,
         khalaApi,
         destinationChainId: 1,
         resourceId,
@@ -75,7 +70,7 @@ export const useTransfer = () => {
     }
   }
 
-  if (isTransferringByXTokens) {
+  if (bridgeKind === 'polkadotXTokens') {
     return async (statusCb?: Callback<ISubmittableResult>) => {
       if (!polkadotApi || !polkadotAccount?.wallet?.signer) {
         throw new Error('Transfer missing required parameters')
@@ -97,7 +92,7 @@ export const useTransfer = () => {
     }
   }
 
-  if (isFromKhala) {
+  if (bridgeKind === 'khalaXTransfer') {
     return async (statusCb?: Callback<ISubmittableResult>) => {
       if (!khalaApi || !polkadotAccount?.wallet?.signer) {
         throw new Error('Transfer missing required parameters')
@@ -123,14 +118,14 @@ export const useTransfer = () => {
     }
   }
 
-  if (isFromMoonriver) {
+  if (bridgeKind === 'evmXTokens') {
     return async () => {
-      if (!bridgeContract) {
+      if (!ethersXTokensBridgeContract) {
         throw new Error('Transfer missing required parameters')
       }
 
       return transferFromMoonriver({
-        contract: bridgeContract,
+        contract: ethersXTokensBridgeContract,
         assetId: asset.id,
         amount: rawAmount,
         destinationAccount,

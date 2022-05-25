@@ -1,11 +1,8 @@
+import {useEthersProvider} from '@/hooks/useEthersProvider'
 import {useSwitchNetwork} from '@/hooks/useSwitchNetwork'
 import {ethersBalanceFetcher} from '@/lib/ethersFetcher'
 import {fromChainAtom} from '@/store/bridge'
-import {
-  ethersProviderAtom,
-  evmAccountAtom,
-  isNetworkWrongAtom,
-} from '@/store/ethers'
+import {evmAccountAtom, isNetworkWrongAtom} from '@/store/ethers'
 import {Button} from '@mui/material'
 import {formatCurrency, trimAddress} from '@phala/utils'
 import {useAtom} from 'jotai'
@@ -18,7 +15,7 @@ const EvmAccount: FC = () => {
   const {enqueueSnackbar} = useSnackbar()
   const [fromChain] = useAtom(fromChainAtom)
   const [evmAccount] = useAtom(evmAccountAtom)
-  const [ethersProvider] = useAtom(ethersProviderAtom)
+  const ethersProvider = useEthersProvider()
   const [isNetworkWrong] = useAtom(isNetworkWrongAtom)
   const switchNetwork = useSwitchNetwork()
   const {data} = useSWR(

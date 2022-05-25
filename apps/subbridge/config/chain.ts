@@ -32,6 +32,11 @@ export interface EvmChain extends BaseChain {
   currencySymbol: string
   isSubstrateCompatible?: boolean
   paraId?: number // for compatible chains
+  chainBridgeContract?: {
+    address: `0x${string}`
+    spender: `0x${string}`
+  }
+  xTokensContractAddress?: `0x${string}`
 }
 
 export interface PolkadotChain extends BaseChain {
@@ -86,6 +91,10 @@ export const CHAINS: Readonly<
     kind: 'evm',
     evmChainId: 1,
     currencySymbol: 'ETH',
+    chainBridgeContract: {
+      address: '0x8F92e7353b180937895E0C5937d616E8ea1A2Bb9',
+      spender: '0xEEc0fb4913119567cDfC0c5fc2Bf8f9F9B226c2d',
+    },
   },
   kovan: {
     id: 'kovan',
@@ -95,6 +104,10 @@ export const CHAINS: Readonly<
     evmChainId: 42,
     currencySymbol: 'kETH',
     isTest: true,
+    chainBridgeContract: {
+      address: '0x82db1f1717487cADEAf6F0C74825495d6D89E08e',
+      spender: '0xF69b08D649B744A4d4781CB1B86E30Cc9Ac9991b',
+    },
   },
   thala: {
     id: 'thala',
@@ -128,6 +141,11 @@ export const CHAINS: Readonly<
     paraId: 2023,
     isSubstrateCompatible: true,
     nativeAsset: 'movr',
+    chainBridgeContract: {
+      address: '0xCe6652551A989C13B41f70cac504341A5F711c8d',
+      spender: '0xf88337a0db6e24Dff0fCD7F92ab0655B97A68d38',
+    },
+    xTokensContractAddress: '0x0000000000000000000000000000000000000804',
   },
   'moonbase-alpha': {
     id: 'moonbase-alpha',
@@ -137,6 +155,10 @@ export const CHAINS: Readonly<
     evmChainId: 1287,
     currencySymbol: 'DEV',
     isSubstrateCompatible: true,
+    chainBridgeContract: {
+      address: '0x1e4ED6d37685D2FB254e47C5b58Cf95173326E4c',
+      spender: '0x0B674CC89F54a47Be4Eb6C1A125bB8f04A529181',
+    },
   },
   bifrost: {
     id: 'bifrost',

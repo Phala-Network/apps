@@ -9,9 +9,6 @@ export const isEvmWalletAuthorizedAtom = atomWithStorage(
 )
 export const ethereumProviderAtom =
   atom<ethers.providers.ExternalProvider | null>(null)
-export const ethersProviderAtom = atom<ethers.providers.Web3Provider | null>(
-  null
-)
 export const evmAccountAtom = atom<string | null>(null)
 export const evmChainIdAtom = atom<number | null>(null)
 export const isNetworkWrongAtom = atom<boolean>((get) => {
