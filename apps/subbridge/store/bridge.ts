@@ -53,19 +53,6 @@ export const fromAccountAtom = atom<string | null>((get) => {
 
 export const destinationAccountAtom = atomWithReset('')
 
-export const bridgeAtom = atom((get) => {
-  const fromChain = get(fromChainAtom)
-  const toChain = get(toChainAtom)
-  const asset = get(assetAtom)
-  const bridge = BRIDGES.find(
-    (x) =>
-      x.fromChain === fromChain.id &&
-      x.toChain === toChain.id &&
-      x.asset === asset.id
-  )
-  return bridge ?? null
-})
-
 export const bridgeErrorAtom = atom<BridgeError | null>('InvalidAmount')
 
 export const bridgeErrorMessageAtom = atom<string | null>((get) => {
@@ -108,4 +95,22 @@ export const existentialDepositAtom = atom<Decimal>((get) => {
   }
 
   return existentialDeposit
+})
+
+export const estimatedTimeAtom = atom<string | null>((get) => {
+  const fromChain = get(fromChainAtom)
+  const toChain = get(toChainAtom)
+  const asset = get(assetAtom)
+  const estimatedTime = BRIDGES.find(
+    (bridge) =>
+      bridge.fromChain === fromChain.id && bridge.toChain === toChain.id
+  )?.assets.find(
+    (assetConfig) => assetConfig.assetId === asset.id
+  )?.estimatedTime
+
+  if (estimatedTime === undefined) {
+    return null
+  }
+
+  return estimatedTime
 })

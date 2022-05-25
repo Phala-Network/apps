@@ -1,7 +1,6 @@
 import {BridgeError} from '@/config/error'
 import {
   amountAtom,
-  bridgeAtom,
   bridgeErrorAtom,
   destChainTransactionFeeAtom,
   destinationAccountAtom,
@@ -21,7 +20,6 @@ export const useValidation = () => {
   const [destinationAccount] = useAtom(destinationAccountAtom)
   const balance = useBalance()
   const bridgeFee = useBridgeFee()
-  const bridge = useAtomValue(bridgeAtom)
   const destChainTransactionFee = useAtomValue(destChainTransactionFeeAtom)
   const existentialDeposit = useAtomValue(existentialDepositAtom)
 

@@ -30,14 +30,9 @@ const getToChainIds = (fromChainId: ChainId): ChainId[] =>
   )
 
 const getAssetIds = (fromChainId: ChainId, toChainId: ChainId): AssetId[] =>
-  Array.from(
-    new Set(
-      BRIDGES.filter(
-        (bridge) =>
-          bridge.fromChain === fromChainId && bridge.toChain === toChainId
-      ).map((bridge) => bridge.asset)
-    )
-  )
+  BRIDGES.find(
+    (bridge) => bridge.fromChain === fromChainId && bridge.toChain === toChainId
+  )?.assets.map(({assetId}) => assetId) ?? []
 
 const BridgeBody: FC<BoxProps> = (props) => {
   const theme = useTheme()

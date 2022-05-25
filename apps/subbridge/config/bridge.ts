@@ -1,157 +1,136 @@
 import {AssetId} from './asset'
 import {ChainId} from './chain'
 
+type AssetConfig = {assetId: AssetId; estimatedTime: string}[]
 export interface Bridge {
   fromChain: ChainId
   toChain: ChainId
-  asset: AssetId
-  estimatedTime: string
+  assets: AssetConfig
 }
+
+const ethereumToKhalaAssets: AssetConfig = [
+  {
+    assetId: 'pha',
+    estimatedTime: '< 1 min',
+  },
+]
+
+const khalaToEthereumAssets: AssetConfig = [
+  {
+    assetId: 'pha',
+    estimatedTime: '~ 10 mins',
+  },
+]
+
+const khalaToKaruraAssets: AssetConfig = [
+  {
+    assetId: 'pha',
+    estimatedTime: '< 1 min',
+  },
+  {
+    assetId: 'kar',
+    estimatedTime: '< 1 min',
+  },
+]
+
+const karuraToKhalaAssets = khalaToKaruraAssets
+
+const khalaToMoonriverAssets: AssetConfig = [
+  {
+    assetId: 'pha',
+    estimatedTime: '< 1 min',
+  },
+  {
+    assetId: 'movr',
+    estimatedTime: '< 1 min',
+  },
+]
+
+const moonriverToKhalaAssets = khalaToMoonriverAssets
+
+const khalaToBifrostAssets: AssetConfig = [
+  {
+    assetId: 'pha',
+    estimatedTime: '< 1 min',
+  },
+  {
+    assetId: 'bnc',
+    estimatedTime: '< 1 min',
+  },
+]
+
+const bifrostToKhalaAssets = khalaToBifrostAssets
 
 export const BRIDGES: Readonly<Bridge[]> = [
   {
     fromChain: 'ethereum',
     toChain: 'khala',
-    asset: 'pha',
-    estimatedTime: '< 1 min',
+    assets: ethereumToKhalaAssets,
   },
   {
     fromChain: 'kovan',
     toChain: 'thala',
-    asset: 'pha',
-    estimatedTime: '< 1 min',
+    assets: ethereumToKhalaAssets,
   },
   {
     fromChain: 'khala',
     toChain: 'ethereum',
-    asset: 'pha',
-    estimatedTime: '~ 10 mins',
+    assets: khalaToEthereumAssets,
   },
   {
     fromChain: 'thala',
     toChain: 'kovan',
-    asset: 'pha',
-    estimatedTime: '> 24 hrs',
+    assets: khalaToEthereumAssets,
   },
   {
     fromChain: 'karura',
     toChain: 'khala',
-    asset: 'pha',
-    estimatedTime: '< 1 min',
+    assets: karuraToKhalaAssets,
   },
   {
     fromChain: 'karura-test',
     toChain: 'thala',
-    asset: 'pha',
-    estimatedTime: '< 1 min',
+    assets: karuraToKhalaAssets,
   },
   {
     fromChain: 'khala',
     toChain: 'karura',
-    asset: 'pha',
-    estimatedTime: '< 1 min',
+    assets: khalaToKaruraAssets,
   },
   {
     fromChain: 'thala',
     toChain: 'karura-test',
-    asset: 'pha',
-    estimatedTime: '< 1 min',
+    assets: khalaToKaruraAssets,
   },
   {
     fromChain: 'moonriver',
     toChain: 'khala',
-    asset: 'pha',
-    estimatedTime: '< 1 min',
+    assets: moonriverToKhalaAssets,
   },
   {
     fromChain: 'khala',
     toChain: 'moonriver',
-    asset: 'pha',
-    estimatedTime: '< 1 min',
-  },
-  {
-    fromChain: 'moonriver',
-    toChain: 'khala',
-    asset: 'movr',
-    estimatedTime: '< 1 min',
-  },
-  {
-    fromChain: 'khala',
-    toChain: 'moonriver',
-    asset: 'movr',
-    estimatedTime: '< 1 min',
-  },
-  {
-    fromChain: 'khala',
-    toChain: 'karura',
-    asset: 'kar',
-    estimatedTime: '< 1 min',
-  },
-  {
-    fromChain: 'thala',
-    toChain: 'karura-test',
-    asset: 'kar',
-    estimatedTime: '< 1 min',
-  },
-  {
-    fromChain: 'karura',
-    toChain: 'khala',
-    asset: 'kar',
-    estimatedTime: '< 1 min',
-  },
-  {
-    fromChain: 'karura-test',
-    toChain: 'thala',
-    asset: 'kar',
-    estimatedTime: '< 1 min',
+    assets: khalaToMoonriverAssets,
   },
   {
     fromChain: 'bifrost',
     toChain: 'khala',
-    asset: 'bnc',
-    estimatedTime: '< 1 min',
+    assets: bifrostToKhalaAssets,
   },
   {
     fromChain: 'khala',
     toChain: 'bifrost',
-    asset: 'bnc',
-    estimatedTime: '< 1 min',
-  },
-  {
-    fromChain: 'bifrost',
-    toChain: 'khala',
-    asset: 'pha',
-    estimatedTime: '< 1 min',
-  },
-  {
-    fromChain: 'khala',
-    toChain: 'bifrost',
-    asset: 'pha',
-    estimatedTime: '< 1 min',
+    assets: khalaToBifrostAssets,
   },
   {
     fromChain: 'bifrost-test',
     toChain: 'thala',
-    asset: 'bnc',
-    estimatedTime: '< 1 min',
+    assets: bifrostToKhalaAssets,
   },
   {
     fromChain: 'thala',
     toChain: 'bifrost-test',
-    asset: 'bnc',
-    estimatedTime: '< 1 min',
-  },
-  {
-    fromChain: 'bifrost-test',
-    toChain: 'thala',
-    asset: 'pha',
-    estimatedTime: '< 1 min',
-  },
-  {
-    fromChain: 'thala',
-    toChain: 'bifrost-test',
-    asset: 'pha',
-    estimatedTime: '< 1 min',
+    assets: khalaToBifrostAssets,
   },
 ]
 
