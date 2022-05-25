@@ -20,6 +20,12 @@
   },
   "rules": {
     "react/prop-types": "off",
-    "no-console": "error"
+    "no-console": "error",
+    "react/jsx-no-target-blank": [
+      "error",
+      {
+        "allowReferrer": true
+      }
+    ]
   }
 }

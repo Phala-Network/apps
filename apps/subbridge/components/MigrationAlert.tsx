@@ -1,12 +1,24 @@
 import {migrationAlertOpenAtom} from '@/store/common'
 import {Alert, AlertProps} from '@mui/material'
 import {useAtom} from 'jotai'
-import {FC} from 'react'
+import {FC, useEffect, useState} from 'react'
 
 const MigrationAlert: FC<AlertProps> = ({sx, ...props}) => {
   const [open, setOpen] = useAtom(migrationAlertOpenAtom)
+  const [isFromApp, setIsFromApp] = useState(false)
 
-  if (!open) return null
+  useEffect(() => {
+    try {
+      const url = new URL(document.referrer)
+      if (url.hostname === 'app.phala.network') {
+        setIsFromApp(true)
+      }
+    } catch (err) {
+      // noop
+    }
+  }, [])
+
+  if (!open || !isFromApp) return null
 
   return (
     <Alert

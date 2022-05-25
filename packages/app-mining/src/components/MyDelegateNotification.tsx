@@ -1,11 +1,11 @@
-import {VFC} from 'react'
-import {Notification} from 'baseui/notification'
-import {Info} from 'react-feather'
-import {Block} from 'baseui/block'
 import {useStyletron} from 'baseui'
+import {Block} from 'baseui/block'
 import {StyledLink} from 'baseui/link'
+import {Notification} from 'baseui/notification'
+import {FC} from 'react'
+import {Info} from 'react-feather'
 
-const MyDelegateNotification: VFC = () => {
+const MyDelegateNotification: FC = () => {
   const [css] = useStyletron()
 
   return (
@@ -27,7 +27,7 @@ const MyDelegateNotification: VFC = () => {
           <StyledLink
             href="https://khala.subscan.io/"
             target="_blank"
-            rel="noopener noreferrer"
+            rel="noreferrer"
           >
             explorer
           </StyledLink>{' '}

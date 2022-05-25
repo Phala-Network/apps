@@ -20,7 +20,7 @@ export const tooltipContent = {
       cooling down period.{' '}
       <StyledLink
         target="_blank"
-        rel="noopener noreferrer"
+        rel="noreferrer"
         href="https://forum.phala.network/t/topic/3073"
         $style={{color: 'inherit', ':visited': {color: 'inherit'}}}
       >
