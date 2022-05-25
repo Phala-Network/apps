@@ -8,13 +8,21 @@ import {
   Typography,
 } from '@mui/material'
 import {useAtom} from 'jotai'
-import {FC} from 'react'
+import {FC, useEffect} from 'react'
 
 const AssetSelect: FC<TextFieldProps & {assetIds: AssetId[]}> = ({
   assetIds,
   ...props
 }) => {
   const [asset, setAsset] = useAtom(assetAtom)
+  useEffect(() => {
+    // Preload asset icons
+    assetIds.forEach((assetId) => {
+      const {icon} = ASSETS[assetId]
+      const image = new Image()
+      image.src = icon.src
+    })
+  }, [assetIds])
 
   return (
     <TextField
