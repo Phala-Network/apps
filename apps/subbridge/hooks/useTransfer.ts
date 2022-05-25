@@ -1,7 +1,7 @@
-import {transferByXTokens} from '@/lib/transferByXTokens'
-import {transferFromEthereumToKhala} from '@/lib/transferFromEthereum'
-import {transferFromKhala} from '@/lib/transferFromKhala'
-import {transferFromMoonriver} from '@/lib/transferFromMoonriver'
+import {transferByChainBridge} from '@/lib/transferByChainBridge'
+import {transferByEvmXTokens} from '@/lib/transferByEvmXTokens'
+import {transferByKhalaXTransfer} from '@/lib/transferByKhalaXTransfer'
+import {transferByPolkadotXTokens} from '@/lib/transferByPolkadotXTokens'
 import {
   amountAtom,
   assetAtom,
@@ -59,7 +59,7 @@ export const useTransfer = () => {
         throw new Error('Transfer missing required parameters')
       }
 
-      return transferFromEthereumToKhala({
+      return transferByChainBridge({
         contract: ethersChainBridgeContract,
         khalaApi,
         destinationChainId: 1,
@@ -75,7 +75,7 @@ export const useTransfer = () => {
       if (!polkadotApi || !polkadotAccount?.wallet?.signer) {
         throw new Error('Transfer missing required parameters')
       }
-      return transferByXTokens({
+      return transferByPolkadotXTokens({
         polkadotApi,
         assetId: asset.id,
         amount: rawAmount,
@@ -98,7 +98,7 @@ export const useTransfer = () => {
         throw new Error('Transfer missing required parameters')
       }
 
-      const extrinsic = transferFromKhala({
+      const extrinsic = transferByKhalaXTransfer({
         khalaApi,
         toChainId: toChain.id,
         amount: rawAmount,
@@ -124,12 +124,13 @@ export const useTransfer = () => {
         throw new Error('Transfer missing required parameters')
       }
 
-      return transferFromMoonriver({
+      return transferByEvmXTokens({
         contract: ethersXTokensBridgeContract,
         assetId: asset.id,
         amount: rawAmount,
         destinationAccount,
         toChainId: toChain.id,
+        decimals,
       })
     }
   }

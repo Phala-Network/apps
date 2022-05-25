@@ -2,8 +2,8 @@ import {AssetId, OrmlToken} from '@/config/asset'
 import {ChainId, CHAINS} from '@/config/chain'
 import type {ApiPromise} from '@polkadot/api'
 import Decimal from 'decimal.js'
-import {transferByXTokens} from './transferByXTokens'
-import {transferFromKhala} from './transferFromKhala'
+import {transferByKhalaXTransfer} from './transferByKhalaXTransfer'
+import {transferByPolkadotXTokens} from './transferByPolkadotXTokens'
 
 const ALICE = '5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY'
 const BLACK_HOLE = '0x0000000000000000000000000000000000000000'
@@ -65,7 +65,7 @@ export const xTokensPartialFeeFetcher = async (
   toChainId: ChainId,
   assetId: AssetId
 ) => {
-  const {partialFee} = await transferByXTokens({
+  const {partialFee} = await transferByPolkadotXTokens({
     polkadotApi,
     assetId,
     amount: '1',
@@ -85,7 +85,7 @@ export const khalaXTransferPartialFeeFetcher = async (
   assetId: AssetId
 ) => {
   const toChain = CHAINS[toChainId]
-  const extrinsic = transferFromKhala({
+  const extrinsic = transferByKhalaXTransfer({
     khalaApi,
     amount: '1',
     destinationAccount: toChain.kind === 'polkadot' ? ALICE : BLACK_HOLE,

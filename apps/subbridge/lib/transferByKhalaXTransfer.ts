@@ -53,7 +53,7 @@ function getExtrinsicAssetId(assetId: AssetId) {
   }
 }
 
-export const transferFromKhala = ({
+export const transferByKhalaXTransfer = ({
   khalaApi,
   amount,
   toChainId,

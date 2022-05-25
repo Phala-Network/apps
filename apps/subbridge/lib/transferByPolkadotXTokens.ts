@@ -7,7 +7,7 @@ import {u8aToHex} from '@polkadot/util'
 import {decodeAddress} from '@polkadot/util-crypto'
 import Decimal from 'decimal.js'
 
-export const transferByXTokens = ({
+export const transferByPolkadotXTokens = ({
   polkadotApi,
   assetId,
   amount,

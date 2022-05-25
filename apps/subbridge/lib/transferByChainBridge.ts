@@ -2,7 +2,7 @@ import type {ApiPromise} from '@polkadot/api'
 import type {ethers} from 'ethers'
 import {createEthereumToKhalaData} from './createEthereumToKhalaData'
 
-export const transferFromEthereumToKhala = async ({
+export const transferByChainBridge = async ({
   contract,
   khalaApi,
   destinationChainId,
