@@ -79,7 +79,7 @@ export const xTokensPartialFeeFetcher = async (
   return new Decimal(partialFee.toString()).div(Decimal.pow(10, decimals))
 }
 
-export const khalaPartialFeeFetcher = async (
+export const khalaXTransferPartialFeeFetcher = async (
   khalaApi: ApiPromise,
   toChainId: ChainId,
   assetId: AssetId

@@ -1,14 +1,15 @@
 import {
-  ethereumToKhalaEstimatedGasFetcher,
   ethersGasPriceFetcher,
-  moonriverEstimatedGasFetcher,
+  evmChainBridgeEstimatedGasFetcher,
+  evmXTokensEstimatedGasFetcher,
 } from '@/lib/ethersFetcher'
 import {
-  khalaPartialFeeFetcher,
+  khalaXTransferPartialFeeFetcher,
   xTokensPartialFeeFetcher,
 } from '@/lib/polkadotFetcher'
 import {
   assetAtom,
+  bridgeInfoAtom,
   decimalsAtom,
   fromChainAtom,
   toChainAtom,
@@ -23,7 +24,7 @@ import {
 import {useEthersProvider} from './useEthersProvider'
 import {useCurrentPolkadotApi, usePolkadotApi} from './usePolkadotApi'
 
-export const useEstimatedGasFee = () => {
+export const useEstimatedGasFee = (): Decimal | undefined => {
   const ethersChainBridgeContract = useEthersChainBridgeContract()
   const ethersXTokensContract = useEthersXTokensContract()
   const fromChain = useAtomValue(fromChainAtom)
@@ -35,74 +36,53 @@ export const useEstimatedGasFee = () => {
     fromChain.id === 'thala' || toChain.id === 'thala' ? 'thala' : 'khala'
   )
   const polkadotApi = useCurrentPolkadotApi()
-  const isFromEthereumToKhala =
-    (fromChain.id === 'ethereum' && toChain.id === 'khala') ||
-    (fromChain.id === 'kovan' && toChain.id === 'thala')
-  const isTransferringByXTokens =
-    fromChain.id === 'karura' ||
-    fromChain.id === 'karura-test' ||
-    fromChain.id === 'bifrost' ||
-    fromChain.id === 'bifrost-test'
-  const isFromKhala = fromChain.id === 'thala' || fromChain.id === 'khala'
-  const isFromMoonriver = fromChain.id === 'moonriver'
+  const {kind: bridgeKind} = useAtomValue(bridgeInfoAtom)
 
-  const {data: ethereumGasPrice} = useSWR(
-    [ethersProvider],
+  const {data: ethersGasPrice} = useSWR(
+    ethersProvider ? [ethersProvider] : null,
     ethersGasPriceFetcher
   )
-  const {data: ethereumToKhalaEstimatedGas} = useSWR(
-    isFromEthereumToKhala &&
+  const {data: evmChainBridgeEstimatedGas} = useSWR(
+    bridgeKind === 'evmChainBridge' &&
       ethersChainBridgeContract &&
       khalaApi &&
       asset.chainBridgeResourceId
       ? [ethersChainBridgeContract, khalaApi, asset.chainBridgeResourceId]
       : null,
-    ethereumToKhalaEstimatedGasFetcher
+    evmChainBridgeEstimatedGasFetcher
   )
 
-  const {data: moonriverEstimatedGas} = useSWR(
-    isFromMoonriver &&
+  const {data: evmXTokensEstimatedGas} = useSWR(
+    bridgeKind === 'evmXTokens' &&
       ethersXTokensContract &&
       toChain.paraId &&
       asset.xc20Address
       ? [ethersXTokensContract, asset.xc20Address, toChain.paraId, decimals]
       : null,
-    moonriverEstimatedGasFetcher
+    evmXTokensEstimatedGasFetcher
   )
 
   const {data: xTokensPartialFee} = useSWR(
-    isTransferringByXTokens && polkadotApi
+    bridgeKind === 'polkadotXTokens' && polkadotApi
       ? [polkadotApi, fromChain.id, toChain.id, asset.id]
       : null,
     xTokensPartialFeeFetcher
   )
 
   const {data: khalaPartialFee} = useSWR(
-    isFromKhala && khalaApi ? [khalaApi, toChain.id, asset.id] : null,
-    khalaPartialFeeFetcher
+    bridgeKind === 'khalaXTransfer' && khalaApi
+      ? [khalaApi, toChain.id, asset.id]
+      : null,
+    khalaXTransferPartialFeeFetcher
   )
 
-  if (
-    isFromEthereumToKhala &&
-    ethereumToKhalaEstimatedGas &&
-    ethereumGasPrice
-  ) {
-    return new Decimal(
-      ethereumToKhalaEstimatedGas.times(ethereumGasPrice.toString())
-    )
-  }
-
-  if (isTransferringByXTokens) {
-    return xTokensPartialFee
-  }
-
-  if (isFromKhala) {
-    return khalaPartialFee
-  }
-
-  if (isFromMoonriver && moonriverEstimatedGas && ethereumGasPrice) {
-    return new Decimal(moonriverEstimatedGas.times(ethereumGasPrice.toString()))
-  }
-
-  return null
+  return (
+    (ethersGasPrice &&
+      ((evmChainBridgeEstimatedGas &&
+        ethersGasPrice.times(evmChainBridgeEstimatedGas)) ||
+        (evmXTokensEstimatedGas &&
+          ethersGasPrice.times(evmXTokensEstimatedGas)))) ||
+    xTokensPartialFee ||
+    khalaPartialFee
+  )
 }

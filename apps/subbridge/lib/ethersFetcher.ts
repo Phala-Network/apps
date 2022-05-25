@@ -45,7 +45,7 @@ export const ethersGasPriceFetcher = async (
 
 const ALICE = '5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY'
 
-export const ethereumToKhalaEstimatedGasFetcher = async (
+export const evmChainBridgeEstimatedGasFetcher = async (
   contract: ethers.Contract,
   khalaApi: ApiPromise,
   resourceId: string
@@ -64,7 +64,7 @@ export const ethereumToKhalaEstimatedGasFetcher = async (
   return new Decimal(estimateGas.toString())
 }
 
-export const moonriverEstimatedGasFetcher = async (
+export const evmXTokensEstimatedGasFetcher = async (
   contract: ethers.Contract,
   xc20Address: `0x${string}`,
   paraId: number,
