@@ -43,7 +43,7 @@ const Links: React.FC = () => {
       <Link activeClassName="active" to="/">
         Dashboard
       </Link>
-      <a href="https://subbridge.io" target="_blank" rel="noreferrer">
+      <a href="https://subbridge.io" target="_blank" rel="noopener">
         SubBridge
       </a>
       {currentNetworkNode.id !== 'phala-rewards-demo' && (

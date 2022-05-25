@@ -118,7 +118,7 @@ export const StakePool: FC<StakePoolProps> = ({pid}) => {
                     <StyledLink
                       href={`https://khala.subscan.io/account/${ownerAddress}`}
                       target="_blank"
-                      rel="noopener noreferrer"
+                      rel="noreferrer"
                     >
                       {trimAddress(ownerAddress)}
                     </StyledLink>
