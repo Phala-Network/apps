@@ -37,6 +37,7 @@ export const toChainAtom = atom<Chain, ChainId>(
     set(toChainIdAtom, update)
   }
 )
+
 export const fromAccountAtom = atom<string | null>((get) => {
   const fromChain = get(fromChainAtom)
   const polkadotAccount = get(polkadotAccountAtom)
@@ -49,7 +50,9 @@ export const fromAccountAtom = atom<string | null>((get) => {
   }
   return null
 })
+
 export const destinationAccountAtom = atomWithReset('')
+
 export const bridgeAtom = atom((get) => {
   const fromChain = get(fromChainAtom)
   const toChain = get(toChainAtom)
@@ -62,17 +65,21 @@ export const bridgeAtom = atom((get) => {
   )
   return bridge ?? null
 })
+
 export const bridgeErrorAtom = atom<BridgeError | null>('InvalidAmount')
+
 export const bridgeErrorMessageAtom = atom<string | null>((get) => {
   const error = get(bridgeErrorAtom)
   if (error === null) return null
   return BRIDGE_ERROR_MESSAGES[error]
 })
+
 export const decimalsAtom = atom<number>((get) => {
   const fromChain = get(fromChainAtom)
   const asset = get(assetAtom)
   return asset.decimals[fromChain.id] ?? asset.decimals.default
 })
+
 export const destChainTransactionFeeAtom = atom<Decimal>((get) => {
   const fromChain = get(fromChainAtom)
   const toChain = get(toChainAtom)
@@ -89,4 +96,16 @@ export const destChainTransactionFeeAtom = atom<Decimal>((get) => {
   }
 
   return destChainTransactionFee
+})
+
+export const existentialDepositAtom = atom<Decimal>((get) => {
+  const toChain = get(toChainAtom)
+  const asset = get(assetAtom)
+  const existentialDeposit = asset.existentialDeposit[toChain.id]
+
+  if (!existentialDeposit) {
+    return new Decimal(0)
+  }
+
+  return existentialDeposit
 })

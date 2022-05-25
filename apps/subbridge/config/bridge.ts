@@ -1,4 +1,3 @@
-import Decimal from 'decimal.js'
 import {AssetId} from './asset'
 import {ChainId} from './chain'
 
@@ -7,7 +6,6 @@ export interface Bridge {
   toChain: ChainId
   asset: AssetId
   estimatedTime: string
-  existentialDeposit?: Decimal
 }
 
 export const BRIDGES: Readonly<Bridge[]> = [
@@ -16,14 +14,12 @@ export const BRIDGES: Readonly<Bridge[]> = [
     toChain: 'khala',
     asset: 'pha',
     estimatedTime: '< 1 min',
-    existentialDeposit: new Decimal('0.01'),
   },
   {
     fromChain: 'kovan',
     toChain: 'thala',
     asset: 'pha',
     estimatedTime: '< 1 min',
-    existentialDeposit: new Decimal('0.01'),
   },
   {
     fromChain: 'khala',
@@ -42,35 +38,30 @@ export const BRIDGES: Readonly<Bridge[]> = [
     toChain: 'khala',
     asset: 'pha',
     estimatedTime: '< 1 min',
-    existentialDeposit: new Decimal('0.01'),
   },
   {
     fromChain: 'karura-test',
     toChain: 'thala',
     asset: 'pha',
     estimatedTime: '< 1 min',
-    existentialDeposit: new Decimal('0.01'),
   },
   {
     fromChain: 'khala',
     toChain: 'karura',
     asset: 'pha',
     estimatedTime: '< 1 min',
-    existentialDeposit: new Decimal('0.04'),
   },
   {
     fromChain: 'thala',
     toChain: 'karura-test',
     asset: 'pha',
     estimatedTime: '< 1 min',
-    existentialDeposit: new Decimal('0.04'),
   },
   {
     fromChain: 'moonriver',
     toChain: 'khala',
     asset: 'pha',
     estimatedTime: '< 1 min',
-    existentialDeposit: new Decimal(0.01),
   },
   {
     fromChain: 'khala',
@@ -95,14 +86,12 @@ export const BRIDGES: Readonly<Bridge[]> = [
     toChain: 'karura',
     asset: 'kar',
     estimatedTime: '< 1 min',
-    existentialDeposit: new Decimal('0.1'),
   },
   {
     fromChain: 'thala',
     toChain: 'karura-test',
     asset: 'kar',
     estimatedTime: '< 1 min',
-    existentialDeposit: new Decimal('0.1'),
   },
   {
     fromChain: 'karura',
@@ -127,7 +116,6 @@ export const BRIDGES: Readonly<Bridge[]> = [
     toChain: 'bifrost',
     asset: 'bnc',
     estimatedTime: '< 1 min',
-    existentialDeposit: new Decimal('0.01'),
   },
   {
     fromChain: 'bifrost',
@@ -152,7 +140,6 @@ export const BRIDGES: Readonly<Bridge[]> = [
     toChain: 'bifrost-test',
     asset: 'bnc',
     estimatedTime: '< 1 min',
-    existentialDeposit: new Decimal('0.01'),
   },
   {
     fromChain: 'bifrost-test',

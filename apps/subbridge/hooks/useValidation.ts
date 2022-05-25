@@ -5,6 +5,7 @@ import {
   bridgeErrorAtom,
   destChainTransactionFeeAtom,
   destinationAccountAtom,
+  existentialDepositAtom,
   toChainAtom,
 } from '@/store/bridge'
 import {validateAddress} from '@phala/utils'
@@ -22,6 +23,7 @@ export const useValidation = () => {
   const bridgeFee = useBridgeFee()
   const bridge = useAtomValue(bridgeAtom)
   const destChainTransactionFee = useAtomValue(destChainTransactionFeeAtom)
+  const existentialDeposit = useAtomValue(existentialDepositAtom)
 
   useEffect(() => {
     let unmounted = false
@@ -44,10 +46,7 @@ export const useValidation = () => {
         return 'InsufficientBalance'
       }
 
-      let minAmount = destChainTransactionFee
-      if (bridge?.existentialDeposit) {
-        minAmount = minAmount.add(bridge.existentialDeposit)
-      }
+      let minAmount = destChainTransactionFee.add(existentialDeposit)
       if (bridgeFee) {
         minAmount = minAmount.add(bridgeFee)
       }
@@ -74,8 +73,8 @@ export const useValidation = () => {
     amount,
     balance,
     toChain.kind,
-    bridge?.existentialDeposit,
     bridgeFee,
     destChainTransactionFee,
+    existentialDeposit,
   ])
 }

@@ -36,6 +36,7 @@ export interface Asset {
     }
   }
   destChainTransactionFee: Partial<Record<ChainId, Decimal>>
+  existentialDeposit: Partial<Record<ChainId, Decimal>>
 }
 
 export const ASSETS: Readonly<Record<AssetId, Asset>> = {
@@ -90,6 +91,14 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
       moonriver: new Decimal('0.05868512'),
       // heiko: new Decimal('0.0384'),
     },
+    existentialDeposit: {
+      khala: new Decimal('0.01'),
+      thala: new Decimal('0.01'),
+      karura: new Decimal('0.04'),
+      'karura-test': new Decimal('0.04'),
+      bifrost: new Decimal('0.04'),
+      'bifrost-test': new Decimal('0.04'),
+    },
   },
   movr: {
     id: 'movr',
@@ -109,6 +118,7 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
       khala: new Decimal('0.000000000266666666'),
       thala: new Decimal('0.000000000266666666'),
     },
+    existentialDeposit: {},
   },
   kar: {
     id: 'kar',
@@ -122,6 +132,12 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
       'karura-test': new Decimal('0.0064'),
       khala: new Decimal('0.008'),
       thala: new Decimal('0.008'),
+    },
+    existentialDeposit: {
+      karura: new Decimal('0.01'),
+      'karura-test': new Decimal('0.01'),
+      khala: new Decimal('0.01'),
+      thala: new Decimal('0.01'),
     },
   },
   zlk: {
@@ -147,6 +163,7 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
         abi: tokenStandardAbi,
       },
     },
+    existentialDeposit: {},
   },
   bnc: {
     id: 'bnc',
@@ -160,6 +177,12 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
       'bifrost-test': new Decimal('0.0051'),
       khala: new Decimal('0.016'),
       thala: new Decimal('0.016'),
+    },
+    existentialDeposit: {
+      bifrost: new Decimal('0.01'),
+      'bifrost-test': new Decimal('0.01'),
+      khala: new Decimal('0.01'),
+      thala: new Decimal('0.01'),
     },
   },
 }
