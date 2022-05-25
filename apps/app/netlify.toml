@@ -1,2 +1,6 @@
 [build]
   ignore = "bash ./build-ignore.sh"
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Referrer-Policy = "strict-origin-when-cross-origin"
