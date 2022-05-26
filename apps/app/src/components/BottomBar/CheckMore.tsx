@@ -1,9 +1,34 @@
+import {ANCHOR, Drawer, SIZE} from 'baseui/drawer'
+import {Link} from 'gatsby'
 import React, {useState} from 'react'
 import styled from 'styled-components'
-import {Drawer, ANCHOR, SIZE} from 'baseui/drawer'
-import MoreIcon from '../../icons/more.svg'
 import ExternalLink from '../../icons/external_link.svg'
+import MoreIcon from '../../icons/more.svg'
 import {LineWrap} from '../Navbar/styledComponent'
+
+const StyledGatsbyLink = styled(Link)`
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  height: 48px;
+  padding: 16px 43px 16px 21px;
+  font-family: Montserrat;
+  font-style: normal;
+  font-size: 16px;
+  line-height: 16px;
+  color: #111111;
+  outline: none;
+
+  :not(:last-of-type) {
+    border-bottom: 1px solid #cecece;
+  }
+
+  :hover {
+    background-color: #d1ff52;
+  }
+`
 
 const MoreButton = styled.button`
   cursor: pointer;
@@ -82,6 +107,14 @@ const CheckMore: React.FC = () => {
           },
         }}
       >
+        <StyledGatsbyLink
+          to="/mining/"
+          onClick={() => {
+            setIsOpen(false)
+          }}
+        >
+          <ExternalName>Mining</ExternalName>
+        </StyledGatsbyLink>
         {LINKS.map(({name, link}) => (
           <LineWrap
             onClick={() => setIsOpen(false)}

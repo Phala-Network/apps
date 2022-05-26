@@ -15,8 +15,8 @@ export const MyDelegateV2 = () => {
     <Block
       maxWidth="1700px"
       margin="0 auto"
-      paddingLeft="scale650"
-      paddingRight="scale650"
+      paddingLeft={[0, 'scale650']}
+      paddingRight={[0, 'scale650']}
       paddingBottom="scale2400"
     >
       <Helmet>
