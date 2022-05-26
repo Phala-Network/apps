@@ -47,7 +47,12 @@ export const useEstimatedGasFee = (): Decimal | undefined => {
       ethersChainBridgeContract &&
       khalaApi &&
       asset.chainBridgeResourceId
-      ? [ethersChainBridgeContract, khalaApi, asset.chainBridgeResourceId]
+      ? [
+          ethersChainBridgeContract,
+          khalaApi,
+          asset.chainBridgeResourceId,
+          toChain.id,
+        ]
       : null,
     evmChainBridgeEstimatedGasFetcher
   )

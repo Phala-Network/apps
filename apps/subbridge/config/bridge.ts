@@ -6,132 +6,132 @@ export type BridgeKind =
   | 'evmXTokens'
   | 'polkadotXTokens'
   | 'khalaXTransfer'
-type AssetConfig = {assetId: AssetId; estimatedTime: string; kind: BridgeKind}[]
+
+type AssetsConfig = {
+  assetId: AssetId
+  estimatedTime: string
+  kind: BridgeKind
+}[]
 
 export interface Bridge {
   fromChain: ChainId
-  toChain: ChainId
-  assets: AssetConfig
+  toChains: {
+    id: ChainId
+    assets: AssetsConfig
+  }[]
 }
 
-const ethereumToKhalaAssets: AssetConfig = [
+const ethereumToKhalaAssets: AssetsConfig = [
   {assetId: 'pha', estimatedTime: '< 1 min', kind: 'evmChainBridge'},
 ]
 
-const khalaToEthereumAssets: AssetConfig = [
+const khalaToEthereumAssets: AssetsConfig = [
   {assetId: 'pha', estimatedTime: '~ 10 mins', kind: 'khalaXTransfer'},
 ]
 
-const khalaToKaruraAssets: AssetConfig = [
+const khalaToKaruraAssets: AssetsConfig = [
   {assetId: 'pha', estimatedTime: '< 1 min', kind: 'khalaXTransfer'},
   {assetId: 'kar', estimatedTime: '< 1 min', kind: 'khalaXTransfer'},
 ]
 
-const karuraToKhalaAssets: AssetConfig = [
+const karuraToKhalaAssets: AssetsConfig = [
   {assetId: 'pha', estimatedTime: '< 1 min', kind: 'polkadotXTokens'},
   {assetId: 'kar', estimatedTime: '< 1 min', kind: 'polkadotXTokens'},
 ]
 
-const khalaToMoonriverAssets: AssetConfig = [
+const khalaToMoonriverAssets: AssetsConfig = [
   {assetId: 'pha', estimatedTime: '< 1 min', kind: 'khalaXTransfer'},
   {assetId: 'movr', estimatedTime: '< 1 min', kind: 'khalaXTransfer'},
+  {assetId: 'zlk', estimatedTime: '< 1 min', kind: 'khalaXTransfer'},
 ]
 
-const moonriverToKhalaAssets: AssetConfig = [
+const moonriverToKhalaAssets: AssetsConfig = [
   {assetId: 'pha', estimatedTime: '< 1 min', kind: 'evmXTokens'},
   {assetId: 'movr', estimatedTime: '< 1 min', kind: 'evmXTokens'},
+  {assetId: 'zlk', estimatedTime: '< 3 mins', kind: 'evmChainBridge'},
 ]
 
-const khalaToBifrostAssets: AssetConfig = [
+const khalaToBifrostAssets: AssetsConfig = [
   {assetId: 'pha', estimatedTime: '< 1 min', kind: 'khalaXTransfer'},
   {assetId: 'bnc', estimatedTime: '< 1 min', kind: 'khalaXTransfer'},
 ]
 
-const bifrostToKhalaAssets: AssetConfig = [
+const bifrostToKhalaAssets: AssetsConfig = [
   {assetId: 'pha', estimatedTime: '< 1 min', kind: 'polkadotXTokens'},
   {assetId: 'bnc', estimatedTime: '< 1 min', kind: 'polkadotXTokens'},
+]
+
+const moonriverToBifrostAssets: AssetsConfig = [
+  {assetId: 'zlk', estimatedTime: '< 1 min', kind: 'evmChainBridge'},
+]
+
+const bifrostToMoonriverAssets: AssetsConfig = [
+  {assetId: 'zlk', estimatedTime: '< 1 min', kind: 'polkadotXTokens'},
 ]
 
 export const BRIDGES: Readonly<Bridge[]> = [
   {
     fromChain: 'ethereum',
-    toChain: 'khala',
-    assets: ethereumToKhalaAssets,
+    toChains: [{id: 'khala', assets: ethereumToKhalaAssets}],
   },
   {
     fromChain: 'kovan',
-    toChain: 'thala',
-    assets: ethereumToKhalaAssets,
+    toChains: [{id: 'thala', assets: ethereumToKhalaAssets}],
   },
   {
     fromChain: 'khala',
-    toChain: 'ethereum',
-    assets: khalaToEthereumAssets,
+    toChains: [
+      {id: 'ethereum', assets: khalaToEthereumAssets},
+      {id: 'karura', assets: khalaToKaruraAssets},
+      {id: 'moonriver', assets: khalaToMoonriverAssets},
+      {id: 'bifrost', assets: khalaToBifrostAssets},
+    ],
   },
   {
     fromChain: 'thala',
-    toChain: 'kovan',
-    assets: khalaToEthereumAssets,
+    toChains: [
+      {id: 'kovan', assets: khalaToEthereumAssets},
+      {id: 'karura-test', assets: khalaToKaruraAssets},
+      {id: 'moonbase-alpha', assets: khalaToMoonriverAssets},
+      {id: 'bifrost-test', assets: khalaToBifrostAssets},
+    ],
   },
   {
     fromChain: 'karura',
-    toChain: 'khala',
-    assets: karuraToKhalaAssets,
+    toChains: [{id: 'khala', assets: karuraToKhalaAssets}],
   },
   {
     fromChain: 'karura-test',
-    toChain: 'thala',
-    assets: karuraToKhalaAssets,
-  },
-  {
-    fromChain: 'khala',
-    toChain: 'karura',
-    assets: khalaToKaruraAssets,
-  },
-  {
-    fromChain: 'thala',
-    toChain: 'karura-test',
-    assets: khalaToKaruraAssets,
+    toChains: [{id: 'thala', assets: karuraToKhalaAssets}],
   },
   {
     fromChain: 'moonriver',
-    toChain: 'khala',
-    assets: moonriverToKhalaAssets,
-  },
-  {
-    fromChain: 'khala',
-    toChain: 'moonriver',
-    assets: khalaToMoonriverAssets,
-  },
-  {
-    fromChain: 'bifrost',
-    toChain: 'khala',
-    assets: bifrostToKhalaAssets,
-  },
-  {
-    fromChain: 'khala',
-    toChain: 'bifrost',
-    assets: khalaToBifrostAssets,
-  },
-  {
-    fromChain: 'bifrost-test',
-    toChain: 'thala',
-    assets: bifrostToKhalaAssets,
-  },
-  {
-    fromChain: 'thala',
-    toChain: 'bifrost-test',
-    assets: khalaToBifrostAssets,
+    toChains: [
+      {id: 'khala', assets: moonriverToKhalaAssets},
+      {id: 'bifrost', assets: moonriverToBifrostAssets},
+    ],
   },
   {
     fromChain: 'moonbase-alpha',
-    toChain: 'khala',
-    assets: [
-      {assetId: 'zlk', estimatedTime: '< 3 mins', kind: 'evmChainBridge'},
+    toChains: [
+      {id: 'thala', assets: moonriverToKhalaAssets},
+      {id: 'bifrost-test', assets: moonriverToBifrostAssets},
+    ],
+  },
+  {
+    fromChain: 'bifrost',
+    toChains: [
+      {id: 'khala', assets: bifrostToKhalaAssets},
+      {id: 'moonriver', assets: bifrostToMoonriverAssets},
+    ],
+  },
+  {
+    fromChain: 'bifrost-test',
+    toChains: [
+      {id: 'thala', assets: bifrostToKhalaAssets},
+      {id: 'moonbase-alpha', assets: bifrostToMoonriverAssets},
     ],
   },
 ]
 
-export const ALL_FROM_CHAINS = [
-  ...new Set(BRIDGES.map((bridge) => bridge.fromChain)),
-]
+export const ALL_FROM_CHAINS = BRIDGES.map((bridge) => bridge.fromChain)

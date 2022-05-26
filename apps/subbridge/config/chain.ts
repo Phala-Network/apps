@@ -30,7 +30,6 @@ export interface EvmChain extends BaseChain {
   kind: 'evm'
   evmChainId: number
   currencySymbol: string
-  isSubstrateCompatible?: boolean
   paraId?: number // for compatible chains
   chainBridgeContract?: {
     address: `0x${string}`
@@ -139,7 +138,6 @@ export const CHAINS: Readonly<
     evmChainId: 1285,
     currencySymbol: 'MOVR',
     paraId: 2023,
-    isSubstrateCompatible: true,
     nativeAsset: 'movr',
     chainBridgeContract: {
       address: '0xCe6652551A989C13B41f70cac504341A5F711c8d',
@@ -154,7 +152,6 @@ export const CHAINS: Readonly<
     kind: 'evm',
     evmChainId: 1287,
     currencySymbol: 'DEV',
-    isSubstrateCompatible: true,
     chainBridgeContract: {
       address: '0x1e4ED6d37685D2FB254e47C5b58Cf95173326E4c',
       spender: '0x0B674CC89F54a47Be4Eb6C1A125bB8f04A529181',

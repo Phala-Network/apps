@@ -48,24 +48,17 @@ export const useTransfer = () => {
 
   if (bridgeKind === 'evmChainBridge') {
     return async () => {
-      const resourceId = asset.chainBridgeResourceId
-      if (
-        !ethersChainBridgeContract ||
-        !khalaApi ||
-        !amount ||
-        fromChain.kind !== 'evm' ||
-        !resourceId
-      ) {
+      if (!ethersChainBridgeContract || !khalaApi) {
         throw new Error('Transfer missing required parameters')
       }
 
       return transferByChainBridge({
         contract: ethersChainBridgeContract,
         khalaApi,
-        destinationChainId: 1,
-        resourceId,
+        assetId: asset.id,
         destinationAccount,
         amount: rawAmount,
+        toChainId: toChain.id,
       })
     }
   }

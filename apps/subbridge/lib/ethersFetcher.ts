@@ -1,9 +1,10 @@
+import {ChainId} from '@/config/chain'
 import {ApiPromise} from '@polkadot/api'
 import {hexStripPrefix, u8aToHex} from '@polkadot/util'
 import {decodeAddress} from '@polkadot/util-crypto'
 import Decimal from 'decimal.js'
 import type {BigNumber, ethers} from 'ethers'
-import {createEthereumToKhalaData} from './createEthereumToKhalaData'
+import {createChainBridgeData} from './transferByChainBridge'
 
 export const ethersBalanceFetcher = async (
   provider: ethers.providers.Web3Provider,
@@ -48,16 +49,18 @@ const ALICE = '5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY'
 export const evmChainBridgeEstimatedGasFetcher = async (
   contract: ethers.Contract,
   khalaApi: ApiPromise,
-  resourceId: string
+  resourceId: string,
+  toChainId: ChainId
 ): Promise<Decimal> => {
   const estimateGas = await contract.estimateGas.deposit(
     1,
     resourceId,
-    await createEthereumToKhalaData(
+    await createChainBridgeData(
       khalaApi,
       // Try to use fixed amount to reduce requests
       ALICE,
-      '1'
+      '1',
+      toChainId
     )
   )
 

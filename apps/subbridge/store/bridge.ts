@@ -67,24 +67,6 @@ export const decimalsAtom = atom<number>((get) => {
   return asset.decimals[fromChain.id] ?? asset.decimals.default
 })
 
-export const destChainTransactionFeeAtom = atom<Decimal>((get) => {
-  const fromChain = get(fromChainAtom)
-  const toChain = get(toChainAtom)
-  const asset = get(assetAtom)
-  const destChainTransactionFee = asset.destChainTransactionFee[toChain.id]
-
-  if (
-    // NOTE: ethereum to khala bridge is not xcm bridge
-    (fromChain.kind === 'evm' && !fromChain.isSubstrateCompatible) ||
-    (toChain.kind === 'evm' && !toChain.isSubstrateCompatible) ||
-    !destChainTransactionFee
-  ) {
-    return new Decimal(0)
-  }
-
-  return destChainTransactionFee
-})
-
 export const existentialDepositAtom = atom<Decimal>((get) => {
   const toChain = get(toChainAtom)
   const asset = get(assetAtom)
@@ -104,13 +86,25 @@ export const bridgeInfoAtom = atom<{
   const fromChain = get(fromChainAtom)
   const toChain = get(toChainAtom)
   const asset = get(assetAtom)
-  const bridge = BRIDGES.find(
-    (bridge) =>
-      bridge.fromChain === fromChain.id && bridge.toChain === toChain.id
-  )?.assets.find((assetConfig) => assetConfig.assetId === asset.id)
+  const bridge = BRIDGES.find((bridge) => bridge.fromChain === fromChain.id)
+    ?.toChains.find((x) => x.id === toChain.id)
+    ?.assets.find((assetConfig) => assetConfig.assetId === asset.id)
 
   return {
     kind: bridge?.kind ?? null,
     estimatedTime: bridge?.estimatedTime ?? null,
   }
+})
+
+export const destChainTransactionFeeAtom = atom<Decimal>((get) => {
+  const {kind} = get(bridgeInfoAtom)
+  const toChain = get(toChainAtom)
+  const asset = get(assetAtom)
+  const destChainTransactionFee = asset.destChainTransactionFee[toChain.id]
+
+  if (kind === 'evmChainBridge' || !destChainTransactionFee) {
+    return new Decimal(0)
+  }
+
+  return destChainTransactionFee
 })

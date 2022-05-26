@@ -9,48 +9,45 @@ const moonriverParaId = CHAINS.moonriver.paraId
 const karuraParaId = CHAINS.karura.paraId
 const bifrostParaId = CHAINS.bifrost.paraId
 
-function getExtrinsicAssetId(assetId: AssetId) {
-  if (assetId === 'pha') {
-    return {
-      Concrete: {
-        parents: 0,
-        interior: 'Here',
+const extrinsicIds: {[assetId in AssetId]?: Record<string, unknown>} = {
+  pha: {
+    Concrete: {
+      parents: 0,
+      interior: 'Here',
+    },
+  },
+  movr: {
+    Concrete: {
+      parents: 1,
+      interior: {
+        X2: [{Parachain: moonriverParaId}, {PalletInstance: 10}],
       },
-    }
-  }
-
-  if (assetId === 'movr') {
-    return {
-      Concrete: {
-        parents: 1,
-        interior: {
-          X2: [{Parachain: moonriverParaId}, {PalletInstance: 10}],
-        },
+    },
+  },
+  kar: {
+    Concrete: {
+      parents: 1,
+      interior: {
+        X2: [{Parachain: karuraParaId}, {GeneralKey: '0x0080'}],
       },
-    }
-  }
-
-  if (assetId === 'kar') {
-    return {
-      Concrete: {
-        parents: 1,
-        interior: {
-          X2: [{Parachain: karuraParaId}, {GeneralKey: '0x0080'}],
-        },
+    },
+  },
+  bnc: {
+    Concrete: {
+      parents: 1,
+      interior: {
+        X2: [{Parachain: bifrostParaId}, {GeneralKey: '0x0001'}],
       },
-    }
-  }
-
-  if (assetId === 'bnc') {
-    return {
-      Concrete: {
-        parents: 1,
-        interior: {
-          X2: [{Parachain: bifrostParaId}, {GeneralKey: '0x0001'}],
-        },
+    },
+  },
+  zlk: {
+    Concrete: {
+      parents: 1,
+      interior: {
+        X2: [{Parachain: bifrostParaId}, {GeneralKey: '0x0207'}],
       },
-    }
-  }
+    },
+  },
 }
 
 export const transferByKhalaXTransfer = ({
@@ -69,11 +66,17 @@ export const transferByKhalaXTransfer = ({
   const asset = ASSETS[assetId]
   const toChain = CHAINS[toChainId]
   const isToEthereum = toChainId === 'ethereum' || toChainId === 'kovan'
+  // const isTransferringZLKToMoonriver =
+  //   (toChainId === 'moonriver' || toChainId === 'moonbase-alpha') &&
+  //   assetId === 'zlk'
   const decimals = asset.decimals.khala ?? asset.decimals.default
+  if (!extrinsicIds[assetId]) {
+    throw new Error(`Unsupported asset: ${assetId}`)
+  }
 
   return khalaApi.tx.xTransfer.transfer(
     {
-      id: getExtrinsicAssetId(assetId),
+      id: extrinsicIds[assetId],
       fun: {Fungible: amount},
     },
     isToEthereum
@@ -92,7 +95,7 @@ export const transferByKhalaXTransfer = ({
           interior: {
             X2: [
               {Parachain: toChain.paraId},
-              toChain.kind === 'evm' && toChain.isSubstrateCompatible
+              toChain.kind === 'evm'
                 ? {
                     AccountKey20: {
                       network: 'Any',
