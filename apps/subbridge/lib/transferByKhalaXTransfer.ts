@@ -66,9 +66,10 @@ export const transferByKhalaXTransfer = ({
   const asset = ASSETS[assetId]
   const toChain = CHAINS[toChainId]
   const isToEthereum = toChainId === 'ethereum' || toChainId === 'kovan'
-  // const isTransferringZLKToMoonriver =
-  //   (toChainId === 'moonriver' || toChainId === 'moonbase-alpha') &&
-  //   assetId === 'zlk'
+  // FIXME: zlk extrinsic body and fee
+  const isTransferringZLKToMoonriver =
+    (toChainId === 'moonriver' || toChainId === 'moonbase-alpha') &&
+    assetId === 'zlk'
   const decimals = asset.decimals.khala ?? asset.decimals.default
   if (!extrinsicIds[assetId]) {
     throw new Error(`Unsupported asset: ${assetId}`)
@@ -79,13 +80,13 @@ export const transferByKhalaXTransfer = ({
       id: extrinsicIds[assetId],
       fun: {Fungible: amount},
     },
-    isToEthereum
+    isToEthereum || isTransferringZLKToMoonriver
       ? {
           parents: 0,
           interior: {
             X3: [
               {GeneralKey: '0x6362'}, // string "cb"
-              {GeneralIndex: 0}, // 0 is chainId of ethereum
+              {GeneralIndex: isToEthereum ? 0 : 2}, // 0 is chainId of ethereum
               {GeneralKey: destinationAccount},
             ],
           },

@@ -21,9 +21,9 @@ import DestinationAccountInput from './DestinationAccountInput'
 import ExtraInfo from './Extra'
 
 const getToChainIds = (fromChainId: ChainId): ChainId[] =>
-  BRIDGES.find((bridge) => bridge.fromChain === fromChainId)?.toChains.map(
-    (x) => x.id
-  ) || []
+  BRIDGES.find((bridge) => bridge.fromChain === fromChainId)
+    ?.toChains.filter((x) => x.assets.length > 0)
+    .map((x) => x.id) || []
 
 const getAssetIds = (fromChainId: ChainId, toChainId: ChainId): AssetId[] =>
   BRIDGES.find((bridge) => bridge.fromChain === fromChainId)
