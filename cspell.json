@@ -15,8 +15,11 @@
     "karura",
     "polkadot",
     "moonriver",
+    "moonbase",
     "parachain",
     "movr",
-    "thala"
+    "thala",
+    "orml",
+    "xtokens"
   ]
 }

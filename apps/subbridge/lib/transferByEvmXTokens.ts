@@ -5,30 +5,31 @@ import {decodeAddress} from '@polkadot/util-crypto'
 import Decimal from 'decimal.js'
 import type {ethers} from 'ethers'
 
-export const transferFromMoonriver = async ({
+export const transferByEvmXTokens = async ({
   contract,
   assetId,
   destinationAccount,
   amount,
   toChainId,
+  decimals,
 }: {
   contract: ethers.Contract
   assetId: AssetId
   destinationAccount: string
   amount: string
   toChainId: ChainId
+  decimals: number
 }): Promise<{hash: string}> => {
   const {ethers} = await import('ethers')
   const asset = ASSETS[assetId]
   const toChain = CHAINS[toChainId]
-  const decimals = asset.decimals.moonriver ?? asset.decimals.default
 
-  if (!asset.xcAddress || !toChain.paraId) {
+  if (!asset.xc20Address || !toChain.paraId) {
     throw new Error('Transfer missing required parameters')
   }
 
   return contract.transfer(
-    asset.xcAddress,
+    asset.xc20Address,
     amount,
     {
       parents: 1,

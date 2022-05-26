@@ -3,7 +3,7 @@ import {useEstimatedGasFee} from '@/hooks/useEstimatedGasFee'
 import {useCurrentPolkadotApi} from '@/hooks/usePolkadotApi'
 import {
   assetAtom,
-  bridgeAtom,
+  bridgeInfoAtom,
   destChainTransactionFeeAtom,
   fromChainAtom,
 } from '@/store/bridge'
@@ -73,15 +73,13 @@ const Info: FC<
 
 const ExtraInfo: FC<PaperProps> = ({sx, ...props}) => {
   const theme = useTheme()
-  const bridge = useAtomValue(bridgeAtom)
   const fromChain = useAtomValue(fromChainAtom)
   const polkadotApi = useCurrentPolkadotApi()
   const estimatedGas = useEstimatedGasFee()
   const bridgeFee = useBridgeFee()
   const asset = useAtomValue(assetAtom)
   const destChainTransactionFee = useAtomValue(destChainTransactionFeeAtom)
-
-  if (!bridge) return null
+  const {estimatedTime} = useAtomValue(bridgeInfoAtom)
 
   return (
     <Paper
@@ -116,7 +114,7 @@ const ExtraInfo: FC<PaperProps> = ({sx, ...props}) => {
 
         <Divider />
 
-        <Info label="Estimated time">{bridge.estimatedTime}</Info>
+        <Info label="Estimated time">{estimatedTime}</Info>
 
         <Info label="Estimated gas fee">
           {estimatedGas ? (

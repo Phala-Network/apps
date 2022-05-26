@@ -1,7 +1,5 @@
-import {fromChainAtom} from '@/store/bridge'
 import {
   ethereumProviderAtom,
-  ethersProviderAtom,
   evmAccountAtom,
   evmChainIdAtom,
   isEvmWalletAuthorizedAtom,
@@ -10,13 +8,11 @@ import type {ethers} from 'ethers'
 import {useAtom} from 'jotai'
 import {useEffect} from 'react'
 
-export const useEthersInitialization = (): void => {
-  const [fromChain] = useAtom(fromChainAtom)
+export const useEthereumProviderInitialization = (): void => {
   const [evmAccount] = useAtom(evmAccountAtom)
   const [ethereumProvider, setEthereumProvider] = useAtom(ethereumProviderAtom)
-  const [, setEthersProvider] = useAtom(ethersProviderAtom)
   const [, setEvmAccount] = useAtom(evmAccountAtom)
-  const [evmChainId, setEvmChainId] = useAtom(evmChainIdAtom)
+  const [, setEvmChainId] = useAtom(evmChainIdAtom)
   const [isEvmWalletAuthorized, setIsEvmWalletAuthorized] = useAtom(
     isEvmWalletAuthorizedAtom
   )
@@ -66,25 +62,6 @@ export const useEthersInitialization = (): void => {
     setEvmAccount,
     setEvmChainId,
   ])
-
-  useEffect(() => {
-    let unmounted = false
-    if (
-      evmChainId &&
-      ethereumProvider &&
-      fromChain.kind === 'evm' &&
-      fromChain.evmChainId === evmChainId
-    ) {
-      import('ethers').then(({ethers}) => {
-        if (unmounted) return
-        const provider = new ethers.providers.Web3Provider(ethereumProvider)
-        setEthersProvider(provider)
-      })
-    }
-    return () => {
-      unmounted = true
-    }
-  }, [evmChainId, ethereumProvider, setEthersProvider, fromChain])
 
   useEffect(() => {
     if (evmAccount) {
