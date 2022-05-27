@@ -18,3 +18,8 @@ export const migrationAlertOpenAtom = atomWithStorage(
   'jotai:migration_alert_open',
   true
 )
+
+export const moreButtonBadgeVersionAtom = atomWithStorage(
+  'jotai:more_button_badge_version',
+  0
+)

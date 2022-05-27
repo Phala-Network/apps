@@ -1,22 +1,33 @@
-import {colorSchemeSettingAtom} from '@/store/common'
+import {
+  colorSchemeSettingAtom,
+  moreButtonBadgeVersionAtom,
+} from '@/store/common'
 import {Link, MoreHoriz} from '@mui/icons-material'
-import {Box, Button, ButtonGroup, Menu, MenuItem, useTheme} from '@mui/material'
+import {Badge, Box, Button, ButtonGroup, Menu, MenuItem} from '@mui/material'
 import {useAtom} from 'jotai'
 import {FC, MouseEvent, useState} from 'react'
+import {ClientOnly} from '../ClientOnly'
+
+const CURRENT_BADGE_VERSION = 1
 
 const externalLinks = [
   ['Wiki', 'https://wiki.phala.network/en-us/general/subbridge/intro/'],
+  ['Discord', 'https://discord.com/invite/phala'],
+  ['Forum', 'https://forum.phala.network/c/mai/73-category/73'],
   ['Phala App', 'https://app.phala.network'],
 ]
 
 const MoreButton: FC = () => {
-  const theme = useTheme()
   const [colorSchemeSetting, setColorSchemeSetting] = useAtom(
     colorSchemeSettingAtom
+  )
+  const [moreButtonBadgeVersion, setMoreButtonBadgeVersion] = useAtom(
+    moreButtonBadgeVersionAtom
   )
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
   const handleClick = (event: MouseEvent<HTMLElement>) => {
+    setMoreButtonBadgeVersion(CURRENT_BADGE_VERSION)
     setAnchorEl(event.currentTarget)
   }
   const handleClose = () => {
@@ -25,16 +36,31 @@ const MoreButton: FC = () => {
 
   return (
     <>
-      <Button
-        sx={{minWidth: 0, px: 1, background: theme.palette.background.paper}}
-        onClick={handleClick}
-      >
-        <MoreHoriz />
-      </Button>
+      <ClientOnly>
+        <Badge
+          color="error"
+          variant="dot"
+          invisible={CURRENT_BADGE_VERSION === moreButtonBadgeVersion}
+          sx={{
+            '& .MuiBadge-badge': {
+              top: 3,
+              right: 3,
+            },
+          }}
+        >
+          <Button
+            sx={{
+              minWidth: 0,
+              px: 1,
+            }}
+            onClick={handleClick}
+          >
+            <MoreHoriz />
+          </Button>
+        </Badge>
+      </ClientOnly>
       <Menu
-        sx={{
-          mt: 1,
-        }}
+        sx={{mt: 1}}
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}

@@ -1,5 +1,6 @@
 import BridgeBody from '@/components/BridgeBody'
 import {ClientOnly} from '@/components/ClientOnly'
+import Footer from '@/components/Footer'
 import MigrationAlert from '@/components/MigrationAlert'
 import {Box, Container, useTheme} from '@mui/material'
 import type {NextPage} from 'next'
@@ -34,6 +35,10 @@ const Home: NextPage = () => {
         </ClientOnly>
 
         <BridgeBody />
+
+        <Box sx={{my: 4}}>
+          <Footer />
+        </Box>
       </Box>
 
       <PolkadotWalletDialog />

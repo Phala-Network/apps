@@ -15,6 +15,7 @@ const SubbridgeLogo: FC<{className?: string}> = ({className}) => {
       }}
     >
       <SubbridgeLogoIcon
+        fill="currentColor"
         css={{
           flex: 'none',
           width: 36,
@@ -24,6 +25,7 @@ const SubbridgeLogo: FC<{className?: string}> = ({className}) => {
         }}
       />
       <SubbridgeLogoText
+        fill="currentColor"
         css={{
           flex: 'none',
           marginLeft: 13,
