@@ -81,6 +81,7 @@ const StakePoolTableV2: FC<{
   const [aprFilter, setAprFilter] = useState(false)
   const [commissionFilter, setCommissionFilter] = useState(kind === 'delegate')
   const [remainingFilter, setRemainingFilter] = useState(kind === 'delegate')
+  const [verifiedFilter, setVerifiedFilter] = useState(false)
   const [remainingValue, setRemainingValue] = useAtom(remainingValueAtom)
 
   const [stakePoolModalKey, setStakePoolModalKey] =
@@ -139,6 +140,13 @@ const StakePoolTableV2: FC<{
               {remainingStake: {gt: remainingValue}},
               {remainingStake: {equals: null}},
             ],
+          },
+          verifiedFilter && {
+            accounts: {
+              is: {
+                identityVerified: {equals: true},
+              },
+            },
           },
         ].filter(isTruthy),
       },
@@ -246,6 +254,14 @@ const StakePoolTableV2: FC<{
             }
           >
             {'Commission < 100%'}
+          </Checkbox>
+          <Checkbox
+            checked={verifiedFilter}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setVerifiedFilter(e.target.checked)
+            }
+          >
+            {'Verified'}
           </Checkbox>
           <Block display="flex" alignItems="center">
             <Checkbox
