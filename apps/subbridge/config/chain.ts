@@ -156,6 +156,7 @@ export const CHAINS: Readonly<
       address: '0x1e4ED6d37685D2FB254e47C5b58Cf95173326E4c',
       spender: '0x0B674CC89F54a47Be4Eb6C1A125bB8f04A529181',
     },
+    isTest: true,
   },
   bifrost: {
     id: 'bifrost',
