@@ -13,8 +13,8 @@ export const MiningV2 = (): JSX.Element => {
     <Block
       maxWidth="1700px"
       margin="0 auto"
-      paddingLeft="scale650"
-      paddingRight="scale650"
+      paddingLeft={[0, 'scale650']}
+      paddingRight={[0, 'scale650']}
       paddingBottom="scale2400"
     >
       <Helmet>
@@ -38,9 +38,10 @@ export const MiningV2 = (): JSX.Element => {
           display="flex"
           justifyContent="space-between"
           alignItems="center"
+          flexWrap
         >
           <HeadingMedium as="div">Stake Pool</HeadingMedium>
-          <Block display="flex">
+          <Block display="flex" flexWrap>
             <ClaimAll marginRight="scale400" kind={'mining'} />
             <CreatePoolButton />
           </Block>

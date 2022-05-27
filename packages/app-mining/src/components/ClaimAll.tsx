@@ -141,7 +141,7 @@ const ClaimAll = (
   }, [address, api, claimableStakePoolPids, decimals])
   return (
     <>
-      <Block display="flex" alignItems="center" {...props}>
+      <Block display="flex" alignItems="center" flexWrap {...props}>
         {polkadotAccount?.address && (
           <Block marginRight="20px">
             <LabelSmall as="div">{'Claimable Rewards'}</LabelSmall>

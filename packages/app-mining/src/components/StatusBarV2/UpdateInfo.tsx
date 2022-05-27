@@ -43,9 +43,9 @@ const UpdateInfo = (): JSX.Element => {
         content="Usually updated every 20 mins"
         placement="bottomLeft"
       >
-        <Info size={16} />
+        <Info size={16} style={{flex: 'none'}} />
       </StatefulTooltip>
-      <LabelSmall $style={{marginLeft: '5px'}}>
+      <LabelSmall $style={{marginLeft: '5px', flex: 'none'}}>
         Last Update: {Boolean(distance) && `${distance} ago`}
       </LabelSmall>
       {isLoading && <Skeleton animation height="34px" width="200px" />}
