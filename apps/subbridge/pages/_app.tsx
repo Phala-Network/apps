@@ -1,5 +1,6 @@
 import AtomsDevtools from '@/components/AtomsDevtools'
 import GlobalStyles from '@/components/GlobalStyles'
+import GtagScript from '@/components/GtagScript'
 import Layout from '@/components/Layout'
 import MuiThemeProvider from '@/components/MuiThemeProvider'
 import {createEmotionCache} from '@/lib/createEmotionCache'
@@ -29,6 +30,7 @@ export default function MyApp(props: MyAppProps) {
           content="Cross-chain Router, Bridging Parachain, EVM, and other chains."
         />
       </Head>
+      <GtagScript />
       <JotaiProvider>
         <AtomsDevtools>
           <CacheProvider value={emotionCache}>
