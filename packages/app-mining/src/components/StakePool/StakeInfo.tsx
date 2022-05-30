@@ -63,6 +63,7 @@ const StakeInfo: FC<{
     freeStake,
     releasingStake,
     stakePoolWithdrawals,
+    availableStake,
   } = stakePool || {}
 
   const withdrawing = useMemo(
@@ -102,6 +103,7 @@ const StakeInfo: FC<{
       <StyledBlock>
         <Item label="Releasing">{releasingStake}</Item>
         <Item label="Withdrawing">{withdrawing}</Item>
+        <Item label="Delegable">{availableStake}</Item>
       </StyledBlock>
     </>
   )

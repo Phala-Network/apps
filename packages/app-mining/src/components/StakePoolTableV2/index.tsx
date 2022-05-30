@@ -52,8 +52,8 @@ const TableHeader = styled.div`
 type MenuItem = {label: string; key: StakePoolModalKey; disabled?: boolean}
 type StakePool = StakePoolsQuery['findManyStakePools'][number]
 
-const remainingValueAtom = atomWithStorage<string>(
-  'jotai:delegate_remaining_filter_value',
+const delegableValueAtom = atomWithStorage<string>(
+  'jotai:delegate_delegable_filter_value',
   '100'
 )
 
@@ -80,9 +80,9 @@ const StakePoolTableV2: FC<{
   const [workersFilter, setWorkersFilter] = useState(kind === 'delegate')
   const [aprFilter, setAprFilter] = useState(false)
   const [commissionFilter, setCommissionFilter] = useState(kind === 'delegate')
-  const [remainingFilter, setRemainingFilter] = useState(kind === 'delegate')
   const [verifiedFilter, setVerifiedFilter] = useState(false)
-  const [remainingValue, setRemainingValue] = useAtom(remainingValueAtom)
+  const [delegableFilter, setDelegableFilter] = useState(kind === 'delegate')
+  const [delegableValue, setDelegableValue] = useAtom(delegableValueAtom)
 
   const [stakePoolModalKey, setStakePoolModalKey] =
     useState<StakePoolModalKey | null>(null)
@@ -134,11 +134,11 @@ const StakePoolTableV2: FC<{
               },
             },
           },
-          remainingFilter && {
-            // remainingStake null means ∞
+          delegableFilter && {
             OR: [
-              {remainingStake: {gt: remainingValue}},
-              {remainingStake: {equals: null}},
+              {availableStake: {gt: delegableValue}},
+              // availableStake null means ∞
+              {availableStake: {equals: null}},
             ],
           },
           verifiedFilter && {
@@ -172,7 +172,7 @@ const StakePoolTableV2: FC<{
       refetchInterval: 60 * 10 * 1000,
       keepPreviousData: true,
       enabled:
-        (kind === 'delegate' && Boolean(remainingValue)) ||
+        (kind === 'delegate' && Boolean(delegableValue)) ||
         ((kind === 'myDelegate' || kind === 'mining') &&
           Boolean(polkadotAccount?.address)),
     }
@@ -190,13 +190,15 @@ const StakePoolTableV2: FC<{
     setCurrentPage(1)
   }
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const debouncedSetSearchString = useCallback(
     debounce(setSearchString, 500),
     []
   )
 
-  const debouncedSetRemainingValue = useCallback(
-    debounce(setRemainingValue, 500),
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const debouncedSetDelegableValue = useCallback(
+    debounce(setDelegableValue, 500),
     []
   )
 
@@ -265,12 +267,12 @@ const StakePoolTableV2: FC<{
           </Checkbox>
           <Block display="flex" alignItems="center">
             <Checkbox
-              checked={remainingFilter}
+              checked={delegableFilter}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setRemainingFilter(e.target.checked)
+                setDelegableFilter(e.target.checked)
               }
             >
-              {'Remaining > '}
+              {'Delegable > '}
             </Checkbox>
 
             <StatefulInput
@@ -279,13 +281,13 @@ const StakePoolTableV2: FC<{
                   style: {width: '128px', marginLeft: '8px'},
                 },
               }}
-              initialState={{value: remainingValue}}
+              initialState={{value: delegableValue}}
               type="number"
               size="compact"
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 const value = e.target.value
                 if (value) {
-                  debouncedSetRemainingValue(value)
+                  debouncedSetDelegableValue(value)
                 }
               }}
             />
@@ -386,16 +388,16 @@ const StakePoolTableV2: FC<{
           </TableBuilderColumn>
         )}
         <TableBuilderColumn
-          id="remainingStake"
+          id="availableStake"
           header={
-            <TooltipHeader content={tooltipContent.remaining}>
-              Remaining
+            <TooltipHeader content={tooltipContent.delegable}>
+              Delegable
             </TooltipHeader>
           }
           sortable
         >
-          {({remainingStake}: StakePool) =>
-            remainingStake ? `${formatCurrency(remainingStake)} PHA` : '∞'
+          {({availableStake}: StakePool) =>
+            availableStake ? `${formatCurrency(availableStake)} PHA` : '∞'
           }
         </TableBuilderColumn>
         {kind !== 'myDelegate' && (

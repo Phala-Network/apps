@@ -17,18 +17,18 @@ import {
 import {Skeleton} from 'baseui/skeleton'
 import {ParagraphSmall} from 'baseui/typography'
 import Decimal from 'decimal.js'
-import {useMemo, useState, VFC} from 'react'
+import {FC, useMemo, useState} from 'react'
 import {StakePool} from '.'
 import {useDelegableBalance} from '../../hooks/useDelegableBalance'
 import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
 
-const DelegateModalBody: VFC<
+const DelegateModalBody: FC<
   {
     stakePool: Pick<StakePool, 'pid'> &
-      Partial<Pick<StakePool, 'remainingStake'>>
+      Partial<Pick<StakePool, 'availableStake'>>
   } & Pick<ModalProps, 'onClose'>
 > = ({stakePool, onClose}) => {
-  const {pid, remainingStake} = stakePool
+  const {pid, availableStake} = stakePool
   const {api} = useApiPromise()
   const delegableBalance = useDelegableBalance()
   const [amount, setAmount] = useState('')
@@ -60,10 +60,10 @@ const DelegateModalBody: VFC<
     }
   }, [api, pid, amount, decimals])
 
-  if (remainingStake === undefined) return null
+  if (availableStake === undefined) return null
 
-  const remaining = remainingStake
-    ? `${formatCurrency(remainingStake)} PHA`
+  const delegableStake = availableStake
+    ? `${formatCurrency(availableStake)} PHA`
     : '∞'
 
   return (
@@ -77,7 +77,7 @@ const DelegateModalBody: VFC<
           label="Amount"
           caption={
             <>
-              Pool Remaining: {remaining}
+              Pool Delegable: {delegableStake}
               <br />
               Delegable Balance:{' '}
               {delegableBalance && decimals ? (
