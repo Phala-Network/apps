@@ -4,7 +4,7 @@ export const tooltipContent = {
   pid: `StakePool's ID`,
   owner: `StakePool's Owner Account. “Unknown” means the account has identity but has not been judged. “Verified” means the registrar has certified that the information is correct.`,
   apr: 'Real-time Annual Percentage Rate',
-  remaining: 'The remaining allocation you can delegate to the Pool',
+  delegable: 'The amount you can delegate to the Pool',
   commission:
     'The commission rate of the mining reward taken by the Pool owner. (0% means no pool owner reward, and all the reward goes to the delegators)',
   delegated: 'Total delegated stake in the StakePool',
