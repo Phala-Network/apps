@@ -92,9 +92,7 @@ export const khalaXTransferPartialFeeFetcher = async (
     toChainId,
     assetId,
   })
-  if (extrinsic) {
-    const decimals = khalaApi.registry.chainDecimals[0]
-    const {partialFee} = await extrinsic.paymentInfo(ALICE)
-    return new Decimal(partialFee.toString()).div(Decimal.pow(10, decimals))
-  }
+  const decimals = khalaApi.registry.chainDecimals[0]
+  const {partialFee} = await extrinsic.paymentInfo(ALICE)
+  return new Decimal(partialFee.toString()).div(Decimal.pow(10, decimals))
 }

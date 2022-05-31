@@ -34,7 +34,9 @@ export const transferByPolkadotXTokens = ({
   }
 
   return polkadotApi.tx.xTokens.transfer(
-    {[isTransferringBNCFromBifrost ? 'Native' : 'Token']: asset.ormlToken},
+    {
+      [isTransferringBNCFromBifrost ? 'Native' : 'Token']: asset.ormlToken,
+    },
     amount,
     {
       V1: {

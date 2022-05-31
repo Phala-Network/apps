@@ -48,6 +48,14 @@ const extrinsicIds: {[assetId in AssetId]?: Record<string, unknown>} = {
       },
     },
   },
+  ausd: {
+    Concrete: {
+      parents: 1,
+      interior: {
+        X2: [{Parachain: karuraParaId}, {GeneralKey: '0x0081'}],
+      },
+    },
+  },
 }
 
 export const transferByKhalaXTransfer = ({
