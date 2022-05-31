@@ -103,8 +103,8 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
     destChainTransactionFee: {
       khala: new Decimal('0.000000016'),
       thala: new Decimal('0.000000016'),
-      bifrost: new Decimal('0.0000000051'),
-      'bifrost-test': new Decimal('0.0000000051'),
+      bifrost: new Decimal('0.0096'),
+      'bifrost-test': new Decimal('0.0096'),
     },
     decimals: {default: 18},
     erc20TokenContractAddress: {
@@ -113,7 +113,10 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
     },
     chainBridgeResourceId:
       '0x028da1efb56e124f659fa6d5d95b3cc541ce207cbfee2f4f066061cc92d37bae',
-    existentialDeposit: {},
+    existentialDeposit: {
+      bifrost: new Decimal('0.01'),
+      'bifrost-test': new Decimal('0.01'),
+    },
   },
   bnc: {
     id: 'bnc',

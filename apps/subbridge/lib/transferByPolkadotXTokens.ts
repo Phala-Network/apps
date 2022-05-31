@@ -7,6 +7,8 @@ import {u8aToHex} from '@polkadot/util'
 import {decodeAddress} from '@polkadot/util-crypto'
 import Decimal from 'decimal.js'
 
+const khalaParaId = CHAINS.khala.paraId
+
 export const transferByPolkadotXTokens = ({
   polkadotApi,
   assetId,
@@ -28,6 +30,11 @@ export const transferByPolkadotXTokens = ({
   const isTransferringBNCFromBifrost =
     (fromChainId === 'bifrost' || fromChainId === 'bifrost-test') &&
     assetId === 'bnc'
+  const isToEthereum = toChainId === 'ethereum' || toChainId === 'kovan'
+  const isTransferringZLKToMoonriver =
+    (toChainId === 'moonriver' || toChainId === 'moonbase-alpha') &&
+    assetId === 'zlk'
+  const isThroughKhala = isToEthereum || isTransferringZLKToMoonriver
 
   if (!asset.ormlToken || !toChain.paraId) {
     throw new Error('Transfer missing required parameters')
@@ -41,17 +48,26 @@ export const transferByPolkadotXTokens = ({
     {
       V1: {
         parents: 1,
-        interior: {
-          X2: [
-            {Parachain: toChain.paraId},
-            {
-              AccountId32: {
-                network: 'Any',
-                id: u8aToHex(decodeAddress(destinationAccount)),
-              },
+        interior: isThroughKhala
+          ? {
+              X4: [
+                {Parachain: khalaParaId},
+                {GeneralKey: '0x6362'}, // string "cb"
+                {GeneralIndex: isToEthereum ? 0 : 2}, // 0 is chainId of ethereum
+                {GeneralKey: destinationAccount},
+              ],
+            }
+          : {
+              X2: [
+                {Parachain: toChain.paraId},
+                {
+                  AccountId32: {
+                    network: 'Any',
+                    id: u8aToHex(decodeAddress(destinationAccount)),
+                  },
+                },
+              ],
             },
-          ],
-        },
       },
     },
     Decimal.pow(10, decimals - 3)
