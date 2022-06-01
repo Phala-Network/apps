@@ -36,6 +36,7 @@ export interface EvmChain extends BaseChain {
     spender: `0x${string}`
   }
   xTokensContractAddress?: `0x${string}`
+  generalIndex?: number // for khala chain bridge
 }
 
 export interface PolkadotChain extends BaseChain {
@@ -94,6 +95,7 @@ export const CHAINS: Readonly<
       address: '0x8F92e7353b180937895E0C5937d616E8ea1A2Bb9',
       spender: '0xEEc0fb4913119567cDfC0c5fc2Bf8f9F9B226c2d',
     },
+    generalIndex: 0,
   },
   kovan: {
     id: 'kovan',
@@ -107,6 +109,7 @@ export const CHAINS: Readonly<
       address: '0x82db1f1717487cADEAf6F0C74825495d6D89E08e',
       spender: '0xF69b08D649B744A4d4781CB1B86E30Cc9Ac9991b',
     },
+    generalIndex: 0,
   },
   thala: {
     id: 'thala',
@@ -144,6 +147,7 @@ export const CHAINS: Readonly<
       spender: '0xf88337a0db6e24Dff0fCD7F92ab0655B97A68d38',
     },
     xTokensContractAddress: '0x0000000000000000000000000000000000000804',
+    generalIndex: 2,
   },
   'moonbase-alpha': {
     id: 'moonbase-alpha',
@@ -157,6 +161,7 @@ export const CHAINS: Readonly<
       spender: '0x0B674CC89F54a47Be4Eb6C1A125bB8f04A529181',
     },
     isTest: true,
+    generalIndex: 2,
   },
   bifrost: {
     id: 'bifrost',

@@ -11,6 +11,7 @@ type AssetsConfig = {
   assetId: AssetId
   estimatedTime: string
   kind: BridgeKind
+  isThroughKhala?: boolean
 }[]
 
 export interface Bridge {
@@ -44,7 +45,7 @@ const karuraToKhalaAssets: AssetsConfig = [
 const khalaToMoonriverAssets: AssetsConfig = [
   {assetId: 'pha', estimatedTime: '< 1 min', kind: 'khalaXTransfer'},
   {assetId: 'movr', estimatedTime: '< 1 min', kind: 'khalaXTransfer'},
-  {assetId: 'zlk', estimatedTime: '< 1 min', kind: 'khalaXTransfer'},
+  {assetId: 'zlk', estimatedTime: '~ 5 mins', kind: 'khalaXTransfer'},
 ]
 
 const moonriverToKhalaAssets: AssetsConfig = [
@@ -66,11 +67,21 @@ const bifrostToKhalaAssets: AssetsConfig = [
 ]
 
 const moonriverToBifrostAssets: AssetsConfig = [
-  {assetId: 'zlk', estimatedTime: '< 1 min', kind: 'evmChainBridge'},
+  {
+    assetId: 'zlk',
+    estimatedTime: '< 3 mins',
+    kind: 'evmChainBridge',
+    isThroughKhala: true,
+  },
 ]
 
 const bifrostToMoonriverAssets: AssetsConfig = [
-  {assetId: 'zlk', estimatedTime: '< 1 min', kind: 'polkadotXTokens'},
+  {
+    assetId: 'zlk',
+    estimatedTime: '~ 5 mins',
+    kind: 'polkadotXTokens',
+    isThroughKhala: true,
+  },
 ]
 
 export const BRIDGES: Readonly<Bridge[]> = [

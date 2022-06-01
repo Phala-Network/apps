@@ -63,7 +63,8 @@ export const xTokensPartialFeeFetcher = async (
   polkadotApi: ApiPromise,
   fromChainId: ChainId,
   toChainId: ChainId,
-  assetId: AssetId
+  assetId: AssetId,
+  isThroughKhala: boolean
 ) => {
   const {partialFee} = await transferByPolkadotXTokens({
     polkadotApi,
@@ -72,6 +73,7 @@ export const xTokensPartialFeeFetcher = async (
     fromChainId,
     toChainId,
     destinationAccount: ALICE,
+    isThroughKhala,
   }).paymentInfo(ALICE)
 
   const decimals = polkadotApi.registry.chainDecimals[0]

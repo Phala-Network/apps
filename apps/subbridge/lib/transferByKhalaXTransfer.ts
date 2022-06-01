@@ -78,11 +78,16 @@ export const transferByKhalaXTransfer = ({
     (toChainId === 'moonriver' || toChainId === 'moonbase-alpha') &&
     assetId === 'zlk'
   const decimals = asset.decimals.khala ?? asset.decimals.default
+  const generalIndex = toChain.kind === 'evm' ? toChain.generalIndex : null
   if (!extrinsicIds[assetId]) {
     throw new Error(`Unsupported asset: ${assetId}`)
   }
 
   const isThroughChainBridge = isToEthereum || isTransferringZLKToMoonriver
+
+  if (isThroughChainBridge && typeof generalIndex !== 'number') {
+    throw new Error('Transfer missing required parameters')
+  }
 
   return khalaApi.tx.xTransfer.transfer(
     {
@@ -95,7 +100,7 @@ export const transferByKhalaXTransfer = ({
         ? {
             X3: [
               {GeneralKey: '0x6362'}, // string "cb"
-              {GeneralIndex: isToEthereum ? 0 : 2}, // 0 is chainId of ethereum
+              {GeneralIndex: generalIndex},
               {GeneralKey: destinationAccount},
             ],
           }

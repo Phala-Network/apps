@@ -16,6 +16,7 @@ export const transferByPolkadotXTokens = ({
   fromChainId,
   toChainId,
   destinationAccount,
+  isThroughKhala = false,
 }: {
   polkadotApi: ApiPromise
   assetId: AssetId
@@ -23,6 +24,7 @@ export const transferByPolkadotXTokens = ({
   toChainId: ChainId
   amount: string
   destinationAccount: string
+  isThroughKhala?: boolean
 }): SubmittableExtrinsic<'promise', ISubmittableResult> => {
   const asset = ASSETS[assetId]
   const toChain = CHAINS[toChainId]
@@ -30,13 +32,13 @@ export const transferByPolkadotXTokens = ({
   const isTransferringBNCFromBifrost =
     (fromChainId === 'bifrost' || fromChainId === 'bifrost-test') &&
     assetId === 'bnc'
-  const isToEthereum = toChainId === 'ethereum' || toChainId === 'kovan'
-  const isTransferringZLKToMoonriver =
-    (toChainId === 'moonriver' || toChainId === 'moonbase-alpha') &&
-    assetId === 'zlk'
-  const isThroughKhala = isToEthereum || isTransferringZLKToMoonriver
+  const generalIndex = toChain.kind === 'evm' ? toChain.generalIndex : null
 
-  if (!asset.ormlToken || !toChain.paraId) {
+  if (
+    !asset.ormlToken ||
+    !toChain.paraId ||
+    (isThroughKhala && typeof generalIndex !== 'number')
+  ) {
     throw new Error('Transfer missing required parameters')
   }
 
@@ -53,7 +55,7 @@ export const transferByPolkadotXTokens = ({
               X4: [
                 {Parachain: khalaParaId},
                 {GeneralKey: '0x6362'}, // string "cb"
-                {GeneralIndex: isToEthereum ? 0 : 2}, // 0 is chainId of ethereum
+                {GeneralIndex: generalIndex},
                 {GeneralKey: destinationAccount},
               ],
             }
