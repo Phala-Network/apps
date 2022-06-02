@@ -48,6 +48,14 @@ const extrinsicIds: {[assetId in AssetId]?: Record<string, unknown>} = {
       },
     },
   },
+  ausd: {
+    Concrete: {
+      parents: 1,
+      interior: {
+        X2: [{Parachain: karuraParaId}, {GeneralKey: '0x0081'}],
+      },
+    },
+  },
 }
 
 export const transferByKhalaXTransfer = ({
@@ -66,13 +74,19 @@ export const transferByKhalaXTransfer = ({
   const asset = ASSETS[assetId]
   const toChain = CHAINS[toChainId]
   const isToEthereum = toChainId === 'ethereum' || toChainId === 'kovan'
-  // FIXME: zlk extrinsic body and fee
   const isTransferringZLKToMoonriver =
     (toChainId === 'moonriver' || toChainId === 'moonbase-alpha') &&
     assetId === 'zlk'
   const decimals = asset.decimals.khala ?? asset.decimals.default
+  const generalIndex = toChain.kind === 'evm' ? toChain.generalIndex : null
   if (!extrinsicIds[assetId]) {
     throw new Error(`Unsupported asset: ${assetId}`)
+  }
+
+  const isThroughChainBridge = isToEthereum || isTransferringZLKToMoonriver
+
+  if (isThroughChainBridge && typeof generalIndex !== 'number') {
+    throw new Error('Transfer missing required parameters')
   }
 
   return khalaApi.tx.xTransfer.transfer(
@@ -80,20 +94,17 @@ export const transferByKhalaXTransfer = ({
       id: extrinsicIds[assetId],
       fun: {Fungible: amount},
     },
-    isToEthereum || isTransferringZLKToMoonriver
-      ? {
-          parents: 0,
-          interior: {
+    {
+      parents: isThroughChainBridge ? 0 : 1,
+      interior: isThroughChainBridge
+        ? {
             X3: [
               {GeneralKey: '0x6362'}, // string "cb"
-              {GeneralIndex: isToEthereum ? 0 : 2}, // 0 is chainId of ethereum
+              {GeneralIndex: generalIndex},
               {GeneralKey: destinationAccount},
             ],
-          },
-        }
-      : {
-          parents: 1,
-          interior: {
+          }
+        : {
             X2: [
               {Parachain: toChain.paraId},
               toChain.kind === 'evm'
@@ -111,8 +122,8 @@ export const transferByKhalaXTransfer = ({
                   },
             ],
           },
-        },
-    isToEthereum
+    },
+    isThroughChainBridge
       ? null // No need to specify a certain weight if transfer will not through XCM
       : Decimal.pow(10, decimals - 3)
           .times(6)

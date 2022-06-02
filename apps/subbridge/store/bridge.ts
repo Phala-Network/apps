@@ -82,6 +82,7 @@ export const existentialDepositAtom = atom<Decimal>((get) => {
 export const bridgeInfoAtom = atom<{
   kind: BridgeKind | null
   estimatedTime: string | null
+  isThroughKhala: boolean
 }>((get) => {
   const fromChain = get(fromChainAtom)
   const toChain = get(toChainAtom)
@@ -93,16 +94,25 @@ export const bridgeInfoAtom = atom<{
   return {
     kind: bridge?.kind ?? null,
     estimatedTime: bridge?.estimatedTime ?? null,
+    isThroughKhala: bridge?.isThroughKhala || false,
   }
 })
 
 export const destChainTransactionFeeAtom = atom<Decimal>((get) => {
-  const {kind} = get(bridgeInfoAtom)
+  const {kind, isThroughKhala} = get(bridgeInfoAtom)
   const toChain = get(toChainAtom)
   const asset = get(assetAtom)
   const destChainTransactionFee = asset.destChainTransactionFee[toChain.id]
+  const khalaFee = asset.destChainTransactionFee['khala'] ?? new Decimal(0)
 
-  if (kind === 'evmChainBridge' || !destChainTransactionFee) {
+  if (kind !== 'evmChainBridge' && isThroughKhala) {
+    return khalaFee.add(destChainTransactionFee ?? 0)
+  }
+
+  if (
+    (kind === 'evmChainBridge' && !isThroughKhala) ||
+    !destChainTransactionFee
+  ) {
     return new Decimal(0)
   }
 

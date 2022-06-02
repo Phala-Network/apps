@@ -11,6 +11,7 @@ type AssetsConfig = {
   assetId: AssetId
   estimatedTime: string
   kind: BridgeKind
+  isThroughKhala?: boolean
 }[]
 
 export interface Bridge {
@@ -32,41 +33,55 @@ const khalaToEthereumAssets: AssetsConfig = [
 const khalaToKaruraAssets: AssetsConfig = [
   {assetId: 'pha', estimatedTime: '< 1 min', kind: 'khalaXTransfer'},
   {assetId: 'kar', estimatedTime: '< 1 min', kind: 'khalaXTransfer'},
+  {assetId: 'ausd', estimatedTime: '< 1 min', kind: 'khalaXTransfer'},
 ]
 
 const karuraToKhalaAssets: AssetsConfig = [
   {assetId: 'pha', estimatedTime: '< 1 min', kind: 'polkadotXTokens'},
   {assetId: 'kar', estimatedTime: '< 1 min', kind: 'polkadotXTokens'},
+  {assetId: 'ausd', estimatedTime: '< 1 min', kind: 'polkadotXTokens'},
 ]
 
 const khalaToMoonriverAssets: AssetsConfig = [
   {assetId: 'pha', estimatedTime: '< 1 min', kind: 'khalaXTransfer'},
   {assetId: 'movr', estimatedTime: '< 1 min', kind: 'khalaXTransfer'},
-  // {assetId: 'zlk', estimatedTime: '< 1 min', kind: 'khalaXTransfer'},
+  {assetId: 'zlk', estimatedTime: '~ 5 mins', kind: 'khalaXTransfer'},
 ]
 
 const moonriverToKhalaAssets: AssetsConfig = [
   {assetId: 'pha', estimatedTime: '< 1 min', kind: 'evmXTokens'},
   {assetId: 'movr', estimatedTime: '< 1 min', kind: 'evmXTokens'},
-  // {assetId: 'zlk', estimatedTime: '< 3 mins', kind: 'evmChainBridge'},
+  {assetId: 'zlk', estimatedTime: '< 3 mins', kind: 'evmChainBridge'},
 ]
 
 const khalaToBifrostAssets: AssetsConfig = [
   {assetId: 'pha', estimatedTime: '< 1 min', kind: 'khalaXTransfer'},
   {assetId: 'bnc', estimatedTime: '< 1 min', kind: 'khalaXTransfer'},
+  {assetId: 'zlk', estimatedTime: '< 1 min', kind: 'khalaXTransfer'},
 ]
 
 const bifrostToKhalaAssets: AssetsConfig = [
   {assetId: 'pha', estimatedTime: '< 1 min', kind: 'polkadotXTokens'},
   {assetId: 'bnc', estimatedTime: '< 1 min', kind: 'polkadotXTokens'},
+  {assetId: 'zlk', estimatedTime: '< 1 min', kind: 'polkadotXTokens'},
 ]
 
 const moonriverToBifrostAssets: AssetsConfig = [
-  // {assetId: 'zlk', estimatedTime: '< 1 min', kind: 'evmChainBridge'},
+  {
+    assetId: 'zlk',
+    estimatedTime: '< 3 mins',
+    kind: 'evmChainBridge',
+    isThroughKhala: true,
+  },
 ]
 
 const bifrostToMoonriverAssets: AssetsConfig = [
-  // {assetId: 'zlk', estimatedTime: '< 1 min', kind: 'polkadotXTokens'},
+  {
+    assetId: 'zlk',
+    estimatedTime: '~ 5 mins',
+    kind: 'polkadotXTokens',
+    isThroughKhala: true,
+  },
 ]
 
 export const BRIDGES: Readonly<Bridge[]> = [

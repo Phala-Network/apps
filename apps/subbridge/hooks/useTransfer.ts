@@ -32,7 +32,7 @@ export const useTransfer = () => {
   const amount = useAtomValue(amountAtom)
   const decimals = useAtomValue(decimalsAtom)
   const polkadotAccount = useAtomValue(polkadotAccountAtom)
-  const {kind: bridgeKind} = useAtomValue(bridgeInfoAtom)
+  const {kind: bridgeKind, isThroughKhala} = useAtomValue(bridgeInfoAtom)
   const khalaApi = usePolkadotApi(
     fromChain.id === 'thala' || toChain.id === 'thala' ? 'thala' : 'khala'
   )
@@ -75,6 +75,7 @@ export const useTransfer = () => {
         fromChainId: fromChain.id,
         toChainId: toChain.id,
         destinationAccount,
+        isThroughKhala,
       }).signAndSend(
         polkadotAccount.address,
         {

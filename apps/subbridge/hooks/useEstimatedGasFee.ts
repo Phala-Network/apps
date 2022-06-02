@@ -36,7 +36,7 @@ export const useEstimatedGasFee = (): Decimal | undefined => {
     fromChain.id === 'thala' || toChain.id === 'thala' ? 'thala' : 'khala'
   )
   const polkadotApi = useCurrentPolkadotApi()
-  const {kind: bridgeKind} = useAtomValue(bridgeInfoAtom)
+  const {kind: bridgeKind, isThroughKhala} = useAtomValue(bridgeInfoAtom)
 
   const {data: ethersGasPrice} = useSWR(
     ethersProvider ? [ethersProvider] : null,
@@ -69,7 +69,7 @@ export const useEstimatedGasFee = (): Decimal | undefined => {
 
   const {data: xTokensPartialFee} = useSWR(
     bridgeKind === 'polkadotXTokens' && polkadotApi
-      ? [polkadotApi, fromChain.id, toChain.id, asset.id]
+      ? [polkadotApi, fromChain.id, toChain.id, asset.id, isThroughKhala]
       : null,
     xTokensPartialFeeFetcher
   )

@@ -1,3 +1,4 @@
+import ausdIcon from '@/assets/ausd_asset_icon.png'
 import bncIcon from '@/assets/bnc_asset_icon.png'
 import karIcon from '@/assets/kar_asset_icon.png'
 import movrIcon from '@/assets/movr_asset_icon.png'
@@ -7,8 +8,8 @@ import Decimal from 'decimal.js'
 import {StaticImageData} from 'next/image'
 import {ChainId, EvmChainId} from './chain'
 
-export type AssetId = 'pha' | 'movr' | 'kar' | 'zlk' | 'bnc'
-export type OrmlToken = 'PHA' | 'KAR' | 'ZLK' | 'BNC'
+export type AssetId = 'pha' | 'movr' | 'kar' | 'zlk' | 'bnc' | 'ausd'
+export type OrmlToken = 'PHA' | 'KAR' | 'ZLK' | 'BNC' | 'KUSD'
 export interface Asset {
   id: AssetId
   symbol: string
@@ -102,8 +103,8 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
     destChainTransactionFee: {
       khala: new Decimal('0.000000016'),
       thala: new Decimal('0.000000016'),
-      bifrost: new Decimal('0.0000000051'),
-      'bifrost-test': new Decimal('0.0000000051'),
+      bifrost: new Decimal('0.0096'),
+      'bifrost-test': new Decimal('0.0096'),
     },
     decimals: {default: 18},
     erc20TokenContractAddress: {
@@ -112,7 +113,10 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
     },
     chainBridgeResourceId:
       '0x028da1efb56e124f659fa6d5d95b3cc541ce207cbfee2f4f066061cc92d37bae',
-    existentialDeposit: {},
+    existentialDeposit: {
+      bifrost: new Decimal('0.01'),
+      'bifrost-test': new Decimal('0.01'),
+    },
   },
   bnc: {
     id: 'bnc',
@@ -130,6 +134,26 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
     existentialDeposit: {
       bifrost: new Decimal('0.01'),
       'bifrost-test': new Decimal('0.01'),
+      khala: new Decimal('0.01'),
+      thala: new Decimal('0.01'),
+    },
+  },
+  ausd: {
+    id: 'ausd',
+    symbol: 'aUSD',
+    icon: ausdIcon,
+    ormlToken: 'KUSD', // TODO: change this to AUSD when karura finished migration
+    decimals: {default: 12},
+    khalaPalletAssetId: 4,
+    destChainTransactionFee: {
+      karura: new Decimal('0.003481902463'),
+      'karura-test': new Decimal('0.003481902463'),
+      khala: new Decimal('0.016'),
+      thala: new Decimal('0.016'),
+    },
+    existentialDeposit: {
+      karura: new Decimal('0.01'),
+      'karura-test': new Decimal('0.01'),
       khala: new Decimal('0.01'),
       thala: new Decimal('0.01'),
     },

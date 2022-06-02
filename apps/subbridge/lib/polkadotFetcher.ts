@@ -63,7 +63,8 @@ export const xTokensPartialFeeFetcher = async (
   polkadotApi: ApiPromise,
   fromChainId: ChainId,
   toChainId: ChainId,
-  assetId: AssetId
+  assetId: AssetId,
+  isThroughKhala: boolean
 ) => {
   const {partialFee} = await transferByPolkadotXTokens({
     polkadotApi,
@@ -72,6 +73,7 @@ export const xTokensPartialFeeFetcher = async (
     fromChainId,
     toChainId,
     destinationAccount: ALICE,
+    isThroughKhala,
   }).paymentInfo(ALICE)
 
   const decimals = polkadotApi.registry.chainDecimals[0]
@@ -92,9 +94,7 @@ export const khalaXTransferPartialFeeFetcher = async (
     toChainId,
     assetId,
   })
-  if (extrinsic) {
-    const decimals = khalaApi.registry.chainDecimals[0]
-    const {partialFee} = await extrinsic.paymentInfo(ALICE)
-    return new Decimal(partialFee.toString()).div(Decimal.pow(10, decimals))
-  }
+  const decimals = khalaApi.registry.chainDecimals[0]
+  const {partialFee} = await extrinsic.paymentInfo(ALICE)
+  return new Decimal(partialFee.toString()).div(Decimal.pow(10, decimals))
 }

@@ -71,7 +71,7 @@ export const transferByChainBridge = async ({
     throw new Error('Transfer missing required parameters')
   }
   return contract.deposit(
-    1,
+    1, // hardcoded khalaChainId
     chainBridgeResourceId,
     await createChainBridgeData(khalaApi, destinationAccount, amount, toChainId)
   )
