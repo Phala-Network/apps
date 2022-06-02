@@ -107,12 +107,12 @@ export const BRIDGES: Readonly<Bridge[]> = [
           {assetId: 'hko', estimatedTime: '< 1 min', kind: 'khalaXTransfer'},
         ],
       },
-      {
-        id: 'basilisk',
-        assets: [
-          {assetId: 'pha', estimatedTime: '< 1 min', kind: 'khalaXTransfer'},
-        ],
-      },
+      // {
+      //   id: 'basilisk',
+      //   assets: [
+      //     {assetId: 'pha', estimatedTime: '< 1 min', kind: 'khalaXTransfer'},
+      //   ],
+      // },
     ],
   },
   {
