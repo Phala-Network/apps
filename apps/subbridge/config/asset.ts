@@ -8,15 +8,8 @@ import zlkIcon from '@/assets/zlk_asset_icon.png'
 import Decimal from 'decimal.js'
 import {ChainId, EvmChainId} from './chain'
 
-export type AssetId =
-  | 'pha'
-  | 'movr'
-  | 'kar'
-  | 'zlk'
-  | 'bnc'
-  | 'ausd'
-  | 'hko'
-  | 'bsx'
+export type AssetId = 'pha' | 'movr' | 'kar' | 'zlk' | 'bnc' | 'ausd' | 'hko'
+
 export type OrmlToken = 'PHA' | 'KAR' | 'ZLK' | 'BNC' | 'KUSD'
 export interface Asset {
   id: AssetId
@@ -24,8 +17,8 @@ export interface Asset {
   icon: string
   decimals: Partial<Record<ChainId, number>> & {default: number}
   xc20Address?: `0x${string}`
-  khalaPalletAssetId?: number
   ormlToken?: OrmlToken
+  palletAssetId?: Partial<Record<ChainId, number>>
   erc20TokenContractAddress?: {
     [chainId in EvmChainId]?: `0x${string}`
   }
@@ -57,7 +50,7 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
       karura: new Decimal('0.0512'),
       'karura-test': new Decimal('0.0512'),
       moonriver: new Decimal('0.05868512'),
-      // heiko: new Decimal('0.0384'),
+      'parallel-heiko': new Decimal('0.0384'),
     },
     existentialDeposit: {
       khala: new Decimal('0.01'),
@@ -67,13 +60,19 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
       bifrost: new Decimal('0.04'),
       'bifrost-test': new Decimal('0.04'),
     },
+    palletAssetId: {
+      'parallel-heiko': 115,
+    },
   },
   movr: {
     id: 'movr',
     symbol: 'MOVR',
     icon: movrIcon,
     decimals: {default: 18},
-    khalaPalletAssetId: 6,
+    palletAssetId: {
+      khala: 6,
+      thala: 6,
+    },
     xc20Address: '0x0000000000000000000000000000000000000802',
     destChainTransactionFee: {
       moonriver: new Decimal('0.00008'),
@@ -88,7 +87,10 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
     icon: karIcon,
     ormlToken: 'KAR',
     decimals: {default: 12},
-    khalaPalletAssetId: 1,
+    palletAssetId: {
+      khala: 1,
+      thala: 1,
+    },
     destChainTransactionFee: {
       karura: new Decimal('0.0064'),
       'karura-test': new Decimal('0.0064'),
@@ -106,7 +108,10 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
     id: 'zlk',
     symbol: 'ZLK',
     icon: zlkIcon,
-    khalaPalletAssetId: 3,
+    palletAssetId: {
+      khala: 3,
+      thala: 3,
+    },
     ormlToken: 'ZLK',
     destChainTransactionFee: {
       khala: new Decimal('0.000000016'),
@@ -130,7 +135,10 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
     id: 'bnc',
     symbol: 'BNC',
     icon: bncIcon,
-    khalaPalletAssetId: 2,
+    palletAssetId: {
+      khala: 2,
+      thala: 2,
+    },
     ormlToken: 'BNC',
     decimals: {default: 12},
     destChainTransactionFee: {
@@ -152,7 +160,10 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
     icon: ausdIcon,
     ormlToken: 'KUSD', // TODO: change this to AUSD when karura finished migration
     decimals: {default: 12},
-    khalaPalletAssetId: 4,
+    palletAssetId: {
+      khala: 4,
+      thala: 4,
+    },
     destChainTransactionFee: {
       karura: new Decimal('0.003481902463'),
       'karura-test': new Decimal('0.003481902463'),
@@ -171,14 +182,18 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
     symbol: 'HKO',
     icon: hkoIcon,
     decimals: {default: 12},
-    khalaPalletAssetId: 7,
+    palletAssetId: {
+      khala: 7,
+      thala: 7,
+      'parallel-heiko': 0,
+    },
     destChainTransactionFee: {
-      heiko: new Decimal('0.0029'),
+      'parallel-heiko': new Decimal('0.0029'),
       khala: new Decimal('0.064'),
       thala: new Decimal('0.064'),
     },
     existentialDeposit: {
-      heiko: new Decimal('0.01'),
+      'parallel-heiko': new Decimal('0.01'),
     },
   },
 }

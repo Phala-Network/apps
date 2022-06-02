@@ -1,11 +1,12 @@
+import basiliskIcon from '@/assets/basilisk_chain_icon.png'
 import bifrostIcon from '@/assets/bifrost_chain_icon.svg'
 import ethereumIcon from '@/assets/ethereum_chain_icon.jpg'
-import heikoIcon from '@/assets/heiko_chain_icon.svg'
 import karuraIcon from '@/assets/karura_chain_icon.png'
 import khalaIcon from '@/assets/khala_chain_icon.svg'
 import kovanIcon from '@/assets/kovan_chain_icon.png'
 import moonbaseAlphaIcon from '@/assets/moonbase_alpha_chain_icon.png'
 import moonriverIcon from '@/assets/moonriver_chain_icon.png'
+import parallelHeikoIcon from '@/assets/parallel_heiko_chain_icon.svg'
 import {AssetId} from './asset'
 
 export type EvmChainId = 'ethereum' | 'kovan' | 'moonriver' | 'moonbase-alpha'
@@ -16,8 +17,8 @@ export type PolkadotChainId =
   | 'karura-test'
   | 'bifrost'
   | 'bifrost-test'
-  | 'heiko'
-// | 'basilisk'
+  | 'parallel-heiko'
+  | 'basilisk'
 export type ChainId = EvmChainId | PolkadotChainId
 export type ChainKind = 'evm' | 'polkadot'
 
@@ -194,11 +195,11 @@ export const CHAINS: Readonly<
     nativeAsset: 'bnc',
     isTest: true,
   },
-  heiko: {
-    id: 'heiko',
-    name: 'Heiko',
+  'parallel-heiko': {
+    id: 'parallel-heiko',
+    name: 'Parallel Heiko',
     kind: 'polkadot',
-    icon: heikoIcon,
+    icon: parallelHeikoIcon,
     paraId: 2085,
     endpoint: [
       'wss://parallel-heiko.api.onfinality.io/public-ws',
@@ -208,17 +209,17 @@ export const CHAINS: Readonly<
     ss58Format: 110,
     nativeAsset: 'hko',
   },
-  // basilisk: {
-  //   id: 'basilisk',
-  //   name: 'Basilisk',
-  //   kind: 'polkadot',
-  //   paraId: 2090,
-  //   endpoint: [
-  //     'wss://rpc-01.basilisk.hydradx.io',
-  //     'wss://basilisk.api.onfinality.io/public-ws',
-  //     'wss://basilisk-rpc.dwellir.com',
-  //   ],
-  //   ss58Format: 10041,
-  //   nativeAsset: 'bsx',
-  // },
+  basilisk: {
+    id: 'basilisk',
+    name: 'Basilisk',
+    icon: basiliskIcon,
+    kind: 'polkadot',
+    paraId: 2090,
+    endpoint: [
+      'wss://rpc-01.basilisk.hydradx.io',
+      'wss://basilisk.api.onfinality.io/public-ws',
+      'wss://basilisk-rpc.dwellir.com',
+    ],
+    ss58Format: 10041,
+  },
 }

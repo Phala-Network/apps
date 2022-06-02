@@ -29,13 +29,17 @@ export const transferByPolkadotXTokens = ({
   const asset = ASSETS[assetId]
   const toChain = CHAINS[toChainId]
   const decimals = asset.decimals[fromChainId] ?? asset.decimals.default
+  const shouldUsePalletAssetId = fromChainId === 'parallel-heiko'
+  const palletAssetId = asset.palletAssetId?.[fromChainId]
   const isTransferringBNCFromBifrost =
     (fromChainId === 'bifrost' || fromChainId === 'bifrost-test') &&
     assetId === 'bnc'
   const generalIndex = toChain.kind === 'evm' ? toChain.generalIndex : null
 
   if (
-    !asset.ormlToken ||
+    (shouldUsePalletAssetId
+      ? palletAssetId === undefined
+      : asset.ormlToken === undefined) ||
     !toChain.paraId ||
     (isThroughKhala && typeof generalIndex !== 'number')
   ) {
@@ -43,9 +47,11 @@ export const transferByPolkadotXTokens = ({
   }
 
   return polkadotApi.tx.xTokens.transfer(
-    {
-      [isTransferringBNCFromBifrost ? 'Native' : 'Token']: asset.ormlToken,
-    },
+    shouldUsePalletAssetId
+      ? palletAssetId
+      : {
+          [isTransferringBNCFromBifrost ? 'Native' : 'Token']: asset.ormlToken,
+        },
     amount,
     {
       V1: {
