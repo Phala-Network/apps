@@ -1,0 +1,12 @@
+diff --git a/index.js b/index.js
+index f93882de25618649e41d64a525df121b9efbda46..ff189a0b8657a2dd5c64ab1fcc9d0d5a81f70404 100644
+--- a/index.js
++++ b/index.js
+@@ -24,6 +24,7 @@ module.exports = ({ dynamicAssetPrefix = false, ...nextConfig } = {}) => {
+         test: new RegExp(`\\.(${nextConfig.fileExtensions.join('|')})$`),
+         // Next.js already handles url() in css/sass/scss files
+         issuer: new RegExp('\\.\\w+(?<!(s?c|sa)ss)$', 'i'),
++        resourceQuery: {not: /react/},
+         exclude: nextConfig.exclude,
+         use: [
+           {

@@ -37,8 +37,8 @@ const khalaToKaruraAssets: AssetsConfig = [
 ]
 
 const karuraToKhalaAssets: AssetsConfig = [
-  {assetId: 'pha', estimatedTime: '< 1 min', kind: 'polkadotXTokens'},
   {assetId: 'kar', estimatedTime: '< 1 min', kind: 'polkadotXTokens'},
+  {assetId: 'pha', estimatedTime: '< 1 min', kind: 'polkadotXTokens'},
   {assetId: 'ausd', estimatedTime: '< 1 min', kind: 'polkadotXTokens'},
 ]
 
@@ -49,8 +49,8 @@ const khalaToMoonriverAssets: AssetsConfig = [
 ]
 
 const moonriverToKhalaAssets: AssetsConfig = [
-  {assetId: 'pha', estimatedTime: '< 1 min', kind: 'evmXTokens'},
   {assetId: 'movr', estimatedTime: '< 1 min', kind: 'evmXTokens'},
+  {assetId: 'pha', estimatedTime: '< 1 min', kind: 'evmXTokens'},
   {assetId: 'zlk', estimatedTime: '< 3 mins', kind: 'evmChainBridge'},
 ]
 
@@ -61,8 +61,8 @@ const khalaToBifrostAssets: AssetsConfig = [
 ]
 
 const bifrostToKhalaAssets: AssetsConfig = [
-  {assetId: 'pha', estimatedTime: '< 1 min', kind: 'polkadotXTokens'},
   {assetId: 'bnc', estimatedTime: '< 1 min', kind: 'polkadotXTokens'},
+  {assetId: 'pha', estimatedTime: '< 1 min', kind: 'polkadotXTokens'},
   {assetId: 'zlk', estimatedTime: '< 1 min', kind: 'polkadotXTokens'},
 ]
 
@@ -100,6 +100,12 @@ export const BRIDGES: Readonly<Bridge[]> = [
       {id: 'karura', assets: khalaToKaruraAssets},
       {id: 'moonriver', assets: khalaToMoonriverAssets},
       {id: 'bifrost', assets: khalaToBifrostAssets},
+      {
+        id: 'heiko',
+        assets: [
+          {assetId: 'hko', estimatedTime: '< 1 min', kind: 'khalaXTransfer'},
+        ],
+      },
     ],
   },
   {
@@ -145,6 +151,18 @@ export const BRIDGES: Readonly<Bridge[]> = [
     toChains: [
       {id: 'thala', assets: bifrostToKhalaAssets},
       {id: 'moonbase-alpha', assets: bifrostToMoonriverAssets},
+    ],
+  },
+  {
+    fromChain: 'heiko',
+    toChains: [
+      {
+        id: 'khala',
+        assets: [
+          {assetId: 'hko', estimatedTime: '< 1 min', kind: 'polkadotXTokens'},
+          {assetId: 'pha', estimatedTime: '< 1 min', kind: 'polkadotXTokens'},
+        ],
+      },
     ],
   },
 ]

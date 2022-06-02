@@ -1,19 +1,27 @@
 import ausdIcon from '@/assets/ausd_asset_icon.png'
 import bncIcon from '@/assets/bnc_asset_icon.png'
+import hkoIcon from '@/assets/hko_asset_icon.svg'
 import karIcon from '@/assets/kar_asset_icon.png'
 import movrIcon from '@/assets/movr_asset_icon.png'
 import phaIcon from '@/assets/pha_asset_icon.png'
 import zlkIcon from '@/assets/zlk_asset_icon.png'
 import Decimal from 'decimal.js'
-import {StaticImageData} from 'next/image'
 import {ChainId, EvmChainId} from './chain'
 
-export type AssetId = 'pha' | 'movr' | 'kar' | 'zlk' | 'bnc' | 'ausd'
+export type AssetId =
+  | 'pha'
+  | 'movr'
+  | 'kar'
+  | 'zlk'
+  | 'bnc'
+  | 'ausd'
+  | 'hko'
+  | 'bsx'
 export type OrmlToken = 'PHA' | 'KAR' | 'ZLK' | 'BNC' | 'KUSD'
 export interface Asset {
   id: AssetId
   symbol: string
-  icon: StaticImageData
+  icon: string
   decimals: Partial<Record<ChainId, number>> & {default: number}
   xc20Address?: `0x${string}`
   khalaPalletAssetId?: number
@@ -156,6 +164,21 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
       'karura-test': new Decimal('0.01'),
       khala: new Decimal('0.01'),
       thala: new Decimal('0.01'),
+    },
+  },
+  hko: {
+    id: 'hko',
+    symbol: 'HKO',
+    icon: hkoIcon,
+    decimals: {default: 12},
+    khalaPalletAssetId: 7,
+    destChainTransactionFee: {
+      heiko: new Decimal('0.0029'),
+      khala: new Decimal('0.064'),
+      thala: new Decimal('0.064'),
+    },
+    existentialDeposit: {
+      heiko: new Decimal('0.01'),
     },
   },
 }

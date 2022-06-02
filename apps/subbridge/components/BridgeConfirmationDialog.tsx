@@ -106,7 +106,7 @@ const Detail: FC<
       <Stack spacing={2}>
         <Info label={kind}>
           <Box sx={{display: 'flex', alignItems: 'center'}}>
-            <img css={{width: 16, height: 16}} src={chain.icon.src} />
+            <img css={{width: 16, height: 16}} src={chain.icon} />
             <Typography variant="body2" component="span" sx={{ml: 1}}>
               {chain.name}
             </Typography>
@@ -138,7 +138,7 @@ const Detail: FC<
               {amount || <Skeleton width={64} />}
             </Typography>
             <Box sx={{display: 'flex', alignItems: 'center', ml: 1}}>
-              <img css={{width: 16, height: 16}} src={asset.icon.src} />
+              <img css={{width: 16, height: 16}} src={asset.icon} />
               <Typography variant="body2" sx={{ml: 1}}>
                 {asset.symbol}
               </Typography>

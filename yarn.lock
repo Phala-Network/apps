@@ -4236,6 +4236,7 @@ __metadata:
     ethers: ^5.6.8
     jotai: ^1.6.7
     next: ^12.1.6
+    next-images: ^1.8.4
     next-transpile-modules: ^9.0.0
     notistack: ^2.0.5
     react: 17.0.2
@@ -14700,6 +14701,30 @@ __metadata:
   languageName: node
   linkType: hard
 
+"next-images@npm:1.8.4":
+  version: 1.8.4
+  resolution: "next-images@npm:1.8.4"
+  dependencies:
+    file-loader: ^6.2.0
+    url-loader: ^4.1.0
+  peerDependencies:
+    webpack: ^4.0.0 || ^5.0.0
+  checksum: f7d59ff211d6ff93f274a899df85ebabc20630e18fc3c471f81ab64fa1ea856ef445da5d7dae34a4be36ef002e63e8e446cddf8e70043a6c6e40fd36e1aabdf5
+  languageName: node
+  linkType: hard
+
+"next-images@patch:next-images@npm:1.8.4#.yarn/patches/next-images-npm-1.8.4-dfc7ff4bad.patch::locator=phala-apps%40workspace%3A.":
+  version: 1.8.4
+  resolution: "next-images@patch:next-images@npm%3A1.8.4#.yarn/patches/next-images-npm-1.8.4-dfc7ff4bad.patch::version=1.8.4&hash=ac8921&locator=phala-apps%40workspace%3A."
+  dependencies:
+    file-loader: ^6.2.0
+    url-loader: ^4.1.0
+  peerDependencies:
+    webpack: ^4.0.0 || ^5.0.0
+  checksum: f25154e9c60269ea97559b0cda1450deea6731934361066ca97b5ffe7ca54ecdb24ecf28d033e513c4d1bed5d2a2bfc42c7a111e40c38eea7c165db5a5b1db0b
+  languageName: node
+  linkType: hard
+
 "next-tick@npm:1, next-tick@npm:^1.1.0":
   version: 1.1.0
   resolution: "next-tick@npm:1.1.0"
@@ -19323,7 +19348,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"url-loader@npm:^4.1.1":
+"url-loader@npm:^4.1.0, url-loader@npm:^4.1.1":
   version: 4.1.1
   resolution: "url-loader@npm:4.1.1"
   dependencies:
