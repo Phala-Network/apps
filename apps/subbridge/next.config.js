@@ -9,23 +9,18 @@ const withTM = require('next-transpile-modules')(
     resolveSymlinks: false,
   }
 )
+const withImages = require('next-images')
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  images: {
+    disableStaticImages: true,
+  },
   env: {
     CONTEXT: process.env.CONTEXT,
   },
   reactStrictMode: true,
   webpack(config) {
-    config.module.rules.push({
-      test: /\.svg$/i,
-      issuer: /\.[jt]sx?$/,
-      resourceQuery: {not: /react/},
-      type: 'asset/resource',
-      generator: {
-        filename: 'static/media/[name].[hash][ext]',
-      },
-    })
     config.module.rules.push({
       test: /\.svg$/i,
       resourceQuery: /react/,
@@ -44,4 +39,4 @@ const nextConfig = {
   },
 }
 
-module.exports = withBundleAnalyzer(withTM(nextConfig))
+module.exports = withBundleAnalyzer(withTM(withImages(nextConfig)))

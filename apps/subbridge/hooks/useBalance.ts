@@ -3,8 +3,8 @@ import {
   ethersContractBalanceFetcher,
 } from '@/lib/ethersFetcher'
 import {
-  khalaTokenBalanceFetcher,
   ormlTokenBalanceFetcher,
+  palletAssetBalanceFetcher,
   polkadotAvailableBalanceFetcher,
 } from '@/lib/polkadotFetcher'
 import {assetAtom, decimalsAtom, fromChainAtom} from '@/store/bridge'
@@ -21,7 +21,7 @@ const refreshInterval = 12000
 
 type BalanceSource =
   | 'ormlToken'
-  | 'khala'
+  | 'palletAsset'
   | 'polkadotNative'
   | 'evmBalance'
   | 'evmContract'
@@ -49,11 +49,13 @@ export const useBalance = (): Decimal | undefined => {
   ) {
     balanceSource = 'ormlToken'
   } else if (
-    (fromChain.id === 'khala' || fromChain.id === 'thala') &&
+    (fromChain.id === 'khala' ||
+      fromChain.id === 'thala' ||
+      fromChain.id === 'parallel-heiko') &&
     asset.id !== fromChain.nativeAsset &&
-    asset.khalaPalletAssetId !== undefined
+    asset.palletAssetId?.[fromChain.id] !== undefined
   ) {
-    balanceSource = 'khala'
+    balanceSource = 'palletAsset'
   } else if (
     fromChain.kind === 'polkadot' &&
     fromChain.nativeAsset === asset.id
@@ -72,16 +74,18 @@ export const useBalance = (): Decimal | undefined => {
     ormlTokenBalanceFetcher,
     {refreshInterval}
   )
-  const {data: khalaTokenBalance} = useSWR(
-    balanceSource === 'khala' && polkadotAccount && asset.khalaPalletAssetId
+  const {data: palletAssetBalance} = useSWR(
+    balanceSource === 'palletAsset' &&
+      polkadotAccount &&
+      asset.palletAssetId?.[fromChain.id]
       ? [
           polkadotApi,
           polkadotAccount.address,
-          asset.khalaPalletAssetId,
+          asset.palletAssetId[fromChain.id],
           decimals,
         ]
       : null,
-    khalaTokenBalanceFetcher,
+    palletAssetBalanceFetcher,
     {refreshInterval}
   )
   const {data: polkadotNativeChainBalance} = useSWR(
@@ -108,7 +112,7 @@ export const useBalance = (): Decimal | undefined => {
 
   const balance: Decimal | undefined =
     ormlTokenBalance ||
-    khalaTokenBalance ||
+    palletAssetBalance ||
     evmNativeBalance ||
     polkadotNativeChainBalance ||
     ethersContractBalance

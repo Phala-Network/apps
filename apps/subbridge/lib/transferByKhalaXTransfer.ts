@@ -8,6 +8,7 @@ import Decimal from 'decimal.js'
 const moonriverParaId = CHAINS.moonriver.paraId
 const karuraParaId = CHAINS.karura.paraId
 const bifrostParaId = CHAINS.bifrost.paraId
+const parallelHeikoParaId = CHAINS['parallel-heiko'].paraId
 
 const extrinsicIds: {[assetId in AssetId]?: Record<string, unknown>} = {
   pha: {
@@ -53,6 +54,14 @@ const extrinsicIds: {[assetId in AssetId]?: Record<string, unknown>} = {
       parents: 1,
       interior: {
         X2: [{Parachain: karuraParaId}, {GeneralKey: '0x0081'}],
+      },
+    },
+  },
+  hko: {
+    Concrete: {
+      parents: 1,
+      interior: {
+        X2: [{Parachain: parallelHeikoParaId}, {GeneralKey: 'HKO'}],
       },
     },
   },

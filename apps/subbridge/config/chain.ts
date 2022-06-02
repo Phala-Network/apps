@@ -1,9 +1,12 @@
-import bifrostIcon from '@/assets/bifrost_chain_icon.png'
+import basiliskIcon from '@/assets/basilisk_chain_icon.png'
+import bifrostIcon from '@/assets/bifrost_chain_icon.svg'
 import ethereumIcon from '@/assets/ethereum_chain_icon.jpg'
 import karuraIcon from '@/assets/karura_chain_icon.png'
-import khalaIcon from '@/assets/khala_chain_icon.jpg'
+import khalaIcon from '@/assets/khala_chain_icon.svg'
+import kovanIcon from '@/assets/kovan_chain_icon.png'
+import moonbaseAlphaIcon from '@/assets/moonbase_alpha_chain_icon.png'
 import moonriverIcon from '@/assets/moonriver_chain_icon.png'
-import {StaticImageData} from 'next/image'
+import parallelHeikoIcon from '@/assets/parallel_heiko_chain_icon.svg'
 import {AssetId} from './asset'
 
 export type EvmChainId = 'ethereum' | 'kovan' | 'moonriver' | 'moonbase-alpha'
@@ -14,12 +17,14 @@ export type PolkadotChainId =
   | 'karura-test'
   | 'bifrost'
   | 'bifrost-test'
+  | 'parallel-heiko'
+  | 'basilisk'
 export type ChainId = EvmChainId | PolkadotChainId
 export type ChainKind = 'evm' | 'polkadot'
 
 interface BaseChain {
   name: string
-  icon: StaticImageData
+  icon: string
   kind: ChainKind
   isTest?: boolean
   nativeAsset?: AssetId
@@ -100,7 +105,7 @@ export const CHAINS: Readonly<
   kovan: {
     id: 'kovan',
     name: 'Kovan',
-    icon: ethereumIcon,
+    icon: kovanIcon,
     kind: 'evm',
     evmChainId: 42,
     currencySymbol: 'kETH',
@@ -152,7 +157,7 @@ export const CHAINS: Readonly<
   'moonbase-alpha': {
     id: 'moonbase-alpha',
     name: 'Moonbase Alpha',
-    icon: moonriverIcon,
+    icon: moonbaseAlphaIcon,
     kind: 'evm',
     evmChainId: 1287,
     currencySymbol: 'DEV',
@@ -189,5 +194,32 @@ export const CHAINS: Readonly<
     paraId: 2001,
     nativeAsset: 'bnc',
     isTest: true,
+  },
+  'parallel-heiko': {
+    id: 'parallel-heiko',
+    name: 'Parallel Heiko',
+    kind: 'polkadot',
+    icon: parallelHeikoIcon,
+    paraId: 2085,
+    endpoint: [
+      'wss://parallel-heiko.api.onfinality.io/public-ws',
+      'wss://heiko-rpc.parallel.fi',
+      'wss://heiko-rpc.dwellir.com',
+    ],
+    ss58Format: 110,
+    nativeAsset: 'hko',
+  },
+  basilisk: {
+    id: 'basilisk',
+    name: 'Basilisk',
+    icon: basiliskIcon,
+    kind: 'polkadot',
+    paraId: 2090,
+    endpoint: [
+      'wss://rpc-01.basilisk.hydradx.io',
+      'wss://basilisk.api.onfinality.io/public-ws',
+      'wss://basilisk-rpc.dwellir.com',
+    ],
+    ss58Format: 10041,
   },
 }

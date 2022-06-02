@@ -20,7 +20,7 @@ const AssetSelect: FC<TextFieldProps & {assetIds: AssetId[]}> = ({
     assetIds.forEach((assetId) => {
       const {icon} = ASSETS[assetId]
       const image = new Image()
-      image.src = icon.src
+      image.src = icon
     })
   }, [assetIds])
 
@@ -50,7 +50,7 @@ const AssetSelect: FC<TextFieldProps & {assetIds: AssetId[]}> = ({
             <Box sx={{display: 'flex', alignItems: 'center'}}>
               <img
                 css={{width: 22, height: 22, flex: 'none', borderRadius: '50%'}}
-                src={icon.src}
+                src={icon}
                 alt={symbol}
               />
               <Typography variant="body1" component="span" sx={{ml: 1}}>
