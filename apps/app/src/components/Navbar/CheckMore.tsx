@@ -41,6 +41,10 @@ const LINKS = [
     link: 'https://wiki.phala.network',
   },
   {
+    name: 'Changelog',
+    link: 'https://forum.phala.network/t/topic/3320',
+  },
+  {
     name: 'Forum',
     link: 'https://forum.phala.network/t/topic/2450/2',
   },
