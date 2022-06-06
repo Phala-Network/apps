@@ -14,7 +14,7 @@ const Footer: FC = () => {
           component="span"
           sx={{mr: 2, color: theme.palette.text.secondary}}
         >
-          Powered by
+          Brought by
         </Typography>
         <a href="https://phala.network" target="_blank" rel="noopener">
           <PhalaBrandLogo
