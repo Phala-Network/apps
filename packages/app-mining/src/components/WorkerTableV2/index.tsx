@@ -107,7 +107,7 @@ const WorkerTableV2: FC<{
       },
     },
     {
-      refetchInterval: 60 * 10 * 1000,
+      refetchInterval: 60 * 1000,
       keepPreviousData: true,
       enabled:
         (kind === 'mining' && Boolean(address)) ||

@@ -6,8 +6,8 @@ import React, {ReactNode, useState} from 'react'
 import {QueryClient, QueryClientProvider} from 'react-query'
 import {ReactQueryDevtools} from 'react-query/devtools'
 import {ThemeProvider} from 'styled-components'
-import theme, {baseTheme} from './theme'
 import {useCurrentNetworkNode} from './store/networkNode'
+import theme, {baseTheme} from './theme'
 
 const WrapApp: React.FC<{children: ReactNode}> = ({children}) => {
   const [currentNetworkNode] = useCurrentNetworkNode()
@@ -17,7 +17,6 @@ const WrapApp: React.FC<{children: ReactNode}> = ({children}) => {
         defaultOptions: {
           queries: {
             refetchOnMount: false,
-            refetchOnWindowFocus: false,
             onError: () => {
               toaster.negative(
                 'Something went wrong. Please try again later.',

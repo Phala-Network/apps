@@ -15,7 +15,7 @@ const UpdateInfo = (): JSX.Element => {
     client,
     {},
     {
-      refetchInterval: 60 * 10 * 1000,
+      refetchInterval: 60 * 1000,
     }
   )
   const [distance, setDistance] = useState('')
