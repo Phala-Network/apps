@@ -28,6 +28,7 @@ interface BaseChain {
   kind: ChainKind
   isTest?: boolean
   nativeAsset?: AssetId
+  explorerURL?: string
 }
 
 export interface EvmChain extends BaseChain {
@@ -70,6 +71,7 @@ export const CHAINS: Readonly<
     ss58Format: 30,
     paraId: 2004,
     nativeAsset: 'pha',
+    explorerURL: 'https://khala.subscan.io/',
   },
   karura: {
     id: 'karura',
@@ -88,6 +90,7 @@ export const CHAINS: Readonly<
     ss58Format: 8,
     paraId: 2000,
     nativeAsset: 'kar',
+    explorerURL: 'https://karura.subscan.io/',
   },
   ethereum: {
     id: 'ethereum',
@@ -101,6 +104,7 @@ export const CHAINS: Readonly<
       spender: '0xEEc0fb4913119567cDfC0c5fc2Bf8f9F9B226c2d',
     },
     generalIndex: 0,
+    explorerURL: 'https://etherscan.io/',
   },
   kovan: {
     id: 'kovan',
@@ -115,6 +119,7 @@ export const CHAINS: Readonly<
       spender: '0xF69b08D649B744A4d4781CB1B86E30Cc9Ac9991b',
     },
     generalIndex: 0,
+    explorerURL: 'https://kovan.etherscan.io/',
   },
   thala: {
     id: 'thala',
@@ -153,6 +158,7 @@ export const CHAINS: Readonly<
     },
     xTokensContractAddress: '0x0000000000000000000000000000000000000804',
     generalIndex: 2,
+    explorerURL: 'https://moonriver.moonscan.io/',
   },
   'moonbase-alpha': {
     id: 'moonbase-alpha',
@@ -167,6 +173,7 @@ export const CHAINS: Readonly<
     },
     isTest: true,
     generalIndex: 2,
+    explorerURL: 'https://moonbase.moonscan.io/',
   },
   bifrost: {
     id: 'bifrost',
@@ -183,6 +190,7 @@ export const CHAINS: Readonly<
     ss58Format: 6,
     paraId: 2001,
     nativeAsset: 'bnc',
+    explorerURL: 'https://bifrost.subscan.io/',
   },
   'bifrost-test': {
     id: 'bifrost-test',
@@ -208,6 +216,7 @@ export const CHAINS: Readonly<
     ],
     ss58Format: 110,
     nativeAsset: 'hko',
+    explorerURL: 'https://parallel-heiko.subscan.io/',
   },
   basilisk: {
     id: 'basilisk',

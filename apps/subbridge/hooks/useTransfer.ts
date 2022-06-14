@@ -11,8 +11,8 @@ import {
   fromChainAtom,
   toChainAtom,
 } from '@/store/bridge'
+import {waitSignAndSend} from '@phala/react-libs'
 import {polkadotAccountAtom} from '@phala/store'
-import {Callback, ISubmittableResult} from '@polkadot/types/types'
 import Decimal from 'decimal.js'
 import {useAtomValue} from 'jotai'
 import {useMemo} from 'react'
@@ -46,8 +46,8 @@ export const useTransfer = () => {
     [amount, decimals]
   )
 
-  if (bridgeKind === 'evmChainBridge') {
-    return async () => {
+  return ({onReady}: {onReady: () => void}) => {
+    if (bridgeKind === 'evmChainBridge') {
       if (!ethersChainBridgeContract || !khalaApi) {
         throw new Error('Transfer missing required parameters')
       }
@@ -59,16 +59,17 @@ export const useTransfer = () => {
         destinationAccount,
         amount: rawAmount,
         toChainId: toChain.id,
+      }).then((transaction) => {
+        onReady()
+        return transaction
       })
     }
-  }
 
-  if (bridgeKind === 'polkadotXTokens') {
-    return async (statusCb?: Callback<ISubmittableResult>) => {
+    if (bridgeKind === 'polkadotXTokens') {
       if (!polkadotApi || !polkadotAccount?.wallet?.signer) {
         throw new Error('Transfer missing required parameters')
       }
-      return transferByPolkadotXTokens({
+      const extrinsic = transferByPolkadotXTokens({
         polkadotApi,
         assetId: asset.id,
         amount: rawAmount,
@@ -76,18 +77,17 @@ export const useTransfer = () => {
         toChainId: toChain.id,
         destinationAccount,
         isThroughKhala,
-      }).signAndSend(
-        polkadotAccount.address,
-        {
-          signer: polkadotAccount.wallet.signer,
-        },
-        statusCb
-      )
+      })
+      return waitSignAndSend({
+        api: polkadotApi,
+        extrinsic,
+        account: polkadotAccount.address,
+        signer: polkadotAccount.wallet.signer,
+        onReady,
+      })
     }
-  }
 
-  if (bridgeKind === 'khalaXTransfer') {
-    return async (statusCb?: Callback<ISubmittableResult>) => {
+    if (bridgeKind === 'khalaXTransfer') {
       if (!khalaApi || !polkadotAccount?.wallet?.signer) {
         throw new Error('Transfer missing required parameters')
       }
@@ -101,19 +101,17 @@ export const useTransfer = () => {
       })
 
       if (extrinsic) {
-        return extrinsic.signAndSend(
-          polkadotAccount.address,
-          {
-            signer: polkadotAccount.wallet.signer,
-          },
-          statusCb
-        )
+        return waitSignAndSend({
+          api: khalaApi,
+          extrinsic,
+          signer: polkadotAccount.wallet.signer,
+          account: polkadotAccount.address,
+          onReady,
+        })
       }
     }
-  }
 
-  if (bridgeKind === 'evmXTokens') {
-    return async () => {
+    if (bridgeKind === 'evmXTokens') {
       if (!ethersXTokensBridgeContract) {
         throw new Error('Transfer missing required parameters')
       }
@@ -125,7 +123,12 @@ export const useTransfer = () => {
         destinationAccount,
         toChainId: toChain.id,
         decimals,
+      }).then((transaction) => {
+        onReady()
+        return transaction
       })
     }
+
+    throw new Error('Invalid bridge kind')
   }
 }

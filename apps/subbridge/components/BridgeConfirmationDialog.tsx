@@ -16,6 +16,7 @@ import {LoadingButton} from '@mui/lab'
 import {
   Box,
   Button,
+  CircularProgress,
   Dialog,
   DialogProps,
   DialogTitle,
@@ -30,6 +31,7 @@ import {
 } from '@mui/material'
 import {TransitionProps} from '@mui/material/transitions'
 import {BoxProps} from '@mui/system'
+import {sleep} from '@phala/utils'
 import {encodeAddress} from '@polkadot/util-crypto'
 import Decimal from 'decimal.js'
 import {useAtom, useAtomValue} from 'jotai'
@@ -37,6 +39,7 @@ import {RESET} from 'jotai/utils'
 import {useSnackbar} from 'notistack'
 import {FC, forwardRef, ReactNode, Ref, useMemo, useRef, useState} from 'react'
 import ExtraInfo from './BridgeBody/Extra'
+import ExplorerLink from './ExplorerLink'
 
 const Transition = forwardRef(function Transition(
   props: TransitionProps & {
@@ -200,26 +203,108 @@ const DialogBody: FC<BoxProps> = (props) => {
 const BridgeConfirmationDialog: FC<DialogProps> = ({onClose, ...props}) => {
   const [, setAmount] = useAtom(amountAtom)
   const [confirming, setConfirming] = useState(false)
+  const fromChain = useAtomValue(fromChainAtom)
   const theme = useTheme()
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'))
   const transfer = useTransfer()
-  const successRef = useRef(false)
-  const {enqueueSnackbar} = useSnackbar()
+  const transferredRef = useRef(false)
+  const {enqueueSnackbar, closeSnackbar} = useSnackbar()
 
   const close = () => {
     onClose?.({}, 'backdropClick')
   }
 
   const onSubmit = async () => {
+    let key
     setConfirming(true)
-    if (transfer) {
-      try {
-        const res = await transfer()
-        if (!res) throw new Error('Transfer failed')
-        successRef.current = true
-        close()
-      } finally {
-        setConfirming(false)
+    try {
+      const res = await transfer({
+        onReady: () => {
+          key = enqueueSnackbar(
+            <Box display="flex" alignItems="center">
+              <CircularProgress size={16} sx={{mr: 1, flex: 'none'}} />
+              <span>Waiting for confirmation...</span>
+            </Box>,
+            {
+              variant: 'default',
+              persist: true,
+            }
+          )
+          transferredRef.current = true
+          setConfirming(false)
+          close()
+        },
+      })
+
+      if ('wait' in res) {
+        // Ethers.js transaction
+        const {transactionHash} = await res.wait()
+        closeSnackbar(key)
+        await sleep(1000)
+        enqueueSnackbar(
+          <>
+            Transaction confirmed
+            {fromChain.explorerURL && (
+              <ExplorerLink
+                kind="tx"
+                hash={transactionHash}
+                url={fromChain.explorerURL}
+                sx={{ml: 1}}
+              >
+                View on explorer
+              </ExplorerLink>
+            )}
+          </>,
+          {variant: 'success'}
+        )
+      } else {
+        // Polkadot.js extrinsic
+        const {txHash} = res
+        closeSnackbar(key)
+        await sleep(1000)
+        enqueueSnackbar(
+          <>
+            Extrinsic Success
+            {fromChain.explorerURL && (
+              <ExplorerLink
+                kind="extrinsic"
+                hash={txHash}
+                url={fromChain.explorerURL}
+                sx={{ml: 1}}
+              >
+                View on explorer
+              </ExplorerLink>
+            )}
+          </>,
+          {variant: 'success'}
+        )
+      }
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (err: any) {
+      if (key) {
+        closeSnackbar(key)
+        await sleep(1000)
+      }
+
+      if (err.receipt) {
+        enqueueSnackbar(
+          <>
+            {err.reason || 'Transaction failed'}
+            {fromChain.explorerURL && (
+              <ExplorerLink
+                kind="tx"
+                hash={err.receipt.transactionHash}
+                url={fromChain.explorerURL}
+                sx={{ml: 1}}
+              >
+                View on explorer
+              </ExplorerLink>
+            )}
+          </>,
+          {variant: 'error'}
+        )
+      } else if (err.message) {
+        enqueueSnackbar(err.message, {variant: 'error'})
       }
     }
   }
@@ -230,10 +315,9 @@ const BridgeConfirmationDialog: FC<DialogProps> = ({onClose, ...props}) => {
       TransitionComponent={Transition}
       TransitionProps={{
         onExited: () => {
-          if (successRef.current) {
+          if (transferredRef.current) {
             setAmount(RESET)
-            enqueueSnackbar('Extrinsic submitted')
-            successRef.current = false
+            transferredRef.current = false
           }
         },
       }}

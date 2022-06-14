@@ -3,7 +3,7 @@ import {ChainId, CHAINS} from '@/config/chain'
 import type {ApiPromise} from '@polkadot/api'
 import {u8aToHex} from '@polkadot/util'
 import {decodeAddress} from '@polkadot/util-crypto'
-import type {ethers} from 'ethers'
+import type {ContractTransaction, ethers} from 'ethers'
 
 export const createChainBridgeData = async (
   khalaApi: ApiPromise,
@@ -65,7 +65,7 @@ export const transferByChainBridge = async ({
   assetId: AssetId
   amount: string
   toChainId: ChainId
-}): Promise<{hash: string}> => {
+}): Promise<ContractTransaction> => {
   const {chainBridgeResourceId} = ASSETS[assetId]
   if (!chainBridgeResourceId) {
     throw new Error('Transfer missing required parameters')
