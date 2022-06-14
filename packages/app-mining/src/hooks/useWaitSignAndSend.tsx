@@ -1,15 +1,15 @@
-import {useCurrentAccount} from '@phala/store'
 import {useApiPromise, waitSignAndSend} from '@phala/react-libs'
+import {useCurrentAccount} from '@phala/store'
 import {SubmittableExtrinsic} from '@polkadot/api/types'
 import {ExtrinsicStatus} from '@polkadot/types/interfaces'
 import {ISubmittableResult} from '@polkadot/types/types'
 import {DURATION, useSnackbar} from 'baseui/snackbar'
-import {XCircle, CheckCircle} from 'react-feather'
+import {CheckCircle, XCircle} from 'react-feather'
 
 // TODO: move to common hooks lib
 const useWaitSignAndSend = (): ((
   extrinsic: SubmittableExtrinsic<'promise', ISubmittableResult> | undefined,
-  onstatus?: (status: ExtrinsicStatus) => void
+  onStatus?: (status: ExtrinsicStatus) => void
 ) => Promise<
   | (typeof waitSignAndSend extends (...args: any) => Promise<infer U>
       ? U
@@ -20,7 +20,7 @@ const useWaitSignAndSend = (): ((
   const [currentAccount] = useCurrentAccount()
   const {api} = useApiPromise()
 
-  return async (extrinsic, onstatus) => {
+  return async (extrinsic, onStatus) => {
     if (!api || !currentAccount?.wallet?.signer || !extrinsic) return
 
     return waitSignAndSend({
@@ -28,7 +28,7 @@ const useWaitSignAndSend = (): ((
       account: currentAccount.address,
       extrinsic,
       signer: currentAccount.wallet.signer,
-      onstatus: (status) => {
+      onStatus: (status) => {
         if (status.isReady) {
           enqueue(
             {
@@ -39,7 +39,7 @@ const useWaitSignAndSend = (): ((
           )
         }
 
-        onstatus?.(status)
+        onStatus?.(status)
       },
     })
       .then((res) => {
