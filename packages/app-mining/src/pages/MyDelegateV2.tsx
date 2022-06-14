@@ -51,7 +51,7 @@ export const MyDelegateV2 = () => {
             <HeadingMedium as="div">My Delegate</HeadingMedium>
           </Block>
 
-          <ClaimAll />
+          <ClaimAll kind="delegate" />
         </Block>
 
         <StakePoolTableV2 kind="myDelegate" />
