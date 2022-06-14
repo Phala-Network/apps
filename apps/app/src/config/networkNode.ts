@@ -2,7 +2,7 @@ import {khala} from '@phala/typedefs'
 import {RegistryTypes} from '@polkadot/types/types'
 
 export type NetworkNodeId =
-  | 'phala-rewards-demo'
+  | 'phala-via-phala'
   | 'khala-via-phala'
   | 'khala-via-onfinality'
   | 'khala-via-dwellir'
@@ -22,9 +22,9 @@ export const DEFAULT_NETWORK_NODE_ID: NetworkNodeId = 'khala-via-phala'
 
 export const NETWORK_NODES: readonly NetworkNode[] = [
   {
-    id: 'phala-rewards-demo',
+    id: 'phala-via-phala',
     name: 'Phala',
-    endpoint: 'wss://phala-rewards-demo.phala.network/ws',
+    endpoint: 'wss://api.phala.network/ws',
     types: khala,
     kind: 'phala',
   },

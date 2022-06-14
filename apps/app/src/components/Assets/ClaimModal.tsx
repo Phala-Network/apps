@@ -1,10 +1,9 @@
-import {useCurrentAccount} from '@phala/store'
 import {
-  PhalaStakePoolTransactionFeeLabel,
-  ModalWrapper,
-  ModalTitleWrapper,
-  ModalFooterWrapper,
   ModalButtonWrapper,
+  ModalFooterWrapper,
+  ModalTitleWrapper,
+  ModalWrapper,
+  PhalaStakePoolTransactionFeeLabel,
 } from '@phala/react-components'
 import {useAllBalances} from '@phala/react-hooks'
 import {
@@ -13,6 +12,7 @@ import {
   useDecimalJsTokenDecimalMultiplier,
   waitSignAndSend,
 } from '@phala/react-libs'
+import {useCurrentAccount} from '@phala/store'
 import {BN} from '@polkadot/util'
 import {toaster} from 'baseui/toast'
 import React, {useCallback, useMemo, useState} from 'react'
@@ -99,7 +99,7 @@ const ClaimModal: React.FC<Props> = ({visible, onClose}) => {
   const canClaim =
     Boolean(vestedClaimable) &&
     !vestedClaimable?.isZero() &&
-    currentNetworkNode.id !== 'phala-rewards-demo'
+    currentNetworkNode.id !== 'phala-via-phala'
 
   return (
     <ModalWrapper visible={visible} onClose={onClose}>

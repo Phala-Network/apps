@@ -62,14 +62,14 @@ const ButtonCell: React.FC<Pick<DataType, 'name'>> = ({name}) => {
   }
   return (
     <Wrapper>
-      {!isMobile && currentNetworkNode.id !== 'phala-rewards-demo' && (
+      {!isMobile && currentNetworkNode.id !== 'phala-via-phala' && (
         <Button onClick={() => setVisibleTransferModal(true)}>Transfer</Button>
       )}
       <Spacer />
       <Popover
         content={({close}) => (
           <div>
-            {isMobile && currentNetworkNode.id !== 'phala-rewards-demo' && (
+            {isMobile && currentNetworkNode.id !== 'phala-via-phala' && (
               <LineWrap
                 onClick={() => {
                   close()
@@ -87,7 +87,7 @@ const ButtonCell: React.FC<Pick<DataType, 'name'>> = ({name}) => {
             >
               Claim
             </LineWrap>
-            {isPHA && currentNetworkNode.id !== 'phala-rewards-demo' && (
+            {isPHA && currentNetworkNode.id !== 'phala-via-phala' && (
               <LineWrap
                 onClick={() => {
                   close()

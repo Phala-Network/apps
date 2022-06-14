@@ -46,7 +46,7 @@ const Links: React.FC = () => {
       <a href="https://subbridge.io" target="_blank" rel="noopener">
         SubBridge
       </a>
-      {currentNetworkNode.id !== 'phala-rewards-demo' && (
+      {currentNetworkNode.id !== 'phala-via-phala' && (
         <>
           <Link activeClassName="active" to="/delegate/" partiallyActive>
             Delegate
