@@ -6,7 +6,6 @@ import {ISubmittableResult} from '@polkadot/types/types'
 import {DURATION, useSnackbar} from 'baseui/snackbar'
 import {CheckCircle, XCircle} from 'react-feather'
 
-// TODO: move to common hooks lib
 const useWaitSignAndSend = (): ((
   extrinsic: SubmittableExtrinsic<'promise', ISubmittableResult> | undefined,
   onStatus?: (status: ExtrinsicStatus) => void
@@ -23,6 +22,8 @@ const useWaitSignAndSend = (): ((
   return async (extrinsic, onStatus) => {
     if (!api || !currentAccount?.wallet?.signer || !extrinsic) return
 
+    let enqueued = false
+
     return waitSignAndSend({
       api,
       account: currentAccount.address,
@@ -30,6 +31,7 @@ const useWaitSignAndSend = (): ((
       signer: currentAccount.wallet.signer,
       onStatus: (status) => {
         if (status.isReady) {
+          enqueued = true
           enqueue(
             {
               message: 'Submitting transaction',
@@ -43,7 +45,9 @@ const useWaitSignAndSend = (): ((
       },
     })
       .then((res) => {
-        dequeue()
+        if (enqueued) {
+          dequeue()
+        }
         // TODO: add view in subscan button
         enqueue({
           message: 'Transaction in block',
@@ -52,13 +56,21 @@ const useWaitSignAndSend = (): ((
         return res
       })
       .catch((err) => {
-        dequeue()
+        if (enqueued) {
+          dequeue()
+        }
+
+        // TODO: detect if it's an extrinsic error
         enqueue(
           {
             message: err?.message,
             startEnhancer: ({size}) => <XCircle size={size} />,
+            actionMessage: 'Learn More',
+            actionOnClick: () => {
+              window.open('https://forum.phala.network/t/topic/3560')
+            },
           },
-          DURATION.long
+          15000
         )
         throw err
       })
