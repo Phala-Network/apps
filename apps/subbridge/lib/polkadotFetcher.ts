@@ -51,9 +51,7 @@ export const ormlTokenBalanceFetcher = async (
 export const khalaToEthereumBridgeFeeFetcher = async (khalaApi: ApiPromise) => {
   const fee = await khalaApi.query.chainBridge.bridgeFee(0)
 
-  return new Decimal((fee.toJSON() as [number, number])[0]).div(
-    Decimal.pow(10, 12)
-  )
+  return new Decimal(fee.toJSON() as number).div(Decimal.pow(10, 12))
 }
 
 export const xTokensPartialFeeFetcher = async (
