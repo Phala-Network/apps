@@ -21,7 +21,7 @@ import {
   useEthersChainBridgeContract,
   useEthersXTokensContract,
 } from './useEthersContract'
-import {useEthersProvider} from './useEthersProvider'
+import {useEthersWeb3Provider} from './useEthersProvider'
 import {useCurrentPolkadotApi, usePolkadotApi} from './usePolkadotApi'
 
 export const useEstimatedGasFee = (): Decimal | undefined => {
@@ -30,7 +30,7 @@ export const useEstimatedGasFee = (): Decimal | undefined => {
   const fromChain = useAtomValue(fromChainAtom)
   const toChain = useAtomValue(toChainAtom)
   const asset = useAtomValue(assetAtom)
-  const ethersProvider = useEthersProvider()
+  const ethersWeb3Provider = useEthersWeb3Provider()
   const decimals = useAtomValue(decimalsAtom)
   const khalaApi = usePolkadotApi(
     fromChain.id === 'thala' || toChain.id === 'thala' ? 'thala' : 'khala'
@@ -39,7 +39,7 @@ export const useEstimatedGasFee = (): Decimal | undefined => {
   const {kind: bridgeKind, isThroughKhala} = useAtomValue(bridgeInfoAtom)
 
   const {data: ethersGasPrice} = useSWR(
-    ethersProvider ? [ethersProvider] : null,
+    ethersWeb3Provider ? [ethersWeb3Provider] : null,
     ethersGasPriceFetcher
   )
   const {data: evmChainBridgeEstimatedGas} = useSWR(

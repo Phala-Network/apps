@@ -1,4 +1,5 @@
 import {useBalance} from '@/hooks/useBalance'
+import {useBridgeLimit} from '@/hooks/useBridgeLimit'
 import {
   amountAtom,
   assetAtom,
@@ -34,6 +35,7 @@ const AmountInput: FC<BoxProps & Pick<InputProps, 'endAdornment'>> = ({
   const [decimals] = useAtom(decimalsAtom)
   const [isWalletConnected] = useAtom(isWalletConnectAtom)
   const [isNetworkWrong] = useAtom(isNetworkWrongAtom)
+  const bridgeLimit = useBridgeLimit()
 
   const showMax = Boolean(
     balance && !balance.eq(0) && (!amount || !balance.eq(amount))
@@ -70,11 +72,33 @@ const AmountInput: FC<BoxProps & Pick<InputProps, 'endAdornment'>> = ({
           sx={{
             display: 'flex',
             justifyContent: 'flex-end',
+            alignItems: 'center',
             mt: 1,
             height: 24,
             mb: -4,
           }}
         >
+          {(!bridgeLimit || bridgeLimit.isFinite()) && (
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                whiteSpace: 'pre',
+                mr: 2,
+              }}
+            >
+              <Typography variant="caption" sx={{fontWeight: 500}}>
+                Limit:{' '}
+              </Typography>
+              {bridgeLimit ? (
+                <Typography variant="caption" sx={{fontWeight: 500}}>
+                  {`${formatCurrency(bridgeLimit, 0)} ${asset.symbol}`}
+                </Typography>
+              ) : (
+                <Skeleton width={64} />
+              )}
+            </Box>
+          )}
           <Box
             sx={{
               display: 'flex',

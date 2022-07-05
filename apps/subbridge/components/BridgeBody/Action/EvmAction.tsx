@@ -1,4 +1,4 @@
-import {useEthersAssetContract} from '@/hooks/useEthersContract'
+import {useCurrentEthersAssetContract} from '@/hooks/useEthersContract'
 import {useSwitchNetwork} from '@/hooks/useSwitchNetwork'
 import {ethersContractAllowanceFetcher} from '@/lib/ethersFetcher'
 import {
@@ -19,7 +19,7 @@ const EvmAction: FC<{onConfirm: () => void}> = ({onConfirm}) => {
   const [approveLoading, setApproveLoading] = useState(false)
   const {enqueueSnackbar} = useSnackbar()
   const [fromChain] = useAtom(fromChainAtom)
-  const ethersAssetContract = useEthersAssetContract()
+  const ethersAssetContract = useCurrentEthersAssetContract()
   const [evmAccount] = useAtom(evmAccountAtom)
   const [isNetworkWrong] = useAtom(isNetworkWrongAtom)
   const [bridgeErrorMessage] = useAtom(bridgeErrorMessageAtom)

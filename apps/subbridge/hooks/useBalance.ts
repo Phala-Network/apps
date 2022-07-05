@@ -13,8 +13,8 @@ import {polkadotAccountAtom} from '@phala/store'
 import Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
 import useSWR from 'swr'
-import {useEthersAssetContract} from './useEthersContract'
-import {useEthersProvider} from './useEthersProvider'
+import {useCurrentEthersAssetContract} from './useEthersContract'
+import {useEthersWeb3Provider} from './useEthersProvider'
 import {useCurrentPolkadotApi} from './usePolkadotApi'
 
 const refreshInterval = 12000
@@ -33,9 +33,9 @@ export const useBalance = (): Decimal | undefined => {
   const [polkadotAccount] = useAtom(polkadotAccountAtom)
   const [evmAccount] = useAtom(evmAccountAtom)
   const [decimals] = useAtom(decimalsAtom)
-  const ethersProvider = useEthersProvider()
+  const ethersWeb3Provider = useEthersWeb3Provider()
   const polkadotApi = useCurrentPolkadotApi()
-  const ethersAssetContract = useEthersAssetContract()
+  const ethersAssetContract = useCurrentEthersAssetContract()
 
   let balanceSource: BalanceSource = null
 
@@ -68,7 +68,10 @@ export const useBalance = (): Decimal | undefined => {
   }
 
   const {data: ormlTokenBalance} = useSWR(
-    balanceSource === 'ormlToken' && polkadotAccount && asset.ormlToken
+    balanceSource === 'ormlToken' &&
+      polkadotApi &&
+      polkadotAccount &&
+      asset.ormlToken
       ? [polkadotApi, polkadotAccount.address, asset.ormlToken, decimals]
       : null,
     ormlTokenBalanceFetcher,
@@ -76,6 +79,7 @@ export const useBalance = (): Decimal | undefined => {
   )
   const {data: palletAssetBalance} = useSWR(
     balanceSource === 'palletAsset' &&
+      polkadotApi &&
       polkadotAccount &&
       asset.palletAssetId?.[fromChain.id]
       ? [
@@ -89,21 +93,27 @@ export const useBalance = (): Decimal | undefined => {
     {refreshInterval}
   )
   const {data: polkadotNativeChainBalance} = useSWR(
-    balanceSource === 'polkadotNative' && polkadotAccount
+    balanceSource === 'polkadotNative' && polkadotApi && polkadotAccount
       ? [polkadotApi, polkadotAccount.address]
       : null,
     polkadotAvailableBalanceFetcher,
     {refreshInterval}
   )
   const {data: evmNativeBalance} = useSWR(
-    balanceSource === 'evmBalance' && evmAccount && ethersProvider
-      ? [ethersProvider, evmAccount]
+    balanceSource === 'evmBalance' &&
+      ethersWeb3Provider &&
+      evmAccount &&
+      ethersWeb3Provider
+      ? [ethersWeb3Provider, evmAccount]
       : null,
     ethersBalanceFetcher,
     {refreshInterval}
   )
   const {data: ethersContractBalance} = useSWR(
-    balanceSource === 'evmContract' && evmAccount
+    balanceSource === 'evmContract' &&
+      ethersAssetContract &&
+      evmAccount &&
+      ethersAssetContract
       ? [ethersAssetContract, evmAccount, decimals]
       : null,
     ethersContractBalanceFetcher,

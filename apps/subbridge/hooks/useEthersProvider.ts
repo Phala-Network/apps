@@ -4,13 +4,15 @@ import type {ethers} from 'ethers'
 import {useAtomValue} from 'jotai'
 import useSWRImmutable from 'swr/immutable'
 
-const fetcher = async (ethereumProvider: ethers.providers.ExternalProvider) => {
+const ethersWeb3ProviderFetcher = async (
+  ethereumProvider: ethers.providers.ExternalProvider
+) => {
   const {ethers} = await import('ethers')
   const provider = new ethers.providers.Web3Provider(ethereumProvider)
   return provider
 }
 
-export const useEthersProvider = ():
+export const useEthersWeb3Provider = ():
   | ethers.providers.Web3Provider
   | undefined => {
   const fromChain = useAtomValue(fromChainAtom)
@@ -22,8 +24,18 @@ export const useEthersProvider = ():
       fromChain.evmChainId === evmChainId
       ? [ethereumProvider, evmChainId]
       : null,
-    fetcher
+    ethersWeb3ProviderFetcher
   )
 
+  return data
+}
+
+const ethersJsonRpcProviderFetcher = async (url: string) => {
+  const {ethers} = await import('ethers')
+  return new ethers.providers.StaticJsonRpcProvider(url)
+}
+
+export const useEthersJsonRpcProvider = (url?: string) => {
+  const {data} = useSWRImmutable(url || null, ethersJsonRpcProviderFetcher)
   return data
 }
