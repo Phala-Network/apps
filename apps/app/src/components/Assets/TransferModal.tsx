@@ -1,30 +1,30 @@
-import {useCurrentAccount} from '@phala/store'
 import {
-  PolkadotTransactionFeeLabel,
-  ModalWrapper,
-  ModalTitleWrapper,
-  ModalFooterWrapper,
   ModalButtonWrapper,
+  ModalFooterWrapper,
+  ModalTitleWrapper,
+  ModalWrapper,
+  PolkadotTransactionFeeLabel,
 } from '@phala/react-components'
+import {usePolkadotAccountTransferrableBalanceDecimal} from '@phala/react-hooks'
 import {
   useApiPromise,
   useDecimalJsTokenDecimalMultiplier,
   waitSignAndSend,
 } from '@phala/react-libs'
-import {usePolkadotAccountTransferrableBalanceDecimal} from '@phala/react-hooks'
-import {validateAddress, toFixed} from '@phala/utils'
-import Decimal from 'decimal.js'
-import React, {useState, useMemo} from 'react'
+import {useCurrentAccount} from '@phala/store'
+import {toFixed, validateAddress} from '@phala/utils'
 import {Input} from 'baseui/input'
-import {
-  Spacer,
-  ButtonContainer,
-  InputWrapper,
-  BalanceText,
-  MaxButton,
-  inputStyle,
-} from './styledComponents'
 import {toaster} from 'baseui/toast'
+import Decimal from 'decimal.js'
+import React, {useMemo, useState} from 'react'
+import {
+  BalanceText,
+  ButtonContainer,
+  inputStyle,
+  InputWrapper,
+  MaxButton,
+  Spacer,
+} from './styledComponents'
 
 type Props = {
   visible: boolean
@@ -55,7 +55,7 @@ const TransferModal: React.FC<Props> = ({visible, onClose}) => {
     setAmount(maxValue)
   }
 
-  const confirm = async () => {
+  const submit = async () => {
     if (api && polkadotAccount && polkadotAccount.wallet?.signer && decimals) {
       let amountString: string
 
@@ -158,11 +158,11 @@ const TransferModal: React.FC<Props> = ({visible, onClose}) => {
             disabled={loading}
             onClick={() => {
               setLoading(true)
-              confirm().finally(() => setLoading(false))
+              submit().finally(() => setLoading(false))
             }}
             type="submit"
           >
-            {loading ? 'Confirming' : 'Confirm'}
+            {loading ? 'Submitting' : 'Submit'}
           </ModalButtonWrapper>
         </ButtonContainer>
       </ModalFooterWrapper>

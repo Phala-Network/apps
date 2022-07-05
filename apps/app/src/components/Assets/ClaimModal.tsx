@@ -17,7 +17,6 @@ import {BN} from '@polkadot/util'
 import {toaster} from 'baseui/toast'
 import React, {useCallback, useMemo, useState} from 'react'
 import styled from 'styled-components'
-import {useCurrentNetworkNode} from '../../store/networkNode'
 
 type Props = {
   visible: boolean
@@ -54,7 +53,6 @@ const ClaimModal: React.FC<Props> = ({visible, onClose}) => {
   const [currentAccount] = useCurrentAccount()
   const allBalances = useAllBalances(currentAccount?.address)
   const decimals = useDecimalJsTokenDecimalMultiplier(api)
-  const [currentNetworkNode] = useCurrentNetworkNode()
   const {vestingLocked, vestedClaimable, vestedBalance} = allBalances || {}
 
   const format = useCallback<(bn: BN | undefined) => string>(
@@ -76,7 +74,7 @@ const ClaimModal: React.FC<Props> = ({visible, onClose}) => {
     return api.tx.vesting?.vest?.()
   }, [api])
 
-  const confirm = () => {
+  const submit = () => {
     if (api && extrinsic && currentAccount?.wallet?.signer) {
       setLoading(true)
 
@@ -96,10 +94,7 @@ const ClaimModal: React.FC<Props> = ({visible, onClose}) => {
     }
   }
 
-  const canClaim =
-    Boolean(vestedClaimable) &&
-    !vestedClaimable?.isZero() &&
-    currentNetworkNode.id !== 'phala-via-phala'
+  const canClaim = Boolean(vestedClaimable) && !vestedClaimable?.isZero()
 
   return (
     <ModalWrapper visible={visible} onClose={onClose}>
@@ -121,10 +116,10 @@ const ClaimModal: React.FC<Props> = ({visible, onClose}) => {
           <ModalButtonWrapper onClick={onClose}>Cancel</ModalButtonWrapper>
           <ModalButtonWrapper
             disabled={loading || !canClaim}
-            onClick={confirm}
+            onClick={submit}
             type="submit"
           >
-            {loading ? 'Confirming' : 'Confirm'}
+            {loading ? 'Submitting' : 'Submit'}
           </ModalButtonWrapper>
         </ButtonContainer>
       </ModalFooterWrapper>
