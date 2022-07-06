@@ -7,7 +7,7 @@ import {StyledLink} from 'baseui/link'
 import {HeadingLarge, HeadingSmall, ParagraphXSmall} from 'baseui/typography'
 import Decimal from 'decimal.js'
 import {PageProps} from 'gatsby'
-import {FC, useCallback, useState} from 'react'
+import {FC, useCallback, useMemo, useState} from 'react'
 import {CheckCircle, MinusCircle} from 'react-feather'
 import {Helmet} from 'react-helmet'
 import styled from 'styled-components'
@@ -69,10 +69,25 @@ export const StakePool: FC<StakePoolProps> = ({pid}) => {
     stakersCount,
     minersCount,
     idleMinersCount,
+    stakePoolAllowedStakers,
   } = stakePool || {}
 
   const isOwner =
     Boolean(ownerAddress) && ownerAddress === polkadotAccount?.address
+
+  const canDelegate = useMemo(() => {
+    if (!polkadotAccount?.address || !stakePoolAllowedStakers) {
+      return false
+    }
+
+    return (
+      isOwner ||
+      !stakePoolAllowedStakers.length ||
+      stakePoolAllowedStakers.find(
+        ({userAddress}) => userAddress === polkadotAccount.address
+      )
+    )
+  }, [stakePoolAllowedStakers, polkadotAccount?.address, isOwner])
 
   return (
     <>
@@ -96,7 +111,12 @@ export const StakePool: FC<StakePoolProps> = ({pid}) => {
         >
           <HeadingLarge as="div">Stake Pool #{pid}</HeadingLarge>
 
-          <Button onClick={() => setModalKey('delegate')}>Delegate</Button>
+          <Button
+            disabled={!canDelegate}
+            onClick={() => setModalKey('delegate')}
+          >
+            Delegate
+          </Button>
         </Block>
 
         <Block maxWidth="1024px" margin="0 auto">

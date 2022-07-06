@@ -31,4 +31,6 @@ export const tooltipContent = {
   claimableReward: 'Rewards that are collectable',
   commissionWarning:
     'This StakePool has lowered its commission in the past 3 days, and there is a risk of callback in the future, resulting in lower returns than the current APR. You can click to enter the details page to view the commission chart.',
+  hideClosed:
+    'Some StakePools have whitelists, if you are not on the whitelist, you cannot delegate.',
 }
