@@ -1,4 +1,4 @@
-import {useEthersProvider} from '@/hooks/useEthersProvider'
+import {useEthersWeb3Provider} from '@/hooks/useEthersProvider'
 import {useSwitchNetwork} from '@/hooks/useSwitchNetwork'
 import {ethersBalanceFetcher} from '@/lib/ethersFetcher'
 import {fromChainAtom} from '@/store/bridge'
@@ -15,11 +15,11 @@ const EvmAccount: FC = () => {
   const {enqueueSnackbar} = useSnackbar()
   const [fromChain] = useAtom(fromChainAtom)
   const [evmAccount] = useAtom(evmAccountAtom)
-  const ethersProvider = useEthersProvider()
+  const ethersWeb3Provider = useEthersWeb3Provider()
   const [isNetworkWrong] = useAtom(isNetworkWrongAtom)
   const switchNetwork = useSwitchNetwork()
   const {data} = useSWR(
-    evmAccount && ethersProvider ? [ethersProvider, evmAccount] : null,
+    evmAccount && ethersWeb3Provider ? [ethersWeb3Provider, evmAccount] : null,
     ethersBalanceFetcher,
     {refreshInterval: 12000}
   )

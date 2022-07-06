@@ -10,6 +10,7 @@ import {Provider as JotaiProvider} from 'jotai'
 import {AppProps} from 'next/app'
 import Head from 'next/head'
 import {SnackbarProvider} from 'notistack'
+import {SWRConfig} from 'swr'
 
 const clientSideEmotionCache = createEmotionCache()
 
@@ -30,28 +31,41 @@ export default function MyApp(props: MyAppProps) {
           content="Cross-chain Router, Bridging Parachain, EVM, and other chains."
         />
       </Head>
+
       <GtagScript />
-      <JotaiProvider>
-        <AtomsDevtools>
-          <CacheProvider value={emotionCache}>
-            <MuiThemeProvider>
-              <SnackbarProvider
-                preventDuplicate
-                anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'center',
-                }}
-              >
-                <CssBaseline enableColorScheme />
-                <GlobalStyles />
-                <Layout>
-                  <Component {...pageProps} />
-                </Layout>
-              </SnackbarProvider>
-            </MuiThemeProvider>
-          </CacheProvider>
-        </AtomsDevtools>
-      </JotaiProvider>
+
+      <SWRConfig
+        value={{
+          onError: (error, key) => {
+            if (process.env.NODE_ENV === 'development') {
+              // eslint-disable-next-line no-console
+              console.error(key, error)
+            }
+          },
+        }}
+      >
+        <JotaiProvider>
+          <AtomsDevtools>
+            <CacheProvider value={emotionCache}>
+              <MuiThemeProvider>
+                <SnackbarProvider
+                  preventDuplicate
+                  anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'center',
+                  }}
+                >
+                  <CssBaseline enableColorScheme />
+                  <GlobalStyles />
+                  <Layout>
+                    <Component {...pageProps} />
+                  </Layout>
+                </SnackbarProvider>
+              </MuiThemeProvider>
+            </CacheProvider>
+          </AtomsDevtools>
+        </JotaiProvider>
+      </SWRConfig>
     </>
   )
 }
