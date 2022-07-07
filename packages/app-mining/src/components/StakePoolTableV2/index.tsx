@@ -77,11 +77,9 @@ const StakePoolTableV2: FC<{
   const [sortAsc, setSortAsc] = useState(kind !== 'delegate')
   const [currentPage, setCurrentPage] = useState(1)
 
-  const [workersFilter, setWorkersFilter] = useState(kind === 'delegate')
-  const [aprFilter, setAprFilter] = useState(false)
-  const [commissionFilter, setCommissionFilter] = useState(kind === 'delegate')
   const [verifiedFilter, setVerifiedFilter] = useState(false)
   const [delegableFilter, setDelegableFilter] = useState(kind === 'delegate')
+  const [whitelistFilter, setWhitelistFilter] = useState(kind === 'delegate')
   const [delegableValue, setDelegableValue] = useAtom(delegableValueAtom)
 
   const [stakePoolModalKey, setStakePoolModalKey] =
@@ -119,13 +117,10 @@ const StakePoolTableV2: FC<{
             },
           ].filter(isTruthy),
         }),
+        // For development
         AND: [
-          // For development
           process.env.NODE_ENV !== 'development' &&
             kind === 'mining' && {ownerAddress: {equals: address}},
-          workersFilter && {minersCount: {gt: 0}},
-          aprFilter && {theoreticalApr: {gt: '0'}},
-          commissionFilter && {commission: {lt: '1'}},
           kind === 'myDelegate' && {
             stakePoolStakers: {
               some: {
@@ -137,17 +132,24 @@ const StakePoolTableV2: FC<{
           delegableFilter && {
             OR: [
               {availableStake: {gt: delegableValue}},
-              // availableStake null means ∞
-              {availableStake: {equals: null}},
+              {availableStake: {equals: null}}, // availableStake null means ∞
             ],
           },
           verifiedFilter && {
-            accounts: {
-              is: {
-                identityVerified: {equals: true},
-              },
-            },
+            accounts: {is: {identityVerified: {equals: true}}},
           },
+          whitelistFilter &&
+            Boolean(polkadotAccount?.address) && {
+              OR: [
+                {stakePoolAllowedStakers: {none: {}}}, // isEmpty
+                {
+                  stakePoolAllowedStakers: {
+                    some: {userAddress: {equals: polkadotAccount?.address}},
+                  },
+                },
+                {ownerAddress: {equals: polkadotAccount?.address}},
+              ],
+            },
         ].filter(isTruthy),
       },
       ...((kind === 'myDelegate' || kind === 'mining') && {
@@ -234,36 +236,22 @@ const StakePoolTableV2: FC<{
             }}
           />
           <Checkbox
-            checked={workersFilter}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setWorkersFilter(e.target.checked)
-            }
-          >
-            Pool with workers
-          </Checkbox>
-          <Checkbox
-            checked={aprFilter}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setAprFilter(e.target.checked)
-            }
-          >
-            {'APR > 0%'}
-          </Checkbox>
-          <Checkbox
-            checked={commissionFilter}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setCommissionFilter(e.target.checked)
-            }
-          >
-            {'Commission < 100%'}
-          </Checkbox>
-          <Checkbox
             checked={verifiedFilter}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setVerifiedFilter(e.target.checked)
             }
           >
             {'Verified'}
+          </Checkbox>
+          <Checkbox
+            checked={whitelistFilter}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setWhitelistFilter(e.target.checked)
+            }
+          >
+            <TooltipHeader content={tooltipContent.hideClosed}>
+              Hide Closed
+            </TooltipHeader>
           </Checkbox>
           <Block display="flex" alignItems="center">
             <Checkbox
@@ -587,7 +575,17 @@ const StakePoolTableV2: FC<{
                 label: 'Claim',
                 key: 'claim',
               },
-              {label: 'Delegate', key: 'delegate'},
+              {
+                label: 'Delegate',
+                key: 'delegate',
+                disabled:
+                  !polkadotAccount?.address ||
+                  (polkadotAccount.address !== stakePool.ownerAddress &&
+                    Boolean(stakePool.stakePoolAllowedStakers.length) &&
+                    !stakePool.stakePoolAllowedStakers.find(
+                      ({userAddress}) => userAddress === polkadotAccount.address
+                    )),
+              },
               (kind === 'myDelegate' || kind === 'mining') && {
                 label: 'Withdraw',
                 key: 'withdraw',

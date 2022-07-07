@@ -606,6 +606,15 @@ export type AggregateStakePoolActivities = {
   _sum?: Maybe<StakePoolActivitiesSumAggregate>;
 };
 
+export type AggregateStakePoolAllowedStakers = {
+  __typename?: 'AggregateStakePoolAllowedStakers';
+  _avg?: Maybe<StakePoolAllowedStakersAvgAggregate>;
+  _count?: Maybe<StakePoolAllowedStakersCountAggregate>;
+  _max?: Maybe<StakePoolAllowedStakersMaxAggregate>;
+  _min?: Maybe<StakePoolAllowedStakersMinAggregate>;
+  _sum?: Maybe<StakePoolAllowedStakersSumAggregate>;
+};
+
 export type AggregateStakePoolStakerActivities = {
   __typename?: 'AggregateStakePoolStakerActivities';
   _avg?: Maybe<StakePoolStakerActivitiesAvgAggregate>;
@@ -3184,6 +3193,7 @@ export type Query = {
   aggregateMiners: AggregateMiners;
   aggregateSchemaMigrations: AggregateSchemaMigrations;
   aggregateStakePoolActivities: AggregateStakePoolActivities;
+  aggregateStakePoolAllowedStakers: AggregateStakePoolAllowedStakers;
   aggregateStakePoolStakerActivities: AggregateStakePoolStakerActivities;
   aggregateStakePoolStakers: AggregateStakePoolStakers;
   aggregateStakePoolStats: AggregateStakePoolStats;
@@ -3202,6 +3212,7 @@ export type Query = {
   findFirstMiners?: Maybe<Miners>;
   findFirstSchemaMigrations?: Maybe<SchemaMigrations>;
   findFirstStakePoolActivities?: Maybe<StakePoolActivities>;
+  findFirstStakePoolAllowedStakers?: Maybe<StakePoolAllowedStakers>;
   findFirstStakePoolStakerActivities?: Maybe<StakePoolStakerActivities>;
   findFirstStakePoolStakers?: Maybe<StakePoolStakers>;
   findFirstStakePoolStats?: Maybe<StakePoolStats>;
@@ -3220,6 +3231,7 @@ export type Query = {
   findManyMiners: Array<Miners>;
   findManySchemaMigrations: Array<SchemaMigrations>;
   findManyStakePoolActivities: Array<StakePoolActivities>;
+  findManyStakePoolAllowedStakers: Array<StakePoolAllowedStakers>;
   findManyStakePoolStakerActivities: Array<StakePoolStakerActivities>;
   findManyStakePoolStakers: Array<StakePoolStakers>;
   findManyStakePoolStats: Array<StakePoolStats>;
@@ -3238,6 +3250,7 @@ export type Query = {
   findUniqueMiners?: Maybe<Miners>;
   findUniqueSchemaMigrations?: Maybe<SchemaMigrations>;
   findUniqueStakePoolActivities?: Maybe<StakePoolActivities>;
+  findUniqueStakePoolAllowedStakers?: Maybe<StakePoolAllowedStakers>;
   findUniqueStakePoolStakerActivities?: Maybe<StakePoolStakerActivities>;
   findUniqueStakePoolStakers?: Maybe<StakePoolStakers>;
   findUniqueStakePoolStats?: Maybe<StakePoolStats>;
@@ -3256,6 +3269,7 @@ export type Query = {
   groupByMiners: Array<MinersGroupBy>;
   groupBySchemaMigrations: Array<SchemaMigrationsGroupBy>;
   groupByStakePoolActivities: Array<StakePoolActivitiesGroupBy>;
+  groupByStakePoolAllowedStakers: Array<StakePoolAllowedStakersGroupBy>;
   groupByStakePoolStakerActivities: Array<StakePoolStakerActivitiesGroupBy>;
   groupByStakePoolStakers: Array<StakePoolStakersGroupBy>;
   groupByStakePoolStats: Array<StakePoolStatsGroupBy>;
@@ -3354,6 +3368,15 @@ export type QueryAggregateStakePoolActivitiesArgs = {
   skip?: InputMaybe<Scalars['Int']>;
   take?: InputMaybe<Scalars['Int']>;
   where?: InputMaybe<StakePoolActivitiesWhereInput>;
+};
+
+
+export type QueryAggregateStakePoolAllowedStakersArgs = {
+  cursor?: InputMaybe<StakePoolAllowedStakersWhereUniqueInput>;
+  orderBy?: InputMaybe<Array<StakePoolAllowedStakersOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']>;
+  take?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<StakePoolAllowedStakersWhereInput>;
 };
 
 
@@ -3526,6 +3549,16 @@ export type QueryFindFirstStakePoolActivitiesArgs = {
   skip?: InputMaybe<Scalars['Int']>;
   take?: InputMaybe<Scalars['Int']>;
   where?: InputMaybe<StakePoolActivitiesWhereInput>;
+};
+
+
+export type QueryFindFirstStakePoolAllowedStakersArgs = {
+  cursor?: InputMaybe<StakePoolAllowedStakersWhereUniqueInput>;
+  distinct?: InputMaybe<Array<StakePoolAllowedStakersScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<StakePoolAllowedStakersOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']>;
+  take?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<StakePoolAllowedStakersWhereInput>;
 };
 
 
@@ -3709,6 +3742,16 @@ export type QueryFindManyStakePoolActivitiesArgs = {
 };
 
 
+export type QueryFindManyStakePoolAllowedStakersArgs = {
+  cursor?: InputMaybe<StakePoolAllowedStakersWhereUniqueInput>;
+  distinct?: InputMaybe<Array<StakePoolAllowedStakersScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<StakePoolAllowedStakersOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']>;
+  take?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<StakePoolAllowedStakersWhereInput>;
+};
+
+
 export type QueryFindManyStakePoolStakerActivitiesArgs = {
   cursor?: InputMaybe<StakePoolStakerActivitiesWhereUniqueInput>;
   distinct?: InputMaybe<Array<StakePoolStakerActivitiesScalarFieldEnum>>;
@@ -3836,6 +3879,11 @@ export type QueryFindUniqueSchemaMigrationsArgs = {
 
 export type QueryFindUniqueStakePoolActivitiesArgs = {
   where: StakePoolActivitiesWhereUniqueInput;
+};
+
+
+export type QueryFindUniqueStakePoolAllowedStakersArgs = {
+  where: StakePoolAllowedStakersWhereUniqueInput;
 };
 
 
@@ -3976,6 +4024,16 @@ export type QueryGroupByStakePoolActivitiesArgs = {
   skip?: InputMaybe<Scalars['Int']>;
   take?: InputMaybe<Scalars['Int']>;
   where?: InputMaybe<StakePoolActivitiesWhereInput>;
+};
+
+
+export type QueryGroupByStakePoolAllowedStakersArgs = {
+  by: Array<StakePoolAllowedStakersScalarFieldEnum>;
+  having?: InputMaybe<StakePoolAllowedStakersScalarWhereWithAggregatesInput>;
+  orderBy?: InputMaybe<Array<StakePoolAllowedStakersOrderByWithAggregationInput>>;
+  skip?: InputMaybe<Scalars['Int']>;
+  take?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<StakePoolAllowedStakersWhereInput>;
 };
 
 
@@ -4691,6 +4749,171 @@ export type StakePoolActivitiesWhereInput = {
 };
 
 export type StakePoolActivitiesWhereUniqueInput = {
+  id?: InputMaybe<Scalars['BigInt']>;
+};
+
+export type StakePoolAllowedStakers = {
+  __typename?: 'StakePoolAllowedStakers';
+  createdAt: Scalars['DateTime'];
+  id: Scalars['BigInt'];
+  stakePoolId: Scalars['BigInt'];
+  stakePools: StakePools;
+  updatedAt: Scalars['DateTime'];
+  userAddress: Scalars['String'];
+};
+
+export type StakePoolAllowedStakersAvgAggregate = {
+  __typename?: 'StakePoolAllowedStakersAvgAggregate';
+  id?: Maybe<Scalars['Float']>;
+  stakePoolId?: Maybe<Scalars['Float']>;
+};
+
+export type StakePoolAllowedStakersAvgOrderByAggregateInput = {
+  id?: InputMaybe<SortOrder>;
+  stakePoolId?: InputMaybe<SortOrder>;
+};
+
+export type StakePoolAllowedStakersCountAggregate = {
+  __typename?: 'StakePoolAllowedStakersCountAggregate';
+  _all: Scalars['Int'];
+  createdAt: Scalars['Int'];
+  id: Scalars['Int'];
+  stakePoolId: Scalars['Int'];
+  updatedAt: Scalars['Int'];
+  userAddress: Scalars['Int'];
+};
+
+export type StakePoolAllowedStakersCountOrderByAggregateInput = {
+  createdAt?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  stakePoolId?: InputMaybe<SortOrder>;
+  updatedAt?: InputMaybe<SortOrder>;
+  userAddress?: InputMaybe<SortOrder>;
+};
+
+export type StakePoolAllowedStakersGroupBy = {
+  __typename?: 'StakePoolAllowedStakersGroupBy';
+  _avg?: Maybe<StakePoolAllowedStakersAvgAggregate>;
+  _count?: Maybe<StakePoolAllowedStakersCountAggregate>;
+  _max?: Maybe<StakePoolAllowedStakersMaxAggregate>;
+  _min?: Maybe<StakePoolAllowedStakersMinAggregate>;
+  _sum?: Maybe<StakePoolAllowedStakersSumAggregate>;
+  createdAt: Scalars['DateTime'];
+  id: Scalars['BigInt'];
+  stakePoolId: Scalars['BigInt'];
+  updatedAt: Scalars['DateTime'];
+  userAddress: Scalars['String'];
+};
+
+export type StakePoolAllowedStakersListRelationFilter = {
+  every?: InputMaybe<StakePoolAllowedStakersWhereInput>;
+  none?: InputMaybe<StakePoolAllowedStakersWhereInput>;
+  some?: InputMaybe<StakePoolAllowedStakersWhereInput>;
+};
+
+export type StakePoolAllowedStakersMaxAggregate = {
+  __typename?: 'StakePoolAllowedStakersMaxAggregate';
+  createdAt?: Maybe<Scalars['DateTime']>;
+  id?: Maybe<Scalars['BigInt']>;
+  stakePoolId?: Maybe<Scalars['BigInt']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+  userAddress?: Maybe<Scalars['String']>;
+};
+
+export type StakePoolAllowedStakersMaxOrderByAggregateInput = {
+  createdAt?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  stakePoolId?: InputMaybe<SortOrder>;
+  updatedAt?: InputMaybe<SortOrder>;
+  userAddress?: InputMaybe<SortOrder>;
+};
+
+export type StakePoolAllowedStakersMinAggregate = {
+  __typename?: 'StakePoolAllowedStakersMinAggregate';
+  createdAt?: Maybe<Scalars['DateTime']>;
+  id?: Maybe<Scalars['BigInt']>;
+  stakePoolId?: Maybe<Scalars['BigInt']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+  userAddress?: Maybe<Scalars['String']>;
+};
+
+export type StakePoolAllowedStakersMinOrderByAggregateInput = {
+  createdAt?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  stakePoolId?: InputMaybe<SortOrder>;
+  updatedAt?: InputMaybe<SortOrder>;
+  userAddress?: InputMaybe<SortOrder>;
+};
+
+export type StakePoolAllowedStakersOrderByRelationAggregateInput = {
+  _count?: InputMaybe<SortOrder>;
+};
+
+export type StakePoolAllowedStakersOrderByWithAggregationInput = {
+  _avg?: InputMaybe<StakePoolAllowedStakersAvgOrderByAggregateInput>;
+  _count?: InputMaybe<StakePoolAllowedStakersCountOrderByAggregateInput>;
+  _max?: InputMaybe<StakePoolAllowedStakersMaxOrderByAggregateInput>;
+  _min?: InputMaybe<StakePoolAllowedStakersMinOrderByAggregateInput>;
+  _sum?: InputMaybe<StakePoolAllowedStakersSumOrderByAggregateInput>;
+  createdAt?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  stakePoolId?: InputMaybe<SortOrder>;
+  updatedAt?: InputMaybe<SortOrder>;
+  userAddress?: InputMaybe<SortOrder>;
+};
+
+export type StakePoolAllowedStakersOrderByWithRelationInput = {
+  createdAt?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  stakePoolId?: InputMaybe<SortOrder>;
+  stakePools?: InputMaybe<StakePoolsOrderByWithRelationInput>;
+  updatedAt?: InputMaybe<SortOrder>;
+  userAddress?: InputMaybe<SortOrder>;
+};
+
+export enum StakePoolAllowedStakersScalarFieldEnum {
+  CreatedAt = 'createdAt',
+  Id = 'id',
+  StakePoolId = 'stakePoolId',
+  UpdatedAt = 'updatedAt',
+  UserAddress = 'userAddress'
+}
+
+export type StakePoolAllowedStakersScalarWhereWithAggregatesInput = {
+  AND?: InputMaybe<Array<StakePoolAllowedStakersScalarWhereWithAggregatesInput>>;
+  NOT?: InputMaybe<Array<StakePoolAllowedStakersScalarWhereWithAggregatesInput>>;
+  OR?: InputMaybe<Array<StakePoolAllowedStakersScalarWhereWithAggregatesInput>>;
+  createdAt?: InputMaybe<DateTimeWithAggregatesFilter>;
+  id?: InputMaybe<BigIntWithAggregatesFilter>;
+  stakePoolId?: InputMaybe<BigIntWithAggregatesFilter>;
+  updatedAt?: InputMaybe<DateTimeWithAggregatesFilter>;
+  userAddress?: InputMaybe<StringWithAggregatesFilter>;
+};
+
+export type StakePoolAllowedStakersSumAggregate = {
+  __typename?: 'StakePoolAllowedStakersSumAggregate';
+  id?: Maybe<Scalars['BigInt']>;
+  stakePoolId?: Maybe<Scalars['BigInt']>;
+};
+
+export type StakePoolAllowedStakersSumOrderByAggregateInput = {
+  id?: InputMaybe<SortOrder>;
+  stakePoolId?: InputMaybe<SortOrder>;
+};
+
+export type StakePoolAllowedStakersWhereInput = {
+  AND?: InputMaybe<Array<StakePoolAllowedStakersWhereInput>>;
+  NOT?: InputMaybe<Array<StakePoolAllowedStakersWhereInput>>;
+  OR?: InputMaybe<Array<StakePoolAllowedStakersWhereInput>>;
+  createdAt?: InputMaybe<DateTimeFilter>;
+  id?: InputMaybe<BigIntFilter>;
+  stakePoolId?: InputMaybe<BigIntFilter>;
+  stakePools?: InputMaybe<StakePoolsRelationFilter>;
+  updatedAt?: InputMaybe<DateTimeFilter>;
+  userAddress?: InputMaybe<StringFilter>;
+};
+
+export type StakePoolAllowedStakersWhereUniqueInput = {
   id?: InputMaybe<Scalars['BigInt']>;
 };
 
@@ -6276,7 +6499,7 @@ export type StakePools = {
   __typename?: 'StakePools';
   _count?: Maybe<StakePoolsCount>;
   accounts: Accounts;
-  availableStake: Scalars['Decimal'];
+  availableStake?: Maybe<Scalars['Decimal']>;
   averageBlockTimeSinceLastActivity: Scalars['Float'];
   cap?: Maybe<Scalars['Decimal']>;
   commission: Scalars['Decimal'];
@@ -6298,6 +6521,7 @@ export type StakePools = {
   remainingStake?: Maybe<Scalars['Decimal']>;
   rewardAcc: Scalars['Decimal'];
   stakePoolActivities: Array<StakePoolActivities>;
+  stakePoolAllowedStakers: Array<StakePoolAllowedStakers>;
   stakePoolStakers: Array<StakePoolStakers>;
   stakePoolStats: Array<StakePoolStats>;
   stakePoolWithdrawals: Array<StakePoolWithdrawals>;
@@ -6332,6 +6556,16 @@ export type StakePoolsStakePoolActivitiesArgs = {
   skip?: InputMaybe<Scalars['Int']>;
   take?: InputMaybe<Scalars['Int']>;
   where?: InputMaybe<StakePoolActivitiesWhereInput>;
+};
+
+
+export type StakePoolsStakePoolAllowedStakersArgs = {
+  cursor?: InputMaybe<StakePoolAllowedStakersWhereUniqueInput>;
+  distinct?: InputMaybe<Array<StakePoolAllowedStakersScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<StakePoolAllowedStakersOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']>;
+  take?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<StakePoolAllowedStakersWhereInput>;
 };
 
 
@@ -6445,6 +6679,7 @@ export type StakePoolsCount = {
   __typename?: 'StakePoolsCount';
   miners: Scalars['Int'];
   stakePoolActivities: Scalars['Int'];
+  stakePoolAllowedStakers: Scalars['Int'];
   stakePoolStakers: Scalars['Int'];
   stakePoolStats: Scalars['Int'];
   stakePoolWithdrawals: Scalars['Int'];
@@ -6525,7 +6760,7 @@ export type StakePoolsGroupBy = {
   _max?: Maybe<StakePoolsMaxAggregate>;
   _min?: Maybe<StakePoolsMinAggregate>;
   _sum?: Maybe<StakePoolsSumAggregate>;
-  availableStake: Scalars['Decimal'];
+  availableStake?: Maybe<Scalars['Decimal']>;
   averageBlockTimeSinceLastActivity: Scalars['Float'];
   cap?: Maybe<Scalars['Decimal']>;
   commission: Scalars['Decimal'];
@@ -6757,6 +6992,7 @@ export type StakePoolsOrderByWithRelationInput = {
   remainingStake?: InputMaybe<SortOrder>;
   rewardAcc?: InputMaybe<SortOrder>;
   stakePoolActivities?: InputMaybe<StakePoolActivitiesOrderByRelationAggregateInput>;
+  stakePoolAllowedStakers?: InputMaybe<StakePoolAllowedStakersOrderByRelationAggregateInput>;
   stakePoolStakers?: InputMaybe<StakePoolStakersOrderByRelationAggregateInput>;
   stakePoolStats?: InputMaybe<StakePoolStatsOrderByRelationAggregateInput>;
   stakePoolWithdrawals?: InputMaybe<StakePoolWithdrawalsOrderByRelationAggregateInput>;
@@ -6814,7 +7050,7 @@ export type StakePoolsScalarWhereWithAggregatesInput = {
   AND?: InputMaybe<Array<StakePoolsScalarWhereWithAggregatesInput>>;
   NOT?: InputMaybe<Array<StakePoolsScalarWhereWithAggregatesInput>>;
   OR?: InputMaybe<Array<StakePoolsScalarWhereWithAggregatesInput>>;
-  availableStake?: InputMaybe<DecimalWithAggregatesFilter>;
+  availableStake?: InputMaybe<DecimalNullableWithAggregatesFilter>;
   averageBlockTimeSinceLastActivity?: InputMaybe<FloatWithAggregatesFilter>;
   cap?: InputMaybe<DecimalNullableWithAggregatesFilter>;
   commission?: InputMaybe<DecimalWithAggregatesFilter>;
@@ -6907,7 +7143,7 @@ export type StakePoolsWhereInput = {
   NOT?: InputMaybe<Array<StakePoolsWhereInput>>;
   OR?: InputMaybe<Array<StakePoolsWhereInput>>;
   accounts?: InputMaybe<AccountsRelationFilter>;
-  availableStake?: InputMaybe<DecimalFilter>;
+  availableStake?: InputMaybe<DecimalNullableFilter>;
   averageBlockTimeSinceLastActivity?: InputMaybe<FloatFilter>;
   cap?: InputMaybe<DecimalNullableFilter>;
   commission?: InputMaybe<DecimalFilter>;
@@ -6929,6 +7165,7 @@ export type StakePoolsWhereInput = {
   remainingStake?: InputMaybe<DecimalNullableFilter>;
   rewardAcc?: InputMaybe<DecimalFilter>;
   stakePoolActivities?: InputMaybe<StakePoolActivitiesListRelationFilter>;
+  stakePoolAllowedStakers?: InputMaybe<StakePoolAllowedStakersListRelationFilter>;
   stakePoolStakers?: InputMaybe<StakePoolStakersListRelationFilter>;
   stakePoolStats?: InputMaybe<StakePoolStatsListRelationFilter>;
   stakePoolWithdrawals?: InputMaybe<StakePoolWithdrawalsListRelationFilter>;
@@ -8068,7 +8305,7 @@ export type StakePoolsQueryVariables = Exact<{
 }>;
 
 
-export type StakePoolsQuery = { __typename?: 'Query', findManyStakePools: Array<{ __typename?: 'StakePools', pid: number, ownerAddress: string, commission: string, ownerReward: string, cap?: string | null, rewardAcc: string, totalShares: string, totalStake: string, freeStake: string, releasingStake: string, usedStake: string, remainingStake?: string | null, stakersCount: number, minersCount: number, theoreticalApr: string, withdrawalsCount: number, availableStake: string, stakePoolStakers?: Array<{ __typename?: 'StakePoolStakers', address?: string | null, shares: string, locked: string, availableReward: string, rewardDebt: string, stake: string, pendingReward: string, stakeReward: string, claimableReward: string, instantClaimableReward: string, isOwner: boolean }>, accounts: { __typename?: 'Accounts', identity?: string | null, identityVerified: boolean }, stakePoolWithdrawals?: Array<{ __typename?: 'StakePoolWithdrawals', shares: string, startTime: any, estimatesEndTime: any, stake: string, userAddress?: string | null }>, miners?: Array<{ __typename?: 'Miners', estimatesReclaimableAt?: any | null, workerPublicKey: string, stakes: string }>, stakePoolStats: Array<{ __typename?: 'StakePoolStats', commission?: string | null, commissionUpdatedAt?: any | null, previousCommission?: string | null }> }>, aggregateStakePools: { __typename?: 'AggregateStakePools', _count?: { __typename?: 'StakePoolsCountAggregate', _all: number } | null } };
+export type StakePoolsQuery = { __typename?: 'Query', findManyStakePools: Array<{ __typename?: 'StakePools', pid: number, ownerAddress: string, commission: string, ownerReward: string, cap?: string | null, rewardAcc: string, totalShares: string, totalStake: string, freeStake: string, releasingStake: string, usedStake: string, remainingStake?: string | null, stakersCount: number, minersCount: number, theoreticalApr: string, withdrawalsCount: number, availableStake?: string | null, stakePoolStakers?: Array<{ __typename?: 'StakePoolStakers', address?: string | null, shares: string, locked: string, availableReward: string, rewardDebt: string, stake: string, pendingReward: string, stakeReward: string, claimableReward: string, instantClaimableReward: string, isOwner: boolean }>, accounts: { __typename?: 'Accounts', identity?: string | null, identityVerified: boolean }, stakePoolWithdrawals?: Array<{ __typename?: 'StakePoolWithdrawals', shares: string, startTime: any, estimatesEndTime: any, stake: string, userAddress?: string | null }>, miners?: Array<{ __typename?: 'Miners', estimatesReclaimableAt?: any | null, workerPublicKey: string, stakes: string }>, stakePoolStats: Array<{ __typename?: 'StakePoolStats', commission?: string | null, commissionUpdatedAt?: any | null, previousCommission?: string | null }>, stakePoolAllowedStakers: Array<{ __typename?: 'StakePoolAllowedStakers', userAddress: string }> }>, aggregateStakePools: { __typename?: 'AggregateStakePools', _count?: { __typename?: 'StakePoolsCountAggregate', _all: number } | null } };
 
 export type TotalStakeQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -8095,7 +8332,7 @@ export type StakePoolQueryVariables = Exact<{
 }>;
 
 
-export type StakePoolQuery = { __typename?: 'Query', findUniqueStakePools?: { __typename?: 'StakePools', pid: number, ownerAddress: string, commission: string, ownerReward: string, cap?: string | null, rewardAcc: string, totalShares: string, totalStake: string, freeStake: string, releasingStake: string, remainingStake?: string | null, theoreticalApr: string, stakersCount: number, withdrawalsCount: number, minersCount: number, idleMinersCount: number, availableStake: string, accounts: { __typename?: 'Accounts', identity?: string | null, identityVerified: boolean }, stakePoolWithdrawals: Array<{ __typename?: 'StakePoolWithdrawals', shares: string, startTime: any, estimatesEndTime: any, stake: string, userAddress?: string | null }>, stakePoolStats: Array<{ __typename?: 'StakePoolStats', commission?: string | null, commissionUpdatedAt?: any | null, previousCommission?: string | null }> } | null };
+export type StakePoolQuery = { __typename?: 'Query', findUniqueStakePools?: { __typename?: 'StakePools', pid: number, ownerAddress: string, commission: string, ownerReward: string, cap?: string | null, rewardAcc: string, totalShares: string, totalStake: string, freeStake: string, releasingStake: string, remainingStake?: string | null, theoreticalApr: string, stakersCount: number, withdrawalsCount: number, minersCount: number, idleMinersCount: number, availableStake?: string | null, accounts: { __typename?: 'Accounts', identity?: string | null, identityVerified: boolean }, stakePoolWithdrawals: Array<{ __typename?: 'StakePoolWithdrawals', shares: string, startTime: any, estimatesEndTime: any, stake: string, userAddress?: string | null }>, stakePoolStats: Array<{ __typename?: 'StakePoolStats', commission?: string | null, commissionUpdatedAt?: any | null, previousCommission?: string | null }>, stakePoolAllowedStakers: Array<{ __typename?: 'StakePoolAllowedStakers', userAddress: string }> } | null };
 
 
 export const StakePoolsDocument = `
@@ -8152,6 +8389,9 @@ export const StakePoolsDocument = `
       previousCommission
     }
     availableStake
+    stakePoolAllowedStakers {
+      userAddress
+    }
   }
   aggregateStakePools(where: $where) {
     _count {
@@ -8296,6 +8536,9 @@ export const StakePoolDocument = `
     }
     idleMinersCount
     availableStake
+    stakePoolAllowedStakers {
+      userAddress
+    }
   }
 }
     `;
