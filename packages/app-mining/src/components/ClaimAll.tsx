@@ -158,23 +158,27 @@ const ClaimAll: FC<
   const extrinsic = useMemo(() => {
     if (api && decimals) {
       let batchParams: any[] = []
-      if (shouldClaimDelegatorRewards) {
-        batchParams = batchParams.concat(
-          aggregatedData.delegatorPids.map((pid) =>
-            api.tx.phalaStakePool?.claimStakerRewards?.(pid, address)
+      try {
+        if (shouldClaimDelegatorRewards) {
+          batchParams = batchParams.concat(
+            aggregatedData.delegatorPids.map((pid) =>
+              api.tx.phalaStakePool?.claimStakerRewards?.(pid, address)
+            )
           )
-        )
-      }
+        }
 
-      if (shouldClaimOwnerRewards) {
-        batchParams = batchParams.concat(
-          aggregatedData.ownerPids.map((pid) =>
-            api.tx.phalaStakePool?.claimOwnerRewards?.(pid, address)
+        if (shouldClaimOwnerRewards) {
+          batchParams = batchParams.concat(
+            aggregatedData.ownerPids.map((pid) =>
+              api.tx.phalaStakePool?.claimOwnerRewards?.(pid, address)
+            )
           )
-        )
-      }
+        }
 
-      return api.tx.utility.batchAll?.(batchParams)
+        return api.tx.utility.batchAll?.(batchParams)
+      } catch (err) {
+        // noop
+      }
     }
   }, [
     address,

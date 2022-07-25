@@ -16,11 +16,11 @@ import {
 import {StatefulTooltip} from 'baseui/tooltip'
 import {ParagraphSmall} from 'baseui/typography'
 import Decimal from 'decimal.js'
-import {useMemo, useState, VFC} from 'react'
+import {FC, useMemo, useState} from 'react'
 import {StakePool} from '.'
 import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
 
-const ReclaimAllModalBody: VFC<
+const ReclaimAllModalBody: FC<
   {
     stakePool: Pick<StakePool, 'pid'> & Partial<Pick<StakePool, 'miners'>>
   } & Pick<ModalProps, 'onClose'>
