@@ -17,11 +17,11 @@ import {
   ModalProps,
 } from 'baseui/modal'
 import {ParagraphSmall} from 'baseui/typography'
-import {useMemo, useState, VFC} from 'react'
+import {FC, useMemo, useState} from 'react'
 import {StakePool} from '.'
 import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
 
-const ClaimModalBody: VFC<
+const ClaimModalBody: FC<
   {
     stakePool: Pick<StakePool, 'pid'> &
       Partial<Pick<StakePool, 'stakePoolStakers'>>
