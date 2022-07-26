@@ -1,14 +1,27 @@
 import ausdIcon from '@/assets/ausd_asset_icon.png'
 import bncIcon from '@/assets/bnc_asset_icon.png'
+import bsxIcon from '@/assets/bsx_asset_icon.png'
 import hkoIcon from '@/assets/hko_asset_icon.svg'
 import karIcon from '@/assets/kar_asset_icon.png'
+import kmaIcon from '@/assets/kma_asset_icon.png'
 import movrIcon from '@/assets/movr_asset_icon.png'
 import phaIcon from '@/assets/pha_asset_icon.png'
+import turIcon from '@/assets/tur_asset_icon.png'
 import zlkIcon from '@/assets/zlk_asset_icon.png'
 import Decimal from 'decimal.js'
 import {ChainId, EvmChainId} from './chain'
 
-export type AssetId = 'pha' | 'movr' | 'kar' | 'zlk' | 'bnc' | 'ausd' | 'hko'
+export type AssetId =
+  | 'pha'
+  | 'movr'
+  | 'kar'
+  | 'zlk'
+  | 'bnc'
+  | 'ausd'
+  | 'hko'
+  | 'bsx'
+  | 'tur'
+  | 'kma'
 
 export type OrmlToken = 'PHA' | 'KAR' | 'ZLK' | 'BNC' | 'KUSD'
 export interface Asset {
@@ -195,5 +208,41 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
     existentialDeposit: {
       'parallel-heiko': new Decimal('0.01'),
     },
+  },
+  bsx: {
+    id: 'bsx',
+    symbol: 'BSX',
+    icon: bsxIcon,
+    decimals: {default: 12},
+    palletAssetId: {
+      khala: 5,
+      thala: 5,
+    },
+    destChainTransactionFee: {},
+    existentialDeposit: {},
+  },
+  tur: {
+    id: 'tur',
+    symbol: 'TUR',
+    icon: turIcon,
+    decimals: {default: 12},
+    palletAssetId: {
+      khala: 5,
+      thala: 5,
+    },
+    destChainTransactionFee: {},
+    existentialDeposit: {},
+  },
+  kma: {
+    id: 'kma',
+    symbol: 'KMA',
+    icon: kmaIcon,
+    decimals: {default: 12},
+    palletAssetId: {
+      khala: 5,
+      thala: 5,
+    },
+    destChainTransactionFee: {},
+    existentialDeposit: {},
   },
 }

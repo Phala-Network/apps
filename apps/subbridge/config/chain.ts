@@ -1,5 +1,6 @@
 import basiliskIcon from '@/assets/basilisk_chain_icon.png'
 import bifrostIcon from '@/assets/bifrost_chain_icon.svg'
+import calamariIcon from '@/assets/calamari_chain_icon.png'
 import ethereumIcon from '@/assets/ethereum_chain_icon.jpg'
 import karuraIcon from '@/assets/karura_chain_icon.png'
 import khalaIcon from '@/assets/khala_chain_icon.svg'
@@ -7,6 +8,7 @@ import kovanIcon from '@/assets/kovan_chain_icon.png'
 import moonbaseAlphaIcon from '@/assets/moonbase_alpha_chain_icon.png'
 import moonriverIcon from '@/assets/moonriver_chain_icon.png'
 import parallelHeikoIcon from '@/assets/parallel_heiko_chain_icon.svg'
+import turingIcon from '@/assets/turing_chain_icon.png'
 import {AssetId} from './asset'
 
 export type EvmChainId = 'ethereum' | 'kovan' | 'moonriver' | 'moonbase-alpha'
@@ -19,6 +21,8 @@ export type PolkadotChainId =
   | 'bifrost-test'
   | 'parallel-heiko'
   | 'basilisk'
+  | 'turing'
+  | 'calamari'
 export type ChainId = EvmChainId | PolkadotChainId
 export type ChainKind = 'evm' | 'polkadot'
 
@@ -230,5 +234,33 @@ export const CHAINS: Readonly<
       'wss://basilisk-rpc.dwellir.com',
     ],
     ss58Format: 10041,
+    nativeAsset: 'bsx',
+  },
+  turing: {
+    id: 'turing',
+    name: 'Turing',
+    icon: turingIcon,
+    kind: 'polkadot',
+    paraId: 2114,
+    endpoint: [
+      'wss://rpc.turing.oak.tech',
+      'wss://turing.api.onfinality.io/public-ws',
+      'wss://turing-rpc.dwellir.com',
+    ],
+    ss58Format: 51,
+    nativeAsset: 'tur',
+  },
+  calamari: {
+    id: 'calamari',
+    name: 'Calamari',
+    icon: calamariIcon,
+    kind: 'polkadot',
+    paraId: 2084,
+    endpoint: [
+      'wss://ws.calamari.systems/',
+      'wss://calamari.api.onfinality.io/public-ws',
+    ],
+    ss58Format: 78,
+    nativeAsset: 'kma',
   },
 }
