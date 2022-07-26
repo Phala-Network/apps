@@ -26,7 +26,7 @@ import {SortOrder, useStakePoolsQuery} from '../hooks/graphql'
 import useWaitSignAndSend from '../hooks/useWaitSignAndSend'
 import {client} from '../utils/GraphQLClient'
 
-const CLAIM_THRESHOLD = '0.0001'
+const CLAIM_THRESHOLD = '0'
 
 const ClaimAll: FC<
   {
