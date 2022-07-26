@@ -54,7 +54,7 @@ const ClaimAll: FC<
       withStakePoolStakers: true,
       stakePoolStakersWhere: {
         address: {equals: polkadotAccount?.address},
-        claimableReward: {gte: CLAIM_THRESHOLD},
+        claimableReward: {gt: CLAIM_THRESHOLD},
       },
       where: {
         OR: [
@@ -62,12 +62,12 @@ const ClaimAll: FC<
             stakePoolStakers: {
               some: {
                 address: {equals: polkadotAccount?.address},
-                claimableReward: {gte: CLAIM_THRESHOLD},
+                claimableReward: {gt: CLAIM_THRESHOLD},
               },
             },
           },
           {
-            ownerReward: {gte: CLAIM_THRESHOLD},
+            ownerReward: {gt: CLAIM_THRESHOLD},
             ownerAddress: {equals: polkadotAccount?.address},
           },
         ],
