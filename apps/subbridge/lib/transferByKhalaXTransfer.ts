@@ -9,6 +9,9 @@ const moonriverParaId = CHAINS.moonriver.paraId
 const karuraParaId = CHAINS.karura.paraId
 const bifrostParaId = CHAINS.bifrost.paraId
 const parallelHeikoParaId = CHAINS['parallel-heiko'].paraId
+const basiliskParaId = CHAINS.basilisk.paraId
+const turingParaId = CHAINS.turing.paraId
+const calamariParaId = CHAINS.calamari.paraId
 
 const extrinsicIds: {[assetId in AssetId]?: Record<string, unknown>} = {
   pha: {
@@ -62,6 +65,30 @@ const extrinsicIds: {[assetId in AssetId]?: Record<string, unknown>} = {
       parents: 1,
       interior: {
         X2: [{Parachain: parallelHeikoParaId}, {GeneralKey: 'HKO'}],
+      },
+    },
+  },
+  bsx: {
+    Concrete: {
+      parents: 1,
+      interior: {
+        X2: [{Parachain: basiliskParaId}, {GeneralIndex: 0}],
+      },
+    },
+  },
+  tur: {
+    Concrete: {
+      parents: 1,
+      interior: {
+        X1: {Parachain: turingParaId},
+      },
+    },
+  },
+  kma: {
+    Concrete: {
+      parents: 1,
+      interior: {
+        X1: {Parachain: calamariParaId},
       },
     },
   },

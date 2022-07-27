@@ -23,7 +23,7 @@ export type AssetId =
   | 'tur'
   | 'kma'
 
-export type OrmlToken = 'PHA' | 'KAR' | 'ZLK' | 'BNC' | 'KUSD'
+export type OrmlToken = 'PHA' | 'KAR' | 'ZLK' | 'BNC' | 'KUSD' | 'TUR'
 export interface Asset {
   id: AssetId
   symbol: string
@@ -56,14 +56,16 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
       '0x00e6dfb61a2fb903df487c401663825643bb825d41695e63df8af6162ab145a6',
     decimals: {ethereum: 18, kovan: 18, default: 12},
     destChainTransactionFee: {
-      khala: new Decimal('0.064'),
-      thala: new Decimal('0.064'),
+      khala: new Decimal('0.09324'),
+      thala: new Decimal('0.09324'),
       bifrost: new Decimal('0.0256'),
       'bifrost-test': new Decimal('0.0256'),
       karura: new Decimal('0.0512'),
       'karura-test': new Decimal('0.0512'),
       moonriver: new Decimal('0.05868512'),
       'parallel-heiko': new Decimal('0.0384'),
+      turing: new Decimal('0.256'),
+      calamari: new Decimal('0.9523809524'),
     },
     existentialDeposit: {
       khala: new Decimal('0.01'),
@@ -75,6 +77,7 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
     },
     palletAssetId: {
       'parallel-heiko': 115,
+      calamari: 13,
     },
   },
   movr: {
@@ -215,21 +218,27 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
     icon: bsxIcon,
     decimals: {default: 12},
     palletAssetId: {
-      khala: 5,
-      thala: 5,
+      khala: 9,
+      thala: 9,
+      basilisk: 0,
     },
-    destChainTransactionFee: {},
+    destChainTransactionFee: {
+      khala: new Decimal('0.064'),
+      thala: new Decimal('0.064'),
+      basilisk: new Decimal('22'),
+    },
     existentialDeposit: {},
   },
   tur: {
     id: 'tur',
     symbol: 'TUR',
     icon: turIcon,
-    decimals: {default: 12},
+    decimals: {default: 10},
     palletAssetId: {
-      khala: 5,
-      thala: 5,
+      khala: 10,
+      thala: 10,
     },
+    ormlToken: 'TUR',
     destChainTransactionFee: {},
     existentialDeposit: {},
   },
@@ -239,10 +248,15 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
     icon: kmaIcon,
     decimals: {default: 12},
     palletAssetId: {
-      khala: 5,
-      thala: 5,
+      calamari: 1,
+      khala: 8,
+      thala: 8,
     },
-    destChainTransactionFee: {},
+    destChainTransactionFee: {
+      khala: new Decimal('6.4'),
+      thala: new Decimal('6.4'),
+      calamari: new Decimal('0.000004'),
+    },
     existentialDeposit: {},
   },
 }

@@ -235,6 +235,7 @@ export const CHAINS: Readonly<
     ],
     ss58Format: 10041,
     nativeAsset: 'bsx',
+    explorerURL: 'https://basilisk.subscan.io/',
   },
   turing: {
     id: 'turing',
@@ -249,6 +250,7 @@ export const CHAINS: Readonly<
     ],
     ss58Format: 51,
     nativeAsset: 'tur',
+    explorerURL: 'https://turing.subscan.io/',
   },
   calamari: {
     id: 'calamari',
@@ -262,5 +264,6 @@ export const CHAINS: Readonly<
     ],
     ss58Format: 78,
     nativeAsset: 'kma',
+    explorerURL: 'https://calamari.subscan.io/',
   },
 }

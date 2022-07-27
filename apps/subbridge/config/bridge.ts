@@ -110,7 +110,6 @@ export const BRIDGES: Readonly<Bridge[]> = [
       {
         id: 'basilisk',
         assets: [
-          {assetId: 'pha', estimatedTime: '< 1 min', kind: 'khalaXTransfer'},
           {assetId: 'bsx', estimatedTime: '< 1 min', kind: 'khalaXTransfer'},
         ],
       },
@@ -193,7 +192,6 @@ export const BRIDGES: Readonly<Bridge[]> = [
       {
         id: 'khala',
         assets: [
-          {assetId: 'pha', estimatedTime: '< 1 min', kind: 'polkadotXTokens'},
           {assetId: 'bsx', estimatedTime: '< 1 min', kind: 'polkadotXTokens'},
         ],
       },
@@ -205,8 +203,8 @@ export const BRIDGES: Readonly<Bridge[]> = [
       {
         id: 'khala',
         assets: [
-          {assetId: 'pha', estimatedTime: '< 1 min', kind: 'polkadotXTokens'},
           {assetId: 'tur', estimatedTime: '< 1 min', kind: 'polkadotXTokens'},
+          {assetId: 'pha', estimatedTime: '< 1 min', kind: 'polkadotXTokens'},
         ],
       },
     ],
@@ -217,8 +215,8 @@ export const BRIDGES: Readonly<Bridge[]> = [
       {
         id: 'khala',
         assets: [
-          {assetId: 'pha', estimatedTime: '< 1 min', kind: 'polkadotXTokens'},
           {assetId: 'kma', estimatedTime: '< 1 min', kind: 'polkadotXTokens'},
+          {assetId: 'pha', estimatedTime: '< 1 min', kind: 'polkadotXTokens'},
         ],
       },
     ],

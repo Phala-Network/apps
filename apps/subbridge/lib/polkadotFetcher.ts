@@ -36,12 +36,12 @@ export const palletAssetBalanceFetcher = async (
 }
 
 export const ormlTokenBalanceFetcher = async (
-  karuraApi: ApiPromise,
+  polkadotApi: ApiPromise,
   address: string,
-  token: OrmlToken,
+  token: OrmlToken | {Token: OrmlToken},
   decimals: number
 ) => {
-  const balance = await karuraApi.query.tokens.accounts(address, {Token: token})
+  const balance = await polkadotApi.query.tokens.accounts(address, token)
 
   return new Decimal((balance.toJSON() as {free: number}).free).div(
     Decimal.pow(10, decimals)
