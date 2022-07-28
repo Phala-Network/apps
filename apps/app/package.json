@@ -51,8 +51,8 @@
     "styletron-react": "^6.1.0-beta.2"
   },
   "devDependencies": {
-    "@types/node": "^16.11.36",
-    "@types/react": "^18.0.12",
+    "@types/node": "^16.11.46",
+    "@types/react": "^18.0.15",
     "@types/react-helmet": "^6.1.5",
     "@types/react-table": "^7.7.11",
     "@types/styled-components": "^5.1.25",
