@@ -66,9 +66,10 @@ const WorkerTableV2: FC<{
   const pageSize = 10
   const [polkadotAccount] = useCurrentAccount()
   const address = polkadotAccount?.address
-  const [sortColumn, setSortColumn] =
-    useState<keyof MinersOrderByWithRelationInput>('pid')
-  const [sortAsc, setSortAsc] = useState(true)
+  const [sortColumn, setSortColumn] = useState<
+    keyof MinersOrderByWithRelationInput
+  >(kind === 'stakePool' ? 'v' : 'pid')
+  const [sortAsc, setSortAsc] = useState(kind === 'mining')
   const [currentPage, setCurrentPage] = useState(1)
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
