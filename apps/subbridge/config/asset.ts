@@ -239,7 +239,11 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
       thala: 10,
     },
     ormlToken: 'TUR',
-    destChainTransactionFee: {},
+    destChainTransactionFee: {
+      khala: new Decimal('0.064'),
+      thala: new Decimal('0.064'),
+      turing: new Decimal('0.1664'),
+    },
     existentialDeposit: {},
   },
   kma: {

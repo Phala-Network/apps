@@ -5,7 +5,6 @@ import type {SubmittableExtrinsic} from '@polkadot/api/types'
 import type {ISubmittableResult} from '@polkadot/types/types'
 import {u8aToHex} from '@polkadot/util'
 import {decodeAddress} from '@polkadot/util-crypto'
-import Decimal from 'decimal.js'
 
 const khalaParaId = CHAINS.khala.paraId
 
@@ -28,7 +27,6 @@ export const transferByPolkadotXTokens = ({
 }): SubmittableExtrinsic<'promise', ISubmittableResult> => {
   const asset = ASSETS[assetId]
   const toChain = CHAINS[toChainId]
-  const decimals = asset.decimals[fromChainId] ?? asset.decimals.default
   const shouldUsePalletAssetId =
     fromChainId === 'parallel-heiko' ||
     fromChainId === 'calamari' ||
@@ -93,8 +91,6 @@ export const transferByPolkadotXTokens = ({
             },
       },
     },
-    Decimal.pow(10, decimals - 3)
-      .times(6)
-      .toString()
+    '6000000000'
   )
 }

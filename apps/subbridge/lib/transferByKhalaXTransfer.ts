@@ -1,9 +1,8 @@
-import {AssetId, ASSETS} from '@/config/asset'
+import {AssetId} from '@/config/asset'
 import {ChainId, CHAINS} from '@/config/chain'
 import type {ApiPromise} from '@polkadot/api'
 import {u8aToHex} from '@polkadot/util'
 import {decodeAddress} from '@polkadot/util-crypto'
-import Decimal from 'decimal.js'
 
 const moonriverParaId = CHAINS.moonriver.paraId
 const karuraParaId = CHAINS.karura.paraId
@@ -107,13 +106,11 @@ export const transferByKhalaXTransfer = ({
   destinationAccount: string
   assetId: AssetId
 }) => {
-  const asset = ASSETS[assetId]
   const toChain = CHAINS[toChainId]
   const isToEthereum = toChainId === 'ethereum' || toChainId === 'kovan'
   const isTransferringZLKToMoonriver =
     (toChainId === 'moonriver' || toChainId === 'moonbase-alpha') &&
     assetId === 'zlk'
-  const decimals = asset.decimals.khala ?? asset.decimals.default
   const generalIndex = toChain.kind === 'evm' ? toChain.generalIndex : null
   if (!extrinsicIds[assetId]) {
     throw new Error(`Unsupported asset: ${assetId}`)
@@ -161,8 +158,6 @@ export const transferByKhalaXTransfer = ({
     },
     isThroughChainBridge
       ? null // No need to specify a certain weight if transfer will not through XCM
-      : Decimal.pow(10, decimals - 3)
-          .times(6)
-          .toString()
+      : '6000000000'
   )
 }
