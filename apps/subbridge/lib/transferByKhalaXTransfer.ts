@@ -1,14 +1,16 @@
-import {AssetId, ASSETS} from '@/config/asset'
+import {AssetId} from '@/config/asset'
 import {ChainId, CHAINS} from '@/config/chain'
 import type {ApiPromise} from '@polkadot/api'
 import {u8aToHex} from '@polkadot/util'
 import {decodeAddress} from '@polkadot/util-crypto'
-import Decimal from 'decimal.js'
 
 const moonriverParaId = CHAINS.moonriver.paraId
 const karuraParaId = CHAINS.karura.paraId
 const bifrostParaId = CHAINS.bifrost.paraId
 const parallelHeikoParaId = CHAINS['parallel-heiko'].paraId
+const basiliskParaId = CHAINS.basilisk.paraId
+const turingParaId = CHAINS.turing.paraId
+const calamariParaId = CHAINS.calamari.paraId
 
 const extrinsicIds: {[assetId in AssetId]?: Record<string, unknown>} = {
   pha: {
@@ -65,6 +67,30 @@ const extrinsicIds: {[assetId in AssetId]?: Record<string, unknown>} = {
       },
     },
   },
+  bsx: {
+    Concrete: {
+      parents: 1,
+      interior: {
+        X2: [{Parachain: basiliskParaId}, {GeneralIndex: 0}],
+      },
+    },
+  },
+  tur: {
+    Concrete: {
+      parents: 1,
+      interior: {
+        X1: {Parachain: turingParaId},
+      },
+    },
+  },
+  kma: {
+    Concrete: {
+      parents: 1,
+      interior: {
+        X1: {Parachain: calamariParaId},
+      },
+    },
+  },
 }
 
 export const transferByKhalaXTransfer = ({
@@ -80,13 +106,11 @@ export const transferByKhalaXTransfer = ({
   destinationAccount: string
   assetId: AssetId
 }) => {
-  const asset = ASSETS[assetId]
   const toChain = CHAINS[toChainId]
   const isToEthereum = toChainId === 'ethereum' || toChainId === 'kovan'
   const isTransferringZLKToMoonriver =
     (toChainId === 'moonriver' || toChainId === 'moonbase-alpha') &&
     assetId === 'zlk'
-  const decimals = asset.decimals.khala ?? asset.decimals.default
   const generalIndex = toChain.kind === 'evm' ? toChain.generalIndex : null
   if (!extrinsicIds[assetId]) {
     throw new Error(`Unsupported asset: ${assetId}`)
@@ -134,8 +158,6 @@ export const transferByKhalaXTransfer = ({
     },
     isThroughChainBridge
       ? null // No need to specify a certain weight if transfer will not through XCM
-      : Decimal.pow(10, decimals - 3)
-          .times(6)
-          .toString()
+      : '6000000000'
   )
 }

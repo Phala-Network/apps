@@ -92,7 +92,7 @@ const AmountInput: FC<BoxProps & Pick<InputProps, 'endAdornment'>> = ({
               </Typography>
               {bridgeLimit ? (
                 <Typography variant="caption" sx={{fontWeight: 500}}>
-                  {`${formatCurrency(bridgeLimit, 0)} ${asset.symbol}`}
+                  {`${formatCurrency(bridgeLimit, 1)} ${asset.symbol}`}
                 </Typography>
               ) : (
                 <Skeleton width={64} />

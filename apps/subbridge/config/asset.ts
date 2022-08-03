@@ -1,16 +1,29 @@
 import ausdIcon from '@/assets/ausd_asset_icon.png'
 import bncIcon from '@/assets/bnc_asset_icon.png'
+import bsxIcon from '@/assets/bsx_asset_icon.png'
 import hkoIcon from '@/assets/hko_asset_icon.svg'
 import karIcon from '@/assets/kar_asset_icon.png'
+import kmaIcon from '@/assets/kma_asset_icon.png'
 import movrIcon from '@/assets/movr_asset_icon.png'
 import phaIcon from '@/assets/pha_asset_icon.png'
+import turIcon from '@/assets/tur_asset_icon.png'
 import zlkIcon from '@/assets/zlk_asset_icon.png'
 import Decimal from 'decimal.js'
 import {ChainId, EvmChainId} from './chain'
 
-export type AssetId = 'pha' | 'movr' | 'kar' | 'zlk' | 'bnc' | 'ausd' | 'hko'
+export type AssetId =
+  | 'pha'
+  | 'movr'
+  | 'kar'
+  | 'zlk'
+  | 'bnc'
+  | 'ausd'
+  | 'hko'
+  | 'bsx'
+  | 'tur'
+  | 'kma'
 
-export type OrmlToken = 'PHA' | 'KAR' | 'ZLK' | 'BNC' | 'KUSD'
+export type OrmlToken = 'PHA' | 'KAR' | 'ZLK' | 'BNC' | 'KUSD' | 'TUR'
 export interface Asset {
   id: AssetId
   symbol: string
@@ -43,14 +56,16 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
       '0x00e6dfb61a2fb903df487c401663825643bb825d41695e63df8af6162ab145a6',
     decimals: {ethereum: 18, kovan: 18, default: 12},
     destChainTransactionFee: {
-      khala: new Decimal('0.064'),
-      thala: new Decimal('0.064'),
+      khala: new Decimal('0.09324'),
+      thala: new Decimal('0.09324'),
       bifrost: new Decimal('0.0256'),
       'bifrost-test': new Decimal('0.0256'),
       karura: new Decimal('0.0512'),
       'karura-test': new Decimal('0.0512'),
       moonriver: new Decimal('0.05868512'),
       'parallel-heiko': new Decimal('0.0384'),
+      turing: new Decimal('0.256'),
+      calamari: new Decimal('0.9523809524'),
     },
     existentialDeposit: {
       khala: new Decimal('0.01'),
@@ -62,6 +77,7 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
     },
     palletAssetId: {
       'parallel-heiko': 115,
+      calamari: 13,
     },
   },
   movr: {
@@ -195,5 +211,56 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
     existentialDeposit: {
       'parallel-heiko': new Decimal('0.01'),
     },
+  },
+  bsx: {
+    id: 'bsx',
+    symbol: 'BSX',
+    icon: bsxIcon,
+    decimals: {default: 12},
+    palletAssetId: {
+      khala: 9,
+      thala: 9,
+      basilisk: 0,
+    },
+    destChainTransactionFee: {
+      khala: new Decimal('0.064'),
+      thala: new Decimal('0.064'),
+      basilisk: new Decimal('22'),
+    },
+    existentialDeposit: {},
+  },
+  tur: {
+    id: 'tur',
+    symbol: 'TUR',
+    icon: turIcon,
+    decimals: {default: 10},
+    palletAssetId: {
+      khala: 10,
+      thala: 10,
+    },
+    ormlToken: 'TUR',
+    destChainTransactionFee: {
+      khala: new Decimal('0.064'),
+      thala: new Decimal('0.064'),
+      turing: new Decimal('0.1664'),
+    },
+    existentialDeposit: {},
+  },
+  kma: {
+    id: 'kma',
+    symbol: 'KMA',
+    icon: kmaIcon,
+    decimals: {default: 12},
+    palletAssetId: {
+      calamari: 1,
+      khala: 8,
+      thala: 8,
+    },
+    destChainTransactionFee: {
+      khala: new Decimal('6.4'),
+      thala: new Decimal('6.4'),
+      calamari: new Decimal('0.000004'),
+    },
+    existentialDeposit: {},
   },
 }

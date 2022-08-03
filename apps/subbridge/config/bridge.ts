@@ -107,12 +107,26 @@ export const BRIDGES: Readonly<Bridge[]> = [
           {assetId: 'hko', estimatedTime: '< 1 min', kind: 'khalaXTransfer'},
         ],
       },
-      // {
-      //   id: 'basilisk',
-      //   assets: [
-      //     {assetId: 'pha', estimatedTime: '< 1 min', kind: 'khalaXTransfer'},
-      //   ],
-      // },
+      {
+        id: 'basilisk',
+        assets: [
+          {assetId: 'bsx', estimatedTime: '< 1 min', kind: 'khalaXTransfer'},
+        ],
+      },
+      {
+        id: 'turing',
+        assets: [
+          {assetId: 'pha', estimatedTime: '< 1 min', kind: 'khalaXTransfer'},
+          {assetId: 'tur', estimatedTime: '< 1 min', kind: 'khalaXTransfer'},
+        ],
+      },
+      {
+        id: 'calamari',
+        assets: [
+          {assetId: 'pha', estimatedTime: '< 1 min', kind: 'khalaXTransfer'},
+          {assetId: 'kma', estimatedTime: '< 1 min', kind: 'khalaXTransfer'},
+        ],
+      },
     ],
   },
   {
@@ -167,6 +181,41 @@ export const BRIDGES: Readonly<Bridge[]> = [
         id: 'khala',
         assets: [
           {assetId: 'hko', estimatedTime: '< 1 min', kind: 'polkadotXTokens'},
+          {assetId: 'pha', estimatedTime: '< 1 min', kind: 'polkadotXTokens'},
+        ],
+      },
+    ],
+  },
+  {
+    fromChain: 'basilisk',
+    toChains: [
+      {
+        id: 'khala',
+        assets: [
+          {assetId: 'bsx', estimatedTime: '< 1 min', kind: 'polkadotXTokens'},
+        ],
+      },
+    ],
+  },
+  {
+    fromChain: 'turing',
+    toChains: [
+      {
+        id: 'khala',
+        assets: [
+          {assetId: 'tur', estimatedTime: '< 1 min', kind: 'polkadotXTokens'},
+          {assetId: 'pha', estimatedTime: '< 1 min', kind: 'polkadotXTokens'},
+        ],
+      },
+    ],
+  },
+  {
+    fromChain: 'calamari',
+    toChains: [
+      {
+        id: 'khala',
+        assets: [
+          {assetId: 'kma', estimatedTime: '< 1 min', kind: 'polkadotXTokens'},
           {assetId: 'pha', estimatedTime: '< 1 min', kind: 'polkadotXTokens'},
         ],
       },

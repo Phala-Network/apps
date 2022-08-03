@@ -43,7 +43,8 @@ export const useBalance = (): Decimal | undefined => {
     (fromChain.id === 'karura' ||
       fromChain.id === 'karura-test' ||
       fromChain.id === 'bifrost' ||
-      fromChain.id === 'bifrost-test') &&
+      fromChain.id === 'bifrost-test' ||
+      fromChain.id === 'turing') &&
     asset.id !== fromChain.nativeAsset &&
     asset.ormlToken !== undefined
   ) {
@@ -51,7 +52,8 @@ export const useBalance = (): Decimal | undefined => {
   } else if (
     (fromChain.id === 'khala' ||
       fromChain.id === 'thala' ||
-      fromChain.id === 'parallel-heiko') &&
+      fromChain.id === 'parallel-heiko' ||
+      fromChain.id === 'calamari') &&
     asset.id !== fromChain.nativeAsset &&
     asset.palletAssetId?.[fromChain.id] !== undefined
   ) {
@@ -72,7 +74,14 @@ export const useBalance = (): Decimal | undefined => {
       polkadotApi &&
       polkadotAccount &&
       asset.ormlToken
-      ? [polkadotApi, polkadotAccount.address, asset.ormlToken, decimals]
+      ? [
+          polkadotApi,
+          polkadotAccount.address,
+          fromChain.id === 'karura' || fromChain.id === 'karura-test'
+            ? {Token: asset.ormlToken}
+            : asset.ormlToken,
+          decimals,
+        ]
       : null,
     ormlTokenBalanceFetcher,
     {refreshInterval}
