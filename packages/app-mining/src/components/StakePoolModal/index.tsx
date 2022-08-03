@@ -1,16 +1,17 @@
-import {useEffect, useState, VFC} from 'react'
-import {Modal, ModalProps} from 'baseui/modal'
 import {useSSR} from '@phala/react-hooks'
+import {Modal, ModalProps} from 'baseui/modal'
+import {FC, useEffect, useState} from 'react'
 import {StakePoolsQuery} from '../../hooks/graphql'
 
 // FIXME: should be loadable, but meet some problems when configuring gatsby-plugin-loadable-components-ssr
-import DelegateModalBody from './DelegateModalBody'
+import AddWorkerModalBody from './AddWorkerModalBody'
 import ClaimModalBody from './ClaimModalBody'
-import WithdrawModalBody from './WithdrawModalBody'
+import DelegateModalBody from './DelegateModalBody'
+import ReclaimAllModalBody from './ReclaimAllModalBody'
 import SetCapModalBody from './SetCapModalBody'
 import SetCommissionModalBody from './SetCommissionModalBody'
-import AddWorkerModalBody from './AddWorkerModalBody'
-import ReclaimAllModalBody from './ReclaimAllModalBody'
+import SetDescriptionModalBody from './SetDescriptionModalBody'
+import WithdrawModalBody from './WithdrawModalBody'
 
 export type StakePoolModalKey =
   | 'addWorker'
@@ -20,6 +21,7 @@ export type StakePoolModalKey =
   | 'withdraw'
   | 'setCommission'
   | 'reclaimAll'
+  | 'setDescription'
 
 const modalKeyMap = {
   delegate: DelegateModalBody,
@@ -29,11 +31,12 @@ const modalKeyMap = {
   setCommission: SetCommissionModalBody,
   addWorker: AddWorkerModalBody,
   reclaimAll: ReclaimAllModalBody,
+  setDescription: SetDescriptionModalBody,
 }
 
 export type StakePool = StakePoolsQuery['findManyStakePools'][number]
 
-const StakePoolModal: VFC<
+const StakePoolModal: FC<
   {
     stakePool?:
       | (Pick<StakePool, 'pid'> &

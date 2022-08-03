@@ -19,11 +19,11 @@ import {
 import {Notification} from 'baseui/notification'
 import {ParagraphSmall} from 'baseui/typography'
 import Decimal from 'decimal.js'
-import {useMemo, useState, VFC} from 'react'
+import {FC, useMemo, useState} from 'react'
 import {StakePool} from '.'
 import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
 
-const WithdrawModalBody: VFC<
+const WithdrawModalBody: FC<
   {
     stakePool: Pick<StakePool, 'pid'> &
       Partial<Pick<StakePool, 'stakePoolStakers' | 'stakePoolWithdrawals'>>

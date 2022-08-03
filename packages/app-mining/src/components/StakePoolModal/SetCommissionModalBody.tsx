@@ -15,11 +15,11 @@ import {
 } from 'baseui/modal'
 import {ParagraphSmall} from 'baseui/typography'
 import Decimal from 'decimal.js'
-import {useMemo, useState, VFC} from 'react'
+import {FC, useMemo, useState} from 'react'
 import {StakePool} from '.'
 import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
 
-const SetCommissionModalBody: VFC<
+const SetCommissionModalBody: FC<
   {
     stakePool: Pick<StakePool, 'pid'> & Partial<Pick<StakePool, 'commission'>>
   } & Pick<ModalProps, 'onClose'>

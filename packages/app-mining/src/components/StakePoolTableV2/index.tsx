@@ -19,7 +19,7 @@ import {debounce} from 'lodash-es'
 import {FC, ReactNode, useCallback, useEffect, useState} from 'react'
 import {AlertTriangle, Search} from 'react-feather'
 import styled from 'styled-components'
-import {$StyleProp} from 'styletron-react'
+import {StyletronProps} from 'styletron-react'
 import {
   QueryMode,
   SortOrder,
@@ -222,9 +222,7 @@ const StakePoolTableV2: FC<{
             size="compact"
             clearable
             placeholder="Search Pid or Owner Address"
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              debouncedSetSearchString(e.target.value)
-            }
+            onChange={(e) => debouncedSetSearchString(e.target.value)}
             endEnhancer={<Search size={18} />}
             overrides={{
               Root: {
@@ -237,17 +235,13 @@ const StakePoolTableV2: FC<{
           />
           <Checkbox
             checked={verifiedFilter}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setVerifiedFilter(e.target.checked)
-            }
+            onChange={(e) => setVerifiedFilter(e.target.checked)}
           >
             {'Verified'}
           </Checkbox>
           <Checkbox
             checked={whitelistFilter}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setWhitelistFilter(e.target.checked)
-            }
+            onChange={(e) => setWhitelistFilter(e.target.checked)}
           >
             <TooltipHeader content={tooltipContent.hideClosed}>
               Hide Closed
@@ -256,9 +250,7 @@ const StakePoolTableV2: FC<{
           <Block display="flex" alignItems="center">
             <Checkbox
               checked={delegableFilter}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setDelegableFilter(e.target.checked)
-              }
+              onChange={(e) => setDelegableFilter(e.target.checked)}
             >
               {'Delegable > '}
             </Checkbox>
@@ -272,7 +264,7 @@ const StakePoolTableV2: FC<{
               initialState={{value: delegableValue}}
               type="number"
               size="compact"
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              onChange={(e) => {
                 const value = e.target.value
                 if (value) {
                   debouncedSetDelegableValue(value)
@@ -311,15 +303,16 @@ const StakePoolTableV2: FC<{
           },
           TableBodyRow: {
             style: {cursor: 'pointer'},
-            component: (props: {
-              $style: $StyleProp<any>
-              children: ReactNode
-              $row: StakePool
-            }) => {
+            component: (
+              props: {
+                children: ReactNode
+                $row: StakePool
+              } & StyletronProps
+            ) => {
               return (
                 <StyledTableBodyRow
                   $style={props.$style}
-                  onClick={(e: MouseEvent) => {
+                  onClick={(e: any) => {
                     // Prevent navigating when clicking other elements
                     const tagName = (e.target as HTMLElement).tagName
                     if (tagName !== 'TR' && tagName !== 'TD') return
@@ -564,6 +557,9 @@ const StakePoolTableV2: FC<{
           }}
         >
           {(stakePool: StakePool) => {
+            const isOwner =
+              Boolean(polkadotAccount?.address) &&
+              polkadotAccount?.address === stakePool.ownerAddress
             const allItems: (false | MenuItem)[] = [
               kind === 'mining' && {label: 'Add Worker', key: 'addWorker'},
               kind === 'mining' && {label: 'Set Cap', key: 'setCap'},
@@ -580,7 +576,7 @@ const StakePoolTableV2: FC<{
                 key: 'delegate',
                 disabled:
                   !polkadotAccount?.address ||
-                  (polkadotAccount.address !== stakePool.ownerAddress &&
+                  (!isOwner &&
                     Boolean(stakePool.stakePoolAllowedStakers.length) &&
                     !stakePool.stakePoolAllowedStakers.find(
                       ({userAddress}) => userAddress === polkadotAccount.address
@@ -595,6 +591,11 @@ const StakePoolTableV2: FC<{
                 label: 'Reclaim All',
                 key: 'reclaimAll',
                 disabled: !stakePool.miners?.length,
+              },
+              kind === 'mining' && {
+                label: 'Set Description',
+                key: 'setDescription',
+                disabled: !isOwner,
               },
             ]
 

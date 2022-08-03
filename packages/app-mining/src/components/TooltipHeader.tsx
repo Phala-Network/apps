@@ -1,16 +1,18 @@
 import {Block} from 'baseui/block'
 import {StatefulTooltip, StatefulTooltipProps} from 'baseui/tooltip'
+import {FC} from 'react'
 import {Info} from 'react-feather'
 
-const TooltipHeader = ({
+const TooltipHeader: FC<Partial<StatefulTooltipProps>> = ({
   children,
+  placement,
   ...props
-}: StatefulTooltipProps): JSX.Element => (
+}) => (
   <Block display="flex" alignItems="center">
     {children}
     <StatefulTooltip
-      placement="bottomLeft"
       overrides={{Body: {style: {maxWidth: '400px'}}}}
+      placement={placement || 'bottomLeft'}
       {...props}
     >
       <Info size={16} style={{marginLeft: 5}} />

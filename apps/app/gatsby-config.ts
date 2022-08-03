@@ -28,6 +28,7 @@ const config: GatsbyConfig = {
         },
       },
     },
+    'gatsby-plugin-fontawesome-css',
     'gatsby-plugin-netlify',
     {
       resolve: 'gatsby-plugin-env-variables',
