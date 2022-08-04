@@ -93,9 +93,7 @@ const TransferModal: React.FC<Props> = ({visible, onClose}) => {
       <InputWrapper>
         <Input
           value={address}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setAddress(e.target.value)
-          }
+          onChange={(e) => setAddress(e.target.value)}
           placeholder="Wallet address"
           overrides={inputStyle}
         />
@@ -104,9 +102,7 @@ const TransferModal: React.FC<Props> = ({visible, onClose}) => {
       <InputWrapper>
         <Input
           value={amount}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setAmount(e.target.value)
-          }
+          onChange={(e) => setAmount(e.target.value)}
           type="number"
           placeholder="Amount(PHA)"
           overrides={{

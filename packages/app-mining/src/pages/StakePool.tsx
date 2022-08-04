@@ -16,6 +16,7 @@ import InfoCard from '../components/StakePool/InfoCard'
 import SettingButton from '../components/StakePool/SettingButton'
 import StakeInfo from '../components/StakePool/StakeInfo'
 import WithdrawQueue from '../components/StakePool/WithdrawQueue'
+import StakePoolDescription from '../components/StakePoolDescription'
 import StakePoolModal, {StakePoolModalKey} from '../components/StakePoolModal'
 import WorkerTableV2 from '../components/WorkerTableV2'
 import {useStakePoolQuery} from '../hooks/graphql'
@@ -186,6 +187,37 @@ export const StakePool: FC<StakePoolProps> = ({pid}) => {
             </InfoCard>
             <InfoCard label="Delegator">{stakersCount}</InfoCard>
           </Block>
+
+          <Block display="flex" alignItems="center" marginTop="scale800">
+            <HeadingSmall marginTop="scale400" marginBottom="scale400">
+              Intro
+            </HeadingSmall>
+            {isOwner && (
+              <SettingButton onClick={() => setModalKey('setDescription')} />
+            )}
+          </Block>
+          <Card
+            overrides={{
+              Root: {
+                style: ({$theme}) => ({
+                  borderRadius: '0',
+                  ...$theme.borders.border200,
+                }),
+              },
+              Body: {
+                style: ({$theme}) => ({
+                  display: 'grid',
+                  gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1fr)',
+                  gap: $theme.sizing.scale800,
+                  [$theme.mediaQuery.medium]: {
+                    gridTemplateColumns: '1fr',
+                  },
+                }),
+              },
+            }}
+          >
+            <StakePoolDescription pid={pid} />
+          </Card>
 
           <HeadingSmall marginTop="scale1200" marginBottom="scale400">
             Stake Info

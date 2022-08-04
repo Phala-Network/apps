@@ -1,7 +1,7 @@
 import {useStyletron} from 'baseui'
-import React, {useEffect, useState, VFC} from 'react'
-import {Tab, Tabs} from 'baseui/tabs-motion'
 import {Block} from 'baseui/block'
+import {Tab, Tabs} from 'baseui/tabs-motion'
+import React, {FC, useEffect, useState} from 'react'
 
 const questions = [
   ['APR', '1c9dbc73-a15a-4ff0-b6e1-85146482558a'],
@@ -11,7 +11,7 @@ const questions = [
 ] as const
 
 // Render all tabs for better switching experience, but only load iframe when tab is visible
-const WrappedIframe: VFC<{
+const WrappedIframe: FC<{
   pid?: string
   questionId: string
   activeKey: React.Key
@@ -39,7 +39,7 @@ const WrappedIframe: VFC<{
   )
 }
 
-const Chart: VFC<{pid?: string}> = ({pid}) => {
+const Chart: FC<{pid?: string}> = ({pid}) => {
   const [activeKey, setActiveKey] = useState<React.Key>(questions[0][1])
   return (
     <Tabs
