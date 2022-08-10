@@ -81,20 +81,22 @@ const WorkerTableV2: FC<{
     {
       take: pageSize,
       skip: pageSize * (currentPage - 1),
-      orderBy: {[sortColumn]: sortAsc ? SortOrder.Asc : SortOrder.Desc},
+      orderBy: [
+        {[sortColumn]: sortAsc ? SortOrder.Asc : SortOrder.Desc},
+        {v: SortOrder.Desc},
+      ],
       where: {
         active: {equals: true},
         current: {equals: true},
-        ...(kind === 'mining' &&
-          process.env.NODE_ENV !== 'development' && {
-            stakePools: {
-              is: {
-                ownerAddress: {
-                  equals: address,
-                },
+        ...(kind === 'mining' && {
+          stakePools: {
+            is: {
+              ownerAddress: {
+                equals: address,
               },
             },
-          }),
+          },
+        }),
 
         ...(kind === 'stakePool' && {
           stakePools: {
