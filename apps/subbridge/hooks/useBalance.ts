@@ -77,7 +77,10 @@ export const useBalance = (): Decimal | undefined => {
       ? [
           polkadotApi,
           polkadotAccount.address,
-          fromChain.id === 'karura' || fromChain.id === 'karura-test'
+          fromChain.id === 'karura' ||
+          fromChain.id === 'karura-test' ||
+          fromChain.id === 'bifrost' ||
+          fromChain.id === 'bifrost-test'
             ? {Token: asset.ormlToken}
             : asset.ormlToken,
           decimals,
