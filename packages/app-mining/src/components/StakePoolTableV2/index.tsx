@@ -117,10 +117,8 @@ const StakePoolTableV2: FC<{
             },
           ].filter(isTruthy),
         }),
-        // For development
         AND: [
-          process.env.NODE_ENV !== 'development' &&
-            kind === 'mining' && {ownerAddress: {equals: address}},
+          kind === 'mining' && {ownerAddress: {equals: address}},
           kind === 'myDelegate' && {
             stakePoolStakers: {
               some: {
