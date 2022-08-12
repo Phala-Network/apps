@@ -18,6 +18,7 @@ import AmountInput from './AmountInput'
 import AssetSelect from './AssetSelect'
 import ChainSelect from './ChainSelect'
 import DestinationAccountInput from './DestinationAccountInput'
+import DestinationAccountWarning from './DestinationAccountWarning'
 import ExtraInfo from './Extra'
 
 const getToChainIds = (fromChainId: ChainId): ChainId[] =>
@@ -110,7 +111,7 @@ const BridgeBody: FC<BoxProps> = (props) => {
 
             <IconButton onClick={handleSwitchChain}>
               <ArrowForward
-                sx={{[theme.breakpoints.down('md')]: {display: 'none'}}}
+                sx={{[theme.breakpoints.down('sm')]: {display: 'none'}}}
               />
               <ArrowDownward
                 sx={{[theme.breakpoints.up('sm')]: {display: 'none'}}}
@@ -138,6 +139,9 @@ const BridgeBody: FC<BoxProps> = (props) => {
 
           <Box sx={{width: 1}}>
             <Collapse in={Boolean(amount) && Boolean(destinationAccount)}>
+              {toChain.kind !== 'evm' && (
+                <DestinationAccountWarning sx={{mb: 3}} />
+              )}
               <ExtraInfo sx={{mb: 3}} />
             </Collapse>
             <Action />

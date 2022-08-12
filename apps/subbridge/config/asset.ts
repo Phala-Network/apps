@@ -1,6 +1,7 @@
 import ausdIcon from '@/assets/ausd_asset_icon.png'
 import bncIcon from '@/assets/bnc_asset_icon.png'
 import bsxIcon from '@/assets/bsx_asset_icon.png'
+import crabIcon from '@/assets/crab_asset_icon.png'
 import hkoIcon from '@/assets/hko_asset_icon.svg'
 import karIcon from '@/assets/kar_asset_icon.png'
 import kmaIcon from '@/assets/kma_asset_icon.png'
@@ -22,6 +23,7 @@ export type AssetId =
   | 'bsx'
   | 'tur'
   | 'kma'
+  | 'crab'
 
 export type OrmlToken = 'PHA' | 'KAR' | 'ZLK' | 'BNC' | 'KUSD' | 'TUR'
 export interface Asset {
@@ -260,6 +262,18 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
       khala: new Decimal('6.4'),
       thala: new Decimal('6.4'),
       calamari: new Decimal('0.000004'),
+    },
+    existentialDeposit: {},
+  },
+  crab: {
+    id: 'crab',
+    symbol: 'CRAB',
+    icon: crabIcon,
+    decimals: {default: 18},
+    palletAssetId: {khala: 11, thala: 11},
+    destChainTransactionFee: {
+      crab: new Decimal('3.2'),
+      khala: new Decimal('0.064'),
     },
     existentialDeposit: {},
   },
