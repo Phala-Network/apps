@@ -14,9 +14,11 @@ import {
 import {useCurrentAccount} from '@phala/store'
 import {toFixed, validateAddress} from '@phala/utils'
 import {Input} from 'baseui/input'
+import {Notification} from 'baseui/notification'
 import {toaster} from 'baseui/toast'
 import Decimal from 'decimal.js'
 import React, {useMemo, useState} from 'react'
+import {useCurrentNetworkNode} from '../../store/networkNode'
 import {
   BalanceText,
   ButtonContainer,
@@ -38,11 +40,12 @@ const TransferModal: React.FC<Props> = ({visible, onClose}) => {
   const {api} = useApiPromise()
   const [polkadotAccount] = useCurrentAccount()
   const decimals = useDecimalJsTokenDecimalMultiplier(api)
+  const [currentNetworkNode] = useCurrentNetworkNode()
 
   const polkadotAccountAddress = polkadotAccount?.address
   const polkadotTransferBalanceDecimal =
     usePolkadotAccountTransferrableBalanceDecimal(polkadotAccountAddress)
-  const isShowMaxButton = polkadotTransferBalanceDecimal.greaterThan('0.003')
+  const isShowMaxButton = polkadotTransferBalanceDecimal?.greaterThan('0.003')
 
   const transferrableValue = useMemo(() => {
     if (!polkadotTransferBalanceDecimal) return '-'
@@ -140,6 +143,17 @@ const TransferModal: React.FC<Props> = ({visible, onClose}) => {
         />
         <BalanceText>{`Balance: ${transferrableValue}`}</BalanceText>
       </InputWrapper>
+      <Spacer></Spacer>
+      <Notification
+        kind="warning"
+        overrides={{
+          Body: {style: {margin: 0, width: 'auto', fontSize: '13px'}},
+        }}
+      >
+        You are transferring on{' '}
+        <b>{currentNetworkNode.kind === 'khala' ? 'Khala' : 'Phala'} Network</b>
+        . Do not transfer to <b>hardware wallets</b>.
+      </Notification>
       <Spacer></Spacer>
       <PolkadotTransactionFeeLabel
         key="PolkadotTransactionFeeLabel"
