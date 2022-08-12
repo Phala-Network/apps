@@ -4,14 +4,13 @@ import useTransferrableBalance from './useTransferrableBalance'
 
 export function usePolkadotAccountTransferrableBalanceDecimal(
   address?: string
-): Decimal {
+): Decimal | undefined {
   const polkadotAccountBalance = useTransferrableBalance(address)
 
   const polkadotAccountBalanceNumber = useMemo(
     () =>
-      polkadotAccountBalance
-        ? new Decimal(polkadotAccountBalance.toString()).div(10 ** 12)
-        : new Decimal(-1),
+      polkadotAccountBalance &&
+      new Decimal(polkadotAccountBalance.toString()).div(10 ** 12),
     [polkadotAccountBalance]
   )
 

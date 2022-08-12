@@ -1,14 +1,14 @@
-import {useMemo} from 'react'
-import {useCurrentAccount} from '@phala/store'
 import {
   useBalance,
   useLockedBalance,
   usePolkadotAccountTransferrableBalanceDecimal,
 } from '@phala/react-hooks'
-import {toFixed, formatCurrency} from '@phala/utils'
+import {useCurrentAccount} from '@phala/store'
+import {formatCurrency, toFixed} from '@phala/utils'
 import {Decimal} from 'decimal.js'
-import usePHAPrice from './usePHAPrice'
+import {useMemo} from 'react'
 import {useCurrentNetworkNode} from '../store/networkNode'
+import usePHAPrice from './usePHAPrice'
 
 const usePHAData = () => {
   const PHAPrice = usePHAPrice()
