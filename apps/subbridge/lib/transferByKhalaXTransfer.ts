@@ -11,6 +11,7 @@ const parallelHeikoParaId = CHAINS['parallel-heiko'].paraId
 const basiliskParaId = CHAINS.basilisk.paraId
 const turingParaId = CHAINS.turing.paraId
 const calamariParaId = CHAINS.calamari.paraId
+const crabParaId = CHAINS.crab.paraId
 
 const extrinsicIds: {[assetId in AssetId]?: Record<string, unknown>} = {
   pha: {
@@ -88,6 +89,14 @@ const extrinsicIds: {[assetId in AssetId]?: Record<string, unknown>} = {
       parents: 1,
       interior: {
         X1: {Parachain: calamariParaId},
+      },
+    },
+  },
+  crab: {
+    Concrete: {
+      parents: 1,
+      interior: {
+        X2: [{Parachain: crabParaId}, {PalletInstance: 5}],
       },
     },
   },

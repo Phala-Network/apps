@@ -17,7 +17,7 @@ const Home: NextPage = () => {
     <Container
       sx={{
         pt: 12,
-        [theme.breakpoints.down('md')]: {
+        [theme.breakpoints.down('sm')]: {
           pt: 9,
         },
       }}

@@ -205,7 +205,7 @@ const BridgeConfirmationDialog: FC<DialogProps> = ({onClose, ...props}) => {
   const [confirming, setConfirming] = useState(false)
   const fromChain = useAtomValue(fromChainAtom)
   const theme = useTheme()
-  const fullScreen = useMediaQuery(theme.breakpoints.down('md'))
+  const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
   const transfer = useTransfer()
   const transferredRef = useRef(false)
   const {enqueueSnackbar, closeSnackbar} = useSnackbar()

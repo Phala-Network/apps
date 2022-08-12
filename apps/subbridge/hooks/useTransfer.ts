@@ -1,4 +1,5 @@
 import {transferByChainBridge} from '@/lib/transferByChainBridge'
+import {transferByCrab} from '@/lib/transferByCrab'
 import {transferByEvmXTokens} from '@/lib/transferByEvmXTokens'
 import {transferByKhalaXTransfer} from '@/lib/transferByKhalaXTransfer'
 import {transferByPolkadotXTokens} from '@/lib/transferByPolkadotXTokens'
@@ -126,6 +127,26 @@ export const useTransfer = () => {
       }).then((transaction) => {
         onReady()
         return transaction
+      })
+    }
+
+    if (bridgeKind === 'crab') {
+      if (!polkadotApi || !polkadotAccount?.wallet?.signer) {
+        throw new Error('Transfer missing required parameters')
+      }
+      const extrinsic = transferByCrab({
+        polkadotApi,
+        assetId: asset.id,
+        amount: rawAmount,
+        toChainId: toChain.id,
+        destinationAccount,
+      })
+      return waitSignAndSend({
+        api: polkadotApi,
+        extrinsic,
+        account: polkadotAccount.address,
+        signer: polkadotAccount.wallet.signer,
+        onReady,
       })
     }
 

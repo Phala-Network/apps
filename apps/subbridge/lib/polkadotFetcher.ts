@@ -2,6 +2,7 @@ import {AssetId, OrmlToken} from '@/config/asset'
 import {ChainId, CHAINS} from '@/config/chain'
 import type {ApiPromise} from '@polkadot/api'
 import Decimal from 'decimal.js'
+import {transferByCrab} from './transferByCrab'
 import {transferByKhalaXTransfer} from './transferByKhalaXTransfer'
 import {transferByPolkadotXTokens} from './transferByPolkadotXTokens'
 
@@ -90,6 +91,23 @@ export const khalaXTransferPartialFeeFetcher = async (
     assetId,
   })
   const decimals = khalaApi.registry.chainDecimals[0]
+  const {partialFee} = await extrinsic.paymentInfo(ALICE)
+  return new Decimal(partialFee.toString()).div(Decimal.pow(10, decimals))
+}
+
+export const crabTransferPartialFeeFetcher = async (
+  crabApi: ApiPromise,
+  toChainId: ChainId,
+  assetId: AssetId
+) => {
+  const extrinsic = transferByCrab({
+    polkadotApi: crabApi,
+    amount: '1',
+    destinationAccount: ALICE,
+    toChainId,
+    assetId,
+  })
+  const decimals = crabApi.registry.chainDecimals[0]
   const {partialFee} = await extrinsic.paymentInfo(ALICE)
   return new Decimal(partialFee.toString()).div(Decimal.pow(10, decimals))
 }

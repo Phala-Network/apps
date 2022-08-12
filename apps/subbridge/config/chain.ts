@@ -1,6 +1,7 @@
 import basiliskIcon from '@/assets/basilisk_chain_icon.png'
 import bifrostIcon from '@/assets/bifrost_chain_icon.svg'
 import calamariIcon from '@/assets/calamari_chain_icon.png'
+import crabChainIcon from '@/assets/crab_chain_icon.svg'
 import ethereumIcon from '@/assets/ethereum_chain_icon.jpg'
 import karuraIcon from '@/assets/karura_chain_icon.png'
 import khalaIcon from '@/assets/khala_chain_icon.svg'
@@ -23,6 +24,7 @@ export type PolkadotChainId =
   | 'basilisk'
   | 'turing'
   | 'calamari'
+  | 'crab'
 export type ChainId = EvmChainId | PolkadotChainId
 export type ChainKind = 'evm' | 'polkadot'
 
@@ -265,5 +267,16 @@ export const CHAINS: Readonly<
     ss58Format: 78,
     nativeAsset: 'kma',
     explorerURL: 'https://calamari.subscan.io/',
+  },
+  crab: {
+    id: 'crab',
+    name: 'Crab',
+    icon: crabChainIcon,
+    kind: 'polkadot',
+    paraId: 2105,
+    endpoint: ['wss://crab-parachain-rpc.darwinia.network/'],
+    ss58Format: 42,
+    nativeAsset: 'crab',
+    explorerURL: 'https://crab.subscan.io/',
   },
 }
