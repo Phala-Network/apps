@@ -34,13 +34,13 @@ const khalaToEthereumAssets: AssetsConfig = [
 const khalaToKaruraAssets: AssetsConfig = [
   {assetId: 'pha', estimatedTime: '< 1 min', kind: 'khalaXTransfer'},
   {assetId: 'kar', estimatedTime: '< 1 min', kind: 'khalaXTransfer'},
-  {assetId: 'ausd', estimatedTime: '< 1 min', kind: 'khalaXTransfer'},
+  // {assetId: 'ausd', estimatedTime: '< 1 min', kind: 'khalaXTransfer'},
 ]
 
 const karuraToKhalaAssets: AssetsConfig = [
   {assetId: 'kar', estimatedTime: '< 1 min', kind: 'polkadotXTokens'},
   {assetId: 'pha', estimatedTime: '< 1 min', kind: 'polkadotXTokens'},
-  {assetId: 'ausd', estimatedTime: '< 1 min', kind: 'polkadotXTokens'},
+  // {assetId: 'ausd', estimatedTime: '< 1 min', kind: 'polkadotXTokens'},
 ]
 
 const khalaToMoonriverAssets: AssetsConfig = [
