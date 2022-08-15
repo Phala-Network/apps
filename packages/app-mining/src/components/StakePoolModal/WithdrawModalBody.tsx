@@ -104,7 +104,7 @@ const WithdrawModalBody: FC<
                 size="mini"
                 kind="tertiary"
                 onClick={() => {
-                  if (stakePoolStakers[0]) {
+                  if (stakePoolStakers[0]?.stake) {
                     setAmount(stakePoolStakers[0].stake)
                   }
                 }}
