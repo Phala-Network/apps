@@ -21,6 +21,8 @@ import useStakePoolDescription, {
 } from '../../hooks/useStakePoolDescription'
 import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
 
+const ANN_MAX_LENGTH = 240
+
 const SetDescriptionModalBody: FC<
   {stakePool: Pick<StakePool, 'pid'>} & Pick<ModalProps, 'onClose'>
 > = ({stakePool: {pid}, onClose}) => {
@@ -105,7 +107,7 @@ const SetDescriptionModalBody: FC<
           <Cell span={1}>
             <FormControl label="Telegram">
               <Input
-                maxLength={32}
+                maxLength={30}
                 disabled={!isFetched}
                 value={telegramString}
                 size="compact"
@@ -116,7 +118,7 @@ const SetDescriptionModalBody: FC<
           <Cell span={1}>
             <FormControl label="Discord">
               <Input
-                maxLength={37}
+                maxLength={30}
                 disabled={!isFetched}
                 value={discordString}
                 size="compact"
@@ -127,7 +129,7 @@ const SetDescriptionModalBody: FC<
           <Cell span={1}>
             <FormControl label="Wechat">
               <Input
-                maxLength={20}
+                maxLength={30}
                 disabled={!isFetched}
                 value={wechatString}
                 size="compact"
@@ -138,7 +140,7 @@ const SetDescriptionModalBody: FC<
           <Cell span={1}>
             <FormControl label="Twitter">
               <Input
-                maxLength={15}
+                maxLength={30}
                 disabled={!isFetched}
                 value={twitterString}
                 size="compact"
@@ -149,7 +151,7 @@ const SetDescriptionModalBody: FC<
           <Cell span={1}>
             <FormControl label="Email">
               <Input
-                maxLength={32}
+                maxLength={30}
                 disabled={!isFetched}
                 value={emailString}
                 size="compact"
@@ -160,7 +162,7 @@ const SetDescriptionModalBody: FC<
           <Cell span={1}>
             <FormControl label="Forum">
               <Input
-                maxLength={50}
+                maxLength={30}
                 disabled={!isFetched}
                 value={forumString}
                 size="compact"
@@ -169,9 +171,15 @@ const SetDescriptionModalBody: FC<
             </FormControl>
           </Cell>
         </Grid>
-        <FormControl label="Announcement">
+        <FormControl
+          label="Announcement"
+          caption={`Characters left: ${Math.max(
+            ANN_MAX_LENGTH - annString.length,
+            0
+          )}`}
+        >
           <Textarea
-            maxLength={60}
+            maxLength={ANN_MAX_LENGTH}
             disabled={!isFetched}
             placeholder="Future plans, such as adding workers, changing stake, changing commission, etc. (optional)"
             value={annString}
