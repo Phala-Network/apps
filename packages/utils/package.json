@@ -10,6 +10,6 @@
   "dependencies": {
     "@polkadot/keyring": "^9.4.1",
     "@polkadot/util": "^9.4.1",
-    "decimal.js": "^10.3.1"
+    "decimal.js": "^10.4.0"
   }
 }

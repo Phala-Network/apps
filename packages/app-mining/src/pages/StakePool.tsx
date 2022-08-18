@@ -4,11 +4,12 @@ import {Block} from 'baseui/block'
 import {Button} from 'baseui/button'
 import {Card} from 'baseui/card'
 import {StyledLink} from 'baseui/link'
+import {StatefulTooltip} from 'baseui/tooltip'
 import {HeadingLarge, HeadingSmall, ParagraphXSmall} from 'baseui/typography'
 import Decimal from 'decimal.js'
 import {PageProps} from 'gatsby'
 import {FC, useCallback, useMemo, useState} from 'react'
-import {CheckCircle, MinusCircle} from 'react-feather'
+import {CheckCircle, Info, MinusCircle} from 'react-feather'
 import {Helmet} from 'react-helmet'
 import styled from 'styled-components'
 import Chart from '../components/StakePool/Chart'
@@ -18,6 +19,7 @@ import StakeInfo from '../components/StakePool/StakeInfo'
 import WithdrawQueue from '../components/StakePool/WithdrawQueue'
 import StakePoolDescription from '../components/StakePoolDescription'
 import StakePoolModal, {StakePoolModalKey} from '../components/StakePoolModal'
+import StakePoolWhitelist from '../components/StakePoolWhitelist'
 import WorkerTableV2 from '../components/WorkerTableV2'
 import {useStakePoolQuery} from '../hooks/graphql'
 import {client} from '../utils/GraphQLClient'
@@ -308,6 +310,33 @@ export const StakePool: FC<StakePoolProps> = ({pid}) => {
               isOwner={isOwner}
             />
           </Card>
+
+          {isOwner && (
+            <>
+              <HeadingSmall marginTop="scale1200" marginBottom="scale400">
+                Whitelist{' '}
+                <StatefulTooltip
+                  overrides={{Body: {style: {maxWidth: '400px'}}}}
+                  content="When there is content in the whitelist, only addresses in the whitelist can delegate to the stake pool. When the whitelist is empty, there are no constraints.
+In any case, the pool owner is not subject to any restrictions on the whitelist."
+                >
+                  <Info size={18} style={{marginLeft: 5}} />
+                </StatefulTooltip>
+              </HeadingSmall>
+              <Card
+                overrides={{
+                  Root: {
+                    style: ({$theme}) => ({
+                      borderRadius: '0',
+                      ...$theme.borders.border200,
+                    }),
+                  },
+                }}
+              >
+                <StakePoolWhitelist pid={pid} />
+              </Card>
+            </>
+          )}
         </Block>
       </Block>
 

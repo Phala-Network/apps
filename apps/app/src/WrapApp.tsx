@@ -29,13 +29,13 @@ const WrapApp: React.FC<{children: ReactNode}> = ({children}) => {
   )
 
   return (
-    <QueryClientProvider contextSharing={true} client={client}>
-      <ApiPromiseProvider
-        endpoint={currentNetworkNode.endpoint}
-        registryTypes={currentNetworkNode.types}
-      >
-        <ThemeProvider theme={theme}>
-          <BaseProvider theme={baseTheme}>
+    <BaseProvider theme={baseTheme}>
+      <QueryClientProvider contextSharing={true} client={client}>
+        <ApiPromiseProvider
+          endpoint={currentNetworkNode.endpoint}
+          registryTypes={currentNetworkNode.types}
+        >
+          <ThemeProvider theme={theme}>
             <SnackbarProvider>{children}</SnackbarProvider>
             <ToasterContainer
               autoHideDuration={3000}
@@ -48,11 +48,11 @@ const WrapApp: React.FC<{children: ReactNode}> = ({children}) => {
                 },
               }}
             />
-          </BaseProvider>
-        </ThemeProvider>
-        <ReactQueryDevtools />
-      </ApiPromiseProvider>
-    </QueryClientProvider>
+          </ThemeProvider>
+          <ReactQueryDevtools />
+        </ApiPromiseProvider>
+      </QueryClientProvider>
+    </BaseProvider>
   )
 }
 

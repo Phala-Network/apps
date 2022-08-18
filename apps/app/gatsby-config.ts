@@ -7,14 +7,14 @@ const config: GatsbyConfig = {
     description: 'To host, connect, and gain in the world of Web3',
   },
   jsxRuntime: 'automatic',
-  flags: {
-    FAST_DEV: true,
-  },
+  flags: {FAST_DEV: true},
   plugins: [
     'local-plugin-layout', // This plugin's place decides providers order, which is highly important
     'local-plugin-styletron',
-    'gatsby-plugin-react-helmet',
     'gatsby-plugin-typescript',
+    'gatsby-plugin-netlify',
+    'gatsby-plugin-react-helmet',
+    'gatsby-plugin-fontawesome-css',
     'gatsby-plugin-styled-components',
     {
       resolve: 'gatsby-plugin-google-gtag',
@@ -28,8 +28,6 @@ const config: GatsbyConfig = {
         },
       },
     },
-    'gatsby-plugin-fontawesome-css',
-    'gatsby-plugin-netlify',
     {
       resolve: 'gatsby-plugin-env-variables',
       options: {
