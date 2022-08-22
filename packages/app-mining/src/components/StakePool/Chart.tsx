@@ -1,7 +1,8 @@
+import {useOnScreenOnce} from '@phala/react-hooks'
 import {useStyletron} from 'baseui'
 import {Block} from 'baseui/block'
 import {Tab, Tabs} from 'baseui/tabs-motion'
-import React, {FC, useEffect, useState} from 'react'
+import React, {FC, useEffect, useRef, useState} from 'react'
 
 const questions = [
   ['APR', '1c9dbc73-a15a-4ff0-b6e1-85146482558a'],
@@ -40,22 +41,27 @@ const WrappedIframe: FC<{
 }
 
 const Chart: FC<{pid?: string}> = ({pid}) => {
+  const rootRef = useRef(null)
   const [activeKey, setActiveKey] = useState<React.Key>(questions[0][1])
+  const isOnScreen = useOnScreenOnce(rootRef)
+
   return (
     <Tabs
+      overrides={{TabList: {props: {ref: rootRef}}}}
       activeKey={activeKey}
       onChange={({activeKey}) => setActiveKey(activeKey)}
       renderAll
     >
-      {questions.map(([title, questionId]) => (
-        <Tab title={title} key={questionId}>
-          <WrappedIframe
-            pid={pid}
-            questionId={questionId}
-            activeKey={activeKey}
-          />
-        </Tab>
-      ))}
+      {isOnScreen &&
+        questions.map(([title, questionId]) => (
+          <Tab title={title} key={questionId}>
+            <WrappedIframe
+              pid={pid}
+              questionId={questionId}
+              activeKey={activeKey}
+            />
+          </Tab>
+        ))}
     </Tabs>
   )
 }
