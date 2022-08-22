@@ -63,7 +63,10 @@ const AddWhitelistModalBody: FC<
         <FormControl label="Pid">
           <ParagraphSmall as="div">{pid}</ParagraphSmall>
         </FormControl>
-        <FormControl label="Addresses" caption="One address per line">
+        <FormControl
+          label="Addresses"
+          caption="One address per line, up to 100"
+        >
           <Textarea
             size="compact"
             autoFocus

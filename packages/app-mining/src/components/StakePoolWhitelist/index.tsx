@@ -45,9 +45,7 @@ const StakePoolWhitelist: FC<{pid?: string}> = ({pid}) => {
       whitelistData.includes(address)
     )
 
-    if (filtered.length !== selectedAddresses.length) {
-      setSelectedAddresses(filtered)
-    }
+    setSelectedAddresses(filtered)
   }, [whitelistData, selectedAddresses])
 
   useEffect(() => {

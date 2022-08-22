@@ -12,7 +12,10 @@ export const useStakePoolWhitelist = (
     async () => {
       if (!api || !pid) return
       const res = await api.query.phalaStakePool.poolContributionWhitelists(pid)
-      return res.toJSON() as string[] | null
+      const json = res.toJSON() as string[] | null
+      // NOTE: when the pool is not in the whitelist, the result is null instead of []
+      if (json === null) return []
+      return json
     },
     {
       refetchInterval: 12000,
