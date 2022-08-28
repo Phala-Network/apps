@@ -20,6 +20,7 @@ import Decimal from 'decimal.js'
 import {FC, useMemo, useState} from 'react'
 import {StakePool} from '.'
 import {useDelegableBalance} from '../../hooks/useDelegableBalance'
+import {useStakePoolDelegable} from '../../hooks/useStakePoolDelegable'
 import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
 
 const DelegateModalBody: FC<
@@ -28,9 +29,10 @@ const DelegateModalBody: FC<
       Partial<Pick<StakePool, 'availableStake'>>
   } & Pick<ModalProps, 'onClose'>
 > = ({stakePool, onClose}) => {
-  const {pid, availableStake} = stakePool
+  const {pid} = stakePool
   const {api} = useApiPromise()
   const delegableBalance = useDelegableBalance()
+  const availableStake = useStakePoolDelegable(pid)
   const [amount, setAmount] = useState('')
   const waitSignAndSend = useWaitSignAndSend()
   const decimals = useDecimalJsTokenDecimalMultiplier(api)
