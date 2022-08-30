@@ -3,7 +3,7 @@ import {assetAtom, fromChainAtom, toChainAtom} from '@/store/bridge'
 import Decimal from 'decimal.js'
 import {useAtomValue} from 'jotai'
 import useSWR from 'swr'
-import {usePolkadotApi} from './usePolkadotApi'
+import {useCurrentPolkadotApi} from './usePolkadotApi'
 
 const zlkChainBridgeFee = new Decimal('0.25')
 
@@ -11,8 +11,9 @@ export const useBridgeFee = (): Decimal | undefined => {
   const fromChain = useAtomValue(fromChainAtom)
   const toChain = useAtomValue(toChainAtom)
   const asset = useAtomValue(assetAtom)
-  const khalaApi = usePolkadotApi(fromChain.id === 'thala' ? 'thala' : 'khala')
+  const api = useCurrentPolkadotApi()
   const isFromKhalaToEthereum =
+    (fromChain.id === 'phala' && toChain.id === 'ethereum') ||
     (fromChain.id === 'khala' && toChain.id === 'ethereum') ||
     (fromChain.id === 'thala' && toChain.id === 'kovan')
   const isTransferringZlkThroughChainBridge =
@@ -21,7 +22,7 @@ export const useBridgeFee = (): Decimal | undefined => {
     asset.id === 'zlk'
 
   const {data: khalaToEthereumBridgeFee} = useSWR(
-    isFromKhalaToEthereum ? [khalaApi] : null,
+    isFromKhalaToEthereum ? [api] : null,
     khalaToEthereumBridgeFeeFetcher
   )
 

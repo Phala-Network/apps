@@ -29,7 +29,7 @@ export const fromChainAtom = atom<Chain, ChainId>(
   }
 )
 
-const toChainIdAtom = atom<ChainId>('khala')
+const toChainIdAtom = atom<ChainId>('phala')
 toChainIdAtom.debugLabel = 'toChain'
 export const toChainAtom = atom<Chain, ChainId>(
   (get) => CHAINS[get(toChainIdAtom)],

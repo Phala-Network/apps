@@ -78,19 +78,21 @@ export const xTokensPartialFeeFetcher = async (
 }
 
 export const khalaXTransferPartialFeeFetcher = async (
-  khalaApi: ApiPromise,
+  api: ApiPromise,
+  fromChainId: ChainId,
   toChainId: ChainId,
   assetId: AssetId
 ) => {
   const toChain = CHAINS[toChainId]
   const extrinsic = transferByKhalaXTransfer({
-    khalaApi,
+    api,
     amount: '1',
     destinationAccount: toChain.kind === 'polkadot' ? ALICE : BLACK_HOLE,
+    fromChainId,
     toChainId,
     assetId,
   })
-  const decimals = khalaApi.registry.chainDecimals[0]
+  const decimals = api.registry.chainDecimals[0]
   const {partialFee} = await extrinsic.paymentInfo(ALICE)
   return new Decimal(partialFee.toString()).div(Decimal.pow(10, decimals))
 }

@@ -88,11 +88,38 @@ const bifrostToMoonriverAssets: AssetsConfig = [
 export const BRIDGES: Readonly<Bridge[]> = [
   {
     fromChain: 'ethereum',
-    toChains: [{id: 'khala', assets: ethereumToKhalaAssets}],
+    toChains: [
+      {
+        id: 'phala',
+        assets: [
+          {
+            assetId: 'pha',
+            estimatedTime: '< 1 min',
+            kind: 'evmChainBridge',
+          },
+        ],
+      },
+      {id: 'khala', assets: ethereumToKhalaAssets},
+    ],
   },
   {
     fromChain: 'kovan',
     toChains: [{id: 'thala', assets: ethereumToKhalaAssets}],
+  },
+  {
+    fromChain: 'phala',
+    toChains: [
+      {
+        id: 'ethereum',
+        assets: [
+          {
+            assetId: 'pha',
+            estimatedTime: '~ 10 mins',
+            kind: 'khalaXTransfer',
+          },
+        ],
+      },
+    ],
   },
   {
     fromChain: 'khala',

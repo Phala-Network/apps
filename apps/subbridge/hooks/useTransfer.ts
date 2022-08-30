@@ -35,7 +35,7 @@ export const useTransfer = () => {
   const polkadotAccount = useAtomValue(polkadotAccountAtom)
   const {kind: bridgeKind, isThroughKhala} = useAtomValue(bridgeInfoAtom)
   const khalaApi = usePolkadotApi(
-    fromChain.id === 'thala' || toChain.id === 'thala' ? 'thala' : 'khala'
+    toChain.id === 'phala' || toChain.id === 'thala' ? toChain.id : 'khala'
   )
   const polkadotApi = useCurrentPolkadotApi()
 
@@ -89,12 +89,13 @@ export const useTransfer = () => {
     }
 
     if (bridgeKind === 'khalaXTransfer') {
-      if (!khalaApi || !polkadotAccount?.wallet?.signer) {
+      if (!polkadotApi || !polkadotAccount?.wallet?.signer) {
         throw new Error('Transfer missing required parameters')
       }
 
       const extrinsic = transferByKhalaXTransfer({
-        khalaApi,
+        api: polkadotApi,
+        fromChainId: fromChain.id,
         toChainId: toChain.id,
         amount: rawAmount,
         destinationAccount,
@@ -103,7 +104,7 @@ export const useTransfer = () => {
 
       if (extrinsic) {
         return waitSignAndSend({
-          api: khalaApi,
+          api: polkadotApi,
           extrinsic,
           signer: polkadotAccount.wallet.signer,
           account: polkadotAccount.address,

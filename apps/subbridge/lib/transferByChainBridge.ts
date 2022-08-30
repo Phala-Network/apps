@@ -12,7 +12,8 @@ export const createChainBridgeData = async (
   toChainId: ChainId
 ): Promise<string> => {
   const {ethers, BigNumber} = await import('ethers')
-  const isToKhala = toChainId === 'khala' || toChainId === 'thala'
+  const isToKhala =
+    toChainId === 'phala' || toChainId === 'khala' || toChainId === 'thala'
   const toChain = CHAINS[toChainId]
   const accountId = u8aToHex(decodeAddress(destinationAccount))
   const dest = khalaApi
@@ -66,13 +67,25 @@ export const transferByChainBridge = async ({
   amount: string
   toChainId: ChainId
 }): Promise<ContractTransaction> => {
-  const {chainBridgeResourceId} = ASSETS[assetId]
-  if (!chainBridgeResourceId) {
+  const asset = ASSETS[assetId]
+  const resourceId =
+    typeof asset.chainBridgeResourceId === 'string'
+      ? asset.chainBridgeResourceId
+      : asset.chainBridgeResourceId?.[toChainId]
+  if (!resourceId) {
     throw new Error('Transfer missing required parameters')
   }
+  const depositChainIdMap: {[chainId in ChainId]?: number} = {
+    khala: 1,
+    phala: 3,
+  }
+  const depositChainId = depositChainIdMap[toChainId]
+  if (!depositChainId) {
+    throw new Error('No deposit chain ID found')
+  }
   return contract.deposit(
-    1, // hardcoded khalaChainId
-    chainBridgeResourceId,
+    depositChainId,
+    resourceId,
     await createChainBridgeData(khalaApi, destinationAccount, amount, toChainId)
   )
 }

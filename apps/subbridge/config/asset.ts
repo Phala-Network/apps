@@ -37,7 +37,11 @@ export interface Asset {
   erc20TokenContractAddress?: {
     [chainId in EvmChainId]?: `0x${string}`
   }
-  chainBridgeResourceId?: `0x${string}`
+  chainBridgeResourceId?:
+    | `0x${string}`
+    | {
+        [toChainId in ChainId]?: `0x${string}`
+      }
   destChainTransactionFee: Partial<Record<ChainId, Decimal>>
   existentialDeposit: Partial<Record<ChainId, Decimal>>
 }
@@ -54,8 +58,12 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
       kovan: '0x512f7a3c14b6ee86c2015bc8ac1fe97e657f75f2',
       moonriver: '0xffFfFFff8E6b63d9e447B6d4C45BDA8AF9dc9603',
     },
-    chainBridgeResourceId:
-      '0x00e6dfb61a2fb903df487c401663825643bb825d41695e63df8af6162ab145a6',
+    chainBridgeResourceId: {
+      phala:
+        '0x00b14e071ddad0b12be5aca6dffc5f2584ea158d9b0ce73e1437115e97a32a3e',
+      khala:
+        '0x00e6dfb61a2fb903df487c401663825643bb825d41695e63df8af6162ab145a6',
+    },
     decimals: {ethereum: 18, kovan: 18, default: 12},
     destChainTransactionFee: {
       khala: new Decimal('0.09324'),
