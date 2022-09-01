@@ -13,87 +13,75 @@ const turingParaId = CHAINS.turing.paraId
 const calamariParaId = CHAINS.calamari.paraId
 const crabParaId = CHAINS.crab.paraId
 
-const extrinsicIds: {[assetId in AssetId]?: Record<string, unknown>} = {
-  pha: {
-    Concrete: {
+const assetConcreteId: {
+  [fromChainId in ChainId]?: {[assetId in AssetId]?: Record<string, unknown>}
+} = {
+  phala: {
+    pha: {
       parents: 0,
       interior: 'Here',
     },
   },
-  movr: {
-    Concrete: {
+  khala: {
+    pha: {
+      parents: 0,
+      interior: 'Here',
+    },
+    movr: {
       parents: 1,
       interior: {
         X2: [{Parachain: moonriverParaId}, {PalletInstance: 10}],
       },
     },
-  },
-  kar: {
-    Concrete: {
+    kar: {
       parents: 1,
       interior: {
         X2: [{Parachain: karuraParaId}, {GeneralKey: '0x0080'}],
       },
     },
-  },
-  bnc: {
-    Concrete: {
+    bnc: {
       parents: 1,
       interior: {
         X2: [{Parachain: bifrostParaId}, {GeneralKey: '0x0001'}],
       },
     },
-  },
-  zlk: {
-    Concrete: {
+    zlk: {
       parents: 1,
       interior: {
         X2: [{Parachain: bifrostParaId}, {GeneralKey: '0x0207'}],
       },
     },
-  },
-  ausd: {
-    Concrete: {
+    ausd: {
       parents: 1,
       interior: {
         X2: [{Parachain: karuraParaId}, {GeneralKey: '0x0081'}],
       },
     },
-  },
-  hko: {
-    Concrete: {
+    hko: {
       parents: 1,
       interior: {
         X2: [{Parachain: parallelHeikoParaId}, {GeneralKey: 'HKO'}],
       },
     },
-  },
-  bsx: {
-    Concrete: {
+    bsx: {
       parents: 1,
       interior: {
         X2: [{Parachain: basiliskParaId}, {GeneralIndex: 0}],
       },
     },
-  },
-  tur: {
-    Concrete: {
+    tur: {
       parents: 1,
       interior: {
         X1: {Parachain: turingParaId},
       },
     },
-  },
-  kma: {
-    Concrete: {
+    kma: {
       parents: 1,
       interior: {
         X1: {Parachain: calamariParaId},
       },
     },
-  },
-  crab: {
-    Concrete: {
+    crab: {
       parents: 1,
       interior: {
         X2: [{Parachain: crabParaId}, {PalletInstance: 5}],
@@ -103,14 +91,16 @@ const extrinsicIds: {[assetId in AssetId]?: Record<string, unknown>} = {
 }
 
 export const transferByKhalaXTransfer = ({
-  khalaApi,
+  api,
   amount,
+  fromChainId,
   toChainId,
   destinationAccount,
   assetId,
 }: {
-  khalaApi: ApiPromise
+  api: ApiPromise
   amount: string
+  fromChainId: ChainId
   toChainId: ChainId
   destinationAccount: string
   assetId: AssetId
@@ -121,7 +111,9 @@ export const transferByKhalaXTransfer = ({
     (toChainId === 'moonriver' || toChainId === 'moonbase-alpha') &&
     assetId === 'zlk'
   const generalIndex = toChain.kind === 'evm' ? toChain.generalIndex : null
-  if (!extrinsicIds[assetId]) {
+
+  const concreteId = assetConcreteId[fromChainId]?.[assetId]
+  if (!concreteId) {
     throw new Error(`Unsupported asset: ${assetId}`)
   }
 
@@ -131,9 +123,9 @@ export const transferByKhalaXTransfer = ({
     throw new Error('Transfer missing required parameters')
   }
 
-  return khalaApi.tx.xTransfer.transfer(
+  return api.tx.xTransfer.transfer(
     {
-      id: extrinsicIds[assetId],
+      id: {Concrete: concreteId},
       fun: {Fungible: amount},
     },
     {

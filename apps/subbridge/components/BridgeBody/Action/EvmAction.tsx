@@ -6,6 +6,7 @@ import {
   bridgeInfoAtom,
   decimalsAtom,
   fromChainAtom,
+  toChainAtom,
 } from '@/store/bridge'
 import {evmAccountAtom, isNetworkWrongAtom} from '@/store/ethers'
 import {LoadingButton} from '@mui/lab'
@@ -19,6 +20,7 @@ const EvmAction: FC<{onConfirm: () => void}> = ({onConfirm}) => {
   const [approveLoading, setApproveLoading] = useState(false)
   const {enqueueSnackbar} = useSnackbar()
   const [fromChain] = useAtom(fromChainAtom)
+  const [toChain] = useAtom(toChainAtom)
   const ethersAssetContract = useCurrentEthersAssetContract()
   const [evmAccount] = useAtom(evmAccountAtom)
   const [isNetworkWrong] = useAtom(isNetworkWrongAtom)
@@ -28,8 +30,10 @@ const EvmAction: FC<{onConfirm: () => void}> = ({onConfirm}) => {
   const decimals = useAtomValue(decimalsAtom)
   const needApproval = bridgeKind === 'evmChainBridge'
   const spender =
-    fromChain.kind === 'evm'
-      ? fromChain.chainBridgeContract?.spender
+    fromChain.kind === 'evm' && fromChain.chainBridgeContract?.spender
+      ? typeof fromChain.chainBridgeContract.spender === 'string'
+        ? fromChain.chainBridgeContract.spender
+        : fromChain.chainBridgeContract.spender[toChain.id]
       : undefined
   const {data: approved} = useSWR(
     needApproval && ethersAssetContract && evmAccount && spender

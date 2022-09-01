@@ -34,10 +34,14 @@ export const useEstimatedGasFee = (): Decimal | undefined => {
   const ethersWeb3Provider = useEthersWeb3Provider()
   const decimals = useAtomValue(decimalsAtom)
   const khalaApi = usePolkadotApi(
-    fromChain.id === 'thala' || toChain.id === 'thala' ? 'thala' : 'khala'
+    toChain.id === 'phala' || toChain.id === 'thala' ? toChain.id : 'khala'
   )
   const polkadotApi = useCurrentPolkadotApi()
   const {kind: bridgeKind, isThroughKhala} = useAtomValue(bridgeInfoAtom)
+  const resourceId =
+    typeof asset.chainBridgeResourceId === 'string'
+      ? asset.chainBridgeResourceId
+      : asset.chainBridgeResourceId?.[toChain.id]
 
   const {data: ethersGasPrice} = useSWR(
     ethersWeb3Provider ? [ethersWeb3Provider] : null,
@@ -47,13 +51,8 @@ export const useEstimatedGasFee = (): Decimal | undefined => {
     bridgeKind === 'evmChainBridge' &&
       ethersChainBridgeContract &&
       khalaApi &&
-      asset.chainBridgeResourceId
-      ? [
-          ethersChainBridgeContract,
-          khalaApi,
-          asset.chainBridgeResourceId,
-          toChain.id,
-        ]
+      resourceId
+      ? [ethersChainBridgeContract, khalaApi, resourceId, toChain.id]
       : null,
     evmChainBridgeEstimatedGasFetcher
   )
@@ -76,8 +75,8 @@ export const useEstimatedGasFee = (): Decimal | undefined => {
   )
 
   const {data: khalaPartialFee} = useSWR(
-    bridgeKind === 'khalaXTransfer' && khalaApi
-      ? [khalaApi, toChain.id, asset.id]
+    bridgeKind === 'khalaXTransfer' && polkadotApi
+      ? [polkadotApi, fromChain.id, toChain.id, asset.id]
       : null,
     khalaXTransferPartialFeeFetcher
   )

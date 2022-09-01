@@ -9,11 +9,13 @@ import kovanIcon from '@/assets/kovan_chain_icon.png'
 import moonbaseAlphaIcon from '@/assets/moonbase_alpha_chain_icon.png'
 import moonriverIcon from '@/assets/moonriver_chain_icon.png'
 import parallelHeikoIcon from '@/assets/parallel_heiko_chain_icon.svg'
+import phalaIcon from '@/assets/phala_chain_icon.svg'
 import turingIcon from '@/assets/turing_chain_icon.png'
 import {AssetId} from './asset'
 
 export type EvmChainId = 'ethereum' | 'kovan' | 'moonriver' | 'moonbase-alpha'
 export type PolkadotChainId =
+  | 'phala'
   | 'khala'
   | 'karura'
   | 'thala'
@@ -45,7 +47,11 @@ export interface EvmChain extends BaseChain {
   paraId?: number // for compatible chains
   chainBridgeContract?: {
     address: `0x${string}`
-    spender: `0x${string}`
+    spender:
+      | `0x${string}`
+      | {
+          [toChainId in ChainId]?: `0x${string}`
+        }
   }
   xTokensContractAddress?: `0x${string}`
   generalIndex?: number // for khala chain bridge
@@ -64,6 +70,17 @@ export type Chain = EvmChain | PolkadotChain
 export const CHAINS: Readonly<
   Record<PolkadotChainId, PolkadotChain> & Record<EvmChainId, EvmChain>
 > = {
+  phala: {
+    id: 'phala',
+    name: 'Phala',
+    icon: phalaIcon,
+    kind: 'polkadot',
+    endpoint: ['wss://api.phala.network/ws'],
+    ss58Format: 30,
+    paraId: 2035,
+    nativeAsset: 'pha',
+    explorerURL: 'https://phala.subscan.io/',
+  },
   khala: {
     id: 'khala',
     name: 'Khala',
@@ -107,7 +124,10 @@ export const CHAINS: Readonly<
     currencySymbol: 'ETH',
     chainBridgeContract: {
       address: '0x8F92e7353b180937895E0C5937d616E8ea1A2Bb9',
-      spender: '0xEEc0fb4913119567cDfC0c5fc2Bf8f9F9B226c2d',
+      spender: {
+        phala: '0xcd38b15a419491c7c1238b0659f65c755792e257',
+        khala: '0xEEc0fb4913119567cDfC0c5fc2Bf8f9F9B226c2d',
+      },
     },
     generalIndex: 0,
     explorerURL: 'https://etherscan.io/',
@@ -122,7 +142,9 @@ export const CHAINS: Readonly<
     isTest: true,
     chainBridgeContract: {
       address: '0x82db1f1717487cADEAf6F0C74825495d6D89E08e',
-      spender: '0xF69b08D649B744A4d4781CB1B86E30Cc9Ac9991b',
+      spender: {
+        thala: '0xF69b08D649B744A4d4781CB1B86E30Cc9Ac9991b',
+      },
     },
     generalIndex: 0,
     explorerURL: 'https://kovan.etherscan.io/',
