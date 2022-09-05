@@ -1,11 +1,10 @@
-import {StatefulPopover, PLACEMENT, StatefulPopoverProps} from 'baseui/popover'
 import {Button, KIND} from 'baseui/button'
+import {StatefulPopover, StatefulPopoverProps} from 'baseui/popover'
 import MoreIcon from './Icons/MoreIcon.svg'
 
-const Popover: React.FC<StatefulPopoverProps> = (props) => {
+const Popover: React.FC<Pick<StatefulPopoverProps, 'content'>> = (props) => {
   return (
     <StatefulPopover
-      placement={PLACEMENT.auto}
       showArrow
       overrides={{
         Arrow: {

@@ -1,5 +1,5 @@
-import React from 'react'
 import {Button, ButtonProps} from 'baseui/button'
+import React from 'react'
 
 const Index: React.FC<ButtonProps> = (props) => {
   const {children, ...params} = props
@@ -8,6 +8,7 @@ const Index: React.FC<ButtonProps> = (props) => {
       overrides={{
         BaseButton: {
           style: () => ({
+            marginBottom: '8px',
             backgroundColor: '#EEEEEE',
             borderTopLeftRadius: '14px',
             borderTopRightRadius: '14px',

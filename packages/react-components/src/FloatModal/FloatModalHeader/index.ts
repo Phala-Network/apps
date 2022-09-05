@@ -1,1 +1,0 @@
-export {FloatModalHeader} from './FloatModalHeader'
