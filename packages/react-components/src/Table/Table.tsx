@@ -2,13 +2,14 @@ import {useEffect} from 'react'
 import {
   Filters,
   TableOptions,
+  useAsyncDebounce,
   useFilters,
   useGlobalFilter,
   usePagination,
   useSortBy,
   useTable,
-  useAsyncDebounce,
 } from 'react-table'
+import 'regenerator-runtime'
 import styled from 'styled-components'
 import TablePagination from './TablePagination'
 import TableSorter from './TableSorter'
