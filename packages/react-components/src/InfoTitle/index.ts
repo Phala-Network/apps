@@ -1,1 +1,0 @@
-export {InfoTitle} from './InfoTitle'
