@@ -5,6 +5,7 @@ import {
   destChainTransactionFeeAtom,
   destinationAccountAtom,
   existentialDepositAtom,
+  fromChainAtom,
   toChainAtom,
 } from '@/store/bridge'
 import {validateAddress} from '@phala/utils'
@@ -17,6 +18,7 @@ import {useBridgeLimit} from './useBridgeLimit'
 export const useValidation = () => {
   const [, setBridgeError] = useAtom(bridgeErrorAtom)
   const [amount] = useAtom(amountAtom)
+  const [fromChain] = useAtom(fromChainAtom)
   const [toChain] = useAtom(toChainAtom)
   const [destinationAccount] = useAtom(destinationAccountAtom)
   const balance = useBalance()
@@ -28,6 +30,9 @@ export const useValidation = () => {
   useEffect(() => {
     let unmounted = false
     const validate = async (): Promise<BridgeError | null> => {
+      if (fromChain.id === 'ethereum' || toChain.id === 'ethereum') {
+        return 'Disabled'
+      }
       if (!amount) {
         return 'InvalidAmount'
       }
@@ -81,5 +86,7 @@ export const useValidation = () => {
     destChainTransactionFee,
     existentialDeposit,
     bridgeLimit,
+    fromChain.id,
+    toChain.id,
   ])
 }
