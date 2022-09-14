@@ -1,10 +1,4 @@
-import {
-  ModalButtonWrapper,
-  ModalFooterWrapper,
-  ModalTitleWrapper,
-  ModalWrapper,
-  PolkadotTransactionFeeLabel,
-} from '@phala/react-components'
+import {PolkadotTransactionFeeLabel} from '@phala/react-components'
 import {usePolkadotAccountTransferrableBalanceDecimal} from '@phala/react-hooks'
 import {
   useApiPromise,
@@ -13,27 +7,22 @@ import {
 } from '@phala/react-libs'
 import {useCurrentAccount} from '@phala/store'
 import {toFixed, validateAddress} from '@phala/utils'
+import {Block} from 'baseui/block'
+import {FormControl} from 'baseui/form-control'
 import {Input} from 'baseui/input'
+import {ModalBody, ModalButton, ModalFooter, ModalHeader} from 'baseui/modal'
 import {Notification} from 'baseui/notification'
 import {toaster} from 'baseui/toast'
 import Decimal from 'decimal.js'
 import React, {useMemo, useState} from 'react'
 import {useCurrentNetworkNode} from '../../store/networkNode'
-import {
-  BalanceText,
-  ButtonContainer,
-  inputStyle,
-  InputWrapper,
-  MaxButton,
-  Spacer,
-} from './styledComponents'
+import {MaxButton} from './styledComponents'
 
 type Props = {
-  visible: boolean
   onClose: () => void
 }
 
-const TransferModal: React.FC<Props> = ({visible, onClose}) => {
+const TransferModal: React.FC<Props> = ({onClose}) => {
   const [address, setAddress] = useState('')
   const [amount, setAmount] = useState('')
   const [loading, setLoading] = useState(false)
@@ -91,92 +80,63 @@ const TransferModal: React.FC<Props> = ({visible, onClose}) => {
   }
 
   return (
-    <ModalWrapper visible={visible} onClose={onClose}>
-      <ModalTitleWrapper>Transfer PHA</ModalTitleWrapper>
-      <InputWrapper>
-        <Input
-          value={address}
-          onChange={(e) => setAddress(e.target.value)}
-          placeholder="Wallet address"
-          overrides={inputStyle}
-        />
-      </InputWrapper>
-      <Spacer></Spacer>
-      <InputWrapper>
-        <Input
-          value={amount}
-          onChange={(e) => setAmount(e.target.value)}
-          type="number"
-          placeholder="Amount(PHA)"
+    <>
+      <ModalHeader>Transfer PHA</ModalHeader>
+      <ModalBody>
+        <FormControl label="Wallet address">
+          <Input value={address} onChange={(e) => setAddress(e.target.value)} />
+        </FormControl>
+        <FormControl label="Amount" caption={`Balance: ${transferrableValue}`}>
+          <Input
+            value={amount}
+            onChange={(e) => setAmount(e.target.value)}
+            type="number"
+            endEnhancer={() =>
+              isShowMaxButton ? (
+                <MaxButton onClick={handleMax}>Max</MaxButton>
+              ) : null
+            }
+          />
+        </FormControl>
+
+        <Notification
+          kind="warning"
           overrides={{
-            ...inputStyle,
-            Input: {
-              style: () => ({
-                paddingLeft: 0,
-                paddingBottom: '16px',
-                color: '#111',
-                fontStyle: 'normal',
-                fontWeight: 500,
-                fontSize: '32px',
-                lineHeight: '32px',
-                '::placeholder': {
-                  color: '#8C8C8C',
-                  transform: 'scale(0.45)',
-                  transformOrigin: 'center left',
-                  fontWeight: 'normal',
-                },
-              }),
-            },
-            EndEnhancer: {
-              style: () => ({
-                borderBottom: '1px solid #8C8C8C',
-                paddingRight: 0,
-                backgroundColor: '#eee',
-              }),
-            },
+            Body: {style: {margin: 0, width: 'auto', fontSize: '14px'}},
           }}
-          endEnhancer={() =>
-            isShowMaxButton ? (
-              <MaxButton onClick={handleMax}>Max</MaxButton>
-            ) : null
-          }
-        />
-        <BalanceText>{`Balance: ${transferrableValue}`}</BalanceText>
-      </InputWrapper>
-      <Spacer></Spacer>
-      <Notification
-        kind="warning"
-        overrides={{
-          Body: {style: {margin: 0, width: 'auto', fontSize: '13px'}},
-        }}
-      >
-        You are transferring on{' '}
-        <b>{currentNetworkNode.kind === 'khala' ? 'Khala' : 'Phala'} Network</b>
-        . Do not transfer to <b>hardware wallets</b>.
-      </Notification>
-      <Spacer></Spacer>
-      <PolkadotTransactionFeeLabel
-        key="PolkadotTransactionFeeLabel"
-        sender={polkadotAccount?.address}
-        recipient={address}
-        amount={amount}
-      />
-      <ModalFooterWrapper>
-        <ButtonContainer>
-          <ModalButtonWrapper onClick={onClose}>Cancel</ModalButtonWrapper>
-          <ModalButtonWrapper
+        >
+          You are transferring on{' '}
+          <b>
+            {currentNetworkNode.kind === 'khala' ? 'Khala' : 'Phala'} Network
+          </b>
+          . Do not transfer to <b>hardware wallets</b>.
+        </Notification>
+      </ModalBody>
+
+      <ModalFooter>
+        <Block
+          display="flex"
+          alignItems="center"
+          justifyContent="space-between"
+        >
+          <PolkadotTransactionFeeLabel
+            key="PolkadotTransactionFeeLabel"
+            sender={polkadotAccount?.address}
+            recipient={address}
+            amount={amount}
+          />
+          <ModalButton
             disabled={loading}
             onClick={() => {
               setLoading(true)
               submit().finally(() => setLoading(false))
             }}
-            type="submit"
           >
             {loading ? 'Submitting' : 'Submit'}
-          </ModalButtonWrapper>
-        </ButtonContainer>
-      </ModalFooterWrapper>
-    </ModalWrapper>
+          </ModalButton>
+        </Block>
+      </ModalFooter>
+    </>
   )
 }
 

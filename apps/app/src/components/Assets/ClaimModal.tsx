@@ -1,10 +1,4 @@
-import {
-  ModalButtonWrapper,
-  ModalFooterWrapper,
-  ModalTitleWrapper,
-  ModalWrapper,
-  PhalaStakePoolTransactionFeeLabel,
-} from '@phala/react-components'
+import {PhalaStakePoolTransactionFeeLabel} from '@phala/react-components'
 import {useAllBalances} from '@phala/react-hooks'
 import {
   bnToDecimal,
@@ -14,40 +8,16 @@ import {
 } from '@phala/react-libs'
 import {useCurrentAccount} from '@phala/store'
 import {BN} from '@polkadot/util'
+import {Block} from 'baseui/block'
+import {ModalBody, ModalButton, ModalFooter, ModalHeader} from 'baseui/modal'
 import {toaster} from 'baseui/toast'
 import React, {useCallback, useMemo, useState} from 'react'
-import styled from 'styled-components'
 
 type Props = {
-  visible: boolean
   onClose: () => void
 }
 
-const Text = styled.div`
-  margin-bottom: 40px;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 16px;
-  line-height: 16px;
-  color: #111111;
-`
-
-const Info = styled.div`
-  font-family: Montserrat;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 20px;
-  line-height: 20px;
-  color: #111111;
-  margin-bottom: 20px;
-`
-const ButtonContainer = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-column-gap: 20px;
-`
-
-const ClaimModal: React.FC<Props> = ({visible, onClose}) => {
+const ClaimModal: React.FC<Props> = ({onClose}) => {
   const [loading, setLoading] = useState(false)
   const {api} = useApiPromise()
   const [currentAccount] = useCurrentAccount()
@@ -97,33 +67,32 @@ const ClaimModal: React.FC<Props> = ({visible, onClose}) => {
   const canClaim = Boolean(vestedClaimable) && !vestedClaimable?.isZero()
 
   return (
-    <ModalWrapper visible={visible} onClose={onClose}>
-      <ModalTitleWrapper>Claim PHA</ModalTitleWrapper>
-      <Text>
+    <>
+      <ModalHeader>Claim PHA</ModalHeader>
+      <ModalBody>
         You have unlocked{' '}
         {format(vestedClaimable && vestedBalance?.sub(vestedClaimable))} PHA,
         you still have {format(vestingLocked)} PHA to be unlocked.
-      </Text>
+        {!canClaim && (
+          <Block marginTop="scale800">
+            Claim now: {format(vestedClaimable)} PHA
+          </Block>
+        )}
+      </ModalBody>
 
-      {canClaim && (
-        <Info>
-          <span>Claim now:</span> {format(vestedClaimable)} PHA
-        </Info>
-      )}
-      <PhalaStakePoolTransactionFeeLabel action={extrinsic} />
-      <ModalFooterWrapper>
-        <ButtonContainer>
-          <ModalButtonWrapper onClick={onClose}>Cancel</ModalButtonWrapper>
-          <ModalButtonWrapper
-            disabled={loading || !canClaim}
-            onClick={submit}
-            type="submit"
-          >
-            {loading ? 'Submitting' : 'Submit'}
-          </ModalButtonWrapper>
-        </ButtonContainer>
-      </ModalFooterWrapper>
-    </ModalWrapper>
+      <ModalFooter>
+        <Block
+          display="flex"
+          alignItems="center"
+          justifyContent="space-between"
+        >
+          <PhalaStakePoolTransactionFeeLabel action={extrinsic} />
+          <ModalButton disabled={loading || !canClaim} onClick={submit}>
+            Claim
+          </ModalButton>
+        </Block>
+      </ModalFooter>
+    </>
   )
 }
 
