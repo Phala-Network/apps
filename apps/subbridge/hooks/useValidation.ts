@@ -30,9 +30,6 @@ export const useValidation = () => {
   useEffect(() => {
     let unmounted = false
     const validate = async (): Promise<BridgeError | null> => {
-      if (fromChain.id === 'ethereum' || toChain.id === 'ethereum') {
-        return 'Disabled'
-      }
       if (!amount) {
         return 'InvalidAmount'
       }
