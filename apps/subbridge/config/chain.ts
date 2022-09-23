@@ -9,6 +9,7 @@ import kovanIcon from '@/assets/kovan_chain_icon.png'
 import moonbaseAlphaIcon from '@/assets/moonbase_alpha_chain_icon.png'
 import moonbeamIcon from '@/assets/moonbeam_chain_icon.png'
 import moonriverIcon from '@/assets/moonriver_chain_icon.png'
+import parallelIcon from '@/assets/parallel_chain_icon.svg'
 import parallelHeikoIcon from '@/assets/parallel_heiko_chain_icon.svg'
 import phalaIcon from '@/assets/phala_chain_icon.svg'
 import turingIcon from '@/assets/turing_chain_icon.png'
@@ -28,6 +29,7 @@ export type PolkadotChainId =
   | 'karura-test'
   | 'bifrost'
   | 'bifrost-test'
+  | 'parallel'
   | 'parallel-heiko'
   | 'basilisk'
   | 'turing'
@@ -248,6 +250,20 @@ export const CHAINS: Readonly<
     paraId: 2001,
     nativeAsset: 'bnc',
     isTest: true,
+  },
+  parallel: {
+    id: 'parallel',
+    name: 'Parallel',
+    kind: 'polkadot',
+    icon: parallelIcon,
+    paraId: 2012,
+    endpoint: [
+      'wss://parallel.api.onfinality.io/public-ws',
+      'wss://rpc.parallel.fi',
+    ],
+    ss58Format: 172,
+    nativeAsset: 'para',
+    explorerURL: 'https://parallel.subscan.io/',
   },
   'parallel-heiko': {
     id: 'parallel-heiko',

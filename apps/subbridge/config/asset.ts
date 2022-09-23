@@ -7,6 +7,7 @@ import hkoIcon from '@/assets/hko_asset_icon.svg'
 import karIcon from '@/assets/kar_asset_icon.png'
 import kmaIcon from '@/assets/kma_asset_icon.png'
 import movrIcon from '@/assets/movr_asset_icon.png'
+import paraIcon from '@/assets/para_asset_icon.png'
 import phaIcon from '@/assets/pha_asset_icon.png'
 import turIcon from '@/assets/tur_asset_icon.png'
 import zlkIcon from '@/assets/zlk_asset_icon.png'
@@ -20,6 +21,7 @@ export type AssetId =
   | 'zlk'
   | 'bnc'
   | 'ausd'
+  | 'para'
   | 'hko'
   | 'bsx'
   | 'tur'
@@ -81,6 +83,7 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
       'karura-test': new Decimal('0.0512'),
       moonbeam: new Decimal('0.158722600511'),
       moonriver: new Decimal('0.05868512'),
+      parallel: new Decimal('0.0556176'),
       'parallel-heiko': new Decimal('0.0384'),
       turing: new Decimal('0.256'),
       calamari: new Decimal('0.9523809524'),
@@ -95,6 +98,7 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
       'bifrost-test': new Decimal('0.04'),
     },
     palletAssetId: {
+      parallel: 115,
       'parallel-heiko': 115,
       calamari: 13,
     },
@@ -211,6 +215,21 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
       khala: new Decimal('0.01'),
       thala: new Decimal('0.01'),
     },
+  },
+  para: {
+    id: 'para',
+    symbol: 'PARA',
+    icon: paraIcon,
+    decimals: {default: 12},
+    palletAssetId: {
+      parallel: 1,
+      phala: 2,
+    },
+    destChainTransactionFee: {
+      phala: new Decimal('0.064'),
+      parallel: new Decimal('0.0139044'),
+    },
+    existentialDeposit: {parallel: new Decimal('0.01')},
   },
   hko: {
     id: 'hko',
