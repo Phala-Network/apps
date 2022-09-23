@@ -7,13 +7,19 @@ import karuraIcon from '@/assets/karura_chain_icon.png'
 import khalaIcon from '@/assets/khala_chain_icon.svg'
 import kovanIcon from '@/assets/kovan_chain_icon.png'
 import moonbaseAlphaIcon from '@/assets/moonbase_alpha_chain_icon.png'
+import moonbeamIcon from '@/assets/moonbeam_chain_icon.png'
 import moonriverIcon from '@/assets/moonriver_chain_icon.png'
 import parallelHeikoIcon from '@/assets/parallel_heiko_chain_icon.svg'
 import phalaIcon from '@/assets/phala_chain_icon.svg'
 import turingIcon from '@/assets/turing_chain_icon.png'
 import {AssetId} from './asset'
 
-export type EvmChainId = 'ethereum' | 'kovan' | 'moonriver' | 'moonbase-alpha'
+export type EvmChainId =
+  | 'ethereum'
+  | 'kovan'
+  | 'moonbeam'
+  | 'moonriver'
+  | 'moonbase-alpha'
 export type PolkadotChainId =
   | 'phala'
   | 'khala'
@@ -170,6 +176,18 @@ export const CHAINS: Readonly<
     isTest: true,
     paraId: 2000,
     nativeAsset: 'kar',
+  },
+  moonbeam: {
+    id: 'moonbeam',
+    name: 'Moonbeam',
+    icon: moonbeamIcon,
+    kind: 'evm',
+    evmChainId: 1284,
+    currencySymbol: 'GLMR',
+    paraId: 2004,
+    nativeAsset: 'glmr',
+    xTokensContractAddress: '0x0000000000000000000000000000000000000804',
+    explorerURL: 'https://moonbeam.moonscan.io/',
   },
   moonriver: {
     id: 'moonriver',

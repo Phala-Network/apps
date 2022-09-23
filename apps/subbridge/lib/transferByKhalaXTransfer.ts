@@ -12,6 +12,7 @@ const basiliskParaId = CHAINS.basilisk.paraId
 const turingParaId = CHAINS.turing.paraId
 const calamariParaId = CHAINS.calamari.paraId
 const crabParaId = CHAINS.crab.paraId
+const moonbeamParaId = CHAINS.moonbeam.paraId
 
 const assetConcreteId: {
   [fromChainId in ChainId]?: {[assetId in AssetId]?: Record<string, unknown>}
@@ -20,6 +21,12 @@ const assetConcreteId: {
     pha: {
       parents: 0,
       interior: 'Here',
+    },
+    glmr: {
+      parents: 1,
+      interior: {
+        X2: [{Parachain: moonbeamParaId}, {PalletInstance: 10}],
+      },
     },
   },
   khala: {

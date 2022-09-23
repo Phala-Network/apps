@@ -123,6 +123,7 @@ export const useTransfer = () => {
         assetId: asset.id,
         amount: rawAmount,
         destinationAccount,
+        fromChainId: fromChain.id,
         toChainId: toChain.id,
         decimals,
       }).then((transaction) => {

@@ -119,6 +119,13 @@ export const BRIDGES: Readonly<Bridge[]> = [
           },
         ],
       },
+      {
+        id: 'moonbeam',
+        assets: [
+          {assetId: 'pha', estimatedTime: '< 1 min', kind: 'khalaXTransfer'},
+          {assetId: 'glmr', estimatedTime: '< 1 min', kind: 'khalaXTransfer'},
+        ],
+      },
     ],
   },
   {
@@ -179,6 +186,18 @@ export const BRIDGES: Readonly<Bridge[]> = [
   {
     fromChain: 'karura-test',
     toChains: [{id: 'thala', assets: karuraToKhalaAssets}],
+  },
+  {
+    fromChain: 'moonbeam',
+    toChains: [
+      {
+        id: 'phala',
+        assets: [
+          {assetId: 'glmr', estimatedTime: '< 1 min', kind: 'evmXTokens'},
+          {assetId: 'pha', estimatedTime: '< 1 min', kind: 'evmXTokens'},
+        ],
+      },
+    ],
   },
   {
     fromChain: 'moonriver',

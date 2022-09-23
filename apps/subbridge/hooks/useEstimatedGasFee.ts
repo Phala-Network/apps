@@ -61,8 +61,13 @@ export const useEstimatedGasFee = (): Decimal | undefined => {
     bridgeKind === 'evmXTokens' &&
       ethersXTokensContract &&
       toChain.paraId &&
-      asset.xc20Address
-      ? [ethersXTokensContract, asset.xc20Address, toChain.paraId, decimals]
+      asset.xc20Address?.[fromChain.id]
+      ? [
+          ethersXTokensContract,
+          asset.xc20Address[fromChain.id],
+          toChain.paraId,
+          decimals,
+        ]
       : null,
     evmXTokensEstimatedGasFetcher
   )
