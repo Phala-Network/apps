@@ -7,11 +7,13 @@ import {decodeAddress} from '@polkadot/util-crypto'
 const moonriverParaId = CHAINS.moonriver.paraId
 const karuraParaId = CHAINS.karura.paraId
 const bifrostParaId = CHAINS.bifrost.paraId
+const parallelParaId = CHAINS.parallel.paraId
 const parallelHeikoParaId = CHAINS['parallel-heiko'].paraId
 const basiliskParaId = CHAINS.basilisk.paraId
 const turingParaId = CHAINS.turing.paraId
 const calamariParaId = CHAINS.calamari.paraId
 const crabParaId = CHAINS.crab.paraId
+const moonbeamParaId = CHAINS.moonbeam.paraId
 
 const assetConcreteId: {
   [fromChainId in ChainId]?: {[assetId in AssetId]?: Record<string, unknown>}
@@ -20,6 +22,18 @@ const assetConcreteId: {
     pha: {
       parents: 0,
       interior: 'Here',
+    },
+    glmr: {
+      parents: 1,
+      interior: {
+        X2: [{Parachain: moonbeamParaId}, {PalletInstance: 10}],
+      },
+    },
+    para: {
+      parents: 1,
+      interior: {
+        X2: [{Parachain: parallelParaId}, {GeneralKey: 'PARA'}],
+      },
     },
   },
   khala: {

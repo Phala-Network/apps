@@ -10,6 +10,7 @@ export const transferByEvmXTokens = async ({
   assetId,
   destinationAccount,
   amount,
+  fromChainId,
   toChainId,
   decimals,
 }: {
@@ -17,6 +18,7 @@ export const transferByEvmXTokens = async ({
   assetId: AssetId
   destinationAccount: string
   amount: string
+  fromChainId: ChainId
   toChainId: ChainId
   decimals: number
 }): Promise<ContractTransaction> => {
@@ -24,12 +26,12 @@ export const transferByEvmXTokens = async ({
   const asset = ASSETS[assetId]
   const toChain = CHAINS[toChainId]
 
-  if (!asset.xc20Address || !toChain.paraId) {
+  if (!asset.xc20Address?.[fromChainId] || !toChain.paraId) {
     throw new Error('Transfer missing required parameters')
   }
 
   return contract.transfer(
-    asset.xc20Address,
+    asset.xc20Address[fromChainId],
     amount,
     {
       parents: 1,

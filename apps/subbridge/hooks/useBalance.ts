@@ -50,8 +50,10 @@ export const useBalance = (): Decimal | undefined => {
   ) {
     balanceSource = 'ormlToken'
   } else if (
-    (fromChain.id === 'khala' ||
+    (fromChain.id === 'phala' ||
+      fromChain.id === 'khala' ||
       fromChain.id === 'thala' ||
+      fromChain.id === 'parallel' ||
       fromChain.id === 'parallel-heiko' ||
       fromChain.id === 'calamari') &&
     asset.id !== fromChain.nativeAsset &&

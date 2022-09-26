@@ -2,10 +2,12 @@ import ausdIcon from '@/assets/ausd_asset_icon.png'
 import bncIcon from '@/assets/bnc_asset_icon.png'
 import bsxIcon from '@/assets/bsx_asset_icon.png'
 import crabIcon from '@/assets/crab_asset_icon.png'
+import glmrIcon from '@/assets/glmr_asset_icon.png'
 import hkoIcon from '@/assets/hko_asset_icon.svg'
 import karIcon from '@/assets/kar_asset_icon.png'
 import kmaIcon from '@/assets/kma_asset_icon.png'
 import movrIcon from '@/assets/movr_asset_icon.png'
+import paraIcon from '@/assets/para_asset_icon.png'
 import phaIcon from '@/assets/pha_asset_icon.png'
 import turIcon from '@/assets/tur_asset_icon.png'
 import zlkIcon from '@/assets/zlk_asset_icon.png'
@@ -19,11 +21,13 @@ export type AssetId =
   | 'zlk'
   | 'bnc'
   | 'ausd'
+  | 'para'
   | 'hko'
   | 'bsx'
   | 'tur'
   | 'kma'
   | 'crab'
+  | 'glmr'
 
 export type OrmlToken = 'PHA' | 'KAR' | 'ZLK' | 'BNC' | 'KUSD' | 'TUR'
 export interface Asset {
@@ -31,7 +35,7 @@ export interface Asset {
   symbol: string
   icon: string
   decimals: Partial<Record<ChainId, number>> & {default: number}
-  xc20Address?: `0x${string}`
+  xc20Address?: Partial<Record<ChainId, `0x${string}`>>
   ormlToken?: OrmlToken
   palletAssetId?: Partial<Record<ChainId, number>>
   erc20TokenContractAddress?: {
@@ -52,10 +56,14 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
     symbol: 'PHA',
     icon: phaIcon,
     ormlToken: 'PHA',
-    xc20Address: '0xffffffff8e6b63d9e447b6d4c45bda8af9dc9603',
+    xc20Address: {
+      moonbeam: '0xffffffff63d24ecc8eb8a7b5d0803e900f7b6ced',
+      moonriver: '0xffffffff8e6b63d9e447b6d4c45bda8af9dc9603',
+    },
     erc20TokenContractAddress: {
       ethereum: '0x6c5bA91642F10282b576d91922Ae6448C9d52f4E',
       kovan: '0x512f7a3c14b6ee86c2015bc8ac1fe97e657f75f2',
+      moonbeam: '0xFFFfFfFf63d24eCc8eB8a7b5D0803e900F7b6cED',
       moonriver: '0xffFfFFff8E6b63d9e447B6d4C45BDA8AF9dc9603',
     },
     chainBridgeResourceId: {
@@ -66,18 +74,22 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
     },
     decimals: {ethereum: 18, kovan: 18, default: 12},
     destChainTransactionFee: {
+      phala: new Decimal('0.092696'),
       khala: new Decimal('0.09324'),
       thala: new Decimal('0.09324'),
       bifrost: new Decimal('0.0256'),
       'bifrost-test': new Decimal('0.0256'),
       karura: new Decimal('0.0512'),
       'karura-test': new Decimal('0.0512'),
+      moonbeam: new Decimal('0.158722600511'),
       moonriver: new Decimal('0.05868512'),
+      parallel: new Decimal('0.0556176'),
       'parallel-heiko': new Decimal('0.0384'),
       turing: new Decimal('0.256'),
       calamari: new Decimal('0.9523809524'),
     },
     existentialDeposit: {
+      phala: new Decimal('0.01'),
       khala: new Decimal('0.01'),
       thala: new Decimal('0.01'),
       karura: new Decimal('0.04'),
@@ -86,6 +98,7 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
       'bifrost-test': new Decimal('0.04'),
     },
     palletAssetId: {
+      parallel: 115,
       'parallel-heiko': 115,
       calamari: 13,
     },
@@ -99,7 +112,7 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
       khala: 6,
       thala: 6,
     },
-    xc20Address: '0x0000000000000000000000000000000000000802',
+    xc20Address: {moonriver: '0x0000000000000000000000000000000000000802'},
     destChainTransactionFee: {
       moonriver: new Decimal('0.00008'),
       khala: new Decimal('0.000000000266666666'),
@@ -203,6 +216,21 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
       thala: new Decimal('0.01'),
     },
   },
+  para: {
+    id: 'para',
+    symbol: 'PARA',
+    icon: paraIcon,
+    decimals: {default: 12},
+    palletAssetId: {
+      parallel: 1,
+      phala: 2,
+    },
+    destChainTransactionFee: {
+      phala: new Decimal('0.064'),
+      parallel: new Decimal('0.0139044'),
+    },
+    existentialDeposit: {parallel: new Decimal('0.01')},
+  },
   hko: {
     id: 'hko',
     symbol: 'HKO',
@@ -284,5 +312,20 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
       khala: new Decimal('0.064'),
     },
     existentialDeposit: {},
+  },
+  glmr: {
+    id: 'glmr',
+    symbol: 'GLMR',
+    icon: glmrIcon,
+    decimals: {default: 18},
+    palletAssetId: {phala: 1},
+    xc20Address: {moonbeam: '0x0000000000000000000000000000000000000802'},
+    destChainTransactionFee: {
+      phala: new Decimal('0.008'),
+      moonbeam: new Decimal('0.004'),
+    },
+    existentialDeposit: {
+      moonbeam: new Decimal('0.01'),
+    },
   },
 }

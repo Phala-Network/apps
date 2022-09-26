@@ -1,4 +1,19 @@
 {
+  "1284": {
+    "chainName": "Moonbeam",
+    "rpcUrls": [
+      "https://rpc.api.moonbeam.network",
+      "https://moonbeam.public.blastapi.io",
+      "https://rpc.ankr.com/moonbeam"
+    ],
+    "nativeCurrency": {
+      "name": "Moonbeam",
+      "symbol": "GLMR",
+      "decimals": 18
+    },
+    "chainId": "0x504",
+    "blockExplorerUrls": ["https://moonbeam.moonscan.io/"]
+  },
   "1285": {
     "chainName": "Moonriver",
     "rpcUrls": [

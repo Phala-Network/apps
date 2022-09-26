@@ -28,6 +28,7 @@ export const transferByPolkadotXTokens = ({
   const asset = ASSETS[assetId]
   const toChain = CHAINS[toChainId]
   const shouldUsePalletAssetId =
+    fromChainId === 'parallel' ||
     fromChainId === 'parallel-heiko' ||
     fromChainId === 'calamari' ||
     fromChainId === 'basilisk'
@@ -53,7 +54,11 @@ export const transferByPolkadotXTokens = ({
     currencyId = {
       MantaCurrency: palletAssetId,
     }
-  } else if (fromChainId === 'parallel-heiko' || fromChainId === 'basilisk') {
+  } else if (
+    fromChainId === 'parallel' ||
+    fromChainId === 'parallel-heiko' ||
+    fromChainId === 'basilisk'
+  ) {
     currencyId = palletAssetId
   } else if (fromChainId === 'turing') {
     currencyId = assetId === 'tur' ? 'Native' : asset.ormlToken

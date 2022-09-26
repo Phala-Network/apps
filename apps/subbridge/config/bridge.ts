@@ -119,6 +119,20 @@ export const BRIDGES: Readonly<Bridge[]> = [
           },
         ],
       },
+      {
+        id: 'moonbeam',
+        assets: [
+          {assetId: 'pha', estimatedTime: '< 1 min', kind: 'khalaXTransfer'},
+          {assetId: 'glmr', estimatedTime: '< 1 min', kind: 'khalaXTransfer'},
+        ],
+      },
+      {
+        id: 'parallel',
+        assets: [
+          {assetId: 'pha', estimatedTime: '< 1 min', kind: 'khalaXTransfer'},
+          {assetId: 'para', estimatedTime: '< 1 min', kind: 'khalaXTransfer'},
+        ],
+      },
     ],
   },
   {
@@ -181,6 +195,18 @@ export const BRIDGES: Readonly<Bridge[]> = [
     toChains: [{id: 'thala', assets: karuraToKhalaAssets}],
   },
   {
+    fromChain: 'moonbeam',
+    toChains: [
+      {
+        id: 'phala',
+        assets: [
+          {assetId: 'glmr', estimatedTime: '< 1 min', kind: 'evmXTokens'},
+          {assetId: 'pha', estimatedTime: '< 1 min', kind: 'evmXTokens'},
+        ],
+      },
+    ],
+  },
+  {
     fromChain: 'moonriver',
     toChains: [
       {id: 'khala', assets: moonriverToKhalaAssets},
@@ -206,6 +232,18 @@ export const BRIDGES: Readonly<Bridge[]> = [
     toChains: [
       {id: 'thala', assets: bifrostToKhalaAssets},
       {id: 'moonbase-alpha', assets: bifrostToMoonriverAssets},
+    ],
+  },
+  {
+    fromChain: 'parallel',
+    toChains: [
+      {
+        id: 'phala',
+        assets: [
+          {assetId: 'para', estimatedTime: '< 1 min', kind: 'polkadotXTokens'},
+          {assetId: 'pha', estimatedTime: '< 1 min', kind: 'polkadotXTokens'},
+        ],
+      },
     ],
   },
   {
