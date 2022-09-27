@@ -1,4 +1,5 @@
 import {useLocation} from '@reach/router'
+import {Notification} from 'baseui/notification'
 import React, {ReactNode} from 'react'
 import {down, up} from 'styled-breakpoints'
 import styled, {css} from 'styled-components'
@@ -39,6 +40,23 @@ const BaseLayout: React.FC<{children: ReactNode}> = (props) => {
   return (
     <HomePageWrap>
       <ContentWrap compact={/^\/(bridge|analytics)/.test(pathname)}>
+        <Notification
+          kind="warning"
+          overrides={{
+            Body: {
+              style: {
+                margin: 0,
+                width: 'auto',
+                fontSize: '14px',
+              },
+            },
+          }}
+        >
+          There will be database update on September 28, 2022, from 2:00 PM to
+          8:00 PM UTC+0. The Phala App will be affected during the update.
+          Please go to Polkadot.js to initiate transactions at that time. Sorry
+          for any inconvenience caused!
+        </Notification>
         {children}
       </ContentWrap>
       <Navbar />
