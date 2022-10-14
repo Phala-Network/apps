@@ -67,7 +67,7 @@ const TransferModal: React.FC<Props> = ({onClose}) => {
         await waitSignAndSend({
           account: polkadotAccount.address,
           api,
-          extrinsic: api.tx.balances.transfer(address, amountString),
+          extrinsic: api.tx.balances.transferKeepAlive(address, amountString),
           signer: polkadotAccount.wallet.signer,
         })
 

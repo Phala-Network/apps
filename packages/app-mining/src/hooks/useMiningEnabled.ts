@@ -1,5 +1,5 @@
 import {useApiPromise} from '@phala/react-libs'
-import {useQuery} from 'react-query'
+import {useQuery} from '@tanstack/react-query'
 
 const useMiningEnabled = (): boolean | undefined => {
   const {api, endpoint} = useApiPromise()

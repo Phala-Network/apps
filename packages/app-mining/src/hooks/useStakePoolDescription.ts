@@ -1,7 +1,7 @@
 import {useApiPromise} from '@phala/react-libs'
 import {hexToString} from '@polkadot/util'
+import {useQuery} from '@tanstack/react-query'
 import Ajv, {JSONSchemaType} from 'ajv'
-import {useQuery} from 'react-query'
 
 export interface StakePoolDescription {
   telegram?: string

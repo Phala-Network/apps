@@ -39,7 +39,7 @@ export function useTransactionFee(
     }
 
     api?.tx?.balances
-      .transfer(
+      .transferKeepAlive(
         recipient,
         new Decimal(amountFormatted)
           .times(10 ** 12)

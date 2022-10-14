@@ -1,5 +1,5 @@
-import {useQuery, UseQueryResult} from 'react-query'
 import {useApiPromise} from '@phala/react-libs'
+import {useQuery, UseQueryResult} from '@tanstack/react-query'
 import Decimal from 'decimal.js'
 
 type StakePoolJSON = {

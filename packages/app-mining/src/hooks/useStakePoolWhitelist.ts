@@ -1,5 +1,5 @@
 import {useApiPromise} from '@phala/react-libs'
-import {useQuery, UseQueryOptions} from 'react-query'
+import {useQuery, UseQueryOptions} from '@tanstack/react-query'
 
 export const useStakePoolWhitelist = (
   pid?: string | number,
