@@ -4,7 +4,7 @@ import {
   polkadotAccountsAtom,
   walletAtom,
 } from '@phala/store'
-import {WalletSelect} from '@talisman-connect/components'
+import {WalletSelect} from '@talismn/connect-components'
 import {useAtom} from 'jotai'
 import {FC} from 'react'
 

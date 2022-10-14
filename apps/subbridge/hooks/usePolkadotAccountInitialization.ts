@@ -15,7 +15,7 @@ export const usePolkadotAccountInitialization = (): void => {
     if (wallet || !lastWalletExtensionName) return
     let unmounted = false
 
-    import('@talisman-connect/wallets').then(({getWalletBySource}) => {
+    import('@talismn/connect-wallets').then(({getWalletBySource}) => {
       if (unmounted) return
       const wallet = getWalletBySource(lastWalletExtensionName)
 

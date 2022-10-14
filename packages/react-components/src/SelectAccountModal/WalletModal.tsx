@@ -1,4 +1,4 @@
-import {Wallet} from '@talisman-connect/wallets'
+import {Wallet} from '@talismn/connect-wallets'
 import {useStyletron} from 'baseui'
 import {Block} from 'baseui/block'
 import {Modal, ModalBody, ModalHeader, ModalProps} from 'baseui/modal'
@@ -16,7 +16,7 @@ const Body: FC<Props> = ({onSelect}) => {
   const [wallets, setWallets] = useState<Wallet[]>()
   useEffect(() => {
     let unmounted = false
-    import('@talisman-connect/wallets').then(({getWallets}) => {
+    import('@talismn/connect-wallets').then(({getWallets}) => {
       const sortedWallets = getWallets().sort((a, b) => {
         return (
           walletsOrder.indexOf(a.extensionName) -

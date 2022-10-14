@@ -1,5 +1,5 @@
 import {useCurrentAccount, walletAtom} from '@phala/store'
-import {Wallet} from '@talisman-connect/wallets'
+import {Wallet} from '@talismn/connect-wallets'
 import {ModalProps} from 'baseui/modal'
 import {toaster} from 'baseui/toast'
 import {useAtom} from 'jotai'
