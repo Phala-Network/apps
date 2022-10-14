@@ -1,6 +1,6 @@
 import {useApiPromise} from '@phala/react-libs'
+import {useQuery, UseQueryResult} from '@tanstack/react-query'
 import Decimal from 'decimal.js'
-import {useQuery, UseQueryResult} from 'react-query'
 
 type WorkerJSON = {
   confidenceLevel: 1 | 2 | 3 | 4 | 5

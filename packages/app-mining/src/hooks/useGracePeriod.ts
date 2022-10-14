@@ -1,5 +1,5 @@
 import {useApiPromise} from '@phala/react-libs'
-import {useQuery, UseQueryResult} from 'react-query'
+import {useQuery, UseQueryResult} from '@tanstack/react-query'
 
 export default function useGracePeriod(): UseQueryResult<
   number | null,
