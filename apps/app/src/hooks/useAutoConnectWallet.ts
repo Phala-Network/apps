@@ -14,7 +14,7 @@ export const useAutoConnectWallet = () => {
     let unmounted = false
     let timeout: NodeJS.Timeout
 
-    import('@talisman-connect/wallets').then(({getWalletBySource}) => {
+    import('@talismn/connect-wallets').then(({getWalletBySource}) => {
       if (unmounted) return
       // HACK: always wait for extension injection for 0.5s before getting wallet
       timeout = setTimeout(() => {

@@ -1,8 +1,6 @@
 import backgroundWaves from '@/assets/background_waves.svg'
 import {css, Global} from '@emotion/react'
 import {Theme, useTheme} from '@mui/material'
-import '@talisman-connect/components/talisman-connect-components.esm.css'
-import '@talisman-connect/ui/talisman-connect-ui.esm.css'
 import {FC, useEffect, useState} from 'react'
 
 const talismanConnectStyles = (theme: Theme) => css`

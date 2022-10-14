@@ -1,4 +1,4 @@
-import type {WalletAccount} from '@talisman-connect/wallets'
+import type {WalletAccount} from '@talismn/connect-wallets'
 import {atom, useAtom} from 'jotai'
 import {atomWithStorage} from 'jotai/utils'
 

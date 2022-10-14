@@ -1,6 +1,6 @@
 import {polkadotAccountsAtom, walletAtom} from '@phala/store'
 import {encodeAddress} from '@polkadot/util-crypto'
-import {WalletAccount} from '@talisman-connect/wallets'
+import {WalletAccount} from '@talismn/connect-wallets'
 import {useAtom, useAtomValue} from 'jotai'
 import {useEffect} from 'react'
 
