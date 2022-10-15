@@ -6,7 +6,7 @@ export const useStakePoolWhitelist = (
   options?: Pick<UseQueryOptions, 'enabled'>
 ) => {
   const {api} = useApiPromise()
-  const {enabled = true} = options || {}
+  const {enabled = Boolean(api && pid)} = options || {}
   const result = useQuery(
     ['stakePoolWhitelist', pid],
     async () => {
