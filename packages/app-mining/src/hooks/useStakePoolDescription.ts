@@ -39,8 +39,8 @@ const useStakePoolDescription = (pid?: string) => {
 
   const query = useQuery(
     ['stakePoolDescription', pid, initialized],
-    async (): Promise<StakePoolDescription | void> => {
-      if (!api || !pid) return
+    async (): Promise<StakePoolDescription | null> => {
+      if (!api || !pid) return null
       const hex = (
         await api.query.phalaStakePool.poolDescriptions(pid)
       ).toJSON() as string
@@ -66,7 +66,7 @@ const useStakePoolDescription = (pid?: string) => {
         version: 1,
       }
     },
-    {refetchInterval: 6000}
+    {refetchInterval: 6000, enabled: Boolean(api && pid)}
   )
 
   return query
