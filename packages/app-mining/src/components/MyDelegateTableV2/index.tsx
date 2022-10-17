@@ -25,6 +25,7 @@ import {
   StakePoolStakeOrderByInput,
   useStakePoolStakesConnectionQuery,
 } from '../../hooks/subsquid'
+import useBlockHeightListener from '../../hooks/useBlockHeightListener'
 import {subsquidClient} from '../../utils/GraphQLClient'
 // import Owner from '../Owner'
 import Pagination from '../Pagination'
@@ -66,7 +67,7 @@ const MyDelegateTableV2: FC = () => {
   //   useState<StakePoolModalKey | null>(null)
   // const [operatingPool, setOperatingPool] = useState<StakePool | null>(null)
 
-  const {data, isLoading} = useStakePoolStakesConnectionQuery(
+  const {data, isLoading, refetch} = useStakePoolStakesConnectionQuery(
     subsquidClient,
     {
       first: pageSize,
@@ -88,17 +89,18 @@ const MyDelegateTableV2: FC = () => {
           },
 
           {
-            OR: [{availableReward_gt: '0'}, {amount_gt: '0'}],
+            OR: [{reward_gt: '0'}, {amount_gt: '0'}],
           },
         ],
       },
     },
     {
-      refetchInterval: 12 * 1000,
       keepPreviousData: true,
       enabled: Boolean(address),
     }
   )
+
+  useBlockHeightListener(refetch)
 
   const totalCount = data?.stakePoolStakesConnection.totalCount || 0
 

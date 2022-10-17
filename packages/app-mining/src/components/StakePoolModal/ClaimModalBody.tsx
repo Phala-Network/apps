@@ -74,8 +74,7 @@ const ClaimModalBody: FC<
         <FormControl label="Rewards">
           <Block display={'flex'} flexDirection={'row'}>
             <ParagraphSmall as="div">
-              {stakes[0] && formatCurrency(stakes[0].availableReward as string)}{' '}
-              PHA
+              {stakes[0] && formatCurrency(stakes[0].reward as string)} PHA
             </ParagraphSmall>
           </Block>
         </FormControl>

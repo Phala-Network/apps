@@ -23,6 +23,7 @@ import {
   WorkerEdge,
   WorkerOrderByInput,
 } from '../../hooks/subsquid'
+import useBlockHeightListener from '../../hooks/useBlockHeightListener'
 import {subsquidClient} from '../../utils/GraphQLClient'
 import Pagination from '../Pagination'
 // import PopoverButton from '../PopoverButton'
@@ -78,7 +79,7 @@ const WorkerTableV2: FC<{
   // const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   // const [openModalKey, setOpenModalKey] = useState<ModalKey | null>(null)
   // const [operatingMiner, setOperatingMiner] = useState<null>(null)
-  const {data, isLoading} = useWorkersConnectionQuery(
+  const {data, isLoading, refetch} = useWorkersConnectionQuery(
     subsquidClient,
     {
       first: pageSize,
@@ -97,13 +98,14 @@ const WorkerTableV2: FC<{
       },
     },
     {
-      refetchInterval: 12 * 1000,
       keepPreviousData: true,
       enabled:
         (kind === 'mining' && Boolean(address)) ||
         (kind === 'stakePool' && pid !== undefined),
     }
   )
+
+  useBlockHeightListener(refetch)
 
   const totalCount = data?.workersConnection.totalCount || 0
 

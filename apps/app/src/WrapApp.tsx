@@ -16,7 +16,6 @@ const WrapApp: React.FC<{children: ReactNode}> = ({children}) => {
       new QueryClient({
         defaultOptions: {
           queries: {
-            refetchOnMount: false,
             onError: () => {
               toaster.negative(
                 'Something went wrong. Please try again later.',

@@ -5,17 +5,13 @@ import {useGlobalStateQuery} from '../../hooks/subsquid'
 import {subsquidClient} from '../../utils/GraphQLClient'
 
 const UpdateInfo = (): JSX.Element => {
-  const {data, isLoading} = useGlobalStateQuery(
-    subsquidClient,
-    {},
-    {refetchInterval: 12 * 1000}
-  )
+  const {data, isLoading} = useGlobalStateQuery(subsquidClient, {})
 
   return (
     <Block display="flex" alignItems="center" height="34px">
       {isLoading && <Skeleton animation height="34px" width="200px" />}
-      {Boolean(data?.squidStatus?.height) && (
-        <Tag closeable={false}>#{data?.squidStatus?.height}</Tag>
+      {Boolean(data?.globalStateById?.height) && (
+        <Tag closeable={false}>#{data?.globalStateById?.height}</Tag>
       )}
     </Block>
   )

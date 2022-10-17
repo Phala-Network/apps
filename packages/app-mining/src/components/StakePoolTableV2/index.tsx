@@ -27,6 +27,7 @@ import {
   StakePoolOrderByInput,
   useStakePoolsConnectionQuery,
 } from '../../hooks/subsquid'
+import useBlockHeightListener from '../../hooks/useBlockHeightListener'
 import {subsquidClient} from '../../utils/GraphQLClient'
 // import Owner from '../Owner'
 import Pagination from '../Pagination'
@@ -83,7 +84,7 @@ const StakePoolTableV2: FC<{
     useState<StakePoolModalKey | null>(null)
   const [operatingPool, setOperatingPool] = useState<StakePool | null>(null)
 
-  const {data, isLoading} = useStakePoolsConnectionQuery(
+  const {data, isLoading, refetch} = useStakePoolsConnectionQuery(
     subsquidClient,
     {
       first: pageSize,
@@ -114,11 +115,12 @@ const StakePoolTableV2: FC<{
       },
     },
     {
-      refetchInterval: 12 * 1000,
       keepPreviousData: true,
       enabled: kind === 'delegate' || Boolean(kind === 'mining' && address),
     }
   )
+
+  useBlockHeightListener(refetch)
 
   const totalCount = data?.stakePoolsConnection.totalCount || 0
 

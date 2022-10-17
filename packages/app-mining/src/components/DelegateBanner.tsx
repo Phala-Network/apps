@@ -9,11 +9,7 @@ import {useGlobalStateQuery} from '../hooks/subsquid'
 import {subsquidClient} from '../utils/GraphQLClient'
 
 const DelegateBanner = (): JSX.Element => {
-  const {data} = useGlobalStateQuery(
-    subsquidClient,
-    {},
-    {refetchInterval: 12 * 1000}
-  )
+  const {data} = useGlobalStateQuery(subsquidClient, {})
 
   const value = data?.globalStateById?.totalStake
 
