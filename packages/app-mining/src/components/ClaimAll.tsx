@@ -22,9 +22,15 @@ import {Skeleton} from 'baseui/skeleton'
 import {HeadingSmall, LabelSmall, ParagraphSmall} from 'baseui/typography'
 import Decimal from 'decimal.js'
 import {FC, useCallback, useEffect, useMemo, useState} from 'react'
-import {SortOrder, useStakePoolsQuery} from '../hooks/graphql'
+import {
+  StakePoolOrderByInput,
+  StakePoolStakeOrderByInput,
+  useAccountRewardsQuery,
+  useStakePoolsConnectionQuery,
+  useStakePoolStakesConnectionQuery,
+} from '../hooks/subsquid'
 import useWaitSignAndSend from '../hooks/useWaitSignAndSend'
-import {client} from '../utils/GraphQLClient'
+import {subsquidClient} from '../utils/GraphQLClient'
 
 const CLAIM_THRESHOLD = '0'
 
@@ -47,76 +53,89 @@ const ClaimAll: FC<
   const [shouldClaimOwnerRewards, setShouldClaimOwnerRewards] = useState(
     kind === 'mining'
   )
-  const {data, isLoading} = useStakePoolsQuery(
-    client,
-    {
-      orderBy: {pid: SortOrder.Asc},
-      withStakePoolStakers: true,
-      stakePoolStakersWhere: {
-        address: {equals: polkadotAccount?.address},
-        claimableReward: {gt: CLAIM_THRESHOLD},
-      },
-      where: {
-        OR: [
-          {
-            stakePoolStakers: {
-              some: {
-                address: {equals: polkadotAccount?.address},
-                claimableReward: {gt: CLAIM_THRESHOLD},
-              },
-            },
-          },
-          {
-            ownerReward: {gt: CLAIM_THRESHOLD},
-            ownerAddress: {equals: polkadotAccount?.address},
-          },
-        ],
-      },
-    },
+
+  const {data, isLoading} = useAccountRewardsQuery(
+    subsquidClient,
+    {accountId: polkadotAccount?.address || ''},
     {
       enabled: Boolean(polkadotAccount?.address),
       refetchOnMount: true,
-      refetchInterval: 60 * 1000,
+      refetchInterval: 12 * 1000,
     }
   )
+
+  const totalStakeReward = useMemo(
+    () =>
+      data?.accountById?.totalStakeReward
+        ? new Decimal(data.accountById.totalStakeReward)
+        : new Decimal(0),
+    [data?.accountById?.totalStakeReward]
+  )
+  const totalOwnerReward = useMemo(
+    () =>
+      data?.accountById?.totalOwnerReward
+        ? new Decimal(data.accountById.totalOwnerReward)
+        : new Decimal(0),
+    [data?.accountById?.totalOwnerReward]
+  )
+
+  const {data: stakePoolsData, isLoading: isStakePoolsLoading} =
+    useStakePoolsConnectionQuery(
+      subsquidClient,
+      {
+        orderBy: StakePoolOrderByInput.PidAsc,
+        where: {
+          owner: {id_eq: polkadotAccount?.address},
+          ownerReward_gt: CLAIM_THRESHOLD,
+        },
+      },
+      {
+        enabled: Boolean(polkadotAccount?.address) && isModalOpen,
+        refetchOnMount: true,
+        refetchInterval: 12 * 1000,
+      }
+    )
+
+  const {data: stakesData, isLoading: isStakesLoading} =
+    useStakePoolStakesConnectionQuery(
+      subsquidClient,
+      {
+        orderBy: StakePoolStakeOrderByInput.StakePoolPidAsc,
+        where: {
+          availableReward_gt: CLAIM_THRESHOLD,
+          account: {id_eq: polkadotAccount?.address},
+        },
+      },
+      {
+        enabled: Boolean(polkadotAccount?.address) && isModalOpen,
+        refetchOnMount: true,
+        refetchInterval: 12 * 1000,
+      }
+    )
+
+  const isModalLoading = isStakePoolsLoading || isStakesLoading
 
   const closeModal = useCallback(() => {
     setIsModalOpen(false)
     setConfirmLock(false)
   }, [])
 
-  const aggregatedData = useMemo(() => {
-    const delegatorPids: number[] = []
-    const ownerPids: number[] = []
-    let delegatorRewards = new Decimal(0)
-    let ownerRewards = new Decimal(0)
+  const delegatedPids: string[] = useMemo(
+    () =>
+      stakesData?.stakePoolStakesConnection.edges.map(
+        (s) => s.node.stakePool.pid
+      ) || [],
+    [stakesData?.stakePoolStakesConnection.edges]
+  )
 
-    data?.findManyStakePools.forEach((x) => {
-      const stakeReward = x.stakePoolStakers?.[0]?.stakeReward
-      if (stakeReward) {
-        delegatorRewards = delegatorRewards.add(new Decimal(stakeReward))
-        delegatorPids.push(x.pid)
-      }
-
-      const ownerReward = new Decimal(x.ownerReward)
-      if (x.ownerAddress === polkadotAccount?.address && ownerReward.gt(0)) {
-        ownerRewards = ownerRewards.add(ownerReward)
-        ownerPids.push(x.pid)
-      }
-    })
-
-    return {
-      delegatorPids,
-      delegatorRewards,
-      ownerRewards,
-      ownerPids,
-    }
-  }, [data, polkadotAccount?.address])
+  const ownedPids: string[] = useMemo(
+    () =>
+      stakePoolsData?.stakePoolsConnection.edges.map((s) => s.node.pid) || [],
+    [stakePoolsData?.stakePoolsConnection.edges]
+  )
 
   const displayRewards =
-    kind === 'delegate'
-      ? aggregatedData.delegatorRewards
-      : aggregatedData.ownerRewards
+    kind === 'delegate' ? totalStakeReward : totalOwnerReward
 
   const onConfirm = async () => {
     setConfirmLock(true)
@@ -140,19 +159,19 @@ const ClaimAll: FC<
   const selectedRewards = useMemo(() => {
     let rewards = new Decimal(0)
     if (shouldClaimDelegatorRewards) {
-      rewards = rewards.add(aggregatedData.delegatorRewards)
+      rewards = rewards.add(totalStakeReward)
     }
 
     if (shouldClaimOwnerRewards) {
-      rewards = rewards.add(aggregatedData.ownerRewards)
+      rewards = rewards.add(totalOwnerReward)
     }
 
     return rewards
   }, [
     shouldClaimDelegatorRewards,
     shouldClaimOwnerRewards,
-    aggregatedData.delegatorRewards,
-    aggregatedData.ownerRewards,
+    totalOwnerReward,
+    totalStakeReward,
   ])
 
   const extrinsic = useMemo(() => {
@@ -161,7 +180,7 @@ const ClaimAll: FC<
       try {
         if (shouldClaimDelegatorRewards) {
           batchParams = batchParams.concat(
-            aggregatedData.delegatorPids.map((pid) =>
+            delegatedPids.map((pid) =>
               api.tx.phalaStakePool?.claimStakerRewards?.(pid, address)
             )
           )
@@ -169,7 +188,7 @@ const ClaimAll: FC<
 
         if (shouldClaimOwnerRewards) {
           batchParams = batchParams.concat(
-            aggregatedData.ownerPids.map((pid) =>
+            ownedPids.map((pid) =>
               api.tx.phalaStakePool?.claimOwnerRewards?.(pid, address)
             )
           )
@@ -183,8 +202,9 @@ const ClaimAll: FC<
   }, [
     address,
     api,
-    aggregatedData,
     decimals,
+    delegatedPids,
+    ownedPids,
     shouldClaimDelegatorRewards,
     shouldClaimOwnerRewards,
   ])
@@ -210,7 +230,7 @@ const ClaimAll: FC<
         <Button
           onClick={() => setIsModalOpen(true)}
           kind="secondary"
-          disabled={displayRewards.eq(0)}
+          disabled={displayRewards.isZero()}
         >
           Claim
         </Button>
@@ -231,110 +251,116 @@ const ClaimAll: FC<
         }}
       >
         <ModalHeader>Claim Rewards</ModalHeader>
+
         <ModalBody>
-          <Block
-            $style={{...theme.borders.border600}}
-            padding="scale500"
-            marginBottom="scale600"
-          >
-            <Checkbox
-              disabled={!aggregatedData.delegatorPids.length}
-              checked={shouldClaimDelegatorRewards}
-              onChange={(e) =>
-                setShouldClaimDelegatorRewards(e.currentTarget.checked)
-              }
-            >
-              <Block>
-                <Block>Delegator Rewards</Block>
-                {Boolean(aggregatedData.delegatorPids.length) && (
-                  <>
-                    <ParagraphSmall as="div" marginTop="scale100">
-                      Rewards: {formatCurrency(aggregatedData.delegatorRewards)}{' '}
-                      PHA
-                    </ParagraphSmall>
-                    <ParagraphSmall as="div" marginTop="scale100">
-                      Pids: {aggregatedData.delegatorPids.join(', ')}
-                    </ParagraphSmall>
-                  </>
-                )}
+          {isModalLoading ? (
+            <Skeleton animation height="32px" />
+          ) : (
+            <>
+              <Block
+                $style={{...theme.borders.border600}}
+                padding="scale500"
+                marginBottom="scale600"
+              >
+                <Checkbox
+                  disabled={!delegatedPids.length}
+                  checked={shouldClaimDelegatorRewards}
+                  onChange={(e) =>
+                    setShouldClaimDelegatorRewards(e.currentTarget.checked)
+                  }
+                >
+                  <Block>
+                    <Block>Delegator Rewards</Block>
+                    {Boolean(delegatedPids.length) && (
+                      <>
+                        <ParagraphSmall as="div" marginTop="scale100">
+                          Rewards: {formatCurrency(totalStakeReward)} PHA
+                        </ParagraphSmall>
+                        <ParagraphSmall as="div" marginTop="scale100">
+                          Pids: {delegatedPids.join(', ')}
+                        </ParagraphSmall>
+                      </>
+                    )}
+                  </Block>
+                </Checkbox>
               </Block>
-            </Checkbox>
-          </Block>
 
-          <Block
-            $style={{...theme.borders.border600}}
-            padding="scale500"
-            marginBottom="scale600"
-          >
-            <Checkbox
-              disabled={!aggregatedData.ownerPids.length}
-              checked={shouldClaimOwnerRewards}
-              onChange={(e) =>
-                setShouldClaimOwnerRewards(e.currentTarget.checked)
-              }
-            >
-              <Block>
-                <Block>Owner Rewards</Block>
-                {Boolean(aggregatedData.ownerPids.length) && (
-                  <>
-                    <ParagraphSmall as="div" marginTop="scale100">
-                      Rewards: {formatCurrency(aggregatedData.ownerRewards)} PHA
-                    </ParagraphSmall>
-                    <ParagraphSmall as="div" marginTop="scale100">
-                      Pids: {aggregatedData.ownerPids.join(', ')}
-                    </ParagraphSmall>
-                  </>
-                )}
+              <Block
+                $style={{...theme.borders.border600}}
+                padding="scale500"
+                marginBottom="scale600"
+              >
+                <Checkbox
+                  disabled={!ownedPids.length}
+                  checked={shouldClaimOwnerRewards}
+                  onChange={(e) =>
+                    setShouldClaimOwnerRewards(e.currentTarget.checked)
+                  }
+                >
+                  <Block>
+                    <Block>Owner Rewards</Block>
+                    {Boolean(ownedPids.length) && (
+                      <>
+                        <ParagraphSmall as="div" marginTop="scale100">
+                          Rewards: {formatCurrency(totalOwnerReward)} PHA
+                        </ParagraphSmall>
+                        <ParagraphSmall as="div" marginTop="scale100">
+                          Pids: {ownedPids.join(', ')}
+                        </ParagraphSmall>
+                      </>
+                    )}
+                  </Block>
+                </Checkbox>
               </Block>
-            </Checkbox>
-          </Block>
 
-          <FormControl label="Selected Rewards">
-            <ParagraphSmall as="div">
-              {formatCurrency(selectedRewards)} PHA
-            </ParagraphSmall>
-          </FormControl>
+              <FormControl label="Selected Rewards">
+                <ParagraphSmall as="div">
+                  {formatCurrency(selectedRewards)} PHA
+                </ParagraphSmall>
+              </FormControl>
 
-          <FormControl
-            label="Target Address"
-            error={isAddressError ? 'Invalid address' : null}
-          >
-            <Input
-              value={address}
-              autoFocus
-              placeholder="Target Address"
-              overrides={{
-                Input: {
-                  style: {textOverflow: 'ellipsis'},
-                },
-                EndEnhancer: {
-                  style: {whiteSpace: 'pre'},
-                },
-              }}
-              endEnhancer={
-                polkadotAccount && (
-                  <Button
-                    kind="tertiary"
-                    size="mini"
-                    onClick={() => {
-                      setAddress(polkadotAccount.address)
-                      setIsAddressError(
-                        !validateAddress(polkadotAccount.address)
-                      )
-                    }}
-                  >
-                    My Address
-                  </Button>
-                )
-              }
-              onChange={(e) => setAddress(e.currentTarget.value)}
-              onBlur={() => {
-                if (address) {
-                  setIsAddressError(!validateAddress(address))
-                }
-              }}
-            />
-          </FormControl>
+              <FormControl
+                label="Target Address"
+                error={isAddressError ? 'Invalid address' : null}
+              >
+                <Input
+                  value={address}
+                  autoFocus
+                  placeholder="Target Address"
+                  overrides={{
+                    Input: {
+                      style: {textOverflow: 'ellipsis'},
+                    },
+                    EndEnhancer: {
+                      style: {whiteSpace: 'pre'},
+                    },
+                  }}
+                  endEnhancer={
+                    polkadotAccount && (
+                      <Button
+                        kind="tertiary"
+                        size="mini"
+                        onClick={() => {
+                          setAddress(polkadotAccount.address)
+                          setIsAddressError(
+                            !validateAddress(polkadotAccount.address)
+                          )
+                        }}
+                      >
+                        My Address
+                      </Button>
+                    )
+                  }
+                  onChange={(e) => setAddress(e.currentTarget.value)}
+                  onBlur={() => {
+                    if (address) {
+                      setIsAddressError(!validateAddress(address))
+                    }
+                  }}
+                />
+              </FormControl>
+            </>
+          )}
         </ModalBody>
         <ModalFooter>
           <Block

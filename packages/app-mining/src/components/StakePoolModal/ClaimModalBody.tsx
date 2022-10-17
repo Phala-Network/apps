@@ -18,16 +18,15 @@ import {
 } from 'baseui/modal'
 import {ParagraphSmall} from 'baseui/typography'
 import {FC, useMemo, useState} from 'react'
-import {StakePool} from '.'
+import {StakePool} from '../../hooks/subsquid'
 import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
 
 const ClaimModalBody: FC<
   {
-    stakePool: Pick<StakePool, 'pid'> &
-      Partial<Pick<StakePool, 'stakePoolStakers'>>
+    stakePool: Pick<StakePool, 'pid'> & Partial<Pick<StakePool, 'stakes'>>
   } & Pick<ModalProps, 'onClose'>
 > = ({stakePool, onClose}) => {
-  const {pid, stakePoolStakers} = stakePool
+  const {pid, stakes} = stakePool
   const [polkadotAccount] = useCurrentAccount()
   const {api} = useApiPromise()
   const [address, setAddress] = useState('')
@@ -59,7 +58,7 @@ const ClaimModalBody: FC<
     }
   }, [api, decimals, pid, address, isAddressError])
 
-  if (!stakePoolStakers) return null
+  if (!stakes) return null
 
   return (
     <>
@@ -75,10 +74,7 @@ const ClaimModalBody: FC<
         <FormControl label="Rewards">
           <Block display={'flex'} flexDirection={'row'}>
             <ParagraphSmall as="div">
-              {stakePoolStakers[0] &&
-                formatCurrency(
-                  stakePoolStakers[0].claimableReward as string
-                )}{' '}
+              {stakes[0] && formatCurrency(stakes[0].availableReward as string)}{' '}
               PHA
             </ParagraphSmall>
           </Block>

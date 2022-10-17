@@ -1,116 +1,103 @@
 import {useCurrentAccount} from '@phala/store'
 import {
   formatCurrency,
-  isSSR,
-  isTruthy,
+  // isSSR,
+  // isTruthy,
   toFixed,
   trimAddress,
 } from '@phala/utils'
 import {useStyletron} from 'baseui'
-import {Block} from 'baseui/block'
-import {StatefulMenu} from 'baseui/menu'
-import {Modal, ModalProps} from 'baseui/modal'
-import {StatefulPopover} from 'baseui/popover'
+// import {Block} from 'baseui/block'
+// import {StatefulMenu} from 'baseui/menu'
+// import {Modal, ModalProps} from 'baseui/modal'
+// import {StatefulPopover} from 'baseui/popover'
 import {TableBuilder, TableBuilderColumn} from 'baseui/table-semantic'
 import {toaster} from 'baseui/toast'
 import {StatefulTooltip} from 'baseui/tooltip'
-import {ParagraphXSmall} from 'baseui/typography'
-import {formatDuration, intervalToDuration, isAfter, isFuture} from 'date-fns'
+// import {ParagraphXSmall} from 'baseui/typography'
+// import {formatDuration, intervalToDuration, isAfter, isFuture} from 'date-fns'
 import Decimal from 'decimal.js'
-import {FC, useCallback, useEffect, useState} from 'react'
+import {FC, useEffect, useState} from 'react'
 import {
-  Miners,
-  MinersOrderByWithRelationInput,
-  SortOrder,
-  useMinersQuery,
-} from '../../hooks/graphql'
-import {client} from '../../utils/GraphQLClient'
+  useWorkersConnectionQuery,
+  WorkerEdge,
+  WorkerOrderByInput,
+} from '../../hooks/subsquid'
+import {subsquidClient} from '../../utils/GraphQLClient'
 import Pagination from '../Pagination'
-import PopoverButton from '../PopoverButton'
+// import PopoverButton from '../PopoverButton'
 import TableSkeleton from '../TableSkeleton'
 import TooltipHeader from '../TooltipHeader'
-import ChangeStakeModalBody from './ChangeStakeModalBody'
-import ReclaimModalBody from './ReclaimModalBody'
-import RemoveModalBody from './RemoveModalBody'
+// import ChangeStakeModalBody from './ChangeStakeModalBody'
+// import ReclaimModalBody from './ReclaimModalBody'
+// import RemoveModalBody from './RemoveModalBody'
 // FIXME: should be loadable, but meet some problems when configuring gatsby-plugin-loadable-components-ssr
-import StartModalBody from './StartModalBody'
-import StopModalBody from './StopModalBody'
+// import StartModalBody from './StartModalBody'
+// import StopModalBody from './StopModalBody'
 import {tooltipContent} from './tooltipContent'
 
-type ModalKey = 'start' | 'changeStake' | 'stop' | 'remove' | 'reclaim'
-type MenuItem = {label: string; key: ModalKey; disabled?: boolean}
+// type ModalKey = 'start' | 'changeStake' | 'stop' | 'remove' | 'reclaim'
+// type MenuItem = {label: string; key: ModalKey; disabled?: boolean}
 
-const modalKeyMap: Readonly<
-  Record<
-    ModalKey,
-    (
-      props: {
-        miner: Miners
-      } & Pick<ModalProps, 'onClose'>
-    ) => JSX.Element
-  >
-> = {
-  start: StartModalBody,
-  stop: StopModalBody,
-  remove: RemoveModalBody,
-  reclaim: ReclaimModalBody,
-  changeStake: ChangeStakeModalBody,
-}
+// const modalKeyMap: Readonly<
+//   Record<
+//     ModalKey,
+//     (
+//       props: {
+//         miner: WorkerEdge
+//       } & Pick<ModalProps, 'onClose'>
+//     ) => JSX.Element
+//   >
+// > = {
+//   start: StartModalBody,
+//   stop: StopModalBody,
+//   remove: RemoveModalBody,
+//   reclaim: ReclaimModalBody,
+//   changeStake: ChangeStakeModalBody,
+// }
 
 const WorkerTableV2: FC<{
   kind: 'stakePool' | 'mining'
   pid?: number
-  isOwner?: boolean
-}> = ({kind, pid, isOwner}) => {
+  // isOwner?: boolean
+}> = ({
+  kind,
+  pid,
+  // isOwner
+}) => {
   const [css] = useStyletron()
   const pageSize = 10
   const [polkadotAccount] = useCurrentAccount()
   const address = polkadotAccount?.address
-  const [sortColumn, setSortColumn] = useState<
-    keyof MinersOrderByWithRelationInput
-  >(kind === 'stakePool' ? 'v' : 'pid')
+  const [sortColumn, setSortColumn] = useState<string>(
+    kind === 'stakePool' ? 'MinerV' : 'StakePoolPid'
+  )
   const [sortAsc, setSortAsc] = useState(kind === 'mining')
   const [currentPage, setCurrentPage] = useState(1)
 
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
-  const [openModalKey, setOpenModalKey] = useState<ModalKey | null>(null)
-  const [operatingMiner, setOperatingMiner] = useState<Miners | null>(null)
-
-  const {data, isLoading} = useMinersQuery(
-    client,
+  // const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
+  // const [openModalKey, setOpenModalKey] = useState<ModalKey | null>(null)
+  // const [operatingMiner, setOperatingMiner] = useState<null>(null)
+  const {data, isLoading} = useWorkersConnectionQuery(
+    subsquidClient,
     {
-      take: pageSize,
-      skip: pageSize * (currentPage - 1),
-      orderBy: [
-        {[sortColumn]: sortAsc ? SortOrder.Asc : SortOrder.Desc},
-        {v: SortOrder.Desc},
-      ],
+      first: pageSize,
+      ...(currentPage !== 1 && {
+        after: String(pageSize * (currentPage - 1)),
+      }),
+      orderBy:
+        WorkerOrderByInput[
+          `${sortColumn}${
+            sortAsc ? 'Asc' : 'Desc'
+          }` as keyof typeof WorkerOrderByInput
+        ],
       where: {
-        active: {equals: true},
-        current: {equals: true},
-        ...(kind === 'mining' && {
-          stakePools: {
-            is: {
-              ownerAddress: {
-                equals: address,
-              },
-            },
-          },
-        }),
-
-        ...(kind === 'stakePool' && {
-          stakePools: {
-            is: {
-              pid: {
-                equals: pid,
-              },
-            },
-          },
-        }),
+        ...(kind === 'mining' && {stakePool: {owner: {id_eq: address}}}),
+        ...(kind === 'stakePool' && {stakePool: {id_eq: String(pid)}}),
       },
     },
     {
-      refetchInterval: 60 * 1000,
+      refetchInterval: 12 * 1000,
       keepPreviousData: true,
       enabled:
         (kind === 'mining' && Boolean(address)) ||
@@ -118,23 +105,23 @@ const WorkerTableV2: FC<{
     }
   )
 
-  const totalCount = data?.aggregateMiners._count?._all ?? 0
+  const totalCount = data?.workersConnection.totalCount || 0
 
   const onSort = (columnId: string): void => {
     if (sortColumn === columnId) {
       setSortAsc(!sortAsc)
     } else {
-      setSortColumn(columnId as keyof MinersOrderByWithRelationInput)
+      setSortColumn(columnId)
       setSortAsc(true)
     }
     setCurrentPage(1)
   }
 
-  const closeModal = useCallback(() => {
-    setIsModalOpen(false)
-  }, [])
+  // const closeModal = useCallback(() => {
+  //   setIsModalOpen(false)
+  // }, [])
 
-  const ModalBody = openModalKey && modalKeyMap[openModalKey]
+  // const ModalBody = openModalKey && modalKeyMap[openModalKey]
 
   useEffect(() => {
     if (kind === 'mining') {
@@ -148,7 +135,7 @@ const WorkerTableV2: FC<{
         <TableBuilder
           isLoading={isLoading}
           loadingMessage={<TableSkeleton />}
-          data={data?.findManyMiners || []}
+          data={data?.workersConnection.edges || []}
           sortColumn={sortColumn}
           sortOrder={sortAsc ? 'ASC' : 'DESC'}
           onSort={onSort}
@@ -173,52 +160,56 @@ const WorkerTableV2: FC<{
             },
           }}
         >
-          <TableBuilderColumn id="workerPublicKey" header="Public Key">
-            {({workerPublicKey}: Miners) => (
-              <StatefulTooltip content={workerPublicKey}>
+          <TableBuilderColumn id="Id" header="Public Key">
+            {({node}: WorkerEdge) => (
+              <StatefulTooltip content={node.id}>
                 <span
                   className={css({cursor: 'pointer'})}
                   onClick={() => {
-                    navigator.clipboard.writeText(workerPublicKey).then(() => {
+                    navigator.clipboard.writeText(node.id).then(() => {
                       toaster.info('Copied', {})
                     })
                   }}
                 >
-                  {trimAddress(workerPublicKey)}
+                  {trimAddress(node.id)}
                 </span>
               </StatefulTooltip>
             )}
           </TableBuilderColumn>
           {kind === 'mining' && (
             <TableBuilderColumn
-              id="pid"
+              id="StakePoolPid"
               header={
                 <TooltipHeader content={tooltipContent.pid}>Pid</TooltipHeader>
               }
               sortable
             >
-              {({pid}: Miners) => pid}
+              {({node}: WorkerEdge) => node.stakePool?.id}
             </TableBuilderColumn>
           )}
-          <TableBuilderColumn id="v" header="V" sortable>
-            {({v}: Miners) => toFixed(new Decimal(v), 4)}
+          <TableBuilderColumn id="MinerV" header="V" sortable>
+            {({node}: WorkerEdge) =>
+              node.miner && toFixed(new Decimal(node.miner.v), 4)
+            }
           </TableBuilderColumn>
           {kind === 'mining' && (
-            <TableBuilderColumn id="ve" header="Ve" sortable>
-              {({ve}: Miners) => toFixed(new Decimal(ve), 4)}
+            <TableBuilderColumn id="MinerVe" header="Ve" sortable>
+              {({node}: WorkerEdge) =>
+                node.miner && toFixed(new Decimal(node.miner.ve), 4)
+              }
             </TableBuilderColumn>
           )}
           {kind === 'mining' && (
-            <TableBuilderColumn id="pInstant" header="P Instant" sortable>
-              {({pInstant}: Miners) => pInstant}
+            <TableBuilderColumn id="MinerPInstant" header="P Instant" sortable>
+              {({node}: WorkerEdge) => node.miner?.pInstant}
             </TableBuilderColumn>
           )}
           {kind === 'mining' && (
-            <TableBuilderColumn id="pInit" header="P Initial" sortable>
-              {({pInit}: Miners) => pInit}
+            <TableBuilderColumn id="MinerPInit" header="P Initial" sortable>
+              {({node}: WorkerEdge) => node.miner?.pInit}
             </TableBuilderColumn>
           )}
-          <TableBuilderColumn
+          {/* <TableBuilderColumn
             id="state"
             header={
               <TooltipHeader content={tooltipContent.state}>
@@ -227,7 +218,7 @@ const WorkerTableV2: FC<{
             }
             sortable
           >
-            {({state, estimatesReclaimableAt}: Miners) => {
+            {({state, estimatesReclaimableAt}: WorkerEdge) => {
               if (state === 'MiningIdle') return 'Mining'
               if (state === 'MiningUnresponsive') return 'Unresponsive'
               if (state === 'MiningCoolingDown') {
@@ -256,11 +247,11 @@ const WorkerTableV2: FC<{
               }
               return state
             }}
-          </TableBuilderColumn>
+          </TableBuilderColumn> */}
 
           {kind === 'mining' && (
             <TableBuilderColumn
-              id="totalReward"
+              id="MinerTotalReward"
               header={
                 <TooltipHeader content={tooltipContent.mined}>
                   Mined
@@ -268,15 +259,19 @@ const WorkerTableV2: FC<{
               }
               sortable
             >
-              {({totalReward}: Miners) => `${formatCurrency(totalReward)} PHA`}
+              {({node}: WorkerEdge) =>
+                node.miner && `${formatCurrency(node.miner.totalReward)} PHA`
+              }
             </TableBuilderColumn>
           )}
 
-          <TableBuilderColumn id="stakes" header="Stake" sortable>
-            {({stakes}: Miners) => `${formatCurrency(stakes)} PHA`}
+          <TableBuilderColumn id="MinerStake" header="Stake" sortable>
+            {({node}: WorkerEdge) =>
+              node.miner && `${formatCurrency(node.miner.stake)} PHA`
+            }
           </TableBuilderColumn>
 
-          {(kind === 'mining' || (kind === 'stakePool' && isOwner)) && (
+          {/* {(kind === 'mining' || (kind === 'stakePool' && isOwner)) && (
             <TableBuilderColumn
               overrides={{
                 TableBodyCell: {
@@ -288,7 +283,7 @@ const WorkerTableV2: FC<{
                 },
               }}
             >
-              {(miner: Miners) => {
+              {(miner: WorkerEdge) => {
                 const {state, estimatesReclaimableAt} = miner
                 const allItems: (false | MenuItem)[] = [
                   {
@@ -344,7 +339,7 @@ const WorkerTableV2: FC<{
                 )
               }}
             </TableBuilderColumn>
-          )}
+          )} */}
         </TableBuilder>
       </div>
 
@@ -355,18 +350,18 @@ const WorkerTableV2: FC<{
         pageSize={pageSize}
       />
 
-      {!isSSR && operatingMiner && (
+      {/* {!isSSR && operatingMiner && (
         <Modal
           isOpen={isModalOpen}
           onClose={closeModal}
           overrides={{Dialog: {style: {borderRadius: 0}}}}
         >
-          {/* TODO: add suspense wrapper here with loadable modal components */}
+          TODO: add suspense wrapper here with loadable modal components
           {ModalBody && (
             <ModalBody miner={operatingMiner} onClose={closeModal} />
           )}
         </Modal>
-      )}
+      )} */}
     </div>
   )
 }

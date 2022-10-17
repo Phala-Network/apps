@@ -18,17 +18,16 @@ import {Skeleton} from 'baseui/skeleton'
 import {ParagraphSmall} from 'baseui/typography'
 import Decimal from 'decimal.js'
 import {FC, useMemo, useState} from 'react'
-import {StakePool} from '.'
+import {StakePool} from '../../hooks/subsquid'
 import {useDelegableBalance} from '../../hooks/useDelegableBalance'
 import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
 
 const DelegateModalBody: FC<
   {
-    stakePool: Pick<StakePool, 'pid'> &
-      Partial<Pick<StakePool, 'availableStake'>>
+    stakePool: Pick<StakePool, 'pid'> & Partial<Pick<StakePool, 'delegable'>>
   } & Pick<ModalProps, 'onClose'>
 > = ({stakePool, onClose}) => {
-  const {pid, availableStake} = stakePool
+  const {pid, delegable} = stakePool
   const {api} = useApiPromise()
   const delegableBalance = useDelegableBalance()
   const [amount, setAmount] = useState('')
@@ -60,11 +59,9 @@ const DelegateModalBody: FC<
     }
   }, [api, pid, amount, decimals])
 
-  if (availableStake === undefined) return null
+  if (delegable === undefined) return null
 
-  const delegableStake = availableStake
-    ? `${formatCurrency(availableStake)} PHA`
-    : '∞'
+  const delegableStake = delegable ? `${formatCurrency(delegable)} PHA` : '∞'
 
   return (
     <>

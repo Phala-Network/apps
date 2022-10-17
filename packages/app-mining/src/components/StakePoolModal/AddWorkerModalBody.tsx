@@ -15,7 +15,7 @@ import {
 } from 'baseui/modal'
 import {ParagraphSmall} from 'baseui/typography'
 import {FC, useMemo, useState} from 'react'
-import {StakePool} from '.'
+import {StakePool} from '../../hooks/subsquid'
 import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
 
 const AddWorkerModalBody: FC<

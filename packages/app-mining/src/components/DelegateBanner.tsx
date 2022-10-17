@@ -1,17 +1,21 @@
-import {HeadingMedium, LabelMedium} from 'baseui/typography'
-import {Link} from 'gatsby'
+import {formatCurrency} from '@phala/utils'
+import {Block} from 'baseui/block'
 import {Button} from 'baseui/button'
 import {Skeleton} from 'baseui/skeleton'
-import {useTotalStakeQuery} from '../hooks/graphql'
-import {client} from '../utils/GraphQLClient'
-import {formatCurrency} from '@phala/utils'
+import {HeadingMedium, LabelMedium} from 'baseui/typography'
+import {Link} from 'gatsby'
 import {ChevronRight} from 'react-feather'
-import {Block} from 'baseui/block'
+import {useGlobalStateQuery} from '../hooks/subsquid'
+import {subsquidClient} from '../utils/GraphQLClient'
 
 const DelegateBanner = (): JSX.Element => {
-  const {data} = useTotalStakeQuery(client)
+  const {data} = useGlobalStateQuery(
+    subsquidClient,
+    {},
+    {refetchInterval: 12 * 1000}
+  )
 
-  const value = data?.aggregateStakePools._sum?.totalStake
+  const value = data?.globalStateById?.totalStake
 
   return (
     <Block

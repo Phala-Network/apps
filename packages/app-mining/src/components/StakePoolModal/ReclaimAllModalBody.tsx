@@ -17,7 +17,7 @@ import {StatefulTooltip} from 'baseui/tooltip'
 import {ParagraphSmall} from 'baseui/typography'
 import Decimal from 'decimal.js'
 import {FC, useMemo, useState} from 'react'
-import {StakePool} from '.'
+import {StakePool} from '../../hooks/subsquid'
 import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
 
 const ReclaimAllModalBody: FC<
@@ -51,7 +51,7 @@ const ReclaimAllModalBody: FC<
       miners
         ? `${formatCurrency(
             miners.reduce(
-              (acc, cur) => acc.add(new Decimal(cur.stakes)),
+              (acc, cur) => acc.add(new Decimal(cur.stake)),
               new Decimal(0)
             )
           )} PHA`
@@ -62,8 +62,8 @@ const ReclaimAllModalBody: FC<
   const extrinsic = useMemo(() => {
     if (api && decimals && miners) {
       return api.tx.utility.batch(
-        miners.map(({workerPublicKey}) =>
-          api.tx.phalaStakePool?.reclaimPoolWorker?.(pid, workerPublicKey)
+        miners.map(({worker}) =>
+          api.tx.phalaStakePool?.reclaimPoolWorker?.(pid, worker?.id)
         ) as any // FIXME: remove any when polkadot types is ready
       )
     }
@@ -87,10 +87,10 @@ const ReclaimAllModalBody: FC<
             {miners.map((miner, index) => (
               <>
                 <StatefulTooltip
-                  content={miner.workerPublicKey}
-                  key={miner.workerPublicKey}
+                  content={miner.worker?.id}
+                  key={miner.worker?.id}
                 >
-                  {trimAddress(miner.workerPublicKey)}
+                  {trimAddress(miner.worker?.id || '')}
                 </StatefulTooltip>
                 {index !== miners.length - 1 && ', '}
               </>

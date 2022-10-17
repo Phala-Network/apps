@@ -17,16 +17,16 @@ import {
 import {ParagraphSmall} from 'baseui/typography'
 import Decimal from 'decimal.js'
 import {FC, useMemo, useState} from 'react'
-import {StakePool} from '.'
+import {StakePool} from '../../hooks/subsquid'
 import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
 
 const SetCapModalBody: FC<
   {
     stakePool: Pick<StakePool, 'pid'> &
-      Partial<Pick<StakePool, 'cap' | 'totalStake'>>
+      Partial<Pick<StakePool, 'capacity' | 'totalStake'>>
   } & Pick<ModalProps, 'onClose'>
 > = ({stakePool, onClose}) => {
-  const {pid, cap: currentCap, totalStake} = stakePool
+  const {pid, capacity: currentCap, totalStake} = stakePool
   const {api} = useApiPromise()
   const [cap, setCap] = useState('')
   const waitSignAndSend = useWaitSignAndSend()

@@ -1,7 +1,7 @@
 import {useSSR} from '@phala/react-hooks'
 import {Modal, ModalProps} from 'baseui/modal'
 import {FC, useEffect, useState} from 'react'
-import {StakePoolsQuery} from '../../hooks/graphql'
+import {StakePool} from '../../hooks/subsquid'
 
 // FIXME: should be loadable, but meet some problems when configuring gatsby-plugin-loadable-components-ssr
 import AddWorkerModalBody from './AddWorkerModalBody'
@@ -34,8 +34,6 @@ const modalKeyMap = {
   setDescription: SetDescriptionModalBody,
 }
 
-export type StakePool = StakePoolsQuery['findManyStakePools'][number]
-
 const StakePoolModal: FC<
   {
     stakePool?:
@@ -43,13 +41,7 @@ const StakePoolModal: FC<
           Partial<
             Pick<
               StakePool,
-              | 'releasingStake'
-              | 'stakePoolStakers'
-              | 'stakePoolWithdrawals'
-              | 'cap'
-              | 'totalStake'
-              | 'commission'
-              | 'miners'
+              'releasingStake' | 'capacity' | 'totalStake' | 'commission'
             >
           >)
       | null

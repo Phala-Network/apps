@@ -1,11 +1,11 @@
 import {useCurrentAccount} from '@phala/store'
-import {formatCurrency, isTruthy, trimAddress} from '@phala/utils'
+import {formatCurrency, trimAddress} from '@phala/utils'
 import {useStyletron} from 'baseui'
 import {Block} from 'baseui/block'
-import {Checkbox} from 'baseui/checkbox'
-import {StatefulInput} from 'baseui/input'
-import {StatefulMenu} from 'baseui/menu'
-import {StatefulPopover} from 'baseui/popover'
+// import {Checkbox} from 'baseui/checkbox'
+// import {StatefulInput} from 'baseui/input'
+// import {StatefulMenu} from 'baseui/menu'
+// import {StatefulPopover} from 'baseui/popover'
 import {
   StyledTableBodyRow,
   TableBuilder,
@@ -13,52 +13,35 @@ import {
 } from 'baseui/table-semantic'
 import {StatefulTooltip} from 'baseui/tooltip'
 import Decimal from 'decimal.js'
-import {useAtom} from 'jotai'
-import {atomWithStorage} from 'jotai/utils'
-import {debounce} from 'lodash-es'
-import {FC, ReactNode, useCallback, useEffect, useState} from 'react'
-import {AlertTriangle, Search} from 'react-feather'
-import styled from 'styled-components'
+// import {useAtom} from 'jotai'
+// import {atomWithStorage} from 'jotai/utils'
+// import {debounce} from 'lodash-es'
+import {FC, ReactNode, useEffect, useState} from 'react'
+import {AlertTriangle} from 'react-feather'
 import {StyletronProps} from 'styletron-react'
 
 import {
-  StakePool,
-  StakePoolEdge,
-  StakePoolOrderByInput,
-  useStakePoolsConnectionQuery,
+  StakePoolStakeEdge,
+  StakePoolStakeOrderByInput,
+  useStakePoolStakesConnectionQuery,
 } from '../../hooks/subsquid'
 import {subsquidClient} from '../../utils/GraphQLClient'
 // import Owner from '../Owner'
 import Pagination from '../Pagination'
-import PopoverButton from '../PopoverButton'
-import StakePoolModal, {StakePoolModalKey} from '../StakePoolModal'
+// import PopoverButton from '../PopoverButton'
+// import StakePoolModal, {StakePoolModalKey} from '../StakePoolModal'
 import TableSkeleton from '../TableSkeleton'
 import TooltipHeader from '../TooltipHeader'
 import {tooltipContent} from './tooltipContent'
 
-const TableHeader = styled.div`
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  margin: -20px 0 0 -20px;
+// type MenuItem = {label: string; key: StakePoolModalKey; disabled?: boolean}
 
-  /* gap polyfill */
-  & > * {
-    margin: 20px 0 0 20px;
-    flex: none;
-  }
-`
+// const delegableValueAtom = atomWithStorage<string>(
+//   'jotai:delegate_delegable_filter_value',
+//   '100'
+// )
 
-type MenuItem = {label: string; key: StakePoolModalKey; disabled?: boolean}
-
-const delegableValueAtom = atomWithStorage<string>(
-  'jotai:delegate_delegable_filter_value',
-  '100'
-)
-
-const StakePoolTableV2: FC<{
-  kind: 'delegate' | 'mining'
-}> = ({kind}) => {
+const MyDelegateTableV2: FC = () => {
   // const [currentTime] = useState(() => {
   //   const now = new Date()
   //   now.setSeconds(0)
@@ -66,24 +49,24 @@ const StakePoolTableV2: FC<{
   //   return now
   // })
   const [css] = useStyletron()
-  const pageSize = kind === 'mining' ? 10 : 20
+  const pageSize = 20
   const [polkadotAccount] = useCurrentAccount()
   const address = polkadotAccount?.address
-  const [searchString, setSearchString] = useState('')
-  const [sortColumn, setSortColumn] = useState<string>('Pid')
-  const [sortAsc, setSortAsc] = useState(true)
+  // const [searchString, setSearchString] = useState('')
+  const [sortColumn, setSortColumn] = useState<string>('Amount')
+  const [sortAsc, setSortAsc] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
 
   // const [verifiedFilter, setVerifiedFilter] = useState(false)
-  const [delegableFilter, setDelegableFilter] = useState(kind === 'delegate')
+  // const [delegableFilter, setDelegableFilter] = useState(kind === 'delegate')
   // const [whitelistFilter, setWhitelistFilter] = useState(kind === 'delegate')
-  const [delegableValue, setDelegableValue] = useAtom(delegableValueAtom)
+  // const [delegableValue, setDelegableValue] = useAtom(delegableValueAtom)
 
-  const [stakePoolModalKey, setStakePoolModalKey] =
-    useState<StakePoolModalKey | null>(null)
-  const [operatingPool, setOperatingPool] = useState<StakePool | null>(null)
+  // const [stakePoolModalKey, setStakePoolModalKey] =
+  //   useState<StakePoolModalKey | null>(null)
+  // const [operatingPool, setOperatingPool] = useState<StakePool | null>(null)
 
-  const {data, isLoading} = useStakePoolsConnectionQuery(
+  const {data, isLoading} = useStakePoolStakesConnectionQuery(
     subsquidClient,
     {
       first: pageSize,
@@ -91,36 +74,33 @@ const StakePoolTableV2: FC<{
         after: String(pageSize * (currentPage - 1)),
       }),
       orderBy:
-        StakePoolOrderByInput[
+        StakePoolStakeOrderByInput[
           `${sortColumn}${
             sortAsc ? 'Asc' : 'Desc'
-          }` as keyof typeof StakePoolOrderByInput
+          }` as keyof typeof StakePoolStakeOrderByInput
         ],
       where: {
-        ...(kind === 'mining' && {owner: {id_eq: address}}),
-        ...(kind === 'delegate' && {
-          AND: [
-            searchString && {
-              OR: [
-                {owner: {id_contains: searchString}},
-                {id_contains: searchString},
-              ],
+        AND: [
+          {
+            account: {
+              id_eq: address,
             },
-            delegableFilter && {
-              OR: [{delegable_gt: delegableValue}, {delegable_isNull: true}],
-            },
-          ].filter(isTruthy),
-        }),
+          },
+
+          {
+            OR: [{availableReward_gt: '0'}, {amount_gt: '0'}],
+          },
+        ],
       },
     },
     {
       refetchInterval: 12 * 1000,
       keepPreviousData: true,
-      enabled: kind === 'delegate' || Boolean(kind === 'mining' && address),
+      enabled: Boolean(address),
     }
   )
 
-  const totalCount = data?.stakePoolsConnection.totalCount || 0
+  const totalCount = data?.stakePoolStakesConnection.totalCount || 0
 
   const onSort = (columnId: string): void => {
     if (sortColumn === columnId) {
@@ -132,93 +112,32 @@ const StakePoolTableV2: FC<{
     setCurrentPage(1)
   }
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const debouncedSetSearchString = useCallback(
-    debounce(setSearchString, 500),
-    []
-  )
+  // // eslint-disable-next-line react-hooks/exhaustive-deps
+  // const debouncedSetSearchString = useCallback(
+  //   debounce(setSearchString, 500),
+  //   []
+  // )
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const debouncedSetDelegableValue = useCallback(
-    debounce(setDelegableValue, 500),
-    []
-  )
+  // // eslint-disable-next-line react-hooks/exhaustive-deps
+  // const debouncedSetDelegableValue = useCallback(
+  //   debounce(setDelegableValue, 500),
+  //   []
+  // )
 
-  const closeModal = useCallback(() => {
-    setStakePoolModalKey(null)
-  }, [])
+  // const closeModal = useCallback(() => {
+  //   setStakePoolModalKey(null)
+  // }, [])
 
   useEffect(() => {
-    if (kind === 'mining') {
-      setCurrentPage(1)
-    }
-  }, [polkadotAccount?.address, kind])
+    setCurrentPage(1)
+  }, [polkadotAccount?.address])
 
   return (
     <div>
-      {kind === 'delegate' && (
-        <TableHeader>
-          <StatefulInput
-            size="compact"
-            clearable
-            placeholder="Search Pid or Owner Address"
-            onChange={(e) => debouncedSetSearchString(e.target.value)}
-            endEnhancer={<Search size={18} />}
-            overrides={{
-              Root: {
-                style: {
-                  width: '420px',
-                  maxWidth: 'calc(100% - 20px)',
-                },
-              },
-            }}
-          />
-          {/* <Checkbox
-            checked={verifiedFilter}
-            onChange={(e) => setVerifiedFilter(e.target.checked)}
-          >
-            {'Verified'}
-          </Checkbox> */}
-          {/* <Checkbox
-            checked={whitelistFilter}
-            onChange={(e) => setWhitelistFilter(e.target.checked)}
-          >
-            <TooltipHeader content={tooltipContent.hideClosed}>
-              Hide Closed
-            </TooltipHeader>
-          </Checkbox> */}
-          <Block display="flex" alignItems="center">
-            <Checkbox
-              checked={delegableFilter}
-              onChange={(e) => setDelegableFilter(e.target.checked)}
-            >
-              {'Delegable > '}
-            </Checkbox>
-
-            <StatefulInput
-              overrides={{
-                Root: {
-                  style: {width: '128px', marginLeft: '8px'},
-                },
-              }}
-              initialState={{value: delegableValue}}
-              type="number"
-              size="compact"
-              onChange={(e) => {
-                const value = e.target.value
-                if (value) {
-                  debouncedSetDelegableValue(value)
-                }
-              }}
-            />
-          </Block>
-        </TableHeader>
-      )}
-
       <TableBuilder
         isLoading={isLoading}
         loadingMessage={<TableSkeleton />}
-        data={data?.stakePoolsConnection.edges || []}
+        data={data?.stakePoolStakesConnection.edges || []}
         sortColumn={sortColumn}
         sortOrder={sortAsc ? 'ASC' : 'DESC'}
         onSort={onSort}
@@ -246,7 +165,7 @@ const StakePoolTableV2: FC<{
             component: (
               props: {
                 children: ReactNode
-                $row: StakePoolEdge
+                $row: StakePoolStakeEdge
               } & StyletronProps
             ) => {
               return (
@@ -259,7 +178,7 @@ const StakePoolTableV2: FC<{
                     // Prevent navigating when selecting text
                     const selection = window.getSelection()
                     if (selection && selection.toString().length) return
-                    window.open(`/stake-pool/${props.$row.node.pid}`)
+                    window.open(`/stake-pool/${props.$row.node.stakePool.pid}`)
                   }}
                 >
                   {props.children}
@@ -270,31 +189,25 @@ const StakePoolTableV2: FC<{
         }}
       >
         <TableBuilderColumn
-          id="Pid"
+          id="StakePoolPid"
           header={
             <TooltipHeader content={tooltipContent.pid}>Pid</TooltipHeader>
           }
           sortable
         >
-          {({node: {pid}}: StakePoolEdge) => pid}
+          {({node: {stakePool}}: StakePoolStakeEdge) => stakePool.pid}
         </TableBuilderColumn>
-        {kind === 'mining' && (
-          <TableBuilderColumn id="WorkerCount" header="Worker" sortable>
-            {({node: {workerCount}}: StakePoolEdge) => workerCount}
-          </TableBuilderColumn>
-        )}
-        {kind !== 'mining' && (
-          <TableBuilderColumn
-            id="owner"
-            header={
-              <TooltipHeader content={tooltipContent.owner}>
-                Owner
-              </TooltipHeader>
-            }
-          >
-            {({node}: StakePoolEdge) => trimAddress(node.owner.id)}
-          </TableBuilderColumn>
-        )}
+        {/* <TableBuilderColumn id="StakePoolWorkerCount" header="Worker" sortable>
+          {({node: {stakePool}}: StakePoolStakeEdge) => stakePool.workerCount}
+        </TableBuilderColumn> */}
+        <TableBuilderColumn
+          id="owner"
+          header={
+            <TooltipHeader content={tooltipContent.owner}>Owner</TooltipHeader>
+          }
+        >
+          {({node}: StakePoolStakeEdge) => trimAddress(node.stakePool.owner.id)}
+        </TableBuilderColumn>
         {/* {kind !== 'mining' && (
           <TableBuilderColumn
             id="theoreticalApr"
@@ -309,7 +222,7 @@ const StakePoolTableV2: FC<{
           </TableBuilderColumn>
         )} */}
         <TableBuilderColumn
-          id="Delegable"
+          id="StakePoolDelegable"
           header={
             <TooltipHeader content={tooltipContent.delegable}>
               Delegable
@@ -317,12 +230,14 @@ const StakePoolTableV2: FC<{
           }
           sortable
         >
-          {({node}: StakePoolEdge) =>
-            node.delegable ? `${formatCurrency(node.delegable)} PHA` : '∞'
+          {({node}: StakePoolStakeEdge) =>
+            node.stakePool.delegable
+              ? `${formatCurrency(node.stakePool.delegable)} PHA`
+              : '∞'
           }
         </TableBuilderColumn>
         <TableBuilderColumn
-          id="Commission"
+          id="StakePoolCommission"
           header={
             <TooltipHeader content={tooltipContent.commission}>
               Commission
@@ -330,7 +245,11 @@ const StakePoolTableV2: FC<{
           }
           sortable
         >
-          {({node: {commission}}: StakePoolEdge) => {
+          {({
+            node: {
+              stakePool: {commission},
+            },
+          }: StakePoolStakeEdge) => {
             const showWarning = false
             // if (stakePoolStats[0]) {
             //   const {commission, previousCommission, commissionUpdatedAt} =
@@ -366,8 +285,8 @@ const StakePoolTableV2: FC<{
             )
           }}
         </TableBuilderColumn>
-        <TableBuilderColumn
-          id="TotalStake"
+        {/* <TableBuilderColumn
+          id="StakePoolTotalStake"
           header={
             <TooltipHeader content={tooltipContent.delegated}>
               Delegated
@@ -375,10 +294,12 @@ const StakePoolTableV2: FC<{
           }
           sortable
         >
-          {({node}: StakePoolEdge) => `${formatCurrency(node.totalStake)} PHA`}
-        </TableBuilderColumn>
+          {({node}: StakePoolStakeEdge) =>
+            `${formatCurrency(node.stakePool.totalStake)} PHA`
+          }
+        </TableBuilderColumn> */}
         <TableBuilderColumn
-          id="FreeStake"
+          id="StakePoolFreeStake"
           header={
             <TooltipHeader content={tooltipContent.freeDelegation}>
               Free Delegation
@@ -386,29 +307,64 @@ const StakePoolTableV2: FC<{
           }
           sortable
         >
-          {({node}: StakePoolEdge) => `${formatCurrency(node.freeStake)} PHA`}
+          {({node}: StakePoolStakeEdge) =>
+            `${formatCurrency(node.stakePool.freeStake)} PHA`
+          }
         </TableBuilderColumn>
-        {kind === 'mining' && (
+        <TableBuilderColumn
+          id="StakePoolReleasingStake"
+          header={
+            <TooltipHeader content={tooltipContent.releasingStake}>
+              Releasing Stake
+            </TooltipHeader>
+          }
+          sortable
+        >
+          {({node}: StakePoolStakeEdge) =>
+            `${formatCurrency(node.stakePool.releasingStake)} PHA`
+          }
+        </TableBuilderColumn>
+        <TableBuilderColumn
+          id="Amount"
+          header={
+            <TooltipHeader content={tooltipContent.yourDelegation}>
+              Your Delegation
+            </TooltipHeader>
+          }
+          sortable
+        >
+          {({node}: StakePoolStakeEdge) => `${formatCurrency(node.amount)} PHA`}
+        </TableBuilderColumn>
+        <TableBuilderColumn
+          id="WithdrawalAmount"
+          sortable
+          header={
+            <TooltipHeader content={tooltipContent.yourWithdrawing}>
+              Your Withdrawing
+            </TooltipHeader>
+          }
+        >
+          {({node}: StakePoolStakeEdge) => {
+            return `${formatCurrency(node.withdrawalAmount)} PHA`
+          }}
+        </TableBuilderColumn>
+        {/* {kind === 'myDelegate' && (
           <TableBuilderColumn
-            id="ReleasingStake"
+            id="claimableReward"
             header={
-              <TooltipHeader content={tooltipContent.releasingStake}>
-                Releasing Stake
+              <TooltipHeader content={tooltipContent.claimableReward}>
+                Claimable Rewards
               </TooltipHeader>
             }
-            sortable
           >
-            {({node}: StakePoolEdge) =>
-              `${formatCurrency(node.releasingStake)} PHA`
-            }
+            {(stakePool: StakePool) => {
+              const value = stakePool.stakePoolStakers?.[0]?.claimableReward
+              return value ? `${formatCurrency(value)} PHA` : '-'
+            }}
           </TableBuilderColumn>
-        )}
-
-        {kind === 'mining' && (
+        )} */}
+        {/* {kind === 'mining' && (
           <TableBuilderColumn
-            id="TotalWithdrawal"
-            header="Total Withdrawal"
-            sortable
             overrides={{
               TableBodyCell: {
                 style: {
@@ -419,22 +375,19 @@ const StakePoolTableV2: FC<{
               },
             }}
           >
-            {({node}: StakePoolEdge) =>
-              new Decimal(node.totalWithdrawal).gt(0) && (
-                <Block display="flex" flexWrap={false} alignItems="center">
-                  <Block marginRight="scale400" flex="none">{`${formatCurrency(
-                    node.totalWithdrawal
-                  )} PHA`}</Block>
-                  <AlertTriangle
-                    className={css({flex: 'none'})}
-                    color="#dea833"
-                  />
-                </Block>
+            {(stakePool: StakePool) =>
+              stakePool.withdrawalsCount > 0 && (
+                <StatefulTooltip
+                  overrides={{Body: {style: {maxWidth: '400px'}}}}
+                  content="There is a withdrawal application in the StakePool, please supplement the delegation or stop workers to release the stake."
+                >
+                  <AlertTriangle color="#dea833" />
+                </StatefulTooltip>
               )
             }
           </TableBuilderColumn>
-        )}
-        <TableBuilderColumn
+        )} */}
+        {/* <TableBuilderColumn
           overrides={{
             TableBodyCell: {
               style: {
@@ -445,10 +398,10 @@ const StakePoolTableV2: FC<{
             },
           }}
         >
-          {({node}: StakePoolEdge) => {
+          {(stakePool: StakePool) => {
             const isOwner =
               Boolean(polkadotAccount?.address) &&
-              polkadotAccount?.address === node.owner.id
+              polkadotAccount?.address === stakePool.ownerAddress
             const allItems: (false | MenuItem)[] = [
               kind === 'mining' && {label: 'Add Worker', key: 'addWorker'},
               kind === 'mining' && {label: 'Set Cap', key: 'setCap'},
@@ -456,30 +409,30 @@ const StakePoolTableV2: FC<{
                 label: 'Set Commission',
                 key: 'setCommission',
               },
-              kind === 'mining' && {
+              (kind === 'myDelegate' || kind === 'mining') && {
                 label: 'Claim',
                 key: 'claim',
               },
               {
                 label: 'Delegate',
                 key: 'delegate',
-                // disabled:
-                //   !polkadotAccount?.address ||
-                //   (!isOwner &&
-                //     Boolean(stakePool.stakePoolAllowedStakers.length) &&
-                //     !stakePool.stakePoolAllowedStakers.find(
-                //       ({userAddress}) => userAddress === polkadotAccount.address
-                //     )),
+                disabled:
+                  !polkadotAccount?.address ||
+                  (!isOwner &&
+                    Boolean(stakePool.stakePoolAllowedStakers.length) &&
+                    !stakePool.stakePoolAllowedStakers.find(
+                      ({userAddress}) => userAddress === polkadotAccount.address
+                    )),
               },
-              kind === 'mining' && {
+              (kind === 'myDelegate' || kind === 'mining') && {
                 label: 'Withdraw',
                 key: 'withdraw',
-                // disabled: !stakePool.stakePoolStakers?.length,
+                disabled: !stakePool.stakePoolStakers?.length,
               },
-              kind === 'mining' && {
+              (kind === 'myDelegate' || kind === 'mining') && {
                 label: 'Reclaim All',
                 key: 'reclaimAll',
-                // disabled: !stakePool.miners?.length,
+                disabled: !stakePool.miners?.length,
               },
               kind === 'mining' && {
                 label: 'Set Description',
@@ -497,7 +450,7 @@ const StakePoolTableV2: FC<{
                     items={allItems.filter(isTruthy)}
                     onItemSelect={({item}: {item: MenuItem}) => {
                       setStakePoolModalKey(item.key)
-                      setOperatingPool(node) // Pass object directly is Bad design
+                      setOperatingPool(stakePool) // Pass object directly is Bad design
                       close()
                     }}
                   />
@@ -507,7 +460,7 @@ const StakePoolTableV2: FC<{
               </StatefulPopover>
             )
           }}
-        </TableBuilderColumn>
+        </TableBuilderColumn> */}
       </TableBuilder>
 
       <Pagination
@@ -517,13 +470,13 @@ const StakePoolTableV2: FC<{
         pageSize={pageSize}
       />
 
-      <StakePoolModal
+      {/* <StakePoolModal
         modalKey={stakePoolModalKey}
         stakePool={operatingPool}
         onClose={closeModal}
-      />
+      /> */}
     </div>
   )
 }
 
-export default StakePoolTableV2
+export default MyDelegateTableV2

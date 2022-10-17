@@ -6,8 +6,7 @@ import {Link} from 'gatsby'
 import {ChevronLeft} from 'react-feather'
 import {Helmet} from 'react-helmet'
 import ClaimAll from '../components/ClaimAll'
-import MyDelegateNotification from '../components/MyDelegateNotification'
-import StakePoolTableV2 from '../components/StakePoolTableV2'
+import MyDelegateTableV2 from '../components/MyDelegateTableV2'
 import StatusBar from '../components/StatusBarV2'
 
 export const MyDelegateV2 = () => {
@@ -23,8 +22,6 @@ export const MyDelegateV2 = () => {
         <title>My Delegate</title>
       </Helmet>
       <StatusBar />
-
-      <MyDelegateNotification />
 
       <Card
         overrides={{
@@ -54,7 +51,7 @@ export const MyDelegateV2 = () => {
           <ClaimAll kind="delegate" />
         </Block>
 
-        <StakePoolTableV2 kind="myDelegate" />
+        <MyDelegateTableV2 />
       </Card>
     </Block>
   )

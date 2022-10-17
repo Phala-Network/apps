@@ -20,16 +20,15 @@ import {Notification} from 'baseui/notification'
 import {ParagraphSmall} from 'baseui/typography'
 import Decimal from 'decimal.js'
 import {FC, useMemo, useState} from 'react'
-import {StakePool} from '.'
+import {StakePool} from '../../hooks/subsquid'
 import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
 
 const WithdrawModalBody: FC<
   {
-    stakePool: Pick<StakePool, 'pid'> &
-      Partial<Pick<StakePool, 'stakePoolStakers' | 'stakePoolWithdrawals'>>
+    stakePool: Pick<StakePool, 'pid'> & Partial<Pick<StakePool, 'stakes'>>
   } & Pick<ModalProps, 'onClose'>
 > = ({stakePool, onClose}) => {
-  const {pid, stakePoolStakers, stakePoolWithdrawals} = stakePool
+  const {pid, stakes} = stakePool
   const {api} = useApiPromise()
   const [amount, setAmount] = useState('')
   const [polkadotAccount] = useCurrentAccount()
@@ -55,29 +54,30 @@ const WithdrawModalBody: FC<
   const hasWithdrawing = useMemo<boolean>(
     () =>
       Boolean(
-        stakePoolWithdrawals?.find(
-          (withdrawal) => withdrawal.userAddress === polkadotAccount?.address
+        stakes?.find(
+          (stakes) =>
+            stakes.account.id === polkadotAccount?.address &&
+            stakes.withdrawalAmount !== '0'
         )
       ),
-    [stakePoolWithdrawals, polkadotAccount]
+    [stakes, polkadotAccount]
   )
 
   const extrinsic = useMemo(() => {
-    if (api && amount && decimals && stakePoolStakers?.[0]) {
+    if (api && amount && decimals && stakes?.[0]) {
       return api.tx.phalaStakePool?.withdraw?.(
         pid,
         new Decimal(amount)
-          .div(new Decimal(stakePoolStakers[0].stake))
-          .times(new Decimal(stakePoolStakers[0].shares))
+          .div(new Decimal(stakes[0].amount))
+          .times(new Decimal(stakes[0].shares))
           .times(decimals)
           .floor()
           .toString()
       )
     }
-  }, [api, stakePoolStakers, decimals, amount, pid])
+  }, [api, stakes, decimals, amount, pid])
 
-  if (stakePoolStakers === undefined || stakePoolWithdrawals === undefined)
-    return null
+  if (stakes === undefined) return null
 
   return (
     <>
@@ -89,7 +89,7 @@ const WithdrawModalBody: FC<
         <FormControl
           label="Amount"
           caption={`Your Delegation: ${formatCurrency(
-            stakePoolStakers[0]?.stake as string
+            stakes[0]?.amount as string
           )} PHA`}
         >
           {/* FIXME: add amount validation */}
@@ -104,8 +104,8 @@ const WithdrawModalBody: FC<
                 size="mini"
                 kind="tertiary"
                 onClick={() => {
-                  if (stakePoolStakers[0]?.stake) {
-                    setAmount(stakePoolStakers[0].stake)
+                  if (stakes[0]?.amount) {
+                    setAmount(stakes[0].amount)
                   }
                 }}
               >

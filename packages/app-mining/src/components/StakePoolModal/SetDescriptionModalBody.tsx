@@ -15,7 +15,7 @@ import {
 import {Textarea} from 'baseui/textarea'
 import {ParagraphSmall} from 'baseui/typography'
 import {FC, useEffect, useMemo, useState} from 'react'
-import {StakePool} from '.'
+import {StakePool} from '../../hooks/subsquid'
 import useStakePoolDescription, {
   StakePoolDescription,
 } from '../../hooks/useStakePoolDescription'
