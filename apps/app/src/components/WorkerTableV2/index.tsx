@@ -8,6 +8,7 @@ import {
 } from '@phala/utils'
 import {useStyletron} from 'baseui'
 import {Block} from 'baseui/block'
+import {StatefulInput} from 'baseui/input'
 import {StatefulMenu} from 'baseui/menu'
 import {Modal, ModalProps} from 'baseui/modal'
 import {StatefulPopover} from 'baseui/popover'
@@ -23,7 +24,9 @@ import {
   isFuture,
 } from 'date-fns'
 import Decimal from 'decimal.js'
+import {debounce} from 'lodash-es'
 import {FC, useCallback, useEffect, useState} from 'react'
+import {Search} from 'react-feather'
 import {
   useWorkersConnectionQuery,
   Worker,
@@ -71,7 +74,7 @@ const WorkerTableV2: FC<{
   )
   const [sortAsc, setSortAsc] = useState(kind === 'mining')
   const [currentPage, setCurrentPage] = useState(1)
-
+  const [searchString, setSearchString] = useState('')
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   const [openModalKey, setOpenModalKey] = useState<ModalKey | null>(null)
   const [operatingWorker, setOperatingWorker] = useState<Worker | null>(null)
@@ -93,6 +96,7 @@ const WorkerTableV2: FC<{
           }` as keyof typeof WorkerOrderByInput
         ],
       where: {
+        ...(searchString && {id_contains: searchString}),
         ...(kind === 'mining' && {stakePool: {owner: {id_eq: address}}}),
         ...(kind === 'stakePool' && {stakePool: {id_eq: String(pid)}}),
       },
@@ -133,9 +137,30 @@ const WorkerTableV2: FC<{
     }
   }, [polkadotAccount?.address, kind])
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const debouncedSetSearchString = useCallback(
+    debounce(setSearchString, 500),
+    []
+  )
+
   return (
     <div>
       <div>
+        <StatefulInput
+          size="compact"
+          clearable
+          placeholder="Search Public Key"
+          onChange={(e) => debouncedSetSearchString(e.target.value)}
+          endEnhancer={<Search size={18} />}
+          overrides={{
+            Root: {
+              style: {
+                width: '480px',
+                maxWidth: '100%',
+              },
+            },
+          }}
+        />
         <TableBuilder
           isLoading={isInitialLoading}
           loadingMessage={<TableSkeleton />}
