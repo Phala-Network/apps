@@ -1,13 +1,12 @@
+import {useAtomsDevtools} from 'jotai/devtools'
+import {ReactNode, StrictMode} from 'react'
 import {Helmet} from 'react-helmet'
-import {ComponentsGlobalStyle} from '@phala/react-components'
 import BaseLayout from './components/BaseLayout'
 import GlobalStyle from './GlobalStyle'
-import {ReactNode, StrictMode} from 'react'
-import {useTestnetGuard} from './hooks/useTestnetGuard'
-import useZendesk from './hooks/useZendesk'
 import {useAutoConnectWallet} from './hooks/useAutoConnectWallet'
 import {useSubscribeWalletAccounts} from './hooks/useSubscribeWalletAccounts'
-import {useAtomsDevtools} from 'jotai/devtools'
+import {useTestnetGuard} from './hooks/useTestnetGuard'
+import useZendesk from './hooks/useZendesk'
 
 const WrapPage: React.FC<{children: ReactNode}> = ({children}) => {
   useTestnetGuard()
@@ -25,7 +24,6 @@ const WrapPage: React.FC<{children: ReactNode}> = ({children}) => {
         />
       </Helmet>
       <GlobalStyle />
-      <ComponentsGlobalStyle />
       <BaseLayout>{children}</BaseLayout>
     </StrictMode>
   )

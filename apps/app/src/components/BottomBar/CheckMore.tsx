@@ -1,9 +1,9 @@
 import {ANCHOR, Drawer, SIZE} from 'baseui/drawer'
 import {Link} from 'gatsby'
 import React, {useState} from 'react'
+import {MoreHorizontal} from 'react-feather'
 import styled from 'styled-components'
 import ExternalLink from '../../icons/external_link.svg'
-import MoreIcon from '../../icons/more.svg'
 import {LineWrap} from '../Navbar/styledComponent'
 
 const StyledGatsbyLink = styled(Link)`
@@ -85,7 +85,7 @@ const CheckMore: React.FC = () => {
   return (
     <div>
       <MoreButton onClick={() => setIsOpen(true)}>
-        <MoreIcon width="43" height="43" />
+        <MoreHorizontal width="24" height="24" />
       </MoreButton>
       <Drawer
         isOpen={isOpen}

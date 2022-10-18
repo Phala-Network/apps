@@ -146,7 +146,7 @@ const ButtonCell: React.FC<Pick<DataType, 'name'>> = ({name}) => {
         overrides={{
           Dialog: {
             style: ({$theme}) => ({
-              borderRadius: 0,
+              borderRadius: '4px',
               borderWidth: '2px',
               borderColor: $theme.colors.accent,
               borderStyle: 'solid',
