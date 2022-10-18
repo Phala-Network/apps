@@ -8,21 +8,19 @@ import {StatefulTooltip} from 'baseui/tooltip'
 import {HeadingLarge, HeadingSmall, ParagraphXSmall} from 'baseui/typography'
 import Decimal from 'decimal.js'
 import {PageProps} from 'gatsby'
-import {FC, useCallback, useMemo, useState} from 'react'
+import {FC, useMemo, useState} from 'react'
 import {CheckCircle, Info, MinusCircle} from 'react-feather'
-import {Helmet} from 'react-helmet'
 import styled from 'styled-components'
+import Head from '../../components/Head'
 import Chart from '../../components/StakePool/Chart'
 import InfoCard from '../../components/StakePool/InfoCard'
 import SettingButton from '../../components/StakePool/SettingButton'
 import StakeInfo from '../../components/StakePool/StakeInfo'
 import WithdrawQueue from '../../components/StakePool/WithdrawQueue'
 import StakePoolDescription from '../../components/StakePoolDescription'
-import StakePoolModal, {
-  StakePoolModalKey,
-} from '../../components/StakePoolModal'
+import {StakePoolModalKey} from '../../components/StakePoolModal'
 import StakePoolWhitelist from '../../components/StakePoolWhitelist'
-import WorkerTableV2 from '../../components/WorkerTableV2'
+// import WorkerTableV2 from '../../components/WorkerTableV2'
 import {useStakePoolQuery} from '../../hooks/graphql'
 import {client} from '../../utils/GraphQLClient'
 
@@ -46,7 +44,7 @@ interface StakePoolProps extends PageProps {
 }
 
 const StakePool: FC<StakePoolProps> = ({pid}) => {
-  const [modalKey, setModalKey] = useState<StakePoolModalKey | null>(null)
+  const [, setModalKey] = useState<StakePoolModalKey | null>(null)
   const [polkadotAccount] = useCurrentAccount()
   const {data, isLoading} = useStakePoolQuery(
     client,
@@ -59,9 +57,9 @@ const StakePool: FC<StakePoolProps> = ({pid}) => {
       enabled: Boolean(pid),
     }
   )
-  const closeModal = useCallback(() => {
-    setModalKey(null)
-  }, [])
+  // const closeModal = useCallback(() => {
+  //   setModalKey(null)
+  // }, [])
 
   const stakePool = data?.findUniqueStakePools
 
@@ -96,9 +94,7 @@ const StakePool: FC<StakePoolProps> = ({pid}) => {
 
   return (
     <>
-      <Helmet>
-        <title>Stake Pool #{pid}</title>
-      </Helmet>
+      <Head title={`Stake Pool #${pid}`}></Head>
 
       <Block
         paddingLeft="scale400"
@@ -306,11 +302,11 @@ const StakePool: FC<StakePoolProps> = ({pid}) => {
               },
             }}
           >
-            <WorkerTableV2
+            {/* <WorkerTableV2
               kind="stakePool"
               pid={pid ? Number(pid) : undefined}
               isOwner={isOwner}
-            />
+            /> */}
           </Card>
 
           {isOwner && (
@@ -342,11 +338,11 @@ In any case, the pool owner is not subject to any restrictions on the whitelist.
         </Block>
       </Block>
 
-      <StakePoolModal
+      {/* <StakePoolModal
         stakePool={data?.findUniqueStakePools}
         onClose={closeModal}
         modalKey={modalKey}
-      />
+      /> */}
     </>
   )
 }

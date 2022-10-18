@@ -1,8 +1,8 @@
 import {Block} from 'baseui/block'
 import {Card} from 'baseui/card'
 // import {useState} from 'react'
-import {Helmet} from 'react-helmet'
 import DelegateBanner from '../../components/DelegateBanner'
+import Head from '../../components/Head'
 import StakePoolTableV2 from '../../components/StakePoolTableV2'
 import StatusBar from '../../components/StatusBarV2'
 
@@ -15,9 +15,7 @@ const Delegate = (): JSX.Element => {
       paddingRight={[0, 'scale650']}
       paddingBottom="scale2400"
     >
-      <Helmet>
-        <title>Delegate</title>
-      </Helmet>
+      <Head title="Delegate" />
 
       <StatusBar />
 

@@ -4,8 +4,8 @@ import {Card} from 'baseui/card'
 import {HeadingMedium} from 'baseui/typography'
 import {Link} from 'gatsby'
 import {ChevronLeft} from 'react-feather'
-import {Helmet} from 'react-helmet'
 import ClaimAll from '../../components/ClaimAll'
+import Head from '../../components/Head'
 import MyDelegateTableV2 from '../../components/MyDelegateTableV2'
 import StatusBar from '../../components/StatusBarV2'
 
@@ -18,9 +18,8 @@ const MyDelegate = () => {
       paddingRight={[0, 'scale650']}
       paddingBottom="scale2400"
     >
-      <Helmet>
-        <title>My Delegate</title>
-      </Helmet>
+      <Head title="My Delegate" />
+
       <StatusBar />
 
       <Card

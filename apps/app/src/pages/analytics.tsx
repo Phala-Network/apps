@@ -2,14 +2,14 @@ import {useStyletron} from 'baseui'
 import {Block} from 'baseui/block'
 import IframeResizer from 'iframe-resizer-react'
 import {FC} from 'react'
-import {Helmet} from 'react-helmet'
+import Head from '../components/Head'
 
 const Analytics: FC = () => {
   const [css] = useStyletron()
 
   return (
     <Block marginTop="scale600" marginBottom="scale600">
-      <Helmet title="Analytics"></Helmet>
+      <Head title="Analytics" />
       <IframeResizer
         className={css({
           width: 'calc(100% + 32px)',

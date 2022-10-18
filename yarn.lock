@@ -2073,46 +2073,46 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fortawesome/fontawesome-common-types@npm:6.1.2":
-  version: 6.1.2
-  resolution: "@fortawesome/fontawesome-common-types@npm:6.1.2"
-  checksum: 16ba97f73256adef5cd680a027e6dbd3e76f34ba9227f7bd9e8c372cb4f337c7ccbf41f35dcfbc22b11320bbb579d01daccf1aa7ae47df5d0b17260c0097bb30
+"@fortawesome/fontawesome-common-types@npm:6.2.0":
+  version: 6.2.0
+  resolution: "@fortawesome/fontawesome-common-types@npm:6.2.0"
+  checksum: 1d0a3340dc2d2798609195cf77f1b0db98f0d87144044eb7cd3d78745baac8509705c6ebc7cce3d9bb36c7d7358ca064f77f39d86478ab1e7aa7aadc344cfd91
   languageName: node
   linkType: hard
 
-"@fortawesome/fontawesome-svg-core@npm:^6.1.2":
-  version: 6.1.2
-  resolution: "@fortawesome/fontawesome-svg-core@npm:6.1.2"
+"@fortawesome/fontawesome-svg-core@npm:^6.2.0":
+  version: 6.2.0
+  resolution: "@fortawesome/fontawesome-svg-core@npm:6.2.0"
   dependencies:
-    "@fortawesome/fontawesome-common-types": 6.1.2
-  checksum: bb82ed1e79ade9977746b4bb28ac0d03de7557e7c923446adec78cb3447740aca0859e91d6310007d758055a1b8f3a6f740915f04cac738931135c9bdbfe5d32
+    "@fortawesome/fontawesome-common-types": 6.2.0
+  checksum: 3bae680cba4098bc3a6aee04e655e0c6b6bab2d78e6709dc0a44d106f57a09bc2fd979310108777a373df301273a2a276739056f8984cd8bc5a50d37338c5380
   languageName: node
   linkType: hard
 
-"@fortawesome/free-brands-svg-icons@npm:^6.1.2":
-  version: 6.1.2
-  resolution: "@fortawesome/free-brands-svg-icons@npm:6.1.2"
+"@fortawesome/free-brands-svg-icons@npm:^6.2.0":
+  version: 6.2.0
+  resolution: "@fortawesome/free-brands-svg-icons@npm:6.2.0"
   dependencies:
-    "@fortawesome/fontawesome-common-types": 6.1.2
-  checksum: 178b7f97bf64dcc1589bff74fc73cd0de32f002d585254e5dfb362d16c21011a77c61439dd507873d288f3c93de615cfc63235622968b037d8d8ded2d56f1d81
+    "@fortawesome/fontawesome-common-types": 6.2.0
+  checksum: 402b4e102bec60b234169c878b08ab1280feededf91d54c9c080bfcae2a2b0c52e05ab3fb9192293ed5d488501335e656c726e7ba3926876277bdf8e31d34026
   languageName: node
   linkType: hard
 
-"@fortawesome/free-regular-svg-icons@npm:^6.1.2":
-  version: 6.1.2
-  resolution: "@fortawesome/free-regular-svg-icons@npm:6.1.2"
+"@fortawesome/free-regular-svg-icons@npm:^6.2.0":
+  version: 6.2.0
+  resolution: "@fortawesome/free-regular-svg-icons@npm:6.2.0"
   dependencies:
-    "@fortawesome/fontawesome-common-types": 6.1.2
-  checksum: 1485773e16a019fd4af0053ab7e7f51558fe016dcfd8b975d5fc14069dd494d0c345477c1ceddc0356634a53add780761242aa4b20fc5ce616274aa7808bff39
+    "@fortawesome/fontawesome-common-types": 6.2.0
+  checksum: 1b68a25590b273653c7adfa18bd6ef0ee533710687a46ef21c7b5395deae280a2faaff0b024717d9e54fdaedb8165769f281342704821777f86316223d5264ba
   languageName: node
   linkType: hard
 
-"@fortawesome/free-solid-svg-icons@npm:^6.1.2":
-  version: 6.1.2
-  resolution: "@fortawesome/free-solid-svg-icons@npm:6.1.2"
+"@fortawesome/free-solid-svg-icons@npm:^6.2.0":
+  version: 6.2.0
+  resolution: "@fortawesome/free-solid-svg-icons@npm:6.2.0"
   dependencies:
-    "@fortawesome/fontawesome-common-types": 6.1.2
-  checksum: b7258cd092304f9bd1e557cd3a59e9ff560165631b04f16785da14ce3148873fa8e688d62f95d68f668be32e1207c47a1fe556978ae7e9573a5b0fec09fc0f0c
+    "@fortawesome/fontawesome-common-types": 6.2.0
+  checksum: b5edf24be491e8493028b7fd2158fb73f3a76491087970609c0ef6a4449fd4744312fe768bfcffc90a5ef86b9980f9ab8ebb36927ba8d9854c2fa638ceadb0ac
   languageName: node
   linkType: hard
 
@@ -3410,16 +3410,16 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@phala/app@workspace:apps/app"
   dependencies:
-    "@fortawesome/fontawesome-svg-core": ^6.1.2
-    "@fortawesome/free-brands-svg-icons": ^6.1.2
-    "@fortawesome/free-regular-svg-icons": ^6.1.2
-    "@fortawesome/free-solid-svg-icons": ^6.1.2
+    "@fortawesome/fontawesome-svg-core": ^6.2.0
+    "@fortawesome/free-brands-svg-icons": ^6.2.0
+    "@fortawesome/free-regular-svg-icons": ^6.2.0
+    "@fortawesome/free-solid-svg-icons": ^6.2.0
     "@fortawesome/react-fontawesome": ^0.2.0
     "@phala/react-components": "workspace:^"
     "@phala/react-hooks": "workspace:^"
     "@phala/react-libs": "workspace:^"
     "@phala/store": "workspace:^"
-    "@phala/typedefs": ^0.2.30
+    "@phala/typedefs": ^0.2.31
     "@phala/utils": "workspace:^"
     "@polkadot/api": ^8.8.1
     "@polkadot/types": ^8.8.1
@@ -3429,9 +3429,9 @@ __metadata:
     "@talismn/connect-wallets": ^1.2.1
     "@tanstack/react-query": ^4.12.0
     "@tanstack/react-query-devtools": ^4.12.0
+    "@types/lodash-es": ^4.17.6
     "@types/node": ^16.11.49
     "@types/react": ^18.0.17
-    "@types/react-helmet": ^6.1.5
     "@types/styled-components": ^5.1.26
     "@types/styletron-react": ^5.0.3
     "@types/styletron-standard": ^2.0.2
@@ -3447,24 +3447,21 @@ __metadata:
     gatsby-plugin-google-fonts: ^1.0.1
     gatsby-plugin-google-gtag: ^4.24.0
     gatsby-plugin-netlify: ^5.0.1
-    gatsby-plugin-react-helmet: ^5.24.0
     gatsby-plugin-react-svg: ^3.1.0
     gatsby-plugin-styled-components: ^5.24.0
     gatsby-plugin-typescript: ^4.24.0
     graphql-request: ^5.0.0
-    humps: ^2.0.1
     iframe-resizer-react: ^1.1.0
     jotai: ^1.7.8
     lodash-es: ^4.17.21
     react: ^18.2.0
     react-dom: ^18.2.0
     react-feather: ^2.0.10
-    react-helmet: ^6.1.0
-    react-simple-maps: ^2.3.0
     styled-breakpoints: ^11.1.1
     styled-components: ^5.3.5
     styletron-engine-monolithic: ^1.0.0
     styletron-react: ^6.1.0
+    typescript: ^4.8.4
   languageName: unknown
   linkType: soft
 
@@ -3588,10 +3585,10 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@phala/typedefs@npm:^0.2.30":
-  version: 0.2.30
-  resolution: "@phala/typedefs@npm:0.2.30"
-  checksum: c8999c1462ab0b642123c262a00d3d96851352778c64c23d8b5a35ed18d9bf2d425541140bab8d82de0c4f02db8b837b3b0d93824b845222fcdd6a565214f0c5
+"@phala/typedefs@npm:^0.2.31":
+  version: 0.2.31
+  resolution: "@phala/typedefs@npm:0.2.31"
+  checksum: 53aa61bc1c4397e26020ed100e3333fdc410af4cf11e7d848dc65b77dfa6064da5c8f93d6edb6dfc49d800a5c99f2f5fa5ed04e456973bf9c694d180f6ed71fd
   languageName: node
   linkType: hard
 
@@ -5071,10 +5068,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/lodash@npm:^4.14.92":
-  version: 4.14.181
-  resolution: "@types/lodash@npm:4.14.181"
-  checksum: 0d1863d8383fd2f8bb42e9e3fc1d6255bb88ff034d6df848941063698944313dae944fc1270315613e3d303fae7c7a9a86085ad3235ed6204c56c4b0b3699aa9
+"@types/lodash-es@npm:^4.17.6":
+  version: 4.17.6
+  resolution: "@types/lodash-es@npm:4.17.6"
+  dependencies:
+    "@types/lodash": "*"
+  checksum: 9bd239dd525086e278821949ce12fbdd4f100a060fed9323fc7ad5661113e1641f28a7ebab617230ed3474680d8f4de705c1928b48252bb684be6ec9eed715db
+  languageName: node
+  linkType: hard
+
+"@types/lodash@npm:*, @types/lodash@npm:^4.14.92":
+  version: 4.14.186
+  resolution: "@types/lodash@npm:4.14.186"
+  checksum: ee0c1368a8100bb6efb88335107473a41928fc307ff1ef4ff1278868ccddba9c04c68c36d1ffe3a0392ef4a956e1955f7de3203ec09df4f1655dd1b88485c549
   languageName: node
   linkType: hard
 
@@ -5161,15 +5167,6 @@ __metadata:
   dependencies:
     "@types/react": "*"
   checksum: db571047af1a567631758700b9f7d143e566df939cfe5fbf7535347cc0c726a1cdbb5e3f8566d076e54cf708b6c1166689de194a9ba09ee35efc9e1d45911685
-  languageName: node
-  linkType: hard
-
-"@types/react-helmet@npm:^6.1.5":
-  version: 6.1.5
-  resolution: "@types/react-helmet@npm:6.1.5"
-  dependencies:
-    "@types/react": "*"
-  checksum: d059cc084d3b3071cce3421bb1170dd42819cf39b81afe60d4fbd66c5ef9ffeaadf1802df80efd9553258f621678f69ceb5a21d73df0d8539d40ae9a0f995485
   languageName: node
   linkType: hard
 
@@ -8255,7 +8252,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"d3-geo@npm:2, d3-geo@npm:^2.0.1":
+"d3-geo@npm:2":
   version: 2.0.2
   resolution: "d3-geo@npm:2.0.2"
   dependencies:
@@ -8331,7 +8328,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"d3-selection@npm:2, d3-selection@npm:^2.0.0":
+"d3-selection@npm:2":
   version: 2.0.0
   resolution: "d3-selection@npm:2.0.0"
   checksum: c00143f55d510e405fc51e5ef626cb6b3705181ec3d595e84e5cb977508e30228d95d7e209aff6e686ff758c562c5dd17e974325ee8c8555bb6f4f382331ec7d
@@ -8387,7 +8384,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"d3-zoom@npm:2, d3-zoom@npm:^2.0.0":
+"d3-zoom@npm:2":
   version: 2.0.0
   resolution: "d3-zoom@npm:2.0.0"
   dependencies:
@@ -10684,18 +10681,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"gatsby-plugin-react-helmet@npm:^5.24.0":
-  version: 5.24.0
-  resolution: "gatsby-plugin-react-helmet@npm:5.24.0"
-  dependencies:
-    "@babel/runtime": ^7.15.4
-  peerDependencies:
-    gatsby: ^4.0.0-next
-    react-helmet: ^5.1.3 || ^6.0.0
-  checksum: 9f9c44b3bc664edecb05e975506de61c5b60cf621a34c9c5c14a8fcc1e7bd7f5ed34e51ce05085fcb1025cc3c95ce9ba6436a9c2125a22bbf357bee7cb2ae22f
-  languageName: node
-  linkType: hard
-
 "gatsby-plugin-react-svg@npm:^3.1.0":
   version: 3.1.0
   resolution: "gatsby-plugin-react-svg@npm:3.1.0"
@@ -11690,13 +11675,6 @@ __metadata:
   dependencies:
     ms: ^2.0.0
   checksum: 9c7a74a2827f9294c009266c82031030eae811ca87b0da3dceb8d6071b9bde22c9f3daef0469c3c533cc67a97d8a167cd9fc0389350e5f415f61a79b171ded16
-  languageName: node
-  linkType: hard
-
-"humps@npm:^2.0.1":
-  version: 2.0.1
-  resolution: "humps@npm:2.0.1"
-  checksum: 7d5a674cfca2f34c04562f6fd0d129b4c43a5caf85fcc1c9eacf5d0729554c9375db362c4232519b37369c94dd2560d85f96ad4091a8fbf4af4e625ab5214a30
   languageName: node
   linkType: hard
 
@@ -16380,13 +16358,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-fast-compare@npm:^3.1.1":
-  version: 3.2.0
-  resolution: "react-fast-compare@npm:3.2.0"
-  checksum: 8ef272c825ae329f61633ce4ce7f15aa5b84e5214d88bc0823880236e03e985a13195befa2c7a4eda7db3b017dc7985729152d88445823f652403cf36c2b86aa
-  languageName: node
-  linkType: hard
-
 "react-feather@npm:^2.0.10":
   version: 2.0.10
   resolution: "react-feather@npm:2.0.10"
@@ -16411,20 +16382,6 @@ __metadata:
   peerDependencies:
     react: ^16.8.0 || ^17.0.0 || ^18.0.0
   checksum: 501c757b5dc742778389206c224d4f3a342008f3e4e2c346da40c0d2432642ccf555bdb2afc4ff6c0ac9f01b792ce9d1d3150fa43eceae4289174547b2412f51
-  languageName: node
-  linkType: hard
-
-"react-helmet@npm:^6.1.0":
-  version: 6.1.0
-  resolution: "react-helmet@npm:6.1.0"
-  dependencies:
-    object-assign: ^4.1.1
-    prop-types: ^15.7.2
-    react-fast-compare: ^3.1.1
-    react-side-effect: ^2.1.0
-  peerDependencies:
-    react: ">=16.3.0"
-  checksum: a4998479dab7fc1c2799eddefb1870a9d881b5f71cfdf97979a9882e42f4bb50402d55335f308f461e735e01a06f46b16cc7b4e6bcb22c7a4a6f85a753c5c106
   languageName: node
   linkType: hard
 
@@ -16516,31 +16473,6 @@ __metadata:
     react: 0.0.0-experimental-c8b778b7f-20220825
     webpack: ^5.59.0
   checksum: 55fc67030b775ededaafc149aa17ebdac6cd4df7f9d61f194f3e3d98bb5cf83a67bd313ce25b9c597df55fa88162840690ba2b61e22d36532478a008c5209385
-  languageName: node
-  linkType: hard
-
-"react-side-effect@npm:^2.1.0":
-  version: 2.1.1
-  resolution: "react-side-effect@npm:2.1.1"
-  peerDependencies:
-    react: ^16.3.0 || ^17.0.0
-  checksum: 324511ea8f6669555e166b4af280cdf46034bf0e33c486711e3ce17f88f6f21fed17055098408be1347657d0cbcd614bca944cf9f8e4ecfa96a21d13893fe9fc
-  languageName: node
-  linkType: hard
-
-"react-simple-maps@npm:^2.3.0":
-  version: 2.3.0
-  resolution: "react-simple-maps@npm:2.3.0"
-  dependencies:
-    d3-geo: ^2.0.1
-    d3-selection: ^2.0.0
-    d3-zoom: ^2.0.0
-    topojson-client: ^3.1.0
-  peerDependencies:
-    prop-types: ^15.7.2
-    react: ^16.8.0 || 17.x
-    react-dom: ^16.8.0 || 17.x
-  checksum: 4fa6286da01de55c74962cf27c7319833e9e0cf33f8365afcd66a3547060343265514657961e19aa8a292a84c8418c83321e3b307f9020546a07bd7616278799
   languageName: node
   linkType: hard
 
@@ -18606,19 +18538,6 @@ __metadata:
     "@tokenizer/token": ^0.3.0
     ieee754: ^1.2.1
   checksum: 7163e3bfaba79d251a47851881bf17db59ea59d8982c7fdbd48986bad2eda6e668aa838c25ae69750e17b8d6a20b85d51657eac8f130d7cb68d3e6c7a283fe9a
-  languageName: node
-  linkType: hard
-
-"topojson-client@npm:^3.1.0":
-  version: 3.1.0
-  resolution: "topojson-client@npm:3.1.0"
-  dependencies:
-    commander: 2
-  bin:
-    topo2geo: bin/topo2geo
-    topomerge: bin/topomerge
-    topoquantize: bin/topoquantize
-  checksum: 8c029a4f18324ace0b8b55dd90edbd40c9e3c6de18bafbb5da37ca20ebf20e26fbd4420891acb3c2c264e214185f7557871f5651a9eee517028663be98d836de
   languageName: node
   linkType: hard
 
