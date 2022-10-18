@@ -17,15 +17,11 @@ const Wrapper = styled.div`
   right: 0;
   height: 80px;
   background-color: #fff;
-  padding: 0 40px;
-
-  ${down('lg')} {
-    padding: 0 20px;
-  }
+  padding: 0 20px;
 
   ${down('md')} {
-    height: 72px;
-    padding: 0 10px;
+    height: 64px;
+    padding: 0 12px;
   }
 `
 

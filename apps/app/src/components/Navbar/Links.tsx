@@ -24,14 +24,10 @@ const Wrapper = styled.div`
       color: #aad829;
     }
 
-    ${down('xl')} {
+    ${down('lg')} {
       font-size: 14px;
       line-height: 14px;
       margin-left: 20px;
-    }
-
-    ${down('lg')} {
-      margin-left: 14px;
     }
   }
 `

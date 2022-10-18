@@ -7,19 +7,16 @@ import DropdownIcon from '../../icons/dropdown.svg'
 import {useCurrentNetworkNode} from '../../store/networkNode'
 import {LineWrap} from './styledComponent'
 
-const Button = styled.button`
+const Button = styled.div`
   cursor: pointer;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   height: 36px;
-  padding: 10px 10px 10px 16px;
+  padding: 0 10px 0 16px;
   background: #eeeeee;
-  border: none;
   font-family: Montserrat;
-  font-style: normal;
   font-size: 16px;
-  line-height: 16px;
-  transition: all 0.2s;
   margin-right: 20px;
 
   & > span {
@@ -32,9 +29,8 @@ const Button = styled.button`
   }
 
   ${down('xl')} {
-    padding: 10px 8px 10px 12px;
+    padding: 0 8px 0 12px;
     font-size: 14px;
-    line-height: 14px;
     margin-right: 10px;
   }
 `
@@ -70,13 +66,11 @@ const SelectNode: React.FC = () => {
         Arrow: {
           style: {
             outline: `1px #aad829 solid`,
-            backgroundColor: '#aad829',
           },
         },
         Body: {
           style: {
             outline: `1px #aad829 solid`,
-            backgroundColor: '#eeeeee',
             boxShadow: 'none',
           },
         },

@@ -11,27 +11,11 @@ import WorkerTableV2 from '../components/WorkerTableV2'
 
 const Mining: FC = () => {
   return (
-    <Block
-      maxWidth="1700px"
-      margin="0 auto"
-      paddingLeft={[0, 'scale650']}
-      paddingRight={[0, 'scale650']}
-      paddingBottom="scale2400"
-    >
+    <Block maxWidth="1700px" margin="0 auto" paddingBottom="scale2400">
       <Head title="Mining" />
 
       <StatusBarV2 />
-      <Card
-        overrides={{
-          Root: {
-            style: ({$theme}) => ({
-              borderRadius: '4px',
-              border: 'none',
-              boxShadow: $theme.lighting.shallowBelow,
-            }),
-          },
-        }}
-      >
+      <Card overrides={{Root: {style: {borderRadius: '4px', border: 'none'}}}}>
         <Block
           marginBottom="scale400"
           display="flex"
@@ -54,7 +38,6 @@ const Mining: FC = () => {
             style: ({$theme}) => ({
               borderRadius: '4px',
               border: 'none',
-              boxShadow: $theme.lighting.shallowBelow,
               marginTop: $theme.sizing.scale950,
             }),
           },

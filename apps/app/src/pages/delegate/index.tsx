@@ -8,27 +8,12 @@ import StatusBar from '../../components/StatusBarV2'
 
 const Delegate = (): JSX.Element => {
   return (
-    <Block
-      maxWidth="1700px"
-      margin="0 auto"
-      paddingLeft={[0, 'scale650']}
-      paddingRight={[0, 'scale650']}
-      paddingBottom="scale2400"
-    >
+    <Block maxWidth="1700px" margin="0 auto" paddingBottom="scale2400">
       <Head title="Delegate" />
 
       <StatusBar />
 
-      <Card
-        overrides={{
-          Root: {
-            style: ({$theme}) => ({
-              borderRadius: '4px',
-              ...$theme.borders.border200,
-            }),
-          },
-        }}
-      >
+      <Card overrides={{Root: {style: {borderRadius: '4px', border: 'none'}}}}>
         <Block marginBottom="scale600">
           <DelegateBanner />
         </Block>

@@ -11,27 +11,12 @@ import StatusBar from '../../components/StatusBarV2'
 
 const MyDelegate = () => {
   return (
-    <Block
-      maxWidth="1700px"
-      margin="0 auto"
-      paddingLeft={[0, 'scale650']}
-      paddingRight={[0, 'scale650']}
-      paddingBottom="scale2400"
-    >
+    <Block maxWidth="1700px" margin="0 auto" paddingBottom="scale2400">
       <Head title="My Delegate" />
 
       <StatusBar />
 
-      <Card
-        overrides={{
-          Root: {
-            style: ({$theme}) => ({
-              borderRadius: '4px',
-              ...$theme.borders.border200,
-            }),
-          },
-        }}
-      >
+      <Card overrides={{Root: {style: {borderRadius: '4px', border: 'none'}}}}>
         <Block
           display="flex"
           justifyContent="space-between"
