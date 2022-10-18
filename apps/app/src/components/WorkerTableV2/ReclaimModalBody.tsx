@@ -11,15 +11,16 @@ import {
   ModalProps,
 } from 'baseui/modal'
 import {ParagraphSmall} from 'baseui/typography'
-import {useMemo, useState} from 'react'
-import type {Miners} from '../../hooks/graphql'
+import {FC, useMemo, useState} from 'react'
+import {Worker} from '../../hooks/subsquid'
 import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
 
-const ReclaimModalBody = ({
-  miner,
+const ReclaimModalBody: FC<{worker: Worker} & Pick<ModalProps, 'onClose'>> = ({
+  worker,
   onClose,
-}: {miner: Miners} & Pick<ModalProps, 'onClose'>): JSX.Element => {
-  const {pid, workerPublicKey, stakes} = miner
+}) => {
+  const {stakePool, id: workerPublicKey, miner} = worker
+  const pid = stakePool?.id
   const {api} = useApiPromise()
   const waitSignAndSend = useWaitSignAndSend()
   const [confirmLock, setConfirmLock] = useState(false)
@@ -33,8 +34,6 @@ const ReclaimModalBody = ({
           setConfirmLock(false)
         }
       })
-    } catch (err) {
-      // setConfirmLock(false)
     } finally {
       setConfirmLock(false)
     }
@@ -53,7 +52,7 @@ const ReclaimModalBody = ({
         <ParagraphSmall>
           Reclaims the releasing stake of miners in a pool
         </ParagraphSmall>
-        <FormControl label="Pid">
+        <FormControl label="pid">
           <ParagraphSmall as="div">{pid}</ParagraphSmall>
         </FormControl>
         <FormControl label="Worker Public Key">
@@ -62,7 +61,9 @@ const ReclaimModalBody = ({
           </ParagraphSmall>
         </FormControl>
         <FormControl label="Reclaimable Stake">
-          <ParagraphSmall as="div">{formatCurrency(stakes)} PHA</ParagraphSmall>
+          <ParagraphSmall as="div">
+            {miner?.stake && formatCurrency(miner.stake)} PHA
+          </ParagraphSmall>
         </FormControl>
       </ModalBody>
       <ModalFooter>

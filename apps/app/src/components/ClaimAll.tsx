@@ -57,7 +57,7 @@ const ClaimAll: FC<
 
   const {
     data,
-    isLoading,
+    isInitialLoading: isLoading,
     refetch: refetchAccountRewards,
   } = useAccountRewardsQuery(
     subsquidClient,
@@ -82,7 +82,7 @@ const ClaimAll: FC<
 
   const {
     data: stakePoolsData,
-    isLoading: isStakePoolsLoading,
+    isInitialLoading: isStakePoolsLoading,
     refetch: refetchStakePools,
   } = useStakePoolsConnectionQuery(
     subsquidClient,
@@ -98,7 +98,7 @@ const ClaimAll: FC<
 
   const {
     data: stakesData,
-    isLoading: isStakesLoading,
+    isInitialLoading: isStakesLoading,
     refetch: refetchStakePoolStakes,
   } = useStakePoolStakesConnectionQuery(
     subsquidClient,
@@ -113,10 +113,12 @@ const ClaimAll: FC<
   )
 
   useBlockHeightListener(() => {
-    refetchAccountRewards()
-    if (Boolean(polkadotAccount?.address) && isModalOpen) {
-      refetchStakePools()
-      refetchStakePoolStakes()
+    if (polkadotAccount?.address) {
+      refetchAccountRewards()
+      if (isModalOpen) {
+        refetchStakePools()
+        refetchStakePoolStakes()
+      }
     }
   })
 
@@ -261,7 +263,7 @@ const ClaimAll: FC<
 
         <ModalBody>
           {isModalLoading ? (
-            <Skeleton animation height="32px" />
+            <Skeleton animation height="400px" />
           ) : (
             <>
               <Block

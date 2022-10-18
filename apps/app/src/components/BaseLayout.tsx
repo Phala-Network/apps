@@ -13,7 +13,7 @@ const HomePageWrap = styled.div`
 
   ${down('md')} {
     display: block;
-    padding-top: 72px;
+    padding-top: 64px;
     padding-bottom: 72px;
   }
 `

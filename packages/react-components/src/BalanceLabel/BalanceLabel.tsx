@@ -19,7 +19,7 @@ function trim(value: string): string {
 }
 
 export const BalanceLabel: React.FC<BalanceLabelProps> = (props) => {
-  const {precision = 4, value, type = ''} = props
+  const {precision = 2, value, type = ''} = props
   const zero = new Decimal(0)
 
   let balanceDisplay = ''

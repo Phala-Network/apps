@@ -1,4 +1,4 @@
-import {Link as GatsbyLink} from 'gatsby'
+import {Link} from 'gatsby'
 import styled from 'styled-components'
 
 const Wrapper = styled.div`
@@ -23,19 +23,15 @@ const Wrapper = styled.div`
 const Links: React.FC = () => {
   return (
     <Wrapper>
-      <GatsbyLink activeClassName="active" to="/">
+      <Link activeClassName="active" to="/">
         Dashboard
-      </GatsbyLink>
+      </Link>
       <a href="https://subbridge.io" target="_blank" rel="noopener">
         SubBridge
       </a>
-      <GatsbyLink
-        activeClassName="active"
-        to="/delegate/"
-        partiallyActive={true}
-      >
+      <Link activeClassName="active" to="/delegate/" partiallyActive={true}>
         Delegate
-      </GatsbyLink>
+      </Link>
     </Wrapper>
   )
 }

@@ -17,29 +17,23 @@ import {
 import {Notification} from 'baseui/notification'
 import {ParagraphSmall} from 'baseui/typography'
 import Decimal from 'decimal.js'
-import {useMemo, useState} from 'react'
-import type {Miners} from '../../hooks/graphql'
+import {FC, useMemo, useState} from 'react'
+import {Worker} from '../../hooks/subsquid'
 import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
 
-const ChangeStakeModalBody = ({
-  miner,
-  onClose,
-}: {miner: Miners} & Pick<ModalProps, 'onClose'>): JSX.Element => {
-  const {
-    pid,
-    workerPublicKey,
-    sMax,
-    stakes,
-    stakePools: {freeStake},
-  } = miner
+const ChangeStakeModalBody: FC<
+  {worker: Worker} & Pick<ModalProps, 'onClose'>
+> = ({worker, onClose}) => {
+  const {id: workerPublicKey, sMax, miner, stakePool} = worker
+  const pid = stakePool?.id
   const {api} = useApiPromise()
   const [amount, setAmount] = useState('')
   const waitSignAndSend = useWaitSignAndSend()
   const decimals = useDecimalJsTokenDecimalMultiplier(api)
   const isNewAmountNotInRange =
     !amount ||
-    new Decimal(amount).lessThanOrEqualTo(stakes) ||
-    new Decimal(amount).greaterThan(sMax)
+    (miner && new Decimal(amount).lessThanOrEqualTo(miner.stake)) ||
+    (sMax && new Decimal(amount).greaterThan(sMax))
 
   const [confirmLock, setConfirmLock] = useState(false)
 
@@ -86,11 +80,12 @@ const ChangeStakeModalBody = ({
           label="Amount"
           caption={
             <>
-              Current Stake: {formatCurrency(stakes)} PHA
+              Current Stake: {miner?.stake && formatCurrency(miner.stake)} PHA
               <br />
-              Smax: {formatCurrency(sMax)} PHA
+              SMax: {sMax && formatCurrency(sMax)} PHA
               <br />
-              Pool Free Delegation: {formatCurrency(freeStake)} PHA
+              Pool Free Delegation:{' '}
+              {stakePool?.freeStake && formatCurrency(stakePool.freeStake)} PHA
             </>
           }
         >
@@ -99,17 +94,19 @@ const ChangeStakeModalBody = ({
             size="compact"
             autoFocus
             type="number"
-            placeholder="Amount (PHA)"
             min={0}
             onChange={(e) => setAmount(e.currentTarget.value)}
+            endEnhancer="PHA"
           />
         </FormControl>
         <Notification
           kind="warning"
-          overrides={{Body: {style: {width: 'auto'}}}}
+          overrides={{
+            Body: {style: {width: 'auto', marginLeft: 0, marginRight: 0}},
+          }}
         >
           New stake should be larger than the current stake, but not larger than
-          Smax. The increase of stake should not be greater than pool free
+          SMax. The increase of stake should not be greater than pool free
           delegation.
         </Notification>
       </ModalBody>

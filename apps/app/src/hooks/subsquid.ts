@@ -1670,7 +1670,7 @@ export type WorkersConnectionQueryVariables = Exact<{
 }>;
 
 
-export type WorkersConnectionQuery = { __typename?: 'Query', workersConnection: { __typename?: 'WorkersConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string, endCursor: string }, edges: Array<{ __typename?: 'WorkerEdge', cursor: string, node: { __typename?: 'Worker', id: string, confidenceLevel?: number | null, initialScore?: number | null, stakePool?: { __typename?: 'StakePool', id: string } | null, miner?: { __typename?: 'Miner', id: string, isBound: boolean, stake: string, state: MinerState, v: string, ve: string, pInit: number, pInstant: number, totalReward: string, coolingDownStartTime?: string | null } | null } }> }, globalStateById?: { __typename?: 'GlobalState', height: number } | null };
+export type WorkersConnectionQuery = { __typename?: 'Query', workersConnection: { __typename?: 'WorkersConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string, endCursor: string }, edges: Array<{ __typename?: 'WorkerEdge', cursor: string, node: { __typename?: 'Worker', id: string, confidenceLevel?: number | null, initialScore?: number | null, sMin?: string | null, sMax?: string | null, stakePool?: { __typename?: 'StakePool', id: string, freeStake: string } | null, miner?: { __typename?: 'Miner', id: string, isBound: boolean, stake: string, state: MinerState, v: string, ve: string, pInit: number, pInstant: number, totalReward: string, coolingDownStartTime?: string | null } | null } }> }, globalStateById?: { __typename?: 'GlobalState', height: number } | null };
 
 
 export const AccountRewardsDocument = `
@@ -1927,6 +1927,7 @@ export const WorkersConnectionDocument = `
         id
         stakePool {
           id
+          freeStake
         }
         miner {
           id
@@ -1942,6 +1943,8 @@ export const WorkersConnectionDocument = `
         }
         confidenceLevel
         initialScore
+        sMin
+        sMax
       }
     }
   }

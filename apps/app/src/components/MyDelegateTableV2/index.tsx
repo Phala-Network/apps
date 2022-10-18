@@ -67,7 +67,8 @@ const MyDelegateTableV2: FC = () => {
   //   useState<StakePoolModalKey | null>(null)
   // const [operatingPool, setOperatingPool] = useState<StakePool | null>(null)
 
-  const {data, isLoading, refetch} = useStakePoolStakesConnectionQuery(
+  const enabled = Boolean(address)
+  const {data, isInitialLoading, refetch} = useStakePoolStakesConnectionQuery(
     subsquidClient,
     {
       first: pageSize,
@@ -82,25 +83,22 @@ const MyDelegateTableV2: FC = () => {
         ],
       where: {
         AND: [
-          {
-            account: {
-              id_eq: address,
-            },
-          },
-
-          {
-            OR: [{reward_gt: '0'}, {amount_gt: '0'}],
-          },
+          {account: {id_eq: address}},
+          {OR: [{reward_gt: '0'}, {amount_gt: '0'}]},
         ],
       },
     },
     {
       keepPreviousData: true,
-      enabled: Boolean(address),
+      enabled,
     }
   )
 
-  useBlockHeightListener(refetch)
+  useBlockHeightListener(() => {
+    if (enabled) {
+      refetch()
+    }
+  })
 
   const totalCount = data?.stakePoolStakesConnection.totalCount || 0
 
@@ -137,7 +135,7 @@ const MyDelegateTableV2: FC = () => {
   return (
     <div>
       <TableBuilder
-        isLoading={isLoading}
+        isLoading={isInitialLoading}
         loadingMessage={<TableSkeleton />}
         data={data?.stakePoolStakesConnection.edges || []}
         sortColumn={sortColumn}

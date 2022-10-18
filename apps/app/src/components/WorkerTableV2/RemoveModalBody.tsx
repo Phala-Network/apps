@@ -10,15 +10,16 @@ import {
   ModalProps,
 } from 'baseui/modal'
 import {ParagraphSmall} from 'baseui/typography'
-import {useMemo, useState} from 'react'
-import type {Miners} from '../../hooks/graphql'
+import {FC, useMemo, useState} from 'react'
+import {Worker} from '../../hooks/subsquid'
 import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
 
-const RemoveModalBody = ({
-  miner,
+const RemoveModalBody: FC<{worker: Worker} & Pick<ModalProps, 'onClose'>> = ({
+  worker,
   onClose,
-}: {miner: Miners} & Pick<ModalProps, 'onClose'>): JSX.Element => {
-  const {pid, workerPublicKey} = miner
+}) => {
+  const {stakePool, id: workerPublicKey} = worker
+  const pid = stakePool?.id
   const {api} = useApiPromise()
   const waitSignAndSend = useWaitSignAndSend()
   const [confirmLock, setConfirmLock] = useState(false)
@@ -32,8 +33,6 @@ const RemoveModalBody = ({
           setConfirmLock(false)
         }
       })
-    } catch (err) {
-      // setConfirmLock(false)
     } finally {
       setConfirmLock(false)
     }

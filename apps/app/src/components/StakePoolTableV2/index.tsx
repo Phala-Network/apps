@@ -84,7 +84,8 @@ const StakePoolTableV2: FC<{
     useState<StakePoolModalKey | null>(null)
   const [operatingPool, setOperatingPool] = useState<StakePool | null>(null)
 
-  const {data, isLoading, refetch} = useStakePoolsConnectionQuery(
+  const enabled = kind === 'delegate' || Boolean(kind === 'mining' && address)
+  const {data, isInitialLoading, refetch} = useStakePoolsConnectionQuery(
     subsquidClient,
     {
       first: pageSize,
@@ -116,11 +117,15 @@ const StakePoolTableV2: FC<{
     },
     {
       keepPreviousData: true,
-      enabled: kind === 'delegate' || Boolean(kind === 'mining' && address),
+      enabled,
     }
   )
 
-  useBlockHeightListener(refetch)
+  useBlockHeightListener(() => {
+    if (enabled) {
+      refetch()
+    }
+  })
 
   const totalCount = data?.stakePoolsConnection.totalCount || 0
 
@@ -218,7 +223,7 @@ const StakePoolTableV2: FC<{
       )}
 
       <TableBuilder
-        isLoading={isLoading}
+        isLoading={isInitialLoading}
         loadingMessage={<TableSkeleton />}
         data={data?.stakePoolsConnection.edges || []}
         sortColumn={sortColumn}

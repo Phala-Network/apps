@@ -27,7 +27,7 @@ const Wrapper = styled.div`
     ${down('lg')} {
       font-size: 14px;
       line-height: 14px;
-      margin-left: 20px;
+      margin-left: 12px;
     }
   }
 `

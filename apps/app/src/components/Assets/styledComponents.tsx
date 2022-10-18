@@ -1,19 +1,15 @@
 import styled from 'styled-components'
 
-export const MaxButton = styled.span`
-  display: inline-block;
+export const MaxButton = styled.div`
+  cursor: pointer;
   border-bottom: '1px solid #8C8C8C';
   font-family: Montserrat;
   font-style: normal;
   font-weight: 600;
+  height: 24px;
 
-  font-size: 16px;
-  line-height: 16px;
+  font-size: 14px;
   background: #ffffff;
-  border-radius: 14px;
-  padding: 6px 18px;
-
-  :hover {
-    background-color: #d1ff52;
-  }
+  border-radius: 12px;
+  padding: 0 12px;
 `

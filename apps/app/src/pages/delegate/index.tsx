@@ -1,19 +1,16 @@
 import {Block} from 'baseui/block'
 import {Card} from 'baseui/card'
-// import {useState} from 'react'
+import {FC} from 'react'
 import DelegateBanner from '../../components/DelegateBanner'
 import Head from '../../components/Head'
 import StakePoolTableV2 from '../../components/StakePoolTableV2'
-import StatusBar from '../../components/StatusBarV2'
 
-const Delegate = (): JSX.Element => {
+const Delegate: FC = () => {
   return (
-    <Block maxWidth="1700px" margin="0 auto" paddingBottom="scale2400">
+    <Block maxWidth="1700px" margin="16px auto 0" paddingBottom="scale2400">
       <Head title="Delegate" />
 
-      <StatusBar />
-
-      <Card overrides={{Root: {style: {borderRadius: '4px', border: 'none'}}}}>
+      <Card overrides={{Root: {style: {borderRadius: 0, border: 'none'}}}}>
         <Block marginBottom="scale600">
           <DelegateBanner />
         </Block>

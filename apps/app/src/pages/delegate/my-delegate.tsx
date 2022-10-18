@@ -7,16 +7,13 @@ import {ChevronLeft} from 'react-feather'
 import ClaimAll from '../../components/ClaimAll'
 import Head from '../../components/Head'
 import MyDelegateTableV2 from '../../components/MyDelegateTableV2'
-import StatusBar from '../../components/StatusBarV2'
 
 const MyDelegate = () => {
   return (
-    <Block maxWidth="1700px" margin="0 auto" paddingBottom="scale2400">
+    <Block maxWidth="1700px" margin="16px auto 0" paddingBottom="scale2400">
       <Head title="My Delegate" />
 
-      <StatusBar />
-
-      <Card overrides={{Root: {style: {borderRadius: '4px', border: 'none'}}}}>
+      <Card overrides={{Root: {style: {borderRadius: 0, border: 'none'}}}}>
         <Block
           display="flex"
           justifyContent="space-between"

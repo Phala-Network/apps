@@ -6,16 +6,14 @@ import ClaimAll from '../components/ClaimAll'
 import CreatePoolButton from '../components/CreatePoolButton'
 import Head from '../components/Head'
 import StakePoolTableV2 from '../components/StakePoolTableV2'
-import StatusBarV2 from '../components/StatusBarV2'
 import WorkerTableV2 from '../components/WorkerTableV2'
 
 const Mining: FC = () => {
   return (
-    <Block maxWidth="1700px" margin="0 auto" paddingBottom="scale2400">
+    <Block maxWidth="1700px" margin="16px auto 0" paddingBottom="scale2400">
       <Head title="Mining" />
 
-      <StatusBarV2 />
-      <Card overrides={{Root: {style: {borderRadius: '4px', border: 'none'}}}}>
+      <Card overrides={{Root: {style: {borderRadius: 0, border: 'none'}}}}>
         <Block
           marginBottom="scale400"
           display="flex"
@@ -35,11 +33,11 @@ const Mining: FC = () => {
       <Card
         overrides={{
           Root: {
-            style: ({$theme}) => ({
-              borderRadius: '4px',
+            style: {
+              borderRadius: 0,
               border: 'none',
-              marginTop: $theme.sizing.scale950,
-            }),
+              marginTop: '16px',
+            },
           },
         }}
       >

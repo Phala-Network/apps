@@ -16,21 +16,16 @@ import {
 } from 'baseui/modal'
 import {ParagraphSmall} from 'baseui/typography'
 import Decimal from 'decimal.js'
-import {useMemo, useState} from 'react'
-import type {Miners} from '../../hooks/graphql'
+import {FC, useMemo, useState} from 'react'
+import {Worker} from '../../hooks/subsquid'
 import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
 
-const StartModalBody = ({
-  miner,
+const StartModalBody: FC<{worker: Worker} & Pick<ModalProps, 'onClose'>> = ({
+  worker,
   onClose,
-}: {miner: Miners} & Pick<ModalProps, 'onClose'>): JSX.Element => {
-  const {
-    pid,
-    workerPublicKey,
-    sMin,
-    sMax,
-    stakePools: {freeStake},
-  } = miner
+}) => {
+  const {id: workerPublicKey, sMin, sMax, stakePool} = worker
+  const pid = stakePool?.id
   const {api} = useApiPromise()
   const [amount, setAmount] = useState('')
   const waitSignAndSend = useWaitSignAndSend()
@@ -46,8 +41,6 @@ const StartModalBody = ({
           setConfirmLock(false)
         }
       })
-    } catch (err) {
-      // setConfirmLock(false)
     } finally {
       setConfirmLock(false)
     }
@@ -81,11 +74,12 @@ const StartModalBody = ({
           label="Amount"
           caption={
             <>
-              Smin: {formatCurrency(sMin)} PHA
+              SMin: {sMin && formatCurrency(sMin)} PHA
               <br />
-              Smax: {formatCurrency(sMax)} PHA
+              SMax: {sMax && formatCurrency(sMax)} PHA
               <br />
-              Pool Free Delegation: {formatCurrency(freeStake)} PHA
+              Pool Free Delegation:{' '}
+              {stakePool?.freeStake && formatCurrency(stakePool.freeStake)} PHA
             </>
           }
         >
@@ -94,9 +88,9 @@ const StartModalBody = ({
             size="compact"
             autoFocus
             type="number"
-            placeholder="Amount (PHA)"
             min={0}
             onChange={(e) => setAmount(e.currentTarget.value)}
+            endEnhancer="PHA"
           />
         </FormControl>
       </ModalBody>

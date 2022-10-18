@@ -84,16 +84,13 @@ const CheckMore: React.FC = () => {
       overrides={{
         Arrow: {
           style: {
-            outline: `1px #aad829 solid`,
-            backgroundColor: '#aad829',
+            border: `1px #aad829 solid`,
           },
         },
         Body: {
           style: {
-            outline: `1px #aad829 solid`,
-            backgroundColor: '#eeeeee',
+            border: `1px #aad829 solid`,
             boxShadow: 'none',
-            marginRight: '20px',
           },
         },
       }}

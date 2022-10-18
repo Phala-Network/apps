@@ -13,14 +13,14 @@ const Button = styled.div`
   justify-content: space-between;
   align-items: center;
   height: 36px;
-  padding: 0 10px 0 16px;
+  padding: 0 6px 0 10px;
   background: #eeeeee;
   font-family: Montserrat;
   font-size: 16px;
   margin-right: 20px;
 
   & > span {
-    margin-right: 12px;
+    margin-right: 4px;
   }
 
   :hover,
@@ -29,7 +29,6 @@ const Button = styled.div`
   }
 
   ${down('xl')} {
-    padding: 0 8px 0 12px;
     font-size: 14px;
     margin-right: 10px;
   }
@@ -65,12 +64,12 @@ const SelectNode: React.FC = () => {
       overrides={{
         Arrow: {
           style: {
-            outline: `1px #aad829 solid`,
+            border: `1px #aad829 solid`,
           },
         },
         Body: {
           style: {
-            outline: `1px #aad829 solid`,
+            border: `1px #aad829 solid`,
             boxShadow: 'none',
           },
         },

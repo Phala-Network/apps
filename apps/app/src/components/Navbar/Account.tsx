@@ -19,19 +19,15 @@ const Connect = styled.div`
   justify-content: center;
   align-items: center;
   height: 36px;
-  padding: 0 20px;
+  padding: 0 10px;
   background: #d1ff52;
   font-family: Montserrat;
-  font-style: normal;
   font-size: 16px;
-  line-height: 16px;
   color: #111111;
   margin-right: 20px;
 
   ${down('xl')} {
     font-size: 14px;
-    line-height: 14px;
-    padding: 0 10px;
     margin-right: 10px;
   }
 `
@@ -43,7 +39,6 @@ const AccountLabel = styled.div`
   font-family: Montserrat;
   font-style: normal;
   font-size: 16px;
-  line-height: 16px;
   background: #eeeeee;
   margin-right: 16px;
   height: 36px;
@@ -60,7 +55,7 @@ const AccountLabel = styled.div`
 `
 
 const Balance = styled.span`
-  padding: 0 12px;
+  padding: 0 8px;
   max-width: 200px;
   overflow: hidden;
 
@@ -80,7 +75,7 @@ const AccountInfo = styled.div`
   border: 1px solid #cecece;
   box-sizing: border-box;
   height: 100%;
-  padding: 0 12px;
+  padding: 0 6px;
 
   svg {
     width: 100%;
