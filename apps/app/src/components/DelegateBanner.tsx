@@ -8,7 +8,7 @@ import {Link} from 'gatsby'
 import {FC} from 'react'
 import {ChevronRight} from 'react-feather'
 import {useGlobalStateQuery} from '../hooks/subsquid'
-import {subsquidClient} from '../utils/GraphQLClient'
+import {subsquidClient} from '../lib/graphqlClient'
 
 const DelegateBanner: FC = () => {
   const [css] = useStyletron()

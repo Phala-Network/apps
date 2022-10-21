@@ -35,6 +35,7 @@ export type Account = {
   totalOwnerReward: Scalars['BigDecimal'];
   totalStake: Scalars['BigDecimal'];
   totalStakeReward: Scalars['BigDecimal'];
+  whitelistedStakePools: Array<StakePoolWhitelist>;
 };
 
 
@@ -51,6 +52,14 @@ export type AccountStakesArgs = {
   offset?: InputMaybe<Scalars['Int']>;
   orderBy?: InputMaybe<Array<StakePoolStakeOrderByInput>>;
   where?: InputMaybe<StakePoolStakeWhereInput>;
+};
+
+
+export type AccountWhitelistedStakePoolsArgs = {
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Array<StakePoolWhitelistOrderByInput>>;
+  where?: InputMaybe<StakePoolWhitelistWhereInput>;
 };
 
 export type AccountEdge = {
@@ -123,6 +132,9 @@ export type AccountWhereInput = {
   totalStake_lte?: InputMaybe<Scalars['BigDecimal']>;
   totalStake_not_eq?: InputMaybe<Scalars['BigDecimal']>;
   totalStake_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  whitelistedStakePools_every?: InputMaybe<StakePoolWhitelistWhereInput>;
+  whitelistedStakePools_none?: InputMaybe<StakePoolWhitelistWhereInput>;
+  whitelistedStakePools_some?: InputMaybe<StakePoolWhitelistWhereInput>;
 };
 
 export type AccountsConnection = {
@@ -737,6 +749,7 @@ export type StakePool = BasePool & {
   totalShares: Scalars['BigDecimal'];
   totalStake: Scalars['BigDecimal'];
   totalWithdrawal: Scalars['BigDecimal'];
+  whitelists: Array<StakePoolWhitelist>;
   workerCount: Scalars['Int'];
   workers: Array<Worker>;
 };
@@ -755,6 +768,14 @@ export type StakePoolStakesArgs = {
   offset?: InputMaybe<Scalars['Int']>;
   orderBy?: InputMaybe<Array<StakePoolStakeOrderByInput>>;
   where?: InputMaybe<StakePoolStakeWhereInput>;
+};
+
+
+export type StakePoolWhitelistsArgs = {
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Array<StakePoolWhitelistOrderByInput>>;
+  where?: InputMaybe<StakePoolWhitelistWhereInput>;
 };
 
 
@@ -1105,6 +1126,9 @@ export type StakePoolWhereInput = {
   totalWithdrawal_lte?: InputMaybe<Scalars['BigDecimal']>;
   totalWithdrawal_not_eq?: InputMaybe<Scalars['BigDecimal']>;
   totalWithdrawal_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  whitelists_every?: InputMaybe<StakePoolWhitelistWhereInput>;
+  whitelists_none?: InputMaybe<StakePoolWhitelistWhereInput>;
+  whitelists_some?: InputMaybe<StakePoolWhitelistWhereInput>;
   workerCount_eq?: InputMaybe<Scalars['Int']>;
   workerCount_gt?: InputMaybe<Scalars['Int']>;
   workerCount_gte?: InputMaybe<Scalars['Int']>;
@@ -1648,10 +1672,12 @@ export type GlobalStateSubscriptionSubscription = { __typename?: 'Subscription',
 
 export type StakePoolByIdQueryVariables = Exact<{
   stakePoolByIdId: Scalars['String'];
+  accountId?: InputMaybe<Scalars['String']>;
+  withWhitelist?: InputMaybe<Scalars['Boolean']>;
 }>;
 
 
-export type StakePoolByIdQuery = { __typename?: 'Query', stakePoolById?: { __typename?: 'StakePool', id: string, pid: string, commission: string, capacity?: string | null, delegable?: string | null, freeStake: string, totalStake: string, releasingStake: string, totalShares: string, ownerReward: string, activeStakeCount: number, workerCount: number, miningWorkerCount: number, totalWithdrawal: string, owner: { __typename?: 'Account', id: string } } | null };
+export type StakePoolByIdQuery = { __typename?: 'Query', stakePoolById?: { __typename?: 'StakePool', id: string, pid: string, commission: string, capacity?: string | null, delegable?: string | null, freeStake: string, totalStake: string, releasingStake: string, totalShares: string, ownerReward: string, activeStakeCount: number, workerCount: number, miningWorkerCount: number, totalWithdrawal: string, owner: { __typename?: 'Account', id: string }, whitelists?: Array<{ __typename?: 'StakePoolWhitelist', id: string, createTime: string }> } | null };
 
 export type StakePoolStakesConnectionQueryVariables = Exact<{
   orderBy: Array<StakePoolStakeOrderByInput> | StakePoolStakeOrderByInput;
@@ -1678,10 +1704,13 @@ export type StakePoolsConnectionQueryVariables = Exact<{
   after?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Int']>;
   where?: InputMaybe<StakePoolWhereInput>;
+  accountId?: InputMaybe<Scalars['String']>;
+  withStake?: InputMaybe<Scalars['Boolean']>;
+  withWhitelist?: InputMaybe<Scalars['Boolean']>;
 }>;
 
 
-export type StakePoolsConnectionQuery = { __typename?: 'Query', globalStateById?: { __typename?: 'GlobalState', height: number } | null, stakePoolsConnection: { __typename?: 'StakePoolsConnection', totalCount: number, edges: Array<{ __typename?: 'StakePoolEdge', cursor: string, node: { __typename?: 'StakePool', id: string, pid: string, commission: string, delegable?: string | null, capacity?: string | null, freeStake: string, releasingStake: string, totalStake: string, totalShares: string, ownerReward: string, workerCount: number, miningWorkerCount: number, totalWithdrawal: string, activeStakeCount: number, owner: { __typename?: 'Account', id: string } } }>, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string, endCursor: string } } };
+export type StakePoolsConnectionQuery = { __typename?: 'Query', globalStateById?: { __typename?: 'GlobalState', height: number } | null, stakePoolsConnection: { __typename?: 'StakePoolsConnection', totalCount: number, edges: Array<{ __typename?: 'StakePoolEdge', cursor: string, node: { __typename?: 'StakePool', id: string, pid: string, commission: string, delegable?: string | null, capacity?: string | null, freeStake: string, releasingStake: string, totalStake: string, totalShares: string, ownerReward: string, workerCount: number, miningWorkerCount: number, totalWithdrawal: string, activeStakeCount: number, owner: { __typename?: 'Account', id: string }, whitelists?: Array<{ __typename?: 'StakePoolWhitelist', id: string, createTime: string }>, stakes?: Array<{ __typename?: 'StakePoolStake', id: string, amount: string, shares: string, reward: string, withdrawalAmount: string, withdrawalShares: string, withdrawalStartTime?: string | null }> } }>, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string, endCursor: string } } };
 
 export type WorkersConnectionQueryVariables = Exact<{
   orderBy: Array<WorkerOrderByInput> | WorkerOrderByInput;
@@ -1756,7 +1785,7 @@ export const GlobalStateSubscriptionDocument = `
 }
     `;
 export const StakePoolByIdDocument = `
-    query StakePoolById($stakePoolByIdId: String!) {
+    query StakePoolById($stakePoolByIdId: String!, $accountId: String, $withWhitelist: Boolean = false) {
   stakePoolById(id: $stakePoolByIdId) {
     id
     pid
@@ -1775,6 +1804,10 @@ export const StakePoolByIdDocument = `
     workerCount
     miningWorkerCount
     totalWithdrawal
+    whitelists(where: {account: {id_eq: $accountId}}, limit: 1) @include(if: $withWhitelist) {
+      id
+      createTime
+    }
   }
 }
     `;
@@ -1908,7 +1941,7 @@ export const useStakePoolWhitelistsConnectionQuery = <
       options
     );
 export const StakePoolsConnectionDocument = `
-    query StakePoolsConnection($orderBy: [StakePoolOrderByInput!]!, $after: String, $first: Int, $where: StakePoolWhereInput) {
+    query StakePoolsConnection($orderBy: [StakePoolOrderByInput!]!, $after: String, $first: Int, $where: StakePoolWhereInput, $accountId: String, $withStake: Boolean = false, $withWhitelist: Boolean = false) {
   globalStateById(id: "0") {
     height
   }
@@ -1937,6 +1970,19 @@ export const StakePoolsConnectionDocument = `
         miningWorkerCount
         totalWithdrawal
         activeStakeCount
+        whitelists(where: {account: {id_eq: $accountId}}, limit: 1) @include(if: $withWhitelist) {
+          id
+          createTime
+        }
+        stakes(where: {account: {id_eq: $accountId}}, limit: 1) @include(if: $withStake) {
+          id
+          amount
+          shares
+          reward
+          withdrawalAmount
+          withdrawalShares
+          withdrawalStartTime
+        }
       }
       cursor
     }

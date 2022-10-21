@@ -7,8 +7,8 @@ import {
   StakePoolStakeOrderByInput,
   useStakePoolStakesConnectionQuery,
 } from '../../hooks/subsquid'
-import useBlockHeightListener from '../../hooks/useBlockHeightListener'
-import {subsquidClient} from '../../utils/GraphQLClient'
+import useCurrentTime from '../../hooks/useCurrentTime'
+import {subsquidClient} from '../../lib/graphqlClient'
 import TableSkeleton from '../TableSkeleton'
 import TooltipHeader from '../TooltipHeader'
 import {tooltipContent} from './tooltipContent'
@@ -16,20 +16,16 @@ import {tooltipContent} from './tooltipContent'
 const WithdrawQueue: FC<{
   pid?: string
 }> = ({pid}) => {
-  const enabled = Boolean(pid)
-  const {data, isInitialLoading, refetch} = useStakePoolStakesConnectionQuery(
+  const currentTime = useCurrentTime()
+  const {data, isInitialLoading} = useStakePoolStakesConnectionQuery(
     subsquidClient,
     {
       where: {stakePool: {id_eq: pid}, withdrawalAmount_gt: '0'},
       orderBy: StakePoolStakeOrderByInput.WithdrawalStartTimeAsc,
     },
-    {enabled, refetchOnWindowFocus: false}
+    {enabled: Boolean(pid), refetchOnWindowFocus: false}
   )
-  useBlockHeightListener(() => {
-    if (enabled) {
-      refetch()
-    }
-  })
+
   return (
     <TableBuilder
       isLoading={isInitialLoading}
@@ -59,15 +55,12 @@ const WithdrawQueue: FC<{
       >
         {({node}: StakePoolStakeEdge) => {
           if (!node.withdrawalStartTime) return
-          const start = new Date()
+          const start = currentTime
           const end = addDays(new Date(node.withdrawalStartTime), 7)
-          return formatDuration(
-            intervalToDuration({
-              start,
-              end: isAfter(end, start) ? end : start,
-            }),
-            {format: ['days', 'hours', 'minutes'], zero: true}
-          )
+          if (isAfter(start, end)) return 'Ended'
+          return formatDuration(intervalToDuration({start, end}), {
+            format: ['days', 'hours', 'minutes'],
+          })
         }}
       </TableBuilderColumn>
       <TableBuilderColumn

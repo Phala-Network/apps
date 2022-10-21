@@ -1,29 +1,33 @@
+import {useQueryClient} from '@tanstack/react-query'
 import {useEffect, useRef} from 'react'
-import {subsquidClient} from '../utils/GraphQLClient'
+import {subsquidClient} from '../lib/graphqlClient'
 import {useGlobalStateQuery} from './subsquid'
 
-const useBlockHeightListener = (callback: () => void) => {
+const useBlockHeightListener = () => {
   const enabled = useRef(false)
-  const callbackRef = useRef(callback)
-  callbackRef.current = callback
   const {data} = useGlobalStateQuery(
     subsquidClient,
     {},
     {refetchInterval: 1000}
   )
-
+  const queryClient = useQueryClient()
   const height = data?.globalStateById?.height
 
   useEffect(() => {
-    if (height) {
+    if (height && queryClient) {
       if (enabled.current) {
-        callbackRef.current()
+        queryClient.invalidateQueries(['AccountRewards'])
+        queryClient.invalidateQueries(['StakePoolById'])
+        queryClient.invalidateQueries(['StakePoolsConnection'])
+        queryClient.invalidateQueries(['StakePoolWhitelistsConnection'])
+        queryClient.invalidateQueries(['StakePoolStakesConnection'])
+        queryClient.invalidateQueries(['WorkersConnection'])
       } else {
         // Skip the first time
         enabled.current = true
       }
     }
-  }, [height])
+  }, [queryClient, height])
 }
 
 export default useBlockHeightListener

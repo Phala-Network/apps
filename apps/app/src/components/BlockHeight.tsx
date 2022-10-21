@@ -2,7 +2,7 @@ import {Block} from 'baseui/block'
 import {Tag} from 'baseui/tag'
 import {FC} from 'react'
 import {useGlobalStateQuery} from '../hooks/subsquid'
-import {subsquidClient} from '../utils/GraphQLClient'
+import {subsquidClient} from '../lib/graphqlClient'
 
 const BlockHeight: FC = () => {
   const {data} = useGlobalStateQuery(subsquidClient, {})

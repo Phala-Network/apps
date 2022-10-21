@@ -3,6 +3,7 @@ import {ReactNode, StrictMode} from 'react'
 import BaseLayout from './components/BaseLayout'
 import GlobalStyle from './GlobalStyle'
 import {useAutoConnectWallet} from './hooks/useAutoConnectWallet'
+import useBlockHeightListener from './hooks/useBlockHeightListener'
 import {useSubscribeWalletAccounts} from './hooks/useSubscribeWalletAccounts'
 import {useTestnetGuard} from './hooks/useTestnetGuard'
 import useZendesk from './hooks/useZendesk'
@@ -13,6 +14,7 @@ const WrapPage: React.FC<{children: ReactNode}> = ({children}) => {
   useAutoConnectWallet()
   useSubscribeWalletAccounts()
   useAtomsDevtools('Phala App')
+  useBlockHeightListener()
 
   return (
     <StrictMode>

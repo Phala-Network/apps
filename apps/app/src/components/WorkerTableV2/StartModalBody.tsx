@@ -17,13 +17,12 @@ import {
 import {ParagraphSmall} from 'baseui/typography'
 import Decimal from 'decimal.js'
 import {FC, useMemo, useState} from 'react'
-import {Worker} from '../../hooks/subsquid'
+import {WorkerConnectionNode} from '.'
 import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
 
-const StartModalBody: FC<{worker: Worker} & Pick<ModalProps, 'onClose'>> = ({
-  worker,
-  onClose,
-}) => {
+const StartModalBody: FC<
+  {worker: WorkerConnectionNode} & Pick<ModalProps, 'onClose'>
+> = ({worker, onClose}) => {
   const {id: workerPublicKey, sMin, sMax, stakePool} = worker
   const pid = stakePool?.id
   const {api} = useApiPromise()

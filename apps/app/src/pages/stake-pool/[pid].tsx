@@ -25,8 +25,7 @@ import StakePoolModal, {
 import StakePoolWhitelist from '../../components/StakePoolWhitelist'
 import WorkerTableV2 from '../../components/WorkerTableV2'
 import {useStakePoolByIdQuery} from '../../hooks/subsquid'
-import useBlockHeightListener from '../../hooks/useBlockHeightListener'
-import {subsquidClient} from '../../utils/GraphQLClient'
+import {subsquidClient} from '../../lib/graphqlClient'
 
 export const VerifiedIcon = styled(CheckCircle).attrs({size: 16})`
   margin-left: 5px;
@@ -51,21 +50,14 @@ const StakePool: FC<StakePoolProps> = ({pid}) => {
   const [, theme] = useStyletron()
   const [modalKey, setModalKey] = useState<StakePoolModalKey | null>(null)
   const [polkadotAccount] = useCurrentAccount()
-  const enabled = Boolean(pid)
-  const {data, refetch} = useStakePoolByIdQuery(
+  const {data} = useStakePoolByIdQuery(
     subsquidClient,
     {stakePoolByIdId: pid as string},
     {
       refetchOnWindowFocus: false,
-      enabled,
+      enabled: Boolean(pid),
     }
   )
-
-  useBlockHeightListener(() => {
-    if (enabled) {
-      refetch()
-    }
-  })
 
   const closeModal = useCallback(() => {
     setModalKey(null)

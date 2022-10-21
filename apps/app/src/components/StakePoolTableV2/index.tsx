@@ -34,8 +34,7 @@ import {
   StakePoolOrderByInput,
   useStakePoolsConnectionQuery,
 } from '../../hooks/subsquid'
-import useBlockHeightListener from '../../hooks/useBlockHeightListener'
-import {subsquidClient} from '../../utils/GraphQLClient'
+import {subsquidClient} from '../../lib/graphqlClient'
 import Owner from '../Owner'
 import Pagination from '../Pagination'
 import PopoverButton from '../PopoverButton'
@@ -65,7 +64,7 @@ const delegableValueAtom = atomWithStorage<string>(
 )
 
 const StakePoolTableV2: FC<{
-  kind: 'delegate' | 'mining'
+  kind: 'delegate' | 'myDelegate' | 'mining'
 }> = ({kind}) => {
   // const [currentTime] = useState(() => {
   //   const now = new Date()
@@ -83,18 +82,23 @@ const StakePoolTableV2: FC<{
   const [currentPage, setCurrentPage] = useState(1)
 
   // const [verifiedFilter, setVerifiedFilter] = useState(false)
-  const [delegableFilter, setDelegableFilter] = useState(kind === 'delegate')
-  // const [whitelistFilter, setWhitelistFilter] = useState(kind === 'delegate')
+  const [delegableFilter, setDelegableFilter] = useState(true)
+  const [whitelistFilter, setWhitelistFilter] = useState(true)
   const [delegableValue, setDelegableValue] = useAtom(delegableValueAtom)
 
   const [stakePoolModalKey, setStakePoolModalKey] =
     useState<StakePoolModalKey | null>(null)
   const [operatingPool, setOperatingPool] = useState<StakePool | null>(null)
 
-  const enabled = kind === 'delegate' || Boolean(kind === 'mining' && address)
-  const {data, isInitialLoading, refetch} = useStakePoolsConnectionQuery(
+  const {data, isInitialLoading} = useStakePoolsConnectionQuery(
     subsquidClient,
     {
+      ...((kind === 'myDelegate' || kind === 'mining') &&
+        address && {
+          withStake: true,
+          withWhitelist: true,
+          accountId: address,
+        }),
       first: pageSize,
       ...(currentPage !== 1 && {
         after: String(pageSize * (currentPage - 1)),
@@ -106,34 +110,39 @@ const StakePoolTableV2: FC<{
           }` as keyof typeof StakePoolOrderByInput
         ],
       where: {
-        ...(kind === 'mining' && {owner: {id_eq: address}}),
-        ...(kind === 'delegate' && {
-          AND: [
-            searchString && {
-              OR: [
-                {owner: {id_contains: searchString}},
-                {id_contains: searchString},
-              ],
-            },
-            delegableFilter && {
-              OR: [{delegable_gt: delegableValue}, {delegable_isNull: true}],
-            },
-          ].filter(isTruthy),
-        }),
+        AND: [
+          kind === 'mining' && {owner: {id_eq: address}},
+          kind === 'delegate' && {
+            AND: [
+              searchString && {
+                OR: [
+                  {owner: {id_contains: searchString}},
+                  {id_contains: searchString},
+                ],
+              },
+              delegableFilter && {
+                OR: [{delegable_gt: delegableValue}, {delegable_isNull: true}],
+              },
+              whitelistFilter && {
+                OR: [
+                  {whitelists_some: {id_eq: address}},
+                  {whitelists_every: {id_isNull: true}}, // empty whitelist
+                ],
+              },
+            ].filter(isTruthy),
+          },
+        ].filter(isTruthy),
       },
     },
     {
       refetchOnWindowFocus: false,
       keepPreviousData: true,
-      enabled,
+      enabled:
+        kind === 'delegate' ||
+        Boolean(kind === 'mining' && address) ||
+        Boolean(kind === 'myDelegate' && address),
     }
   )
-
-  useBlockHeightListener(() => {
-    if (enabled) {
-      refetch()
-    }
-  })
 
   const totalCount = data?.stakePoolsConnection.totalCount || 0
 
@@ -194,14 +203,14 @@ const StakePoolTableV2: FC<{
           >
             {'Verified'}
           </Checkbox> */}
-          {/* <Checkbox
+          <Checkbox
             checked={whitelistFilter}
             onChange={(e) => setWhitelistFilter(e.target.checked)}
           >
             <TooltipHeader content={tooltipContent.hideClosed}>
               Hide Closed
             </TooltipHeader>
-          </Checkbox> */}
+          </Checkbox>
           <Block display="flex" alignItems="center">
             <Checkbox
               checked={delegableFilter}

@@ -25,16 +25,16 @@ import {
 } from 'date-fns'
 import Decimal from 'decimal.js'
 import {debounce} from 'lodash-es'
-import {FC, useCallback, useEffect, useState} from 'react'
+import {FC, useCallback, useEffect, useMemo, useState} from 'react'
 import {Search} from 'react-feather'
 import {
   useWorkersConnectionQuery,
-  Worker,
   WorkerEdge,
   WorkerOrderByInput,
+  WorkersConnectionQuery,
 } from '../../hooks/subsquid'
-import useBlockHeightListener from '../../hooks/useBlockHeightListener'
-import {subsquidClient} from '../../utils/GraphQLClient'
+import useCurrentTime from '../../hooks/useCurrentTime'
+import {subsquidClient} from '../../lib/graphqlClient'
 import Pagination from '../Pagination'
 import PopoverButton from '../PopoverButton'
 import TableSkeleton from '../TableSkeleton'
@@ -49,9 +49,14 @@ import {tooltipContent} from './tooltipContent'
 
 type ModalKey = 'start' | 'changeStake' | 'stop' | 'remove' | 'reclaim'
 type MenuItem = {label: string; key: ModalKey; disabled?: boolean}
+export type WorkerConnectionNode =
+  WorkersConnectionQuery['workersConnection']['edges'][number]['node']
 
 const modalKeyMap: Readonly<
-  Record<ModalKey, FC<{worker: Worker} & Pick<ModalProps, 'onClose'>>>
+  Record<
+    ModalKey,
+    FC<{worker: WorkerConnectionNode} & Pick<ModalProps, 'onClose'>>
+  >
 > = {
   start: StartModalBody,
   stop: StopModalBody,
@@ -65,6 +70,7 @@ const WorkerTableV2: FC<{
   pid?: string
   isOwner?: boolean
 }> = ({kind, pid, isOwner}) => {
+  const currentTime = useCurrentTime()
   const [css] = useStyletron()
   const pageSize = 10
   const [polkadotAccount] = useCurrentAccount()
@@ -77,24 +83,25 @@ const WorkerTableV2: FC<{
   const [searchString, setSearchString] = useState('')
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   const [openModalKey, setOpenModalKey] = useState<ModalKey | null>(null)
-  const [operatingWorker, setOperatingWorker] = useState<Worker | null>(null)
+  const [operatingWorkerId, setOperatingWorkerId] = useState<string | null>(
+    null
+  )
 
-  const enabled =
-    (kind === 'mining' && Boolean(address)) ||
-    (kind === 'stakePool' && pid !== undefined)
-  const {data, isInitialLoading, refetch} = useWorkersConnectionQuery(
+  const {data, isInitialLoading} = useWorkersConnectionQuery(
     subsquidClient,
     {
       first: pageSize,
       ...(currentPage !== 1 && {
         after: String(pageSize * (currentPage - 1)),
       }),
-      orderBy:
+      orderBy: [
         WorkerOrderByInput[
           `${sortColumn}${
             sortAsc ? 'Asc' : 'Desc'
           }` as keyof typeof WorkerOrderByInput
         ],
+        sortColumn !== 'MinerV' && WorkerOrderByInput.MinerVDesc,
+      ].filter(isTruthy),
       where: {
         ...(searchString && {id_contains: searchString}),
         ...(kind === 'mining' && {stakePool: {owner: {id_eq: address}}}),
@@ -104,15 +111,20 @@ const WorkerTableV2: FC<{
     {
       refetchOnWindowFocus: false,
       keepPreviousData: true,
-      enabled,
+      enabled:
+        (kind === 'mining' && Boolean(address)) ||
+        (kind === 'stakePool' && pid !== undefined),
     }
   )
 
-  useBlockHeightListener(() => {
-    if (enabled) {
-      refetch()
-    }
-  })
+  const operatingWorker = useMemo<WorkerConnectionNode | null>(() => {
+    if (!operatingWorkerId) return null
+    return (
+      data?.workersConnection.edges.find(
+        ({node}) => node.id === operatingWorkerId
+      )?.node || null
+    )
+  }, [data?.workersConnection.edges, operatingWorkerId])
 
   const totalCount = data?.workersConnection.totalCount || 0
 
@@ -241,15 +253,16 @@ const WorkerTableV2: FC<{
               if (state === 'MiningUnresponsive') return 'Unresponsive'
               if (state === 'MiningCoolingDown') {
                 if (!coolingDownStartTime) return 'CoolingDown'
-                const start = new Date()
+                const start = currentTime
                 const end = addDays(new Date(coolingDownStartTime), 7)
-                const duration = formatDuration(
-                  intervalToDuration({
-                    start,
-                    end: isAfter(end, start) ? end : start,
-                  }),
-                  {format: ['days', 'hours', 'minutes'], zero: true}
-                )
+                let duration: string
+                if (isAfter(start, end)) {
+                  duration = 'Ended'
+                } else {
+                  duration = formatDuration(intervalToDuration({start, end}), {
+                    format: ['days', 'hours', 'minutes'],
+                  })
+                }
                 return (
                   <>
                     <Block marginTop="-10px">CoolingDown</Block>
@@ -348,7 +361,7 @@ const WorkerTableV2: FC<{
                         onItemSelect={({item}: {item: MenuItem}) => {
                           setIsModalOpen(true)
                           setOpenModalKey(item.key)
-                          setOperatingWorker(node) // Pass object directly is Bad design
+                          setOperatingWorkerId(node.id)
                           close()
                         }}
                       />

@@ -30,9 +30,8 @@ import {
   useStakePoolsConnectionQuery,
   useStakePoolStakesConnectionQuery,
 } from '../hooks/subsquid'
-import useBlockHeightListener from '../hooks/useBlockHeightListener'
 import useWaitSignAndSend from '../hooks/useWaitSignAndSend'
-import {subsquidClient} from '../utils/GraphQLClient'
+import {subsquidClient} from '../lib/graphqlClient'
 
 const CLAIM_THRESHOLD = '0'
 
@@ -55,11 +54,7 @@ const ClaimAll: FC<{kind: 'delegate' | 'mining'} & BlockProps> = ({
     kind === 'mining'
   )
 
-  const {
-    data,
-    isInitialLoading: isLoading,
-    refetch: refetchAccountRewards,
-  } = useAccountRewardsQuery(
+  const {data, isInitialLoading: isLoading} = useAccountRewardsQuery(
     subsquidClient,
     {accountId: polkadotAccount?.address || ''},
     {enabled: Boolean(polkadotAccount?.address)}
@@ -80,53 +75,37 @@ const ClaimAll: FC<{kind: 'delegate' | 'mining'} & BlockProps> = ({
     [data?.accountById?.totalOwnerReward]
   )
 
-  const {
-    data: stakePoolsData,
-    isInitialLoading: isStakePoolsLoading,
-    refetch: refetchStakePools,
-  } = useStakePoolsConnectionQuery(
-    subsquidClient,
-    {
-      orderBy: StakePoolOrderByInput.PidAsc,
-      where: {
-        owner: {id_eq: polkadotAccount?.address},
-        ownerReward_gt: CLAIM_THRESHOLD,
+  const {data: stakePoolsData, isInitialLoading: isStakePoolsLoading} =
+    useStakePoolsConnectionQuery(
+      subsquidClient,
+      {
+        orderBy: StakePoolOrderByInput.PidAsc,
+        where: {
+          owner: {id_eq: polkadotAccount?.address},
+          ownerReward_gt: CLAIM_THRESHOLD,
+        },
       },
-    },
-    {
-      enabled: Boolean(polkadotAccount?.address) && isModalOpen,
-      refetchOnWindowFocus: false,
-    }
-  )
-
-  const {
-    data: stakesData,
-    isInitialLoading: isStakesLoading,
-    refetch: refetchStakePoolStakes,
-  } = useStakePoolStakesConnectionQuery(
-    subsquidClient,
-    {
-      orderBy: StakePoolStakeOrderByInput.StakePoolPidAsc,
-      where: {
-        reward_gt: CLAIM_THRESHOLD,
-        account: {id_eq: polkadotAccount?.address},
-      },
-    },
-    {
-      enabled: Boolean(polkadotAccount?.address) && isModalOpen,
-      refetchOnWindowFocus: false,
-    }
-  )
-
-  useBlockHeightListener(() => {
-    if (polkadotAccount?.address) {
-      refetchAccountRewards()
-      if (isModalOpen) {
-        refetchStakePools()
-        refetchStakePoolStakes()
+      {
+        enabled: Boolean(polkadotAccount?.address) && isModalOpen,
+        refetchOnWindowFocus: false,
       }
-    }
-  })
+    )
+
+  const {data: stakesData, isInitialLoading: isStakesLoading} =
+    useStakePoolStakesConnectionQuery(
+      subsquidClient,
+      {
+        orderBy: StakePoolStakeOrderByInput.StakePoolPidAsc,
+        where: {
+          reward_gt: CLAIM_THRESHOLD,
+          account: {id_eq: polkadotAccount?.address},
+        },
+      },
+      {
+        enabled: Boolean(polkadotAccount?.address) && isModalOpen,
+        refetchOnWindowFocus: false,
+      }
+    )
 
   const isModalLoading = isStakePoolsLoading || isStakesLoading
 
