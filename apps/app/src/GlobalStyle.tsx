@@ -23,6 +23,12 @@ const GlobalStyle = createGlobalStyle`
   label[data-baseweb=form-control-label] {
     font-weight: 600;
   }
+
+  div[data-baseweb=table-builder-semantic] {
+    th {
+      font-weight: 600;
+    }
+  }
 `
 
 export default GlobalStyle

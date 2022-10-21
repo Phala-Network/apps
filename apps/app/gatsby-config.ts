@@ -37,7 +37,7 @@ const config: GatsbyConfig = {
       resolve: 'gatsby-plugin-google-fonts',
       options: {
         // FIXME: Montserrat:400 is too light, load it after css is ready
-        fonts: ['Lato', 'Montserrat:500,600,700', 'PT Mono'],
+        fonts: ['Montserrat:500,600,700', 'PT Mono'],
         display: 'swap',
       },
     },

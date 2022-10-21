@@ -5,10 +5,8 @@ import {ParagraphSmall} from 'baseui/typography'
 import Decimal from 'decimal.js'
 import {FC, ReactNode, useMemo} from 'react'
 import styled from 'styled-components'
-import {StakePoolQuery} from '../../hooks/graphql'
+import {StakePool} from '../../hooks/subsquid'
 import SettingButton from './SettingButton'
-
-type StakePool = StakePoolQuery['findUniqueStakePools']
 
 const StyledBlock = styled(Block)`
   & > div + div {
@@ -52,28 +50,18 @@ const Item: FC<{label: string; action?: ReactNode; children: ReactNode}> = ({
 }
 
 const StakeInfo: FC<{
-  stakePool: StakePool
+  stakePool?: Omit<StakePool, 'owner' | 'miners' | 'workers' | 'stakes'> | null
   isOwner: boolean
   onSetCap: () => void
 }> = ({stakePool, isOwner, onSetCap}) => {
   const {
-    cap,
-    remainingStake,
+    capacity,
     totalStake,
     freeStake,
     releasingStake,
-    stakePoolWithdrawals,
-    availableStake,
+    totalWithdrawal,
+    delegable,
   } = stakePool || {}
-
-  const withdrawing = useMemo(
-    () =>
-      stakePoolWithdrawals &&
-      stakePoolWithdrawals
-        .reduce((acc, cur) => acc.add(cur.stake), new Decimal(0))
-        .toString(),
-    [stakePoolWithdrawals]
-  )
 
   return (
     <>
@@ -88,9 +76,9 @@ const StakeInfo: FC<{
             )
           }
         >
-          {cap}
+          {capacity}
         </Item>
-        <Item label="Remaining">{remainingStake}</Item>
+
         <Item label="Delegated">{totalStake}</Item>
         <Item label="Free">{freeStake}</Item>
         <Item label="Stake">
@@ -101,9 +89,14 @@ const StakeInfo: FC<{
       </StyledBlock>
 
       <StyledBlock>
+        <Item label="Delegable">{delegable}</Item>
+        <Item label="Remaining">
+          {capacity &&
+            totalStake &&
+            new Decimal(capacity).minus(totalStake).toString()}
+        </Item>
+        <Item label="Withdrawing">{totalWithdrawal}</Item>
         <Item label="Releasing">{releasingStake}</Item>
-        <Item label="Withdrawing">{withdrawing}</Item>
-        <Item label="Delegable">{availableStake}</Item>
       </StyledBlock>
     </>
   )

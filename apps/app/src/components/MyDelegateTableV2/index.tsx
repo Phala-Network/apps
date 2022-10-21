@@ -1,5 +1,5 @@
 import {useCurrentAccount} from '@phala/store'
-import {formatCurrency, trimAddress} from '@phala/utils'
+import {formatCurrency} from '@phala/utils'
 import {useStyletron} from 'baseui'
 import {Block} from 'baseui/block'
 // import {Checkbox} from 'baseui/checkbox'
@@ -16,7 +16,7 @@ import Decimal from 'decimal.js'
 // import {useAtom} from 'jotai'
 // import {atomWithStorage} from 'jotai/utils'
 // import {debounce} from 'lodash-es'
-import {FC, ReactNode, useEffect, useState} from 'react'
+import {FC, ReactNode, SyntheticEvent, useEffect, useState} from 'react'
 import {AlertTriangle} from 'react-feather'
 import {StyletronProps} from 'styletron-react'
 
@@ -27,7 +27,7 @@ import {
 } from '../../hooks/subsquid'
 import useBlockHeightListener from '../../hooks/useBlockHeightListener'
 import {subsquidClient} from '../../utils/GraphQLClient'
-// import Owner from '../Owner'
+import Owner from '../Owner'
 import Pagination from '../Pagination'
 // import PopoverButton from '../PopoverButton'
 // import StakePoolModal, {StakePoolModalKey} from '../StakePoolModal'
@@ -36,11 +36,6 @@ import TooltipHeader from '../TooltipHeader'
 import {tooltipContent} from './tooltipContent'
 
 // type MenuItem = {label: string; key: StakePoolModalKey; disabled?: boolean}
-
-// const delegableValueAtom = atomWithStorage<string>(
-//   'jotai:delegate_delegable_filter_value',
-//   '100'
-// )
 
 const MyDelegateTableV2: FC = () => {
   // const [currentTime] = useState(() => {
@@ -57,12 +52,6 @@ const MyDelegateTableV2: FC = () => {
   const [sortColumn, setSortColumn] = useState<string>('Amount')
   const [sortAsc, setSortAsc] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
-
-  // const [verifiedFilter, setVerifiedFilter] = useState(false)
-  // const [delegableFilter, setDelegableFilter] = useState(kind === 'delegate')
-  // const [whitelistFilter, setWhitelistFilter] = useState(kind === 'delegate')
-  // const [delegableValue, setDelegableValue] = useAtom(delegableValueAtom)
-
   // const [stakePoolModalKey, setStakePoolModalKey] =
   //   useState<StakePoolModalKey | null>(null)
   // const [operatingPool, setOperatingPool] = useState<StakePool | null>(null)
@@ -89,6 +78,7 @@ const MyDelegateTableV2: FC = () => {
       },
     },
     {
+      refetchOnWindowFocus: false,
       keepPreviousData: true,
       enabled,
     }
@@ -111,18 +101,6 @@ const MyDelegateTableV2: FC = () => {
     }
     setCurrentPage(1)
   }
-
-  // // eslint-disable-next-line react-hooks/exhaustive-deps
-  // const debouncedSetSearchString = useCallback(
-  //   debounce(setSearchString, 500),
-  //   []
-  // )
-
-  // // eslint-disable-next-line react-hooks/exhaustive-deps
-  // const debouncedSetDelegableValue = useCallback(
-  //   debounce(setDelegableValue, 500),
-  //   []
-  // )
 
   // const closeModal = useCallback(() => {
   //   setStakePoolModalKey(null)
@@ -171,7 +149,7 @@ const MyDelegateTableV2: FC = () => {
               return (
                 <StyledTableBodyRow
                   $style={props.$style}
-                  onClick={(e: any) => {
+                  onClick={(e: SyntheticEvent) => {
                     // Prevent navigating when clicking other elements
                     const tagName = (e.target as HTMLElement).tagName
                     if (tagName !== 'TR' && tagName !== 'TD') return
@@ -206,7 +184,9 @@ const MyDelegateTableV2: FC = () => {
             <TooltipHeader content={tooltipContent.owner}>Owner</TooltipHeader>
           }
         >
-          {({node}: StakePoolStakeEdge) => trimAddress(node.stakePool.owner.id)}
+          {({node}: StakePoolStakeEdge) => (
+            <Owner account={node.stakePool.owner} />
+          )}
         </TableBuilderColumn>
         {/* {kind !== 'mining' && (
           <TableBuilderColumn
@@ -328,7 +308,7 @@ const MyDelegateTableV2: FC = () => {
           id="Amount"
           header={
             <TooltipHeader content={tooltipContent.yourDelegation}>
-              Your Delegation
+              My Delegation
             </TooltipHeader>
           }
           sortable
@@ -340,7 +320,7 @@ const MyDelegateTableV2: FC = () => {
           sortable
           header={
             <TooltipHeader content={tooltipContent.yourWithdrawing}>
-              Your Withdrawing
+              My Withdrawing
             </TooltipHeader>
           }
         >

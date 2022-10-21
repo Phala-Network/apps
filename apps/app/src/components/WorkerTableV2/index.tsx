@@ -62,7 +62,7 @@ const modalKeyMap: Readonly<
 
 const WorkerTableV2: FC<{
   kind: 'stakePool' | 'mining'
-  pid?: number
+  pid?: string
   isOwner?: boolean
 }> = ({kind, pid, isOwner}) => {
   const [css] = useStyletron()
@@ -98,10 +98,11 @@ const WorkerTableV2: FC<{
       where: {
         ...(searchString && {id_contains: searchString}),
         ...(kind === 'mining' && {stakePool: {owner: {id_eq: address}}}),
-        ...(kind === 'stakePool' && {stakePool: {id_eq: String(pid)}}),
+        ...(kind === 'stakePool' && pid && {stakePool: {id_eq: pid}}),
       },
     },
     {
+      refetchOnWindowFocus: false,
       keepPreviousData: true,
       enabled,
     }

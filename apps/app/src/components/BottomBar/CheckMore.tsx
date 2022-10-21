@@ -30,7 +30,7 @@ const StyledGatsbyLink = styled(Link)`
   }
 `
 
-const MoreButton = styled.button`
+const MoreButton = styled.div`
   cursor: pointer;
   display: flex;
   align-items: center;

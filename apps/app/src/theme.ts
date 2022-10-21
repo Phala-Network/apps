@@ -1,6 +1,6 @@
 import {createLightTheme, LightTheme} from 'baseui'
-import {DefaultTheme} from 'styled-components'
 import {Breakpoints, MediaQuery} from 'baseui/theme'
+import {DefaultTheme} from 'styled-components'
 
 const theme: DefaultTheme = {
   colors: {
@@ -24,11 +24,9 @@ const mediaQuery: MediaQuery = {
 const typography = Object.keys(LightTheme.typography).reduce<
   Record<string, unknown>
 >((acc, key) => {
-  // Override non-small Headings font weight to 600
-  if (/.*Heading.*(Large|Medium)/.test(key)) {
-    acc[key] = {
-      fontWeight: 600,
-    }
+  // Override Headings font weight to 600
+  if (key.includes('Heading')) {
+    acc[key] = {fontWeight: 600}
   }
 
   return acc
@@ -37,15 +35,16 @@ const typography = Object.keys(LightTheme.typography).reduce<
 const overrides = {
   breakpoints,
   mediaQuery,
-  lighting: {
-    shallowAbove: '0px -4px 16px rgba(0, 0, 0, 0.05)',
-    shallowBelow: '0px 4px 16px rgba(0, 0, 0, 0.05)',
-  },
+  // lighting: {
+  //   shallowAbove: '0px -4px 16px rgba(0, 0, 0, 0.05)',
+  //   shallowBelow: '0px 4px 16px rgba(0, 0, 0, 0.05)',
+  // },
   typography,
 }
 
 export const baseTheme = createLightTheme(
   {
+    primaryFontFamily: 'Montserrat, system-ui',
     accent: '#D1FF52',
     primaryA: '#1A1A1A',
   },

@@ -1,5 +1,6 @@
 import {useCurrentAccount} from '@phala/store'
 import {toFixed, trimAddress} from '@phala/utils'
+import {useStyletron} from 'baseui'
 import {Block} from 'baseui/block'
 import {Button} from 'baseui/button'
 import {Card} from 'baseui/card'
@@ -8,7 +9,7 @@ import {StatefulTooltip} from 'baseui/tooltip'
 import {HeadingLarge, HeadingSmall, ParagraphXSmall} from 'baseui/typography'
 import Decimal from 'decimal.js'
 import {PageProps} from 'gatsby'
-import {FC, useMemo, useState} from 'react'
+import {FC, useCallback, useState} from 'react'
 import {CheckCircle, Info, MinusCircle} from 'react-feather'
 import styled from 'styled-components'
 import Head from '../../components/Head'
@@ -18,11 +19,14 @@ import SettingButton from '../../components/StakePool/SettingButton'
 import StakeInfo from '../../components/StakePool/StakeInfo'
 import WithdrawQueue from '../../components/StakePool/WithdrawQueue'
 import StakePoolDescription from '../../components/StakePoolDescription'
-import {StakePoolModalKey} from '../../components/StakePoolModal'
+import StakePoolModal, {
+  StakePoolModalKey,
+} from '../../components/StakePoolModal'
 import StakePoolWhitelist from '../../components/StakePoolWhitelist'
-// import WorkerTableV2 from '../../components/WorkerTableV2'
-import {useStakePoolQuery} from '../../hooks/graphql'
-import {client} from '../../utils/GraphQLClient'
+import WorkerTableV2 from '../../components/WorkerTableV2'
+import {useStakePoolByIdQuery} from '../../hooks/subsquid'
+import useBlockHeightListener from '../../hooks/useBlockHeightListener'
+import {subsquidClient} from '../../utils/GraphQLClient'
 
 export const VerifiedIcon = styled(CheckCircle).attrs({size: 16})`
   margin-left: 5px;
@@ -44,53 +48,50 @@ interface StakePoolProps extends PageProps {
 }
 
 const StakePool: FC<StakePoolProps> = ({pid}) => {
-  const [, setModalKey] = useState<StakePoolModalKey | null>(null)
+  const [, theme] = useStyletron()
+  const [modalKey, setModalKey] = useState<StakePoolModalKey | null>(null)
   const [polkadotAccount] = useCurrentAccount()
-  const {data, isLoading} = useStakePoolQuery(
-    client,
+  const enabled = Boolean(pid)
+  const {data, refetch} = useStakePoolByIdQuery(
+    subsquidClient,
+    {stakePoolByIdId: pid as string},
     {
-      where: {
-        pid: Number(pid),
-      },
-    },
-    {
-      enabled: Boolean(pid),
+      refetchOnWindowFocus: false,
+      enabled,
     }
   )
-  // const closeModal = useCallback(() => {
-  //   setModalKey(null)
-  // }, [])
 
-  const stakePool = data?.findUniqueStakePools
-
-  const {
-    stakePoolWithdrawals = [],
-    theoreticalApr,
-    commission,
-    ownerAddress,
-    accounts,
-    stakersCount,
-    minersCount,
-    idleMinersCount,
-    stakePoolAllowedStakers,
-  } = stakePool || {}
-
-  const isOwner =
-    Boolean(ownerAddress) && ownerAddress === polkadotAccount?.address
-
-  const canDelegate = useMemo(() => {
-    if (!polkadotAccount?.address || !stakePoolAllowedStakers) {
-      return false
+  useBlockHeightListener(() => {
+    if (enabled) {
+      refetch()
     }
+  })
 
-    return (
-      isOwner ||
-      !stakePoolAllowedStakers.length ||
-      stakePoolAllowedStakers.find(
-        ({userAddress}) => userAddress === polkadotAccount.address
-      )
-    )
-  }, [stakePoolAllowedStakers, polkadotAccount?.address, isOwner])
+  const closeModal = useCallback(() => {
+    setModalKey(null)
+  }, [])
+
+  const stakePool = data?.stakePoolById
+
+  const {commission, owner, activeStakeCount, workerCount, miningWorkerCount} =
+    stakePool || {}
+
+  const isOwner = Boolean(owner && owner.id === polkadotAccount?.address)
+
+  const canDelegate = true
+  // const canDelegate = useMemo(() => {
+  //   if (!polkadotAccount?.address || !stakePoolAllowedStakers) {
+  //     return false
+  //   }
+
+  //   return (
+  //     isOwner ||
+  //     !stakePoolAllowedStakers.length ||
+  //     stakePoolAllowedStakers.find(
+  //       ({userAddress}) => userAddress === polkadotAccount.address
+  //     )
+  //   )
+  // }, [stakePoolAllowedStakers, polkadotAccount?.address, isOwner])
 
   return (
     <>
@@ -125,42 +126,40 @@ const StakePool: FC<StakePoolProps> = ({pid}) => {
             display="grid"
             gridTemplateColumns="2fr 1fr 1fr 1fr 1fr"
             gridGap="scale400"
-            $style={({$theme}: any) => ({
-              [$theme.mediaQuery.medium]: {
+            $style={{
+              [theme.mediaQuery.medium]: {
                 gridTemplateColumns: '1fr 1fr',
               },
-            })}
+            }}
           >
             <InfoCard
               label="Owner"
               extra={
-                ownerAddress && (
+                owner && (
                   <ParagraphXSmall as="div">
                     <StyledLink
-                      href={`https://khala.subscan.io/account/${ownerAddress}`}
+                      href={`https://khala.subscan.io/account/${owner.id}`}
                       target="_blank"
                       rel="noreferrer"
                     >
-                      {trimAddress(ownerAddress)}
+                      {trimAddress(owner.id)}
                     </StyledLink>
                   </ParagraphXSmall>
                 )
               }
             >
-              {ownerAddress &&
-                accounts &&
-                (accounts.identity || trimAddress(ownerAddress))}
-              {accounts && accounts.identity ? (
+              {owner && trimAddress(owner.id)}
+              {/* {accounts && accounts.identity ? (
                 accounts.identityVerified ? (
                   <VerifiedIcon />
                 ) : (
                   <UnVerifiedIcon />
                 )
-              ) : null}
+              ) : null} */}
             </InfoCard>
             <InfoCard label="APR">
-              {theoreticalApr &&
-                `${toFixed(new Decimal(theoreticalApr).times(100), 2)}%`}
+              {/* {theoreticalApr &&
+                `${toFixed(new Decimal(theoreticalApr).times(100), 2)}%`} */}
             </InfoCard>
             <InfoCard
               label="Commission"
@@ -176,16 +175,16 @@ const StakePool: FC<StakePoolProps> = ({pid}) => {
             <InfoCard
               label="Worker"
               extra={
-                typeof idleMinersCount === 'number' && (
+                typeof miningWorkerCount === 'number' && (
                   <ParagraphXSmall as="div" color="contentSecondary">
-                    {idleMinersCount} Mining
+                    {miningWorkerCount} Mining
                   </ParagraphXSmall>
                 )
               }
             >
-              {minersCount}
+              {workerCount}
             </InfoCard>
-            <InfoCard label="Delegator">{stakersCount}</InfoCard>
+            <InfoCard label="Delegator">{activeStakeCount}</InfoCard>
           </Block>
 
           <Block display="flex" alignItems="center" marginTop="scale800">
@@ -283,10 +282,7 @@ const StakePool: FC<StakePoolProps> = ({pid}) => {
               },
             }}
           >
-            <WithdrawQueue
-              stakePoolWithdrawals={stakePoolWithdrawals}
-              isLoading={isLoading}
-            />
+            <WithdrawQueue pid={pid} />
           </Card>
 
           <HeadingSmall marginTop="scale1200" marginBottom="scale400">
@@ -302,11 +298,7 @@ const StakePool: FC<StakePoolProps> = ({pid}) => {
               },
             }}
           >
-            {/* <WorkerTableV2
-              kind="stakePool"
-              pid={pid ? Number(pid) : undefined}
-              isOwner={isOwner}
-            /> */}
+            <WorkerTableV2 kind="stakePool" pid={pid} isOwner={isOwner} />
           </Card>
 
           {isOwner && (
@@ -338,11 +330,11 @@ In any case, the pool owner is not subject to any restrictions on the whitelist.
         </Block>
       </Block>
 
-      {/* <StakePoolModal
-        stakePool={data?.findUniqueStakePools}
+      <StakePoolModal
+        stakePool={stakePool}
         onClose={closeModal}
         modalKey={modalKey}
-      /> */}
+      />
     </>
   )
 }

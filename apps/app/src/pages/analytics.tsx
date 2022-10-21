@@ -8,7 +8,7 @@ const Analytics: FC = () => {
   const [css] = useStyletron()
 
   return (
-    <Block marginTop="scale600" marginBottom="scale600">
+    <Block margin="12px auto" width="1200px" maxWidth="100%">
       <Head title="Analytics" />
       <IframeResizer
         className={css({

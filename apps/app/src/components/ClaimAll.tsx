@@ -5,6 +5,7 @@ import {
 } from '@phala/react-libs'
 import {useCurrentAccount} from '@phala/store'
 import {formatCurrency, validateAddress} from '@phala/utils'
+import {SubmittableExtrinsic} from '@polkadot/api/types'
 import {useStyletron} from 'baseui'
 import {Block, BlockProps} from 'baseui/block'
 import {Button} from 'baseui/button'
@@ -35,12 +36,11 @@ import {subsquidClient} from '../utils/GraphQLClient'
 
 const CLAIM_THRESHOLD = '0'
 
-const ClaimAll: FC<
-  {
-    kind: 'delegate' | 'mining'
-  } & BlockProps
-> = ({kind, ...props}) => {
-  const [, theme] = useStyletron()
+const ClaimAll: FC<{kind: 'delegate' | 'mining'} & BlockProps> = ({
+  kind,
+  ...props
+}) => {
+  const [css, theme] = useStyletron()
   const [polkadotAccount] = useCurrentAccount()
   const {api} = useApiPromise()
   const [address, setAddress] = useState('')
@@ -93,7 +93,10 @@ const ClaimAll: FC<
         ownerReward_gt: CLAIM_THRESHOLD,
       },
     },
-    {enabled: Boolean(polkadotAccount?.address) && isModalOpen}
+    {
+      enabled: Boolean(polkadotAccount?.address) && isModalOpen,
+      refetchOnWindowFocus: false,
+    }
   )
 
   const {
@@ -109,7 +112,10 @@ const ClaimAll: FC<
         account: {id_eq: polkadotAccount?.address},
       },
     },
-    {enabled: Boolean(polkadotAccount?.address) && isModalOpen}
+    {
+      enabled: Boolean(polkadotAccount?.address) && isModalOpen,
+      refetchOnWindowFocus: false,
+    }
   )
 
   useBlockHeightListener(() => {
@@ -185,25 +191,24 @@ const ClaimAll: FC<
 
   const extrinsic = useMemo(() => {
     if (api && decimals) {
-      let batchParams: any[] = []
+      const batchParams: SubmittableExtrinsic<'promise'>[] = []
       try {
         if (shouldClaimDelegatorRewards) {
-          batchParams = batchParams.concat(
-            delegatedPids.map((pid) =>
-              api.tx.phalaStakePool?.claimStakerRewards?.(pid, address)
+          for (const pid of delegatedPids) {
+            batchParams.push(
+              api.tx.phalaStakePool.claimStakerRewards(pid, address)
             )
-          )
+          }
         }
-
         if (shouldClaimOwnerRewards) {
-          batchParams = batchParams.concat(
-            ownedPids.map((pid) =>
-              api.tx.phalaStakePool?.claimOwnerRewards?.(pid, address)
+          for (const pid of ownedPids) {
+            batchParams.push(
+              api.tx.phalaStakePool.claimOwnerRewards(pid, address)
             )
-          )
+          }
         }
 
-        return api.tx.utility.batchAll?.(batchParams)
+        return api.tx.utility.batchAll(batchParams)
       } catch (err) {
         // noop
       }
@@ -228,9 +233,12 @@ const ClaimAll: FC<
             </LabelSmall>
             <HeadingSmall as="div">
               {isLoading ? (
-                <Skeleton animation height="32px" width="200px" />
+                <Skeleton animation height="36px" width="200px" />
               ) : (
-                `${formatCurrency(displayRewards)} PHA`
+                <>
+                  {formatCurrency(displayRewards)}{' '}
+                  <span className={css({fontSize: '16px'})}>PHA</span>
+                </>
               )}
             </HeadingSmall>
           </Block>
@@ -251,6 +259,7 @@ const ClaimAll: FC<
         overrides={{
           Dialog: {
             style: ({$theme}) => ({
+              width: '560px',
               borderRadius: '4px',
               borderWidth: '2px',
               borderColor: $theme.colors.accent,
@@ -341,17 +350,14 @@ const ClaimAll: FC<
                 <Input
                   value={address}
                   autoFocus
-                  placeholder="Target Address"
                   overrides={{
-                    Input: {
-                      style: {textOverflow: 'ellipsis'},
-                    },
-                    EndEnhancer: {
-                      style: {whiteSpace: 'pre'},
-                    },
+                    Input: {style: {textOverflow: 'ellipsis'}},
+                    EndEnhancer: {style: {whiteSpace: 'pre'}},
                   }}
                   endEnhancer={
-                    polkadotAccount && (
+                    polkadotAccount &&
+                    !address &&
+                    address !== polkadotAccount.address && (
                       <Button
                         kind="tertiary"
                         size="mini"

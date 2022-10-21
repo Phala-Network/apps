@@ -1,5 +1,5 @@
 import {useCurrentAccount} from '@phala/store'
-import {formatCurrency, isTruthy, trimAddress} from '@phala/utils'
+import {formatCurrency, isTruthy} from '@phala/utils'
 import {useStyletron} from 'baseui'
 import {Block} from 'baseui/block'
 import {Checkbox} from 'baseui/checkbox'
@@ -16,7 +16,14 @@ import Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
 import {atomWithStorage} from 'jotai/utils'
 import {debounce} from 'lodash-es'
-import {FC, ReactNode, useCallback, useEffect, useState} from 'react'
+import {
+  FC,
+  ReactNode,
+  SyntheticEvent,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react'
 import {AlertTriangle, Search} from 'react-feather'
 import styled from 'styled-components'
 import {StyletronProps} from 'styletron-react'
@@ -29,7 +36,7 @@ import {
 } from '../../hooks/subsquid'
 import useBlockHeightListener from '../../hooks/useBlockHeightListener'
 import {subsquidClient} from '../../utils/GraphQLClient'
-// import Owner from '../Owner'
+import Owner from '../Owner'
 import Pagination from '../Pagination'
 import PopoverButton from '../PopoverButton'
 import StakePoolModal, {StakePoolModalKey} from '../StakePoolModal'
@@ -41,7 +48,7 @@ const TableHeader = styled.div`
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  margin: -20px 0 0 -20px;
+  margin: -20px 0 12px -20px;
 
   /* gap polyfill */
   & > * {
@@ -116,6 +123,7 @@ const StakePoolTableV2: FC<{
       },
     },
     {
+      refetchOnWindowFocus: false,
       keepPreviousData: true,
       enabled,
     }
@@ -259,7 +267,7 @@ const StakePoolTableV2: FC<{
               return (
                 <StyledTableBodyRow
                   $style={props.$style}
-                  onClick={(e: any) => {
+                  onClick={(e: SyntheticEvent) => {
                     // Prevent navigating when clicking other elements
                     const tagName = (e.target as HTMLElement).tagName
                     if (tagName !== 'TR' && tagName !== 'TD') return
@@ -299,7 +307,7 @@ const StakePoolTableV2: FC<{
               </TooltipHeader>
             }
           >
-            {({node}: StakePoolEdge) => trimAddress(node.owner.id)}
+            {({node}: StakePoolEdge) => <Owner account={node.owner} />}
           </TableBuilderColumn>
         )}
         {/* {kind !== 'mining' && (
@@ -339,18 +347,14 @@ const StakePoolTableV2: FC<{
         >
           {({node: {commission}}: StakePoolEdge) => {
             const showWarning = false
-            // if (stakePoolStats[0]) {
-            //   const {commission, previousCommission, commissionUpdatedAt} =
-            //     stakePoolStats[0]
-            //   if (
-            //     commission &&
-            //     previousCommission &&
-            //     new Decimal(commission).lt(previousCommission) &&
-            //     new Date(commissionUpdatedAt).getTime() >
-            //       currentTime.getTime() - 1000 * 60 * 60 * 24 * 3
-            //   ) {
-            //     showWarning = true
-            //   }
+            // if (
+            //   commission &&
+            //   previousCommission &&
+            //   new Decimal(commission).lt(previousCommission) &&
+            //   new Date(commissionUpdatedAt).getTime() >
+            //     currentTime.getTime() - 1000 * 60 * 60 * 24 * 3
+            // ) {
+            //   showWarning = true
             // }
             return (
               <Block display="flex" alignItems="center">
@@ -433,6 +437,7 @@ const StakePoolTableV2: FC<{
                 )} PHA`}</Block>
                 {node.totalWithdrawal !== '0' && (
                   <AlertTriangle
+                    width={16}
                     className={css({flex: 'none'})}
                     color="#dea833"
                   />

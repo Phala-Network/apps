@@ -336,7 +336,9 @@ export enum MinerOrderByInput {
   WorkerSMaxAsc = 'worker_sMax_ASC',
   WorkerSMaxDesc = 'worker_sMax_DESC',
   WorkerSMinAsc = 'worker_sMin_ASC',
-  WorkerSMinDesc = 'worker_sMin_DESC'
+  WorkerSMinDesc = 'worker_sMin_DESC',
+  WorkerShareAsc = 'worker_share_ASC',
+  WorkerShareDesc = 'worker_share_DESC'
 }
 
 export enum MinerState {
@@ -1470,12 +1472,13 @@ export type WhereIdInput = {
 
 export type Worker = {
   __typename?: 'Worker';
-  confidenceLevel?: Maybe<Scalars['Int']>;
+  confidenceLevel: Scalars['Int'];
   id: Scalars['String'];
   initialScore?: Maybe<Scalars['Int']>;
   miner?: Maybe<Miner>;
   sMax?: Maybe<Scalars['BigDecimal']>;
   sMin?: Maybe<Scalars['BigDecimal']>;
+  share?: Maybe<Scalars['BigDecimal']>;
   stakePool?: Maybe<StakePool>;
 };
 
@@ -1516,6 +1519,8 @@ export enum WorkerOrderByInput {
   SMaxDesc = 'sMax_DESC',
   SMinAsc = 'sMin_ASC',
   SMinDesc = 'sMin_DESC',
+  ShareAsc = 'share_ASC',
+  ShareDesc = 'share_DESC',
   StakePoolActiveStakeCountAsc = 'stakePool_activeStakeCount_ASC',
   StakePoolActiveStakeCountDesc = 'stakePool_activeStakeCount_DESC',
   StakePoolCapacityAsc = 'stakePool_capacity_ASC',
@@ -1604,6 +1609,15 @@ export type WorkerWhereInput = {
   sMin_lte?: InputMaybe<Scalars['BigDecimal']>;
   sMin_not_eq?: InputMaybe<Scalars['BigDecimal']>;
   sMin_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  share_eq?: InputMaybe<Scalars['BigDecimal']>;
+  share_gt?: InputMaybe<Scalars['BigDecimal']>;
+  share_gte?: InputMaybe<Scalars['BigDecimal']>;
+  share_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  share_isNull?: InputMaybe<Scalars['Boolean']>;
+  share_lt?: InputMaybe<Scalars['BigDecimal']>;
+  share_lte?: InputMaybe<Scalars['BigDecimal']>;
+  share_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  share_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
   stakePool?: InputMaybe<StakePoolWhereInput>;
   stakePool_isNull?: InputMaybe<Scalars['Boolean']>;
 };
@@ -1631,6 +1645,13 @@ export type GlobalStateSubscriptionSubscriptionVariables = Exact<{ [key: string]
 
 
 export type GlobalStateSubscriptionSubscription = { __typename?: 'Subscription', globalStateById?: { __typename?: 'GlobalState', height: number, totalStake: string, averageBlockTime: number, miningWorkerShare: string } | null };
+
+export type StakePoolByIdQueryVariables = Exact<{
+  stakePoolByIdId: Scalars['String'];
+}>;
+
+
+export type StakePoolByIdQuery = { __typename?: 'Query', stakePoolById?: { __typename?: 'StakePool', id: string, pid: string, commission: string, capacity?: string | null, delegable?: string | null, freeStake: string, totalStake: string, releasingStake: string, totalShares: string, ownerReward: string, activeStakeCount: number, workerCount: number, miningWorkerCount: number, totalWithdrawal: string, owner: { __typename?: 'Account', id: string } } | null };
 
 export type StakePoolStakesConnectionQueryVariables = Exact<{
   orderBy: Array<StakePoolStakeOrderByInput> | StakePoolStakeOrderByInput;
@@ -1670,7 +1691,7 @@ export type WorkersConnectionQueryVariables = Exact<{
 }>;
 
 
-export type WorkersConnectionQuery = { __typename?: 'Query', workersConnection: { __typename?: 'WorkersConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string, endCursor: string }, edges: Array<{ __typename?: 'WorkerEdge', cursor: string, node: { __typename?: 'Worker', id: string, confidenceLevel?: number | null, initialScore?: number | null, sMin?: string | null, sMax?: string | null, stakePool?: { __typename?: 'StakePool', id: string, freeStake: string } | null, miner?: { __typename?: 'Miner', id: string, isBound: boolean, stake: string, state: MinerState, v: string, ve: string, pInit: number, pInstant: number, totalReward: string, coolingDownStartTime?: string | null } | null } }> }, globalStateById?: { __typename?: 'GlobalState', height: number } | null };
+export type WorkersConnectionQuery = { __typename?: 'Query', workersConnection: { __typename?: 'WorkersConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string, endCursor: string }, edges: Array<{ __typename?: 'WorkerEdge', cursor: string, node: { __typename?: 'Worker', id: string, confidenceLevel: number, initialScore?: number | null, sMin?: string | null, sMax?: string | null, stakePool?: { __typename?: 'StakePool', id: string, freeStake: string } | null, miner?: { __typename?: 'Miner', id: string, isBound: boolean, stake: string, state: MinerState, v: string, ve: string, pInit: number, pInstant: number, totalReward: string, coolingDownStartTime?: string | null } | null } }> }, globalStateById?: { __typename?: 'GlobalState', height: number } | null };
 
 
 export const AccountRewardsDocument = `
@@ -1734,6 +1755,43 @@ export const GlobalStateSubscriptionDocument = `
   }
 }
     `;
+export const StakePoolByIdDocument = `
+    query StakePoolById($stakePoolByIdId: String!) {
+  stakePoolById(id: $stakePoolByIdId) {
+    id
+    pid
+    owner {
+      id
+    }
+    commission
+    capacity
+    delegable
+    freeStake
+    totalStake
+    releasingStake
+    totalShares
+    ownerReward
+    activeStakeCount
+    workerCount
+    miningWorkerCount
+    totalWithdrawal
+  }
+}
+    `;
+export const useStakePoolByIdQuery = <
+      TData = StakePoolByIdQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: StakePoolByIdQueryVariables,
+      options?: UseQueryOptions<StakePoolByIdQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<StakePoolByIdQuery, TError, TData>(
+      ['StakePoolById', variables],
+      fetcher<StakePoolByIdQuery, StakePoolByIdQueryVariables>(client, StakePoolByIdDocument, variables, headers),
+      options
+    );
 export const StakePoolStakesConnectionDocument = `
     query StakePoolStakesConnection($orderBy: [StakePoolStakeOrderByInput!]!, $after: String, $first: Int, $where: StakePoolStakeWhereInput) {
   globalStateById(id: "0") {

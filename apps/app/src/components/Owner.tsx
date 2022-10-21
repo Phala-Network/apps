@@ -2,10 +2,10 @@ import {trimAddress} from '@phala/utils'
 import {Block} from 'baseui/block'
 import {StyledLink} from 'baseui/link'
 import {StatefulTooltip} from 'baseui/tooltip'
-import {FC} from 'react'
+import {FC, SyntheticEvent} from 'react'
 import {CheckCircle, MinusCircle} from 'react-feather'
 import styled from 'styled-components'
-import type {StakePools} from '../hooks/graphql'
+import {Account} from '../hooks/subsquid'
 
 export const VerifiedIcon = styled(CheckCircle).attrs({size: 16})`
   margin-left: 5px;
@@ -19,37 +19,34 @@ export const UnVerifiedIcon = styled(MinusCircle).attrs({
 `
 
 const Owner: FC<{
-  stakePool: Pick<StakePools, 'ownerAddress'> & {
-    accounts: Pick<StakePools['accounts'], 'identity' | 'identityVerified'>
-  }
-}> = ({
-  stakePool: {
-    ownerAddress,
-    accounts: {identityVerified, identity},
-  },
-}) => (
-  <Block display="flex" alignItems="center">
-    <StatefulTooltip content={ownerAddress} placement="bottomLeft">
-      <StyledLink
-        onClick={(e) => e.stopPropagation()}
-        href={`https://khala.subscan.io/account/${ownerAddress}`}
-        target="_blank"
-        rel="noreferrer"
-      >
-        {identity || trimAddress(ownerAddress)}
-      </StyledLink>
-    </StatefulTooltip>
-    {identity && identityVerified ? (
-      <StatefulTooltip content="Verified">
-        <VerifiedIcon />
+  account: Account
+}> = ({account: {id}}) => {
+  const identity = null
+  const identityVerified = false
+  return (
+    <Block display="flex" alignItems="center">
+      <StatefulTooltip content={id} placement="bottomLeft">
+        <StyledLink
+          onClick={(e: SyntheticEvent) => e.stopPropagation()}
+          href={`https://khala.subscan.io/account/${id}`}
+          target="_blank"
+          rel="noreferrer"
+        >
+          {identity || trimAddress(id)}
+        </StyledLink>
       </StatefulTooltip>
-    ) : null}
-    {identity && !identityVerified ? (
-      <StatefulTooltip content="Unknown">
-        <UnVerifiedIcon />
-      </StatefulTooltip>
-    ) : null}
-  </Block>
-)
+      {identity && identityVerified ? (
+        <StatefulTooltip content="Verified">
+          <VerifiedIcon />
+        </StatefulTooltip>
+      ) : null}
+      {identity && !identityVerified ? (
+        <StatefulTooltip content="Unknown">
+          <UnVerifiedIcon />
+        </StatefulTooltip>
+      ) : null}
+    </Block>
+  )
+}
 
 export default Owner

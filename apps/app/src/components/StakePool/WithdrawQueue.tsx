@@ -1,55 +1,54 @@
 import {formatCurrency, trimAddress} from '@phala/utils'
 import {TableBuilder, TableBuilderColumn} from 'baseui/table-semantic'
-import {formatDuration, intervalToDuration, isAfter} from 'date-fns'
-import {VFC} from 'react'
-import {StakePoolQuery} from '../../hooks/graphql'
-import TooltipHeader from '../TooltipHeader'
+import {addDays, formatDuration, intervalToDuration, isAfter} from 'date-fns'
+import {FC} from 'react'
+import {
+  StakePoolStakeEdge,
+  StakePoolStakeOrderByInput,
+  useStakePoolStakesConnectionQuery,
+} from '../../hooks/subsquid'
+import useBlockHeightListener from '../../hooks/useBlockHeightListener'
+import {subsquidClient} from '../../utils/GraphQLClient'
 import TableSkeleton from '../TableSkeleton'
+import TooltipHeader from '../TooltipHeader'
 import {tooltipContent} from './tooltipContent'
 
-type StakePoolWithdrawals = NonNullable<
-  StakePoolQuery['findUniqueStakePools']
->['stakePoolWithdrawals']
-
-type StakePoolWithdrawal = StakePoolWithdrawals[number]
-
-const WithdrawQueue: VFC<{
-  stakePoolWithdrawals: StakePoolWithdrawals
-  isLoading?: boolean
-}> = ({stakePoolWithdrawals, isLoading = false}) => {
+const WithdrawQueue: FC<{
+  pid?: string
+}> = ({pid}) => {
+  const enabled = Boolean(pid)
+  const {data, isInitialLoading, refetch} = useStakePoolStakesConnectionQuery(
+    subsquidClient,
+    {
+      where: {stakePool: {id_eq: pid}, withdrawalAmount_gt: '0'},
+      orderBy: StakePoolStakeOrderByInput.WithdrawalStartTimeAsc,
+    },
+    {enabled, refetchOnWindowFocus: false}
+  )
+  useBlockHeightListener(() => {
+    if (enabled) {
+      refetch()
+    }
+  })
   return (
     <TableBuilder
-      isLoading={isLoading}
+      isLoading={isInitialLoading}
       loadingMessage={<TableSkeleton />}
-      data={stakePoolWithdrawals}
+      data={data?.stakePoolStakesConnection.edges || []}
       emptyMessage="No Results"
       overrides={{
-        TableBodyCell: {
-          style: {
-            whiteSpace: 'nowrap',
-          },
-        },
-        TableHeadCellSortable: {
-          style: {
-            svg: {
-              right: 'initial',
-            },
-          },
-        },
-        TableLoadingMessage: {
-          style: {
-            padding: '10px 0',
-          },
-        },
+        TableBodyCell: {style: {whiteSpace: 'nowrap'}},
+        TableHeadCellSortable: {style: {svg: {right: 'initial'}}},
+        TableLoadingMessage: {style: {padding: '10px 0'}},
       }}
     >
       <TableBuilderColumn header="Delegator">
-        {({userAddress}: StakePoolWithdrawal) =>
-          userAddress && trimAddress(userAddress)
-        }
+        {({node}: StakePoolStakeEdge) => trimAddress(node.account.id)}
       </TableBuilderColumn>
       <TableBuilderColumn header="Withdrawing">
-        {({stake}: StakePoolWithdrawal) => `${formatCurrency(stake)} PHA`}
+        {({node}: StakePoolStakeEdge) =>
+          `${formatCurrency(node.withdrawalAmount)} PHA`
+        }
       </TableBuilderColumn>
       <TableBuilderColumn
         header={
@@ -58,9 +57,10 @@ const WithdrawQueue: VFC<{
           </TooltipHeader>
         }
       >
-        {({estimatesEndTime}: StakePoolWithdrawal) => {
+        {({node}: StakePoolStakeEdge) => {
+          if (!node.withdrawalStartTime) return
           const start = new Date()
-          const end = new Date(estimatesEndTime)
+          const end = addDays(new Date(node.withdrawalStartTime), 7)
           return formatDuration(
             intervalToDuration({
               start,
@@ -77,10 +77,10 @@ const WithdrawQueue: VFC<{
           </TooltipHeader>
         }
       >
-        {({estimatesEndTime}: StakePoolWithdrawal) => {
-          const date = new Date(estimatesEndTime)
-          date.setDate(date.getDate() + 7)
-          return date.toLocaleDateString()
+        {({node}: StakePoolStakeEdge) => {
+          if (!node.withdrawalStartTime) return
+          const date = new Date(node.withdrawalStartTime)
+          return addDays(date, 14).toLocaleDateString()
         }}
       </TableBuilderColumn>
     </TableBuilder>
