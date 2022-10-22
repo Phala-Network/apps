@@ -9,7 +9,7 @@ import {StatefulTooltip} from 'baseui/tooltip'
 import {HeadingLarge, HeadingSmall, ParagraphXSmall} from 'baseui/typography'
 import Decimal from 'decimal.js'
 import {PageProps} from 'gatsby'
-import {FC, useCallback, useState} from 'react'
+import {FC, useCallback, useMemo, useState} from 'react'
 import {CheckCircle, Info, MinusCircle} from 'react-feather'
 import styled from 'styled-components'
 import Head from '../../components/Head'
@@ -25,6 +25,7 @@ import StakePoolModal, {
 import StakePoolWhitelist from '../../components/StakePoolWhitelist'
 import WorkerTableV2 from '../../components/WorkerTableV2'
 import {useStakePoolByIdQuery} from '../../hooks/subsquid'
+import useAprCoefficient from '../../hooks/useAprCoefficient'
 import {subsquidClient} from '../../lib/graphqlClient'
 
 export const VerifiedIcon = styled(CheckCircle).attrs({size: 16})`
@@ -50,9 +51,14 @@ const StakePool: FC<StakePoolProps> = ({pid}) => {
   const [, theme] = useStyletron()
   const [modalKey, setModalKey] = useState<StakePoolModalKey | null>(null)
   const [polkadotAccount] = useCurrentAccount()
+  const aprCoefficient = useAprCoefficient()
   const {data} = useStakePoolByIdQuery(
     subsquidClient,
-    {stakePoolByIdId: pid as string},
+    {
+      stakePoolByIdId: pid as string,
+      withWhitelist: true,
+      accountId: polkadotAccount?.address,
+    },
     {
       refetchOnWindowFocus: false,
       enabled: Boolean(pid),
@@ -65,25 +71,25 @@ const StakePool: FC<StakePoolProps> = ({pid}) => {
 
   const stakePool = data?.stakePoolById
 
-  const {commission, owner, activeStakeCount, workerCount, miningWorkerCount} =
-    stakePool || {}
+  const {
+    commission,
+    owner,
+    activeStakeCount,
+    workerCount,
+    miningWorkerCount,
+    whitelists,
+    whitelistEnabled,
+  } = stakePool || {}
 
   const isOwner = Boolean(owner && owner.id === polkadotAccount?.address)
 
-  const canDelegate = true
-  // const canDelegate = useMemo(() => {
-  //   if (!polkadotAccount?.address || !stakePoolAllowedStakers) {
-  //     return false
-  //   }
-
-  //   return (
-  //     isOwner ||
-  //     !stakePoolAllowedStakers.length ||
-  //     stakePoolAllowedStakers.find(
-  //       ({userAddress}) => userAddress === polkadotAccount.address
-  //     )
-  //   )
-  // }, [stakePoolAllowedStakers, polkadotAccount?.address, isOwner])
+  const canDelegate = useMemo(() => {
+    return Boolean(
+      isOwner ||
+        whitelistEnabled === false ||
+        (polkadotAccount?.address && whitelists?.length)
+    )
+  }, [whitelistEnabled, polkadotAccount?.address, isOwner, whitelists?.length])
 
   return (
     <>
@@ -150,8 +156,12 @@ const StakePool: FC<StakePoolProps> = ({pid}) => {
               ) : null} */}
             </InfoCard>
             <InfoCard label="APR">
-              {/* {theoreticalApr &&
-                `${toFixed(new Decimal(theoreticalApr).times(100), 2)}%`} */}
+              {aprCoefficient &&
+                stakePool?.aprBase &&
+                `${toFixed(
+                  aprCoefficient.times(stakePool.aprBase).times(100),
+                  2
+                )}%`}
             </InfoCard>
             <InfoCard
               label="Commission"

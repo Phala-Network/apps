@@ -303,6 +303,8 @@ export enum MinerOrderByInput {
   PInstantDesc = 'pInstant_DESC',
   StakePoolActiveStakeCountAsc = 'stakePool_activeStakeCount_ASC',
   StakePoolActiveStakeCountDesc = 'stakePool_activeStakeCount_DESC',
+  StakePoolAprBaseAsc = 'stakePool_aprBase_ASC',
+  StakePoolAprBaseDesc = 'stakePool_aprBase_DESC',
   StakePoolCapacityAsc = 'stakePool_capacity_ASC',
   StakePoolCapacityDesc = 'stakePool_capacity_DESC',
   StakePoolCommissionAsc = 'stakePool_commission_ASC',
@@ -315,6 +317,8 @@ export enum MinerOrderByInput {
   StakePoolIdDesc = 'stakePool_id_DESC',
   StakePoolMiningWorkerCountAsc = 'stakePool_miningWorkerCount_ASC',
   StakePoolMiningWorkerCountDesc = 'stakePool_miningWorkerCount_DESC',
+  StakePoolMiningWorkerShareAsc = 'stakePool_miningWorkerShare_ASC',
+  StakePoolMiningWorkerShareDesc = 'stakePool_miningWorkerShare_DESC',
   StakePoolOwnerRewardAsc = 'stakePool_ownerReward_ASC',
   StakePoolOwnerRewardDesc = 'stakePool_ownerReward_DESC',
   StakePoolPidAsc = 'stakePool_pid_ASC',
@@ -327,6 +331,8 @@ export enum MinerOrderByInput {
   StakePoolTotalStakeDesc = 'stakePool_totalStake_DESC',
   StakePoolTotalWithdrawalAsc = 'stakePool_totalWithdrawal_ASC',
   StakePoolTotalWithdrawalDesc = 'stakePool_totalWithdrawal_DESC',
+  StakePoolWhitelistEnabledAsc = 'stakePool_whitelistEnabled_ASC',
+  StakePoolWhitelistEnabledDesc = 'stakePool_whitelistEnabled_DESC',
   StakePoolWorkerCountAsc = 'stakePool_workerCount_ASC',
   StakePoolWorkerCountDesc = 'stakePool_workerCount_DESC',
   StakeAsc = 'stake_ASC',
@@ -734,6 +740,7 @@ export type SquidStatus = {
 export type StakePool = BasePool & {
   __typename?: 'StakePool';
   activeStakeCount: Scalars['Int'];
+  aprBase: Scalars['BigDecimal'];
   capacity?: Maybe<Scalars['BigDecimal']>;
   commission: Scalars['BigDecimal'];
   delegable?: Maybe<Scalars['BigDecimal']>;
@@ -741,6 +748,7 @@ export type StakePool = BasePool & {
   id: Scalars['String'];
   miners: Array<Miner>;
   miningWorkerCount: Scalars['Int'];
+  miningWorkerShare: Scalars['BigDecimal'];
   owner: Account;
   ownerReward: Scalars['BigDecimal'];
   pid: Scalars['BigInt'];
@@ -749,6 +757,7 @@ export type StakePool = BasePool & {
   totalShares: Scalars['BigDecimal'];
   totalStake: Scalars['BigDecimal'];
   totalWithdrawal: Scalars['BigDecimal'];
+  whitelistEnabled: Scalars['Boolean'];
   whitelists: Array<StakePoolWhitelist>;
   workerCount: Scalars['Int'];
   workers: Array<Worker>;
@@ -795,6 +804,8 @@ export type StakePoolEdge = {
 export enum StakePoolOrderByInput {
   ActiveStakeCountAsc = 'activeStakeCount_ASC',
   ActiveStakeCountDesc = 'activeStakeCount_DESC',
+  AprBaseAsc = 'aprBase_ASC',
+  AprBaseDesc = 'aprBase_DESC',
   CapacityAsc = 'capacity_ASC',
   CapacityDesc = 'capacity_DESC',
   CommissionAsc = 'commission_ASC',
@@ -807,6 +818,8 @@ export enum StakePoolOrderByInput {
   IdDesc = 'id_DESC',
   MiningWorkerCountAsc = 'miningWorkerCount_ASC',
   MiningWorkerCountDesc = 'miningWorkerCount_DESC',
+  MiningWorkerShareAsc = 'miningWorkerShare_ASC',
+  MiningWorkerShareDesc = 'miningWorkerShare_DESC',
   OwnerRewardAsc = 'ownerReward_ASC',
   OwnerRewardDesc = 'ownerReward_DESC',
   OwnerIdAsc = 'owner_id_ASC',
@@ -827,6 +840,8 @@ export enum StakePoolOrderByInput {
   TotalStakeDesc = 'totalStake_DESC',
   TotalWithdrawalAsc = 'totalWithdrawal_ASC',
   TotalWithdrawalDesc = 'totalWithdrawal_DESC',
+  WhitelistEnabledAsc = 'whitelistEnabled_ASC',
+  WhitelistEnabledDesc = 'whitelistEnabled_DESC',
   WorkerCountAsc = 'workerCount_ASC',
   WorkerCountDesc = 'workerCount_DESC'
 }
@@ -869,6 +884,8 @@ export enum StakePoolStakeOrderByInput {
   SharesDesc = 'shares_DESC',
   StakePoolActiveStakeCountAsc = 'stakePool_activeStakeCount_ASC',
   StakePoolActiveStakeCountDesc = 'stakePool_activeStakeCount_DESC',
+  StakePoolAprBaseAsc = 'stakePool_aprBase_ASC',
+  StakePoolAprBaseDesc = 'stakePool_aprBase_DESC',
   StakePoolCapacityAsc = 'stakePool_capacity_ASC',
   StakePoolCapacityDesc = 'stakePool_capacity_DESC',
   StakePoolCommissionAsc = 'stakePool_commission_ASC',
@@ -881,6 +898,8 @@ export enum StakePoolStakeOrderByInput {
   StakePoolIdDesc = 'stakePool_id_DESC',
   StakePoolMiningWorkerCountAsc = 'stakePool_miningWorkerCount_ASC',
   StakePoolMiningWorkerCountDesc = 'stakePool_miningWorkerCount_DESC',
+  StakePoolMiningWorkerShareAsc = 'stakePool_miningWorkerShare_ASC',
+  StakePoolMiningWorkerShareDesc = 'stakePool_miningWorkerShare_DESC',
   StakePoolOwnerRewardAsc = 'stakePool_ownerReward_ASC',
   StakePoolOwnerRewardDesc = 'stakePool_ownerReward_DESC',
   StakePoolPidAsc = 'stakePool_pid_ASC',
@@ -893,6 +912,8 @@ export enum StakePoolStakeOrderByInput {
   StakePoolTotalStakeDesc = 'stakePool_totalStake_DESC',
   StakePoolTotalWithdrawalAsc = 'stakePool_totalWithdrawal_ASC',
   StakePoolTotalWithdrawalDesc = 'stakePool_totalWithdrawal_DESC',
+  StakePoolWhitelistEnabledAsc = 'stakePool_whitelistEnabled_ASC',
+  StakePoolWhitelistEnabledDesc = 'stakePool_whitelistEnabled_DESC',
   StakePoolWorkerCountAsc = 'stakePool_workerCount_ASC',
   StakePoolWorkerCountDesc = 'stakePool_workerCount_DESC',
   WithdrawalAmountAsc = 'withdrawalAmount_ASC',
@@ -1002,6 +1023,15 @@ export type StakePoolWhereInput = {
   activeStakeCount_lte?: InputMaybe<Scalars['Int']>;
   activeStakeCount_not_eq?: InputMaybe<Scalars['Int']>;
   activeStakeCount_not_in?: InputMaybe<Array<Scalars['Int']>>;
+  aprBase_eq?: InputMaybe<Scalars['BigDecimal']>;
+  aprBase_gt?: InputMaybe<Scalars['BigDecimal']>;
+  aprBase_gte?: InputMaybe<Scalars['BigDecimal']>;
+  aprBase_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  aprBase_isNull?: InputMaybe<Scalars['Boolean']>;
+  aprBase_lt?: InputMaybe<Scalars['BigDecimal']>;
+  aprBase_lte?: InputMaybe<Scalars['BigDecimal']>;
+  aprBase_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  aprBase_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
   capacity_eq?: InputMaybe<Scalars['BigDecimal']>;
   capacity_gt?: InputMaybe<Scalars['BigDecimal']>;
   capacity_gte?: InputMaybe<Scalars['BigDecimal']>;
@@ -1067,6 +1097,15 @@ export type StakePoolWhereInput = {
   miningWorkerCount_lte?: InputMaybe<Scalars['Int']>;
   miningWorkerCount_not_eq?: InputMaybe<Scalars['Int']>;
   miningWorkerCount_not_in?: InputMaybe<Array<Scalars['Int']>>;
+  miningWorkerShare_eq?: InputMaybe<Scalars['BigDecimal']>;
+  miningWorkerShare_gt?: InputMaybe<Scalars['BigDecimal']>;
+  miningWorkerShare_gte?: InputMaybe<Scalars['BigDecimal']>;
+  miningWorkerShare_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  miningWorkerShare_isNull?: InputMaybe<Scalars['Boolean']>;
+  miningWorkerShare_lt?: InputMaybe<Scalars['BigDecimal']>;
+  miningWorkerShare_lte?: InputMaybe<Scalars['BigDecimal']>;
+  miningWorkerShare_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  miningWorkerShare_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
   owner?: InputMaybe<AccountWhereInput>;
   ownerReward_eq?: InputMaybe<Scalars['BigDecimal']>;
   ownerReward_gt?: InputMaybe<Scalars['BigDecimal']>;
@@ -1126,6 +1165,9 @@ export type StakePoolWhereInput = {
   totalWithdrawal_lte?: InputMaybe<Scalars['BigDecimal']>;
   totalWithdrawal_not_eq?: InputMaybe<Scalars['BigDecimal']>;
   totalWithdrawal_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  whitelistEnabled_eq?: InputMaybe<Scalars['Boolean']>;
+  whitelistEnabled_isNull?: InputMaybe<Scalars['Boolean']>;
+  whitelistEnabled_not_eq?: InputMaybe<Scalars['Boolean']>;
   whitelists_every?: InputMaybe<StakePoolWhitelistWhereInput>;
   whitelists_none?: InputMaybe<StakePoolWhitelistWhereInput>;
   whitelists_some?: InputMaybe<StakePoolWhitelistWhereInput>;
@@ -1172,6 +1214,8 @@ export enum StakePoolWhitelistOrderByInput {
   IdDesc = 'id_DESC',
   StakePoolActiveStakeCountAsc = 'stakePool_activeStakeCount_ASC',
   StakePoolActiveStakeCountDesc = 'stakePool_activeStakeCount_DESC',
+  StakePoolAprBaseAsc = 'stakePool_aprBase_ASC',
+  StakePoolAprBaseDesc = 'stakePool_aprBase_DESC',
   StakePoolCapacityAsc = 'stakePool_capacity_ASC',
   StakePoolCapacityDesc = 'stakePool_capacity_DESC',
   StakePoolCommissionAsc = 'stakePool_commission_ASC',
@@ -1184,6 +1228,8 @@ export enum StakePoolWhitelistOrderByInput {
   StakePoolIdDesc = 'stakePool_id_DESC',
   StakePoolMiningWorkerCountAsc = 'stakePool_miningWorkerCount_ASC',
   StakePoolMiningWorkerCountDesc = 'stakePool_miningWorkerCount_DESC',
+  StakePoolMiningWorkerShareAsc = 'stakePool_miningWorkerShare_ASC',
+  StakePoolMiningWorkerShareDesc = 'stakePool_miningWorkerShare_DESC',
   StakePoolOwnerRewardAsc = 'stakePool_ownerReward_ASC',
   StakePoolOwnerRewardDesc = 'stakePool_ownerReward_DESC',
   StakePoolPidAsc = 'stakePool_pid_ASC',
@@ -1196,6 +1242,8 @@ export enum StakePoolWhitelistOrderByInput {
   StakePoolTotalStakeDesc = 'stakePool_totalStake_DESC',
   StakePoolTotalWithdrawalAsc = 'stakePool_totalWithdrawal_ASC',
   StakePoolTotalWithdrawalDesc = 'stakePool_totalWithdrawal_DESC',
+  StakePoolWhitelistEnabledAsc = 'stakePool_whitelistEnabled_ASC',
+  StakePoolWhitelistEnabledDesc = 'stakePool_whitelistEnabled_DESC',
   StakePoolWorkerCountAsc = 'stakePool_workerCount_ASC',
   StakePoolWorkerCountDesc = 'stakePool_workerCount_DESC'
 }
@@ -1547,6 +1595,8 @@ export enum WorkerOrderByInput {
   ShareDesc = 'share_DESC',
   StakePoolActiveStakeCountAsc = 'stakePool_activeStakeCount_ASC',
   StakePoolActiveStakeCountDesc = 'stakePool_activeStakeCount_DESC',
+  StakePoolAprBaseAsc = 'stakePool_aprBase_ASC',
+  StakePoolAprBaseDesc = 'stakePool_aprBase_DESC',
   StakePoolCapacityAsc = 'stakePool_capacity_ASC',
   StakePoolCapacityDesc = 'stakePool_capacity_DESC',
   StakePoolCommissionAsc = 'stakePool_commission_ASC',
@@ -1559,6 +1609,8 @@ export enum WorkerOrderByInput {
   StakePoolIdDesc = 'stakePool_id_DESC',
   StakePoolMiningWorkerCountAsc = 'stakePool_miningWorkerCount_ASC',
   StakePoolMiningWorkerCountDesc = 'stakePool_miningWorkerCount_DESC',
+  StakePoolMiningWorkerShareAsc = 'stakePool_miningWorkerShare_ASC',
+  StakePoolMiningWorkerShareDesc = 'stakePool_miningWorkerShare_DESC',
   StakePoolOwnerRewardAsc = 'stakePool_ownerReward_ASC',
   StakePoolOwnerRewardDesc = 'stakePool_ownerReward_DESC',
   StakePoolPidAsc = 'stakePool_pid_ASC',
@@ -1571,6 +1623,8 @@ export enum WorkerOrderByInput {
   StakePoolTotalStakeDesc = 'stakePool_totalStake_DESC',
   StakePoolTotalWithdrawalAsc = 'stakePool_totalWithdrawal_ASC',
   StakePoolTotalWithdrawalDesc = 'stakePool_totalWithdrawal_DESC',
+  StakePoolWhitelistEnabledAsc = 'stakePool_whitelistEnabled_ASC',
+  StakePoolWhitelistEnabledDesc = 'stakePool_whitelistEnabled_DESC',
   StakePoolWorkerCountAsc = 'stakePool_workerCount_ASC',
   StakePoolWorkerCountDesc = 'stakePool_workerCount_DESC'
 }
@@ -1665,11 +1719,6 @@ export type GlobalStateQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GlobalStateQuery = { __typename?: 'Query', globalStateById?: { __typename?: 'GlobalState', height: number, totalStake: string, averageBlockTime: number, miningWorkerShare: string } | null };
 
-export type GlobalStateSubscriptionSubscriptionVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GlobalStateSubscriptionSubscription = { __typename?: 'Subscription', globalStateById?: { __typename?: 'GlobalState', height: number, totalStake: string, averageBlockTime: number, miningWorkerShare: string } | null };
-
 export type StakePoolByIdQueryVariables = Exact<{
   stakePoolByIdId: Scalars['String'];
   accountId?: InputMaybe<Scalars['String']>;
@@ -1677,7 +1726,7 @@ export type StakePoolByIdQueryVariables = Exact<{
 }>;
 
 
-export type StakePoolByIdQuery = { __typename?: 'Query', stakePoolById?: { __typename?: 'StakePool', id: string, pid: string, commission: string, capacity?: string | null, delegable?: string | null, freeStake: string, totalStake: string, releasingStake: string, totalShares: string, ownerReward: string, activeStakeCount: number, workerCount: number, miningWorkerCount: number, totalWithdrawal: string, owner: { __typename?: 'Account', id: string }, whitelists?: Array<{ __typename?: 'StakePoolWhitelist', id: string, createTime: string }> } | null };
+export type StakePoolByIdQuery = { __typename?: 'Query', stakePoolById?: { __typename?: 'StakePool', id: string, pid: string, commission: string, capacity?: string | null, delegable?: string | null, freeStake: string, totalStake: string, releasingStake: string, totalShares: string, ownerReward: string, activeStakeCount: number, workerCount: number, miningWorkerCount: number, totalWithdrawal: string, miningWorkerShare: string, aprBase: string, whitelistEnabled: boolean, owner: { __typename?: 'Account', id: string }, whitelists?: Array<{ __typename?: 'StakePoolWhitelist', id: string, createTime: string }> } | null };
 
 export type StakePoolStakesConnectionQueryVariables = Exact<{
   orderBy: Array<StakePoolStakeOrderByInput> | StakePoolStakeOrderByInput;
@@ -1687,7 +1736,7 @@ export type StakePoolStakesConnectionQueryVariables = Exact<{
 }>;
 
 
-export type StakePoolStakesConnectionQuery = { __typename?: 'Query', globalStateById?: { __typename?: 'GlobalState', height: number } | null, stakePoolStakesConnection: { __typename?: 'StakePoolStakesConnection', totalCount: number, edges: Array<{ __typename?: 'StakePoolStakeEdge', cursor: string, node: { __typename?: 'StakePoolStake', amount: string, shares: string, reward: string, withdrawalAmount: string, withdrawalShares: string, withdrawalStartTime?: string | null, account: { __typename?: 'Account', id: string }, stakePool: { __typename?: 'StakePool', id: string, pid: string, commission: string, capacity?: string | null, delegable?: string | null, freeStake: string, releasingStake: string, totalStake: string, totalShares: string, ownerReward: string, activeStakeCount: number, workerCount: number, miningWorkerCount: number, totalWithdrawal: string, owner: { __typename?: 'Account', id: string } } } }>, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string, endCursor: string } } };
+export type StakePoolStakesConnectionQuery = { __typename?: 'Query', stakePoolStakesConnection: { __typename?: 'StakePoolStakesConnection', totalCount: number, edges: Array<{ __typename?: 'StakePoolStakeEdge', cursor: string, node: { __typename?: 'StakePoolStake', amount: string, shares: string, reward: string, withdrawalAmount: string, withdrawalShares: string, withdrawalStartTime?: string | null, account: { __typename?: 'Account', id: string }, stakePool: { __typename?: 'StakePool', id: string, pid: string, commission: string, capacity?: string | null, delegable?: string | null, freeStake: string, releasingStake: string, totalStake: string, totalShares: string, ownerReward: string, activeStakeCount: number, workerCount: number, miningWorkerCount: number, totalWithdrawal: string, owner: { __typename?: 'Account', id: string } } } }>, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string, endCursor: string } } };
 
 export type StakePoolWhitelistsConnectionQueryVariables = Exact<{
   orderBy: Array<StakePoolWhitelistOrderByInput> | StakePoolWhitelistOrderByInput;
@@ -1710,7 +1759,12 @@ export type StakePoolsConnectionQueryVariables = Exact<{
 }>;
 
 
-export type StakePoolsConnectionQuery = { __typename?: 'Query', globalStateById?: { __typename?: 'GlobalState', height: number } | null, stakePoolsConnection: { __typename?: 'StakePoolsConnection', totalCount: number, edges: Array<{ __typename?: 'StakePoolEdge', cursor: string, node: { __typename?: 'StakePool', id: string, pid: string, commission: string, delegable?: string | null, capacity?: string | null, freeStake: string, releasingStake: string, totalStake: string, totalShares: string, ownerReward: string, workerCount: number, miningWorkerCount: number, totalWithdrawal: string, activeStakeCount: number, owner: { __typename?: 'Account', id: string }, whitelists?: Array<{ __typename?: 'StakePoolWhitelist', id: string, createTime: string }>, stakes?: Array<{ __typename?: 'StakePoolStake', id: string, amount: string, shares: string, reward: string, withdrawalAmount: string, withdrawalShares: string, withdrawalStartTime?: string | null }> } }>, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string, endCursor: string } } };
+export type StakePoolsConnectionQuery = { __typename?: 'Query', stakePoolsConnection: { __typename?: 'StakePoolsConnection', totalCount: number, edges: Array<{ __typename?: 'StakePoolEdge', cursor: string, node: { __typename?: 'StakePool', id: string, pid: string, commission: string, delegable?: string | null, capacity?: string | null, freeStake: string, releasingStake: string, totalStake: string, totalShares: string, ownerReward: string, workerCount: number, miningWorkerCount: number, totalWithdrawal: string, activeStakeCount: number, miningWorkerShare: string, aprBase: string, whitelistEnabled: boolean, owner: { __typename?: 'Account', id: string }, whitelists?: Array<{ __typename?: 'StakePoolWhitelist', id: string, createTime: string }>, stakes?: Array<{ __typename?: 'StakePoolStake', id: string, amount: string, shares: string, reward: string, withdrawalAmount: string, withdrawalShares: string, withdrawalStartTime?: string | null }> } }>, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string, endCursor: string } } };
+
+export type TokenomicParametersQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type TokenomicParametersQuery = { __typename?: 'Query', tokenomicParametersById?: { __typename?: 'TokenomicParameters', phaRate: string, budgetPerBlock: string, vMax: string, treasuryRatio: string, k: string, re: string } | null };
 
 export type WorkersConnectionQueryVariables = Exact<{
   orderBy: Array<WorkerOrderByInput> | WorkerOrderByInput;
@@ -1774,16 +1828,6 @@ export const useGlobalStateQuery = <
       fetcher<GlobalStateQuery, GlobalStateQueryVariables>(client, GlobalStateDocument, variables, headers),
       options
     );
-export const GlobalStateSubscriptionDocument = `
-    subscription GlobalStateSubscription {
-  globalStateById(id: "0") {
-    height
-    totalStake
-    averageBlockTime
-    miningWorkerShare
-  }
-}
-    `;
 export const StakePoolByIdDocument = `
     query StakePoolById($stakePoolByIdId: String!, $accountId: String, $withWhitelist: Boolean = false) {
   stakePoolById(id: $stakePoolByIdId) {
@@ -1808,6 +1852,9 @@ export const StakePoolByIdDocument = `
       id
       createTime
     }
+    miningWorkerShare
+    aprBase
+    whitelistEnabled
   }
 }
     `;
@@ -1827,9 +1874,6 @@ export const useStakePoolByIdQuery = <
     );
 export const StakePoolStakesConnectionDocument = `
     query StakePoolStakesConnection($orderBy: [StakePoolStakeOrderByInput!]!, $after: String, $first: Int, $where: StakePoolStakeWhereInput) {
-  globalStateById(id: "0") {
-    height
-  }
   stakePoolStakesConnection(
     orderBy: $orderBy
     after: $after
@@ -1942,9 +1986,6 @@ export const useStakePoolWhitelistsConnectionQuery = <
     );
 export const StakePoolsConnectionDocument = `
     query StakePoolsConnection($orderBy: [StakePoolOrderByInput!]!, $after: String, $first: Int, $where: StakePoolWhereInput, $accountId: String, $withStake: Boolean = false, $withWhitelist: Boolean = false) {
-  globalStateById(id: "0") {
-    height
-  }
   stakePoolsConnection(
     orderBy: $orderBy
     after: $after
@@ -1983,6 +2024,9 @@ export const StakePoolsConnectionDocument = `
           withdrawalShares
           withdrawalStartTime
         }
+        miningWorkerShare
+        aprBase
+        whitelistEnabled
       }
       cursor
     }
@@ -2008,6 +2052,32 @@ export const useStakePoolsConnectionQuery = <
     useQuery<StakePoolsConnectionQuery, TError, TData>(
       ['StakePoolsConnection', variables],
       fetcher<StakePoolsConnectionQuery, StakePoolsConnectionQueryVariables>(client, StakePoolsConnectionDocument, variables, headers),
+      options
+    );
+export const TokenomicParametersDocument = `
+    query TokenomicParameters {
+  tokenomicParametersById(id: "0") {
+    phaRate
+    budgetPerBlock
+    vMax
+    treasuryRatio
+    k
+    re
+  }
+}
+    `;
+export const useTokenomicParametersQuery = <
+      TData = TokenomicParametersQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: TokenomicParametersQueryVariables,
+      options?: UseQueryOptions<TokenomicParametersQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<TokenomicParametersQuery, TError, TData>(
+      variables === undefined ? ['TokenomicParameters'] : ['TokenomicParameters', variables],
+      fetcher<TokenomicParametersQuery, TokenomicParametersQueryVariables>(client, TokenomicParametersDocument, variables, headers),
       options
     );
 export const WorkersConnectionDocument = `

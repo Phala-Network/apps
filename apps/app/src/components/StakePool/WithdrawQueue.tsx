@@ -33,8 +33,21 @@ const WithdrawQueue: FC<{
       data={data?.stakePoolStakesConnection.edges || []}
       emptyMessage="No Results"
       overrides={{
-        TableBodyCell: {style: {whiteSpace: 'nowrap'}},
-        TableHeadCellSortable: {style: {svg: {right: 'initial'}}},
+        TableBodyCell: {
+          style: {
+            whiteSpace: 'nowrap',
+            paddingRight: '12px',
+            paddingLeft: '12px',
+          },
+        },
+        TableHeadCell: {style: {paddingLeft: '12px', paddingRight: '12px'}},
+        TableHeadCellSortable: {
+          style: {
+            paddingLeft: '12px',
+            paddingRight: '32px',
+            svg: {right: 'initial'},
+          },
+        },
         TableLoadingMessage: {style: {padding: '10px 0'}},
       }}
     >

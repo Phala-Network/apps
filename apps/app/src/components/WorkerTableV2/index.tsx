@@ -49,13 +49,13 @@ import {tooltipContent} from './tooltipContent'
 
 type ModalKey = 'start' | 'changeStake' | 'stop' | 'remove' | 'reclaim'
 type MenuItem = {label: string; key: ModalKey; disabled?: boolean}
-export type WorkerConnectionNode =
+export type WorkersConnectionNode =
   WorkersConnectionQuery['workersConnection']['edges'][number]['node']
 
 const modalKeyMap: Readonly<
   Record<
     ModalKey,
-    FC<{worker: WorkerConnectionNode} & Pick<ModalProps, 'onClose'>>
+    FC<{worker: WorkersConnectionNode} & Pick<ModalProps, 'onClose'>>
   >
 > = {
   start: StartModalBody,
@@ -117,13 +117,11 @@ const WorkerTableV2: FC<{
     }
   )
 
-  const operatingWorker = useMemo<WorkerConnectionNode | null>(() => {
-    if (!operatingWorkerId) return null
-    return (
-      data?.workersConnection.edges.find(
-        ({node}) => node.id === operatingWorkerId
-      )?.node || null
-    )
+  const operatingWorker = useMemo<WorkersConnectionNode | undefined>(() => {
+    if (!operatingWorkerId) return
+    return data?.workersConnection.edges.find(
+      ({node}) => node.id === operatingWorkerId
+    )?.node
   }, [data?.workersConnection.edges, operatingWorkerId])
 
   const totalCount = data?.workersConnection.totalCount || 0
@@ -183,8 +181,21 @@ const WorkerTableV2: FC<{
           onSort={onSort}
           emptyMessage="No Results"
           overrides={{
-            TableBodyCell: {style: {whiteSpace: 'nowrap'}},
-            TableHeadCellSortable: {style: {svg: {right: 'initial'}}},
+            TableBodyCell: {
+              style: {
+                whiteSpace: 'nowrap',
+                paddingRight: '12px',
+                paddingLeft: '12px',
+              },
+            },
+            TableHeadCell: {style: {paddingLeft: '12px', paddingRight: '12px'}},
+            TableHeadCellSortable: {
+              style: {
+                paddingLeft: '12px',
+                paddingRight: '32px',
+                svg: {right: 'initial'},
+              },
+            },
             TableLoadingMessage: {style: {padding: '10px 0'}},
           }}
         >

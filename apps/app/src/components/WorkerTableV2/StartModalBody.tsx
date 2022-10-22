@@ -17,11 +17,11 @@ import {
 import {ParagraphSmall} from 'baseui/typography'
 import Decimal from 'decimal.js'
 import {FC, useMemo, useState} from 'react'
-import {WorkerConnectionNode} from '.'
+import {WorkersConnectionNode} from '.'
 import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
 
 const StartModalBody: FC<
-  {worker: WorkerConnectionNode} & Pick<ModalProps, 'onClose'>
+  {worker: WorkersConnectionNode} & Pick<ModalProps, 'onClose'>
 > = ({worker, onClose}) => {
   const {id: workerPublicKey, sMin, sMax, stakePool} = worker
   const pid = stakePool?.id

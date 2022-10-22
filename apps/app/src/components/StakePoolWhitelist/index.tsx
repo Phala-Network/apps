@@ -98,6 +98,21 @@ const StakePoolWhitelist: FC<{pid?: string}> = ({pid}) => {
           Root: {
             style: {marginTop: '12px'},
           },
+          TableBodyCell: {
+            style: {
+              whiteSpace: 'nowrap',
+              paddingRight: '12px',
+              paddingLeft: '12px',
+            },
+          },
+          TableHeadCell: {style: {paddingLeft: '12px', paddingRight: '12px'}},
+          TableHeadCellSortable: {
+            style: {
+              paddingLeft: '12px',
+              paddingRight: '32px',
+              svg: {right: 'initial'},
+            },
+          },
           TableLoadingMessage: {
             style: {
               padding: '10px 0',

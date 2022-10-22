@@ -30,10 +30,9 @@ const ClaimModalBody: FC<
   const [polkadotAccount] = useCurrentAccount()
   const {api} = useApiPromise()
   const [address, setAddress] = useState('')
-  const isAddressError = !validateAddress(address)
+  const [isAddressError, setIsAddressError] = useState(false)
   const waitSignAndSend = useWaitSignAndSend()
   const decimals = useDecimalJsTokenDecimalMultiplier(api)
-
   const [confirmLock, setConfirmLock] = useState(false)
 
   const onConfirm = async () => {
@@ -62,7 +61,7 @@ const ClaimModalBody: FC<
 
   return (
     <>
-      <ModalHeader>Claim</ModalHeader>
+      <ModalHeader>Claim Reward</ModalHeader>
       <ModalBody>
         <ParagraphSmall>
           Claim all the pending rewards of the sender and send to the target
@@ -84,24 +83,22 @@ const ClaimModalBody: FC<
           error={isAddressError ? 'Invalid address' : null}
         >
           <Input
-            size="compact"
             value={address}
             autoFocus
-            placeholder="Target Address"
             overrides={{
-              EndEnhancer: {
-                style: {
-                  whiteSpace: 'pre',
-                },
-              },
+              Input: {style: {textOverflow: 'ellipsis'}},
+              EndEnhancer: {style: {whiteSpace: 'pre'}},
             }}
             endEnhancer={
-              polkadotAccount && (
+              polkadotAccount &&
+              !address &&
+              address !== polkadotAccount.address && (
                 <Button
                   kind="tertiary"
                   size="mini"
                   onClick={() => {
                     setAddress(polkadotAccount.address)
+                    setIsAddressError(!validateAddress(polkadotAccount.address))
                   }}
                 >
                   My Address
@@ -109,6 +106,11 @@ const ClaimModalBody: FC<
               )
             }
             onChange={(e) => setAddress(e.currentTarget.value)}
+            onBlur={() => {
+              if (address) {
+                setIsAddressError(!validateAddress(address))
+              }
+            }}
           />
         </FormControl>
       </ModalBody>

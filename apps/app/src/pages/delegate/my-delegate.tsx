@@ -6,7 +6,7 @@ import {Link} from 'gatsby'
 import {ChevronLeft} from 'react-feather'
 import ClaimAll from '../../components/ClaimAll'
 import Head from '../../components/Head'
-import MyDelegateTableV2 from '../../components/MyDelegateTableV2'
+import StakePoolTableV2 from '../../components/StakePoolTableV2'
 
 const MyDelegate = () => {
   return (
@@ -32,7 +32,7 @@ const MyDelegate = () => {
           <ClaimAll kind="delegate" />
         </Block>
 
-        <MyDelegateTableV2 />
+        <StakePoolTableV2 kind="myDelegate" />
       </Card>
     </Block>
   )

@@ -9,9 +9,7 @@ const PopoverButton = forwardRef<HTMLButtonElement, ButtonProps>(
         kind="tertiary"
         size="mini"
         shape="circle"
-        overrides={{
-          Root: {props: {ref}},
-        }}
+        overrides={{Root: {props: {ref}}}}
         {...props}
       >
         <MoreHorizontal />

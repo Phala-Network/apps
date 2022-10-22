@@ -22,6 +22,7 @@ const useBlockHeightListener = () => {
         queryClient.invalidateQueries(['StakePoolWhitelistsConnection'])
         queryClient.invalidateQueries(['StakePoolStakesConnection'])
         queryClient.invalidateQueries(['WorkersConnection'])
+        queryClient.invalidateQueries(['TokenomicParameters'])
       } else {
         // Skip the first time
         enabled.current = true

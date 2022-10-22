@@ -18,11 +18,11 @@ import {Notification} from 'baseui/notification'
 import {ParagraphSmall} from 'baseui/typography'
 import Decimal from 'decimal.js'
 import {FC, useMemo, useState} from 'react'
-import {WorkerConnectionNode} from '.'
+import {WorkersConnectionNode} from '.'
 import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
 
 const ChangeStakeModalBody: FC<
-  {worker: WorkerConnectionNode} & Pick<ModalProps, 'onClose'>
+  {worker: WorkersConnectionNode} & Pick<ModalProps, 'onClose'>
 > = ({worker, onClose}) => {
   const {id: workerPublicKey, sMax, miner, stakePool} = worker
   const pid = stakePool?.id

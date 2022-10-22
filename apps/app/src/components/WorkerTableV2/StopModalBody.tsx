@@ -11,11 +11,11 @@ import {
 } from 'baseui/modal'
 import {ParagraphSmall} from 'baseui/typography'
 import {FC, useMemo, useState} from 'react'
-import {WorkerConnectionNode} from '.'
+import {WorkersConnectionNode} from '.'
 import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
 
 const StopModalBody: FC<
-  {worker: WorkerConnectionNode} & Pick<ModalProps, 'onClose'>
+  {worker: WorkersConnectionNode} & Pick<ModalProps, 'onClose'>
 > = ({worker, onClose}) => {
   const {stakePool, id: workerPublicKey} = worker
   const pid = stakePool?.id
