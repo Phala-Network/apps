@@ -44,11 +44,11 @@ const AddWhitelistModalBody: FC<
   const extrinsic = useMemo(() => {
     if (api && newAddresses) {
       const getExtrinsic = (address: string) =>
-        api.tx.phalaStakePool?.addStakerToWhitelist?.(pid, address)
+        api.tx.phalaStakePool.addStakerToWhitelist(pid, address)
       try {
         const addressesArray = newAddresses.split('\n').filter(Boolean)
         if (addressesArray.length > 1) {
-          return api.tx.utility.batchAll?.(addressesArray.map(getExtrinsic))
+          return api.tx.utility.batchAll(addressesArray.map(getExtrinsic))
         }
         return getExtrinsic(addressesArray[0])
       } catch (e) {

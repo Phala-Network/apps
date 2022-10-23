@@ -39,7 +39,7 @@ const Body = ({onClose}: Pick<ModalProps, 'onClose'>) => {
 
   const extrinsic = useMemo(() => {
     if (api) {
-      return api.tx.phalaStakePool?.create?.()
+      return api.tx.phalaStakePool.create()
     }
   }, [api])
 

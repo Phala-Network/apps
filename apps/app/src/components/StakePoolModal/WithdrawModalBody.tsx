@@ -1,6 +1,5 @@
 import {TransactionFeeLabel} from '@phala/react-components'
 import {useApiPromise} from '@phala/react-libs'
-import {useCurrentAccount} from '@phala/store'
 import {formatCurrency} from '@phala/utils'
 import {Block} from 'baseui/block'
 import {Button} from 'baseui/button'
@@ -29,7 +28,6 @@ const WithdrawModalBody: FC<
   const {pid, stakes} = stakePool
   const {api} = useApiPromise()
   const [amount, setAmount] = useState('')
-  const [polkadotAccount] = useCurrentAccount()
   const waitSignAndSend = useWaitSignAndSend()
   const [confirmLock, setConfirmLock] = useState(false)
 
@@ -39,30 +37,16 @@ const WithdrawModalBody: FC<
       await waitSignAndSend(extrinsic, (status) => {
         if (status.isReady) {
           onClose?.({closeSource: 'closeButton'})
-          setConfirmLock(false)
         }
       })
     } catch (err) {
-      // setConfirmLock(false)
-    } finally {
       setConfirmLock(false)
     }
   }
-  const hasWithdrawing = useMemo<boolean>(
-    () =>
-      Boolean(
-        stakes?.find(
-          (stakes) =>
-            stakes.account.id === polkadotAccount?.address &&
-            stakes.withdrawalAmount !== '0'
-        )
-      ),
-    [stakes, polkadotAccount]
-  )
 
   const extrinsic = useMemo(() => {
     if (api && amount && stakes?.[0]) {
-      return api.tx.phalaStakePool?.withdraw?.(
+      return api.tx.phalaStakePool.withdraw(
         pid,
         new Decimal(amount)
           .div(new Decimal(stakes[0].amount))
@@ -74,7 +58,11 @@ const WithdrawModalBody: FC<
     }
   }, [api, stakes, amount, pid])
 
-  if (stakes === undefined) return null
+  const stake = stakes?.[0]
+
+  if (!stake) return null
+
+  const hasWithdrawing = stake.withdrawalAmount !== '0'
 
   return (
     <>
@@ -85,9 +73,7 @@ const WithdrawModalBody: FC<
         </FormDisplay>
         <FormControl
           label="Amount"
-          caption={`Your Delegation: ${formatCurrency(
-            stakes[0]?.amount as string
-          )} PHA`}
+          caption={`Your Delegation: ${formatCurrency(stake.amount)} PHA`}
         >
           {/* FIXME: add amount validation */}
           <Input
@@ -101,9 +87,7 @@ const WithdrawModalBody: FC<
                 size="mini"
                 kind="tertiary"
                 onClick={() => {
-                  if (stakes[0]?.amount) {
-                    setAmount(stakes[0].amount)
-                  }
+                  setAmount(stake.amount)
                 }}
               >
                 Max
@@ -117,7 +101,14 @@ const WithdrawModalBody: FC<
         <Notification
           kind="warning"
           overrides={{
-            Body: {style: {width: 'auto', whiteSpace: 'pre-wrap'}},
+            Body: {
+              style: {
+                width: 'auto',
+                whiteSpace: 'pre-wrap',
+                marginLeft: 0,
+                marginRight: 0,
+              },
+            },
           }}
         >
           {hasWithdrawing && 'You have a pending withdraw request!\n\n'}

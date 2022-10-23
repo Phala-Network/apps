@@ -234,7 +234,6 @@ const ClaimAll: FC<{kind: 'delegate' | 'mining'} & BlockProps> = ({
         overrides={{
           Dialog: {
             style: ({$theme}) => ({
-              width: '560px',
               borderRadius: '4px',
               borderWidth: '2px',
               borderColor: $theme.colors.accent,
@@ -323,6 +322,7 @@ const ClaimAll: FC<{kind: 'delegate' | 'mining'} & BlockProps> = ({
                 error={isAddressError ? 'Invalid address' : null}
               >
                 <Input
+                  size="compact"
                   value={address}
                   autoFocus
                   overrides={{

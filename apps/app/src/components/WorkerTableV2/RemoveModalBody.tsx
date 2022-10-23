@@ -39,7 +39,7 @@ const RemoveModalBody: FC<
 
   const extrinsic = useMemo(() => {
     if (api) {
-      return api.tx.phalaStakePool?.removeWorker?.(pid, workerPublicKey)
+      return api.tx.phalaStakePool.removeWorker(pid, workerPublicKey)
     }
   }, [api, pid, workerPublicKey])
 

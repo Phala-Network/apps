@@ -38,30 +38,29 @@ const ClaimModalBody: FC<
       await waitSignAndSend(extrinsic, (status) => {
         if (status.isReady) {
           onClose?.({closeSource: 'closeButton'})
-          setConfirmLock(false)
         }
       })
     } catch (err) {
-      // setConfirmLock(false)
-    } finally {
       setConfirmLock(false)
     }
   }
 
   const extrinsic = useMemo(() => {
     if (api && !isAddressError) {
-      return api.tx.phalaStakePool?.claimRewards?.(pid, address)
+      return api.tx.phalaStakePool.claimRewards(pid, address)
     }
   }, [api, pid, address, isAddressError])
 
-  if (!stakes) return null
+  const stake = stakes?.[0]
+
+  if (!stake) return null
 
   return (
     <>
       <ModalHeader>Claim Reward</ModalHeader>
       <ModalBody>
         <ParagraphSmall>
-          Claim all the pending rewards of the sender and send to the target
+          Claim all rewards of the sender and send to the target
         </ParagraphSmall>
         <FormDisplay label="Pid">
           <ParagraphSmall as="div">{pid}</ParagraphSmall>
@@ -70,7 +69,7 @@ const ClaimModalBody: FC<
         <FormDisplay label="Rewards">
           <Block display={'flex'} flexDirection={'row'}>
             <ParagraphSmall as="div">
-              {stakes[0] && formatCurrency(stakes[0].reward as string)} PHA
+              {formatCurrency(stake.reward as string)} PHA
             </ParagraphSmall>
           </Block>
         </FormDisplay>
@@ -86,6 +85,7 @@ const ClaimModalBody: FC<
               Input: {style: {textOverflow: 'ellipsis'}},
               EndEnhancer: {style: {whiteSpace: 'pre'}},
             }}
+            size="compact"
             endEnhancer={
               polkadotAccount &&
               !address &&

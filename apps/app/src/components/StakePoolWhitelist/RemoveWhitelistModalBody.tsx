@@ -42,10 +42,10 @@ const RemoveWhitelistModalBody: FC<
   const extrinsic = useMemo(() => {
     if (api) {
       const getExtrinsic = (address: string) =>
-        api.tx.phalaStakePool?.removeStakerFromWhitelist?.(pid, address)
+        api.tx.phalaStakePool.removeStakerFromWhitelist(pid, address)
       try {
         if (addresses.length > 1) {
-          return api.tx.utility.batchAll?.(addresses.map(getExtrinsic))
+          return api.tx.utility.batchAll(addresses.map(getExtrinsic))
         }
         return getExtrinsic(addresses[0])
       } catch (e) {

@@ -134,7 +134,12 @@ const StakePoolTableV2: FC<{
             ].filter(isTruthy),
           },
           kind === 'myDelegate' && {
-            stakes_some: {account: {id_eq: address}, amount_gt: '0'},
+            stakes_some: {
+              AND: [
+                {account: {id_eq: address}},
+                {OR: [{amount_gt: '0'}, {reward_gt: '0'}]},
+              ],
+            },
           },
         ].filter(isTruthy),
       },
@@ -188,10 +193,14 @@ const StakePoolTableV2: FC<{
   }, [])
 
   useEffect(() => {
-    if (kind === 'mining') {
-      setCurrentPage(1)
-    }
-  }, [polkadotAccount?.address, kind])
+    setCurrentPage(1)
+  }, [
+    polkadotAccount?.address,
+    searchString,
+    delegableFilter,
+    whitelistFilter,
+    delegableValue,
+  ])
 
   return (
     <div>
@@ -537,6 +546,7 @@ const StakePoolTableV2: FC<{
               polkadotAccount?.address &&
                 (isOwner || !node.whitelistEnabled || node.whitelists.length)
             )
+            const stake = node.stakes?.[0]
             if (kind === 'delegate') {
               return (
                 <Button
@@ -557,11 +567,7 @@ const StakePoolTableV2: FC<{
               {label: 'Add Worker', key: 'addWorker'},
               {label: 'Set Cap', key: 'setCap'},
               {label: 'Set Commission', key: 'setCommission'},
-              {
-                label: 'Set Description',
-                key: 'setDescription',
-                disabled: !isOwner,
-              },
+              {label: 'Set Description', key: 'setDescription'},
             ]
             const commonMenuItems: MenuItem[] = [
               {
@@ -569,17 +575,17 @@ const StakePoolTableV2: FC<{
                 key: 'delegate',
                 disabled: !canDelegate,
               },
-              {label: 'Claim Reward', key: 'claim'},
+              {
+                label: 'Claim Reward',
+                key: 'claim',
+                disabled: !stake || stake.reward === '0',
+              },
               {
                 label: 'Withdraw',
                 key: 'withdraw',
-                disabled: !node.stakes.length,
+                disabled: !stake || stake.amount === '0',
               },
-              {
-                label: 'Reclaim All Workers',
-                key: 'reclaimAll',
-                // disabled: !stakePool.miners?.length,
-              },
+              {label: 'Reclaim All Workers', key: 'reclaimAll'},
             ]
             let items: Array<MenuItem | MenuDivider> = commonMenuItems
             if (kind === 'mining') {

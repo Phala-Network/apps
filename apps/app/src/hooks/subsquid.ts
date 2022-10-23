@@ -1719,6 +1719,14 @@ export type GlobalStateQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GlobalStateQuery = { __typename?: 'Query', globalStateById?: { __typename?: 'GlobalState', height: number, totalStake: string, averageBlockTime: number, miningWorkerShare: string } | null };
 
+export type ReclaimableWorkersConnectionQueryVariables = Exact<{
+  orderBy: Array<WorkerOrderByInput> | WorkerOrderByInput;
+  where?: InputMaybe<WorkerWhereInput>;
+}>;
+
+
+export type ReclaimableWorkersConnectionQuery = { __typename?: 'Query', workersConnection: { __typename?: 'WorkersConnection', totalCount: number, edges: Array<{ __typename?: 'WorkerEdge', cursor: string, node: { __typename?: 'Worker', id: string, miner?: { __typename?: 'Miner', stake: string } | null } }> } };
+
 export type StakePoolByIdQueryVariables = Exact<{
   stakePoolByIdId: Scalars['String'];
   accountId?: InputMaybe<Scalars['String']>;
@@ -1774,7 +1782,7 @@ export type WorkersConnectionQueryVariables = Exact<{
 }>;
 
 
-export type WorkersConnectionQuery = { __typename?: 'Query', workersConnection: { __typename?: 'WorkersConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string, endCursor: string }, edges: Array<{ __typename?: 'WorkerEdge', cursor: string, node: { __typename?: 'Worker', id: string, confidenceLevel: number, initialScore?: number | null, sMin?: string | null, sMax?: string | null, stakePool?: { __typename?: 'StakePool', id: string, freeStake: string } | null, miner?: { __typename?: 'Miner', id: string, isBound: boolean, stake: string, state: MinerState, v: string, ve: string, pInit: number, pInstant: number, totalReward: string, coolingDownStartTime?: string | null } | null } }> }, globalStateById?: { __typename?: 'GlobalState', height: number } | null };
+export type WorkersConnectionQuery = { __typename?: 'Query', workersConnection: { __typename?: 'WorkersConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string, endCursor: string }, edges: Array<{ __typename?: 'WorkerEdge', cursor: string, node: { __typename?: 'Worker', id: string, confidenceLevel: number, initialScore?: number | null, sMin?: string | null, sMax?: string | null, stakePool?: { __typename?: 'StakePool', id: string, freeStake: string } | null, miner?: { __typename?: 'Miner', id: string, isBound: boolean, stake: string, state: MinerState, v: string, ve: string, pInit: number, pInstant: number, totalReward: string, coolingDownStartTime?: string | null } | null } }> } };
 
 
 export const AccountRewardsDocument = `
@@ -1826,6 +1834,36 @@ export const useGlobalStateQuery = <
     useQuery<GlobalStateQuery, TError, TData>(
       variables === undefined ? ['GlobalState'] : ['GlobalState', variables],
       fetcher<GlobalStateQuery, GlobalStateQueryVariables>(client, GlobalStateDocument, variables, headers),
+      options
+    );
+export const ReclaimableWorkersConnectionDocument = `
+    query ReclaimableWorkersConnection($orderBy: [WorkerOrderByInput!]!, $where: WorkerWhereInput) {
+  workersConnection(orderBy: $orderBy, where: $where) {
+    edges {
+      node {
+        id
+        miner {
+          stake
+        }
+      }
+      cursor
+    }
+    totalCount
+  }
+}
+    `;
+export const useReclaimableWorkersConnectionQuery = <
+      TData = ReclaimableWorkersConnectionQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: ReclaimableWorkersConnectionQueryVariables,
+      options?: UseQueryOptions<ReclaimableWorkersConnectionQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<ReclaimableWorkersConnectionQuery, TError, TData>(
+      ['ReclaimableWorkersConnection', variables],
+      fetcher<ReclaimableWorkersConnectionQuery, ReclaimableWorkersConnectionQueryVariables>(client, ReclaimableWorkersConnectionDocument, variables, headers),
       options
     );
 export const StakePoolByIdDocument = `
@@ -2121,9 +2159,6 @@ export const WorkersConnectionDocument = `
         sMax
       }
     }
-  }
-  globalStateById(id: "0") {
-    height
   }
 }
     `;

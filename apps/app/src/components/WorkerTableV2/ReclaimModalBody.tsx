@@ -40,7 +40,7 @@ const ReclaimModalBody: FC<
 
   const extrinsic = useMemo(() => {
     if (api) {
-      return api.tx.phalaStakePool?.reclaimPoolWorker?.(pid, workerPublicKey)
+      return api.tx.phalaStakePool.reclaimPoolWorker(pid, workerPublicKey)
     }
   }, [api, pid, workerPublicKey])
 

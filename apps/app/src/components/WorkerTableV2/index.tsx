@@ -143,10 +143,8 @@ const WorkerTableV2: FC<{
   const ModalBody = openModalKey && modalKeyMap[openModalKey]
 
   useEffect(() => {
-    if (kind === 'mining') {
-      setCurrentPage(1)
-    }
-  }, [polkadotAccount?.address, kind])
+    setCurrentPage(1)
+  }, [polkadotAccount?.address, searchString])
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const debouncedSetSearchString = useCallback(

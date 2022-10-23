@@ -52,7 +52,7 @@ const ChangeStakeModalBody: FC<
 
   const extrinsic = useMemo(() => {
     if (!isNewAmountNotInRange && api && amount) {
-      return api.tx.phalaStakePool?.restartMining?.(
+      return api.tx.phalaStakePool.restartMining(
         pid,
         workerPublicKey,
         new Decimal(amount).times(1e12).floor().toString()

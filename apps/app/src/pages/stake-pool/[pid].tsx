@@ -61,6 +61,7 @@ const StakePool: FC<StakePoolProps> = ({pid}) => {
     },
     {
       refetchOnWindowFocus: false,
+      keepPreviousData: true,
       enabled: Boolean(pid),
     }
   )

@@ -33,7 +33,7 @@ const ClaimModal: React.FC<Props> = ({onClose}) => {
   const extrinsic = useMemo(() => {
     if (!api) return
 
-    return api.tx.vesting?.vest?.()
+    return api.tx.vesting.vest()
   }, [api])
 
   const submit = () => {

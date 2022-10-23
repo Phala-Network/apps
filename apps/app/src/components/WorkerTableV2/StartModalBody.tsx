@@ -43,7 +43,7 @@ const StartModalBody: FC<
   }
   const extrinsic = useMemo(() => {
     if (api && amount) {
-      return api.tx.phalaStakePool?.startMining?.(
+      return api.tx.phalaStakePool.startMining(
         pid,
         workerPublicKey,
         new Decimal(amount).times(1e12).floor().toString()

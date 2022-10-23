@@ -41,7 +41,7 @@ const StopModalBody: FC<
 
   const extrinsic = useMemo(() => {
     if (api) {
-      return api.tx.phalaStakePool?.stopMining?.(pid, workerPublicKey)
+      return api.tx.phalaStakePool.stopMining(pid, workerPublicKey)
     }
   }, [api, pid, workerPublicKey])
 
