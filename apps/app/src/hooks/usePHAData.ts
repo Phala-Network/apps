@@ -62,7 +62,7 @@ const usePHAData = () => {
 
   return {
     name: currentNetworkNode.kind === 'phala' ? 'PHA' : 'K-PHA',
-    icon: '/images/Phala.svg',
+    icon: '/images/phala.svg',
     balance: balanceValue,
     transferrable: transferrableValue,
     crowdloanVesting: crowdloanVestingValue,

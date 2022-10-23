@@ -3481,16 +3481,10 @@ __metadata:
     "@polkadot/api": ^8.8.1
     "@polkadot/react-identicon": ^2.9.3
     "@talismn/connect-wallets": ^1.2.1
-    "@types/node": ^16.11.47
     "@types/react": ^18.0.15
-    "@types/react-dom": ^18.0.6
-    "@types/styled-components": ^5.1.25
     baseui: 12.2.0
-    currency.js: ^2.0.4
-    decimal.js: ^10.4.0
     jotai: ^1.7.7
     react-feather: ^2.0.10
-    styled-components: ^5.3.5
   peerDependencies:
     react: ">=17"
     react-dom: ">=17"
@@ -3517,12 +3511,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@phala/react-libs@workspace:packages/react-libs"
   dependencies:
-    "@phala/utils": "workspace:^"
     "@polkadot/api": ^8.8.1
     "@polkadot/types": ^8.8.1
     "@polkadot/util-crypto": ^9.4.1
-    "@types/bn.js": ^5.1.0
-    bn.js: ^5.2.0
     decimal.js: ^10.4.0
   peerDependencies:
     react: ">=17"
@@ -5252,7 +5243,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/styled-components@npm:^5.1.25, @types/styled-components@npm:^5.1.26":
+"@types/styled-components@npm:^5.1.26":
   version: 5.1.26
   resolution: "@types/styled-components@npm:5.1.26"
   dependencies:
@@ -6624,7 +6615,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bn.js@npm:^5.2.0, bn.js@npm:^5.2.1":
+"bn.js@npm:^5.2.1":
   version: 5.2.1
   resolution: "bn.js@npm:5.2.1"
   checksum: 3dd8c8d38055fedfa95c1d5fc3c99f8dd547b36287b37768db0abab3c239711f88ff58d18d155dd8ad902b0b0cee973747b7ae20ea12a09473272b0201c9edd3
@@ -8107,13 +8098,6 @@ __metadata:
   version: 3.1.0
   resolution: "csstype@npm:3.1.0"
   checksum: 644e986cefab86525f0b674a06889cfdbb1f117e5b7d1ce0fc55b0423ecc58807a1ea42ecc75c4f18999d14fc42d1d255f84662a45003a52bb5840e977eb2ffd
-  languageName: node
-  linkType: hard
-
-"currency.js@npm:^2.0.4":
-  version: 2.0.4
-  resolution: "currency.js@npm:2.0.4"
-  checksum: 327b0f5c329df8fba3071ab76ef301cd6ddf967304f52f69934c4e2aee07fcf30130a8cd136d3a8803f5932b1fdc195a2dcc68b16630ad0f10f86c0608920446
   languageName: node
   linkType: hard
 

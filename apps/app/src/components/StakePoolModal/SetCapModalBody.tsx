@@ -1,8 +1,5 @@
-import {PhalaStakePoolTransactionFeeLabel} from '@phala/react-components'
-import {
-  useApiPromise,
-  useDecimalJsTokenDecimalMultiplier,
-} from '@phala/react-libs'
+import {TransactionFeeLabel} from '@phala/react-components'
+import {useApiPromise} from '@phala/react-libs'
 import {formatCurrency} from '@phala/utils'
 import {Block} from 'baseui/block'
 import {FormControl} from 'baseui/form-control'
@@ -19,6 +16,7 @@ import Decimal from 'decimal.js'
 import {FC, useMemo, useState} from 'react'
 import {StakePool} from '../../hooks/subsquid'
 import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
+import FormDisplay from '../FormDisplay'
 
 const SetCapModalBody: FC<
   {
@@ -30,7 +28,6 @@ const SetCapModalBody: FC<
   const {api} = useApiPromise()
   const [cap, setCap] = useState('')
   const waitSignAndSend = useWaitSignAndSend()
-  const decimals = useDecimalJsTokenDecimalMultiplier(api)
   const [confirmLock, setConfirmLock] = useState(false)
 
   const onConfirm = async () => {
@@ -50,13 +47,13 @@ const SetCapModalBody: FC<
   }
 
   const extrinsic = useMemo(() => {
-    if (api && decimals && cap) {
-      return api.tx.phalaStakePool?.setCap?.(
+    if (api && cap) {
+      return api.tx.phalaStakePool.setCap(
         pid,
-        new Decimal(cap).times(decimals).floor().toString()
+        new Decimal(cap).times(1e12).floor().toString()
       )
     }
-  }, [api, cap, decimals, pid])
+  }, [api, cap, pid])
 
   if (totalStake === undefined || currentCap === undefined) return null
 
@@ -64,9 +61,9 @@ const SetCapModalBody: FC<
     <>
       <ModalHeader>Set Cap</ModalHeader>
       <ModalBody>
-        <FormControl label="Pid">
+        <FormDisplay label="Pid">
           <ParagraphSmall as="div">{pid}</ParagraphSmall>
-        </FormControl>
+        </FormDisplay>
         <FormControl
           label="New Cap"
           caption={
@@ -95,7 +92,7 @@ const SetCapModalBody: FC<
           alignItems="center"
           justifyContent="space-between"
         >
-          <PhalaStakePoolTransactionFeeLabel action={extrinsic} />
+          <TransactionFeeLabel action={extrinsic} />
           <ModalButton disabled={!cap || confirmLock} onClick={onConfirm}>
             Confirm
           </ModalButton>

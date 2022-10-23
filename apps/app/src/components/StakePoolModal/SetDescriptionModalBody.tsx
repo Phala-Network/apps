@@ -1,4 +1,4 @@
-import {PhalaStakePoolTransactionFeeLabel} from '@phala/react-components'
+import {TransactionFeeLabel} from '@phala/react-components'
 import {useApiPromise} from '@phala/react-libs'
 import {stringToHex} from '@polkadot/util'
 import {Block} from 'baseui/block'
@@ -20,6 +20,7 @@ import useStakePoolDescription, {
   StakePoolDescription,
 } from '../../hooks/useStakePoolDescription'
 import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
+import FormDisplay from '../FormDisplay'
 
 const ANN_MAX_LENGTH = 240
 
@@ -100,9 +101,9 @@ const SetDescriptionModalBody: FC<
     <>
       <ModalHeader>Set Description</ModalHeader>
       <ModalBody>
-        <FormControl label="Pid">
+        <FormDisplay label="Pid">
           <ParagraphSmall as="div">{pid}</ParagraphSmall>
-        </FormControl>
+        </FormDisplay>
         <Grid gridMargins={0} gridColumns={2} gridGutters={12}>
           <Cell span={1}>
             <FormControl label="Telegram">
@@ -194,7 +195,7 @@ const SetDescriptionModalBody: FC<
           alignItems="center"
           justifyContent="space-between"
         >
-          <PhalaStakePoolTransactionFeeLabel action={extrinsic} />
+          <TransactionFeeLabel action={extrinsic} />
           <ModalButton disabled={confirmLock} onClick={onConfirm}>
             Confirm
           </ModalButton>

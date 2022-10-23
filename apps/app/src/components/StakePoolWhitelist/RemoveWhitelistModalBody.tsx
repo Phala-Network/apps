@@ -1,7 +1,6 @@
-import {PhalaStakePoolTransactionFeeLabel} from '@phala/react-components'
+import {TransactionFeeLabel} from '@phala/react-components'
 import {useApiPromise} from '@phala/react-libs'
 import {Block} from 'baseui/block'
-import {FormControl} from 'baseui/form-control'
 import {
   ModalBody,
   ModalButton,
@@ -12,6 +11,7 @@ import {
 import {ParagraphSmall} from 'baseui/typography'
 import {FC, useMemo, useState} from 'react'
 import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
+import FormDisplay from '../FormDisplay'
 
 const RemoveWhitelistModalBody: FC<
   {
@@ -58,10 +58,10 @@ const RemoveWhitelistModalBody: FC<
     <>
       <ModalHeader>Remove Stakers from Whitelist</ModalHeader>
       <ModalBody>
-        <FormControl label="Pid">
+        <FormDisplay label="Pid">
           <ParagraphSmall as="div">{pid}</ParagraphSmall>
-        </FormControl>
-        <FormControl label="Addresses">
+        </FormDisplay>
+        <FormDisplay label="Addresses">
           <ParagraphSmall>
             {addresses.map((address) => (
               <>
@@ -70,7 +70,7 @@ const RemoveWhitelistModalBody: FC<
               </>
             ))}
           </ParagraphSmall>
-        </FormControl>
+        </FormDisplay>
       </ModalBody>
       <ModalFooter>
         <Block
@@ -78,7 +78,7 @@ const RemoveWhitelistModalBody: FC<
           alignItems="center"
           justifyContent="space-between"
         >
-          <PhalaStakePoolTransactionFeeLabel action={extrinsic} />
+          <TransactionFeeLabel action={extrinsic} />
           <ModalButton disabled={confirmLock} onClick={onConfirm}>
             Confirm
           </ModalButton>

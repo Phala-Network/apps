@@ -1,5 +1,2 @@
-export * from './BalanceLabel'
-export * from './FeeLabel'
-export * from './PhalaStakePoolTransactionFeeLabel'
-export * from './PolkadotTransactionFeeLabel'
 export * from './SelectAccountModal'
+export * from './TransactionFeeLabel'

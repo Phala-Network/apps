@@ -1,11 +1,8 @@
-import {BalanceLabel, SelectAccountModal} from '@phala/react-components'
+import {SelectAccountModal} from '@phala/react-components'
 import {useBalance, useSSR} from '@phala/react-hooks'
-import {
-  useApiPromise,
-  useDecimalJsTokenDecimalMultiplier,
-} from '@phala/react-libs'
+import {useApiPromise} from '@phala/react-libs'
 import {useCurrentAccount} from '@phala/store'
-import {trimAddress} from '@phala/utils'
+import {formatCurrency, trimAddress} from '@phala/utils'
 import {useStyletron} from 'baseui'
 import {Block} from 'baseui/block'
 import Decimal from 'decimal.js'
@@ -14,6 +11,7 @@ import {down} from 'styled-breakpoints'
 import styled from 'styled-components'
 
 const Connect = styled.div`
+  font-weight: 500;
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -21,7 +19,6 @@ const Connect = styled.div`
   height: 36px;
   padding: 0 10px;
   background: #d1ff52;
-  font-family: Montserrat;
   font-size: 16px;
   color: #111111;
   margin-right: 20px;
@@ -36,10 +33,9 @@ const AccountLabel = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-family: Montserrat;
-  font-style: normal;
   font-size: 16px;
   background: #eeeeee;
+  font-weight: 500;
   margin-right: 16px;
   height: 36px;
 
@@ -110,12 +106,11 @@ const Account: React.FC = () => {
   const [currentAccount] = useCurrentAccount()
   const balance = useBalance(currentAccount?.address)
   const {api} = useApiPromise()
-  const decimals = useDecimalJsTokenDecimalMultiplier(api)
 
   const balanceValue = useMemo(() => {
-    if (!api || !balance || !decimals) return
-    return new Decimal(balance.toString() || '0').div(decimals)
-  }, [api, balance, decimals])
+    if (!api || !balance) return
+    return new Decimal(balance.toString()).div(1e12)
+  }, [api, balance])
 
   const {isServer} = useSSR()
 
@@ -130,7 +125,7 @@ const Account: React.FC = () => {
       ) : (
         <AccountLabel>
           <Balance>
-            <BalanceLabel value={balanceValue} />
+            {balanceValue ? formatCurrency(balanceValue) : '-'}
             <span className="unit">PHA</span>
           </Balance>
           <AccountInfo onClick={openAccountSelectModal}>

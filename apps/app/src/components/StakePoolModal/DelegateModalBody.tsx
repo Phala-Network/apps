@@ -1,8 +1,5 @@
-import {PhalaStakePoolTransactionFeeLabel} from '@phala/react-components'
-import {
-  useApiPromise,
-  useDecimalJsTokenDecimalMultiplier,
-} from '@phala/react-libs'
+import {TransactionFeeLabel} from '@phala/react-components'
+import {useApiPromise} from '@phala/react-libs'
 import {formatCurrency} from '@phala/utils'
 import {Block} from 'baseui/block'
 import {FormControl} from 'baseui/form-control'
@@ -21,6 +18,7 @@ import {FC, useMemo, useState} from 'react'
 import {StakePool} from '../../hooks/subsquid'
 import {useDelegableBalance} from '../../hooks/useDelegableBalance'
 import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
+import FormDisplay from '../FormDisplay'
 
 const DelegateModalBody: FC<
   {
@@ -32,7 +30,6 @@ const DelegateModalBody: FC<
   const delegableBalance = useDelegableBalance()
   const [amount, setAmount] = useState('')
   const waitSignAndSend = useWaitSignAndSend()
-  const decimals = useDecimalJsTokenDecimalMultiplier(api)
   const [confirmLock, setConfirmLock] = useState(false)
 
   const onConfirm = async () => {
@@ -51,13 +48,13 @@ const DelegateModalBody: FC<
     }
   }
   const extrinsic = useMemo(() => {
-    if (api && amount && decimals) {
-      return api.tx.phalaStakePool?.contribute?.(
+    if (api && amount) {
+      return api.tx.phalaStakePool.contribute(
         pid,
-        new Decimal(amount).times(decimals).floor().toString()
+        new Decimal(amount).times(1e12).floor().toString()
       )
     }
-  }, [api, pid, amount, decimals])
+  }, [api, pid, amount])
 
   if (delegable === undefined) return null
 
@@ -67,9 +64,9 @@ const DelegateModalBody: FC<
     <>
       <ModalHeader>Delegate</ModalHeader>
       <ModalBody>
-        <FormControl label="Pid">
+        <FormDisplay label="Pid">
           <ParagraphSmall as="div">{pid}</ParagraphSmall>
-        </FormControl>
+        </FormDisplay>
         <FormControl
           label="Amount"
           caption={
@@ -77,8 +74,8 @@ const DelegateModalBody: FC<
               Pool Delegable: {delegableStake}
               <br />
               Delegable Balance:{' '}
-              {delegableBalance && decimals ? (
-                `${formatCurrency(delegableBalance.div(decimals))} PHA`
+              {delegableBalance ? (
+                `${formatCurrency(delegableBalance.div(1e12))} PHA`
               ) : (
                 <Skeleton
                   animation
@@ -111,7 +108,7 @@ const DelegateModalBody: FC<
           alignItems="center"
           justifyContent="space-between"
         >
-          <PhalaStakePoolTransactionFeeLabel action={extrinsic} />
+          <TransactionFeeLabel action={extrinsic} />
           <ModalButton disabled={!amount || confirmLock} onClick={onConfirm}>
             Confirm
           </ModalButton>

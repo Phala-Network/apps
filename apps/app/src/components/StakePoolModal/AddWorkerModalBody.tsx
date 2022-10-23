@@ -1,8 +1,5 @@
-import {PhalaStakePoolTransactionFeeLabel} from '@phala/react-components'
-import {
-  useApiPromise,
-  useDecimalJsTokenDecimalMultiplier,
-} from '@phala/react-libs'
+import {TransactionFeeLabel} from '@phala/react-components'
+import {useApiPromise} from '@phala/react-libs'
 import {Block} from 'baseui/block'
 import {FormControl} from 'baseui/form-control'
 import {Input} from 'baseui/input'
@@ -17,6 +14,7 @@ import {ParagraphSmall} from 'baseui/typography'
 import {FC, useMemo, useState} from 'react'
 import {StakePool} from '../../hooks/subsquid'
 import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
+import FormDisplay from '../FormDisplay'
 
 const AddWorkerModalBody: FC<
   {stakePool: Pick<StakePool, 'pid'>} & Pick<ModalProps, 'onClose'>
@@ -26,7 +24,6 @@ const AddWorkerModalBody: FC<
   const [pubKey, setPubKey] = useState('')
   const [error, setError] = useState<string | null>(null)
   const waitSignAndSend = useWaitSignAndSend()
-  const decimals = useDecimalJsTokenDecimalMultiplier(api)
   // Expected at least 32 bytes (256 bits), so it should be 31 * 2 + 1 === 63
   const isValidPubKey = /0x[0-9a-fA-F]{63,}/.test(pubKey)
 
@@ -49,18 +46,18 @@ const AddWorkerModalBody: FC<
   }
 
   const extrinsic = useMemo(() => {
-    if (api && decimals && isValidPubKey) {
-      return api?.tx.phalaStakePool?.addWorker?.(pid, pubKey)
+    if (api && isValidPubKey) {
+      return api.tx.phalaStakePool.addWorker(pid, pubKey)
     }
-  }, [api, decimals, pid, isValidPubKey, pubKey])
+  }, [api, pid, isValidPubKey, pubKey])
 
   return (
     <>
       <ModalHeader>Add Worker</ModalHeader>
       <ModalBody>
-        <FormControl label="Pid">
+        <FormDisplay label="Pid">
           <ParagraphSmall as="div">{pid}</ParagraphSmall>
-        </FormControl>
+        </FormDisplay>
         <FormControl label="Worker Public Key" error={error}>
           <Input
             size="compact"
@@ -84,7 +81,7 @@ const AddWorkerModalBody: FC<
           alignItems="center"
           justifyContent="space-between"
         >
-          <PhalaStakePoolTransactionFeeLabel action={extrinsic} />
+          <TransactionFeeLabel action={extrinsic} />
           <ModalButton
             disabled={!isValidPubKey || Boolean(error) || confirmLock}
             onClick={onConfirm}

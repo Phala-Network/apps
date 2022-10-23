@@ -6,7 +6,6 @@ const Wrapper = styled.div`
 
   a {
     font-family: Montserrat;
-    font-style: normal;
     font-size: 16px;
     line-height: 16px;
     color: #111111;

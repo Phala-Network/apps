@@ -31,7 +31,6 @@ export const LineWrap = styled.div`
   box-sizing: border-box;
   height: 48px;
   padding: 16px 23px 16px 21px;
-  font-family: Montserrat;
   font-size: 16px;
   line-height: 16px;
   color: #111111;

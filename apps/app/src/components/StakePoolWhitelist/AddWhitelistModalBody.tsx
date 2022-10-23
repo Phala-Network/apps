@@ -1,4 +1,4 @@
-import {PhalaStakePoolTransactionFeeLabel} from '@phala/react-components'
+import {TransactionFeeLabel} from '@phala/react-components'
 import {useApiPromise} from '@phala/react-libs'
 import {Block} from 'baseui/block'
 import {FormControl} from 'baseui/form-control'
@@ -13,6 +13,7 @@ import {Textarea} from 'baseui/textarea'
 import {ParagraphSmall} from 'baseui/typography'
 import {FC, useMemo, useState} from 'react'
 import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
+import FormDisplay from '../FormDisplay'
 
 const AddWhitelistModalBody: FC<
   {
@@ -60,9 +61,9 @@ const AddWhitelistModalBody: FC<
     <>
       <ModalHeader>Add Stakers to Whitelist</ModalHeader>
       <ModalBody>
-        <FormControl label="Pid">
+        <FormDisplay label="Pid">
           <ParagraphSmall as="div">{pid}</ParagraphSmall>
-        </FormControl>
+        </FormDisplay>
         <FormControl
           label="Addresses"
           caption="One address per line, up to 100"
@@ -80,7 +81,7 @@ const AddWhitelistModalBody: FC<
           alignItems="center"
           justifyContent="space-between"
         >
-          <PhalaStakePoolTransactionFeeLabel action={extrinsic} />
+          <TransactionFeeLabel action={extrinsic} />
           <ModalButton
             disabled={!newAddresses || confirmLock}
             onClick={onConfirm}

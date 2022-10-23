@@ -3,8 +3,6 @@ import styled from 'styled-components'
 export const MaxButton = styled.div`
   cursor: pointer;
   border-bottom: '1px solid #8C8C8C';
-  font-family: Montserrat;
-  font-style: normal;
   font-weight: 600;
   height: 24px;
 

@@ -35,19 +35,11 @@ const typography = Object.keys(LightTheme.typography).reduce<
 const overrides = {
   breakpoints,
   mediaQuery,
-  // lighting: {
-  //   shallowAbove: '0px -4px 16px rgba(0, 0, 0, 0.05)',
-  //   shallowBelow: '0px 4px 16px rgba(0, 0, 0, 0.05)',
-  // },
   typography,
 }
 
 export const baseTheme = createLightTheme(
-  {
-    primaryFontFamily: 'Montserrat, system-ui',
-    accent: '#D1FF52',
-    primaryA: '#1A1A1A',
-  },
+  {accent: '#D1FF52', primaryA: '#1A1A1A'},
   overrides
 )
 

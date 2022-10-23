@@ -143,9 +143,10 @@ const StakePoolTableV2: FC<{
       refetchOnWindowFocus: false,
       keepPreviousData: true,
       enabled:
-        kind === 'delegate' ||
-        Boolean(kind === 'mining' && address) ||
-        Boolean(kind === 'myDelegate' && address),
+        !stakePoolModalKey &&
+        (kind === 'delegate' ||
+          Boolean(kind === 'mining' && address) ||
+          Boolean(kind === 'myDelegate' && address)),
     }
   )
 

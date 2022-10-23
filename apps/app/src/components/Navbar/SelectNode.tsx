@@ -15,7 +15,6 @@ const Button = styled.div`
   height: 36px;
   padding: 0 6px 0 10px;
   background: #eeeeee;
-  font-family: Montserrat;
   font-size: 16px;
   margin-right: 20px;
 

@@ -1,10 +1,5 @@
-import {PolkadotTransactionFeeLabel} from '@phala/react-components'
 import {usePolkadotAccountTransferrableBalanceDecimal} from '@phala/react-hooks'
-import {
-  useApiPromise,
-  useDecimalJsTokenDecimalMultiplier,
-  waitSignAndSend,
-} from '@phala/react-libs'
+import {useApiPromise, waitSignAndSend} from '@phala/react-libs'
 import {useCurrentAccount} from '@phala/store'
 import {toFixed, validateAddress} from '@phala/utils'
 import {Block} from 'baseui/block'
@@ -28,7 +23,6 @@ const TransferModal: React.FC<Props> = ({onClose}) => {
   const [loading, setLoading] = useState(false)
   const {api} = useApiPromise()
   const [polkadotAccount] = useCurrentAccount()
-  const decimals = useDecimalJsTokenDecimalMultiplier(api)
   const [currentNetworkNode] = useCurrentNetworkNode()
 
   const polkadotAccountAddress = polkadotAccount?.address
@@ -48,7 +42,7 @@ const TransferModal: React.FC<Props> = ({onClose}) => {
   }
 
   const submit = async () => {
-    if (api && polkadotAccount && polkadotAccount.wallet?.signer && decimals) {
+    if (api && polkadotAccount && polkadotAccount.wallet?.signer) {
       let amountString: string
 
       if (!validateAddress(address)) {
@@ -57,7 +51,7 @@ const TransferModal: React.FC<Props> = ({onClose}) => {
       }
 
       try {
-        amountString = new Decimal(amount).mul(decimals).toString()
+        amountString = new Decimal(amount).mul(1e12).toString()
       } catch (err) {
         toaster.negative('Invalid amount', {})
         return
@@ -119,12 +113,12 @@ const TransferModal: React.FC<Props> = ({onClose}) => {
           alignItems="center"
           justifyContent="space-between"
         >
-          <PolkadotTransactionFeeLabel
+          {/* <PolkadotTransactionFeeLabel
             key="PolkadotTransactionFeeLabel"
             sender={polkadotAccount?.address}
             recipient={address}
             amount={amount}
-          />
+          /> */}
           <ModalButton
             disabled={loading}
             onClick={() => {

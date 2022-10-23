@@ -1,11 +1,7 @@
-import {PhalaStakePoolTransactionFeeLabel} from '@phala/react-components'
-import {
-  useApiPromise,
-  useDecimalJsTokenDecimalMultiplier,
-} from '@phala/react-libs'
+import {TransactionFeeLabel} from '@phala/react-components'
+import {useApiPromise} from '@phala/react-libs'
 import {formatCurrency, trimAddress} from '@phala/utils'
 import {Block} from 'baseui/block'
-import {FormControl} from 'baseui/form-control'
 import {
   ModalBody,
   ModalButton,
@@ -19,6 +15,7 @@ import Decimal from 'decimal.js'
 import {FC, useMemo, useState} from 'react'
 import {StakePool} from '../../hooks/subsquid'
 import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
+import FormDisplay from '../FormDisplay'
 
 const ReclaimAllModalBody: FC<
   {
@@ -28,7 +25,6 @@ const ReclaimAllModalBody: FC<
   const {pid, miners} = stakePool
   const {api} = useApiPromise()
   const waitSignAndSend = useWaitSignAndSend()
-  const decimals = useDecimalJsTokenDecimalMultiplier(api)
   const [confirmLock, setConfirmLock] = useState(false)
 
   const onConfirm = async () => {
@@ -60,14 +56,14 @@ const ReclaimAllModalBody: FC<
   )
 
   const extrinsic = useMemo(() => {
-    if (api && decimals && miners) {
+    if (api && miners) {
       return api.tx.utility.batch(
         miners.map(({worker}) =>
-          api.tx.phalaStakePool?.reclaimPoolWorker?.(pid, worker?.id)
-        ) as any // FIXME: remove any when polkadot types is ready
+          api.tx.phalaStakePool.reclaimPoolWorker(pid, worker?.id)
+        )
       )
     }
-  }, [api, decimals, miners, pid])
+  }, [api, miners, pid])
 
   if (!miners) return null
 
@@ -78,11 +74,11 @@ const ReclaimAllModalBody: FC<
         <ParagraphSmall>
           Reclaim the releasing stake of miners in a pool
         </ParagraphSmall>
-        <FormControl label="Pid">
+        <FormDisplay label="Pid">
           <ParagraphSmall as="div">{pid}</ParagraphSmall>
-        </FormControl>
+        </FormDisplay>
 
-        <FormControl label="Worker Public Keys">
+        <FormDisplay label="Worker Public Keys">
           <ParagraphSmall as="div">
             {miners.map((miner, index) => (
               <>
@@ -96,11 +92,11 @@ const ReclaimAllModalBody: FC<
               </>
             ))}
           </ParagraphSmall>
-        </FormControl>
+        </FormDisplay>
 
-        <FormControl label="Reclaimable Stake">
+        <FormDisplay label="Reclaimable Stake">
           <ParagraphSmall as="div">{reclaimableStake}</ParagraphSmall>
-        </FormControl>
+        </FormDisplay>
       </ModalBody>
       <ModalFooter>
         <Block
@@ -108,7 +104,7 @@ const ReclaimAllModalBody: FC<
           alignItems="center"
           justifyContent="space-between"
         >
-          <PhalaStakePoolTransactionFeeLabel action={extrinsic} />
+          <TransactionFeeLabel action={extrinsic} />
           <ModalButton disabled={confirmLock} onClick={onConfirm}>
             Confirm
           </ModalButton>

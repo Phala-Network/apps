@@ -1,4 +1,4 @@
-import {PhalaStakePoolTransactionFeeLabel} from '@phala/react-components'
+import {TransactionFeeLabel} from '@phala/react-components'
 import {useApiPromise} from '@phala/react-libs'
 import {useCurrentAccount} from '@phala/store'
 import {Block} from 'baseui/block'
@@ -55,7 +55,7 @@ const Body = ({onClose}: Pick<ModalProps, 'onClose'>) => {
           alignItems="center"
           justifyContent="space-between"
         >
-          <PhalaStakePoolTransactionFeeLabel action={extrinsic} />
+          <TransactionFeeLabel action={extrinsic} />
           <ModalButton disabled={confirmLock} onClick={onConfirm}>
             Confirm
           </ModalButton>

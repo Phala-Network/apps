@@ -21,8 +21,6 @@ const Wrapper = styled.div`
 `
 
 const Title = styled.div`
-  font-family: Montserrat;
-  font-style: normal;
   font-weight: 600;
   font-size: 20px;
   line-height: 20px;
@@ -62,8 +60,6 @@ const AssetList: React.FC<Props> = ({tableData}) => {
         overrides={{
           TableEmptyMessage: {
             style: () => ({
-              fontFamily: 'Montserrat',
-              fontStyle: 'normal',
               fontSize: '20px',
               lineHeight: '256px',
               textAlign: 'center',
@@ -75,8 +71,6 @@ const AssetList: React.FC<Props> = ({tableData}) => {
             style: ({$theme}) => ({
               border: 'none',
               backgroundColor: '#D1FF52',
-              fontFamily: 'Montserrat',
-              fontStyle: 'normal',
               fontSize: '16px',
               lineHeight: '16px',
               color: '#111111',

@@ -1,8 +1,5 @@
-import {PhalaStakePoolTransactionFeeLabel} from '@phala/react-components'
-import {
-  useApiPromise,
-  useDecimalJsTokenDecimalMultiplier,
-} from '@phala/react-libs'
+import {TransactionFeeLabel} from '@phala/react-components'
+import {useApiPromise} from '@phala/react-libs'
 import {formatCurrency} from '@phala/utils'
 import {Block} from 'baseui/block'
 import {FormControl} from 'baseui/form-control'
@@ -19,6 +16,7 @@ import Decimal from 'decimal.js'
 import {FC, useMemo, useState} from 'react'
 import {WorkersConnectionNode} from '.'
 import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
+import FormDisplay from '../FormDisplay'
 
 const StartModalBody: FC<
   {worker: WorkersConnectionNode} & Pick<ModalProps, 'onClose'>
@@ -28,7 +26,6 @@ const StartModalBody: FC<
   const {api} = useApiPromise()
   const [amount, setAmount] = useState('')
   const waitSignAndSend = useWaitSignAndSend()
-  const decimals = useDecimalJsTokenDecimalMultiplier(api)
   const [confirmLock, setConfirmLock] = useState(false)
 
   const onConfirm = async () => {
@@ -45,14 +42,14 @@ const StartModalBody: FC<
     }
   }
   const extrinsic = useMemo(() => {
-    if (api && decimals && amount) {
+    if (api && amount) {
       return api.tx.phalaStakePool?.startMining?.(
         pid,
         workerPublicKey,
-        new Decimal(amount).times(decimals).floor().toString()
+        new Decimal(amount).times(1e12).floor().toString()
       )
     }
-  }, [amount, api, decimals, pid, workerPublicKey])
+  }, [amount, api, pid, workerPublicKey])
 
   return (
     <>
@@ -61,14 +58,14 @@ const StartModalBody: FC<
         <ParagraphSmall>
           Start a miner on behalf of the stake pool
         </ParagraphSmall>
-        <FormControl label="Pid">
+        <FormDisplay label="Pid">
           <ParagraphSmall as="div">{pid}</ParagraphSmall>
-        </FormControl>
-        <FormControl label="Worker Public Key">
+        </FormDisplay>
+        <FormDisplay label="Worker Public Key">
           <ParagraphSmall as="div" $style={{wordBreak: 'break-all'}}>
             {workerPublicKey}
           </ParagraphSmall>
-        </FormControl>
+        </FormDisplay>
         <FormControl
           label="Amount"
           caption={
@@ -99,7 +96,7 @@ const StartModalBody: FC<
           alignItems="center"
           justifyContent="space-between"
         >
-          <PhalaStakePoolTransactionFeeLabel action={extrinsic} />
+          <TransactionFeeLabel action={extrinsic} />
           <ModalButton disabled={!amount || confirmLock} onClick={onConfirm}>
             Confirm
           </ModalButton>

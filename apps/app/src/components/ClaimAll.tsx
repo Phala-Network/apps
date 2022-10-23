@@ -1,8 +1,5 @@
-import {PhalaStakePoolTransactionFeeLabel} from '@phala/react-components'
-import {
-  useApiPromise,
-  useDecimalJsTokenDecimalMultiplier,
-} from '@phala/react-libs'
+import {TransactionFeeLabel} from '@phala/react-components'
+import {useApiPromise} from '@phala/react-libs'
 import {useCurrentAccount} from '@phala/store'
 import {formatCurrency, validateAddress} from '@phala/utils'
 import {SubmittableExtrinsic} from '@polkadot/api/types'
@@ -32,6 +29,7 @@ import {
 } from '../hooks/subsquid'
 import useWaitSignAndSend from '../hooks/useWaitSignAndSend'
 import {subsquidClient} from '../lib/graphqlClient'
+import FormDisplay from './FormDisplay'
 
 const CLAIM_THRESHOLD = '0'
 
@@ -46,7 +44,6 @@ const ClaimAll: FC<{kind: 'delegate' | 'mining'} & BlockProps> = ({
   const [confirmLock, setConfirmLock] = useState(false)
   const [isAddressError, setIsAddressError] = useState(false)
   const waitSignAndSend = useWaitSignAndSend()
-  const decimals = useDecimalJsTokenDecimalMultiplier(api)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [shouldClaimDelegatorRewards, setShouldClaimDelegatorRewards] =
     useState(kind === 'delegate')
@@ -169,7 +166,7 @@ const ClaimAll: FC<{kind: 'delegate' | 'mining'} & BlockProps> = ({
   ])
 
   const extrinsic = useMemo(() => {
-    if (api && decimals) {
+    if (api) {
       const batchParams: SubmittableExtrinsic<'promise'>[] = []
       try {
         if (shouldClaimDelegatorRewards) {
@@ -195,7 +192,6 @@ const ClaimAll: FC<{kind: 'delegate' | 'mining'} & BlockProps> = ({
   }, [
     address,
     api,
-    decimals,
     delegatedPids,
     ownedPids,
     shouldClaimDelegatorRewards,
@@ -316,11 +312,11 @@ const ClaimAll: FC<{kind: 'delegate' | 'mining'} & BlockProps> = ({
                 </Checkbox>
               </Block>
 
-              <FormControl label="Selected Rewards">
+              <FormDisplay label="Selected Rewards">
                 <ParagraphSmall as="div">
                   {formatCurrency(selectedRewards)} PHA
                 </ParagraphSmall>
-              </FormControl>
+              </FormDisplay>
 
               <FormControl
                 label="Target Address"
@@ -368,7 +364,7 @@ const ClaimAll: FC<{kind: 'delegate' | 'mining'} & BlockProps> = ({
             alignItems="center"
             justifyContent="space-between"
           >
-            <PhalaStakePoolTransactionFeeLabel action={extrinsic} />
+            <TransactionFeeLabel action={extrinsic} />
             <ModalButton
               disabled={
                 !address ||

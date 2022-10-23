@@ -1,9 +1,8 @@
 import {ANCHOR, Drawer, SIZE} from 'baseui/drawer'
 import {Link} from 'gatsby'
 import React, {useState} from 'react'
-import {MoreHorizontal} from 'react-feather'
+import {ExternalLink, MoreHorizontal} from 'react-feather'
 import styled from 'styled-components'
-import ExternalLink from '../../icons/external_link.svg'
 import {LineWrap} from '../Navbar/styledComponent'
 
 const StyledGatsbyLink = styled(Link)`
@@ -14,8 +13,6 @@ const StyledGatsbyLink = styled(Link)`
   box-sizing: border-box;
   height: 48px;
   padding: 16px 43px 16px 21px;
-  font-family: Montserrat;
-  font-style: normal;
   font-size: 16px;
   line-height: 16px;
   color: #111111;
@@ -127,7 +124,7 @@ const CheckMore: React.FC = () => {
             target="_blank"
           >
             <ExternalName>{name}</ExternalName>
-            <ExternalLink />
+            <ExternalLink width={18} height={18} color="#999" />
           </LineWrap>
         ))}
       </Drawer>

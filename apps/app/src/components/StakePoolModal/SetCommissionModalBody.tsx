@@ -1,8 +1,5 @@
-import {PhalaStakePoolTransactionFeeLabel} from '@phala/react-components'
-import {
-  useApiPromise,
-  useDecimalJsTokenDecimalMultiplier,
-} from '@phala/react-libs'
+import {TransactionFeeLabel} from '@phala/react-components'
+import {useApiPromise} from '@phala/react-libs'
 import {Block} from 'baseui/block'
 import {FormControl} from 'baseui/form-control'
 import {Input} from 'baseui/input'
@@ -18,6 +15,7 @@ import Decimal from 'decimal.js'
 import {FC, useMemo, useState} from 'react'
 import {StakePool} from '../../hooks/subsquid'
 import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
+import FormDisplay from '../FormDisplay'
 
 const SetCommissionModalBody: FC<
   {
@@ -28,7 +26,6 @@ const SetCommissionModalBody: FC<
   const {api} = useApiPromise()
   const [commission, setCommission] = useState('')
   const waitSignAndSend = useWaitSignAndSend()
-  const decimals = useDecimalJsTokenDecimalMultiplier(api)
   const [confirmLock, setConfirmLock] = useState(false)
 
   const onConfirm = async () => {
@@ -48,13 +45,13 @@ const SetCommissionModalBody: FC<
   }
 
   const extrinsic = useMemo(() => {
-    if (api && decimals && commission) {
-      return api.tx.phalaStakePool?.setPayoutPref?.(
+    if (api && commission) {
+      return api.tx.phalaStakePool.setPayoutPref(
         pid,
-        new Decimal(commission).times(10 ** 4).toString()
+        new Decimal(commission).times(1e4).toString()
       )
     }
-  }, [api, commission, decimals, pid])
+  }, [api, commission, pid])
 
   if (currentCommission === undefined) return null
 
@@ -62,9 +59,9 @@ const SetCommissionModalBody: FC<
     <>
       <ModalHeader>Set Commission</ModalHeader>
       <ModalBody>
-        <FormControl label="Pid">
+        <FormDisplay label="Pid">
           <ParagraphSmall as="div">{pid}</ParagraphSmall>
-        </FormControl>
+        </FormDisplay>
         <FormControl
           label="New Commission"
           caption={
@@ -93,7 +90,7 @@ const SetCommissionModalBody: FC<
           alignItems="center"
           justifyContent="space-between"
         >
-          <PhalaStakePoolTransactionFeeLabel action={extrinsic} />
+          <TransactionFeeLabel action={extrinsic} />
           <ModalButton
             disabled={!commission || confirmLock}
             onClick={onConfirm}

@@ -1,8 +1,5 @@
-import {PhalaStakePoolTransactionFeeLabel} from '@phala/react-components'
-import {
-  useApiPromise,
-  useDecimalJsTokenDecimalMultiplier,
-} from '@phala/react-libs'
+import {TransactionFeeLabel} from '@phala/react-components'
+import {useApiPromise} from '@phala/react-libs'
 import {useCurrentAccount} from '@phala/store'
 import {formatCurrency, validateAddress} from '@phala/utils'
 import {Block} from 'baseui/block'
@@ -20,6 +17,7 @@ import {ParagraphSmall} from 'baseui/typography'
 import {FC, useMemo, useState} from 'react'
 import {StakePool} from '../../hooks/subsquid'
 import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
+import FormDisplay from '../FormDisplay'
 
 const ClaimModalBody: FC<
   {
@@ -32,7 +30,6 @@ const ClaimModalBody: FC<
   const [address, setAddress] = useState('')
   const [isAddressError, setIsAddressError] = useState(false)
   const waitSignAndSend = useWaitSignAndSend()
-  const decimals = useDecimalJsTokenDecimalMultiplier(api)
   const [confirmLock, setConfirmLock] = useState(false)
 
   const onConfirm = async () => {
@@ -52,10 +49,10 @@ const ClaimModalBody: FC<
   }
 
   const extrinsic = useMemo(() => {
-    if (api && decimals && !isAddressError) {
+    if (api && !isAddressError) {
       return api.tx.phalaStakePool?.claimRewards?.(pid, address)
     }
-  }, [api, decimals, pid, address, isAddressError])
+  }, [api, pid, address, isAddressError])
 
   if (!stakes) return null
 
@@ -66,17 +63,17 @@ const ClaimModalBody: FC<
         <ParagraphSmall>
           Claim all the pending rewards of the sender and send to the target
         </ParagraphSmall>
-        <FormControl label="Pid">
+        <FormDisplay label="Pid">
           <ParagraphSmall as="div">{pid}</ParagraphSmall>
-        </FormControl>
+        </FormDisplay>
 
-        <FormControl label="Rewards">
+        <FormDisplay label="Rewards">
           <Block display={'flex'} flexDirection={'row'}>
             <ParagraphSmall as="div">
               {stakes[0] && formatCurrency(stakes[0].reward as string)} PHA
             </ParagraphSmall>
           </Block>
-        </FormControl>
+        </FormDisplay>
 
         <FormControl
           label="Target Address"
@@ -120,7 +117,7 @@ const ClaimModalBody: FC<
           alignItems="center"
           justifyContent="space-between"
         >
-          <PhalaStakePoolTransactionFeeLabel action={extrinsic} />
+          <TransactionFeeLabel action={extrinsic} />
           <ModalButton
             disabled={!address || isAddressError || confirmLock}
             onClick={onConfirm}

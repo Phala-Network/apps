@@ -1,8 +1,5 @@
-import {PhalaStakePoolTransactionFeeLabel} from '@phala/react-components'
-import {
-  useApiPromise,
-  useDecimalJsTokenDecimalMultiplier,
-} from '@phala/react-libs'
+import {TransactionFeeLabel} from '@phala/react-components'
+import {useApiPromise} from '@phala/react-libs'
 import {useCurrentAccount} from '@phala/store'
 import {formatCurrency} from '@phala/utils'
 import {Block} from 'baseui/block'
@@ -22,6 +19,7 @@ import Decimal from 'decimal.js'
 import {FC, useMemo, useState} from 'react'
 import {StakePool} from '../../hooks/subsquid'
 import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
+import FormDisplay from '../FormDisplay'
 
 const WithdrawModalBody: FC<
   {
@@ -33,7 +31,6 @@ const WithdrawModalBody: FC<
   const [amount, setAmount] = useState('')
   const [polkadotAccount] = useCurrentAccount()
   const waitSignAndSend = useWaitSignAndSend()
-  const decimals = useDecimalJsTokenDecimalMultiplier(api)
   const [confirmLock, setConfirmLock] = useState(false)
 
   const onConfirm = async () => {
@@ -64,18 +61,18 @@ const WithdrawModalBody: FC<
   )
 
   const extrinsic = useMemo(() => {
-    if (api && amount && decimals && stakes?.[0]) {
+    if (api && amount && stakes?.[0]) {
       return api.tx.phalaStakePool?.withdraw?.(
         pid,
         new Decimal(amount)
           .div(new Decimal(stakes[0].amount))
           .times(new Decimal(stakes[0].shares))
-          .times(decimals)
+          .times(1e12)
           .floor()
           .toString()
       )
     }
-  }, [api, stakes, decimals, amount, pid])
+  }, [api, stakes, amount, pid])
 
   if (stakes === undefined) return null
 
@@ -83,9 +80,9 @@ const WithdrawModalBody: FC<
     <>
       <ModalHeader>Withdraw</ModalHeader>
       <ModalBody>
-        <FormControl label="Pid">
+        <FormDisplay label="Pid">
           <ParagraphSmall as="div">{pid}</ParagraphSmall>
-        </FormControl>
+        </FormDisplay>
         <FormControl
           label="Amount"
           caption={`Your Delegation: ${formatCurrency(
@@ -134,7 +131,7 @@ const WithdrawModalBody: FC<
           alignItems="center"
           justifyContent="space-between"
         >
-          <PhalaStakePoolTransactionFeeLabel action={extrinsic} />
+          <TransactionFeeLabel action={extrinsic} />
           <ModalButton disabled={!amount || confirmLock} onClick={onConfirm}>
             Confirm
           </ModalButton>

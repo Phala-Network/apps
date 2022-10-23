@@ -1,8 +1,5 @@
-import {PhalaStakePoolTransactionFeeLabel} from '@phala/react-components'
-import {
-  useApiPromise,
-  useDecimalJsTokenDecimalMultiplier,
-} from '@phala/react-libs'
+import {TransactionFeeLabel} from '@phala/react-components'
+import {useApiPromise} from '@phala/react-libs'
 import {formatCurrency} from '@phala/utils'
 import {Block} from 'baseui/block'
 import {FormControl} from 'baseui/form-control'
@@ -20,6 +17,7 @@ import Decimal from 'decimal.js'
 import {FC, useMemo, useState} from 'react'
 import {WorkersConnectionNode} from '.'
 import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
+import FormDisplay from '../FormDisplay'
 
 const ChangeStakeModalBody: FC<
   {worker: WorkersConnectionNode} & Pick<ModalProps, 'onClose'>
@@ -29,7 +27,6 @@ const ChangeStakeModalBody: FC<
   const {api} = useApiPromise()
   const [amount, setAmount] = useState('')
   const waitSignAndSend = useWaitSignAndSend()
-  const decimals = useDecimalJsTokenDecimalMultiplier(api)
   const isNewAmountNotInRange =
     !amount ||
     (miner && new Decimal(amount).lessThanOrEqualTo(miner.stake)) ||
@@ -54,28 +51,28 @@ const ChangeStakeModalBody: FC<
   }
 
   const extrinsic = useMemo(() => {
-    if (!isNewAmountNotInRange && api && decimals && amount) {
+    if (!isNewAmountNotInRange && api && amount) {
       return api.tx.phalaStakePool?.restartMining?.(
         pid,
         workerPublicKey,
-        new Decimal(amount).times(decimals).floor().toString()
+        new Decimal(amount).times(1e12).floor().toString()
       )
     }
-  }, [amount, api, decimals, isNewAmountNotInRange, pid, workerPublicKey])
+  }, [amount, api, isNewAmountNotInRange, pid, workerPublicKey])
 
   return (
     <>
       <ModalHeader>Change Stake</ModalHeader>
       <ModalBody>
         <ParagraphSmall>Restart the worker with a higher stake</ParagraphSmall>
-        <FormControl label="Pid">
+        <FormDisplay label="Pid">
           <ParagraphSmall as="div">{pid}</ParagraphSmall>
-        </FormControl>
-        <FormControl label="Worker Public Key">
+        </FormDisplay>
+        <FormDisplay label="Worker Public Key">
           <ParagraphSmall as="div" $style={{wordBreak: 'break-all'}}>
             {workerPublicKey}
           </ParagraphSmall>
-        </FormControl>
+        </FormDisplay>
         <FormControl
           label="Amount"
           caption={
@@ -116,7 +113,7 @@ const ChangeStakeModalBody: FC<
           alignItems="center"
           justifyContent="space-between"
         >
-          <PhalaStakePoolTransactionFeeLabel action={extrinsic} />
+          <TransactionFeeLabel action={extrinsic} />
           <ModalButton
             disabled={isNewAmountNotInRange || confirmLock}
             onClick={onConfirm}

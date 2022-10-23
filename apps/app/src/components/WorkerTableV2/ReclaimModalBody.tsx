@@ -1,8 +1,7 @@
-import {PhalaStakePoolTransactionFeeLabel} from '@phala/react-components'
+import {TransactionFeeLabel} from '@phala/react-components'
 import {useApiPromise} from '@phala/react-libs'
 import {formatCurrency} from '@phala/utils'
 import {Block} from 'baseui/block'
-import {FormControl} from 'baseui/form-control'
 import {
   ModalBody,
   ModalButton,
@@ -14,6 +13,7 @@ import {ParagraphSmall} from 'baseui/typography'
 import {FC, useMemo, useState} from 'react'
 import {WorkersConnectionNode} from '.'
 import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
+import FormDisplay from '../FormDisplay'
 
 const ReclaimModalBody: FC<
   {worker: WorkersConnectionNode} & Pick<ModalProps, 'onClose'>
@@ -51,19 +51,19 @@ const ReclaimModalBody: FC<
         <ParagraphSmall>
           Reclaims the releasing stake of miners in a pool
         </ParagraphSmall>
-        <FormControl label="pid">
+        <FormDisplay label="Pid">
           <ParagraphSmall as="div">{pid}</ParagraphSmall>
-        </FormControl>
-        <FormControl label="Worker Public Key">
+        </FormDisplay>
+        <FormDisplay label="Worker Public Key">
           <ParagraphSmall as="div" $style={{wordBreak: 'break-all'}}>
             {workerPublicKey}
           </ParagraphSmall>
-        </FormControl>
-        <FormControl label="Reclaimable Stake">
+        </FormDisplay>
+        <FormDisplay label="Reclaimable Stake">
           <ParagraphSmall as="div">
             {miner?.stake && formatCurrency(miner.stake)} PHA
           </ParagraphSmall>
-        </FormControl>
+        </FormDisplay>
       </ModalBody>
       <ModalFooter>
         <Block
@@ -71,7 +71,7 @@ const ReclaimModalBody: FC<
           alignItems="center"
           justifyContent="space-between"
         >
-          <PhalaStakePoolTransactionFeeLabel action={extrinsic} />
+          <TransactionFeeLabel action={extrinsic} />
           <ModalButton disabled={confirmLock} onClick={onConfirm}>
             Confirm
           </ModalButton>

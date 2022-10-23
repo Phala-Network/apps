@@ -2,23 +2,23 @@ import {SubmittableExtrinsic} from '@polkadot/api/types'
 import {Decimal} from 'decimal.js'
 import {useEffect, useState} from 'react'
 
-export function usePhalaStakePoolTransactionFee(
-  action?: SubmittableExtrinsic<'promise', any>,
+export function useTransactionFee(
+  action?: SubmittableExtrinsic<'promise'>,
   polkadotAccount?: string
 ) {
-  const [fee, setFee] = useState<string>('-')
+  const [fee, setFee] = useState<Decimal>()
 
   useEffect(() => {
+    let unmounted = false
     if (action && polkadotAccount) {
       action.paymentInfo(polkadotAccount).then(({partialFee}) => {
-        setFee(
-          new Decimal(partialFee.toString())
-            .div(10 ** 12)
-            .toFixed(8)
-            .replace(/\.?0+$/, '') + // Remove Trailing Zeros
-            ' PHA'
-        )
+        if (!unmounted) {
+          setFee(new Decimal(partialFee.toString()).div(1e12))
+        }
       })
+    }
+    return () => {
+      unmounted = true
     }
   }, [action, polkadotAccount])
 
