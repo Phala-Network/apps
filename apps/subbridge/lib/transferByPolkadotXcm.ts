@@ -6,32 +6,35 @@ import type {ISubmittableResult} from '@polkadot/types/types'
 import {u8aToHex} from '@polkadot/util'
 import {decodeAddress} from '@polkadot/util-crypto'
 
-export const transferByCrab = ({
+export const transferByPolkadotXcm = ({
   polkadotApi,
+  assetId,
   amount,
+  fromChainId,
   toChainId,
   destinationAccount,
 }: {
   polkadotApi: ApiPromise
   assetId: AssetId
+  fromChainId: ChainId
   toChainId: ChainId
   amount: string
   destinationAccount: string
 }): SubmittableExtrinsic<'promise', ISubmittableResult> => {
-  // const asset = ASSETS[assetId]
   const toChain = CHAINS[toChainId]
+  let Concrete
+  if (fromChainId === 'crab' && assetId === 'crab') {
+    Concrete = {parents: 0, interior: {X1: {PalletInstance: 5}}}
+  } else if (fromChainId === 'shiden') {
+    if (assetId === 'pha') {
+      Concrete = {parents: 1, interior: {X1: {Parachain: 2004}}}
+    } else if (assetId === 'sdn') {
+      Concrete = {parents: 0, interior: 'Here'}
+    }
+  }
 
   return polkadotApi.tx.polkadotXcm.reserveTransferAssets(
-    {
-      V1: {
-        parents: 1,
-        interior: {
-          X1: {
-            Parachain: toChain.paraId,
-          },
-        },
-      },
-    },
+    {V1: {parents: 1, interior: {X1: {Parachain: toChain.paraId}}}},
     {
       V1: {
         parents: 0,
@@ -45,25 +48,7 @@ export const transferByCrab = ({
         },
       },
     },
-    {
-      V1: [
-        {
-          id: {
-            Concrete: {
-              parents: 0,
-              interior: {
-                X1: {
-                  PalletInstance: 5,
-                },
-              },
-            },
-          },
-          fun: {
-            Fungible: amount,
-          },
-        },
-      ],
-    },
+    {V1: [{id: {Concrete}, fun: {Fungible: amount}}]},
     0
   )
 }

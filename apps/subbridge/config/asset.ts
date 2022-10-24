@@ -9,6 +9,7 @@ import kmaIcon from '@/assets/kma_asset_icon.png'
 import movrIcon from '@/assets/movr_asset_icon.png'
 import paraIcon from '@/assets/para_asset_icon.png'
 import phaIcon from '@/assets/pha_asset_icon.png'
+import sdnIcon from '@/assets/sdn_asset_icon.png'
 import turIcon from '@/assets/tur_asset_icon.png'
 import zlkIcon from '@/assets/zlk_asset_icon.png'
 import Decimal from 'decimal.js'
@@ -28,6 +29,7 @@ export type AssetId =
   | 'kma'
   | 'crab'
   | 'glmr'
+  | 'sdn'
 
 export type OrmlToken = 'PHA' | 'KAR' | 'ZLK' | 'BNC' | 'KUSD' | 'TUR'
 export interface Asset {
@@ -37,7 +39,7 @@ export interface Asset {
   decimals: Partial<Record<ChainId, number>> & {default: number}
   xc20Address?: Partial<Record<ChainId, `0x${string}`>>
   ormlToken?: OrmlToken
-  palletAssetId?: Partial<Record<ChainId, number>>
+  palletAssetId?: Partial<Record<ChainId, number | string>>
   erc20TokenContractAddress?: {
     [chainId in EvmChainId]?: `0x${string}`
   }
@@ -75,8 +77,8 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
     decimals: {ethereum: 18, kovan: 18, default: 12},
     destChainTransactionFee: {
       phala: new Decimal('0.092696'),
-      khala: new Decimal('0.09324'),
-      thala: new Decimal('0.09324'),
+      khala: new Decimal('0.092696'),
+      thala: new Decimal('0.092696'),
       bifrost: new Decimal('0.0256'),
       'bifrost-test': new Decimal('0.0256'),
       karura: new Decimal('0.0512'),
@@ -87,6 +89,7 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
       'parallel-heiko': new Decimal('0.0384'),
       turing: new Decimal('0.256'),
       calamari: new Decimal('0.9523809524'),
+      shiden: new Decimal('0.024464'),
     },
     existentialDeposit: {
       phala: new Decimal('0.01'),
@@ -101,6 +104,7 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
       parallel: 115,
       'parallel-heiko': 115,
       calamari: 13,
+      shiden: '18446744073709551623',
     },
   },
   movr: {
@@ -327,5 +331,17 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
     existentialDeposit: {
       moonbeam: new Decimal('0.01'),
     },
+  },
+  sdn: {
+    id: 'sdn',
+    symbol: 'SDN',
+    icon: sdnIcon,
+    decimals: {default: 18},
+    palletAssetId: {khala: 12, thala: 12},
+    destChainTransactionFee: {
+      shiden: new Decimal('0.004635101624603116'),
+      khala: new Decimal('0.016'),
+    },
+    existentialDeposit: {},
   },
 }

@@ -2,8 +2,8 @@ import {AssetId, OrmlToken} from '@/config/asset'
 import {ChainId, CHAINS} from '@/config/chain'
 import type {ApiPromise} from '@polkadot/api'
 import Decimal from 'decimal.js'
-import {transferByCrab} from './transferByCrab'
 import {transferByKhalaXTransfer} from './transferByKhalaXTransfer'
+import {transferByPolkadotXcm} from './transferByPolkadotXcm'
 import {transferByPolkadotXTokens} from './transferByPolkadotXTokens'
 
 const ALICE = '5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY'
@@ -97,19 +97,21 @@ export const khalaXTransferPartialFeeFetcher = async (
   return new Decimal(partialFee.toString()).div(Decimal.pow(10, decimals))
 }
 
-export const crabTransferPartialFeeFetcher = async (
-  crabApi: ApiPromise,
+export const polkadotXcmTransferPartialFeeFetcher = async (
+  api: ApiPromise,
+  fromChainId: ChainId,
   toChainId: ChainId,
   assetId: AssetId
 ) => {
-  const extrinsic = transferByCrab({
-    polkadotApi: crabApi,
+  const extrinsic = transferByPolkadotXcm({
+    polkadotApi: api,
     amount: '1',
     destinationAccount: ALICE,
+    fromChainId,
     toChainId,
     assetId,
   })
-  const decimals = crabApi.registry.chainDecimals[0]
+  const decimals = api.registry.chainDecimals[0]
   const {partialFee} = await extrinsic.paymentInfo(ALICE)
   return new Decimal(partialFee.toString()).div(Decimal.pow(10, decimals))
 }

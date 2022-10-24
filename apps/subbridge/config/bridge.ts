@@ -6,7 +6,7 @@ export type BridgeKind =
   | 'evmXTokens'
   | 'polkadotXTokens'
   | 'khalaXTransfer'
-  | 'crab'
+  | 'polkadotXcm'
 
 type AssetsConfig = {
   assetId: AssetId
@@ -175,6 +175,13 @@ export const BRIDGES: Readonly<Bridge[]> = [
           {assetId: 'crab', estimatedTime: '< 1 min', kind: 'khalaXTransfer'},
         ],
       },
+      {
+        id: 'shiden',
+        assets: [
+          {assetId: 'pha', estimatedTime: '< 1 min', kind: 'khalaXTransfer'},
+          {assetId: 'sdn', estimatedTime: '< 1 min', kind: 'khalaXTransfer'},
+        ],
+      },
     ],
   },
   {
@@ -298,7 +305,21 @@ export const BRIDGES: Readonly<Bridge[]> = [
     toChains: [
       {
         id: 'khala',
-        assets: [{assetId: 'crab', estimatedTime: '< 1 min', kind: 'crab'}],
+        assets: [
+          {assetId: 'crab', estimatedTime: '< 1 min', kind: 'polkadotXcm'},
+        ],
+      },
+    ],
+  },
+  {
+    fromChain: 'shiden',
+    toChains: [
+      {
+        id: 'khala',
+        assets: [
+          {assetId: 'sdn', estimatedTime: '< 1 min', kind: 'polkadotXcm'},
+          {assetId: 'pha', estimatedTime: '< 1 min', kind: 'polkadotXcm'},
+        ],
       },
     ],
   },

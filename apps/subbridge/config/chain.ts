@@ -12,6 +12,7 @@ import moonriverIcon from '@/assets/moonriver_chain_icon.png'
 import parallelIcon from '@/assets/parallel_chain_icon.svg'
 import parallelHeikoIcon from '@/assets/parallel_heiko_chain_icon.svg'
 import phalaIcon from '@/assets/phala_chain_icon.svg'
+import shidenIcon from '@/assets/shiden_chain_icon.png'
 import turingIcon from '@/assets/turing_chain_icon.png'
 import {AssetId} from './asset'
 
@@ -35,6 +36,7 @@ export type PolkadotChainId =
   | 'turing'
   | 'calamari'
   | 'crab'
+  | 'shiden'
 export type ChainId = EvmChainId | PolkadotChainId
 export type ChainKind = 'evm' | 'polkadot'
 
@@ -334,5 +336,22 @@ export const CHAINS: Readonly<
     ss58Format: 42,
     nativeAsset: 'crab',
     explorerURL: 'https://crab.subscan.io/',
+  },
+  shiden: {
+    id: 'shiden',
+    name: 'Shiden',
+    icon: shidenIcon,
+    kind: 'polkadot',
+    paraId: 2007,
+    endpoint: [
+      'wss://rpc.shiden.astar.network',
+      'wss://shiden.public.blastapi.io',
+      'wss://shiden-rpc.dwellir.com',
+      'wss://shiden.api.onfinality.io/public-ws',
+      'wss://public-rpc.pinknode.io/shiden',
+    ],
+    ss58Format: 5,
+    nativeAsset: 'sdn',
+    explorerURL: 'https://shiden.subscan.io/',
   },
 }

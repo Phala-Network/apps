@@ -14,93 +14,59 @@ const turingParaId = CHAINS.turing.paraId
 const calamariParaId = CHAINS.calamari.paraId
 const crabParaId = CHAINS.crab.paraId
 const moonbeamParaId = CHAINS.moonbeam.paraId
+const shidenParaId = CHAINS.shiden.paraId
 
 const assetConcreteId: {
   [fromChainId in ChainId]?: {[assetId in AssetId]?: Record<string, unknown>}
 } = {
   phala: {
-    pha: {
-      parents: 0,
-      interior: 'Here',
-    },
+    pha: {parents: 0, interior: 'Here'},
     glmr: {
       parents: 1,
-      interior: {
-        X2: [{Parachain: moonbeamParaId}, {PalletInstance: 10}],
-      },
+      interior: {X2: [{Parachain: moonbeamParaId}, {PalletInstance: 10}]},
     },
     para: {
       parents: 1,
-      interior: {
-        X2: [{Parachain: parallelParaId}, {GeneralKey: 'PARA'}],
-      },
+      interior: {X2: [{Parachain: parallelParaId}, {GeneralKey: 'PARA'}]},
     },
   },
   khala: {
-    pha: {
-      parents: 0,
-      interior: 'Here',
-    },
+    pha: {parents: 0, interior: 'Here'},
     movr: {
       parents: 1,
-      interior: {
-        X2: [{Parachain: moonriverParaId}, {PalletInstance: 10}],
-      },
+      interior: {X2: [{Parachain: moonriverParaId}, {PalletInstance: 10}]},
     },
     kar: {
       parents: 1,
-      interior: {
-        X2: [{Parachain: karuraParaId}, {GeneralKey: '0x0080'}],
-      },
+      interior: {X2: [{Parachain: karuraParaId}, {GeneralKey: '0x0080'}]},
     },
     bnc: {
       parents: 1,
-      interior: {
-        X2: [{Parachain: bifrostParaId}, {GeneralKey: '0x0001'}],
-      },
+      interior: {X2: [{Parachain: bifrostParaId}, {GeneralKey: '0x0001'}]},
     },
     zlk: {
       parents: 1,
-      interior: {
-        X2: [{Parachain: bifrostParaId}, {GeneralKey: '0x0207'}],
-      },
+      interior: {X2: [{Parachain: bifrostParaId}, {GeneralKey: '0x0207'}]},
     },
     ausd: {
       parents: 1,
-      interior: {
-        X2: [{Parachain: karuraParaId}, {GeneralKey: '0x0081'}],
-      },
+      interior: {X2: [{Parachain: karuraParaId}, {GeneralKey: '0x0081'}]},
     },
     hko: {
       parents: 1,
-      interior: {
-        X2: [{Parachain: parallelHeikoParaId}, {GeneralKey: 'HKO'}],
-      },
+      interior: {X2: [{Parachain: parallelHeikoParaId}, {GeneralKey: 'HKO'}]},
     },
     bsx: {
       parents: 1,
-      interior: {
-        X2: [{Parachain: basiliskParaId}, {GeneralIndex: 0}],
-      },
+      interior: {X2: [{Parachain: basiliskParaId}, {GeneralIndex: 0}]},
     },
-    tur: {
-      parents: 1,
-      interior: {
-        X1: {Parachain: turingParaId},
-      },
-    },
-    kma: {
-      parents: 1,
-      interior: {
-        X1: {Parachain: calamariParaId},
-      },
-    },
+    tur: {parents: 1, interior: {X1: {Parachain: turingParaId}}},
+    kma: {parents: 1, interior: {X1: {Parachain: calamariParaId}}},
     crab: {
       parents: 1,
-      interior: {
-        X2: [{Parachain: crabParaId}, {PalletInstance: 5}],
-      },
+      interior: {X2: [{Parachain: crabParaId}, {PalletInstance: 5}]},
     },
+    sdn: {parents: 1, interior: {X1: {Parachain: shidenParaId}}},
   },
 }
 
