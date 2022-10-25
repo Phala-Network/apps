@@ -98,23 +98,27 @@ const WithdrawModalBody: FC<
           />
         </FormControl>
 
-        <Notification
-          kind="warning"
-          overrides={{
-            Body: {
-              style: {
-                width: 'auto',
-                whiteSpace: 'pre-wrap',
-                marginLeft: 0,
-                marginRight: 0,
+        {hasWithdrawing && (
+          <Notification
+            kind="warning"
+            overrides={{
+              Body: {
+                style: {
+                  width: 'auto',
+                  whiteSpace: 'pre-wrap',
+                  marginLeft: 0,
+                  marginRight: 0,
+                },
               },
-            },
-          }}
-        >
-          {hasWithdrawing && 'You have a pending withdraw request!\n\n'}
-          Only one withdraw request is kept. Resubmission will replace the
-          existing one and reset the countdown.
-        </Notification>
+            }}
+          >
+            You have a pending withdraw request!
+            <br />
+            <br />
+            Only one withdraw request is kept. Resubmission will replace the
+            existing one and reset the countdown.
+          </Notification>
+        )}
       </ModalBody>
       <ModalFooter>
         <Block

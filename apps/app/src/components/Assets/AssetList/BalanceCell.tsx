@@ -16,6 +16,7 @@ const ValueItem = styled.div`
   flex-wrap: nowrap;
   white-space: nowrap;
   gap: 12px;
+  max-width: 280px;
 
   :first-of-type {
     margin-top: 20px;
@@ -23,7 +24,6 @@ const ValueItem = styled.div`
 
   ${down('md')} {
     font-size: 14px;
-    width: 220px;
   }
 `
 

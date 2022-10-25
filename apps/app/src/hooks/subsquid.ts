@@ -30,6 +30,8 @@ export type Scalars = {
 export type Account = {
   __typename?: 'Account';
   id: Scalars['String'];
+  identityDisplay?: Maybe<Scalars['String']>;
+  identityLevel: IdentityLevel;
   ownedStakePools: Array<StakePool>;
   stakes: Array<StakePoolStake>;
   totalOwnerReward: Scalars['BigDecimal'];
@@ -71,6 +73,10 @@ export type AccountEdge = {
 export enum AccountOrderByInput {
   IdAsc = 'id_ASC',
   IdDesc = 'id_DESC',
+  IdentityDisplayAsc = 'identityDisplay_ASC',
+  IdentityDisplayDesc = 'identityDisplay_DESC',
+  IdentityLevelAsc = 'identityLevel_ASC',
+  IdentityLevelDesc = 'identityLevel_DESC',
   TotalOwnerRewardAsc = 'totalOwnerReward_ASC',
   TotalOwnerRewardDesc = 'totalOwnerReward_DESC',
   TotalStakeRewardAsc = 'totalStakeReward_ASC',
@@ -99,6 +105,28 @@ export type AccountWhereInput = {
   id_not_in?: InputMaybe<Array<Scalars['String']>>;
   id_not_startsWith?: InputMaybe<Scalars['String']>;
   id_startsWith?: InputMaybe<Scalars['String']>;
+  identityDisplay_contains?: InputMaybe<Scalars['String']>;
+  identityDisplay_containsInsensitive?: InputMaybe<Scalars['String']>;
+  identityDisplay_endsWith?: InputMaybe<Scalars['String']>;
+  identityDisplay_eq?: InputMaybe<Scalars['String']>;
+  identityDisplay_gt?: InputMaybe<Scalars['String']>;
+  identityDisplay_gte?: InputMaybe<Scalars['String']>;
+  identityDisplay_in?: InputMaybe<Array<Scalars['String']>>;
+  identityDisplay_isNull?: InputMaybe<Scalars['Boolean']>;
+  identityDisplay_lt?: InputMaybe<Scalars['String']>;
+  identityDisplay_lte?: InputMaybe<Scalars['String']>;
+  identityDisplay_not_contains?: InputMaybe<Scalars['String']>;
+  identityDisplay_not_containsInsensitive?: InputMaybe<Scalars['String']>;
+  identityDisplay_not_endsWith?: InputMaybe<Scalars['String']>;
+  identityDisplay_not_eq?: InputMaybe<Scalars['String']>;
+  identityDisplay_not_in?: InputMaybe<Array<Scalars['String']>>;
+  identityDisplay_not_startsWith?: InputMaybe<Scalars['String']>;
+  identityDisplay_startsWith?: InputMaybe<Scalars['String']>;
+  identityLevel_eq?: InputMaybe<IdentityLevel>;
+  identityLevel_in?: InputMaybe<Array<IdentityLevel>>;
+  identityLevel_isNull?: InputMaybe<Scalars['Boolean']>;
+  identityLevel_not_eq?: InputMaybe<IdentityLevel>;
+  identityLevel_not_in?: InputMaybe<Array<IdentityLevel>>;
   ownedStakePools_every?: InputMaybe<StakePoolWhereInput>;
   ownedStakePools_none?: InputMaybe<StakePoolWhereInput>;
   ownedStakePools_some?: InputMaybe<StakePoolWhereInput>;
@@ -267,6 +295,16 @@ export type GlobalStatesConnection = {
   pageInfo: PageInfo;
   totalCount: Scalars['Int'];
 };
+
+export enum IdentityLevel {
+  Erroneous = 'Erroneous',
+  FeePaid = 'FeePaid',
+  KnownGood = 'KnownGood',
+  LowQuality = 'LowQuality',
+  OutOfDate = 'OutOfDate',
+  Reasonable = 'Reasonable',
+  Unknown = 'Unknown'
+}
 
 export type Miner = {
   __typename?: 'Miner';
@@ -824,6 +862,10 @@ export enum StakePoolOrderByInput {
   OwnerRewardDesc = 'ownerReward_DESC',
   OwnerIdAsc = 'owner_id_ASC',
   OwnerIdDesc = 'owner_id_DESC',
+  OwnerIdentityDisplayAsc = 'owner_identityDisplay_ASC',
+  OwnerIdentityDisplayDesc = 'owner_identityDisplay_DESC',
+  OwnerIdentityLevelAsc = 'owner_identityLevel_ASC',
+  OwnerIdentityLevelDesc = 'owner_identityLevel_DESC',
   OwnerTotalOwnerRewardAsc = 'owner_totalOwnerReward_ASC',
   OwnerTotalOwnerRewardDesc = 'owner_totalOwnerReward_DESC',
   OwnerTotalStakeRewardAsc = 'owner_totalStakeReward_ASC',
@@ -868,6 +910,10 @@ export type StakePoolStakeEdge = {
 export enum StakePoolStakeOrderByInput {
   AccountIdAsc = 'account_id_ASC',
   AccountIdDesc = 'account_id_DESC',
+  AccountIdentityDisplayAsc = 'account_identityDisplay_ASC',
+  AccountIdentityDisplayDesc = 'account_identityDisplay_DESC',
+  AccountIdentityLevelAsc = 'account_identityLevel_ASC',
+  AccountIdentityLevelDesc = 'account_identityLevel_DESC',
   AccountTotalOwnerRewardAsc = 'account_totalOwnerReward_ASC',
   AccountTotalOwnerRewardDesc = 'account_totalOwnerReward_DESC',
   AccountTotalStakeRewardAsc = 'account_totalStakeReward_ASC',
@@ -1202,6 +1248,10 @@ export type StakePoolWhitelistEdge = {
 export enum StakePoolWhitelistOrderByInput {
   AccountIdAsc = 'account_id_ASC',
   AccountIdDesc = 'account_id_DESC',
+  AccountIdentityDisplayAsc = 'account_identityDisplay_ASC',
+  AccountIdentityDisplayDesc = 'account_identityDisplay_DESC',
+  AccountIdentityLevelAsc = 'account_identityLevel_ASC',
+  AccountIdentityLevelDesc = 'account_identityLevel_DESC',
   AccountTotalOwnerRewardAsc = 'account_totalOwnerReward_ASC',
   AccountTotalOwnerRewardDesc = 'account_totalOwnerReward_DESC',
   AccountTotalStakeRewardAsc = 'account_totalStakeReward_ASC',
@@ -1734,7 +1784,7 @@ export type StakePoolByIdQueryVariables = Exact<{
 }>;
 
 
-export type StakePoolByIdQuery = { __typename?: 'Query', stakePoolById?: { __typename?: 'StakePool', id: string, pid: string, commission: string, capacity?: string | null, delegable?: string | null, freeStake: string, totalStake: string, releasingStake: string, totalShares: string, ownerReward: string, activeStakeCount: number, workerCount: number, miningWorkerCount: number, totalWithdrawal: string, miningWorkerShare: string, aprBase: string, whitelistEnabled: boolean, owner: { __typename?: 'Account', id: string }, whitelists?: Array<{ __typename?: 'StakePoolWhitelist', id: string, createTime: string }> } | null };
+export type StakePoolByIdQuery = { __typename?: 'Query', stakePoolById?: { __typename?: 'StakePool', id: string, pid: string, commission: string, capacity?: string | null, delegable?: string | null, freeStake: string, totalStake: string, releasingStake: string, totalShares: string, ownerReward: string, activeStakeCount: number, workerCount: number, miningWorkerCount: number, totalWithdrawal: string, miningWorkerShare: string, aprBase: string, whitelistEnabled: boolean, owner: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel: IdentityLevel }, whitelists?: Array<{ __typename?: 'StakePoolWhitelist', id: string, createTime: string }> } | null };
 
 export type StakePoolStakesConnectionQueryVariables = Exact<{
   orderBy: Array<StakePoolStakeOrderByInput> | StakePoolStakeOrderByInput;
@@ -1767,7 +1817,7 @@ export type StakePoolsConnectionQueryVariables = Exact<{
 }>;
 
 
-export type StakePoolsConnectionQuery = { __typename?: 'Query', stakePoolsConnection: { __typename?: 'StakePoolsConnection', totalCount: number, edges: Array<{ __typename?: 'StakePoolEdge', cursor: string, node: { __typename?: 'StakePool', id: string, pid: string, commission: string, delegable?: string | null, capacity?: string | null, freeStake: string, releasingStake: string, totalStake: string, totalShares: string, ownerReward: string, workerCount: number, miningWorkerCount: number, totalWithdrawal: string, activeStakeCount: number, miningWorkerShare: string, aprBase: string, whitelistEnabled: boolean, owner: { __typename?: 'Account', id: string }, whitelists?: Array<{ __typename?: 'StakePoolWhitelist', id: string, createTime: string }>, stakes?: Array<{ __typename?: 'StakePoolStake', id: string, amount: string, shares: string, reward: string, withdrawalAmount: string, withdrawalShares: string, withdrawalStartTime?: string | null }> } }>, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string, endCursor: string } } };
+export type StakePoolsConnectionQuery = { __typename?: 'Query', stakePoolsConnection: { __typename?: 'StakePoolsConnection', totalCount: number, edges: Array<{ __typename?: 'StakePoolEdge', cursor: string, node: { __typename?: 'StakePool', id: string, pid: string, commission: string, delegable?: string | null, capacity?: string | null, freeStake: string, releasingStake: string, totalStake: string, totalShares: string, ownerReward: string, workerCount: number, miningWorkerCount: number, totalWithdrawal: string, activeStakeCount: number, miningWorkerShare: string, aprBase: string, whitelistEnabled: boolean, owner: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel: IdentityLevel }, whitelists?: Array<{ __typename?: 'StakePoolWhitelist', id: string, createTime: string }>, stakes?: Array<{ __typename?: 'StakePoolStake', id: string, amount: string, shares: string, reward: string, withdrawalAmount: string, withdrawalShares: string, withdrawalStartTime?: string | null }> } }>, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string, endCursor: string } } };
 
 export type TokenomicParametersQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1873,6 +1923,8 @@ export const StakePoolByIdDocument = `
     pid
     owner {
       id
+      identityDisplay
+      identityLevel
     }
     commission
     capacity
@@ -2036,6 +2088,8 @@ export const StakePoolsConnectionDocument = `
         pid
         owner {
           id
+          identityDisplay
+          identityLevel
         }
         commission
         delegable

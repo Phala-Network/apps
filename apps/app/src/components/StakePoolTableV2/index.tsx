@@ -1,5 +1,5 @@
 import {useCurrentAccount} from '@phala/store'
-import {formatCurrency, isTruthy, toFixed} from '@phala/utils'
+import {formatCurrency, isSSR, isTruthy, toFixed} from '@phala/utils'
 import {useStyletron} from 'baseui'
 import {Block} from 'baseui/block'
 import {Button} from 'baseui/button'
@@ -13,7 +13,6 @@ import {
   TableBuilder,
   TableBuilderColumn,
 } from 'baseui/table-semantic'
-import {StatefulTooltip} from 'baseui/tooltip'
 import Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
 import {atomWithStorage} from 'jotai/utils'
@@ -31,6 +30,7 @@ import {AlertTriangle, Search} from 'react-feather'
 import styled from 'styled-components'
 import {StyletronProps} from 'styletron-react'
 import {
+  IdentityLevel,
   StakePoolEdge,
   StakePoolOrderByInput,
   StakePoolsConnectionQuery,
@@ -62,11 +62,16 @@ const TableHeader = styled.div`
 type StakePoolsConnectionNode =
   StakePoolsConnectionQuery['stakePoolsConnection']['edges'][number]['node']
 type MenuItem = {label: string; key: StakePoolModalKey; disabled?: boolean}
-type MenuDivider = {divider: true}
+type MenuDivider = {divider: true; key: 'divider'}
 
 const delegableValueAtom = atomWithStorage<string>(
   'jotai:delegate_delegable_filter_value',
   '100'
+)
+
+const delegatedValueAtom = atomWithStorage<string>(
+  'jotai:delegate_delegated_filter_value',
+  '10000'
 )
 
 const StakePoolTableV2: FC<{
@@ -83,10 +88,12 @@ const StakePoolTableV2: FC<{
   const [sortAsc, setSortAsc] = useState(kind === 'mining')
   const [currentPage, setCurrentPage] = useState(1)
 
-  // const [verifiedFilter, setVerifiedFilter] = useState(false)
+  const [verifiedFilter, setVerifiedFilter] = useState(false)
   const [delegableFilter, setDelegableFilter] = useState(true)
+  const [delegatedFilter, setDelegatedFilter] = useState(false)
   const [whitelistFilter, setWhitelistFilter] = useState(true)
   const [delegableValue, setDelegableValue] = useAtom(delegableValueAtom)
+  const [delegatedValue, setDelegatedValue] = useAtom(delegatedValueAtom)
   const [stakePoolModalKey, setStakePoolModalKey] =
     useState<StakePoolModalKey | null>(null)
   const [operatingStakePoolId, setOperatingStakePoolId] = useState<
@@ -118,9 +125,24 @@ const StakePoolTableV2: FC<{
             AND: [
               searchString && {
                 OR: [
-                  {owner: {id_contains: searchString}},
+                  {
+                    owner: {
+                      OR: [
+                        {id_containsInsensitive: searchString},
+                        {identityDisplay_containsInsensitive: searchString},
+                      ],
+                    },
+                  },
                   {id_contains: searchString},
                 ],
+              },
+              verifiedFilter && {
+                owner: {
+                  identityLevel_in: [
+                    IdentityLevel.KnownGood,
+                    IdentityLevel.Reasonable,
+                  ],
+                },
               },
               delegableFilter && {
                 OR: [{delegable_gt: delegableValue}, {delegable_isNull: true}],
@@ -131,6 +153,7 @@ const StakePoolTableV2: FC<{
                   {whitelistEnabled_eq: false},
                 ],
               },
+              delegatedFilter && {totalStake_gt: delegatedValue},
             ].filter(isTruthy),
           },
           kind === 'myDelegate' && {
@@ -188,6 +211,12 @@ const StakePoolTableV2: FC<{
     []
   )
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const debouncedSetDelegatedValue = useCallback(
+    debounce(setDelegatedValue, 500),
+    []
+  )
+
   const closeModal = useCallback(() => {
     setStakePoolModalKey(null)
   }, [])
@@ -209,7 +238,7 @@ const StakePoolTableV2: FC<{
           <StatefulInput
             size="compact"
             clearable
-            placeholder="Search Pid or Owner Address"
+            placeholder="Search Pid or Owner"
             onChange={(e) => debouncedSetSearchString(e.target.value)}
             endEnhancer={<Search size={18} />}
             overrides={{
@@ -221,12 +250,12 @@ const StakePoolTableV2: FC<{
               },
             }}
           />
-          {/* <Checkbox
+          <Checkbox
             checked={verifiedFilter}
             onChange={(e) => setVerifiedFilter(e.target.checked)}
           >
             {'Verified'}
-          </Checkbox> */}
+          </Checkbox>
           <Checkbox
             checked={whitelistFilter}
             onChange={(e) => setWhitelistFilter(e.target.checked)}
@@ -243,23 +272,71 @@ const StakePoolTableV2: FC<{
               {'Delegable > '}
             </Checkbox>
 
-            <StatefulInput
-              overrides={{
-                Root: {
-                  style: {width: '128px', marginLeft: '8px'},
-                },
-              }}
-              initialState={{value: delegableValue}}
-              type="number"
-              size="compact"
-              onChange={(e) => {
-                const value = e.target.value
-                if (value) {
-                  debouncedSetDelegableValue(value)
-                }
-              }}
-            />
+            {!isSSR && (
+              <StatefulInput
+                overrides={{
+                  Root: {
+                    style: {width: '128px', marginLeft: '8px'},
+                  },
+                }}
+                initialState={{value: delegableValue}}
+                type="number"
+                size="compact"
+                onChange={(e) => {
+                  const value = e.target.value
+                  if (value) {
+                    debouncedSetDelegableValue(value)
+                  }
+                }}
+              />
+            )}
           </Block>
+          <Block display="flex" alignItems="center">
+            <Checkbox
+              checked={delegatedFilter}
+              onChange={(e) => setDelegatedFilter(e.target.checked)}
+            >
+              {'Delegated > '}
+            </Checkbox>
+
+            {!isSSR && (
+              <StatefulInput
+                overrides={{
+                  Root: {
+                    style: {width: '128px', marginLeft: '8px'},
+                  },
+                }}
+                initialState={{value: delegatedValue}}
+                type="number"
+                size="compact"
+                onChange={(e) => {
+                  const value = e.target.value
+                  if (value) {
+                    debouncedSetDelegatedValue(value)
+                  }
+                }}
+              />
+            )}
+          </Block>
+          {(verifiedFilter ||
+            whitelistFilter ||
+            delegableFilter ||
+            delegatedFilter) && (
+            <Block>
+              <Button
+                kind="secondary"
+                size="mini"
+                onClick={() => {
+                  setVerifiedFilter(false)
+                  setWhitelistFilter(false)
+                  setDelegableFilter(false)
+                  setDelegatedFilter(false)
+                }}
+              >
+                Reset Filters
+              </Button>
+            </Block>
+          )}
         </TableHeader>
       )}
 
@@ -332,12 +409,13 @@ const StakePoolTableV2: FC<{
         )}
         {kind !== 'mining' && (
           <TableBuilderColumn
-            id="owner"
+            id="OwnerId"
             header={
               <TooltipHeader content={tooltipContent.owner}>
                 Owner
               </TooltipHeader>
             }
+            sortable
           >
             {({node}: StakePoolEdge) => <Owner account={node.owner} />}
           </TableBuilderColumn>
@@ -383,37 +461,9 @@ const StakePoolTableV2: FC<{
             sortable
           >
             {({node: {commission}}: StakePoolEdge) => {
-              const showWarning = false
-              // if (
-              //   commission &&
-              //   previousCommission &&
-              //   new Decimal(commission).lt(previousCommission) &&
-              //   new Date(commissionUpdatedAt).getTime() >
-              //     currentTime.getTime() - 1000 * 60 * 60 * 24 * 3
-              // ) {
-              //   showWarning = true
-              // }
-              return (
-                <Block display="flex" alignItems="center">
-                  <span>
-                    {commission
-                      ? `${new Decimal(commission).times(100)}%`
-                      : '0%'}
-                  </span>
-                  {showWarning && (
-                    <StatefulTooltip
-                      overrides={{Body: {style: {maxWidth: '400px'}}}}
-                      content={tooltipContent.commissionWarning}
-                    >
-                      <AlertTriangle
-                        color="#dea833"
-                        size={16}
-                        className={css({marginLeft: '4px'})}
-                      />
-                    </StatefulTooltip>
-                  )}
-                </Block>
-              )
+              return commission
+                ? `${new Decimal(commission).times(100)}%`
+                : '0%'
             }}
           </TableBuilderColumn>
         )}
@@ -544,7 +594,7 @@ const StakePoolTableV2: FC<{
             const isOwner = polkadotAccount?.address === node.owner.id
             const canDelegate = Boolean(
               polkadotAccount?.address &&
-                (isOwner || !node.whitelistEnabled || node.whitelists.length)
+                (isOwner || !node.whitelistEnabled || node.whitelists?.length)
             )
             const stake = node.stakes?.[0]
             if (kind === 'delegate') {
@@ -589,7 +639,11 @@ const StakePoolTableV2: FC<{
             ]
             let items: Array<MenuItem | MenuDivider> = commonMenuItems
             if (kind === 'mining') {
-              items = [...miningMenuItems, {divider: true}, ...commonMenuItems]
+              items = [
+                ...miningMenuItems,
+                {divider: true, key: 'divider'},
+                ...commonMenuItems,
+              ]
             }
 
             return (

@@ -24,7 +24,7 @@ import StakePoolModal, {
 } from '../../components/StakePoolModal'
 import StakePoolWhitelist from '../../components/StakePoolWhitelist'
 import WorkerTableV2 from '../../components/WorkerTableV2'
-import {useStakePoolByIdQuery} from '../../hooks/subsquid'
+import {IdentityLevel, useStakePoolByIdQuery} from '../../hooks/subsquid'
 import useAprCoefficient from '../../hooks/useAprCoefficient'
 import {subsquidClient} from '../../lib/graphqlClient'
 
@@ -83,6 +83,11 @@ const StakePool: FC<StakePoolProps> = ({pid}) => {
   } = stakePool || {}
 
   const isOwner = Boolean(owner && owner.id === polkadotAccount?.address)
+  const verified = Boolean(
+    owner &&
+      (owner.identityLevel === IdentityLevel.Reasonable ||
+        owner.identityLevel === IdentityLevel.KnownGood)
+  )
 
   const canDelegate = useMemo(() => {
     return Boolean(
@@ -147,14 +152,15 @@ const StakePool: FC<StakePoolProps> = ({pid}) => {
                 )
               }
             >
-              {owner && trimAddress(owner.id)}
-              {/* {accounts && accounts.identity ? (
-                accounts.identityVerified ? (
-                  <VerifiedIcon />
+              {owner &&
+                (owner.identityDisplay ? (
+                  <>
+                    {owner.identityDisplay}
+                    {verified ? <VerifiedIcon /> : <UnVerifiedIcon />}
+                  </>
                 ) : (
-                  <UnVerifiedIcon />
-                )
-              ) : null} */}
+                  trimAddress(owner.id)
+                ))}
             </InfoCard>
             <InfoCard label="APR">
               {aprCoefficient &&

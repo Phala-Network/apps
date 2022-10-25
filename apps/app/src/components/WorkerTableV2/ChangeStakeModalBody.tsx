@@ -44,21 +44,19 @@ const ChangeStakeModalBody: FC<
         }
       })
     } catch (err) {
-      // setConfirmLock(false)
-    } finally {
       setConfirmLock(false)
     }
   }
 
   const extrinsic = useMemo(() => {
-    if (!isNewAmountNotInRange && api && amount) {
+    if (api && amount && !isNewAmountNotInRange) {
       return api.tx.phalaStakePool.restartMining(
         pid,
         workerPublicKey,
         new Decimal(amount).times(1e12).floor().toString()
       )
     }
-  }, [amount, api, isNewAmountNotInRange, pid, workerPublicKey])
+  }, [amount, api, pid, workerPublicKey, isNewAmountNotInRange])
 
   return (
     <>
