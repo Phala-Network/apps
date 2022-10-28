@@ -4,8 +4,8 @@ import {
   evmXTokensEstimatedGasFetcher,
 } from '@/lib/ethersFetcher'
 import {
-  crabTransferPartialFeeFetcher,
   khalaXTransferPartialFeeFetcher,
+  polkadotXcmTransferPartialFeeFetcher,
   xTokensPartialFeeFetcher,
 } from '@/lib/polkadotFetcher'
 import {
@@ -86,11 +86,11 @@ export const useEstimatedGasFee = (): Decimal | undefined => {
     khalaXTransferPartialFeeFetcher
   )
 
-  const {data: crabPartialFee} = useSWR(
-    bridgeKind === 'crab' && polkadotApi
-      ? [polkadotApi, toChain.id, asset.id]
+  const {data: polkadotXcmPartialFee} = useSWR(
+    bridgeKind === 'polkadotXcm' && polkadotApi
+      ? [polkadotApi, fromChain.id, toChain.id, asset.id]
       : null,
-    crabTransferPartialFeeFetcher
+    polkadotXcmTransferPartialFeeFetcher
   )
 
   return (
@@ -101,6 +101,6 @@ export const useEstimatedGasFee = (): Decimal | undefined => {
           ethersGasPrice.times(evmXTokensEstimatedGas)))) ||
     xTokensPartialFee ||
     khalaPartialFee ||
-    crabPartialFee
+    polkadotXcmPartialFee
   )
 }

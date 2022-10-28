@@ -1,6 +1,7 @@
 import {BridgeError} from '@/config/error'
 import {
   amountAtom,
+  assetAtom,
   bridgeErrorAtom,
   destChainTransactionFeeAtom,
   destinationAccountAtom,
@@ -20,6 +21,7 @@ export const useValidation = () => {
   const [amount] = useAtom(amountAtom)
   const [fromChain] = useAtom(fromChainAtom)
   const [toChain] = useAtom(toChainAtom)
+  const [asset] = useAtom(assetAtom)
   const [destinationAccount] = useAtom(destinationAccountAtom)
   const balance = useBalance()
   const bridgeFee = useBridgeFee()
@@ -61,6 +63,15 @@ export const useValidation = () => {
         return 'InsufficientReserve'
       }
 
+      if (
+        fromChain.id === 'shiden' &&
+        asset.id === 'pha' &&
+        amount &&
+        balance.eq(amount)
+      ) {
+        return 'MinBalanceLimit'
+      }
+
       return null
     }
 
@@ -85,5 +96,6 @@ export const useValidation = () => {
     bridgeLimit,
     fromChain.id,
     toChain.id,
+    asset.id,
   ])
 }
