@@ -42,8 +42,6 @@ const DelegateModalBody: FC<
         }
       })
     } catch (err) {
-      // setConfirmLock(false)
-    } finally {
       setConfirmLock(false)
     }
   }

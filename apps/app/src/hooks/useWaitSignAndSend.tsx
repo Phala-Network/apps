@@ -70,7 +70,7 @@ const useWaitSignAndSend = (): ((
               window.open('https://forum.phala.network/t/topic/3560')
             },
           },
-          15000
+          8000
         )
         throw err
       })

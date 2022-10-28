@@ -1,5 +1,6 @@
+import {TransactionFeeLabel} from '@phala/react-components'
 import {usePolkadotAccountTransferrableBalanceDecimal} from '@phala/react-hooks'
-import {useApiPromise, waitSignAndSend} from '@phala/react-libs'
+import {useApiPromise} from '@phala/react-libs'
 import {useCurrentAccount} from '@phala/store'
 import {toFixed, validateAddress} from '@phala/utils'
 import {Block} from 'baseui/block'
@@ -7,9 +8,9 @@ import {FormControl} from 'baseui/form-control'
 import {Input} from 'baseui/input'
 import {ModalBody, ModalButton, ModalFooter, ModalHeader} from 'baseui/modal'
 import {Notification} from 'baseui/notification'
-import {toaster} from 'baseui/toast'
 import Decimal from 'decimal.js'
 import React, {useMemo, useState} from 'react'
+import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
 import {useCurrentNetworkNode} from '../../store/networkNode'
 import {MaxButton} from './styledComponents'
 
@@ -24,6 +25,7 @@ const TransferModal: React.FC<Props> = ({onClose}) => {
   const {api} = useApiPromise()
   const [polkadotAccount] = useCurrentAccount()
   const [currentNetworkNode] = useCurrentNetworkNode()
+  const waitSignAndSend = useWaitSignAndSend()
 
   const polkadotAccountAddress = polkadotAccount?.address
   const polkadotTransferBalanceDecimal =
@@ -41,34 +43,27 @@ const TransferModal: React.FC<Props> = ({onClose}) => {
     setAmount(maxValue)
   }
 
+  const extrinsic = useMemo(() => {
+    try {
+      if (validateAddress(address) && api) {
+        const amountString = new Decimal(amount).mul(1e12).toString()
+        return api.tx.balances.transferKeepAlive(address, amountString)
+      }
+    } catch (error) {
+      // noop
+    }
+  }, [address, amount, api])
+
   const submit = async () => {
-    if (api && polkadotAccount && polkadotAccount.wallet?.signer) {
-      let amountString: string
-
-      if (!validateAddress(address)) {
-        toaster.negative('Invalid address', {})
-        return
-      }
-
+    if (extrinsic) {
       try {
-        amountString = new Decimal(amount).mul(1e12).toString()
-      } catch (err) {
-        toaster.negative('Invalid amount', {})
-        return
-      }
-
-      try {
-        await waitSignAndSend({
-          account: polkadotAccount.address,
-          api,
-          extrinsic: api.tx.balances.transferKeepAlive(address, amountString),
-          signer: polkadotAccount.wallet.signer,
+        await waitSignAndSend(extrinsic, (status) => {
+          if (status.isReady) {
+            onClose()
+          }
         })
-
-        toaster.positive('Success', {})
-        onClose()
-      } catch (err) {
-        toaster.negative((err as Error)?.message, {})
+      } catch (e) {
+        setLoading(false)
       }
     }
   }
@@ -113,20 +108,15 @@ const TransferModal: React.FC<Props> = ({onClose}) => {
           alignItems="center"
           justifyContent="space-between"
         >
-          {/* <PolkadotTransactionFeeLabel
-            key="PolkadotTransactionFeeLabel"
-            sender={polkadotAccount?.address}
-            recipient={address}
-            amount={amount}
-          /> */}
+          <TransactionFeeLabel action={extrinsic} />
           <ModalButton
-            disabled={loading}
+            disabled={loading || !extrinsic}
             onClick={() => {
               setLoading(true)
-              submit().finally(() => setLoading(false))
+              submit()
             }}
           >
-            {loading ? 'Submitting' : 'Submit'}
+            Submit
           </ModalButton>
         </Block>
       </ModalFooter>
