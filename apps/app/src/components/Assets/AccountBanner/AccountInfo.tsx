@@ -14,7 +14,7 @@ const Wrapper = styled.div`
   box-sizing: border-box;
   display: grid;
   grid-column-gap: 23px;
-  grid-template-rows: 36px 48px;
+  grid-template-rows: auto auto;
   grid-template-columns: auto 1fr;
   grid-template-areas: 'Name Button' 'Address Address';
 

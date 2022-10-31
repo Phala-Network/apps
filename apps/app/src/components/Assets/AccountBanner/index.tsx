@@ -38,7 +38,7 @@ const Content = styled.div`
 
 const Left = styled.div`
   flex: 1;
-  padding-top: 103px;
+  padding-top: 70px;
   padding-left: 85px;
 
   ${down('md')} {
@@ -67,7 +67,7 @@ const Dollar = styled.div`
   font-size: 60px;
   line-height: 36px;
   color: #ffffff;
-  padding-top: 113px;
+  padding-top: 80px;
   padding-right: 85px;
 
   ${down('md')} {
