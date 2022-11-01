@@ -8,7 +8,7 @@ export type NetworkNodeId =
   | 'khala-via-dwellir'
   | 'pc-test-3'
 
-export type NetworkNodeKind = 'khala' | 'phala'
+export type NetworkNodeKind = 'khala' | 'phala' | 'test'
 
 export type NetworkNode = {
   id: NetworkNodeId
@@ -57,6 +57,6 @@ export const NETWORK_NODES: readonly NetworkNode[] = [
       name: 'pc-test-3',
       endpoint: 'wss://pc-test-3.phala.network/khala/ws',
       types: khala,
-      kind: 'khala',
+      kind: 'test',
     } as NetworkNode),
 ].filter((node): node is NetworkNode => node !== false)

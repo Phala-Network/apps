@@ -1,17 +1,13 @@
-import {PhalaStakePoolTransactionFeeLabel} from '@phala/react-components'
+import {TransactionFeeLabel} from '@phala/react-components'
 import {useAllBalances} from '@phala/react-hooks'
-import {
-  bnToDecimal,
-  useApiPromise,
-  useDecimalJsTokenDecimalMultiplier,
-  waitSignAndSend,
-} from '@phala/react-libs'
+import {useApiPromise, waitSignAndSend} from '@phala/react-libs'
 import {useCurrentAccount} from '@phala/store'
 import {BN} from '@polkadot/util'
 import {Block} from 'baseui/block'
 import {ModalBody, ModalButton, ModalFooter, ModalHeader} from 'baseui/modal'
 import {toaster} from 'baseui/toast'
-import React, {useCallback, useMemo, useState} from 'react'
+import Decimal from 'decimal.js'
+import React, {useMemo, useState} from 'react'
 
 type Props = {
   onClose: () => void
@@ -22,26 +18,22 @@ const ClaimModal: React.FC<Props> = ({onClose}) => {
   const {api} = useApiPromise()
   const [currentAccount] = useCurrentAccount()
   const allBalances = useAllBalances(currentAccount?.address)
-  const decimals = useDecimalJsTokenDecimalMultiplier(api)
   const {vestingLocked, vestedClaimable, vestedBalance} = allBalances || {}
 
-  const format = useCallback<(bn: BN | undefined) => string>(
-    (bn) => {
-      // HACK: derived vestedClaimable may be negative
-      if (bn?.isNeg()) return '0'
+  const format = (bn?: BN) => {
+    // HACK: derived vestedClaimable may be negative
+    if (bn?.isNeg()) return '0'
 
-      if (bn && decimals) {
-        return bnToDecimal(bn, decimals).toString()
-      }
-      return '-'
-    },
-    [decimals]
-  )
+    if (bn) {
+      return new Decimal(bn.toString()).div(1e12).toString()
+    }
+    return '-'
+  }
 
   const extrinsic = useMemo(() => {
     if (!api) return
 
-    return api.tx.vesting?.vest?.()
+    return api.tx.vesting.vest()
   }, [api])
 
   const submit = () => {
@@ -86,7 +78,7 @@ const ClaimModal: React.FC<Props> = ({onClose}) => {
           alignItems="center"
           justifyContent="space-between"
         >
-          <PhalaStakePoolTransactionFeeLabel action={extrinsic} />
+          <TransactionFeeLabel action={extrinsic} />
           <ModalButton disabled={loading || !canClaim} onClick={submit}>
             Claim
           </ModalButton>

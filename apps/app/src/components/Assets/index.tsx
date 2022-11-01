@@ -1,12 +1,9 @@
 import Decimal from 'decimal.js'
 import {useMemo} from 'react'
-import {Helmet} from 'react-helmet'
-import styled from 'styled-components'
 import usePHAData from '../../hooks/usePHAData'
+import Head from '../Head'
 import AccountBanner from './AccountBanner'
 import AssetList, {DataType} from './AssetList'
-
-const Wrapper = styled.div``
 
 const Index = () => {
   const phaData = usePHAData()
@@ -27,13 +24,11 @@ const Index = () => {
   }, [tableData])
 
   return (
-    <Wrapper>
-      <Helmet>
-        <title>Dashboard</title>
-      </Helmet>
+    <>
+      <Head title="Dashboard" />
       <AccountBanner totalValue={totalValue} />
       <AssetList tableData={tableData} />
-    </Wrapper>
+    </>
   )
 }
 

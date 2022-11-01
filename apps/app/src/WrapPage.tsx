@@ -1,13 +1,12 @@
-import {Helmet} from 'react-helmet'
-import {ComponentsGlobalStyle} from '@phala/react-components'
+import {useAtomsDevtools} from 'jotai/devtools'
+import {ReactNode, StrictMode} from 'react'
 import BaseLayout from './components/BaseLayout'
 import GlobalStyle from './GlobalStyle'
-import {ReactNode, StrictMode} from 'react'
+import {useAutoConnectWallet} from './hooks/useAutoConnectWallet'
+import useBlockHeightListener from './hooks/useBlockHeightListener'
+import {useSubscribeWalletAccounts} from './hooks/useSubscribeWalletAccounts'
 import {useTestnetGuard} from './hooks/useTestnetGuard'
 import useZendesk from './hooks/useZendesk'
-import {useAutoConnectWallet} from './hooks/useAutoConnectWallet'
-import {useSubscribeWalletAccounts} from './hooks/useSubscribeWalletAccounts'
-import {useAtomsDevtools} from 'jotai/devtools'
 
 const WrapPage: React.FC<{children: ReactNode}> = ({children}) => {
   useTestnetGuard()
@@ -15,17 +14,15 @@ const WrapPage: React.FC<{children: ReactNode}> = ({children}) => {
   useAutoConnectWallet()
   useSubscribeWalletAccounts()
   useAtomsDevtools('Phala App')
+  useBlockHeightListener()
 
   return (
     <StrictMode>
-      <Helmet titleTemplate="%s | Phala App">
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
-        />
-      </Helmet>
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+      />
       <GlobalStyle />
-      <ComponentsGlobalStyle />
       <BaseLayout>{children}</BaseLayout>
     </StrictMode>
   )

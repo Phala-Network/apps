@@ -1,9 +1,8 @@
 import {PLACEMENT, StatefulPopover} from 'baseui/popover'
 import {navigate} from 'gatsby'
+import {ExternalLink, MoreHorizontal} from 'react-feather'
 import {down} from 'styled-breakpoints'
 import styled from 'styled-components'
-import ExternalLink from '../../icons/external_link.svg'
-import MoreIcon from '../../icons/more.svg'
 import {LineWrap} from './styledComponent'
 
 const MoreButton = styled.button`
@@ -74,7 +73,7 @@ const CheckMore: React.FC = () => {
           {LINKS.map(({name, link}) => (
             <LineWrap onClick={close} href={link} key={name} target="_blank">
               <ExternalName>{name}</ExternalName>
-              <ExternalLink />
+              <ExternalLink width={18} height={18} color="#999" />
             </LineWrap>
           ))}
         </>
@@ -84,22 +83,19 @@ const CheckMore: React.FC = () => {
       overrides={{
         Arrow: {
           style: {
-            outline: `1px #aad829 solid`,
-            backgroundColor: '#aad829',
+            border: `1px #aad829 solid`,
           },
         },
         Body: {
           style: {
-            outline: `1px #aad829 solid`,
-            backgroundColor: '#eeeeee',
+            border: `1px #aad829 solid`,
             boxShadow: 'none',
-            marginRight: '20px',
           },
         },
       }}
     >
       <MoreButton>
-        <MoreIcon />
+        <MoreHorizontal width={24} height={24} />
       </MoreButton>
     </StatefulPopover>
   )

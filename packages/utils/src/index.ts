@@ -1,8 +1,5 @@
 export * from './formatCurrency'
-export {default as isDev} from './isDev'
-export {isProduction} from './isProduction'
 export * from './isSSR'
-export {default as isTest} from './isTest'
 export * from './isTruthy'
 export * from './sleep'
 export * from './toFixed'

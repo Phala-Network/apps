@@ -9,25 +9,24 @@ import ButtonCell from './ButtonCell'
 import ValueCell from './ValueCell'
 
 const Wrapper = styled.div`
-  padding: 30px 85px;
+  padding: 30px 0;
 
   ${up('md')} {
     margin: 0 auto;
     max-width: 1270px;
   }
   ${down('md')} {
-    padding: 22px 10px;
+    padding: 22px 0;
   }
 `
 
 const Title = styled.div`
-  font-family: Montserrat;
-  font-style: normal;
   font-weight: 600;
   font-size: 20px;
   line-height: 20px;
   color: #111111;
   margin-bottom: 20px;
+  padding-left: 10px;
 
   ${down('md')} {
     font-size: 20px;
@@ -59,15 +58,8 @@ const AssetList: React.FC<Props> = ({tableData}) => {
         data={tableData}
         emptyMessage="Please Connect Wallet"
         overrides={{
-          Root: {
-            style: () => ({
-              boxShadow: '0px 16px 48px rgba(0, 0, 0, 0.1)',
-            }),
-          },
           TableEmptyMessage: {
             style: () => ({
-              fontFamily: 'Montserrat',
-              fontStyle: 'normal',
               fontSize: '20px',
               lineHeight: '256px',
               textAlign: 'center',
@@ -79,8 +71,6 @@ const AssetList: React.FC<Props> = ({tableData}) => {
             style: ({$theme}) => ({
               border: 'none',
               backgroundColor: '#D1FF52',
-              fontFamily: 'Montserrat',
-              fontStyle: 'normal',
               fontSize: '16px',
               lineHeight: '16px',
               color: '#111111',
@@ -120,10 +110,10 @@ const AssetList: React.FC<Props> = ({tableData}) => {
         }}
       >
         <TableBuilderColumn header="Asset">
-          {(row) => <AssetCell name={row.name} icon={row.icon} />}
+          {(row: DataType) => <AssetCell name={row.name} icon={row.icon} />}
         </TableBuilderColumn>
         <TableBuilderColumn header="Balance">
-          {(row) => (
+          {(row: DataType) => (
             <BalanceCell
               balance={row.balance}
               transferrable={row.transferrable}
@@ -134,12 +124,12 @@ const AssetList: React.FC<Props> = ({tableData}) => {
         </TableBuilderColumn>
         {isMobile ? null : (
           <TableBuilderColumn header="Value">
-            {(row) => <ValueCell value={row.value} />}
+            {(row: DataType) => <ValueCell value={row.value} />}
           </TableBuilderColumn>
         )}
 
         <TableBuilderColumn>
-          {(row) => <ButtonCell name={row.name} />}
+          {(row: DataType) => <ButtonCell name={row.name} />}
         </TableBuilderColumn>
       </TableBuilder>
     </Wrapper>

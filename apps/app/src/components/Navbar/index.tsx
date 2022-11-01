@@ -2,6 +2,8 @@ import {Block} from 'baseui/block'
 import React from 'react'
 import {down} from 'styled-breakpoints'
 import styled from 'styled-components'
+import {useCurrentNetworkNode} from '../../store/networkNode'
+import BlockHeight from '../BlockHeight'
 import Account from './Account'
 import CheckMore from './CheckMore'
 import Links from './Links'
@@ -17,15 +19,11 @@ const Wrapper = styled.div`
   right: 0;
   height: 80px;
   background-color: #fff;
-  padding: 0 40px;
-
-  ${down('lg')} {
-    padding: 0 20px;
-  }
+  padding: 0 20px;
 
   ${down('md')} {
-    height: 72px;
-    padding: 0 10px;
+    height: 64px;
+    padding: 0 12px;
   }
 `
 
@@ -37,6 +35,7 @@ const Content = styled.div`
 `
 
 const Index: React.FC = () => {
+  const [currentNetworkNode] = useCurrentNetworkNode()
   return (
     <Wrapper>
       <Content>
@@ -45,6 +44,7 @@ const Index: React.FC = () => {
           <Links />
         </Block>
         <Block display="flex" alignItems="center" flex="none">
+          {currentNetworkNode.kind === 'khala' && <BlockHeight />}
           <SelectNode />
           <Account />
           <CheckMore />

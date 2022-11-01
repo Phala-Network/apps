@@ -1,49 +1,27 @@
-import {useLocation} from '@reach/router'
-import React, {ReactNode} from 'react'
-import {down, up} from 'styled-breakpoints'
-import styled, {css} from 'styled-components'
+import {FC, ReactNode} from 'react'
+import {down} from 'styled-breakpoints'
+import styled from 'styled-components'
 import BottomBar from './BottomBar'
 import Navbar from './Navbar'
 
-const HomePageWrap = styled.div`
+const PageContainer = styled.div`
   padding-top: 80px;
-  ${up('md')} {
-    display: flex;
-  }
 
   ${down('md')} {
-    display: block;
-    padding-top: 72px;
+    padding-top: 64px;
     padding-bottom: 72px;
   }
 `
 
-const ContentWrap = styled.div<{compact?: boolean}>`
-  margin: 0 auto;
-  ${up('md')} {
-    ${(props) =>
-      props.compact
-        ? css`
-            width: 1200px;
-          `
-        : css`
-            width: 100%;
-          `}
-  }
-`
-
-const BaseLayout: React.FC<{children: ReactNode}> = (props) => {
+const BaseLayout: FC<{children: ReactNode}> = (props) => {
   const {children} = props
-  const {pathname} = useLocation()
 
   return (
-    <HomePageWrap>
-      <ContentWrap compact={/^\/(bridge|analytics)/.test(pathname)}>
-        {children}
-      </ContentWrap>
+    <PageContainer>
+      {children}
       <Navbar />
       <BottomBar />
-    </HomePageWrap>
+    </PageContainer>
   )
 }
 

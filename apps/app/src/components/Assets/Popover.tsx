@@ -1,6 +1,6 @@
 import {Button, KIND} from 'baseui/button'
 import {StatefulPopover, StatefulPopoverProps} from 'baseui/popover'
-import MoreIcon from './Icons/MoreIcon.svg'
+import {MoreVertical} from 'react-feather'
 
 const Popover: React.FC<Pick<StatefulPopoverProps, 'content'>> = (props) => {
   return (
@@ -9,14 +9,12 @@ const Popover: React.FC<Pick<StatefulPopoverProps, 'content'>> = (props) => {
       overrides={{
         Arrow: {
           style: {
-            outline: `1px #aad829 solid`,
-            backgroundColor: '#aad829',
+            border: `1px #aad829 solid`,
           },
         },
         Body: {
           style: {
-            outline: `1px #aad829 solid`,
-            backgroundColor: '#eeeeee',
+            border: `1px #aad829 solid`,
             boxShadow: 'none',
           },
         },
@@ -27,16 +25,11 @@ const Popover: React.FC<Pick<StatefulPopoverProps, 'content'>> = (props) => {
         kind={KIND.tertiary}
         overrides={{
           BaseButton: {
-            style: () => ({
-              padding: 0,
-              ':hover': {
-                backgroundColor: '#D1FF52',
-              },
-            }),
+            style: () => ({padding: 0}),
           },
         }}
       >
-        <MoreIcon />
+        <MoreVertical width={24} height={24} />
       </Button>
     </StatefulPopover>
   )

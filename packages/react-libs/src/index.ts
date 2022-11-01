@@ -1,6 +1,3 @@
 export {ApiPromiseProvider, useApiPromise} from './polkadot/hooks/useApiPromise'
-export {usePhalaStakePoolTransactionFee} from './polkadot/hooks/usePhalaStakePoolTransactionFee'
-export {useDecimalJsTokenDecimalMultiplier} from './polkadot/useTokenDecimals'
-export {useTransactionFee} from './polkadot/useTransactionFee'
-export {bnToDecimal} from './polkadot/utils/balances'
+export {useTransactionFee} from './polkadot/hooks/useTransactionFee'
 export {waitSignAndSend} from './polkadot/utils/signAndSend'

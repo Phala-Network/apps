@@ -16,8 +16,6 @@ const Index: React.FC<ButtonProps> = (props) => {
             borderBottomRightRadius: '14px',
             padding: '6px 18px',
             color: '#111111',
-            fontFamily: 'Montserrat',
-            fontStyle: 'normal',
             fontWeight: 600,
             fontSize: '16px',
             lineHeight: '16px',

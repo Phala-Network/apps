@@ -4,14 +4,13 @@ import {useCurrentAccount} from '@phala/store'
 import {trimAddress} from '@phala/utils'
 import {toaster} from 'baseui/toast'
 import React, {MouseEventHandler, useMemo, useState} from 'react'
+import {Copy} from 'react-feather'
 import {down} from 'styled-breakpoints'
 import {useBreakpoint} from 'styled-breakpoints/react-styled'
 import styled from 'styled-components'
 import Button from '../Button'
-import CopyIcon from '../Icons/CopyIcon.svg'
 
 const Wrapper = styled.div`
-  box-sizing: border-box;
   display: grid;
   grid-column-gap: 23px;
   grid-template-rows: 36px 48px;
@@ -27,13 +26,13 @@ const Wrapper = styled.div`
 
 const Name = styled.div`
   grid-area: Name;
-  font-family: Montserrat;
-  font-style: normal;
   font-weight: 600;
-
   font-size: 36px;
   line-height: 36px;
   color: #ffffff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 
   ${down('md')} {
     font-size: 20px;
@@ -56,9 +55,10 @@ const AddressWrapper = styled.div`
   padding-top: 16px;
 
   svg {
-    fill: #8c8c8c;
+    cursor: pointer;
+    color: #8c8c8c;
     :hover {
-      fill: #aad829;
+      color: #aad829;
     }
   }
 
@@ -67,8 +67,6 @@ const AddressWrapper = styled.div`
   }
 `
 const Address = styled.a`
-  font-style: normal;
-  font-weight: normal;
   font-size: 16px;
   line-height: 16px;
   color: #aad829;
@@ -142,8 +140,8 @@ const AccountInfo: React.FC = () => {
             </HrefAddress>
           )}
 
-          {!polkadotAccount ? null : (
-            <CopyIcon
+          {polkadotAccount && (
+            <Copy
               onClick={onClick}
               width={isMobile ? '13' : '26'}
               height={isMobile ? '13' : '26'}

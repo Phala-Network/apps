@@ -3,27 +3,20 @@ import {down} from 'styled-breakpoints'
 import styled from 'styled-components'
 import {DataType} from './index'
 
-const Wrapper = styled.div``
-
 const Balance = styled.div`
-  font-family: Montserrat;
-  font-style: normal;
   font-weight: 600;
   font-size: 16px;
-  line-height: 16px;
-  color: #111111;
 `
 
 const ValueItem = styled.div`
-  font-style: normal;
-  font-weight: normal;
-  font-size: 16px;
-  line-height: 16px;
+  font-size: 14px;
   color: #8c8c8c;
-  margin-top: 10px;
   display: flex;
   justify-content: space-between;
-  width: 265px;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+  gap: 12px;
+  max-width: 280px;
 
   :first-of-type {
     margin-top: 20px;
@@ -31,8 +24,6 @@ const ValueItem = styled.div`
 
   ${down('md')} {
     font-size: 14px;
-    margin-bottom: 14px;
-    width: 220px;
   }
 `
 
@@ -40,7 +31,7 @@ const BalanceCell: React.FC<
   Pick<DataType, 'balance' | 'transferrable' | 'crowdloanVesting' | 'delegate'>
 > = ({balance, transferrable, crowdloanVesting, delegate}) => {
   return (
-    <Wrapper>
+    <div>
       <Balance>{balance}</Balance>
       <div>
         {transferrable ? (
@@ -62,7 +53,7 @@ const BalanceCell: React.FC<
           </ValueItem>
         ) : null}
       </div>
-    </Wrapper>
+    </div>
   )
 }
 

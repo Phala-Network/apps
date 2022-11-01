@@ -13,6 +13,10 @@ const GlobalStyle = createGlobalStyle`
     text-decoration: none;
   }
 
+  input[type=number] {
+    -moz-appearance: textfield;
+  }
+
   input::-webkit-outer-spin-button,
   input::-webkit-inner-spin-button {
     -webkit-appearance: none;
@@ -22,6 +26,12 @@ const GlobalStyle = createGlobalStyle`
   // HACK: baseui form label does not use font preset in theme
   label[data-baseweb=form-control-label] {
     font-weight: 600;
+  }
+
+  div[data-baseweb=table-builder-semantic] {
+    th {
+      font-weight: 600;
+    }
   }
 `
 

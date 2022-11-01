@@ -8,3 +8,7 @@ export const wrapRootElement = ({element}) => {
 export const wrapPageElement = ({props, element}) => (
   <WrapPage {...props}>{element}</WrapPage>
 )
+
+export const onRenderBody = ({setHtmlAttributes}) => {
+  setHtmlAttributes({lang: 'en'})
+}

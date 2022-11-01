@@ -48,7 +48,7 @@ const Body: FC<Props> = ({onSelect, onDisconnect}) => {
                         : theme.colors.backgroundTertiary,
                     },
                   }}
-                  onClick={(e) => {
+                  onClick={(e: any) => {
                     if ((e.target as HTMLElement)?.tagName === 'DIV') {
                       onSelect?.(account.address)
                     }
@@ -94,7 +94,7 @@ const Body: FC<Props> = ({onSelect, onDisconnect}) => {
   )
 }
 
-const AccountModal: VFC<ModalProps & Props> = ({
+const AccountModal: FC<ModalProps & Props> = ({
   isOpen,
   onClose,
   onSelect,
@@ -107,7 +107,7 @@ const AccountModal: VFC<ModalProps & Props> = ({
       overrides={{
         Dialog: {
           style: ({$theme}) => ({
-            borderRadius: 0,
+            borderRadius: '4px',
             borderWidth: '2px',
             borderColor: $theme.colors.accent,
             borderStyle: 'solid',

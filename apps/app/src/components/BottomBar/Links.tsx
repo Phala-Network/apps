@@ -1,31 +1,34 @@
-import {Link as GatsbyLink} from 'gatsby'
+import {Link} from 'gatsby'
 import styled from 'styled-components'
 
 const Wrapper = styled.div`
   display: flex;
-`
 
-const Link = styled(GatsbyLink).attrs({activeClassName: 'active'})`
-  font-family: Montserrat;
-  font-style: normal;
-  font-size: 16px;
-  line-height: 16px;
-  color: #111111;
-  text-decoration: none;
-  margin-left: 30px;
+  a {
+    font-family: Montserrat;
+    font-size: 16px;
+    line-height: 16px;
+    color: #111111;
+    text-decoration: none;
+    margin-left: 30px;
 
-  &:hover,
-  &.active {
-    color: #aad829;
+    &:hover,
+    &.active {
+      color: #aad829;
+    }
   }
 `
 
 const Links: React.FC = () => {
   return (
     <Wrapper>
-      <Link to="/">Dashboard</Link>
-      <Link to="/bridge/">Bridge</Link>
-      <Link to="/delegate/" partiallyActive={true}>
+      <Link activeClassName="active" to="/">
+        Dashboard
+      </Link>
+      <a href="https://subbridge.io" target="_blank" rel="noopener">
+        SubBridge
+      </a>
+      <Link activeClassName="active" to="/delegate/" partiallyActive={true}>
         Delegate
       </Link>
     </Wrapper>

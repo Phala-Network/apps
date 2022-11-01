@@ -1,14 +1,12 @@
+import {formatCurrency} from '@phala/utils'
 import React from 'react'
 import styled from 'styled-components'
-import {formatCurrency} from '@phala/utils'
 import {DataType} from './index'
 
 const Wrapper = styled.div`
-  font-family: Montserrat;
-  font-style: normal;
+  white-space: nowrap;
   font-weight: 600;
   font-size: 16px;
-  line-height: 16px;
   color: #111111;
 `
 

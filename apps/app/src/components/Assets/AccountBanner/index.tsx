@@ -61,11 +61,10 @@ const Icon = styled.div`
 `
 
 const Dollar = styled.div`
-  font-family: Montserrat;
-  font-style: normal;
   font-weight: 600;
   font-size: 60px;
   line-height: 36px;
+  white-space: nowrap;
   color: #ffffff;
   padding-top: 113px;
   padding-right: 85px;

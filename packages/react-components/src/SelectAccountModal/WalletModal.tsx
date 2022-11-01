@@ -112,7 +112,7 @@ const WalletModal: FC<ModalProps & Props> = ({isOpen, onClose, onSelect}) => {
       overrides={{
         Dialog: {
           style: ({$theme}) => ({
-            borderRadius: 0,
+            borderRadius: '4px',
             borderWidth: '2px',
             borderColor: $theme.colors.accent,
             borderStyle: 'solid',
