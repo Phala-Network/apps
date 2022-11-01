@@ -582,6 +582,13 @@ const StakePoolTableV2: FC<{
             )}
           </TableBuilderColumn>
         )}
+        {kind === 'mining' && (
+          <TableBuilderColumn id="OwnerReward" header="Owner Reward" sortable>
+            {({node}: StakePoolEdge) =>
+              `${formatCurrency(node.ownerReward)} PHA`
+            }
+          </TableBuilderColumn>
+        )}
         <TableBuilderColumn
           id="Actions"
           overrides={{
@@ -628,7 +635,9 @@ const StakePoolTableV2: FC<{
               {
                 label: 'Claim Reward',
                 key: 'claim',
-                disabled: !stake || stake.reward === '0',
+                disabled:
+                  (!stake || stake.reward === '0') &&
+                  (!isOwner || node.ownerReward === '0'),
               },
               {
                 label: 'Withdraw',

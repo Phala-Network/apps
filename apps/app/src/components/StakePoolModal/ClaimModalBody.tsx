@@ -4,6 +4,7 @@ import {useCurrentAccount} from '@phala/store'
 import {formatCurrency, validateAddress} from '@phala/utils'
 import {Block} from 'baseui/block'
 import {Button} from 'baseui/button'
+import {Checkbox} from 'baseui/checkbox'
 import {FormControl} from 'baseui/form-control'
 import {Input} from 'baseui/input'
 import {
@@ -14,6 +15,7 @@ import {
   ModalProps,
 } from 'baseui/modal'
 import {ParagraphSmall} from 'baseui/typography'
+import Decimal from 'decimal.js'
 import {FC, useMemo, useState} from 'react'
 import {StakePool} from '../../hooks/subsquid'
 import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
@@ -21,16 +23,21 @@ import FormDisplay from '../FormDisplay'
 
 const ClaimModalBody: FC<
   {
-    stakePool: Pick<StakePool, 'pid'> & Partial<Pick<StakePool, 'stakes'>>
+    stakePool: Pick<StakePool, 'pid' | 'ownerReward' | 'owner'> &
+      Partial<Pick<StakePool, 'stakes'>>
   } & Pick<ModalProps, 'onClose'>
 > = ({stakePool, onClose}) => {
-  const {pid, stakes} = stakePool
+  const {pid, stakes, ownerReward, owner} = stakePool
+  const stake = stakes?.[0]
   const [polkadotAccount] = useCurrentAccount()
+  const isOwner = polkadotAccount?.address === owner.id
   const {api} = useApiPromise()
   const [address, setAddress] = useState('')
   const [isAddressError, setIsAddressError] = useState(false)
   const waitSignAndSend = useWaitSignAndSend()
   const [confirmLock, setConfirmLock] = useState(false)
+  const [delegatorRewardSelected, setDelegatorRewardSelected] = useState(true)
+  const [ownerRewardSelected, setOwnerRewardSelected] = useState(isOwner)
 
   const onConfirm = async () => {
     setConfirmLock(true)
@@ -47,13 +54,33 @@ const ClaimModalBody: FC<
 
   const extrinsic = useMemo(() => {
     if (api && !isAddressError) {
-      return api.tx.phalaStakePool.claimRewards(pid, address)
+      if (delegatorRewardSelected && ownerRewardSelected) {
+        return api.tx.phalaStakePool.claimRewards(pid, address)
+      } else if (delegatorRewardSelected) {
+        return api.tx.phalaStakePool.claimStakerRewards(pid, address)
+      } else if (ownerRewardSelected) {
+        return api.tx.phalaStakePool.claimOwnerRewards(pid, address)
+      }
     }
-  }, [api, pid, address, isAddressError])
+  }, [
+    api,
+    pid,
+    address,
+    isAddressError,
+    delegatorRewardSelected,
+    ownerRewardSelected,
+  ])
 
-  const stake = stakes?.[0]
-
-  if (!stake) return null
+  const selectedRewards = useMemo(() => {
+    let rewards = new Decimal(0)
+    if (delegatorRewardSelected && stake) {
+      rewards = rewards.plus(stake.reward)
+    }
+    if (ownerRewardSelected) {
+      rewards = rewards.plus(ownerReward)
+    }
+    return rewards
+  }, [delegatorRewardSelected, ownerReward, ownerRewardSelected, stake])
 
   return (
     <>
@@ -66,12 +93,32 @@ const ClaimModalBody: FC<
           <ParagraphSmall as="div">{pid}</ParagraphSmall>
         </FormDisplay>
 
-        <FormDisplay label="Rewards">
-          <Block display={'flex'} flexDirection={'row'}>
-            <ParagraphSmall as="div">
-              {formatCurrency(stake.reward as string)} PHA
-            </ParagraphSmall>
-          </Block>
+        {isOwner && (
+          <>
+            {stake && (
+              <Checkbox
+                overrides={{Root: {style: {margin: '16px 0'}}}}
+                checked={delegatorRewardSelected}
+                onChange={(e) => setDelegatorRewardSelected(e.target.checked)}
+              >
+                Delegator Reward: {formatCurrency(stake.reward)} PHA
+              </Checkbox>
+            )}
+
+            <Checkbox
+              overrides={{Root: {style: {margin: '16px 0'}}}}
+              checked={ownerRewardSelected}
+              onChange={(e) => setOwnerRewardSelected(e.target.checked)}
+            >
+              Owner Reward: {formatCurrency(ownerReward)} PHA
+            </Checkbox>
+          </>
+        )}
+
+        <FormDisplay label={isOwner ? 'Selected Rewards' : 'Reward'}>
+          <ParagraphSmall as="div">
+            {formatCurrency(selectedRewards)} PHA
+          </ParagraphSmall>
         </FormDisplay>
 
         <FormControl
@@ -119,7 +166,12 @@ const ClaimModalBody: FC<
         >
           <TransactionFeeLabel action={extrinsic} />
           <ModalButton
-            disabled={!address || isAddressError || confirmLock}
+            disabled={
+              !address ||
+              isAddressError ||
+              confirmLock ||
+              !(delegatorRewardSelected || ownerRewardSelected)
+            }
             onClick={onConfirm}
           >
             Confirm
