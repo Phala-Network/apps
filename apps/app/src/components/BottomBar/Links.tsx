@@ -6,11 +6,11 @@ const Wrapper = styled.div`
 
   a {
     font-family: Montserrat;
-    font-size: 16px;
-    line-height: 16px;
+    font-size: 14px;
+    line-height: 14px;
     color: #111111;
     text-decoration: none;
-    margin-left: 30px;
+    margin-left: 16px;
 
     &:hover,
     &.active {
