@@ -1,4 +1,5 @@
 {
+  "$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json",
   "words": [
     "baseui",
     "karura",
@@ -20,6 +21,10 @@
     "typedefs",
     "unsub",
     "xtokens",
-    "readystate"
+    "readystate",
+    "fortawesome",
+    "fontawesome",
+    "talismn",
+    "tanstack"
   ]
 }

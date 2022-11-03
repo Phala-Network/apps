@@ -9,7 +9,7 @@ const PageContainer = styled.div`
 
   ${down('md')} {
     padding-top: 64px;
-    padding-bottom: 72px;
+    padding-bottom: 64px;
   }
 `
 
