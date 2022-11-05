@@ -5,11 +5,16 @@
   "type": "module",
   "main": "src/index.ts",
   "scripts": {
+    "lint": "eslint --cache --ext .ts,.tsx src",
+    "lint:fix": "eslint --fix --cache --ext .ts,.tsx src",
     "typecheck": "tsc --project ./tsconfig.json --noEmit"
   },
   "dependencies": {
     "@polkadot/keyring": "^10.1.11",
     "@polkadot/util": "^10.1.11",
     "decimal.js": "^10.4.2"
+  },
+  "devDependencies": {
+    "@phala/eslint-config": "workspace:^"
   }
 }

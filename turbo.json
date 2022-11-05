@@ -10,7 +10,10 @@
       "outputs": [".cache/**", "public/**"]
     },
     "lint": {
-      "outputs": []
+      "outputs": [".eslintcache", ".next/cache/eslint/**"]
+    },
+    "lint:fix": {
+      "outputs": [".eslintcache", ".next/cache/eslint/**"]
     }
   }
 }

@@ -29,11 +29,11 @@ jobs:
         run: yarn install --immutable
 
       - name: Linter
-        run: yarn lint
+        run: npm run lint
 
       # FIXME: Enable typecheck when it is ready
       # - name: Typecheck
       #   run: yarn typecheck
 
       - name: Build All Apps
-        run: yarn build
+        run: npm run build

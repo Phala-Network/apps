@@ -5,6 +5,8 @@
   "type": "module",
   "main": "src/index.ts",
   "scripts": {
+    "lint": "eslint --cache --ext .ts,.tsx src",
+    "lint:fix": "eslint --fix --cache --ext .ts,.tsx src",
     "typecheck": "tsc --project ./tsconfig.json --noEmit"
   },
   "peerDependencies": {
@@ -16,5 +18,8 @@
     "@talismn/connect-wallets": {
       "optional": true
     }
+  },
+  "devDependencies": {
+    "@phala/eslint-config": "workspace:^"
   }
 }

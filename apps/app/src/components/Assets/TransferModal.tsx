@@ -1,4 +1,4 @@
-import {usePolkadotAccountTransferrableBalanceDecimal} from '@phala/react-hooks'
+import {useAllBalances} from '@phala/react-hooks'
 import {useApiPromise} from '@phala/react-libs'
 import {useCurrentAccount} from '@phala/store'
 import {toFixed, validateAddress} from '@phala/utils'
@@ -28,8 +28,10 @@ const TransferModal: React.FC<Props> = ({onClose}) => {
   const waitSignAndSend = useWaitSignAndSend()
 
   const polkadotAccountAddress = polkadotAccount?.address
+  const allBalances = useAllBalances(polkadotAccountAddress)
   const polkadotTransferBalanceDecimal =
-    usePolkadotAccountTransferrableBalanceDecimal(polkadotAccountAddress)
+    allBalances &&
+    new Decimal(allBalances?.availableBalance.toString()).div(1e12)
   const isShowMaxButton = polkadotTransferBalanceDecimal?.greaterThan('0.003')
 
   const transferrableValue = useMemo(() => {
