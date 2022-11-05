@@ -7,11 +7,9 @@
   "scripts": {
     "typecheck": "tsc --project ./tsconfig.json --noEmit"
   },
-  "dependencies": {
-    "jotai": "^1.7.8"
-  },
   "peerDependencies": {
     "@talismn/connect-wallets": "^1.1.3",
+    "jotai": "^1.9.1",
     "react": ">=17"
   },
   "peerDependenciesMeta": {

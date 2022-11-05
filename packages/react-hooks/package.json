@@ -9,12 +9,12 @@
   },
   "dependencies": {
     "@phala/react-libs": "workspace:^",
-    "@polkadot/api": "^8.8.1",
-    "@polkadot/api-derive": "^8.8.1",
-    "@polkadot/types": "^8.8.1",
-    "@polkadot/util": "^9.4.1",
-    "@types/react": "^18.0.15",
-    "decimal.js": "^10.4.0"
+    "@polkadot/api": "^9.6.2",
+    "@polkadot/api-derive": "^9.6.2",
+    "@polkadot/types": "^9.6.2",
+    "@polkadot/util": "^10.1.11",
+    "@types/react": "^18.0.25",
+    "decimal.js": "^10.4.2"
   },
   "peerDependencies": {
     "react": ">=17"
