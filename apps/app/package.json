@@ -4,8 +4,8 @@
   "scripts": {
     "build": "gatsby build",
     "clean": "gatsby clean",
-    "dev": "gatsby develop -H 0.0.0.0",
-    "serve": "gatsby serve -H 0.0.0.0",
+    "dev": "gatsby develop",
+    "serve": "gatsby serve",
     "typecheck": "tsc --project ./tsconfig.json --noEmit"
   },
   "browserslist": [
