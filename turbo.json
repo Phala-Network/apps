@@ -3,7 +3,11 @@
   "pipeline": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": [".next/**", ".cache"]
+      "outputs": [".next/**", "out/**"]
+    },
+    "@phala/app#build": {
+      "dependsOn": ["^build"],
+      "outputs": [".cache/**", "public/**"]
     },
     "lint": {
       "outputs": []

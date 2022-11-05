@@ -1,4 +1,3 @@
-import {SelectAccountModal} from '@phala/react-components'
 import {useSSR} from '@phala/react-hooks'
 import {useCurrentAccount} from '@phala/store'
 import {trimAddress} from '@phala/utils'
@@ -8,6 +7,7 @@ import {Copy} from 'react-feather'
 import {down} from 'styled-breakpoints'
 import {useBreakpoint} from 'styled-breakpoints/react-styled'
 import styled from 'styled-components'
+import {SelectAccountModal} from '../../SelectAccountModal'
 import Button from '../Button'
 
 const Wrapper = styled.div`

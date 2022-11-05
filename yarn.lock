@@ -3401,13 +3401,13 @@ __metadata:
     "@fortawesome/free-regular-svg-icons": ^6.2.0
     "@fortawesome/free-solid-svg-icons": ^6.2.0
     "@fortawesome/react-fontawesome": ^0.2.0
-    "@phala/react-components": "workspace:^"
     "@phala/react-hooks": "workspace:^"
     "@phala/react-libs": "workspace:^"
     "@phala/store": "workspace:^"
     "@phala/typedefs": ^0.2.32
     "@phala/utils": "workspace:^"
     "@polkadot/api": ^9.6.2
+    "@polkadot/react-identicon": ^2.9.12
     "@polkadot/types": ^9.6.2
     "@polkadot/util": ^10.1.11
     "@polkadot/util-crypto": ^10.1.11
@@ -3448,32 +3448,6 @@ __metadata:
     styletron-engine-monolithic: ^1.0.0
     styletron-react: ^6.1.0
     typescript: ^4.8.4
-  languageName: unknown
-  linkType: soft
-
-"@phala/eslint-config@workspace:packages/eslint-config":
-  version: 0.0.0-use.local
-  resolution: "@phala/eslint-config@workspace:packages/eslint-config"
-  languageName: unknown
-  linkType: soft
-
-"@phala/react-components@workspace:^, @phala/react-components@workspace:packages/react-components":
-  version: 0.0.0-use.local
-  resolution: "@phala/react-components@workspace:packages/react-components"
-  dependencies:
-    "@phala/react-libs": "workspace:^"
-    "@phala/store": "workspace:^"
-    "@phala/utils": "workspace:^"
-    "@polkadot/api": ^9.6.2
-    "@polkadot/react-identicon": ^2.9.12
-    "@talismn/connect-wallets": ^1.2.1
-    "@types/react": ^18.0.25
-    baseui: 12.2.0
-    jotai: ^1.9.1
-    react-feather: ^2.0.10
-  peerDependencies:
-    react: ">=17"
-    react-dom: ">=17"
   languageName: unknown
   linkType: soft
 
@@ -6393,7 +6367,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"baseui@npm:12.2.0, baseui@npm:^12.2.0":
+"baseui@npm:^12.2.0":
   version: 12.2.0
   resolution: "baseui@npm:12.2.0"
   dependencies:
@@ -6829,11 +6803,11 @@ __metadata:
   linkType: hard
 
 "canvas-renderer@npm:~2.2.0":
-  version: 2.2.0
-  resolution: "canvas-renderer@npm:2.2.0"
+  version: 2.2.1
+  resolution: "canvas-renderer@npm:2.2.1"
   dependencies:
     "@types/node": "*"
-  checksum: 348bbfed8530c2df557e1820814a17a1d950d004e34bf307ecc8ea6ca94f8706ddaf02d81fb67480f64da7a92f2811964cb41791f4bd00edfcc8498472b096a7
+  checksum: 91d8807aee0fa0549862a4124455bea7833d4c739df39b6519df367ec4f57683735d6bf873dfbc0d47ce49e4d92a02cc2bd15eda2a025fa961d3d1c0539d85e8
   languageName: node
   linkType: hard
 
@@ -7428,11 +7402,11 @@ __metadata:
   linkType: hard
 
 "copy-to-clipboard@npm:^3.3.1":
-  version: 3.3.1
-  resolution: "copy-to-clipboard@npm:3.3.1"
+  version: 3.3.2
+  resolution: "copy-to-clipboard@npm:3.3.2"
   dependencies:
     toggle-selection: ^1.0.6
-  checksum: 3c7b1c333dc6a4b2e9905f52e4df6bbd34ff9f9c97ecd3ca55378a6bc1c191bb12a3252e6289c7b436e9188cff0360d393c0161626851d2301607860bbbdcfd5
+  checksum: 968ec7ec3d0cf3067542b63dd244ba5d05e743899d7a0361fb0a3130e731d277f5ea54ea4d90fc88cc66eea2e4c67dc2dd8698e4ed360f921af5aa7c60b889ac
   languageName: node
   linkType: hard
 

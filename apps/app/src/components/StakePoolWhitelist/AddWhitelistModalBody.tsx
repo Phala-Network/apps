@@ -1,4 +1,3 @@
-import {TransactionFeeLabel} from '@phala/react-components'
 import {useApiPromise} from '@phala/react-libs'
 import {Block} from 'baseui/block'
 import {FormControl} from 'baseui/form-control'
@@ -14,6 +13,7 @@ import {ParagraphSmall} from 'baseui/typography'
 import {FC, useMemo, useState} from 'react'
 import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
 import FormDisplay from '../FormDisplay'
+import {TransactionFeeLabel} from '../TransactionFeeLabel'
 
 const AddWhitelistModalBody: FC<
   {

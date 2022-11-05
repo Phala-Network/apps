@@ -1,4 +1,3 @@
-import {TransactionFeeLabel} from '@phala/react-components'
 import {usePolkadotAccountTransferrableBalanceDecimal} from '@phala/react-hooks'
 import {useApiPromise} from '@phala/react-libs'
 import {useCurrentAccount} from '@phala/store'
@@ -12,6 +11,7 @@ import Decimal from 'decimal.js'
 import React, {useMemo, useState} from 'react'
 import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
 import {useCurrentNetworkNode} from '../../store/networkNode'
+import {TransactionFeeLabel} from '../TransactionFeeLabel'
 import {MaxButton} from './styledComponents'
 
 type Props = {

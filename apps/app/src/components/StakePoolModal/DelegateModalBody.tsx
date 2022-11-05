@@ -1,4 +1,3 @@
-import {TransactionFeeLabel} from '@phala/react-components'
 import {useApiPromise} from '@phala/react-libs'
 import {formatCurrency} from '@phala/utils'
 import {Block} from 'baseui/block'
@@ -19,6 +18,7 @@ import {StakePool} from '../../hooks/subsquid'
 import {useDelegableBalance} from '../../hooks/useDelegableBalance'
 import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
 import FormDisplay from '../FormDisplay'
+import {TransactionFeeLabel} from '../TransactionFeeLabel'
 
 const DelegateModalBody: FC<
   {

@@ -1,4 +1,3 @@
-import {TransactionFeeLabel} from '@phala/react-components'
 import {useApiPromise} from '@phala/react-libs'
 import {useCurrentAccount} from '@phala/store'
 import {Block} from 'baseui/block'
@@ -14,6 +13,7 @@ import {
 import {ParagraphSmall} from 'baseui/typography'
 import {useMemo, useState} from 'react'
 import useWaitSignAndSend from '../hooks/useWaitSignAndSend'
+import {TransactionFeeLabel} from './TransactionFeeLabel'
 
 const Body = ({onClose}: Pick<ModalProps, 'onClose'>) => {
   const {api} = useApiPromise()
