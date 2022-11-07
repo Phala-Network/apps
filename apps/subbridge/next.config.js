@@ -13,14 +13,19 @@ const withImages = require('next-images')
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  images: {
-    disableStaticImages: true,
-  },
+  eslint: {ignoreDuringBuilds: true},
+  images: {disableStaticImages: true},
   env: {
     CONTEXT: process.env.CONTEXT,
   },
   reactStrictMode: true,
   webpack(config) {
+    for (const rule of config.module.rules) {
+      if (rule.test instanceof RegExp && rule.test.test('.svg')) {
+        rule.resourceQuery = {not: /react/}
+      }
+    }
+
     config.module.rules.push({
       test: /\.svg$/i,
       resourceQuery: /react/,
@@ -28,9 +33,7 @@ const nextConfig = {
       use: [
         {
           loader: '@svgr/webpack',
-          options: {
-            dimensions: false,
-          },
+          options: {dimensions: false},
         },
       ],
     })

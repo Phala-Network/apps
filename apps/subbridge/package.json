@@ -18,7 +18,7 @@
     "@mui/icons-material": "^5.10.9",
     "@mui/lab": "5.0.0-alpha.106",
     "@mui/material": "^5.10.12",
-    "@next/bundle-analyzer": "^12.2.3",
+    "@next/bundle-analyzer": "^13.0.2",
     "@phala/react-libs": "workspace:^",
     "@phala/store": "workspace:^",
     "@phala/utils": "workspace:^",
@@ -29,9 +29,9 @@
     "@talismn/connect-ui": "^1.1.0",
     "@talismn/connect-wallets": "^1.2.1",
     "decimal.js": "^10.4.2",
-    "ethers": "^5.6.9",
+    "ethers": "^5.7.2",
     "jotai": "^1.9.1",
-    "next": "12.2.3",
+    "next": "13.0.2",
     "next-images": "^1.8.4",
     "notistack": "^2.0.8",
     "react": "^18.2.0",
@@ -45,8 +45,8 @@
     "@types/react": "^18.0.25",
     "@types/react-dom": "^18.0.8",
     "eslint": "^8.27.0",
-    "eslint-config-next": "^12.2.3",
-    "next-transpile-modules": "^9.0.0",
+    "eslint-config-next": "^13.0.2",
+    "next-transpile-modules": "^10.0.0",
     "typescript": "^4.8.4"
   }
 }
