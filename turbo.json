@@ -3,17 +3,13 @@
   "pipeline": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": [".next/**", "out/**"]
+      "outputs": ["out/**"]
     },
     "@phala/app#build": {
       "dependsOn": ["^build"],
-      "outputs": [".cache/**", "public/**"]
+      "outputs": ["public/**"]
     },
-    "lint": {
-      "outputs": [".eslintcache", ".next/cache/eslint/**"]
-    },
-    "lint:fix": {
-      "outputs": [".eslintcache", ".next/cache/eslint/**"]
-    }
+    "lint": {"outputs": []},
+    "lint:fix": {"outputs": []}
   }
 }
