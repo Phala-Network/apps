@@ -10,8 +10,8 @@
     "typecheck": "tsc --project ./tsconfig.json --noEmit"
   },
   "dependencies": {
-    "@polkadot/api": "^9.6.2",
-    "@polkadot/types": "^9.6.2",
+    "@polkadot/api": "^9.7.1",
+    "@polkadot/types": "^9.7.1",
     "@polkadot/util-crypto": "^10.1.11",
     "decimal.js": "^10.4.2"
   },
