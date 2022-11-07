@@ -1,6 +1,6 @@
 import {polkadotAccountsAtom, useCurrentAccount} from '@phala/store'
 import {trimAddress} from '@phala/utils'
-import Identicon from '@polkadot/react-identicon'
+import {Identicon} from '@polkadot/react-identicon'
 import {useStyletron} from 'baseui'
 import {Block} from 'baseui/block'
 import {Button} from 'baseui/button'
