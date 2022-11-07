@@ -16,31 +16,19 @@
     "packages/*"
   ],
   "scripts": {
-    "postinstall": "husky install",
-    "lint": "eslint --cache --ext .js,.jsx,.ts,.tsx .",
-    "lint:fix": "eslint --cache --fix --ext .js,.jsx,.ts,.tsx .",
-    "typecheck": "yarn workspaces foreach -ptv run typecheck"
-  },
-  "lint-staged": {
-    "*.{js,jsx,ts,tsx}": "eslint --cache --fix"
-  },
-  "dependencies": {
-    "@types/node": "^16.11.49",
-    "typescript": "^4.8.4"
+    "prepare": "husky install",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "lint:fix": "turbo run lint:fix"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^5.33.1",
-    "@typescript-eslint/parser": "^5.33.1",
-    "eslint": "^8.22.0",
-    "eslint-config-prettier": "^8.5.0",
-    "eslint-plugin-prettier": "^4.2.1",
-    "eslint-plugin-react": "^7.30.1",
-    "eslint-plugin-react-hooks": "^4.6.0",
-    "husky": "^7.0.4",
-    "lint-staged": "^11.2.6",
-    "prettier": "^2.7.1"
+    "@types/node": "^16.18.3",
+    "husky": "^8.0.1",
+    "prettier": "^2.7.1",
+    "turbo": "^1.6.3",
+    "typescript": "^4.8.4"
   },
-  "packageManager": "yarn@3.2.1",
+  "packageManager": "yarn@3.2.4",
   "resolutions": {
     "next-images@^1.8.4": "patch:next-images@npm:1.8.4#.yarn/patches/next-images-npm-1.8.4-dfc7ff4bad.patch"
   }

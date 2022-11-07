@@ -1,4 +1,3 @@
-import {TransactionFeeLabel} from '@phala/react-components'
 import {useAllBalances} from '@phala/react-hooks'
 import {useApiPromise, waitSignAndSend} from '@phala/react-libs'
 import {useCurrentAccount} from '@phala/store'
@@ -8,6 +7,7 @@ import {ModalBody, ModalButton, ModalFooter, ModalHeader} from 'baseui/modal'
 import {toaster} from 'baseui/toast'
 import Decimal from 'decimal.js'
 import React, {useMemo, useState} from 'react'
+import {TransactionFeeLabel} from '../TransactionFeeLabel'
 
 type Props = {
   onClose: () => void

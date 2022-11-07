@@ -1,8 +1,4 @@
-import {
-  useBalance,
-  useLockedBalance,
-  usePolkadotAccountTransferrableBalanceDecimal,
-} from '@phala/react-hooks'
+import {useAllBalances, useBalance, useLockedBalance} from '@phala/react-hooks'
 import {useCurrentAccount} from '@phala/store'
 import {formatCurrency, toFixed} from '@phala/utils'
 import {Decimal} from 'decimal.js'
@@ -16,8 +12,10 @@ const usePHAData = () => {
   const [currentNetworkNode] = useCurrentNetworkNode()
   const polkadotAccountAddress = currentAccount?.address
   const polkadotAccountBalance = useBalance(polkadotAccountAddress)
+  const allBalances = useAllBalances(polkadotAccountAddress)
   const polkadotTransferBalanceDecimal =
-    usePolkadotAccountTransferrableBalanceDecimal(polkadotAccountAddress)
+    allBalances &&
+    new Decimal(allBalances?.availableBalance.toString()).div(1e12)
 
   const {delegateBalance, crowdloanVestingBalance} = useLockedBalance(
     polkadotAccountAddress

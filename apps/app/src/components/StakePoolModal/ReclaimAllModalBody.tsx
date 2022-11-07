@@ -1,4 +1,3 @@
-import {TransactionFeeLabel} from '@phala/react-components'
 import {useApiPromise} from '@phala/react-libs'
 import {formatCurrency, trimAddress} from '@phala/utils'
 import {Block} from 'baseui/block'
@@ -25,6 +24,7 @@ import {
 import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
 import {subsquidClient} from '../../lib/graphqlClient'
 import FormDisplay from '../FormDisplay'
+import {TransactionFeeLabel} from '../TransactionFeeLabel'
 
 const ReclaimAllModalBody: FC<
   {stakePool: Pick<StakePool, 'pid'>} & Pick<ModalProps, 'onClose'>

@@ -5,15 +5,20 @@
   "type": "module",
   "main": "src/index.ts",
   "scripts": {
+    "lint": "eslint --cache --ext .ts,.tsx src",
+    "lint:fix": "eslint --fix --cache --ext .ts,.tsx src",
     "typecheck": "tsc --project ./tsconfig.json --noEmit"
   },
   "dependencies": {
-    "@polkadot/api": "^8.8.1",
-    "@polkadot/types": "^8.8.1",
-    "@polkadot/util-crypto": "^9.4.1",
-    "decimal.js": "^10.4.0"
+    "@polkadot/api": "^9.6.2",
+    "@polkadot/types": "^9.6.2",
+    "@polkadot/util-crypto": "^10.1.11",
+    "decimal.js": "^10.4.2"
   },
   "peerDependencies": {
     "react": ">=17"
+  },
+  "devDependencies": {
+    "@phala/eslint-config": "workspace:^"
   }
 }

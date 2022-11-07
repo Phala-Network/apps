@@ -1,5 +1,3 @@
-[build]
-  ignore = "bash ./build-ignore.sh"
 [[headers]]
   for = "/*"
   [headers.values]

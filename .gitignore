@@ -32,6 +32,7 @@ node_modules
 **/tsconfig.tsbuildinfo
 **/.eslintcache
 .cache
+.turbo
 
 # Misc
 .DS_Store

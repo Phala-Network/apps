@@ -1,0 +1,19 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "pipeline": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": [".next/**", "out/**"]
+    },
+    "@phala/app#build": {
+      "dependsOn": ["^build"],
+      "outputs": [".cache/**", "public/**"]
+    },
+    "lint": {
+      "outputs": [".eslintcache", ".next/cache/eslint/**"]
+    },
+    "lint:fix": {
+      "outputs": [".eslintcache", ".next/cache/eslint/**"]
+    }
+  }
+}

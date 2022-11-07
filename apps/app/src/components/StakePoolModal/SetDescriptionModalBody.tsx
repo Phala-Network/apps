@@ -1,4 +1,3 @@
-import {TransactionFeeLabel} from '@phala/react-components'
 import {useApiPromise} from '@phala/react-libs'
 import {stringToHex} from '@polkadot/util'
 import {Block} from 'baseui/block'
@@ -21,6 +20,7 @@ import useStakePoolDescription, {
 } from '../../hooks/useStakePoolDescription'
 import useWaitSignAndSend from '../../hooks/useWaitSignAndSend'
 import FormDisplay from '../FormDisplay'
+import {TransactionFeeLabel} from '../TransactionFeeLabel'
 
 const ANN_MAX_LENGTH = 240
 

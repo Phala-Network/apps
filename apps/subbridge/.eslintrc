@@ -1,3 +1,10 @@
 {
-  // "extends": "next/core-web-vitals"
+  "extends": [
+    "@phala/eslint-config",
+    "@phala/eslint-config/react",
+    "next/core-web-vitals"
+  ],
+  "rules": {
+    "@next/next/no-img-element": "off"
+  }
 }

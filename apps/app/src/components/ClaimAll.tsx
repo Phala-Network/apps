@@ -1,4 +1,3 @@
-import {TransactionFeeLabel} from '@phala/react-components'
 import {useApiPromise} from '@phala/react-libs'
 import {useCurrentAccount} from '@phala/store'
 import {formatCurrency, validateAddress} from '@phala/utils'
@@ -30,6 +29,7 @@ import {
 import useWaitSignAndSend from '../hooks/useWaitSignAndSend'
 import {subsquidClient} from '../lib/graphqlClient'
 import FormDisplay from './FormDisplay'
+import {TransactionFeeLabel} from './TransactionFeeLabel'
 
 const CLAIM_THRESHOLD = '0'
 

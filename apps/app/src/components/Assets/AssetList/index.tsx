@@ -34,7 +34,7 @@ const Title = styled.div`
   }
 `
 
-export type DataType = {
+export interface DataType {
   name: string
   icon: string
   balance: string
@@ -44,7 +44,7 @@ export type DataType = {
   delegate?: string
 }
 
-type Props = {
+interface Props {
   tableData: DataType[]
 }
 

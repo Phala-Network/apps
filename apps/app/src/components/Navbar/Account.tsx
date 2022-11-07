@@ -1,4 +1,3 @@
-import {SelectAccountModal} from '@phala/react-components'
 import {useBalance, useSSR} from '@phala/react-hooks'
 import {useApiPromise} from '@phala/react-libs'
 import {useCurrentAccount} from '@phala/store'
@@ -9,6 +8,7 @@ import Decimal from 'decimal.js'
 import {useMemo, useState} from 'react'
 import {down} from 'styled-breakpoints'
 import styled from 'styled-components'
+import {SelectAccountModal} from '../SelectAccountModal'
 
 const Connect = styled.div`
   font-weight: 500;
