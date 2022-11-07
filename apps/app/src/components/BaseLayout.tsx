@@ -2,6 +2,7 @@ import {FC, ReactNode} from 'react'
 import {down} from 'styled-breakpoints'
 import styled from 'styled-components'
 import BottomBar from './BottomBar'
+import HalvingPeriodNotification from './HalvingPeriodNotification'
 import Navbar from './Navbar'
 
 const PageContainer = styled.div`
@@ -18,6 +19,7 @@ const BaseLayout: FC<{children: ReactNode}> = (props) => {
 
   return (
     <PageContainer>
+      <HalvingPeriodNotification />
       {children}
       <Navbar />
       <BottomBar />
