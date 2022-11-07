@@ -1,3 +1,6 @@
+import '@phala/polkadot-types/interfaces/augment-api'
+import '@phala/polkadot-types/interfaces/augment-types'
+
 declare module '*.png'
 
 declare module '*.svg' {
