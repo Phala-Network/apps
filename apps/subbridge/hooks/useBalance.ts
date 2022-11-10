@@ -56,7 +56,8 @@ export const useBalance = (): Decimal | undefined => {
       fromChain.id === 'parallel' ||
       fromChain.id === 'parallel-heiko' ||
       fromChain.id === 'calamari' ||
-      fromChain.id === 'shiden') &&
+      fromChain.id === 'shiden' ||
+      fromChain.id === 'astar') &&
     asset.id !== fromChain.nativeAsset &&
     asset.palletAssetId?.[fromChain.id] !== undefined
   ) {

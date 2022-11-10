@@ -1,3 +1,4 @@
+import astarIcon from '@/assets/astar_chain_icon.png'
 import basiliskIcon from '@/assets/basilisk_chain_icon.png'
 import bifrostIcon from '@/assets/bifrost_chain_icon.svg'
 import calamariIcon from '@/assets/calamari_chain_icon.png'
@@ -37,6 +38,7 @@ export type PolkadotChainId =
   | 'calamari'
   | 'crab'
   | 'shiden'
+  | 'astar'
 export type ChainId = EvmChainId | PolkadotChainId
 export type ChainKind = 'evm' | 'polkadot'
 
@@ -353,5 +355,23 @@ export const CHAINS: Readonly<
     ss58Format: 5,
     nativeAsset: 'sdn',
     explorerURL: 'https://shiden.subscan.io/',
+  },
+  astar: {
+    id: 'astar',
+    name: 'Astar',
+    icon: astarIcon,
+    kind: 'polkadot',
+    paraId: 2006,
+    endpoint: [
+      'wss://rpc.astar.network',
+      'wss://astar.public.blastapi.io',
+      'wss://astar-rpc.dwellir.com',
+      'wss://astar.api.onfinality.io/public-ws',
+      'wss://public-rpc.pinknode.io/astar',
+      'wss://1rpc.io/astr',
+    ],
+    ss58Format: 5,
+    nativeAsset: 'astr',
+    explorerURL: 'https://astar.subscan.io/',
   },
 }
