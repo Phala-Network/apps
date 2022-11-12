@@ -1,5 +1,6 @@
 import {useStyletron} from 'baseui'
 import {Block} from 'baseui/block'
+import {StyledLink} from 'baseui/link'
 import {ParagraphSmall} from 'baseui/typography'
 import {FC} from 'react'
 
@@ -16,14 +17,23 @@ const EmergencyNotification: FC = () => {
       justifyContent="center"
     >
       <ParagraphSmall as="div">
-        The nodes of some PRB stake pools are affected by unknown reasons and
-        cannot operate normally. The APR of these pools are also effected. This
-        is not an isolated case, our developers are fixing it.
+        The nodes of some PRB stake pools encountered a critical bug with Kusama
+        node which caused database corruption on certain height. The APR of
+        these pools are also effected. This is not an isolated case and now it
+        has been fixed.{' '}
+        <StyledLink
+          href="https://discord.com/channels/697726436211163147/891912723447832617/1041040854153957457"
+          target="_blank"
+        >
+          More Detail
+        </StyledLink>
       </ParagraphSmall>
       <ParagraphSmall as="div">
+        Pool owners can update by the solution above, and for Delegators, It is
+        recommended that:
         <b>
-          It is recommended that: before your withdrawing, please contact the
-          stake pool owner in time to avoid unnecessary withdrawal queues.
+          Before your withdrawing, please contact the stake pool owner in time
+          to avoid unnecessary withdrawal queues.
         </b>
       </ParagraphSmall>
     </Block>
