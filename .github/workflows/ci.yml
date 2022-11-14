@@ -7,39 +7,30 @@ on:
   pull_request:
     branches:
       - main
+  workflow_dispatch:
 
 jobs:
   build:
+    name: Build and Test
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [16.x]
+    env:
+      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+      TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
+
     steps:
-      - uses: actions/checkout@v3
+      - name: Check out code
+        uses: actions/checkout@v3
         with:
           fetch-depth: 2
 
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Setup Node.js environment
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node-version }}
-
-      # https://github.com/actions/setup-node/issues/325
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
-    
-      - name: Restore yarn cache
-        uses: actions/cache@v2
-        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
-        with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: yarn-cache-folder-${{ hashFiles('**/yarn.lock', '.yarnrc.yml') }}
-          restore-keys: |
-            yarn-cache-folder-
+          node-version: 16
+          cache: 'yarn'
 
       - name: Install dependencies
-        run: yarn install --immutable
+        run: yarn --immutable
 
       - name: Linter
         run: npm run lint
@@ -48,5 +39,5 @@ jobs:
       # - name: Typecheck
       #   run: yarn typecheck
 
-      - name: Build All Apps
+      - name: Build all apps
         run: npm run build
