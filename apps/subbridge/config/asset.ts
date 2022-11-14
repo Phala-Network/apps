@@ -1,3 +1,4 @@
+import astrIcon from '@/assets/astr_asset_icon.png'
 import ausdIcon from '@/assets/ausd_asset_icon.png'
 import bncIcon from '@/assets/bnc_asset_icon.png'
 import bsxIcon from '@/assets/bsx_asset_icon.png'
@@ -30,8 +31,9 @@ export type AssetId =
   | 'crab'
   | 'glmr'
   | 'sdn'
+  | 'astr'
 
-export type OrmlToken = 'PHA' | 'KAR' | 'ZLK' | 'BNC' | 'KUSD' | 'TUR'
+export type OrmlToken = 'PHA' | 'KAR' | 'ZLK' | 'BNC' | 'KUSD' | 'TUR' | 'ASTR'
 export interface Asset {
   id: AssetId
   symbol: string
@@ -90,6 +92,7 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
       turing: new Decimal('0.256'),
       calamari: new Decimal('0.9523809524'),
       shiden: new Decimal('0.024464'),
+      astar: new Decimal('0.000912'),
     },
     existentialDeposit: {
       phala: new Decimal('0.01'),
@@ -105,6 +108,7 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
       'parallel-heiko': 115,
       calamari: 13,
       shiden: '18446744073709551623',
+      astar: '18446744073709551622',
     },
   },
   movr: {
@@ -341,6 +345,18 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
     destChainTransactionFee: {
       shiden: new Decimal('0.004635101624603116'),
       khala: new Decimal('0.016'),
+    },
+    existentialDeposit: {},
+  },
+  astr: {
+    id: 'astr',
+    symbol: 'ASTR',
+    icon: astrIcon,
+    decimals: {default: 18},
+    palletAssetId: {phala: '6'},
+    destChainTransactionFee: {
+      astar: new Decimal('0.004635101624597127'),
+      phala: new Decimal('0.032'),
     },
     existentialDeposit: {},
   },

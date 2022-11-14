@@ -21,6 +21,7 @@ export const transferByPolkadotXcm = ({
   amount: string
   destinationAccount: string
 }): SubmittableExtrinsic<'promise', ISubmittableResult> => {
+  const fromChain = CHAINS[fromChainId]
   const toChain = CHAINS[toChainId]
   let Concrete
   if (fromChainId === 'crab' && assetId === 'crab') {
@@ -31,9 +32,20 @@ export const transferByPolkadotXcm = ({
     } else if (assetId === 'sdn') {
       Concrete = {parents: 0, interior: 'Here'}
     }
+  } else if (fromChainId === 'astar') {
+    if (assetId === 'pha') {
+      Concrete = {parents: 1, interior: {X1: {Parachain: 2035}}}
+    } else if (assetId === 'astr') {
+      Concrete = {parents: 0, interior: 'Here'}
+    }
   }
 
-  return polkadotApi.tx.polkadotXcm.reserveTransferAssets(
+  const isNativeAsset = fromChain.nativeAsset === assetId
+  const functionName = isNativeAsset
+    ? 'reserveTransferAssets'
+    : 'reserveWithdrawAssets'
+
+  return polkadotApi.tx.polkadotXcm[functionName](
     {V1: {parents: 1, interior: {X1: {Parachain: toChain.paraId}}}},
     {
       V1: {
