@@ -1,5 +1,4 @@
 export * from './formatCurrency'
-export * from './isSSR'
 export * from './isTruthy'
 export * from './sleep'
 export * from './toFixed'

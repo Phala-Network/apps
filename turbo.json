@@ -6,11 +6,6 @@
       "outputs": ["out/**"],
       "env": ["CONTEXT", "NODE_ENV"]
     },
-    "@phala/app#build": {
-      "dependsOn": ["^build"],
-      "outputs": ["public/**"],
-      "env": ["CONTEXT", "NODE_ENV"]
-    },
     "lint": {"outputs": []},
     "lint:fix": {"outputs": []}
   }
