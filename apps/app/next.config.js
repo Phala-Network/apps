@@ -2,7 +2,15 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-  experimental: {appDir: true},
+  async redirects() {
+    return [
+      {
+        source: '/delegate',
+        destination: '/delegate/vaults',
+        permanent: true,
+      },
+    ]
+  },
 }
 
 module.exports = nextConfig

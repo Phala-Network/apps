@@ -1,5 +1,5 @@
 import type {WalletAccount} from '@talismn/connect-wallets'
-import {atom, useAtom} from 'jotai'
+import {atom} from 'jotai'
 import {atomWithStorage} from 'jotai/utils'
 
 export const polkadotAccountsAtom = atom<WalletAccount[] | null>(null)
@@ -26,6 +26,3 @@ export const polkadotAccountAtom = atom<WalletAccount | null, string | null>(
   }
 )
 polkadotAccountAtom.debugLabel = 'polkadotAccountAtom'
-
-// TODO: remove hooks below in @phala/app
-export const useCurrentAccount = () => useAtom(polkadotAccountAtom)
