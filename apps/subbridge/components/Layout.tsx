@@ -1,12 +1,12 @@
 import {useEthereumProviderInitialization} from '@/hooks/useEthereumProviderInitialization'
-import {usePolkadotAccountInitialization} from '@/hooks/usePolkadotAccountInitialization'
 import {useValidation} from '@/hooks/useValidation'
+import {useConnectPolkadotWallet} from '@phala/react-hooks'
 import {FC, ReactNode} from 'react'
 import TopBar from './TopBar'
 
 const Layout: FC<{children: ReactNode}> = ({children}) => {
   useEthereumProviderInitialization()
-  usePolkadotAccountInitialization()
+  useConnectPolkadotWallet('SubBridge')
   useValidation()
 
   return (

@@ -2,6 +2,7 @@ import {montserrat} from '@/lib/theme'
 import {AppBar, Button, Stack, Toolbar, useTheme} from '@mui/material'
 import NextLink from 'next/link'
 import {FC} from 'react'
+import Account from './Account'
 
 interface NavItem {
   name: string
@@ -57,7 +58,7 @@ const TopBar: FC = () => {
         mb: 1,
       }}
     >
-      <Toolbar>
+      <Toolbar sx={{justifyContent: 'space-between'}}>
         <Stack
           spacing={1}
           component="nav"
@@ -67,6 +68,9 @@ const TopBar: FC = () => {
           {navItems.map((item) => (
             <NavItem key={item.name} item={item} />
           ))}
+        </Stack>
+        <Stack direction="column">
+          <Account />
         </Stack>
       </Toolbar>
     </AppBar>

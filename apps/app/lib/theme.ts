@@ -31,16 +31,10 @@ export const theme = createTheme({
   typography: {
     h1: {fontFamily: montserrat.style.fontFamily},
     h2: {fontFamily: montserrat.style.fontFamily},
-    h3: {
-      userSelect: 'none',
-      fontFamily: montserrat.style.fontFamily,
-      fontWeight: 600,
-    },
-    h4: {
-      userSelect: 'none',
-      fontFamily: montserrat.style.fontFamily,
-      fontWeight: 600,
-    },
+    h3: {fontFamily: montserrat.style.fontFamily, fontWeight: 600},
+    h4: {fontFamily: montserrat.style.fontFamily, fontWeight: 600},
+    h5: {fontFamily: montserrat.style.fontFamily},
+    h6: {fontFamily: montserrat.style.fontFamily},
     num1: {
       fontFamily: barlow.style.fontFamily,
       fontWeight: 700,
@@ -78,18 +72,7 @@ export const theme = createTheme({
     MuiButtonGroup: {
       defaultProps: {disableRipple: true, disableElevation: true},
     },
-    MuiPaper: {
-      defaultProps: {variant: 'outlined'},
-      // styleOverrides: {
-      //   outlined: {
-      //     borderColor: 'transparent',
-      //     backgroundImage:
-      //       'linear-gradient(#121212, #121212), linear-gradient(266.84deg, rgba(77, 87, 122, 0.5) 0%, rgba(46, 49, 61, 0.5) 105.85%)',
-      //     backgroundOrigin: 'border-box',
-      //     backgroundClip: 'padding-box, border-box',
-      //   },
-      // },
-    },
+    MuiPaper: {defaultProps: {variant: 'outlined'}},
     MuiButton: {
       defaultProps: {disableElevation: true, variant: 'outlined'},
       styleOverrides: {
@@ -101,5 +84,6 @@ export const theme = createTheme({
     MuiOutlinedInput: {defaultProps: {notched: true}},
     MuiLoadingButton: {defaultProps: {variant: 'outlined'}},
     MuiChip: {defaultProps: {variant: 'outlined'}},
+    MuiDialog: {defaultProps: {fullWidth: true, maxWidth: 'xs'}},
   },
 })

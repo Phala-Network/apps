@@ -1,5 +1,5 @@
 {
-  "name": "@phala/react-libs",
+  "name": "@phala/lib",
   "version": "0.0.1",
   "sideEffects": false,
   "type": "module",
@@ -11,12 +11,7 @@
   },
   "dependencies": {
     "@polkadot/api": "^9.8.2",
-    "@polkadot/types": "^9.8.2",
-    "@polkadot/util-crypto": "^10.1.12",
-    "decimal.js": "^10.4.2"
-  },
-  "peerDependencies": {
-    "react": ">=17"
+    "@polkadot/types": "^9.8.2"
   },
   "devDependencies": {
     "@phala/eslint-config": "workspace:^"

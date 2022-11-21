@@ -5,24 +5,24 @@ import {atomWithStorage} from 'jotai/utils'
 export const polkadotAccountsAtom = atom<WalletAccount[] | null>(null)
 polkadotAccountsAtom.debugLabel = 'polkadotAccounts'
 
-const lastAccountAddressAtom = atomWithStorage<string | null>(
-  'jotai:last_account_address',
+const polkadotAccountAddressAtom = atomWithStorage<string | null>(
+  'jotai:polkadot_account_address',
   null
 )
-lastAccountAddressAtom.debugLabel = 'lastAccountAddress'
+polkadotAccountAddressAtom.debugLabel = 'polkadotAccountAddress'
 
 export const polkadotAccountAtom = atom<WalletAccount | null, string | null>(
   (get) => {
-    const lastPolkadotAccount = get(lastAccountAddressAtom)
-    if (!lastPolkadotAccount) return null
+    const polkadotAccountAddress = get(polkadotAccountAddressAtom)
+    if (!polkadotAccountAddress) return null
     return (
       get(polkadotAccountsAtom)?.find(
-        (account) => account.address === get(lastAccountAddressAtom)
+        (account) => account.address === get(polkadotAccountAddressAtom)
       ) || null
     )
   },
   (get, set, account) => {
-    set(lastAccountAddressAtom, account)
+    set(polkadotAccountAddressAtom, account)
   }
 )
-polkadotAccountAtom.debugLabel = 'polkadotAccountAtom'
+polkadotAccountAtom.debugLabel = 'polkadotAccount'

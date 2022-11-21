@@ -16,11 +16,10 @@
     "@mui/lab": "5.0.0-alpha.108",
     "@mui/material": "^5.10.14",
     "@next/font": "^13.0.4",
+    "@phala/react-hooks": "workspace:^",
     "@phala/store": "workspace:^",
     "@polkadot/api": "^9.8.2",
     "@polkadot/extension-inject": "^0.44.6",
-    "@talismn/connect-components": "^1.1.4",
-    "@talismn/connect-ui": "^1.1.0",
     "@talismn/connect-wallets": "^1.2.1",
     "@types/react": "^18.0.25",
     "@types/react-dom": "^18.0.9",
@@ -31,5 +30,9 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "typescript": "^4.9.3"
+  },
+  "devDependencies": {
+    "@next/bundle-analyzer": "^13.0.4",
+    "next-transpile-modules": "^10.0.0"
   }
 }
