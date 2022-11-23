@@ -2530,9 +2530,13 @@ __metadata:
     "@phala/store": "workspace:^"
     "@polkadot/api": ^9.8.2
     "@polkadot/extension-inject": ^0.44.6
+    "@polkadot/util": ^10.1.13
     "@talismn/connect-wallets": ^1.2.1
+    "@tanstack/react-query": ^4.16.1
+    "@tanstack/react-query-devtools": ^4.16.1
     "@types/react": ^18.0.25
     "@types/react-dom": ^18.0.9
+    decimal.js: ^10.4.2
     eslint: 8.27.0
     eslint-config-next: ^13.0.4
     jotai: ^1.10.0
@@ -2540,6 +2544,7 @@ __metadata:
     next-transpile-modules: ^10.0.0
     react: ^18.2.0
     react-dom: ^18.2.0
+    swr: ^1.3.0
     typescript: ^4.9.3
   languageName: unknown
   linkType: soft
@@ -2591,6 +2596,7 @@ __metadata:
   resolution: "@phala/react-hooks@workspace:packages/react-hooks"
   dependencies:
     "@phala/eslint-config": "workspace:^"
+    "@phala/utils": "workspace:^"
     "@polkadot/api": ^9.8.2
     "@polkadot/api-derive": ^9.8.2
     "@polkadot/types": ^9.8.2
@@ -2992,7 +2998,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@polkadot/util@npm:10.1.12, @polkadot/util@npm:^10.1.12, @polkadot/util@npm:^10.1.5":
+"@polkadot/util@npm:10.1.12":
   version: 10.1.12
   resolution: "@polkadot/util@npm:10.1.12"
   dependencies:
@@ -3004,6 +3010,21 @@ __metadata:
     "@types/bn.js": ^5.1.1
     bn.js: ^5.2.1
   checksum: 927157a1ee48bd9528a6217fa3e696a34d4c7ad4eacd8acd42d921d03c2ce20beb2d41436f0a0909edc976d7474ad5d6ffff187d6a81aa8025d4351e258f35bf
+  languageName: node
+  linkType: hard
+
+"@polkadot/util@npm:^10.1.12, @polkadot/util@npm:^10.1.13, @polkadot/util@npm:^10.1.5":
+  version: 10.1.13
+  resolution: "@polkadot/util@npm:10.1.13"
+  dependencies:
+    "@babel/runtime": ^7.20.1
+    "@polkadot/x-bigint": 10.1.13
+    "@polkadot/x-global": 10.1.13
+    "@polkadot/x-textdecoder": 10.1.13
+    "@polkadot/x-textencoder": 10.1.13
+    "@types/bn.js": ^5.1.1
+    bn.js: ^5.2.1
+  checksum: fe5cfe7fccda5c30813c82ba330a831786ff6e9a62172ff89599ee71c7111ab57842de526ec23a4fbeb650cbd8aa7c5e771b670dce56682f0c3723696bca4656
   languageName: node
   linkType: hard
 
@@ -3085,13 +3106,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@polkadot/x-bigint@npm:10.1.12, @polkadot/x-bigint@npm:^10.1.12":
+"@polkadot/x-bigint@npm:10.1.12":
   version: 10.1.12
   resolution: "@polkadot/x-bigint@npm:10.1.12"
   dependencies:
     "@babel/runtime": ^7.20.1
     "@polkadot/x-global": 10.1.12
   checksum: 6a0e4a4893dca8a6e0f2c390cdd676a2b60b04c1441b8d9ee2a653aff6357993bf5bed1e33a87540d2081ad18a8a33b39d48d4ec8a7d76b74862be6f9c44bc5b
+  languageName: node
+  linkType: hard
+
+"@polkadot/x-bigint@npm:10.1.13, @polkadot/x-bigint@npm:^10.1.12":
+  version: 10.1.13
+  resolution: "@polkadot/x-bigint@npm:10.1.13"
+  dependencies:
+    "@babel/runtime": ^7.20.1
+    "@polkadot/x-global": 10.1.13
+  checksum: 403d5ebfdf420b403bb52bc5a332b74aed14ed84611479a1a4ecbd53083c273e1c4b0d02c5b41f44950891436b857c504fb39a924be70e0c73a23c042ae7ab4b
   languageName: node
   linkType: hard
 
@@ -3107,12 +3138,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@polkadot/x-global@npm:10.1.12, @polkadot/x-global@npm:^10.1.12, @polkadot/x-global@npm:^10.1.5":
+"@polkadot/x-global@npm:10.1.12":
   version: 10.1.12
   resolution: "@polkadot/x-global@npm:10.1.12"
   dependencies:
     "@babel/runtime": ^7.20.1
   checksum: e6742855b3f89d97874089bbccf32ae535500bbf2e707761e660a9a00a6c21dc82fa3cdc8630d0983c6a81e9f3aa04b4563236424476dfc3fca1650f01ed632f
+  languageName: node
+  linkType: hard
+
+"@polkadot/x-global@npm:10.1.13, @polkadot/x-global@npm:^10.1.12, @polkadot/x-global@npm:^10.1.5":
+  version: 10.1.13
+  resolution: "@polkadot/x-global@npm:10.1.13"
+  dependencies:
+    "@babel/runtime": ^7.20.1
+  checksum: f079ca9c68b3515219ac57d477ef177072e44e6c7a73d1a0b0f1961db8c78d859d258f7535d42786c0926e1e46eee7bfbc95ff9feb847f090e9fd2089dc066e8
   languageName: node
   linkType: hard
 
@@ -3136,6 +3176,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@polkadot/x-textdecoder@npm:10.1.13":
+  version: 10.1.13
+  resolution: "@polkadot/x-textdecoder@npm:10.1.13"
+  dependencies:
+    "@babel/runtime": ^7.20.1
+    "@polkadot/x-global": 10.1.13
+  checksum: 50ce56d3eb79f732f6e05d7c37195e633b122ae9551d814c9b4ccf5d2051afa39adeaa4c8f5bae9fe9088dc4bf432e57a0277298be8cf4418826107644b2645b
+  languageName: node
+  linkType: hard
+
 "@polkadot/x-textencoder@npm:10.1.12":
   version: 10.1.12
   resolution: "@polkadot/x-textencoder@npm:10.1.12"
@@ -3143,6 +3193,16 @@ __metadata:
     "@babel/runtime": ^7.20.1
     "@polkadot/x-global": 10.1.12
   checksum: 4b57e6f2532914d7f14e3405212e24b5bfa36ba68d2cd39c09bf81344b90bc961106bb30ce5d670d8d91fce830f8367d06c5493e8442d9d1072a85d3f87440b4
+  languageName: node
+  linkType: hard
+
+"@polkadot/x-textencoder@npm:10.1.13":
+  version: 10.1.13
+  resolution: "@polkadot/x-textencoder@npm:10.1.13"
+  dependencies:
+    "@babel/runtime": ^7.20.1
+    "@polkadot/x-global": 10.1.13
+  checksum: a06924f1763f3a8722bb1e7186a9fadba09ee7d7f4294e405e01af642afd2ea311fcd93ba4b0736084580ef20b14c9b2ebe88580bd9b38cb2aae4227c7b12e9f
   languageName: node
   linkType: hard
 
@@ -3434,6 +3494,56 @@ __metadata:
     "@polkadot/api": ">=9.3.3"
     "@polkadot/extension-inject": ">=0.44.6"
   checksum: 9a8b1eb2468c890d47a7e3b303d905f26bee39849f8a8514ffd07c9a054597965518d188f8d3f05fbb5193e0f8399be11a52b6668d355df0657693147d1036ff
+  languageName: node
+  linkType: hard
+
+"@tanstack/match-sorter-utils@npm:8.1.1":
+  version: 8.1.1
+  resolution: "@tanstack/match-sorter-utils@npm:8.1.1"
+  dependencies:
+    remove-accents: 0.4.2
+  checksum: bf1458b7ca08cf79750ebd46fddef9c9b845ef55b5b69c0f7f69d48d6cbd73dbfd98763509f655298033b93cfc92b21d54f9f13a4d631cc68ca9191913967205
+  languageName: node
+  linkType: hard
+
+"@tanstack/query-core@npm:4.15.1":
+  version: 4.15.1
+  resolution: "@tanstack/query-core@npm:4.15.1"
+  checksum: ee98e75a3770fd35a6a10b9e7b3c417ea9da2b072481b5191d759182b29fd7bc4e8e340f83e2961b46fe4e1adac356087df04d4661c9459d09ff4d0574f683eb
+  languageName: node
+  linkType: hard
+
+"@tanstack/react-query-devtools@npm:^4.16.1":
+  version: 4.16.1
+  resolution: "@tanstack/react-query-devtools@npm:4.16.1"
+  dependencies:
+    "@tanstack/match-sorter-utils": 8.1.1
+    superjson: ^1.10.0
+    use-sync-external-store: ^1.2.0
+  peerDependencies:
+    "@tanstack/react-query": 4.16.1
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+  checksum: fb2ea13a485f99a97cadc4b139c5723107a03522471468e8ee6a6d125807b9bfed6fa01f229711b2a3e1aff3241fc63da40877ebf3c8388a1e511896770cd2be
+  languageName: node
+  linkType: hard
+
+"@tanstack/react-query@npm:^4.16.1":
+  version: 4.16.1
+  resolution: "@tanstack/react-query@npm:4.16.1"
+  dependencies:
+    "@tanstack/query-core": 4.15.1
+    use-sync-external-store: ^1.2.0
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+    react-native: "*"
+  peerDependenciesMeta:
+    react-dom:
+      optional: true
+    react-native:
+      optional: true
+  checksum: 2c2d4c5c8bab2cd978ddd42153d33f844bd24a17ebe42f269cc64ee2a031f60f980b441640172885d9fd156fe9abc74ffc800fb68c6b6f6ef4fe48ffadafff79
   languageName: node
   linkType: hard
 
@@ -4584,6 +4694,15 @@ __metadata:
   dependencies:
     safe-buffer: ~5.1.1
   checksum: 985d974a2d33e1a2543ada51c93e1ba2f73eaed608dc39f229afc78f71dcc4c8b7d7c684aa647e3c6a3a204027444d69e53e169ce94e8d1fa8d7dee80c9c8fed
+  languageName: node
+  linkType: hard
+
+"copy-anything@npm:^3.0.2":
+  version: 3.0.2
+  resolution: "copy-anything@npm:3.0.2"
+  dependencies:
+    is-what: ^4.1.6
+  checksum: 394491d62ab0c77c81616668bce51b91cf4e7b539bd530bb5b22c226151b0bc6122c01de21ffe46d5ec273f504fb34f6569f349ffb823fa814dddb8b27a4750c
   languageName: node
   linkType: hard
 
@@ -6897,6 +7016,13 @@ __metadata:
   dependencies:
     call-bind: ^1.0.2
   checksum: 95bd9a57cdcb58c63b1c401c60a474b0f45b94719c30f548c891860f051bc2231575c290a6b420c6bc6e7ed99459d424c652bd5bf9a1d5259505dc35b4bf83de
+  languageName: node
+  linkType: hard
+
+"is-what@npm:^4.1.6":
+  version: 4.1.7
+  resolution: "is-what@npm:4.1.7"
+  checksum: aade39dcc45a209d6cb2f2d5dbcf0e63ed894aadbae37bd5693c64e9876a27632431b43fc9d9332ebf0795eddd2abc11a2d0f3c6fa41c36330616a645660530e
   languageName: node
   linkType: hard
 
@@ -9402,6 +9528,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"remove-accents@npm:0.4.2":
+  version: 0.4.2
+  resolution: "remove-accents@npm:0.4.2"
+  checksum: 84a6988555dea24115e2d1954db99509588d43fe55a1590f0b5894802776f7b488b3151c37ceb9e4f4b646f26b80b7325dcea2fae58bc3865df146e1fa606711
+  languageName: node
+  linkType: hard
+
 "require-directory@npm:^2.1.1":
   version: 2.1.1
   resolution: "require-directory@npm:2.1.1"
@@ -10059,6 +10192,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"superjson@npm:^1.10.0":
+  version: 1.11.0
+  resolution: "superjson@npm:1.11.0"
+  dependencies:
+    copy-anything: ^3.0.2
+  checksum: 943c2ffd67422a601fae0b2b9df176f421cebcee710cc2c379b0c01bca6aca98d0941bb0e91856dc785ede1c3353c524f8215a67916a48e3a59a45539a2c2bc4
+  languageName: node
+  linkType: hard
+
 "supports-color@npm:^2.0.0":
   version: 2.0.0
   resolution: "supports-color@npm:2.0.0"
@@ -10601,7 +10743,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"use-sync-external-store@npm:1.2.0":
+"use-sync-external-store@npm:1.2.0, use-sync-external-store@npm:^1.2.0":
   version: 1.2.0
   resolution: "use-sync-external-store@npm:1.2.0"
   peerDependencies:

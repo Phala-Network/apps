@@ -10,6 +10,7 @@
     "typecheck": "tsc --project ./tsconfig.json --noEmit"
   },
   "dependencies": {
+    "@phala/utils": "workspace:^",
     "@polkadot/api": "^9.8.2",
     "@polkadot/api-derive": "^9.8.2",
     "@polkadot/types": "^9.8.2",

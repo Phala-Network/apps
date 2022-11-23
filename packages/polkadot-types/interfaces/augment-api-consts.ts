@@ -8,8 +8,8 @@ import '@polkadot/api-base/types/consts';
 import type { ApiTypes, AugmentedConst } from '@polkadot/api-base/types';
 import type { Option, U8aFixed, bool, u128, u16, u32, u64, u8 } from '@polkadot/types-codec';
 import type { Codec } from '@polkadot/types-codec/types';
-import type { Percent, Permill, Weight } from '@polkadot/types/interfaces/runtime';
-import type { FrameSupportPalletId, FrameSystemLimitsBlockLength, FrameSystemLimitsBlockWeights, SpVersionRuntimeVersion, SpWeightsRuntimeDbWeight } from '@polkadot/types/lookup';
+import type { AccountId32, Percent, Permill } from '@polkadot/types/interfaces/runtime';
+import type { FrameSupportPalletId, FrameSystemLimitsBlockLength, FrameSystemLimitsBlockWeights, SpVersionRuntimeVersion, SpWeightsRuntimeDbWeight, SpWeightsWeightV2Weight } from '@polkadot/types/lookup';
 
 export type __AugmentedConst<ApiType extends ApiTypes> = AugmentedConst<ApiType>;
 
@@ -196,6 +196,14 @@ declare module '@polkadot/api-base/types/consts' {
        **/
       launchPeriod: u32 & AugmentedConst<ApiType>;
       /**
+       * The maximum number of items which can be blacklisted.
+       **/
+      maxBlacklisted: u32 & AugmentedConst<ApiType>;
+      /**
+       * The maximum number of deposits a public proposal may have at any time.
+       **/
+      maxDeposits: u32 & AugmentedConst<ApiType>;
+      /**
        * The maximum number of public proposals that can exist at any time.
        **/
       maxProposals: u32 & AugmentedConst<ApiType>;
@@ -210,10 +218,6 @@ declare module '@polkadot/api-base/types/consts' {
        * The minimum amount to be used as a deposit for a public referendum proposal.
        **/
       minimumDeposit: u128 & AugmentedConst<ApiType>;
-      /**
-       * The amount of balance that must be deposited per byte of preimage stored.
-       **/
-      preimageByteDeposit: u128 & AugmentedConst<ApiType>;
       /**
        * The minimum period of vote locking.
        * 
@@ -311,6 +315,10 @@ declare module '@polkadot/api-base/types/consts' {
     };
     phalaRegistry: {
       /**
+       * Enable None Attestation, SHOULD BE SET TO FALSE ON PRODUCTION !!!
+       **/
+      noneAttestationEnabled: bool & AugmentedConst<ApiType>;
+      /**
        * Verify attestation
        * 
        * SHOULD NOT SET TO FALSE ON PRODUCTION!!!
@@ -327,7 +335,11 @@ declare module '@polkadot/api-base/types/consts' {
        **/
       [key: string]: Codec;
     };
-    phalaStakePool: {
+    phalaStakePoolv2: {
+      /**
+       * If computing is enabled by default.
+       **/
+      computingEnabledByDefault: bool & AugmentedConst<ApiType>;
       /**
        * The grace period for force withdraw request, in seconds.
        **/
@@ -338,9 +350,26 @@ declare module '@polkadot/api-base/types/consts' {
       maxPoolWorkers: u32 & AugmentedConst<ApiType>;
       minContribution: u128 & AugmentedConst<ApiType>;
       /**
-       * If mining is enabled by default.
+       * Generic const
        **/
-      miningEnabledByDefault: bool & AugmentedConst<ApiType>;
+      [key: string]: Codec;
+    };
+    phalaVault: {
+      initialCheckPoint: u128 & AugmentedConst<ApiType>;
+      /**
+       * Generic const
+       **/
+      [key: string]: Codec;
+    };
+    phalaWrappedBalances: {
+      /**
+       * W-PHA's asset id
+       **/
+      wPhaAssetId: u32 & AugmentedConst<ApiType>;
+      /**
+       * Pha's global fund pool
+       **/
+      wrappedBalancesAccountId: AccountId32 & AugmentedConst<ApiType>;
       /**
        * Generic const
        **/
@@ -497,6 +526,10 @@ declare module '@polkadot/api-base/types/consts' {
        **/
       maxPriorities: u32 & AugmentedConst<ApiType>;
       /**
+       * The maximum nesting allowed in the pallet extrinsics.
+       **/
+      nestingBudget: u32 & AugmentedConst<ApiType>;
+      /**
        * The maximum number of parts each resource may have
        **/
       partsLimit: u32 & AugmentedConst<ApiType>;
@@ -535,13 +568,11 @@ declare module '@polkadot/api-base/types/consts' {
     };
     scheduler: {
       /**
-       * The maximum weight that may be scheduled per block for any dispatchables of less
-       * priority than `schedule::HARD_DEADLINE`.
+       * The maximum weight that may be scheduled per block for any dispatchables.
        **/
-      maximumWeight: Weight & AugmentedConst<ApiType>;
+      maximumWeight: SpWeightsWeightV2Weight & AugmentedConst<ApiType>;
       /**
        * The maximum number of scheduled calls in the queue for a single block.
-       * Not strictly enforced, but used for weight estimation.
        **/
       maxScheduledPerBlock: u32 & AugmentedConst<ApiType>;
       /**

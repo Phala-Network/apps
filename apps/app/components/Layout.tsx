@@ -9,7 +9,7 @@ const WalletDialog = dynamic(() => import('./WalletDialog'), {ssr: false})
 
 const Layout: FC<{children: ReactNode}> = ({children}) => {
   useAtomsDevtools('Phala App')
-  useConnectPolkadotWallet('Phala App')
+  useConnectPolkadotWallet('Phala App', 30)
 
   return (
     <>

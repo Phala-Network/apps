@@ -1,10 +1,15 @@
 import {polkadotAccountsAtom, walletAtom} from '@phala/store'
+import {transformAddress} from '@phala/utils'
+import {WalletAccount} from '@talismn/connect-wallets'
 import {useAtom} from 'jotai'
 import {useEffect} from 'react'
 
 const TALISMAN_STORAGE_KEY = '@talisman-connect/selected-wallet-name'
 
-const useConnectPolkadotWallet = (dappName: string): void => {
+const useConnectPolkadotWallet = (
+  dappName: string,
+  ss58Format?: number
+): void => {
   const [, setAccounts] = useAtom(polkadotAccountsAtom)
   const [wallet, setWallet] = useAtom(walletAtom)
 
@@ -35,17 +40,28 @@ const useConnectPolkadotWallet = (dappName: string): void => {
   useEffect(() => {
     let unsub: () => void
     let unmounted = false
+    const saveAccounts = (accounts?: WalletAccount[]) => {
+      if (!accounts || unmounted) return
+      if (ss58Format === undefined) {
+        setAccounts(accounts)
+      } else {
+        setAccounts(
+          accounts.map((a) => {
+            return {
+              ...a,
+              address: transformAddress(a.address, ss58Format),
+            }
+          })
+        )
+      }
+    }
     const updateAccounts = async () => {
       if (wallet) {
         // Some wallets don't implement subscribeAccounts correctly, so call getAccounts anyway
         const accounts = await wallet.getAccounts()
+        saveAccounts(accounts)
         if (!unmounted) {
-          setAccounts(accounts)
-          unsub = (await wallet.subscribeAccounts((accounts) => {
-            if (accounts && !unmounted) {
-              setAccounts(accounts)
-            }
-          })) as () => void
+          unsub = (await wallet.subscribeAccounts(updateAccounts)) as () => void
         }
       } else {
         setAccounts(null)
@@ -56,7 +72,7 @@ const useConnectPolkadotWallet = (dappName: string): void => {
       unmounted = true
       unsub?.()
     }
-  }, [wallet, setAccounts])
+  }, [wallet, setAccounts, ss58Format])
 }
 
 export default useConnectPolkadotWallet
