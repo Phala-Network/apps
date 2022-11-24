@@ -1,5 +1,6 @@
+import useBlockHeightListener from '@/hooks/useBlockHeightListener'
 import {Container} from '@mui/material'
-import {useConnectPolkadotWallet} from '@phala/react-hooks'
+import {useConnectPolkadotWallet} from '@phala/lib'
 import {useAtomsDevtools} from 'jotai/devtools'
 import dynamic from 'next/dynamic'
 import {FC, ReactNode} from 'react'
@@ -10,6 +11,7 @@ const WalletDialog = dynamic(() => import('./WalletDialog'), {ssr: false})
 const Layout: FC<{children: ReactNode}> = ({children}) => {
   useAtomsDevtools('Phala App')
   useConnectPolkadotWallet('Phala App', 30)
+  useBlockHeightListener()
 
   return (
     <>

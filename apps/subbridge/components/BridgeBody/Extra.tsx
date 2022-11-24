@@ -19,7 +19,7 @@ import {
   Typography,
   useTheme,
 } from '@mui/material'
-import {formatCurrency} from '@phala/utils'
+import {formatCurrency} from '@phala/util'
 import {useAtomValue} from 'jotai'
 import {FC, ReactNode} from 'react'
 

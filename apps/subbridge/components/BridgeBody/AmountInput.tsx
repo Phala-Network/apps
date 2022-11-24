@@ -17,7 +17,7 @@ import {
   Typography,
 } from '@mui/material'
 import {BoxProps} from '@mui/system'
-import {formatCurrency} from '@phala/utils'
+import {formatCurrency} from '@phala/util'
 import {useAtom} from 'jotai'
 import {FC} from 'react'
 

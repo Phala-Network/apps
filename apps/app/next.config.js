@@ -3,7 +3,7 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 })
 const withTM = require('next-transpile-modules')(
-  ['@phala/store', '@phala/utils', '@phala/lib', '@phala/react-hooks'],
+  ['@phala/store', '@phala/util', '@phala/lib'],
   {
     // make peerDependencies work
     resolveSymlinks: false,
@@ -14,6 +14,15 @@ const withTM = require('next-transpile-modules')(
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
+  webpack(config) {
+    config.module.rules.push({
+      test: /\.svg$/i,
+      issuer: /\.[jt]sx?$/,
+      use: [{loader: '@svgr/webpack', options: {dimensions: false}}],
+    })
+
+    return config
+  },
   async redirects() {
     return [
       {

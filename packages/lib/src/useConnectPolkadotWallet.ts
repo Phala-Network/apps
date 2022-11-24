@@ -1,12 +1,12 @@
 import {polkadotAccountsAtom, walletAtom} from '@phala/store'
-import {transformAddress} from '@phala/utils'
+import {transformAddress} from '@phala/util'
 import {WalletAccount} from '@talismn/connect-wallets'
 import {useAtom} from 'jotai'
 import {useEffect} from 'react'
 
 const TALISMAN_STORAGE_KEY = '@talisman-connect/selected-wallet-name'
 
-const useConnectPolkadotWallet = (
+export const useConnectPolkadotWallet = (
   dappName: string,
   ss58Format?: number
 ): void => {
@@ -61,7 +61,7 @@ const useConnectPolkadotWallet = (
         const accounts = await wallet.getAccounts()
         saveAccounts(accounts)
         if (!unmounted) {
-          unsub = (await wallet.subscribeAccounts(updateAccounts)) as () => void
+          unsub = (await wallet.subscribeAccounts(saveAccounts)) as () => void
         }
       } else {
         setAccounts(null)
@@ -74,5 +74,3 @@ const useConnectPolkadotWallet = (
     }
   }, [wallet, setAccounts, ss58Format])
 }
-
-export default useConnectPolkadotWallet

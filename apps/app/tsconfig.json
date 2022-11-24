@@ -6,7 +6,11 @@
     "jsxImportSource": "@emotion/react",
     "baseUrl": ".",
     "paths": {
-      "@/*": ["*"]
+      "@/assets/*": ["assets/*"],
+      "@/components/*": ["components/*"],
+      "@/hooks/*": ["hooks/*"],
+      "@/lib/*": ["lib/*"],
+      "@/store/*": ["store/*"]
     },
     "plugins": [
       {

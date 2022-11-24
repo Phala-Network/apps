@@ -1,5 +1,5 @@
-import {SubmittableExtrinsic} from '@polkadot/api/types'
-import {Decimal} from 'decimal.js'
+import type {SubmittableExtrinsic} from '@polkadot/api/types'
+import Decimal from 'decimal.js'
 import {useEffect, useState} from 'react'
 
 export function useTransactionFee(

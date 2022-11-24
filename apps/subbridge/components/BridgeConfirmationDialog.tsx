@@ -31,7 +31,7 @@ import {
 } from '@mui/material'
 import {TransitionProps} from '@mui/material/transitions'
 import {BoxProps} from '@mui/system'
-import {sleep} from '@phala/utils'
+import {sleep} from '@phala/util'
 import {encodeAddress} from '@polkadot/util-crypto'
 import Decimal from 'decimal.js'
 import {useAtom, useAtomValue} from 'jotai'

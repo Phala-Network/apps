@@ -1,3 +1,4 @@
+import {KeyboardArrowDown} from '@mui/icons-material'
 import {createTheme} from '@mui/material'
 import {Barlow, Montserrat, Roboto} from '@next/font/google'
 
@@ -41,6 +42,7 @@ export const colors = {
     700: '#37105b',
     900: '#1f0a32',
   },
+  cardBackground: '#191A24',
 }
 
 export const theme = createTheme({
@@ -57,7 +59,11 @@ export const theme = createTheme({
     h1: {fontFamily: montserrat.style.fontFamily},
     h2: {fontFamily: montserrat.style.fontFamily},
     h3: {fontFamily: montserrat.style.fontFamily, fontWeight: 600},
-    h4: {fontFamily: montserrat.style.fontFamily, fontWeight: 600},
+    h4: {
+      fontFamily: montserrat.style.fontFamily,
+      fontWeight: 500,
+      fontSize: '2.625rem',
+    },
     h5: {fontFamily: montserrat.style.fontFamily},
     h6: {fontFamily: montserrat.style.fontFamily},
     num1: {
@@ -93,7 +99,7 @@ export const theme = createTheme({
     num7: {
       fontFamily: barlow.style.fontFamily,
       fontWeight: 600,
-      fontSize: '0.75rem',
+      fontSize: '0.875rem',
     },
     fontFamily: roboto.style.fontFamily,
   },
@@ -114,5 +120,8 @@ export const theme = createTheme({
     MuiOutlinedInput: {defaultProps: {notched: true}},
     MuiLoadingButton: {defaultProps: {variant: 'outlined'}},
     MuiDialog: {defaultProps: {fullWidth: true, maxWidth: 'xs'}},
+    MuiSelect: {
+      defaultProps: {IconComponent: KeyboardArrowDown},
+    },
   },
 })

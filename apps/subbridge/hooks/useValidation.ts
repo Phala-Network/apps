@@ -9,7 +9,7 @@ import {
   fromChainAtom,
   toChainAtom,
 } from '@/store/bridge'
-import {validateAddress} from '@phala/utils'
+import {validateAddress} from '@phala/util'
 import {useAtom, useAtomValue} from 'jotai'
 import {useEffect} from 'react'
 import {useBalance} from './useBalance'

@@ -1,5 +1,5 @@
 import {colors, montserrat} from '@/lib/theme'
-import {Chain, chainAtom} from '@/store/polkadot'
+import {Chain, chainAtom} from '@/store/common'
 import {MenuItem, Select} from '@mui/material'
 import {useAtom} from 'jotai'
 import {FC} from 'react'

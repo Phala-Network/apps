@@ -34,7 +34,12 @@ const DelegateDataCard: FC<{
         </Typography>
         {count > 0 && <Chip size="small" label={count} sx={{ml: 'auto'}} />}
       </Stack>
-      <Typography variant="num3" component="div" mb={0.5}>
+      <Typography
+        variant="num3"
+        component="div"
+        mb={{xs: 0, md: 0.5}}
+        mt={{xs: -0.5, md: 0}}
+      >
         32,481<sub>PHA</sub>
       </Typography>
       <Stack direction="row" alignItems="baseline" spacing={1}>
@@ -43,7 +48,7 @@ const DelegateDataCard: FC<{
           component="div"
           color={theme.palette.text.secondary}
         >
-          Estimated APY
+          Est. APY
         </Typography>
         <Typography variant="num7" component="div">
           34.5%
@@ -71,12 +76,24 @@ const DelegateDetailCard: FC = () => {
             >
               Delegation
             </Typography>
-            <Stack direction="row" alignItems="baseline" spacing={0.5}>
-              <Typography variant="num1" component="div" lineHeight="1.2">
-                4,831,233
-                <sub>PHA</sub>
-              </Typography>
-            </Stack>
+            <Typography
+              variant="num1"
+              component="div"
+              display={{xs: 'none', md: 'block'}}
+              lineHeight="1.2"
+            >
+              4,831,233
+              <sub>PHA</sub>
+            </Typography>
+            <Typography
+              variant="num2"
+              component="div"
+              display={{xs: 'block', md: 'none'}}
+              lineHeight="1.2"
+            >
+              4,831,233
+              <sub>PHA</sub>
+            </Typography>
           </Box>
           <DelegatorSelect />
         </Stack>
@@ -103,7 +120,7 @@ const DelegateDetailCard: FC = () => {
           pl={{xs: 1, sm: 2}}
           pr={0.5}
           py={1}
-          sx={{background: theme.palette.grey[900]}}
+          sx={{background: theme.palette.action.hover}}
         >
           <Typography
             variant="subtitle1"

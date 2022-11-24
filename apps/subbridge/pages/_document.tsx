@@ -1,11 +1,8 @@
 import {createEmotionCache} from '@/lib/createEmotionCache'
-import {EmotionJSX} from '@emotion/react/types/jsx-namespace'
 import createEmotionServer from '@emotion/server/create-instance'
 import Document, {Head, Html, Main, NextScript} from 'next/document'
 
-export default class MyDocument extends Document<{
-  emotionStyleTags: EmotionJSX.Element[]
-}> {
+export default class MyDocument extends Document {
   render() {
     return (
       <Html lang="en">
@@ -20,8 +17,8 @@ export default class MyDocument extends Document<{
           />
           <link rel="manifest" href="/site.webmanifest" />
 
-          {/* Inject MUI styles first to match with the prepend: true configuration. */}
-          {this.props.emotionStyleTags}
+          {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+          {(this.props as any).emotionStyleTags}
         </Head>
         <body>
           <Main />
