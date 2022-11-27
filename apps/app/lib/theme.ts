@@ -120,8 +120,7 @@ export const theme = createTheme({
     MuiOutlinedInput: {defaultProps: {notched: true}},
     MuiLoadingButton: {defaultProps: {variant: 'outlined'}},
     MuiDialog: {defaultProps: {fullWidth: true, maxWidth: 'xs'}},
-    MuiSelect: {
-      defaultProps: {IconComponent: KeyboardArrowDown},
-    },
+    MuiSelect: {defaultProps: {IconComponent: KeyboardArrowDown}},
+    MuiMenu: {styleOverrides: {list: {backgroundColor: colors.cardBackground}}},
   },
 })

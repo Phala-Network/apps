@@ -9,7 +9,7 @@ import {MenuItem, Skeleton, Stack, TextField} from '@mui/material'
 import {polkadotAccountAtom} from '@phala/store'
 import {useAtom} from 'jotai'
 import {FC, useState} from 'react'
-import StakePoolFarmCard from './StakePoolFarmCard'
+import FarmCard from './FarmCard'
 
 type BasePoolListVariant = 'farm' | 'delegate'
 type OrderByEntries = [string, BasePoolOrderByInput][]
@@ -111,9 +111,12 @@ const BasePoolList: FC<{
           ? skeleton
           : data?.pages.map((page, index) => (
               <Stack key={index} spacing={2}>
-                {page.basePoolsConnection.edges.map((edge) => (
-                  <StakePoolFarmCard key={edge.node.id} basePool={edge.node} />
-                ))}
+                {page.basePoolsConnection.edges.map(
+                  (edge) =>
+                    variant === 'farm' && (
+                      <FarmCard key={edge.node.id} basePool={edge.node} />
+                    )
+                )}
               </Stack>
             ))}
       </Stack>

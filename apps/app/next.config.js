@@ -27,7 +27,12 @@ const nextConfig = {
     return [
       {
         source: '/delegate',
-        destination: '/delegate/vaults',
+        destination: '/delegate/vault',
+        permanent: true,
+      },
+      {
+        source: '/farm',
+        destination: '/farm/stake-pool',
         permanent: true,
       },
     ]

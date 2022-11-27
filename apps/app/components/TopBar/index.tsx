@@ -1,3 +1,4 @@
+import PhalaLogo from '@/assets/phala_logo.svg'
 import {montserrat} from '@/lib/theme'
 import {AppBar, Button, Stack, Toolbar, useTheme} from '@mui/material'
 import NextLink from 'next/link'
@@ -12,8 +13,8 @@ interface NavItem {
 
 const navItems: NavItem[] = [
   {name: 'dashboard', href: '/'},
-  {name: 'delegate', href: '/delegate'},
-  {name: 'farm', href: '/farm'},
+  {name: 'delegate', href: '/delegate/vault'},
+  {name: 'farm', href: '/farm/stake-pool'},
   {name: 'subBridge', href: 'https://subbridge.io'},
   {name: 'DAO', href: ''},
 ]
@@ -60,7 +61,9 @@ const TopBar: FC = () => {
       }}
     >
       <Toolbar>
+        <PhalaLogo width={30} />
         <Stack
+          ml={3}
           spacing={1}
           component="nav"
           direction="row"

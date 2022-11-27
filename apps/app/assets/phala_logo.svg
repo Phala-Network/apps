@@ -1,0 +1,8 @@
+<svg width="500" height="500" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M500 0H0V500H500V0Z" fill="black" />
+  <path d="M349 255H162V318H349V255Z" fill="#CDFA50" />
+  <path d="M411 161H349V255H411V161Z" fill="#CDFA50" />
+  <path d="M162 318H100V333.329V348.671V410H161.986V348.671H162V318Z" fill="#CDFA50" />
+  <path d="M349 99H162.268H153.308H100V223.8V243.721V255H162.268V243.721V223.8V161.4H349V99Z" fill="#CDFA50" />
+  <path d="M349 255H162V318H349V255Z" fill="#CDFA50" />
+</svg>

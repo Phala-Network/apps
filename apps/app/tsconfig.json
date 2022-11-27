@@ -10,7 +10,8 @@
       "@/components/*": ["components/*"],
       "@/hooks/*": ["hooks/*"],
       "@/lib/*": ["lib/*"],
-      "@/store/*": ["store/*"]
+      "@/store/*": ["store/*"],
+      "@/config": ["config"]
     },
     "plugins": [
       {

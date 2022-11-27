@@ -2256,12 +2256,12 @@ export type BasePoolsConnectionQueryVariables = Exact<{
 }>;
 
 
-export type BasePoolsConnectionQuery = { __typename?: 'Query', basePoolsConnection: { __typename?: 'BasePoolsConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', endCursor: string, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string }, edges: Array<{ __typename?: 'BasePoolEdge', cursor: string, node: { __typename?: 'BasePool', cid: number, commission: string, delegatorCount: number, freeValue: string, id: string, kind: BasePoolKind, pid: string, releasingValue: string, sharePrice: string, totalShares: string, totalValue: string, whitelistEnabled: boolean, withdrawalShares: string, withdrawalValue: string, account: { __typename?: 'Account', id: string }, owner: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null }, stakePool?: { __typename?: 'StakePool', aprMultiplier: string, capacity?: string | null, delegable?: string | null, idleWorkerCount: number, ownerReward: string, workerCount: number } | null, vault?: { __typename?: 'Vault', apr: string, claimableOwnerShares: string, lastSharePriceCheckpoint: string } | null } }> } };
+export type BasePoolsConnectionQuery = { __typename?: 'Query', basePoolsConnection: { __typename?: 'BasePoolsConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', endCursor: string, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string }, edges: Array<{ __typename?: 'BasePoolEdge', cursor: string, node: { __typename?: 'BasePool', cid: number, commission: string, delegatorCount: number, freeValue: string, id: string, kind: BasePoolKind, pid: string, releasingValue: string, sharePrice: string, totalShares: string, totalValue: string, whitelistEnabled: boolean, withdrawalShares: string, withdrawalValue: string, account: { __typename?: 'Account', id: string, stakePoolNftCount: number }, owner: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null }, stakePool?: { __typename?: 'StakePool', aprMultiplier: string, capacity?: string | null, delegable?: string | null, idleWorkerCount: number, ownerReward: string, workerCount: number } | null, vault?: { __typename?: 'Vault', apr: string, claimableOwnerShares: string, lastSharePriceCheckpoint: string } | null } }> } };
 
 export type GlobalStateQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GlobalStateQuery = { __typename?: 'Query', globalStateById?: { __typename?: 'GlobalState', averageBlockTime: number, height: number, stakePoolValue: string, totalValue: string, vaultValue: string } | null };
+export type GlobalStateQuery = { __typename?: 'Query', globalStateById?: { __typename?: 'GlobalState', averageBlockTime: number, height: number, stakePoolValue: string, totalValue: string, vaultValue: string, idleWorkerShares: string } | null };
 
 export type TokenomicParametersQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2332,6 +2332,7 @@ export const BasePoolsConnectionDocument = `
       node {
         account {
           id
+          stakePoolNftCount
         }
         cid
         commission
@@ -2409,6 +2410,7 @@ export const GlobalStateDocument = `
     stakePoolValue
     totalValue
     vaultValue
+    idleWorkerShares
   }
 }
     `;
