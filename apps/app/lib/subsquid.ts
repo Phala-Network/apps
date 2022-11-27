@@ -38,11 +38,20 @@ export type Account = {
   id: Scalars['String'];
   identityDisplay?: Maybe<Scalars['String']>;
   identityLevel?: Maybe<IdentityLevel>;
+  ownedPools: Array<BasePool>;
   stakePoolNftCount: Scalars['Int'];
   stakePoolOwnerReward: Scalars['BigDecimal'];
   stakePoolValue: Scalars['BigDecimal'];
   vaultNftCount: Scalars['Int'];
   vaultValue: Scalars['BigDecimal'];
+};
+
+
+export type AccountOwnedPoolsArgs = {
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Array<BasePoolOrderByInput>>;
+  where?: InputMaybe<BasePoolWhereInput>;
 };
 
 export type AccountEdge = {
@@ -142,6 +151,9 @@ export type AccountWhereInput = {
   identityLevel_isNull?: InputMaybe<Scalars['Boolean']>;
   identityLevel_not_eq?: InputMaybe<IdentityLevel>;
   identityLevel_not_in?: InputMaybe<Array<IdentityLevel>>;
+  ownedPools_every?: InputMaybe<BasePoolWhereInput>;
+  ownedPools_none?: InputMaybe<BasePoolWhereInput>;
+  ownedPools_some?: InputMaybe<BasePoolWhereInput>;
   stakePoolNftCount_eq?: InputMaybe<Scalars['Int']>;
   stakePoolNftCount_gt?: InputMaybe<Scalars['Int']>;
   stakePoolNftCount_gte?: InputMaybe<Scalars['Int']>;
@@ -2246,7 +2258,7 @@ export type AccountByIdQueryVariables = Exact<{
 }>;
 
 
-export type AccountByIdQuery = { __typename?: 'Query', accountById?: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null, stakePoolNftCount: number, stakePoolValue: string, vaultNftCount: number, vaultValue: string, stakePoolOwnerReward: string } | null };
+export type AccountByIdQuery = { __typename?: 'Query', accountById?: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null, stakePoolNftCount: number, stakePoolValue: string, vaultNftCount: number, vaultValue: string, stakePoolOwnerReward: string, ownedPools: Array<{ __typename?: 'BasePool', id: string, account: { __typename?: 'Account', id: string, stakePoolNftCount: number, stakePoolValue: string, vaultNftCount: number, vaultValue: string } }> } | null };
 
 export type BasePoolsConnectionQueryVariables = Exact<{
   orderBy: Array<BasePoolOrderByInput> | BasePoolOrderByInput;
@@ -2280,6 +2292,16 @@ export const AccountByIdDocument = `
     vaultNftCount
     vaultValue
     stakePoolOwnerReward
+    ownedPools(where: {kind_eq: StakePool}, orderBy: pid_ASC) {
+      id
+      account {
+        id
+        stakePoolNftCount
+        stakePoolValue
+        vaultNftCount
+        vaultValue
+      }
+    }
   }
 }
     `;

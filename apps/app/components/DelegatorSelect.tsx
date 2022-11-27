@@ -1,4 +1,6 @@
+import useAccountQuery from '@/hooks/useAccountQuery'
 import useAsset from '@/hooks/useAsset'
+import useSelectedVaultState from '@/hooks/useSelectedVaultState'
 import {colors} from '@/lib/theme'
 import {vaultIdAtom} from '@/store/common'
 import {
@@ -14,25 +16,40 @@ import {
 import {polkadotAccountAtom} from '@phala/store'
 import {formatCurrency} from '@phala/util'
 import {useAtom} from 'jotai'
-import {FC} from 'react'
+import {FC, useMemo} from 'react'
+
+const ACCOUNT = 'account'
 
 const DelegatorSelect: FC = () => {
   const theme = useTheme()
-  const [vaultId, setVaultId] = useAtom(vaultIdAtom)
   const [account] = useAtom(polkadotAccountAtom)
-  const {balance} = useAsset(account?.address, vaultId === null ? undefined : 1)
-  const vaults = ['12321', '1233', '424']
+  const [, setVaultId] = useAtom(vaultIdAtom)
+  const {data: accountData} = useAccountQuery()
+  const vaultIds = useMemo(
+    () => accountData?.accountById?.ownedPools.map((x) => x.id) ?? [],
+    [accountData?.accountById?.ownedPools]
+  )
+  const selectedVaultState = useSelectedVaultState()
+  const {balance} = useAsset(
+    selectedVaultState !== undefined
+      ? selectedVaultState
+        ? selectedVaultState.account.id
+        : account?.address
+      : undefined,
+    selectedVaultState ? 1 : undefined
+  )
+  if (!account || !accountData) return null
+  const value = selectedVaultState?.id ?? ACCOUNT
 
-  if (!account) return null
   return (
     <TextField
-      value={vaultId || 'account'}
+      value={value}
       select
       size="small"
-      disabled={!vaults.length}
+      disabled={!vaultIds.length}
       FormHelperTextProps={{sx: {textAlign: 'right', mx: 0}}}
       onChange={(e) => {
-        setVaultId(e.target.value === 'account' ? null : e.target.value)
+        setVaultId(e.target.value === ACCOUNT ? null : e.target.value)
       }}
       helperText={
         <Typography variant="num7">
@@ -52,7 +69,7 @@ const DelegatorSelect: FC = () => {
         },
       }}
     >
-      <MenuItem value="account">
+      <MenuItem value={ACCOUNT}>
         <Stack direction="row" spacing={1}>
           <Chip
             label="Account"
@@ -74,7 +91,7 @@ const DelegatorSelect: FC = () => {
           </Box>
         </Stack>
       </MenuItem>
-      {vaults.map((pid) => (
+      {vaultIds.map((pid) => (
         <MenuItem value={pid} key={pid}>
           <Stack direction="row" spacing={1}>
             <Chip
@@ -86,7 +103,7 @@ const DelegatorSelect: FC = () => {
                 color: theme.palette.getContrastText(colors.vault[300]),
               }}
             />
-            <span>{pid}</span>
+            <span>{`#${pid}`}</span>
           </Stack>
         </MenuItem>
       ))}

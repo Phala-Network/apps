@@ -1,22 +1,35 @@
+import useAccountQuery from '@/hooks/useAccountQuery'
+import useAsset from '@/hooks/useAsset'
+import useSelectedVaultState from '@/hooks/useSelectedVaultState'
+import {BasePoolKind} from '@/lib/subsquid'
 import {colors} from '@/lib/theme'
 import {
   Box,
   Button,
   Chip,
   Paper,
+  Skeleton,
   Stack,
   Typography,
   useTheme,
 } from '@mui/material'
-import {FC} from 'react'
+import {polkadotAccountAtom} from '@phala/store'
+import {formatCurrency} from '@phala/util'
+import Decimal from 'decimal.js'
+import {useAtom} from 'jotai'
+import {FC, useMemo} from 'react'
 import DelegatorSelect from './DelegatorSelect'
 
 const DelegateDataCard: FC<{
-  background: string
-  title: string
-  count: number
-}> = ({background, title, count}) => {
+  kind: BasePoolKind
+  count?: number
+  value?: string
+}> = ({kind, count, value}) => {
   const theme = useTheme()
+  const isVault = kind === BasePoolKind.Vault
+  const label = isVault ? 'Vault' : 'Stake Pool'
+  const background = isVault ? colors.vault[300] : colors.main[500]
+
   return (
     <Box
       sx={{background}}
@@ -30,9 +43,9 @@ const DelegateDataCard: FC<{
           color={theme.palette.text.secondary}
           lineHeight={1}
         >
-          {title}
+          {label}
         </Typography>
-        {count > 0 && <Chip size="small" label={count} sx={{ml: 'auto'}} />}
+        {!!count && <Chip size="small" label={count} sx={{ml: 'auto'}} />}
       </Stack>
       <Typography
         variant="num3"
@@ -40,7 +53,14 @@ const DelegateDataCard: FC<{
         mb={{xs: 0, md: 0.5}}
         mt={{xs: -0.5, md: 0}}
       >
-        32,481<sub>PHA</sub>
+        {value ? (
+          <>
+            {formatCurrency(value)}
+            <sub>PHA</sub>
+          </>
+        ) : (
+          <Skeleton width={64} />
+        )}
       </Typography>
       <Stack direction="row" alignItems="baseline" spacing={1}>
         <Typography
@@ -48,18 +68,32 @@ const DelegateDataCard: FC<{
           component="div"
           color={theme.palette.text.secondary}
         >
-          Est. APY
+          {isVault ? 'Est. APY' : 'Est. APR'}
         </Typography>
-        <Typography variant="num7" component="div">
+        {/* <Typography variant="num7" component="div">
           34.5%
-        </Typography>
+        </Typography> */}
       </Stack>
     </Box>
   )
 }
 
 const DelegateDetailCard: FC = () => {
+  const {data} = useAccountQuery()
   const theme = useTheme()
+  const [account] = useAtom(polkadotAccountAtom)
+  const {balance: locked} = useAsset(account?.address, 1)
+  const accountState = data?.accountById
+  const selectedVaultState = useSelectedVaultState()
+  const isAccount = selectedVaultState === null
+  const {stakePoolNftCount, stakePoolValue, vaultNftCount, vaultValue} =
+    selectedVaultState?.account ?? accountState ?? {}
+
+  const totalValue = useMemo(() => {
+    if (!stakePoolValue || !vaultValue) return
+    return formatCurrency(new Decimal(stakePoolValue).plus(vaultValue))
+  }, [stakePoolValue, vaultValue])
+
   return (
     <Paper sx={{p: {xs: 1.5, sm: 2}, background: 'none'}}>
       <Stack spacing={{xs: 1.5, sm: 2}}>
@@ -82,8 +116,14 @@ const DelegateDetailCard: FC = () => {
               display={{xs: 'none', md: 'block'}}
               lineHeight="1.2"
             >
-              4,831,233
-              <sub>PHA</sub>
+              {totalValue ? (
+                <>
+                  {totalValue}
+                  <sub>PHA</sub>
+                </>
+              ) : (
+                <Skeleton width={128} />
+              )}
             </Typography>
             <Typography
               variant="num2"
@@ -91,8 +131,14 @@ const DelegateDetailCard: FC = () => {
               display={{xs: 'block', md: 'none'}}
               lineHeight="1.2"
             >
-              4,831,233
-              <sub>PHA</sub>
+              {totalValue ? (
+                <>
+                  {totalValue}
+                  <sub>PHA</sub>
+                </>
+              ) : (
+                <Skeleton width={64} />
+              )}
             </Typography>
           </Box>
           <DelegatorSelect />
@@ -102,43 +148,51 @@ const DelegateDetailCard: FC = () => {
           spacing={{xs: 1.5, sm: 2}}
           sx={{'>div': {flex: '1 0'}}}
         >
+          {isAccount && (
+            <DelegateDataCard
+              kind={BasePoolKind.Vault}
+              count={vaultNftCount}
+              value={vaultValue}
+            />
+          )}
           <DelegateDataCard
-            background={colors.vault[300]}
-            title="Vault"
-            count={12}
-          />
-          <DelegateDataCard
-            background={colors.main[500]}
-            title="Stake Pool"
-            count={0}
+            kind={BasePoolKind.StakePool}
+            count={stakePoolNftCount}
+            value={stakePoolValue}
           />
         </Stack>
-        <Stack
-          direction="row"
-          alignItems="baseline"
-          borderRadius="2px"
-          pl={{xs: 1, sm: 2}}
-          pr={0.5}
-          py={1}
-          sx={{background: theme.palette.action.hover}}
-        >
-          <Typography
-            variant="subtitle1"
-            component="div"
-            color={theme.palette.text.secondary}
+        {isAccount && (
+          <Stack
+            direction="row"
+            alignItems="baseline"
+            borderRadius="2px"
+            pl={{xs: 1, sm: 2}}
+            pr={0.5}
+            py={1}
+            sx={{background: theme.palette.action.hover}}
           >
-            Locked
-          </Typography>
-          <Typography variant="num6" component="div" flex="1 0" ml={1.5}>
-            201 PHA
-          </Typography>
-          <Button variant="text" size="small">
-            Claim All
-          </Button>
-          <Button variant="text" size="small">
-            Track
-          </Button>
-        </Stack>
+            <Typography
+              variant="subtitle1"
+              component="div"
+              color={theme.palette.text.secondary}
+            >
+              Locked
+            </Typography>
+            <Typography variant="num6" component="div" flex="1 0" ml={1.5}>
+              {locked ? (
+                `${formatCurrency(locked)} PHA`
+              ) : (
+                <Skeleton width={100} animation="wave" />
+              )}
+            </Typography>
+            <Button variant="text" size="small">
+              Claim All
+            </Button>
+            <Button variant="text" size="small">
+              Track
+            </Button>
+          </Stack>
+        )}
       </Stack>
     </Paper>
   )

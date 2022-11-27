@@ -41,7 +41,11 @@ const useAsset = (account?: string, assetId?: number | string) => {
           if (!unmounted) {
             setBalance(
               new Decimal(unwrapped.balance.toString()).div(
-                Decimal.pow(10, assetMetadata.decimals.toString())
+                Decimal.pow(
+                  10,
+                  // TODO: remove hardcode
+                  assetId === 1 ? 12 : assetMetadata.decimals.toNumber()
+                )
               )
             )
           }
