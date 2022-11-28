@@ -82,7 +82,16 @@ const DelegateDetailCard: FC = () => {
   const selectedVaultState = useSelectedVaultState()
   const asAccount = selectedVaultState === null
   const {stakePoolNftCount, stakePoolValue, vaultNftCount, vaultValue} =
-    selectedVaultState?.account ?? accountState ?? {}
+    selectedVaultState?.account ??
+    (accountState === null
+      ? {
+          stakePoolNftCount: 0,
+          stakePoolValue: '0',
+          vaultNftCount: 0,
+          vaultValue: '0',
+        }
+      : accountState) ??
+    {}
 
   const totalValue = useMemo(() => {
     if (!stakePoolValue || !vaultValue) return

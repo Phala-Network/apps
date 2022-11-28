@@ -33,6 +33,9 @@ import {FC} from 'react'
 import DelegateInput from './DelegateInput'
 import ExtraProperties from './ExtraProperties'
 import Property from './Property'
+import Whitelists from './Whitelists'
+import WithdrawQueue from './WithdrawQueue'
+import Workers from './Workers'
 
 const DetailPage: FC<{kind: BasePoolKind; pid: ParsedUrlQuery[string]}> = ({
   kind,
@@ -244,12 +247,20 @@ const DetailPage: FC<{kind: BasePoolKind; pid: ParsedUrlQuery[string]}> = ({
               <Typography variant="h6" component="div">
                 Delegation
               </Typography>
-              <DelegatorSelect />
+              <DelegatorSelect isVault={isVault} />
             </Stack>
             <Stack></Stack>
             {basePool && <DelegateInput basePool={basePool} />}
           </Paper>
         </Stack>
+
+        {basePool && (
+          <>
+            <WithdrawQueue basePool={basePool} />
+            <Whitelists basePool={basePool} />
+            {stakePool && <Workers basePool={basePool} />}
+          </>
+        )}
       </Stack>
     </>
   )

@@ -20,7 +20,7 @@ import {FC, useMemo} from 'react'
 
 const ACCOUNT = 'account'
 
-const DelegatorSelect: FC = () => {
+const DelegatorSelect: FC<{isVault?: boolean}> = ({isVault = false}) => {
   const theme = useTheme()
   const [account] = useAtom(polkadotAccountAtom)
   const [, setVaultId] = useAtom(vaultIdAtom)
@@ -39,14 +39,15 @@ const DelegatorSelect: FC = () => {
     selectedVaultState ? 1 : undefined
   )
   if (!account || !accountData) return null
-  const value = selectedVaultState?.id ?? ACCOUNT
+  // MEMO: vault cannot delegate to another vault
+  const value = (!isVault && selectedVaultState?.id) || ACCOUNT
 
   return (
     <TextField
       value={value}
       select
       size="small"
-      disabled={!vaultIds.length}
+      disabled={isVault || !vaultIds.length}
       FormHelperTextProps={{sx: {textAlign: 'right', mx: 0}}}
       onChange={(e) => {
         setVaultId(e.target.value === ACCOUNT ? null : e.target.value)
