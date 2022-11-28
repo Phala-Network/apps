@@ -75,14 +75,8 @@ export const transferByChainBridge = async ({
   if (!resourceId) {
     throw new Error('Transfer missing required parameters')
   }
-  const depositChainIdMap: {[chainId in ChainId]?: number} = {
-    khala: 1,
-    phala: 3,
-  }
-  const depositChainId = depositChainIdMap[toChainId]
-  if (!depositChainId) {
-    throw new Error('No deposit chain ID found')
-  }
+  // TODO: make deposit chain configurable
+  const depositChainId = toChainId === 'phala' ? 3 : 1
   return contract.deposit(
     depositChainId,
     resourceId,
