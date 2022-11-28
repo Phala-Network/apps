@@ -215,6 +215,7 @@ export type BasePool = {
   cid: Scalars['Int'];
   /** decimal percentage, 1 means 100% */
   commission: Scalars['BigDecimal'];
+  delegations: Array<Delegation>;
   delegatorCount: Scalars['Int'];
   freeValue: Scalars['BigDecimal'];
   /** pid */
@@ -233,6 +234,14 @@ export type BasePool = {
   whitelists: Array<BasePoolWhitelist>;
   withdrawalShares: Scalars['BigDecimal'];
   withdrawalValue: Scalars['BigDecimal'];
+};
+
+
+export type BasePoolDelegationsArgs = {
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Array<DelegationOrderByInput>>;
+  where?: InputMaybe<DelegationWhereInput>;
 };
 
 
@@ -364,6 +373,9 @@ export type BasePoolWhereInput = {
   commission_lte?: InputMaybe<Scalars['BigDecimal']>;
   commission_not_eq?: InputMaybe<Scalars['BigDecimal']>;
   commission_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  delegations_every?: InputMaybe<DelegationWhereInput>;
+  delegations_none?: InputMaybe<DelegationWhereInput>;
+  delegations_some?: InputMaybe<DelegationWhereInput>;
   delegatorCount_eq?: InputMaybe<Scalars['Int']>;
   delegatorCount_gt?: InputMaybe<Scalars['Int']>;
   delegatorCount_gte?: InputMaybe<Scalars['Int']>;

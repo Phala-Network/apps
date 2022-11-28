@@ -9,7 +9,7 @@ import usePolkadotApi from './usePolkadotApi'
 const useSignAndSend = () => {
   const api = usePolkadotApi()
   const [account] = useAtom(polkadotAccountAtom)
-  return useCallback(
+  const signAndSend = useCallback(
     (extrinsic: SubmittableExtrinsic<'promise', ISubmittableResult>) => {
       if (!account || !api) {
         throw new Error('Account or api is not ready')
@@ -28,6 +28,7 @@ const useSignAndSend = () => {
     },
     [account, api]
   )
+  return signAndSend
 }
 
 export default useSignAndSend

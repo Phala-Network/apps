@@ -1,10 +1,12 @@
 import StakePoolIcon from '@/assets/stake_pool.svg'
 import VaultIcon from '@/assets/vault.svg'
 import BasePoolList from '@/components/BasePoolList'
+import ClientOnly from '@/components/ClientOnly'
 import DelegateChartCard from '@/components/DelegateChartCard'
 import DelegateDetailCard from '@/components/DelegateDetailCard'
 import NetworkOverview from '@/components/NetworkOverview'
 import PageHeader from '@/components/PageHeader'
+import useSelectedVaultState from '@/hooks/useSelectedVaultState'
 import {BasePoolKind} from '@/lib/subsquid'
 import {colors} from '@/lib/theme'
 import {
@@ -18,7 +20,7 @@ import {
 } from '@mui/material'
 import {GetStaticPaths, GetStaticProps, NextPage} from 'next'
 import {useRouter} from 'next/router'
-import {useState} from 'react'
+import {useCallback, useEffect, useState} from 'react'
 
 const PoolSwitch = styled(Switch)(
   sx({
@@ -72,6 +74,28 @@ const Delegate: NextPage = () => {
   const isVault = kind === 'vault'
   // Avoid ui lag
   const [switchChecked, setSwitchChecked] = useState(!isVault)
+  const selectedVaultState = useSelectedVaultState()
+  const asAccount = selectedVaultState === null
+
+  const handleSwitchChange = useCallback(
+    (checked: boolean) => {
+      setSwitchChecked(checked)
+      router.replace(
+        `/delegate/${checked ? 'stake-pool' : 'vault'}`,
+        undefined,
+        {
+          shallow: true,
+        }
+      )
+    },
+    [router]
+  )
+
+  useEffect(() => {
+    if (!asAccount) {
+      handleSwitchChange(true)
+    }
+  }, [asAccount, handleSwitchChange])
 
   return (
     <>
@@ -88,73 +112,73 @@ const Delegate: NextPage = () => {
         <DelegateChartCard />
       </Stack>
 
-      <Stack
-        direction="row"
-        my={{xs: 2, md: 5}}
-        alignItems="center"
-        justifyContent="center"
-      >
-        <Box position="relative">
-          <PoolSwitch
-            checked={switchChecked}
-            onChange={(e) => {
-              setSwitchChecked((v) => !v)
-              router.replace(
-                `/delegate/${e.target.checked ? 'stake-pool' : 'vault'}`,
-                undefined,
-                {shallow: true}
-              )
-            }}
-          />
+      <ClientOnly>
+        {asAccount && (
           <Stack
             direction="row"
-            position="absolute"
-            top="0"
-            left="0"
-            right="0"
-            bottom="0"
-            width={1}
-            sx={{pointerEvents: 'none'}}
+            mt={{xs: 2, md: 5}}
+            alignItems="center"
+            justifyContent="center"
           >
-            <Stack
-              px={2}
-              flex="1 0"
-              direction="row"
-              alignItems="center"
-              spacing={1}
-              color={
-                switchChecked
-                  ? theme.palette.text.secondary
-                  : theme.palette.text.primary
-              }
-            >
-              <VaultIcon width={24} />
-              <Typography variant="button" flex="1" textAlign="center">
-                Vault
-              </Typography>
-            </Stack>
-            <Stack
-              px={2}
-              flex="1 0"
-              direction="row"
-              alignItems="center"
-              spacing={1}
-              color={
-                switchChecked
-                  ? theme.palette.text.primary
-                  : theme.palette.text.secondary
-              }
-            >
-              <StakePoolIcon width={24} />
-              <Typography variant="button" flex="1" textAlign="center">
-                Stake Pool
-              </Typography>
-            </Stack>
+            <Box position="relative">
+              <PoolSwitch
+                checked={switchChecked}
+                onChange={(e) => {
+                  handleSwitchChange(e.target.checked)
+                }}
+              />
+              <Stack
+                direction="row"
+                position="absolute"
+                top="0"
+                left="0"
+                right="0"
+                bottom="0"
+                width={1}
+                sx={{pointerEvents: 'none'}}
+              >
+                <Stack
+                  px={2}
+                  flex="1 0"
+                  direction="row"
+                  alignItems="center"
+                  spacing={1}
+                  color={
+                    switchChecked
+                      ? theme.palette.text.secondary
+                      : theme.palette.text.primary
+                  }
+                >
+                  <VaultIcon width={24} />
+                  <Typography variant="button" flex="1" textAlign="center">
+                    Vault
+                  </Typography>
+                </Stack>
+                <Stack
+                  px={2}
+                  flex="1 0"
+                  direction="row"
+                  alignItems="center"
+                  spacing={1}
+                  color={
+                    switchChecked
+                      ? theme.palette.text.primary
+                      : theme.palette.text.secondary
+                  }
+                >
+                  <StakePoolIcon width={24} />
+                  <Typography variant="button" flex="1" textAlign="center">
+                    Stake Pool
+                  </Typography>
+                </Stack>
+              </Stack>
+            </Box>
           </Stack>
-        </Box>
-      </Stack>
+        )}
+      </ClientOnly>
 
       <BasePoolList
+        sx={{mt: {xs: 2, md: 5}}}
         variant="delegate"
         kind={isVault ? BasePoolKind.Vault : BasePoolKind.StakePool}
       />

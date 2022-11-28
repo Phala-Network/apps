@@ -1,4 +1,5 @@
 export * from './formatCurrency'
+export {default as getDecimalPattern} from './getDecimalPattern'
 export * from './isTruthy'
 export * from './sleep'
 export * from './toFixed'

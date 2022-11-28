@@ -89,7 +89,7 @@ const DelegateDetailCard: FC = () => {
   const {balance: locked} = useAsset(account?.address, 1)
   const accountState = data?.accountById
   const selectedVaultState = useSelectedVaultState()
-  const isAccount = selectedVaultState === null
+  const asAccount = selectedVaultState === null
   const {stakePoolNftCount, stakePoolValue, vaultNftCount, vaultValue} =
     selectedVaultState?.account ?? accountState ?? {}
 
@@ -155,7 +155,7 @@ const DelegateDetailCard: FC = () => {
           <DelegateDataCard
             kind={BasePoolKind.Vault}
             count={vaultNftCount}
-            value={isAccount ? vaultValue : '-'}
+            value={asAccount ? vaultValue : '-'}
           />
           <DelegateDataCard
             kind={BasePoolKind.StakePool}
@@ -189,11 +189,11 @@ const DelegateDetailCard: FC = () => {
             alignSelf="baseline"
           >
             <ClientOnly fallback={<Skeleton width={100} />}>
-              {isAccount ? locked && `${formatCurrency(locked)} PHA` : '-'}
+              {asAccount ? locked && `${formatCurrency(locked)} PHA` : '-'}
             </ClientOnly>
           </Typography>
           <ClientOnly>
-            {isAccount && (
+            {asAccount && (
               <>
                 <Button variant="text" size="small">
                   Claim All

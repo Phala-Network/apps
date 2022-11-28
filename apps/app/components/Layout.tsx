@@ -16,7 +16,9 @@ const Layout: FC<{children: ReactNode}> = ({children}) => {
   return (
     <>
       <TopBar />
-      <Container maxWidth="xl">{children}</Container>
+      <Container maxWidth="xl" sx={{pb: 4}}>
+        {children}
+      </Container>
       <WalletDialog />
     </>
   )

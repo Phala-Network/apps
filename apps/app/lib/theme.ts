@@ -49,7 +49,7 @@ export const theme = createTheme({
   palette: {
     mode: 'dark',
     primary: {main: colors.main[400]},
-    secondary: {main: '#8625E7'},
+    secondary: {main: colors.vault[400]},
   },
   breakpoints: {
     values: {xs: 0, sm: 576, md: 768, lg: 992, xl: 1200},
@@ -64,8 +64,6 @@ export const theme = createTheme({
       fontWeight: 500,
       fontSize: '2.625rem',
     },
-    h5: {fontFamily: montserrat.style.fontFamily},
-    h6: {fontFamily: montserrat.style.fontFamily},
     num1: {
       fontFamily: barlow.style.fontFamily,
       fontWeight: 700,
@@ -84,12 +82,12 @@ export const theme = createTheme({
     num4: {
       fontFamily: barlow.style.fontFamily,
       fontWeight: 600,
-      fontSize: '1.125rem',
+      fontSize: '1.375rem',
     },
     num5: {
       fontFamily: barlow.style.fontFamily,
       fontWeight: 500,
-      fontSize: '2.75rem',
+      fontSize: '1.125rem',
     },
     num6: {
       fontFamily: barlow.style.fontFamily,
