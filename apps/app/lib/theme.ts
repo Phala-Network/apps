@@ -122,5 +122,6 @@ export const theme = createTheme({
     MuiDialog: {defaultProps: {fullWidth: true, maxWidth: 'xs'}},
     MuiSelect: {defaultProps: {IconComponent: KeyboardArrowDown}},
     MuiMenu: {styleOverrides: {list: {backgroundColor: colors.cardBackground}}},
+    MuiSkeleton: {defaultProps: {animation: 'wave'}},
   },
 })

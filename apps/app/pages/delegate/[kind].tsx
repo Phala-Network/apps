@@ -1,9 +1,11 @@
 import StakePoolIcon from '@/assets/stake_pool.svg'
 import VaultIcon from '@/assets/vault.svg'
+import BasePoolList from '@/components/BasePoolList'
 import DelegateChartCard from '@/components/DelegateChartCard'
 import DelegateDetailCard from '@/components/DelegateDetailCard'
 import NetworkOverview from '@/components/NetworkOverview'
 import PageHeader from '@/components/PageHeader'
+import {BasePoolKind} from '@/lib/subsquid'
 import {colors} from '@/lib/theme'
 import {
   Box,
@@ -151,6 +153,11 @@ const Delegate: NextPage = () => {
           </Stack>
         </Box>
       </Stack>
+
+      <BasePoolList
+        variant="delegate"
+        kind={isVault ? BasePoolKind.Vault : BasePoolKind.StakePool}
+      />
     </>
   )
 }

@@ -4,14 +4,10 @@ import CollapsedIcon from '@/components/CollapsedIcon'
 import useGetApr from '@/hooks/useGetApr'
 import getApy from '@/lib/getApy'
 import {colors} from '@/lib/theme'
-import {Settings} from '@mui/icons-material'
 import {
   alpha,
   Box,
-  Button,
-  Chip,
   Collapse,
-  IconButton,
   Link,
   Paper,
   Skeleton,
@@ -25,7 +21,7 @@ import {BasePoolQuery} from '.'
 import ExtraProperties from './ExtraProperties'
 import Property from './Property'
 
-const FarmCard: FC<{basePool: BasePoolQuery}> = ({basePool}) => {
+const DelegateCard: FC<{basePool: BasePoolQuery}> = ({basePool}) => {
   const getApr = useGetApr()
   const theme = useTheme()
   const [collapsed, setCollapsed] = useState(true)
@@ -33,24 +29,6 @@ const FarmCard: FC<{basePool: BasePoolQuery}> = ({basePool}) => {
 
   const actions = (
     <Stack direction="row" alignItems="center">
-      {stakePool && (
-        <Button
-          variant="text"
-          size="small"
-          onClick={(e) => {
-            e.stopPropagation()
-          }}
-        >
-          Claim Reward
-        </Button>
-      )}
-      <IconButton
-        onClick={(e) => {
-          e.stopPropagation()
-        }}
-      >
-        <Settings />
-      </IconButton>
       <CollapsedIcon collapsed={collapsed} />
     </Stack>
   )
@@ -74,10 +52,11 @@ const FarmCard: FC<{basePool: BasePoolQuery}> = ({basePool}) => {
         <Stack direction="row" spacing={2} alignItems="center">
           {stakePool && <StakePoolIcon width={48} color={colors.main[300]} />}
           {vault && <VaultIcon width={48} color={colors.vault[400]} />}
-          <Box flex="1 0" width={108}>
+          <Box>
             <Link
               color="inherit"
-              variant="num2"
+              variant="num3"
+              flex="1 0"
               href={`/${stakePool ? 'stake-pool' : 'vault'}/${basePool.pid}`}
               target="_blank"
               rel="noopener"
@@ -105,11 +84,6 @@ const FarmCard: FC<{basePool: BasePoolQuery}> = ({basePool}) => {
                 : '∞'}
             </Property>
           )}
-          {stakePool && (
-            <Property label="Owner Reward" sx={{width: 120}}>
-              {`${formatCurrency(stakePool.ownerReward)} PHA`}
-            </Property>
-          )}
           {vault && (
             <Property label="Est. APY" sx={{width: 64, flexShrink: '0'}}>
               {(
@@ -130,15 +104,7 @@ const FarmCard: FC<{basePool: BasePoolQuery}> = ({basePool}) => {
             </Property>
           )}
         </Stack>
-        <Stack flex="1 0" direction="row">
-          {basePool.withdrawalValue !== '0' && (
-            <Chip
-              size="small"
-              label="Insufficient Stake"
-              sx={{color: theme.palette.warning.dark}}
-            />
-          )}
-        </Stack>
+        <Stack flex="1 0" direction="row"></Stack>
         <Box display={{xs: 'none', md: 'block'}}>{actions}</Box>
       </Stack>
       <Collapse in={!collapsed}>
@@ -157,4 +123,4 @@ const FarmCard: FC<{basePool: BasePoolQuery}> = ({basePool}) => {
   )
 }
 
-export default FarmCard
+export default DelegateCard

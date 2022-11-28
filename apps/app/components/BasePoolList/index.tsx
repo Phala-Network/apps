@@ -2,17 +2,28 @@ import {subsquidClient} from '@/lib/graphql'
 import {
   BasePoolKind,
   BasePoolOrderByInput,
+  BasePoolsConnectionQuery,
   useInfiniteBasePoolsConnectionQuery,
 } from '@/lib/subsquid'
-import {Search} from '@mui/icons-material'
-import {MenuItem, Skeleton, Stack, TextField} from '@mui/material'
+import {FilterList, Search} from '@mui/icons-material'
+import {
+  Box,
+  IconButton,
+  MenuItem,
+  Skeleton,
+  Stack,
+  TextField,
+} from '@mui/material'
 import {polkadotAccountAtom} from '@phala/store'
 import {useAtom} from 'jotai'
 import {FC, useState} from 'react'
+import DelegateCard from './DelegateCard'
 import FarmCard from './FarmCard'
 
 type BasePoolListVariant = 'farm' | 'delegate'
 type OrderByEntries = [string, BasePoolOrderByInput][]
+export type BasePoolQuery =
+  BasePoolsConnectionQuery['basePoolsConnection']['edges'][number]['node']
 
 const commonOrderByEntries: OrderByEntries = [
   ['Pid Asc', BasePoolOrderByInput.PidAsc],
@@ -45,7 +56,7 @@ const getDefaultOrderBy = (
 }
 
 const skeleton = [...Array(3)].map((_, index) => (
-  <Skeleton variant="rectangular" key={index} height={101} animation="wave" />
+  <Skeleton variant="rectangular" key={index} height={101} />
 ))
 
 const BasePoolList: FC<{
@@ -82,45 +93,54 @@ const BasePoolList: FC<{
   )
 
   return (
-    <>
-      <Stack direction="row" spacing={{xs: 1, md: 2}}>
-        <TextField
-          placeholder="Search By Pid"
-          value={searchString}
-          size="small"
-          InputProps={{endAdornment: <Search />}}
-          onChange={(e) => setSearchString(e.target.value)}
-          sx={{flex: '1 0'}}
-        />
-        <TextField
-          size="small"
-          select
-          sx={{width: 180}}
-          value={orderBy}
-          onChange={(e) => setOrderBy(e.target.value as BasePoolOrderByInput)}
-        >
-          {orderByEntries.map(([label, value]) => (
-            <MenuItem key={value} value={value}>
-              {label}
-            </MenuItem>
-          ))}
-        </TextField>
-      </Stack>
-      <Stack spacing={2} mt={2}>
-        {isLoading
-          ? skeleton
-          : data?.pages.map((page, index) => (
-              <Stack key={index} spacing={2}>
-                {page.basePoolsConnection.edges.map(
-                  (edge) =>
-                    variant === 'farm' && (
-                      <FarmCard key={edge.node.id} basePool={edge.node} />
-                    )
-                )}
-              </Stack>
+    <Stack direction="row">
+      <Box width={256} display={{xs: 'none', md: 'block'}}></Box>
+      <Box flex="1 0">
+        <Stack direction="row" spacing={{xs: 1, md: 2}} ml={{xs: 0, md: -2}}>
+          {variant === 'delegate' && (
+            <IconButton sx={{display: {xs: 'block', md: 'none'}}}>
+              <FilterList />
+            </IconButton>
+          )}
+          <TextField
+            placeholder="Search By Pid"
+            value={searchString}
+            size="small"
+            InputProps={{endAdornment: <Search />}}
+            onChange={(e) => setSearchString(e.target.value)}
+            sx={{flex: '1 0'}}
+          />
+          <TextField
+            size="small"
+            select
+            sx={{width: 180}}
+            value={orderBy}
+            onChange={(e) => setOrderBy(e.target.value as BasePoolOrderByInput)}
+          >
+            {orderByEntries.map(([label, value]) => (
+              <MenuItem key={value} value={value}>
+                {label}
+              </MenuItem>
             ))}
-      </Stack>
-    </>
+          </TextField>
+        </Stack>
+        <Stack spacing={2} mt={2}>
+          {isLoading
+            ? skeleton
+            : data?.pages.map((page, index) => (
+                <Stack key={index} spacing={2}>
+                  {page.basePoolsConnection.edges.map((edge) =>
+                    variant === 'farm' ? (
+                      <FarmCard key={edge.node.id} basePool={edge.node} />
+                    ) : (
+                      <DelegateCard key={edge.node.id} basePool={edge.node} />
+                    )
+                  )}
+                </Stack>
+              ))}
+        </Stack>
+      </Box>
+    </Stack>
   )
 }
 

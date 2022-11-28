@@ -1,3 +1,4 @@
+import ClientOnly from '@/components/ClientOnly'
 import useAccountQuery from '@/hooks/useAccountQuery'
 import useAsset from '@/hooks/useAsset'
 import useSelectedVaultState from '@/hooks/useSelectedVaultState'
@@ -53,14 +54,17 @@ const DelegateDataCard: FC<{
         mb={{xs: 0, md: 0.5}}
         mt={{xs: -0.5, md: 0}}
       >
-        {value ? (
-          <>
-            {formatCurrency(value)}
-            <sub>PHA</sub>
-          </>
-        ) : (
-          <Skeleton width={64} />
-        )}
+        <ClientOnly fallback={<Skeleton width={64} />}>
+          {value &&
+            (value === '-' ? (
+              '-'
+            ) : (
+              <>
+                {formatCurrency(value)}
+                <sub>PHA</sub>
+              </>
+            ))}
+        </ClientOnly>
       </Typography>
       <Stack direction="row" alignItems="baseline" spacing={1}>
         <Typography
@@ -129,7 +133,7 @@ const DelegateDetailCard: FC = () => {
               variant="num2"
               component="div"
               display={{xs: 'block', md: 'none'}}
-              lineHeight="1.2"
+              lineHeight="36px"
             >
               {totalValue ? (
                 <>
@@ -148,51 +152,59 @@ const DelegateDetailCard: FC = () => {
           spacing={{xs: 1.5, sm: 2}}
           sx={{'>div': {flex: '1 0'}}}
         >
-          {isAccount && (
-            <DelegateDataCard
-              kind={BasePoolKind.Vault}
-              count={vaultNftCount}
-              value={vaultValue}
-            />
-          )}
+          <DelegateDataCard
+            kind={BasePoolKind.Vault}
+            count={vaultNftCount}
+            value={isAccount ? vaultValue : '-'}
+          />
           <DelegateDataCard
             kind={BasePoolKind.StakePool}
             count={stakePoolNftCount}
             value={stakePoolValue}
           />
         </Stack>
-        {isAccount && (
-          <Stack
-            direction="row"
-            alignItems="baseline"
-            borderRadius="2px"
-            pl={{xs: 1, sm: 2}}
-            pr={0.5}
-            py={1}
-            sx={{background: theme.palette.action.hover}}
+        <Stack
+          direction="row"
+          alignItems="center"
+          borderRadius="2px"
+          pl={{xs: 1, sm: 2}}
+          pr={0.5}
+          py={1}
+          sx={{background: theme.palette.action.hover}}
+        >
+          <Typography
+            lineHeight="32px"
+            variant="subtitle1"
+            component="div"
+            color={theme.palette.text.secondary}
+            alignSelf="baseline"
           >
-            <Typography
-              variant="subtitle1"
-              component="div"
-              color={theme.palette.text.secondary}
-            >
-              Locked
-            </Typography>
-            <Typography variant="num6" component="div" flex="1 0" ml={1.5}>
-              {locked ? (
-                `${formatCurrency(locked)} PHA`
-              ) : (
-                <Skeleton width={100} animation="wave" />
-              )}
-            </Typography>
-            <Button variant="text" size="small">
-              Claim All
-            </Button>
-            <Button variant="text" size="small">
-              Track
-            </Button>
-          </Stack>
-        )}
+            Locked
+          </Typography>
+          <Typography
+            variant="num6"
+            component="div"
+            flex="1 0"
+            ml={1.5}
+            alignSelf="baseline"
+          >
+            <ClientOnly fallback={<Skeleton width={100} />}>
+              {isAccount ? locked && `${formatCurrency(locked)} PHA` : '-'}
+            </ClientOnly>
+          </Typography>
+          <ClientOnly>
+            {isAccount && (
+              <>
+                <Button variant="text" size="small">
+                  Claim All
+                </Button>
+                <Button variant="text" size="small">
+                  Track
+                </Button>
+              </>
+            )}
+          </ClientOnly>
+        </Stack>
       </Stack>
     </Paper>
   )
