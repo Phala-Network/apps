@@ -1,6 +1,5 @@
 import {BasePoolCommonFragment} from '@/lib/subsquid'
-import {theme} from '@/lib/theme'
-import {Stack, SxProps} from '@mui/material'
+import {Box, Stack, SxProps} from '@mui/material'
 import {formatCurrency, toFixed} from '@phala/util'
 import Decimal from 'decimal.js'
 import {FC} from 'react'
@@ -31,9 +30,9 @@ const ExtraProperties: FC<{basePool: BasePoolCommonFragment; sx?: SxProps}> = ({
         {stakePool && (
           <Property size="small" label="Workers">
             {stakePool.workerCount}
-            <span css={{color: theme.palette.text.secondary}}>
+            <Box component="span" color="text.secondary">
               {` / ${stakePool.idleWorkerCount} Idle`}
-            </span>
+            </Box>
           </Property>
         )}
         {vault && (

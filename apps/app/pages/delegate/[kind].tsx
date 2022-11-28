@@ -16,7 +16,6 @@ import {
   styled,
   Switch,
   Typography,
-  useTheme,
 } from '@mui/material'
 import {GetStaticPaths, GetStaticProps, NextPage} from 'next'
 import {useRouter} from 'next/router'
@@ -69,7 +68,6 @@ const Delegate: NextPage = () => {
   const {
     query: {kind},
   } = useRouter()
-  const theme = useTheme()
   const router = useRouter()
   const isVault = kind === 'vault'
   // Avoid ui lag
@@ -143,11 +141,7 @@ const Delegate: NextPage = () => {
                   direction="row"
                   alignItems="center"
                   spacing={1}
-                  color={
-                    switchChecked
-                      ? theme.palette.text.secondary
-                      : theme.palette.text.primary
-                  }
+                  color={switchChecked ? 'text.secondary' : 'text.primary'}
                 >
                   <VaultIcon width={24} />
                   <Typography variant="button" flex="1" textAlign="center">
@@ -160,11 +154,7 @@ const Delegate: NextPage = () => {
                   direction="row"
                   alignItems="center"
                   spacing={1}
-                  color={
-                    switchChecked
-                      ? theme.palette.text.primary
-                      : theme.palette.text.secondary
-                  }
+                  color={switchChecked ? 'text.primary' : 'text.secondary'}
                 >
                   <StakePoolIcon width={24} />
                   <Typography variant="button" flex="1" textAlign="center">

@@ -1,4 +1,4 @@
-import {Stack, SxProps, Typography, useTheme} from '@mui/material'
+import {Stack, SxProps, Typography} from '@mui/material'
 import {FC, ReactNode} from 'react'
 
 const Property: FC<{
@@ -7,14 +7,13 @@ const Property: FC<{
   children: ReactNode
   sx?: SxProps
 }> = ({size = 'medium', label, children, sx}) => {
-  const theme = useTheme()
   return (
     <Stack sx={sx} direction={size === 'medium' ? 'column' : 'row'}>
       <Typography
         lineHeight={1.3}
         variant="subtitle2"
         component="div"
-        color={theme.palette.text.secondary}
+        color="text.secondary"
         mr={0.5}
       >
         {label}

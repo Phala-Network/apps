@@ -100,16 +100,14 @@ const WalletDialog: FC = () => {
                     <Typography
                       variant="body1"
                       component="div"
-                      color={isActive ? undefined : theme.palette.text.primary}
+                      color={isActive ? undefined : 'text.primary'}
                     >
                       {account.name}
                     </Typography>
                     <Typography
                       variant="caption"
                       component="div"
-                      color={
-                        isActive ? undefined : theme.palette.text.secondary
-                      }
+                      color={isActive ? undefined : 'text.secondary'}
                     >
                       {account.address}
                     </Typography>
@@ -121,7 +119,7 @@ const WalletDialog: FC = () => {
         ) : (
           <Stack alignItems="center" pt={3} pb={5}>
             <Typography variant="subtitle1">No accounts found</Typography>
-            <Typography variant="caption" color={theme.palette.text.secondary}>
+            <Typography variant="caption" color="text.secondary">
               Check wallet settings and try again
             </Typography>
           </Stack>
@@ -145,13 +143,10 @@ const WalletDialog: FC = () => {
                       setWallet(w)
                     },
                   }
-                : {
-                    href: w.installUrl,
-                    target: '_blank',
-                  })}
+                : {href: w.installUrl, target: '_blank'})}
             >
               <Image src={w.logo.src} alt={w.logo.alt} width={24} height={24} />
-              <Typography ml={2} color={theme.palette.text.primary}>
+              <Typography ml={2} color="text.primary">
                 {!w.installed && 'Install '}
                 {w.title}
               </Typography>

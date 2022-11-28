@@ -94,9 +94,9 @@ const FarmCard: FC<{
           {stakePool && (
             <Property label="Est. APR" sx={{width: 64, flexShrink: '0'}}>
               {(
-                <span css={{color: colors.main[300]}}>
+                <Box component="span" color={colors.main[300]}>
                   {getApr(stakePool.aprMultiplier)}
-                </span>
+                </Box>
               ) || <Skeleton />}
             </Property>
           )}
@@ -115,9 +115,9 @@ const FarmCard: FC<{
           {vault && (
             <Property label="Est. APY" sx={{width: 64, flexShrink: '0'}}>
               {(
-                <span css={{color: colors.vault[400]}}>
+                <Box component="span" color={colors.vault[400]}>
                   {getApy(vault.apr)}
-                </span>
+                </Box>
               ) || <Skeleton />}
             </Property>
           )}

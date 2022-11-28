@@ -26,7 +26,6 @@ const DelegateDataCard: FC<{
   count?: number
   value?: string
 }> = ({kind, count, value}) => {
-  const theme = useTheme()
   const isVault = kind === BasePoolKind.Vault
   const label = isVault ? 'Vault' : 'Stake Pool'
   const background = isVault ? colors.vault[300] : colors.main[500]
@@ -39,11 +38,7 @@ const DelegateDataCard: FC<{
       py={{xs: 1, sm: 1.5}}
     >
       <Stack direction="row" alignItems="center" height={24}>
-        <Typography
-          variant="subtitle1"
-          color={theme.palette.text.secondary}
-          lineHeight={1}
-        >
+        <Typography variant="subtitle1" color="text.secondary" lineHeight={1}>
           {label}
         </Typography>
         {!!count && <Chip size="small" label={count} sx={{ml: 'auto'}} />}
@@ -67,11 +62,7 @@ const DelegateDataCard: FC<{
         </ClientOnly>
       </Typography>
       <Stack direction="row" alignItems="baseline" spacing={1}>
-        <Typography
-          variant="caption"
-          component="div"
-          color={theme.palette.text.secondary}
-        >
+        <Typography variant="caption" component="div" color="text.secondary">
           {isVault ? 'Est. APY' : 'Est. APR'}
         </Typography>
         {/* <Typography variant="num7" component="div">
@@ -110,7 +101,7 @@ const DelegateDetailCard: FC = () => {
             <Typography
               variant="subtitle1"
               component="div"
-              color={theme.palette.text.secondary}
+              color="text.secondary"
             >
               Delegation
             </Typography>
@@ -176,7 +167,7 @@ const DelegateDetailCard: FC = () => {
             lineHeight="32px"
             variant="subtitle1"
             component="div"
-            color={theme.palette.text.secondary}
+            color="text.secondary"
             alignSelf="baseline"
           >
             Locked

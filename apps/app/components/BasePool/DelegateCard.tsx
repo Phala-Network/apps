@@ -1,7 +1,6 @@
 import StakePoolIcon from '@/assets/stake_pool_detailed.svg'
 import VaultIcon from '@/assets/vault_detailed.svg'
 import CollapsedIcon from '@/components/CollapsedIcon'
-import DelegateInput from '@/components/DelegateInput'
 import useGetApr from '@/hooks/useGetApr'
 import usePoolFavorite from '@/hooks/usePoolFavorite'
 import getApy from '@/lib/getApy'
@@ -28,6 +27,7 @@ import {
 } from '@mui/material'
 import {formatCurrency, trimAddress} from '@phala/util'
 import {FC, useState} from 'react'
+import DelegateInput from './DelegateInput'
 import ExtraProperties from './ExtraProperties'
 import Property from './Property'
 
@@ -96,7 +96,7 @@ const DelegateCard: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
                 <Link
                   textOverflow="ellipsis"
                   overflow="hidden"
-                  color={theme.palette.text.secondary}
+                  color="text.secondary"
                   variant="body2"
                   href={`https://khala.subscan.io/account/${owner.id}`}
                   target="_blank"
@@ -134,9 +134,9 @@ const DelegateCard: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
           {stakePool && (
             <Property label="Est. APR" sx={{width: 64, flexShrink: '0'}}>
               {(
-                <span css={{color: colors.main[300]}}>
+                <Box component="span" color={colors.main[300]}>
                   {getApr(stakePool.aprMultiplier)}
-                </span>
+                </Box>
               ) || <Skeleton />}
             </Property>
           )}
@@ -150,9 +150,9 @@ const DelegateCard: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
           {vault && (
             <Property label="Est. APY" sx={{width: 64, flexShrink: '0'}}>
               {(
-                <span css={{color: colors.vault[400]}}>
+                <Box component="span" color={colors.vault[400]}>
                   {getApy(vault.apr)}
-                </span>
+                </Box>
               ) || <Skeleton />}
             </Property>
           )}

@@ -1,6 +1,5 @@
 import StakePoolIcon from '@/assets/stake_pool_detailed.svg'
 import VaultIcon from '@/assets/vault_detailed.svg'
-import DelegateInput from '@/components/DelegateInput'
 import DelegatorSelect from '@/components/DelegatorSelect'
 import PageHeader from '@/components/PageHeader'
 import useGetApr from '@/hooks/useGetApr'
@@ -31,6 +30,7 @@ import {
 import {formatCurrency, trimAddress} from '@phala/util'
 import type {ParsedUrlQuery} from 'querystring'
 import {FC} from 'react'
+import DelegateInput from './DelegateInput'
 import ExtraProperties from './ExtraProperties'
 import Property from './Property'
 
@@ -106,9 +106,9 @@ const DetailPage: FC<{kind: BasePoolKind; pid: ParsedUrlQuery[string]}> = ({
                 {stakePool && (
                   <Property label="Est. APR" sx={{width: 64, flexShrink: '0'}}>
                     {(
-                      <span css={{color: colors.main[300]}}>
+                      <Box component="span" color={colors.main[300]}>
                         {getApr(stakePool.aprMultiplier)}
-                      </span>
+                      </Box>
                     ) || <Skeleton />}
                   </Property>
                 )}
@@ -122,9 +122,9 @@ const DetailPage: FC<{kind: BasePoolKind; pid: ParsedUrlQuery[string]}> = ({
                 {vault && (
                   <Property label="Est. APY" sx={{width: 64, flexShrink: '0'}}>
                     {(
-                      <span css={{color: colors.vault[400]}}>
+                      <Box component="span" color={colors.vault[400]}>
                         {getApy(vault.apr)}
-                      </span>
+                      </Box>
                     ) || <Skeleton />}
                   </Property>
                 )}
@@ -172,7 +172,14 @@ const DetailPage: FC<{kind: BasePoolKind; pid: ParsedUrlQuery[string]}> = ({
         </Paper>
 
         <Stack direction={{xs: 'column', md: 'row'}} spacing={{xs: 2, md: 2.5}}>
-          <Paper sx={{p: 3, pt: 2, background: 'transparent', flex: '1 0'}}>
+          <Paper
+            sx={{
+              p: {xs: 2, md: 3},
+              pt: {xs: 1.5, md: 2},
+              background: 'transparent',
+              flex: '1 0',
+            }}
+          >
             <Stack direction="row" alignItems="center" spacing={1}>
               <Link
                 variant="h6"
@@ -180,6 +187,9 @@ const DetailPage: FC<{kind: BasePoolKind; pid: ParsedUrlQuery[string]}> = ({
                 href={`https://khala.subscan.io/account/${owner?.id}`}
                 target="_blank"
                 rel="noopener"
+                overflow="hidden"
+                textOverflow="ellipsis"
+                whiteSpace="nowrap"
                 sx={{
                   textDecorationColor: alpha(theme.palette.text.primary, 0.4),
                 }}
@@ -210,9 +220,10 @@ const DetailPage: FC<{kind: BasePoolKind; pid: ParsedUrlQuery[string]}> = ({
                   </Tooltip>
                   <Tooltip title={owner.id} placement="top">
                     <Typography
+                      flexShrink="0"
                       variant="subtitle2"
                       component="div"
-                      color={theme.palette.text.secondary}
+                      color="text.secondary"
                     >
                       {trimAddress(owner.id)}
                     </Typography>
@@ -221,7 +232,14 @@ const DetailPage: FC<{kind: BasePoolKind; pid: ParsedUrlQuery[string]}> = ({
               )}
             </Stack>
           </Paper>
-          <Paper sx={{p: 3, pt: 2, background: 'transparent', flex: '1 0'}}>
+          <Paper
+            sx={{
+              px: {xs: 2, md: 3},
+              py: {xs: 1.5, md: 2},
+              background: 'transparent',
+              flex: '1 0',
+            }}
+          >
             <Stack direction="row" justifyContent="space-between">
               <Typography variant="h6" component="div">
                 Delegation
