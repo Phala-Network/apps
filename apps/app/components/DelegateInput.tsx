@@ -1,14 +1,14 @@
 import usePolkadotApi from '@/hooks/usePolkadotApi'
 import useSelectedVaultState from '@/hooks/useSelectedVaultState'
 import useSignAndSend from '@/hooks/useSignAndSend'
-import {BasePoolKind} from '@/lib/subsquid'
+import {BasePoolCommonFragment, BasePoolKind} from '@/lib/subsquid'
+import {barlow} from '@/lib/theme'
 import {LoadingButton} from '@mui/lab'
 import {Stack, SxProps, TextField} from '@mui/material'
 import {getDecimalPattern} from '@phala/util'
 import {FC, useMemo, useState} from 'react'
-import {BasePoolQuery} from './BasePoolList'
 
-const DelegateInput: FC<{basePool: BasePoolQuery; sx?: SxProps}> = ({
+const DelegateInput: FC<{basePool: BasePoolCommonFragment; sx?: SxProps}> = ({
   basePool,
   sx,
 }) => {
@@ -40,15 +40,16 @@ const DelegateInput: FC<{basePool: BasePoolQuery; sx?: SxProps}> = ({
     })
   }
   return (
-    <Stack direction="row" spacing={1} sx={sx}>
+    <Stack direction="row" spacing={2} sx={sx}>
       <TextField
+        placeholder="0.00"
         disabled={loading}
         value={amount}
-        InputProps={{endAdornment: 'PHA'}}
-        inputProps={{
-          inputMode: 'decimal',
-          pattern: getDecimalPattern(12),
+        InputProps={{
+          endAdornment: 'PHA',
+          sx: {fontFamily: barlow.style.fontFamily, fontWeight: 600},
         }}
+        inputProps={{inputMode: 'decimal', pattern: getDecimalPattern(12)}}
         sx={{flex: '1 0'}}
         color={color}
         size="small"

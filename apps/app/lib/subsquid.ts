@@ -2272,6 +2272,15 @@ export type AccountByIdQueryVariables = Exact<{
 
 export type AccountByIdQuery = { __typename?: 'Query', accountById?: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null, stakePoolNftCount: number, stakePoolValue: string, vaultNftCount: number, vaultValue: string, stakePoolOwnerReward: string, ownedPools: Array<{ __typename?: 'BasePool', id: string, account: { __typename?: 'Account', id: string, stakePoolNftCount: number, stakePoolValue: string, vaultNftCount: number, vaultValue: string } }> } | null };
 
+export type BasePoolCommonFragment = { __typename?: 'BasePool', cid: number, commission: string, delegatorCount: number, freeValue: string, id: string, kind: BasePoolKind, pid: string, releasingValue: string, sharePrice: string, totalShares: string, totalValue: string, whitelistEnabled: boolean, withdrawalShares: string, withdrawalValue: string, account: { __typename?: 'Account', id: string, stakePoolNftCount: number }, owner: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null }, stakePool?: { __typename?: 'StakePool', aprMultiplier: string, capacity?: string | null, delegable?: string | null, idleWorkerCount: number, ownerReward: string, workerCount: number } | null, vault?: { __typename?: 'Vault', apr: string, claimableOwnerShares: string, lastSharePriceCheckpoint: string } | null };
+
+export type BasePoolByIdQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type BasePoolByIdQuery = { __typename?: 'Query', basePoolById?: { __typename?: 'BasePool', cid: number, commission: string, delegatorCount: number, freeValue: string, id: string, kind: BasePoolKind, pid: string, releasingValue: string, sharePrice: string, totalShares: string, totalValue: string, whitelistEnabled: boolean, withdrawalShares: string, withdrawalValue: string, account: { __typename?: 'Account', id: string, stakePoolNftCount: number }, owner: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null }, stakePool?: { __typename?: 'StakePool', aprMultiplier: string, capacity?: string | null, delegable?: string | null, idleWorkerCount: number, ownerReward: string, workerCount: number } | null, vault?: { __typename?: 'Vault', apr: string, claimableOwnerShares: string, lastSharePriceCheckpoint: string } | null } | null };
+
 export type BasePoolsConnectionQueryVariables = Exact<{
   orderBy: Array<BasePoolOrderByInput> | BasePoolOrderByInput;
   first?: InputMaybe<Scalars['Int']>;
@@ -2292,7 +2301,46 @@ export type TokenomicParametersQueryVariables = Exact<{ [key: string]: never; }>
 
 export type TokenomicParametersQuery = { __typename?: 'Query', tokenomicParametersById?: { __typename?: 'TokenomicParameters', phaRate: string, budgetPerBlock: string, vMax: string, treasuryRatio: string, k: string, re: string } | null };
 
-
+export const BasePoolCommonFragmentDoc = `
+    fragment BasePoolCommon on BasePool {
+  account {
+    id
+    stakePoolNftCount
+  }
+  cid
+  commission
+  delegatorCount
+  freeValue
+  id
+  kind
+  owner {
+    id
+    identityDisplay
+    identityLevel
+  }
+  pid
+  releasingValue
+  sharePrice
+  totalShares
+  totalValue
+  whitelistEnabled
+  withdrawalShares
+  withdrawalValue
+  stakePool {
+    aprMultiplier
+    capacity
+    delegable
+    idleWorkerCount
+    ownerReward
+    workerCount
+  }
+  vault {
+    apr
+    claimableOwnerShares
+    lastSharePriceCheckpoint
+  }
+}
+    `;
 export const AccountByIdDocument = `
     query AccountById($accountId: String!) {
   accountById(id: $accountId) {
@@ -2347,6 +2395,43 @@ export const useInfiniteAccountByIdQuery = <
       options
     );
 
+export const BasePoolByIdDocument = `
+    query BasePoolById($id: String!) {
+  basePoolById(id: $id) {
+    ...BasePoolCommon
+  }
+}
+    ${BasePoolCommonFragmentDoc}`;
+export const useBasePoolByIdQuery = <
+      TData = BasePoolByIdQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: BasePoolByIdQueryVariables,
+      options?: UseQueryOptions<BasePoolByIdQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<BasePoolByIdQuery, TError, TData>(
+      ['BasePoolById', variables],
+      fetcher<BasePoolByIdQuery, BasePoolByIdQueryVariables>(client, BasePoolByIdDocument, variables, headers),
+      options
+    );
+export const useInfiniteBasePoolByIdQuery = <
+      TData = BasePoolByIdQuery,
+      TError = unknown
+    >(
+      pageParamKey: keyof BasePoolByIdQueryVariables,
+      client: GraphQLClient,
+      variables: BasePoolByIdQueryVariables,
+      options?: UseInfiniteQueryOptions<BasePoolByIdQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useInfiniteQuery<BasePoolByIdQuery, TError, TData>(
+      ['BasePoolById.infinite', variables],
+      (metaData) => fetcher<BasePoolByIdQuery, BasePoolByIdQueryVariables>(client, BasePoolByIdDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
+      options
+    );
+
 export const BasePoolsConnectionDocument = `
     query BasePoolsConnection($orderBy: [BasePoolOrderByInput!]!, $first: Int, $after: String, $where: BasePoolWhereInput) {
   basePoolsConnection(
@@ -2364,48 +2449,13 @@ export const BasePoolsConnectionDocument = `
     }
     edges {
       node {
-        account {
-          id
-          stakePoolNftCount
-        }
-        cid
-        commission
-        delegatorCount
-        freeValue
-        id
-        kind
-        owner {
-          id
-          identityDisplay
-          identityLevel
-        }
-        pid
-        releasingValue
-        sharePrice
-        totalShares
-        totalValue
-        whitelistEnabled
-        withdrawalShares
-        withdrawalValue
-        stakePool {
-          aprMultiplier
-          capacity
-          delegable
-          idleWorkerCount
-          ownerReward
-          workerCount
-        }
-        vault {
-          apr
-          claimableOwnerShares
-          lastSharePriceCheckpoint
-        }
+        ...BasePoolCommon
       }
       cursor
     }
   }
 }
-    `;
+    ${BasePoolCommonFragmentDoc}`;
 export const useBasePoolsConnectionQuery = <
       TData = BasePoolsConnectionQuery,
       TError = unknown

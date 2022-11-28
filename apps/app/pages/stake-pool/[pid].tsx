@@ -1,12 +1,17 @@
-import PageHeader from '@/components/PageHeader'
-import {Container} from '@mui/material'
-import {FC} from 'react'
+import DetailPage from '@/components/BasePool/DetailPage'
+import {BasePoolKind} from '@/lib/subsquid'
+import {NextPage} from 'next'
+import {useRouter} from 'next/router'
 
-const StakePool: FC = () => {
+const StakePool: NextPage = () => {
+  const {
+    query: {pid},
+  } = useRouter()
+  if (typeof pid !== 'string') return null
   return (
-    <Container maxWidth="lg">
-      <PageHeader title="Stake Pool"></PageHeader>
-    </Container>
+    <>
+      <DetailPage kind={BasePoolKind.StakePool} pid={pid} />
+    </>
   )
 }
 

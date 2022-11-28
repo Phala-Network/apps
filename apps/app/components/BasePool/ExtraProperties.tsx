@@ -1,15 +1,22 @@
+import {BasePoolCommonFragment} from '@/lib/subsquid'
 import {theme} from '@/lib/theme'
-import {Stack} from '@mui/material'
+import {Stack, SxProps} from '@mui/material'
 import {formatCurrency, toFixed} from '@phala/util'
 import Decimal from 'decimal.js'
 import {FC} from 'react'
-import {BasePoolQuery} from '.'
 import Property from './Property'
 
-const ExtraProperties: FC<{basePool: BasePoolQuery}> = ({basePool}) => {
+const ExtraProperties: FC<{basePool: BasePoolCommonFragment; sx?: SxProps}> = ({
+  basePool,
+  sx,
+}) => {
   const {vault, stakePool} = basePool
   return (
-    <Stack direction={{xs: 'column', sm: 'row'}} spacing={{xs: 0.5, sm: 2}}>
+    <Stack
+      direction={{xs: 'column', sm: 'row'}}
+      spacing={{xs: 0.5, sm: 2}}
+      sx={sx}
+    >
       <Stack flex="1 0" spacing={0.5}>
         {stakePool && (
           <Property size="small" label="Capacity">

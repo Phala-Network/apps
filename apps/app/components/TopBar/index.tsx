@@ -61,7 +61,7 @@ const TopBar: FC = () => {
       }}
     >
       <Toolbar>
-        <PhalaLogo width={30} />
+        <PhalaLogo width={30} css={{flexShrink: 0}} />
         <Stack
           ml={3}
           spacing={1}

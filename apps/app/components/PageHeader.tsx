@@ -2,10 +2,11 @@ import {Stack, Typography} from '@mui/material'
 import {FC, ReactNode} from 'react'
 import Title from './Title'
 
-const PageHeader: FC<{title: string; children?: ReactNode}> = ({
-  title,
-  children,
-}) => {
+const PageHeader: FC<{
+  title: string
+  pageTitle?: string
+  children?: ReactNode
+}> = ({title, pageTitle, children}) => {
   return (
     <>
       <Title>{title}</Title>
@@ -22,10 +23,10 @@ const PageHeader: FC<{title: string; children?: ReactNode}> = ({
           display={{xs: 'none', sm: 'block'}}
           my={{sm: 3, md: 5}}
         >
-          {title}
+          {pageTitle ?? title}
         </Typography>
         <Typography variant="h4" component="h1" display={{sm: 'none'}} my={3}>
-          {title}
+          {pageTitle ?? title}
         </Typography>
         {children}
       </Stack>

@@ -3,7 +3,6 @@ import {subsquidClient} from '@/lib/graphql'
 import {
   BasePoolKind,
   BasePoolOrderByInput,
-  BasePoolsConnectionQuery,
   BasePoolWhereInput,
   IdentityLevel,
   useInfiniteBasePoolsConnectionQuery,
@@ -32,8 +31,6 @@ import FarmCard from './FarmCard'
 
 type BasePoolListVariant = 'farm' | 'delegate'
 type OrderByEntries = [string, BasePoolOrderByInput][]
-export type BasePoolQuery =
-  BasePoolsConnectionQuery['basePoolsConnection']['edges'][number]['node']
 
 const commonOrderByEntries: OrderByEntries = [
   ['Pid Asc', BasePoolOrderByInput.PidAsc],
@@ -141,7 +138,7 @@ const BasePoolList: FC<{
     }
   )
 
-  const filters = (
+  const filters = variant === 'delegate' && (
     <Stack spacing={2}>
       <Typography variant="h5" component="div">
         State
@@ -194,9 +191,11 @@ const BasePoolList: FC<{
 
   return (
     <Stack direction="row" sx={sx}>
-      <Box width={256} display={{xs: 'none', xl: 'block'}}>
-        {filters}
-      </Box>
+      {variant === 'delegate' && (
+        <Box width={256} display={{xs: 'none', xl: 'block'}}>
+          {filters}
+        </Box>
+      )}
       <Box flex="1 0">
         <Stack direction="row" spacing={{xs: 1, md: 2}} ml={{xs: 0, xl: -2}}>
           <IconButton

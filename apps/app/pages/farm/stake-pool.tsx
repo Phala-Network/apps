@@ -1,4 +1,4 @@
-import BasePoolList from '@/components/BasePoolList'
+import BasePoolList from '@/components/BasePool/List'
 import CreateBasePoolButton from '@/components/CreateBasePoolButton'
 import PageHeader from '@/components/PageHeader'
 import useAccountQuery from '@/hooks/useAccountQuery'

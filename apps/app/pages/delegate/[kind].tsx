@@ -1,6 +1,6 @@
 import StakePoolIcon from '@/assets/stake_pool.svg'
 import VaultIcon from '@/assets/vault.svg'
-import BasePoolList from '@/components/BasePoolList'
+import BasePoolList from '@/components/BasePool/List'
 import ClientOnly from '@/components/ClientOnly'
 import DelegateChartCard from '@/components/DelegateChartCard'
 import DelegateDetailCard from '@/components/DelegateDetailCard'
