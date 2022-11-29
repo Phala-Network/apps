@@ -616,9 +616,11 @@ export type Delegation = {
   /** ${pid}-${accountId} */
   id: Scalars['String'];
   shares: Scalars['BigDecimal'];
+  value: Scalars['BigDecimal'];
   withdrawalNft?: Maybe<DelegationNft>;
   withdrawalShares: Scalars['BigDecimal'];
   withdrawalStartTime?: Maybe<Scalars['DateTime']>;
+  withdrawalValue: Scalars['BigDecimal'];
 };
 
 export type DelegationEdge = {
@@ -771,6 +773,8 @@ export enum DelegationOrderByInput {
   IdDesc = 'id_DESC',
   SharesAsc = 'shares_ASC',
   SharesDesc = 'shares_DESC',
+  ValueAsc = 'value_ASC',
+  ValueDesc = 'value_DESC',
   WithdrawalNftCollectionIdAsc = 'withdrawalNft_collectionId_ASC',
   WithdrawalNftCollectionIdDesc = 'withdrawalNft_collectionId_DESC',
   WithdrawalNftIdAsc = 'withdrawalNft_id_ASC',
@@ -780,7 +784,9 @@ export enum DelegationOrderByInput {
   WithdrawalSharesAsc = 'withdrawalShares_ASC',
   WithdrawalSharesDesc = 'withdrawalShares_DESC',
   WithdrawalStartTimeAsc = 'withdrawalStartTime_ASC',
-  WithdrawalStartTimeDesc = 'withdrawalStartTime_DESC'
+  WithdrawalStartTimeDesc = 'withdrawalStartTime_DESC',
+  WithdrawalValueAsc = 'withdrawalValue_ASC',
+  WithdrawalValueDesc = 'withdrawalValue_DESC'
 }
 
 export type DelegationWhereInput = {
@@ -818,6 +824,15 @@ export type DelegationWhereInput = {
   shares_lte?: InputMaybe<Scalars['BigDecimal']>;
   shares_not_eq?: InputMaybe<Scalars['BigDecimal']>;
   shares_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  value_eq?: InputMaybe<Scalars['BigDecimal']>;
+  value_gt?: InputMaybe<Scalars['BigDecimal']>;
+  value_gte?: InputMaybe<Scalars['BigDecimal']>;
+  value_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  value_isNull?: InputMaybe<Scalars['Boolean']>;
+  value_lt?: InputMaybe<Scalars['BigDecimal']>;
+  value_lte?: InputMaybe<Scalars['BigDecimal']>;
+  value_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  value_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
   withdrawalNft?: InputMaybe<DelegationNftWhereInput>;
   withdrawalNft_isNull?: InputMaybe<Scalars['Boolean']>;
   withdrawalShares_eq?: InputMaybe<Scalars['BigDecimal']>;
@@ -838,6 +853,15 @@ export type DelegationWhereInput = {
   withdrawalStartTime_lte?: InputMaybe<Scalars['DateTime']>;
   withdrawalStartTime_not_eq?: InputMaybe<Scalars['DateTime']>;
   withdrawalStartTime_not_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  withdrawalValue_eq?: InputMaybe<Scalars['BigDecimal']>;
+  withdrawalValue_gt?: InputMaybe<Scalars['BigDecimal']>;
+  withdrawalValue_gte?: InputMaybe<Scalars['BigDecimal']>;
+  withdrawalValue_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  withdrawalValue_isNull?: InputMaybe<Scalars['Boolean']>;
+  withdrawalValue_lt?: InputMaybe<Scalars['BigDecimal']>;
+  withdrawalValue_lte?: InputMaybe<Scalars['BigDecimal']>;
+  withdrawalValue_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  withdrawalValue_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
 };
 
 export type DelegationsConnection = {
@@ -2291,6 +2315,25 @@ export type BasePoolsConnectionQueryVariables = Exact<{
 
 export type BasePoolsConnectionQuery = { __typename?: 'Query', basePoolsConnection: { __typename?: 'BasePoolsConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', endCursor: string, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string }, edges: Array<{ __typename?: 'BasePoolEdge', cursor: string, node: { __typename?: 'BasePool', cid: number, commission: string, delegatorCount: number, freeValue: string, id: string, kind: BasePoolKind, pid: string, releasingValue: string, sharePrice: string, totalShares: string, totalValue: string, whitelistEnabled: boolean, withdrawalShares: string, withdrawalValue: string, account: { __typename?: 'Account', id: string, stakePoolNftCount: number }, owner: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null }, stakePool?: { __typename?: 'StakePool', aprMultiplier: string, capacity?: string | null, delegable?: string | null, idleWorkerCount: number, ownerReward: string, workerCount: number } | null, vault?: { __typename?: 'Vault', apr: string, claimableOwnerShares: string, lastSharePriceCheckpoint: string } | null } }> } };
 
+export type DelegationCommonFragment = { __typename?: 'Delegation', id: string, shares: string, value: string, withdrawalStartTime?: string | null, withdrawalShares: string, withdrawalValue: string, basePool: { __typename?: 'BasePool', id: string, kind: BasePoolKind }, delegationNft?: { __typename?: 'DelegationNft', collectionId: number, nftId: number } | null, withdrawalNft?: { __typename?: 'DelegationNft', collectionId: number, nftId: number } | null };
+
+export type DelegationByIdQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type DelegationByIdQuery = { __typename?: 'Query', delegationById?: { __typename?: 'Delegation', id: string, shares: string, value: string, withdrawalStartTime?: string | null, withdrawalShares: string, withdrawalValue: string, basePool: { __typename?: 'BasePool', id: string, kind: BasePoolKind }, delegationNft?: { __typename?: 'DelegationNft', collectionId: number, nftId: number } | null, withdrawalNft?: { __typename?: 'DelegationNft', collectionId: number, nftId: number } | null } | null };
+
+export type DelegationsConnectionQueryVariables = Exact<{
+  orderBy: Array<DelegationOrderByInput> | DelegationOrderByInput;
+  after?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<DelegationWhereInput>;
+}>;
+
+
+export type DelegationsConnectionQuery = { __typename?: 'Query', delegationsConnection: { __typename?: 'DelegationsConnection', totalCount: number, edges: Array<{ __typename?: 'DelegationEdge', cursor: string, node: { __typename?: 'Delegation', id: string, shares: string, value: string, withdrawalStartTime?: string | null, withdrawalShares: string, withdrawalValue: string, basePool: { __typename?: 'BasePool', id: string, kind: BasePoolKind }, delegationNft?: { __typename?: 'DelegationNft', collectionId: number, nftId: number } | null, withdrawalNft?: { __typename?: 'DelegationNft', collectionId: number, nftId: number } | null } }>, pageInfo: { __typename?: 'PageInfo', endCursor: string, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string } } };
+
 export type GlobalStateQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -2338,6 +2381,28 @@ export const BasePoolCommonFragmentDoc = `
     apr
     claimableOwnerShares
     lastSharePriceCheckpoint
+  }
+}
+    `;
+export const DelegationCommonFragmentDoc = `
+    fragment DelegationCommon on Delegation {
+  basePool {
+    id
+    kind
+  }
+  id
+  shares
+  value
+  withdrawalStartTime
+  withdrawalShares
+  withdrawalValue
+  delegationNft {
+    collectionId
+    nftId
+  }
+  withdrawalNft {
+    collectionId
+    nftId
   }
 }
     `;
@@ -2483,6 +2548,97 @@ export const useInfiniteBasePoolsConnectionQuery = <
     useInfiniteQuery<BasePoolsConnectionQuery, TError, TData>(
       ['BasePoolsConnection.infinite', variables],
       (metaData) => fetcher<BasePoolsConnectionQuery, BasePoolsConnectionQueryVariables>(client, BasePoolsConnectionDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
+      options
+    );
+
+export const DelegationByIdDocument = `
+    query DelegationById($id: String!) {
+  delegationById(id: $id) {
+    ...DelegationCommon
+  }
+}
+    ${DelegationCommonFragmentDoc}`;
+export const useDelegationByIdQuery = <
+      TData = DelegationByIdQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: DelegationByIdQueryVariables,
+      options?: UseQueryOptions<DelegationByIdQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<DelegationByIdQuery, TError, TData>(
+      ['DelegationById', variables],
+      fetcher<DelegationByIdQuery, DelegationByIdQueryVariables>(client, DelegationByIdDocument, variables, headers),
+      options
+    );
+export const useInfiniteDelegationByIdQuery = <
+      TData = DelegationByIdQuery,
+      TError = unknown
+    >(
+      pageParamKey: keyof DelegationByIdQueryVariables,
+      client: GraphQLClient,
+      variables: DelegationByIdQueryVariables,
+      options?: UseInfiniteQueryOptions<DelegationByIdQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useInfiniteQuery<DelegationByIdQuery, TError, TData>(
+      ['DelegationById.infinite', variables],
+      (metaData) => fetcher<DelegationByIdQuery, DelegationByIdQueryVariables>(client, DelegationByIdDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
+      options
+    );
+
+export const DelegationsConnectionDocument = `
+    query DelegationsConnection($orderBy: [DelegationOrderByInput!]!, $after: String, $first: Int, $where: DelegationWhereInput) {
+  delegationsConnection(
+    orderBy: $orderBy
+    after: $after
+    first: $first
+    where: $where
+  ) {
+    edges {
+      cursor
+      node {
+        ...DelegationCommon
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+      hasPreviousPage
+      startCursor
+    }
+    totalCount
+  }
+}
+    ${DelegationCommonFragmentDoc}`;
+export const useDelegationsConnectionQuery = <
+      TData = DelegationsConnectionQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: DelegationsConnectionQueryVariables,
+      options?: UseQueryOptions<DelegationsConnectionQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<DelegationsConnectionQuery, TError, TData>(
+      ['DelegationsConnection', variables],
+      fetcher<DelegationsConnectionQuery, DelegationsConnectionQueryVariables>(client, DelegationsConnectionDocument, variables, headers),
+      options
+    );
+export const useInfiniteDelegationsConnectionQuery = <
+      TData = DelegationsConnectionQuery,
+      TError = unknown
+    >(
+      pageParamKey: keyof DelegationsConnectionQueryVariables,
+      client: GraphQLClient,
+      variables: DelegationsConnectionQueryVariables,
+      options?: UseInfiniteQueryOptions<DelegationsConnectionQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useInfiniteQuery<DelegationsConnectionQuery, TError, TData>(
+      ['DelegationsConnection.infinite', variables],
+      (metaData) => fetcher<DelegationsConnectionQuery, DelegationsConnectionQueryVariables>(client, DelegationsConnectionDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
       options
     );
 

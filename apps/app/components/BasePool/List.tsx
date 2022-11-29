@@ -141,13 +141,13 @@ const BasePoolList: FC<{
   const filters = variant === 'delegate' && (
     <Stack spacing={2}>
       <Typography variant="h5" component="div">
-        State
+        Status
       </Typography>
       <FormControlLabel
         control={
           <Checkbox
             color={color}
-            value={verifiedFilter}
+            checked={verifiedFilter}
             onChange={(e) => setVerifiedFilter(e.target.checked)}
           />
         }
@@ -157,7 +157,7 @@ const BasePoolList: FC<{
         control={
           <Checkbox
             color={color}
-            value={favoriteFilter}
+            checked={favoriteFilter}
             onChange={(e) => setFavoriteFilter(e.target.checked)}
           />
         }
@@ -167,7 +167,7 @@ const BasePoolList: FC<{
         control={
           <Checkbox
             color={color}
-            value={delegatedFilter}
+            checked={delegatedFilter}
             onChange={(e) => setDelegatedFilter(e.target.checked)}
           />
         }
@@ -177,7 +177,7 @@ const BasePoolList: FC<{
         control={
           <Checkbox
             color={color}
-            value={closedFilter}
+            checked={closedFilter}
             onChange={(e) => setClosedFilter(e.target.checked)}
           />
         }

@@ -28,6 +28,7 @@ const NavItem: FC<{item: NavItem}> = ({item: {name, href}}) => {
       variant="text"
       className={montserrat.className}
       sx={{
+        fontWeight: 600,
         textTransform: 'capitalize',
         color: theme.palette.text.primary,
       }}
@@ -67,7 +68,7 @@ const TopBar: FC = () => {
           spacing={1}
           component="nav"
           direction="row"
-          display={['none', 'flex']}
+          display={{xs: 'none', lg: 'flex'}}
         >
           {navItems.map((item) => (
             <NavItem key={item.name} item={item} />

@@ -133,11 +133,13 @@ const DelegateCard: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
         <Stack direction="row" spacing={2}>
           {stakePool && (
             <Property label="Est. APR" sx={{width: 64, flexShrink: '0'}}>
-              {(
+              {getApr(stakePool.aprMultiplier) ? (
                 <Box component="span" color={colors.main[300]}>
                   {getApr(stakePool.aprMultiplier)}
                 </Box>
-              ) || <Skeleton />}
+              ) : (
+                <Skeleton width={32} />
+              )}
             </Property>
           )}
           {stakePool && (
@@ -149,21 +151,14 @@ const DelegateCard: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
           )}
           {vault && (
             <Property label="Est. APY" sx={{width: 64, flexShrink: '0'}}>
-              {(
-                <Box component="span" color={colors.vault[400]}>
-                  {getApy(vault.apr)}
-                </Box>
-              ) || <Skeleton />}
+              <Box component="span" color={colors.vault[400]}>
+                {getApy(vault.apr)}
+              </Box>
             </Property>
           )}
           {vault && (
             <Property label="TVL" sx={{width: 120}}>
               {`${formatCurrency(basePool.totalValue)} PHA`}
-            </Property>
-          )}
-          {vault && (
-            <Property label="Owner Reward" sx={{width: 120}}>
-              {` PHA`}
             </Property>
           )}
         </Stack>

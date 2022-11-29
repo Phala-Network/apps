@@ -79,6 +79,7 @@ const DelegatorSelect: FC<{isVault?: boolean}> = ({isVault = false}) => {
               transition: 'none',
               backgroundColor: colors.main[300],
               color: theme.palette.getContrastText(colors.main[300]),
+              WebkitTextFillColor: 'currentColor',
             }}
           />
           <Box

@@ -29,9 +29,9 @@ const ExtraProperties: FC<{basePool: BasePoolCommonFragment; sx?: SxProps}> = ({
         </Property>
         {stakePool && (
           <Property size="small" label="Workers">
-            {stakePool.workerCount}
+            {`${stakePool.idleWorkerCount} Idle`}
             <Box component="span" color="text.secondary">
-              {` / ${stakePool.idleWorkerCount} Idle`}
+              {` / ${stakePool.workerCount}`}
             </Box>
           </Property>
         )}

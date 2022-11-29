@@ -82,7 +82,7 @@ const DelegateInput: FC<{basePool: BasePoolCommonFragment; sx?: SxProps}> = ({
         pl={0.5}
         alignItems="baseline"
       >
-        <Typography variant="caption">Est. APY after delegating: </Typography>
+        <Typography variant="caption">Est. delegated APY: </Typography>
         <Typography variant="num7" ml={0.5}>
           85.32%
         </Typography>

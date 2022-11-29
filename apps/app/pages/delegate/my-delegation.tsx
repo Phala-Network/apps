@@ -1,12 +1,16 @@
+import DelegationList from '@/components/Delegation/List'
 import PageHeader from '@/components/PageHeader'
-import {Container} from '@mui/material'
+import {polkadotAccountAtom} from '@phala/store'
+import {useAtom} from 'jotai'
 import {FC} from 'react'
 
 const MyDelegation: FC = () => {
+  const [polkadotAccount] = useAtom(polkadotAccountAtom)
   return (
-    <Container maxWidth="lg">
+    <>
       <PageHeader title="My Delegation"></PageHeader>
-    </Container>
+      <DelegationList address={polkadotAccount?.address} />
+    </>
   )
 }
 

@@ -28,6 +28,7 @@ const useGetApr = () => {
       ) {
         return
       }
+
       return `${toFixed(
         new Decimal(budgetPerBlock)
           .times(new Decimal(treasuryRatio).negated().add(1))
