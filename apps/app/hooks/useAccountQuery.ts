@@ -1,5 +1,5 @@
 import {subsquidClient} from '@/lib/graphql'
-import {useAccountByIdQuery} from '@/lib/subsquid'
+import {useAccountByIdQuery} from '@/lib/subsquidQuery'
 import {polkadotAccountAtom} from '@phala/store'
 import {useAtom} from 'jotai'
 

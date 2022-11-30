@@ -1,5 +1,8 @@
 import {subsquidClient} from '@/lib/graphql'
-import {useGlobalStateQuery, useTokenomicParametersQuery} from '@/lib/subsquid'
+import {
+  useGlobalStateQuery,
+  useTokenomicParametersQuery,
+} from '@/lib/subsquidQuery'
 import Decimal from 'decimal.js'
 import {useCallback} from 'react'
 

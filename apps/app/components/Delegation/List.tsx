@@ -1,10 +1,11 @@
+import ListSkeleton from '@/components/ListSkeleton'
 import {subsquidClient} from '@/lib/graphql'
 import {
   BasePoolKind,
   DelegationOrderByInput,
   DelegationWhereInput,
   useInfiniteDelegationsConnectionQuery,
-} from '@/lib/subsquid'
+} from '@/lib/subsquidQuery'
 import {
   FilterList,
   FormatListBulleted,
@@ -17,13 +18,13 @@ import {
   FormControlLabel,
   IconButton,
   MenuItem,
-  Skeleton,
   Stack,
   SxProps,
   TextField,
   ToggleButton,
   ToggleButtonGroup,
   Typography,
+  Unstable_Grid2 as Grid,
 } from '@mui/material'
 import {isTruthy} from '@phala/util'
 import {debounce} from 'lodash-es'
@@ -38,19 +39,15 @@ const orderByEntries: [string, DelegationOrderByInput][] = [
   ['Pid Desc', DelegationOrderByInput.BasePoolIdDesc],
 ]
 
-const skeleton = [...Array(3)].map((_, index) => (
-  <Skeleton variant="rounded" key={index} height={105} />
-))
-
 const DelegationList: FC<{
   address?: string
   isVault?: boolean
   sx?: SxProps
 }> = ({address, isVault = false, sx}) => {
-  const [showNftCard, setShowNftCard] = useState(false)
+  const [showNftCard, setShowNftCard] = useState(true)
   const [orderBy, setOrderBy] = useState(DelegationOrderByInput.ValueDesc)
   const color = isVault ? 'secondary' : 'primary'
-  const [vaultFilter, setVaultFilter] = useState(true)
+  const [vaultFilter, setVaultFilter] = useState(!isVault)
   const [stakePoolFilter, setStakePoolFilter] = useState(true)
   const [withdrawingFilter, setWithdrawingFilterFilter] = useState(false)
 
@@ -62,14 +59,15 @@ const DelegationList: FC<{
   )
   const where: Array<DelegationWhereInput | false> = [
     {account: {id_eq: address}},
+    {shares_gt: '0'},
     !!searchString && {
       OR: [{basePool: {id_contains: searchString}}],
     },
     (vaultFilter || stakePoolFilter) && {
       basePool: {
         kind_in: [
-          vaultFilter && BasePoolKind.Vault,
-          stakePoolFilter && BasePoolKind.StakePool,
+          vaultFilter && ('Vault' as BasePoolKind),
+          stakePoolFilter && ('StakePool' as BasePoolKind),
         ].filter(isTruthy),
       },
     },
@@ -88,29 +86,33 @@ const DelegationList: FC<{
 
   const filters = (
     <Stack spacing={2}>
-      <Typography variant="h5" component="div">
-        Type
-      </Typography>
-      <FormControlLabel
-        control={
-          <Checkbox
-            color={color}
-            checked={vaultFilter}
-            onChange={(e) => setVaultFilter(e.target.checked)}
+      {!isVault && (
+        <>
+          <Typography variant="h5" component="div">
+            Type
+          </Typography>
+          <FormControlLabel
+            control={
+              <Checkbox
+                color={color}
+                checked={vaultFilter}
+                onChange={(e) => setVaultFilter(e.target.checked)}
+              />
+            }
+            label="Vault"
           />
-        }
-        label="Vault"
-      />
-      <FormControlLabel
-        control={
-          <Checkbox
-            color={color}
-            checked={stakePoolFilter}
-            onChange={(e) => setStakePoolFilter(e.target.checked)}
+          <FormControlLabel
+            control={
+              <Checkbox
+                color={color}
+                checked={stakePoolFilter}
+                onChange={(e) => setStakePoolFilter(e.target.checked)}
+              />
+            }
+            label="Stake Pool"
           />
-        }
-        label="Stake Pool"
-      />
+        </>
+      )}
       <Typography variant="h5" component="div">
         Status
       </Typography>
@@ -182,19 +184,23 @@ const DelegationList: FC<{
           </ToggleButtonGroup>
         </Stack>
         <Stack spacing={2} mt={2}>
-          {isLoading
-            ? skeleton
-            : data?.pages.map((page, index) => (
-                <Stack key={index} spacing={2}>
-                  {page.delegationsConnection.edges.map((edge) =>
-                    showNftCard ? (
-                      <NftCard delegation={edge.node} key={edge.node.id} />
+          {isLoading ? (
+            <ListSkeleton height={105} />
+          ) : (
+            data?.pages.map((page, index) => (
+              <Grid container key={index} spacing={2}>
+                {page.delegationsConnection.edges.map((edge) => (
+                  <Grid key={edge.node.id} xs={12} md={showNftCard ? 6 : 12}>
+                    {showNftCard ? (
+                      <NftCard delegation={edge.node} />
                     ) : (
-                      <HorizonCard delegation={edge.node} key={edge.node.id} />
-                    )
-                  )}
-                </Stack>
-              ))}
+                      <HorizonCard delegation={edge.node} />
+                    )}
+                  </Grid>
+                ))}
+              </Grid>
+            ))
+          )}
         </Stack>
       </Box>
     </Stack>

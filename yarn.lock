@@ -6410,6 +6410,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"graphql-tag@npm:^2.12.6":
+  version: 2.12.6
+  resolution: "graphql-tag@npm:2.12.6"
+  dependencies:
+    tslib: ^2.1.0
+  peerDependencies:
+    graphql: ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
+  checksum: b15162a3d62f17b9b79302445b9ee330e041582f1c7faca74b9dec5daa74272c906ec1c34e1c50592bb6215e5c3eba80a309103f6ba9e4c1cddc350c46f010df
+  languageName: node
+  linkType: hard
+
 "graphql@npm:^16.6.0":
   version: 16.6.0
   resolution: "graphql@npm:16.6.0"
@@ -8329,6 +8340,7 @@ __metadata:
   resolution: "phala-apps@workspace:."
   dependencies:
     "@types/node": ^16.18.3
+    graphql-tag: ^2.12.6
     husky: ^8.0.2
     prettier: ^2.8.0
     turbo: ^1.6.3

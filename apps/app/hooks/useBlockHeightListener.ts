@@ -1,5 +1,5 @@
 import {subsquidClient} from '@/lib/graphql'
-import {useGlobalStateQuery} from '@/lib/subsquid'
+import {useGlobalStateQuery} from '@/lib/subsquidQuery'
 import {useQueryClient} from '@tanstack/react-query'
 import {useEffect, useRef} from 'react'
 

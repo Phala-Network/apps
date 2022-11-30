@@ -5,8 +5,7 @@ import PageHeader from '@/components/PageHeader'
 import Property from '@/components/Property'
 import useGetApr from '@/hooks/useGetApr'
 import aprToApy from '@/lib/aprToApy'
-import {subsquidClient} from '@/lib/graphql'
-import {BasePoolKind, IdentityLevel, useBasePoolByIdQuery} from '@/lib/subsquid'
+import {BasePoolCommonFragment, IdentityLevel} from '@/lib/subsquidQuery'
 import {colors} from '@/lib/theme'
 import {
   RemoveCircleOutline,
@@ -29,7 +28,6 @@ import {
   useTheme,
 } from '@mui/material'
 import {toCurrency, toPercentage, trimAddress} from '@phala/util'
-import type {ParsedUrlQuery} from 'querystring'
 import {FC} from 'react'
 import DelegateInput from './DelegateInput'
 import ExtraProperties from './ExtraProperties'
@@ -37,28 +35,16 @@ import Whitelists from './Whitelists'
 import WithdrawQueue from './WithdrawQueue'
 import Workers from './Workers'
 
-const DetailPage: FC<{kind: BasePoolKind; pid: ParsedUrlQuery[string]}> = ({
-  kind,
-  pid,
-}) => {
+const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
+  const {vault, stakePool, owner} = basePool
   const getApr = useGetApr()
   const theme = useTheme()
-  const isPidValid = typeof pid === 'string' && pid.length > 0
-  const isVault = kind === BasePoolKind.Vault
+  const isVault = !!vault
   const color = isVault ? 'secondary' : 'primary'
-  const {data} = useBasePoolByIdQuery(
-    subsquidClient,
-    {id: isPidValid ? pid : ''},
-    {
-      enabled: isPidValid,
-    }
-  )
-  const basePool = data?.basePoolById
-  const {vault, stakePool, owner} = basePool || {}
+
   const ownerVerified =
-    !!owner &&
-    (owner.identityLevel === IdentityLevel.KnownGood ||
-      owner.identityLevel === IdentityLevel.Reasonable)
+    owner.identityLevel === IdentityLevel.KnownGood ||
+    owner.identityLevel === IdentityLevel.Reasonable
   const actions = (
     <>
       <IconButton>
@@ -66,16 +52,11 @@ const DetailPage: FC<{kind: BasePoolKind; pid: ParsedUrlQuery[string]}> = ({
       </IconButton>
     </>
   )
-  const apr = basePool?.aprMultiplier
-    ? getApr(basePool.aprMultiplier)
-    : undefined
-  if (data && isVault === !vault) return null
+  const apr = getApr(basePool.aprMultiplier)
   return (
     <>
       <PageHeader
-        title={`${isVault ? 'Vault' : 'Stake Pool'}${
-          isPidValid ? ` #${pid}` : ''
-        }`}
+        title={`${isVault ? 'Vault' : 'Stake Pool'} #${basePool.pid}`}
         pageTitle={isVault ? 'Vault' : 'Stake Pool'}
       />
       <Stack spacing={{xs: 2, md: 2.5}}>
@@ -99,14 +80,12 @@ const DetailPage: FC<{kind: BasePoolKind; pid: ParsedUrlQuery[string]}> = ({
                 alignItems="center"
                 width={{xs: 1, sm: 'initial'}}
               >
-                {!isVault && (
+                {stakePool && (
                   <StakePoolIcon width={48} color={colors.main[300]} />
                 )}
-                {isVault && <VaultIcon width={48} color={colors.vault[400]} />}
+                {vault && <VaultIcon width={48} color={colors.vault[400]} />}
                 <Box flex="1 0" width={108}>
-                  <Typography variant="num2">
-                    {isPidValid ? `#${pid}` : ''}
-                  </Typography>
+                  <Typography variant="num2">{`#${basePool.pid}`}</Typography>
                 </Box>
                 <Box display={{xs: 'block', sm: 'none'}}>{actions}</Box>
               </Stack>
@@ -193,28 +172,23 @@ const DetailPage: FC<{kind: BasePoolKind; pid: ParsedUrlQuery[string]}> = ({
             }}
           >
             <Stack direction="row" alignItems="center" spacing={1}>
-              {owner ? (
-                <Link
-                  variant="h6"
-                  color="inherit"
-                  href={`https://khala.subscan.io/account/${owner?.id}`}
-                  target="_blank"
-                  rel="noopener"
-                  overflow="hidden"
-                  textOverflow="ellipsis"
-                  whiteSpace="nowrap"
-                  sx={{
-                    textDecorationColor: alpha(theme.palette.text.primary, 0.4),
-                  }}
-                >
-                  {owner.identityDisplay || trimAddress(owner.id)}
-                </Link>
-              ) : (
-                <Typography variant="h6" component="div">
-                  <Skeleton width={100} />
-                </Typography>
-              )}
-              {owner?.identityDisplay && (
+              <Link
+                variant="h6"
+                color="inherit"
+                href={`https://khala.subscan.io/account/${owner?.id}`}
+                target="_blank"
+                rel="noopener"
+                overflow="hidden"
+                textOverflow="ellipsis"
+                whiteSpace="nowrap"
+                sx={{
+                  textDecorationColor: alpha(theme.palette.text.primary, 0.4),
+                }}
+              >
+                {owner.identityDisplay || trimAddress(owner.id)}
+              </Link>
+
+              {owner.identityDisplay && (
                 <>
                   <Tooltip
                     title={owner.identityLevel ?? 'No Judgement'}
@@ -261,17 +235,13 @@ const DetailPage: FC<{kind: BasePoolKind; pid: ParsedUrlQuery[string]}> = ({
               <DelegatorSelect isVault={isVault} />
             </Stack>
             <Stack></Stack>
-            {basePool && <DelegateInput basePool={basePool} />}
+            <DelegateInput basePool={basePool} />
           </Paper>
         </Stack>
 
-        {basePool && (
-          <>
-            <WithdrawQueue basePool={basePool} />
-            <Whitelists basePool={basePool} />
-            {stakePool && <Workers basePool={basePool} />}
-          </>
-        )}
+        <WithdrawQueue basePool={basePool} />
+        <Whitelists basePool={basePool} />
+        {stakePool && <Workers basePool={basePool} />}
       </Stack>
     </>
   )

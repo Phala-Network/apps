@@ -1,7 +1,7 @@
 import usePolkadotApi from '@/hooks/usePolkadotApi'
 import useSelectedVaultState from '@/hooks/useSelectedVaultState'
 import useSignAndSend from '@/hooks/useSignAndSend'
-import {BasePoolCommonFragment, BasePoolKind} from '@/lib/subsquid'
+import {BasePoolCommonFragment} from '@/lib/subsquidQuery'
 import {barlow} from '@/lib/theme'
 import {LoadingButton} from '@mui/lab'
 import {Stack, SxProps, TextField, Typography} from '@mui/material'
@@ -14,7 +14,7 @@ const DelegateInput: FC<{basePool: BasePoolCommonFragment; sx?: SxProps}> = ({
   sx,
 }) => {
   const {kind} = basePool
-  const color = kind === BasePoolKind.StakePool ? 'primary' : 'secondary'
+  const color = kind === 'StakePool' ? 'primary' : 'secondary'
   const api = usePolkadotApi()
   const [loading, setLoading] = useState(false)
   const selectedVaultState = useSelectedVaultState()
@@ -29,7 +29,7 @@ const DelegateInput: FC<{basePool: BasePoolCommonFragment; sx?: SxProps}> = ({
     const amount = new Decimal(amountString).times(1e12).toString()
     setLoading(true)
     const extrinsic =
-      kind === BasePoolKind.StakePool
+      kind === 'StakePool'
         ? api.tx.phalaStakePoolv2.contribute(
             basePool.pid,
             amount,

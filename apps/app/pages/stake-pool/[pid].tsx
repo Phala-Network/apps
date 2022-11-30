@@ -1,17 +1,28 @@
 import DetailPage from '@/components/BasePool/DetailPage'
-import {BasePoolKind} from '@/lib/subsquid'
+import getBasePoolServerSideProps, {
+  BasePoolServerSideProps,
+} from '@/lib/getBasePoolServerSideProps'
+import {subsquidClient} from '@/lib/graphql'
+import {useBasePoolByIdQuery} from '@/lib/subsquidQuery'
 import {NextPage} from 'next'
-import {useRouter} from 'next/router'
 
-const StakePool: NextPage = () => {
-  const {
-    query: {pid},
-  } = useRouter()
+export const getServerSideProps = getBasePoolServerSideProps('StakePool')
+
+const Vault: NextPage<BasePoolServerSideProps> = ({pid, basePoolQuery}) => {
+  const {data} = useBasePoolByIdQuery(
+    subsquidClient,
+    {id: pid},
+    {initialData: basePoolQuery}
+  )
+
+  const basePool = data?.basePoolById
+  if (!basePool) return null
+
   return (
     <>
-      <DetailPage kind={BasePoolKind.StakePool} pid={pid} />
+      <DetailPage basePool={basePool} />
     </>
   )
 }
 
-export default StakePool
+export default Vault

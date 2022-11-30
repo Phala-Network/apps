@@ -1,6 +1,6 @@
-import {BasePoolKind} from './subsquid'
+import type {BasePoolKind} from './subsquidQuery'
 
 const getPoolPath = (kind: BasePoolKind, pid: string) =>
-  `/${kind === BasePoolKind.Vault ? 'vault' : 'stake-pool'}/${pid}`
+  `/${kind === 'Vault' ? 'vault' : 'stake-pool'}/${pid}`
 
 export default getPoolPath

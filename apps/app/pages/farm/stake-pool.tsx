@@ -2,7 +2,6 @@ import BasePoolList from '@/components/BasePool/List'
 import CreateBasePoolButton from '@/components/CreateBasePoolButton'
 import PageHeader from '@/components/PageHeader'
 import useAccountQuery from '@/hooks/useAccountQuery'
-import {BasePoolKind} from '@/lib/subsquid'
 import {LoadingButton} from '@mui/lab'
 import {Box, Skeleton, Stack, Typography} from '@mui/material'
 import {toCurrency} from '@phala/util'
@@ -39,10 +38,10 @@ const MyStakePools: FC = () => {
         <LoadingButton disabled={stakePoolOwnerReward === '0'}>
           Claim All
         </LoadingButton>
-        <CreateBasePoolButton kind={BasePoolKind.StakePool} />
+        <CreateBasePoolButton kind="StakePool" />
       </Stack>
       <Box mt={3}>
-        <BasePoolList kind={BasePoolKind.StakePool} variant="farm" />
+        <BasePoolList kind="StakePool" variant="farm" />
       </Box>
     </>
   )

@@ -4,7 +4,7 @@ import useAsset from '@/hooks/useAsset'
 import usePolkadotApi from '@/hooks/usePolkadotApi'
 import useSelectedVaultState from '@/hooks/useSelectedVaultState'
 import useSignAndSend from '@/hooks/useSignAndSend'
-import {BasePoolKind} from '@/lib/subsquid'
+import type {BasePoolKind} from '@/lib/subsquidQuery'
 import {colors} from '@/lib/theme'
 import {
   Box,
@@ -28,7 +28,7 @@ const DelegateDataCard: FC<{
   count?: number
   value?: string
 }> = ({kind, count, value}) => {
-  const isVault = kind === BasePoolKind.Vault
+  const isVault = kind === 'Vault'
   const label = isVault ? 'Vault' : 'Stake Pool'
   const background = isVault ? colors.vault[300] : colors.main[500]
 
@@ -99,7 +99,7 @@ const DelegateDetailCard: FC = () => {
 
   const totalValue = useMemo(() => {
     if (!stakePoolValue || !vaultValue) return
-    return toCurrency(new Decimal(stakePoolValue).plus(vaultValue))
+    return toCurrency(new Decimal(stakePoolValue).plus(vaultValue), 0)
   }, [stakePoolValue, vaultValue])
 
   const unwrapAll = () => {
@@ -162,12 +162,12 @@ const DelegateDetailCard: FC = () => {
           sx={{'>div': {flex: '1 0'}}}
         >
           <DelegateDataCard
-            kind={BasePoolKind.Vault}
+            kind="Vault"
             count={vaultNftCount}
             value={asAccount ? vaultValue : '-'}
           />
           <DelegateDataCard
-            kind={BasePoolKind.StakePool}
+            kind="StakePool"
             count={stakePoolNftCount}
             value={stakePoolValue}
           />

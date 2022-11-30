@@ -7,7 +7,6 @@ import DelegateDetailCard from '@/components/DelegateDetailCard'
 import NetworkOverview from '@/components/NetworkOverview'
 import PageHeader from '@/components/PageHeader'
 import useSelectedVaultState from '@/hooks/useSelectedVaultState'
-import {BasePoolKind} from '@/lib/subsquid'
 import {colors} from '@/lib/theme'
 import {
   Box,
@@ -170,7 +169,7 @@ const Delegate: NextPage = () => {
       <BasePoolList
         sx={{mt: {xs: 2, md: 5}}}
         variant="delegate"
-        kind={isVault ? BasePoolKind.Vault : BasePoolKind.StakePool}
+        kind={isVault ? 'Vault' : 'StakePool'}
       />
     </>
   )

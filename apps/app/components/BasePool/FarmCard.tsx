@@ -5,7 +5,7 @@ import Property from '@/components/Property'
 import useGetApr from '@/hooks/useGetApr'
 import aprToApy from '@/lib/aprToApy'
 import getPoolPath from '@/lib/getPoolPath'
-import {BasePoolCommonFragment} from '@/lib/subsquid'
+import {BasePoolCommonFragment} from '@/lib/subsquidQuery'
 import {colors} from '@/lib/theme'
 import {Settings} from '@mui/icons-material'
 import {

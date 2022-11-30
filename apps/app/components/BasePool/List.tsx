@@ -1,3 +1,4 @@
+import ListSkeleton from '@/components/ListSkeleton'
 import useSelectedVaultState from '@/hooks/useSelectedVaultState'
 import {subsquidClient} from '@/lib/graphql'
 import {
@@ -6,7 +7,7 @@ import {
   BasePoolWhereInput,
   IdentityLevel,
   useInfiniteBasePoolsConnectionQuery,
-} from '@/lib/subsquid'
+} from '@/lib/subsquidQuery'
 import {favoritePoolsAtom} from '@/store/common'
 import {FilterList, Search} from '@mui/icons-material'
 import {
@@ -15,7 +16,6 @@ import {
   FormControlLabel,
   IconButton,
   MenuItem,
-  Skeleton,
   Stack,
   SxProps,
   TextField,
@@ -49,10 +49,6 @@ const vaultOrderByEntries: OrderByEntries = [
   ['APY low to high', BasePoolOrderByInput.AprMultiplierDesc],
 ]
 
-const skeleton = [...Array(3)].map((_, index) => (
-  <Skeleton variant="rounded" key={index} height={101} />
-))
-
 const BasePoolList: FC<{
   variant: BasePoolListVariant
   kind: BasePoolKind
@@ -68,7 +64,7 @@ const BasePoolList: FC<{
     selectedVaultState === null
       ? polkadotAccount?.address
       : selectedVaultState?.account.id
-  const isVault = kind === BasePoolKind.Vault
+  const isVault = kind === 'Vault'
   const [favoritePools] = useAtom(favoritePoolsAtom)
   const color = isVault ? 'secondary' : 'primary'
   const [verifiedFilter, setVerifiedFilter] = useState(false)
@@ -233,19 +229,21 @@ const BasePoolList: FC<{
           </TextField>
         </Stack>
         <Stack spacing={2} mt={2}>
-          {isLoading
-            ? skeleton
-            : data?.pages.map((page, index) => (
-                <Stack key={index} spacing={2}>
-                  {page.basePoolsConnection.edges.map((edge) =>
-                    variant === 'farm' ? (
-                      <FarmCard key={edge.node.id} basePool={edge.node} />
-                    ) : (
-                      <DelegateCard key={edge.node.id} basePool={edge.node} />
-                    )
-                  )}
-                </Stack>
-              ))}
+          {isLoading ? (
+            <ListSkeleton height={101} />
+          ) : (
+            data?.pages.map((page, index) => (
+              <Stack key={index} spacing={2}>
+                {page.basePoolsConnection.edges.map((edge) =>
+                  variant === 'farm' ? (
+                    <FarmCard key={edge.node.id} basePool={edge.node} />
+                  ) : (
+                    <DelegateCard key={edge.node.id} basePool={edge.node} />
+                  )
+                )}
+              </Stack>
+            ))
+          )}
         </Stack>
       </Box>
     </Stack>

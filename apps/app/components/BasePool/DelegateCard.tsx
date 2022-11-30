@@ -6,7 +6,7 @@ import useGetApr from '@/hooks/useGetApr'
 import usePoolFavorite from '@/hooks/usePoolFavorite'
 import aprToApy from '@/lib/aprToApy'
 import getPoolPath from '@/lib/getPoolPath'
-import {BasePoolCommonFragment, IdentityLevel} from '@/lib/subsquid'
+import {BasePoolCommonFragment, IdentityLevel} from '@/lib/subsquidQuery'
 import {colors} from '@/lib/theme'
 import {
   RemoveCircleOutline,

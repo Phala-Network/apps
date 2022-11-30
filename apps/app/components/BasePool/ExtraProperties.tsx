@@ -1,5 +1,5 @@
 import Property from '@/components/Property'
-import {BasePoolCommonFragment} from '@/lib/subsquid'
+import {BasePoolCommonFragment} from '@/lib/subsquidQuery'
 import {Box, Stack, SxProps} from '@mui/material'
 import {toCurrency, toFixed} from '@phala/util'
 import Decimal from 'decimal.js'
