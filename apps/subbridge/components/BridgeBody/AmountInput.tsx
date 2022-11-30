@@ -17,7 +17,7 @@ import {
   Typography,
 } from '@mui/material'
 import {BoxProps} from '@mui/system'
-import {formatCurrency} from '@phala/util'
+import {toCurrency} from '@phala/util'
 import {useAtom} from 'jotai'
 import {FC} from 'react'
 
@@ -92,7 +92,7 @@ const AmountInput: FC<BoxProps & Pick<InputProps, 'endAdornment'>> = ({
               </Typography>
               {bridgeLimit ? (
                 <Typography variant="caption" sx={{fontWeight: 500}}>
-                  {`${formatCurrency(bridgeLimit, 1)} ${asset.symbol}`}
+                  {`${toCurrency(bridgeLimit, 1)} ${asset.symbol}`}
                 </Typography>
               ) : (
                 <Skeleton width={64} />
@@ -117,7 +117,7 @@ const AmountInput: FC<BoxProps & Pick<InputProps, 'endAdornment'>> = ({
             </Typography>
             {balance ? (
               <Typography variant="caption" sx={{fontWeight: 500}}>
-                {`${formatCurrency(balance)} ${asset.symbol}`}
+                {`${toCurrency(balance)} ${asset.symbol}`}
               </Typography>
             ) : (
               <Skeleton width={64} />

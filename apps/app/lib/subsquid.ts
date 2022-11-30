@@ -61,6 +61,8 @@ export type AccountEdge = {
 };
 
 export enum AccountOrderByInput {
+  BasePoolAprMultiplierAsc = 'basePool_aprMultiplier_ASC',
+  BasePoolAprMultiplierDesc = 'basePool_aprMultiplier_DESC',
   BasePoolCidAsc = 'basePool_cid_ASC',
   BasePoolCidDesc = 'basePool_cid_DESC',
   BasePoolCommissionAsc = 'basePool_commission_ASC',
@@ -211,6 +213,7 @@ export type AccountsConnection = {
 export type BasePool = {
   __typename?: 'BasePool';
   account: Account;
+  aprMultiplier: Scalars['BigDecimal'];
   /** NFT collection id */
   cid: Scalars['Int'];
   /** decimal percentage, 1 means 100% */
@@ -280,6 +283,8 @@ export enum BasePoolOrderByInput {
   AccountVaultNftCountDesc = 'account_vaultNftCount_DESC',
   AccountVaultValueAsc = 'account_vaultValue_ASC',
   AccountVaultValueDesc = 'account_vaultValue_DESC',
+  AprMultiplierAsc = 'aprMultiplier_ASC',
+  AprMultiplierDesc = 'aprMultiplier_DESC',
   CidAsc = 'cid_ASC',
   CidDesc = 'cid_DESC',
   CommissionAsc = 'commission_ASC',
@@ -314,8 +319,6 @@ export enum BasePoolOrderByInput {
   ReleasingValueDesc = 'releasingValue_DESC',
   SharePriceAsc = 'sharePrice_ASC',
   SharePriceDesc = 'sharePrice_DESC',
-  StakePoolAprMultiplierAsc = 'stakePool_aprMultiplier_ASC',
-  StakePoolAprMultiplierDesc = 'stakePool_aprMultiplier_DESC',
   StakePoolCapacityAsc = 'stakePool_capacity_ASC',
   StakePoolCapacityDesc = 'stakePool_capacity_DESC',
   StakePoolDelegableAsc = 'stakePool_delegable_ASC',
@@ -334,8 +337,6 @@ export enum BasePoolOrderByInput {
   TotalSharesDesc = 'totalShares_DESC',
   TotalValueAsc = 'totalValue_ASC',
   TotalValueDesc = 'totalValue_DESC',
-  VaultAprAsc = 'vault_apr_ASC',
-  VaultAprDesc = 'vault_apr_DESC',
   VaultClaimableOwnerSharesAsc = 'vault_claimableOwnerShares_ASC',
   VaultClaimableOwnerSharesDesc = 'vault_claimableOwnerShares_DESC',
   VaultIdAsc = 'vault_id_ASC',
@@ -355,6 +356,15 @@ export type BasePoolWhereInput = {
   OR?: InputMaybe<Array<BasePoolWhereInput>>;
   account?: InputMaybe<AccountWhereInput>;
   account_isNull?: InputMaybe<Scalars['Boolean']>;
+  aprMultiplier_eq?: InputMaybe<Scalars['BigDecimal']>;
+  aprMultiplier_gt?: InputMaybe<Scalars['BigDecimal']>;
+  aprMultiplier_gte?: InputMaybe<Scalars['BigDecimal']>;
+  aprMultiplier_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  aprMultiplier_isNull?: InputMaybe<Scalars['Boolean']>;
+  aprMultiplier_lt?: InputMaybe<Scalars['BigDecimal']>;
+  aprMultiplier_lte?: InputMaybe<Scalars['BigDecimal']>;
+  aprMultiplier_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  aprMultiplier_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
   cid_eq?: InputMaybe<Scalars['Int']>;
   cid_gt?: InputMaybe<Scalars['Int']>;
   cid_gte?: InputMaybe<Scalars['Int']>;
@@ -525,6 +535,8 @@ export enum BasePoolWhitelistOrderByInput {
   AccountVaultNftCountDesc = 'account_vaultNftCount_DESC',
   AccountVaultValueAsc = 'account_vaultValue_ASC',
   AccountVaultValueDesc = 'account_vaultValue_DESC',
+  BasePoolAprMultiplierAsc = 'basePool_aprMultiplier_ASC',
+  BasePoolAprMultiplierDesc = 'basePool_aprMultiplier_DESC',
   BasePoolCidAsc = 'basePool_cid_ASC',
   BasePoolCidDesc = 'basePool_cid_DESC',
   BasePoolCommissionAsc = 'basePool_commission_ASC',
@@ -631,8 +643,8 @@ export type DelegationEdge = {
 
 export type DelegationNft = {
   __typename?: 'DelegationNft';
-  collectionId: Scalars['Int'];
-  /** ${collectionId}-${nftId} */
+  cid: Scalars['Int'];
+  /** ${cid}-${nftId} */
   id: Scalars['String'];
   nftId: Scalars['Int'];
   owner: Account;
@@ -645,8 +657,8 @@ export type DelegationNftEdge = {
 };
 
 export enum DelegationNftOrderByInput {
-  CollectionIdAsc = 'collectionId_ASC',
-  CollectionIdDesc = 'collectionId_DESC',
+  CidAsc = 'cid_ASC',
+  CidDesc = 'cid_DESC',
   IdAsc = 'id_ASC',
   IdDesc = 'id_DESC',
   NftIdAsc = 'nftId_ASC',
@@ -672,15 +684,15 @@ export enum DelegationNftOrderByInput {
 export type DelegationNftWhereInput = {
   AND?: InputMaybe<Array<DelegationNftWhereInput>>;
   OR?: InputMaybe<Array<DelegationNftWhereInput>>;
-  collectionId_eq?: InputMaybe<Scalars['Int']>;
-  collectionId_gt?: InputMaybe<Scalars['Int']>;
-  collectionId_gte?: InputMaybe<Scalars['Int']>;
-  collectionId_in?: InputMaybe<Array<Scalars['Int']>>;
-  collectionId_isNull?: InputMaybe<Scalars['Boolean']>;
-  collectionId_lt?: InputMaybe<Scalars['Int']>;
-  collectionId_lte?: InputMaybe<Scalars['Int']>;
-  collectionId_not_eq?: InputMaybe<Scalars['Int']>;
-  collectionId_not_in?: InputMaybe<Array<Scalars['Int']>>;
+  cid_eq?: InputMaybe<Scalars['Int']>;
+  cid_gt?: InputMaybe<Scalars['Int']>;
+  cid_gte?: InputMaybe<Scalars['Int']>;
+  cid_in?: InputMaybe<Array<Scalars['Int']>>;
+  cid_isNull?: InputMaybe<Scalars['Boolean']>;
+  cid_lt?: InputMaybe<Scalars['Int']>;
+  cid_lte?: InputMaybe<Scalars['Int']>;
+  cid_not_eq?: InputMaybe<Scalars['Int']>;
+  cid_not_in?: InputMaybe<Array<Scalars['Int']>>;
   id_contains?: InputMaybe<Scalars['String']>;
   id_containsInsensitive?: InputMaybe<Scalars['String']>;
   id_endsWith?: InputMaybe<Scalars['String']>;
@@ -735,6 +747,8 @@ export enum DelegationOrderByInput {
   AccountVaultNftCountDesc = 'account_vaultNftCount_DESC',
   AccountVaultValueAsc = 'account_vaultValue_ASC',
   AccountVaultValueDesc = 'account_vaultValue_DESC',
+  BasePoolAprMultiplierAsc = 'basePool_aprMultiplier_ASC',
+  BasePoolAprMultiplierDesc = 'basePool_aprMultiplier_DESC',
   BasePoolCidAsc = 'basePool_cid_ASC',
   BasePoolCidDesc = 'basePool_cid_DESC',
   BasePoolCommissionAsc = 'basePool_commission_ASC',
@@ -763,8 +777,8 @@ export enum DelegationOrderByInput {
   BasePoolWithdrawalSharesDesc = 'basePool_withdrawalShares_DESC',
   BasePoolWithdrawalValueAsc = 'basePool_withdrawalValue_ASC',
   BasePoolWithdrawalValueDesc = 'basePool_withdrawalValue_DESC',
-  DelegationNftCollectionIdAsc = 'delegationNft_collectionId_ASC',
-  DelegationNftCollectionIdDesc = 'delegationNft_collectionId_DESC',
+  DelegationNftCidAsc = 'delegationNft_cid_ASC',
+  DelegationNftCidDesc = 'delegationNft_cid_DESC',
   DelegationNftIdAsc = 'delegationNft_id_ASC',
   DelegationNftIdDesc = 'delegationNft_id_DESC',
   DelegationNftNftIdAsc = 'delegationNft_nftId_ASC',
@@ -775,8 +789,8 @@ export enum DelegationOrderByInput {
   SharesDesc = 'shares_DESC',
   ValueAsc = 'value_ASC',
   ValueDesc = 'value_DESC',
-  WithdrawalNftCollectionIdAsc = 'withdrawalNft_collectionId_ASC',
-  WithdrawalNftCollectionIdDesc = 'withdrawalNft_collectionId_DESC',
+  WithdrawalNftCidAsc = 'withdrawalNft_cid_ASC',
+  WithdrawalNftCidDesc = 'withdrawalNft_cid_DESC',
   WithdrawalNftIdAsc = 'withdrawalNft_id_ASC',
   WithdrawalNftIdDesc = 'withdrawalNft_id_DESC',
   WithdrawalNftNftIdAsc = 'withdrawalNft_nftId_ASC',
@@ -1416,8 +1430,6 @@ export enum SessionOrderByInput {
   PInitDesc = 'pInit_DESC',
   PInstantAsc = 'pInstant_ASC',
   PInstantDesc = 'pInstant_DESC',
-  StakePoolAprMultiplierAsc = 'stakePool_aprMultiplier_ASC',
-  StakePoolAprMultiplierDesc = 'stakePool_aprMultiplier_DESC',
   StakePoolCapacityAsc = 'stakePool_capacity_ASC',
   StakePoolCapacityDesc = 'stakePool_capacity_DESC',
   StakePoolDelegableAsc = 'stakePool_delegable_ASC',
@@ -1568,7 +1580,6 @@ export type SquidStatus = {
 
 export type StakePool = {
   __typename?: 'StakePool';
-  aprMultiplier: Scalars['BigDecimal'];
   basePool: BasePool;
   /** null means infinite */
   capacity?: Maybe<Scalars['BigDecimal']>;
@@ -1589,8 +1600,8 @@ export type StakePoolEdge = {
 };
 
 export enum StakePoolOrderByInput {
-  AprMultiplierAsc = 'aprMultiplier_ASC',
-  AprMultiplierDesc = 'aprMultiplier_DESC',
+  BasePoolAprMultiplierAsc = 'basePool_aprMultiplier_ASC',
+  BasePoolAprMultiplierDesc = 'basePool_aprMultiplier_DESC',
   BasePoolCidAsc = 'basePool_cid_ASC',
   BasePoolCidDesc = 'basePool_cid_DESC',
   BasePoolCommissionAsc = 'basePool_commission_ASC',
@@ -1638,15 +1649,6 @@ export enum StakePoolOrderByInput {
 export type StakePoolWhereInput = {
   AND?: InputMaybe<Array<StakePoolWhereInput>>;
   OR?: InputMaybe<Array<StakePoolWhereInput>>;
-  aprMultiplier_eq?: InputMaybe<Scalars['BigDecimal']>;
-  aprMultiplier_gt?: InputMaybe<Scalars['BigDecimal']>;
-  aprMultiplier_gte?: InputMaybe<Scalars['BigDecimal']>;
-  aprMultiplier_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
-  aprMultiplier_isNull?: InputMaybe<Scalars['Boolean']>;
-  aprMultiplier_lt?: InputMaybe<Scalars['BigDecimal']>;
-  aprMultiplier_lte?: InputMaybe<Scalars['BigDecimal']>;
-  aprMultiplier_not_eq?: InputMaybe<Scalars['BigDecimal']>;
-  aprMultiplier_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
   basePool?: InputMaybe<BasePoolWhereInput>;
   basePool_isNull?: InputMaybe<Scalars['Boolean']>;
   capacity_eq?: InputMaybe<Scalars['BigDecimal']>;
@@ -2018,7 +2020,6 @@ export type TokenomicParametersWhereInput = {
 
 export type Vault = {
   __typename?: 'Vault';
-  apr: Scalars['BigDecimal'];
   basePool: BasePool;
   claimableOwnerShares: Scalars['BigDecimal'];
   /** pid */
@@ -2034,8 +2035,8 @@ export type VaultEdge = {
 };
 
 export enum VaultOrderByInput {
-  AprAsc = 'apr_ASC',
-  AprDesc = 'apr_DESC',
+  BasePoolAprMultiplierAsc = 'basePool_aprMultiplier_ASC',
+  BasePoolAprMultiplierDesc = 'basePool_aprMultiplier_DESC',
   BasePoolCidAsc = 'basePool_cid_ASC',
   BasePoolCidDesc = 'basePool_cid_DESC',
   BasePoolCommissionAsc = 'basePool_commission_ASC',
@@ -2075,15 +2076,6 @@ export enum VaultOrderByInput {
 export type VaultWhereInput = {
   AND?: InputMaybe<Array<VaultWhereInput>>;
   OR?: InputMaybe<Array<VaultWhereInput>>;
-  apr_eq?: InputMaybe<Scalars['BigDecimal']>;
-  apr_gt?: InputMaybe<Scalars['BigDecimal']>;
-  apr_gte?: InputMaybe<Scalars['BigDecimal']>;
-  apr_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
-  apr_isNull?: InputMaybe<Scalars['Boolean']>;
-  apr_lt?: InputMaybe<Scalars['BigDecimal']>;
-  apr_lte?: InputMaybe<Scalars['BigDecimal']>;
-  apr_not_eq?: InputMaybe<Scalars['BigDecimal']>;
-  apr_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
   basePool?: InputMaybe<BasePoolWhereInput>;
   basePool_isNull?: InputMaybe<Scalars['Boolean']>;
   claimableOwnerShares_eq?: InputMaybe<Scalars['BigDecimal']>;
@@ -2186,8 +2178,6 @@ export enum WorkerOrderByInput {
   SessionVeDesc = 'session_ve_DESC',
   SharesAsc = 'shares_ASC',
   SharesDesc = 'shares_DESC',
-  StakePoolAprMultiplierAsc = 'stakePool_aprMultiplier_ASC',
-  StakePoolAprMultiplierDesc = 'stakePool_aprMultiplier_DESC',
   StakePoolCapacityAsc = 'stakePool_capacity_ASC',
   StakePoolCapacityDesc = 'stakePool_capacity_DESC',
   StakePoolDelegableAsc = 'stakePool_delegable_ASC',
@@ -2296,14 +2286,14 @@ export type AccountByIdQueryVariables = Exact<{
 
 export type AccountByIdQuery = { __typename?: 'Query', accountById?: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null, stakePoolNftCount: number, stakePoolValue: string, vaultNftCount: number, vaultValue: string, stakePoolOwnerReward: string, ownedPools: Array<{ __typename?: 'BasePool', id: string, account: { __typename?: 'Account', id: string, stakePoolNftCount: number, stakePoolValue: string, vaultNftCount: number, vaultValue: string } }> } | null };
 
-export type BasePoolCommonFragment = { __typename?: 'BasePool', cid: number, commission: string, delegatorCount: number, freeValue: string, id: string, kind: BasePoolKind, pid: string, releasingValue: string, sharePrice: string, totalShares: string, totalValue: string, whitelistEnabled: boolean, withdrawalShares: string, withdrawalValue: string, account: { __typename?: 'Account', id: string, stakePoolNftCount: number }, owner: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null }, stakePool?: { __typename?: 'StakePool', aprMultiplier: string, capacity?: string | null, delegable?: string | null, idleWorkerCount: number, ownerReward: string, workerCount: number } | null, vault?: { __typename?: 'Vault', apr: string, claimableOwnerShares: string, lastSharePriceCheckpoint: string } | null };
+export type BasePoolCommonFragment = { __typename?: 'BasePool', cid: number, commission: string, delegatorCount: number, freeValue: string, id: string, kind: BasePoolKind, pid: string, aprMultiplier: string, releasingValue: string, sharePrice: string, totalShares: string, totalValue: string, whitelistEnabled: boolean, withdrawalShares: string, withdrawalValue: string, account: { __typename?: 'Account', id: string, stakePoolNftCount: number }, owner: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null }, stakePool?: { __typename?: 'StakePool', capacity?: string | null, delegable?: string | null, idleWorkerCount: number, ownerReward: string, workerCount: number } | null, vault?: { __typename?: 'Vault', claimableOwnerShares: string, lastSharePriceCheckpoint: string } | null };
 
 export type BasePoolByIdQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
 
 
-export type BasePoolByIdQuery = { __typename?: 'Query', basePoolById?: { __typename?: 'BasePool', cid: number, commission: string, delegatorCount: number, freeValue: string, id: string, kind: BasePoolKind, pid: string, releasingValue: string, sharePrice: string, totalShares: string, totalValue: string, whitelistEnabled: boolean, withdrawalShares: string, withdrawalValue: string, account: { __typename?: 'Account', id: string, stakePoolNftCount: number }, owner: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null }, stakePool?: { __typename?: 'StakePool', aprMultiplier: string, capacity?: string | null, delegable?: string | null, idleWorkerCount: number, ownerReward: string, workerCount: number } | null, vault?: { __typename?: 'Vault', apr: string, claimableOwnerShares: string, lastSharePriceCheckpoint: string } | null } | null };
+export type BasePoolByIdQuery = { __typename?: 'Query', basePoolById?: { __typename?: 'BasePool', cid: number, commission: string, delegatorCount: number, freeValue: string, id: string, kind: BasePoolKind, pid: string, aprMultiplier: string, releasingValue: string, sharePrice: string, totalShares: string, totalValue: string, whitelistEnabled: boolean, withdrawalShares: string, withdrawalValue: string, account: { __typename?: 'Account', id: string, stakePoolNftCount: number }, owner: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null }, stakePool?: { __typename?: 'StakePool', capacity?: string | null, delegable?: string | null, idleWorkerCount: number, ownerReward: string, workerCount: number } | null, vault?: { __typename?: 'Vault', claimableOwnerShares: string, lastSharePriceCheckpoint: string } | null } | null };
 
 export type BasePoolsConnectionQueryVariables = Exact<{
   orderBy: Array<BasePoolOrderByInput> | BasePoolOrderByInput;
@@ -2313,16 +2303,16 @@ export type BasePoolsConnectionQueryVariables = Exact<{
 }>;
 
 
-export type BasePoolsConnectionQuery = { __typename?: 'Query', basePoolsConnection: { __typename?: 'BasePoolsConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', endCursor: string, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string }, edges: Array<{ __typename?: 'BasePoolEdge', cursor: string, node: { __typename?: 'BasePool', cid: number, commission: string, delegatorCount: number, freeValue: string, id: string, kind: BasePoolKind, pid: string, releasingValue: string, sharePrice: string, totalShares: string, totalValue: string, whitelistEnabled: boolean, withdrawalShares: string, withdrawalValue: string, account: { __typename?: 'Account', id: string, stakePoolNftCount: number }, owner: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null }, stakePool?: { __typename?: 'StakePool', aprMultiplier: string, capacity?: string | null, delegable?: string | null, idleWorkerCount: number, ownerReward: string, workerCount: number } | null, vault?: { __typename?: 'Vault', apr: string, claimableOwnerShares: string, lastSharePriceCheckpoint: string } | null } }> } };
+export type BasePoolsConnectionQuery = { __typename?: 'Query', basePoolsConnection: { __typename?: 'BasePoolsConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', endCursor: string, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string }, edges: Array<{ __typename?: 'BasePoolEdge', cursor: string, node: { __typename?: 'BasePool', cid: number, commission: string, delegatorCount: number, freeValue: string, id: string, kind: BasePoolKind, pid: string, aprMultiplier: string, releasingValue: string, sharePrice: string, totalShares: string, totalValue: string, whitelistEnabled: boolean, withdrawalShares: string, withdrawalValue: string, account: { __typename?: 'Account', id: string, stakePoolNftCount: number }, owner: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null }, stakePool?: { __typename?: 'StakePool', capacity?: string | null, delegable?: string | null, idleWorkerCount: number, ownerReward: string, workerCount: number } | null, vault?: { __typename?: 'Vault', claimableOwnerShares: string, lastSharePriceCheckpoint: string } | null } }> } };
 
-export type DelegationCommonFragment = { __typename?: 'Delegation', id: string, shares: string, value: string, withdrawalStartTime?: string | null, withdrawalShares: string, withdrawalValue: string, basePool: { __typename?: 'BasePool', id: string, kind: BasePoolKind }, delegationNft?: { __typename?: 'DelegationNft', collectionId: number, nftId: number } | null, withdrawalNft?: { __typename?: 'DelegationNft', collectionId: number, nftId: number } | null };
+export type DelegationCommonFragment = { __typename?: 'Delegation', id: string, shares: string, value: string, withdrawalStartTime?: string | null, withdrawalShares: string, withdrawalValue: string, basePool: { __typename?: 'BasePool', id: string, kind: BasePoolKind }, delegationNft?: { __typename?: 'DelegationNft', cid: number, nftId: number } | null, withdrawalNft?: { __typename?: 'DelegationNft', cid: number, nftId: number } | null };
 
 export type DelegationByIdQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
 
 
-export type DelegationByIdQuery = { __typename?: 'Query', delegationById?: { __typename?: 'Delegation', id: string, shares: string, value: string, withdrawalStartTime?: string | null, withdrawalShares: string, withdrawalValue: string, basePool: { __typename?: 'BasePool', id: string, kind: BasePoolKind }, delegationNft?: { __typename?: 'DelegationNft', collectionId: number, nftId: number } | null, withdrawalNft?: { __typename?: 'DelegationNft', collectionId: number, nftId: number } | null } | null };
+export type DelegationByIdQuery = { __typename?: 'Query', delegationById?: { __typename?: 'Delegation', id: string, shares: string, value: string, withdrawalStartTime?: string | null, withdrawalShares: string, withdrawalValue: string, basePool: { __typename?: 'BasePool', id: string, kind: BasePoolKind }, delegationNft?: { __typename?: 'DelegationNft', cid: number, nftId: number } | null, withdrawalNft?: { __typename?: 'DelegationNft', cid: number, nftId: number } | null } | null };
 
 export type DelegationsConnectionQueryVariables = Exact<{
   orderBy: Array<DelegationOrderByInput> | DelegationOrderByInput;
@@ -2332,7 +2322,7 @@ export type DelegationsConnectionQueryVariables = Exact<{
 }>;
 
 
-export type DelegationsConnectionQuery = { __typename?: 'Query', delegationsConnection: { __typename?: 'DelegationsConnection', totalCount: number, edges: Array<{ __typename?: 'DelegationEdge', cursor: string, node: { __typename?: 'Delegation', id: string, shares: string, value: string, withdrawalStartTime?: string | null, withdrawalShares: string, withdrawalValue: string, basePool: { __typename?: 'BasePool', id: string, kind: BasePoolKind }, delegationNft?: { __typename?: 'DelegationNft', collectionId: number, nftId: number } | null, withdrawalNft?: { __typename?: 'DelegationNft', collectionId: number, nftId: number } | null } }>, pageInfo: { __typename?: 'PageInfo', endCursor: string, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string } } };
+export type DelegationsConnectionQuery = { __typename?: 'Query', delegationsConnection: { __typename?: 'DelegationsConnection', totalCount: number, edges: Array<{ __typename?: 'DelegationEdge', cursor: string, node: { __typename?: 'Delegation', id: string, shares: string, value: string, withdrawalStartTime?: string | null, withdrawalShares: string, withdrawalValue: string, basePool: { __typename?: 'BasePool', id: string, kind: BasePoolKind }, delegationNft?: { __typename?: 'DelegationNft', cid: number, nftId: number } | null, withdrawalNft?: { __typename?: 'DelegationNft', cid: number, nftId: number } | null } }>, pageInfo: { __typename?: 'PageInfo', endCursor: string, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string } } };
 
 export type GlobalStateQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2362,6 +2352,7 @@ export const BasePoolCommonFragmentDoc = `
     identityLevel
   }
   pid
+  aprMultiplier
   releasingValue
   sharePrice
   totalShares
@@ -2370,7 +2361,6 @@ export const BasePoolCommonFragmentDoc = `
   withdrawalShares
   withdrawalValue
   stakePool {
-    aprMultiplier
     capacity
     delegable
     idleWorkerCount
@@ -2378,7 +2368,6 @@ export const BasePoolCommonFragmentDoc = `
     workerCount
   }
   vault {
-    apr
     claimableOwnerShares
     lastSharePriceCheckpoint
   }
@@ -2397,11 +2386,11 @@ export const DelegationCommonFragmentDoc = `
   withdrawalShares
   withdrawalValue
   delegationNft {
-    collectionId
+    cid
     nftId
   }
   withdrawalNft {
-    collectionId
+    cid
     nftId
   }
 }

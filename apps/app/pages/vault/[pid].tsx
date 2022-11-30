@@ -7,7 +7,6 @@ const Vault: NextPage = () => {
   const {
     query: {pid},
   } = useRouter()
-  if (typeof pid !== 'string') return null
   return (
     <>
       <DetailPage kind={BasePoolKind.Vault} pid={pid} />

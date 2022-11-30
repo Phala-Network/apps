@@ -39,31 +39,18 @@ const commonOrderByEntries: OrderByEntries = [
 
 const stakePoolOrderByEntries: OrderByEntries = [
   ...commonOrderByEntries,
-  ['APR high to low', BasePoolOrderByInput.StakePoolAprMultiplierDesc],
-  ['APR low to high', BasePoolOrderByInput.StakePoolAprMultiplierAsc],
+  ['APR high to low', BasePoolOrderByInput.AprMultiplierDesc],
+  ['APR low to high', BasePoolOrderByInput.AprMultiplierDesc],
 ]
 
 const vaultOrderByEntries: OrderByEntries = [
   ...commonOrderByEntries,
-  ['APY high to low', BasePoolOrderByInput.VaultAprDesc],
-  ['APY low to high', BasePoolOrderByInput.VaultAprAsc],
+  ['APY high to low', BasePoolOrderByInput.AprMultiplierDesc],
+  ['APY low to high', BasePoolOrderByInput.AprMultiplierDesc],
 ]
 
-const getDefaultOrderBy = (
-  variant: BasePoolListVariant,
-  kind: BasePoolKind
-): BasePoolOrderByInput => {
-  if (variant === 'delegate') {
-    if (kind === BasePoolKind.StakePool) {
-      return BasePoolOrderByInput.StakePoolAprMultiplierDesc
-    }
-    return BasePoolOrderByInput.VaultAprDesc
-  }
-  return BasePoolOrderByInput.PidAsc
-}
-
 const skeleton = [...Array(3)].map((_, index) => (
-  <Skeleton variant="rectangular" key={index} height={101} />
+  <Skeleton variant="rounded" key={index} height={101} />
 ))
 
 const BasePoolList: FC<{
@@ -71,6 +58,10 @@ const BasePoolList: FC<{
   kind: BasePoolKind
   sx?: SxProps
 }> = ({variant, kind, sx}) => {
+  const defaultOrderBy =
+    variant === 'farm'
+      ? BasePoolOrderByInput.PidAsc
+      : BasePoolOrderByInput.AprMultiplierDesc
   const [polkadotAccount] = useAtom(polkadotAccountAtom)
   const selectedVaultState = useSelectedVaultState()
   const delegatorAddress =
@@ -85,12 +76,9 @@ const BasePoolList: FC<{
   const [delegatedFilter, setDelegatedFilter] = useState(false)
   const [closedFilter, setClosedFilter] = useState(false)
   const [stakePoolOrderBy, setStakePoolOrderBy] =
-    useState<BasePoolOrderByInput>(() =>
-      getDefaultOrderBy(variant, BasePoolKind.StakePool)
-    )
-  const [vaultOrderBy, setVaultOrderBy] = useState<BasePoolOrderByInput>(() =>
-    getDefaultOrderBy(variant, BasePoolKind.Vault)
-  )
+    useState<BasePoolOrderByInput>(defaultOrderBy)
+  const [vaultOrderBy, setVaultOrderBy] =
+    useState<BasePoolOrderByInput>(defaultOrderBy)
   const [searchString, setSearchString] = useState('')
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const debouncedSetSearchString = useCallback(
@@ -190,18 +178,23 @@ const BasePoolList: FC<{
   )
 
   return (
-    <Stack direction="row" sx={sx}>
+    <Stack direction="row" sx={sx} alignItems="flex-start" minHeight="100vh">
       {variant === 'delegate' && (
-        <Box width={256} display={{xs: 'none', xl: 'block'}}>
+        <Box
+          width={256}
+          display={{xs: 'none', xl: 'block'}}
+          position="sticky"
+          top="80px"
+        >
           {filters}
         </Box>
       )}
       <Box flex="1 0">
-        <Stack direction="row" spacing={{xs: 1, md: 2}} ml={{xs: 0, xl: -2}}>
+        <Stack direction="row" spacing={{xs: 1, md: 2}} alignItems="center">
           <IconButton
             sx={{
               display: {
-                xs: variant === 'delegate' ? 'block' : 'none',
+                xs: variant === 'delegate' ? undefined : 'none',
                 xl: 'none',
               },
             }}
@@ -216,7 +209,7 @@ const BasePoolList: FC<{
             size="small"
             InputProps={{endAdornment: <Search />}}
             onChange={(e) => debouncedSetSearchString(e.target.value)}
-            sx={{flex: '1 0'}}
+            sx={{flex: '1 0', ml: {xl: '0!important'}}}
           />
           <TextField
             color={color}

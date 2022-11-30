@@ -1,9 +1,9 @@
+import Property from '@/components/Property'
 import {BasePoolCommonFragment} from '@/lib/subsquid'
 import {Box, Stack, SxProps} from '@mui/material'
-import {formatCurrency, toFixed} from '@phala/util'
+import {toCurrency, toFixed} from '@phala/util'
 import Decimal from 'decimal.js'
 import {FC} from 'react'
-import Property from './Property'
 
 const ExtraProperties: FC<{basePool: BasePoolCommonFragment; sx?: SxProps}> = ({
   basePool,
@@ -19,9 +19,7 @@ const ExtraProperties: FC<{basePool: BasePoolCommonFragment; sx?: SxProps}> = ({
       <Stack flex="1 0" spacing={0.5}>
         {stakePool && (
           <Property size="small" label="Capacity">
-            {stakePool.capacity
-              ? `${formatCurrency(stakePool.capacity)} PHA`
-              : '∞'}
+            {stakePool.capacity ? `${toCurrency(stakePool.capacity)} PHA` : '∞'}
           </Property>
         )}
         <Property size="small" label="Commission">
@@ -47,17 +45,17 @@ const ExtraProperties: FC<{basePool: BasePoolCommonFragment; sx?: SxProps}> = ({
       <Stack flex="1 0" spacing={0.5}>
         {stakePool && (
           <Property size="small" label="Delegation">
-            {`${formatCurrency(basePool.totalValue)} PHA`}
+            {`${toCurrency(basePool.totalValue)} PHA`}
           </Property>
         )}
         <Property size="small" label="Free">
-          {`${formatCurrency(basePool.freeValue)} PHA`}
+          {`${toCurrency(basePool.freeValue)} PHA`}
         </Property>
         <Property size="small" label="Withdrawing">
-          {`${formatCurrency(basePool.withdrawalValue)} PHA`}
+          {`${toCurrency(basePool.withdrawalValue)} PHA`}
         </Property>
         <Property size="small" label="Price">
-          {`${formatCurrency(basePool.sharePrice)} PHA`}
+          {`${toCurrency(basePool.sharePrice)} PHA`}
         </Property>
       </Stack>
     </Stack>

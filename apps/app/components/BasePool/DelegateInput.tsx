@@ -6,6 +6,7 @@ import {barlow} from '@/lib/theme'
 import {LoadingButton} from '@mui/lab'
 import {Stack, SxProps, TextField, Typography} from '@mui/material'
 import {getDecimalPattern} from '@phala/util'
+import Decimal from 'decimal.js'
 import {FC, useMemo, useState} from 'react'
 
 const DelegateInput: FC<{basePool: BasePoolCommonFragment; sx?: SxProps}> = ({
@@ -18,13 +19,14 @@ const DelegateInput: FC<{basePool: BasePoolCommonFragment; sx?: SxProps}> = ({
   const [loading, setLoading] = useState(false)
   const selectedVaultState = useSelectedVaultState()
   const signAndSend = useSignAndSend()
-  const [amount, setAmount] = useState('')
+  const [amountString, setAmountString] = useState('')
   const asAccount = selectedVaultState === null
   const disabled = useMemo(() => {
-    return !amount || selectedVaultState === undefined
-  }, [amount, selectedVaultState])
+    return !amountString || selectedVaultState === undefined
+  }, [amountString, selectedVaultState])
   const delegate = () => {
     if (!api || selectedVaultState === undefined) return
+    const amount = new Decimal(amountString).times(1e12).toString()
     setLoading(true)
     const extrinsic =
       kind === BasePoolKind.StakePool
@@ -35,9 +37,17 @@ const DelegateInput: FC<{basePool: BasePoolCommonFragment; sx?: SxProps}> = ({
           )
         : api.tx.phalaVault.contribute(basePool.pid, amount)
 
-    signAndSend(extrinsic)
+    signAndSend(
+      asAccount
+        ? api.tx.utility.batchAll([
+            // TODO: use current w-pha balance
+            api.tx.phalaWrappedBalances.wrap(amount),
+            extrinsic,
+          ])
+        : extrinsic
+    )
       .then(() => {
-        setAmount('')
+        setAmountString('')
       })
       .finally(() => {
         setLoading(false)
@@ -49,7 +59,7 @@ const DelegateInput: FC<{basePool: BasePoolCommonFragment; sx?: SxProps}> = ({
         <TextField
           placeholder="0.00"
           disabled={loading}
-          value={amount}
+          value={amountString}
           InputProps={{
             endAdornment: 'PHA',
             sx: {fontFamily: barlow.style.fontFamily, fontWeight: 600},
@@ -60,7 +70,7 @@ const DelegateInput: FC<{basePool: BasePoolCommonFragment; sx?: SxProps}> = ({
           size="small"
           onChange={(e) => {
             if (!e.target.validity.patternMismatch) {
-              setAmount(e.target.value)
+              setAmountString(e.target.value)
             }
           }}
         />

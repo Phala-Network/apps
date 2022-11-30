@@ -5,7 +5,7 @@ import useAccountQuery from '@/hooks/useAccountQuery'
 import {BasePoolKind} from '@/lib/subsquid'
 import {LoadingButton} from '@mui/lab'
 import {Box, Skeleton, Stack, Typography} from '@mui/material'
-import {formatCurrency} from '@phala/util'
+import {toCurrency} from '@phala/util'
 import {FC} from 'react'
 
 const MyStakePools: FC = () => {
@@ -32,7 +32,7 @@ const MyStakePools: FC = () => {
           {isLoading ? (
             <Skeleton width={100} />
           ) : (
-            `${formatCurrency(stakePoolOwnerReward)} PHA`
+            `${toCurrency(stakePoolOwnerReward)} PHA`
           )}
         </Typography>
 

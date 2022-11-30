@@ -1,8 +1,10 @@
 import StakePoolIcon from '@/assets/stake_pool_detailed.svg'
 import VaultIcon from '@/assets/vault_detailed.svg'
 import CollapsedIcon from '@/components/CollapsedIcon'
+import Property from '@/components/Property'
 import useGetApr from '@/hooks/useGetApr'
-import getApy from '@/lib/getApy'
+import aprToApy from '@/lib/aprToApy'
+import getPoolPath from '@/lib/getPoolPath'
 import {BasePoolCommonFragment} from '@/lib/subsquid'
 import {colors} from '@/lib/theme'
 import {Settings} from '@mui/icons-material'
@@ -20,10 +22,9 @@ import {
   Typography,
   useTheme,
 } from '@mui/material'
-import {formatCurrency} from '@phala/util'
+import {toCurrency, toPercentage} from '@phala/util'
 import {FC, useState} from 'react'
 import ExtraProperties from './ExtraProperties'
-import Property from './Property'
 
 const FarmCard: FC<{
   basePool: BasePoolCommonFragment
@@ -57,6 +58,8 @@ const FarmCard: FC<{
     </Stack>
   )
 
+  const apr = getApr(basePool.aprMultiplier)
+
   return (
     <Paper>
       <Stack
@@ -80,7 +83,7 @@ const FarmCard: FC<{
             <Link
               color="inherit"
               variant="num2"
-              href={`/${stakePool ? 'stake-pool' : 'vault'}/${basePool.pid}`}
+              href={getPoolPath(basePool.kind, basePool.id)}
               target="_blank"
               rel="noopener"
               sx={{textDecorationColor: alpha(theme.palette.text.primary, 0.4)}}
@@ -93,37 +96,41 @@ const FarmCard: FC<{
         <Stack direction="row" spacing={2}>
           {stakePool && (
             <Property label="Est. APR" sx={{width: 64, flexShrink: '0'}}>
-              {(
+              {apr ? (
                 <Box component="span" color={colors.main[300]}>
-                  {getApr(stakePool.aprMultiplier)}
+                  {toPercentage(apr)}
                 </Box>
-              ) || <Skeleton />}
+              ) : (
+                <Skeleton width={32} />
+              )}
             </Property>
           )}
           {stakePool && (
             <Property label="Delegable" sx={{width: 120}}>
               {stakePool.delegable
-                ? `${formatCurrency(stakePool.delegable)} PHA`
+                ? `${toCurrency(stakePool.delegable)} PHA`
                 : '∞'}
             </Property>
           )}
           {stakePool && (
             <Property label="Owner Reward" sx={{width: 120}}>
-              {`${formatCurrency(stakePool.ownerReward)} PHA`}
+              {`${toCurrency(stakePool.ownerReward)} PHA`}
             </Property>
           )}
           {vault && (
             <Property label="Est. APY" sx={{width: 64, flexShrink: '0'}}>
-              {(
+              {apr ? (
                 <Box component="span" color={colors.vault[400]}>
-                  {getApy(vault.apr)}
+                  {toPercentage(aprToApy(apr))}
                 </Box>
-              ) || <Skeleton />}
+              ) : (
+                <Skeleton width={32} />
+              )}
             </Property>
           )}
           {vault && (
             <Property label="TVL" sx={{width: 120}}>
-              {`${formatCurrency(basePool.totalValue)} PHA`}
+              {`${toCurrency(basePool.totalValue)} PHA`}
             </Property>
           )}
           {vault && (

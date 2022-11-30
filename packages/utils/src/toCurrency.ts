@@ -1,7 +1,7 @@
 import Decimal from 'decimal.js'
 import {toFixed} from './toFixed'
 
-export function formatCurrency(
+export function toCurrency(
   value: Decimal | string | number,
   fractionDigits = 2
 ): string {

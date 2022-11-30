@@ -2,8 +2,9 @@ import StakePoolIcon from '@/assets/stake_pool_detailed.svg'
 import VaultIcon from '@/assets/vault_detailed.svg'
 import DelegatorSelect from '@/components/DelegatorSelect'
 import PageHeader from '@/components/PageHeader'
+import Property from '@/components/Property'
 import useGetApr from '@/hooks/useGetApr'
-import getApy from '@/lib/getApy'
+import aprToApy from '@/lib/aprToApy'
 import {subsquidClient} from '@/lib/graphql'
 import {BasePoolKind, IdentityLevel, useBasePoolByIdQuery} from '@/lib/subsquid'
 import {colors} from '@/lib/theme'
@@ -27,12 +28,11 @@ import {
   Typography,
   useTheme,
 } from '@mui/material'
-import {formatCurrency, trimAddress} from '@phala/util'
+import {toCurrency, toPercentage, trimAddress} from '@phala/util'
 import type {ParsedUrlQuery} from 'querystring'
 import {FC} from 'react'
 import DelegateInput from './DelegateInput'
 import ExtraProperties from './ExtraProperties'
-import Property from './Property'
 import Whitelists from './Whitelists'
 import WithdrawQueue from './WithdrawQueue'
 import Workers from './Workers'
@@ -66,7 +66,10 @@ const DetailPage: FC<{kind: BasePoolKind; pid: ParsedUrlQuery[string]}> = ({
       </IconButton>
     </>
   )
-  if (isVault === !vault) return null
+  const apr = basePool?.aprMultiplier
+    ? getApr(basePool.aprMultiplier)
+    : undefined
+  if (data && isVault === !vault) return null
   return (
     <>
       <PageHeader
@@ -96,44 +99,50 @@ const DetailPage: FC<{kind: BasePoolKind; pid: ParsedUrlQuery[string]}> = ({
                 alignItems="center"
                 width={{xs: 1, sm: 'initial'}}
               >
-                {stakePool && (
+                {!isVault && (
                   <StakePoolIcon width={48} color={colors.main[300]} />
                 )}
-                {vault && <VaultIcon width={48} color={colors.vault[400]} />}
+                {isVault && <VaultIcon width={48} color={colors.vault[400]} />}
                 <Box flex="1 0" width={108}>
-                  <Typography variant="num2">{`#${pid}`}</Typography>
+                  <Typography variant="num2">
+                    {isPidValid ? `#${pid}` : ''}
+                  </Typography>
                 </Box>
                 <Box display={{xs: 'block', sm: 'none'}}>{actions}</Box>
               </Stack>
               <Stack direction="row" spacing={2} alignItems="center" flex="1 0">
                 {stakePool && (
                   <Property label="Est. APR" sx={{width: 64, flexShrink: '0'}}>
-                    {(
+                    {apr ? (
                       <Box component="span" color={colors.main[300]}>
-                        {getApr(stakePool.aprMultiplier)}
+                        {toPercentage(apr)}
                       </Box>
-                    ) || <Skeleton />}
+                    ) : (
+                      <Skeleton width={32} />
+                    )}
                   </Property>
                 )}
                 {stakePool && (
                   <Property label="Delegable" sx={{width: 120}}>
                     {stakePool.delegable
-                      ? `${formatCurrency(stakePool.delegable)} PHA`
+                      ? `${toCurrency(stakePool.delegable)} PHA`
                       : '∞'}
                   </Property>
                 )}
                 {vault && (
                   <Property label="Est. APY" sx={{width: 64, flexShrink: '0'}}>
-                    {(
+                    {apr ? (
                       <Box component="span" color={colors.vault[400]}>
-                        {getApy(vault.apr)}
+                        {toPercentage(aprToApy(apr))}
                       </Box>
-                    ) || <Skeleton />}
+                    ) : (
+                      <Skeleton width={32} />
+                    )}
                   </Property>
                 )}
                 {vault && (
                   <Property label="TVL" sx={{width: 120}}>
-                    {basePool && `${formatCurrency(basePool.totalValue)} PHA`}
+                    {basePool && `${toCurrency(basePool.totalValue)} PHA`}
                   </Property>
                 )}
                 <Stack flex="1 0" direction="row">
@@ -184,25 +193,27 @@ const DetailPage: FC<{kind: BasePoolKind; pid: ParsedUrlQuery[string]}> = ({
             }}
           >
             <Stack direction="row" alignItems="center" spacing={1}>
-              <Link
-                variant="h6"
-                color="inherit"
-                href={`https://khala.subscan.io/account/${owner?.id}`}
-                target="_blank"
-                rel="noopener"
-                overflow="hidden"
-                textOverflow="ellipsis"
-                whiteSpace="nowrap"
-                sx={{
-                  textDecorationColor: alpha(theme.palette.text.primary, 0.4),
-                }}
-              >
-                {owner ? (
-                  owner.identityDisplay || trimAddress(owner.id)
-                ) : (
+              {owner ? (
+                <Link
+                  variant="h6"
+                  color="inherit"
+                  href={`https://khala.subscan.io/account/${owner?.id}`}
+                  target="_blank"
+                  rel="noopener"
+                  overflow="hidden"
+                  textOverflow="ellipsis"
+                  whiteSpace="nowrap"
+                  sx={{
+                    textDecorationColor: alpha(theme.palette.text.primary, 0.4),
+                  }}
+                >
+                  {owner.identityDisplay || trimAddress(owner.id)}
+                </Link>
+              ) : (
+                <Typography variant="h6" component="div">
                   <Skeleton width={100} />
-                )}
-              </Link>
+                </Typography>
+              )}
               {owner?.identityDisplay && (
                 <>
                   <Tooltip

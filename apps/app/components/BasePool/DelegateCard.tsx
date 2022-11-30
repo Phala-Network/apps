@@ -1,9 +1,11 @@
 import StakePoolIcon from '@/assets/stake_pool_detailed.svg'
 import VaultIcon from '@/assets/vault_detailed.svg'
 import CollapsedIcon from '@/components/CollapsedIcon'
+import Property from '@/components/Property'
 import useGetApr from '@/hooks/useGetApr'
 import usePoolFavorite from '@/hooks/usePoolFavorite'
-import getApy from '@/lib/getApy'
+import aprToApy from '@/lib/aprToApy'
+import getPoolPath from '@/lib/getPoolPath'
 import {BasePoolCommonFragment, IdentityLevel} from '@/lib/subsquid'
 import {colors} from '@/lib/theme'
 import {
@@ -25,11 +27,10 @@ import {
   Typography,
   useTheme,
 } from '@mui/material'
-import {formatCurrency, trimAddress} from '@phala/util'
+import {toCurrency, toPercentage, trimAddress} from '@phala/util'
 import {FC, useState} from 'react'
 import DelegateInput from './DelegateInput'
 import ExtraProperties from './ExtraProperties'
-import Property from './Property'
 
 const DelegateCard: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
   const getApr = useGetApr()
@@ -46,6 +47,7 @@ const DelegateCard: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
       <CollapsedIcon collapsed={collapsed} />
     </Stack>
   )
+  const apr = getApr(basePool.aprMultiplier)
 
   return (
     <Paper>
@@ -82,7 +84,7 @@ const DelegateCard: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
             <Link
               color="inherit"
               variant="num4"
-              href={`/${stakePool ? 'stake-pool' : 'vault'}/${basePool.pid}`}
+              href={getPoolPath(basePool.kind, basePool.id)}
               target="_blank"
               rel="noopener"
               sx={{textDecorationColor: alpha(theme.palette.text.primary, 0.4)}}
@@ -101,6 +103,7 @@ const DelegateCard: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
                   href={`https://khala.subscan.io/account/${owner.id}`}
                   target="_blank"
                   rel="noopener"
+                  lineHeight="24px"
                 >
                   {owner.identityDisplay || trimAddress(owner.id)}
                 </Link>
@@ -133,9 +136,9 @@ const DelegateCard: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
         <Stack direction="row" spacing={2}>
           {stakePool && (
             <Property label="Est. APR" sx={{width: 64, flexShrink: '0'}}>
-              {getApr(stakePool.aprMultiplier) ? (
+              {apr ? (
                 <Box component="span" color={colors.main[300]}>
-                  {getApr(stakePool.aprMultiplier)}
+                  {toPercentage(apr)}
                 </Box>
               ) : (
                 <Skeleton width={32} />
@@ -145,20 +148,24 @@ const DelegateCard: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
           {stakePool && (
             <Property label="Delegable" sx={{width: 120}}>
               {stakePool.delegable
-                ? `${formatCurrency(stakePool.delegable)} PHA`
+                ? `${toCurrency(stakePool.delegable)} PHA`
                 : '∞'}
             </Property>
           )}
           {vault && (
             <Property label="Est. APY" sx={{width: 64, flexShrink: '0'}}>
-              <Box component="span" color={colors.vault[400]}>
-                {getApy(vault.apr)}
-              </Box>
+              {apr ? (
+                <Box component="span" color={colors.vault[400]}>
+                  {toPercentage(aprToApy(apr))}
+                </Box>
+              ) : (
+                <Skeleton width={32} />
+              )}
             </Property>
           )}
           {vault && (
             <Property label="TVL" sx={{width: 120}}>
-              {`${formatCurrency(basePool.totalValue)} PHA`}
+              {`${toCurrency(basePool.totalValue)} PHA`}
             </Property>
           )}
         </Stack>

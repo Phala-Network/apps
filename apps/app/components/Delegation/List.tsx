@@ -5,7 +5,12 @@ import {
   DelegationWhereInput,
   useInfiniteDelegationsConnectionQuery,
 } from '@/lib/subsquid'
-import {FilterList, Search} from '@mui/icons-material'
+import {
+  FilterList,
+  FormatListBulleted,
+  GridView,
+  Search,
+} from '@mui/icons-material'
 import {
   Box,
   Checkbox,
@@ -16,11 +21,15 @@ import {
   Stack,
   SxProps,
   TextField,
+  ToggleButton,
+  ToggleButtonGroup,
   Typography,
 } from '@mui/material'
 import {isTruthy} from '@phala/util'
 import {debounce} from 'lodash-es'
 import {FC, useCallback, useState} from 'react'
+import HorizonCard from './HorizonCard'
+import NftCard from './NftCard'
 
 const orderByEntries: [string, DelegationOrderByInput][] = [
   ['Value high to low', DelegationOrderByInput.ValueDesc],
@@ -30,7 +39,7 @@ const orderByEntries: [string, DelegationOrderByInput][] = [
 ]
 
 const skeleton = [...Array(3)].map((_, index) => (
-  <Skeleton variant="rectangular" key={index} height={101} />
+  <Skeleton variant="rounded" key={index} height={105} />
 ))
 
 const DelegationList: FC<{
@@ -38,6 +47,7 @@ const DelegationList: FC<{
   isVault?: boolean
   sx?: SxProps
 }> = ({address, isVault = false, sx}) => {
+  const [showNftCard, setShowNftCard] = useState(false)
   const [orderBy, setOrderBy] = useState(DelegationOrderByInput.ValueDesc)
   const color = isVault ? 'secondary' : 'primary'
   const [vaultFilter, setVaultFilter] = useState(true)
@@ -126,15 +136,8 @@ const DelegationList: FC<{
         {filters}
       </Box>
       <Box flex="1 0">
-        <Stack direction="row" spacing={{xs: 1, md: 2}} ml={{xs: 0, xl: -2}}>
-          <IconButton
-            sx={{
-              display: {
-                xs: 'block',
-                xl: 'none',
-              },
-            }}
-          >
+        <Stack direction="row" alignItems="center" spacing={{xs: 1, md: 2}}>
+          <IconButton sx={{display: {xl: 'none'}}}>
             <FilterList />
           </IconButton>
           <TextField
@@ -143,7 +146,7 @@ const DelegationList: FC<{
             size="small"
             InputProps={{endAdornment: <Search />}}
             onChange={(e) => debouncedSetSearchString(e.target.value)}
-            sx={{flex: '1 0'}}
+            sx={{flex: '1', ml: {xl: '0!important'}}}
           />
           <TextField
             color={color}
@@ -161,13 +164,35 @@ const DelegationList: FC<{
               </MenuItem>
             ))}
           </TextField>
+          <ToggleButtonGroup
+            color="primary"
+            size="small"
+            value={showNftCard}
+            exclusive
+            onChange={(e, value) => {
+              setShowNftCard(value)
+            }}
+          >
+            <ToggleButton value={true} aria-label="left aligned">
+              <GridView />
+            </ToggleButton>
+            <ToggleButton value={false} aria-label="centered">
+              <FormatListBulleted />
+            </ToggleButton>
+          </ToggleButtonGroup>
         </Stack>
         <Stack spacing={2} mt={2}>
           {isLoading
             ? skeleton
             : data?.pages.map((page, index) => (
                 <Stack key={index} spacing={2}>
-                  {page.delegationsConnection.edges.map((edge) => edge.node.id)}
+                  {page.delegationsConnection.edges.map((edge) =>
+                    showNftCard ? (
+                      <NftCard delegation={edge.node} key={edge.node.id} />
+                    ) : (
+                      <HorizonCard delegation={edge.node} key={edge.node.id} />
+                    )
+                  )}
                 </Stack>
               ))}
         </Stack>

@@ -7,6 +7,7 @@ export const globalStyles = css`
     background-image: linear-gradient(
       to bottom,
       #1f222e 0%,
+      #1f222e 200px,
       ${theme.palette.background.default} 580px
     );
     background-attachment: fixed;
@@ -15,6 +16,7 @@ export const globalStyles = css`
       background-image: linear-gradient(
         to bottom,
         #1f222e 0%,
+        #1f222e 100px,
         ${theme.palette.background.default} 300px
       );
     }

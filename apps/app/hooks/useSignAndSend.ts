@@ -20,10 +20,6 @@ const useSignAndSend = () => {
         account: account.address,
         extrinsic,
         signer: account.wallet?.signer,
-      }).catch((err) => {
-        if (err.message !== 'Cancelled') {
-          throw err
-        }
       })
     },
     [account, api]

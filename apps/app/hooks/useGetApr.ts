@@ -1,6 +1,5 @@
 import {subsquidClient} from '@/lib/graphql'
 import {useGlobalStateQuery, useTokenomicParametersQuery} from '@/lib/subsquid'
-import {toFixed} from '@phala/util'
 import Decimal from 'decimal.js'
 import {useCallback} from 'react'
 
@@ -28,17 +27,12 @@ const useGetApr = () => {
       ) {
         return
       }
-
-      return `${toFixed(
-        new Decimal(budgetPerBlock)
-          .times(new Decimal(treasuryRatio).negated().add(1))
-          .times(ONE_YEAR)
-          .div(averageBlockTime)
-          .div(idleWorkerShares)
-          .times(aprMultiplier)
-          .times(100),
-        2
-      )}%`
+      return new Decimal(budgetPerBlock)
+        .times(new Decimal(treasuryRatio).negated().add(1))
+        .times(ONE_YEAR)
+        .div(averageBlockTime)
+        .div(idleWorkerShares)
+        .times(aprMultiplier)
     },
     [averageBlockTime, budgetPerBlock, idleWorkerShares, treasuryRatio]
   )

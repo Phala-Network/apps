@@ -14,7 +14,7 @@ import {
   useTheme,
 } from '@mui/material'
 import {polkadotAccountAtom} from '@phala/store'
-import {formatCurrency} from '@phala/util'
+import {toCurrency} from '@phala/util'
 import {useAtom} from 'jotai'
 import {FC, useMemo} from 'react'
 
@@ -55,7 +55,7 @@ const DelegatorSelect: FC<{isVault?: boolean}> = ({isVault = false}) => {
       helperText={
         <Typography variant="num7">
           {balance ? (
-            `${formatCurrency(balance)} PHA`
+            `${toCurrency(balance)} PHA`
           ) : (
             <Skeleton width={55} sx={{marginLeft: 'auto'}} />
           )}

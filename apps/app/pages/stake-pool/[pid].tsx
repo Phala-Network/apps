@@ -7,7 +7,6 @@ const StakePool: NextPage = () => {
   const {
     query: {pid},
   } = useRouter()
-  if (typeof pid !== 'string') return null
   return (
     <>
       <DetailPage kind={BasePoolKind.StakePool} pid={pid} />

@@ -1,7 +1,9 @@
 import ClientOnly from '@/components/ClientOnly'
 import useAccountQuery from '@/hooks/useAccountQuery'
 import useAsset from '@/hooks/useAsset'
+import usePolkadotApi from '@/hooks/usePolkadotApi'
 import useSelectedVaultState from '@/hooks/useSelectedVaultState'
+import useSignAndSend from '@/hooks/useSignAndSend'
 import {BasePoolKind} from '@/lib/subsquid'
 import {colors} from '@/lib/theme'
 import {
@@ -15,7 +17,7 @@ import {
   useTheme,
 } from '@mui/material'
 import {polkadotAccountAtom} from '@phala/store'
-import {formatCurrency} from '@phala/util'
+import {toCurrency} from '@phala/util'
 import Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
 import {FC, useMemo} from 'react'
@@ -55,7 +57,7 @@ const DelegateDataCard: FC<{
               '-'
             ) : (
               <>
-                {formatCurrency(value)}
+                {toCurrency(value)}
                 <sub>PHA</sub>
               </>
             ))}
@@ -76,8 +78,10 @@ const DelegateDataCard: FC<{
 const DelegateDetailCard: FC = () => {
   const {data} = useAccountQuery()
   const theme = useTheme()
+  const api = usePolkadotApi()
+  const signAndSend = useSignAndSend()
   const [account] = useAtom(polkadotAccountAtom)
-  const {balance: locked} = useAsset(account?.address, 1)
+  const {balance: wrapped} = useAsset(account?.address, 1)
   const accountState = data?.accountById
   const selectedVaultState = useSelectedVaultState()
   const asAccount = selectedVaultState === null
@@ -95,8 +99,13 @@ const DelegateDetailCard: FC = () => {
 
   const totalValue = useMemo(() => {
     if (!stakePoolValue || !vaultValue) return
-    return formatCurrency(new Decimal(stakePoolValue).plus(vaultValue))
+    return toCurrency(new Decimal(stakePoolValue).plus(vaultValue))
   }, [stakePoolValue, vaultValue])
+
+  const unwrapAll = () => {
+    if (!api) return
+    signAndSend(api.tx.phalaWrappedBalances.unwrapAll())
+  }
 
   return (
     <Paper sx={{p: {xs: 1.5, sm: 2}, background: 'none'}}>
@@ -179,7 +188,7 @@ const DelegateDetailCard: FC = () => {
             color="text.secondary"
             alignSelf="baseline"
           >
-            Locked
+            Wrapped
           </Typography>
           <Typography
             variant="num6"
@@ -189,14 +198,19 @@ const DelegateDetailCard: FC = () => {
             alignSelf="baseline"
           >
             <ClientOnly fallback={<Skeleton width={100} />}>
-              {asAccount ? locked && `${formatCurrency(locked)} PHA` : '-'}
+              {asAccount ? wrapped && `${toCurrency(wrapped)} PHA` : '-'}
             </ClientOnly>
           </Typography>
           <ClientOnly>
             {asAccount && (
               <>
-                <Button variant="text" size="small">
-                  Claim All
+                <Button
+                  variant="text"
+                  size="small"
+                  disabled={!wrapped || wrapped.eq(0)}
+                  onClick={unwrapAll}
+                >
+                  Unwrap All
                 </Button>
                 <Button variant="text" size="small">
                   Track

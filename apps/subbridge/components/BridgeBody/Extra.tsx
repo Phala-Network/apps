@@ -19,7 +19,7 @@ import {
   Typography,
   useTheme,
 } from '@mui/material'
-import {formatCurrency} from '@phala/util'
+import {toCurrency} from '@phala/util'
 import {useAtomValue} from 'jotai'
 import {FC, ReactNode} from 'react'
 
@@ -99,7 +99,7 @@ const ExtraInfo: FC<PaperProps> = ({sx, ...props}) => {
           tooltip="This transaction will charge a bridge fee to cover the destination chain’s gas fee."
         >
           {bridgeFee ? (
-            `${formatCurrency(bridgeFee, 8)} ${asset.symbol}`
+            `${toCurrency(bridgeFee, 8)} ${asset.symbol}`
           ) : (
             <Skeleton width={80} />
           )}
@@ -109,7 +109,7 @@ const ExtraInfo: FC<PaperProps> = ({sx, ...props}) => {
           label="Destination Chain Fee"
           tooltip=" This fee is used to pay the XCM fee of the destination chain."
         >
-          {`${formatCurrency(destChainTransactionFee, 12)} ${asset.symbol}`}
+          {`${toCurrency(destChainTransactionFee, 12)} ${asset.symbol}`}
         </Info>
 
         <Divider />
@@ -118,7 +118,7 @@ const ExtraInfo: FC<PaperProps> = ({sx, ...props}) => {
 
         <Info label="Estimated gas fee">
           {estimatedGas ? (
-            `${formatCurrency(estimatedGas, 8)} ${
+            `${toCurrency(estimatedGas, 8)} ${
               fromChain.kind === 'evm'
                 ? fromChain.currencySymbol
                 : polkadotApi?.registry.chainTokens[0]
