@@ -2319,14 +2319,14 @@ export type BasePoolsConnectionQueryVariables = Exact<{
 
 export type BasePoolsConnectionQuery = { readonly __typename?: 'Query', readonly basePoolsConnection: { readonly __typename?: 'BasePoolsConnection', readonly totalCount: number, readonly pageInfo: { readonly __typename?: 'PageInfo', readonly endCursor: string, readonly hasNextPage: boolean, readonly hasPreviousPage: boolean, readonly startCursor: string }, readonly edges: ReadonlyArray<{ readonly __typename?: 'BasePoolEdge', readonly cursor: string, readonly node: { readonly __typename?: 'BasePool', readonly cid: number, readonly commission: string, readonly delegatorCount: number, readonly freeValue: string, readonly id: string, readonly kind: BasePoolKind, readonly pid: string, readonly aprMultiplier: string, readonly releasingValue: string, readonly sharePrice: string, readonly totalShares: string, readonly totalValue: string, readonly whitelistEnabled: boolean, readonly withdrawalShares: string, readonly withdrawalValue: string, readonly account: { readonly __typename?: 'Account', readonly id: string, readonly stakePoolNftCount: number }, readonly owner: { readonly __typename?: 'Account', readonly id: string, readonly identityDisplay?: string | null, readonly identityLevel?: IdentityLevel | null }, readonly stakePool?: { readonly __typename?: 'StakePool', readonly capacity?: string | null, readonly delegable?: string | null, readonly idleWorkerCount: number, readonly ownerReward: string, readonly workerCount: number } | null, readonly vault?: { readonly __typename?: 'Vault', readonly claimableOwnerShares: string, readonly lastSharePriceCheckpoint: string } | null } }> } };
 
-export type DelegationCommonFragment = { readonly __typename?: 'Delegation', readonly id: string, readonly shares: string, readonly value: string, readonly withdrawalStartTime?: string | null, readonly withdrawalShares: string, readonly withdrawalValue: string, readonly basePool: { readonly __typename?: 'BasePool', readonly id: string, readonly kind: BasePoolKind, readonly aprMultiplier: string, readonly freeValue: string, readonly totalShares: string }, readonly delegationNft?: { readonly __typename?: 'DelegationNft', readonly cid: number, readonly nftId: number } | null, readonly withdrawalNft?: { readonly __typename?: 'DelegationNft', readonly cid: number, readonly nftId: number } | null };
+export type DelegationCommonFragment = { readonly __typename?: 'Delegation', readonly id: string, readonly shares: string, readonly value: string, readonly withdrawalStartTime?: string | null, readonly withdrawalShares: string, readonly withdrawalValue: string, readonly basePool: { readonly __typename?: 'BasePool', readonly id: string, readonly kind: BasePoolKind, readonly aprMultiplier: string, readonly freeValue: string, readonly totalShares: string }, readonly delegationNft?: { readonly __typename?: 'DelegationNft', readonly cid: number, readonly nftId: number } | null, readonly withdrawalNft?: { readonly __typename?: 'DelegationNft', readonly cid: number, readonly nftId: number } | null, readonly account: { readonly __typename?: 'Account', readonly id: string, readonly identityDisplay?: string | null, readonly identityLevel?: IdentityLevel | null } };
 
 export type DelegationByIdQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
 
 
-export type DelegationByIdQuery = { readonly __typename?: 'Query', readonly delegationById?: { readonly __typename?: 'Delegation', readonly id: string, readonly shares: string, readonly value: string, readonly withdrawalStartTime?: string | null, readonly withdrawalShares: string, readonly withdrawalValue: string, readonly basePool: { readonly __typename?: 'BasePool', readonly id: string, readonly kind: BasePoolKind, readonly aprMultiplier: string, readonly freeValue: string, readonly totalShares: string }, readonly delegationNft?: { readonly __typename?: 'DelegationNft', readonly cid: number, readonly nftId: number } | null, readonly withdrawalNft?: { readonly __typename?: 'DelegationNft', readonly cid: number, readonly nftId: number } | null } | null };
+export type DelegationByIdQuery = { readonly __typename?: 'Query', readonly delegationById?: { readonly __typename?: 'Delegation', readonly id: string, readonly shares: string, readonly value: string, readonly withdrawalStartTime?: string | null, readonly withdrawalShares: string, readonly withdrawalValue: string, readonly basePool: { readonly __typename?: 'BasePool', readonly id: string, readonly kind: BasePoolKind, readonly aprMultiplier: string, readonly freeValue: string, readonly totalShares: string }, readonly delegationNft?: { readonly __typename?: 'DelegationNft', readonly cid: number, readonly nftId: number } | null, readonly withdrawalNft?: { readonly __typename?: 'DelegationNft', readonly cid: number, readonly nftId: number } | null, readonly account: { readonly __typename?: 'Account', readonly id: string, readonly identityDisplay?: string | null, readonly identityLevel?: IdentityLevel | null } } | null };
 
 export type DelegationsConnectionQueryVariables = Exact<{
   orderBy: ReadonlyArray<DelegationOrderByInput> | DelegationOrderByInput;
@@ -2336,7 +2336,7 @@ export type DelegationsConnectionQueryVariables = Exact<{
 }>;
 
 
-export type DelegationsConnectionQuery = { readonly __typename?: 'Query', readonly delegationsConnection: { readonly __typename?: 'DelegationsConnection', readonly totalCount: number, readonly edges: ReadonlyArray<{ readonly __typename?: 'DelegationEdge', readonly cursor: string, readonly node: { readonly __typename?: 'Delegation', readonly id: string, readonly shares: string, readonly value: string, readonly withdrawalStartTime?: string | null, readonly withdrawalShares: string, readonly withdrawalValue: string, readonly basePool: { readonly __typename?: 'BasePool', readonly id: string, readonly kind: BasePoolKind, readonly aprMultiplier: string, readonly freeValue: string, readonly totalShares: string }, readonly delegationNft?: { readonly __typename?: 'DelegationNft', readonly cid: number, readonly nftId: number } | null, readonly withdrawalNft?: { readonly __typename?: 'DelegationNft', readonly cid: number, readonly nftId: number } | null } }>, readonly pageInfo: { readonly __typename?: 'PageInfo', readonly endCursor: string, readonly hasNextPage: boolean, readonly hasPreviousPage: boolean, readonly startCursor: string } } };
+export type DelegationsConnectionQuery = { readonly __typename?: 'Query', readonly delegationsConnection: { readonly __typename?: 'DelegationsConnection', readonly totalCount: number, readonly edges: ReadonlyArray<{ readonly __typename?: 'DelegationEdge', readonly cursor: string, readonly node: { readonly __typename?: 'Delegation', readonly id: string, readonly shares: string, readonly value: string, readonly withdrawalStartTime?: string | null, readonly withdrawalShares: string, readonly withdrawalValue: string, readonly basePool: { readonly __typename?: 'BasePool', readonly id: string, readonly kind: BasePoolKind, readonly aprMultiplier: string, readonly freeValue: string, readonly totalShares: string }, readonly delegationNft?: { readonly __typename?: 'DelegationNft', readonly cid: number, readonly nftId: number } | null, readonly withdrawalNft?: { readonly __typename?: 'DelegationNft', readonly cid: number, readonly nftId: number } | null, readonly account: { readonly __typename?: 'Account', readonly id: string, readonly identityDisplay?: string | null, readonly identityLevel?: IdentityLevel | null } } }>, readonly pageInfo: { readonly __typename?: 'PageInfo', readonly endCursor: string, readonly hasNextPage: boolean, readonly hasPreviousPage: boolean, readonly startCursor: string } } };
 
 export type GlobalStateQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2429,6 +2429,11 @@ export const DelegationCommonFragmentDoc = `
   withdrawalNft {
     cid
     nftId
+  }
+  account {
+    id
+    identityDisplay
+    identityLevel
   }
 }
     `;
@@ -2694,6 +2699,7 @@ export const useGlobalStateQuery = <
       fetcher<GlobalStateQuery, GlobalStateQueryVariables>(client, GlobalStateDocument, variables, headers),
       options
     );
+
 export const TokenomicParametersDocument = `
     query TokenomicParameters {
   tokenomicParametersById(id: "0") {
@@ -2720,6 +2726,7 @@ export const useTokenomicParametersQuery = <
       fetcher<TokenomicParametersQuery, TokenomicParametersQueryVariables>(client, TokenomicParametersDocument, variables, headers),
       options
     );
+
 export const BasePoolWhitelistsConnectionDocument = `
     query BasePoolWhitelistsConnection($orderBy: [BasePoolWhitelistOrderByInput!]!, $after: String, $first: Int, $where: BasePoolWhitelistWhereInput) {
   basePoolWhitelistsConnection(

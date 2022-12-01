@@ -12,6 +12,7 @@ const withTM = require('next-transpile-modules')(
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  eslint: {ignoreDuringBuilds: true},
   reactStrictMode: true,
   swcMinify: true,
   webpack(config) {

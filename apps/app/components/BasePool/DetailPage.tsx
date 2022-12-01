@@ -1,11 +1,17 @@
 import StakePoolIcon from '@/assets/stake_pool_detailed.svg'
 import VaultIcon from '@/assets/vault_detailed.svg'
+import NftCard from '@/components/Delegation/NftCard'
 import DelegatorSelect from '@/components/DelegatorSelect'
 import PageHeader from '@/components/PageHeader'
 import Property from '@/components/Property'
 import useGetApr from '@/hooks/useGetApr'
 import aprToApy from '@/lib/aprToApy'
-import {BasePoolCommonFragment, IdentityLevel} from '@/lib/subsquidQuery'
+import {subsquidClient} from '@/lib/graphql'
+import {
+  BasePoolCommonFragment,
+  IdentityLevel,
+  useDelegationByIdQuery,
+} from '@/lib/subsquidQuery'
 import {colors} from '@/lib/theme'
 import {
   RemoveCircleOutline,
@@ -27,7 +33,9 @@ import {
   Typography,
   useTheme,
 } from '@mui/material'
+import {polkadotAccountAtom} from '@phala/store'
 import {toCurrency, toPercentage, trimAddress} from '@phala/util'
+import {useAtom} from 'jotai'
 import {FC} from 'react'
 import DelegateInput from './DelegateInput'
 import ExtraProperties from './ExtraProperties'
@@ -35,6 +43,7 @@ import WhitelistList from './WhitelistList'
 import WithdrawQueue from './WithdrawQueue'
 
 const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
+  const [account] = useAtom(polkadotAccountAtom)
   const {vault, stakePool, owner} = basePool
   const getApr = useGetApr()
   const theme = useTheme()
@@ -52,19 +61,26 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
     </>
   )
   const apr = getApr(basePool.aprMultiplier)
+  const {data} = useDelegationByIdQuery(
+    subsquidClient,
+    {id: `${basePool.id}-${account?.address}`},
+    {
+      enabled: !!account,
+    }
+  )
   return (
     <>
       <PageHeader
         title={`${isVault ? 'Vault' : 'Stake Pool'} #${basePool.pid}`}
         pageTitle={isVault ? 'Vault' : 'Stake Pool'}
       />
-      <Stack spacing={{xs: 2, md: 2.5}}>
+      <Stack spacing={{xs: 2, lg: 2.5}}>
         <Paper sx={{background: 'transparent'}} component="section">
           <Stack
             spacing={2}
             direction={{xs: 'column', lg: 'row'}}
             alignItems={{xs: 'flex-start', lg: 'center'}}
-            sx={{p: {xs: 2, md: 2.5}}}
+            sx={{p: {xs: 2, lg: 2.5}}}
           >
             <Stack
               flex="1 0"
@@ -162,7 +178,7 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
           </Tabs>
         </Paper>
 
-        <Stack direction={{xs: 'column', md: 'row'}} spacing={{xs: 2, md: 2.5}}>
+        <Stack direction={{xs: 'column', lg: 'row'}} spacing={{xs: 2, lg: 2.5}}>
           <Paper
             component="section"
             sx={{
@@ -224,20 +240,26 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
           <Paper
             component="section"
             sx={{
-              px: {xs: 2, md: 3},
-              py: {xs: 1.5, md: 2},
+              position: 'relative',
+              p: 2,
               background: 'transparent',
               flex: '1 0',
             }}
           >
-            <Stack direction="row" justifyContent="space-between">
-              <Typography variant="h6" component="div">
-                Delegation
-              </Typography>
+            <Box position="absolute" right={16} top={16}>
               <DelegatorSelect isVault={isVault} />
+            </Box>
+            <Stack>
+              <Box maxWidth="375px">
+                {data?.delegationById ? (
+                  <NftCard compact delegation={data.delegationById} />
+                ) : (
+                  // TODO: placeholder style
+                  <Box height="240px">No delegation</Box>
+                )}
+              </Box>
             </Stack>
-            <Stack></Stack>
-            <DelegateInput basePool={basePool} />
+            <DelegateInput basePool={basePool} sx={{mt: 3}} />
           </Paper>
         </Stack>
 

@@ -19,7 +19,10 @@ import {toCurrency, toPercentage} from '@phala/util'
 import Decimal from 'decimal.js'
 import {FC} from 'react'
 
-const NftCard: FC<{delegation: DelegationCommonFragment}> = ({delegation}) => {
+const NftCard: FC<{
+  compact?: boolean
+  delegation: DelegationCommonFragment
+}> = ({compact = false, delegation}) => {
   const {value, shares, basePool, delegationNft} = delegation
   const isVault = basePool.kind === 'Vault'
   const color = isVault ? 'secondary' : 'primary'
@@ -34,13 +37,14 @@ const NftCard: FC<{delegation: DelegationCommonFragment}> = ({delegation}) => {
     <Paper
       sx={{
         height: 240,
-        background: colors.cardBackground,
+        background: compact ? 'transparent' : colors.cardBackground,
         display: 'flex',
         overflow: 'hidden',
+        ...(compact && {border: 'none'}),
       }}
     >
-      <Box width={160} bgcolor="gray" flexShrink="0"></Box>
-      <Stack flex="1" py={2} px={2.5}>
+      <Box width={160} bgcolor="gray" flexShrink="0" borderRadius="6px"></Box>
+      <Stack flex="1" py={compact ? 0 : 2} px={2.5}>
         <Box width={140}>
           <Chip
             label={`NO.${delegationNft.nftId}`}

@@ -13,7 +13,9 @@ import {Button, Stack, Theme, ThemeProvider} from '@mui/material'
 import {DataGrid, GridColDef} from '@mui/x-data-grid'
 import {FC, useMemo, useState} from 'react'
 
-const columns: GridColDef<{id: string}>[] = [
+type RowModel = {id: string}
+
+const columns: GridColDef<RowModel>[] = [
   {
     field: 'id',
     headerName: 'Address',
@@ -40,10 +42,10 @@ const WhitelistList: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
       where: {basePool: {id_eq: basePool.id}},
     }
   )
-  const rows = useMemo(() => {
+  const rows = useMemo<RowModel[]>(() => {
     return (
-      data?.basePoolWhitelistsConnection.edges.map((x) => {
-        return {id: x.node.account.id}
+      data?.basePoolWhitelistsConnection.edges.map(({node}) => {
+        return {id: node.account.id}
       }) ?? []
     )
   }, [data])
@@ -55,7 +57,11 @@ const WhitelistList: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
         address
       )
     })
-    signAndSend(calls.length === 1 ? calls[0] : api.tx.utility.batch(calls))
+    signAndSend(
+      calls.length === 1 ? calls[0] : api.tx.utility.batch(calls)
+    ).then(() => {
+      setSelectedAddress([])
+    })
   }
   return (
     <>
@@ -81,22 +87,24 @@ const WhitelistList: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
             ),
           }}
           sx={{
-            height: 400,
-            '& .MuiDataGrid-cell,.MuiDataGrid-columnHeader': {
+            '&,.MuiDataGrid-columnHeaders,.MuiDataGrid-cell,.MuiDataGrid-footerContainer':
+              {borderColor: theme.palette.divider},
+            '.MuiDataGrid-cell,.MuiDataGrid-columnHeader': {
               outline: 'none!important',
             },
-            '& .MuiDataGrid-columnHeader:last-child .MuiDataGrid-columnSeparator':
+            '.MuiDataGrid-columnHeader:last-child .MuiDataGrid-columnSeparator':
               {display: 'none'},
           }}
           loading={isLoading}
           rows={rows}
           columns={columns}
-          pageSize={100}
-          rowsPerPageOptions={[100]}
+          pageSize={5}
           checkboxSelection
+          selectionModel={selectedAddress}
           onSelectionModelChange={(selection) => {
             setSelectedAddress(selection as string[])
           }}
+          autoHeight
           disableColumnMenu
           disableColumnSelector
           disableColumnFilter
