@@ -6,7 +6,7 @@ const ListSkeleton: FC<SkeletonProps & {count?: number}> = ({
   ...props
 }) => (
   <>
-    {[...Array(count)].map((_, index) => (
+    {Array.from({length: count}).map((_, index) => (
       <Skeleton variant="rounded" key={index} {...props} />
     ))}
   </>

@@ -2694,22 +2694,6 @@ export const useGlobalStateQuery = <
       fetcher<GlobalStateQuery, GlobalStateQueryVariables>(client, GlobalStateDocument, variables, headers),
       options
     );
-export const useInfiniteGlobalStateQuery = <
-      TData = GlobalStateQuery,
-      TError = unknown
-    >(
-      pageParamKey: keyof GlobalStateQueryVariables,
-      client: GraphQLClient,
-      variables?: GlobalStateQueryVariables,
-      options?: UseInfiniteQueryOptions<GlobalStateQuery, TError, TData>,
-      headers?: RequestInit['headers']
-    ) =>
-    useInfiniteQuery<GlobalStateQuery, TError, TData>(
-      variables === undefined ? ['GlobalState.infinite'] : ['GlobalState.infinite', variables],
-      (metaData) => fetcher<GlobalStateQuery, GlobalStateQueryVariables>(client, GlobalStateDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
-      options
-    );
-
 export const TokenomicParametersDocument = `
     query TokenomicParameters {
   tokenomicParametersById(id: "0") {
@@ -2736,22 +2720,6 @@ export const useTokenomicParametersQuery = <
       fetcher<TokenomicParametersQuery, TokenomicParametersQueryVariables>(client, TokenomicParametersDocument, variables, headers),
       options
     );
-export const useInfiniteTokenomicParametersQuery = <
-      TData = TokenomicParametersQuery,
-      TError = unknown
-    >(
-      pageParamKey: keyof TokenomicParametersQueryVariables,
-      client: GraphQLClient,
-      variables?: TokenomicParametersQueryVariables,
-      options?: UseInfiniteQueryOptions<TokenomicParametersQuery, TError, TData>,
-      headers?: RequestInit['headers']
-    ) =>
-    useInfiniteQuery<TokenomicParametersQuery, TError, TData>(
-      variables === undefined ? ['TokenomicParameters.infinite'] : ['TokenomicParameters.infinite', variables],
-      (metaData) => fetcher<TokenomicParametersQuery, TokenomicParametersQueryVariables>(client, TokenomicParametersDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
-      options
-    );
-
 export const BasePoolWhitelistsConnectionDocument = `
     query BasePoolWhitelistsConnection($orderBy: [BasePoolWhitelistOrderByInput!]!, $after: String, $first: Int, $where: BasePoolWhitelistWhereInput) {
   basePoolWhitelistsConnection(
