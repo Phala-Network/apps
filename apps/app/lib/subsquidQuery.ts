@@ -2348,6 +2348,26 @@ export type TokenomicParametersQueryVariables = Exact<{ [key: string]: never; }>
 
 export type TokenomicParametersQuery = { readonly __typename?: 'Query', readonly tokenomicParametersById?: { readonly __typename?: 'TokenomicParameters', readonly phaRate: string, readonly budgetPerBlock: string, readonly vMax: string, readonly treasuryRatio: string, readonly k: string, readonly re: string } | null };
 
+export type BasePoolWhitelistsConnectionQueryVariables = Exact<{
+  orderBy: ReadonlyArray<BasePoolWhitelistOrderByInput> | BasePoolWhitelistOrderByInput;
+  after?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<BasePoolWhitelistWhereInput>;
+}>;
+
+
+export type BasePoolWhitelistsConnectionQuery = { readonly __typename?: 'Query', readonly basePoolWhitelistsConnection: { readonly __typename?: 'BasePoolWhitelistsConnection', readonly totalCount: number, readonly edges: ReadonlyArray<{ readonly __typename?: 'BasePoolWhitelistEdge', readonly cursor: string, readonly node: { readonly __typename?: 'BasePoolWhitelist', readonly createTime: string, readonly id: string, readonly account: { readonly __typename?: 'Account', readonly id: string, readonly identityDisplay?: string | null, readonly identityLevel?: IdentityLevel | null } } }>, readonly pageInfo: { readonly __typename?: 'PageInfo', readonly endCursor: string, readonly hasNextPage: boolean, readonly hasPreviousPage: boolean, readonly startCursor: string } } };
+
+export type WorkersConnectionQueryVariables = Exact<{
+  orderBy: ReadonlyArray<WorkerOrderByInput> | WorkerOrderByInput;
+  after?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<WorkerWhereInput>;
+}>;
+
+
+export type WorkersConnectionQuery = { readonly __typename?: 'Query', readonly workersConnection: { readonly __typename?: 'WorkersConnection', readonly totalCount: number, readonly edges: ReadonlyArray<{ readonly __typename?: 'WorkerEdge', readonly cursor: string, readonly node: { readonly __typename?: 'Worker', readonly id: string, readonly confidenceLevel: number, readonly initialScore?: number | null, readonly sMin?: string | null, readonly sMax?: string | null, readonly shares?: string | null, readonly session?: { readonly __typename?: 'Session', readonly coolingDownStartTime?: string | null, readonly pInit: number, readonly pInstant: number, readonly stake: string, readonly state: WorkerState, readonly totalReward: string, readonly v: string, readonly ve: string } | null } }>, readonly pageInfo: { readonly __typename?: 'PageInfo', readonly hasNextPage: boolean, readonly hasPreviousPage: boolean, readonly startCursor: string, readonly endCursor: string } } };
+
 export const BasePoolCommonFragmentDoc = `
     fragment BasePoolCommon on BasePool {
   account {
@@ -2729,5 +2749,134 @@ export const useInfiniteTokenomicParametersQuery = <
     useInfiniteQuery<TokenomicParametersQuery, TError, TData>(
       variables === undefined ? ['TokenomicParameters.infinite'] : ['TokenomicParameters.infinite', variables],
       (metaData) => fetcher<TokenomicParametersQuery, TokenomicParametersQueryVariables>(client, TokenomicParametersDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
+      options
+    );
+
+export const BasePoolWhitelistsConnectionDocument = `
+    query BasePoolWhitelistsConnection($orderBy: [BasePoolWhitelistOrderByInput!]!, $after: String, $first: Int, $where: BasePoolWhitelistWhereInput) {
+  basePoolWhitelistsConnection(
+    orderBy: $orderBy
+    after: $after
+    first: $first
+    where: $where
+  ) {
+    edges {
+      cursor
+      node {
+        account {
+          id
+          identityDisplay
+          identityLevel
+        }
+        createTime
+        id
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+      hasPreviousPage
+      startCursor
+    }
+    totalCount
+  }
+}
+    `;
+export const useBasePoolWhitelistsConnectionQuery = <
+      TData = BasePoolWhitelistsConnectionQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: BasePoolWhitelistsConnectionQueryVariables,
+      options?: UseQueryOptions<BasePoolWhitelistsConnectionQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<BasePoolWhitelistsConnectionQuery, TError, TData>(
+      ['BasePoolWhitelistsConnection', variables],
+      fetcher<BasePoolWhitelistsConnectionQuery, BasePoolWhitelistsConnectionQueryVariables>(client, BasePoolWhitelistsConnectionDocument, variables, headers),
+      options
+    );
+export const useInfiniteBasePoolWhitelistsConnectionQuery = <
+      TData = BasePoolWhitelistsConnectionQuery,
+      TError = unknown
+    >(
+      pageParamKey: keyof BasePoolWhitelistsConnectionQueryVariables,
+      client: GraphQLClient,
+      variables: BasePoolWhitelistsConnectionQueryVariables,
+      options?: UseInfiniteQueryOptions<BasePoolWhitelistsConnectionQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useInfiniteQuery<BasePoolWhitelistsConnectionQuery, TError, TData>(
+      ['BasePoolWhitelistsConnection.infinite', variables],
+      (metaData) => fetcher<BasePoolWhitelistsConnectionQuery, BasePoolWhitelistsConnectionQueryVariables>(client, BasePoolWhitelistsConnectionDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
+      options
+    );
+
+export const WorkersConnectionDocument = `
+    query WorkersConnection($orderBy: [WorkerOrderByInput!]!, $after: String, $first: Int, $where: WorkerWhereInput) {
+  workersConnection(
+    orderBy: $orderBy
+    after: $after
+    first: $first
+    where: $where
+  ) {
+    edges {
+      cursor
+      node {
+        id
+        session {
+          coolingDownStartTime
+          pInit
+          pInstant
+          stake
+          state
+          totalReward
+          v
+          ve
+        }
+        confidenceLevel
+        initialScore
+        sMin
+        sMax
+        shares
+      }
+    }
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+      startCursor
+      endCursor
+    }
+    totalCount
+  }
+}
+    `;
+export const useWorkersConnectionQuery = <
+      TData = WorkersConnectionQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: WorkersConnectionQueryVariables,
+      options?: UseQueryOptions<WorkersConnectionQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<WorkersConnectionQuery, TError, TData>(
+      ['WorkersConnection', variables],
+      fetcher<WorkersConnectionQuery, WorkersConnectionQueryVariables>(client, WorkersConnectionDocument, variables, headers),
+      options
+    );
+export const useInfiniteWorkersConnectionQuery = <
+      TData = WorkersConnectionQuery,
+      TError = unknown
+    >(
+      pageParamKey: keyof WorkersConnectionQueryVariables,
+      client: GraphQLClient,
+      variables: WorkersConnectionQueryVariables,
+      options?: UseInfiniteQueryOptions<WorkersConnectionQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useInfiniteQuery<WorkersConnectionQuery, TError, TData>(
+      ['WorkersConnection.infinite', variables],
+      (metaData) => fetcher<WorkersConnectionQuery, WorkersConnectionQueryVariables>(client, WorkersConnectionDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
       options
     );

@@ -1,3 +1,4 @@
+import NftsIcon from '@/assets/nfts.svg'
 import ListSkeleton from '@/components/ListSkeleton'
 import {subsquidClient} from '@/lib/graphql'
 import {
@@ -19,7 +20,6 @@ import {
   IconButton,
   MenuItem,
   Stack,
-  SxProps,
   TextField,
   ToggleButton,
   ToggleButtonGroup,
@@ -29,6 +29,7 @@ import {
 import {isTruthy} from '@phala/util'
 import {debounce} from 'lodash-es'
 import {FC, useCallback, useState} from 'react'
+import SectionHeader from '../SectionHeader'
 import HorizonCard from './HorizonCard'
 import NftCard from './NftCard'
 
@@ -42,10 +43,11 @@ const orderByEntries: [string, DelegationOrderByInput][] = [
 const DelegationList: FC<{
   address?: string
   isVault?: boolean
-  sx?: SxProps
-}> = ({address, isVault = false, sx}) => {
+}> = ({address, isVault = false}) => {
   const [showNftCard, setShowNftCard] = useState(true)
-  const [orderBy, setOrderBy] = useState(DelegationOrderByInput.ValueDesc)
+  const [orderBy, setOrderBy] = useState<DelegationOrderByInput>(
+    DelegationOrderByInput.ValueDesc
+  )
   const color = isVault ? 'secondary' : 'primary'
   const [vaultFilter, setVaultFilter] = useState(!isVault)
   const [stakePoolFilter, setStakePoolFilter] = useState(true)
@@ -133,77 +135,80 @@ const DelegationList: FC<{
   )
 
   return (
-    <Stack direction="row" sx={sx}>
-      <Box width={256} display={{xs: 'none', xl: 'block'}}>
-        {filters}
-      </Box>
-      <Box flex="1 0">
-        <Stack direction="row" alignItems="center" spacing={{xs: 1, md: 2}}>
-          <IconButton sx={{display: {xl: 'none'}}}>
-            <FilterList />
-          </IconButton>
-          <TextField
-            color={color}
-            placeholder="Search Pid"
-            size="small"
-            InputProps={{endAdornment: <Search />}}
-            onChange={(e) => debouncedSetSearchString(e.target.value)}
-            sx={{flex: '1', ml: {xl: '0!important'}}}
-          />
-          <TextField
-            color={color}
-            size="small"
-            select
-            sx={{width: 180}}
-            value={orderBy}
-            onChange={(e) => {
-              setOrderBy(e.target.value as DelegationOrderByInput)
-            }}
-          >
-            {orderByEntries.map(([label, value]) => (
-              <MenuItem key={value} value={value}>
-                {label}
-              </MenuItem>
-            ))}
-          </TextField>
-          <ToggleButtonGroup
-            color="primary"
-            size="small"
-            value={showNftCard}
-            exclusive
-            onChange={(e, value) => {
-              setShowNftCard(value)
-            }}
-          >
-            <ToggleButton value={true} aria-label="left aligned">
-              <GridView />
-            </ToggleButton>
-            <ToggleButton value={false} aria-label="centered">
-              <FormatListBulleted />
-            </ToggleButton>
-          </ToggleButtonGroup>
-        </Stack>
-        <Stack spacing={2} mt={2}>
-          {isLoading ? (
-            <ListSkeleton height={105} />
-          ) : (
-            data?.pages.map((page, index) => (
-              <Grid container key={index} spacing={2}>
-                {page.delegationsConnection.edges.map((edge) => (
-                  <Grid key={edge.node.id} xs={12} md={showNftCard ? 6 : 12}>
-                    {showNftCard ? (
-                      <NftCard delegation={edge.node} />
-                    ) : (
-                      <HorizonCard delegation={edge.node} />
-                    )}
-                  </Grid>
-                ))}
-              </Grid>
-            ))
-          )}
-        </Stack>
-      </Box>
-    </Stack>
+    <>
+      {isVault && <SectionHeader icon={<NftsIcon />} title="Delegation NFTs" />}
+      <Stack direction="row">
+        <Box width={256} display={{xs: 'none', xl: 'block'}}>
+          {filters}
+        </Box>
+        <Box flex="1 0">
+          <Stack direction="row" alignItems="center" spacing={{xs: 1, md: 2}}>
+            <IconButton sx={{display: {xl: 'none'}}}>
+              <FilterList />
+            </IconButton>
+            <TextField
+              color={color}
+              placeholder="Search Pid"
+              size="small"
+              InputProps={{endAdornment: <Search />}}
+              onChange={(e) => debouncedSetSearchString(e.target.value)}
+              sx={{flex: '1', ml: {xl: '0!important'}}}
+            />
+            <TextField
+              color={color}
+              size="small"
+              select
+              sx={{width: 180}}
+              value={orderBy}
+              onChange={(e) => {
+                setOrderBy(e.target.value as DelegationOrderByInput)
+              }}
+            >
+              {orderByEntries.map(([label, value]) => (
+                <MenuItem key={value} value={value}>
+                  {label}
+                </MenuItem>
+              ))}
+            </TextField>
+            <ToggleButtonGroup
+              color={color}
+              size="small"
+              value={showNftCard}
+              exclusive
+              onChange={(e, value) => {
+                setShowNftCard(value)
+              }}
+            >
+              <ToggleButton value={true} aria-label="left aligned">
+                <GridView />
+              </ToggleButton>
+              <ToggleButton value={false} aria-label="centered">
+                <FormatListBulleted />
+              </ToggleButton>
+            </ToggleButtonGroup>
+          </Stack>
+          <Stack spacing={2} mt={2}>
+            {isLoading ? (
+              <ListSkeleton height={105} />
+            ) : (
+              data?.pages.map((page, index) => (
+                <Grid container key={index} spacing={2}>
+                  {page.delegationsConnection.edges.map((edge) => (
+                    <Grid key={edge.node.id} xs={12} md={showNftCard ? 6 : 12}>
+                      {showNftCard ? (
+                        <NftCard delegation={edge.node} />
+                      ) : (
+                        <HorizonCard delegation={edge.node} />
+                      )}
+                    </Grid>
+                  ))}
+                </Grid>
+              ))
+            )}
+          </Stack>
+        </Box>
+      </Stack>
+    </>
   )
 }
 

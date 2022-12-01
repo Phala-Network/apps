@@ -2324,7 +2324,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mui/utils@npm:^5.10.16":
+"@mui/utils@npm:^5.10.16, @mui/utils@npm:^5.10.3":
   version: 5.10.16
   resolution: "@mui/utils@npm:5.10.16"
   dependencies:
@@ -2336,6 +2336,24 @@ __metadata:
   peerDependencies:
     react: ^17.0.0 || ^18.0.0
   checksum: 2db4ac76544fe19856b5d456b2ddfb55baf505ce24f27f1d06900758d61067b74ceb94069d34cb82467e4be5fa33d613a0f2f947fc7b29315317090ac8cacbeb
+  languageName: node
+  linkType: hard
+
+"@mui/x-data-grid@npm:^5.17.13":
+  version: 5.17.13
+  resolution: "@mui/x-data-grid@npm:5.17.13"
+  dependencies:
+    "@babel/runtime": ^7.18.9
+    "@mui/utils": ^5.10.3
+    clsx: ^1.2.1
+    prop-types: ^15.8.1
+    reselect: ^4.1.6
+  peerDependencies:
+    "@mui/material": ^5.4.1
+    "@mui/system": ^5.4.1
+    react: ^17.0.2 || ^18.0.0
+    react-dom: ^17.0.2 || ^18.0.0
+  checksum: b0e8375222bd18b2a7872ae506ab926a2e85b99e98c182890a0c3bb7e2bd49ee1530eb24cd4829768fac8900d0b8b7ab1a8a8e6ad06a720d7a40c5caa3472be8
   languageName: node
   linkType: hard
 
@@ -2533,6 +2551,7 @@ __metadata:
     "@mui/icons-material": ^5.10.16
     "@mui/lab": 5.0.0-alpha.110
     "@mui/material": ^5.10.16
+    "@mui/x-data-grid": ^5.17.13
     "@next/bundle-analyzer": ^13.0.5
     "@next/font": ^13.0.5
     "@phala/lib": "workspace:^"
@@ -2554,6 +2573,7 @@ __metadata:
     eslint-config-next: ^13.0.5
     graphql: ^16.6.0
     graphql-request: ^5.0.0
+    graphql-tag: ^2.12.6
     jotai: ^1.10.0
     lodash-es: ^4.17.21
     next: ^13.0.5
@@ -8340,7 +8360,6 @@ __metadata:
   resolution: "phala-apps@workspace:."
   dependencies:
     "@types/node": ^16.18.3
-    graphql-tag: ^2.12.6
     husky: ^8.0.2
     prettier: ^2.8.0
     turbo: ^1.6.3
@@ -9584,6 +9603,13 @@ __metadata:
   version: 2.1.1
   resolution: "require-directory@npm:2.1.1"
   checksum: fb47e70bf0001fdeabdc0429d431863e9475e7e43ea5f94ad86503d918423c1543361cc5166d713eaa7029dd7a3d34775af04764bebff99ef413111a5af18c80
+  languageName: node
+  linkType: hard
+
+"reselect@npm:^4.1.6":
+  version: 4.1.7
+  resolution: "reselect@npm:4.1.7"
+  checksum: 738d8e2b8f0dca154ad29de6a209c9fbca2d70ae6788fd85df87f2c74b95a65bbf2d16d43a9e2faff39de34d17a29d706ba08a6b2ee5660c09589edbd19af7e1
   languageName: node
   linkType: hard
 

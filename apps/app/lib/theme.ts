@@ -63,7 +63,7 @@ export const theme = createTheme({
     h4: {
       fontFamily: montserrat.style.fontFamily,
       fontWeight: 500,
-      fontSize: '2.625rem',
+      fontSize: '2.125rem',
     },
     num1: {
       fontFamily: barlow.style.fontFamily,

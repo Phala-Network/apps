@@ -2340,6 +2340,26 @@ type TokenomicParametersQueryVariables = Exact<{ [key: string]: never; }>;
 
 type TokenomicParametersQuery = { readonly __typename?: 'Query', readonly tokenomicParametersById?: { readonly __typename?: 'TokenomicParameters', readonly phaRate: string, readonly budgetPerBlock: string, readonly vMax: string, readonly treasuryRatio: string, readonly k: string, readonly re: string } | null };
 
+type BasePoolWhitelistsConnectionQueryVariables = Exact<{
+  orderBy: ReadonlyArray<BasePoolWhitelistOrderByInput> | BasePoolWhitelistOrderByInput;
+  after?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<BasePoolWhitelistWhereInput>;
+}>;
+
+
+type BasePoolWhitelistsConnectionQuery = { readonly __typename?: 'Query', readonly basePoolWhitelistsConnection: { readonly __typename?: 'BasePoolWhitelistsConnection', readonly totalCount: number, readonly edges: ReadonlyArray<{ readonly __typename?: 'BasePoolWhitelistEdge', readonly cursor: string, readonly node: { readonly __typename?: 'BasePoolWhitelist', readonly createTime: string, readonly id: string, readonly account: { readonly __typename?: 'Account', readonly id: string, readonly identityDisplay?: string | null, readonly identityLevel?: IdentityLevel | null } } }>, readonly pageInfo: { readonly __typename?: 'PageInfo', readonly endCursor: string, readonly hasNextPage: boolean, readonly hasPreviousPage: boolean, readonly startCursor: string } } };
+
+type WorkersConnectionQueryVariables = Exact<{
+  orderBy: ReadonlyArray<WorkerOrderByInput> | WorkerOrderByInput;
+  after?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<WorkerWhereInput>;
+}>;
+
+
+type WorkersConnectionQuery = { readonly __typename?: 'Query', readonly workersConnection: { readonly __typename?: 'WorkersConnection', readonly totalCount: number, readonly edges: ReadonlyArray<{ readonly __typename?: 'WorkerEdge', readonly cursor: string, readonly node: { readonly __typename?: 'Worker', readonly id: string, readonly confidenceLevel: number, readonly initialScore?: number | null, readonly sMin?: string | null, readonly sMax?: string | null, readonly shares?: string | null, readonly session?: { readonly __typename?: 'Session', readonly coolingDownStartTime?: string | null, readonly pInit: number, readonly pInstant: number, readonly stake: string, readonly state: WorkerState, readonly totalReward: string, readonly v: string, readonly ve: string } | null } }>, readonly pageInfo: { readonly __typename?: 'PageInfo', readonly hasNextPage: boolean, readonly hasPreviousPage: boolean, readonly startCursor: string, readonly endCursor: string } } };
+
 export const BasePoolCommonFragmentDoc = gql`
     fragment BasePoolCommon on BasePool {
   account {
@@ -2514,6 +2534,75 @@ export const DelegationCommonFragmentDoc = gql`
   }
 }
     `;
+ const BasePoolWhitelistsConnectionDocument = gql`
+    query BasePoolWhitelistsConnection($orderBy: [BasePoolWhitelistOrderByInput!]!, $after: String, $first: Int, $where: BasePoolWhitelistWhereInput) {
+  basePoolWhitelistsConnection(
+    orderBy: $orderBy
+    after: $after
+    first: $first
+    where: $where
+  ) {
+    edges {
+      cursor
+      node {
+        account {
+          id
+          identityDisplay
+          identityLevel
+        }
+        createTime
+        id
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+      hasPreviousPage
+      startCursor
+    }
+    totalCount
+  }
+}
+    `;
+ const WorkersConnectionDocument = gql`
+    query WorkersConnection($orderBy: [WorkerOrderByInput!]!, $after: String, $first: Int, $where: WorkerWhereInput) {
+  workersConnection(
+    orderBy: $orderBy
+    after: $after
+    first: $first
+    where: $where
+  ) {
+    edges {
+      cursor
+      node {
+        id
+        session {
+          coolingDownStartTime
+          pInit
+          pInstant
+          stake
+          state
+          totalReward
+          v
+          ve
+        }
+        confidenceLevel
+        initialScore
+        sMin
+        sMax
+        shares
+      }
+    }
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+      startCursor
+      endCursor
+    }
+    totalCount
+  }
+}
+    `;
 
 export type SdkFunctionWrapper = <T>(action: (requestHeaders?:Record<string, string>) => Promise<T>, operationName: string, operationType?: string) => Promise<T>;
 
@@ -2542,6 +2631,12 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     TokenomicParameters(variables?: TokenomicParametersQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<TokenomicParametersQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<TokenomicParametersQuery>(TokenomicParametersDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'TokenomicParameters', 'query');
+    },
+    BasePoolWhitelistsConnection(variables: BasePoolWhitelistsConnectionQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<BasePoolWhitelistsConnectionQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<BasePoolWhitelistsConnectionQuery>(BasePoolWhitelistsConnectionDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'BasePoolWhitelistsConnection', 'query');
+    },
+    WorkersConnection(variables: WorkersConnectionQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<WorkersConnectionQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<WorkersConnectionQuery>(WorkersConnectionDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'WorkersConnection', 'query');
     }
   };
 }

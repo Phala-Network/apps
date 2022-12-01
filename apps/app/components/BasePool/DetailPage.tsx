@@ -31,9 +31,8 @@ import {toCurrency, toPercentage, trimAddress} from '@phala/util'
 import {FC} from 'react'
 import DelegateInput from './DelegateInput'
 import ExtraProperties from './ExtraProperties'
-import Whitelists from './Whitelists'
+import WhitelistList from './WhitelistList'
 import WithdrawQueue from './WithdrawQueue'
-import Workers from './Workers'
 
 const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
   const {vault, stakePool, owner} = basePool
@@ -60,7 +59,7 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
         pageTitle={isVault ? 'Vault' : 'Stake Pool'}
       />
       <Stack spacing={{xs: 2, md: 2.5}}>
-        <Paper sx={{background: 'transparent'}}>
+        <Paper sx={{background: 'transparent'}} component="section">
           <Stack
             spacing={2}
             direction={{xs: 'column', lg: 'row'}}
@@ -149,6 +148,7 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
         </Paper>
 
         <Paper
+          component="section"
           sx={{
             p: {xs: 1, md: 2},
             pt: {xs: 0.5, md: 1},
@@ -164,6 +164,7 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
 
         <Stack direction={{xs: 'column', md: 'row'}} spacing={{xs: 2, md: 2.5}}>
           <Paper
+            component="section"
             sx={{
               p: {xs: 2, md: 3},
               pt: {xs: 1.5, md: 2},
@@ -221,6 +222,7 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
             </Stack>
           </Paper>
           <Paper
+            component="section"
             sx={{
               px: {xs: 2, md: 3},
               py: {xs: 1.5, md: 2},
@@ -239,9 +241,12 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
           </Paper>
         </Stack>
 
-        <WithdrawQueue basePool={basePool} />
-        <Whitelists basePool={basePool} />
-        {stakePool && <Workers basePool={basePool} />}
+        <Box component="section">
+          <WithdrawQueue basePool={basePool} />
+        </Box>
+        <Box component="section">
+          <WhitelistList basePool={basePool} />
+        </Box>
       </Stack>
     </>
   )

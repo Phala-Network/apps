@@ -5,15 +5,20 @@ import getBasePoolServerSideProps, {
 } from '@/lib/getBasePoolServerSideProps'
 import {subsquidClient} from '@/lib/graphql'
 import {useBasePoolByIdQuery} from '@/lib/subsquidQuery'
+import {Box} from '@mui/material'
 import {NextPage} from 'next'
 
 export const getServerSideProps = getBasePoolServerSideProps('Vault')
 
-const Vault: NextPage<BasePoolServerSideProps> = ({pid, basePoolQuery}) => {
+const Vault: NextPage<BasePoolServerSideProps> = ({
+  pid,
+  initialData,
+  initialDataUpdatedAt,
+}) => {
   const {data} = useBasePoolByIdQuery(
     subsquidClient,
     {id: pid},
-    {initialData: basePoolQuery}
+    {initialData, initialDataUpdatedAt}
   )
 
   const basePool = data?.basePoolById
@@ -22,7 +27,10 @@ const Vault: NextPage<BasePoolServerSideProps> = ({pid, basePoolQuery}) => {
   return (
     <>
       <DetailPage basePool={basePool} />
-      <DelegationList isVault />
+
+      <Box component="section">
+        <DelegationList isVault address={basePool.account.id} />
+      </Box>
     </>
   )
 }

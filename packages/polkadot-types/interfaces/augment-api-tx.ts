@@ -1938,6 +1938,34 @@ declare module '@polkadot/api-base/types/submittable' {
        **/
       [key: string]: SubmittableExtrinsicFunction<ApiType>;
     };
+    phalaBasePool: {
+      /**
+       * Adds a staker accountid to contribution whitelist.
+       * 
+       * Calling this method will forbide stakers contribute who isn't in the whitelist.
+       * The caller must be the owner of the pool.
+       * If a pool hasn't registed in the wihtelist map, any staker could contribute as what they use to do.
+       * The whitelist has a lmit len of 100 stakers.
+       **/
+      addStakerToWhitelist: AugmentedSubmittable<(pid: u64 | AnyNumber | Uint8Array, staker: AccountId32 | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [u64, AccountId32]>;
+      /**
+       * Removes a staker accountid to contribution whitelist.
+       * 
+       * The caller must be the owner of the pool.
+       * If the last staker in the whitelist is removed, the pool will return back to a normal pool that allow anyone to contribute.
+       **/
+      removeStakerFromWhitelist: AugmentedSubmittable<(pid: u64 | AnyNumber | Uint8Array, staker: AccountId32 | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [u64, AccountId32]>;
+      /**
+       * Adds a description to the pool
+       * 
+       * The caller must be the owner of the pool.
+       **/
+      setPoolDescription: AugmentedSubmittable<(pid: u64 | AnyNumber | Uint8Array, description: Bytes | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [u64, Bytes]>;
+      /**
+       * Generic tx
+       **/
+      [key: string]: SubmittableExtrinsicFunction<ApiType>;
+    };
     phalaComputation: {
       /**
        * Triggers a force heartbeat request to all workers by sending a MAX pow target

@@ -4,7 +4,8 @@ import {BasePoolByIdQuery, BasePoolKind} from './subsquidQuery'
 
 export type BasePoolServerSideProps = {
   pid: string
-  basePoolQuery: BasePoolByIdQuery
+  initialData: BasePoolByIdQuery
+  initialDataUpdatedAt: number
 }
 
 const getBasePoolServerSideProps =
@@ -14,11 +15,13 @@ const getBasePoolServerSideProps =
     if (typeof pid !== 'string') {
       throw new Error('Invalid pid')
     }
-    const basePoolQuery = await subsquidSdk.BasePoolById({id: pid})
-    if (basePoolQuery.basePoolById?.kind !== kind) {
+    const initialData = await subsquidSdk.BasePoolById({id: pid})
+    if (initialData.basePoolById?.kind !== kind) {
       return {notFound: true}
     }
-    return {props: {pid, basePoolQuery}}
+    return {
+      props: {pid, initialData, initialDataUpdatedAt: new Date().getTime()},
+    }
   }
 
 export default getBasePoolServerSideProps

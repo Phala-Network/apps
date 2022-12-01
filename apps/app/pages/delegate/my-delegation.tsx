@@ -2,7 +2,7 @@ import DelegateChartCard from '@/components/DelegateChartCard'
 import DelegateDetailCard from '@/components/DelegateDetailCard'
 import DelegationList from '@/components/Delegation/List'
 import PageHeader from '@/components/PageHeader'
-import {Stack} from '@mui/material'
+import {Box, Stack} from '@mui/material'
 import {polkadotAccountAtom} from '@phala/store'
 import {useAtom} from 'jotai'
 import {FC} from 'react'
@@ -20,10 +20,9 @@ const MyDelegation: FC = () => {
         <DelegateDetailCard />
         <DelegateChartCard />
       </Stack>
-      <DelegationList
-        sx={{mt: {xs: 2, md: 5}}}
-        address={polkadotAccount?.address}
-      />
+      <Box mt={{xs: 2, md: 5}} component="section">
+        <DelegationList address={polkadotAccount?.address} />
+      </Box>
     </>
   )
 }
