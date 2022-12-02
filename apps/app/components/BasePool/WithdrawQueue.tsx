@@ -110,6 +110,7 @@ const WithdrawQueue: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
         rows={rows}
         columns={columns}
         pageSize={5}
+        rowsPerPageOptions={[5]}
         disableColumnMenu
         disableColumnSelector
         disableColumnFilter

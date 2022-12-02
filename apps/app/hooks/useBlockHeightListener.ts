@@ -17,7 +17,6 @@ const useBlockHeightListener = () => {
     if (height && queryClient) {
       if (enabled.current) {
         queryClient.invalidateQueries(['AccountById'])
-        queryClient.invalidateQueries(['TokenomicParameters'])
         queryClient.invalidateQueries(['BasePoolsConnection.infinite"'])
       } else {
         // Skip the first time

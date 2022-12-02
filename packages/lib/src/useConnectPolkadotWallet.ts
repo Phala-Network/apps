@@ -1,10 +1,8 @@
-import {polkadotAccountsAtom, walletAtom} from '@phala/store'
+import {polkadotAccountsAtom, walletAtom, walletNameAtom} from '@phala/store'
 import {transformAddress} from '@phala/util'
 import {WalletAccount} from '@talismn/connect-wallets'
 import {useAtom} from 'jotai'
 import {useEffect} from 'react'
-
-const TALISMAN_STORAGE_KEY = '@talisman-connect/selected-wallet-name'
 
 export const useConnectPolkadotWallet = (
   dappName: string,
@@ -12,14 +10,14 @@ export const useConnectPolkadotWallet = (
 ): void => {
   const [, setAccounts] = useAtom(polkadotAccountsAtom)
   const [wallet, setWallet] = useAtom(walletAtom)
+  const [walletName] = useAtom(walletNameAtom)
 
   useEffect(() => {
-    const storageWalletName = localStorage.getItem(TALISMAN_STORAGE_KEY)
-    if (!storageWalletName) return
+    if (wallet || !walletName) return
     let unmounted = false
     const connect = async () => {
       const {getWalletBySource} = await import('@talismn/connect-wallets')
-      const newWallet = getWalletBySource(storageWalletName)
+      const newWallet = getWalletBySource(walletName)
       if (newWallet) {
         try {
           await newWallet.enable(dappName)
@@ -35,7 +33,7 @@ export const useConnectPolkadotWallet = (
     return () => {
       unmounted = true
     }
-  }, [setWallet, dappName])
+  }, [setWallet, dappName, walletName, wallet])
 
   useEffect(() => {
     let unsub: () => void

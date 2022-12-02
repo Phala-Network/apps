@@ -1,5 +1,5 @@
 import DetailPage from '@/components/BasePool/DetailPage'
-import WorkerList from '@/components/BasePool/WorkerList'
+import WorkerList from '@/components/BasePool/Worker/List'
 import getBasePoolServerSideProps, {
   BasePoolServerSideProps,
 } from '@/lib/getBasePoolServerSideProps'

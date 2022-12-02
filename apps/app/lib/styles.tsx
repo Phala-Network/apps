@@ -10,7 +10,7 @@ export const globalStyles = css`
       #1f222e 200px,
       ${theme.palette.background.default} 580px
     );
-    background-attachment: fixed;
+    /* background-attachment: fixed; */
 
     ${theme.breakpoints.down('sm')} {
       background-image: linear-gradient(

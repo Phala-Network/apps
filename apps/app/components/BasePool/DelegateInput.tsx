@@ -1,11 +1,13 @@
+import useGetApr from '@/hooks/useGetApr'
 import usePolkadotApi from '@/hooks/usePolkadotApi'
 import useSelectedVaultState from '@/hooks/useSelectedVaultState'
 import useSignAndSend from '@/hooks/useSignAndSend'
+import aprToApy from '@/lib/aprToApy'
 import {BasePoolCommonFragment} from '@/lib/subsquidQuery'
 import {barlow} from '@/lib/theme'
 import {LoadingButton} from '@mui/lab'
-import {Stack, SxProps, TextField, Typography} from '@mui/material'
-import {getDecimalPattern} from '@phala/util'
+import {Skeleton, Stack, SxProps, TextField, Typography} from '@mui/material'
+import {getDecimalPattern, toPercentage} from '@phala/util'
 import Decimal from 'decimal.js'
 import {FC, useMemo, useState} from 'react'
 
@@ -13,9 +15,10 @@ const DelegateInput: FC<{basePool: BasePoolCommonFragment; sx?: SxProps}> = ({
   basePool,
   sx,
 }) => {
-  const {kind} = basePool
-  const color = kind === 'StakePool' ? 'primary' : 'secondary'
+  const isVault = basePool.kind === 'Vault'
+  const color = isVault ? 'secondary' : 'primary'
   const api = usePolkadotApi()
+  const getApr = useGetApr()
   const [loading, setLoading] = useState(false)
   const selectedVaultState = useSelectedVaultState()
   const signAndSend = useSignAndSend()
@@ -28,14 +31,13 @@ const DelegateInput: FC<{basePool: BasePoolCommonFragment; sx?: SxProps}> = ({
     if (!api || selectedVaultState === undefined) return
     const amount = new Decimal(amountString).times(1e12).toString()
     setLoading(true)
-    const extrinsic =
-      kind === 'StakePool'
-        ? api.tx.phalaStakePoolv2.contribute(
-            basePool.pid,
-            amount,
-            asAccount ? null : selectedVaultState.id
-          )
-        : api.tx.phalaVault.contribute(basePool.pid, amount)
+    const extrinsic = isVault
+      ? api.tx.phalaVault.contribute(basePool.pid, amount)
+      : api.tx.phalaStakePoolv2.contribute(
+          basePool.pid,
+          amount,
+          asAccount ? null : selectedVaultState.id
+        )
 
     signAndSend(
       asAccount
@@ -53,6 +55,18 @@ const DelegateInput: FC<{basePool: BasePoolCommonFragment; sx?: SxProps}> = ({
         setLoading(false)
       })
   }
+  const delegatedApr = useMemo(() => {
+    const apr = getApr(basePool.aprMultiplier)
+    if (!apr) return
+    try {
+      const totalValue = new Decimal(basePool.totalValue)
+      const amount = new Decimal(amountString)
+
+      return apr.times(totalValue).div(totalValue.plus(amount))
+    } catch (err) {
+      return '-'
+    }
+  }, [amountString, basePool.aprMultiplier, basePool.totalValue, getApr])
   return (
     <Stack sx={sx} spacing={1}>
       <Stack direction="row" spacing={2}>
@@ -92,9 +106,17 @@ const DelegateInput: FC<{basePool: BasePoolCommonFragment; sx?: SxProps}> = ({
         pl={0.5}
         alignItems="baseline"
       >
-        <Typography variant="caption">Est. delegated APY: </Typography>
+        <Typography variant="caption">{`Est. delegated ${
+          isVault ? 'APY' : 'APR'
+        }: `}</Typography>
         <Typography variant="num7" ml={0.5}>
-          85.32%
+          {typeof delegatedApr === 'string' ? (
+            '-'
+          ) : delegatedApr ? (
+            toPercentage(isVault ? aprToApy(delegatedApr) : delegatedApr)
+          ) : (
+            <Skeleton width={32} />
+          )}
         </Typography>
       </Stack>
     </Stack>

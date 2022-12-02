@@ -72,13 +72,15 @@ const NftCard: FC<{
         </Typography>
 
         <Stack spacing={0.5} mt="auto">
-          <Property size="small" label={`Est. ${isVault ? 'APY' : 'APR'}`}>
-            {apr ? (
-              toPercentage(isVault ? aprToApy(apr) : apr)
-            ) : (
-              <Skeleton width={32} />
-            )}
-          </Property>
+          {!compact && (
+            <Property size="small" label={`Est. ${isVault ? 'APY' : 'APR'}`}>
+              {apr ? (
+                toPercentage(isVault ? aprToApy(apr) : apr)
+              ) : (
+                <Skeleton width={32} />
+              )}
+            </Property>
+          )}
           <Property size="small" label="Shares">
             {toPercentage(new Decimal(shares).div(basePool.totalShares))}
           </Property>

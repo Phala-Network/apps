@@ -99,6 +99,7 @@ const WhitelistList: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
           rows={rows}
           columns={columns}
           pageSize={5}
+          rowsPerPageOptions={[5]}
           checkboxSelection
           selectionModel={selectedAddress}
           onSelectionModelChange={(selection) => {

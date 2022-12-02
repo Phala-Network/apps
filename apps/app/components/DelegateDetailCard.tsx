@@ -1,9 +1,11 @@
 import ClientOnly from '@/components/ClientOnly'
 import useAccountQuery from '@/hooks/useAccountQuery'
 import useAsset from '@/hooks/useAsset'
+import useGetApr from '@/hooks/useGetApr'
 import usePolkadotApi from '@/hooks/usePolkadotApi'
 import useSelectedVaultState from '@/hooks/useSelectedVaultState'
 import useSignAndSend from '@/hooks/useSignAndSend'
+import aprToApy from '@/lib/aprToApy'
 import type {BasePoolKind} from '@/lib/subsquidQuery'
 import {colors} from '@/lib/theme'
 import {
@@ -17,7 +19,7 @@ import {
   useTheme,
 } from '@mui/material'
 import {polkadotAccountAtom} from '@phala/store'
-import {toCurrency} from '@phala/util'
+import {toCurrency, toPercentage} from '@phala/util'
 import Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
 import {FC, useMemo} from 'react'
@@ -26,11 +28,15 @@ import DelegatorSelect from './DelegatorSelect'
 const DelegateDataCard: FC<{
   kind: BasePoolKind
   count?: number
-  value?: string
-}> = ({kind, count, value}) => {
+  value?: string | false
+  aprMultiplier?: string | false
+}> = ({kind, count, value, aprMultiplier}) => {
   const isVault = kind === 'Vault'
   const label = isVault ? 'Vault' : 'Stake Pool'
   const background = isVault ? colors.vault[300] : colors.main[500]
+  const getApr = useGetApr()
+
+  const apr = aprMultiplier && getApr(aprMultiplier)
 
   return (
     <Box
@@ -52,24 +58,27 @@ const DelegateDataCard: FC<{
         mt={{xs: -0.5, md: 0}}
       >
         <ClientOnly fallback={<Skeleton width={64} />}>
-          {value &&
-            (value === '-' ? (
-              '-'
-            ) : (
-              <>
-                {toCurrency(value)}
-                <sub>PHA</sub>
-              </>
-            ))}
+          {value === false
+            ? '-'
+            : value && (
+                <>
+                  {toCurrency(value)}
+                  <sub>PHA</sub>
+                </>
+              )}
         </ClientOnly>
       </Typography>
       <Stack direction="row" alignItems="baseline" spacing={1}>
         <Typography variant="caption" component="div" color="text.secondary">
           {isVault ? 'Est. APY' : 'Est. APR'}
         </Typography>
-        {/* <Typography variant="num7" component="div">
-          34.5%
-        </Typography> */}
+        <Typography variant="num7" component="div">
+          <ClientOnly fallback={<Skeleton width={32} />}>
+            {apr === false
+              ? '-'
+              : apr && toPercentage(isVault ? aprToApy(apr) : apr)}
+          </ClientOnly>
+        </Typography>
       </Stack>
     </Box>
   )
@@ -85,14 +94,23 @@ const DelegateDetailCard: FC = () => {
   const accountState = data?.accountById
   const selectedVaultState = useSelectedVaultState()
   const asAccount = selectedVaultState === null
-  const {stakePoolNftCount, stakePoolValue, vaultNftCount, vaultValue} =
+  const {
+    stakePoolNftCount,
+    stakePoolValue,
+    stakePoolAvgAprMultiplier,
+    vaultNftCount,
+    vaultValue,
+    vaultAvgAprMultiplier,
+  } =
     selectedVaultState?.account ??
     (accountState === null
       ? {
           stakePoolNftCount: 0,
           stakePoolValue: '0',
+          stakePoolAvgAprMultiplier: '0',
           vaultNftCount: 0,
           vaultValue: '0',
+          vaultAvgAprMultiplier: '0',
         }
       : accountState) ??
     {}
@@ -164,12 +182,14 @@ const DelegateDetailCard: FC = () => {
           <DelegateDataCard
             kind="Vault"
             count={vaultNftCount}
-            value={asAccount ? vaultValue : '-'}
+            value={asAccount && vaultValue}
+            aprMultiplier={asAccount && vaultAvgAprMultiplier}
           />
           <DelegateDataCard
             kind="StakePool"
             count={stakePoolNftCount}
             value={stakePoolValue}
+            aprMultiplier={stakePoolAvgAprMultiplier}
           />
         </Stack>
         <Stack
