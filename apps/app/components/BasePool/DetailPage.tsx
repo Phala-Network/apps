@@ -49,15 +49,18 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
   const theme = useTheme()
   const isVault = !!vault
   const color = isVault ? 'secondary' : 'primary'
+  const isOwner = owner.id === account?.address
 
   const ownerVerified =
     owner.identityLevel === IdentityLevel.KnownGood ||
     owner.identityLevel === IdentityLevel.Reasonable
   const actions = (
     <>
-      <IconButton>
-        <Settings />
-      </IconButton>
+      {isOwner && (
+        <IconButton>
+          <Settings />
+        </IconButton>
+      )}
     </>
   )
   const apr = getApr(basePool.aprMultiplier)

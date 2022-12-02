@@ -1,4 +1,5 @@
 import WhitelistsIcon from '@/assets/whitelists.svg'
+import Empty from '@/components/Empty'
 import SectionHeader from '@/components/SectionHeader'
 import usePolkadotApi from '@/hooks/usePolkadotApi'
 import useSignAndSend from '@/hooks/useSignAndSend'
@@ -11,6 +12,8 @@ import {
 import {theme} from '@/lib/theme'
 import {Button, Stack, Theme, ThemeProvider} from '@mui/material'
 import {DataGrid, GridColDef} from '@mui/x-data-grid'
+import {polkadotAccountAtom} from '@phala/store'
+import {useAtom} from 'jotai'
 import {FC, useMemo, useState} from 'react'
 
 type RowModel = {id: string}
@@ -30,6 +33,8 @@ const vaultTheme: Theme = {
 }
 
 const WhitelistList: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
+  const [account] = useAtom(polkadotAccountAtom)
+  const isOwner = account?.address === basePool.owner.id
   const isVault = basePool.kind === 'Vault'
   const color = isVault ? 'secondary' : 'primary'
   const api = usePolkadotApi()
@@ -66,25 +71,23 @@ const WhitelistList: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
   return (
     <>
       <SectionHeader title="Whitelist" icon={<WhitelistsIcon />}>
-        <Stack direction="row" ml="auto" spacing={2}>
-          {selectedAddress.length > 0 && (
-            <Button color={color} onClick={removeSelected}>
-              Remove
+        {isOwner && (
+          <Stack direction="row" ml="auto" spacing={2}>
+            {selectedAddress.length > 0 && (
+              <Button color={color} onClick={removeSelected}>
+                Remove
+              </Button>
+            )}
+            <Button color={color} variant="contained">
+              Add
             </Button>
-          )}
-          <Button color={color} variant="contained">
-            Add
-          </Button>
-        </Stack>
+          </Stack>
+        )}
       </SectionHeader>
       <ThemeProvider theme={isVault ? vaultTheme : theme}>
         <DataGrid
           components={{
-            NoRowsOverlay: () => (
-              <Stack height="100%" alignItems="center" justifyContent="center">
-                No whitelist
-              </Stack>
-            ),
+            NoRowsOverlay: () => <Empty />,
           }}
           sx={{
             '&,.MuiDataGrid-columnHeaders,.MuiDataGrid-cell,.MuiDataGrid-footerContainer':

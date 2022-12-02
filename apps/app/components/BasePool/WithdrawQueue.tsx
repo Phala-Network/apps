@@ -1,4 +1,5 @@
 import WithdrawalQueueIcon from '@/assets/withdraw_queue.svg'
+import Empty from '@/components/Empty'
 import SectionHeader from '@/components/SectionHeader'
 import {subsquidClient} from '@/lib/graphql'
 import {
@@ -6,7 +7,7 @@ import {
   DelegationOrderByInput,
   useDelegationsConnectionQuery,
 } from '@/lib/subsquidQuery'
-import {Stack, useTheme} from '@mui/material'
+import {useTheme} from '@mui/material'
 import {DataGrid, GridColDef, GridSortModel} from '@mui/x-data-grid'
 import {toCurrency} from '@phala/util'
 import {addDays, formatDuration, intervalToDuration, isAfter} from 'date-fns'
@@ -90,11 +91,7 @@ const WithdrawQueue: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
       ></SectionHeader>
       <DataGrid
         components={{
-          NoRowsOverlay: () => (
-            <Stack height="100%" alignItems="center" justifyContent="center">
-              No queued withdrawal
-            </Stack>
-          ),
+          NoRowsOverlay: () => <Empty />,
         }}
         sx={{
           '&,.MuiDataGrid-columnHeaders,.MuiDataGrid-cell,.MuiDataGrid-footerContainer':

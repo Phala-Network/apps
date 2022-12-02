@@ -74,6 +74,10 @@ const Delegate: NextPage = () => {
   const selectedVaultState = useSelectedVaultState()
   const asAccount = selectedVaultState === null
 
+  useEffect(() => {
+    setSwitchChecked(router.query.kind === 'stake-pool')
+  }, [router.query.kind])
+
   const handleSwitchChange = useCallback(
     (checked: boolean) => {
       setSwitchChecked(checked)

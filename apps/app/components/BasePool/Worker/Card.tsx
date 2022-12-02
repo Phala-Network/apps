@@ -63,7 +63,7 @@ const WorkerCard: FC<{worker: Worker; isOwner: boolean}> = ({
             {worker.id}
           </Typography>
           <Stack
-            maxWidth={580}
+            width={580}
             direction={{xs: 'column', sm: 'row'}}
             mt={1}
             spacing={{xs: 0.5, sm: 3}}

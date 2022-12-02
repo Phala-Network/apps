@@ -1,5 +1,7 @@
 import NftsIcon from '@/assets/nfts.svg'
+import Empty from '@/components/Empty'
 import ListSkeleton from '@/components/ListSkeleton'
+import SectionHeader from '@/components/SectionHeader'
 import {subsquidClient} from '@/lib/graphql'
 import {
   BasePoolKind,
@@ -29,7 +31,6 @@ import {
 import {isTruthy} from '@phala/util'
 import {debounce} from 'lodash-es'
 import {FC, useCallback, useState} from 'react'
-import SectionHeader from '../SectionHeader'
 import HorizonCard from './HorizonCard'
 import NftCard from './NftCard'
 
@@ -85,6 +86,7 @@ const DelegationList: FC<{
         lastPage.delegationsConnection.pageInfo.endCursor,
     }
   )
+  const isEmpty = data?.pages[0].delegationsConnection.totalCount === 0
 
   const filters = (
     <Stack spacing={2}>
@@ -190,6 +192,8 @@ const DelegationList: FC<{
           <Stack spacing={2} mt={2}>
             {isLoading ? (
               <ListSkeleton height={105} />
+            ) : isEmpty ? (
+              <Empty sx={{minHeight: 400}} />
             ) : (
               data?.pages.map((page, index) => (
                 <Grid container key={index} spacing={2}>

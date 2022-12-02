@@ -1,26 +1,40 @@
 import PhalaLogo from '@/assets/phala_logo.svg'
 import {montserrat} from '@/lib/theme'
-import {AppBar, Button, Stack, Toolbar, useTheme} from '@mui/material'
+import {AppBar, Button, Stack, Toolbar, Tooltip, useTheme} from '@mui/material'
 import NextLink from 'next/link'
 import {FC} from 'react'
 import Account from './Account'
 import Chain from './Chain'
 
 interface NavItem {
-  name: string
-  href: string
+  label: string
+  href?: string
+  sub?: NavItem[]
 }
 
 const navItems: NavItem[] = [
-  {name: 'dashboard', href: '/'},
-  {name: 'delegate', href: '/delegate/vault'},
-  {name: 'farm', href: '/farm/stake-pool'},
-  {name: 'subBridge', href: 'https://subbridge.io'},
-  {name: 'DAO', href: ''},
+  {label: 'Dashboard', href: '/'},
+  {
+    label: 'Delegate',
+    sub: [
+      {label: 'Vault', href: '/delegate/vault'},
+      {label: 'Stake Pool', href: '/delegate/stake-pool'},
+      {label: 'My Delegation', href: '/delegate/my-delegation'},
+    ],
+  },
+  {
+    label: 'Farm',
+    sub: [
+      {label: 'Vault', href: '/farm/vault'},
+      {label: 'Stake Pool', href: '/farm/stake-pool'},
+    ],
+  },
+  {label: 'SubBridge', href: 'https://subbridge.io'},
+  {label: 'DAO', href: ''},
 ]
 
-const NavItem: FC<{item: NavItem}> = ({item: {name, href}}) => {
-  const isExternal = !href.startsWith('/')
+const NavItem: FC<{item: NavItem}> = ({item: {label, href}}) => {
+  const isExternal = !href || !href.startsWith('/')
   const theme = useTheme()
 
   const link = (
@@ -29,12 +43,11 @@ const NavItem: FC<{item: NavItem}> = ({item: {name, href}}) => {
       className={montserrat.className}
       sx={{
         fontWeight: 600,
-        textTransform: 'capitalize',
         color: theme.palette.text.primary,
       }}
       {...(isExternal && {href, target: '_blank'})}
     >
-      {name}
+      {label}
     </Button>
   )
 
@@ -48,6 +61,8 @@ const NavItem: FC<{item: NavItem}> = ({item: {name, href}}) => {
     </NextLink>
   )
 }
+
+NavItem.displayName = 'NavItem'
 
 const TopBar: FC = () => {
   return (
@@ -70,9 +85,29 @@ const TopBar: FC = () => {
           direction="row"
           display={{xs: 'none', lg: 'flex'}}
         >
-          {navItems.map((item) => (
-            <NavItem key={item.name} item={item} />
-          ))}
+          {navItems.map((item) => {
+            if (!item.sub) {
+              return <NavItem key={item.label} item={item} />
+            }
+            return (
+              <Tooltip
+                enterTouchDelay={0}
+                title={
+                  <Stack>
+                    {item.sub.map((item) => (
+                      <NavItem key={item.label} item={item} />
+                    ))}
+                  </Stack>
+                }
+                placement="bottom-start"
+                key={item.label}
+              >
+                <span>
+                  <NavItem key={item.label} item={item} />
+                </span>
+              </Tooltip>
+            )
+          })}
         </Stack>
         <Stack direction="row" ml="auto" spacing={2}>
           <Chain />

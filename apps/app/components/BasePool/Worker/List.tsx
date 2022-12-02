@@ -1,4 +1,5 @@
 import WorkerIcon from '@/assets/worker.svg'
+import Empty from '@/components/Empty'
 import ListSkeleton from '@/components/ListSkeleton'
 import SectionHeader from '@/components/SectionHeader'
 import {subsquidClient} from '@/lib/graphql'
@@ -25,17 +26,20 @@ const WorkerList: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
     where: {stakePool: {id_eq: basePool.id}},
   })
   const isOwner = account?.address === basePool.owner.id
+  const isEmpty = data?.workersConnection.totalCount === 0
   return (
     <>
       <SectionHeader title="Workers" icon={<WorkerIcon />}>
         <Stack spacing={2} direction="row" ml="auto">
-          <Button>Reclaim All</Button>
+          <Button disabled={isEmpty}>Reclaim All</Button>
           {isOwner && <Button variant="contained">Add</Button>}
         </Stack>
       </SectionHeader>
       <Stack>
         {isLoading ? (
           <ListSkeleton height={94} />
+        ) : isEmpty ? (
+          <Empty sx={{minHeight: 400}} />
         ) : (
           data?.workersConnection.edges.map(({node, cursor}) => (
             <WorkerCard key={cursor} worker={node} isOwner={isOwner} />
@@ -43,7 +47,7 @@ const WorkerList: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
         )}
       </Stack>
 
-      {data?.workersConnection.totalCount && (
+      {data && !isEmpty && (
         <Stack alignItems="center" mt={3}>
           <Pagination
             page={page}

@@ -1,15 +1,27 @@
+import {subsquidClient} from '@/lib/graphql'
+import {useGlobalStateQuery} from '@/lib/subsquidQuery'
 import {Box, Divider, Stack, Typography} from '@mui/material'
+import Decimal from 'decimal.js'
 import {FC, useMemo} from 'react'
 
 const NetworkOverview: FC = () => {
-  const items = useMemo<[string, string][]>(() => {
+  const {data} = useGlobalStateQuery(subsquidClient)
+  const {totalValue} = data?.globalStateById || {}
+  const items = useMemo<[string, string | undefined][]>(() => {
     return [
-      ['Total Value', '131M'],
-      ['Stake Ratio', '44.3%'],
-      ['Daily Rewards', '563K'],
-      ['Avg APR', '61.4%'],
+      [
+        'Total Value',
+        totalValue &&
+          Intl.NumberFormat('en-US', {
+            notation: 'compact',
+            maximumFractionDigits: 2,
+          }).format(BigInt(new Decimal(totalValue).floor().toString())),
+      ],
+      ['Stake Ratio', ''],
+      ['Daily Rewards', ''],
+      ['Avg APR', ''],
     ]
-  }, [])
+  }, [totalValue])
 
   return (
     <Stack
