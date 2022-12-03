@@ -23,7 +23,13 @@ const Property: FC<{
           {children}
         </Typography>
       ) : (
-        <Typography lineHeight={1.3} variant="num7" component="div" ml="auto">
+        <Typography
+          lineHeight={1.3}
+          variant="num7"
+          component="div"
+          ml="auto"
+          sx={{wordBreak: 'break-all'}}
+        >
           {children}
         </Typography>
       )}

@@ -2314,7 +2314,7 @@ export const DelegationCommonFragmentDoc = gql`
     vaultValue
     vaultAvgAprMultiplier
     stakePoolOwnerReward
-    ownedPools(where: {kind_eq: StakePool}, orderBy: pid_ASC) {
+    ownedPools(where: {kind_eq: Vault}, orderBy: pid_ASC, limit: 99) {
       id
       account {
         id

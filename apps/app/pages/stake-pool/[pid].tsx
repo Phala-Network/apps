@@ -10,7 +10,7 @@ import {NextPage} from 'next'
 
 export const getServerSideProps = getBasePoolServerSideProps('StakePool')
 
-const Vault: NextPage<BasePoolServerSideProps> = ({
+const StakePool: NextPage<BasePoolServerSideProps> = ({
   pid,
   initialData,
   initialDataUpdatedAt,
@@ -34,4 +34,4 @@ const Vault: NextPage<BasePoolServerSideProps> = ({
   )
 }
 
-export default Vault
+export default StakePool
