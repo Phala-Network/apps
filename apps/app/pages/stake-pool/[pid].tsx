@@ -18,7 +18,7 @@ const StakePool: NextPage<BasePoolServerSideProps> = ({
   const {data} = useBasePoolByIdQuery(
     subsquidClient,
     {id: pid},
-    {initialData, initialDataUpdatedAt}
+    {initialData: initialData || undefined, initialDataUpdatedAt}
   )
 
   const basePool = data?.basePoolById
