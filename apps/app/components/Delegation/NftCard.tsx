@@ -72,7 +72,11 @@ const NftCard: FC<{
 
         <Stack spacing={0.5} mt="auto">
           {!compact && (
-            <Property size="small" label={`Est. ${isVault ? 'APY' : 'APR'}`}>
+            <Property
+              size="small"
+              label={`Est. ${isVault ? 'APY' : 'APR'}`}
+              sx={{justifyContent: 'space-between'}}
+            >
               {apr ? (
                 toPercentage(isVault ? aprToApy(apr) : apr)
               ) : (
