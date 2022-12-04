@@ -39,12 +39,12 @@ const AddWhitelist: FC<{
       <DialogTitle>Add Whitelist</DialogTitle>
       <DialogContent>
         <TextField
+          label="Address"
           autoFocus
           disabled={loading}
           fullWidth
           multiline
           rows={2}
-          placeholder="Address"
           value={address}
           size="small"
           onChange={(e) => {

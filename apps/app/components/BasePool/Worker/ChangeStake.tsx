@@ -114,6 +114,7 @@ const ChangeStake: FC<{
       </DialogTitle>
       <DialogContent>
         <TextField
+          label="Stake"
           autoFocus
           disabled={loading}
           fullWidth
@@ -135,11 +136,6 @@ const ChangeStake: FC<{
           {!isChangeStake && (
             <Property size="small" label="SMin">
               {sMin ? `${toCurrency(sMin)} PHA` : <Skeleton width={32} />}
-            </Property>
-          )}
-          {isChangeStake && worker.session?.stake && (
-            <Property size="small" label="Current Stake">
-              {`${toCurrency(worker.session.stake)} PHA`}
             </Property>
           )}
           <Property size="small" label="SMax">

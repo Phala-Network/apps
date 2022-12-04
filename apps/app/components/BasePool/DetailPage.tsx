@@ -22,13 +22,12 @@ import {
   alpha,
   Box,
   Chip,
+  Dialog,
   IconButton,
   Link,
   Paper,
   Skeleton,
   Stack,
-  Tab,
-  Tabs,
   Tooltip,
   Typography,
   useTheme,
@@ -36,19 +35,25 @@ import {
 import {polkadotAccountAtom} from '@phala/store'
 import {toCurrency, toPercentage, trimAddress} from '@phala/util'
 import {useAtom} from 'jotai'
-import {FC} from 'react'
+import dynamic from 'next/dynamic'
+import {FC, useState} from 'react'
 import DelegateInput from './DelegateInput'
 import ExtraProperties from './ExtraProperties'
 import WhitelistList from './Whitelist/List'
 import WithdrawQueue from './WithdrawQueue'
 
+const BasePoolOwnerSettings = dynamic(() => import('./OwnerSettings'), {
+  ssr: false,
+})
+
 const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
+  const [dialogOpen, setDialogOpen] = useState(false)
   const [account] = useAtom(polkadotAccountAtom)
   const {vault, stakePool, owner} = basePool
   const getApr = useGetApr()
   const theme = useTheme()
   const isVault = !!vault
-  const color = isVault ? 'secondary' : 'primary'
+  // const color = isVault ? 'secondary' : 'primary'
   const isOwner = owner.id === account?.address
 
   const ownerVerified =
@@ -57,7 +62,7 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
   const actions = (
     <>
       {isOwner && (
-        <IconButton>
+        <IconButton onClick={() => setDialogOpen(true)}>
           <Settings />
         </IconButton>
       )}
@@ -159,14 +164,14 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
             {basePool && (
               <ExtraProperties
                 basePool={basePool}
-                sx={{width: {xs: 1, lg: 350}}}
+                sx={{width: {xs: 1, lg: 450}}}
               />
             )}
             <Box display={{xs: 'none', lg: 'block'}}>{actions}</Box>
           </Stack>
         </Paper>
 
-        <Paper
+        {/* <Paper
           component="section"
           sx={{
             p: {xs: 1, md: 2},
@@ -179,7 +184,7 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
             <Tab label="Delegation" value="delegation" />
             <Tab label="Commission" value="commission" />
           </Tabs>
-        </Paper>
+        </Paper> */}
 
         <Stack direction={{xs: 'column', lg: 'row'}} spacing={{xs: 2, lg: 2.5}}>
           <Paper
@@ -273,6 +278,10 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
           <WhitelistList basePool={basePool} />
         </Box>
       </Stack>
+
+      <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
+        <BasePoolOwnerSettings basePool={basePool} />
+      </Dialog>
     </>
   )
 }

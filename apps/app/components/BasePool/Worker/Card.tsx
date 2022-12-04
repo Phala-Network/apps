@@ -84,7 +84,12 @@ const WorkerCard: FC<{
                 {entries
                   .slice(i * count, (i + 1) * count)
                   .map(([label, value]: [string, ReactNode]) => (
-                    <Property label={label} size="small" key={label}>
+                    <Property
+                      label={label}
+                      size="small"
+                      key={label}
+                      sx={{justifyContent: 'space-between'}}
+                    >
                       {value}
                     </Property>
                   ))}

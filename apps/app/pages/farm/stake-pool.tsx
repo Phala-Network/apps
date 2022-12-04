@@ -1,15 +1,48 @@
 import BasePoolList from '@/components/BasePool/List'
 import CreateBasePoolButton from '@/components/CreateBasePoolButton'
 import PageHeader from '@/components/PageHeader'
-import useAccountQuery from '@/hooks/useAccountQuery'
-import {LoadingButton} from '@mui/lab'
-import {Box, Skeleton, Stack, Typography} from '@mui/material'
+import {subsquidClient} from '@/lib/graphql'
+import {useClaimableStakePoolsQuery} from '@/lib/subsquidQuery'
+import {Box, Button, Dialog, Skeleton, Stack, Typography} from '@mui/material'
+import {polkadotAccountAtom} from '@phala/store'
 import {toCurrency} from '@phala/util'
-import {FC} from 'react'
+import Decimal from 'decimal.js'
+import {useAtom} from 'jotai'
+import dynamic from 'next/dynamic'
+import {FC, useCallback, useMemo, useState} from 'react'
+
+const ClaimReward = dynamic(() => import('@/components/BasePool/ClaimReward'), {
+  ssr: false,
+})
 
 const MyStakePools: FC = () => {
-  const {data, isLoading} = useAccountQuery()
-  const stakePoolOwnerReward = data?.accountById?.stakePoolOwnerReward ?? '0'
+  const [account] = useAtom(polkadotAccountAtom)
+  const [dialogOpen, setDialogOpen] = useState(false)
+  const {data} = useClaimableStakePoolsQuery(
+    subsquidClient,
+    {
+      accountId: account?.address,
+    },
+    {enabled: !!account}
+  )
+  const ownerReward = useMemo(() => {
+    if (!data) return
+    return data.basePoolsConnection.edges.reduce((acc, cur) => {
+      if (cur.node.stakePool) {
+        return acc.plus(cur.node.stakePool.ownerReward)
+      }
+      return acc
+    }, new Decimal(0))
+  }, [data])
+  const claimablePools = useMemo(() => {
+    if (!data) return []
+    return data.basePoolsConnection.edges.map((edge) => ({id: edge.node.id}))
+  }, [data])
+
+  const onClose = useCallback(() => {
+    setDialogOpen(false)
+  }, [])
+
   return (
     <>
       <PageHeader title="My Stake Pools" />
@@ -28,21 +61,30 @@ const MyStakePools: FC = () => {
           Owner Rewards
         </Typography>
         <Typography variant="num3">
-          {isLoading ? (
-            <Skeleton width={100} />
+          {ownerReward ? (
+            `${toCurrency(ownerReward)} PHA`
           ) : (
-            `${toCurrency(stakePoolOwnerReward)} PHA`
+            <Skeleton width={100} />
           )}
         </Typography>
 
-        <LoadingButton disabled={stakePoolOwnerReward === '0'}>
+        <Button
+          disabled={!ownerReward || ownerReward.eq(0)}
+          onClick={() => {
+            setDialogOpen(true)
+          }}
+        >
           Claim All
-        </LoadingButton>
+        </Button>
         <CreateBasePoolButton kind="StakePool" />
       </Stack>
       <Box mt={3}>
         <BasePoolList kind="StakePool" variant="farm" />
       </Box>
+
+      <Dialog open={dialogOpen} onClose={onClose}>
+        <ClaimReward basePools={claimablePools} onClose={onClose} />
+      </Dialog>
     </>
   )
 }

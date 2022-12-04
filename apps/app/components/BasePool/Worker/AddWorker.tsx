@@ -41,12 +41,13 @@ const AddWorker: FC<{
       <DialogTitle>Add Worker</DialogTitle>
       <DialogContent>
         <TextField
+          label="Worker Pubkey"
           autoFocus
           disabled={loading}
           fullWidth
           multiline
           rows={2}
-          placeholder="Worker Pubkey 0x…"
+          placeholder="0x…"
           value={workerId}
           size="small"
           onChange={(e) => {

@@ -17,8 +17,7 @@ const navItems: NavItem[] = [
   {
     label: 'Delegate',
     sub: [
-      {label: 'Vault', href: '/delegate/vault'},
-      {label: 'Stake Pool', href: '/delegate/stake-pool'},
+      {label: 'Delegate', href: '/delegate/vault'},
       {label: 'My Delegation', href: '/delegate/my-delegation'},
     ],
   },

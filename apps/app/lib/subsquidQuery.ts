@@ -2195,6 +2195,21 @@ export type BasePoolsConnectionQueryVariables = Exact<{
 
 export type BasePoolsConnectionQuery = { readonly __typename?: 'Query', readonly basePoolsConnection: { readonly __typename?: 'BasePoolsConnection', readonly totalCount: number, readonly pageInfo: { readonly __typename?: 'PageInfo', readonly endCursor: string, readonly hasNextPage: boolean, readonly hasPreviousPage: boolean, readonly startCursor: string }, readonly edges: ReadonlyArray<{ readonly __typename?: 'BasePoolEdge', readonly cursor: string, readonly node: { readonly __typename?: 'BasePool', readonly cid: number, readonly commission: string, readonly delegatorCount: number, readonly freeValue: string, readonly id: string, readonly kind: BasePoolKind, readonly aprMultiplier: string, readonly pid: string, readonly releasingValue: string, readonly sharePrice: string, readonly totalShares: string, readonly totalValue: string, readonly whitelistEnabled: boolean, readonly withdrawalShares: string, readonly withdrawalValue: string, readonly account: { readonly __typename?: 'Account', readonly id: string, readonly stakePoolNftCount: number, readonly stakePoolValue: string }, readonly owner: { readonly __typename?: 'Account', readonly id: string, readonly identityDisplay?: string | null, readonly identityLevel?: IdentityLevel | null }, readonly stakePool?: { readonly __typename?: 'StakePool', readonly capacity?: string | null, readonly delegable?: string | null, readonly idleWorkerCount: number, readonly ownerReward: string, readonly workerCount: number } | null, readonly vault?: { readonly __typename?: 'Vault', readonly claimableOwnerShares: string, readonly lastSharePriceCheckpoint: string } | null } }> } };
 
+export type ClaimableStakePoolsQueryVariables = Exact<{
+  accountId?: InputMaybe<Scalars['String']>;
+  gt?: InputMaybe<Scalars['BigDecimal']>;
+}>;
+
+
+export type ClaimableStakePoolsQuery = { readonly __typename?: 'Query', readonly basePoolsConnection: { readonly __typename?: 'BasePoolsConnection', readonly edges: ReadonlyArray<{ readonly __typename?: 'BasePoolEdge', readonly node: { readonly __typename?: 'BasePool', readonly id: string, readonly stakePool?: { readonly __typename?: 'StakePool', readonly ownerReward: string } | null } }> } };
+
+export type OwnedVaultsQueryVariables = Exact<{
+  accountId?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type OwnedVaultsQuery = { readonly __typename?: 'Query', readonly basePoolsConnection: { readonly __typename?: 'BasePoolsConnection', readonly edges: ReadonlyArray<{ readonly __typename?: 'BasePoolEdge', readonly node: { readonly __typename?: 'BasePool', readonly id: string, readonly sharePrice: string, readonly commission: string, readonly vault?: { readonly __typename?: 'Vault', readonly claimableOwnerShares: string, readonly lastSharePriceCheckpoint: string } | null } }> } };
+
 export type DelegationCommonFragment = { readonly __typename?: 'Delegation', readonly id: string, readonly shares: string, readonly value: string, readonly withdrawalStartTime?: string | null, readonly withdrawalShares: string, readonly withdrawalValue: string, readonly basePool: { readonly __typename?: 'BasePool', readonly id: string, readonly kind: BasePoolKind, readonly freeValue: string, readonly totalShares: string, readonly aprMultiplier: string }, readonly delegationNft?: { readonly __typename?: 'DelegationNft', readonly cid: number, readonly nftId: number } | null, readonly withdrawalNft?: { readonly __typename?: 'DelegationNft', readonly cid: number, readonly nftId: number } | null, readonly account: { readonly __typename?: 'Account', readonly id: string, readonly identityDisplay?: string | null, readonly identityLevel?: IdentityLevel | null } };
 
 export type DelegationByIdQueryVariables = Exact<{
@@ -2455,6 +2470,103 @@ export const useInfiniteBasePoolsConnectionQuery = <
     useInfiniteQuery<BasePoolsConnectionQuery, TError, TData>(
       ['BasePoolsConnection.infinite', variables],
       (metaData) => fetcher<BasePoolsConnectionQuery, BasePoolsConnectionQueryVariables>(client, BasePoolsConnectionDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
+      options
+    );
+
+export const ClaimableStakePoolsDocument = `
+    query ClaimableStakePools($accountId: String, $gt: BigDecimal) {
+  basePoolsConnection(
+    orderBy: pid_ASC
+    where: {owner: {id_eq: $accountId}, stakePool: {ownerReward_gt: $gt}}
+  ) {
+    edges {
+      node {
+        id
+        stakePool {
+          ownerReward
+        }
+      }
+    }
+  }
+}
+    `;
+export const useClaimableStakePoolsQuery = <
+      TData = ClaimableStakePoolsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: ClaimableStakePoolsQueryVariables,
+      options?: UseQueryOptions<ClaimableStakePoolsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<ClaimableStakePoolsQuery, TError, TData>(
+      variables === undefined ? ['ClaimableStakePools'] : ['ClaimableStakePools', variables],
+      fetcher<ClaimableStakePoolsQuery, ClaimableStakePoolsQueryVariables>(client, ClaimableStakePoolsDocument, variables, headers),
+      options
+    );
+export const useInfiniteClaimableStakePoolsQuery = <
+      TData = ClaimableStakePoolsQuery,
+      TError = unknown
+    >(
+      pageParamKey: keyof ClaimableStakePoolsQueryVariables,
+      client: GraphQLClient,
+      variables?: ClaimableStakePoolsQueryVariables,
+      options?: UseInfiniteQueryOptions<ClaimableStakePoolsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useInfiniteQuery<ClaimableStakePoolsQuery, TError, TData>(
+      variables === undefined ? ['ClaimableStakePools.infinite'] : ['ClaimableStakePools.infinite', variables],
+      (metaData) => fetcher<ClaimableStakePoolsQuery, ClaimableStakePoolsQueryVariables>(client, ClaimableStakePoolsDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
+      options
+    );
+
+export const OwnedVaultsDocument = `
+    query OwnedVaults($accountId: String) {
+  basePoolsConnection(
+    orderBy: pid_ASC
+    where: {owner: {id_eq: $accountId}, kind_eq: Vault}
+  ) {
+    edges {
+      node {
+        id
+        sharePrice
+        vault {
+          claimableOwnerShares
+          lastSharePriceCheckpoint
+        }
+        commission
+      }
+    }
+  }
+}
+    `;
+export const useOwnedVaultsQuery = <
+      TData = OwnedVaultsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: OwnedVaultsQueryVariables,
+      options?: UseQueryOptions<OwnedVaultsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<OwnedVaultsQuery, TError, TData>(
+      variables === undefined ? ['OwnedVaults'] : ['OwnedVaults', variables],
+      fetcher<OwnedVaultsQuery, OwnedVaultsQueryVariables>(client, OwnedVaultsDocument, variables, headers),
+      options
+    );
+export const useInfiniteOwnedVaultsQuery = <
+      TData = OwnedVaultsQuery,
+      TError = unknown
+    >(
+      pageParamKey: keyof OwnedVaultsQueryVariables,
+      client: GraphQLClient,
+      variables?: OwnedVaultsQueryVariables,
+      options?: UseInfiniteQueryOptions<OwnedVaultsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useInfiniteQuery<OwnedVaultsQuery, TError, TData>(
+      variables === undefined ? ['OwnedVaults.infinite'] : ['OwnedVaults.infinite', variables],
+      (metaData) => fetcher<OwnedVaultsQuery, OwnedVaultsQueryVariables>(client, OwnedVaultsDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
       options
     );
 

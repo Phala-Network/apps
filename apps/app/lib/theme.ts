@@ -122,5 +122,6 @@ export const theme = createTheme({
     MuiSelect: {defaultProps: {IconComponent: KeyboardArrowDown}},
     MuiMenu: {styleOverrides: {list: {backgroundColor: colors.cardBackground}}},
     MuiSkeleton: {defaultProps: {animation: 'wave'}},
+    MuiDialogContent: {styleOverrides: {root: {overflowY: 'initial'}}},
   },
 })

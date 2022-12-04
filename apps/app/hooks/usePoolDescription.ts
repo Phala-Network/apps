@@ -12,7 +12,7 @@ interface Description {
   announcement?: string
 }
 
-const usePoolDescription = (pid: string) => {
+const usePoolDescription = (pid: string, enabled = true) => {
   const api = usePolkadotApi()
   const [telegram, setTelegram] = useState<string>()
   const [discord, setDiscord] = useState<string>()
@@ -50,7 +50,7 @@ const usePoolDescription = (pid: string) => {
       unmounted = true
       unsub?.()
     }
-  }, [pid, api])
+  }, [pid, api, enabled])
 
   return {telegram, discord, wechat, twitter, email, forum, announcement}
 }

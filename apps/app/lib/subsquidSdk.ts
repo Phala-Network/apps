@@ -2187,6 +2187,21 @@ type BasePoolsConnectionQueryVariables = Exact<{
 
 type BasePoolsConnectionQuery = { readonly __typename?: 'Query', readonly basePoolsConnection: { readonly __typename?: 'BasePoolsConnection', readonly totalCount: number, readonly pageInfo: { readonly __typename?: 'PageInfo', readonly endCursor: string, readonly hasNextPage: boolean, readonly hasPreviousPage: boolean, readonly startCursor: string }, readonly edges: ReadonlyArray<{ readonly __typename?: 'BasePoolEdge', readonly cursor: string, readonly node: { readonly __typename?: 'BasePool', readonly cid: number, readonly commission: string, readonly delegatorCount: number, readonly freeValue: string, readonly id: string, readonly kind: BasePoolKind, readonly aprMultiplier: string, readonly pid: string, readonly releasingValue: string, readonly sharePrice: string, readonly totalShares: string, readonly totalValue: string, readonly whitelistEnabled: boolean, readonly withdrawalShares: string, readonly withdrawalValue: string, readonly account: { readonly __typename?: 'Account', readonly id: string, readonly stakePoolNftCount: number, readonly stakePoolValue: string }, readonly owner: { readonly __typename?: 'Account', readonly id: string, readonly identityDisplay?: string | null, readonly identityLevel?: IdentityLevel | null }, readonly stakePool?: { readonly __typename?: 'StakePool', readonly capacity?: string | null, readonly delegable?: string | null, readonly idleWorkerCount: number, readonly ownerReward: string, readonly workerCount: number } | null, readonly vault?: { readonly __typename?: 'Vault', readonly claimableOwnerShares: string, readonly lastSharePriceCheckpoint: string } | null } }> } };
 
+type ClaimableStakePoolsQueryVariables = Exact<{
+  accountId?: InputMaybe<Scalars['String']>;
+  gt?: InputMaybe<Scalars['BigDecimal']>;
+}>;
+
+
+type ClaimableStakePoolsQuery = { readonly __typename?: 'Query', readonly basePoolsConnection: { readonly __typename?: 'BasePoolsConnection', readonly edges: ReadonlyArray<{ readonly __typename?: 'BasePoolEdge', readonly node: { readonly __typename?: 'BasePool', readonly id: string, readonly stakePool?: { readonly __typename?: 'StakePool', readonly ownerReward: string } | null } }> } };
+
+type OwnedVaultsQueryVariables = Exact<{
+  accountId?: InputMaybe<Scalars['String']>;
+}>;
+
+
+type OwnedVaultsQuery = { readonly __typename?: 'Query', readonly basePoolsConnection: { readonly __typename?: 'BasePoolsConnection', readonly edges: ReadonlyArray<{ readonly __typename?: 'BasePoolEdge', readonly node: { readonly __typename?: 'BasePool', readonly id: string, readonly sharePrice: string, readonly commission: string, readonly vault?: { readonly __typename?: 'Vault', readonly claimableOwnerShares: string, readonly lastSharePriceCheckpoint: string } | null } }> } };
+
 type DelegationCommonFragment = { readonly __typename?: 'Delegation', readonly id: string, readonly shares: string, readonly value: string, readonly withdrawalStartTime?: string | null, readonly withdrawalShares: string, readonly withdrawalValue: string, readonly basePool: { readonly __typename?: 'BasePool', readonly id: string, readonly kind: BasePoolKind, readonly freeValue: string, readonly totalShares: string, readonly aprMultiplier: string }, readonly delegationNft?: { readonly __typename?: 'DelegationNft', readonly cid: number, readonly nftId: number } | null, readonly withdrawalNft?: { readonly __typename?: 'DelegationNft', readonly cid: number, readonly nftId: number } | null, readonly account: { readonly __typename?: 'Account', readonly id: string, readonly identityDisplay?: string | null, readonly identityLevel?: IdentityLevel | null } };
 
 type DelegationByIdQueryVariables = Exact<{
@@ -2360,6 +2375,43 @@ export const DelegationCommonFragmentDoc = gql`
   }
 }
     ${BasePoolCommonFragmentDoc}`;
+ const ClaimableStakePoolsDocument = gql`
+    query ClaimableStakePools($accountId: String, $gt: BigDecimal) {
+  basePoolsConnection(
+    orderBy: pid_ASC
+    where: {owner: {id_eq: $accountId}, stakePool: {ownerReward_gt: $gt}}
+  ) {
+    edges {
+      node {
+        id
+        stakePool {
+          ownerReward
+        }
+      }
+    }
+  }
+}
+    `;
+ const OwnedVaultsDocument = gql`
+    query OwnedVaults($accountId: String) {
+  basePoolsConnection(
+    orderBy: pid_ASC
+    where: {owner: {id_eq: $accountId}, kind_eq: Vault}
+  ) {
+    edges {
+      node {
+        id
+        sharePrice
+        vault {
+          claimableOwnerShares
+          lastSharePriceCheckpoint
+        }
+        commission
+      }
+    }
+  }
+}
+    `;
  const DelegationByIdDocument = gql`
     query DelegationById($id: String!) {
   delegationById(id: $id) {
@@ -2492,6 +2544,12 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     BasePoolsConnection(variables: BasePoolsConnectionQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<BasePoolsConnectionQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<BasePoolsConnectionQuery>(BasePoolsConnectionDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'BasePoolsConnection', 'query');
+    },
+    ClaimableStakePools(variables?: ClaimableStakePoolsQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<ClaimableStakePoolsQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<ClaimableStakePoolsQuery>(ClaimableStakePoolsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'ClaimableStakePools', 'query');
+    },
+    OwnedVaults(variables?: OwnedVaultsQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<OwnedVaultsQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<OwnedVaultsQuery>(OwnedVaultsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'OwnedVaults', 'query');
     },
     DelegationById(variables: DelegationByIdQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<DelegationByIdQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<DelegationByIdQuery>(DelegationByIdDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'DelegationById', 'query');

@@ -2,6 +2,7 @@ import ListSkeleton from '@/components/ListSkeleton'
 import useSelectedVaultState from '@/hooks/useSelectedVaultState'
 import {subsquidClient} from '@/lib/graphql'
 import {
+  BasePoolCommonFragment,
   BasePoolKind,
   BasePoolOrderByInput,
   BasePoolWhereInput,
@@ -13,6 +14,7 @@ import {FilterList, Search} from '@mui/icons-material'
 import {
   Box,
   Checkbox,
+  Dialog,
   FormControlLabel,
   IconButton,
   MenuItem,
@@ -25,12 +27,25 @@ import {polkadotAccountAtom} from '@phala/store'
 import {isTruthy} from '@phala/util'
 import {useAtom} from 'jotai'
 import {debounce} from 'lodash-es'
+import dynamic from 'next/dynamic'
 import {FC, useCallback, useState} from 'react'
 import DelegateCard from './DelegateCard'
 import FarmCard from './FarmCard'
 
+const OwnerSettings = dynamic(() => import('./OwnerSettings'), {
+  ssr: false,
+})
+const ClaimReward = dynamic(() => import('./ClaimReward'), {
+  ssr: false,
+})
+
 type BasePoolListVariant = 'farm' | 'delegate'
 type OrderByEntries = [string, BasePoolOrderByInput][]
+export type PoolDialogAction = 'ownerSettings' | 'claimReward' | 'claimShares'
+export type OnAction = (
+  basePool: BasePoolCommonFragment,
+  action: PoolDialogAction
+) => void
 
 const commonOrderByEntries: OrderByEntries = [
   ['Pid Asc', BasePoolOrderByInput.PidAsc],
@@ -56,6 +71,9 @@ const BasePoolList: FC<{
   kind: BasePoolKind
   sx?: SxProps
 }> = ({variant, kind, sx}) => {
+  const [dialogOpen, setDialogOpen] = useState(false)
+  const [operatingPool, setOperatingPool] = useState<BasePoolCommonFragment>()
+  const [dialogAction, setDialogAction] = useState<PoolDialogAction>()
   const [polkadotAccount] = useAtom(polkadotAccountAtom)
   const selectedVaultState = useSelectedVaultState()
   const delegatorAddress =
@@ -127,6 +145,15 @@ const BasePoolList: FC<{
     }
   )
 
+  const onAction: OnAction = useCallback((basePool, action) => {
+    setDialogOpen(true)
+    setOperatingPool(basePool)
+    setDialogAction(action)
+  }, [])
+  const onClose = useCallback(() => {
+    setDialogOpen(false)
+  }, [])
+
   const filters = variant === 'delegate' && (
     <Stack spacing={2}>
       <Typography variant="h5" component="div">
@@ -179,79 +206,97 @@ const BasePoolList: FC<{
   )
 
   return (
-    <Stack direction="row" sx={sx} alignItems="flex-start" minHeight="100vh">
-      {variant === 'delegate' && (
-        <Box
-          width={256}
-          display={{xs: 'none', xl: 'block'}}
-          position="sticky"
-          top="80px"
-        >
-          {filters}
-        </Box>
-      )}
-      <Box flex="1 0">
-        <Stack direction="row" spacing={{xs: 1, md: 2}} alignItems="center">
-          <IconButton
-            sx={{
-              display: {
-                xs: variant === 'delegate' ? undefined : 'none',
-                xl: 'none',
-              },
-            }}
+    <>
+      <Stack direction="row" sx={sx} alignItems="flex-start" minHeight="100vh">
+        {variant === 'delegate' && (
+          <Box
+            width={256}
+            display={{xs: 'none', xl: 'block'}}
+            position="sticky"
+            top="80px"
           >
-            <FilterList />
-          </IconButton>
-          <TextField
-            color={color}
-            placeholder={
-              variant === 'farm' ? 'Search Pid' : 'Search Pid or Owner'
-            }
-            size="small"
-            InputProps={{endAdornment: <Search />}}
-            onChange={(e) => debouncedSetSearchString(e.target.value)}
-            sx={{flex: '1 0', ml: {xl: '0!important'}}}
-          />
-          <TextField
-            color={color}
-            size="small"
-            select
-            sx={{width: 180}}
-            value={orderBy}
-            onChange={(e) => {
-              if (isVault) {
-                setVaultOrderBy(e.target.value as BasePoolOrderByInput)
-              } else {
-                setStakePoolOrderBy(e.target.value as BasePoolOrderByInput)
+            {filters}
+          </Box>
+        )}
+        <Box flex="1 0">
+          <Stack direction="row" spacing={{xs: 1, md: 2}} alignItems="center">
+            <IconButton
+              sx={{
+                display: {
+                  xs: variant === 'delegate' ? undefined : 'none',
+                  xl: 'none',
+                },
+              }}
+            >
+              <FilterList />
+            </IconButton>
+            <TextField
+              color={color}
+              placeholder={
+                variant === 'farm' ? 'Search Pid' : 'Search Pid or Owner'
               }
-            }}
-          >
-            {orderByEntries.map(([label, value]) => (
-              <MenuItem key={value} value={value}>
-                {label}
-              </MenuItem>
-            ))}
-          </TextField>
-        </Stack>
-        <Stack spacing={2} mt={2}>
-          {isLoading ? (
-            <ListSkeleton height={101} />
-          ) : (
-            data?.pages.map((page, index) => (
-              <Stack key={index} spacing={2}>
-                {page.basePoolsConnection.edges.map((edge) =>
-                  variant === 'farm' ? (
-                    <FarmCard key={edge.node.id} basePool={edge.node} />
-                  ) : (
-                    <DelegateCard key={edge.node.id} basePool={edge.node} />
-                  )
-                )}
-              </Stack>
-            ))
-          )}
-        </Stack>
-      </Box>
-    </Stack>
+              size="small"
+              InputProps={{endAdornment: <Search />}}
+              onChange={(e) => debouncedSetSearchString(e.target.value)}
+              sx={{flex: '1 0', ml: {xl: '0!important'}}}
+            />
+            <TextField
+              color={color}
+              size="small"
+              select
+              sx={{width: 180}}
+              value={orderBy}
+              onChange={(e) => {
+                if (isVault) {
+                  setVaultOrderBy(e.target.value as BasePoolOrderByInput)
+                } else {
+                  setStakePoolOrderBy(e.target.value as BasePoolOrderByInput)
+                }
+              }}
+            >
+              {orderByEntries.map(([label, value]) => (
+                <MenuItem key={value} value={value}>
+                  {label}
+                </MenuItem>
+              ))}
+            </TextField>
+          </Stack>
+          <Stack spacing={2} mt={2}>
+            {isLoading ? (
+              <ListSkeleton height={101} />
+            ) : (
+              data?.pages.map((page, index) => (
+                <Stack key={index} spacing={2}>
+                  {page.basePoolsConnection.edges.map((edge) =>
+                    variant === 'farm' ? (
+                      <FarmCard
+                        key={edge.node.id}
+                        basePool={edge.node}
+                        onAction={onAction}
+                      />
+                    ) : (
+                      <DelegateCard key={edge.node.id} basePool={edge.node} />
+                    )
+                  )}
+                </Stack>
+              ))
+            )}
+          </Stack>
+        </Box>
+      </Stack>
+      <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
+        {operatingPool && (
+          <>
+            {dialogAction === 'ownerSettings' && (
+              <OwnerSettings basePool={operatingPool} />
+            )}
+            {dialogAction === 'claimReward' && (
+              <ClaimReward basePool={operatingPool} onClose={onClose} />
+            )}
+          </>
+        )}
+      </Dialog>
+    </>
   )
 }
 

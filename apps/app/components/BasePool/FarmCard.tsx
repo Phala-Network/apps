@@ -23,12 +23,15 @@ import {
   useTheme,
 } from '@mui/material'
 import {toCurrency, toPercentage} from '@phala/util'
+import Decimal from 'decimal.js'
 import {FC, useState} from 'react'
 import ExtraProperties from './ExtraProperties'
+import {OnAction} from './List'
 
 const FarmCard: FC<{
   basePool: BasePoolCommonFragment
-}> = ({basePool}) => {
+  onAction: OnAction
+}> = ({basePool, onAction}) => {
   const getApr = useGetApr()
   const theme = useTheme()
   const [collapsed, setCollapsed] = useState(true)
@@ -38,10 +41,12 @@ const FarmCard: FC<{
     <Stack direction="row" alignItems="center">
       {stakePool && (
         <Button
+          disabled={!stakePool || new Decimal(stakePool.ownerReward).lt('0.01')}
           variant="text"
           size="small"
           onClick={(e) => {
             e.stopPropagation()
+            onAction(basePool, 'claimReward')
           }}
         >
           Claim Reward
@@ -50,6 +55,7 @@ const FarmCard: FC<{
       <IconButton
         onClick={(e) => {
           e.stopPropagation()
+          onAction(basePool, 'ownerSettings')
         }}
       >
         <Settings />
@@ -81,6 +87,7 @@ const FarmCard: FC<{
           {vault && <VaultIcon width={48} color={colors.vault[400]} />}
           <Box flex="1 0" width={108}>
             <Link
+              onClick={(e) => e.stopPropagation()}
               color="inherit"
               variant="num2"
               href={getPoolPath(basePool.kind, basePool.id)}

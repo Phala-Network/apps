@@ -8,7 +8,9 @@ import {FC, ReactNode} from 'react'
 import ScrollTop from './ScrollTop'
 import TopBar from './TopBar'
 
-const WalletDialog = dynamic(() => import('./WalletDialog'), {ssr: false})
+const WalletDialog = dynamic(() => import('./WalletDialog'), {
+  ssr: false,
+})
 
 const Layout: FC<{children: ReactNode}> = ({children}) => {
   const theme = useTheme()
