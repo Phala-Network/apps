@@ -1,3 +1,4 @@
+import VaultIcon from '@/assets/vault.svg'
 import useAccountQuery from '@/hooks/useAccountQuery'
 import useAsset from '@/hooks/useAsset'
 import useSelectedVaultState from '@/hooks/useSelectedVaultState'
@@ -5,7 +6,6 @@ import {colors} from '@/lib/theme'
 import {vaultIdAtom} from '@/store/common'
 import {
   Box,
-  Chip,
   MenuItem,
   Skeleton,
   Stack,
@@ -16,6 +16,7 @@ import {
 import {polkadotAccountAtom} from '@phala/store'
 import {toCurrency} from '@phala/util'
 import {useAtom} from 'jotai'
+import Image from 'next/image'
 import {FC, useMemo} from 'react'
 
 const ACCOUNT = 'account'
@@ -38,7 +39,7 @@ const DelegatorSelect: FC<{isVault?: boolean}> = ({isVault = false}) => {
       : undefined,
     selectedVaultState ? 1 : undefined
   )
-  if (!account || !accountData) return null
+  if (!account || !accountData || !account.wallet) return null
   // MEMO: vault cannot delegate to another vault
   const value = (!isVault && selectedVaultState?.id) || ACCOUNT
 
@@ -66,21 +67,17 @@ const DelegatorSelect: FC<{isVault?: boolean}> = ({isVault = false}) => {
           borderRadius: '20px',
           background: theme.palette.action.hover,
           fieldset: {border: 'none'},
-          '.MuiSelect-select': {pl: '9px', py: 1},
+          '.MuiSelect-select': {pl: 2, py: 1},
         },
       }}
     >
       <MenuItem value={ACCOUNT}>
         <Stack direction="row" spacing={1}>
-          <Chip
-            label="Account"
-            size="small"
-            sx={{
-              transition: 'none',
-              backgroundColor: colors.main[300],
-              color: theme.palette.getContrastText(colors.main[300]),
-              WebkitTextFillColor: 'currentColor',
-            }}
+          <Image
+            src={account.wallet.logo.src}
+            alt={account.wallet.logo.alt}
+            width={22}
+            height={22}
           />
           <Box
             sx={{
@@ -96,16 +93,8 @@ const DelegatorSelect: FC<{isVault?: boolean}> = ({isVault = false}) => {
       {vaultIds.map((pid) => (
         <MenuItem value={pid} key={pid}>
           <Stack direction="row" spacing={1}>
-            <Chip
-              label="Vault"
-              size="small"
-              sx={{
-                transition: 'none',
-                backgroundColor: colors.vault[300],
-                color: theme.palette.getContrastText(colors.vault[300]),
-              }}
-            />
-            <span>{`#${pid}`}</span>
+            <VaultIcon width={22} color={colors.vault[400]} />
+            <Box>{`Vault #${pid}`}</Box>
           </Stack>
         </MenuItem>
       ))}

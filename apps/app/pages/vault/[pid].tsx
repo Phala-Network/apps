@@ -29,7 +29,7 @@ const Vault: NextPage<BasePoolServerSideProps> = ({
       <DetailPage basePool={basePool} />
 
       <Box component="section">
-        <DelegationList isVault address={basePool.account.id} />
+        <DelegationList isVault showHeader address={basePool.account.id} />
       </Box>
     </>
   )

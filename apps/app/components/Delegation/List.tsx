@@ -42,15 +42,16 @@ const orderByEntries: [string, DelegationOrderByInput][] = [
 ]
 
 const DelegationList: FC<{
+  showHeader?: boolean
   address?: string
   isVault?: boolean
-}> = ({address, isVault = false}) => {
+}> = ({address, isVault = false, showHeader = false}) => {
   const [showNftCard, setShowNftCard] = useState(true)
   const [orderBy, setOrderBy] = useState<DelegationOrderByInput>(
     DelegationOrderByInput.ValueDesc
   )
   const color = isVault ? 'secondary' : 'primary'
-  const [vaultFilter, setVaultFilter] = useState(!isVault)
+  const [vaultFilter, setVaultFilter] = useState(true)
   const [stakePoolFilter, setStakePoolFilter] = useState(true)
   const [withdrawingFilter, setWithdrawingFilterFilter] = useState(false)
 
@@ -66,14 +67,15 @@ const DelegationList: FC<{
     !!searchString && {
       OR: [{basePool: {id_contains: searchString}}],
     },
-    (vaultFilter || stakePoolFilter) && {
-      basePool: {
-        kind_in: [
-          vaultFilter && ('Vault' as BasePoolKind),
-          stakePoolFilter && ('StakePool' as BasePoolKind),
-        ].filter(isTruthy),
+    !isVault &&
+      (vaultFilter || stakePoolFilter) && {
+        basePool: {
+          kind_in: [
+            vaultFilter && ('Vault' as BasePoolKind),
+            stakePoolFilter && ('StakePool' as BasePoolKind),
+          ].filter(isTruthy),
+        },
       },
-    },
   ]
   const {data, isLoading} = useInfiniteDelegationsConnectionQuery(
     'after',
@@ -138,7 +140,9 @@ const DelegationList: FC<{
 
   return (
     <>
-      {isVault && <SectionHeader icon={<NftsIcon />} title="Delegation NFTs" />}
+      {showHeader && (
+        <SectionHeader icon={<NftsIcon />} title="Delegation NFTs" />
+      )}
       <Stack direction="row">
         <Box width={256} display={{xs: 'none', xl: 'block'}}>
           {filters}
