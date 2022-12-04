@@ -1,6 +1,6 @@
 import WorkerIcon from '@/assets/worker.svg'
 import Property from '@/components/Property'
-import {WorkersConnectionQuery, WorkerState} from '@/lib/subsquidQuery'
+import {WorkerState} from '@/lib/subsquidQuery'
 import {
   Box,
   Button,
@@ -11,10 +11,9 @@ import {
   useTheme,
 } from '@mui/material'
 import {toCurrency, toFixed} from '@phala/util'
+import {addDays, formatDuration, intervalToDuration, isAfter} from 'date-fns'
 import {FC, ReactNode, useMemo} from 'react'
-
-type Worker =
-  WorkersConnectionQuery['workersConnection']['edges'][number]['node']
+import {OnAction, Worker} from './List'
 
 const workerStateColors: Record<WorkerState, string> = {
   Ready: '#5988FF',
@@ -30,10 +29,11 @@ const workerStateLabels: Record<WorkerState, string> = {
   WorkerCoolingDown: 'CoolingDown',
 }
 
-const WorkerCard: FC<{worker: Worker; isOwner: boolean}> = ({
-  worker,
-  isOwner,
-}) => {
+const WorkerCard: FC<{
+  worker: Worker
+  isOwner: boolean
+  onAction: OnAction
+}> = ({worker, isOwner, onAction}) => {
   const theme = useTheme()
   const session = worker.session
   const entries = useMemo<[string, ReactNode][]>(() => {
@@ -49,6 +49,17 @@ const WorkerCard: FC<{worker: Worker; isOwner: boolean}> = ({
   }, [session])
   const groups = 3
   const count = Math.ceil(entries.length / groups)
+
+  const reclaimCountdown = useMemo(() => {
+    if (!worker.session?.coolingDownStartTime) return
+    const start = new Date()
+    const end = addDays(new Date(worker.session.coolingDownStartTime), 7)
+    if (isAfter(start, end)) return
+    return formatDuration(intervalToDuration({start, end}), {
+      format: ['d', 'h', 'm'],
+    })
+  }, [worker.session?.coolingDownStartTime])
+
   return (
     <Paper>
       <Stack direction="row" alignItems="center" p={2} spacing={2}>
@@ -98,10 +109,18 @@ const WorkerCard: FC<{worker: Worker; isOwner: boolean}> = ({
             <Stack direction="row">
               {session.state === 'Ready' && (
                 <>
-                  <Button variant="text" size="small">
+                  <Button
+                    variant="text"
+                    size="small"
+                    onClick={() => onAction(worker, 'start')}
+                  >
                     Start
                   </Button>
-                  <Button variant="text" size="small">
+                  <Button
+                    variant="text"
+                    size="small"
+                    onClick={() => onAction(worker, 'remove')}
+                  >
                     Remove
                   </Button>
                 </>
@@ -109,17 +128,30 @@ const WorkerCard: FC<{worker: Worker; isOwner: boolean}> = ({
               {(session.state === 'WorkerIdle' ||
                 session.state === 'WorkerUnresponsive') && (
                 <>
-                  <Button variant="text" size="small">
+                  <Button
+                    variant="text"
+                    size="small"
+                    onClick={() => onAction(worker, 'stop')}
+                  >
                     Stop
                   </Button>
-                  <Button variant="text" size="small">
+                  <Button
+                    variant="text"
+                    size="small"
+                    onClick={() => onAction(worker, 'changeStake')}
+                  >
                     Change Stake
                   </Button>
                 </>
               )}
               {session.state === 'WorkerCoolingDown' && (
-                <Button variant="text" size="small">
-                  Reclaim
+                <Button
+                  disabled={Boolean(reclaimCountdown)}
+                  variant="text"
+                  size="small"
+                  onClick={() => onAction(worker, 'reclaim')}
+                >
+                  {reclaimCountdown || 'Reclaim'}
                 </Button>
               )}
             </Stack>

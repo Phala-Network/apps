@@ -2237,7 +2237,7 @@ export type WorkersConnectionQueryVariables = Exact<{
 }>;
 
 
-export type WorkersConnectionQuery = { readonly __typename?: 'Query', readonly workersConnection: { readonly __typename?: 'WorkersConnection', readonly totalCount: number, readonly edges: ReadonlyArray<{ readonly __typename?: 'WorkerEdge', readonly cursor: string, readonly node: { readonly __typename?: 'Worker', readonly id: string, readonly confidenceLevel: number, readonly initialScore?: number | null, readonly shares?: string | null, readonly session?: { readonly __typename?: 'Session', readonly coolingDownStartTime?: string | null, readonly pInit: number, readonly pInstant: number, readonly stake: string, readonly state: WorkerState, readonly totalReward: string, readonly v: string, readonly ve: string } | null } }>, readonly pageInfo: { readonly __typename?: 'PageInfo', readonly hasNextPage: boolean, readonly hasPreviousPage: boolean, readonly startCursor: string, readonly endCursor: string } } };
+export type WorkersConnectionQuery = { readonly __typename?: 'Query', readonly workersConnection: { readonly __typename?: 'WorkersConnection', readonly totalCount: number, readonly edges: ReadonlyArray<{ readonly __typename?: 'WorkerEdge', readonly cursor: string, readonly node: { readonly __typename?: 'Worker', readonly id: string, readonly confidenceLevel: number, readonly initialScore?: number | null, readonly shares?: string | null, readonly stakePool?: { readonly __typename?: 'StakePool', readonly id: string, readonly basePool: { readonly __typename?: 'BasePool', readonly freeValue: string } } | null, readonly session?: { readonly __typename?: 'Session', readonly coolingDownStartTime?: string | null, readonly pInit: number, readonly pInstant: number, readonly stake: string, readonly state: WorkerState, readonly totalReward: string, readonly v: string, readonly ve: string } | null } }>, readonly pageInfo: { readonly __typename?: 'PageInfo', readonly hasNextPage: boolean, readonly hasPreviousPage: boolean, readonly startCursor: string, readonly endCursor: string } } };
 
 export const BasePoolCommonFragmentDoc = `
     fragment BasePoolCommon on BasePool {
@@ -2663,6 +2663,12 @@ export const WorkersConnectionDocument = `
       cursor
       node {
         id
+        stakePool {
+          id
+          basePool {
+            freeValue
+          }
+        }
         session {
           coolingDownStartTime
           pInit

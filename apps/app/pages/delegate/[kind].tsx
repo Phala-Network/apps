@@ -8,6 +8,7 @@ import NetworkOverview from '@/components/NetworkOverview'
 import PageHeader from '@/components/PageHeader'
 import useSelectedVaultState from '@/hooks/useSelectedVaultState'
 import {colors} from '@/lib/theme'
+import {vaultIdAtom} from '@/store/common'
 import {
   Box,
   experimental_sx as sx,
@@ -16,6 +17,7 @@ import {
   Switch,
   Typography,
 } from '@mui/material'
+import {useAtom} from 'jotai'
 import {GetStaticPaths, GetStaticProps, NextPage} from 'next'
 import {useRouter} from 'next/router'
 import {useCallback, useEffect, useState} from 'react'
@@ -69,14 +71,18 @@ const Delegate: NextPage = () => {
   } = useRouter()
   const router = useRouter()
   const isVault = kind === 'vault'
+  const [, setVaultId] = useAtom(vaultIdAtom)
   // Avoid ui lag
   const [switchChecked, setSwitchChecked] = useState(!isVault)
   const selectedVaultState = useSelectedVaultState()
   const asAccount = selectedVaultState === null
 
   useEffect(() => {
-    setSwitchChecked(router.query.kind === 'stake-pool')
-  }, [router.query.kind])
+    setSwitchChecked(kind === 'stake-pool')
+    if (kind === 'vault') {
+      setVaultId(null)
+    }
+  }, [kind, setVaultId])
 
   const handleSwitchChange = useCallback(
     (checked: boolean) => {
@@ -84,19 +90,17 @@ const Delegate: NextPage = () => {
       router.replace(
         `/delegate/${checked ? 'stake-pool' : 'vault'}`,
         undefined,
-        {
-          shallow: true,
-        }
+        {shallow: true}
       )
     },
     [router]
   )
 
   useEffect(() => {
-    if (!asAccount) {
+    if (!asAccount && !switchChecked) {
       handleSwitchChange(true)
     }
-  }, [asAccount, handleSwitchChange])
+  }, [asAccount, handleSwitchChange, switchChecked])
 
   return (
     <>

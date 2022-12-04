@@ -22,6 +22,10 @@ export const globalStyles = css`
     }
   }
 
+  .SnackbarContainer-root.SnackbarContainer-top.SnackbarContainer-right {
+    top: 72px;
+  }
+
   sub {
     font-size: 50%;
     vertical-align: baseline;

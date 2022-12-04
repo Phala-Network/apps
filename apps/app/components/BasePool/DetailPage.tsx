@@ -39,7 +39,7 @@ import {useAtom} from 'jotai'
 import {FC} from 'react'
 import DelegateInput from './DelegateInput'
 import ExtraProperties from './ExtraProperties'
-import WhitelistList from './WhitelistList'
+import WhitelistList from './Whitelist/List'
 import WithdrawQueue from './WithdrawQueue'
 
 const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {

@@ -17,7 +17,12 @@ const useBlockHeightListener = () => {
     if (height && queryClient) {
       if (enabled.current) {
         queryClient.invalidateQueries(['AccountById'])
+        queryClient.invalidateQueries(['BasePoolById'])
         queryClient.invalidateQueries(['BasePoolsConnection.infinite"'])
+        queryClient.invalidateQueries(['BasePoolWhitelistsConnection'])
+        queryClient.invalidateQueries(['DelegationsConnection'])
+        queryClient.invalidateQueries(['DelegationsConnection.infinite'])
+        queryClient.invalidateQueries(['WorkersConnection'])
       } else {
         // Skip the first time
         enabled.current = true

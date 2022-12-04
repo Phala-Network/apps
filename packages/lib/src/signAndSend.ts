@@ -12,7 +12,7 @@ interface SignAndSendProps {
   onReady?: () => void
 }
 
-interface ExtrinsicResult {
+export interface ExtrinsicResult {
   txHash: `0x${string}`
   method: string
   section: string
@@ -46,16 +46,12 @@ export const waitSignAndSend = ({
                   )
                   errorInfo = `${decoded.section}.${
                     decoded.method
-                  } ${decoded.docs.join(' ')}`
+                  }: ${decoded.docs.join(' ')}`
                 } else {
                   errorInfo = dispatchError.toString()
                 }
                 // TODO: add txHash
-                reject(
-                  new Error(
-                    `${section}.${method}:: ExtrinsicFailed:: ${errorInfo}`
-                  )
-                )
+                reject(new Error(errorInfo))
               } else {
                 resolve({txHash: txHash.toHex(), section, method})
               }

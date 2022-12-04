@@ -78,7 +78,7 @@ const DelegationList: FC<{
   const {data, isLoading} = useInfiniteDelegationsConnectionQuery(
     'after',
     subsquidClient,
-    {first: 10, orderBy, where: {AND: where.filter(isTruthy)}},
+    {first: 99, orderBy, where: {AND: where.filter(isTruthy)}},
     {
       keepPreviousData: true,
       enabled: !!address,

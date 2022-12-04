@@ -51,7 +51,12 @@ const ExtraProperties: FC<{basePool: BasePoolCommonFragment; sx?: SxProps}> = ({
           {entries
             .slice(i * count, (i + 1) * count)
             .map(([label, value]: [string, ReactNode]) => (
-              <Property size="small" label={label} key={label}>
+              <Property
+                size="small"
+                label={label}
+                key={label}
+                sx={{justifyContent: 'space-between'}}
+              >
                 {value}
               </Property>
             ))}

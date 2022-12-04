@@ -10,11 +10,14 @@ import {
   useBasePoolWhitelistsConnectionQuery,
 } from '@/lib/subsquidQuery'
 import {theme} from '@/lib/theme'
-import {Button, Stack, Theme, ThemeProvider} from '@mui/material'
+import {Button, Dialog, Stack, Theme, ThemeProvider} from '@mui/material'
 import {DataGrid, GridColDef} from '@mui/x-data-grid'
 import {polkadotAccountAtom} from '@phala/store'
 import {useAtom} from 'jotai'
-import {FC, useMemo, useState} from 'react'
+import dynamic from 'next/dynamic'
+import {FC, useCallback, useMemo, useState} from 'react'
+
+const AddWhitelist = dynamic(() => import('./AddWhitelist'), {ssr: false})
 
 type RowModel = {id: string}
 
@@ -33,6 +36,7 @@ const vaultTheme: Theme = {
 }
 
 const WhitelistList: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
+  const [dialogOpen, setDialogOpen] = useState(false)
   const [account] = useAtom(polkadotAccountAtom)
   const isOwner = account?.address === basePool.owner.id
   const isVault = basePool.kind === 'Vault'
@@ -68,6 +72,11 @@ const WhitelistList: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
       setSelectedAddress([])
     })
   }
+
+  const onClose = useCallback(() => {
+    setDialogOpen(false)
+  }, [])
+
   return (
     <>
       <SectionHeader title="Whitelist" icon={<WhitelistsIcon />}>
@@ -78,7 +87,11 @@ const WhitelistList: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
                 Remove
               </Button>
             )}
-            <Button color={color} variant="contained">
+            <Button
+              color={color}
+              variant="contained"
+              onClick={() => setDialogOpen(true)}
+            >
               Add
             </Button>
           </Stack>
@@ -114,6 +127,10 @@ const WhitelistList: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
           disableColumnFilter
           disableSelectionOnClick
         />
+
+        <Dialog open={dialogOpen} onClose={onClose}>
+          <AddWhitelist pid={basePool.id} onClose={onClose} />
+        </Dialog>
       </ThemeProvider>
     </>
   )

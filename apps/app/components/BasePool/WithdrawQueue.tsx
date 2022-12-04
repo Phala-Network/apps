@@ -30,27 +30,27 @@ const columns: GridColDef<RowModel>[] = [
   {
     field: 'value',
     headerName: 'Value',
-    flex: 1,
+    width: 200,
     valueFormatter: ({value}) => `${toCurrency(value)} PHA`,
   },
   {
     field: 'countdown',
     headerName: 'Countdown',
-    flex: 1,
+    width: 200,
     valueGetter: ({row}) => row.startTime && new Date(row.startTime),
     valueFormatter: ({value}) => {
       const start = new Date()
       const end = addDays(new Date(value), 7)
       if (isAfter(start, end)) return 'Ended'
       return formatDuration(intervalToDuration({start, end}), {
-        format: ['days', 'hours', 'minutes'],
+        format: ['d', 'h', 'm'],
       })
     },
   },
   {
     field: 'latestWithdrawal',
     headerName: 'Latest Withdrawal',
-    flex: 1,
+    width: 200,
     valueGetter: ({row}) => row.startTime && new Date(row.startTime),
     valueFormatter: ({value}) =>
       addDays(new Date(value), 14).toLocaleDateString(),

@@ -1,3 +1,4 @@
+import Property from '@/components/Property'
 import useGetApr from '@/hooks/useGetApr'
 import usePolkadotApi from '@/hooks/usePolkadotApi'
 import useSelectedVaultState from '@/hooks/useSelectedVaultState'
@@ -6,7 +7,7 @@ import aprToApy from '@/lib/aprToApy'
 import {BasePoolCommonFragment} from '@/lib/subsquidQuery'
 import {barlow} from '@/lib/theme'
 import {LoadingButton} from '@mui/lab'
-import {Skeleton, Stack, SxProps, TextField, Typography} from '@mui/material'
+import {Skeleton, Stack, SxProps, TextField} from '@mui/material'
 import {getDecimalPattern, toPercentage} from '@phala/util'
 import Decimal from 'decimal.js'
 import {FC, useMemo, useState} from 'react'
@@ -29,7 +30,7 @@ const DelegateInput: FC<{basePool: BasePoolCommonFragment; sx?: SxProps}> = ({
   }, [amountString, selectedVaultState])
   const delegate = () => {
     if (!api || selectedVaultState === undefined) return
-    const amount = new Decimal(amountString).times(1e12).toString()
+    const amount = new Decimal(amountString).times(1e12).toHex()
     setLoading(true)
     const extrinsic = isVault
       ? api.tx.phalaVault.contribute(basePool.pid, amount)
@@ -100,25 +101,18 @@ const DelegateInput: FC<{basePool: BasePoolCommonFragment; sx?: SxProps}> = ({
           Delegate
         </LoadingButton>
       </Stack>
-      <Stack
-        direction="row"
-        color="text.secondary"
-        pl={0.5}
-        alignItems="baseline"
+      <Property
+        size="small"
+        label={`Est. delegated ${isVault ? 'APY' : 'APR'}`}
       >
-        <Typography variant="caption">{`Est. delegated ${
-          isVault ? 'APY' : 'APR'
-        }: `}</Typography>
-        <Typography variant="num7" ml={0.5}>
-          {typeof delegatedApr === 'string' ? (
-            '-'
-          ) : delegatedApr ? (
-            toPercentage(isVault ? aprToApy(delegatedApr) : delegatedApr)
-          ) : (
-            <Skeleton width={32} />
-          )}
-        </Typography>
-      </Stack>
+        {typeof delegatedApr === 'string' ? (
+          '-'
+        ) : delegatedApr ? (
+          toPercentage(isVault ? aprToApy(delegatedApr) : delegatedApr)
+        ) : (
+          <Skeleton width={32} />
+        )}
+      </Property>
     </Stack>
   )
 }

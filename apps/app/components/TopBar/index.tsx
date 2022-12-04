@@ -44,8 +44,9 @@ const NavItem: FC<{item: NavItem}> = ({item: {label, href}}) => {
       sx={{
         fontWeight: 600,
         color: theme.palette.text.primary,
+        ...(!href && {cursor: 'default'}),
       }}
-      {...(isExternal && {href, target: '_blank'})}
+      {...(isExternal && href && {href, target: '_blank'})}
     >
       {label}
     </Button>
@@ -56,7 +57,7 @@ const NavItem: FC<{item: NavItem}> = ({item: {label, href}}) => {
   }
 
   return (
-    <NextLink href={href} passHref legacyBehavior>
+    <NextLink href={href} passHref legacyBehavior shallow>
       {link}
     </NextLink>
   )

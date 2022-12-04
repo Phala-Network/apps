@@ -38,12 +38,14 @@ const commonOrderByEntries: OrderByEntries = [
 ]
 
 const stakePoolOrderByEntries: OrderByEntries = [
-  ...commonOrderByEntries,
   ['APR high to low', BasePoolOrderByInput.AprMultiplierDesc],
   ['APR low to high', BasePoolOrderByInput.AprMultiplierDesc],
+  ...commonOrderByEntries,
 ]
 
 const vaultOrderByEntries: OrderByEntries = [
+  ['TVL high to low', BasePoolOrderByInput.TotalValueDesc],
+  ['TVL low to high', BasePoolOrderByInput.TotalValueAsc],
   ...commonOrderByEntries,
   ['APY high to low', BasePoolOrderByInput.AprMultiplierDesc],
   ['APY low to high', BasePoolOrderByInput.AprMultiplierDesc],
@@ -54,10 +56,6 @@ const BasePoolList: FC<{
   kind: BasePoolKind
   sx?: SxProps
 }> = ({variant, kind, sx}) => {
-  const defaultOrderBy =
-    variant === 'farm'
-      ? BasePoolOrderByInput.PidAsc
-      : BasePoolOrderByInput.AprMultiplierDesc
   const [polkadotAccount] = useAtom(polkadotAccountAtom)
   const selectedVaultState = useSelectedVaultState()
   const delegatorAddress =
@@ -72,9 +70,16 @@ const BasePoolList: FC<{
   const [delegatedFilter, setDelegatedFilter] = useState(false)
   const [closedFilter, setClosedFilter] = useState(false)
   const [stakePoolOrderBy, setStakePoolOrderBy] =
-    useState<BasePoolOrderByInput>(defaultOrderBy)
-  const [vaultOrderBy, setVaultOrderBy] =
-    useState<BasePoolOrderByInput>(defaultOrderBy)
+    useState<BasePoolOrderByInput>(
+      variant === 'farm'
+        ? BasePoolOrderByInput.PidAsc
+        : BasePoolOrderByInput.AprMultiplierDesc
+    )
+  const [vaultOrderBy, setVaultOrderBy] = useState<BasePoolOrderByInput>(
+    variant === 'farm'
+      ? BasePoolOrderByInput.PidAsc
+      : BasePoolOrderByInput.TotalValueDesc
+  )
   const [searchString, setSearchString] = useState('')
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const debouncedSetSearchString = useCallback(
@@ -113,7 +118,7 @@ const BasePoolList: FC<{
   const {data, isLoading} = useInfiniteBasePoolsConnectionQuery(
     'after',
     subsquidClient,
-    {first: 10, orderBy, where: {AND: where.filter(isTruthy)}},
+    {first: 99, orderBy, where: {AND: where.filter(isTruthy)}},
     {
       keepPreviousData: true,
       enabled: Boolean(delegatorAddress),

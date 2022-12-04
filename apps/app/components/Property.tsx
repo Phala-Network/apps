@@ -8,7 +8,12 @@ const Property: FC<{
   sx?: SxProps
 }> = ({size = 'medium', label, children, sx}) => {
   return (
-    <Stack sx={sx} direction={size === 'medium' ? 'column' : 'row'}>
+    <Stack
+      sx={sx}
+      direction={size === 'medium' ? 'column' : 'row'}
+      overflow="hidden"
+      alignItems={size === 'medium' ? 'flex-start' : 'baseline'}
+    >
       <Typography
         lineHeight={1.3}
         variant="subtitle2"
@@ -27,7 +32,7 @@ const Property: FC<{
           lineHeight={1.3}
           variant="num7"
           component="div"
-          ml="auto"
+          ml={0.5}
           sx={{wordBreak: 'break-all'}}
         >
           {children}
