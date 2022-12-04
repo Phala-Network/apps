@@ -39,7 +39,7 @@ const commonOrderByEntries: OrderByEntries = [
 
 const stakePoolOrderByEntries: OrderByEntries = [
   ['APR high to low', BasePoolOrderByInput.AprMultiplierDesc],
-  ['APR low to high', BasePoolOrderByInput.AprMultiplierDesc],
+  ['APR low to high', BasePoolOrderByInput.AprMultiplierAsc],
   ...commonOrderByEntries,
 ]
 
@@ -48,7 +48,7 @@ const vaultOrderByEntries: OrderByEntries = [
   ['TVL low to high', BasePoolOrderByInput.TotalValueAsc],
   ...commonOrderByEntries,
   ['APY high to low', BasePoolOrderByInput.AprMultiplierDesc],
-  ['APY low to high', BasePoolOrderByInput.AprMultiplierDesc],
+  ['APY low to high', BasePoolOrderByInput.AprMultiplierAsc],
 ]
 
 const BasePoolList: FC<{
