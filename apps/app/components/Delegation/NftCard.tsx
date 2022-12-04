@@ -16,7 +16,6 @@ import {
   useTheme,
 } from '@mui/material'
 import {toCurrency, toPercentage} from '@phala/util'
-import Decimal from 'decimal.js'
 import {FC} from 'react'
 
 const NftCard: FC<{
@@ -68,7 +67,7 @@ const NftCard: FC<{
           <sub>PHA</sub>
         </Typography>
         <Typography variant="caption" color={theme.palette.success.main}>
-          {`+1 PHA / 7d`}
+          {`+ PHA / 7d`}
         </Typography>
 
         <Stack spacing={0.5} mt="auto">
@@ -81,8 +80,12 @@ const NftCard: FC<{
               )}
             </Property>
           )}
-          <Property size="small" label="Shares">
-            {toPercentage(new Decimal(shares).div(basePool.totalShares))}
+          <Property
+            size="small"
+            label="Shares"
+            sx={{justifyContent: 'space-between'}}
+          >
+            {toCurrency(shares)}
           </Property>
         </Stack>
       </Stack>

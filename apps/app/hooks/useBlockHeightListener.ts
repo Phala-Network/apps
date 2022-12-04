@@ -20,6 +20,7 @@ const useBlockHeightListener = () => {
         queryClient.invalidateQueries(['BasePoolById'])
         queryClient.invalidateQueries(['BasePoolsConnection.infinite"'])
         queryClient.invalidateQueries(['BasePoolWhitelistsConnection'])
+        queryClient.invalidateQueries(['DelegationById'])
         queryClient.invalidateQueries(['DelegationsConnection'])
         queryClient.invalidateQueries(['DelegationsConnection.infinite'])
         queryClient.invalidateQueries(['WorkersConnection'])
