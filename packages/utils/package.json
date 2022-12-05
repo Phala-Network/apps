@@ -11,8 +11,8 @@
   },
   "dependencies": {
     "@polkadot/keyring": "^10.1.14",
-    "@polkadot/util": "^10.1.14",
-    "decimal.js": "^10.4.2"
+    "@polkadot/util": "^10.2.1",
+    "decimal.js": "^10.4.3"
   },
   "devDependencies": {
     "@phala/eslint-config": "workspace:^"
