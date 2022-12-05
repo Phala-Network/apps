@@ -5,6 +5,8 @@ import DelegatorSelect from '@/components/DelegatorSelect'
 import PageHeader from '@/components/PageHeader'
 import Property from '@/components/Property'
 import useGetApr from '@/hooks/useGetApr'
+import usePolkadotApi from '@/hooks/usePolkadotApi'
+import useSignAndSend from '@/hooks/useSignAndSend'
 import aprToApy from '@/lib/aprToApy'
 import {subsquidClient} from '@/lib/graphql'
 import {
@@ -39,6 +41,7 @@ import {useAtom} from 'jotai'
 import dynamic from 'next/dynamic'
 import {FC, useCallback, useState} from 'react'
 import Withdraw from '../Delegation/Withdraw'
+import PromiseButton from '../PromiseButton'
 import DelegateInput from './DelegateInput'
 import ExtraProperties from './ExtraProperties'
 import WhitelistList from './Whitelist/List'
@@ -51,6 +54,8 @@ const OwnerSettings = dynamic(() => import('./OwnerSettings'), {
 })
 
 const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
+  const api = usePolkadotApi()
+  const signAndSend = useSignAndSend()
   const [dialogOpen, setDialogOpen] = useState(false)
   const [dialogAction, setDialogAction] = useState<DetailPageDialogAction>()
   const [account] = useAtom(polkadotAccountAtom)
@@ -79,7 +84,7 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
     </>
   )
   const apr = getApr(basePool.aprMultiplier)
-  const {data} = useDelegationByIdQuery(
+  const {data, isLoading: isDelegationLoading} = useDelegationByIdQuery(
     subsquidClient,
     {id: `${basePool.id}-${account?.address}`},
     {
@@ -91,6 +96,18 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
   }, [])
   const hasDelegation =
     !!data?.delegationById && data.delegationById.shares !== '0'
+  const hasWithdrawal =
+    !!data?.delegationById && data.delegationById.withdrawalShares !== '0'
+
+  const reclaim = async () => {
+    if (!api) return
+    return signAndSend(
+      isVault
+        ? api.tx.phalaVault.checkAndMaybeForceWithdraw(basePool.id)
+        : api.tx.phalaStakePoolv2.checkAndMaybeForceWithdraw(basePool.id)
+    )
+  }
+
   return (
     <>
       <PageHeader
@@ -281,7 +298,10 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
                 <Box maxWidth="375px">
                   <NftCard compact delegation={data.delegationById} />
                 </Box>
-                <Box>
+                <Stack spacing={2}>
+                  {hasWithdrawal && (
+                    <PromiseButton onClick={reclaim}>Reclaim</PromiseButton>
+                  )}
                   <Button
                     onClick={() => {
                       setDialogOpen(true)
@@ -290,12 +310,12 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
                   >
                     Withdraw
                   </Button>
-                </Box>
+                </Stack>
               </Stack>
             ) : (
               // TODO: placeholder style
               <Stack height="240px" alignItems="center" justifyContent="center">
-                No delegation
+                {!isDelegationLoading && 'No delegation'}
               </Stack>
             )}
             <DelegateInput basePool={basePool} sx={{mt: 3}} />

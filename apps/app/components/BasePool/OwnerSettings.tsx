@@ -88,9 +88,7 @@ const OwnerSettings: FC<{
               }}
             />
             <LoadingButton
-              onClick={() => {
-                setCommission()
-              }}
+              onClick={setCommission}
               disabled={!commissionValid}
               loading={commissionLoading}
               color={color}
@@ -125,9 +123,7 @@ const OwnerSettings: FC<{
                 }}
               />
               <LoadingButton
-                onClick={() => {
-                  setCapacity()
-                }}
+                onClick={setCapacity}
                 disabled={!capacityString}
                 loading={capacityLoading}
                 color={color}

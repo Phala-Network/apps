@@ -87,9 +87,7 @@ const ClaimReward: FC<{
       <DialogActions>
         <LoadingButton
           variant="text"
-          onClick={() => {
-            claimReward()
-          }}
+          onClick={claimReward}
           disabled={!addressValid}
           loading={loading}
         >
