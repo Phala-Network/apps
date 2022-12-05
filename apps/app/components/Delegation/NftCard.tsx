@@ -22,6 +22,7 @@ import {
 import {toCurrency, toPercentage} from '@phala/util'
 import {FC, useRef, useState} from 'react'
 import {OnAction} from './List'
+import NftCover from './NftCover'
 
 const NftCard: FC<{
   compact?: boolean
@@ -51,7 +52,9 @@ const NftCard: FC<{
         ...(compact && {border: 'none'}),
       }}
     >
-      <Box width={160} bgcolor="gray" flexShrink="0" borderRadius="6px"></Box>
+      <Box width={160} flexShrink="0" borderRadius="6px" overflow="hidden">
+        <NftCover />
+      </Box>
       <Stack flex="1" py={compact ? 0 : 2} px={2.5} position="relative">
         <Box width={140}>
           <Chip

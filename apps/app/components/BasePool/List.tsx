@@ -125,16 +125,18 @@ const BasePoolList: FC<{
       },
     },
     favoriteFilter && {id_in: favoritePools},
-    !closedFilter && {
-      OR: [
-        {owner: {id_eq: delegatorAddress}},
-        {whitelistEnabled_eq: false},
-        {whitelists_some: {id_eq: delegatorAddress}},
-      ],
-    },
-    delegatedFilter && {
-      delegations_some: {account: {id_eq: delegatorAddress}, shares_gt: '0'},
-    },
+    !closedFilter &&
+      !!delegatorAddress && {
+        OR: [
+          {owner: {id_eq: delegatorAddress}},
+          {whitelistEnabled_eq: false},
+          {whitelists_some: {id_eq: delegatorAddress}},
+        ],
+      },
+    delegatedFilter &&
+      !!delegatorAddress && {
+        delegations_some: {account: {id_eq: delegatorAddress}, shares_gt: '0'},
+      },
   ]
   const {data, isLoading} = useInfiniteBasePoolsConnectionQuery(
     'after',
@@ -142,7 +144,6 @@ const BasePoolList: FC<{
     {first: 99, orderBy, where: {AND: where.filter(isTruthy)}},
     {
       keepPreviousData: true,
-      enabled: Boolean(delegatorAddress),
       getNextPageParam: (lastPage) =>
         lastPage.basePoolsConnection.pageInfo.endCursor,
     }

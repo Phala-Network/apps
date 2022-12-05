@@ -15,7 +15,7 @@ import {
   Paper,
   Skeleton,
   Stack,
-  useTheme
+  useTheme,
 } from '@mui/material'
 import {toCurrency, toPercentage} from '@phala/util'
 import {FC} from 'react'

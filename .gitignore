@@ -25,9 +25,6 @@ node_modules
 /coverage
 .out/
 
-# Build directories (next.js...)
-/apps/app/public
-
 # Cache
 **/tsconfig.tsbuildinfo
 **/.eslintcache
