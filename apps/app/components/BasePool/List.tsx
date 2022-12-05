@@ -99,6 +99,7 @@ const BasePoolList: FC<{
       : BasePoolOrderByInput.TotalValueDesc
   )
   const [searchString, setSearchString] = useState('')
+  const isSearchingPid = /^[0-9]+$/.test(searchString)
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const debouncedSetSearchString = useCallback(
     debounce(setSearchString, 500),
@@ -108,13 +109,15 @@ const BasePoolList: FC<{
   const orderBy = isVault ? vaultOrderBy : stakePoolOrderBy
   const where: Array<BasePoolWhereInput | false> = [
     {kind_eq: kind},
-    !!searchString && {
-      OR: [
-        {id_eq: searchString},
-        {owner: {id_containsInsensitive: searchString}},
-        {owner: {identityDisplay_containsInsensitive: searchString}},
-      ],
-    },
+    !!searchString &&
+      (isSearchingPid
+        ? {id_eq: searchString}
+        : {
+            OR: [
+              {owner: {id_containsInsensitive: searchString}},
+              {owner: {identityDisplay_containsInsensitive: searchString}},
+            ],
+          }),
     variant === 'farm' && {owner: {id_eq: polkadotAccount?.address}},
     verifiedFilter && {
       owner: {
