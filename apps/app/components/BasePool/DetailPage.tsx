@@ -6,6 +6,7 @@ import PageHeader from '@/components/PageHeader'
 import Property from '@/components/Property'
 import useGetApr from '@/hooks/useGetApr'
 import usePolkadotApi from '@/hooks/usePolkadotApi'
+import useSelectedVaultState from '@/hooks/useSelectedVaultState'
 import useSignAndSend from '@/hooks/useSignAndSend'
 import aprToApy from '@/lib/aprToApy'
 import {subsquidClient} from '@/lib/graphql'
@@ -59,6 +60,7 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
   const [dialogOpen, setDialogOpen] = useState(false)
   const [dialogAction, setDialogAction] = useState<DetailPageDialogAction>()
   const [account] = useAtom(polkadotAccountAtom)
+  const selectedVaultState = useSelectedVaultState()
   const {vault, stakePool, owner} = basePool
   const getApr = useGetApr()
   const theme = useTheme()
@@ -86,9 +88,13 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
   const apr = getApr(basePool.aprMultiplier)
   const {data, isLoading: isDelegationLoading} = useDelegationByIdQuery(
     subsquidClient,
-    {id: `${basePool.id}-${account?.address}`},
     {
-      enabled: !!account,
+      id: `${basePool.id}-${
+        selectedVaultState?.account.id || account?.address
+      }`,
+    },
+    {
+      enabled: !!selectedVaultState || !!account,
     }
   )
   const onClose = useCallback(() => {

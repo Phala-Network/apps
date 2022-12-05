@@ -27,7 +27,8 @@ const NftCard: FC<{
   compact?: boolean
   delegation: DelegationCommonFragment
   onAction?: OnAction
-}> = ({compact = false, delegation, onAction}) => {
+  isOwner?: boolean
+}> = ({compact = false, delegation, onAction, isOwner = false}) => {
   const [menuOpen, setMenuOpen] = useState(false)
   const moreRef = useRef(null)
   const {value, shares, basePool, delegationNft} = delegation
@@ -100,7 +101,7 @@ const NftCard: FC<{
             {toCurrency(shares)}
           </Property>
         </Stack>
-        {!compact && (
+        {!compact && isOwner && (
           <>
             <IconButton
               ref={moreRef}

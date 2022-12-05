@@ -58,7 +58,8 @@ const DelegationList: FC<{
   showHeader?: boolean
   address?: string
   isVault?: boolean
-}> = ({address, isVault = false, showHeader = false}) => {
+  isOwner?: boolean
+}> = ({address, isVault = false, showHeader = false, isOwner = false}) => {
   const [dialogOpen, setDialogOpen] = useState(false)
   const [dialogAction, setDialogAction] = useState<DelegationDialogAction>()
   const [operatingDelegation, setOperatingDelegation] =
@@ -230,11 +231,16 @@ const DelegationList: FC<{
                   {page.delegationsConnection.edges.map((edge) => (
                     <Grid key={edge.node.id} xs={12} md={showNftCard ? 6 : 12}>
                       {showNftCard ? (
-                        <NftCard delegation={edge.node} onAction={onAction} />
+                        <NftCard
+                          delegation={edge.node}
+                          onAction={onAction}
+                          isOwner={isOwner}
+                        />
                       ) : (
                         <HorizonCard
                           delegation={edge.node}
                           onAction={onAction}
+                          isOwner={isOwner}
                         />
                       )}
                     </Grid>

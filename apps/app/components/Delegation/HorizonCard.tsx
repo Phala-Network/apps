@@ -15,7 +15,7 @@ import {
   Paper,
   Skeleton,
   Stack,
-  useTheme,
+  useTheme
 } from '@mui/material'
 import {toCurrency, toPercentage} from '@phala/util'
 import {FC} from 'react'
@@ -25,7 +25,8 @@ import {OnAction} from './List'
 const HorizonCard: FC<{
   delegation: DelegationCommonFragment
   onAction: OnAction
-}> = ({delegation, onAction}) => {
+  isOwner?: boolean
+}> = ({delegation, onAction, isOwner = false}) => {
   const api = usePolkadotApi()
   const signAndSend = useSignAndSend()
   const {value, basePool, delegationNft} = delegation
@@ -47,7 +48,7 @@ const HorizonCard: FC<{
   // TODO: handle withdrawal nft
   if (!delegationNft) return null
 
-  const actions = (
+  const actions = isOwner && (
     <Stack direction="row" alignItems="center">
       {hasWithdrawal && (
         <PromiseButton variant="text" onClick={reclaim}>
