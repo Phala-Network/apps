@@ -16,11 +16,8 @@ type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
-  /** Big number decimal */
   BigDecimal: string;
-  /** Big number integer */
   BigInt: string;
-  /** A date-time string in simplified extended ISO 8601 format (YYYY-MM-DDTHH:mm:ss.sssZ) */
   DateTime: string;
 };
 
@@ -35,7 +32,6 @@ type Account = {
   readonly ownedPools: ReadonlyArray<BasePool>;
   readonly stakePoolAvgAprMultiplier: Scalars['BigDecimal'];
   readonly stakePoolNftCount: Scalars['Int'];
-  readonly stakePoolOwnerReward: Scalars['BigDecimal'];
   readonly stakePoolValue: Scalars['BigDecimal'];
   readonly vaultAvgAprMultiplier: Scalars['BigDecimal'];
   readonly vaultNftCount: Scalars['Int'];
@@ -105,8 +101,6 @@ const AccountOrderByInput = {
   StakePoolAvgAprMultiplierDesc: 'stakePoolAvgAprMultiplier_DESC',
   StakePoolNftCountAsc: 'stakePoolNftCount_ASC',
   StakePoolNftCountDesc: 'stakePoolNftCount_DESC',
-  StakePoolOwnerRewardAsc: 'stakePoolOwnerReward_ASC',
-  StakePoolOwnerRewardDesc: 'stakePoolOwnerReward_DESC',
   StakePoolValueAsc: 'stakePoolValue_ASC',
   StakePoolValueDesc: 'stakePoolValue_DESC',
   VaultAvgAprMultiplierAsc: 'vaultAvgAprMultiplier_ASC',
@@ -186,15 +180,6 @@ type AccountWhereInput = {
   readonly stakePoolNftCount_lte?: InputMaybe<Scalars['Int']>;
   readonly stakePoolNftCount_not_eq?: InputMaybe<Scalars['Int']>;
   readonly stakePoolNftCount_not_in?: InputMaybe<ReadonlyArray<Scalars['Int']>>;
-  readonly stakePoolOwnerReward_eq?: InputMaybe<Scalars['BigDecimal']>;
-  readonly stakePoolOwnerReward_gt?: InputMaybe<Scalars['BigDecimal']>;
-  readonly stakePoolOwnerReward_gte?: InputMaybe<Scalars['BigDecimal']>;
-  readonly stakePoolOwnerReward_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
-  readonly stakePoolOwnerReward_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly stakePoolOwnerReward_lt?: InputMaybe<Scalars['BigDecimal']>;
-  readonly stakePoolOwnerReward_lte?: InputMaybe<Scalars['BigDecimal']>;
-  readonly stakePoolOwnerReward_not_eq?: InputMaybe<Scalars['BigDecimal']>;
-  readonly stakePoolOwnerReward_not_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
   readonly stakePoolValue_eq?: InputMaybe<Scalars['BigDecimal']>;
   readonly stakePoolValue_gt?: InputMaybe<Scalars['BigDecimal']>;
   readonly stakePoolValue_gte?: InputMaybe<Scalars['BigDecimal']>;
@@ -308,8 +293,6 @@ const BasePoolOrderByInput = {
   AccountStakePoolAvgAprMultiplierDesc: 'account_stakePoolAvgAprMultiplier_DESC',
   AccountStakePoolNftCountAsc: 'account_stakePoolNftCount_ASC',
   AccountStakePoolNftCountDesc: 'account_stakePoolNftCount_DESC',
-  AccountStakePoolOwnerRewardAsc: 'account_stakePoolOwnerReward_ASC',
-  AccountStakePoolOwnerRewardDesc: 'account_stakePoolOwnerReward_DESC',
   AccountStakePoolValueAsc: 'account_stakePoolValue_ASC',
   AccountStakePoolValueDesc: 'account_stakePoolValue_DESC',
   AccountVaultAvgAprMultiplierAsc: 'account_vaultAvgAprMultiplier_ASC',
@@ -342,8 +325,6 @@ const BasePoolOrderByInput = {
   OwnerStakePoolAvgAprMultiplierDesc: 'owner_stakePoolAvgAprMultiplier_DESC',
   OwnerStakePoolNftCountAsc: 'owner_stakePoolNftCount_ASC',
   OwnerStakePoolNftCountDesc: 'owner_stakePoolNftCount_DESC',
-  OwnerStakePoolOwnerRewardAsc: 'owner_stakePoolOwnerReward_ASC',
-  OwnerStakePoolOwnerRewardDesc: 'owner_stakePoolOwnerReward_DESC',
   OwnerStakePoolValueAsc: 'owner_stakePoolValue_ASC',
   OwnerStakePoolValueDesc: 'owner_stakePoolValue_DESC',
   OwnerVaultAvgAprMultiplierAsc: 'owner_vaultAvgAprMultiplier_ASC',
@@ -569,8 +550,6 @@ const BasePoolWhitelistOrderByInput = {
   AccountStakePoolAvgAprMultiplierDesc: 'account_stakePoolAvgAprMultiplier_DESC',
   AccountStakePoolNftCountAsc: 'account_stakePoolNftCount_ASC',
   AccountStakePoolNftCountDesc: 'account_stakePoolNftCount_DESC',
-  AccountStakePoolOwnerRewardAsc: 'account_stakePoolOwnerReward_ASC',
-  AccountStakePoolOwnerRewardDesc: 'account_stakePoolOwnerReward_DESC',
   AccountStakePoolValueAsc: 'account_stakePoolValue_ASC',
   AccountStakePoolValueDesc: 'account_stakePoolValue_DESC',
   AccountVaultAvgAprMultiplierAsc: 'account_vaultAvgAprMultiplier_ASC',
@@ -718,8 +697,6 @@ const DelegationNftOrderByInput = {
   OwnerStakePoolAvgAprMultiplierDesc: 'owner_stakePoolAvgAprMultiplier_DESC',
   OwnerStakePoolNftCountAsc: 'owner_stakePoolNftCount_ASC',
   OwnerStakePoolNftCountDesc: 'owner_stakePoolNftCount_DESC',
-  OwnerStakePoolOwnerRewardAsc: 'owner_stakePoolOwnerReward_ASC',
-  OwnerStakePoolOwnerRewardDesc: 'owner_stakePoolOwnerReward_DESC',
   OwnerStakePoolValueAsc: 'owner_stakePoolValue_ASC',
   OwnerStakePoolValueDesc: 'owner_stakePoolValue_DESC',
   OwnerVaultAvgAprMultiplierAsc: 'owner_vaultAvgAprMultiplier_ASC',
@@ -791,8 +768,6 @@ const DelegationOrderByInput = {
   AccountStakePoolAvgAprMultiplierDesc: 'account_stakePoolAvgAprMultiplier_DESC',
   AccountStakePoolNftCountAsc: 'account_stakePoolNftCount_ASC',
   AccountStakePoolNftCountDesc: 'account_stakePoolNftCount_DESC',
-  AccountStakePoolOwnerRewardAsc: 'account_stakePoolOwnerReward_ASC',
-  AccountStakePoolOwnerRewardDesc: 'account_stakePoolOwnerReward_DESC',
   AccountStakePoolValueAsc: 'account_stakePoolValue_ASC',
   AccountStakePoolValueDesc: 'account_stakePoolValue_DESC',
   AccountVaultAvgAprMultiplierAsc: 'account_vaultAvgAprMultiplier_ASC',
@@ -2166,7 +2141,7 @@ type AccountByIdQueryVariables = Exact<{
 }>;
 
 
-type AccountByIdQuery = { readonly __typename?: 'Query', readonly accountById?: { readonly __typename?: 'Account', readonly id: string, readonly identityDisplay?: string | null, readonly identityLevel?: IdentityLevel | null, readonly stakePoolNftCount: number, readonly stakePoolValue: string, readonly stakePoolAvgAprMultiplier: string, readonly vaultNftCount: number, readonly vaultValue: string, readonly vaultAvgAprMultiplier: string, readonly stakePoolOwnerReward: string, readonly ownedPools: ReadonlyArray<{ readonly __typename?: 'BasePool', readonly id: string, readonly account: { readonly __typename?: 'Account', readonly id: string, readonly stakePoolNftCount: number, readonly stakePoolValue: string, readonly stakePoolAvgAprMultiplier: string, readonly vaultNftCount: number, readonly vaultValue: string, readonly vaultAvgAprMultiplier: string } }> } | null };
+type AccountByIdQuery = { readonly __typename?: 'Query', readonly accountById?: { readonly __typename?: 'Account', readonly id: string, readonly identityDisplay?: string | null, readonly identityLevel?: IdentityLevel | null, readonly stakePoolNftCount: number, readonly stakePoolValue: string, readonly stakePoolAvgAprMultiplier: string, readonly vaultNftCount: number, readonly vaultValue: string, readonly vaultAvgAprMultiplier: string, readonly ownedPools: ReadonlyArray<{ readonly __typename?: 'BasePool', readonly id: string, readonly account: { readonly __typename?: 'Account', readonly id: string, readonly stakePoolNftCount: number, readonly stakePoolValue: string, readonly stakePoolAvgAprMultiplier: string, readonly vaultNftCount: number, readonly vaultValue: string, readonly vaultAvgAprMultiplier: string } }> } | null };
 
 type BasePoolCommonFragment = { readonly __typename?: 'BasePool', readonly cid: number, readonly commission: string, readonly delegatorCount: number, readonly freeValue: string, readonly id: string, readonly kind: BasePoolKind, readonly aprMultiplier: string, readonly pid: string, readonly releasingValue: string, readonly sharePrice: string, readonly totalShares: string, readonly totalValue: string, readonly whitelistEnabled: boolean, readonly withdrawalShares: string, readonly withdrawalValue: string, readonly account: { readonly __typename?: 'Account', readonly id: string, readonly stakePoolNftCount: number, readonly stakePoolValue: string }, readonly owner: { readonly __typename?: 'Account', readonly id: string, readonly identityDisplay?: string | null, readonly identityLevel?: IdentityLevel | null }, readonly stakePool?: { readonly __typename?: 'StakePool', readonly capacity?: string | null, readonly delegable?: string | null, readonly idleWorkerCount: number, readonly ownerReward: string, readonly workerCount: number } | null, readonly vault?: { readonly __typename?: 'Vault', readonly claimableOwnerShares: string, readonly lastSharePriceCheckpoint: string } | null };
 
@@ -2328,7 +2303,6 @@ export const DelegationCommonFragmentDoc = gql`
     vaultNftCount
     vaultValue
     vaultAvgAprMultiplier
-    stakePoolOwnerReward
     ownedPools(where: {kind_eq: Vault}, orderBy: pid_ASC, limit: 99) {
       id
       account {

@@ -69,10 +69,20 @@ const DelegateDataCard: FC<{
         </ClientOnly>
       </Typography>
       <Stack direction="row" alignItems="baseline" spacing={1}>
-        <Typography variant="caption" component="div" color="text.secondary">
+        <Typography
+          variant="caption"
+          component="div"
+          color="text.secondary"
+          flexShrink="0"
+        >
           {isVault ? 'Est. APY' : 'Est. APR'}
         </Typography>
-        <Typography variant="num7" component="div">
+        <Typography
+          variant="num7"
+          component="div"
+          maxWidth="100px"
+          overflow="hidden"
+        >
           <ClientOnly fallback={<Skeleton width={32} />}>
             {apr === false
               ? '-'

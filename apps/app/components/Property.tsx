@@ -20,6 +20,7 @@ const Property: FC<{
         component="div"
         color="text.secondary"
         mr={0.5}
+        flexShrink={0}
       >
         {label}
       </Typography>
