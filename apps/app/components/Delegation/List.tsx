@@ -5,6 +5,7 @@ import SectionHeader from '@/components/SectionHeader'
 import {subsquidClient} from '@/lib/graphql'
 import {
   BasePoolKind,
+  DelegationCommonFragment,
   DelegationOrderByInput,
   DelegationWhereInput,
   useInfiniteDelegationsConnectionQuery,
@@ -18,6 +19,7 @@ import {
 import {
   Box,
   Checkbox,
+  Dialog,
   FormControlLabel,
   IconButton,
   MenuItem,
@@ -30,9 +32,20 @@ import {
 } from '@mui/material'
 import {isTruthy} from '@phala/util'
 import {debounce} from 'lodash-es'
+import dynamic from 'next/dynamic'
 import {FC, useCallback, useState} from 'react'
 import HorizonCard from './HorizonCard'
 import NftCard from './NftCard'
+
+const Withdraw = dynamic(() => import('./Withdraw'), {
+  ssr: false,
+})
+
+export type DelegationDialogAction = 'withdraw'
+export type OnAction = (
+  delegation: DelegationCommonFragment,
+  action: DelegationDialogAction
+) => void
 
 const orderByEntries: [string, DelegationOrderByInput][] = [
   ['Value high to low', DelegationOrderByInput.ValueDesc],
@@ -46,6 +59,10 @@ const DelegationList: FC<{
   address?: string
   isVault?: boolean
 }> = ({address, isVault = false, showHeader = false}) => {
+  const [dialogOpen, setDialogOpen] = useState(false)
+  const [dialogAction, setDialogAction] = useState<DelegationDialogAction>()
+  const [operatingDelegation, setOperatingDelegation] =
+    useState<DelegationCommonFragment>()
   const [showNftCard, setShowNftCard] = useState(true)
   const [orderBy, setOrderBy] = useState<DelegationOrderByInput>(
     DelegationOrderByInput.ValueDesc
@@ -89,6 +106,15 @@ const DelegationList: FC<{
     }
   )
   const isEmpty = data?.pages[0].delegationsConnection.totalCount === 0
+
+  const onAction: OnAction = useCallback((basePool, action) => {
+    setDialogOpen(true)
+    setOperatingDelegation(basePool)
+    setDialogAction(action)
+  }, [])
+  const onClose = useCallback(() => {
+    setDialogOpen(false)
+  }, [])
 
   const filters = (
     <Stack spacing={2}>
@@ -204,9 +230,12 @@ const DelegationList: FC<{
                   {page.delegationsConnection.edges.map((edge) => (
                     <Grid key={edge.node.id} xs={12} md={showNftCard ? 6 : 12}>
                       {showNftCard ? (
-                        <NftCard delegation={edge.node} />
+                        <NftCard delegation={edge.node} onAction={onAction} />
                       ) : (
-                        <HorizonCard delegation={edge.node} />
+                        <HorizonCard
+                          delegation={edge.node}
+                          onAction={onAction}
+                        />
                       )}
                     </Grid>
                   ))}
@@ -216,6 +245,16 @@ const DelegationList: FC<{
           </Stack>
         </Box>
       </Stack>
+
+      <Dialog open={dialogOpen} onClose={onClose}>
+        {operatingDelegation && (
+          <>
+            {dialogAction === 'withdraw' && (
+              <Withdraw onClose={onClose} delegation={operatingDelegation} />
+            )}
+          </>
+        )}
+      </Dialog>
     </>
   )
 }

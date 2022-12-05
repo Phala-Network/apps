@@ -21,6 +21,7 @@ import {
 import {
   alpha,
   Box,
+  Button,
   Chip,
   Dialog,
   IconButton,
@@ -36,18 +37,22 @@ import {polkadotAccountAtom} from '@phala/store'
 import {toCurrency, toPercentage, trimAddress} from '@phala/util'
 import {useAtom} from 'jotai'
 import dynamic from 'next/dynamic'
-import {FC, useState} from 'react'
+import {FC, useCallback, useState} from 'react'
+import Withdraw from '../Delegation/Withdraw'
 import DelegateInput from './DelegateInput'
 import ExtraProperties from './ExtraProperties'
 import WhitelistList from './Whitelist/List'
 import WithdrawQueue from './WithdrawQueue'
 
-const BasePoolOwnerSettings = dynamic(() => import('./OwnerSettings'), {
+type DetailPageDialogAction = 'withdraw' | 'ownerSettings'
+
+const OwnerSettings = dynamic(() => import('./OwnerSettings'), {
   ssr: false,
 })
 
 const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
   const [dialogOpen, setDialogOpen] = useState(false)
+  const [dialogAction, setDialogAction] = useState<DetailPageDialogAction>()
   const [account] = useAtom(polkadotAccountAtom)
   const {vault, stakePool, owner} = basePool
   const getApr = useGetApr()
@@ -62,7 +67,12 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
   const actions = (
     <>
       {isOwner && (
-        <IconButton onClick={() => setDialogOpen(true)}>
+        <IconButton
+          onClick={() => {
+            setDialogOpen(true)
+            setDialogAction('ownerSettings')
+          }}
+        >
           <Settings />
         </IconButton>
       )}
@@ -76,6 +86,11 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
       enabled: !!account,
     }
   )
+  const onClose = useCallback(() => {
+    setDialogOpen(false)
+  }, [])
+  const hasDelegation =
+    !!data?.delegationById && data.delegationById.shares !== '0'
   return (
     <>
       <PageHeader
@@ -257,16 +272,32 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
             <Box position="absolute" right={16} top={16}>
               <DelegatorSelect isVault={isVault} />
             </Box>
-            <Stack>
-              <Box maxWidth="375px">
-                {data?.delegationById ? (
+            {hasDelegation ? (
+              <Stack
+                direction="row"
+                justifyContent="space-between"
+                alignItems="flex-end"
+              >
+                <Box maxWidth="375px">
                   <NftCard compact delegation={data.delegationById} />
-                ) : (
-                  // TODO: placeholder style
-                  <Box height="240px">No delegation</Box>
-                )}
-              </Box>
-            </Stack>
+                </Box>
+                <Box>
+                  <Button
+                    onClick={() => {
+                      setDialogOpen(true)
+                      setDialogAction('withdraw')
+                    }}
+                  >
+                    Withdraw
+                  </Button>
+                </Box>
+              </Stack>
+            ) : (
+              // TODO: placeholder style
+              <Stack height="240px" alignItems="center" justifyContent="center">
+                No delegation
+              </Stack>
+            )}
             <DelegateInput basePool={basePool} sx={{mt: 3}} />
           </Paper>
         </Stack>
@@ -279,8 +310,13 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
         </Box>
       </Stack>
 
-      <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
-        <BasePoolOwnerSettings basePool={basePool} />
+      <Dialog open={dialogOpen} onClose={onClose}>
+        {dialogAction === 'ownerSettings' && (
+          <OwnerSettings basePool={basePool} />
+        )}
+        {hasDelegation && dialogAction === 'withdraw' && (
+          <Withdraw delegation={data.delegationById} onClose={onClose} />
+        )}
       </Dialog>
     </>
   )

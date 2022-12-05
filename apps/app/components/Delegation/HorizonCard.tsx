@@ -17,10 +17,12 @@ import {
 } from '@mui/material'
 import {toCurrency, toPercentage} from '@phala/util'
 import {FC} from 'react'
+import {OnAction} from './List'
 
-const HorizonCard: FC<{delegation: DelegationCommonFragment}> = ({
-  delegation,
-}) => {
+const HorizonCard: FC<{
+  delegation: DelegationCommonFragment
+  onAction: OnAction
+}> = ({delegation, onAction}) => {
   const {value, basePool, delegationNft} = delegation
   const isVault = basePool.kind === 'Vault'
   const color = isVault ? 'secondary' : 'primary'
@@ -33,7 +35,14 @@ const HorizonCard: FC<{delegation: DelegationCommonFragment}> = ({
 
   const actions = (
     <Stack direction="row" alignItems="center">
-      <Button variant="text">Withdraw</Button>
+      <Button
+        variant="text"
+        onClick={() => {
+          onAction(delegation, 'withdraw')
+        }}
+      >
+        Withdraw
+      </Button>
     </Stack>
   )
 
@@ -72,7 +81,7 @@ const HorizonCard: FC<{delegation: DelegationCommonFragment}> = ({
             <Box
               component="span"
               color={theme.palette.success.main}
-            >{`+1 PHA`}</Box>
+            >{`+ PHA`}</Box>
           </Property>
           <Property label={`Est. ${isVault ? 'APY' : 'APR'}`} sx={{width: 64}}>
             {apr ? (
