@@ -1,6 +1,6 @@
 import ClientOnly from '@/components/ClientOnly'
 import useAccountQuery from '@/hooks/useAccountQuery'
-import useAsset from '@/hooks/useAsset'
+import useAssetBalance from '@/hooks/useAssetBalance'
 import useGetApr from '@/hooks/useGetApr'
 import usePolkadotApi from '@/hooks/usePolkadotApi'
 import useSelectedVaultState from '@/hooks/useSelectedVaultState'
@@ -100,7 +100,7 @@ const DelegateDetailCard: FC = () => {
   const api = usePolkadotApi()
   const signAndSend = useSignAndSend()
   const [account] = useAtom(polkadotAccountAtom)
-  const {balance: wrapped} = useAsset(account?.address, 1)
+  const wrapped = useAssetBalance(account?.address, 1)
   const accountState = data?.accountById
   const selectedVaultState = useSelectedVaultState()
   const asAccount = selectedVaultState === null

@@ -15,6 +15,15 @@ const nextConfig = {
   eslint: {ignoreDuringBuilds: true},
   reactStrictMode: true,
   swcMinify: true,
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '*.coinmarketcap.com',
+        pathname: '/static/img/coins/**',
+      },
+    ],
+  },
   webpack(config) {
     config.module.rules.push({
       test: /\.svg$/i,

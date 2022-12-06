@@ -1,8 +1,9 @@
 {
   "editor.codeActionsOnSave": {
+    "source.removeUnusedImports": true,
     "source.addMissingImports": true,
-    "source.fixAll.eslint": true,
-    "source.sortImports": true
+    "source.sortImports": true,
+    "source.fixAll.eslint": true
   },
   "eslint.workingDirectories": [{"mode": "auto"}],
   "javascript.format.insertSpaceAfterOpeningAndBeforeClosingEmptyBraces": false,

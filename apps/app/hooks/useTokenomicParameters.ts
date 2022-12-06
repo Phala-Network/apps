@@ -1,3 +1,4 @@
+import {ApiPromise} from '@polkadot/api'
 import {u128} from '@polkadot/types'
 import Decimal from 'decimal.js'
 import useSWRImmutable from 'swr/immutable'
@@ -15,21 +16,26 @@ export type TokenomicParameters = {
 export const fromBits = (value: u128): Decimal =>
   new Decimal(value.toString()).div(new Decimal(2).pow(64))
 
+const tokenomicParametersFetcher = async (api: ApiPromise) => {
+  const tokenomicParameters =
+    await api.query.phalaComputation.tokenomicParameters()
+  const t = tokenomicParameters.unwrap()
+  return {
+    phaRate: fromBits(t.phaRate),
+    budgetPerBlock: fromBits(t.budgetPerBlock),
+    vMax: fromBits(t.vMax),
+    treasuryRatio: fromBits(t.treasuryRatio),
+    re: fromBits(t.re),
+    k: fromBits(t.k),
+  }
+}
+
 const useTokenomicParameters = (): TokenomicParameters | undefined => {
   const api = usePolkadotApi()
-  const {data} = useSWRImmutable(api ? [api] : null, async (api) => {
-    const tokenomicParameters =
-      await api.query.phalaComputation.tokenomicParameters()
-    const t = tokenomicParameters.unwrap()
-    return {
-      phaRate: fromBits(t.phaRate),
-      budgetPerBlock: fromBits(t.budgetPerBlock),
-      vMax: fromBits(t.vMax),
-      treasuryRatio: fromBits(t.treasuryRatio),
-      re: fromBits(t.re),
-      k: fromBits(t.k),
-    }
-  })
+  const {data} = useSWRImmutable(
+    api ? [api, 'tokenomicParameters'] : null,
+    tokenomicParametersFetcher
+  )
   return data
 }
 

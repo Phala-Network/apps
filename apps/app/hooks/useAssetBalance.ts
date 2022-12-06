@@ -1,19 +1,12 @@
 import {VoidFn} from '@polkadot/api/types'
-import {hexToString} from '@polkadot/util'
 import Decimal from 'decimal.js'
 import {useEffect, useState} from 'react'
-import useSWRImmutable from 'swr/immutable'
+import useAssetsMetadata from './useAssetsMetadata'
 import usePolkadotApi from './usePolkadotApi'
 
-const useAsset = (account?: string, assetId?: number | string) => {
+const useAssetBalance = (account?: string, assetId?: number) => {
   const api = usePolkadotApi()
-  const {data: assetMetadata} = useSWRImmutable(
-    api && assetId !== undefined ? [api, assetId] : null,
-    async (api, assetId) => {
-      const metadata = await api.query.assets.metadata(assetId)
-      return metadata
-    }
-  )
+  const assetsMetadata = useAssetsMetadata()
   const [balance, setBalance] = useState<Decimal>()
 
   useEffect(() => {
@@ -34,7 +27,8 @@ const useAsset = (account?: string, assetId?: number | string) => {
           unsub = fn
         })
     } else {
-      if (assetMetadata?.decimals === undefined) return
+      const assetMetadata = assetsMetadata?.[assetId]
+      if (!assetMetadata) return
       api.query.assets
         .account(assetId, account, (res) => {
           const unwrapped = res.unwrapOr({balance: 0})
@@ -44,7 +38,7 @@ const useAsset = (account?: string, assetId?: number | string) => {
                 Decimal.pow(
                   10,
                   // TODO: remove hardcode
-                  assetId === 1 ? 12 : assetMetadata.decimals.toNumber()
+                  assetId === 1 ? 12 : assetMetadata.decimals
                 )
               )
             )
@@ -58,12 +52,9 @@ const useAsset = (account?: string, assetId?: number | string) => {
       unmounted = true
       unsub?.()
     }
-  }, [api, assetId, account, assetMetadata?.decimals])
+  }, [api, assetId, account, assetsMetadata])
 
-  return {
-    symbol: assetMetadata && hexToString(assetMetadata.symbol.toHex()),
-    balance,
-  }
+  return balance
 }
 
-export default useAsset
+export default useAssetBalance

@@ -1,6 +1,6 @@
 import VaultIcon from '@/assets/vault.svg'
 import useAccountQuery from '@/hooks/useAccountQuery'
-import useAsset from '@/hooks/useAsset'
+import useAssetBalance from '@/hooks/useAssetBalance'
 import useSelectedVaultState from '@/hooks/useSelectedVaultState'
 import {colors} from '@/lib/theme'
 import {vaultIdAtom} from '@/store/common'
@@ -31,7 +31,7 @@ const DelegatorSelect: FC<{isVault?: boolean}> = ({isVault = false}) => {
     [accountData?.accountById?.ownedPools]
   )
   const selectedVaultState = useSelectedVaultState()
-  const {balance} = useAsset(
+  const balance = useAssetBalance(
     selectedVaultState !== undefined
       ? selectedVaultState
         ? selectedVaultState.account.id

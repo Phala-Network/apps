@@ -7,7 +7,7 @@ import useSWRImmutable from 'swr/immutable'
 const usePolkadotApi = () => {
   const [chain] = useAtom(chainAtom)
   const {data: polkadotApi} = useSWRImmutable(
-    [chain === 'khala' ? KHALA_ENDPOINTS : PHALA_ENDPOINTS],
+    [chain === 'khala' ? KHALA_ENDPOINTS : PHALA_ENDPOINTS, 'api'],
     createPolkadotApi
   )
 
