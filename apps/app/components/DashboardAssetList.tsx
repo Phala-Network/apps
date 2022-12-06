@@ -11,6 +11,10 @@ import {
   Button,
   Checkbox,
   Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
   Divider,
   FormControlLabel,
   NoSsr,
@@ -28,13 +32,40 @@ import {FC, useCallback, useState} from 'react'
 import AssetTransfer from './AssetTransfer'
 import SectionHeader from './SectionHeader'
 
+type AssetDialogAction = 'transfer' | 'buy'
 export type Asset = AssetMetadata & {balance: Decimal | undefined}
-type OnTransfer = (asset: Asset) => void
+type OnAction = (asset: Asset, action: AssetDialogAction) => void
 
-const Asset: FC<{asset: Asset; onTransfer: OnTransfer}> = ({
-  asset,
-  onTransfer,
-}) => {
+const BuyConfirmation: FC<{onClose: () => void}> = ({onClose}) => {
+  return (
+    <>
+      <DialogTitle>Buy PHA</DialogTitle>
+      <DialogContent>
+        <DialogContentText>
+          The service is powered by Bifinity (Binance Connect).
+        </DialogContentText>
+        <br />
+        <DialogContentText>
+          Please note that tokens you purchase on Binance will not be
+          automatically transferred to the Phala/Khala network. Pay attention to
+          the security of your funds.
+        </DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Button
+          href={`https://www.binancecnt.com/en/pre-connect?merchantCode=pha&timestamp=${Date.now()}&fiatCurrency=EUR`}
+          target="_blank"
+          onClick={onClose}
+          variant="text"
+        >
+          I Understand
+        </Button>
+      </DialogActions>
+    </>
+  )
+}
+
+const Asset: FC<{asset: Asset; onAction: OnAction}> = ({asset, onAction}) => {
   const wrapAsset = useWrapAsset()
   return (
     <Stack direction="row" py={2} px={{xs: 1, sm: 2}} alignItems="center">
@@ -61,6 +92,16 @@ const Asset: FC<{asset: Asset; onTransfer: OnTransfer}> = ({
       >
         {asset.name}
       </Typography>
+      {asset.symbol === 'PHA' && (
+        <Button
+          variant="text"
+          size="small"
+          sx={{ml: 0.5}}
+          onClick={() => onAction(asset, 'buy')}
+        >
+          Buy
+        </Button>
+      )}
       <Typography variant="num6" ml="auto" flexShrink={0}>
         {asset.balance ? (
           `${wrapAsset(toCurrency(asset.balance))} ${asset.symbol}`
@@ -73,7 +114,7 @@ const Asset: FC<{asset: Asset; onTransfer: OnTransfer}> = ({
         variant="text"
         sx={{ml: 2}}
         disabled={!asset.balance || asset.balance.eq(0)}
-        onClick={() => onTransfer(asset)}
+        onClick={() => onAction(asset, 'transfer')}
       >
         Transfer
       </Button>
@@ -89,6 +130,7 @@ const Assets: FC<{
 }> = ({assetsMetadata}) => {
   const [hideSmallBalance] = useAtom(hideSmallBalanceAtom)
   const [dialogOpen, setDialogOpen] = useState(false)
+  const [dialogAction, setDialogAction] = useState<AssetDialogAction>()
   const [operatingAsset, setOperatingAsset] = useState<Asset>()
   const [account] = useAtom(polkadotAccountAtom)
   const phaBalance = useAssetBalance(account?.address)
@@ -112,7 +154,8 @@ const Assets: FC<{
       a.balance && b.balance && a.balance.greaterThan(b.balance) ? -1 : 1
     )
   }
-  const onTransfer: OnTransfer = useCallback((asset) => {
+  const onAction: OnAction = useCallback((asset, action) => {
+    setDialogAction(action)
     setDialogOpen(true)
     setOperatingAsset(asset)
   }, [])
@@ -125,16 +168,17 @@ const Assets: FC<{
       <Stack divider={<Divider flexItem />}>
         <Asset
           asset={{...phaMetadata, balance: phaBalance}}
-          onTransfer={onTransfer}
+          onAction={onAction}
         />
         {getAssets().map((asset) => (
-          <Asset asset={asset} key={asset.assetId} onTransfer={onTransfer} />
+          <Asset asset={asset} key={asset.assetId} onAction={onAction} />
         ))}
       </Stack>
       <Dialog open={dialogOpen} onClose={onClose}>
-        {operatingAsset && (
+        {operatingAsset && dialogAction === 'transfer' && (
           <AssetTransfer asset={operatingAsset} onClose={onClose} />
         )}
+        {dialogAction === 'buy' && <BuyConfirmation onClose={onClose} />}
       </Dialog>
     </>
   )

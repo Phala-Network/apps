@@ -14,7 +14,7 @@ export type TokenomicParameters = {
 }
 
 export const fromBits = (value: u128): Decimal =>
-  new Decimal(value.toString()).div(new Decimal(2).pow(64))
+  new Decimal(value.toString()).div(Decimal.pow(2, 64))
 
 const tokenomicParametersFetcher = async (api: ApiPromise) => {
   const tokenomicParameters =

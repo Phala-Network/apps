@@ -27,19 +27,21 @@ const useAssetBalance = (account?: string, assetId?: number) => {
           unsub = fn
         })
     } else {
-      const assetMetadata = assetsMetadata?.[assetId]
-      if (!assetMetadata) return
+      // TODO: remove hardcode
+      const assetMetadata = assetsMetadata?.[assetId] || {
+        assetId: 1,
+        symbol: 'WPHA',
+        name: 'Wrapped PHA',
+        decimals: 12,
+      }
+
       api.query.assets
         .account(assetId, account, (res) => {
           const unwrapped = res.unwrapOr({balance: 0})
           if (!unmounted) {
             setBalance(
               new Decimal(unwrapped.balance.toString()).div(
-                Decimal.pow(
-                  10,
-                  // TODO: remove hardcode
-                  assetId === 1 ? 12 : assetMetadata.decimals
-                )
+                Decimal.pow(10, assetMetadata.decimals)
               )
             )
           }

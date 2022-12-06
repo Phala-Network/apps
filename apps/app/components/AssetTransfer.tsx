@@ -30,7 +30,7 @@ const AssetTransfer: FC<{asset: Asset; onClose: () => void}> = ({
   const transfer = () => {
     if (!api) return
     const amount = new Decimal(amountString)
-      .times(new Decimal(10).pow(asset.decimals))
+      .times(Decimal.pow(10, asset.decimals))
       .toHex()
     let extrinsic
     if (asset.symbol === 'PHA') {
