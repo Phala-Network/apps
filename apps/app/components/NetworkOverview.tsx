@@ -1,27 +1,72 @@
 import {subsquidClient} from '@/lib/graphql'
-import {useGlobalStateQuery} from '@/lib/subsquidQuery'
+import {
+  RewardRecordOrderByInput,
+  useGlobalStateQuery,
+  useRewardRecordsConnectionQuery,
+} from '@/lib/subsquidQuery'
+import {chainAtom} from '@/store/common'
 import {Box, Divider, Stack, Typography} from '@mui/material'
+import {toPercentage} from '@phala/util'
+import {useQuery} from '@tanstack/react-query'
+import {addDays} from 'date-fns'
 import Decimal from 'decimal.js'
-import {FC, useMemo} from 'react'
+import {useAtom} from 'jotai'
+import {FC, useMemo, useState} from 'react'
+
+type CirculationData = {
+  data: {circulations: {nodes: [{amount: string}]}}
+}
+
+const numberFormat = (value: Decimal) =>
+  Intl.NumberFormat('en-US', {
+    notation: 'compact',
+    maximumFractionDigits: 2,
+  }).format(BigInt(value.floor().toString()))
 
 const NetworkOverview: FC = () => {
-  const {data} = useGlobalStateQuery(subsquidClient)
-  const {totalValue} = data?.globalStateById || {}
+  const [yesterday] = useState(() => addDays(new Date(), -1).toISOString())
+  const [chain] = useAtom(chainAtom)
+  const {data: rewardRecordsData} = useRewardRecordsConnectionQuery(
+    subsquidClient,
+    {
+      orderBy: RewardRecordOrderByInput.TimeDesc,
+      where: {time_gt: yesterday},
+    }
+  )
+  const {data: circulationData} = useQuery<CirculationData>(
+    ['circulations', chain],
+    async () => {
+      const res = await fetch(
+        'https://api.subquery.network/sq/Phala-Network/khala-chainbridge__UGhhb?query=%7Bcirculations(first:1,orderBy:BLOCK_HEIGHT_DESC)%7Bnodes%7Bamount%7D%7D%7D'
+      )
+      return res.json()
+    }
+  )
+  const {data: globalStateData} = useGlobalStateQuery(subsquidClient)
+  const circulationValue = circulationData?.data.circulations.nodes[0].amount
+  const {totalValue} = globalStateData?.globalStateById || {}
+  const stakeRatio = useMemo(() => {
+    if (!circulationValue || !totalValue) return
+    return toPercentage(
+      new Decimal(totalValue).times(1e12).div(circulationValue)
+    )
+  }, [circulationValue, totalValue])
+  const dailyRewards = useMemo(() => {
+    if (!rewardRecordsData) return
+    const sum = rewardRecordsData.rewardRecordsConnection.edges.reduce(
+      (acc, cur) => acc.plus(cur.node.value),
+      new Decimal(0)
+    )
+    return numberFormat(sum)
+  }, [rewardRecordsData])
   const items = useMemo<[string, string | undefined][]>(() => {
     return [
-      [
-        'Total Value',
-        totalValue &&
-          Intl.NumberFormat('en-US', {
-            notation: 'compact',
-            maximumFractionDigits: 2,
-          }).format(BigInt(new Decimal(totalValue).floor().toString())),
-      ],
-      ['Stake Ratio', ''],
-      ['Daily Rewards', ''],
+      ['Total Value', totalValue && numberFormat(new Decimal(totalValue))],
+      ['Stake Ratio', stakeRatio],
+      ['Daily Rewards', dailyRewards],
       ['Avg APR', ''],
     ]
-  }, [totalValue])
+  }, [stakeRatio, totalValue, dailyRewards])
 
   return (
     <Stack

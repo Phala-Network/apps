@@ -841,6 +841,98 @@ export const DelegationOrderByInput = {
 } as const;
 
 export type DelegationOrderByInput = typeof DelegationOrderByInput[keyof typeof DelegationOrderByInput];
+export type DelegationValueRecord = {
+  readonly __typename?: 'DelegationValueRecord';
+  readonly account: Account;
+  readonly id: Scalars['String'];
+  /** block time */
+  readonly updatedTime: Scalars['DateTime'];
+  readonly value: Scalars['BigDecimal'];
+};
+
+export type DelegationValueRecordEdge = {
+  readonly __typename?: 'DelegationValueRecordEdge';
+  readonly cursor: Scalars['String'];
+  readonly node: DelegationValueRecord;
+};
+
+export const DelegationValueRecordOrderByInput = {
+  AccountIdAsc: 'account_id_ASC',
+  AccountIdDesc: 'account_id_DESC',
+  AccountIdentityDisplayAsc: 'account_identityDisplay_ASC',
+  AccountIdentityDisplayDesc: 'account_identityDisplay_DESC',
+  AccountIdentityLevelAsc: 'account_identityLevel_ASC',
+  AccountIdentityLevelDesc: 'account_identityLevel_DESC',
+  AccountStakePoolAvgAprMultiplierAsc: 'account_stakePoolAvgAprMultiplier_ASC',
+  AccountStakePoolAvgAprMultiplierDesc: 'account_stakePoolAvgAprMultiplier_DESC',
+  AccountStakePoolNftCountAsc: 'account_stakePoolNftCount_ASC',
+  AccountStakePoolNftCountDesc: 'account_stakePoolNftCount_DESC',
+  AccountStakePoolValueAsc: 'account_stakePoolValue_ASC',
+  AccountStakePoolValueDesc: 'account_stakePoolValue_DESC',
+  AccountVaultAvgAprMultiplierAsc: 'account_vaultAvgAprMultiplier_ASC',
+  AccountVaultAvgAprMultiplierDesc: 'account_vaultAvgAprMultiplier_DESC',
+  AccountVaultNftCountAsc: 'account_vaultNftCount_ASC',
+  AccountVaultNftCountDesc: 'account_vaultNftCount_DESC',
+  AccountVaultValueAsc: 'account_vaultValue_ASC',
+  AccountVaultValueDesc: 'account_vaultValue_DESC',
+  IdAsc: 'id_ASC',
+  IdDesc: 'id_DESC',
+  UpdatedTimeAsc: 'updatedTime_ASC',
+  UpdatedTimeDesc: 'updatedTime_DESC',
+  ValueAsc: 'value_ASC',
+  ValueDesc: 'value_DESC'
+} as const;
+
+export type DelegationValueRecordOrderByInput = typeof DelegationValueRecordOrderByInput[keyof typeof DelegationValueRecordOrderByInput];
+export type DelegationValueRecordWhereInput = {
+  readonly AND?: InputMaybe<ReadonlyArray<DelegationValueRecordWhereInput>>;
+  readonly OR?: InputMaybe<ReadonlyArray<DelegationValueRecordWhereInput>>;
+  readonly account?: InputMaybe<AccountWhereInput>;
+  readonly account_isNull?: InputMaybe<Scalars['Boolean']>;
+  readonly id_contains?: InputMaybe<Scalars['String']>;
+  readonly id_containsInsensitive?: InputMaybe<Scalars['String']>;
+  readonly id_endsWith?: InputMaybe<Scalars['String']>;
+  readonly id_eq?: InputMaybe<Scalars['String']>;
+  readonly id_gt?: InputMaybe<Scalars['String']>;
+  readonly id_gte?: InputMaybe<Scalars['String']>;
+  readonly id_in?: InputMaybe<ReadonlyArray<Scalars['String']>>;
+  readonly id_isNull?: InputMaybe<Scalars['Boolean']>;
+  readonly id_lt?: InputMaybe<Scalars['String']>;
+  readonly id_lte?: InputMaybe<Scalars['String']>;
+  readonly id_not_contains?: InputMaybe<Scalars['String']>;
+  readonly id_not_containsInsensitive?: InputMaybe<Scalars['String']>;
+  readonly id_not_endsWith?: InputMaybe<Scalars['String']>;
+  readonly id_not_eq?: InputMaybe<Scalars['String']>;
+  readonly id_not_in?: InputMaybe<ReadonlyArray<Scalars['String']>>;
+  readonly id_not_startsWith?: InputMaybe<Scalars['String']>;
+  readonly id_startsWith?: InputMaybe<Scalars['String']>;
+  readonly updatedTime_eq?: InputMaybe<Scalars['DateTime']>;
+  readonly updatedTime_gt?: InputMaybe<Scalars['DateTime']>;
+  readonly updatedTime_gte?: InputMaybe<Scalars['DateTime']>;
+  readonly updatedTime_in?: InputMaybe<ReadonlyArray<Scalars['DateTime']>>;
+  readonly updatedTime_isNull?: InputMaybe<Scalars['Boolean']>;
+  readonly updatedTime_lt?: InputMaybe<Scalars['DateTime']>;
+  readonly updatedTime_lte?: InputMaybe<Scalars['DateTime']>;
+  readonly updatedTime_not_eq?: InputMaybe<Scalars['DateTime']>;
+  readonly updatedTime_not_in?: InputMaybe<ReadonlyArray<Scalars['DateTime']>>;
+  readonly value_eq?: InputMaybe<Scalars['BigDecimal']>;
+  readonly value_gt?: InputMaybe<Scalars['BigDecimal']>;
+  readonly value_gte?: InputMaybe<Scalars['BigDecimal']>;
+  readonly value_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
+  readonly value_isNull?: InputMaybe<Scalars['Boolean']>;
+  readonly value_lt?: InputMaybe<Scalars['BigDecimal']>;
+  readonly value_lte?: InputMaybe<Scalars['BigDecimal']>;
+  readonly value_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  readonly value_not_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
+};
+
+export type DelegationValueRecordsConnection = {
+  readonly __typename?: 'DelegationValueRecordsConnection';
+  readonly edges: ReadonlyArray<DelegationValueRecordEdge>;
+  readonly pageInfo: PageInfo;
+  readonly totalCount: Scalars['Int'];
+};
+
 export type DelegationWhereInput = {
   readonly AND?: InputMaybe<ReadonlyArray<DelegationWhereInput>>;
   readonly OR?: InputMaybe<ReadonlyArray<DelegationWhereInput>>;
@@ -925,21 +1017,15 @@ export type DelegationsConnection = {
 
 export type GlobalState = {
   readonly __typename?: 'GlobalState';
-  /** in milliseconds during last 500 blocks */
   readonly averageBlockTime: Scalars['Int'];
+  readonly averageBlockTimeUpdatedHeight: Scalars['Int'];
+  readonly averageBlockTimeUpdatedTime: Scalars['DateTime'];
   readonly height: Scalars['Int'];
   /** constant 0 */
   readonly id: Scalars['String'];
   /** for apr calculation */
   readonly idleWorkerShares: Scalars['BigDecimal'];
-  /** for average block time calculation */
-  readonly lastRecordedBlockHeight: Scalars['Int'];
-  /** for average block time calculation */
-  readonly lastRecordedBlockTime: Scalars['DateTime'];
-  readonly stakePoolValue: Scalars['BigDecimal'];
-  /** excluded value vaults delegated to stake pools */
   readonly totalValue: Scalars['BigDecimal'];
-  readonly vaultValue: Scalars['BigDecimal'];
 };
 
 export type GlobalStateEdge = {
@@ -949,6 +1035,10 @@ export type GlobalStateEdge = {
 };
 
 export const GlobalStateOrderByInput = {
+  AverageBlockTimeUpdatedHeightAsc: 'averageBlockTimeUpdatedHeight_ASC',
+  AverageBlockTimeUpdatedHeightDesc: 'averageBlockTimeUpdatedHeight_DESC',
+  AverageBlockTimeUpdatedTimeAsc: 'averageBlockTimeUpdatedTime_ASC',
+  AverageBlockTimeUpdatedTimeDesc: 'averageBlockTimeUpdatedTime_DESC',
   AverageBlockTimeAsc: 'averageBlockTime_ASC',
   AverageBlockTimeDesc: 'averageBlockTime_DESC',
   HeightAsc: 'height_ASC',
@@ -957,22 +1047,32 @@ export const GlobalStateOrderByInput = {
   IdDesc: 'id_DESC',
   IdleWorkerSharesAsc: 'idleWorkerShares_ASC',
   IdleWorkerSharesDesc: 'idleWorkerShares_DESC',
-  LastRecordedBlockHeightAsc: 'lastRecordedBlockHeight_ASC',
-  LastRecordedBlockHeightDesc: 'lastRecordedBlockHeight_DESC',
-  LastRecordedBlockTimeAsc: 'lastRecordedBlockTime_ASC',
-  LastRecordedBlockTimeDesc: 'lastRecordedBlockTime_DESC',
-  StakePoolValueAsc: 'stakePoolValue_ASC',
-  StakePoolValueDesc: 'stakePoolValue_DESC',
   TotalValueAsc: 'totalValue_ASC',
-  TotalValueDesc: 'totalValue_DESC',
-  VaultValueAsc: 'vaultValue_ASC',
-  VaultValueDesc: 'vaultValue_DESC'
+  TotalValueDesc: 'totalValue_DESC'
 } as const;
 
 export type GlobalStateOrderByInput = typeof GlobalStateOrderByInput[keyof typeof GlobalStateOrderByInput];
 export type GlobalStateWhereInput = {
   readonly AND?: InputMaybe<ReadonlyArray<GlobalStateWhereInput>>;
   readonly OR?: InputMaybe<ReadonlyArray<GlobalStateWhereInput>>;
+  readonly averageBlockTimeUpdatedHeight_eq?: InputMaybe<Scalars['Int']>;
+  readonly averageBlockTimeUpdatedHeight_gt?: InputMaybe<Scalars['Int']>;
+  readonly averageBlockTimeUpdatedHeight_gte?: InputMaybe<Scalars['Int']>;
+  readonly averageBlockTimeUpdatedHeight_in?: InputMaybe<ReadonlyArray<Scalars['Int']>>;
+  readonly averageBlockTimeUpdatedHeight_isNull?: InputMaybe<Scalars['Boolean']>;
+  readonly averageBlockTimeUpdatedHeight_lt?: InputMaybe<Scalars['Int']>;
+  readonly averageBlockTimeUpdatedHeight_lte?: InputMaybe<Scalars['Int']>;
+  readonly averageBlockTimeUpdatedHeight_not_eq?: InputMaybe<Scalars['Int']>;
+  readonly averageBlockTimeUpdatedHeight_not_in?: InputMaybe<ReadonlyArray<Scalars['Int']>>;
+  readonly averageBlockTimeUpdatedTime_eq?: InputMaybe<Scalars['DateTime']>;
+  readonly averageBlockTimeUpdatedTime_gt?: InputMaybe<Scalars['DateTime']>;
+  readonly averageBlockTimeUpdatedTime_gte?: InputMaybe<Scalars['DateTime']>;
+  readonly averageBlockTimeUpdatedTime_in?: InputMaybe<ReadonlyArray<Scalars['DateTime']>>;
+  readonly averageBlockTimeUpdatedTime_isNull?: InputMaybe<Scalars['Boolean']>;
+  readonly averageBlockTimeUpdatedTime_lt?: InputMaybe<Scalars['DateTime']>;
+  readonly averageBlockTimeUpdatedTime_lte?: InputMaybe<Scalars['DateTime']>;
+  readonly averageBlockTimeUpdatedTime_not_eq?: InputMaybe<Scalars['DateTime']>;
+  readonly averageBlockTimeUpdatedTime_not_in?: InputMaybe<ReadonlyArray<Scalars['DateTime']>>;
   readonly averageBlockTime_eq?: InputMaybe<Scalars['Int']>;
   readonly averageBlockTime_gt?: InputMaybe<Scalars['Int']>;
   readonly averageBlockTime_gte?: InputMaybe<Scalars['Int']>;
@@ -1017,33 +1117,6 @@ export type GlobalStateWhereInput = {
   readonly idleWorkerShares_lte?: InputMaybe<Scalars['BigDecimal']>;
   readonly idleWorkerShares_not_eq?: InputMaybe<Scalars['BigDecimal']>;
   readonly idleWorkerShares_not_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
-  readonly lastRecordedBlockHeight_eq?: InputMaybe<Scalars['Int']>;
-  readonly lastRecordedBlockHeight_gt?: InputMaybe<Scalars['Int']>;
-  readonly lastRecordedBlockHeight_gte?: InputMaybe<Scalars['Int']>;
-  readonly lastRecordedBlockHeight_in?: InputMaybe<ReadonlyArray<Scalars['Int']>>;
-  readonly lastRecordedBlockHeight_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly lastRecordedBlockHeight_lt?: InputMaybe<Scalars['Int']>;
-  readonly lastRecordedBlockHeight_lte?: InputMaybe<Scalars['Int']>;
-  readonly lastRecordedBlockHeight_not_eq?: InputMaybe<Scalars['Int']>;
-  readonly lastRecordedBlockHeight_not_in?: InputMaybe<ReadonlyArray<Scalars['Int']>>;
-  readonly lastRecordedBlockTime_eq?: InputMaybe<Scalars['DateTime']>;
-  readonly lastRecordedBlockTime_gt?: InputMaybe<Scalars['DateTime']>;
-  readonly lastRecordedBlockTime_gte?: InputMaybe<Scalars['DateTime']>;
-  readonly lastRecordedBlockTime_in?: InputMaybe<ReadonlyArray<Scalars['DateTime']>>;
-  readonly lastRecordedBlockTime_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly lastRecordedBlockTime_lt?: InputMaybe<Scalars['DateTime']>;
-  readonly lastRecordedBlockTime_lte?: InputMaybe<Scalars['DateTime']>;
-  readonly lastRecordedBlockTime_not_eq?: InputMaybe<Scalars['DateTime']>;
-  readonly lastRecordedBlockTime_not_in?: InputMaybe<ReadonlyArray<Scalars['DateTime']>>;
-  readonly stakePoolValue_eq?: InputMaybe<Scalars['BigDecimal']>;
-  readonly stakePoolValue_gt?: InputMaybe<Scalars['BigDecimal']>;
-  readonly stakePoolValue_gte?: InputMaybe<Scalars['BigDecimal']>;
-  readonly stakePoolValue_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
-  readonly stakePoolValue_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly stakePoolValue_lt?: InputMaybe<Scalars['BigDecimal']>;
-  readonly stakePoolValue_lte?: InputMaybe<Scalars['BigDecimal']>;
-  readonly stakePoolValue_not_eq?: InputMaybe<Scalars['BigDecimal']>;
-  readonly stakePoolValue_not_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
   readonly totalValue_eq?: InputMaybe<Scalars['BigDecimal']>;
   readonly totalValue_gt?: InputMaybe<Scalars['BigDecimal']>;
   readonly totalValue_gte?: InputMaybe<Scalars['BigDecimal']>;
@@ -1053,15 +1126,6 @@ export type GlobalStateWhereInput = {
   readonly totalValue_lte?: InputMaybe<Scalars['BigDecimal']>;
   readonly totalValue_not_eq?: InputMaybe<Scalars['BigDecimal']>;
   readonly totalValue_not_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
-  readonly vaultValue_eq?: InputMaybe<Scalars['BigDecimal']>;
-  readonly vaultValue_gt?: InputMaybe<Scalars['BigDecimal']>;
-  readonly vaultValue_gte?: InputMaybe<Scalars['BigDecimal']>;
-  readonly vaultValue_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
-  readonly vaultValue_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly vaultValue_lt?: InputMaybe<Scalars['BigDecimal']>;
-  readonly vaultValue_lte?: InputMaybe<Scalars['BigDecimal']>;
-  readonly vaultValue_not_eq?: InputMaybe<Scalars['BigDecimal']>;
-  readonly vaultValue_not_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
 };
 
 export type GlobalStatesConnection = {
@@ -1115,6 +1179,11 @@ export type Query = {
   readonly delegationNftByUniqueInput?: Maybe<DelegationNft>;
   readonly delegationNfts: ReadonlyArray<DelegationNft>;
   readonly delegationNftsConnection: DelegationNftsConnection;
+  readonly delegationValueRecordById?: Maybe<DelegationValueRecord>;
+  /** @deprecated Use delegationValueRecordById */
+  readonly delegationValueRecordByUniqueInput?: Maybe<DelegationValueRecord>;
+  readonly delegationValueRecords: ReadonlyArray<DelegationValueRecord>;
+  readonly delegationValueRecordsConnection: DelegationValueRecordsConnection;
   readonly delegations: ReadonlyArray<Delegation>;
   readonly delegationsConnection: DelegationsConnection;
   readonly globalStateById?: Maybe<GlobalState>;
@@ -1122,6 +1191,11 @@ export type Query = {
   readonly globalStateByUniqueInput?: Maybe<GlobalState>;
   readonly globalStates: ReadonlyArray<GlobalState>;
   readonly globalStatesConnection: GlobalStatesConnection;
+  readonly rewardRecordById?: Maybe<RewardRecord>;
+  /** @deprecated Use rewardRecordById */
+  readonly rewardRecordByUniqueInput?: Maybe<RewardRecord>;
+  readonly rewardRecords: ReadonlyArray<RewardRecord>;
+  readonly rewardRecordsConnection: RewardRecordsConnection;
   readonly sessionById?: Maybe<Session>;
   /** @deprecated Use sessionById */
   readonly sessionByUniqueInput?: Maybe<Session>;
@@ -1260,6 +1334,32 @@ export type QueryDelegationNftsConnectionArgs = {
 };
 
 
+export type QueryDelegationValueRecordByIdArgs = {
+  id: Scalars['String'];
+};
+
+
+export type QueryDelegationValueRecordByUniqueInputArgs = {
+  where: WhereIdInput;
+};
+
+
+export type QueryDelegationValueRecordsArgs = {
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<ReadonlyArray<DelegationValueRecordOrderByInput>>;
+  where?: InputMaybe<DelegationValueRecordWhereInput>;
+};
+
+
+export type QueryDelegationValueRecordsConnectionArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy: ReadonlyArray<DelegationValueRecordOrderByInput>;
+  where?: InputMaybe<DelegationValueRecordWhereInput>;
+};
+
+
 export type QueryDelegationsArgs = {
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
@@ -1299,6 +1399,32 @@ export type QueryGlobalStatesConnectionArgs = {
   first?: InputMaybe<Scalars['Int']>;
   orderBy: ReadonlyArray<GlobalStateOrderByInput>;
   where?: InputMaybe<GlobalStateWhereInput>;
+};
+
+
+export type QueryRewardRecordByIdArgs = {
+  id: Scalars['String'];
+};
+
+
+export type QueryRewardRecordByUniqueInputArgs = {
+  where: WhereIdInput;
+};
+
+
+export type QueryRewardRecordsArgs = {
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<ReadonlyArray<RewardRecordOrderByInput>>;
+  where?: InputMaybe<RewardRecordWhereInput>;
+};
+
+
+export type QueryRewardRecordsConnectionArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy: ReadonlyArray<RewardRecordOrderByInput>;
+  where?: InputMaybe<RewardRecordWhereInput>;
 };
 
 
@@ -1403,6 +1529,77 @@ export type QueryWorkersConnectionArgs = {
   first?: InputMaybe<Scalars['Int']>;
   orderBy: ReadonlyArray<WorkerOrderByInput>;
   where?: InputMaybe<WorkerWhereInput>;
+};
+
+export type RewardRecord = {
+  readonly __typename?: 'RewardRecord';
+  readonly id: Scalars['String'];
+  /** block time */
+  readonly time: Scalars['DateTime'];
+  readonly value: Scalars['BigDecimal'];
+};
+
+export type RewardRecordEdge = {
+  readonly __typename?: 'RewardRecordEdge';
+  readonly cursor: Scalars['String'];
+  readonly node: RewardRecord;
+};
+
+export const RewardRecordOrderByInput = {
+  IdAsc: 'id_ASC',
+  IdDesc: 'id_DESC',
+  TimeAsc: 'time_ASC',
+  TimeDesc: 'time_DESC',
+  ValueAsc: 'value_ASC',
+  ValueDesc: 'value_DESC'
+} as const;
+
+export type RewardRecordOrderByInput = typeof RewardRecordOrderByInput[keyof typeof RewardRecordOrderByInput];
+export type RewardRecordWhereInput = {
+  readonly AND?: InputMaybe<ReadonlyArray<RewardRecordWhereInput>>;
+  readonly OR?: InputMaybe<ReadonlyArray<RewardRecordWhereInput>>;
+  readonly id_contains?: InputMaybe<Scalars['String']>;
+  readonly id_containsInsensitive?: InputMaybe<Scalars['String']>;
+  readonly id_endsWith?: InputMaybe<Scalars['String']>;
+  readonly id_eq?: InputMaybe<Scalars['String']>;
+  readonly id_gt?: InputMaybe<Scalars['String']>;
+  readonly id_gte?: InputMaybe<Scalars['String']>;
+  readonly id_in?: InputMaybe<ReadonlyArray<Scalars['String']>>;
+  readonly id_isNull?: InputMaybe<Scalars['Boolean']>;
+  readonly id_lt?: InputMaybe<Scalars['String']>;
+  readonly id_lte?: InputMaybe<Scalars['String']>;
+  readonly id_not_contains?: InputMaybe<Scalars['String']>;
+  readonly id_not_containsInsensitive?: InputMaybe<Scalars['String']>;
+  readonly id_not_endsWith?: InputMaybe<Scalars['String']>;
+  readonly id_not_eq?: InputMaybe<Scalars['String']>;
+  readonly id_not_in?: InputMaybe<ReadonlyArray<Scalars['String']>>;
+  readonly id_not_startsWith?: InputMaybe<Scalars['String']>;
+  readonly id_startsWith?: InputMaybe<Scalars['String']>;
+  readonly time_eq?: InputMaybe<Scalars['DateTime']>;
+  readonly time_gt?: InputMaybe<Scalars['DateTime']>;
+  readonly time_gte?: InputMaybe<Scalars['DateTime']>;
+  readonly time_in?: InputMaybe<ReadonlyArray<Scalars['DateTime']>>;
+  readonly time_isNull?: InputMaybe<Scalars['Boolean']>;
+  readonly time_lt?: InputMaybe<Scalars['DateTime']>;
+  readonly time_lte?: InputMaybe<Scalars['DateTime']>;
+  readonly time_not_eq?: InputMaybe<Scalars['DateTime']>;
+  readonly time_not_in?: InputMaybe<ReadonlyArray<Scalars['DateTime']>>;
+  readonly value_eq?: InputMaybe<Scalars['BigDecimal']>;
+  readonly value_gt?: InputMaybe<Scalars['BigDecimal']>;
+  readonly value_gte?: InputMaybe<Scalars['BigDecimal']>;
+  readonly value_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
+  readonly value_isNull?: InputMaybe<Scalars['Boolean']>;
+  readonly value_lt?: InputMaybe<Scalars['BigDecimal']>;
+  readonly value_lte?: InputMaybe<Scalars['BigDecimal']>;
+  readonly value_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  readonly value_not_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
+};
+
+export type RewardRecordsConnection = {
+  readonly __typename?: 'RewardRecordsConnection';
+  readonly edges: ReadonlyArray<RewardRecordEdge>;
+  readonly pageInfo: PageInfo;
+  readonly totalCount: Scalars['Int'];
 };
 
 export type Session = {
@@ -1761,9 +1958,13 @@ export type Subscription = {
   readonly delegationById?: Maybe<Delegation>;
   readonly delegationNftById?: Maybe<DelegationNft>;
   readonly delegationNfts: ReadonlyArray<DelegationNft>;
+  readonly delegationValueRecordById?: Maybe<DelegationValueRecord>;
+  readonly delegationValueRecords: ReadonlyArray<DelegationValueRecord>;
   readonly delegations: ReadonlyArray<Delegation>;
   readonly globalStateById?: Maybe<GlobalState>;
   readonly globalStates: ReadonlyArray<GlobalState>;
+  readonly rewardRecordById?: Maybe<RewardRecord>;
+  readonly rewardRecords: ReadonlyArray<RewardRecord>;
   readonly sessionById?: Maybe<Session>;
   readonly sessions: ReadonlyArray<Session>;
   readonly stakePoolById?: Maybe<StakePool>;
@@ -1832,6 +2033,19 @@ export type SubscriptionDelegationNftsArgs = {
 };
 
 
+export type SubscriptionDelegationValueRecordByIdArgs = {
+  id: Scalars['String'];
+};
+
+
+export type SubscriptionDelegationValueRecordsArgs = {
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<ReadonlyArray<DelegationValueRecordOrderByInput>>;
+  where?: InputMaybe<DelegationValueRecordWhereInput>;
+};
+
+
 export type SubscriptionDelegationsArgs = {
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
@@ -1850,6 +2064,19 @@ export type SubscriptionGlobalStatesArgs = {
   offset?: InputMaybe<Scalars['Int']>;
   orderBy?: InputMaybe<ReadonlyArray<GlobalStateOrderByInput>>;
   where?: InputMaybe<GlobalStateWhereInput>;
+};
+
+
+export type SubscriptionRewardRecordByIdArgs = {
+  id: Scalars['String'];
+};
+
+
+export type SubscriptionRewardRecordsArgs = {
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<ReadonlyArray<RewardRecordOrderByInput>>;
+  where?: InputMaybe<RewardRecordWhereInput>;
 };
 
 
@@ -2207,7 +2434,17 @@ export type DelegationsConnectionQuery = { readonly __typename?: 'Query', readon
 export type GlobalStateQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GlobalStateQuery = { readonly __typename?: 'Query', readonly globalStateById?: { readonly __typename?: 'GlobalState', readonly averageBlockTime: number, readonly height: number, readonly stakePoolValue: string, readonly totalValue: string, readonly vaultValue: string, readonly idleWorkerShares: string } | null };
+export type GlobalStateQuery = { readonly __typename?: 'Query', readonly globalStateById?: { readonly __typename?: 'GlobalState', readonly averageBlockTime: number, readonly height: number, readonly totalValue: string, readonly idleWorkerShares: string } | null };
+
+export type RewardRecordsConnectionQueryVariables = Exact<{
+  orderBy: ReadonlyArray<RewardRecordOrderByInput> | RewardRecordOrderByInput;
+  where?: InputMaybe<RewardRecordWhereInput>;
+  after?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+}>;
+
+
+export type RewardRecordsConnectionQuery = { readonly __typename?: 'Query', readonly rewardRecordsConnection: { readonly __typename?: 'RewardRecordsConnection', readonly totalCount: number, readonly edges: ReadonlyArray<{ readonly __typename?: 'RewardRecordEdge', readonly node: { readonly __typename?: 'RewardRecord', readonly id: string, readonly time: string, readonly value: string } }> } };
 
 export type BasePoolWhitelistsConnectionQueryVariables = Exact<{
   orderBy: ReadonlyArray<BasePoolWhitelistOrderByInput> | BasePoolWhitelistOrderByInput;
@@ -2640,9 +2877,7 @@ export const GlobalStateDocument = `
   globalStateById(id: "0") {
     averageBlockTime
     height
-    stakePoolValue
     totalValue
-    vaultValue
     idleWorkerShares
   }
 }
@@ -2674,6 +2909,55 @@ export const useInfiniteGlobalStateQuery = <
     useInfiniteQuery<GlobalStateQuery, TError, TData>(
       variables === undefined ? ['GlobalState.infinite'] : ['GlobalState.infinite', variables],
       (metaData) => fetcher<GlobalStateQuery, GlobalStateQueryVariables>(client, GlobalStateDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
+      options
+    );
+
+export const RewardRecordsConnectionDocument = `
+    query RewardRecordsConnection($orderBy: [RewardRecordOrderByInput!]!, $where: RewardRecordWhereInput, $after: String, $first: Int) {
+  rewardRecordsConnection(
+    orderBy: $orderBy
+    where: $where
+    after: $after
+    first: $first
+  ) {
+    edges {
+      node {
+        id
+        time
+        value
+      }
+    }
+    totalCount
+  }
+}
+    `;
+export const useRewardRecordsConnectionQuery = <
+      TData = RewardRecordsConnectionQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: RewardRecordsConnectionQueryVariables,
+      options?: UseQueryOptions<RewardRecordsConnectionQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<RewardRecordsConnectionQuery, TError, TData>(
+      ['RewardRecordsConnection', variables],
+      fetcher<RewardRecordsConnectionQuery, RewardRecordsConnectionQueryVariables>(client, RewardRecordsConnectionDocument, variables, headers),
+      options
+    );
+export const useInfiniteRewardRecordsConnectionQuery = <
+      TData = RewardRecordsConnectionQuery,
+      TError = unknown
+    >(
+      pageParamKey: keyof RewardRecordsConnectionQueryVariables,
+      client: GraphQLClient,
+      variables: RewardRecordsConnectionQueryVariables,
+      options?: UseInfiniteQueryOptions<RewardRecordsConnectionQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useInfiniteQuery<RewardRecordsConnectionQuery, TError, TData>(
+      ['RewardRecordsConnection.infinite', variables],
+      (metaData) => fetcher<RewardRecordsConnectionQuery, RewardRecordsConnectionQueryVariables>(client, RewardRecordsConnectionDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
       options
     );
 
