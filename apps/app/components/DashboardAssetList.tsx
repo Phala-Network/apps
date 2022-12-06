@@ -105,7 +105,7 @@ const Assets: FC<{
     let assets = Object.values(allAssets)
     if (hideSmallBalance) {
       assets = assets.filter((asset) => {
-        return asset.balance && asset.balance.gt(0)
+        return asset.balance && asset.balance.gt('0.01')
       })
     }
     return assets.sort((a, b) =>

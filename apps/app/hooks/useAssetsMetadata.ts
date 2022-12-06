@@ -5,6 +5,7 @@ import usePolkadotApi from './usePolkadotApi'
 
 const iconMap: Record<string, string> = {
   PHA: 'https://s2.coinmarketcap.com/static/img/coins/64x64/6841.png',
+  // Khala
   KSM: 'https://s2.coinmarketcap.com/static/img/coins/64x64/5034.png',
   SDN: 'https://s2.coinmarketcap.com/static/img/coins/64x64/11451.png',
   TUR: 'https://s2.coinmarketcap.com/static/img/coins/64x64/20340.png',
@@ -17,8 +18,18 @@ const iconMap: Record<string, string> = {
   KMA: 'https://s2.coinmarketcap.com/static/img/coins/64x64/15305.png',
   KAR: 'https://s2.coinmarketcap.com/static/img/coins/64x64/10042.png',
   ZLK: 'https://s2.coinmarketcap.com/static/img/coins/64x64/15419.png',
-  BIT: 'https://s2.coinmarketcap.com/static/img/coins/64x64/15419.png',
+  BIT: 'https://s2.coinmarketcap.com/static/img/coins/64x64/21974.png',
   NEER: 'https://s2.coinmarketcap.com/static/img/coins/64x64/14294.png',
+
+  // Phala
+  GLMR: 'https://s2.coinmarketcap.com/static/img/coins/64x64/6836.png',
+  ASTR: 'https://s2.coinmarketcap.com/static/img/coins/64x64/12885.png',
+  DOT: 'https://s2.coinmarketcap.com/static/img/coins/64x64/6636.png',
+  PARA: 'https://s2.coinmarketcap.com/static/img/coins/64x64/12887.png',
+  AUSD: 'https://s2.coinmarketcap.com/static/img/coins/64x64/20411.png',
+  ACA: 'https://s2.coinmarketcap.com/static/img/coins/64x64/6756.png',
+  RING: 'https://s2.coinmarketcap.com/static/img/coins/64x64/5798.png',
+  LDOT: 'https://s2.coinmarketcap.com/static/img/coins/64x64/20725.png',
 }
 
 export type AssetMetadata = {
