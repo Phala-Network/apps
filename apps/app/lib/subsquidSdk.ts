@@ -1009,6 +1009,8 @@ type DelegationsConnection = {
 
 type GlobalState = {
   readonly __typename?: 'GlobalState';
+  readonly averageAprMultiplier: Scalars['BigDecimal'];
+  readonly averageAprMultiplierUpdatedTime: Scalars['DateTime'];
   readonly averageBlockTime: Scalars['Int'];
   readonly averageBlockTimeUpdatedHeight: Scalars['Int'];
   readonly averageBlockTimeUpdatedTime: Scalars['DateTime'];
@@ -1027,6 +1029,10 @@ type GlobalStateEdge = {
 };
 
 const GlobalStateOrderByInput = {
+  AverageAprMultiplierUpdatedTimeAsc: 'averageAprMultiplierUpdatedTime_ASC',
+  AverageAprMultiplierUpdatedTimeDesc: 'averageAprMultiplierUpdatedTime_DESC',
+  AverageAprMultiplierAsc: 'averageAprMultiplier_ASC',
+  AverageAprMultiplierDesc: 'averageAprMultiplier_DESC',
   AverageBlockTimeUpdatedHeightAsc: 'averageBlockTimeUpdatedHeight_ASC',
   AverageBlockTimeUpdatedHeightDesc: 'averageBlockTimeUpdatedHeight_DESC',
   AverageBlockTimeUpdatedTimeAsc: 'averageBlockTimeUpdatedTime_ASC',
@@ -1047,6 +1053,24 @@ export type GlobalStateOrderByInput = typeof GlobalStateOrderByInput[keyof typeo
 type GlobalStateWhereInput = {
   readonly AND?: InputMaybe<ReadonlyArray<GlobalStateWhereInput>>;
   readonly OR?: InputMaybe<ReadonlyArray<GlobalStateWhereInput>>;
+  readonly averageAprMultiplierUpdatedTime_eq?: InputMaybe<Scalars['DateTime']>;
+  readonly averageAprMultiplierUpdatedTime_gt?: InputMaybe<Scalars['DateTime']>;
+  readonly averageAprMultiplierUpdatedTime_gte?: InputMaybe<Scalars['DateTime']>;
+  readonly averageAprMultiplierUpdatedTime_in?: InputMaybe<ReadonlyArray<Scalars['DateTime']>>;
+  readonly averageAprMultiplierUpdatedTime_isNull?: InputMaybe<Scalars['Boolean']>;
+  readonly averageAprMultiplierUpdatedTime_lt?: InputMaybe<Scalars['DateTime']>;
+  readonly averageAprMultiplierUpdatedTime_lte?: InputMaybe<Scalars['DateTime']>;
+  readonly averageAprMultiplierUpdatedTime_not_eq?: InputMaybe<Scalars['DateTime']>;
+  readonly averageAprMultiplierUpdatedTime_not_in?: InputMaybe<ReadonlyArray<Scalars['DateTime']>>;
+  readonly averageAprMultiplier_eq?: InputMaybe<Scalars['BigDecimal']>;
+  readonly averageAprMultiplier_gt?: InputMaybe<Scalars['BigDecimal']>;
+  readonly averageAprMultiplier_gte?: InputMaybe<Scalars['BigDecimal']>;
+  readonly averageAprMultiplier_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
+  readonly averageAprMultiplier_isNull?: InputMaybe<Scalars['Boolean']>;
+  readonly averageAprMultiplier_lt?: InputMaybe<Scalars['BigDecimal']>;
+  readonly averageAprMultiplier_lte?: InputMaybe<Scalars['BigDecimal']>;
+  readonly averageAprMultiplier_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  readonly averageAprMultiplier_not_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
   readonly averageBlockTimeUpdatedHeight_eq?: InputMaybe<Scalars['Int']>;
   readonly averageBlockTimeUpdatedHeight_gt?: InputMaybe<Scalars['Int']>;
   readonly averageBlockTimeUpdatedHeight_gte?: InputMaybe<Scalars['Int']>;
@@ -2426,7 +2450,7 @@ type DelegationsConnectionQuery = { readonly __typename?: 'Query', readonly dele
 type GlobalStateQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-type GlobalStateQuery = { readonly __typename?: 'Query', readonly globalStateById?: { readonly __typename?: 'GlobalState', readonly averageBlockTime: number, readonly height: number, readonly totalValue: string, readonly idleWorkerShares: string } | null };
+type GlobalStateQuery = { readonly __typename?: 'Query', readonly globalStateById?: { readonly __typename?: 'GlobalState', readonly averageBlockTime: number, readonly averageAprMultiplier: string, readonly height: number, readonly totalValue: string, readonly idleWorkerShares: string } | null };
 
 type RewardRecordsConnectionQueryVariables = Exact<{
   orderBy: ReadonlyArray<RewardRecordOrderByInput> | RewardRecordOrderByInput;
@@ -2658,6 +2682,7 @@ export const DelegationCommonFragmentDoc = gql`
     query GlobalState {
   globalStateById(id: "0") {
     averageBlockTime
+    averageAprMultiplier
     height
     totalValue
     idleWorkerShares

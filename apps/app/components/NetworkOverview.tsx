@@ -1,3 +1,4 @@
+import useGetApr from '@/hooks/useGetApr'
 import {subsquidClient} from '@/lib/graphql'
 import {
   RewardRecordOrderByInput,
@@ -5,7 +6,7 @@ import {
   useRewardRecordsConnectionQuery,
 } from '@/lib/subsquidQuery'
 import {chainAtom} from '@/store/common'
-import {Box, Divider, Stack, Typography} from '@mui/material'
+import {Box, Divider, Skeleton, Stack, Typography} from '@mui/material'
 import {toPercentage} from '@phala/util'
 import {useQuery} from '@tanstack/react-query'
 import {addDays} from 'date-fns'
@@ -24,6 +25,7 @@ const numberFormat = (value: Decimal) =>
   }).format(BigInt(value.floor().toString()))
 
 const NetworkOverview: FC = () => {
+  const getApr = useGetApr()
   const [yesterday] = useState(() => addDays(new Date(), -1).toISOString())
   const [chain] = useAtom(chainAtom)
   const {data: rewardRecordsData} = useRewardRecordsConnectionQuery(
@@ -44,7 +46,8 @@ const NetworkOverview: FC = () => {
   )
   const {data: globalStateData} = useGlobalStateQuery(subsquidClient)
   const circulationValue = circulationData?.data.circulations.nodes[0].amount
-  const {totalValue} = globalStateData?.globalStateById || {}
+  const {totalValue, averageAprMultiplier} =
+    globalStateData?.globalStateById || {}
   const stakeRatio = useMemo(() => {
     if (!circulationValue || !totalValue) return
     return toPercentage(
@@ -59,14 +62,20 @@ const NetworkOverview: FC = () => {
     )
     return numberFormat(sum)
   }, [rewardRecordsData])
+  const avgApr = useMemo(() => {
+    if (!averageAprMultiplier) return
+    const apr = getApr(averageAprMultiplier)
+    if (!apr) return
+    return toPercentage(apr)
+  }, [getApr, averageAprMultiplier])
   const items = useMemo<[string, string | undefined][]>(() => {
     return [
       ['Total Value', totalValue && numberFormat(new Decimal(totalValue))],
       ['Stake Ratio', stakeRatio],
       ['Daily Rewards', dailyRewards],
-      ['Avg APR', ''],
+      ['Avg APR', avgApr],
     ]
-  }, [stakeRatio, totalValue, dailyRewards])
+  }, [stakeRatio, totalValue, dailyRewards, avgApr])
 
   return (
     <Stack
@@ -92,7 +101,7 @@ const NetworkOverview: FC = () => {
             component="div"
             color="primary"
           >
-            {value}
+            {value || <Skeleton width={80} />}
           </Typography>
           <Typography
             variant="num6"
@@ -100,7 +109,7 @@ const NetworkOverview: FC = () => {
             component="div"
             color="primary"
           >
-            {value}
+            {value || <Skeleton width={32} />}
           </Typography>
         </Box>
       ))}
