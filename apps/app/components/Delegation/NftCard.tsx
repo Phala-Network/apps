@@ -1,5 +1,7 @@
 import Property from '@/components/Property'
 import useGetApr from '@/hooks/useGetApr'
+import usePolkadotApi from '@/hooks/usePolkadotApi'
+import useSignAndSend from '@/hooks/useSignAndSend'
 import aprToApy from '@/lib/aprToApy'
 import getPoolPath from '@/lib/getPoolPath'
 import {DelegationCommonFragment} from '@/lib/subsquidQuery'
@@ -30,6 +32,8 @@ const NftCard: FC<{
   onAction?: OnAction
   isOwner?: boolean
 }> = ({compact = false, delegation, onAction, isOwner = false}) => {
+  const api = usePolkadotApi()
+  const signAndSend = useSignAndSend()
   const [menuOpen, setMenuOpen] = useState(false)
   const moreRef = useRef(null)
   const {value, shares, basePool, delegationNft} = delegation
@@ -38,6 +42,15 @@ const NftCard: FC<{
   const theme = useTheme()
   const getApr = useGetApr()
   const apr = getApr(basePool.aprMultiplier)
+  const poolHasWithdraw = delegation.basePool.withdrawalShares !== '0'
+  const reclaim = async () => {
+    if (!api) return
+    return signAndSend(
+      isVault
+        ? api.tx.phalaVault.checkAndMaybeForceWithdraw(basePool.id)
+        : api.tx.phalaStakePoolv2.checkAndMaybeForceWithdraw(basePool.id)
+    )
+  }
 
   // TODO: handle withdrawal nft
   if (!delegationNft) return null
@@ -125,6 +138,15 @@ const NftCard: FC<{
                 }}
               >
                 Withdraw
+              </MenuItem>
+              <MenuItem
+                disabled={!poolHasWithdraw}
+                onClick={() => {
+                  reclaim()
+                  setMenuOpen(false)
+                }}
+              >
+                Reclaim
               </MenuItem>
             </Menu>
           </>

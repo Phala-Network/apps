@@ -102,8 +102,7 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
   }, [])
   const hasDelegation =
     !!data?.delegationById && data.delegationById.shares !== '0'
-  const hasWithdrawal =
-    !!data?.delegationById && data.delegationById.withdrawalShares !== '0'
+  const poolHasWithdrawal = basePool.withdrawalShares !== '0'
 
   const reclaim = async () => {
     if (!api) return
@@ -305,9 +304,12 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
                   <NftCard compact delegation={data.delegationById} />
                 </Box>
                 <Stack spacing={2}>
-                  {hasWithdrawal && (
-                    <PromiseButton onClick={reclaim}>Reclaim</PromiseButton>
-                  )}
+                  <PromiseButton
+                    onClick={reclaim}
+                    disabled={!poolHasWithdrawal}
+                  >
+                    Reclaim
+                  </PromiseButton>
                   <Button
                     onClick={() => {
                       setDialogOpen(true)
