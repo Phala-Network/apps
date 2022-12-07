@@ -1,5 +1,5 @@
 import {css} from '@mui/material'
-import {theme} from './theme'
+import {barlow, theme} from './theme'
 
 export const globalStyles = css`
   body {
@@ -30,5 +30,14 @@ export const globalStyles = css`
     font-size: 50%;
     vertical-align: baseline;
     margin-left: 0.25em;
+  }
+
+  .recharts-cartesian-axis-tick-value {
+    font-size: 0.75rem;
+    font-family: ${barlow.style.fontFamily};
+  }
+
+  .recharts-tooltip-wrapper:focus-visible {
+    outline: none;
   }
 `

@@ -1,9 +1,9 @@
-import DelegateChartCard from '@/components/DelegateChartCard'
 import DelegateDetailCard from '@/components/DelegateDetailCard'
 import DelegationList from '@/components/Delegation/List'
+import DelegationScatterChart from '@/components/DelegationScatterChart'
 import PageHeader from '@/components/PageHeader'
 import useSelectedVaultState from '@/hooks/useSelectedVaultState'
-import {Box, Stack} from '@mui/material'
+import {Box, Paper, Stack} from '@mui/material'
 import {polkadotAccountAtom} from '@phala/store'
 import {useAtom} from 'jotai'
 import {FC} from 'react'
@@ -20,7 +20,15 @@ const MyDelegation: FC = () => {
         sx={{'>div': {flex: '1 0'}}}
       >
         <DelegateDetailCard />
-        <DelegateChartCard />
+        <Paper sx={{pr: 2, pt: 2, background: 'none', minWidth: 0}}>
+          <DelegationScatterChart
+            address={
+              selectedVaultState === null
+                ? polkadotAccount?.address
+                : selectedVaultState?.account.id
+            }
+          />
+        </Paper>
       </Stack>
       <Box mt={{xs: 2, md: 5}} component="section">
         <DelegationList
