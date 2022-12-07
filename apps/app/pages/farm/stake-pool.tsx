@@ -47,35 +47,32 @@ const MyStakePools: FC = () => {
     <>
       <PageHeader title="My Stake Pools" />
       <Stack
-        spacing={2}
         direction="row"
+        alignContent="center"
         justifyContent="space-between"
-        alignItems="center"
-        sx={{
-          '>*:last-child': {
-            ml: 'auto',
-          },
-        }}
       >
-        <Typography variant="h6" component="h2" color="text.secondary">
-          Owner Rewards
-        </Typography>
-        <Typography variant="num3">
-          {ownerReward ? (
-            `${toCurrency(ownerReward)} PHA`
-          ) : (
-            <Skeleton width={100} />
-          )}
-        </Typography>
+        <Stack spacing={2} direction="row" alignItems="center">
+          <Typography variant="h6" component="h2" color="text.secondary">
+            Owner Rewards
+          </Typography>
+          <Typography variant="num3">
+            {ownerReward ? (
+              `${toCurrency(ownerReward)} PHA`
+            ) : (
+              <Skeleton width={100} />
+            )}
+          </Typography>
 
-        <Button
-          disabled={!ownerReward || ownerReward.eq(0)}
-          onClick={() => {
-            setDialogOpen(true)
-          }}
-        >
-          Claim All
-        </Button>
+          <Button
+            size="small"
+            disabled={!ownerReward || ownerReward.eq(0)}
+            onClick={() => {
+              setDialogOpen(true)
+            }}
+          >
+            Claim All
+          </Button>
+        </Stack>
         <CreateBasePoolButton kind="StakePool" />
       </Stack>
       <Box mt={3}>

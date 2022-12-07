@@ -3,8 +3,11 @@ import VaultIcon from '@/assets/vault_detailed.svg'
 import CollapsedIcon from '@/components/CollapsedIcon'
 import Property from '@/components/Property'
 import useGetApr from '@/hooks/useGetApr'
+import usePolkadotApi from '@/hooks/usePolkadotApi'
+import useSignAndSend from '@/hooks/useSignAndSend'
 import aprToApy from '@/lib/aprToApy'
 import getPoolPath from '@/lib/getPoolPath'
+import getCastableReward from '@/lib/getVaultCastableReward'
 import {BasePoolCommonFragment} from '@/lib/subsquidQuery'
 import {colors} from '@/lib/theme'
 import {Settings} from '@mui/icons-material'
@@ -24,7 +27,8 @@ import {
 } from '@mui/material'
 import {toCurrency, toPercentage} from '@phala/util'
 import Decimal from 'decimal.js'
-import {FC, useState} from 'react'
+import {FC, useCallback, useMemo, useState} from 'react'
+import PromiseButton from '../PromiseButton'
 import ExtraProperties from './ExtraProperties'
 import {OnAction} from './List'
 
@@ -32,10 +36,28 @@ const FarmCard: FC<{
   basePool: BasePoolCommonFragment
   onAction: OnAction
 }> = ({basePool, onAction}) => {
+  const api = usePolkadotApi()
+  const signAndSend = useSignAndSend()
   const getApr = useGetApr()
   const theme = useTheme()
   const [collapsed, setCollapsed] = useState(true)
   const {vault, stakePool} = basePool
+
+  const castableReward = useMemo(() => getCastableReward(basePool), [basePool])
+  const claimableDelegation = useMemo(
+    () =>
+      basePool.vault
+        ? new Decimal(basePool.sharePrice).times(
+            basePool.vault.claimableOwnerShares
+          )
+        : new Decimal(0),
+    [basePool]
+  )
+
+  const mintReward = useCallback(async () => {
+    if (!api) return
+    return signAndSend(api.tx.phalaVault.maybeGainOwnerShares(basePool.id))
+  }, [api, signAndSend, basePool])
 
   const actions = (
     <Stack direction="row" alignItems="center">
@@ -50,6 +72,32 @@ const FarmCard: FC<{
           }}
         >
           Claim Reward
+        </Button>
+      )}
+      {vault && (
+        <PromiseButton
+          disabled={!vault || castableReward.lt('0.01')}
+          variant="text"
+          size="small"
+          onClick={(e) => {
+            e.stopPropagation()
+            return mintReward()
+          }}
+        >
+          Mint Reward
+        </PromiseButton>
+      )}
+      {vault && (
+        <Button
+          disabled={!vault || claimableDelegation.lt('0.01')}
+          variant="text"
+          size="small"
+          onClick={(e) => {
+            e.stopPropagation()
+            onAction(basePool, 'claimDelegation')
+          }}
+        >
+          Claim Delegation
         </Button>
       )}
       <IconButton
@@ -141,8 +189,13 @@ const FarmCard: FC<{
             </Property>
           )}
           {vault && (
-            <Property label="Owner Reward" sx={{width: 120}}>
-              {` PHA`}
+            <Property label="Castable Reward" sx={{width: 120}}>
+              {`${toCurrency(getCastableReward(basePool))} PHA`}
+            </Property>
+          )}
+          {vault && (
+            <Property label="Claimable Delegation" sx={{width: 150}}>
+              {`${toCurrency(claimableDelegation)} PHA`}
             </Property>
           )}
         </Stack>

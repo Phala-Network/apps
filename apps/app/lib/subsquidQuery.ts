@@ -2434,7 +2434,7 @@ export type OwnedVaultsQueryVariables = Exact<{
 }>;
 
 
-export type OwnedVaultsQuery = { readonly __typename?: 'Query', readonly basePoolsConnection: { readonly __typename?: 'BasePoolsConnection', readonly edges: ReadonlyArray<{ readonly __typename?: 'BasePoolEdge', readonly node: { readonly __typename?: 'BasePool', readonly id: string, readonly sharePrice: string, readonly commission: string, readonly vault?: { readonly __typename?: 'Vault', readonly claimableOwnerShares: string, readonly lastSharePriceCheckpoint: string } | null } }> } };
+export type OwnedVaultsQuery = { readonly __typename?: 'Query', readonly basePoolsConnection: { readonly __typename?: 'BasePoolsConnection', readonly edges: ReadonlyArray<{ readonly __typename?: 'BasePoolEdge', readonly node: { readonly __typename?: 'BasePool', readonly id: string, readonly totalShares: string, readonly sharePrice: string, readonly commission: string, readonly vault?: { readonly __typename?: 'Vault', readonly claimableOwnerShares: string, readonly lastSharePriceCheckpoint: string } | null } }> } };
 
 export type DelegationCommonFragment = { readonly __typename?: 'Delegation', readonly id: string, readonly shares: string, readonly value: string, readonly withdrawalStartTime?: string | null, readonly withdrawalShares: string, readonly withdrawalValue: string, readonly basePool: { readonly __typename?: 'BasePool', readonly id: string, readonly kind: BasePoolKind, readonly freeValue: string, readonly sharePrice: string, readonly aprMultiplier: string }, readonly delegationNft?: { readonly __typename?: 'DelegationNft', readonly cid: number, readonly nftId: number } | null, readonly withdrawalNft?: { readonly __typename?: 'DelegationNft', readonly cid: number, readonly nftId: number } | null, readonly account: { readonly __typename?: 'Account', readonly id: string, readonly identityDisplay?: string | null, readonly identityLevel?: IdentityLevel | null } };
 
@@ -2764,6 +2764,7 @@ export const OwnedVaultsDocument = `
     edges {
       node {
         id
+        totalShares
         sharePrice
         vault {
           claimableOwnerShares

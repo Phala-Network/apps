@@ -1,7 +1,7 @@
 {
   "editor.codeActionsOnSave": {
-    "source.removeUnusedImports": true,
     "source.addMissingImports": true,
+    "source.removeUnusedImports": true,
     "source.sortImports": true,
     "source.fixAll.eslint": true
   },

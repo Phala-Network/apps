@@ -38,10 +38,16 @@ const OwnerSettings = dynamic(() => import('./OwnerSettings'), {
 const ClaimReward = dynamic(() => import('./ClaimReward'), {
   ssr: false,
 })
+const ClaimDelegation = dynamic(() => import('./ClaimDelegation'), {
+  ssr: false,
+})
 
 type BasePoolListVariant = 'farm' | 'delegate'
 type OrderByEntries = [string, BasePoolOrderByInput][]
-export type PoolDialogAction = 'ownerSettings' | 'claimReward' | 'claimShares'
+export type PoolDialogAction =
+  | 'ownerSettings'
+  | 'claimReward'
+  | 'claimDelegation'
 export type OnAction = (
   basePool: BasePoolCommonFragment,
   action: PoolDialogAction
@@ -296,6 +302,9 @@ const BasePoolList: FC<{
             )}
             {dialogAction === 'claimReward' && (
               <ClaimReward basePool={operatingPool} onClose={onClose} />
+            )}
+            {dialogAction === 'claimDelegation' && (
+              <ClaimDelegation basePool={operatingPool} onClose={onClose} />
             )}
           </>
         )}

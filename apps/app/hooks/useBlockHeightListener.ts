@@ -24,6 +24,8 @@ const useBlockHeightListener = () => {
         queryClient.invalidateQueries(['DelegationsConnection'])
         queryClient.invalidateQueries(['DelegationsConnection.infinite'])
         queryClient.invalidateQueries(['WorkersConnection'])
+        queryClient.invalidateQueries(['OwnedVaults'])
+        queryClient.invalidateQueries(['ClaimableStakePools'])
       } else {
         // Skip the first time
         enabled.current = true

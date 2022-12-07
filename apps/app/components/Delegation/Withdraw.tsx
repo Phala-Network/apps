@@ -35,7 +35,11 @@ const Withdraw: FC<{
     if (!api || selectedVaultState === undefined) return
     const shares = withdrawAll
       ? new Decimal(delegation.shares).times(1e12).toHex()
-      : new Decimal(amountString).div(basePool.sharePrice).floor().toHex()
+      : new Decimal(amountString)
+          .div(basePool.sharePrice)
+          .times(1e12)
+          .floor()
+          .toHex()
 
     const extrinsic = isVault
       ? api.tx.phalaVault.withdraw(basePool.id, shares)
