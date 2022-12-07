@@ -102,7 +102,7 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
   }, [])
   const hasDelegation =
     !!data?.delegationById && data.delegationById.shares !== '0'
-  const poolHasWithdrawal = basePool.withdrawalShares !== '0'
+  const poolHasWithdrawal = basePool.withdrawingShares !== '0'
 
   const reclaim = async () => {
     if (!api) return
@@ -185,7 +185,7 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
                   </Property>
                 )}
                 <Stack flex="1 0" direction="row">
-                  {basePool?.withdrawalValue !== '0' && (
+                  {basePool?.withdrawingValue !== '0' && (
                     <Chip
                       size="small"
                       label="Insufficient Stake"

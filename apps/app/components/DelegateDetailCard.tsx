@@ -15,6 +15,7 @@ import {
   Paper,
   Skeleton,
   Stack,
+  SxProps,
   Typography,
   useTheme,
 } from '@mui/material'
@@ -94,7 +95,7 @@ const DelegateDataCard: FC<{
   )
 }
 
-const DelegateDetailCard: FC = () => {
+const DelegateDetailCard: FC<{sx?: SxProps}> = ({sx}) => {
   const {data} = useAccountQuery()
   const theme = useTheme()
   const api = usePolkadotApi()
@@ -136,7 +137,12 @@ const DelegateDetailCard: FC = () => {
   }
 
   return (
-    <Paper sx={{p: {xs: 1.5, sm: 2}, background: 'none'}}>
+    <Paper
+      sx={[
+        {p: {xs: 1.5, sm: 2}, background: 'none'},
+        ...(Array.isArray(sx) ? sx : [sx]),
+      ]}
+    >
       <Stack spacing={{xs: 1.5, sm: 2}}>
         <Stack
           direction="row"

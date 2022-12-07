@@ -66,7 +66,7 @@ const WithdrawQueue: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
     orderBy: DelegationOrderByInput.WithdrawalStartTimeAsc,
     where: {
       basePool: {pid_eq: basePool.id},
-      withdrawalShares_gt: '0',
+      withdrawingShares_gt: '0',
     },
   })
 
@@ -76,7 +76,7 @@ const WithdrawQueue: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
         return {
           id: node.id,
           delegator: node.account.id,
-          value: node.withdrawalValue,
+          value: node.withdrawingValue,
           startTime: node.withdrawalStartTime,
         }
       }) ?? []

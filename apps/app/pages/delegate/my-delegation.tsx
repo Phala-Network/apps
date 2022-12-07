@@ -14,13 +14,18 @@ const MyDelegation: FC = () => {
   return (
     <>
       <PageHeader title="My Delegation"></PageHeader>
-      <Stack
-        direction={{xs: 'column', md: 'row'}}
-        spacing={2}
-        sx={{'>div': {flex: '1 0'}}}
-      >
-        <DelegateDetailCard />
-        <Paper sx={{pr: 2, pt: 2, background: 'none', minWidth: 0}}>
+      <Stack direction={{xs: 'column', md: 'row'}} spacing={2}>
+        <DelegateDetailCard sx={{flex: {xs: 'none', md: '1 0'}}} />
+        <Paper
+          sx={{
+            pr: 2,
+            pt: 2,
+            background: 'none',
+            minWidth: 0,
+            height: {xs: 300, md: 'auto'},
+            flex: {xs: 'none', md: '1 0'},
+          }}
+        >
           <DelegationScatterChart
             address={
               selectedVaultState === null

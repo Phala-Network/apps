@@ -35,7 +35,7 @@ const HorizonCard: FC<{
   const theme = useTheme()
   const getApr = useGetApr()
   const apr = getApr(basePool.aprMultiplier)
-  const poolHasWithdraw = delegation.basePool.withdrawalShares !== '0'
+  const poolHasWithdrawal = delegation.basePool.withdrawingShares !== '0'
   const reclaim = async () => {
     if (!api) return
     return signAndSend(
@@ -61,7 +61,7 @@ const HorizonCard: FC<{
       <PromiseButton
         variant="text"
         onClick={reclaim}
-        disabled={!poolHasWithdraw}
+        disabled={!poolHasWithdrawal}
       >
         Reclaim
       </PromiseButton>

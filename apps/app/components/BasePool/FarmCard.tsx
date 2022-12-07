@@ -200,7 +200,7 @@ const FarmCard: FC<{
           )}
         </Stack>
         <Stack flex="1 0" direction="row">
-          {basePool.withdrawalValue !== '0' && (
+          {basePool.withdrawingShares !== '0' && (
             <Chip
               size="small"
               label="Insufficient Stake"
