@@ -7,7 +7,7 @@ import usePolkadotApi from '@/hooks/usePolkadotApi'
 import useSignAndSend from '@/hooks/useSignAndSend'
 import aprToApy from '@/lib/aprToApy'
 import getPoolPath from '@/lib/getPoolPath'
-import getCastableReward from '@/lib/getVaultCastableReward'
+import getVaultOwnerCut from '@/lib/getVaultOwnerCut'
 import {BasePoolCommonFragment} from '@/lib/subsquidQuery'
 import {colors} from '@/lib/theme'
 import {Settings} from '@mui/icons-material'
@@ -43,8 +43,8 @@ const FarmCard: FC<{
   const [collapsed, setCollapsed] = useState(true)
   const {vault, stakePool} = basePool
 
-  const castableReward = useMemo(() => getCastableReward(basePool), [basePool])
-  const claimableDelegation = useMemo(
+  const vaultOwnerCut = useMemo(() => getVaultOwnerCut(basePool), [basePool])
+  const vaultOwnerReward = useMemo(
     () =>
       basePool.vault
         ? new Decimal(basePool.sharePrice).times(
@@ -54,7 +54,7 @@ const FarmCard: FC<{
     [basePool]
   )
 
-  const mintReward = useCallback(async () => {
+  const mintCut = useCallback(async () => {
     if (!api) return
     return signAndSend(api.tx.phalaVault.maybeGainOwnerShares(basePool.id))
   }, [api, signAndSend, basePool])
@@ -76,20 +76,20 @@ const FarmCard: FC<{
       )}
       {vault && (
         <PromiseButton
-          disabled={!vault || castableReward.lt('0.01')}
+          disabled={!vault || vaultOwnerCut.lt('0.01')}
           variant="text"
           size="small"
           onClick={(e) => {
             e.stopPropagation()
-            return mintReward()
+            return mintCut()
           }}
         >
-          Mint Reward
+          Mint Cut
         </PromiseButton>
       )}
       {vault && (
         <Button
-          disabled={!vault || claimableDelegation.lt('0.01')}
+          disabled={!vault || vaultOwnerReward.lt('0.01')}
           variant="text"
           size="small"
           onClick={(e) => {
@@ -97,7 +97,7 @@ const FarmCard: FC<{
             onAction(basePool, 'claimDelegation')
           }}
         >
-          Claim Delegation
+          Claim to Delegation
         </Button>
       )}
       <IconButton
@@ -189,13 +189,13 @@ const FarmCard: FC<{
             </Property>
           )}
           {vault && (
-            <Property label="Castable Reward" sx={{width: 120}}>
-              {`${toCurrency(getCastableReward(basePool))} PHA`}
+            <Property label="Owner Cut" sx={{width: 120}}>
+              {`${toCurrency(getVaultOwnerCut(basePool))} PHA`}
             </Property>
           )}
           {vault && (
-            <Property label="Claimable Delegation" sx={{width: 150}}>
-              {`${toCurrency(claimableDelegation)} PHA`}
+            <Property label="Owner Reward" sx={{width: 150}}>
+              {`${toCurrency(vaultOwnerReward)} PHA`}
             </Property>
           )}
         </Stack>

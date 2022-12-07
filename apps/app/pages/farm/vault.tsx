@@ -5,7 +5,7 @@ import PageHeader from '@/components/PageHeader'
 import PromiseButton from '@/components/PromiseButton'
 import usePolkadotApi from '@/hooks/usePolkadotApi'
 import useSignAndSend from '@/hooks/useSignAndSend'
-import getCastableReward from '@/lib/getVaultCastableReward'
+import getVaultOwnerCut from '@/lib/getVaultOwnerCut'
 import {subsquidClient} from '@/lib/graphql'
 import {useOwnedVaultsQuery} from '@/lib/subsquidQuery'
 import {Box, Button, Dialog, Skeleton, Stack, Typography} from '@mui/material'
@@ -29,22 +29,22 @@ const MyVaults: FC = () => {
     {enabled: !!account}
   )
   const edges = data?.basePoolsConnection.edges
-  const castableVaults = useMemo(() => {
+  const vaultsWithOwnerCut = useMemo(() => {
     return (
       edges
         ?.map((edge) => {
-          return [edge.node.id, getCastableReward(edge.node)] as const
+          return [edge.node.id, getVaultOwnerCut(edge.node)] as const
         })
         .filter(([, reward]) => reward.gt(0)) || []
     )
   }, [edges])
-  const castableRewards = useMemo(() => {
-    return castableVaults.reduce(
+  const ownerCut = useMemo(() => {
+    return vaultsWithOwnerCut.reduce(
       (acc, [, reward]) => acc.plus(reward),
       new Decimal(0)
     )
-  }, [castableVaults])
-  const claimableVaults = useMemo(
+  }, [vaultsWithOwnerCut])
+  const vaultsWithOwnerRewards = useMemo(
     () =>
       edges
         ?.map(({node}) => node)
@@ -53,19 +53,19 @@ const MyVaults: FC = () => {
         ) || [],
     [edges]
   )
-  const claimableDelegation = useMemo(() => {
-    return claimableVaults.reduce((acc, cur) => {
+  const ownerRewards = useMemo(() => {
+    return vaultsWithOwnerRewards.reduce((acc, cur) => {
       if (!cur.vault) return acc
       return acc.plus(
         new Decimal(cur.sharePrice).times(cur.vault?.claimableOwnerShares)
       )
     }, new Decimal(0))
-  }, [claimableVaults])
+  }, [vaultsWithOwnerRewards])
 
   const mintAll = useCallback(async () => {
     if (!api) return
     let extrinsic
-    const extrinsics = castableVaults.map(([id]) =>
+    const extrinsics = vaultsWithOwnerCut.map(([id]) =>
       api.tx.phalaVault.maybeGainOwnerShares(id)
     )
     if (extrinsics.length === 1) {
@@ -74,7 +74,7 @@ const MyVaults: FC = () => {
       extrinsic = api.tx.utility.batch(extrinsics)
     }
     return signAndSend(extrinsic)
-  }, [api, castableVaults, signAndSend])
+  }, [api, vaultsWithOwnerCut, signAndSend])
 
   return (
     <>
@@ -82,17 +82,17 @@ const MyVaults: FC = () => {
       <Stack
         direction="row"
         spacing={2}
-        alignItems="flex-start"
+        alignItems="flex-end"
         justifyContent="space-between"
       >
         <Stack spacing={0.5}>
           <Stack spacing={2} direction="row" alignItems="center">
             <Typography variant="h6" component="h2" color="text.secondary">
-              Castable Rewards
+              Owner Cut
             </Typography>
             <Typography variant="num3">
-              {!isLoading && castableRewards ? (
-                `${toCurrency(castableRewards)} PHA`
+              {!isLoading && ownerCut ? (
+                `${toCurrency(ownerCut)} PHA`
               ) : (
                 <Skeleton width={100} />
               )}
@@ -100,31 +100,31 @@ const MyVaults: FC = () => {
             <PromiseButton
               size="small"
               onClick={mintAll}
-              disabled={!castableVaults.length}
+              disabled={!vaultsWithOwnerCut.length}
             >
-              Mint All
+              Mint Cut
             </PromiseButton>
           </Stack>
 
           <Stack spacing={2} direction="row" alignItems="center">
             <Typography variant="h6" component="h2" color="text.secondary">
-              Claimable Delegation
+              Owner Rewards
             </Typography>
             <Typography variant="num3">
-              {!isLoading && claimableDelegation ? (
-                `${toCurrency(claimableDelegation)} PHA`
+              {!isLoading && ownerRewards ? (
+                `${toCurrency(ownerRewards)} PHA`
               ) : (
                 <Skeleton width={100} />
               )}
             </Typography>
             <Button
               size="small"
-              disabled={!claimableVaults.length}
+              disabled={!vaultsWithOwnerRewards.length}
               onClick={() => {
                 setDialogOpen(true)
               }}
             >
-              Claim All
+              Claim to Delegation
             </Button>
           </Stack>
         </Stack>
@@ -135,7 +135,7 @@ const MyVaults: FC = () => {
         <BasePoolList kind="Vault" variant="farm" />
       </Box>
       <Dialog open={dialogOpen} onClose={onClose}>
-        <ClaimDelegation basePools={claimableVaults} onClose={onClose} />
+        <ClaimDelegation basePools={vaultsWithOwnerRewards} onClose={onClose} />
       </Dialog>
     </>
   )

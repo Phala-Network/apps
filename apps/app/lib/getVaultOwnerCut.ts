@@ -1,7 +1,7 @@
 import Decimal from 'decimal.js'
 import {BasePool, Vault} from './subsquidQuery'
 
-const getCastableReward = (
+const getVaultOwnerCut = (
   basePool: Pick<BasePool, 'sharePrice' | 'commission' | 'totalShares'> & {
     vault?: Pick<Vault, 'lastSharePriceCheckpoint'> | null
   }
@@ -23,4 +23,4 @@ const getCastableReward = (
     .times(sharePrice)
 }
 
-export default getCastableReward
+export default getVaultOwnerCut
