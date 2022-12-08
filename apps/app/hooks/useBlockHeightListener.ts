@@ -8,7 +8,7 @@ const useBlockHeightListener = () => {
   const {data} = useGlobalStateQuery(
     subsquidClient,
     {},
-    {refetchInterval: 1000}
+    {refetchInterval: 3000}
   )
   const queryClient = useQueryClient()
   const height = data?.globalStateById?.height

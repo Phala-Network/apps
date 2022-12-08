@@ -148,18 +148,22 @@ const BasePoolList: FC<{
         delegations_some: {account: {id_eq: delegatorAddress}, shares_gt: '0'},
       },
   ]
-  const {data, isLoading, fetchNextPage} = useInfiniteBasePoolsConnectionQuery(
-    'after',
-    subsquidClient,
-    {first: 20, orderBy, where: {AND: where.filter(isTruthy)}},
-    {
-      keepPreviousData: true,
-      getNextPageParam: (lastPage) =>
-        lastPage.basePoolsConnection.pageInfo.hasNextPage
-          ? lastPage.basePoolsConnection.pageInfo.endCursor
-          : undefined,
-    }
-  )
+  const enabled =
+    variant === 'delegate' || (!!polkadotAccount?.address && variant === 'farm')
+  const {data, isLoading, fetchNextPage, hasNextPage} =
+    useInfiniteBasePoolsConnectionQuery(
+      'after',
+      subsquidClient,
+      {first: 20, orderBy, where: {AND: where.filter(isTruthy)}},
+      {
+        enabled,
+        keepPreviousData: true,
+        getNextPageParam: (lastPage) =>
+          lastPage.basePoolsConnection.pageInfo.hasNextPage
+            ? lastPage.basePoolsConnection.pageInfo.endCursor
+            : undefined,
+      }
+    )
   const isEmpty = data?.pages[0].basePoolsConnection.totalCount === 0
 
   const onAction: OnAction = useCallback((basePool, action) => {
@@ -172,10 +176,10 @@ const BasePoolList: FC<{
   }, [])
 
   useEffect(() => {
-    if (inView) {
+    if (inView && enabled) {
       fetchNextPage()
     }
-  }, [inView, fetchNextPage])
+  }, [inView, fetchNextPage, enabled])
 
   const filters = variant === 'delegate' && (
     <Stack spacing={2}>
@@ -285,9 +289,7 @@ const BasePoolList: FC<{
             </TextField>
           </Stack>
           <Stack spacing={2} mt={2}>
-            {isLoading ? (
-              <ListSkeleton height={101} />
-            ) : isEmpty ? (
+            {isEmpty ? (
               <Empty sx={{minHeight: 400}} />
             ) : (
               data?.pages.map((page, index) => (
@@ -306,8 +308,11 @@ const BasePoolList: FC<{
                 </Stack>
               ))
             )}
+
+            {(isLoading || hasNextPage) && (
+              <ListSkeleton ref={ref} height={100} />
+            )}
           </Stack>
-          <Box ref={ref}></Box>
         </Box>
       </Stack>
       <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>

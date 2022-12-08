@@ -21,6 +21,7 @@ import {
   FormControlLabel,
   IconButton,
   MenuItem,
+  Skeleton,
   Stack,
   TextField,
   ToggleButton,
@@ -95,7 +96,8 @@ const DelegationList: FC<{
         },
       },
   ]
-  const {data, isLoading, fetchNextPage} =
+  const enabled = !!address
+  const {data, isLoading, fetchNextPage, hasNextPage} =
     useInfiniteDelegationsConnectionQuery(
       'after',
       subsquidClient,
@@ -111,8 +113,10 @@ const DelegationList: FC<{
     )
 
   useEffect(() => {
-    fetchNextPage()
-  }, [inView, fetchNextPage])
+    if (enabled && inView) {
+      fetchNextPage()
+    }
+  }, [inView, fetchNextPage, enabled])
 
   const isEmpty = data?.pages[0].delegationsConnection.totalCount === 0
 
@@ -229,9 +233,7 @@ const DelegationList: FC<{
             </ToggleButtonGroup>
           </Stack>
           <Stack spacing={2} mt={2}>
-            {isLoading ? (
-              <ListSkeleton height={105} />
-            ) : isEmpty ? (
+            {isEmpty ? (
               <Empty sx={{minHeight: 400}} />
             ) : (
               data?.pages.map((page, index) => (
@@ -256,6 +258,19 @@ const DelegationList: FC<{
                 </Grid>
               ))
             )}
+
+            {(isLoading || hasNextPage) &&
+              (showNftCard ? (
+                <Grid container spacing={2} ref={ref}>
+                  {Array.from({length: 6}).map((_, index) => (
+                    <Grid xs={12} md={6} key={index}>
+                      <Skeleton variant="rounded" height={240} />
+                    </Grid>
+                  ))}
+                </Grid>
+              ) : (
+                <ListSkeleton height={105} ref={ref} />
+              ))}
           </Stack>
           <Box ref={ref}></Box>
         </Box>

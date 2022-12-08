@@ -171,7 +171,7 @@ const DelegateCard: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
         <Stack flex="1 0" direction="row"></Stack>
         <Box display={{xs: 'none', md: 'block'}}>{actions}</Box>
       </Stack>
-      <Collapse in={!collapsed}>
+      <Collapse in={!collapsed} mountOnEnter unmountOnExit>
         <Stack direction={{xs: 'column', md: 'row'}} p={2} spacing={3}>
           <Stack flex="1 0">
             <Box>

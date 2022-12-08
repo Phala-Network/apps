@@ -210,7 +210,7 @@ const FarmCard: FC<{
         </Stack>
         <Box display={{xs: 'none', md: 'block'}}>{actions}</Box>
       </Stack>
-      <Collapse in={!collapsed}>
+      <Collapse in={!collapsed} mountOnEnter unmountOnExit>
         <Stack direction={{xs: 'column', md: 'row'}} p={2}>
           <Stack flex="1 0">
             <Box>
