@@ -1,4 +1,5 @@
 import WorkerIcon from '@/assets/worker.svg'
+import PromiseButton from '@/components/PromiseButton'
 import Property from '@/components/Property'
 import {WorkerState} from '@/lib/subsquidQuery'
 import {
@@ -121,25 +122,25 @@ const WorkerCard: FC<{
                   >
                     Start
                   </Button>
-                  <Button
+                  <PromiseButton
                     variant="text"
                     size="small"
                     onClick={() => onAction(worker, 'remove')}
                   >
                     Remove
-                  </Button>
+                  </PromiseButton>
                 </>
               )}
               {(session.state === 'WorkerIdle' ||
                 session.state === 'WorkerUnresponsive') && (
                 <>
-                  <Button
+                  <PromiseButton
                     variant="text"
                     size="small"
                     onClick={() => onAction(worker, 'stop')}
                   >
                     Stop
-                  </Button>
+                  </PromiseButton>
                   <Button
                     variant="text"
                     size="small"
@@ -150,14 +151,14 @@ const WorkerCard: FC<{
                 </>
               )}
               {session.state === 'WorkerCoolingDown' && (
-                <Button
+                <PromiseButton
                   disabled={Boolean(reclaimCountdown)}
                   variant="text"
                   size="small"
                   onClick={() => onAction(worker, 'reclaim')}
                 >
                   {reclaimCountdown || 'Reclaim'}
-                </Button>
+                </PromiseButton>
               )}
             </Stack>
           )}

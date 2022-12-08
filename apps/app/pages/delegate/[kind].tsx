@@ -2,8 +2,8 @@ import StakePoolIcon from '@/assets/stake_pool.svg'
 import VaultIcon from '@/assets/vault.svg'
 import BasePoolList from '@/components/BasePool/List'
 import ClientOnly from '@/components/ClientOnly'
-import DelegateChartCard from '@/components/DelegateChartCard'
 import DelegateDetailCard from '@/components/DelegateDetailCard'
+import DelegationValueChart from '@/components/DelegationValueChart'
 import NetworkOverview from '@/components/NetworkOverview'
 import PageHeader from '@/components/PageHeader'
 import useSelectedVaultState from '@/hooks/useSelectedVaultState'
@@ -12,11 +12,15 @@ import {vaultIdAtom} from '@/store/common'
 import {
   Box,
   experimental_sx as sx,
+  Paper,
   Stack,
   styled,
   Switch,
+  ToggleButton,
+  ToggleButtonGroup,
   Typography,
 } from '@mui/material'
+import {polkadotAccountAtom} from '@phala/store'
 import {useAtom} from 'jotai'
 import {GetStaticPaths, GetStaticProps, NextPage} from 'next'
 import {useRouter} from 'next/router'
@@ -69,6 +73,7 @@ const Delegate: NextPage = () => {
   const {
     query: {kind},
   } = useRouter()
+  const [account] = useAtom(polkadotAccountAtom)
   const router = useRouter()
   const isVault = kind === 'vault'
   const [, setVaultId] = useAtom(vaultIdAtom)
@@ -76,6 +81,7 @@ const Delegate: NextPage = () => {
   const [switchChecked, setSwitchChecked] = useState(!isVault)
   const selectedVaultState = useSelectedVaultState()
   const asAccount = selectedVaultState === null
+  const [chartDays, setChartDays] = useState(7)
 
   useEffect(() => {
     setSwitchChecked(kind === 'stake-pool')
@@ -108,13 +114,56 @@ const Delegate: NextPage = () => {
         <NetworkOverview />
       </PageHeader>
 
-      <Stack
-        direction={{xs: 'column', md: 'row'}}
-        spacing={2}
-        sx={{'>div': {flex: '1 0'}}}
-      >
-        <DelegateDetailCard />
-        <DelegateChartCard />
+      <Stack direction={{xs: 'column', md: 'row'}} spacing={2}>
+        <DelegateDetailCard sx={{flex: {xs: 'none', md: '1 0'}}} />
+        <Paper
+          sx={{
+            background: 'none',
+            minWidth: 0,
+            height: {xs: 300, md: 'auto'},
+            flex: {xs: 'none', md: '1 0'},
+          }}
+        >
+          <Stack height="100%">
+            <Stack
+              direction="row"
+              alignItems="center"
+              justifyContent="space-between"
+              p={2}
+            >
+              <Typography variant="h6">Delegation Value</Typography>
+              <ToggleButtonGroup
+                color="primary"
+                exclusive
+                size="small"
+                value={chartDays}
+                onChange={(_, value) => {
+                  setChartDays(value)
+                }}
+              >
+                <ToggleButton sx={{width: 40}} value={7}>
+                  7D
+                </ToggleButton>
+                <ToggleButton sx={{width: 40}} value={14}>
+                  14D
+                </ToggleButton>
+                <ToggleButton sx={{width: 40}} value={30}>
+                  1M
+                </ToggleButton>
+              </ToggleButtonGroup>
+            </Stack>
+            <Box flex={1}>
+              <DelegationValueChart
+                days={chartDays}
+                address={
+                  selectedVaultState === null
+                    ? account?.address
+                    : selectedVaultState?.account.id
+                }
+              />
+            </Box>
+          </Stack>
+        </Paper>
       </Stack>
 
       <ClientOnly>

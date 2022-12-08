@@ -2455,6 +2455,16 @@ export type DelegationsConnectionQueryVariables = Exact<{
 
 export type DelegationsConnectionQuery = { readonly __typename?: 'Query', readonly delegationsConnection: { readonly __typename?: 'DelegationsConnection', readonly totalCount: number, readonly edges: ReadonlyArray<{ readonly __typename?: 'DelegationEdge', readonly cursor: string, readonly node: { readonly __typename?: 'Delegation', readonly id: string, readonly shares: string, readonly value: string, readonly withdrawalStartTime?: string | null, readonly withdrawingShares: string, readonly withdrawingValue: string, readonly basePool: { readonly __typename?: 'BasePool', readonly id: string, readonly kind: BasePoolKind, readonly freeValue: string, readonly sharePrice: string, readonly aprMultiplier: string, readonly withdrawingShares: string }, readonly delegationNft?: { readonly __typename?: 'DelegationNft', readonly cid: number, readonly nftId: number } | null, readonly withdrawalNft?: { readonly __typename?: 'DelegationNft', readonly cid: number, readonly nftId: number } | null, readonly account: { readonly __typename?: 'Account', readonly id: string, readonly identityDisplay?: string | null, readonly identityLevel?: IdentityLevel | null } } }>, readonly pageInfo: { readonly __typename?: 'PageInfo', readonly endCursor: string, readonly hasNextPage: boolean, readonly hasPreviousPage: boolean, readonly startCursor: string } } };
 
+export type DelegationValueRecordsConnectionQueryVariables = Exact<{
+  orderBy: ReadonlyArray<DelegationValueRecordOrderByInput> | DelegationValueRecordOrderByInput;
+  after?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<DelegationValueRecordWhereInput>;
+}>;
+
+
+export type DelegationValueRecordsConnectionQuery = { readonly __typename?: 'Query', readonly delegationValueRecordsConnection: { readonly __typename?: 'DelegationValueRecordsConnection', readonly totalCount: number, readonly pageInfo: { readonly __typename?: 'PageInfo', readonly hasNextPage: boolean, readonly hasPreviousPage: boolean, readonly startCursor: string, readonly endCursor: string }, readonly edges: ReadonlyArray<{ readonly __typename?: 'DelegationValueRecordEdge', readonly cursor: string, readonly node: { readonly __typename?: 'DelegationValueRecord', readonly id: string, readonly updatedTime: string, readonly value: string } }> } };
+
 export type GlobalStateQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -2895,6 +2905,62 @@ export const useInfiniteDelegationsConnectionQuery = <
     useInfiniteQuery<DelegationsConnectionQuery, TError, TData>(
       ['DelegationsConnection.infinite', variables],
       (metaData) => fetcher<DelegationsConnectionQuery, DelegationsConnectionQueryVariables>(client, DelegationsConnectionDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
+      options
+    );
+
+export const DelegationValueRecordsConnectionDocument = `
+    query DelegationValueRecordsConnection($orderBy: [DelegationValueRecordOrderByInput!]!, $after: String, $first: Int, $where: DelegationValueRecordWhereInput) {
+  delegationValueRecordsConnection(
+    orderBy: $orderBy
+    after: $after
+    first: $first
+    where: $where
+  ) {
+    totalCount
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+      startCursor
+      endCursor
+    }
+    edges {
+      node {
+        id
+        updatedTime
+        value
+      }
+      cursor
+    }
+  }
+}
+    `;
+export const useDelegationValueRecordsConnectionQuery = <
+      TData = DelegationValueRecordsConnectionQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: DelegationValueRecordsConnectionQueryVariables,
+      options?: UseQueryOptions<DelegationValueRecordsConnectionQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<DelegationValueRecordsConnectionQuery, TError, TData>(
+      ['DelegationValueRecordsConnection', variables],
+      fetcher<DelegationValueRecordsConnectionQuery, DelegationValueRecordsConnectionQueryVariables>(client, DelegationValueRecordsConnectionDocument, variables, headers),
+      options
+    );
+export const useInfiniteDelegationValueRecordsConnectionQuery = <
+      TData = DelegationValueRecordsConnectionQuery,
+      TError = unknown
+    >(
+      pageParamKey: keyof DelegationValueRecordsConnectionQueryVariables,
+      client: GraphQLClient,
+      variables: DelegationValueRecordsConnectionQueryVariables,
+      options?: UseInfiniteQueryOptions<DelegationValueRecordsConnectionQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useInfiniteQuery<DelegationValueRecordsConnectionQuery, TError, TData>(
+      ['DelegationValueRecordsConnection.infinite', variables],
+      (metaData) => fetcher<DelegationValueRecordsConnectionQuery, DelegationValueRecordsConnectionQueryVariables>(client, DelegationValueRecordsConnectionDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
       options
     );
 

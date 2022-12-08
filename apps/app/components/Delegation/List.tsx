@@ -210,10 +210,10 @@ const DelegationList: FC<{
                 setShowNftCard(value)
               }}
             >
-              <ToggleButton value={true} aria-label="left aligned">
+              <ToggleButton value={true}>
                 <GridView />
               </ToggleButton>
-              <ToggleButton value={false} aria-label="centered">
+              <ToggleButton value={false}>
                 <FormatListBulleted />
               </ToggleButton>
             </ToggleButtonGroup>

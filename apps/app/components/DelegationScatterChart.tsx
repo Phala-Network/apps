@@ -45,7 +45,7 @@ const CustomTooltip = ({
             size="small"
             label={name}
             key={name}
-          >{`${value}${unit}`}</Property>
+          >{`${value}${name === 'Value' ? ' PHA' : unit}`}</Property>
         ))}
       </Paper>
     )
@@ -104,8 +104,13 @@ const DelegationScatterChart: FC<{address?: string}> = ({address}) => {
               type="number"
               dataKey="value"
               name="Value"
-              unit="PHA"
               tickLine={false}
+              tickFormatter={(value) =>
+                Intl.NumberFormat('en-US', {
+                  notation: 'compact',
+                  maximumFractionDigits: 0,
+                }).format(value)
+              }
             />
             <YAxis
               type="number"
@@ -115,7 +120,6 @@ const DelegationScatterChart: FC<{address?: string}> = ({address}) => {
               tickLine={false}
               width={40}
             />
-            <XAxis dataKey="name" />
             <Scatter data={chartData.vault} fill={colors.vault[400]}></Scatter>
             <Scatter
               data={chartData.stakePool}

@@ -2447,6 +2447,16 @@ type DelegationsConnectionQueryVariables = Exact<{
 
 type DelegationsConnectionQuery = { readonly __typename?: 'Query', readonly delegationsConnection: { readonly __typename?: 'DelegationsConnection', readonly totalCount: number, readonly edges: ReadonlyArray<{ readonly __typename?: 'DelegationEdge', readonly cursor: string, readonly node: { readonly __typename?: 'Delegation', readonly id: string, readonly shares: string, readonly value: string, readonly withdrawalStartTime?: string | null, readonly withdrawingShares: string, readonly withdrawingValue: string, readonly basePool: { readonly __typename?: 'BasePool', readonly id: string, readonly kind: BasePoolKind, readonly freeValue: string, readonly sharePrice: string, readonly aprMultiplier: string, readonly withdrawingShares: string }, readonly delegationNft?: { readonly __typename?: 'DelegationNft', readonly cid: number, readonly nftId: number } | null, readonly withdrawalNft?: { readonly __typename?: 'DelegationNft', readonly cid: number, readonly nftId: number } | null, readonly account: { readonly __typename?: 'Account', readonly id: string, readonly identityDisplay?: string | null, readonly identityLevel?: IdentityLevel | null } } }>, readonly pageInfo: { readonly __typename?: 'PageInfo', readonly endCursor: string, readonly hasNextPage: boolean, readonly hasPreviousPage: boolean, readonly startCursor: string } } };
 
+type DelegationValueRecordsConnectionQueryVariables = Exact<{
+  orderBy: ReadonlyArray<DelegationValueRecordOrderByInput> | DelegationValueRecordOrderByInput;
+  after?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<DelegationValueRecordWhereInput>;
+}>;
+
+
+type DelegationValueRecordsConnectionQuery = { readonly __typename?: 'Query', readonly delegationValueRecordsConnection: { readonly __typename?: 'DelegationValueRecordsConnection', readonly totalCount: number, readonly pageInfo: { readonly __typename?: 'PageInfo', readonly hasNextPage: boolean, readonly hasPreviousPage: boolean, readonly startCursor: string, readonly endCursor: string }, readonly edges: ReadonlyArray<{ readonly __typename?: 'DelegationValueRecordEdge', readonly cursor: string, readonly node: { readonly __typename?: 'DelegationValueRecord', readonly id: string, readonly updatedTime: string, readonly value: string } }> } };
+
 type GlobalStateQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -2680,6 +2690,32 @@ export const DelegationCommonFragmentDoc = gql`
   }
 }
     ${DelegationCommonFragmentDoc}`;
+ const DelegationValueRecordsConnectionDocument = gql`
+    query DelegationValueRecordsConnection($orderBy: [DelegationValueRecordOrderByInput!]!, $after: String, $first: Int, $where: DelegationValueRecordWhereInput) {
+  delegationValueRecordsConnection(
+    orderBy: $orderBy
+    after: $after
+    first: $first
+    where: $where
+  ) {
+    totalCount
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+      startCursor
+      endCursor
+    }
+    edges {
+      node {
+        id
+        updatedTime
+        value
+      }
+      cursor
+    }
+  }
+}
+    `;
  const GlobalStateDocument = gql`
     query GlobalState {
   globalStateById(id: "0") {
@@ -2811,6 +2847,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     DelegationsConnection(variables: DelegationsConnectionQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<DelegationsConnectionQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<DelegationsConnectionQuery>(DelegationsConnectionDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'DelegationsConnection', 'query');
+    },
+    DelegationValueRecordsConnection(variables: DelegationValueRecordsConnectionQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<DelegationValueRecordsConnectionQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<DelegationValueRecordsConnectionQuery>(DelegationValueRecordsConnectionDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'DelegationValueRecordsConnection', 'query');
     },
     GlobalState(variables?: GlobalStateQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GlobalStateQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GlobalStateQuery>(GlobalStateDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GlobalState', 'query');
