@@ -8,6 +8,7 @@ import {DelegationCommonFragment} from '@/lib/subsquidQuery'
 import {colors} from '@/lib/theme'
 import MoreVert from '@mui/icons-material/MoreVert'
 import {
+  Alert,
   alpha,
   Box,
   Chip,
@@ -36,12 +37,13 @@ const NftCard: FC<{
   const signAndSend = useSignAndSend()
   const [menuOpen, setMenuOpen] = useState(false)
   const moreRef = useRef(null)
-  const {value, shares, basePool, delegationNft} = delegation
+  const {value, shares, basePool, delegationNft, withdrawingValue} = delegation
   const isVault = basePool.kind === 'Vault'
   const color = isVault ? 'secondary' : 'primary'
   const theme = useTheme()
   const getApr = useGetApr()
   const apr = getApr(basePool.aprMultiplier)
+  const hasWithdrawal = withdrawingValue !== '0'
   const poolHasWithdrawal = delegation.basePool.withdrawingShares !== '0'
   const reclaim = async () => {
     if (!api) return
@@ -65,8 +67,32 @@ const NftCard: FC<{
         ...(compact && {border: 'none'}),
       }}
     >
-      <Box width={160} flexShrink="0" borderRadius="6px" overflow="hidden">
+      <Box
+        width={160}
+        flexShrink="0"
+        borderRadius="6px"
+        overflow="hidden"
+        position="relative"
+      >
         <NftCover />
+        {hasWithdrawal && (
+          <Alert
+            icon={false}
+            variant="filled"
+            severity="warning"
+            sx={{
+              borderRadius: 0,
+              py: 0.5,
+              position: 'absolute',
+              bottom: 0,
+              left: 0,
+              right: 0,
+              '.MuiAlert-message': {p: 0},
+            }}
+          >
+            Withdrawing
+          </Alert>
+        )}
       </Box>
       <Stack flex="1" py={compact ? 0 : 2} px={2.5} position="relative">
         <Box width={140}>
@@ -96,11 +122,16 @@ const NftCard: FC<{
         </Typography>
 
         <Stack spacing={0.5} mt="auto">
+          {hasWithdrawal && (
+            <Property size="small" label="Withdrawing" fullWidth>
+              {`${toCurrency(withdrawingValue)} PHA`}
+            </Property>
+          )}
           {!compact && (
             <Property
               size="small"
               label={`Est. ${isVault ? 'APY' : 'APR'}`}
-              sx={{justifyContent: 'space-between'}}
+              fullWidth
             >
               {apr ? (
                 toPercentage(isVault ? aprToApy(apr) : apr)
@@ -109,11 +140,7 @@ const NftCard: FC<{
               )}
             </Property>
           )}
-          <Property
-            size="small"
-            label="Shares"
-            sx={{justifyContent: 'space-between'}}
-          >
+          <Property size="small" label="Shares" fullWidth>
             {toCurrency(shares)}
           </Property>
         </Stack>

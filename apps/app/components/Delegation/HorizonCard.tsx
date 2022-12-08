@@ -29,12 +29,13 @@ const HorizonCard: FC<{
 }> = ({delegation, onAction, isOwner = false}) => {
   const api = usePolkadotApi()
   const signAndSend = useSignAndSend()
-  const {value, basePool, delegationNft} = delegation
+  const {value, basePool, delegationNft, withdrawingValue} = delegation
   const isVault = basePool.kind === 'Vault'
   const color = isVault ? 'secondary' : 'primary'
   const theme = useTheme()
   const getApr = useGetApr()
   const apr = getApr(basePool.aprMultiplier)
+  const hasWithdrawal = withdrawingValue !== '0'
   const poolHasWithdrawal = delegation.basePool.withdrawingShares !== '0'
   const reclaim = async () => {
     if (!api) return
@@ -51,6 +52,7 @@ const HorizonCard: FC<{
   const actions = isOwner && (
     <Stack direction="row" alignItems="center">
       <Button
+        size="small"
         variant="text"
         onClick={() => {
           onAction(delegation, 'withdraw')
@@ -59,6 +61,7 @@ const HorizonCard: FC<{
         Withdraw
       </Button>
       <PromiseButton
+        size="small"
         variant="text"
         onClick={reclaim}
         disabled={!poolHasWithdrawal}
@@ -99,12 +102,12 @@ const HorizonCard: FC<{
           <Property label="Value" sx={{width: 120}}>{`${toCurrency(
             value
           )} PHA`}</Property>
-          <Property label="7D Profit" sx={{width: 120}}>
+          {/* <Property label="7D Profit" sx={{width: 120}}>
             <Box
               component="span"
               color={theme.palette.success.main}
             >{`+ PHA`}</Box>
-          </Property>
+          </Property> */}
           <Property label={`Est. ${isVault ? 'APY' : 'APR'}`} sx={{width: 64}}>
             {apr ? (
               <Box
@@ -117,9 +120,25 @@ const HorizonCard: FC<{
               <Skeleton width={32} />
             )}
           </Property>
+          {hasWithdrawal && (
+            <Property label="Withdrawing" sx={{width: 120}}>{`${toCurrency(
+              withdrawingValue
+            )} PHA`}</Property>
+          )}
         </Stack>
-        <Stack direction="row" flex="1"></Stack>
-        {actions}
+
+        <Stack flex="1" alignItems="flex-end" justifyContent="space-between">
+          <Stack direction="row" height="24px">
+            {hasWithdrawal && (
+              <Chip
+                label="Withdrawing"
+                size="small"
+                sx={{color: theme.palette.warning.dark}}
+              />
+            )}
+          </Stack>
+          {actions}
+        </Stack>
       </Stack>
     </Paper>
   )

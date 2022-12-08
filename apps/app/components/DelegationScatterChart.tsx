@@ -40,12 +40,9 @@ const CustomTooltip = ({
       <Paper sx={{p: 1}}>
         <Typography variant="subtitle2">{payload[0].payload.name}</Typography>
         {payload.map(({name, value, unit}) => (
-          <Property
-            sx={{justifyContent: 'space-between'}}
-            size="small"
-            label={name}
-            key={name}
-          >{`${value}${name === 'Value' ? ' PHA' : unit}`}</Property>
+          <Property fullWidth size="small" label={name} key={name}>{`${value}${
+            name === 'Value' ? ' PHA' : unit
+          }`}</Property>
         ))}
       </Paper>
     )

@@ -33,7 +33,7 @@ const CustomTooltip = ({
       <Paper sx={{p: 1}}>
         <Typography variant="subtitle2">{label}</Typography>
         <Property
-          sx={{justifyContent: 'space-between'}}
+          fullWidth
           size="small"
           label="Value"
         >{`${payload[0].value} PHA`}</Property>

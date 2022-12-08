@@ -299,7 +299,7 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
                 justifyContent="space-between"
                 alignItems="flex-end"
               >
-                <Box maxWidth="375px">
+                <Box width="400px">
                   <NftCard compact delegation={data.delegationById} />
                 </Box>
                 <Stack spacing={2}>

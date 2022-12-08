@@ -95,6 +95,7 @@ const DelegationList: FC<{
           ].filter(isTruthy),
         },
       },
+    withdrawingFilter && {withdrawingValue_gt: '0'},
   ]
   const enabled = !!address
   const {data, isLoading, fetchNextPage, hasNextPage} =
@@ -272,7 +273,6 @@ const DelegationList: FC<{
                 <ListSkeleton height={105} ref={ref} />
               ))}
           </Stack>
-          <Box ref={ref}></Box>
         </Box>
       </Stack>
 

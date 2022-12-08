@@ -5,14 +5,16 @@ const Property: FC<{
   size?: 'medium' | 'small'
   label: ReactNode
   children: ReactNode
+  fullWidth?: boolean
   sx?: SxProps
-}> = ({size = 'medium', label, children, sx}) => {
+}> = ({size = 'medium', label, children, fullWidth = false, sx}) => {
   return (
     <Stack
       sx={sx}
       direction={size === 'medium' ? 'column' : 'row'}
       overflow="hidden"
       alignItems={size === 'medium' ? 'flex-start' : 'baseline'}
+      {...(fullWidth && {justifyContent: 'space-between'})}
     >
       <Typography
         lineHeight={1.3}
