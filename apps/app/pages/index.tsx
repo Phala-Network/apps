@@ -1,5 +1,6 @@
 import DashboardAccount from '@/components/DashboardAccount'
 import DashboardAssetList from '@/components/DashboardAssetList'
+import DashboardCarousel from '@/components/DashboardCarousel'
 import DashboardNftList from '@/components/DashboardNftList'
 import Title from '@/components/Title'
 import {Box, Paper, Stack} from '@mui/material'
@@ -16,7 +17,16 @@ const Dashboard: FC = () => {
       >
         <DashboardAccount />
 
-        <Paper sx={{width: '400px', flexShrink: 0}}></Paper>
+        <Paper
+          sx={{
+            height: {xs: 200, md: 'auto'},
+            width: {xs: '100%', md: 300, lg: 370},
+            flexShrink: 0,
+            overflow: 'hidden',
+          }}
+        >
+          <DashboardCarousel />
+        </Paper>
       </Stack>
 
       <Box component="section" mt={4}>

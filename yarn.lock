@@ -2597,6 +2597,7 @@ __metadata:
     notistack: ^2.0.8
     react: ^18.2.0
     react-dom: ^18.2.0
+    react-multi-carousel: ^2.8.2
     recharts: ^2.1.16
     swr: ^1.3.0
     typescript: ^4.9.3
@@ -9808,6 +9809,13 @@ __metadata:
   version: 3.0.4
   resolution: "react-lifecycles-compat@npm:3.0.4"
   checksum: a904b0fc0a8eeb15a148c9feb7bc17cec7ef96e71188280061fc340043fd6d8ee3ff233381f0e8f95c1cf926210b2c4a31f38182c8f35ac55057e453d6df204f
+  languageName: node
+  linkType: hard
+
+"react-multi-carousel@npm:^2.8.2":
+  version: 2.8.2
+  resolution: "react-multi-carousel@npm:2.8.2"
+  checksum: 95a77120ec11e0f0c33609617b873a56c639b30a3b186e0d00323fff03889b2761b62ca3f2734e04f6c1fe00866bf759939a62b4f4a847211ad6da8224c46274
   languageName: node
   linkType: hard
 
