@@ -10,7 +10,7 @@ import getPoolPath from '@/lib/getPoolPath'
 import getVaultOwnerCut from '@/lib/getVaultOwnerCut'
 import {BasePoolCommonFragment} from '@/lib/subsquidQuery'
 import {colors} from '@/lib/theme'
-import {Settings} from '@mui/icons-material'
+import Settings from '@mui/icons-material/Settings'
 import {
   alpha,
   Box,

@@ -11,7 +11,7 @@ import {
   fromChainAtom,
   toChainAtom,
 } from '@/store/bridge'
-import {ArrowDownward} from '@mui/icons-material'
+import ArrowDownward from '@mui/icons-material/ArrowDownward'
 import {LoadingButton} from '@mui/lab'
 import {
   Box,

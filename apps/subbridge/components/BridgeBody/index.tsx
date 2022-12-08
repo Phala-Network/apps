@@ -8,7 +8,8 @@ import {
   fromChainAtom,
   toChainAtom,
 } from '@/store/bridge'
-import {ArrowDownward, ArrowForward} from '@mui/icons-material'
+import ArrowDownward from '@mui/icons-material/ArrowDownward'
+import ArrowForward from '@mui/icons-material/ArrowForward'
 import {Box, Collapse, IconButton, Paper, Stack, useTheme} from '@mui/material'
 import {BoxProps} from '@mui/system'
 import {useAtom, useAtomValue} from 'jotai'

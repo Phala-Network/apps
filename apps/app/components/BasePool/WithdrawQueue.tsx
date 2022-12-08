@@ -43,7 +43,7 @@ const columns: GridColDef<RowModel>[] = [
       const end = addDays(new Date(value), 7)
       if (isAfter(start, end)) return 'Ended'
       return formatDuration(intervalToDuration({start, end}), {
-        format: ['d', 'h', 'm'],
+        format: ['days', 'hours', 'minutes'],
       })
     },
   },

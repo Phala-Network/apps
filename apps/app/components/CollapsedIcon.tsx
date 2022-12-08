@@ -1,4 +1,4 @@
-import {KeyboardArrowRight} from '@mui/icons-material'
+import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight'
 import {useTheme} from '@mui/material'
 import {FC} from 'react'
 

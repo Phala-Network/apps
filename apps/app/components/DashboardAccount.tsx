@@ -5,7 +5,8 @@ import {subsquidClient} from '@/lib/graphql'
 import {useAccountByIdQuery} from '@/lib/subsquidQuery'
 import {colors} from '@/lib/theme'
 import {assetVisibleAtom, walletDialogOpenAtom} from '@/store/ui'
-import {RemoveRedEye, VisibilityOff} from '@mui/icons-material'
+import RemoveRedEye from '@mui/icons-material/RemoveRedEye'
+import VisibilityOff from '@mui/icons-material/VisibilityOff'
 import {
   Box,
   Button,

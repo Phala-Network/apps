@@ -1,4 +1,4 @@
-import {KeyboardArrowUp} from '@mui/icons-material'
+import KeyboardArrowUp from '@mui/icons-material/KeyboardArrowUp'
 import {Box, Fab, Fade, useScrollTrigger} from '@mui/material'
 import {FC} from 'react'
 

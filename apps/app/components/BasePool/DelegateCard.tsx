@@ -8,12 +8,10 @@ import aprToApy from '@/lib/aprToApy'
 import getPoolPath from '@/lib/getPoolPath'
 import {BasePoolCommonFragment, IdentityLevel} from '@/lib/subsquidQuery'
 import {colors} from '@/lib/theme'
-import {
-  RemoveCircleOutline,
-  Star,
-  StarBorder,
-  VerifiedOutlined,
-} from '@mui/icons-material'
+import RemoveCircleOutline from '@mui/icons-material/RemoveCircleOutline'
+import Star from '@mui/icons-material/Star'
+import StarBorder from '@mui/icons-material/StarBorder'
+import VerifiedOutlined from '@mui/icons-material/VerifiedOutlined'
 import {
   alpha,
   Box,

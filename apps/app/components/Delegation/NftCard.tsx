@@ -6,7 +6,7 @@ import aprToApy from '@/lib/aprToApy'
 import getPoolPath from '@/lib/getPoolPath'
 import {DelegationCommonFragment} from '@/lib/subsquidQuery'
 import {colors} from '@/lib/theme'
-import {MoreVert} from '@mui/icons-material'
+import MoreVert from '@mui/icons-material/MoreVert'
 import {
   alpha,
   Box,

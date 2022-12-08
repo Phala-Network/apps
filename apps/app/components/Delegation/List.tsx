@@ -10,12 +10,10 @@ import {
   DelegationWhereInput,
   useInfiniteDelegationsConnectionQuery,
 } from '@/lib/subsquidQuery'
-import {
-  FilterList,
-  FormatListBulleted,
-  GridView,
-  Search,
-} from '@mui/icons-material'
+import FilterList from '@mui/icons-material/FilterList'
+import FormatListBulleted from '@mui/icons-material/FormatListBulleted'
+import GridView from '@mui/icons-material/GridView'
+import Search from '@mui/icons-material/Search'
 import {
   Box,
   Checkbox,

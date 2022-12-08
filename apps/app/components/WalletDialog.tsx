@@ -1,6 +1,7 @@
 import {walletDialogOpenAtom} from '@/store/ui'
 import {jsx} from '@emotion/react'
-import {ArrowForwardIos, Download} from '@mui/icons-material'
+import ArrowForwardIos from '@mui/icons-material/ArrowForwardIos'
+import Download from '@mui/icons-material/Download'
 import {
   Box,
   Button,

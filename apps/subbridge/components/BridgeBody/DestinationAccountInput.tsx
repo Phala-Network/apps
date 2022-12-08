@@ -5,7 +5,7 @@ import {
 } from '@/store/bridge'
 import {isWalletConnectAtom} from '@/store/common'
 import {evmAccountAtom} from '@/store/ethers'
-import {HighlightOff} from '@mui/icons-material'
+import HighlightOff from '@mui/icons-material/HighlightOff'
 import {Box, BoxProps, IconButton, Link, TextField} from '@mui/material'
 import {polkadotAccountAtom} from '@phala/store'
 import {trimAddress} from '@phala/util'

@@ -1,4 +1,4 @@
-import {KeyboardArrowDown} from '@mui/icons-material'
+import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown'
 import {createTheme} from '@mui/material'
 import {Barlow, Montserrat, Roboto} from '@next/font/google'
 

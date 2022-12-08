@@ -10,7 +10,8 @@ import {
   useInfiniteBasePoolsConnectionQuery,
 } from '@/lib/subsquidQuery'
 import {favoritePoolsAtom} from '@/store/common'
-import {FilterList, Search} from '@mui/icons-material'
+import FilterList from '@mui/icons-material/FilterList'
+import Search from '@mui/icons-material/Search'
 import {
   Box,
   Checkbox,

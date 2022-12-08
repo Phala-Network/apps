@@ -16,11 +16,10 @@ import {
   useDelegationByIdQuery,
 } from '@/lib/subsquidQuery'
 import {colors} from '@/lib/theme'
-import {
-  RemoveCircleOutline,
-  Settings,
-  VerifiedOutlined,
-} from '@mui/icons-material'
+import RemoveCircleOutline from '@mui/icons-material/RemoveCircleOutline'
+import Settings from '@mui/icons-material/Settings'
+import VerifiedOutlined from '@mui/icons-material/VerifiedOutlined'
+
 import {
   alpha,
   Box,
