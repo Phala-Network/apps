@@ -29,7 +29,8 @@ import {isTruthy} from '@phala/util'
 import {useAtom} from 'jotai'
 import {debounce} from 'lodash-es'
 import dynamic from 'next/dynamic'
-import {FC, useCallback, useState} from 'react'
+import {FC, useCallback, useEffect, useState} from 'react'
+import {useInView} from 'react-intersection-observer'
 import DelegateCard from './DelegateCard'
 import FarmCard from './FarmCard'
 
@@ -78,6 +79,7 @@ const BasePoolList: FC<{
   kind: BasePoolKind
   sx?: SxProps
 }> = ({variant, kind, sx}) => {
+  const {ref, inView} = useInView()
   const [dialogOpen, setDialogOpen] = useState(false)
   const [operatingPool, setOperatingPool] = useState<BasePoolCommonFragment>()
   const [dialogAction, setDialogAction] = useState<PoolDialogAction>()
@@ -145,14 +147,16 @@ const BasePoolList: FC<{
         delegations_some: {account: {id_eq: delegatorAddress}, shares_gt: '0'},
       },
   ]
-  const {data, isLoading} = useInfiniteBasePoolsConnectionQuery(
+  const {data, isLoading, fetchNextPage} = useInfiniteBasePoolsConnectionQuery(
     'after',
     subsquidClient,
-    {first: 99, orderBy, where: {AND: where.filter(isTruthy)}},
+    {first: 20, orderBy, where: {AND: where.filter(isTruthy)}},
     {
       keepPreviousData: true,
       getNextPageParam: (lastPage) =>
-        lastPage.basePoolsConnection.pageInfo.endCursor,
+        lastPage.basePoolsConnection.pageInfo.hasNextPage
+          ? lastPage.basePoolsConnection.pageInfo.endCursor
+          : undefined,
     }
   )
 
@@ -164,6 +168,12 @@ const BasePoolList: FC<{
   const onClose = useCallback(() => {
     setDialogOpen(false)
   }, [])
+
+  useEffect(() => {
+    if (inView) {
+      fetchNextPage()
+    }
+  }, [inView, fetchNextPage])
 
   const filters = variant === 'delegate' && (
     <Stack spacing={2}>
@@ -293,6 +303,7 @@ const BasePoolList: FC<{
               ))
             )}
           </Stack>
+          <Box ref={ref}></Box>
         </Box>
       </Stack>
       <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>

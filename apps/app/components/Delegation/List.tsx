@@ -31,7 +31,8 @@ import {
 import {isTruthy} from '@phala/util'
 import {debounce} from 'lodash-es'
 import dynamic from 'next/dynamic'
-import {FC, useCallback, useState} from 'react'
+import {FC, useCallback, useEffect, useState} from 'react'
+import {useInView} from 'react-intersection-observer'
 import HorizonCard from './HorizonCard'
 import NftCard from './NftCard'
 
@@ -58,6 +59,7 @@ const DelegationList: FC<{
   isVault?: boolean
   isOwner?: boolean
 }> = ({address, isVault = false, showHeader = false, isOwner = false}) => {
+  const {ref, inView} = useInView()
   const [dialogOpen, setDialogOpen] = useState(false)
   const [dialogAction, setDialogAction] = useState<DelegationDialogAction>()
   const [operatingDelegation, setOperatingDelegation] =
@@ -93,17 +95,25 @@ const DelegationList: FC<{
         },
       },
   ]
-  const {data, isLoading} = useInfiniteDelegationsConnectionQuery(
-    'after',
-    subsquidClient,
-    {first: 99, orderBy, where: {AND: where.filter(isTruthy)}},
-    {
-      keepPreviousData: true,
-      enabled: !!address,
-      getNextPageParam: (lastPage) =>
-        lastPage.delegationsConnection.pageInfo.endCursor,
-    }
-  )
+  const {data, isLoading, fetchNextPage} =
+    useInfiniteDelegationsConnectionQuery(
+      'after',
+      subsquidClient,
+      {first: 20, orderBy, where: {AND: where.filter(isTruthy)}},
+      {
+        keepPreviousData: true,
+        enabled: !!address,
+        getNextPageParam: (lastPage) =>
+          lastPage.delegationsConnection.pageInfo.hasNextPage
+            ? lastPage.delegationsConnection.pageInfo.endCursor
+            : undefined,
+      }
+    )
+
+  useEffect(() => {
+    fetchNextPage()
+  }, [inView, fetchNextPage])
+
   const isEmpty = data?.pages[0].delegationsConnection.totalCount === 0
 
   const onAction: OnAction = useCallback((basePool, action) => {
@@ -247,6 +257,7 @@ const DelegationList: FC<{
               ))
             )}
           </Stack>
+          <Box ref={ref}></Box>
         </Box>
       </Stack>
 
