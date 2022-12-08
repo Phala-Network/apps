@@ -102,6 +102,7 @@ const DelegateCard: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
                   target="_blank"
                   rel="noopener"
                   lineHeight="24px"
+                  whiteSpace="nowrap"
                 >
                   {owner.identityDisplay || trimAddress(owner.id)}
                 </Link>

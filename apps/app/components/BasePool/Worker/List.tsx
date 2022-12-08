@@ -32,19 +32,23 @@ export type WorkerDialogAction =
   | 'addWorker'
 export type OnAction = (worker: Worker, action: WorkerAction) => Promise<void>
 
-const pageSize = 10
+const pageSize = 5
 
 const WorkerList: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
   const [page, setPage] = useState(1)
   const api = usePolkadotApi()
   const [account] = useAtom(polkadotAccountAtom)
   const signAndSend = useSignAndSend()
-  const {data, isLoading} = useWorkersConnectionQuery(subsquidClient, {
-    after: page === 1 ? undefined : String((page - 1) * pageSize),
-    orderBy: WorkerOrderByInput.IdAsc,
-    first: pageSize,
-    where: {stakePool: {id_eq: basePool.id}},
-  })
+  const {data, isLoading} = useWorkersConnectionQuery(
+    subsquidClient,
+    {
+      after: page === 1 ? undefined : String((page - 1) * pageSize),
+      orderBy: WorkerOrderByInput.IdAsc,
+      first: pageSize,
+      where: {stakePool: {id_eq: basePool.id}},
+    },
+    {keepPreviousData: true}
+  )
   const isOwner = account?.address === basePool.owner.id
   const isEmpty = data?.workersConnection.totalCount === 0
   const [dialogOpen, setDialogOpen] = useState(false)
@@ -98,7 +102,7 @@ const WorkerList: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
           )}
         </Stack>
       </SectionHeader>
-      <Stack>
+      <Stack spacing={2}>
         {isLoading ? (
           <ListSkeleton height={94} />
         ) : isEmpty ? (

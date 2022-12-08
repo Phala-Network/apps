@@ -1,3 +1,4 @@
+import Empty from '@/components/Empty'
 import ListSkeleton from '@/components/ListSkeleton'
 import useSelectedVaultState from '@/hooks/useSelectedVaultState'
 import {subsquidClient} from '@/lib/graphql'
@@ -159,6 +160,7 @@ const BasePoolList: FC<{
           : undefined,
     }
   )
+  const isEmpty = data?.pages[0].basePoolsConnection.totalCount === 0
 
   const onAction: OnAction = useCallback((basePool, action) => {
     setDialogOpen(true)
@@ -285,6 +287,8 @@ const BasePoolList: FC<{
           <Stack spacing={2} mt={2}>
             {isLoading ? (
               <ListSkeleton height={101} />
+            ) : isEmpty ? (
+              <Empty sx={{minHeight: 400}} />
             ) : (
               data?.pages.map((page, index) => (
                 <Stack key={index} spacing={2}>
