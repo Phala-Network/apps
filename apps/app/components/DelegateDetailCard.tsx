@@ -1,4 +1,5 @@
 import ClientOnly from '@/components/ClientOnly'
+import {WPHA_ASSET_ID} from '@/config'
 import useAccountQuery from '@/hooks/useAccountQuery'
 import useAssetBalance from '@/hooks/useAssetBalance'
 import useGetApr from '@/hooks/useGetApr'
@@ -101,7 +102,7 @@ const DelegateDetailCard: FC<{sx?: SxProps}> = ({sx}) => {
   const api = usePolkadotApi()
   const signAndSend = useSignAndSend()
   const [account] = useAtom(polkadotAccountAtom)
-  const wrapped = useAssetBalance(account?.address, 1)
+  const wrapped = useAssetBalance(account?.address, WPHA_ASSET_ID)
   const accountState = data?.accountById
   const selectedVaultState = useSelectedVaultState()
   const asAccount = selectedVaultState === null

@@ -1,4 +1,5 @@
 import VaultIcon from '@/assets/vault.svg'
+import {WPHA_ASSET_ID} from '@/config'
 import useAccountQuery from '@/hooks/useAccountQuery'
 import useAssetBalance from '@/hooks/useAssetBalance'
 import useSelectedVaultState from '@/hooks/useSelectedVaultState'
@@ -37,7 +38,7 @@ const DelegatorSelect: FC<{isVault?: boolean}> = ({isVault = false}) => {
         ? selectedVaultState.account.id
         : account?.address
       : undefined,
-    selectedVaultState ? 1 : undefined
+    selectedVaultState ? WPHA_ASSET_ID : undefined
   )
   if (!account || !accountData || !account.wallet) return null
   // MEMO: vault cannot delegate to another vault
