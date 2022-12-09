@@ -74,7 +74,7 @@ const NftCard: FC<{
         overflow="hidden"
         position="relative"
       >
-        <NftCover />
+        <NftCover delegation={delegation} />
         {hasWithdrawal && (
           <Alert
             icon={false}
