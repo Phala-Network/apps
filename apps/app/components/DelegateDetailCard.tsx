@@ -26,6 +26,7 @@ import Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
 import {FC, useMemo} from 'react'
 import DelegatorSelect from './DelegatorSelect'
+import PromiseButton from './PromiseButton'
 
 const DelegateDataCard: FC<{
   kind: BasePoolKind
@@ -132,9 +133,9 @@ const DelegateDetailCard: FC<{sx?: SxProps}> = ({sx}) => {
     return toCurrency(new Decimal(stakePoolValue).plus(vaultValue), 0)
   }, [stakePoolValue, vaultValue])
 
-  const unwrapAll = () => {
+  const unwrapAll = async () => {
     if (!api) return
-    signAndSend(api.tx.phalaWrappedBalances.unwrapAll())
+    return signAndSend(api.tx.phalaWrappedBalances.unwrapAll())
   }
 
   return (
@@ -241,14 +242,14 @@ const DelegateDetailCard: FC<{sx?: SxProps}> = ({sx}) => {
           <ClientOnly>
             {asAccount && (
               <>
-                <Button
+                <PromiseButton
                   variant="text"
                   size="small"
                   disabled={!wrapped || wrapped.eq(0)}
                   onClick={unwrapAll}
                 >
                   Unwrap All
-                </Button>
+                </PromiseButton>
                 <Button variant="text" size="small">
                   Track
                 </Button>
