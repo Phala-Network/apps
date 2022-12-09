@@ -1,12 +1,21 @@
 import usePolkadotApi from '@/hooks/usePolkadotApi'
+import usePoolIntro, {PoolIntro} from '@/hooks/usePoolIntro'
 import useSignAndSend from '@/hooks/useSignAndSend'
 import {BasePoolCommonFragment} from '@/lib/subsquidQuery'
 import {barlow} from '@/lib/theme'
 import {LoadingButton} from '@mui/lab'
-import {DialogContent, DialogTitle, Stack, TextField} from '@mui/material'
+import {
+  DialogContent,
+  DialogTitle,
+  Stack,
+  TextField,
+  Typography,
+  Unstable_Grid2 as Grid,
+} from '@mui/material'
 import {getDecimalPattern} from '@phala/util'
+import {stringToHex} from '@polkadot/util'
 import Decimal from 'decimal.js'
-import {FC, useMemo, useState} from 'react'
+import {FC, useEffect, useMemo, useState} from 'react'
 
 const OwnerSettings: FC<{
   basePool: BasePoolCommonFragment
@@ -15,6 +24,8 @@ const OwnerSettings: FC<{
   const isVault = kind === 'Vault'
   const color = isVault ? 'secondary' : 'primary'
   const api = usePolkadotApi()
+  const [introLoaded, setIntroLoaded] = useState(false)
+  const poolIntro = usePoolIntro(basePool.id)
   const signAndSend = useSignAndSend()
   const [commissionLoading, setCommissionLoading] = useState(false)
   const [commissionString, setCommissionString] = useState(
@@ -24,6 +35,15 @@ const OwnerSettings: FC<{
   const [capacityString, setCapacityString] = useState(() =>
     stakePool?.capacity ? new Decimal(stakePool.capacity).toString() : ''
   )
+
+  const [telegramString, setTelegramString] = useState('')
+  const [discordString, setDiscordString] = useState('')
+  const [wechatString, setWechatString] = useState('')
+  const [twitterString, setTwitterString] = useState('')
+  const [emailString, setEmailString] = useState('')
+  const [forumString, setForumString] = useState('')
+  const [annString, setAnnString] = useState('')
+  const [saveIntroLoading, setSaveIntroLoading] = useState(false)
 
   const commissionValid = useMemo(() => {
     try {
@@ -56,6 +76,39 @@ const OwnerSettings: FC<{
     })
   }
 
+  const saveIntro = () => {
+    if (!api) return
+    setSaveIntroLoading(true)
+    const description: PoolIntro = {
+      telegram: telegramString,
+      discord: discordString,
+      wechat: wechatString,
+      twitter: twitterString,
+      email: emailString,
+      forum: forumString,
+      ann: annString,
+      version: 1,
+    }
+    const hex = stringToHex(JSON.stringify(description))
+    return signAndSend(
+      api.tx.phalaBasePool.setPoolDescription(basePool.id, hex)
+    ).finally(() => {
+      setSaveIntroLoading(false)
+    })
+  }
+
+  useEffect(() => {
+    if (!poolIntro || introLoaded) return
+    setTelegramString(poolIntro.telegram || '')
+    setDiscordString(poolIntro.discord || '')
+    setWechatString(poolIntro.wechat || '')
+    setTwitterString(poolIntro.twitter || '')
+    setEmailString(poolIntro.email || '')
+    setForumString(poolIntro.forum || '')
+    setAnnString(poolIntro.ann || '')
+    setIntroLoaded(true)
+  }, [poolIntro, introLoaded])
+
   return (
     <>
       <DialogTitle>{`${
@@ -78,7 +131,7 @@ const OwnerSettings: FC<{
                 inputMode: 'decimal',
                 pattern: getDecimalPattern(4),
               }}
-              sx={{flex: '1 0'}}
+              fullWidth
               color={color}
               size="small"
               onChange={(e) => {
@@ -113,7 +166,7 @@ const OwnerSettings: FC<{
                   inputMode: 'decimal',
                   pattern: getDecimalPattern(4),
                 }}
-                sx={{flex: '1 0'}}
+                fullWidth
                 color={color}
                 size="small"
                 onChange={(e) => {
@@ -133,6 +186,127 @@ const OwnerSettings: FC<{
               </LoadingButton>
             </Stack>
           )}
+        </Stack>
+
+        <Typography variant="h6" mt={3}>
+          Intro
+        </Typography>
+        <Grid container rowSpacing={3} columnSpacing={2} mt={0.5}>
+          <Grid xs={6}>
+            <TextField
+              disabled={!introLoaded || saveIntroLoading}
+              fullWidth
+              label="Telegram"
+              placeholder="@"
+              value={telegramString}
+              inputProps={{maxLength: 30}}
+              color={color}
+              size="small"
+              onChange={(e) => {
+                setTelegramString(e.target.value)
+              }}
+            />
+          </Grid>
+          <Grid xs={6}>
+            <TextField
+              disabled={!introLoaded || saveIntroLoading}
+              fullWidth
+              label="Discord"
+              value={discordString}
+              inputProps={{maxLength: 30}}
+              color={color}
+              size="small"
+              onChange={(e) => {
+                setDiscordString(e.target.value)
+              }}
+            />
+          </Grid>
+          <Grid xs={6}>
+            <TextField
+              disabled={!introLoaded || saveIntroLoading}
+              fullWidth
+              label="Wechat"
+              value={wechatString}
+              inputProps={{maxLength: 30}}
+              color={color}
+              size="small"
+              onChange={(e) => {
+                setWechatString(e.target.value)
+              }}
+            />
+          </Grid>
+          <Grid xs={6}>
+            <TextField
+              disabled={!introLoaded || saveIntroLoading}
+              fullWidth
+              placeholder="@"
+              label="Twitter"
+              value={twitterString}
+              inputProps={{maxLength: 30}}
+              color={color}
+              size="small"
+              onChange={(e) => {
+                setTwitterString(e.target.value)
+              }}
+            />
+          </Grid>
+          <Grid xs={6}>
+            <TextField
+              disabled={!introLoaded || saveIntroLoading}
+              fullWidth
+              label="Email"
+              value={emailString}
+              inputProps={{maxLength: 30}}
+              color={color}
+              size="small"
+              onChange={(e) => {
+                setEmailString(e.target.value)
+              }}
+            />
+          </Grid>
+          <Grid xs={6}>
+            <TextField
+              disabled={!introLoaded || saveIntroLoading}
+              fullWidth
+              label="Phala Forum"
+              value={forumString}
+              inputProps={{maxLength: 30}}
+              color={color}
+              size="small"
+              onChange={(e) => {
+                setForumString(e.target.value)
+              }}
+            />
+          </Grid>
+          <Grid xs={12}>
+            <TextField
+              disabled={!introLoaded || saveIntroLoading}
+              fullWidth
+              multiline
+              rows={4}
+              label="Announcement"
+              value={annString}
+              inputProps={{maxLength: 240}}
+              color={color}
+              size="small"
+              onChange={(e) => {
+                setAnnString(e.target.value)
+              }}
+              helperText={`${annString.length}/240`}
+            />
+          </Grid>
+        </Grid>
+
+        <Stack direction="row" justifyContent="flex-end">
+          <LoadingButton
+            disabled={!introLoaded}
+            onClick={saveIntro}
+            loading={saveIntroLoading}
+            color={color}
+            variant="contained"
+          >
+            Save Intro
+          </LoadingButton>
         </Stack>
       </DialogContent>
     </>

@@ -12,38 +12,34 @@ import aprToApy from '@/lib/aprToApy'
 import {subsquidClient} from '@/lib/graphql'
 import {
   BasePoolCommonFragment,
-  IdentityLevel,
   useDelegationByIdQuery,
 } from '@/lib/subsquidQuery'
 import {colors} from '@/lib/theme'
-import RemoveCircleOutline from '@mui/icons-material/RemoveCircleOutline'
 import Settings from '@mui/icons-material/Settings'
-import VerifiedOutlined from '@mui/icons-material/VerifiedOutlined'
 
 import {
-  alpha,
   Box,
   Button,
   Chip,
   Dialog,
   IconButton,
-  Link,
   Paper,
   Skeleton,
   Stack,
-  Tooltip,
   Typography,
   useTheme,
 } from '@mui/material'
 import {polkadotAccountAtom} from '@phala/store'
-import {toCurrency, toPercentage, trimAddress} from '@phala/util'
+import {toCurrency, toPercentage} from '@phala/util'
 import {useAtom} from 'jotai'
 import dynamic from 'next/dynamic'
 import {FC, useCallback, useState} from 'react'
 import Withdraw from '../Delegation/Withdraw'
+import Empty from '../Empty'
 import PromiseButton from '../PromiseButton'
 import DelegateInput from './DelegateInput'
 import ExtraProperties from './ExtraProperties'
+import Intro from './Intro'
 import WhitelistList from './Whitelist/List'
 import WithdrawQueue from './WithdrawQueue'
 
@@ -67,9 +63,6 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
   // const color = isVault ? 'secondary' : 'primary'
   const isOwner = owner.id === account?.address
 
-  const ownerVerified =
-    owner.identityLevel === IdentityLevel.KnownGood ||
-    owner.identityLevel === IdentityLevel.Reasonable
   const actions = (
     <>
       {isOwner && (
@@ -229,57 +222,22 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
               p: {xs: 2, md: 3},
               pt: {xs: 1.5, md: 2},
               background: 'transparent',
-              flex: '1 0',
+              flex: {xs: 'none', lg: '1 0'},
+              height: {xs: 300, lg: 'auto'},
             }}
           >
-            <Stack direction="row" alignItems="center" spacing={1}>
-              <Link
-                variant="h6"
-                color="inherit"
-                href={`https://khala.subscan.io/account/${owner?.id}`}
-                target="_blank"
-                rel="noopener"
-                overflow="hidden"
-                textOverflow="ellipsis"
-                whiteSpace="nowrap"
+            <Box position="relative" height="100%">
+              <Intro
+                basePool={basePool}
                 sx={{
-                  textDecorationColor: alpha(theme.palette.text.primary, 0.4),
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
                 }}
-              >
-                {owner.identityDisplay || trimAddress(owner.id)}
-              </Link>
-
-              {owner.identityDisplay && (
-                <>
-                  <Tooltip
-                    title={owner.identityLevel ?? 'No Judgement'}
-                    placement="top"
-                  >
-                    {ownerVerified ? (
-                      <VerifiedOutlined
-                        color="success"
-                        sx={{width: 22, flexShrink: 0}}
-                      />
-                    ) : (
-                      <RemoveCircleOutline
-                        color="disabled"
-                        sx={{width: 22, flexShrink: 0}}
-                      />
-                    )}
-                  </Tooltip>
-                  <Tooltip title={owner.id} placement="top">
-                    <Typography
-                      flexShrink="0"
-                      variant="subtitle2"
-                      component="div"
-                      color="text.secondary"
-                    >
-                      {trimAddress(owner.id)}
-                    </Typography>
-                  </Tooltip>
-                </>
-              )}
-            </Stack>
+              />
+            </Box>
           </Paper>
           <Paper
             component="section"
@@ -287,7 +245,7 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
               position: 'relative',
               p: 2,
               background: 'transparent',
-              flex: '1 0',
+              flex: {xs: 'none', lg: '1 0'},
             }}
           >
             <Box position="absolute" right={16} top={16}>
@@ -321,9 +279,9 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
               </Stack>
             ) : (
               // TODO: placeholder style
-              <Stack height="240px" alignItems="center" justifyContent="center">
-                {!isDelegationLoading && 'No delegation'}
-              </Stack>
+              <Box height="240px">
+                {!isDelegationLoading && <Empty message="No Delegation" />}
+              </Box>
             )}
             <DelegateInput basePool={basePool} sx={{mt: 3}} />
           </Paper>

@@ -572,7 +572,7 @@ declare module '@polkadot/api-base/types/events' {
       /**
        * A Nft is created to contain pool shares
        **/
-      NftCreated: AugmentedEvent<ApiType, [cid: u32, nftId: u32, owner: AccountId32, shares: u128], { cid: u32, nftId: u32, owner: AccountId32, shares: u128 }>;
+      NftCreated: AugmentedEvent<ApiType, [pid: u64, cid: u32, nftId: u32, owner: AccountId32, shares: u128], { pid: u64, cid: u32, nftId: u32, owner: AccountId32, shares: u128 }>;
       /**
        * A pool contribution whitelist is added
        * 

@@ -80,7 +80,7 @@ const DelegateInput: FC<{basePool: BasePoolCommonFragment; sx?: SxProps}> = ({
             sx: {fontFamily: barlow.style.fontFamily, fontWeight: 600},
           }}
           inputProps={{inputMode: 'decimal', pattern: getDecimalPattern(12)}}
-          sx={{flex: '1 0'}}
+          fullWidth
           color={color}
           size="small"
           onChange={(e) => {

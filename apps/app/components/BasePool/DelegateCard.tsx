@@ -4,6 +4,7 @@ import CollapsedIcon from '@/components/CollapsedIcon'
 import Property from '@/components/Property'
 import useGetApr from '@/hooks/useGetApr'
 import usePoolFavorite from '@/hooks/usePoolFavorite'
+import usePoolIntro from '@/hooks/usePoolIntro'
 import aprToApy from '@/lib/aprToApy'
 import getPoolPath from '@/lib/getPoolPath'
 import {BasePoolCommonFragment, IdentityLevel} from '@/lib/subsquidQuery'
@@ -27,6 +28,8 @@ import {
 } from '@mui/material'
 import {toCurrency, toPercentage, trimAddress} from '@phala/util'
 import {FC, useState} from 'react'
+import Empty from '../Empty'
+import TextSkeleton from '../TextSkeleton'
 import DelegateInput from './DelegateInput'
 import ExtraProperties from './ExtraProperties'
 
@@ -36,6 +39,7 @@ const DelegateCard: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
   const [collapsed, setCollapsed] = useState(true)
   const {vault, stakePool, owner} = basePool
   const [isFavorite, toggleFavorite] = usePoolFavorite(basePool.pid)
+  const poolIntro = usePoolIntro(basePool.id)
   const ownerVerified =
     owner.identityLevel === IdentityLevel.KnownGood ||
     owner.identityLevel === IdentityLevel.Reasonable
@@ -174,9 +178,21 @@ const DelegateCard: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
       <Collapse in={!collapsed} mountOnEnter unmountOnExit>
         <Stack direction={{xs: 'column', md: 'row'}} p={2} spacing={3}>
           <Stack flex="1 0">
-            <Box>
-              <Typography variant="h6">Announcement</Typography>
-              <Box minHeight={64}></Box>
+            <Typography variant="h6" lineHeight={1}>
+              Announcement
+            </Typography>
+            <Box height={100} overflow="auto" my={1}>
+              {poolIntro ? (
+                poolIntro.ann ? (
+                  <Typography whiteSpace="pre-wrap" variant="body2">
+                    {poolIntro.ann}
+                  </Typography>
+                ) : (
+                  <Empty message="No Announcement" />
+                )
+              ) : (
+                <TextSkeleton />
+              )}
             </Box>
             <ExtraProperties basePool={basePool} />
           </Stack>

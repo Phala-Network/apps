@@ -1849,6 +1849,7 @@ export default {
   PhalaPalletsComputeBasePoolPalletEvent: {
     _enum: {
       NftCreated: {
+        pid: 'u64',
         cid: 'u32',
         nftId: 'u32',
         owner: 'AccountId32',

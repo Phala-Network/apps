@@ -91,6 +91,7 @@ const TopBar: FC = () => {
             }
             return (
               <Tooltip
+                leaveDelay={200}
                 enterTouchDelay={0}
                 title={
                   <Stack>

@@ -4,6 +4,7 @@ import CollapsedIcon from '@/components/CollapsedIcon'
 import Property from '@/components/Property'
 import useGetApr from '@/hooks/useGetApr'
 import usePolkadotApi from '@/hooks/usePolkadotApi'
+import usePoolIntro from '@/hooks/usePoolIntro'
 import useSignAndSend from '@/hooks/useSignAndSend'
 import aprToApy from '@/lib/aprToApy'
 import getPoolPath from '@/lib/getPoolPath'
@@ -28,7 +29,9 @@ import {
 import {toCurrency, toPercentage} from '@phala/util'
 import Decimal from 'decimal.js'
 import {FC, useCallback, useMemo, useState} from 'react'
+import Empty from '../Empty'
 import PromiseButton from '../PromiseButton'
+import TextSkeleton from '../TextSkeleton'
 import ExtraProperties from './ExtraProperties'
 import {OnAction} from './List'
 
@@ -42,6 +45,7 @@ const FarmCard: FC<{
   const theme = useTheme()
   const [collapsed, setCollapsed] = useState(true)
   const {vault, stakePool} = basePool
+  const poolIntro = usePoolIntro(basePool.id)
 
   const vaultOwnerCut = useMemo(() => getVaultOwnerCut(basePool), [basePool])
   const vaultOwnerReward = useMemo(
@@ -213,9 +217,21 @@ const FarmCard: FC<{
       <Collapse in={!collapsed} mountOnEnter unmountOnExit>
         <Stack direction={{xs: 'column', md: 'row'}} p={2}>
           <Stack flex="1 0">
-            <Box>
-              <Typography variant="h6">Announcement</Typography>
-              <Box minHeight={64}></Box>
+            <Typography variant="h6" lineHeight={1}>
+              Announcement
+            </Typography>
+            <Box height={100} overflow="auto" my={1}>
+              {poolIntro ? (
+                poolIntro.ann ? (
+                  <Typography whiteSpace="pre-wrap" variant="body2">
+                    {poolIntro.ann}
+                  </Typography>
+                ) : (
+                  <Empty message="No Announcement" />
+                )
+              ) : (
+                <TextSkeleton />
+              )}
             </Box>
             <ExtraProperties basePool={basePool} />
           </Stack>

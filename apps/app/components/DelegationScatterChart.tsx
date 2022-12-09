@@ -5,7 +5,7 @@ import {
   useDelegationsConnectionQuery,
 } from '@/lib/subsquidQuery'
 import {colors} from '@/lib/theme'
-import {Paper, Stack, Typography} from '@mui/material'
+import {Paper, Typography} from '@mui/material'
 import Decimal from 'decimal.js'
 import {FC, ReactElement, useMemo} from 'react'
 import {
@@ -17,6 +17,7 @@ import {
   XAxis,
   YAxis,
 } from 'recharts'
+import Empty from './Empty'
 import Property from './Property'
 
 type ChartData = {
@@ -126,9 +127,7 @@ const DelegationScatterChart: FC<{address?: string}> = ({address}) => {
           </ScatterChart>
         </ResponsiveContainer>
       ) : (
-        <Stack alignItems="center" justifyContent="center" height="100%">
-          No Delegation
-        </Stack>
+        <Empty message="No Delegation" />
       )}
     </>
   )

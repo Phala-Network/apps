@@ -2082,6 +2082,7 @@ declare module '@polkadot/types/lookup' {
   interface PhalaPalletsComputeBasePoolPalletEvent extends Enum {
     readonly isNftCreated: boolean;
     readonly asNftCreated: {
+      readonly pid: u64;
       readonly cid: u32;
       readonly nftId: u32;
       readonly owner: AccountId32;
