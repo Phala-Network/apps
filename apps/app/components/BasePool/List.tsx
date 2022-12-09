@@ -147,6 +147,8 @@ const BasePoolList: FC<{
       !!delegatorAddress && {
         delegations_some: {account: {id_eq: delegatorAddress}, shares_gt: '0'},
       },
+    variant === 'delegate' &&
+      kind === 'StakePool' && {stakePool: {delegable_gte: '100'}},
   ]
   const enabled =
     variant === 'delegate' || (!!polkadotAccount?.address && variant === 'farm')
@@ -182,7 +184,7 @@ const BasePoolList: FC<{
   }, [inView, fetchNextPage, enabled])
 
   const filters = variant === 'delegate' && (
-    <Stack spacing={2}>
+    <Stack spacing={2} pr={3}>
       <Typography variant="h5" component="div">
         Status
       </Typography>
