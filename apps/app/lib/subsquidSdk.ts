@@ -2460,7 +2460,7 @@ type DelegationValueRecordsConnectionQuery = { readonly __typename?: 'Query', re
 type GlobalStateQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-type GlobalStateQuery = { readonly __typename?: 'Query', readonly globalStateById?: { readonly __typename?: 'GlobalState', readonly averageBlockTime: number, readonly averageAprMultiplier: string, readonly height: number, readonly totalValue: string, readonly idleWorkerShares: string } | null };
+type GlobalStateQuery = { readonly __typename?: 'Query', readonly squidStatus?: { readonly __typename?: 'SquidStatus', readonly height?: number | null } | null, readonly globalStateById?: { readonly __typename?: 'GlobalState', readonly averageBlockTime: number, readonly averageAprMultiplier: string, readonly height: number, readonly totalValue: string, readonly idleWorkerShares: string } | null };
 
 type RewardRecordsConnectionQueryVariables = Exact<{
   orderBy: ReadonlyArray<RewardRecordOrderByInput> | RewardRecordOrderByInput;
@@ -2718,6 +2718,9 @@ export const DelegationCommonFragmentDoc = gql`
     `;
  const GlobalStateDocument = gql`
     query GlobalState {
+  squidStatus {
+    height
+  }
   globalStateById(id: "0") {
     averageBlockTime
     averageAprMultiplier

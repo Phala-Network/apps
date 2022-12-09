@@ -11,7 +11,7 @@ const useBlockHeightListener = () => {
     {refetchInterval: 3000}
   )
   const queryClient = useQueryClient()
-  const height = data?.globalStateById?.height
+  const height = data?.squidStatus?.height
 
   useEffect(() => {
     if (height && queryClient) {

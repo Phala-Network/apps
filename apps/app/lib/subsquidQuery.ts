@@ -2468,7 +2468,7 @@ export type DelegationValueRecordsConnectionQuery = { readonly __typename?: 'Que
 export type GlobalStateQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GlobalStateQuery = { readonly __typename?: 'Query', readonly globalStateById?: { readonly __typename?: 'GlobalState', readonly averageBlockTime: number, readonly averageAprMultiplier: string, readonly height: number, readonly totalValue: string, readonly idleWorkerShares: string } | null };
+export type GlobalStateQuery = { readonly __typename?: 'Query', readonly squidStatus?: { readonly __typename?: 'SquidStatus', readonly height?: number | null } | null, readonly globalStateById?: { readonly __typename?: 'GlobalState', readonly averageBlockTime: number, readonly averageAprMultiplier: string, readonly height: number, readonly totalValue: string, readonly idleWorkerShares: string } | null };
 
 export type RewardRecordsConnectionQueryVariables = Exact<{
   orderBy: ReadonlyArray<RewardRecordOrderByInput> | RewardRecordOrderByInput;
@@ -2966,6 +2966,9 @@ export const useInfiniteDelegationValueRecordsConnectionQuery = <
 
 export const GlobalStateDocument = `
     query GlobalState {
+  squidStatus {
+    height
+  }
   globalStateById(id: "0") {
     averageBlockTime
     averageAprMultiplier
