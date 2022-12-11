@@ -21,6 +21,7 @@ import {
   FormControlLabel,
   IconButton,
   MenuItem,
+  NoSsr,
   Skeleton,
   Stack,
   TextField,
@@ -133,7 +134,7 @@ const DelegationList: FC<{
   const filters = (
     <Stack spacing={2}>
       {!isVault && (
-        <>
+        <NoSsr>
           <Typography variant="h5" component="div">
             Type
           </Typography>
@@ -157,7 +158,7 @@ const DelegationList: FC<{
             }
             label="Stake Pool"
           />
-        </>
+        </NoSsr>
       )}
       <Typography variant="h5" component="div">
         Status

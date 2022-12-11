@@ -1,4 +1,5 @@
 import useBlockHeightListener from '@/hooks/useBlockHeightListener'
+import useVaultReset from '@/hooks/useVaultReset'
 import {Container, useMediaQuery, useTheme} from '@mui/material'
 import {useConnectPolkadotWallet} from '@phala/lib'
 import {useAtomsDevtools} from 'jotai/devtools'
@@ -18,6 +19,7 @@ const Layout: FC<{children: ReactNode}> = ({children}) => {
   useAtomsDevtools('Phala App')
   useConnectPolkadotWallet('Phala App', 30)
   useBlockHeightListener()
+  useVaultReset()
 
   return (
     <SnackbarProvider
