@@ -36,7 +36,7 @@ const MyStakePools: FC = () => {
   }, [data])
   const claimablePools = useMemo(() => {
     if (!data) return []
-    return data.basePoolsConnection.edges.map((edge) => ({id: edge.node.id}))
+    return data.basePoolsConnection.edges.map((edge) => edge.node)
   }, [data])
 
   const onClose = useCallback(() => {

@@ -65,13 +65,13 @@ const MyVaults: FC = () => {
   const mintAll = useCallback(async () => {
     if (!api) return
     let extrinsic
-    const extrinsics = vaultsWithOwnerCut.map(([id]) =>
+    const calls = vaultsWithOwnerCut.map(([id]) =>
       api.tx.phalaVault.maybeGainOwnerShares(id)
     )
-    if (extrinsics.length === 1) {
-      extrinsic = extrinsics[0]
+    if (calls.length === 1) {
+      extrinsic = calls[0]
     } else {
-      extrinsic = api.tx.utility.batch(extrinsics)
+      extrinsic = api.tx.utility.batch(calls)
     }
     return signAndSend(extrinsic)
   }, [api, vaultsWithOwnerCut, signAndSend])

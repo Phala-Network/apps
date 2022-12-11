@@ -221,8 +221,10 @@ const DelegationList: FC<{
               size="small"
               value={showNftCard}
               exclusive
-              onChange={(e, value) => {
-                setShowNftCard(value)
+              onChange={(e, value: boolean) => {
+                if (value !== null) {
+                  setShowNftCard(value)
+                }
               }}
             >
               <ToggleButton value={true}>

@@ -10,12 +10,20 @@ import {
 } from '@mui/material'
 import {polkadotAccountAtom} from '@phala/store'
 import {validateAddress} from '@phala/util'
+import Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
 import {FC, useMemo, useState} from 'react'
 
+type BasePoolWithOwnerReward = {
+  id: string
+  stakePool?: {
+    ownerReward: string
+  } | null
+}
+
 const ClaimReward: FC<{
-  basePool?: {id: string}
-  basePools?: {id: string}[]
+  basePool?: BasePoolWithOwnerReward
+  basePools?: BasePoolWithOwnerReward[]
   onClose: () => void
 }> = ({basePool, basePools, onClose}) => {
   const [account] = useAtom(polkadotAccountAtom)
@@ -30,18 +38,26 @@ const ClaimReward: FC<{
     if (!api || (!basePool && !basePools)) return
     const getExtrinsic = (id: string) =>
       api.tx.phalaStakePoolv2.claimOwnerRewards(id, address)
-    let extrinsic
+    const calls = []
+    let totalReward = new Decimal(0)
     if (basePool) {
-      extrinsic = getExtrinsic(basePool.id)
+      calls.push(getExtrinsic(basePool.id))
+      if (basePool.stakePool) {
+        totalReward = totalReward.plus(basePool.stakePool.ownerReward)
+      }
     } else if (basePools) {
-      extrinsic =
-        basePools.length === 1
-          ? getExtrinsic(basePools[0].id)
-          : api.tx.utility.batch(basePools.map(({id}) => getExtrinsic(id)))
+      calls.push(...basePools.map(({id}) => getExtrinsic(id)))
+      for (const {stakePool} of basePools) {
+        if (stakePool) {
+          totalReward = totalReward.plus(stakePool.ownerReward)
+        }
+      }
     }
-    if (!extrinsic) return
+    calls.push(
+      api.tx.phalaWrappedBalances.unwrap(totalReward.times(1e12).toHex())
+    )
     setLoading(true)
-    signAndSend(extrinsic)
+    signAndSend(api.tx.utility.batchAll(calls))
       .then(() => {
         onClose()
       })
