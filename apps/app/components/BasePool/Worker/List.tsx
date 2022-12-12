@@ -122,6 +122,7 @@ const WorkerList: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
       {data && !isEmpty && (
         <Stack alignItems="center" mt={3}>
           <Pagination
+            color="primary"
             page={page}
             count={Math.ceil(data.workersConnection.totalCount / pageSize)}
             onChange={(_, newPage) => setPage(newPage)}

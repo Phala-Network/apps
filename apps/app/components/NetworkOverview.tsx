@@ -15,7 +15,7 @@ import {useAtom} from 'jotai'
 import {FC, useMemo, useState} from 'react'
 
 type CirculationData = {
-  data: {circulations: {nodes: [{amount: string}]}}
+  data?: {circulations?: {nodes?: [{amount: string}?]}}
 }
 
 const numberFormat = (value: Decimal) =>
@@ -45,7 +45,8 @@ const NetworkOverview: FC = () => {
     }
   )
   const {data: globalStateData} = useGlobalStateQuery(subsquidClient)
-  const circulationValue = circulationData?.data.circulations.nodes[0].amount
+  const circulationValue =
+    circulationData?.data?.circulations?.nodes?.[0]?.amount
   const {totalValue, averageAprMultiplier} =
     globalStateData?.globalStateById || {}
   const stakeRatio = useMemo(() => {

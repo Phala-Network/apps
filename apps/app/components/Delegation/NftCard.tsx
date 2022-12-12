@@ -1,3 +1,4 @@
+import DelegationNftCover from '@/components/DelegationNftCover'
 import Property from '@/components/Property'
 import useGetApr from '@/hooks/useGetApr'
 import usePolkadotApi from '@/hooks/usePolkadotApi'
@@ -25,7 +26,6 @@ import {
 import {toCurrency, toPercentage} from '@phala/util'
 import {FC, useRef, useState} from 'react'
 import {OnAction} from './List'
-import NftCover from './NftCover'
 
 const NftCard: FC<{
   compact?: boolean
@@ -74,7 +74,11 @@ const NftCard: FC<{
         overflow="hidden"
         position="relative"
       >
-        <NftCover delegation={delegation} />
+        <DelegationNftCover
+          variant="delegation"
+          delegation={delegation}
+          nft={delegationNft}
+        />
         {hasWithdrawal && (
           <Alert
             icon={false}

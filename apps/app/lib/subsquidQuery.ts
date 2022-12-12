@@ -760,7 +760,7 @@ export type Delegation = {
   readonly __typename?: 'Delegation';
   readonly account: Account;
   readonly basePool: BasePool;
-  readonly delegationNft?: Maybe<Nft>;
+  readonly delegationNft: Nft;
   /** ${pid}-${accountId} */
   readonly id: Scalars['String'];
   readonly shares: Scalars['BigDecimal'];
@@ -1194,9 +1194,10 @@ export type Nft = {
   readonly __typename?: 'Nft';
   readonly burned: Scalars['Boolean'];
   readonly cid: Scalars['Int'];
+  readonly delegation?: Maybe<Delegation>;
   /** ${cid}-${nftId} */
   readonly id: Scalars['String'];
-  readonly mintTime: Scalars['DateTime'];
+  readonly mintTime?: Maybe<Scalars['DateTime']>;
   readonly nftId: Scalars['Int'];
   readonly owner: Account;
 };
@@ -1212,6 +1213,18 @@ export const NftOrderByInput = {
   BurnedDesc: 'burned_DESC',
   CidAsc: 'cid_ASC',
   CidDesc: 'cid_DESC',
+  DelegationIdAsc: 'delegation_id_ASC',
+  DelegationIdDesc: 'delegation_id_DESC',
+  DelegationSharesAsc: 'delegation_shares_ASC',
+  DelegationSharesDesc: 'delegation_shares_DESC',
+  DelegationValueAsc: 'delegation_value_ASC',
+  DelegationValueDesc: 'delegation_value_DESC',
+  DelegationWithdrawalStartTimeAsc: 'delegation_withdrawalStartTime_ASC',
+  DelegationWithdrawalStartTimeDesc: 'delegation_withdrawalStartTime_DESC',
+  DelegationWithdrawingSharesAsc: 'delegation_withdrawingShares_ASC',
+  DelegationWithdrawingSharesDesc: 'delegation_withdrawingShares_DESC',
+  DelegationWithdrawingValueAsc: 'delegation_withdrawingValue_ASC',
+  DelegationWithdrawingValueDesc: 'delegation_withdrawingValue_DESC',
   IdAsc: 'id_ASC',
   IdDesc: 'id_DESC',
   MintTimeAsc: 'mintTime_ASC',
@@ -1254,6 +1267,8 @@ export type NftWhereInput = {
   readonly cid_lte?: InputMaybe<Scalars['Int']>;
   readonly cid_not_eq?: InputMaybe<Scalars['Int']>;
   readonly cid_not_in?: InputMaybe<ReadonlyArray<Scalars['Int']>>;
+  readonly delegation?: InputMaybe<DelegationWhereInput>;
+  readonly delegation_isNull?: InputMaybe<Scalars['Boolean']>;
   readonly id_contains?: InputMaybe<Scalars['String']>;
   readonly id_containsInsensitive?: InputMaybe<Scalars['String']>;
   readonly id_endsWith?: InputMaybe<Scalars['String']>;
@@ -2622,14 +2637,14 @@ export type BasePoolAprRecordsConnectionQueryVariables = Exact<{
 
 export type BasePoolAprRecordsConnectionQuery = { readonly __typename?: 'Query', readonly basePoolAprRecordsConnection: { readonly __typename?: 'BasePoolAprRecordsConnection', readonly totalCount: number, readonly edges: ReadonlyArray<{ readonly __typename?: 'BasePoolAprRecordEdge', readonly cursor: string, readonly node: { readonly __typename?: 'BasePoolAprRecord', readonly id: string, readonly updatedTime: string, readonly value: string } }> } };
 
-export type DelegationCommonFragment = { readonly __typename?: 'Delegation', readonly id: string, readonly shares: string, readonly value: string, readonly withdrawalStartTime?: string | null, readonly withdrawingShares: string, readonly withdrawingValue: string, readonly basePool: { readonly __typename?: 'BasePool', readonly id: string, readonly kind: BasePoolKind, readonly freeValue: string, readonly sharePrice: string, readonly aprMultiplier: string, readonly withdrawingShares: string }, readonly delegationNft?: { readonly __typename?: 'Nft', readonly cid: number, readonly nftId: number } | null, readonly withdrawalNft?: { readonly __typename?: 'Nft', readonly cid: number, readonly nftId: number } | null, readonly account: { readonly __typename?: 'Account', readonly id: string, readonly identityDisplay?: string | null, readonly identityLevel?: IdentityLevel | null } };
+export type DelegationCommonFragment = { readonly __typename?: 'Delegation', readonly id: string, readonly shares: string, readonly value: string, readonly withdrawalStartTime?: string | null, readonly withdrawingShares: string, readonly withdrawingValue: string, readonly basePool: { readonly __typename?: 'BasePool', readonly id: string, readonly kind: BasePoolKind, readonly freeValue: string, readonly sharePrice: string, readonly aprMultiplier: string, readonly withdrawingShares: string }, readonly delegationNft: { readonly __typename?: 'Nft', readonly cid: number, readonly nftId: number, readonly mintTime?: string | null }, readonly withdrawalNft?: { readonly __typename?: 'Nft', readonly cid: number, readonly nftId: number } | null, readonly account: { readonly __typename?: 'Account', readonly id: string, readonly identityDisplay?: string | null, readonly identityLevel?: IdentityLevel | null } };
 
 export type DelegationByIdQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
 
 
-export type DelegationByIdQuery = { readonly __typename?: 'Query', readonly delegationById?: { readonly __typename?: 'Delegation', readonly id: string, readonly shares: string, readonly value: string, readonly withdrawalStartTime?: string | null, readonly withdrawingShares: string, readonly withdrawingValue: string, readonly basePool: { readonly __typename?: 'BasePool', readonly id: string, readonly kind: BasePoolKind, readonly freeValue: string, readonly sharePrice: string, readonly aprMultiplier: string, readonly withdrawingShares: string }, readonly delegationNft?: { readonly __typename?: 'Nft', readonly cid: number, readonly nftId: number } | null, readonly withdrawalNft?: { readonly __typename?: 'Nft', readonly cid: number, readonly nftId: number } | null, readonly account: { readonly __typename?: 'Account', readonly id: string, readonly identityDisplay?: string | null, readonly identityLevel?: IdentityLevel | null } } | null };
+export type DelegationByIdQuery = { readonly __typename?: 'Query', readonly delegationById?: { readonly __typename?: 'Delegation', readonly id: string, readonly shares: string, readonly value: string, readonly withdrawalStartTime?: string | null, readonly withdrawingShares: string, readonly withdrawingValue: string, readonly basePool: { readonly __typename?: 'BasePool', readonly id: string, readonly kind: BasePoolKind, readonly freeValue: string, readonly sharePrice: string, readonly aprMultiplier: string, readonly withdrawingShares: string }, readonly delegationNft: { readonly __typename?: 'Nft', readonly cid: number, readonly nftId: number, readonly mintTime?: string | null }, readonly withdrawalNft?: { readonly __typename?: 'Nft', readonly cid: number, readonly nftId: number } | null, readonly account: { readonly __typename?: 'Account', readonly id: string, readonly identityDisplay?: string | null, readonly identityLevel?: IdentityLevel | null } } | null };
 
 export type DelegationsConnectionQueryVariables = Exact<{
   orderBy: ReadonlyArray<DelegationOrderByInput> | DelegationOrderByInput;
@@ -2639,7 +2654,7 @@ export type DelegationsConnectionQueryVariables = Exact<{
 }>;
 
 
-export type DelegationsConnectionQuery = { readonly __typename?: 'Query', readonly delegationsConnection: { readonly __typename?: 'DelegationsConnection', readonly totalCount: number, readonly edges: ReadonlyArray<{ readonly __typename?: 'DelegationEdge', readonly cursor: string, readonly node: { readonly __typename?: 'Delegation', readonly id: string, readonly shares: string, readonly value: string, readonly withdrawalStartTime?: string | null, readonly withdrawingShares: string, readonly withdrawingValue: string, readonly basePool: { readonly __typename?: 'BasePool', readonly id: string, readonly kind: BasePoolKind, readonly freeValue: string, readonly sharePrice: string, readonly aprMultiplier: string, readonly withdrawingShares: string }, readonly delegationNft?: { readonly __typename?: 'Nft', readonly cid: number, readonly nftId: number } | null, readonly withdrawalNft?: { readonly __typename?: 'Nft', readonly cid: number, readonly nftId: number } | null, readonly account: { readonly __typename?: 'Account', readonly id: string, readonly identityDisplay?: string | null, readonly identityLevel?: IdentityLevel | null } } }>, readonly pageInfo: { readonly __typename?: 'PageInfo', readonly endCursor: string, readonly hasNextPage: boolean, readonly hasPreviousPage: boolean, readonly startCursor: string } } };
+export type DelegationsConnectionQuery = { readonly __typename?: 'Query', readonly delegationsConnection: { readonly __typename?: 'DelegationsConnection', readonly totalCount: number, readonly edges: ReadonlyArray<{ readonly __typename?: 'DelegationEdge', readonly cursor: string, readonly node: { readonly __typename?: 'Delegation', readonly id: string, readonly shares: string, readonly value: string, readonly withdrawalStartTime?: string | null, readonly withdrawingShares: string, readonly withdrawingValue: string, readonly basePool: { readonly __typename?: 'BasePool', readonly id: string, readonly kind: BasePoolKind, readonly freeValue: string, readonly sharePrice: string, readonly aprMultiplier: string, readonly withdrawingShares: string }, readonly delegationNft: { readonly __typename?: 'Nft', readonly cid: number, readonly nftId: number, readonly mintTime?: string | null }, readonly withdrawalNft?: { readonly __typename?: 'Nft', readonly cid: number, readonly nftId: number } | null, readonly account: { readonly __typename?: 'Account', readonly id: string, readonly identityDisplay?: string | null, readonly identityLevel?: IdentityLevel | null } } }>, readonly pageInfo: { readonly __typename?: 'PageInfo', readonly endCursor: string, readonly hasNextPage: boolean, readonly hasPreviousPage: boolean, readonly startCursor: string } } };
 
 export type DelegationValueRecordsConnectionQueryVariables = Exact<{
   orderBy: ReadonlyArray<DelegationValueRecordOrderByInput> | DelegationValueRecordOrderByInput;
@@ -2655,6 +2670,16 @@ export type GlobalStateQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GlobalStateQuery = { readonly __typename?: 'Query', readonly squidStatus?: { readonly __typename?: 'SquidStatus', readonly height?: number | null } | null, readonly globalStateById?: { readonly __typename?: 'GlobalState', readonly averageBlockTime: number, readonly averageAprMultiplier: string, readonly height: number, readonly totalValue: string, readonly idleWorkerShares: string } | null };
+
+export type NftsConnectionQueryVariables = Exact<{
+  orderBy: ReadonlyArray<NftOrderByInput> | NftOrderByInput;
+  after?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<NftWhereInput>;
+}>;
+
+
+export type NftsConnectionQuery = { readonly __typename?: 'Query', readonly nftsConnection: { readonly __typename?: 'NftsConnection', readonly totalCount: number, readonly edges: ReadonlyArray<{ readonly __typename?: 'NftEdge', readonly cursor: string, readonly node: { readonly __typename?: 'Nft', readonly id: string, readonly cid: number, readonly nftId: number, readonly mintTime?: string | null, readonly owner: { readonly __typename?: 'Account', readonly id: string }, readonly delegation?: { readonly __typename?: 'Delegation', readonly value: string, readonly basePool: { readonly __typename?: 'BasePool', readonly kind: BasePoolKind } } | null } }>, readonly pageInfo: { readonly __typename?: 'PageInfo', readonly hasNextPage: boolean, readonly hasPreviousPage: boolean, readonly startCursor: string, readonly endCursor: string } } };
 
 export type RewardRecordsConnectionQueryVariables = Exact<{
   orderBy: ReadonlyArray<RewardRecordOrderByInput> | RewardRecordOrderByInput;
@@ -2745,6 +2770,7 @@ export const DelegationCommonFragmentDoc = `
   delegationNft {
     cid
     nftId
+    mintTime
   }
   withdrawalNft {
     cid
@@ -3235,6 +3261,67 @@ export const useInfiniteGlobalStateQuery = <
     useInfiniteQuery<GlobalStateQuery, TError, TData>(
       variables === undefined ? ['GlobalState.infinite'] : ['GlobalState.infinite', variables],
       (metaData) => fetcher<GlobalStateQuery, GlobalStateQueryVariables>(client, GlobalStateDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
+      options
+    );
+
+export const NftsConnectionDocument = `
+    query NftsConnection($orderBy: [NftOrderByInput!]!, $after: String, $first: Int, $where: NftWhereInput) {
+  nftsConnection(orderBy: $orderBy, after: $after, first: $first, where: $where) {
+    edges {
+      cursor
+      node {
+        id
+        owner {
+          id
+        }
+        cid
+        nftId
+        mintTime
+        delegation {
+          value
+          basePool {
+            kind
+          }
+        }
+      }
+    }
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+      startCursor
+      endCursor
+    }
+    totalCount
+  }
+}
+    `;
+export const useNftsConnectionQuery = <
+      TData = NftsConnectionQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: NftsConnectionQueryVariables,
+      options?: UseQueryOptions<NftsConnectionQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<NftsConnectionQuery, TError, TData>(
+      ['NftsConnection', variables],
+      fetcher<NftsConnectionQuery, NftsConnectionQueryVariables>(client, NftsConnectionDocument, variables, headers),
+      options
+    );
+export const useInfiniteNftsConnectionQuery = <
+      TData = NftsConnectionQuery,
+      TError = unknown
+    >(
+      pageParamKey: keyof NftsConnectionQueryVariables,
+      client: GraphQLClient,
+      variables: NftsConnectionQueryVariables,
+      options?: UseInfiniteQueryOptions<NftsConnectionQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useInfiniteQuery<NftsConnectionQuery, TError, TData>(
+      ['NftsConnection.infinite', variables],
+      (metaData) => fetcher<NftsConnectionQuery, NftsConnectionQueryVariables>(client, NftsConnectionDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
       options
     );
 
