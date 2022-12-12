@@ -70,7 +70,7 @@ const BasePoolAprChart: FC<{basePool: BasePoolCommonFragment}> = ({
   })
 
   const chartData = useMemo(() => {
-    const result: {date: Date; dateString: string; value: number}[] =
+    const result: {date: Date; dateString: string; value?: number}[] =
       Array.from({
         length: days,
       }).map((_, i) => {
@@ -78,7 +78,6 @@ const BasePoolAprChart: FC<{basePool: BasePoolCommonFragment}> = ({
         return {
           dateString: date.toLocaleDateString(),
           date,
-          value: 0,
         }
       })
 
@@ -96,6 +95,14 @@ const BasePoolAprChart: FC<{basePool: BasePoolCommonFragment}> = ({
       }
     }
 
+    for (const r of result) {
+      if (r.value === undefined) {
+        r.value = 0
+      } else {
+        break
+      }
+    }
+
     return result
   }, [data, isVault, now])
 
@@ -106,7 +113,7 @@ const BasePoolAprChart: FC<{basePool: BasePoolCommonFragment}> = ({
         margin={{top: 10, right: 30, left: 0, bottom: 0}}
       >
         <defs>
-          <linearGradient id="main" x1="0" y1="0" x2="0" y2="1">
+          <linearGradient id={basePool.kind} x1="0" y1="0" x2="0" y2="1">
             <stop offset="5%" stopColor={color} stopOpacity={0.3} />
             <stop offset="95%" stopColor={color} stopOpacity={0} />
           </linearGradient>
@@ -130,7 +137,7 @@ const BasePoolAprChart: FC<{basePool: BasePoolCommonFragment}> = ({
           stroke={color}
           strokeWidth={3}
           fillOpacity={1}
-          fill="url(#main)"
+          fill={`url(#${basePool.kind})`}
         />
       </AreaChart>
     </ResponsiveContainer>

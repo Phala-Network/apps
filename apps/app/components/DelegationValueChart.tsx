@@ -67,7 +67,7 @@ const DelegationValueChart: FC<{address?: string; days: number}> = ({
   )
 
   const chartData = useMemo(() => {
-    const result: {date: Date; dateString: string; value: number}[] =
+    const result: {date: Date; dateString: string; value?: number}[] =
       Array.from({
         length: days,
       }).map((_, i) => {
@@ -75,7 +75,6 @@ const DelegationValueChart: FC<{address?: string; days: number}> = ({
         return {
           dateString: date.toLocaleDateString(),
           date,
-          value: 0,
         }
       })
 
@@ -86,6 +85,14 @@ const DelegationValueChart: FC<{address?: string; days: number}> = ({
       const index = result.findIndex((r) => r.date.getTime() >= date.getTime())
       if (index !== -1) {
         result[index].value = new Decimal(node.value).floor().toNumber()
+      }
+    }
+
+    for (const r of result) {
+      if (r.value === undefined) {
+        r.value = 0
+      } else {
+        break
       }
     }
 
