@@ -70,7 +70,7 @@ const BasePoolAprChart: FC<{basePool: BasePoolCommonFragment}> = ({
   })
 
   const chartData = useMemo(() => {
-    const result: {date: Date; dateString: string; value?: number}[] =
+    const result: {date: Date; dateString: string; value: number}[] =
       Array.from({
         length: days,
       }).map((_, i) => {
@@ -78,6 +78,7 @@ const BasePoolAprChart: FC<{basePool: BasePoolCommonFragment}> = ({
         return {
           dateString: date.toLocaleDateString(),
           date,
+          value: 0,
         }
       })
 
@@ -130,7 +131,6 @@ const BasePoolAprChart: FC<{basePool: BasePoolCommonFragment}> = ({
           strokeWidth={3}
           fillOpacity={1}
           fill="url(#main)"
-          dot
         />
       </AreaChart>
     </ResponsiveContainer>

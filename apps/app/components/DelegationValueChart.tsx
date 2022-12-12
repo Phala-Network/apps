@@ -67,7 +67,7 @@ const DelegationValueChart: FC<{address?: string; days: number}> = ({
   )
 
   const chartData = useMemo(() => {
-    const result: {date: Date; dateString: string; value?: number}[] =
+    const result: {date: Date; dateString: string; value: number}[] =
       Array.from({
         length: days,
       }).map((_, i) => {
@@ -75,6 +75,7 @@ const DelegationValueChart: FC<{address?: string; days: number}> = ({
         return {
           dateString: date.toLocaleDateString(),
           date,
+          value: 0,
         }
       })
 
@@ -125,7 +126,6 @@ const DelegationValueChart: FC<{address?: string; days: number}> = ({
           strokeWidth={3}
           fillOpacity={1}
           fill="url(#main)"
-          dot
         />
       </AreaChart>
     </ResponsiveContainer>

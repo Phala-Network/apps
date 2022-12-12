@@ -17,6 +17,7 @@ import {
   Tooltip,
   XAxis,
   YAxis,
+  ZAxis,
 } from 'recharts'
 import Empty from './Empty'
 import Property from './Property'
@@ -122,6 +123,7 @@ const DelegationScatterChart: FC<{address?: string}> = ({address}) => {
               tickLine={false}
               width={35}
             />
+            <ZAxis range={[120, 120]} />
             <Scatter data={chartData.vault} fill={colors.vault[400]}></Scatter>
             <Scatter
               data={chartData.stakePool}
