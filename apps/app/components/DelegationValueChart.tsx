@@ -4,6 +4,7 @@ import {
   useDelegationValueRecordsConnectionQuery,
 } from '@/lib/subsquidQuery'
 import {Paper, Typography} from '@mui/material'
+import {toCurrency} from '@phala/util'
 import {addDays} from 'date-fns'
 import Decimal from 'decimal.js'
 import {FC, ReactElement, useMemo, useState} from 'react'
@@ -32,11 +33,9 @@ const CustomTooltip = ({
     return (
       <Paper sx={{p: 1}}>
         <Typography variant="subtitle2">{label}</Typography>
-        <Property
-          fullWidth
-          size="small"
-          label="Value"
-        >{`${payload[0].value} PHA`}</Property>
+        <Property fullWidth size="small" label="Value">{`${toCurrency(
+          payload[0].value
+        )} PHA`}</Property>
       </Paper>
     )
   }
@@ -48,7 +47,11 @@ const DelegationValueChart: FC<{address?: string; days: number}> = ({
   address,
   days,
 }) => {
-  const [now] = useState(new Date())
+  const [now] = useState(() => {
+    const now = new Date()
+    now.setMinutes(0, 0, 0)
+    return now
+  })
   const {data} = useDelegationValueRecordsConnectionQuery(
     subsquidClient,
     {

@@ -6,6 +6,7 @@ import {
 } from '@/lib/subsquidQuery'
 import {colors} from '@/lib/theme'
 import {Paper, Typography} from '@mui/material'
+import {toCurrency} from '@phala/util'
 import Decimal from 'decimal.js'
 import {FC, ReactElement, useMemo} from 'react'
 import {
@@ -41,9 +42,9 @@ const CustomTooltip = ({
       <Paper sx={{p: 1}}>
         <Typography variant="subtitle2">{payload[0].payload.name}</Typography>
         {payload.map(({name, value, unit}) => (
-          <Property fullWidth size="small" label={name} key={name}>{`${value}${
-            name === 'Value' ? ' PHA' : unit
-          }`}</Property>
+          <Property fullWidth size="small" label={name} key={name}>{`${
+            name === 'Value' ? toCurrency(value) : value
+          }${name === 'Value' ? ' PHA' : unit}`}</Property>
         ))}
       </Paper>
     )
@@ -76,7 +77,10 @@ const DelegationScatterChart: FC<{address?: string}> = ({address}) => {
           node.basePool.kind === 'StakePool' ? 'Stake Pool' : 'Vault'
         } #${node.basePool.id}`,
         value: new Decimal(node.value).floor().toNumber(),
-        apr: getApr(node.basePool.aprMultiplier)?.times(100).floor().toNumber(),
+        apr: getApr(node.basePool.aprMultiplier)
+          ?.times(100)
+          .toDP(2, 0)
+          .toNumber(),
       }
       if (node.basePool.kind === 'StakePool') {
         result.stakePool.push(cell)

@@ -56,7 +56,11 @@ const BasePoolAprChart: FC<{basePool: BasePoolCommonFragment}> = ({
 }) => {
   const isVault = basePool.kind === 'Vault'
   const color = isVault ? colors.vault[500] : colors.main[400]
-  const [now] = useState(new Date())
+  const [now] = useState(() => {
+    const now = new Date()
+    now.setMinutes(0, 0, 0)
+    return now
+  })
   const {data} = useBasePoolAprRecordsConnectionQuery(subsquidClient, {
     orderBy: DelegationValueRecordOrderByInput.UpdatedTimeDesc,
     where: {
@@ -83,11 +87,11 @@ const BasePoolAprChart: FC<{basePool: BasePoolCommonFragment}> = ({
       const date = new Date(node.updatedTime)
       const index = result.findIndex((r) => r.date.getTime() >= date.getTime())
       if (index !== -1) {
-        let value = new Decimal(node.value).times(100)
+        let value = new Decimal(node.value)
         if (isVault) {
-          value = aprToApy(value).toDP(2, 0)
+          value = aprToApy(value)
         }
-        result[index].value = value.toNumber()
+        result[index].value = value.times(100).toDP(2, 0).toNumber()
       }
     }
 
@@ -108,7 +112,7 @@ const BasePoolAprChart: FC<{basePool: BasePoolCommonFragment}> = ({
         </defs>
         <XAxis tickLine={false} dataKey="dateString" />
         <YAxis
-          width={35}
+          width={38}
           type="number"
           dataKey="value"
           name={isVault ? 'APY' : 'APR'}
