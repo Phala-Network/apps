@@ -270,6 +270,110 @@ type BasePoolWhitelistsArgs = {
   where?: InputMaybe<BasePoolWhitelistWhereInput>;
 };
 
+type BasePoolAprRecord = {
+  readonly __typename?: 'BasePoolAprRecord';
+  readonly basePool: BasePool;
+  readonly id: Scalars['String'];
+  /** block time */
+  readonly updatedTime: Scalars['DateTime'];
+  readonly value: Scalars['BigDecimal'];
+};
+
+type BasePoolAprRecordEdge = {
+  readonly __typename?: 'BasePoolAprRecordEdge';
+  readonly cursor: Scalars['String'];
+  readonly node: BasePoolAprRecord;
+};
+
+const BasePoolAprRecordOrderByInput = {
+  BasePoolAprMultiplierAsc: 'basePool_aprMultiplier_ASC',
+  BasePoolAprMultiplierDesc: 'basePool_aprMultiplier_DESC',
+  BasePoolCidAsc: 'basePool_cid_ASC',
+  BasePoolCidDesc: 'basePool_cid_DESC',
+  BasePoolCommissionAsc: 'basePool_commission_ASC',
+  BasePoolCommissionDesc: 'basePool_commission_DESC',
+  BasePoolDelegatorCountAsc: 'basePool_delegatorCount_ASC',
+  BasePoolDelegatorCountDesc: 'basePool_delegatorCount_DESC',
+  BasePoolFreeValueAsc: 'basePool_freeValue_ASC',
+  BasePoolFreeValueDesc: 'basePool_freeValue_DESC',
+  BasePoolIdAsc: 'basePool_id_ASC',
+  BasePoolIdDesc: 'basePool_id_DESC',
+  BasePoolKindAsc: 'basePool_kind_ASC',
+  BasePoolKindDesc: 'basePool_kind_DESC',
+  BasePoolPidAsc: 'basePool_pid_ASC',
+  BasePoolPidDesc: 'basePool_pid_DESC',
+  BasePoolReleasingValueAsc: 'basePool_releasingValue_ASC',
+  BasePoolReleasingValueDesc: 'basePool_releasingValue_DESC',
+  BasePoolSharePriceAsc: 'basePool_sharePrice_ASC',
+  BasePoolSharePriceDesc: 'basePool_sharePrice_DESC',
+  BasePoolTotalSharesAsc: 'basePool_totalShares_ASC',
+  BasePoolTotalSharesDesc: 'basePool_totalShares_DESC',
+  BasePoolTotalValueAsc: 'basePool_totalValue_ASC',
+  BasePoolTotalValueDesc: 'basePool_totalValue_DESC',
+  BasePoolWhitelistEnabledAsc: 'basePool_whitelistEnabled_ASC',
+  BasePoolWhitelistEnabledDesc: 'basePool_whitelistEnabled_DESC',
+  BasePoolWithdrawingSharesAsc: 'basePool_withdrawingShares_ASC',
+  BasePoolWithdrawingSharesDesc: 'basePool_withdrawingShares_DESC',
+  BasePoolWithdrawingValueAsc: 'basePool_withdrawingValue_ASC',
+  BasePoolWithdrawingValueDesc: 'basePool_withdrawingValue_DESC',
+  IdAsc: 'id_ASC',
+  IdDesc: 'id_DESC',
+  UpdatedTimeAsc: 'updatedTime_ASC',
+  UpdatedTimeDesc: 'updatedTime_DESC',
+  ValueAsc: 'value_ASC',
+  ValueDesc: 'value_DESC'
+} as const;
+
+export type BasePoolAprRecordOrderByInput = typeof BasePoolAprRecordOrderByInput[keyof typeof BasePoolAprRecordOrderByInput];
+type BasePoolAprRecordWhereInput = {
+  readonly AND?: InputMaybe<ReadonlyArray<BasePoolAprRecordWhereInput>>;
+  readonly OR?: InputMaybe<ReadonlyArray<BasePoolAprRecordWhereInput>>;
+  readonly basePool?: InputMaybe<BasePoolWhereInput>;
+  readonly basePool_isNull?: InputMaybe<Scalars['Boolean']>;
+  readonly id_contains?: InputMaybe<Scalars['String']>;
+  readonly id_containsInsensitive?: InputMaybe<Scalars['String']>;
+  readonly id_endsWith?: InputMaybe<Scalars['String']>;
+  readonly id_eq?: InputMaybe<Scalars['String']>;
+  readonly id_gt?: InputMaybe<Scalars['String']>;
+  readonly id_gte?: InputMaybe<Scalars['String']>;
+  readonly id_in?: InputMaybe<ReadonlyArray<Scalars['String']>>;
+  readonly id_isNull?: InputMaybe<Scalars['Boolean']>;
+  readonly id_lt?: InputMaybe<Scalars['String']>;
+  readonly id_lte?: InputMaybe<Scalars['String']>;
+  readonly id_not_contains?: InputMaybe<Scalars['String']>;
+  readonly id_not_containsInsensitive?: InputMaybe<Scalars['String']>;
+  readonly id_not_endsWith?: InputMaybe<Scalars['String']>;
+  readonly id_not_eq?: InputMaybe<Scalars['String']>;
+  readonly id_not_in?: InputMaybe<ReadonlyArray<Scalars['String']>>;
+  readonly id_not_startsWith?: InputMaybe<Scalars['String']>;
+  readonly id_startsWith?: InputMaybe<Scalars['String']>;
+  readonly updatedTime_eq?: InputMaybe<Scalars['DateTime']>;
+  readonly updatedTime_gt?: InputMaybe<Scalars['DateTime']>;
+  readonly updatedTime_gte?: InputMaybe<Scalars['DateTime']>;
+  readonly updatedTime_in?: InputMaybe<ReadonlyArray<Scalars['DateTime']>>;
+  readonly updatedTime_isNull?: InputMaybe<Scalars['Boolean']>;
+  readonly updatedTime_lt?: InputMaybe<Scalars['DateTime']>;
+  readonly updatedTime_lte?: InputMaybe<Scalars['DateTime']>;
+  readonly updatedTime_not_eq?: InputMaybe<Scalars['DateTime']>;
+  readonly updatedTime_not_in?: InputMaybe<ReadonlyArray<Scalars['DateTime']>>;
+  readonly value_eq?: InputMaybe<Scalars['BigDecimal']>;
+  readonly value_gt?: InputMaybe<Scalars['BigDecimal']>;
+  readonly value_gte?: InputMaybe<Scalars['BigDecimal']>;
+  readonly value_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
+  readonly value_isNull?: InputMaybe<Scalars['Boolean']>;
+  readonly value_lt?: InputMaybe<Scalars['BigDecimal']>;
+  readonly value_lte?: InputMaybe<Scalars['BigDecimal']>;
+  readonly value_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  readonly value_not_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
+};
+
+type BasePoolAprRecordsConnection = {
+  readonly __typename?: 'BasePoolAprRecordsConnection';
+  readonly edges: ReadonlyArray<BasePoolAprRecordEdge>;
+  readonly pageInfo: PageInfo;
+  readonly totalCount: Scalars['Int'];
+};
+
 type BasePoolEdge = {
   readonly __typename?: 'BasePoolEdge';
   readonly cursor: Scalars['String'];
@@ -648,12 +752,12 @@ type Delegation = {
   readonly __typename?: 'Delegation';
   readonly account: Account;
   readonly basePool: BasePool;
-  readonly delegationNft?: Maybe<DelegationNft>;
+  readonly delegationNft?: Maybe<Nft>;
   /** ${pid}-${accountId} */
   readonly id: Scalars['String'];
   readonly shares: Scalars['BigDecimal'];
   readonly value: Scalars['BigDecimal'];
-  readonly withdrawalNft?: Maybe<DelegationNft>;
+  readonly withdrawalNft?: Maybe<Nft>;
   readonly withdrawalStartTime?: Maybe<Scalars['DateTime']>;
   readonly withdrawingShares: Scalars['BigDecimal'];
   readonly withdrawingValue: Scalars['BigDecimal'];
@@ -663,98 +767,6 @@ type DelegationEdge = {
   readonly __typename?: 'DelegationEdge';
   readonly cursor: Scalars['String'];
   readonly node: Delegation;
-};
-
-type DelegationNft = {
-  readonly __typename?: 'DelegationNft';
-  readonly cid: Scalars['Int'];
-  /** ${cid}-${nftId} */
-  readonly id: Scalars['String'];
-  readonly nftId: Scalars['Int'];
-  readonly owner: Account;
-};
-
-type DelegationNftEdge = {
-  readonly __typename?: 'DelegationNftEdge';
-  readonly cursor: Scalars['String'];
-  readonly node: DelegationNft;
-};
-
-const DelegationNftOrderByInput = {
-  CidAsc: 'cid_ASC',
-  CidDesc: 'cid_DESC',
-  IdAsc: 'id_ASC',
-  IdDesc: 'id_DESC',
-  NftIdAsc: 'nftId_ASC',
-  NftIdDesc: 'nftId_DESC',
-  OwnerIdAsc: 'owner_id_ASC',
-  OwnerIdDesc: 'owner_id_DESC',
-  OwnerIdentityDisplayAsc: 'owner_identityDisplay_ASC',
-  OwnerIdentityDisplayDesc: 'owner_identityDisplay_DESC',
-  OwnerIdentityLevelAsc: 'owner_identityLevel_ASC',
-  OwnerIdentityLevelDesc: 'owner_identityLevel_DESC',
-  OwnerStakePoolAvgAprMultiplierAsc: 'owner_stakePoolAvgAprMultiplier_ASC',
-  OwnerStakePoolAvgAprMultiplierDesc: 'owner_stakePoolAvgAprMultiplier_DESC',
-  OwnerStakePoolNftCountAsc: 'owner_stakePoolNftCount_ASC',
-  OwnerStakePoolNftCountDesc: 'owner_stakePoolNftCount_DESC',
-  OwnerStakePoolValueAsc: 'owner_stakePoolValue_ASC',
-  OwnerStakePoolValueDesc: 'owner_stakePoolValue_DESC',
-  OwnerVaultAvgAprMultiplierAsc: 'owner_vaultAvgAprMultiplier_ASC',
-  OwnerVaultAvgAprMultiplierDesc: 'owner_vaultAvgAprMultiplier_DESC',
-  OwnerVaultNftCountAsc: 'owner_vaultNftCount_ASC',
-  OwnerVaultNftCountDesc: 'owner_vaultNftCount_DESC',
-  OwnerVaultValueAsc: 'owner_vaultValue_ASC',
-  OwnerVaultValueDesc: 'owner_vaultValue_DESC'
-} as const;
-
-export type DelegationNftOrderByInput = typeof DelegationNftOrderByInput[keyof typeof DelegationNftOrderByInput];
-type DelegationNftWhereInput = {
-  readonly AND?: InputMaybe<ReadonlyArray<DelegationNftWhereInput>>;
-  readonly OR?: InputMaybe<ReadonlyArray<DelegationNftWhereInput>>;
-  readonly cid_eq?: InputMaybe<Scalars['Int']>;
-  readonly cid_gt?: InputMaybe<Scalars['Int']>;
-  readonly cid_gte?: InputMaybe<Scalars['Int']>;
-  readonly cid_in?: InputMaybe<ReadonlyArray<Scalars['Int']>>;
-  readonly cid_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly cid_lt?: InputMaybe<Scalars['Int']>;
-  readonly cid_lte?: InputMaybe<Scalars['Int']>;
-  readonly cid_not_eq?: InputMaybe<Scalars['Int']>;
-  readonly cid_not_in?: InputMaybe<ReadonlyArray<Scalars['Int']>>;
-  readonly id_contains?: InputMaybe<Scalars['String']>;
-  readonly id_containsInsensitive?: InputMaybe<Scalars['String']>;
-  readonly id_endsWith?: InputMaybe<Scalars['String']>;
-  readonly id_eq?: InputMaybe<Scalars['String']>;
-  readonly id_gt?: InputMaybe<Scalars['String']>;
-  readonly id_gte?: InputMaybe<Scalars['String']>;
-  readonly id_in?: InputMaybe<ReadonlyArray<Scalars['String']>>;
-  readonly id_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly id_lt?: InputMaybe<Scalars['String']>;
-  readonly id_lte?: InputMaybe<Scalars['String']>;
-  readonly id_not_contains?: InputMaybe<Scalars['String']>;
-  readonly id_not_containsInsensitive?: InputMaybe<Scalars['String']>;
-  readonly id_not_endsWith?: InputMaybe<Scalars['String']>;
-  readonly id_not_eq?: InputMaybe<Scalars['String']>;
-  readonly id_not_in?: InputMaybe<ReadonlyArray<Scalars['String']>>;
-  readonly id_not_startsWith?: InputMaybe<Scalars['String']>;
-  readonly id_startsWith?: InputMaybe<Scalars['String']>;
-  readonly nftId_eq?: InputMaybe<Scalars['Int']>;
-  readonly nftId_gt?: InputMaybe<Scalars['Int']>;
-  readonly nftId_gte?: InputMaybe<Scalars['Int']>;
-  readonly nftId_in?: InputMaybe<ReadonlyArray<Scalars['Int']>>;
-  readonly nftId_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly nftId_lt?: InputMaybe<Scalars['Int']>;
-  readonly nftId_lte?: InputMaybe<Scalars['Int']>;
-  readonly nftId_not_eq?: InputMaybe<Scalars['Int']>;
-  readonly nftId_not_in?: InputMaybe<ReadonlyArray<Scalars['Int']>>;
-  readonly owner?: InputMaybe<AccountWhereInput>;
-  readonly owner_isNull?: InputMaybe<Scalars['Boolean']>;
-};
-
-type DelegationNftsConnection = {
-  readonly __typename?: 'DelegationNftsConnection';
-  readonly edges: ReadonlyArray<DelegationNftEdge>;
-  readonly pageInfo: PageInfo;
-  readonly totalCount: Scalars['Int'];
 };
 
 const DelegationOrderByInput = {
@@ -806,10 +818,14 @@ const DelegationOrderByInput = {
   BasePoolWithdrawingSharesDesc: 'basePool_withdrawingShares_DESC',
   BasePoolWithdrawingValueAsc: 'basePool_withdrawingValue_ASC',
   BasePoolWithdrawingValueDesc: 'basePool_withdrawingValue_DESC',
+  DelegationNftBurnedAsc: 'delegationNft_burned_ASC',
+  DelegationNftBurnedDesc: 'delegationNft_burned_DESC',
   DelegationNftCidAsc: 'delegationNft_cid_ASC',
   DelegationNftCidDesc: 'delegationNft_cid_DESC',
   DelegationNftIdAsc: 'delegationNft_id_ASC',
   DelegationNftIdDesc: 'delegationNft_id_DESC',
+  DelegationNftMintTimeAsc: 'delegationNft_mintTime_ASC',
+  DelegationNftMintTimeDesc: 'delegationNft_mintTime_DESC',
   DelegationNftNftIdAsc: 'delegationNft_nftId_ASC',
   DelegationNftNftIdDesc: 'delegationNft_nftId_DESC',
   IdAsc: 'id_ASC',
@@ -818,10 +834,14 @@ const DelegationOrderByInput = {
   SharesDesc: 'shares_DESC',
   ValueAsc: 'value_ASC',
   ValueDesc: 'value_DESC',
+  WithdrawalNftBurnedAsc: 'withdrawalNft_burned_ASC',
+  WithdrawalNftBurnedDesc: 'withdrawalNft_burned_DESC',
   WithdrawalNftCidAsc: 'withdrawalNft_cid_ASC',
   WithdrawalNftCidDesc: 'withdrawalNft_cid_DESC',
   WithdrawalNftIdAsc: 'withdrawalNft_id_ASC',
   WithdrawalNftIdDesc: 'withdrawalNft_id_DESC',
+  WithdrawalNftMintTimeAsc: 'withdrawalNft_mintTime_ASC',
+  WithdrawalNftMintTimeDesc: 'withdrawalNft_mintTime_DESC',
   WithdrawalNftNftIdAsc: 'withdrawalNft_nftId_ASC',
   WithdrawalNftNftIdDesc: 'withdrawalNft_nftId_DESC',
   WithdrawalStartTimeAsc: 'withdrawalStartTime_ASC',
@@ -932,7 +952,7 @@ type DelegationWhereInput = {
   readonly account_isNull?: InputMaybe<Scalars['Boolean']>;
   readonly basePool?: InputMaybe<BasePoolWhereInput>;
   readonly basePool_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly delegationNft?: InputMaybe<DelegationNftWhereInput>;
+  readonly delegationNft?: InputMaybe<NftWhereInput>;
   readonly delegationNft_isNull?: InputMaybe<Scalars['Boolean']>;
   readonly id_contains?: InputMaybe<Scalars['String']>;
   readonly id_containsInsensitive?: InputMaybe<Scalars['String']>;
@@ -969,7 +989,7 @@ type DelegationWhereInput = {
   readonly value_lte?: InputMaybe<Scalars['BigDecimal']>;
   readonly value_not_eq?: InputMaybe<Scalars['BigDecimal']>;
   readonly value_not_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
-  readonly withdrawalNft?: InputMaybe<DelegationNftWhereInput>;
+  readonly withdrawalNft?: InputMaybe<NftWhereInput>;
   readonly withdrawalNft_isNull?: InputMaybe<Scalars['Boolean']>;
   readonly withdrawalStartTime_eq?: InputMaybe<Scalars['DateTime']>;
   readonly withdrawalStartTime_gt?: InputMaybe<Scalars['DateTime']>;
@@ -1162,6 +1182,116 @@ const IdentityLevel = {
 } as const;
 
 export type IdentityLevel = typeof IdentityLevel[keyof typeof IdentityLevel];
+type Nft = {
+  readonly __typename?: 'Nft';
+  readonly burned: Scalars['Boolean'];
+  readonly cid: Scalars['Int'];
+  /** ${cid}-${nftId} */
+  readonly id: Scalars['String'];
+  readonly mintTime: Scalars['DateTime'];
+  readonly nftId: Scalars['Int'];
+  readonly owner: Account;
+};
+
+type NftEdge = {
+  readonly __typename?: 'NftEdge';
+  readonly cursor: Scalars['String'];
+  readonly node: Nft;
+};
+
+const NftOrderByInput = {
+  BurnedAsc: 'burned_ASC',
+  BurnedDesc: 'burned_DESC',
+  CidAsc: 'cid_ASC',
+  CidDesc: 'cid_DESC',
+  IdAsc: 'id_ASC',
+  IdDesc: 'id_DESC',
+  MintTimeAsc: 'mintTime_ASC',
+  MintTimeDesc: 'mintTime_DESC',
+  NftIdAsc: 'nftId_ASC',
+  NftIdDesc: 'nftId_DESC',
+  OwnerIdAsc: 'owner_id_ASC',
+  OwnerIdDesc: 'owner_id_DESC',
+  OwnerIdentityDisplayAsc: 'owner_identityDisplay_ASC',
+  OwnerIdentityDisplayDesc: 'owner_identityDisplay_DESC',
+  OwnerIdentityLevelAsc: 'owner_identityLevel_ASC',
+  OwnerIdentityLevelDesc: 'owner_identityLevel_DESC',
+  OwnerStakePoolAvgAprMultiplierAsc: 'owner_stakePoolAvgAprMultiplier_ASC',
+  OwnerStakePoolAvgAprMultiplierDesc: 'owner_stakePoolAvgAprMultiplier_DESC',
+  OwnerStakePoolNftCountAsc: 'owner_stakePoolNftCount_ASC',
+  OwnerStakePoolNftCountDesc: 'owner_stakePoolNftCount_DESC',
+  OwnerStakePoolValueAsc: 'owner_stakePoolValue_ASC',
+  OwnerStakePoolValueDesc: 'owner_stakePoolValue_DESC',
+  OwnerVaultAvgAprMultiplierAsc: 'owner_vaultAvgAprMultiplier_ASC',
+  OwnerVaultAvgAprMultiplierDesc: 'owner_vaultAvgAprMultiplier_DESC',
+  OwnerVaultNftCountAsc: 'owner_vaultNftCount_ASC',
+  OwnerVaultNftCountDesc: 'owner_vaultNftCount_DESC',
+  OwnerVaultValueAsc: 'owner_vaultValue_ASC',
+  OwnerVaultValueDesc: 'owner_vaultValue_DESC'
+} as const;
+
+export type NftOrderByInput = typeof NftOrderByInput[keyof typeof NftOrderByInput];
+type NftWhereInput = {
+  readonly AND?: InputMaybe<ReadonlyArray<NftWhereInput>>;
+  readonly OR?: InputMaybe<ReadonlyArray<NftWhereInput>>;
+  readonly burned_eq?: InputMaybe<Scalars['Boolean']>;
+  readonly burned_isNull?: InputMaybe<Scalars['Boolean']>;
+  readonly burned_not_eq?: InputMaybe<Scalars['Boolean']>;
+  readonly cid_eq?: InputMaybe<Scalars['Int']>;
+  readonly cid_gt?: InputMaybe<Scalars['Int']>;
+  readonly cid_gte?: InputMaybe<Scalars['Int']>;
+  readonly cid_in?: InputMaybe<ReadonlyArray<Scalars['Int']>>;
+  readonly cid_isNull?: InputMaybe<Scalars['Boolean']>;
+  readonly cid_lt?: InputMaybe<Scalars['Int']>;
+  readonly cid_lte?: InputMaybe<Scalars['Int']>;
+  readonly cid_not_eq?: InputMaybe<Scalars['Int']>;
+  readonly cid_not_in?: InputMaybe<ReadonlyArray<Scalars['Int']>>;
+  readonly id_contains?: InputMaybe<Scalars['String']>;
+  readonly id_containsInsensitive?: InputMaybe<Scalars['String']>;
+  readonly id_endsWith?: InputMaybe<Scalars['String']>;
+  readonly id_eq?: InputMaybe<Scalars['String']>;
+  readonly id_gt?: InputMaybe<Scalars['String']>;
+  readonly id_gte?: InputMaybe<Scalars['String']>;
+  readonly id_in?: InputMaybe<ReadonlyArray<Scalars['String']>>;
+  readonly id_isNull?: InputMaybe<Scalars['Boolean']>;
+  readonly id_lt?: InputMaybe<Scalars['String']>;
+  readonly id_lte?: InputMaybe<Scalars['String']>;
+  readonly id_not_contains?: InputMaybe<Scalars['String']>;
+  readonly id_not_containsInsensitive?: InputMaybe<Scalars['String']>;
+  readonly id_not_endsWith?: InputMaybe<Scalars['String']>;
+  readonly id_not_eq?: InputMaybe<Scalars['String']>;
+  readonly id_not_in?: InputMaybe<ReadonlyArray<Scalars['String']>>;
+  readonly id_not_startsWith?: InputMaybe<Scalars['String']>;
+  readonly id_startsWith?: InputMaybe<Scalars['String']>;
+  readonly mintTime_eq?: InputMaybe<Scalars['DateTime']>;
+  readonly mintTime_gt?: InputMaybe<Scalars['DateTime']>;
+  readonly mintTime_gte?: InputMaybe<Scalars['DateTime']>;
+  readonly mintTime_in?: InputMaybe<ReadonlyArray<Scalars['DateTime']>>;
+  readonly mintTime_isNull?: InputMaybe<Scalars['Boolean']>;
+  readonly mintTime_lt?: InputMaybe<Scalars['DateTime']>;
+  readonly mintTime_lte?: InputMaybe<Scalars['DateTime']>;
+  readonly mintTime_not_eq?: InputMaybe<Scalars['DateTime']>;
+  readonly mintTime_not_in?: InputMaybe<ReadonlyArray<Scalars['DateTime']>>;
+  readonly nftId_eq?: InputMaybe<Scalars['Int']>;
+  readonly nftId_gt?: InputMaybe<Scalars['Int']>;
+  readonly nftId_gte?: InputMaybe<Scalars['Int']>;
+  readonly nftId_in?: InputMaybe<ReadonlyArray<Scalars['Int']>>;
+  readonly nftId_isNull?: InputMaybe<Scalars['Boolean']>;
+  readonly nftId_lt?: InputMaybe<Scalars['Int']>;
+  readonly nftId_lte?: InputMaybe<Scalars['Int']>;
+  readonly nftId_not_eq?: InputMaybe<Scalars['Int']>;
+  readonly nftId_not_in?: InputMaybe<ReadonlyArray<Scalars['Int']>>;
+  readonly owner?: InputMaybe<AccountWhereInput>;
+  readonly owner_isNull?: InputMaybe<Scalars['Boolean']>;
+};
+
+type NftsConnection = {
+  readonly __typename?: 'NftsConnection';
+  readonly edges: ReadonlyArray<NftEdge>;
+  readonly pageInfo: PageInfo;
+  readonly totalCount: Scalars['Int'];
+};
+
 type PageInfo = {
   readonly __typename?: 'PageInfo';
   readonly endCursor: Scalars['String'];
@@ -1177,6 +1307,11 @@ type Query = {
   readonly accountByUniqueInput?: Maybe<Account>;
   readonly accounts: ReadonlyArray<Account>;
   readonly accountsConnection: AccountsConnection;
+  readonly basePoolAprRecordById?: Maybe<BasePoolAprRecord>;
+  /** @deprecated Use basePoolAprRecordById */
+  readonly basePoolAprRecordByUniqueInput?: Maybe<BasePoolAprRecord>;
+  readonly basePoolAprRecords: ReadonlyArray<BasePoolAprRecord>;
+  readonly basePoolAprRecordsConnection: BasePoolAprRecordsConnection;
   readonly basePoolById?: Maybe<BasePool>;
   /** @deprecated Use basePoolById */
   readonly basePoolByUniqueInput?: Maybe<BasePool>;
@@ -1190,11 +1325,6 @@ type Query = {
   readonly delegationById?: Maybe<Delegation>;
   /** @deprecated Use delegationById */
   readonly delegationByUniqueInput?: Maybe<Delegation>;
-  readonly delegationNftById?: Maybe<DelegationNft>;
-  /** @deprecated Use delegationNftById */
-  readonly delegationNftByUniqueInput?: Maybe<DelegationNft>;
-  readonly delegationNfts: ReadonlyArray<DelegationNft>;
-  readonly delegationNftsConnection: DelegationNftsConnection;
   readonly delegationValueRecordById?: Maybe<DelegationValueRecord>;
   /** @deprecated Use delegationValueRecordById */
   readonly delegationValueRecordByUniqueInput?: Maybe<DelegationValueRecord>;
@@ -1207,6 +1337,11 @@ type Query = {
   readonly globalStateByUniqueInput?: Maybe<GlobalState>;
   readonly globalStates: ReadonlyArray<GlobalState>;
   readonly globalStatesConnection: GlobalStatesConnection;
+  readonly nftById?: Maybe<Nft>;
+  /** @deprecated Use nftById */
+  readonly nftByUniqueInput?: Maybe<Nft>;
+  readonly nfts: ReadonlyArray<Nft>;
+  readonly nftsConnection: NftsConnection;
   readonly rewardRecordById?: Maybe<RewardRecord>;
   /** @deprecated Use rewardRecordById */
   readonly rewardRecordByUniqueInput?: Maybe<RewardRecord>;
@@ -1259,6 +1394,32 @@ type QueryAccountsConnectionArgs = {
   first?: InputMaybe<Scalars['Int']>;
   orderBy: ReadonlyArray<AccountOrderByInput>;
   where?: InputMaybe<AccountWhereInput>;
+};
+
+
+type QueryBasePoolAprRecordByIdArgs = {
+  id: Scalars['String'];
+};
+
+
+type QueryBasePoolAprRecordByUniqueInputArgs = {
+  where: WhereIdInput;
+};
+
+
+type QueryBasePoolAprRecordsArgs = {
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<ReadonlyArray<BasePoolAprRecordOrderByInput>>;
+  where?: InputMaybe<BasePoolAprRecordWhereInput>;
+};
+
+
+type QueryBasePoolAprRecordsConnectionArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy: ReadonlyArray<BasePoolAprRecordOrderByInput>;
+  where?: InputMaybe<BasePoolAprRecordWhereInput>;
 };
 
 
@@ -1321,32 +1482,6 @@ type QueryDelegationByIdArgs = {
 
 type QueryDelegationByUniqueInputArgs = {
   where: WhereIdInput;
-};
-
-
-type QueryDelegationNftByIdArgs = {
-  id: Scalars['String'];
-};
-
-
-type QueryDelegationNftByUniqueInputArgs = {
-  where: WhereIdInput;
-};
-
-
-type QueryDelegationNftsArgs = {
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<ReadonlyArray<DelegationNftOrderByInput>>;
-  where?: InputMaybe<DelegationNftWhereInput>;
-};
-
-
-type QueryDelegationNftsConnectionArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  orderBy: ReadonlyArray<DelegationNftOrderByInput>;
-  where?: InputMaybe<DelegationNftWhereInput>;
 };
 
 
@@ -1415,6 +1550,32 @@ type QueryGlobalStatesConnectionArgs = {
   first?: InputMaybe<Scalars['Int']>;
   orderBy: ReadonlyArray<GlobalStateOrderByInput>;
   where?: InputMaybe<GlobalStateWhereInput>;
+};
+
+
+type QueryNftByIdArgs = {
+  id: Scalars['String'];
+};
+
+
+type QueryNftByUniqueInputArgs = {
+  where: WhereIdInput;
+};
+
+
+type QueryNftsArgs = {
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<ReadonlyArray<NftOrderByInput>>;
+  where?: InputMaybe<NftWhereInput>;
+};
+
+
+type QueryNftsConnectionArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy: ReadonlyArray<NftOrderByInput>;
+  where?: InputMaybe<NftWhereInput>;
 };
 
 
@@ -1967,18 +2128,20 @@ type Subscription = {
   readonly __typename?: 'Subscription';
   readonly accountById?: Maybe<Account>;
   readonly accounts: ReadonlyArray<Account>;
+  readonly basePoolAprRecordById?: Maybe<BasePoolAprRecord>;
+  readonly basePoolAprRecords: ReadonlyArray<BasePoolAprRecord>;
   readonly basePoolById?: Maybe<BasePool>;
   readonly basePoolWhitelistById?: Maybe<BasePoolWhitelist>;
   readonly basePoolWhitelists: ReadonlyArray<BasePoolWhitelist>;
   readonly basePools: ReadonlyArray<BasePool>;
   readonly delegationById?: Maybe<Delegation>;
-  readonly delegationNftById?: Maybe<DelegationNft>;
-  readonly delegationNfts: ReadonlyArray<DelegationNft>;
   readonly delegationValueRecordById?: Maybe<DelegationValueRecord>;
   readonly delegationValueRecords: ReadonlyArray<DelegationValueRecord>;
   readonly delegations: ReadonlyArray<Delegation>;
   readonly globalStateById?: Maybe<GlobalState>;
   readonly globalStates: ReadonlyArray<GlobalState>;
+  readonly nftById?: Maybe<Nft>;
+  readonly nfts: ReadonlyArray<Nft>;
   readonly rewardRecordById?: Maybe<RewardRecord>;
   readonly rewardRecords: ReadonlyArray<RewardRecord>;
   readonly sessionById?: Maybe<Session>;
@@ -2002,6 +2165,19 @@ type SubscriptionAccountsArgs = {
   offset?: InputMaybe<Scalars['Int']>;
   orderBy?: InputMaybe<ReadonlyArray<AccountOrderByInput>>;
   where?: InputMaybe<AccountWhereInput>;
+};
+
+
+type SubscriptionBasePoolAprRecordByIdArgs = {
+  id: Scalars['String'];
+};
+
+
+type SubscriptionBasePoolAprRecordsArgs = {
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<ReadonlyArray<BasePoolAprRecordOrderByInput>>;
+  where?: InputMaybe<BasePoolAprRecordWhereInput>;
 };
 
 
@@ -2036,19 +2212,6 @@ type SubscriptionDelegationByIdArgs = {
 };
 
 
-type SubscriptionDelegationNftByIdArgs = {
-  id: Scalars['String'];
-};
-
-
-type SubscriptionDelegationNftsArgs = {
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<ReadonlyArray<DelegationNftOrderByInput>>;
-  where?: InputMaybe<DelegationNftWhereInput>;
-};
-
-
 type SubscriptionDelegationValueRecordByIdArgs = {
   id: Scalars['String'];
 };
@@ -2080,6 +2243,19 @@ type SubscriptionGlobalStatesArgs = {
   offset?: InputMaybe<Scalars['Int']>;
   orderBy?: InputMaybe<ReadonlyArray<GlobalStateOrderByInput>>;
   where?: InputMaybe<GlobalStateWhereInput>;
+};
+
+
+type SubscriptionNftByIdArgs = {
+  id: Scalars['String'];
+};
+
+
+type SubscriptionNftsArgs = {
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<ReadonlyArray<NftOrderByInput>>;
+  where?: InputMaybe<NftWhereInput>;
 };
 
 
@@ -2428,14 +2604,24 @@ type OwnedVaultsQueryVariables = Exact<{
 
 type OwnedVaultsQuery = { readonly __typename?: 'Query', readonly basePoolsConnection: { readonly __typename?: 'BasePoolsConnection', readonly edges: ReadonlyArray<{ readonly __typename?: 'BasePoolEdge', readonly node: { readonly __typename?: 'BasePool', readonly id: string, readonly totalShares: string, readonly sharePrice: string, readonly commission: string, readonly vault?: { readonly __typename?: 'Vault', readonly claimableOwnerShares: string, readonly lastSharePriceCheckpoint: string } | null } }> } };
 
-type DelegationCommonFragment = { readonly __typename?: 'Delegation', readonly id: string, readonly shares: string, readonly value: string, readonly withdrawalStartTime?: string | null, readonly withdrawingShares: string, readonly withdrawingValue: string, readonly basePool: { readonly __typename?: 'BasePool', readonly id: string, readonly kind: BasePoolKind, readonly freeValue: string, readonly sharePrice: string, readonly aprMultiplier: string, readonly withdrawingShares: string }, readonly delegationNft?: { readonly __typename?: 'DelegationNft', readonly cid: number, readonly nftId: number } | null, readonly withdrawalNft?: { readonly __typename?: 'DelegationNft', readonly cid: number, readonly nftId: number } | null, readonly account: { readonly __typename?: 'Account', readonly id: string, readonly identityDisplay?: string | null, readonly identityLevel?: IdentityLevel | null } };
+type BasePoolAprRecordsConnectionQueryVariables = Exact<{
+  orderBy: ReadonlyArray<BasePoolAprRecordOrderByInput> | BasePoolAprRecordOrderByInput;
+  after?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<BasePoolAprRecordWhereInput>;
+}>;
+
+
+type BasePoolAprRecordsConnectionQuery = { readonly __typename?: 'Query', readonly basePoolAprRecordsConnection: { readonly __typename?: 'BasePoolAprRecordsConnection', readonly totalCount: number, readonly edges: ReadonlyArray<{ readonly __typename?: 'BasePoolAprRecordEdge', readonly cursor: string, readonly node: { readonly __typename?: 'BasePoolAprRecord', readonly id: string, readonly updatedTime: string, readonly value: string } }> } };
+
+type DelegationCommonFragment = { readonly __typename?: 'Delegation', readonly id: string, readonly shares: string, readonly value: string, readonly withdrawalStartTime?: string | null, readonly withdrawingShares: string, readonly withdrawingValue: string, readonly basePool: { readonly __typename?: 'BasePool', readonly id: string, readonly kind: BasePoolKind, readonly freeValue: string, readonly sharePrice: string, readonly aprMultiplier: string, readonly withdrawingShares: string }, readonly delegationNft?: { readonly __typename?: 'Nft', readonly cid: number, readonly nftId: number } | null, readonly withdrawalNft?: { readonly __typename?: 'Nft', readonly cid: number, readonly nftId: number } | null, readonly account: { readonly __typename?: 'Account', readonly id: string, readonly identityDisplay?: string | null, readonly identityLevel?: IdentityLevel | null } };
 
 type DelegationByIdQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
 
 
-type DelegationByIdQuery = { readonly __typename?: 'Query', readonly delegationById?: { readonly __typename?: 'Delegation', readonly id: string, readonly shares: string, readonly value: string, readonly withdrawalStartTime?: string | null, readonly withdrawingShares: string, readonly withdrawingValue: string, readonly basePool: { readonly __typename?: 'BasePool', readonly id: string, readonly kind: BasePoolKind, readonly freeValue: string, readonly sharePrice: string, readonly aprMultiplier: string, readonly withdrawingShares: string }, readonly delegationNft?: { readonly __typename?: 'DelegationNft', readonly cid: number, readonly nftId: number } | null, readonly withdrawalNft?: { readonly __typename?: 'DelegationNft', readonly cid: number, readonly nftId: number } | null, readonly account: { readonly __typename?: 'Account', readonly id: string, readonly identityDisplay?: string | null, readonly identityLevel?: IdentityLevel | null } } | null };
+type DelegationByIdQuery = { readonly __typename?: 'Query', readonly delegationById?: { readonly __typename?: 'Delegation', readonly id: string, readonly shares: string, readonly value: string, readonly withdrawalStartTime?: string | null, readonly withdrawingShares: string, readonly withdrawingValue: string, readonly basePool: { readonly __typename?: 'BasePool', readonly id: string, readonly kind: BasePoolKind, readonly freeValue: string, readonly sharePrice: string, readonly aprMultiplier: string, readonly withdrawingShares: string }, readonly delegationNft?: { readonly __typename?: 'Nft', readonly cid: number, readonly nftId: number } | null, readonly withdrawalNft?: { readonly __typename?: 'Nft', readonly cid: number, readonly nftId: number } | null, readonly account: { readonly __typename?: 'Account', readonly id: string, readonly identityDisplay?: string | null, readonly identityLevel?: IdentityLevel | null } } | null };
 
 type DelegationsConnectionQueryVariables = Exact<{
   orderBy: ReadonlyArray<DelegationOrderByInput> | DelegationOrderByInput;
@@ -2445,7 +2631,7 @@ type DelegationsConnectionQueryVariables = Exact<{
 }>;
 
 
-type DelegationsConnectionQuery = { readonly __typename?: 'Query', readonly delegationsConnection: { readonly __typename?: 'DelegationsConnection', readonly totalCount: number, readonly edges: ReadonlyArray<{ readonly __typename?: 'DelegationEdge', readonly cursor: string, readonly node: { readonly __typename?: 'Delegation', readonly id: string, readonly shares: string, readonly value: string, readonly withdrawalStartTime?: string | null, readonly withdrawingShares: string, readonly withdrawingValue: string, readonly basePool: { readonly __typename?: 'BasePool', readonly id: string, readonly kind: BasePoolKind, readonly freeValue: string, readonly sharePrice: string, readonly aprMultiplier: string, readonly withdrawingShares: string }, readonly delegationNft?: { readonly __typename?: 'DelegationNft', readonly cid: number, readonly nftId: number } | null, readonly withdrawalNft?: { readonly __typename?: 'DelegationNft', readonly cid: number, readonly nftId: number } | null, readonly account: { readonly __typename?: 'Account', readonly id: string, readonly identityDisplay?: string | null, readonly identityLevel?: IdentityLevel | null } } }>, readonly pageInfo: { readonly __typename?: 'PageInfo', readonly endCursor: string, readonly hasNextPage: boolean, readonly hasPreviousPage: boolean, readonly startCursor: string } } };
+type DelegationsConnectionQuery = { readonly __typename?: 'Query', readonly delegationsConnection: { readonly __typename?: 'DelegationsConnection', readonly totalCount: number, readonly edges: ReadonlyArray<{ readonly __typename?: 'DelegationEdge', readonly cursor: string, readonly node: { readonly __typename?: 'Delegation', readonly id: string, readonly shares: string, readonly value: string, readonly withdrawalStartTime?: string | null, readonly withdrawingShares: string, readonly withdrawingValue: string, readonly basePool: { readonly __typename?: 'BasePool', readonly id: string, readonly kind: BasePoolKind, readonly freeValue: string, readonly sharePrice: string, readonly aprMultiplier: string, readonly withdrawingShares: string }, readonly delegationNft?: { readonly __typename?: 'Nft', readonly cid: number, readonly nftId: number } | null, readonly withdrawalNft?: { readonly __typename?: 'Nft', readonly cid: number, readonly nftId: number } | null, readonly account: { readonly __typename?: 'Account', readonly id: string, readonly identityDisplay?: string | null, readonly identityLevel?: IdentityLevel | null } } }>, readonly pageInfo: { readonly __typename?: 'PageInfo', readonly endCursor: string, readonly hasNextPage: boolean, readonly hasPreviousPage: boolean, readonly startCursor: string } } };
 
 type DelegationValueRecordsConnectionQueryVariables = Exact<{
   orderBy: ReadonlyArray<DelegationValueRecordOrderByInput> | DelegationValueRecordOrderByInput;
@@ -2455,7 +2641,7 @@ type DelegationValueRecordsConnectionQueryVariables = Exact<{
 }>;
 
 
-type DelegationValueRecordsConnectionQuery = { readonly __typename?: 'Query', readonly delegationValueRecordsConnection: { readonly __typename?: 'DelegationValueRecordsConnection', readonly totalCount: number, readonly pageInfo: { readonly __typename?: 'PageInfo', readonly hasNextPage: boolean, readonly hasPreviousPage: boolean, readonly startCursor: string, readonly endCursor: string }, readonly edges: ReadonlyArray<{ readonly __typename?: 'DelegationValueRecordEdge', readonly cursor: string, readonly node: { readonly __typename?: 'DelegationValueRecord', readonly id: string, readonly updatedTime: string, readonly value: string } }> } };
+type DelegationValueRecordsConnectionQuery = { readonly __typename?: 'Query', readonly delegationValueRecordsConnection: { readonly __typename?: 'DelegationValueRecordsConnection', readonly totalCount: number, readonly edges: ReadonlyArray<{ readonly __typename?: 'DelegationValueRecordEdge', readonly cursor: string, readonly node: { readonly __typename?: 'DelegationValueRecord', readonly id: string, readonly updatedTime: string, readonly value: string } }> } };
 
 type GlobalStateQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2659,6 +2845,26 @@ export const DelegationCommonFragmentDoc = gql`
   }
 }
     `;
+ const BasePoolAprRecordsConnectionDocument = gql`
+    query BasePoolAprRecordsConnection($orderBy: [BasePoolAprRecordOrderByInput!]!, $after: String, $first: Int, $where: BasePoolAprRecordWhereInput) {
+  basePoolAprRecordsConnection(
+    orderBy: $orderBy
+    after: $after
+    first: $first
+    where: $where
+  ) {
+    edges {
+      node {
+        id
+        updatedTime
+        value
+      }
+      cursor
+    }
+    totalCount
+  }
+}
+    `;
  const DelegationByIdDocument = gql`
     query DelegationById($id: String!) {
   delegationById(id: $id) {
@@ -2699,12 +2905,6 @@ export const DelegationCommonFragmentDoc = gql`
     where: $where
   ) {
     totalCount
-    pageInfo {
-      hasNextPage
-      hasPreviousPage
-      startCursor
-      endCursor
-    }
     edges {
       node {
         id
@@ -2844,6 +3044,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     OwnedVaults(variables?: OwnedVaultsQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<OwnedVaultsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<OwnedVaultsQuery>(OwnedVaultsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'OwnedVaults', 'query');
+    },
+    BasePoolAprRecordsConnection(variables: BasePoolAprRecordsConnectionQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<BasePoolAprRecordsConnectionQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<BasePoolAprRecordsConnectionQuery>(BasePoolAprRecordsConnectionDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'BasePoolAprRecordsConnection', 'query');
     },
     DelegationById(variables: DelegationByIdQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<DelegationByIdQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<DelegationByIdQuery>(DelegationByIdDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'DelegationById', 'query');

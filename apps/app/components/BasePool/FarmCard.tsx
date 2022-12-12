@@ -32,6 +32,7 @@ import {FC, useCallback, useMemo, useState} from 'react'
 import Empty from '../Empty'
 import PromiseButton from '../PromiseButton'
 import TextSkeleton from '../TextSkeleton'
+import BasePoolAprChart from './AprChart'
 import ExtraProperties from './ExtraProperties'
 import {OnAction} from './List'
 
@@ -215,7 +216,7 @@ const FarmCard: FC<{
         <Box display={{xs: 'none', md: 'block'}}>{actions}</Box>
       </Stack>
       <Collapse in={!collapsed} mountOnEnter unmountOnExit>
-        <Stack direction={{xs: 'column', md: 'row'}} p={2}>
+        <Stack direction={{xs: 'column', md: 'row'}} p={2} spacing={3}>
           <Stack flex="1 0">
             <Typography variant="h6" lineHeight={1}>
               Announcement
@@ -235,7 +236,9 @@ const FarmCard: FC<{
             </Box>
             <ExtraProperties basePool={basePool} />
           </Stack>
-          <Box flex="1 0"></Box>
+          <Box flex="1 0">
+            <BasePoolAprChart basePool={basePool} />
+          </Box>
         </Stack>
       </Collapse>
     </Paper>

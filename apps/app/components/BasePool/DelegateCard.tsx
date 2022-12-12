@@ -30,6 +30,7 @@ import {toCurrency, toPercentage, trimAddress} from '@phala/util'
 import {FC, useState} from 'react'
 import Empty from '../Empty'
 import TextSkeleton from '../TextSkeleton'
+import BasePoolAprChart from './AprChart'
 import DelegateInput from './DelegateInput'
 import ExtraProperties from './ExtraProperties'
 
@@ -197,7 +198,9 @@ const DelegateCard: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
             <ExtraProperties basePool={basePool} />
           </Stack>
           <Stack flex="1 0">
-            <Box flex="1 0"></Box>
+            <Box flex="1 0">
+              <BasePoolAprChart basePool={basePool} />
+            </Box>
             <DelegateInput basePool={basePool} />
           </Stack>
         </Stack>

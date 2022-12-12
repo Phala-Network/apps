@@ -116,7 +116,7 @@ const DelegationScatterChart: FC<{address?: string}> = ({address}) => {
               name="APR"
               unit="%"
               tickLine={false}
-              width={40}
+              width={35}
             />
             <Scatter data={chartData.vault} fill={colors.vault[400]}></Scatter>
             <Scatter

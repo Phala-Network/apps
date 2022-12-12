@@ -1,8 +1,12 @@
+import Property from '@/components/Property'
+import aprToApy from '@/lib/aprToApy'
 import {subsquidClient} from '@/lib/graphql'
 import {
+  BasePoolCommonFragment,
   DelegationValueRecordOrderByInput,
-  useDelegationValueRecordsConnectionQuery,
+  useBasePoolAprRecordsConnectionQuery,
 } from '@/lib/subsquidQuery'
+import {colors} from '@/lib/theme'
 import {Paper, Typography} from '@mui/material'
 import {addDays} from 'date-fns'
 import Decimal from 'decimal.js'
@@ -15,12 +19,13 @@ import {
   XAxis,
   YAxis,
 } from 'recharts'
-import Property from './Property'
 
 const CustomTooltip = ({
+  isVault,
   label,
   payload,
 }: {
+  isVault: boolean
   label?: string
   payload?: {
     name: string
@@ -35,8 +40,8 @@ const CustomTooltip = ({
         <Property
           fullWidth
           size="small"
-          label="Value"
-        >{`${payload[0].value} PHA`}</Property>
+          label={isVault ? 'APY' : 'APR'}
+        >{`${payload[0].value}%`}</Property>
       </Paper>
     )
   }
@@ -44,24 +49,21 @@ const CustomTooltip = ({
   return null
 }
 
-const DelegationValueChart: FC<{address?: string; days: number}> = ({
-  address,
-  days,
+const days = 7
+
+const BasePoolAprChart: FC<{basePool: BasePoolCommonFragment}> = ({
+  basePool,
 }) => {
+  const isVault = basePool.kind === 'Vault'
+  const color = isVault ? colors.vault[500] : colors.main[400]
   const [now] = useState(new Date())
-  const {data} = useDelegationValueRecordsConnectionQuery(
-    subsquidClient,
-    {
-      orderBy: DelegationValueRecordOrderByInput.UpdatedTimeDesc,
-      where: {
-        account: {id_eq: address},
-        updatedTime_gte: addDays(now, -days).toISOString(),
-      },
+  const {data} = useBasePoolAprRecordsConnectionQuery(subsquidClient, {
+    orderBy: DelegationValueRecordOrderByInput.UpdatedTimeDesc,
+    where: {
+      basePool: {id_eq: basePool.id},
+      updatedTime_gte: addDays(now, -days).toISOString(),
     },
-    {
-      enabled: !!address,
-    }
-  )
+  })
 
   const chartData = useMemo(() => {
     const result: {date: Date; dateString: string; value?: number}[] =
@@ -77,16 +79,20 @@ const DelegationValueChart: FC<{address?: string; days: number}> = ({
 
     if (!data) return result
 
-    for (const {node} of data.delegationValueRecordsConnection.edges) {
+    for (const {node} of data.basePoolAprRecordsConnection.edges) {
       const date = new Date(node.updatedTime)
       const index = result.findIndex((r) => r.date.getTime() >= date.getTime())
       if (index !== -1) {
-        result[index].value = new Decimal(node.value).floor().toNumber()
+        let value = new Decimal(node.value).times(100)
+        if (isVault) {
+          value = aprToApy(value).toDP(2, 0)
+        }
+        result[index].value = value.toNumber()
       }
     }
 
     return result
-  }, [data, days, now])
+  }, [data, isVault, now])
 
   return (
     <ResponsiveContainer width="100%" height="100%">
@@ -96,29 +102,27 @@ const DelegationValueChart: FC<{address?: string; days: number}> = ({
       >
         <defs>
           <linearGradient id="main" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="5%" stopColor="#C5FF46" stopOpacity={0.3} />
-            <stop offset="95%" stopColor="#C5FF46" stopOpacity={0} />
+            <stop offset="5%" stopColor={color} stopOpacity={0.3} />
+            <stop offset="95%" stopColor={color} stopOpacity={0} />
           </linearGradient>
         </defs>
         <XAxis tickLine={false} dataKey="dateString" />
         <YAxis
-          width={40}
+          width={35}
           type="number"
           dataKey="value"
-          name="Value"
+          name={isVault ? 'APY' : 'APR'}
+          unit="%"
           tickLine={false}
-          tickFormatter={(value) =>
-            Intl.NumberFormat('en-US', {
-              notation: 'compact',
-              maximumFractionDigits: 0,
-            }).format(value)
-          }
         />
-        <Tooltip isAnimationActive={false} content={<CustomTooltip />} />
+        <Tooltip
+          isAnimationActive={false}
+          content={<CustomTooltip isVault={isVault} />}
+        />
         <Area
           type="monotone"
           dataKey="value"
-          stroke="#C5FF46"
+          stroke={color}
           strokeWidth={3}
           fillOpacity={1}
           fill="url(#main)"
@@ -129,4 +133,4 @@ const DelegationValueChart: FC<{address?: string; days: number}> = ({
   )
 }
 
-export default DelegationValueChart
+export default BasePoolAprChart
