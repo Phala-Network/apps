@@ -139,7 +139,7 @@ const Intro: FC<{basePool: BasePoolCommonFragment; sx?: SxProps}> = ({
                   : {
                       onClick: () => {
                         navigator.clipboard.writeText(value)
-                        enqueueSnackbar('Copied')
+                        enqueueSnackbar('Copied to clipboard')
                       },
                     })}
                 sx={{mt: 1, ml: 1, pl: 0.5}}

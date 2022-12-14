@@ -5,6 +5,7 @@ import {subsquidClient} from '@/lib/graphql'
 import {useAccountByIdQuery} from '@/lib/subsquidQuery'
 import {colors} from '@/lib/theme'
 import {assetVisibleAtom, walletDialogOpenAtom} from '@/store/ui'
+import ContentCopy from '@mui/icons-material/ContentCopy'
 import RemoveRedEye from '@mui/icons-material/RemoveRedEye'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
 import {
@@ -22,6 +23,7 @@ import {toCurrency, trimAddress} from '@phala/util'
 import Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
 import dynamic from 'next/dynamic'
+import {useSnackbar} from 'notistack'
 import {FC} from 'react'
 
 const BalanceBox = styled(Box)(({theme}) =>
@@ -40,6 +42,7 @@ const Identicon = dynamic(() => import('@polkadot/react-identicon'), {
 const DashboardAccount: FC = () => {
   const [, setWalletDialogOpen] = useAtom(walletDialogOpenAtom)
   const wrapAsset = useWrapAsset()
+  const {enqueueSnackbar} = useSnackbar()
   const [assetVisible, setAssetVisible] = useAtom(assetVisibleAtom)
   const [account] = useAtom(polkadotAccountAtom)
   const freeBalance = useAssetBalance(account?.address)
@@ -90,7 +93,17 @@ const DashboardAccount: FC = () => {
             >
               {account ? account.name : 'Phala App'}
             </Typography>
-            <Stack direction="row" alignItems="center">
+            <Stack
+              direction="row"
+              alignItems="center"
+              sx={{cursor: account ? 'pointer' : 'auto'}}
+              onClick={() => {
+                if (account) {
+                  navigator.clipboard.writeText(account.address)
+                  enqueueSnackbar('Copied to clipboard')
+                }
+              }}
+            >
               <Typography
                 variant="subtitle2"
                 color="text.secondary"
@@ -100,6 +113,7 @@ const DashboardAccount: FC = () => {
                   ? trimAddress(account.address)
                   : 'To host, connect, and gain in the world of Web3'}
               </Typography>
+              <ContentCopy sx={{ml: 1, width: 16}} color="disabled" />
             </Stack>
           </Box>
           {account ? (
@@ -112,6 +126,7 @@ const DashboardAccount: FC = () => {
             </IconButton>
           ) : (
             <Button
+              sx={{flexShrink: 0}}
               onClick={() => {
                 setWalletDialogOpen(true)
               }}

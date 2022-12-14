@@ -23,7 +23,7 @@ const Layout: FC<{children: ReactNode}> = ({children}) => {
 
   return (
     <SnackbarProvider
-      autoHideDuration={6000}
+      autoHideDuration={3000}
       anchorOrigin={{
         vertical: matches ? 'top' : 'bottom',
         horizontal: matches ? 'right' : 'center',

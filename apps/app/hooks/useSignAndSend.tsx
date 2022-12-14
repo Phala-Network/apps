@@ -69,6 +69,7 @@ const useSignAndSend = () => {
                   </Typography>
                 </Box>,
                 {
+                  autoHideDuration: 6000,
                   variant: 'error',
                   style: {maxWidth: '400px'},
                 }

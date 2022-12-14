@@ -13,6 +13,7 @@ import {
 } from '@mui/material'
 import {toCurrency, toFixed} from '@phala/util'
 import {addDays, formatDuration, intervalToDuration, isAfter} from 'date-fns'
+import {useSnackbar} from 'notistack'
 import {FC, ReactNode, useMemo} from 'react'
 import {OnAction, Worker} from './List'
 
@@ -36,6 +37,7 @@ const WorkerCard: FC<{
   onAction: OnAction
 }> = ({worker, isOwner, onAction}) => {
   const theme = useTheme()
+  const {enqueueSnackbar} = useSnackbar()
   const session = worker.session
   const entries = useMemo<[string, ReactNode][]>(() => {
     if (!session) return []
@@ -70,7 +72,11 @@ const WorkerCard: FC<{
         <Box>
           <Typography
             color={theme.palette.primary.main}
-            sx={{wordBreak: 'break-all'}}
+            sx={{wordBreak: 'break-all', cursor: 'pointer'}}
+            onClick={() => {
+              navigator.clipboard.writeText(worker.id)
+              enqueueSnackbar('Copied to clipboard')
+            }}
           >
             {worker.id}
           </Typography>
