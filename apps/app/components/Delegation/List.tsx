@@ -51,8 +51,10 @@ export type OnAction = (
 const orderByEntries: [string, DelegationOrderByInput][] = [
   ['Value high to low', DelegationOrderByInput.ValueDesc],
   ['Value low to high', DelegationOrderByInput.ValueAsc],
-  ['Pid Asc', DelegationOrderByInput.BasePoolIdAsc],
-  ['Pid Desc', DelegationOrderByInput.BasePoolIdDesc],
+  ['APR high to low', DelegationOrderByInput.BasePoolAprMultiplierDesc],
+  ['APR low to high', DelegationOrderByInput.BasePoolAprMultiplierAsc],
+  ['PID Asc', DelegationOrderByInput.BasePoolIdAsc],
+  ['PID Desc', DelegationOrderByInput.BasePoolIdDesc],
 ]
 
 const DelegationList: FC<{
@@ -85,17 +87,16 @@ const DelegationList: FC<{
     {account: {id_eq: address}},
     {shares_gt: '0'},
     !!searchString && {
-      OR: [{basePool: {id_contains: searchString}}],
+      OR: [{basePool: {id_startsWith: searchString}}],
     },
-    !isVault &&
-      (vaultFilter || stakePoolFilter) && {
-        basePool: {
-          kind_in: [
-            vaultFilter && ('Vault' as BasePoolKind),
-            stakePoolFilter && ('StakePool' as BasePoolKind),
-          ].filter(isTruthy),
-        },
+    !isVault && {
+      basePool: {
+        kind_in: [
+          vaultFilter && ('Vault' as BasePoolKind),
+          stakePoolFilter && ('StakePool' as BasePoolKind),
+        ].filter(isTruthy),
       },
+    },
     withdrawingFilter && {withdrawingValue_gt: '0'},
   ]
   const enabled = !!address
@@ -195,7 +196,7 @@ const DelegationList: FC<{
             </IconButton>
             <TextField
               color={color}
-              placeholder="Search Pid"
+              placeholder="Search PID"
               size="small"
               InputProps={{endAdornment: <Search />}}
               onChange={(e) => debouncedSetSearchString(e.target.value)}

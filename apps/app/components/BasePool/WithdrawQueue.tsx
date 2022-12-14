@@ -7,7 +7,7 @@ import {
   DelegationOrderByInput,
   useDelegationsConnectionQuery,
 } from '@/lib/subsquidQuery'
-import {useTheme} from '@mui/material'
+import {Paper, useTheme} from '@mui/material'
 import {DataGrid, GridColDef, GridSortModel} from '@mui/x-data-grid'
 import {toCurrency} from '@phala/util'
 import {addDays, formatDuration, intervalToDuration, isAfter} from 'date-fns'
@@ -89,6 +89,7 @@ const WithdrawQueue: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
         icon={<WithdrawalQueueIcon />}
         title="Withdrawal Queue"
       ></SectionHeader>
+      <Paper sx={{background: 'transparent'}}></Paper>
       <DataGrid
         components={{
           NoRowsOverlay: () => <Empty />,

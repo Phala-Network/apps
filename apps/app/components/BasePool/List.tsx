@@ -57,8 +57,8 @@ export type OnAction = (
 ) => void
 
 const commonOrderByEntries: OrderByEntries = [
-  ['Pid Asc', BasePoolOrderByInput.PidAsc],
-  ['Pid Desc', BasePoolOrderByInput.PidDesc],
+  ['PID Asc', BasePoolOrderByInput.PidAsc],
+  ['PID Desc', BasePoolOrderByInput.PidDesc],
 ]
 
 const stakePoolOrderByEntries: OrderByEntries = [
@@ -121,7 +121,7 @@ const BasePoolList: FC<{
     {kind_eq: kind},
     !!searchString &&
       (isSearchingPid
-        ? {id_eq: searchString}
+        ? {id_startsWith: searchString}
         : {
             OR: [
               {owner: {id_containsInsensitive: searchString}},
@@ -262,7 +262,7 @@ const BasePoolList: FC<{
             <TextField
               color={color}
               placeholder={
-                variant === 'farm' ? 'Search Pid' : 'Search Pid or Owner'
+                variant === 'farm' ? 'Search PID' : 'Search PID or Owner'
               }
               size="small"
               InputProps={{endAdornment: <Search />}}
