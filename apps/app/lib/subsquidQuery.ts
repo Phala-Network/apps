@@ -32,7 +32,6 @@ export type Scalars = {
 export type Account = {
   readonly __typename?: 'Account';
   readonly basePool?: Maybe<BasePool>;
-  readonly delegations: ReadonlyArray<Delegation>;
   /** account address */
   readonly id: Scalars['String'];
   readonly identityDisplay?: Maybe<Scalars['String']>;
@@ -44,14 +43,6 @@ export type Account = {
   readonly vaultAvgAprMultiplier: Scalars['BigDecimal'];
   readonly vaultNftCount: Scalars['Int'];
   readonly vaultValue: Scalars['BigDecimal'];
-};
-
-
-export type AccountDelegationsArgs = {
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<ReadonlyArray<DelegationOrderByInput>>;
-  where?: InputMaybe<DelegationWhereInput>;
 };
 
 
@@ -125,9 +116,6 @@ export type AccountWhereInput = {
   readonly OR?: InputMaybe<ReadonlyArray<AccountWhereInput>>;
   readonly basePool?: InputMaybe<BasePoolWhereInput>;
   readonly basePool_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly delegations_every?: InputMaybe<DelegationWhereInput>;
-  readonly delegations_none?: InputMaybe<DelegationWhereInput>;
-  readonly delegations_some?: InputMaybe<DelegationWhereInput>;
   readonly id_contains?: InputMaybe<Scalars['String']>;
   readonly id_containsInsensitive?: InputMaybe<Scalars['String']>;
   readonly id_endsWith?: InputMaybe<Scalars['String']>;
