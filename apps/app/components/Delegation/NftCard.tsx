@@ -117,7 +117,7 @@ const NftCard: FC<{
             fontWeight="500"
             mt={1}
             sx={{textDecorationColor: alpha(theme.palette.text.primary, 0.4)}}
-          >{`${isVault ? 'Vault' : 'Stake Pool'} #${basePool.id}`}</Link>
+          >{`${basePool.kind} #${basePool.id}`}</Link>
         </Box>
         <Typography variant="num3" mt={1}>
           {toCurrency(value)}

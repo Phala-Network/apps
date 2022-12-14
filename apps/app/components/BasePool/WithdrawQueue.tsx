@@ -7,11 +7,15 @@ import {
   DelegationOrderByInput,
   useDelegationsConnectionQuery,
 } from '@/lib/subsquidQuery'
-import {Paper, useTheme} from '@mui/material'
+import Check from '@mui/icons-material/Check'
+import WarningAmber from '@mui/icons-material/WarningAmber'
+import {Box, Paper, Stack, Tooltip, Typography, useTheme} from '@mui/material'
 import {DataGrid, GridColDef, GridSortModel} from '@mui/x-data-grid'
 import {toCurrency} from '@phala/util'
 import {addDays, formatDuration, intervalToDuration, isAfter} from 'date-fns'
+import Decimal from 'decimal.js'
 import {FC, useMemo, useState} from 'react'
+import Property from '../Property'
 
 type RowModel = {
   id: string
@@ -26,6 +30,7 @@ const columns: GridColDef<RowModel>[] = [
     headerName: 'Delegator',
     flex: 1,
     sortable: false,
+    minWidth: 420,
   },
   {
     field: 'value',
@@ -83,13 +88,86 @@ const WithdrawQueue: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
     )
   }, [data])
 
+  const gapValue = useMemo(() => {
+    const {withdrawingValue, freeValue, releasingValue} = basePool
+    return new Decimal(withdrawingValue).minus(freeValue).minus(releasingValue)
+  }, [basePool])
+
+  const criticalTime = useMemo(() => {
+    let time
+    const {freeValue, releasingValue} = basePool
+    let baseValue = new Decimal(freeValue).plus(releasingValue)
+    for (const row of rows) {
+      baseValue = baseValue.minus(row.value)
+      if (baseValue.lt(0) && row.startTime) {
+        time = row.startTime
+      }
+    }
+    return time && addDays(new Date(time), 7)
+  }, [basePool, rows])
+
+  const isInsufficient = gapValue.gt(0)
+
   return (
     <>
       <SectionHeader
         icon={<WithdrawalQueueIcon />}
         title="Withdrawal Queue"
       ></SectionHeader>
-      <Paper sx={{background: 'transparent'}}></Paper>
+      <Paper sx={{background: 'transparent', mb: 2, p: 2}}>
+        <Stack direction={{xs: 'column', md: 'row'}}>
+          <Stack spacing={3} flex={{xs: 'none', md: '1'}}>
+            <Stack direction="row" alignItems="center">
+              {gapValue.gt(0) ? (
+                <WarningAmber fontSize="large" color="warning" />
+              ) : (
+                <Check fontSize="large" color="success" />
+              )}
+              <Typography variant="h6" ml={1}>
+                {isInsufficient ? 'Insufficient Stake' : 'Sufficient Stake'}
+              </Typography>
+            </Stack>
+            <Stack direction="row" alignItems="center" spacing={2}>
+              <Property label="Total Withdraw">
+                {toCurrency(basePool.withdrawingValue)} PHA
+              </Property>
+              <Typography variant="body1" component="div">
+                -
+              </Typography>
+              <Property label="Releasing Value">
+                {toCurrency(basePool.releasingValue)} PHA
+              </Property>
+              <Typography variant="body1" component="div">
+                -
+              </Typography>
+              <Property label="Free Value">
+                {toCurrency(basePool.freeValue)} PHA
+              </Property>
+              <Typography variant="body1" component="div">
+                =
+              </Typography>
+              <Property label="Gap Value">{toCurrency(gapValue)} PHA</Property>
+            </Stack>
+            {criticalTime && (
+              <Stack direction="row" spacing={1}>
+                <Tooltip title="----">
+                  <Typography
+                    variant="subtitle2"
+                    color="text.secondary"
+                    sx={{textDecoration: 'underline dotted', cursor: 'help'}}
+                  >
+                    Critical Time
+                  </Typography>
+                </Tooltip>
+                <Typography variant="subtitle2">
+                  {criticalTime.toLocaleString()}
+                </Typography>
+              </Stack>
+            )}
+          </Stack>
+          <Box flex={1}></Box>
+        </Stack>
+      </Paper>
       <DataGrid
         components={{
           NoRowsOverlay: () => <Empty />,

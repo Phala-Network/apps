@@ -35,7 +35,6 @@ const DelegateDataCard: FC<{
   aprMultiplier?: string | false
 }> = ({kind, count, value, aprMultiplier}) => {
   const isVault = kind === 'Vault'
-  const label = isVault ? 'Vault' : 'Stake Pool'
   const background = isVault ? colors.vault[300] : colors.main[500]
   const getApr = useGetApr()
 
@@ -50,7 +49,7 @@ const DelegateDataCard: FC<{
     >
       <Stack direction="row" alignItems="center" height={24}>
         <Typography variant="subtitle1" color="text.secondary" lineHeight={1}>
-          {label}
+          {kind}
         </Typography>
         {!!count && <Chip size="small" label={count} sx={{ml: 'auto'}} />}
       </Stack>

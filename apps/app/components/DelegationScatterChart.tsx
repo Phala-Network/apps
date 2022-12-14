@@ -74,9 +74,7 @@ const DelegationScatterChart: FC<{address?: string}> = ({address}) => {
     }
     for (const {node} of data.delegationsConnection.edges) {
       const cell = {
-        name: `${
-          node.basePool.kind === 'StakePool' ? 'Stake Pool' : 'Vault'
-        } #${node.basePool.id}`,
+        name: `${node.basePool.kind} #${node.basePool.id}`,
         value: new Decimal(node.value).floor().toNumber(),
         apr: getApr(node.basePool.aprMultiplier)
           ?.times(100)

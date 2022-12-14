@@ -157,7 +157,7 @@ const DelegationList: FC<{
                 onChange={(e) => setStakePoolFilter(e.target.checked)}
               />
             }
-            label="Stake Pool"
+            label="StakePool"
           />
         </NoSsr>
       )}

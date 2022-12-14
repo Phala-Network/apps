@@ -45,7 +45,7 @@ const MyStakePools: FC = () => {
 
   return (
     <>
-      <PageHeader title="My Stake Pools" />
+      <PageHeader title="My StakePools" />
       <Stack
         direction="row"
         alignContent="center"

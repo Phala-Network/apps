@@ -214,7 +214,7 @@ const Delegate: NextPage = () => {
                 >
                   <StakePoolIcon width={24} />
                   <Typography variant="button" flex="1" textAlign="center">
-                    Stake Pool
+                    StakePool
                   </Typography>
                 </Stack>
               </Stack>

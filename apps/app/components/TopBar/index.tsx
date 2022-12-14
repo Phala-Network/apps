@@ -25,7 +25,7 @@ const navItems: NavItem[] = [
     label: 'Farm',
     sub: [
       {label: 'Vault', href: '/farm/vault'},
-      {label: 'Stake Pool', href: '/farm/stake-pool'},
+      {label: 'StakePool', href: '/farm/stake-pool'},
     ],
   },
   {label: 'SubBridge', href: 'https://subbridge.io'},

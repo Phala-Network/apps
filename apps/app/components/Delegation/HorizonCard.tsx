@@ -98,7 +98,7 @@ const HorizonCard: FC<{
             fontWeight="500"
             mt={1}
             sx={{textDecorationColor: alpha(theme.palette.text.primary, 0.4)}}
-          >{`${isVault ? 'Vault' : 'Stake Pool'} #${basePool.id}`}</Link>
+          >{`${basePool.kind} #${basePool.id}`}</Link>
         </Box>
         <Stack direction="row" spacing={{xs: 1, md: 2}}>
           <Property label="Value" sx={{width: 120}}>{`${toCurrency(

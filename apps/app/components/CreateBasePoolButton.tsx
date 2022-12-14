@@ -21,9 +21,11 @@ const CreateBasePoolButton: FC<
   }
 
   return (
-    <PromiseButton variant="contained" onClick={onClick} {...props}>{`Create ${
-      kind === 'StakePool' ? 'Stake Pool' : 'Vault'
-    }`}</PromiseButton>
+    <PromiseButton
+      variant="contained"
+      onClick={onClick}
+      {...props}
+    >{`Create ${kind}`}</PromiseButton>
   )
 }
 

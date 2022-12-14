@@ -108,8 +108,8 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
   return (
     <>
       <PageHeader
-        title={`${isVault ? 'Vault' : 'Stake Pool'} #${basePool.pid}`}
-        pageTitle={isVault ? 'Vault' : 'Stake Pool'}
+        title={`${basePool.kind} #${basePool.pid}`}
+        pageTitle={basePool.kind}
       />
       <Stack spacing={{xs: 2, lg: 2.5}}>
         <Paper sx={{background: 'transparent'}} component="section">

@@ -111,9 +111,7 @@ const OwnerSettings: FC<{
 
   return (
     <>
-      <DialogTitle>{`${
-        isVault ? 'Vault' : 'Stake Pool'
-      } #${id} Settings`}</DialogTitle>
+      <DialogTitle>{`${kind} #${id} Settings`}</DialogTitle>
 
       <DialogContent>
         <Stack spacing={3}>
