@@ -36,7 +36,7 @@ const schema: JSONSchemaType<PoolIntro> = {
 const ajv = new Ajv()
 const validate = ajv.compile(schema)
 
-const poolIntroFetcher = async (api: ApiPromise, pid: string) => {
+const poolIntroFetcher = async ([api, pid]: [ApiPromise, string]) => {
   return api.query.phalaBasePool.poolDescriptions(pid).then((bytes) => {
     try {
       const hex = bytes.unwrap().toHex()
@@ -54,9 +54,13 @@ const poolIntroFetcher = async (api: ApiPromise, pid: string) => {
 
 const usePoolIntro = (pid: string, enabled = true) => {
   const api = usePolkadotApi()
-  const {data} = useSWR(api && enabled ? [api, pid] : null, poolIntroFetcher, {
-    refreshInterval: 12000,
-  })
+  const {data} = useSWR(
+    api && enabled ? [api, pid, 'poolIntro'] : null,
+    poolIntroFetcher,
+    {
+      refreshInterval: 12000,
+    }
+  )
 
   return data
 }

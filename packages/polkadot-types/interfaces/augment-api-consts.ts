@@ -307,7 +307,7 @@ declare module '@polkadot/api-base/types/consts' {
       /**
        * The maximum amount of signatories allowed in the multisig.
        **/
-      maxSignatories: u16 & AugmentedConst<ApiType>;
+      maxSignatories: u32 & AugmentedConst<ApiType>;
       /**
        * Generic const
        **/
@@ -355,7 +355,7 @@ declare module '@polkadot/api-base/types/consts' {
       [key: string]: Codec;
     };
     phalaVault: {
-      initialCheckPoint: u128 & AugmentedConst<ApiType>;
+      initialPriceCheckPoint: u128 & AugmentedConst<ApiType>;
       /**
        * Generic const
        **/

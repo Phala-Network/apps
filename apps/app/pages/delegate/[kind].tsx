@@ -11,7 +11,6 @@ import {colors} from '@/lib/theme'
 import {vaultIdAtom} from '@/store/common'
 import {
   Box,
-  experimental_sx as sx,
   Paper,
   Stack,
   styled,
@@ -26,8 +25,8 @@ import {GetStaticPaths, GetStaticProps, NextPage} from 'next'
 import {useRouter} from 'next/router'
 import {useCallback, useEffect, useState} from 'react'
 
-const PoolSwitch = styled(Switch)(
-  sx({
+const PoolSwitch = styled(Switch)(({theme}) =>
+  theme.unstable_sx({
     p: 0,
     width: 'initial',
     height: 'initial',

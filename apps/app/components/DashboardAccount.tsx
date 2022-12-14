@@ -10,7 +10,6 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff'
 import {
   Box,
   Button,
-  experimental_sx as sx,
   IconButton,
   Paper,
   Skeleton,
@@ -25,8 +24,8 @@ import {useAtom} from 'jotai'
 import dynamic from 'next/dynamic'
 import {FC} from 'react'
 
-const BalanceBox = styled(Box)(
-  sx({
+const BalanceBox = styled(Box)(({theme}) =>
+  theme.unstable_sx({
     flex: 1,
     background: colors.main[500],
     padding: {xs: 1, sm: 2},
@@ -67,18 +66,19 @@ const DashboardAccount: FC = () => {
     >
       <Box>
         <Stack direction="row" spacing={{xs: 2, md: 3}} alignItems="center">
-          {account ? (
-            <Identicon value={account.address} theme="polkadot" size={64} />
-          ) : (
-            <Box
-              width="64px"
-              height="64px"
-              borderRadius="32px"
-              overflow="hidden"
-            >
+          <Box
+            width="64px"
+            height="64px"
+            borderRadius="32px"
+            overflow="hidden"
+            flexShrink="0"
+          >
+            {account ? (
+              <Identicon value={account.address} theme="polkadot" size={64} />
+            ) : (
               <PhalaLogo width="100%" />
-            </Box>
-          )}
+            )}
+          </Box>
           <Box flex="1">
             <Typography
               variant="h4"
@@ -90,15 +90,17 @@ const DashboardAccount: FC = () => {
             >
               {account ? account.name : 'Phala App'}
             </Typography>
-            <Typography
-              variant="subtitle2"
-              color="text.secondary"
-              component="div"
-            >
-              {account
-                ? trimAddress(account.address)
-                : 'To host, connect, and gain in the world of Web3'}
-            </Typography>
+            <Stack direction="row" alignItems="center">
+              <Typography
+                variant="subtitle2"
+                color="text.secondary"
+                component="div"
+              >
+                {account
+                  ? trimAddress(account.address)
+                  : 'To host, connect, and gain in the world of Web3'}
+              </Typography>
+            </Stack>
           </Box>
           {account ? (
             <IconButton onClick={() => setAssetVisible((x) => !x)}>

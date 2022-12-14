@@ -27,11 +27,11 @@ import SectionHeader from './SectionHeader'
 
 type Nft = NftsConnectionQuery['nftsConnection']['edges'][number]['node']
 
-const nftNameFetcher = async (
-  api: ApiPromise,
-  cid: number,
-  nftId: number
-): Promise<string | undefined> => {
+const nftNameFetcher = async ([api, cid, nftId]: [
+  ApiPromise,
+  number,
+  number
+]): Promise<string | undefined> => {
   const property = await api.query.rmrkCore.properties(cid, nftId, 'name')
   try {
     return property.unwrap().toUtf8()
@@ -40,10 +40,10 @@ const nftNameFetcher = async (
   }
 }
 
-const collectionSymbolFetcher = async (
-  api: ApiPromise,
-  cid: number
-): Promise<string | undefined> => {
+const collectionSymbolFetcher = async ([api, cid]: [
+  ApiPromise,
+  number
+]): Promise<string | undefined> => {
   const collection = await api.query.rmrkCore.collections(cid)
   try {
     return collection.unwrap().symbol.toUtf8()
@@ -82,7 +82,7 @@ const NftCard: FC<{nft: Nft}> = ({nft}) => {
           )}
         </Box>
       </Box>
-      <Stack p={1} justifyContent="space-between" flex="1" minHeight={90}>
+      <Stack p={1.5} justifyContent="space-between" flex="1" minHeight={90}>
         <Typography variant="subtitle2" component="div">
           {name === undefined ? <Skeleton width="100%" /> : name}
         </Typography>

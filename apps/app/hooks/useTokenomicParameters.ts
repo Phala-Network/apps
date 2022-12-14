@@ -16,7 +16,7 @@ export type TokenomicParameters = {
 export const fromBits = (value: u128): Decimal =>
   new Decimal(value.toString()).div(Decimal.pow(2, 64))
 
-const tokenomicParametersFetcher = async (api: ApiPromise) => {
+const tokenomicParametersFetcher = async ([api]: [ApiPromise]) => {
   const tokenomicParameters =
     await api.query.phalaComputation.tokenomicParameters()
   const t = tokenomicParameters.unwrap()
