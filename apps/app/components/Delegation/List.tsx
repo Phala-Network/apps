@@ -53,8 +53,8 @@ const orderByEntries: [string, DelegationOrderByInput][] = [
   ['Value low to high', DelegationOrderByInput.ValueAsc],
   ['APR high to low', DelegationOrderByInput.BasePoolAprMultiplierDesc],
   ['APR low to high', DelegationOrderByInput.BasePoolAprMultiplierAsc],
-  ['PID small to large', DelegationOrderByInput.BasePoolIdAsc],
-  ['PID large to small', DelegationOrderByInput.BasePoolIdDesc],
+  ['PID small to large', DelegationOrderByInput.BasePoolPidAsc],
+  ['PID large to small', DelegationOrderByInput.BasePoolPidDesc],
 ]
 
 const DelegationList: FC<{
