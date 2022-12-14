@@ -58,7 +58,7 @@ const BuyConfirmation: FC<{onClose: () => void}> = ({onClose}) => {
           onClick={onClose}
           variant="text"
         >
-          I Understand
+          I understand
         </Button>
       </DialogActions>
     </>
@@ -194,7 +194,7 @@ const DashboardAssetList: FC = () => {
         <NoSsr>
           <FormControlLabel
             sx={{ml: 'auto'}}
-            label="Hide Small Balances"
+            label="Hide small balances"
             control={
               <Checkbox
                 checked={hideSmallBalance}

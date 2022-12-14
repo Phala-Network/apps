@@ -49,7 +49,13 @@ const DashboardAccount: FC = () => {
     {accountId: account?.address ?? ''},
     {enabled: !!account?.address}
   )
-  const accountData = data?.accountById
+  const accountData =
+    data?.accountById === null
+      ? {
+          vaultValue: '0',
+          stakePoolValue: '0',
+        }
+      : data?.accountById
   return (
     <Paper
       sx={{

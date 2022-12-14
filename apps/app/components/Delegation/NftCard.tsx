@@ -8,6 +8,7 @@ import getPoolPath from '@/lib/getPoolPath'
 import {DelegationCommonFragment} from '@/lib/subsquidQuery'
 import {colors} from '@/lib/theme'
 import MoreVert from '@mui/icons-material/MoreVert'
+import Numbers from '@mui/icons-material/Numbers'
 import {
   Alert,
   alpha,
@@ -101,7 +102,8 @@ const NftCard: FC<{
       <Stack flex="1" py={compact ? 0 : 2} px={2.5} position="relative">
         <Box width={140}>
           <Chip
-            label={`NO.${delegationNft.nftId}`}
+            icon={<Numbers />}
+            label={delegationNft.nftId}
             color={color}
             size="small"
           />

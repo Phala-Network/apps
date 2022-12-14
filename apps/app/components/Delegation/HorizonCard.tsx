@@ -6,6 +6,7 @@ import aprToApy from '@/lib/aprToApy'
 import getPoolPath from '@/lib/getPoolPath'
 import {DelegationCommonFragment} from '@/lib/subsquidQuery'
 import {colors} from '@/lib/theme'
+import Numbers from '@mui/icons-material/Numbers'
 import {
   alpha,
   Box,
@@ -82,7 +83,8 @@ const HorizonCard: FC<{
       <Stack direction="row" spacing={2} alignItems="center">
         <Box width={140}>
           <Chip
-            label={`NO.${delegationNft.nftId}`}
+            icon={<Numbers />}
+            label={delegationNft.nftId}
             color={color}
             size="small"
           />
