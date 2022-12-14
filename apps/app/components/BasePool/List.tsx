@@ -57,8 +57,8 @@ export type OnAction = (
 ) => void
 
 const commonOrderByEntries: OrderByEntries = [
-  ['PID Asc', BasePoolOrderByInput.PidAsc],
-  ['PID Desc', BasePoolOrderByInput.PidDesc],
+  ['PID small to large', BasePoolOrderByInput.PidAsc],
+  ['PID large to small', BasePoolOrderByInput.PidDesc],
 ]
 
 const stakePoolOrderByEntries: OrderByEntries = [
