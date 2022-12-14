@@ -237,6 +237,7 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
           >
             <Box position="relative" height="100%">
               <Intro
+                variant="detail"
                 basePool={basePool}
                 sx={{
                   position: 'absolute',

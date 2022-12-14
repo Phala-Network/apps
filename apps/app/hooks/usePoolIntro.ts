@@ -52,10 +52,10 @@ const poolIntroFetcher = async ([api, pid]: [ApiPromise, string]) => {
   })
 }
 
-const usePoolIntro = (pid: string, enabled = true) => {
+const usePoolIntro = (pid: string) => {
   const api = usePolkadotApi()
   const {data} = useSWR(
-    api && enabled ? [api, pid, 'poolIntro'] : null,
+    api ? [api, pid, 'poolIntro'] : null,
     poolIntroFetcher,
     {
       refreshInterval: 12000,

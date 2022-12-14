@@ -37,10 +37,11 @@ const iconMap: Record<string, IconProp> = {
   forum: faMessage,
 }
 
-const Intro: FC<{basePool: BasePoolCommonFragment; sx?: SxProps}> = ({
-  basePool,
-  sx,
-}) => {
+const Intro: FC<{
+  basePool: BasePoolCommonFragment
+  sx?: SxProps
+  variant: 'detail' | 'card'
+}> = ({basePool, sx, variant}) => {
   const {enqueueSnackbar} = useSnackbar()
   const theme = useTheme()
   const {owner} = basePool
@@ -49,65 +50,67 @@ const Intro: FC<{basePool: BasePoolCommonFragment; sx?: SxProps}> = ({
   const poolIntro = usePoolIntro(basePool.id)
 
   const chips = useMemo(() => {
-    if (!poolIntro) return []
+    if (!poolIntro || variant === 'card') return []
     return Object.entries(poolIntro).filter(
       ([label, value]) =>
         label !== 'ann' && typeof value === 'string' && value.length > 0
     )
-  }, [poolIntro])
+  }, [poolIntro, variant])
 
   return (
     <Stack sx={sx}>
-      <Stack direction="row" alignItems="center" spacing={1}>
-        <Link
-          variant="h6"
-          color="inherit"
-          href={`https://khala.subscan.io/account/${owner?.id}`}
-          target="_blank"
-          rel="noopener"
-          overflow="hidden"
-          textOverflow="ellipsis"
-          whiteSpace="nowrap"
-          sx={{
-            textDecorationColor: alpha(theme.palette.text.primary, 0.4),
-          }}
-        >
-          {owner.identityDisplay || trimAddress(owner.id)}
-        </Link>
+      {variant === 'detail' && (
+        <Stack direction="row" alignItems="center" spacing={1}>
+          <Link
+            variant="h6"
+            color="inherit"
+            href={`https://khala.subscan.io/account/${owner?.id}`}
+            target="_blank"
+            rel="noopener"
+            overflow="hidden"
+            textOverflow="ellipsis"
+            whiteSpace="nowrap"
+            sx={{
+              textDecorationColor: alpha(theme.palette.text.primary, 0.4),
+            }}
+          >
+            {owner.identityDisplay || trimAddress(owner.id)}
+          </Link>
 
-        {owner.identityDisplay && (
-          <>
-            <Tooltip
-              title={owner.identityLevel ?? 'No Judgement'}
-              placement="top"
-            >
-              {ownerVerified ? (
-                <VerifiedOutlined
-                  color="success"
-                  sx={{width: 22, flexShrink: 0}}
-                />
-              ) : (
-                <RemoveCircleOutline
-                  color="disabled"
-                  sx={{width: 22, flexShrink: 0}}
-                />
-              )}
-            </Tooltip>
-            <Tooltip title={owner.id} placement="top">
-              <Typography
-                flexShrink="0"
-                variant="subtitle2"
-                component="div"
-                color="text.secondary"
+          {owner.identityDisplay && (
+            <>
+              <Tooltip
+                title={owner.identityLevel ?? 'No Judgement'}
+                placement="top"
               >
-                {trimAddress(owner.id)}
-              </Typography>
-            </Tooltip>
-          </>
-        )}
-      </Stack>
+                {ownerVerified ? (
+                  <VerifiedOutlined
+                    color="success"
+                    sx={{width: 22, flexShrink: 0}}
+                  />
+                ) : (
+                  <RemoveCircleOutline
+                    color="disabled"
+                    sx={{width: 22, flexShrink: 0}}
+                  />
+                )}
+              </Tooltip>
+              <Tooltip title={owner.id} placement="top">
+                <Typography
+                  flexShrink="0"
+                  variant="subtitle2"
+                  component="div"
+                  color="text.secondary"
+                >
+                  {trimAddress(owner.id)}
+                </Typography>
+              </Tooltip>
+            </>
+          )}
+        </Stack>
+      )}
 
-      {chips.length > 0 && (
+      {chips.length > 0 && variant === 'detail' && (
         <Box ml={-1}>
           {chips.map(([label, value]) => {
             const icon = iconMap[label]
@@ -152,7 +155,7 @@ const Intro: FC<{basePool: BasePoolCommonFragment; sx?: SxProps}> = ({
       {poolIntro ? (
         poolIntro.ann ? (
           <Typography
-            mt={2}
+            mt={variant === 'detail' ? 2 : 0}
             minHeight={0}
             display="block"
             variant="body2"
