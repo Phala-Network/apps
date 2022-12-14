@@ -26,6 +26,7 @@ import {
   Paper,
   Skeleton,
   Stack,
+  Tooltip,
   Typography,
   useTheme,
 } from '@mui/material'
@@ -137,7 +138,15 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
                 )}
                 {vault && <VaultIcon width={48} color={colors.vault[400]} />}
                 <Box flex="1 0" width={108}>
-                  <Typography variant="num2">{`#${basePool.pid}`}</Typography>
+                  <Tooltip title={basePool.account.id} placement="bottom-start">
+                    <Typography
+                      variant="num2"
+                      sx={{
+                        textDecoration: 'underline dotted',
+                        textDecorationColor: theme.palette.text.secondary,
+                      }}
+                    >{`#${basePool.pid}`}</Typography>
+                  </Tooltip>
                 </Box>
                 <Box display={{xs: 'block', sm: 'none'}}>{actions}</Box>
               </Stack>
