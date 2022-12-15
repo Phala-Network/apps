@@ -6,7 +6,6 @@ import useSignAndSend from '@/hooks/useSignAndSend'
 import {subsquidClient} from '@/lib/graphql'
 import {
   BasePoolCommonFragment,
-  BasePoolWhitelistOrderByInput,
   useBasePoolWhitelistsConnectionQuery,
 } from '@/lib/subsquidQuery'
 import {theme} from '@/lib/theme'
@@ -46,10 +45,7 @@ const WhitelistList: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
   const [selectedAddress, setSelectedAddress] = useState<string[]>([])
   const {data, isLoading} = useBasePoolWhitelistsConnectionQuery(
     subsquidClient,
-    {
-      orderBy: BasePoolWhitelistOrderByInput.CreateTimeAsc,
-      where: {basePool: {id_eq: basePool.id}},
-    }
+    {orderBy: 'createTime_ASC', where: {basePool: {id_eq: basePool.id}}}
   )
   const rows = useMemo<RowModel[]>(() => {
     return (

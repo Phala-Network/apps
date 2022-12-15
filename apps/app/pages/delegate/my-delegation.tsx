@@ -18,8 +18,7 @@ const MyDelegation: FC = () => {
         <DelegateDetailCard sx={{flex: {xs: 'none', md: '1 0'}}} />
         <Paper
           sx={{
-            px: {xs: 1.5, sm: 2},
-            pt: {xs: 1.5, sm: 2},
+            p: {xs: 1.5, sm: 2},
             background: 'none',
             minWidth: 0,
             height: {xs: 300, md: 'auto'},

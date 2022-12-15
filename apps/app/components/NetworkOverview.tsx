@@ -1,7 +1,6 @@
 import useGetApr from '@/hooks/useGetApr'
 import {subsquidClient} from '@/lib/graphql'
 import {
-  RewardRecordOrderByInput,
   useGlobalStateQuery,
   useRewardRecordsConnectionQuery,
 } from '@/lib/subsquidQuery'
@@ -30,10 +29,7 @@ const NetworkOverview: FC = () => {
   const [chain] = useAtom(chainAtom)
   const {data: rewardRecordsData} = useRewardRecordsConnectionQuery(
     subsquidClient,
-    {
-      orderBy: RewardRecordOrderByInput.TimeDesc,
-      where: {time_gt: yesterday},
-    }
+    {orderBy: 'time_DESC', where: {time_gt: yesterday}}
   )
   const {data: circulationData} = useQuery<CirculationData>(
     ['circulations', chain],

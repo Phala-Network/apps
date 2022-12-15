@@ -151,7 +151,7 @@ const Delegate: NextPage = () => {
                 </ToggleButton>
               </ToggleButtonGroup>
             </Stack>
-            <Box flex={1} ml={{xs: -1, sm: -1.5}} mb={{xs: -1, sm: -1.5}}>
+            <Box flex={1} ml={{xs: -1, sm: -1.5}}>
               <DelegationValueChart
                 days={chartDays}
                 address={

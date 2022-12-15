@@ -1,11 +1,7 @@
 import NftsIcon from '@/assets/nfts.svg'
 import usePolkadotApi from '@/hooks/usePolkadotApi'
 import {subsquidClient} from '@/lib/graphql'
-import {
-  NftOrderByInput,
-  NftsConnectionQuery,
-  useNftsConnectionQuery,
-} from '@/lib/subsquidQuery'
+import {NftsConnectionQuery, useNftsConnectionQuery} from '@/lib/subsquidQuery'
 import {
   Box,
   Chip,
@@ -112,7 +108,7 @@ const DashboardNftList: FC = () => {
     subsquidClient,
     {
       after: page === 1 ? undefined : String((page - 1) * pageSize),
-      orderBy: NftOrderByInput.MintTimeDesc,
+      orderBy: 'mintTime_DESC',
       first: pageSize,
       where: {owner: {id_eq: account?.address}, burned_eq: false},
     },

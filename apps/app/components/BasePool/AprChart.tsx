@@ -3,7 +3,6 @@ import aprToApy from '@/lib/aprToApy'
 import {subsquidClient} from '@/lib/graphql'
 import {
   BasePoolCommonFragment,
-  DelegationValueRecordOrderByInput,
   useBasePoolAprRecordsConnectionQuery,
 } from '@/lib/subsquidQuery'
 import {colors} from '@/lib/theme'
@@ -62,7 +61,7 @@ const BasePoolAprChart: FC<{basePool: BasePoolCommonFragment}> = ({
     return now
   })
   const {data} = useBasePoolAprRecordsConnectionQuery(subsquidClient, {
-    orderBy: DelegationValueRecordOrderByInput.UpdatedTimeDesc,
+    orderBy: 'updatedTime_DESC',
     where: {
       basePool: {id_eq: basePool.id},
       updatedTime_gte: addDays(now, -days).toISOString(),
@@ -132,6 +131,7 @@ const BasePoolAprChart: FC<{basePool: BasePoolCommonFragment}> = ({
           content={<CustomTooltip isVault={isVault} />}
         />
         <Area
+          connectNulls
           type="monotone"
           dataKey="value"
           stroke={color}

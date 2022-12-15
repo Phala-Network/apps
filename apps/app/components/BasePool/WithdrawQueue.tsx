@@ -4,17 +4,32 @@ import SectionHeader from '@/components/SectionHeader'
 import {subsquidClient} from '@/lib/graphql'
 import {
   BasePoolCommonFragment,
-  DelegationOrderByInput,
   useDelegationsConnectionQuery,
 } from '@/lib/subsquidQuery'
+import {colors} from '@/lib/theme'
 import Check from '@mui/icons-material/Check'
 import WarningAmber from '@mui/icons-material/WarningAmber'
 import {Box, Paper, Stack, Tooltip, Typography, useTheme} from '@mui/material'
 import {DataGrid, GridColDef, GridSortModel} from '@mui/x-data-grid'
 import {toCurrency} from '@phala/util'
-import {addDays, formatDuration, intervalToDuration, isAfter} from 'date-fns'
+import {
+  addDays,
+  formatDuration,
+  intervalToDuration,
+  isAfter,
+  isSameDay,
+} from 'date-fns'
 import Decimal from 'decimal.js'
-import {FC, useMemo, useState} from 'react'
+import {FC, ReactElement, useMemo, useState} from 'react'
+import {
+  Line,
+  LineChart,
+  ReferenceLine,
+  ResponsiveContainer,
+  Tooltip as RechartsTooltip,
+  XAxis,
+  YAxis,
+} from 'recharts'
 import Property from '../Property'
 
 type RowModel = {
@@ -22,6 +37,31 @@ type RowModel = {
   delegator: string
   value: string
   startTime?: string | null
+}
+
+const CustomTooltip = ({
+  label,
+  payload,
+}: {
+  label?: string
+  payload?: {
+    name: string
+    value: number | string
+    unit?: string
+  }[]
+}): ReactElement | null => {
+  if (payload?.[0]) {
+    return (
+      <Paper sx={{p: 1}}>
+        <Typography variant="subtitle2">{label}</Typography>
+        <Property fullWidth size="small" label="Due withdrawal">{`${toCurrency(
+          payload[0].value
+        )} PHA`}</Property>
+      </Paper>
+    )
+  }
+
+  return null
 }
 
 const columns: GridColDef<RowModel>[] = [
@@ -68,7 +108,7 @@ const WithdrawQueue: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
     {field: 'countdown', sort: 'asc'},
   ])
   const {data, isLoading} = useDelegationsConnectionQuery(subsquidClient, {
-    orderBy: DelegationOrderByInput.WithdrawalStartTimeAsc,
+    orderBy: 'withdrawalStartTime_ASC',
     where: {
       basePool: {pid_eq: basePool.id},
       withdrawingShares_gt: '0',
@@ -103,10 +143,42 @@ const WithdrawQueue: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
         time = row.startTime
       }
     }
-    return time && addDays(new Date(time), 7)
+    if (time) {
+      return addDays(new Date(time), 7)
+    }
   }, [basePool, rows])
 
   const isInsufficient = gapValue.gt(0)
+
+  const chartData = useMemo(() => {
+    const now = new Date()
+    const days = 14
+    const result: {date: Date; dateString: string; value?: number}[] =
+      Array.from({
+        length: days,
+      }).map((_, i) => {
+        const date = addDays(now, i)
+        return {
+          dateString: date.toLocaleDateString(),
+          date,
+        }
+      })
+    let acc = new Decimal(0)
+    for (const row of rows) {
+      if (!row.startTime) continue
+      const endTime = addDays(new Date(row.startTime), 7)
+      acc = acc.plus(row.value)
+      const index = result.findIndex((item) => isSameDay(item.date, endTime))
+      if (index === -1) continue
+      result[index].value = acc.toDP(2, 0).toNumber()
+    }
+    for (let i = 0; i < result.length; i++) {
+      if (result[i].value === undefined) {
+        result[i].value = result[i - 1]?.value ?? 0
+      }
+    }
+    return result
+  }, [rows])
 
   return (
     <>
@@ -115,7 +187,7 @@ const WithdrawQueue: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
         title="Withdrawal Queue"
       ></SectionHeader>
       <Paper sx={{background: 'transparent', mb: 2, p: 2}}>
-        <Stack direction={{xs: 'column', md: 'row'}}>
+        <Stack direction={{xs: 'column', md: 'row'}} spacing={2}>
           <Stack spacing={3} flex={{xs: 'none', md: '1'}}>
             <Stack direction="row" alignItems="center">
               {gapValue.gt(0) ? (
@@ -150,7 +222,8 @@ const WithdrawQueue: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
             </Stack>
             {criticalTime && (
               <Stack direction="row" spacing={1}>
-                <Tooltip title="----">
+                {/* TODO: critical time explanation */}
+                <Tooltip title="">
                   <Typography
                     variant="subtitle2"
                     color="text.secondary"
@@ -165,7 +238,55 @@ const WithdrawQueue: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
               </Stack>
             )}
           </Stack>
-          <Box flex={1}></Box>
+          <Box flex={{xs: 'none', md: 1}} height={170} minWidth={0}>
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={chartData}>
+                <XAxis height={20} tickLine={false} dataKey="dateString" />
+                <YAxis
+                  width={40}
+                  type="number"
+                  dataKey="value"
+                  name="Value"
+                  tickLine={false}
+                  tickFormatter={(value) =>
+                    Intl.NumberFormat('en-US', {
+                      notation: 'compact',
+                      maximumFractionDigits: 0,
+                    }).format(value)
+                  }
+                />
+                <RechartsTooltip
+                  isAnimationActive={false}
+                  content={<CustomTooltip />}
+                />
+                <Line
+                  dot={false}
+                  type="stepAfter"
+                  dataKey="value"
+                  stroke={
+                    basePool.kind === 'Vault'
+                      ? colors.vault[500]
+                      : colors.main[400]
+                  }
+                  strokeWidth={3}
+                />
+                {criticalTime && (
+                  <ReferenceLine
+                    strokeDasharray="3 3"
+                    x={criticalTime.toLocaleDateString()}
+                  />
+                )}
+                <ReferenceLine
+                  alwaysShow
+                  strokeDasharray="3 3"
+                  y={new Decimal(basePool.freeValue)
+                    .plus(basePool.releasingValue)
+                    .toDP(2, 0)
+                    .toNumber()}
+                />
+              </LineChart>
+            </ResponsiveContainer>
+          </Box>
         </Stack>
       </Paper>
       <DataGrid

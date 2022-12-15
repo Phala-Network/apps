@@ -1,9 +1,6 @@
 import useGetApr from '@/hooks/useGetApr'
 import {subsquidClient} from '@/lib/graphql'
-import {
-  DelegationOrderByInput,
-  useDelegationsConnectionQuery,
-} from '@/lib/subsquidQuery'
+import {useDelegationsConnectionQuery} from '@/lib/subsquidQuery'
 import {colors} from '@/lib/theme'
 import {Paper, Typography} from '@mui/material'
 import {toCurrency} from '@phala/util'
@@ -59,7 +56,7 @@ const DelegationScatterChart: FC<{address?: string}> = ({address}) => {
   const {data, isLoading} = useDelegationsConnectionQuery(
     subsquidClient,
     {
-      orderBy: DelegationOrderByInput.ValueDesc,
+      orderBy: 'value_DESC',
       first: 50,
       where: {account: {id_eq: address}, value_gt: '1'},
     },
@@ -102,6 +99,7 @@ const DelegationScatterChart: FC<{address?: string}> = ({address}) => {
           <ScatterChart>
             <CartesianGrid strokeDasharray="3 3" stroke="#444" />
             <XAxis
+              height={20}
               type="number"
               dataKey="value"
               name="Value"

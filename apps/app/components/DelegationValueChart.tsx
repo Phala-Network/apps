@@ -1,8 +1,5 @@
 import {subsquidClient} from '@/lib/graphql'
-import {
-  DelegationValueRecordOrderByInput,
-  useDelegationValueRecordsConnectionQuery,
-} from '@/lib/subsquidQuery'
+import {useDelegationValueRecordsConnectionQuery} from '@/lib/subsquidQuery'
 import {Paper, Typography} from '@mui/material'
 import {toCurrency} from '@phala/util'
 import {addDays} from 'date-fns'
@@ -55,15 +52,13 @@ const DelegationValueChart: FC<{address?: string; days: number}> = ({
   const {data} = useDelegationValueRecordsConnectionQuery(
     subsquidClient,
     {
-      orderBy: DelegationValueRecordOrderByInput.UpdatedTimeDesc,
+      orderBy: 'updatedTime_DESC',
       where: {
         account: {id_eq: address},
         updatedTime_gte: addDays(now, -days).toISOString(),
       },
     },
-    {
-      enabled: !!address,
-    }
+    {enabled: !!address}
   )
 
   const chartData = useMemo(() => {
@@ -111,7 +106,7 @@ const DelegationValueChart: FC<{address?: string; days: number}> = ({
             <stop offset="95%" stopColor="#C5FF46" stopOpacity={0} />
           </linearGradient>
         </defs>
-        <XAxis tickLine={false} dataKey="dateString" />
+        <XAxis height={20} tickLine={false} dataKey="dateString" />
         <YAxis
           width={40}
           type="number"
@@ -127,6 +122,7 @@ const DelegationValueChart: FC<{address?: string; days: number}> = ({
         />
         <Tooltip isAnimationActive={false} content={<CustomTooltip />} />
         <Area
+          connectNulls
           type="monotone"
           dataKey="value"
           stroke="#C5FF46"
