@@ -51,22 +51,22 @@ export type OnAction = (
 ) => void
 
 const commonOrderByEntries: OrderByEntries = [
-  ['PID small to large', BasePoolOrderByInput.PidAsc],
-  ['PID large to small', BasePoolOrderByInput.PidDesc],
+  ['PID small to large', 'pid_ASC'],
+  ['PID large to small', 'pid_DESC'],
 ]
 
 const stakePoolOrderByEntries: OrderByEntries = [
-  ['APR high to low', BasePoolOrderByInput.AprMultiplierDesc],
-  ['APR low to high', BasePoolOrderByInput.AprMultiplierAsc],
+  ['APR high to low', 'aprMultiplier_DESC'],
+  ['APR low to high', 'aprMultiplier_ASC'],
   ...commonOrderByEntries,
 ]
 
 const vaultOrderByEntries: OrderByEntries = [
-  ['TVL high to low', BasePoolOrderByInput.TotalValueDesc],
-  ['TVL low to high', BasePoolOrderByInput.TotalValueAsc],
+  ['TVL high to low', 'totalValue_DESC'],
+  ['TVL low to high', 'totalValue_ASC'],
   ...commonOrderByEntries,
-  ['APY high to low', BasePoolOrderByInput.AprMultiplierDesc],
-  ['APY low to high', BasePoolOrderByInput.AprMultiplierAsc],
+  ['APY high to low', 'aprMultiplier_DESC'],
+  ['APY low to high', 'aprMultiplier_ASC'],
 ]
 
 const BasePoolList: FC<{
@@ -93,14 +93,10 @@ const BasePoolList: FC<{
   const [closedFilter, setClosedFilter] = useState(false)
   const [stakePoolOrderBy, setStakePoolOrderBy] =
     useState<BasePoolOrderByInput>(
-      variant === 'farm'
-        ? BasePoolOrderByInput.PidAsc
-        : BasePoolOrderByInput.AprMultiplierDesc
+      variant === 'farm' ? 'pid_ASC' : 'aprMultiplier_DESC'
     )
   const [vaultOrderBy, setVaultOrderBy] = useState<BasePoolOrderByInput>(
-    variant === 'farm'
-      ? BasePoolOrderByInput.PidAsc
-      : BasePoolOrderByInput.TotalValueDesc
+    variant === 'farm' ? 'pid_ASC' : 'totalValue_DESC'
   )
   const [searchString, setSearchString] = useState('')
   const isSearchingPid = /^[0-9]+$/.test(searchString)

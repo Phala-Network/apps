@@ -47,12 +47,12 @@ export type OnAction = (
 ) => void
 
 const orderByEntries: [string, DelegationOrderByInput][] = [
-  ['Value high to low', DelegationOrderByInput.ValueDesc],
-  ['Value low to high', DelegationOrderByInput.ValueAsc],
-  ['APR high to low', DelegationOrderByInput.BasePoolAprMultiplierDesc],
-  ['APR low to high', DelegationOrderByInput.BasePoolAprMultiplierAsc],
-  ['PID small to large', DelegationOrderByInput.BasePoolPidAsc],
-  ['PID large to small', DelegationOrderByInput.BasePoolPidDesc],
+  ['Value high to low', 'value_DESC'],
+  ['Value low to high', 'value_ASC'],
+  ['APR high to low', 'basePool_aprMultiplier_DESC'],
+  ['APR low to high', 'basePool_aprMultiplier_ASC'],
+  ['PID small to large', 'basePool_pid_ASC'],
+  ['PID large to small', 'basePool_id_DESC'],
 ]
 
 const DelegationList: FC<{
@@ -67,9 +67,7 @@ const DelegationList: FC<{
   const [operatingDelegation, setOperatingDelegation] =
     useState<DelegationCommonFragment>()
   const [showNftCard, setShowNftCard] = useState(true)
-  const [orderBy, setOrderBy] = useState<DelegationOrderByInput>(
-    DelegationOrderByInput.ValueDesc
-  )
+  const [orderBy, setOrderBy] = useState<DelegationOrderByInput>('value_DESC')
   const color = isVault ? 'secondary' : 'primary'
   const [vaultFilter, setVaultFilter] = useState(true)
   const [stakePoolFilter, setStakePoolFilter] = useState(true)

@@ -13,16 +13,38 @@ import {
   WorkerOrderByInput,
   WorkersConnectionQuery,
 } from '@/lib/subsquidQuery'
-import {Button, Dialog, Pagination, Stack} from '@mui/material'
+import Search from '@mui/icons-material/Search'
+import {
+  Button,
+  Dialog,
+  MenuItem,
+  Pagination,
+  Stack,
+  TextField,
+} from '@mui/material'
 import {polkadotAccountAtom} from '@phala/store'
 import {addDays} from 'date-fns'
 import {useAtom} from 'jotai'
+import {debounce} from 'lodash-es'
 import dynamic from 'next/dynamic'
 import {FC, useCallback, useState} from 'react'
 import WorkerCard from './Card'
 
 const ChangeStake = dynamic(() => import('./ChangeStake'))
 const AddWorker = dynamic(() => import('./AddWorker'))
+
+const orderByEntries: [string, WorkerOrderByInput][] = [
+  ['Stake high to low', 'session_stake_DESC'],
+  ['Stake low to high', 'session_stake_ASC'],
+  ['V high to low', 'session_v_DESC'],
+  ['V low to high', 'session_v_ASC'],
+  ['Ve high to low', 'session_ve_DESC'],
+  ['Ve low to high', 'session_ve_ASC'],
+  ['P Instant high to low', 'session_pInstant_DESC'],
+  ['P Instant low to high', 'session_pInstant_ASC'],
+  ['P Initial high to low', 'session_pInit_DESC'],
+  ['P Initial low to high', 'session_pInit_ASC'],
+]
 
 export type Worker =
   WorkersConnectionQuery['workersConnection']['edges'][number]['node']
@@ -42,6 +64,13 @@ const WorkerList: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
     addDays(new Date(), -7).toISOString()
   )
   const [page, setPage] = useState(1)
+  const [searchString, setSearchString] = useState('')
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const debouncedSetSearchString = useCallback(
+    debounce(setSearchString, 500),
+    []
+  )
+  const [orderBy, setOrderBy] = useState<WorkerOrderByInput>('session_v_DESC')
   const api = usePolkadotApi()
   const [account] = useAtom(polkadotAccountAtom)
   const signAndSend = useSignAndSend()
@@ -49,16 +78,21 @@ const WorkerList: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
     subsquidClient,
     {
       after: page === 1 ? undefined : String((page - 1) * pageSize),
-      orderBy: WorkerOrderByInput.IdAsc,
+      orderBy: orderBy,
       first: pageSize,
-      where: {stakePool: {id_eq: basePool.id}},
+      where: {
+        AND: [
+          {stakePool: {id_eq: basePool.id}},
+          ...(searchString ? [{id_containsInsensitive: searchString}] : []),
+        ],
+      },
     },
     {keepPreviousData: true}
   )
   const {data: reclaimableData} = useReclaimableWorkersConnectionQuery(
     subsquidClient,
     {
-      orderBy: WorkerOrderByInput.SessionCoolingDownStartTimeAsc,
+      orderBy: 'session_coolingDownStartTime_ASC',
       where: {
         stakePool: {id_eq: basePool.id},
         session: {
@@ -117,6 +151,29 @@ const WorkerList: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
     <>
       <SectionHeader title="Workers" icon={<WorkerIcon />}>
         <Stack spacing={2} direction="row" ml="auto">
+          <TextField
+            placeholder="Search"
+            size="small"
+            InputProps={{
+              endAdornment: <Search />,
+            }}
+            onChange={(e) => debouncedSetSearchString(e.target.value)}
+          />
+          <TextField
+            size="small"
+            select
+            sx={{width: 180}}
+            value={orderBy}
+            onChange={(e) => {
+              setOrderBy(e.target.value as WorkerOrderByInput)
+            }}
+          >
+            {orderByEntries.map(([label, value]) => (
+              <MenuItem key={value} value={value}>
+                {label}
+              </MenuItem>
+            ))}
+          </TextField>
           <PromiseButton
             onClick={reclaimAll}
             disabled={
