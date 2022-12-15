@@ -1,6 +1,16 @@
 import PhalaLogo from '@/assets/phala_logo.svg'
 import {montserrat} from '@/lib/theme'
-import {AppBar, Button, Stack, Toolbar, Tooltip, useTheme} from '@mui/material'
+import {faDiscord, faTwitter} from '@fortawesome/free-brands-svg-icons'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {
+  AppBar,
+  Button,
+  IconButton,
+  Stack,
+  Toolbar,
+  Tooltip,
+  useTheme,
+} from '@mui/material'
 import NextLink from 'next/link'
 import {FC} from 'react'
 import Account from './Account'
@@ -29,7 +39,17 @@ const navItems: NavItem[] = [
     ],
   },
   {label: 'SubBridge', href: 'https://subbridge.io'},
-  {label: 'DAO', href: ''},
+  {
+    label: 'DAO',
+    sub: [
+      {label: 'Forum', href: 'https://forum.phala.network/'},
+      {
+        label: 'Governance',
+        href: 'https://polkadot.js.org/apps/?rpc=wss%3A%2F%2Fkhala-api.phala.network%2Fws#/democracy',
+      },
+      {label: 'Subsquare.io', href: 'https://khala.subsquare.io/'},
+    ],
+  },
 ]
 
 const NavItem: FC<{item: NavItem}> = ({item: {label, href}}) => {
@@ -65,6 +85,7 @@ const NavItem: FC<{item: NavItem}> = ({item: {label, href}}) => {
 NavItem.displayName = 'NavItem'
 
 const TopBar: FC = () => {
+  const theme = useTheme()
   return (
     <AppBar
       position="sticky"
@@ -79,11 +100,11 @@ const TopBar: FC = () => {
       <Toolbar>
         <PhalaLogo width={30} css={{flexShrink: 0}} />
         <Stack
-          ml={3}
+          ml={2}
           spacing={1}
           component="nav"
           direction="row"
-          display={{xs: 'none', lg: 'flex'}}
+          display={{xs: 'none', md: 'flex'}}
         >
           {navItems.map((item) => {
             if (!item.sub) {
@@ -110,9 +131,37 @@ const TopBar: FC = () => {
             )
           })}
         </Stack>
-        <Stack direction="row" ml="auto" spacing={2}>
+        <Stack direction="row" ml="auto" spacing={2} alignItems="center">
           <Chain />
           <Account />
+          <Stack
+            direction="row"
+            spacing={1}
+            alignItems="center"
+            display={{xs: 'none', md: 'flex'}}
+          >
+            <IconButton
+              size="small"
+              href="https://discord.gg/phala"
+              target="_blank"
+            >
+              <FontAwesomeIcon
+                icon={faDiscord}
+                width={18}
+                color={theme.palette.text.secondary}
+              />
+            </IconButton>
+            <IconButton
+              size="small"
+              href="https://twitter.com/PhalaNetwork"
+              target="_blank"
+            >
+              <FontAwesomeIcon
+                icon={faTwitter}
+                color={theme.palette.text.secondary}
+              />
+            </IconButton>
+          </Stack>
         </Stack>
       </Toolbar>
     </AppBar>
