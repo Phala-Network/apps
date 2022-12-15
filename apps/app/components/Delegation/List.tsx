@@ -38,9 +38,7 @@ import {useInView} from 'react-intersection-observer'
 import HorizonCard from './HorizonCard'
 import NftCard from './NftCard'
 
-const Withdraw = dynamic(() => import('./Withdraw'), {
-  ssr: false,
-})
+const Withdraw = dynamic(() => import('./Withdraw'))
 
 export type DelegationDialogAction = 'withdraw'
 export type OnAction = (

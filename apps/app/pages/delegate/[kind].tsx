@@ -1,7 +1,6 @@
 import StakePoolIcon from '@/assets/stake_pool.svg'
 import VaultIcon from '@/assets/vault.svg'
 import BasePoolList from '@/components/BasePool/List'
-import ClientOnly from '@/components/ClientOnly'
 import DelegateDetailCard from '@/components/DelegateDetailCard'
 import DelegationValueChart from '@/components/DelegationValueChart'
 import NetworkOverview from '@/components/NetworkOverview'
@@ -11,6 +10,7 @@ import {colors} from '@/lib/theme'
 import {vaultIdAtom} from '@/store/common'
 import {
   Box,
+  NoSsr,
   Paper,
   Stack,
   styled,
@@ -114,13 +114,14 @@ const Delegate: NextPage = () => {
       </PageHeader>
 
       <Stack direction={{xs: 'column', md: 'row'}} spacing={2}>
-        <DelegateDetailCard sx={{flex: {xs: 'none', md: '1 0'}}} />
+        <DelegateDetailCard sx={{flex: {xs: 'none', md: '1'}}} />
         <Paper
           sx={{
             background: 'none',
             minWidth: 0,
             height: {xs: 300, md: 'auto'},
-            flex: {xs: 'none', md: '1 0'},
+            flex: {xs: 'none', md: '1'},
+            p: {xs: 1.5, sm: 2},
           }}
         >
           <Stack height="100%">
@@ -128,7 +129,6 @@ const Delegate: NextPage = () => {
               direction="row"
               alignItems="center"
               justifyContent="space-between"
-              p={2}
             >
               <Typography variant="h6">Delegation Value</Typography>
               <ToggleButtonGroup
@@ -151,7 +151,7 @@ const Delegate: NextPage = () => {
                 </ToggleButton>
               </ToggleButtonGroup>
             </Stack>
-            <Box flex={1}>
+            <Box flex={1} ml={{xs: -1, sm: -1.5}} mb={{xs: -1, sm: -1.5}}>
               <DelegationValueChart
                 days={chartDays}
                 address={
@@ -165,7 +165,7 @@ const Delegate: NextPage = () => {
         </Paper>
       </Stack>
 
-      <ClientOnly>
+      <NoSsr>
         {asAccount && (
           <Stack
             direction="row"
@@ -220,7 +220,7 @@ const Delegate: NextPage = () => {
             </Box>
           </Stack>
         )}
-      </ClientOnly>
+      </NoSsr>
 
       <BasePoolList
         sx={{mt: {xs: 2, md: 5}}}

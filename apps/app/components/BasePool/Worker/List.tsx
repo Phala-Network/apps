@@ -18,8 +18,8 @@ import dynamic from 'next/dynamic'
 import {FC, useCallback, useState} from 'react'
 import WorkerCard from './Card'
 
-const ChangeStake = dynamic(() => import('./ChangeStake'), {ssr: false})
-const AddWorker = dynamic(() => import('./AddWorker'), {ssr: false})
+const ChangeStake = dynamic(() => import('./ChangeStake'))
+const AddWorker = dynamic(() => import('./AddWorker'))
 
 export type Worker =
   WorkersConnectionQuery['workersConnection']['edges'][number]['node']

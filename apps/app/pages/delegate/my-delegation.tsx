@@ -18,21 +18,23 @@ const MyDelegation: FC = () => {
         <DelegateDetailCard sx={{flex: {xs: 'none', md: '1 0'}}} />
         <Paper
           sx={{
-            pr: 2,
-            pt: 2,
+            px: {xs: 1.5, sm: 2},
+            pt: {xs: 1.5, sm: 2},
             background: 'none',
             minWidth: 0,
             height: {xs: 300, md: 'auto'},
             flex: {xs: 'none', md: '1 0'},
           }}
         >
-          <DelegationScatterChart
-            address={
-              selectedVaultState === null
-                ? polkadotAccount?.address
-                : selectedVaultState?.account.id
-            }
-          />
+          <Box ml={{xs: -1.5, sm: -2}} height="100%">
+            <DelegationScatterChart
+              address={
+                selectedVaultState === null
+                  ? polkadotAccount?.address
+                  : selectedVaultState?.account.id
+              }
+            />
+          </Box>
         </Paper>
       </Stack>
       <Box mt={{xs: 2, md: 5}} component="section">

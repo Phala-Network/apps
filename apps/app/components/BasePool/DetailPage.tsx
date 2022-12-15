@@ -46,9 +46,7 @@ import WithdrawQueue from './WithdrawQueue'
 
 type DetailPageDialogAction = 'withdraw' | 'ownerSettings'
 
-const OwnerSettings = dynamic(() => import('./OwnerSettings'), {
-  ssr: false,
-})
+const OwnerSettings = dynamic(() => import('./OwnerSettings'))
 
 const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
   const api = usePolkadotApi()

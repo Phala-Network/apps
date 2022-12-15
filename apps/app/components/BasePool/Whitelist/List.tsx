@@ -17,7 +17,7 @@ import {useAtom} from 'jotai'
 import dynamic from 'next/dynamic'
 import {FC, useCallback, useMemo, useState} from 'react'
 
-const AddWhitelist = dynamic(() => import('./AddWhitelist'), {ssr: false})
+const AddWhitelist = dynamic(() => import('./AddWhitelist'))
 
 type RowModel = {id: string}
 

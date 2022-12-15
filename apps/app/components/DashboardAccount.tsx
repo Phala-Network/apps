@@ -53,10 +53,7 @@ const DashboardAccount: FC = () => {
   )
   const accountData =
     data?.accountById === null
-      ? {
-          vaultValue: '0',
-          stakePoolValue: '0',
-        }
+      ? {vaultValue: '0', stakePoolValue: '0'}
       : data?.accountById
   return (
     <Paper

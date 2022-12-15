@@ -11,9 +11,7 @@ import {useAtom} from 'jotai'
 import dynamic from 'next/dynamic'
 import {FC, useCallback, useMemo, useState} from 'react'
 
-const ClaimReward = dynamic(() => import('@/components/BasePool/ClaimReward'), {
-  ssr: false,
-})
+const ClaimReward = dynamic(() => import('@/components/BasePool/ClaimReward'))
 
 const MyStakePools: FC = () => {
   const [account] = useAtom(polkadotAccountAtom)

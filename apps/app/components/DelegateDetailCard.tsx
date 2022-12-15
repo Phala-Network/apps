@@ -13,6 +13,7 @@ import {
   Box,
   Button,
   Chip,
+  NoSsr,
   Paper,
   Skeleton,
   Stack,
@@ -238,7 +239,7 @@ const DelegateDetailCard: FC<{sx?: SxProps}> = ({sx}) => {
               {asAccount ? wrapped && `${toCurrency(wrapped)} PHA` : '-'}
             </ClientOnly>
           </Typography>
-          <ClientOnly>
+          <NoSsr>
             {asAccount && (
               <>
                 <PromiseButton
@@ -254,7 +255,7 @@ const DelegateDetailCard: FC<{sx?: SxProps}> = ({sx}) => {
                 </Button>
               </>
             )}
-          </ClientOnly>
+          </NoSsr>
         </Stack>
       </Stack>
     </Paper>

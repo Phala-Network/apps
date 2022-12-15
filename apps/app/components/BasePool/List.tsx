@@ -35,15 +35,9 @@ import {useInView} from 'react-intersection-observer'
 import DelegateCard from './DelegateCard'
 import FarmCard from './FarmCard'
 
-const OwnerSettings = dynamic(() => import('./OwnerSettings'), {
-  ssr: false,
-})
-const ClaimReward = dynamic(() => import('./ClaimReward'), {
-  ssr: false,
-})
-const ClaimDelegation = dynamic(() => import('./ClaimDelegation'), {
-  ssr: false,
-})
+const OwnerSettings = dynamic(() => import('./OwnerSettings'))
+const ClaimReward = dynamic(() => import('./ClaimReward'))
+const ClaimDelegation = dynamic(() => import('./ClaimDelegation'))
 
 type BasePoolListVariant = 'farm' | 'delegate'
 type OrderByEntries = [string, BasePoolOrderByInput][]
