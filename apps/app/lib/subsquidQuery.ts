@@ -2699,6 +2699,14 @@ export type WorkersConnectionQueryVariables = Exact<{
 
 export type WorkersConnectionQuery = { readonly __typename?: 'Query', readonly workersConnection: { readonly __typename?: 'WorkersConnection', readonly totalCount: number, readonly edges: ReadonlyArray<{ readonly __typename?: 'WorkerEdge', readonly cursor: string, readonly node: { readonly __typename?: 'Worker', readonly id: string, readonly confidenceLevel: number, readonly initialScore?: number | null, readonly shares?: string | null, readonly stakePool?: { readonly __typename?: 'StakePool', readonly id: string, readonly basePool: { readonly __typename?: 'BasePool', readonly freeValue: string } } | null, readonly session?: { readonly __typename?: 'Session', readonly coolingDownStartTime?: string | null, readonly pInit: number, readonly pInstant: number, readonly stake: string, readonly state: WorkerState, readonly totalReward: string, readonly v: string, readonly ve: string } | null } }>, readonly pageInfo: { readonly __typename?: 'PageInfo', readonly hasNextPage: boolean, readonly hasPreviousPage: boolean, readonly startCursor: string, readonly endCursor: string } } };
 
+export type ReclaimableWorkersConnectionQueryVariables = Exact<{
+  orderBy: ReadonlyArray<WorkerOrderByInput> | WorkerOrderByInput;
+  where?: InputMaybe<WorkerWhereInput>;
+}>;
+
+
+export type ReclaimableWorkersConnectionQuery = { readonly __typename?: 'Query', readonly workersConnection: { readonly __typename?: 'WorkersConnection', readonly totalCount: number, readonly edges: ReadonlyArray<{ readonly __typename?: 'WorkerEdge', readonly cursor: string, readonly node: { readonly __typename?: 'Worker', readonly id: string, readonly session?: { readonly __typename?: 'Session', readonly id: string, readonly coolingDownStartTime?: string | null, readonly stake: string } | null } }> } };
+
 export const BasePoolCommonFragmentDoc = `
     fragment BasePoolCommon on BasePool {
   account {
@@ -3492,5 +3500,53 @@ export const useInfiniteWorkersConnectionQuery = <
     useInfiniteQuery<WorkersConnectionQuery, TError, TData>(
       ['WorkersConnection.infinite', variables],
       (metaData) => fetcher<WorkersConnectionQuery, WorkersConnectionQueryVariables>(client, WorkersConnectionDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
+      options
+    );
+
+export const ReclaimableWorkersConnectionDocument = `
+    query ReclaimableWorkersConnection($orderBy: [WorkerOrderByInput!]!, $where: WorkerWhereInput) {
+  workersConnection(orderBy: $orderBy, where: $where) {
+    edges {
+      cursor
+      node {
+        id
+        session {
+          id
+          coolingDownStartTime
+          stake
+        }
+      }
+    }
+    totalCount
+  }
+}
+    `;
+export const useReclaimableWorkersConnectionQuery = <
+      TData = ReclaimableWorkersConnectionQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: ReclaimableWorkersConnectionQueryVariables,
+      options?: UseQueryOptions<ReclaimableWorkersConnectionQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<ReclaimableWorkersConnectionQuery, TError, TData>(
+      ['ReclaimableWorkersConnection', variables],
+      fetcher<ReclaimableWorkersConnectionQuery, ReclaimableWorkersConnectionQueryVariables>(client, ReclaimableWorkersConnectionDocument, variables, headers),
+      options
+    );
+export const useInfiniteReclaimableWorkersConnectionQuery = <
+      TData = ReclaimableWorkersConnectionQuery,
+      TError = unknown
+    >(
+      pageParamKey: keyof ReclaimableWorkersConnectionQueryVariables,
+      client: GraphQLClient,
+      variables: ReclaimableWorkersConnectionQueryVariables,
+      options?: UseInfiniteQueryOptions<ReclaimableWorkersConnectionQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useInfiniteQuery<ReclaimableWorkersConnectionQuery, TError, TData>(
+      ['ReclaimableWorkersConnection.infinite', variables],
+      (metaData) => fetcher<ReclaimableWorkersConnectionQuery, ReclaimableWorkersConnectionQueryVariables>(client, ReclaimableWorkersConnectionDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
       options
     );

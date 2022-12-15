@@ -1,18 +1,21 @@
 import WorkerIcon from '@/assets/worker.svg'
 import Empty from '@/components/Empty'
 import ListSkeleton from '@/components/ListSkeleton'
+import PromiseButton from '@/components/PromiseButton'
 import SectionHeader from '@/components/SectionHeader'
 import usePolkadotApi from '@/hooks/usePolkadotApi'
 import useSignAndSend from '@/hooks/useSignAndSend'
 import {subsquidClient} from '@/lib/graphql'
 import {
   BasePoolCommonFragment,
+  useReclaimableWorkersConnectionQuery,
   useWorkersConnectionQuery,
   WorkerOrderByInput,
   WorkersConnectionQuery,
 } from '@/lib/subsquidQuery'
 import {Button, Dialog, Pagination, Stack} from '@mui/material'
 import {polkadotAccountAtom} from '@phala/store'
+import {addDays} from 'date-fns'
 import {useAtom} from 'jotai'
 import dynamic from 'next/dynamic'
 import {FC, useCallback, useState} from 'react'
@@ -35,6 +38,9 @@ export type OnAction = (worker: Worker, action: WorkerAction) => Promise<void>
 const pageSize = 5
 
 const WorkerList: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
+  const [reclaimableDate] = useState(() =>
+    addDays(new Date(), -7).toISOString()
+  )
   const [page, setPage] = useState(1)
   const api = usePolkadotApi()
   const [account] = useAtom(polkadotAccountAtom)
@@ -48,6 +54,19 @@ const WorkerList: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
       where: {stakePool: {id_eq: basePool.id}},
     },
     {keepPreviousData: true}
+  )
+  const {data: reclaimableData} = useReclaimableWorkersConnectionQuery(
+    subsquidClient,
+    {
+      orderBy: WorkerOrderByInput.SessionCoolingDownStartTimeAsc,
+      where: {
+        stakePool: {id_eq: basePool.id},
+        session: {
+          state_eq: 'WorkerCoolingDown',
+          coolingDownStartTime_lte: reclaimableDate,
+        },
+      },
+    }
   )
   const isOwner = account?.address === basePool.owner.id
   const isEmpty = data?.workersConnection.totalCount === 0
@@ -84,11 +103,29 @@ const WorkerList: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
     setDialogOpen(false)
   }, [])
 
+  const reclaimAll = async () => {
+    if (!api || !reclaimableData) return
+    const calls = reclaimableData.workersConnection.edges.map(({node}) =>
+      api.tx.phalaStakePoolv2.reclaimPoolWorker(basePool.id, node.id)
+    )
+    return signAndSend(
+      calls.length === 1 ? calls[0] : api.tx.utility.batch(calls)
+    )
+  }
+
   return (
     <>
       <SectionHeader title="Workers" icon={<WorkerIcon />}>
         <Stack spacing={2} direction="row" ml="auto">
-          <Button disabled>Reclaim All</Button>
+          <PromiseButton
+            onClick={reclaimAll}
+            disabled={
+              !reclaimableData ||
+              reclaimableData.workersConnection.edges.length === 0
+            }
+          >
+            Reclaim All
+          </PromiseButton>
           {isOwner && (
             <Button
               variant="contained"
