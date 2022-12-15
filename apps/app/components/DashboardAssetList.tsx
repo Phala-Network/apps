@@ -27,12 +27,15 @@ import {polkadotAccountAtom} from '@phala/store'
 import {toCurrency} from '@phala/util'
 import Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
+import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import {FC, useCallback, useState} from 'react'
-import AssetTransfer from './AssetTransfer'
 import SectionHeader from './SectionHeader'
+import Vest from './Vest'
 
-type AssetDialogAction = 'transfer' | 'buy'
+const AssetTransfer = dynamic(() => import('./AssetTransfer'))
+
+type AssetDialogAction = 'transfer' | 'buy' | 'claim'
 export type Asset = AssetMetadata & {balance: Decimal | undefined}
 type OnAction = (asset: Asset, action: AssetDialogAction) => void
 
@@ -93,14 +96,23 @@ const Asset: FC<{asset: Asset; onAction: OnAction}> = ({asset, onAction}) => {
         {asset.name}
       </Typography>
       {asset.symbol === 'PHA' && (
-        <Button
-          variant="text"
-          size="small"
-          sx={{ml: 0.5}}
-          onClick={() => onAction(asset, 'buy')}
-        >
-          Buy
-        </Button>
+        <>
+          <Button
+            variant="text"
+            size="small"
+            sx={{ml: 0.5}}
+            onClick={() => onAction(asset, 'buy')}
+          >
+            Buy
+          </Button>
+          <Button
+            variant="text"
+            size="small"
+            onClick={() => onAction(asset, 'claim')}
+          >
+            Claim
+          </Button>
+        </>
       )}
       <Typography variant="num6" ml="auto" flexShrink={0}>
         {asset.balance ? (
@@ -179,6 +191,7 @@ const Assets: FC<{
           <AssetTransfer asset={operatingAsset} onClose={onClose} />
         )}
         {dialogAction === 'buy' && <BuyConfirmation onClose={onClose} />}
+        {dialogAction === 'claim' && <Vest onClose={onClose} />}
       </Dialog>
     </>
   )
