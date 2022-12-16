@@ -1,5 +1,4 @@
 import {useApiPromise} from '@phala/react-libs'
-import {useCurrentAccount} from '@phala/store'
 import {Block} from 'baseui/block'
 import {Button} from 'baseui/button'
 import {
@@ -66,7 +65,6 @@ const Body = ({onClose}: Pick<ModalProps, 'onClose'>) => {
 }
 
 const CreatePoolButton = () => {
-  const [currentAccount] = useCurrentAccount()
   const [isOpen, setIsOpen] = useState(false)
   const onClose = () => setIsOpen(false)
   return (
@@ -76,7 +74,7 @@ const CreatePoolButton = () => {
         onClick={() => {
           setIsOpen(true)
         }}
-        disabled={!currentAccount}
+        disabled
       >
         Create Pool
       </Button>

@@ -1,22 +1,32 @@
-import {useStyletron} from 'baseui'
 import {Block} from 'baseui/block'
-import IframeResizer from 'iframe-resizer-react'
+import {Button} from 'baseui/button'
+import {Notification} from 'baseui/notification'
 import {FC} from 'react'
-import Head from '../components/Head'
 
 const Analytics: FC = () => {
-  const [css] = useStyletron()
-
   return (
-    <Block margin="12px auto" width="1200px" maxWidth="100%">
-      <Head title="Analytics" />
-      <IframeResizer
-        className={css({
-          width: 'calc(100% + 32px)',
-          border: 'none',
-        })}
-        src="https://mb.phala.network/public/dashboard/d3e95e99-dcd9-4469-ad32-7e5dbd388cc7#bordered=false"
-      ></IframeResizer>
+    <Block
+      display="flex"
+      alignItems="center"
+      marginTop="scale1200"
+      justifyContent="center"
+      flexDirection="column"
+    >
+      <Notification kind="info" overrides={{Body: {style: {width: 'auto'}}}}>
+        <Block display="flex" alignItems="center">
+          On-chain upgrading. Phala App 2.0 will be launched on 22nd Dec.
+        </Block>
+      </Notification>
+      <Button
+        overrides={{Root: {style: {marginTop: '24px'}}}}
+        onClick={() =>
+          window.open(
+            'https://twitter.com/phalanetwork/status/1603743551351058434'
+          )
+        }
+      >
+        Learn More
+      </Button>
     </Block>
   )
 }

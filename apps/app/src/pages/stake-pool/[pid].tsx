@@ -9,7 +9,7 @@ import {StatefulTooltip} from 'baseui/tooltip'
 import {HeadingLarge, HeadingSmall, ParagraphXSmall} from 'baseui/typography'
 import Decimal from 'decimal.js'
 import {PageProps} from 'gatsby'
-import {FC, useCallback, useMemo, useState} from 'react'
+import {FC, useCallback, useState} from 'react'
 import {CheckCircle, Info, MinusCircle} from 'react-feather'
 import styled from 'styled-components'
 import Head from '../../components/Head'
@@ -72,15 +72,8 @@ const StakePool: FC<StakePoolProps> = ({pid}) => {
 
   const stakePool = data?.stakePoolById
 
-  const {
-    commission,
-    owner,
-    activeStakeCount,
-    workerCount,
-    miningWorkerCount,
-    whitelists,
-    whitelistEnabled,
-  } = stakePool || {}
+  const {commission, owner, activeStakeCount, workerCount, miningWorkerCount} =
+    stakePool || {}
 
   const isOwner = Boolean(owner && owner.id === polkadotAccount?.address)
   const verified = Boolean(
@@ -88,15 +81,6 @@ const StakePool: FC<StakePoolProps> = ({pid}) => {
       (owner.identityLevel === IdentityLevel.Reasonable ||
         owner.identityLevel === IdentityLevel.KnownGood)
   )
-
-  const canDelegate = useMemo(() => {
-    return Boolean(
-      isOwner ||
-        whitelistEnabled === false ||
-        (polkadotAccount?.address && whitelists?.length)
-    )
-  }, [whitelistEnabled, polkadotAccount?.address, isOwner, whitelists?.length])
-
   return (
     <>
       <Head title={`Stake Pool #${pid}`}></Head>
@@ -117,10 +101,7 @@ const StakePool: FC<StakePoolProps> = ({pid}) => {
         >
           <HeadingLarge as="div">Stake Pool #{pid}</HeadingLarge>
 
-          <Button
-            disabled={!canDelegate}
-            onClick={() => setModalKey('delegate')}
-          >
+          <Button disabled onClick={() => setModalKey('delegate')}>
             Delegate
           </Button>
         </Block>

@@ -68,6 +68,7 @@ const StakePoolWhitelist: FC<{pid?: string}> = ({pid}) => {
   return (
     <div>
       <Button
+        disabled
         size="compact"
         kind="secondary"
         onClick={() => {
@@ -78,11 +79,11 @@ const StakePoolWhitelist: FC<{pid?: string}> = ({pid}) => {
         Add Stakers
       </Button>
       <Button
+        disabled
         onClick={() => {
           setIsModalOpen(true)
           setModalKey('remove')
         }}
-        disabled={!selectedAddresses.length}
         size="compact"
         kind="secondary"
         overrides={{Root: {style: {marginLeft: '12px'}}}}
