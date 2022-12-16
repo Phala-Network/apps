@@ -603,10 +603,10 @@ const StakePoolTableV2: FC<{
               polkadotAccount?.address &&
                 (isOwner || !node.whitelistEnabled || node.whitelists?.length)
             )
-            const stake = node.stakes?.[0]
             if (kind === 'delegate') {
               return (
                 <Button
+                  disabled
                   kind="secondary"
                   size="compact"
                   onClick={(e) => {
@@ -621,30 +621,28 @@ const StakePoolTableV2: FC<{
               )
             }
             const miningMenuItems: MenuItem[] = [
-              {label: 'Add Worker', key: 'addWorker'},
-              {label: 'Set Cap', key: 'setCap'},
-              {label: 'Set Commission', key: 'setCommission'},
-              {label: 'Set Description', key: 'setDescription'},
+              {label: 'Add Worker', key: 'addWorker', disabled: true},
+              {label: 'Set Cap', key: 'setCap', disabled: true},
+              {label: 'Set Commission', key: 'setCommission', disabled: true},
+              {label: 'Set Description', key: 'setDescription', disabled: true},
             ]
             const commonMenuItems: MenuItem[] = [
               {
                 label: canDelegate ? 'Delegate' : 'Delegate (Not in Whitelist)',
                 key: 'delegate',
-                disabled: !canDelegate,
+                disabled: true,
               },
               {
                 label: 'Claim Reward',
                 key: 'claim',
-                disabled:
-                  (!stake || stake.reward === '0') &&
-                  (!isOwner || node.ownerReward === '0'),
+                disabled: true,
               },
               {
                 label: 'Withdraw',
                 key: 'withdraw',
-                disabled: !stake || stake.amount === '0',
+                disabled: true,
               },
-              {label: 'Reclaim All Workers', key: 'reclaimAll'},
+              {label: 'Reclaim All Workers', key: 'reclaimAll', disabled: true},
             ]
             let items: Array<MenuItem | MenuDivider> = commonMenuItems
             if (kind === 'mining') {
