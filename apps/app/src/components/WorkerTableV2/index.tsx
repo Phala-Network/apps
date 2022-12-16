@@ -16,13 +16,7 @@ import {TableBuilder, TableBuilderColumn} from 'baseui/table-semantic'
 import {toaster} from 'baseui/toast'
 import {StatefulTooltip} from 'baseui/tooltip'
 import {ParagraphXSmall} from 'baseui/typography'
-import {
-  addDays,
-  formatDuration,
-  intervalToDuration,
-  isAfter,
-  isFuture,
-} from 'date-fns'
+import {addDays, formatDuration, intervalToDuration, isAfter} from 'date-fns'
 import Decimal from 'decimal.js'
 import {debounce} from 'lodash-es'
 import {FC, useCallback, useEffect, useMemo, useState} from 'react'
@@ -326,37 +320,31 @@ const WorkerTableV2: FC<{
               {({node}: WorkerEdge) => {
                 const {miner} = node
                 if (!miner) return
-                const {state, coolingDownStartTime} = miner
                 const allItems: (false | MenuItem)[] = [
                   {
                     label: 'Start',
                     key: 'start',
-                    disabled: state !== 'Ready',
+                    disabled: true,
                   },
                   {
                     label: 'Change Stake',
                     key: 'changeStake',
-                    disabled:
-                      state !== 'MiningIdle' && state !== 'MiningUnresponsive',
+                    disabled: true,
                   },
                   {
                     label: 'Stop',
                     key: 'stop',
-                    disabled:
-                      state !== 'MiningIdle' && state !== 'MiningUnresponsive',
+                    disabled: true,
                   },
                   {
                     label: 'Remove',
                     key: 'remove',
-                    disabled:
-                      state !== 'Ready' && state !== 'MiningCoolingDown',
+                    disabled: true,
                   },
                   {
                     label: 'Reclaim',
                     key: 'reclaim',
-                    disabled:
-                      !coolingDownStartTime ||
-                      isFuture(addDays(new Date(coolingDownStartTime), 7)),
+                    disabled: true,
                   },
                 ]
 

@@ -219,11 +219,7 @@ const ClaimAll: FC<{kind: 'delegate' | 'mining'} & BlockProps> = ({
           </Block>
         )}
 
-        <Button
-          onClick={() => setIsModalOpen(true)}
-          kind="secondary"
-          disabled={displayRewards.isZero()}
-        >
+        <Button onClick={() => setIsModalOpen(true)} kind="secondary" disabled>
           Claim
         </Button>
       </Block>

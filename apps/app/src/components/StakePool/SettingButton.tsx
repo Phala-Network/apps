@@ -7,6 +7,7 @@ const SettingButton: FC<Pick<ButtonProps, 'onClick'>> = ({onClick}) => {
   const [, theme] = useStyletron()
   return (
     <Button
+      disabled
       kind="tertiary"
       size="mini"
       shape="circle"
