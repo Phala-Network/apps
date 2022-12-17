@@ -28,9 +28,8 @@ const BaseLayout: FC<{children: ReactNode}> = (props) => {
         justifyContent="center"
       >
         <ParagraphSmall as="div">
-          On-chain upgrading. Until the 21st Dec, you will not be able to
-          perform any on-chain operations, Phala App 2.0 will be launched on
-          22nd Dec.
+          Phala on-chain functions are being upgraded to V2. Until the 21st Dec,
+          you are not able to operate anything with delegate & mine.
           <StyledLink
             href="https://twitter.com/phalanetwork/status/1603743551351058434"
             target="_blank"
