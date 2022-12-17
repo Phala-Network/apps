@@ -8,3 +8,23 @@ export const favoritePoolsAtom = atomWithStorage<string[]>(
   'jotai:favorite_pools',
   []
 )
+
+export const basePoolMinDelegableAtom = atomWithStorage<string>(
+  'jotai:base_pool_min_delegable',
+  '100'
+)
+
+export const basePoolMinTvlAtom = atomWithStorage<string>(
+  'jotai:base_pool_min_tvl',
+  ''
+)
+
+export const basePoolMinAprAtom = atomWithStorage<string>(
+  'jotai:base_pool_min_apr',
+  ''
+)
+
+export const basePoolMinWorkersAtom = atomWithStorage<string>(
+  'jotai:base_pool_min_workers',
+  ''
+)

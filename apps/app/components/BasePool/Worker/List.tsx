@@ -3,6 +3,7 @@ import Empty from '@/components/Empty'
 import ListSkeleton from '@/components/ListSkeleton'
 import PromiseButton from '@/components/PromiseButton'
 import SectionHeader from '@/components/SectionHeader'
+import useDebounced from '@/hooks/useDebounced'
 import usePolkadotApi from '@/hooks/usePolkadotApi'
 import useSignAndSend from '@/hooks/useSignAndSend'
 import {subsquidClient} from '@/lib/graphql'
@@ -25,7 +26,6 @@ import {
 import {polkadotAccountAtom} from '@phala/store'
 import {addDays} from 'date-fns'
 import {useAtom} from 'jotai'
-import {debounce} from 'lodash-es'
 import dynamic from 'next/dynamic'
 import {FC, useCallback, useState} from 'react'
 import WorkerCard from './Card'
@@ -65,11 +65,7 @@ const WorkerList: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
   )
   const [page, setPage] = useState(1)
   const [searchString, setSearchString] = useState('')
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const debouncedSetSearchString = useCallback(
-    debounce(setSearchString, 500),
-    []
-  )
+  const debouncedSearchString = useDebounced(searchString, 500)
   const [orderBy, setOrderBy] = useState<WorkerOrderByInput>('session_v_DESC')
   const api = usePolkadotApi()
   const [account] = useAtom(polkadotAccountAtom)
@@ -83,7 +79,9 @@ const WorkerList: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
       where: {
         AND: [
           {stakePool: {id_eq: basePool.id}},
-          ...(searchString ? [{id_containsInsensitive: searchString}] : []),
+          ...(debouncedSearchString
+            ? [{id_containsInsensitive: debouncedSearchString}]
+            : []),
         ],
       },
     },
@@ -152,12 +150,13 @@ const WorkerList: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
       <SectionHeader title="Workers" icon={<WorkerIcon />}>
         <Stack spacing={2} direction="row" ml="auto">
           <TextField
+            value={searchString}
             placeholder="Search"
             size="small"
             InputProps={{
               endAdornment: <Search />,
             }}
-            onChange={(e) => debouncedSetSearchString(e.target.value)}
+            onChange={(e) => setSearchString(e.target.value)}
           />
           <TextField
             size="small"

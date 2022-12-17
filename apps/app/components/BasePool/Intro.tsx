@@ -79,10 +79,7 @@ const Intro: FC<{
 
           {owner.identityDisplay && (
             <>
-              <Tooltip
-                title={owner.identityLevel ?? 'No Judgement'}
-                placement="top"
-              >
+              <Tooltip title={owner.identityLevel ?? 'No Judgement'}>
                 {ownerVerified ? (
                   <VerifiedOutlined
                     color="success"
@@ -95,7 +92,7 @@ const Intro: FC<{
                   />
                 )}
               </Tooltip>
-              <Tooltip title={owner.id} placement="top">
+              <Tooltip title={owner.id}>
                 <Typography
                   flexShrink="0"
                   variant="subtitle2"

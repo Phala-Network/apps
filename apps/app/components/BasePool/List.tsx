@@ -1,5 +1,6 @@
 import Empty from '@/components/Empty'
 import ListSkeleton from '@/components/ListSkeleton'
+import useDebounced from '@/hooks/useDebounced'
 import useSelectedVaultState from '@/hooks/useSelectedVaultState'
 import {subsquidClient} from '@/lib/graphql'
 import {
@@ -10,7 +11,8 @@ import {
   IdentityLevel,
   useInfiniteBasePoolsConnectionQuery,
 } from '@/lib/subsquidQuery'
-import {favoritePoolsAtom} from '@/store/common'
+import {barlow} from '@/lib/theme'
+import {basePoolMinDelegableAtom, favoritePoolsAtom} from '@/store/common'
 import FilterList from '@mui/icons-material/FilterList'
 import Search from '@mui/icons-material/Search'
 import {
@@ -20,15 +22,15 @@ import {
   FormControlLabel,
   IconButton,
   MenuItem,
+  NoSsr,
   Stack,
   SxProps,
   TextField,
   Typography,
 } from '@mui/material'
 import {polkadotAccountAtom} from '@phala/store'
-import {isTruthy} from '@phala/util'
+import {getDecimalPattern, isTruthy} from '@phala/util'
 import {useAtom} from 'jotai'
-import {debounce} from 'lodash-es'
 import dynamic from 'next/dynamic'
 import {FC, useCallback, useEffect, useState} from 'react'
 import {useInView} from 'react-intersection-observer'
@@ -100,22 +102,24 @@ const BasePoolList: FC<{
   )
   const [searchString, setSearchString] = useState('')
   const isSearchingPid = /^[0-9]+$/.test(searchString)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const debouncedSetSearchString = useCallback(
-    debounce(setSearchString, 500),
-    []
-  )
+  const debouncedSearchString = useDebounced(searchString, 500)
+  const [minDelegable, setMinDelegable] = useAtom(basePoolMinDelegableAtom)
+  const debouncedMinDelegable = useDebounced(minDelegable, 500)
   const orderByEntries = isVault ? vaultOrderByEntries : stakePoolOrderByEntries
   const orderBy = isVault ? vaultOrderBy : stakePoolOrderBy
   const where: Array<BasePoolWhereInput | false> = [
     {kind_eq: kind},
-    !!searchString &&
+    !!debouncedSearchString &&
       (isSearchingPid
-        ? {id_startsWith: searchString}
+        ? {id_startsWith: debouncedSearchString}
         : {
             OR: [
-              {owner: {id_containsInsensitive: searchString}},
-              {owner: {identityDisplay_containsInsensitive: searchString}},
+              {owner: {id_containsInsensitive: debouncedSearchString}},
+              {
+                owner: {
+                  identityDisplay_containsInsensitive: debouncedSearchString,
+                },
+              },
             ],
           }),
     variant === 'farm' && {owner: {id_eq: polkadotAccount?.address}},
@@ -138,7 +142,10 @@ const BasePoolList: FC<{
         delegations_some: {account: {id_eq: delegatorAddress}, shares_gt: '0'},
       },
     variant === 'delegate' &&
-      kind === 'StakePool' && {stakePool: {delegable_gte: '100'}},
+      kind === 'StakePool' &&
+      !!debouncedMinDelegable && {
+        stakePool: {delegable_gte: debouncedMinDelegable},
+      },
   ]
   const enabled =
     variant === 'delegate' || (!!polkadotAccount?.address && variant === 'farm')
@@ -221,6 +228,25 @@ const BasePoolList: FC<{
       <Typography variant="h5" component="div">
         Property
       </Typography>
+      <NoSsr>
+        <Stack spacing={2} pt={2} pr={1}>
+          <TextField
+            value={minDelegable}
+            label="Min Delegable"
+            size="small"
+            InputProps={{
+              endAdornment: 'PHA',
+              sx: {fontFamily: barlow.style.fontFamily, fontWeight: 600},
+            }}
+            inputProps={{inputMode: 'decimal', pattern: getDecimalPattern(2)}}
+            onChange={(e) => {
+              if (!e.target.validity.patternMismatch) {
+                setMinDelegable(e.target.value)
+              }
+            }}
+          />
+        </Stack>
+      </NoSsr>
     </Stack>
   )
 
@@ -255,8 +281,9 @@ const BasePoolList: FC<{
                 variant === 'farm' ? 'Search PID' : 'Search PID or Owner'
               }
               size="small"
+              value={searchString}
               InputProps={{endAdornment: <Search />}}
-              onChange={(e) => debouncedSetSearchString(e.target.value)}
+              onChange={(e) => setSearchString(e.target.value)}
               sx={{flex: '1 0', ml: {xl: '0!important'}}}
             />
             <TextField

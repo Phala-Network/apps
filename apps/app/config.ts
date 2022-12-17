@@ -6,4 +6,4 @@ export const KHALA_ENDPOINTS = ['wss://pc-test-4.phala.network/khala/ws']
 //   'wss://public-rpc.pinknode.io/khala',
 // ]
 export const PHALA_ENDPOINTS = ['wss://api.phala.network/ws']
-export const WPHA_ASSET_ID = 15
+export const WPHA_ASSET_ID = 10000

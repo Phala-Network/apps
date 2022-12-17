@@ -92,7 +92,6 @@ const DelegateCard: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
             <Stack direction="row" alignItems="center">
               <Tooltip
                 title={owner.id}
-                placement="top"
                 PopperProps={{onClick: (e) => e.stopPropagation()}}
               >
                 <Link
@@ -112,7 +111,6 @@ const DelegateCard: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
               {owner.identityDisplay && (
                 <Tooltip
                   title={owner.identityLevel ?? 'No Judgement'}
-                  placement="top"
                   PopperProps={{onClick: (e) => e.stopPropagation()}}
                 >
                   {ownerVerified ? (

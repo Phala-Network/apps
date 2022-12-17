@@ -2,6 +2,7 @@ import NftsIcon from '@/assets/nfts.svg'
 import Empty from '@/components/Empty'
 import ListSkeleton from '@/components/ListSkeleton'
 import SectionHeader from '@/components/SectionHeader'
+import useDebounced from '@/hooks/useDebounced'
 import {subsquidClient} from '@/lib/graphql'
 import {
   BasePoolKind,
@@ -31,7 +32,6 @@ import {
   Unstable_Grid2 as Grid,
 } from '@mui/material'
 import {isTruthy} from '@phala/util'
-import {debounce} from 'lodash-es'
 import dynamic from 'next/dynamic'
 import {FC, useCallback, useEffect, useState} from 'react'
 import {useInView} from 'react-intersection-observer'
@@ -74,16 +74,12 @@ const DelegationList: FC<{
   const [withdrawingFilter, setWithdrawingFilterFilter] = useState(false)
 
   const [searchString, setSearchString] = useState('')
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const debouncedSetSearchString = useCallback(
-    debounce(setSearchString, 500),
-    []
-  )
+  const debouncedSearchString = useDebounced(searchString, 500)
   const where: Array<DelegationWhereInput | false> = [
     {account: {id_eq: address}},
     {shares_gt: '0'},
-    !!searchString && {
-      OR: [{basePool: {id_startsWith: searchString}}],
+    !!debouncedSearchString && {
+      OR: [{basePool: {id_startsWith: debouncedSearchString}}],
     },
     !isVault && {
       basePool: {
@@ -191,11 +187,12 @@ const DelegationList: FC<{
               <FilterList />
             </IconButton>
             <TextField
+              value={searchString}
               color={color}
               placeholder="Search PID"
               size="small"
               InputProps={{endAdornment: <Search />}}
-              onChange={(e) => debouncedSetSearchString(e.target.value)}
+              onChange={(e) => setSearchString(e.target.value)}
               sx={{flex: '1', ml: {xl: '0!important'}}}
             />
             <TextField
