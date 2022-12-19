@@ -160,7 +160,12 @@ const BasePoolList: FC<{
     variant === 'delegate' &&
       kind === 'StakePool' &&
       !!debouncedMinDelegable && {
-        stakePool: {delegable_gte: debouncedMinDelegable},
+        stakePool: {
+          OR: [
+            {delegable_gte: debouncedMinDelegable},
+            {delegable_isNull: true},
+          ],
+        },
       },
     variant === 'delegate' &&
       !!debouncedMinTvl && {
