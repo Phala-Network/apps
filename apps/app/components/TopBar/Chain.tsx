@@ -25,6 +25,7 @@ const Chain: FC = () => {
           borderColor: color,
         },
       }}
+      inputProps={{sx: {py: '6.5px'}}}
       onChange={(e) => setChain(e.target.value as Chain)}
     >
       {['khala', 'phala'].map((value) => (

@@ -81,7 +81,7 @@ const DashboardAccount: FC = () => {
               <PhalaLogo width="100%" />
             )}
           </Box>
-          <Box flex="1">
+          <Stack flex="1" alignItems="flex-start">
             <Typography
               variant="h4"
               component="div"
@@ -114,7 +114,7 @@ const DashboardAccount: FC = () => {
               </Typography>
               <ContentCopy sx={{ml: 1, width: 16}} color="disabled" />
             </Stack>
-          </Box>
+          </Stack>
           {account ? (
             <IconButton onClick={() => setAssetVisible((x) => !x)}>
               {assetVisible ? (
