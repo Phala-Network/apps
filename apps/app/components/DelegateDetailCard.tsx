@@ -6,7 +6,7 @@ import useGetApr from '@/hooks/useGetApr'
 import usePolkadotApi from '@/hooks/usePolkadotApi'
 import useSelectedVaultState from '@/hooks/useSelectedVaultState'
 import useSignAndSend from '@/hooks/useSignAndSend'
-import aprToApy from '@/lib/aprToApy'
+import {aprToApy} from '@/lib/apr'
 import type {BasePoolKind} from '@/lib/subsquidQuery'
 import {colors} from '@/lib/theme'
 import {

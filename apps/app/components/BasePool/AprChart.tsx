@@ -1,5 +1,5 @@
 import Property from '@/components/Property'
-import aprToApy from '@/lib/aprToApy'
+import {aprToApy} from '@/lib/apr'
 import {subsquidClient} from '@/lib/graphql'
 import {
   BasePoolCommonFragment,

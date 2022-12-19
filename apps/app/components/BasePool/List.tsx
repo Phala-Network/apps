@@ -1,6 +1,7 @@
 import Empty from '@/components/Empty'
 import ListSkeleton from '@/components/ListSkeleton'
 import useDebounced from '@/hooks/useDebounced'
+import useGetAprMultiplier from '@/hooks/useGetAprMultiplier'
 import useSelectedVaultState from '@/hooks/useSelectedVaultState'
 import {subsquidClient} from '@/lib/graphql'
 import {
@@ -12,13 +13,20 @@ import {
   useInfiniteBasePoolsConnectionQuery,
 } from '@/lib/subsquidQuery'
 import {barlow} from '@/lib/theme'
-import {basePoolMinDelegableAtom, favoritePoolsAtom} from '@/store/common'
+import {
+  basePoolMinAprAtom,
+  basePoolMinDelegableAtom,
+  basePoolMinTvlAtom,
+  favoritePoolsAtom,
+} from '@/store/common'
 import FilterList from '@mui/icons-material/FilterList'
 import Search from '@mui/icons-material/Search'
 import {
   Box,
+  Button,
   Checkbox,
   Dialog,
+  Drawer,
   FormControlLabel,
   IconButton,
   MenuItem,
@@ -82,6 +90,7 @@ const BasePoolList: FC<{
   const [dialogAction, setDialogAction] = useState<PoolDialogAction>()
   const [polkadotAccount] = useAtom(polkadotAccountAtom)
   const selectedVaultState = useSelectedVaultState()
+  const getAprMultiplier = useGetAprMultiplier()
   const delegatorAddress =
     selectedVaultState === null
       ? polkadotAccount?.address
@@ -89,6 +98,7 @@ const BasePoolList: FC<{
   const isVault = kind === 'Vault'
   const [favoritePools] = useAtom(favoritePoolsAtom)
   const color = isVault ? 'secondary' : 'primary'
+  const [drawerOpen, setDrawerOpen] = useState(false)
   const [verifiedFilter, setVerifiedFilter] = useState(false)
   const [favoriteFilter, setFavoriteFilter] = useState(false)
   const [delegatedFilter, setDelegatedFilter] = useState(false)
@@ -105,6 +115,12 @@ const BasePoolList: FC<{
   const debouncedSearchString = useDebounced(searchString, 500)
   const [minDelegable, setMinDelegable] = useAtom(basePoolMinDelegableAtom)
   const debouncedMinDelegable = useDebounced(minDelegable, 500)
+  const [minTvl, setMinTvl] = useAtom(basePoolMinTvlAtom)
+  const debouncedMinTvl = useDebounced(minTvl, 500)
+  const [minApr, setMinApr] = useAtom(basePoolMinAprAtom)
+  const debouncedMinApr = useDebounced(getAprMultiplier(minApr), 500)
+  const [minApy, setMinApy] = useAtom(basePoolMinAprAtom)
+  const debouncedMinApy = useDebounced(getAprMultiplier(minApy), 500)
   const orderByEntries = isVault ? vaultOrderByEntries : stakePoolOrderByEntries
   const orderBy = isVault ? vaultOrderBy : stakePoolOrderBy
   const where: Array<BasePoolWhereInput | false> = [
@@ -146,6 +162,20 @@ const BasePoolList: FC<{
       !!debouncedMinDelegable && {
         stakePool: {delegable_gte: debouncedMinDelegable},
       },
+    variant === 'delegate' &&
+      !!debouncedMinTvl && {
+        totalValue_gte: debouncedMinTvl,
+      },
+    variant === 'delegate' &&
+      kind === 'StakePool' &&
+      !!debouncedMinApr && {
+        aprMultiplier_gte: debouncedMinApr.toDP(2).toString(),
+      },
+    variant === 'delegate' &&
+      kind === 'Vault' &&
+      !!debouncedMinApy && {
+        aprMultiplier_gte: debouncedMinApy.toDP(2).toString(),
+      },
   ]
   const enabled =
     variant === 'delegate' || (!!polkadotAccount?.address && variant === 'farm')
@@ -180,8 +210,32 @@ const BasePoolList: FC<{
     }
   }, [inView, fetchNextPage, enabled])
 
+  const clearFilters = () => {
+    setVerifiedFilter(false)
+    setFavoriteFilter(false)
+    setDelegatedFilter(false)
+    setClosedFilter(false)
+    if (kind === 'StakePool') {
+      setMinDelegable('')
+      setMinApr('')
+    } else {
+      setMinApy('')
+    }
+    setMinTvl('')
+  }
+
+  const canClearFilters =
+    verifiedFilter ||
+    favoriteFilter ||
+    delegatedFilter ||
+    closedFilter ||
+    (kind === 'StakePool' && minDelegable !== '') ||
+    minTvl !== '' ||
+    (kind === 'StakePool' && minApr !== '') ||
+    (kind === 'Vault' && minApy !== '')
+
   const filters = variant === 'delegate' && (
-    <Stack spacing={2} pr={3}>
+    <Stack spacing={2} pr={5}>
       <Typography variant="h5" component="div">
         Status
       </Typography>
@@ -229,10 +283,29 @@ const BasePoolList: FC<{
         Property
       </Typography>
       <NoSsr>
-        <Stack spacing={2} pt={2} pr={1}>
+        <Stack spacing={3} pt={2}>
+          {kind === 'StakePool' && (
+            <TextField
+              value={minDelegable}
+              placeholder="0.00"
+              label="Min Delegable"
+              size="small"
+              InputProps={{
+                endAdornment: 'PHA',
+                sx: {fontFamily: barlow.style.fontFamily, fontWeight: 600},
+              }}
+              inputProps={{inputMode: 'decimal', pattern: getDecimalPattern(2)}}
+              onChange={(e) => {
+                if (!e.target.validity.patternMismatch) {
+                  setMinDelegable(e.target.value)
+                }
+              }}
+            />
+          )}
           <TextField
-            value={minDelegable}
-            label="Min Delegable"
+            value={minTvl}
+            label="Min TVL"
+            placeholder="0.00"
             size="small"
             InputProps={{
               endAdornment: 'PHA',
@@ -241,10 +314,49 @@ const BasePoolList: FC<{
             inputProps={{inputMode: 'decimal', pattern: getDecimalPattern(2)}}
             onChange={(e) => {
               if (!e.target.validity.patternMismatch) {
-                setMinDelegable(e.target.value)
+                setMinTvl(e.target.value)
               }
             }}
           />
+          {kind === 'StakePool' && (
+            <TextField
+              value={minApr}
+              label="Min APR"
+              size="small"
+              placeholder="0.00"
+              InputProps={{
+                endAdornment: '%',
+                sx: {fontFamily: barlow.style.fontFamily, fontWeight: 600},
+              }}
+              inputProps={{inputMode: 'decimal', pattern: getDecimalPattern(2)}}
+              onChange={(e) => {
+                if (!e.target.validity.patternMismatch) {
+                  setMinApr(e.target.value)
+                }
+              }}
+            />
+          )}
+          {kind === 'Vault' && (
+            <TextField
+              value={minApy}
+              label="Min APY"
+              size="small"
+              placeholder="0.00"
+              InputProps={{
+                endAdornment: '%',
+                sx: {fontFamily: barlow.style.fontFamily, fontWeight: 600},
+              }}
+              inputProps={{inputMode: 'decimal', pattern: getDecimalPattern(2)}}
+              onChange={(e) => {
+                if (!e.target.validity.patternMismatch) {
+                  setMinApy(e.target.value)
+                }
+              }}
+            />
+          )}
+          <Button onClick={clearFilters} disabled={!canClearFilters}>
+            Clear Filters
+          </Button>
         </Stack>
       </NoSsr>
     </Stack>
@@ -266,6 +378,7 @@ const BasePoolList: FC<{
         <Box flex="1 0">
           <Stack direction="row" spacing={{xs: 1, md: 2}} alignItems="center">
             <IconButton
+              onClick={() => setDrawerOpen(true)}
               sx={{
                 display: {
                   xs: variant === 'delegate' ? undefined : 'none',
@@ -349,6 +462,16 @@ const BasePoolList: FC<{
           </>
         )}
       </Dialog>
+      {variant === 'delegate' && (
+        <Drawer
+          PaperProps={{sx: {pt: 3, pl: 3}}}
+          anchor="left"
+          open={drawerOpen}
+          onClose={() => setDrawerOpen(false)}
+        >
+          {filters}
+        </Drawer>
+      )}
     </>
   )
 }
