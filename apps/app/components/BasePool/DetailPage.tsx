@@ -77,22 +77,21 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
     </>
   )
   const apr = getApr(basePool.aprMultiplier)
-  const {data, isLoading: isDelegationLoading} = useDelegationByIdQuery(
-    subsquidClient,
-    {
-      id: `${basePool.id}-${
-        selectedVaultState?.account.id || account?.address
-      }`,
-    },
-    {
-      enabled: !!selectedVaultState || !!account,
-    }
-  )
+  const {data: delegationData, isLoading: isDelegationLoading} =
+    useDelegationByIdQuery(
+      subsquidClient,
+      {
+        id: `${basePool.id}-${
+          selectedVaultState?.account.id || account?.address
+        }`,
+      },
+      {enabled: !!selectedVaultState || !!account}
+    )
   const onClose = useCallback(() => {
     setDialogOpen(false)
   }, [])
-  const hasDelegation =
-    !!data?.delegationById && data.delegationById.shares !== '0'
+  const {delegationById: delegation} = delegationData || {}
+  const hasDelegation = !!delegation && delegation.shares !== '0'
   const poolHasWithdrawal = basePool.withdrawingShares !== '0'
 
   const reclaim = async () => {
@@ -266,7 +265,7 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
                 alignItems="flex-end"
               >
                 <Box width="400px">
-                  <NftCard compact delegation={data.delegationById} />
+                  <NftCard compact delegation={delegation} />
                 </Box>
                 <Stack spacing={2}>
                   <PromiseButton
@@ -286,7 +285,6 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
                 </Stack>
               </Stack>
             ) : (
-              // TODO: placeholder style
               <Box height="240px">
                 {!isDelegationLoading && <Empty message="No Delegation" />}
               </Box>
@@ -308,7 +306,7 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
           <OwnerSettings basePool={basePool} />
         )}
         {hasDelegation && dialogAction === 'withdraw' && (
-          <Withdraw delegation={data.delegationById} onClose={onClose} />
+          <Withdraw delegation={delegation} onClose={onClose} />
         )}
       </Dialog>
     </>
