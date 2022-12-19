@@ -30,33 +30,33 @@ export type Scalars = {
 };
 
 export type Account = {
-  readonly __typename?: 'Account';
-  readonly basePool?: Maybe<BasePool>;
+  __typename?: 'Account';
+  basePool?: Maybe<BasePool>;
   /** account address */
-  readonly id: Scalars['String'];
-  readonly identityDisplay?: Maybe<Scalars['String']>;
-  readonly identityLevel?: Maybe<IdentityLevel>;
-  readonly ownedPools: ReadonlyArray<BasePool>;
-  readonly stakePoolAvgAprMultiplier: Scalars['BigDecimal'];
-  readonly stakePoolNftCount: Scalars['Int'];
-  readonly stakePoolValue: Scalars['BigDecimal'];
-  readonly vaultAvgAprMultiplier: Scalars['BigDecimal'];
-  readonly vaultNftCount: Scalars['Int'];
-  readonly vaultValue: Scalars['BigDecimal'];
+  id: Scalars['String'];
+  identityDisplay?: Maybe<Scalars['String']>;
+  identityLevel?: Maybe<IdentityLevel>;
+  ownedPools: Array<BasePool>;
+  stakePoolAvgAprMultiplier: Scalars['BigDecimal'];
+  stakePoolNftCount: Scalars['Int'];
+  stakePoolValue: Scalars['BigDecimal'];
+  vaultAvgAprMultiplier: Scalars['BigDecimal'];
+  vaultNftCount: Scalars['Int'];
+  vaultValue: Scalars['BigDecimal'];
 };
 
 
 export type AccountOwnedPoolsArgs = {
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<ReadonlyArray<BasePoolOrderByInput>>;
+  orderBy?: InputMaybe<Array<BasePoolOrderByInput>>;
   where?: InputMaybe<BasePoolWhereInput>;
 };
 
 export type AccountEdge = {
-  readonly __typename?: 'AccountEdge';
-  readonly cursor: Scalars['String'];
-  readonly node: Account;
+  __typename?: 'AccountEdge';
+  cursor: Scalars['String'];
+  node: Account;
 };
 
 export const AccountOrderByInput = {
@@ -112,149 +112,149 @@ export const AccountOrderByInput = {
 
 export type AccountOrderByInput = typeof AccountOrderByInput[keyof typeof AccountOrderByInput];
 export type AccountWhereInput = {
-  readonly AND?: InputMaybe<ReadonlyArray<AccountWhereInput>>;
-  readonly OR?: InputMaybe<ReadonlyArray<AccountWhereInput>>;
-  readonly basePool?: InputMaybe<BasePoolWhereInput>;
-  readonly basePool_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly id_contains?: InputMaybe<Scalars['String']>;
-  readonly id_containsInsensitive?: InputMaybe<Scalars['String']>;
-  readonly id_endsWith?: InputMaybe<Scalars['String']>;
-  readonly id_eq?: InputMaybe<Scalars['String']>;
-  readonly id_gt?: InputMaybe<Scalars['String']>;
-  readonly id_gte?: InputMaybe<Scalars['String']>;
-  readonly id_in?: InputMaybe<ReadonlyArray<Scalars['String']>>;
-  readonly id_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly id_lt?: InputMaybe<Scalars['String']>;
-  readonly id_lte?: InputMaybe<Scalars['String']>;
-  readonly id_not_contains?: InputMaybe<Scalars['String']>;
-  readonly id_not_containsInsensitive?: InputMaybe<Scalars['String']>;
-  readonly id_not_endsWith?: InputMaybe<Scalars['String']>;
-  readonly id_not_eq?: InputMaybe<Scalars['String']>;
-  readonly id_not_in?: InputMaybe<ReadonlyArray<Scalars['String']>>;
-  readonly id_not_startsWith?: InputMaybe<Scalars['String']>;
-  readonly id_startsWith?: InputMaybe<Scalars['String']>;
-  readonly identityDisplay_contains?: InputMaybe<Scalars['String']>;
-  readonly identityDisplay_containsInsensitive?: InputMaybe<Scalars['String']>;
-  readonly identityDisplay_endsWith?: InputMaybe<Scalars['String']>;
-  readonly identityDisplay_eq?: InputMaybe<Scalars['String']>;
-  readonly identityDisplay_gt?: InputMaybe<Scalars['String']>;
-  readonly identityDisplay_gte?: InputMaybe<Scalars['String']>;
-  readonly identityDisplay_in?: InputMaybe<ReadonlyArray<Scalars['String']>>;
-  readonly identityDisplay_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly identityDisplay_lt?: InputMaybe<Scalars['String']>;
-  readonly identityDisplay_lte?: InputMaybe<Scalars['String']>;
-  readonly identityDisplay_not_contains?: InputMaybe<Scalars['String']>;
-  readonly identityDisplay_not_containsInsensitive?: InputMaybe<Scalars['String']>;
-  readonly identityDisplay_not_endsWith?: InputMaybe<Scalars['String']>;
-  readonly identityDisplay_not_eq?: InputMaybe<Scalars['String']>;
-  readonly identityDisplay_not_in?: InputMaybe<ReadonlyArray<Scalars['String']>>;
-  readonly identityDisplay_not_startsWith?: InputMaybe<Scalars['String']>;
-  readonly identityDisplay_startsWith?: InputMaybe<Scalars['String']>;
-  readonly identityLevel_eq?: InputMaybe<IdentityLevel>;
-  readonly identityLevel_in?: InputMaybe<ReadonlyArray<IdentityLevel>>;
-  readonly identityLevel_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly identityLevel_not_eq?: InputMaybe<IdentityLevel>;
-  readonly identityLevel_not_in?: InputMaybe<ReadonlyArray<IdentityLevel>>;
-  readonly ownedPools_every?: InputMaybe<BasePoolWhereInput>;
-  readonly ownedPools_none?: InputMaybe<BasePoolWhereInput>;
-  readonly ownedPools_some?: InputMaybe<BasePoolWhereInput>;
-  readonly stakePoolAvgAprMultiplier_eq?: InputMaybe<Scalars['BigDecimal']>;
-  readonly stakePoolAvgAprMultiplier_gt?: InputMaybe<Scalars['BigDecimal']>;
-  readonly stakePoolAvgAprMultiplier_gte?: InputMaybe<Scalars['BigDecimal']>;
-  readonly stakePoolAvgAprMultiplier_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
-  readonly stakePoolAvgAprMultiplier_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly stakePoolAvgAprMultiplier_lt?: InputMaybe<Scalars['BigDecimal']>;
-  readonly stakePoolAvgAprMultiplier_lte?: InputMaybe<Scalars['BigDecimal']>;
-  readonly stakePoolAvgAprMultiplier_not_eq?: InputMaybe<Scalars['BigDecimal']>;
-  readonly stakePoolAvgAprMultiplier_not_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
-  readonly stakePoolNftCount_eq?: InputMaybe<Scalars['Int']>;
-  readonly stakePoolNftCount_gt?: InputMaybe<Scalars['Int']>;
-  readonly stakePoolNftCount_gte?: InputMaybe<Scalars['Int']>;
-  readonly stakePoolNftCount_in?: InputMaybe<ReadonlyArray<Scalars['Int']>>;
-  readonly stakePoolNftCount_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly stakePoolNftCount_lt?: InputMaybe<Scalars['Int']>;
-  readonly stakePoolNftCount_lte?: InputMaybe<Scalars['Int']>;
-  readonly stakePoolNftCount_not_eq?: InputMaybe<Scalars['Int']>;
-  readonly stakePoolNftCount_not_in?: InputMaybe<ReadonlyArray<Scalars['Int']>>;
-  readonly stakePoolValue_eq?: InputMaybe<Scalars['BigDecimal']>;
-  readonly stakePoolValue_gt?: InputMaybe<Scalars['BigDecimal']>;
-  readonly stakePoolValue_gte?: InputMaybe<Scalars['BigDecimal']>;
-  readonly stakePoolValue_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
-  readonly stakePoolValue_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly stakePoolValue_lt?: InputMaybe<Scalars['BigDecimal']>;
-  readonly stakePoolValue_lte?: InputMaybe<Scalars['BigDecimal']>;
-  readonly stakePoolValue_not_eq?: InputMaybe<Scalars['BigDecimal']>;
-  readonly stakePoolValue_not_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
-  readonly vaultAvgAprMultiplier_eq?: InputMaybe<Scalars['BigDecimal']>;
-  readonly vaultAvgAprMultiplier_gt?: InputMaybe<Scalars['BigDecimal']>;
-  readonly vaultAvgAprMultiplier_gte?: InputMaybe<Scalars['BigDecimal']>;
-  readonly vaultAvgAprMultiplier_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
-  readonly vaultAvgAprMultiplier_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly vaultAvgAprMultiplier_lt?: InputMaybe<Scalars['BigDecimal']>;
-  readonly vaultAvgAprMultiplier_lte?: InputMaybe<Scalars['BigDecimal']>;
-  readonly vaultAvgAprMultiplier_not_eq?: InputMaybe<Scalars['BigDecimal']>;
-  readonly vaultAvgAprMultiplier_not_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
-  readonly vaultNftCount_eq?: InputMaybe<Scalars['Int']>;
-  readonly vaultNftCount_gt?: InputMaybe<Scalars['Int']>;
-  readonly vaultNftCount_gte?: InputMaybe<Scalars['Int']>;
-  readonly vaultNftCount_in?: InputMaybe<ReadonlyArray<Scalars['Int']>>;
-  readonly vaultNftCount_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly vaultNftCount_lt?: InputMaybe<Scalars['Int']>;
-  readonly vaultNftCount_lte?: InputMaybe<Scalars['Int']>;
-  readonly vaultNftCount_not_eq?: InputMaybe<Scalars['Int']>;
-  readonly vaultNftCount_not_in?: InputMaybe<ReadonlyArray<Scalars['Int']>>;
-  readonly vaultValue_eq?: InputMaybe<Scalars['BigDecimal']>;
-  readonly vaultValue_gt?: InputMaybe<Scalars['BigDecimal']>;
-  readonly vaultValue_gte?: InputMaybe<Scalars['BigDecimal']>;
-  readonly vaultValue_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
-  readonly vaultValue_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly vaultValue_lt?: InputMaybe<Scalars['BigDecimal']>;
-  readonly vaultValue_lte?: InputMaybe<Scalars['BigDecimal']>;
-  readonly vaultValue_not_eq?: InputMaybe<Scalars['BigDecimal']>;
-  readonly vaultValue_not_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
+  AND?: InputMaybe<Array<AccountWhereInput>>;
+  OR?: InputMaybe<Array<AccountWhereInput>>;
+  basePool?: InputMaybe<BasePoolWhereInput>;
+  basePool_isNull?: InputMaybe<Scalars['Boolean']>;
+  id_contains?: InputMaybe<Scalars['String']>;
+  id_containsInsensitive?: InputMaybe<Scalars['String']>;
+  id_endsWith?: InputMaybe<Scalars['String']>;
+  id_eq?: InputMaybe<Scalars['String']>;
+  id_gt?: InputMaybe<Scalars['String']>;
+  id_gte?: InputMaybe<Scalars['String']>;
+  id_in?: InputMaybe<Array<Scalars['String']>>;
+  id_isNull?: InputMaybe<Scalars['Boolean']>;
+  id_lt?: InputMaybe<Scalars['String']>;
+  id_lte?: InputMaybe<Scalars['String']>;
+  id_not_contains?: InputMaybe<Scalars['String']>;
+  id_not_containsInsensitive?: InputMaybe<Scalars['String']>;
+  id_not_endsWith?: InputMaybe<Scalars['String']>;
+  id_not_eq?: InputMaybe<Scalars['String']>;
+  id_not_in?: InputMaybe<Array<Scalars['String']>>;
+  id_not_startsWith?: InputMaybe<Scalars['String']>;
+  id_startsWith?: InputMaybe<Scalars['String']>;
+  identityDisplay_contains?: InputMaybe<Scalars['String']>;
+  identityDisplay_containsInsensitive?: InputMaybe<Scalars['String']>;
+  identityDisplay_endsWith?: InputMaybe<Scalars['String']>;
+  identityDisplay_eq?: InputMaybe<Scalars['String']>;
+  identityDisplay_gt?: InputMaybe<Scalars['String']>;
+  identityDisplay_gte?: InputMaybe<Scalars['String']>;
+  identityDisplay_in?: InputMaybe<Array<Scalars['String']>>;
+  identityDisplay_isNull?: InputMaybe<Scalars['Boolean']>;
+  identityDisplay_lt?: InputMaybe<Scalars['String']>;
+  identityDisplay_lte?: InputMaybe<Scalars['String']>;
+  identityDisplay_not_contains?: InputMaybe<Scalars['String']>;
+  identityDisplay_not_containsInsensitive?: InputMaybe<Scalars['String']>;
+  identityDisplay_not_endsWith?: InputMaybe<Scalars['String']>;
+  identityDisplay_not_eq?: InputMaybe<Scalars['String']>;
+  identityDisplay_not_in?: InputMaybe<Array<Scalars['String']>>;
+  identityDisplay_not_startsWith?: InputMaybe<Scalars['String']>;
+  identityDisplay_startsWith?: InputMaybe<Scalars['String']>;
+  identityLevel_eq?: InputMaybe<IdentityLevel>;
+  identityLevel_in?: InputMaybe<Array<IdentityLevel>>;
+  identityLevel_isNull?: InputMaybe<Scalars['Boolean']>;
+  identityLevel_not_eq?: InputMaybe<IdentityLevel>;
+  identityLevel_not_in?: InputMaybe<Array<IdentityLevel>>;
+  ownedPools_every?: InputMaybe<BasePoolWhereInput>;
+  ownedPools_none?: InputMaybe<BasePoolWhereInput>;
+  ownedPools_some?: InputMaybe<BasePoolWhereInput>;
+  stakePoolAvgAprMultiplier_eq?: InputMaybe<Scalars['BigDecimal']>;
+  stakePoolAvgAprMultiplier_gt?: InputMaybe<Scalars['BigDecimal']>;
+  stakePoolAvgAprMultiplier_gte?: InputMaybe<Scalars['BigDecimal']>;
+  stakePoolAvgAprMultiplier_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  stakePoolAvgAprMultiplier_isNull?: InputMaybe<Scalars['Boolean']>;
+  stakePoolAvgAprMultiplier_lt?: InputMaybe<Scalars['BigDecimal']>;
+  stakePoolAvgAprMultiplier_lte?: InputMaybe<Scalars['BigDecimal']>;
+  stakePoolAvgAprMultiplier_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  stakePoolAvgAprMultiplier_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  stakePoolNftCount_eq?: InputMaybe<Scalars['Int']>;
+  stakePoolNftCount_gt?: InputMaybe<Scalars['Int']>;
+  stakePoolNftCount_gte?: InputMaybe<Scalars['Int']>;
+  stakePoolNftCount_in?: InputMaybe<Array<Scalars['Int']>>;
+  stakePoolNftCount_isNull?: InputMaybe<Scalars['Boolean']>;
+  stakePoolNftCount_lt?: InputMaybe<Scalars['Int']>;
+  stakePoolNftCount_lte?: InputMaybe<Scalars['Int']>;
+  stakePoolNftCount_not_eq?: InputMaybe<Scalars['Int']>;
+  stakePoolNftCount_not_in?: InputMaybe<Array<Scalars['Int']>>;
+  stakePoolValue_eq?: InputMaybe<Scalars['BigDecimal']>;
+  stakePoolValue_gt?: InputMaybe<Scalars['BigDecimal']>;
+  stakePoolValue_gte?: InputMaybe<Scalars['BigDecimal']>;
+  stakePoolValue_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  stakePoolValue_isNull?: InputMaybe<Scalars['Boolean']>;
+  stakePoolValue_lt?: InputMaybe<Scalars['BigDecimal']>;
+  stakePoolValue_lte?: InputMaybe<Scalars['BigDecimal']>;
+  stakePoolValue_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  stakePoolValue_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  vaultAvgAprMultiplier_eq?: InputMaybe<Scalars['BigDecimal']>;
+  vaultAvgAprMultiplier_gt?: InputMaybe<Scalars['BigDecimal']>;
+  vaultAvgAprMultiplier_gte?: InputMaybe<Scalars['BigDecimal']>;
+  vaultAvgAprMultiplier_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  vaultAvgAprMultiplier_isNull?: InputMaybe<Scalars['Boolean']>;
+  vaultAvgAprMultiplier_lt?: InputMaybe<Scalars['BigDecimal']>;
+  vaultAvgAprMultiplier_lte?: InputMaybe<Scalars['BigDecimal']>;
+  vaultAvgAprMultiplier_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  vaultAvgAprMultiplier_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  vaultNftCount_eq?: InputMaybe<Scalars['Int']>;
+  vaultNftCount_gt?: InputMaybe<Scalars['Int']>;
+  vaultNftCount_gte?: InputMaybe<Scalars['Int']>;
+  vaultNftCount_in?: InputMaybe<Array<Scalars['Int']>>;
+  vaultNftCount_isNull?: InputMaybe<Scalars['Boolean']>;
+  vaultNftCount_lt?: InputMaybe<Scalars['Int']>;
+  vaultNftCount_lte?: InputMaybe<Scalars['Int']>;
+  vaultNftCount_not_eq?: InputMaybe<Scalars['Int']>;
+  vaultNftCount_not_in?: InputMaybe<Array<Scalars['Int']>>;
+  vaultValue_eq?: InputMaybe<Scalars['BigDecimal']>;
+  vaultValue_gt?: InputMaybe<Scalars['BigDecimal']>;
+  vaultValue_gte?: InputMaybe<Scalars['BigDecimal']>;
+  vaultValue_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  vaultValue_isNull?: InputMaybe<Scalars['Boolean']>;
+  vaultValue_lt?: InputMaybe<Scalars['BigDecimal']>;
+  vaultValue_lte?: InputMaybe<Scalars['BigDecimal']>;
+  vaultValue_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  vaultValue_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
 };
 
 export type AccountsConnection = {
-  readonly __typename?: 'AccountsConnection';
-  readonly edges: ReadonlyArray<AccountEdge>;
-  readonly pageInfo: PageInfo;
-  readonly totalCount: Scalars['Int'];
+  __typename?: 'AccountsConnection';
+  edges: Array<AccountEdge>;
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int'];
 };
 
 export type BasePool = {
-  readonly __typename?: 'BasePool';
-  readonly account: Account;
-  readonly aprMultiplier: Scalars['BigDecimal'];
+  __typename?: 'BasePool';
+  account: Account;
+  aprMultiplier: Scalars['BigDecimal'];
   /** NFT collection id */
-  readonly cid: Scalars['Int'];
+  cid: Scalars['Int'];
   /** decimal percentage, 1 means 100% */
-  readonly commission: Scalars['BigDecimal'];
-  readonly delegations: ReadonlyArray<Delegation>;
-  readonly delegatorCount: Scalars['Int'];
-  readonly freeValue: Scalars['BigDecimal'];
+  commission: Scalars['BigDecimal'];
+  delegations: Array<Delegation>;
+  delegatorCount: Scalars['Int'];
+  freeValue: Scalars['BigDecimal'];
   /** pid */
-  readonly id: Scalars['String'];
-  readonly kind: BasePoolKind;
-  readonly owner: Account;
+  id: Scalars['String'];
+  kind: BasePoolKind;
+  owner: Account;
   /** numeric pid for sorting */
-  readonly pid: Scalars['BigInt'];
-  readonly releasingValue: Scalars['BigDecimal'];
-  readonly sharePrice: Scalars['BigDecimal'];
-  readonly stakePool?: Maybe<StakePool>;
-  readonly totalShares: Scalars['BigDecimal'];
-  readonly totalValue: Scalars['BigDecimal'];
-  readonly vault?: Maybe<Vault>;
-  readonly whitelistEnabled: Scalars['Boolean'];
-  readonly whitelists: ReadonlyArray<BasePoolWhitelist>;
-  readonly withdrawingShares: Scalars['BigDecimal'];
-  readonly withdrawingValue: Scalars['BigDecimal'];
+  pid: Scalars['BigInt'];
+  releasingValue: Scalars['BigDecimal'];
+  sharePrice: Scalars['BigDecimal'];
+  stakePool?: Maybe<StakePool>;
+  totalShares: Scalars['BigDecimal'];
+  totalValue: Scalars['BigDecimal'];
+  vault?: Maybe<Vault>;
+  whitelistEnabled: Scalars['Boolean'];
+  whitelists: Array<BasePoolWhitelist>;
+  withdrawingShares: Scalars['BigDecimal'];
+  withdrawingValue: Scalars['BigDecimal'];
 };
 
 
 export type BasePoolDelegationsArgs = {
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<ReadonlyArray<DelegationOrderByInput>>;
+  orderBy?: InputMaybe<Array<DelegationOrderByInput>>;
   where?: InputMaybe<DelegationWhereInput>;
 };
 
@@ -262,23 +262,23 @@ export type BasePoolDelegationsArgs = {
 export type BasePoolWhitelistsArgs = {
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<ReadonlyArray<BasePoolWhitelistOrderByInput>>;
+  orderBy?: InputMaybe<Array<BasePoolWhitelistOrderByInput>>;
   where?: InputMaybe<BasePoolWhitelistWhereInput>;
 };
 
 export type BasePoolAprRecord = {
-  readonly __typename?: 'BasePoolAprRecord';
-  readonly basePool: BasePool;
-  readonly id: Scalars['String'];
+  __typename?: 'BasePoolAprRecord';
+  basePool: BasePool;
+  id: Scalars['String'];
   /** block time */
-  readonly updatedTime: Scalars['DateTime'];
-  readonly value: Scalars['BigDecimal'];
+  updatedTime: Scalars['DateTime'];
+  value: Scalars['BigDecimal'];
 };
 
 export type BasePoolAprRecordEdge = {
-  readonly __typename?: 'BasePoolAprRecordEdge';
-  readonly cursor: Scalars['String'];
-  readonly node: BasePoolAprRecord;
+  __typename?: 'BasePoolAprRecordEdge';
+  cursor: Scalars['String'];
+  node: BasePoolAprRecord;
 };
 
 export const BasePoolAprRecordOrderByInput = {
@@ -322,58 +322,58 @@ export const BasePoolAprRecordOrderByInput = {
 
 export type BasePoolAprRecordOrderByInput = typeof BasePoolAprRecordOrderByInput[keyof typeof BasePoolAprRecordOrderByInput];
 export type BasePoolAprRecordWhereInput = {
-  readonly AND?: InputMaybe<ReadonlyArray<BasePoolAprRecordWhereInput>>;
-  readonly OR?: InputMaybe<ReadonlyArray<BasePoolAprRecordWhereInput>>;
-  readonly basePool?: InputMaybe<BasePoolWhereInput>;
-  readonly basePool_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly id_contains?: InputMaybe<Scalars['String']>;
-  readonly id_containsInsensitive?: InputMaybe<Scalars['String']>;
-  readonly id_endsWith?: InputMaybe<Scalars['String']>;
-  readonly id_eq?: InputMaybe<Scalars['String']>;
-  readonly id_gt?: InputMaybe<Scalars['String']>;
-  readonly id_gte?: InputMaybe<Scalars['String']>;
-  readonly id_in?: InputMaybe<ReadonlyArray<Scalars['String']>>;
-  readonly id_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly id_lt?: InputMaybe<Scalars['String']>;
-  readonly id_lte?: InputMaybe<Scalars['String']>;
-  readonly id_not_contains?: InputMaybe<Scalars['String']>;
-  readonly id_not_containsInsensitive?: InputMaybe<Scalars['String']>;
-  readonly id_not_endsWith?: InputMaybe<Scalars['String']>;
-  readonly id_not_eq?: InputMaybe<Scalars['String']>;
-  readonly id_not_in?: InputMaybe<ReadonlyArray<Scalars['String']>>;
-  readonly id_not_startsWith?: InputMaybe<Scalars['String']>;
-  readonly id_startsWith?: InputMaybe<Scalars['String']>;
-  readonly updatedTime_eq?: InputMaybe<Scalars['DateTime']>;
-  readonly updatedTime_gt?: InputMaybe<Scalars['DateTime']>;
-  readonly updatedTime_gte?: InputMaybe<Scalars['DateTime']>;
-  readonly updatedTime_in?: InputMaybe<ReadonlyArray<Scalars['DateTime']>>;
-  readonly updatedTime_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly updatedTime_lt?: InputMaybe<Scalars['DateTime']>;
-  readonly updatedTime_lte?: InputMaybe<Scalars['DateTime']>;
-  readonly updatedTime_not_eq?: InputMaybe<Scalars['DateTime']>;
-  readonly updatedTime_not_in?: InputMaybe<ReadonlyArray<Scalars['DateTime']>>;
-  readonly value_eq?: InputMaybe<Scalars['BigDecimal']>;
-  readonly value_gt?: InputMaybe<Scalars['BigDecimal']>;
-  readonly value_gte?: InputMaybe<Scalars['BigDecimal']>;
-  readonly value_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
-  readonly value_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly value_lt?: InputMaybe<Scalars['BigDecimal']>;
-  readonly value_lte?: InputMaybe<Scalars['BigDecimal']>;
-  readonly value_not_eq?: InputMaybe<Scalars['BigDecimal']>;
-  readonly value_not_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
+  AND?: InputMaybe<Array<BasePoolAprRecordWhereInput>>;
+  OR?: InputMaybe<Array<BasePoolAprRecordWhereInput>>;
+  basePool?: InputMaybe<BasePoolWhereInput>;
+  basePool_isNull?: InputMaybe<Scalars['Boolean']>;
+  id_contains?: InputMaybe<Scalars['String']>;
+  id_containsInsensitive?: InputMaybe<Scalars['String']>;
+  id_endsWith?: InputMaybe<Scalars['String']>;
+  id_eq?: InputMaybe<Scalars['String']>;
+  id_gt?: InputMaybe<Scalars['String']>;
+  id_gte?: InputMaybe<Scalars['String']>;
+  id_in?: InputMaybe<Array<Scalars['String']>>;
+  id_isNull?: InputMaybe<Scalars['Boolean']>;
+  id_lt?: InputMaybe<Scalars['String']>;
+  id_lte?: InputMaybe<Scalars['String']>;
+  id_not_contains?: InputMaybe<Scalars['String']>;
+  id_not_containsInsensitive?: InputMaybe<Scalars['String']>;
+  id_not_endsWith?: InputMaybe<Scalars['String']>;
+  id_not_eq?: InputMaybe<Scalars['String']>;
+  id_not_in?: InputMaybe<Array<Scalars['String']>>;
+  id_not_startsWith?: InputMaybe<Scalars['String']>;
+  id_startsWith?: InputMaybe<Scalars['String']>;
+  updatedTime_eq?: InputMaybe<Scalars['DateTime']>;
+  updatedTime_gt?: InputMaybe<Scalars['DateTime']>;
+  updatedTime_gte?: InputMaybe<Scalars['DateTime']>;
+  updatedTime_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  updatedTime_isNull?: InputMaybe<Scalars['Boolean']>;
+  updatedTime_lt?: InputMaybe<Scalars['DateTime']>;
+  updatedTime_lte?: InputMaybe<Scalars['DateTime']>;
+  updatedTime_not_eq?: InputMaybe<Scalars['DateTime']>;
+  updatedTime_not_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  value_eq?: InputMaybe<Scalars['BigDecimal']>;
+  value_gt?: InputMaybe<Scalars['BigDecimal']>;
+  value_gte?: InputMaybe<Scalars['BigDecimal']>;
+  value_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  value_isNull?: InputMaybe<Scalars['Boolean']>;
+  value_lt?: InputMaybe<Scalars['BigDecimal']>;
+  value_lte?: InputMaybe<Scalars['BigDecimal']>;
+  value_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  value_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
 };
 
 export type BasePoolAprRecordsConnection = {
-  readonly __typename?: 'BasePoolAprRecordsConnection';
-  readonly edges: ReadonlyArray<BasePoolAprRecordEdge>;
-  readonly pageInfo: PageInfo;
-  readonly totalCount: Scalars['Int'];
+  __typename?: 'BasePoolAprRecordsConnection';
+  edges: Array<BasePoolAprRecordEdge>;
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int'];
 };
 
 export type BasePoolEdge = {
-  readonly __typename?: 'BasePoolEdge';
-  readonly cursor: Scalars['String'];
-  readonly node: BasePool;
+  __typename?: 'BasePoolEdge';
+  cursor: Scalars['String'];
+  node: BasePool;
 };
 
 export const BasePoolKind = {
@@ -473,170 +473,170 @@ export const BasePoolOrderByInput = {
 
 export type BasePoolOrderByInput = typeof BasePoolOrderByInput[keyof typeof BasePoolOrderByInput];
 export type BasePoolWhereInput = {
-  readonly AND?: InputMaybe<ReadonlyArray<BasePoolWhereInput>>;
-  readonly OR?: InputMaybe<ReadonlyArray<BasePoolWhereInput>>;
-  readonly account?: InputMaybe<AccountWhereInput>;
-  readonly account_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly aprMultiplier_eq?: InputMaybe<Scalars['BigDecimal']>;
-  readonly aprMultiplier_gt?: InputMaybe<Scalars['BigDecimal']>;
-  readonly aprMultiplier_gte?: InputMaybe<Scalars['BigDecimal']>;
-  readonly aprMultiplier_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
-  readonly aprMultiplier_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly aprMultiplier_lt?: InputMaybe<Scalars['BigDecimal']>;
-  readonly aprMultiplier_lte?: InputMaybe<Scalars['BigDecimal']>;
-  readonly aprMultiplier_not_eq?: InputMaybe<Scalars['BigDecimal']>;
-  readonly aprMultiplier_not_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
-  readonly cid_eq?: InputMaybe<Scalars['Int']>;
-  readonly cid_gt?: InputMaybe<Scalars['Int']>;
-  readonly cid_gte?: InputMaybe<Scalars['Int']>;
-  readonly cid_in?: InputMaybe<ReadonlyArray<Scalars['Int']>>;
-  readonly cid_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly cid_lt?: InputMaybe<Scalars['Int']>;
-  readonly cid_lte?: InputMaybe<Scalars['Int']>;
-  readonly cid_not_eq?: InputMaybe<Scalars['Int']>;
-  readonly cid_not_in?: InputMaybe<ReadonlyArray<Scalars['Int']>>;
-  readonly commission_eq?: InputMaybe<Scalars['BigDecimal']>;
-  readonly commission_gt?: InputMaybe<Scalars['BigDecimal']>;
-  readonly commission_gte?: InputMaybe<Scalars['BigDecimal']>;
-  readonly commission_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
-  readonly commission_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly commission_lt?: InputMaybe<Scalars['BigDecimal']>;
-  readonly commission_lte?: InputMaybe<Scalars['BigDecimal']>;
-  readonly commission_not_eq?: InputMaybe<Scalars['BigDecimal']>;
-  readonly commission_not_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
-  readonly delegations_every?: InputMaybe<DelegationWhereInput>;
-  readonly delegations_none?: InputMaybe<DelegationWhereInput>;
-  readonly delegations_some?: InputMaybe<DelegationWhereInput>;
-  readonly delegatorCount_eq?: InputMaybe<Scalars['Int']>;
-  readonly delegatorCount_gt?: InputMaybe<Scalars['Int']>;
-  readonly delegatorCount_gte?: InputMaybe<Scalars['Int']>;
-  readonly delegatorCount_in?: InputMaybe<ReadonlyArray<Scalars['Int']>>;
-  readonly delegatorCount_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly delegatorCount_lt?: InputMaybe<Scalars['Int']>;
-  readonly delegatorCount_lte?: InputMaybe<Scalars['Int']>;
-  readonly delegatorCount_not_eq?: InputMaybe<Scalars['Int']>;
-  readonly delegatorCount_not_in?: InputMaybe<ReadonlyArray<Scalars['Int']>>;
-  readonly freeValue_eq?: InputMaybe<Scalars['BigDecimal']>;
-  readonly freeValue_gt?: InputMaybe<Scalars['BigDecimal']>;
-  readonly freeValue_gte?: InputMaybe<Scalars['BigDecimal']>;
-  readonly freeValue_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
-  readonly freeValue_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly freeValue_lt?: InputMaybe<Scalars['BigDecimal']>;
-  readonly freeValue_lte?: InputMaybe<Scalars['BigDecimal']>;
-  readonly freeValue_not_eq?: InputMaybe<Scalars['BigDecimal']>;
-  readonly freeValue_not_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
-  readonly id_contains?: InputMaybe<Scalars['String']>;
-  readonly id_containsInsensitive?: InputMaybe<Scalars['String']>;
-  readonly id_endsWith?: InputMaybe<Scalars['String']>;
-  readonly id_eq?: InputMaybe<Scalars['String']>;
-  readonly id_gt?: InputMaybe<Scalars['String']>;
-  readonly id_gte?: InputMaybe<Scalars['String']>;
-  readonly id_in?: InputMaybe<ReadonlyArray<Scalars['String']>>;
-  readonly id_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly id_lt?: InputMaybe<Scalars['String']>;
-  readonly id_lte?: InputMaybe<Scalars['String']>;
-  readonly id_not_contains?: InputMaybe<Scalars['String']>;
-  readonly id_not_containsInsensitive?: InputMaybe<Scalars['String']>;
-  readonly id_not_endsWith?: InputMaybe<Scalars['String']>;
-  readonly id_not_eq?: InputMaybe<Scalars['String']>;
-  readonly id_not_in?: InputMaybe<ReadonlyArray<Scalars['String']>>;
-  readonly id_not_startsWith?: InputMaybe<Scalars['String']>;
-  readonly id_startsWith?: InputMaybe<Scalars['String']>;
-  readonly kind_eq?: InputMaybe<BasePoolKind>;
-  readonly kind_in?: InputMaybe<ReadonlyArray<BasePoolKind>>;
-  readonly kind_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly kind_not_eq?: InputMaybe<BasePoolKind>;
-  readonly kind_not_in?: InputMaybe<ReadonlyArray<BasePoolKind>>;
-  readonly owner?: InputMaybe<AccountWhereInput>;
-  readonly owner_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly pid_eq?: InputMaybe<Scalars['BigInt']>;
-  readonly pid_gt?: InputMaybe<Scalars['BigInt']>;
-  readonly pid_gte?: InputMaybe<Scalars['BigInt']>;
-  readonly pid_in?: InputMaybe<ReadonlyArray<Scalars['BigInt']>>;
-  readonly pid_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly pid_lt?: InputMaybe<Scalars['BigInt']>;
-  readonly pid_lte?: InputMaybe<Scalars['BigInt']>;
-  readonly pid_not_eq?: InputMaybe<Scalars['BigInt']>;
-  readonly pid_not_in?: InputMaybe<ReadonlyArray<Scalars['BigInt']>>;
-  readonly releasingValue_eq?: InputMaybe<Scalars['BigDecimal']>;
-  readonly releasingValue_gt?: InputMaybe<Scalars['BigDecimal']>;
-  readonly releasingValue_gte?: InputMaybe<Scalars['BigDecimal']>;
-  readonly releasingValue_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
-  readonly releasingValue_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly releasingValue_lt?: InputMaybe<Scalars['BigDecimal']>;
-  readonly releasingValue_lte?: InputMaybe<Scalars['BigDecimal']>;
-  readonly releasingValue_not_eq?: InputMaybe<Scalars['BigDecimal']>;
-  readonly releasingValue_not_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
-  readonly sharePrice_eq?: InputMaybe<Scalars['BigDecimal']>;
-  readonly sharePrice_gt?: InputMaybe<Scalars['BigDecimal']>;
-  readonly sharePrice_gte?: InputMaybe<Scalars['BigDecimal']>;
-  readonly sharePrice_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
-  readonly sharePrice_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly sharePrice_lt?: InputMaybe<Scalars['BigDecimal']>;
-  readonly sharePrice_lte?: InputMaybe<Scalars['BigDecimal']>;
-  readonly sharePrice_not_eq?: InputMaybe<Scalars['BigDecimal']>;
-  readonly sharePrice_not_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
-  readonly stakePool?: InputMaybe<StakePoolWhereInput>;
-  readonly stakePool_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly totalShares_eq?: InputMaybe<Scalars['BigDecimal']>;
-  readonly totalShares_gt?: InputMaybe<Scalars['BigDecimal']>;
-  readonly totalShares_gte?: InputMaybe<Scalars['BigDecimal']>;
-  readonly totalShares_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
-  readonly totalShares_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly totalShares_lt?: InputMaybe<Scalars['BigDecimal']>;
-  readonly totalShares_lte?: InputMaybe<Scalars['BigDecimal']>;
-  readonly totalShares_not_eq?: InputMaybe<Scalars['BigDecimal']>;
-  readonly totalShares_not_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
-  readonly totalValue_eq?: InputMaybe<Scalars['BigDecimal']>;
-  readonly totalValue_gt?: InputMaybe<Scalars['BigDecimal']>;
-  readonly totalValue_gte?: InputMaybe<Scalars['BigDecimal']>;
-  readonly totalValue_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
-  readonly totalValue_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly totalValue_lt?: InputMaybe<Scalars['BigDecimal']>;
-  readonly totalValue_lte?: InputMaybe<Scalars['BigDecimal']>;
-  readonly totalValue_not_eq?: InputMaybe<Scalars['BigDecimal']>;
-  readonly totalValue_not_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
-  readonly vault?: InputMaybe<VaultWhereInput>;
-  readonly vault_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly whitelistEnabled_eq?: InputMaybe<Scalars['Boolean']>;
-  readonly whitelistEnabled_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly whitelistEnabled_not_eq?: InputMaybe<Scalars['Boolean']>;
-  readonly whitelists_every?: InputMaybe<BasePoolWhitelistWhereInput>;
-  readonly whitelists_none?: InputMaybe<BasePoolWhitelistWhereInput>;
-  readonly whitelists_some?: InputMaybe<BasePoolWhitelistWhereInput>;
-  readonly withdrawingShares_eq?: InputMaybe<Scalars['BigDecimal']>;
-  readonly withdrawingShares_gt?: InputMaybe<Scalars['BigDecimal']>;
-  readonly withdrawingShares_gte?: InputMaybe<Scalars['BigDecimal']>;
-  readonly withdrawingShares_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
-  readonly withdrawingShares_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly withdrawingShares_lt?: InputMaybe<Scalars['BigDecimal']>;
-  readonly withdrawingShares_lte?: InputMaybe<Scalars['BigDecimal']>;
-  readonly withdrawingShares_not_eq?: InputMaybe<Scalars['BigDecimal']>;
-  readonly withdrawingShares_not_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
-  readonly withdrawingValue_eq?: InputMaybe<Scalars['BigDecimal']>;
-  readonly withdrawingValue_gt?: InputMaybe<Scalars['BigDecimal']>;
-  readonly withdrawingValue_gte?: InputMaybe<Scalars['BigDecimal']>;
-  readonly withdrawingValue_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
-  readonly withdrawingValue_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly withdrawingValue_lt?: InputMaybe<Scalars['BigDecimal']>;
-  readonly withdrawingValue_lte?: InputMaybe<Scalars['BigDecimal']>;
-  readonly withdrawingValue_not_eq?: InputMaybe<Scalars['BigDecimal']>;
-  readonly withdrawingValue_not_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
+  AND?: InputMaybe<Array<BasePoolWhereInput>>;
+  OR?: InputMaybe<Array<BasePoolWhereInput>>;
+  account?: InputMaybe<AccountWhereInput>;
+  account_isNull?: InputMaybe<Scalars['Boolean']>;
+  aprMultiplier_eq?: InputMaybe<Scalars['BigDecimal']>;
+  aprMultiplier_gt?: InputMaybe<Scalars['BigDecimal']>;
+  aprMultiplier_gte?: InputMaybe<Scalars['BigDecimal']>;
+  aprMultiplier_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  aprMultiplier_isNull?: InputMaybe<Scalars['Boolean']>;
+  aprMultiplier_lt?: InputMaybe<Scalars['BigDecimal']>;
+  aprMultiplier_lte?: InputMaybe<Scalars['BigDecimal']>;
+  aprMultiplier_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  aprMultiplier_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  cid_eq?: InputMaybe<Scalars['Int']>;
+  cid_gt?: InputMaybe<Scalars['Int']>;
+  cid_gte?: InputMaybe<Scalars['Int']>;
+  cid_in?: InputMaybe<Array<Scalars['Int']>>;
+  cid_isNull?: InputMaybe<Scalars['Boolean']>;
+  cid_lt?: InputMaybe<Scalars['Int']>;
+  cid_lte?: InputMaybe<Scalars['Int']>;
+  cid_not_eq?: InputMaybe<Scalars['Int']>;
+  cid_not_in?: InputMaybe<Array<Scalars['Int']>>;
+  commission_eq?: InputMaybe<Scalars['BigDecimal']>;
+  commission_gt?: InputMaybe<Scalars['BigDecimal']>;
+  commission_gte?: InputMaybe<Scalars['BigDecimal']>;
+  commission_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  commission_isNull?: InputMaybe<Scalars['Boolean']>;
+  commission_lt?: InputMaybe<Scalars['BigDecimal']>;
+  commission_lte?: InputMaybe<Scalars['BigDecimal']>;
+  commission_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  commission_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  delegations_every?: InputMaybe<DelegationWhereInput>;
+  delegations_none?: InputMaybe<DelegationWhereInput>;
+  delegations_some?: InputMaybe<DelegationWhereInput>;
+  delegatorCount_eq?: InputMaybe<Scalars['Int']>;
+  delegatorCount_gt?: InputMaybe<Scalars['Int']>;
+  delegatorCount_gte?: InputMaybe<Scalars['Int']>;
+  delegatorCount_in?: InputMaybe<Array<Scalars['Int']>>;
+  delegatorCount_isNull?: InputMaybe<Scalars['Boolean']>;
+  delegatorCount_lt?: InputMaybe<Scalars['Int']>;
+  delegatorCount_lte?: InputMaybe<Scalars['Int']>;
+  delegatorCount_not_eq?: InputMaybe<Scalars['Int']>;
+  delegatorCount_not_in?: InputMaybe<Array<Scalars['Int']>>;
+  freeValue_eq?: InputMaybe<Scalars['BigDecimal']>;
+  freeValue_gt?: InputMaybe<Scalars['BigDecimal']>;
+  freeValue_gte?: InputMaybe<Scalars['BigDecimal']>;
+  freeValue_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  freeValue_isNull?: InputMaybe<Scalars['Boolean']>;
+  freeValue_lt?: InputMaybe<Scalars['BigDecimal']>;
+  freeValue_lte?: InputMaybe<Scalars['BigDecimal']>;
+  freeValue_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  freeValue_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  id_contains?: InputMaybe<Scalars['String']>;
+  id_containsInsensitive?: InputMaybe<Scalars['String']>;
+  id_endsWith?: InputMaybe<Scalars['String']>;
+  id_eq?: InputMaybe<Scalars['String']>;
+  id_gt?: InputMaybe<Scalars['String']>;
+  id_gte?: InputMaybe<Scalars['String']>;
+  id_in?: InputMaybe<Array<Scalars['String']>>;
+  id_isNull?: InputMaybe<Scalars['Boolean']>;
+  id_lt?: InputMaybe<Scalars['String']>;
+  id_lte?: InputMaybe<Scalars['String']>;
+  id_not_contains?: InputMaybe<Scalars['String']>;
+  id_not_containsInsensitive?: InputMaybe<Scalars['String']>;
+  id_not_endsWith?: InputMaybe<Scalars['String']>;
+  id_not_eq?: InputMaybe<Scalars['String']>;
+  id_not_in?: InputMaybe<Array<Scalars['String']>>;
+  id_not_startsWith?: InputMaybe<Scalars['String']>;
+  id_startsWith?: InputMaybe<Scalars['String']>;
+  kind_eq?: InputMaybe<BasePoolKind>;
+  kind_in?: InputMaybe<Array<BasePoolKind>>;
+  kind_isNull?: InputMaybe<Scalars['Boolean']>;
+  kind_not_eq?: InputMaybe<BasePoolKind>;
+  kind_not_in?: InputMaybe<Array<BasePoolKind>>;
+  owner?: InputMaybe<AccountWhereInput>;
+  owner_isNull?: InputMaybe<Scalars['Boolean']>;
+  pid_eq?: InputMaybe<Scalars['BigInt']>;
+  pid_gt?: InputMaybe<Scalars['BigInt']>;
+  pid_gte?: InputMaybe<Scalars['BigInt']>;
+  pid_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  pid_isNull?: InputMaybe<Scalars['Boolean']>;
+  pid_lt?: InputMaybe<Scalars['BigInt']>;
+  pid_lte?: InputMaybe<Scalars['BigInt']>;
+  pid_not_eq?: InputMaybe<Scalars['BigInt']>;
+  pid_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  releasingValue_eq?: InputMaybe<Scalars['BigDecimal']>;
+  releasingValue_gt?: InputMaybe<Scalars['BigDecimal']>;
+  releasingValue_gte?: InputMaybe<Scalars['BigDecimal']>;
+  releasingValue_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  releasingValue_isNull?: InputMaybe<Scalars['Boolean']>;
+  releasingValue_lt?: InputMaybe<Scalars['BigDecimal']>;
+  releasingValue_lte?: InputMaybe<Scalars['BigDecimal']>;
+  releasingValue_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  releasingValue_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  sharePrice_eq?: InputMaybe<Scalars['BigDecimal']>;
+  sharePrice_gt?: InputMaybe<Scalars['BigDecimal']>;
+  sharePrice_gte?: InputMaybe<Scalars['BigDecimal']>;
+  sharePrice_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  sharePrice_isNull?: InputMaybe<Scalars['Boolean']>;
+  sharePrice_lt?: InputMaybe<Scalars['BigDecimal']>;
+  sharePrice_lte?: InputMaybe<Scalars['BigDecimal']>;
+  sharePrice_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  sharePrice_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  stakePool?: InputMaybe<StakePoolWhereInput>;
+  stakePool_isNull?: InputMaybe<Scalars['Boolean']>;
+  totalShares_eq?: InputMaybe<Scalars['BigDecimal']>;
+  totalShares_gt?: InputMaybe<Scalars['BigDecimal']>;
+  totalShares_gte?: InputMaybe<Scalars['BigDecimal']>;
+  totalShares_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  totalShares_isNull?: InputMaybe<Scalars['Boolean']>;
+  totalShares_lt?: InputMaybe<Scalars['BigDecimal']>;
+  totalShares_lte?: InputMaybe<Scalars['BigDecimal']>;
+  totalShares_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  totalShares_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  totalValue_eq?: InputMaybe<Scalars['BigDecimal']>;
+  totalValue_gt?: InputMaybe<Scalars['BigDecimal']>;
+  totalValue_gte?: InputMaybe<Scalars['BigDecimal']>;
+  totalValue_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  totalValue_isNull?: InputMaybe<Scalars['Boolean']>;
+  totalValue_lt?: InputMaybe<Scalars['BigDecimal']>;
+  totalValue_lte?: InputMaybe<Scalars['BigDecimal']>;
+  totalValue_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  totalValue_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  vault?: InputMaybe<VaultWhereInput>;
+  vault_isNull?: InputMaybe<Scalars['Boolean']>;
+  whitelistEnabled_eq?: InputMaybe<Scalars['Boolean']>;
+  whitelistEnabled_isNull?: InputMaybe<Scalars['Boolean']>;
+  whitelistEnabled_not_eq?: InputMaybe<Scalars['Boolean']>;
+  whitelists_every?: InputMaybe<BasePoolWhitelistWhereInput>;
+  whitelists_none?: InputMaybe<BasePoolWhitelistWhereInput>;
+  whitelists_some?: InputMaybe<BasePoolWhitelistWhereInput>;
+  withdrawingShares_eq?: InputMaybe<Scalars['BigDecimal']>;
+  withdrawingShares_gt?: InputMaybe<Scalars['BigDecimal']>;
+  withdrawingShares_gte?: InputMaybe<Scalars['BigDecimal']>;
+  withdrawingShares_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  withdrawingShares_isNull?: InputMaybe<Scalars['Boolean']>;
+  withdrawingShares_lt?: InputMaybe<Scalars['BigDecimal']>;
+  withdrawingShares_lte?: InputMaybe<Scalars['BigDecimal']>;
+  withdrawingShares_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  withdrawingShares_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  withdrawingValue_eq?: InputMaybe<Scalars['BigDecimal']>;
+  withdrawingValue_gt?: InputMaybe<Scalars['BigDecimal']>;
+  withdrawingValue_gte?: InputMaybe<Scalars['BigDecimal']>;
+  withdrawingValue_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  withdrawingValue_isNull?: InputMaybe<Scalars['Boolean']>;
+  withdrawingValue_lt?: InputMaybe<Scalars['BigDecimal']>;
+  withdrawingValue_lte?: InputMaybe<Scalars['BigDecimal']>;
+  withdrawingValue_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  withdrawingValue_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
 };
 
 export type BasePoolWhitelist = {
-  readonly __typename?: 'BasePoolWhitelist';
-  readonly account: Account;
-  readonly basePool: BasePool;
-  readonly createTime: Scalars['DateTime'];
+  __typename?: 'BasePoolWhitelist';
+  account: Account;
+  basePool: BasePool;
+  createTime: Scalars['DateTime'];
   /** ${pid}-${accountId} */
-  readonly id: Scalars['String'];
+  id: Scalars['String'];
 };
 
 export type BasePoolWhitelistEdge = {
-  readonly __typename?: 'BasePoolWhitelistEdge';
-  readonly cursor: Scalars['String'];
-  readonly node: BasePoolWhitelist;
+  __typename?: 'BasePoolWhitelistEdge';
+  cursor: Scalars['String'];
+  node: BasePoolWhitelist;
 };
 
 export const BasePoolWhitelistOrderByInput = {
@@ -696,73 +696,73 @@ export const BasePoolWhitelistOrderByInput = {
 
 export type BasePoolWhitelistOrderByInput = typeof BasePoolWhitelistOrderByInput[keyof typeof BasePoolWhitelistOrderByInput];
 export type BasePoolWhitelistWhereInput = {
-  readonly AND?: InputMaybe<ReadonlyArray<BasePoolWhitelistWhereInput>>;
-  readonly OR?: InputMaybe<ReadonlyArray<BasePoolWhitelistWhereInput>>;
-  readonly account?: InputMaybe<AccountWhereInput>;
-  readonly account_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly basePool?: InputMaybe<BasePoolWhereInput>;
-  readonly basePool_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly createTime_eq?: InputMaybe<Scalars['DateTime']>;
-  readonly createTime_gt?: InputMaybe<Scalars['DateTime']>;
-  readonly createTime_gte?: InputMaybe<Scalars['DateTime']>;
-  readonly createTime_in?: InputMaybe<ReadonlyArray<Scalars['DateTime']>>;
-  readonly createTime_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly createTime_lt?: InputMaybe<Scalars['DateTime']>;
-  readonly createTime_lte?: InputMaybe<Scalars['DateTime']>;
-  readonly createTime_not_eq?: InputMaybe<Scalars['DateTime']>;
-  readonly createTime_not_in?: InputMaybe<ReadonlyArray<Scalars['DateTime']>>;
-  readonly id_contains?: InputMaybe<Scalars['String']>;
-  readonly id_containsInsensitive?: InputMaybe<Scalars['String']>;
-  readonly id_endsWith?: InputMaybe<Scalars['String']>;
-  readonly id_eq?: InputMaybe<Scalars['String']>;
-  readonly id_gt?: InputMaybe<Scalars['String']>;
-  readonly id_gte?: InputMaybe<Scalars['String']>;
-  readonly id_in?: InputMaybe<ReadonlyArray<Scalars['String']>>;
-  readonly id_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly id_lt?: InputMaybe<Scalars['String']>;
-  readonly id_lte?: InputMaybe<Scalars['String']>;
-  readonly id_not_contains?: InputMaybe<Scalars['String']>;
-  readonly id_not_containsInsensitive?: InputMaybe<Scalars['String']>;
-  readonly id_not_endsWith?: InputMaybe<Scalars['String']>;
-  readonly id_not_eq?: InputMaybe<Scalars['String']>;
-  readonly id_not_in?: InputMaybe<ReadonlyArray<Scalars['String']>>;
-  readonly id_not_startsWith?: InputMaybe<Scalars['String']>;
-  readonly id_startsWith?: InputMaybe<Scalars['String']>;
+  AND?: InputMaybe<Array<BasePoolWhitelistWhereInput>>;
+  OR?: InputMaybe<Array<BasePoolWhitelistWhereInput>>;
+  account?: InputMaybe<AccountWhereInput>;
+  account_isNull?: InputMaybe<Scalars['Boolean']>;
+  basePool?: InputMaybe<BasePoolWhereInput>;
+  basePool_isNull?: InputMaybe<Scalars['Boolean']>;
+  createTime_eq?: InputMaybe<Scalars['DateTime']>;
+  createTime_gt?: InputMaybe<Scalars['DateTime']>;
+  createTime_gte?: InputMaybe<Scalars['DateTime']>;
+  createTime_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  createTime_isNull?: InputMaybe<Scalars['Boolean']>;
+  createTime_lt?: InputMaybe<Scalars['DateTime']>;
+  createTime_lte?: InputMaybe<Scalars['DateTime']>;
+  createTime_not_eq?: InputMaybe<Scalars['DateTime']>;
+  createTime_not_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  id_contains?: InputMaybe<Scalars['String']>;
+  id_containsInsensitive?: InputMaybe<Scalars['String']>;
+  id_endsWith?: InputMaybe<Scalars['String']>;
+  id_eq?: InputMaybe<Scalars['String']>;
+  id_gt?: InputMaybe<Scalars['String']>;
+  id_gte?: InputMaybe<Scalars['String']>;
+  id_in?: InputMaybe<Array<Scalars['String']>>;
+  id_isNull?: InputMaybe<Scalars['Boolean']>;
+  id_lt?: InputMaybe<Scalars['String']>;
+  id_lte?: InputMaybe<Scalars['String']>;
+  id_not_contains?: InputMaybe<Scalars['String']>;
+  id_not_containsInsensitive?: InputMaybe<Scalars['String']>;
+  id_not_endsWith?: InputMaybe<Scalars['String']>;
+  id_not_eq?: InputMaybe<Scalars['String']>;
+  id_not_in?: InputMaybe<Array<Scalars['String']>>;
+  id_not_startsWith?: InputMaybe<Scalars['String']>;
+  id_startsWith?: InputMaybe<Scalars['String']>;
 };
 
 export type BasePoolWhitelistsConnection = {
-  readonly __typename?: 'BasePoolWhitelistsConnection';
-  readonly edges: ReadonlyArray<BasePoolWhitelistEdge>;
-  readonly pageInfo: PageInfo;
-  readonly totalCount: Scalars['Int'];
+  __typename?: 'BasePoolWhitelistsConnection';
+  edges: Array<BasePoolWhitelistEdge>;
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int'];
 };
 
 export type BasePoolsConnection = {
-  readonly __typename?: 'BasePoolsConnection';
-  readonly edges: ReadonlyArray<BasePoolEdge>;
-  readonly pageInfo: PageInfo;
-  readonly totalCount: Scalars['Int'];
+  __typename?: 'BasePoolsConnection';
+  edges: Array<BasePoolEdge>;
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int'];
 };
 
 export type Delegation = {
-  readonly __typename?: 'Delegation';
-  readonly account: Account;
-  readonly basePool: BasePool;
-  readonly delegationNft: Nft;
+  __typename?: 'Delegation';
+  account: Account;
+  basePool: BasePool;
+  delegationNft: Nft;
   /** ${pid}-${accountId} */
-  readonly id: Scalars['String'];
-  readonly shares: Scalars['BigDecimal'];
-  readonly value: Scalars['BigDecimal'];
-  readonly withdrawalNft?: Maybe<Nft>;
-  readonly withdrawalStartTime?: Maybe<Scalars['DateTime']>;
-  readonly withdrawingShares: Scalars['BigDecimal'];
-  readonly withdrawingValue: Scalars['BigDecimal'];
+  id: Scalars['String'];
+  shares: Scalars['BigDecimal'];
+  value: Scalars['BigDecimal'];
+  withdrawalNft?: Maybe<Nft>;
+  withdrawalStartTime?: Maybe<Scalars['DateTime']>;
+  withdrawingShares: Scalars['BigDecimal'];
+  withdrawingValue: Scalars['BigDecimal'];
 };
 
 export type DelegationEdge = {
-  readonly __typename?: 'DelegationEdge';
-  readonly cursor: Scalars['String'];
-  readonly node: Delegation;
+  __typename?: 'DelegationEdge';
+  cursor: Scalars['String'];
+  node: Delegation;
 };
 
 export const DelegationOrderByInput = {
@@ -850,18 +850,18 @@ export const DelegationOrderByInput = {
 
 export type DelegationOrderByInput = typeof DelegationOrderByInput[keyof typeof DelegationOrderByInput];
 export type DelegationValueRecord = {
-  readonly __typename?: 'DelegationValueRecord';
-  readonly account: Account;
-  readonly id: Scalars['String'];
+  __typename?: 'DelegationValueRecord';
+  account: Account;
+  id: Scalars['String'];
   /** block time */
-  readonly updatedTime: Scalars['DateTime'];
-  readonly value: Scalars['BigDecimal'];
+  updatedTime: Scalars['DateTime'];
+  value: Scalars['BigDecimal'];
 };
 
 export type DelegationValueRecordEdge = {
-  readonly __typename?: 'DelegationValueRecordEdge';
-  readonly cursor: Scalars['String'];
-  readonly node: DelegationValueRecord;
+  __typename?: 'DelegationValueRecordEdge';
+  cursor: Scalars['String'];
+  node: DelegationValueRecord;
 };
 
 export const DelegationValueRecordOrderByInput = {
@@ -893,155 +893,155 @@ export const DelegationValueRecordOrderByInput = {
 
 export type DelegationValueRecordOrderByInput = typeof DelegationValueRecordOrderByInput[keyof typeof DelegationValueRecordOrderByInput];
 export type DelegationValueRecordWhereInput = {
-  readonly AND?: InputMaybe<ReadonlyArray<DelegationValueRecordWhereInput>>;
-  readonly OR?: InputMaybe<ReadonlyArray<DelegationValueRecordWhereInput>>;
-  readonly account?: InputMaybe<AccountWhereInput>;
-  readonly account_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly id_contains?: InputMaybe<Scalars['String']>;
-  readonly id_containsInsensitive?: InputMaybe<Scalars['String']>;
-  readonly id_endsWith?: InputMaybe<Scalars['String']>;
-  readonly id_eq?: InputMaybe<Scalars['String']>;
-  readonly id_gt?: InputMaybe<Scalars['String']>;
-  readonly id_gte?: InputMaybe<Scalars['String']>;
-  readonly id_in?: InputMaybe<ReadonlyArray<Scalars['String']>>;
-  readonly id_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly id_lt?: InputMaybe<Scalars['String']>;
-  readonly id_lte?: InputMaybe<Scalars['String']>;
-  readonly id_not_contains?: InputMaybe<Scalars['String']>;
-  readonly id_not_containsInsensitive?: InputMaybe<Scalars['String']>;
-  readonly id_not_endsWith?: InputMaybe<Scalars['String']>;
-  readonly id_not_eq?: InputMaybe<Scalars['String']>;
-  readonly id_not_in?: InputMaybe<ReadonlyArray<Scalars['String']>>;
-  readonly id_not_startsWith?: InputMaybe<Scalars['String']>;
-  readonly id_startsWith?: InputMaybe<Scalars['String']>;
-  readonly updatedTime_eq?: InputMaybe<Scalars['DateTime']>;
-  readonly updatedTime_gt?: InputMaybe<Scalars['DateTime']>;
-  readonly updatedTime_gte?: InputMaybe<Scalars['DateTime']>;
-  readonly updatedTime_in?: InputMaybe<ReadonlyArray<Scalars['DateTime']>>;
-  readonly updatedTime_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly updatedTime_lt?: InputMaybe<Scalars['DateTime']>;
-  readonly updatedTime_lte?: InputMaybe<Scalars['DateTime']>;
-  readonly updatedTime_not_eq?: InputMaybe<Scalars['DateTime']>;
-  readonly updatedTime_not_in?: InputMaybe<ReadonlyArray<Scalars['DateTime']>>;
-  readonly value_eq?: InputMaybe<Scalars['BigDecimal']>;
-  readonly value_gt?: InputMaybe<Scalars['BigDecimal']>;
-  readonly value_gte?: InputMaybe<Scalars['BigDecimal']>;
-  readonly value_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
-  readonly value_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly value_lt?: InputMaybe<Scalars['BigDecimal']>;
-  readonly value_lte?: InputMaybe<Scalars['BigDecimal']>;
-  readonly value_not_eq?: InputMaybe<Scalars['BigDecimal']>;
-  readonly value_not_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
+  AND?: InputMaybe<Array<DelegationValueRecordWhereInput>>;
+  OR?: InputMaybe<Array<DelegationValueRecordWhereInput>>;
+  account?: InputMaybe<AccountWhereInput>;
+  account_isNull?: InputMaybe<Scalars['Boolean']>;
+  id_contains?: InputMaybe<Scalars['String']>;
+  id_containsInsensitive?: InputMaybe<Scalars['String']>;
+  id_endsWith?: InputMaybe<Scalars['String']>;
+  id_eq?: InputMaybe<Scalars['String']>;
+  id_gt?: InputMaybe<Scalars['String']>;
+  id_gte?: InputMaybe<Scalars['String']>;
+  id_in?: InputMaybe<Array<Scalars['String']>>;
+  id_isNull?: InputMaybe<Scalars['Boolean']>;
+  id_lt?: InputMaybe<Scalars['String']>;
+  id_lte?: InputMaybe<Scalars['String']>;
+  id_not_contains?: InputMaybe<Scalars['String']>;
+  id_not_containsInsensitive?: InputMaybe<Scalars['String']>;
+  id_not_endsWith?: InputMaybe<Scalars['String']>;
+  id_not_eq?: InputMaybe<Scalars['String']>;
+  id_not_in?: InputMaybe<Array<Scalars['String']>>;
+  id_not_startsWith?: InputMaybe<Scalars['String']>;
+  id_startsWith?: InputMaybe<Scalars['String']>;
+  updatedTime_eq?: InputMaybe<Scalars['DateTime']>;
+  updatedTime_gt?: InputMaybe<Scalars['DateTime']>;
+  updatedTime_gte?: InputMaybe<Scalars['DateTime']>;
+  updatedTime_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  updatedTime_isNull?: InputMaybe<Scalars['Boolean']>;
+  updatedTime_lt?: InputMaybe<Scalars['DateTime']>;
+  updatedTime_lte?: InputMaybe<Scalars['DateTime']>;
+  updatedTime_not_eq?: InputMaybe<Scalars['DateTime']>;
+  updatedTime_not_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  value_eq?: InputMaybe<Scalars['BigDecimal']>;
+  value_gt?: InputMaybe<Scalars['BigDecimal']>;
+  value_gte?: InputMaybe<Scalars['BigDecimal']>;
+  value_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  value_isNull?: InputMaybe<Scalars['Boolean']>;
+  value_lt?: InputMaybe<Scalars['BigDecimal']>;
+  value_lte?: InputMaybe<Scalars['BigDecimal']>;
+  value_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  value_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
 };
 
 export type DelegationValueRecordsConnection = {
-  readonly __typename?: 'DelegationValueRecordsConnection';
-  readonly edges: ReadonlyArray<DelegationValueRecordEdge>;
-  readonly pageInfo: PageInfo;
-  readonly totalCount: Scalars['Int'];
+  __typename?: 'DelegationValueRecordsConnection';
+  edges: Array<DelegationValueRecordEdge>;
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int'];
 };
 
 export type DelegationWhereInput = {
-  readonly AND?: InputMaybe<ReadonlyArray<DelegationWhereInput>>;
-  readonly OR?: InputMaybe<ReadonlyArray<DelegationWhereInput>>;
-  readonly account?: InputMaybe<AccountWhereInput>;
-  readonly account_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly basePool?: InputMaybe<BasePoolWhereInput>;
-  readonly basePool_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly delegationNft?: InputMaybe<NftWhereInput>;
-  readonly delegationNft_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly id_contains?: InputMaybe<Scalars['String']>;
-  readonly id_containsInsensitive?: InputMaybe<Scalars['String']>;
-  readonly id_endsWith?: InputMaybe<Scalars['String']>;
-  readonly id_eq?: InputMaybe<Scalars['String']>;
-  readonly id_gt?: InputMaybe<Scalars['String']>;
-  readonly id_gte?: InputMaybe<Scalars['String']>;
-  readonly id_in?: InputMaybe<ReadonlyArray<Scalars['String']>>;
-  readonly id_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly id_lt?: InputMaybe<Scalars['String']>;
-  readonly id_lte?: InputMaybe<Scalars['String']>;
-  readonly id_not_contains?: InputMaybe<Scalars['String']>;
-  readonly id_not_containsInsensitive?: InputMaybe<Scalars['String']>;
-  readonly id_not_endsWith?: InputMaybe<Scalars['String']>;
-  readonly id_not_eq?: InputMaybe<Scalars['String']>;
-  readonly id_not_in?: InputMaybe<ReadonlyArray<Scalars['String']>>;
-  readonly id_not_startsWith?: InputMaybe<Scalars['String']>;
-  readonly id_startsWith?: InputMaybe<Scalars['String']>;
-  readonly shares_eq?: InputMaybe<Scalars['BigDecimal']>;
-  readonly shares_gt?: InputMaybe<Scalars['BigDecimal']>;
-  readonly shares_gte?: InputMaybe<Scalars['BigDecimal']>;
-  readonly shares_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
-  readonly shares_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly shares_lt?: InputMaybe<Scalars['BigDecimal']>;
-  readonly shares_lte?: InputMaybe<Scalars['BigDecimal']>;
-  readonly shares_not_eq?: InputMaybe<Scalars['BigDecimal']>;
-  readonly shares_not_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
-  readonly value_eq?: InputMaybe<Scalars['BigDecimal']>;
-  readonly value_gt?: InputMaybe<Scalars['BigDecimal']>;
-  readonly value_gte?: InputMaybe<Scalars['BigDecimal']>;
-  readonly value_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
-  readonly value_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly value_lt?: InputMaybe<Scalars['BigDecimal']>;
-  readonly value_lte?: InputMaybe<Scalars['BigDecimal']>;
-  readonly value_not_eq?: InputMaybe<Scalars['BigDecimal']>;
-  readonly value_not_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
-  readonly withdrawalNft?: InputMaybe<NftWhereInput>;
-  readonly withdrawalNft_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly withdrawalStartTime_eq?: InputMaybe<Scalars['DateTime']>;
-  readonly withdrawalStartTime_gt?: InputMaybe<Scalars['DateTime']>;
-  readonly withdrawalStartTime_gte?: InputMaybe<Scalars['DateTime']>;
-  readonly withdrawalStartTime_in?: InputMaybe<ReadonlyArray<Scalars['DateTime']>>;
-  readonly withdrawalStartTime_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly withdrawalStartTime_lt?: InputMaybe<Scalars['DateTime']>;
-  readonly withdrawalStartTime_lte?: InputMaybe<Scalars['DateTime']>;
-  readonly withdrawalStartTime_not_eq?: InputMaybe<Scalars['DateTime']>;
-  readonly withdrawalStartTime_not_in?: InputMaybe<ReadonlyArray<Scalars['DateTime']>>;
-  readonly withdrawingShares_eq?: InputMaybe<Scalars['BigDecimal']>;
-  readonly withdrawingShares_gt?: InputMaybe<Scalars['BigDecimal']>;
-  readonly withdrawingShares_gte?: InputMaybe<Scalars['BigDecimal']>;
-  readonly withdrawingShares_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
-  readonly withdrawingShares_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly withdrawingShares_lt?: InputMaybe<Scalars['BigDecimal']>;
-  readonly withdrawingShares_lte?: InputMaybe<Scalars['BigDecimal']>;
-  readonly withdrawingShares_not_eq?: InputMaybe<Scalars['BigDecimal']>;
-  readonly withdrawingShares_not_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
-  readonly withdrawingValue_eq?: InputMaybe<Scalars['BigDecimal']>;
-  readonly withdrawingValue_gt?: InputMaybe<Scalars['BigDecimal']>;
-  readonly withdrawingValue_gte?: InputMaybe<Scalars['BigDecimal']>;
-  readonly withdrawingValue_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
-  readonly withdrawingValue_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly withdrawingValue_lt?: InputMaybe<Scalars['BigDecimal']>;
-  readonly withdrawingValue_lte?: InputMaybe<Scalars['BigDecimal']>;
-  readonly withdrawingValue_not_eq?: InputMaybe<Scalars['BigDecimal']>;
-  readonly withdrawingValue_not_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
+  AND?: InputMaybe<Array<DelegationWhereInput>>;
+  OR?: InputMaybe<Array<DelegationWhereInput>>;
+  account?: InputMaybe<AccountWhereInput>;
+  account_isNull?: InputMaybe<Scalars['Boolean']>;
+  basePool?: InputMaybe<BasePoolWhereInput>;
+  basePool_isNull?: InputMaybe<Scalars['Boolean']>;
+  delegationNft?: InputMaybe<NftWhereInput>;
+  delegationNft_isNull?: InputMaybe<Scalars['Boolean']>;
+  id_contains?: InputMaybe<Scalars['String']>;
+  id_containsInsensitive?: InputMaybe<Scalars['String']>;
+  id_endsWith?: InputMaybe<Scalars['String']>;
+  id_eq?: InputMaybe<Scalars['String']>;
+  id_gt?: InputMaybe<Scalars['String']>;
+  id_gte?: InputMaybe<Scalars['String']>;
+  id_in?: InputMaybe<Array<Scalars['String']>>;
+  id_isNull?: InputMaybe<Scalars['Boolean']>;
+  id_lt?: InputMaybe<Scalars['String']>;
+  id_lte?: InputMaybe<Scalars['String']>;
+  id_not_contains?: InputMaybe<Scalars['String']>;
+  id_not_containsInsensitive?: InputMaybe<Scalars['String']>;
+  id_not_endsWith?: InputMaybe<Scalars['String']>;
+  id_not_eq?: InputMaybe<Scalars['String']>;
+  id_not_in?: InputMaybe<Array<Scalars['String']>>;
+  id_not_startsWith?: InputMaybe<Scalars['String']>;
+  id_startsWith?: InputMaybe<Scalars['String']>;
+  shares_eq?: InputMaybe<Scalars['BigDecimal']>;
+  shares_gt?: InputMaybe<Scalars['BigDecimal']>;
+  shares_gte?: InputMaybe<Scalars['BigDecimal']>;
+  shares_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  shares_isNull?: InputMaybe<Scalars['Boolean']>;
+  shares_lt?: InputMaybe<Scalars['BigDecimal']>;
+  shares_lte?: InputMaybe<Scalars['BigDecimal']>;
+  shares_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  shares_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  value_eq?: InputMaybe<Scalars['BigDecimal']>;
+  value_gt?: InputMaybe<Scalars['BigDecimal']>;
+  value_gte?: InputMaybe<Scalars['BigDecimal']>;
+  value_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  value_isNull?: InputMaybe<Scalars['Boolean']>;
+  value_lt?: InputMaybe<Scalars['BigDecimal']>;
+  value_lte?: InputMaybe<Scalars['BigDecimal']>;
+  value_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  value_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  withdrawalNft?: InputMaybe<NftWhereInput>;
+  withdrawalNft_isNull?: InputMaybe<Scalars['Boolean']>;
+  withdrawalStartTime_eq?: InputMaybe<Scalars['DateTime']>;
+  withdrawalStartTime_gt?: InputMaybe<Scalars['DateTime']>;
+  withdrawalStartTime_gte?: InputMaybe<Scalars['DateTime']>;
+  withdrawalStartTime_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  withdrawalStartTime_isNull?: InputMaybe<Scalars['Boolean']>;
+  withdrawalStartTime_lt?: InputMaybe<Scalars['DateTime']>;
+  withdrawalStartTime_lte?: InputMaybe<Scalars['DateTime']>;
+  withdrawalStartTime_not_eq?: InputMaybe<Scalars['DateTime']>;
+  withdrawalStartTime_not_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  withdrawingShares_eq?: InputMaybe<Scalars['BigDecimal']>;
+  withdrawingShares_gt?: InputMaybe<Scalars['BigDecimal']>;
+  withdrawingShares_gte?: InputMaybe<Scalars['BigDecimal']>;
+  withdrawingShares_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  withdrawingShares_isNull?: InputMaybe<Scalars['Boolean']>;
+  withdrawingShares_lt?: InputMaybe<Scalars['BigDecimal']>;
+  withdrawingShares_lte?: InputMaybe<Scalars['BigDecimal']>;
+  withdrawingShares_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  withdrawingShares_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  withdrawingValue_eq?: InputMaybe<Scalars['BigDecimal']>;
+  withdrawingValue_gt?: InputMaybe<Scalars['BigDecimal']>;
+  withdrawingValue_gte?: InputMaybe<Scalars['BigDecimal']>;
+  withdrawingValue_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  withdrawingValue_isNull?: InputMaybe<Scalars['Boolean']>;
+  withdrawingValue_lt?: InputMaybe<Scalars['BigDecimal']>;
+  withdrawingValue_lte?: InputMaybe<Scalars['BigDecimal']>;
+  withdrawingValue_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  withdrawingValue_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
 };
 
 export type DelegationsConnection = {
-  readonly __typename?: 'DelegationsConnection';
-  readonly edges: ReadonlyArray<DelegationEdge>;
-  readonly pageInfo: PageInfo;
-  readonly totalCount: Scalars['Int'];
+  __typename?: 'DelegationsConnection';
+  edges: Array<DelegationEdge>;
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int'];
 };
 
 export type GlobalState = {
-  readonly __typename?: 'GlobalState';
-  readonly averageAprMultiplier: Scalars['BigDecimal'];
-  readonly averageAprMultiplierUpdatedTime: Scalars['DateTime'];
-  readonly averageBlockTime: Scalars['Int'];
-  readonly averageBlockTimeUpdatedHeight: Scalars['Int'];
-  readonly averageBlockTimeUpdatedTime: Scalars['DateTime'];
-  readonly height: Scalars['Int'];
+  __typename?: 'GlobalState';
+  averageAprMultiplier: Scalars['BigDecimal'];
+  averageAprMultiplierUpdatedTime: Scalars['DateTime'];
+  averageBlockTime: Scalars['Int'];
+  averageBlockTimeUpdatedHeight: Scalars['Int'];
+  averageBlockTimeUpdatedTime: Scalars['DateTime'];
+  height: Scalars['Int'];
   /** constant 0 */
-  readonly id: Scalars['String'];
+  id: Scalars['String'];
   /** for apr calculation */
-  readonly idleWorkerShares: Scalars['BigDecimal'];
-  readonly totalValue: Scalars['BigDecimal'];
+  idleWorkerShares: Scalars['BigDecimal'];
+  totalValue: Scalars['BigDecimal'];
 };
 
 export type GlobalStateEdge = {
-  readonly __typename?: 'GlobalStateEdge';
-  readonly cursor: Scalars['String'];
-  readonly node: GlobalState;
+  __typename?: 'GlobalStateEdge';
+  cursor: Scalars['String'];
+  node: GlobalState;
 };
 
 export const GlobalStateOrderByInput = {
@@ -1067,104 +1067,104 @@ export const GlobalStateOrderByInput = {
 
 export type GlobalStateOrderByInput = typeof GlobalStateOrderByInput[keyof typeof GlobalStateOrderByInput];
 export type GlobalStateWhereInput = {
-  readonly AND?: InputMaybe<ReadonlyArray<GlobalStateWhereInput>>;
-  readonly OR?: InputMaybe<ReadonlyArray<GlobalStateWhereInput>>;
-  readonly averageAprMultiplierUpdatedTime_eq?: InputMaybe<Scalars['DateTime']>;
-  readonly averageAprMultiplierUpdatedTime_gt?: InputMaybe<Scalars['DateTime']>;
-  readonly averageAprMultiplierUpdatedTime_gte?: InputMaybe<Scalars['DateTime']>;
-  readonly averageAprMultiplierUpdatedTime_in?: InputMaybe<ReadonlyArray<Scalars['DateTime']>>;
-  readonly averageAprMultiplierUpdatedTime_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly averageAprMultiplierUpdatedTime_lt?: InputMaybe<Scalars['DateTime']>;
-  readonly averageAprMultiplierUpdatedTime_lte?: InputMaybe<Scalars['DateTime']>;
-  readonly averageAprMultiplierUpdatedTime_not_eq?: InputMaybe<Scalars['DateTime']>;
-  readonly averageAprMultiplierUpdatedTime_not_in?: InputMaybe<ReadonlyArray<Scalars['DateTime']>>;
-  readonly averageAprMultiplier_eq?: InputMaybe<Scalars['BigDecimal']>;
-  readonly averageAprMultiplier_gt?: InputMaybe<Scalars['BigDecimal']>;
-  readonly averageAprMultiplier_gte?: InputMaybe<Scalars['BigDecimal']>;
-  readonly averageAprMultiplier_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
-  readonly averageAprMultiplier_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly averageAprMultiplier_lt?: InputMaybe<Scalars['BigDecimal']>;
-  readonly averageAprMultiplier_lte?: InputMaybe<Scalars['BigDecimal']>;
-  readonly averageAprMultiplier_not_eq?: InputMaybe<Scalars['BigDecimal']>;
-  readonly averageAprMultiplier_not_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
-  readonly averageBlockTimeUpdatedHeight_eq?: InputMaybe<Scalars['Int']>;
-  readonly averageBlockTimeUpdatedHeight_gt?: InputMaybe<Scalars['Int']>;
-  readonly averageBlockTimeUpdatedHeight_gte?: InputMaybe<Scalars['Int']>;
-  readonly averageBlockTimeUpdatedHeight_in?: InputMaybe<ReadonlyArray<Scalars['Int']>>;
-  readonly averageBlockTimeUpdatedHeight_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly averageBlockTimeUpdatedHeight_lt?: InputMaybe<Scalars['Int']>;
-  readonly averageBlockTimeUpdatedHeight_lte?: InputMaybe<Scalars['Int']>;
-  readonly averageBlockTimeUpdatedHeight_not_eq?: InputMaybe<Scalars['Int']>;
-  readonly averageBlockTimeUpdatedHeight_not_in?: InputMaybe<ReadonlyArray<Scalars['Int']>>;
-  readonly averageBlockTimeUpdatedTime_eq?: InputMaybe<Scalars['DateTime']>;
-  readonly averageBlockTimeUpdatedTime_gt?: InputMaybe<Scalars['DateTime']>;
-  readonly averageBlockTimeUpdatedTime_gte?: InputMaybe<Scalars['DateTime']>;
-  readonly averageBlockTimeUpdatedTime_in?: InputMaybe<ReadonlyArray<Scalars['DateTime']>>;
-  readonly averageBlockTimeUpdatedTime_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly averageBlockTimeUpdatedTime_lt?: InputMaybe<Scalars['DateTime']>;
-  readonly averageBlockTimeUpdatedTime_lte?: InputMaybe<Scalars['DateTime']>;
-  readonly averageBlockTimeUpdatedTime_not_eq?: InputMaybe<Scalars['DateTime']>;
-  readonly averageBlockTimeUpdatedTime_not_in?: InputMaybe<ReadonlyArray<Scalars['DateTime']>>;
-  readonly averageBlockTime_eq?: InputMaybe<Scalars['Int']>;
-  readonly averageBlockTime_gt?: InputMaybe<Scalars['Int']>;
-  readonly averageBlockTime_gte?: InputMaybe<Scalars['Int']>;
-  readonly averageBlockTime_in?: InputMaybe<ReadonlyArray<Scalars['Int']>>;
-  readonly averageBlockTime_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly averageBlockTime_lt?: InputMaybe<Scalars['Int']>;
-  readonly averageBlockTime_lte?: InputMaybe<Scalars['Int']>;
-  readonly averageBlockTime_not_eq?: InputMaybe<Scalars['Int']>;
-  readonly averageBlockTime_not_in?: InputMaybe<ReadonlyArray<Scalars['Int']>>;
-  readonly height_eq?: InputMaybe<Scalars['Int']>;
-  readonly height_gt?: InputMaybe<Scalars['Int']>;
-  readonly height_gte?: InputMaybe<Scalars['Int']>;
-  readonly height_in?: InputMaybe<ReadonlyArray<Scalars['Int']>>;
-  readonly height_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly height_lt?: InputMaybe<Scalars['Int']>;
-  readonly height_lte?: InputMaybe<Scalars['Int']>;
-  readonly height_not_eq?: InputMaybe<Scalars['Int']>;
-  readonly height_not_in?: InputMaybe<ReadonlyArray<Scalars['Int']>>;
-  readonly id_contains?: InputMaybe<Scalars['String']>;
-  readonly id_containsInsensitive?: InputMaybe<Scalars['String']>;
-  readonly id_endsWith?: InputMaybe<Scalars['String']>;
-  readonly id_eq?: InputMaybe<Scalars['String']>;
-  readonly id_gt?: InputMaybe<Scalars['String']>;
-  readonly id_gte?: InputMaybe<Scalars['String']>;
-  readonly id_in?: InputMaybe<ReadonlyArray<Scalars['String']>>;
-  readonly id_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly id_lt?: InputMaybe<Scalars['String']>;
-  readonly id_lte?: InputMaybe<Scalars['String']>;
-  readonly id_not_contains?: InputMaybe<Scalars['String']>;
-  readonly id_not_containsInsensitive?: InputMaybe<Scalars['String']>;
-  readonly id_not_endsWith?: InputMaybe<Scalars['String']>;
-  readonly id_not_eq?: InputMaybe<Scalars['String']>;
-  readonly id_not_in?: InputMaybe<ReadonlyArray<Scalars['String']>>;
-  readonly id_not_startsWith?: InputMaybe<Scalars['String']>;
-  readonly id_startsWith?: InputMaybe<Scalars['String']>;
-  readonly idleWorkerShares_eq?: InputMaybe<Scalars['BigDecimal']>;
-  readonly idleWorkerShares_gt?: InputMaybe<Scalars['BigDecimal']>;
-  readonly idleWorkerShares_gte?: InputMaybe<Scalars['BigDecimal']>;
-  readonly idleWorkerShares_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
-  readonly idleWorkerShares_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly idleWorkerShares_lt?: InputMaybe<Scalars['BigDecimal']>;
-  readonly idleWorkerShares_lte?: InputMaybe<Scalars['BigDecimal']>;
-  readonly idleWorkerShares_not_eq?: InputMaybe<Scalars['BigDecimal']>;
-  readonly idleWorkerShares_not_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
-  readonly totalValue_eq?: InputMaybe<Scalars['BigDecimal']>;
-  readonly totalValue_gt?: InputMaybe<Scalars['BigDecimal']>;
-  readonly totalValue_gte?: InputMaybe<Scalars['BigDecimal']>;
-  readonly totalValue_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
-  readonly totalValue_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly totalValue_lt?: InputMaybe<Scalars['BigDecimal']>;
-  readonly totalValue_lte?: InputMaybe<Scalars['BigDecimal']>;
-  readonly totalValue_not_eq?: InputMaybe<Scalars['BigDecimal']>;
-  readonly totalValue_not_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
+  AND?: InputMaybe<Array<GlobalStateWhereInput>>;
+  OR?: InputMaybe<Array<GlobalStateWhereInput>>;
+  averageAprMultiplierUpdatedTime_eq?: InputMaybe<Scalars['DateTime']>;
+  averageAprMultiplierUpdatedTime_gt?: InputMaybe<Scalars['DateTime']>;
+  averageAprMultiplierUpdatedTime_gte?: InputMaybe<Scalars['DateTime']>;
+  averageAprMultiplierUpdatedTime_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  averageAprMultiplierUpdatedTime_isNull?: InputMaybe<Scalars['Boolean']>;
+  averageAprMultiplierUpdatedTime_lt?: InputMaybe<Scalars['DateTime']>;
+  averageAprMultiplierUpdatedTime_lte?: InputMaybe<Scalars['DateTime']>;
+  averageAprMultiplierUpdatedTime_not_eq?: InputMaybe<Scalars['DateTime']>;
+  averageAprMultiplierUpdatedTime_not_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  averageAprMultiplier_eq?: InputMaybe<Scalars['BigDecimal']>;
+  averageAprMultiplier_gt?: InputMaybe<Scalars['BigDecimal']>;
+  averageAprMultiplier_gte?: InputMaybe<Scalars['BigDecimal']>;
+  averageAprMultiplier_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  averageAprMultiplier_isNull?: InputMaybe<Scalars['Boolean']>;
+  averageAprMultiplier_lt?: InputMaybe<Scalars['BigDecimal']>;
+  averageAprMultiplier_lte?: InputMaybe<Scalars['BigDecimal']>;
+  averageAprMultiplier_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  averageAprMultiplier_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  averageBlockTimeUpdatedHeight_eq?: InputMaybe<Scalars['Int']>;
+  averageBlockTimeUpdatedHeight_gt?: InputMaybe<Scalars['Int']>;
+  averageBlockTimeUpdatedHeight_gte?: InputMaybe<Scalars['Int']>;
+  averageBlockTimeUpdatedHeight_in?: InputMaybe<Array<Scalars['Int']>>;
+  averageBlockTimeUpdatedHeight_isNull?: InputMaybe<Scalars['Boolean']>;
+  averageBlockTimeUpdatedHeight_lt?: InputMaybe<Scalars['Int']>;
+  averageBlockTimeUpdatedHeight_lte?: InputMaybe<Scalars['Int']>;
+  averageBlockTimeUpdatedHeight_not_eq?: InputMaybe<Scalars['Int']>;
+  averageBlockTimeUpdatedHeight_not_in?: InputMaybe<Array<Scalars['Int']>>;
+  averageBlockTimeUpdatedTime_eq?: InputMaybe<Scalars['DateTime']>;
+  averageBlockTimeUpdatedTime_gt?: InputMaybe<Scalars['DateTime']>;
+  averageBlockTimeUpdatedTime_gte?: InputMaybe<Scalars['DateTime']>;
+  averageBlockTimeUpdatedTime_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  averageBlockTimeUpdatedTime_isNull?: InputMaybe<Scalars['Boolean']>;
+  averageBlockTimeUpdatedTime_lt?: InputMaybe<Scalars['DateTime']>;
+  averageBlockTimeUpdatedTime_lte?: InputMaybe<Scalars['DateTime']>;
+  averageBlockTimeUpdatedTime_not_eq?: InputMaybe<Scalars['DateTime']>;
+  averageBlockTimeUpdatedTime_not_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  averageBlockTime_eq?: InputMaybe<Scalars['Int']>;
+  averageBlockTime_gt?: InputMaybe<Scalars['Int']>;
+  averageBlockTime_gte?: InputMaybe<Scalars['Int']>;
+  averageBlockTime_in?: InputMaybe<Array<Scalars['Int']>>;
+  averageBlockTime_isNull?: InputMaybe<Scalars['Boolean']>;
+  averageBlockTime_lt?: InputMaybe<Scalars['Int']>;
+  averageBlockTime_lte?: InputMaybe<Scalars['Int']>;
+  averageBlockTime_not_eq?: InputMaybe<Scalars['Int']>;
+  averageBlockTime_not_in?: InputMaybe<Array<Scalars['Int']>>;
+  height_eq?: InputMaybe<Scalars['Int']>;
+  height_gt?: InputMaybe<Scalars['Int']>;
+  height_gte?: InputMaybe<Scalars['Int']>;
+  height_in?: InputMaybe<Array<Scalars['Int']>>;
+  height_isNull?: InputMaybe<Scalars['Boolean']>;
+  height_lt?: InputMaybe<Scalars['Int']>;
+  height_lte?: InputMaybe<Scalars['Int']>;
+  height_not_eq?: InputMaybe<Scalars['Int']>;
+  height_not_in?: InputMaybe<Array<Scalars['Int']>>;
+  id_contains?: InputMaybe<Scalars['String']>;
+  id_containsInsensitive?: InputMaybe<Scalars['String']>;
+  id_endsWith?: InputMaybe<Scalars['String']>;
+  id_eq?: InputMaybe<Scalars['String']>;
+  id_gt?: InputMaybe<Scalars['String']>;
+  id_gte?: InputMaybe<Scalars['String']>;
+  id_in?: InputMaybe<Array<Scalars['String']>>;
+  id_isNull?: InputMaybe<Scalars['Boolean']>;
+  id_lt?: InputMaybe<Scalars['String']>;
+  id_lte?: InputMaybe<Scalars['String']>;
+  id_not_contains?: InputMaybe<Scalars['String']>;
+  id_not_containsInsensitive?: InputMaybe<Scalars['String']>;
+  id_not_endsWith?: InputMaybe<Scalars['String']>;
+  id_not_eq?: InputMaybe<Scalars['String']>;
+  id_not_in?: InputMaybe<Array<Scalars['String']>>;
+  id_not_startsWith?: InputMaybe<Scalars['String']>;
+  id_startsWith?: InputMaybe<Scalars['String']>;
+  idleWorkerShares_eq?: InputMaybe<Scalars['BigDecimal']>;
+  idleWorkerShares_gt?: InputMaybe<Scalars['BigDecimal']>;
+  idleWorkerShares_gte?: InputMaybe<Scalars['BigDecimal']>;
+  idleWorkerShares_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  idleWorkerShares_isNull?: InputMaybe<Scalars['Boolean']>;
+  idleWorkerShares_lt?: InputMaybe<Scalars['BigDecimal']>;
+  idleWorkerShares_lte?: InputMaybe<Scalars['BigDecimal']>;
+  idleWorkerShares_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  idleWorkerShares_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  totalValue_eq?: InputMaybe<Scalars['BigDecimal']>;
+  totalValue_gt?: InputMaybe<Scalars['BigDecimal']>;
+  totalValue_gte?: InputMaybe<Scalars['BigDecimal']>;
+  totalValue_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  totalValue_isNull?: InputMaybe<Scalars['Boolean']>;
+  totalValue_lt?: InputMaybe<Scalars['BigDecimal']>;
+  totalValue_lte?: InputMaybe<Scalars['BigDecimal']>;
+  totalValue_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  totalValue_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
 };
 
 export type GlobalStatesConnection = {
-  readonly __typename?: 'GlobalStatesConnection';
-  readonly edges: ReadonlyArray<GlobalStateEdge>;
-  readonly pageInfo: PageInfo;
-  readonly totalCount: Scalars['Int'];
+  __typename?: 'GlobalStatesConnection';
+  edges: Array<GlobalStateEdge>;
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int'];
 };
 
 export const IdentityLevel = {
@@ -1179,21 +1179,21 @@ export const IdentityLevel = {
 
 export type IdentityLevel = typeof IdentityLevel[keyof typeof IdentityLevel];
 export type Nft = {
-  readonly __typename?: 'Nft';
-  readonly burned: Scalars['Boolean'];
-  readonly cid: Scalars['Int'];
-  readonly delegation?: Maybe<Delegation>;
+  __typename?: 'Nft';
+  burned: Scalars['Boolean'];
+  cid: Scalars['Int'];
+  delegation?: Maybe<Delegation>;
   /** ${cid}-${nftId} */
-  readonly id: Scalars['String'];
-  readonly mintTime?: Maybe<Scalars['DateTime']>;
-  readonly nftId: Scalars['Int'];
-  readonly owner: Account;
+  id: Scalars['String'];
+  mintTime?: Maybe<Scalars['DateTime']>;
+  nftId: Scalars['Int'];
+  owner: Account;
 };
 
 export type NftEdge = {
-  readonly __typename?: 'NftEdge';
-  readonly cursor: Scalars['String'];
-  readonly node: Nft;
+  __typename?: 'NftEdge';
+  cursor: Scalars['String'];
+  node: Nft;
 };
 
 export const NftOrderByInput = {
@@ -1241,144 +1241,144 @@ export const NftOrderByInput = {
 
 export type NftOrderByInput = typeof NftOrderByInput[keyof typeof NftOrderByInput];
 export type NftWhereInput = {
-  readonly AND?: InputMaybe<ReadonlyArray<NftWhereInput>>;
-  readonly OR?: InputMaybe<ReadonlyArray<NftWhereInput>>;
-  readonly burned_eq?: InputMaybe<Scalars['Boolean']>;
-  readonly burned_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly burned_not_eq?: InputMaybe<Scalars['Boolean']>;
-  readonly cid_eq?: InputMaybe<Scalars['Int']>;
-  readonly cid_gt?: InputMaybe<Scalars['Int']>;
-  readonly cid_gte?: InputMaybe<Scalars['Int']>;
-  readonly cid_in?: InputMaybe<ReadonlyArray<Scalars['Int']>>;
-  readonly cid_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly cid_lt?: InputMaybe<Scalars['Int']>;
-  readonly cid_lte?: InputMaybe<Scalars['Int']>;
-  readonly cid_not_eq?: InputMaybe<Scalars['Int']>;
-  readonly cid_not_in?: InputMaybe<ReadonlyArray<Scalars['Int']>>;
-  readonly delegation?: InputMaybe<DelegationWhereInput>;
-  readonly delegation_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly id_contains?: InputMaybe<Scalars['String']>;
-  readonly id_containsInsensitive?: InputMaybe<Scalars['String']>;
-  readonly id_endsWith?: InputMaybe<Scalars['String']>;
-  readonly id_eq?: InputMaybe<Scalars['String']>;
-  readonly id_gt?: InputMaybe<Scalars['String']>;
-  readonly id_gte?: InputMaybe<Scalars['String']>;
-  readonly id_in?: InputMaybe<ReadonlyArray<Scalars['String']>>;
-  readonly id_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly id_lt?: InputMaybe<Scalars['String']>;
-  readonly id_lte?: InputMaybe<Scalars['String']>;
-  readonly id_not_contains?: InputMaybe<Scalars['String']>;
-  readonly id_not_containsInsensitive?: InputMaybe<Scalars['String']>;
-  readonly id_not_endsWith?: InputMaybe<Scalars['String']>;
-  readonly id_not_eq?: InputMaybe<Scalars['String']>;
-  readonly id_not_in?: InputMaybe<ReadonlyArray<Scalars['String']>>;
-  readonly id_not_startsWith?: InputMaybe<Scalars['String']>;
-  readonly id_startsWith?: InputMaybe<Scalars['String']>;
-  readonly mintTime_eq?: InputMaybe<Scalars['DateTime']>;
-  readonly mintTime_gt?: InputMaybe<Scalars['DateTime']>;
-  readonly mintTime_gte?: InputMaybe<Scalars['DateTime']>;
-  readonly mintTime_in?: InputMaybe<ReadonlyArray<Scalars['DateTime']>>;
-  readonly mintTime_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly mintTime_lt?: InputMaybe<Scalars['DateTime']>;
-  readonly mintTime_lte?: InputMaybe<Scalars['DateTime']>;
-  readonly mintTime_not_eq?: InputMaybe<Scalars['DateTime']>;
-  readonly mintTime_not_in?: InputMaybe<ReadonlyArray<Scalars['DateTime']>>;
-  readonly nftId_eq?: InputMaybe<Scalars['Int']>;
-  readonly nftId_gt?: InputMaybe<Scalars['Int']>;
-  readonly nftId_gte?: InputMaybe<Scalars['Int']>;
-  readonly nftId_in?: InputMaybe<ReadonlyArray<Scalars['Int']>>;
-  readonly nftId_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly nftId_lt?: InputMaybe<Scalars['Int']>;
-  readonly nftId_lte?: InputMaybe<Scalars['Int']>;
-  readonly nftId_not_eq?: InputMaybe<Scalars['Int']>;
-  readonly nftId_not_in?: InputMaybe<ReadonlyArray<Scalars['Int']>>;
-  readonly owner?: InputMaybe<AccountWhereInput>;
-  readonly owner_isNull?: InputMaybe<Scalars['Boolean']>;
+  AND?: InputMaybe<Array<NftWhereInput>>;
+  OR?: InputMaybe<Array<NftWhereInput>>;
+  burned_eq?: InputMaybe<Scalars['Boolean']>;
+  burned_isNull?: InputMaybe<Scalars['Boolean']>;
+  burned_not_eq?: InputMaybe<Scalars['Boolean']>;
+  cid_eq?: InputMaybe<Scalars['Int']>;
+  cid_gt?: InputMaybe<Scalars['Int']>;
+  cid_gte?: InputMaybe<Scalars['Int']>;
+  cid_in?: InputMaybe<Array<Scalars['Int']>>;
+  cid_isNull?: InputMaybe<Scalars['Boolean']>;
+  cid_lt?: InputMaybe<Scalars['Int']>;
+  cid_lte?: InputMaybe<Scalars['Int']>;
+  cid_not_eq?: InputMaybe<Scalars['Int']>;
+  cid_not_in?: InputMaybe<Array<Scalars['Int']>>;
+  delegation?: InputMaybe<DelegationWhereInput>;
+  delegation_isNull?: InputMaybe<Scalars['Boolean']>;
+  id_contains?: InputMaybe<Scalars['String']>;
+  id_containsInsensitive?: InputMaybe<Scalars['String']>;
+  id_endsWith?: InputMaybe<Scalars['String']>;
+  id_eq?: InputMaybe<Scalars['String']>;
+  id_gt?: InputMaybe<Scalars['String']>;
+  id_gte?: InputMaybe<Scalars['String']>;
+  id_in?: InputMaybe<Array<Scalars['String']>>;
+  id_isNull?: InputMaybe<Scalars['Boolean']>;
+  id_lt?: InputMaybe<Scalars['String']>;
+  id_lte?: InputMaybe<Scalars['String']>;
+  id_not_contains?: InputMaybe<Scalars['String']>;
+  id_not_containsInsensitive?: InputMaybe<Scalars['String']>;
+  id_not_endsWith?: InputMaybe<Scalars['String']>;
+  id_not_eq?: InputMaybe<Scalars['String']>;
+  id_not_in?: InputMaybe<Array<Scalars['String']>>;
+  id_not_startsWith?: InputMaybe<Scalars['String']>;
+  id_startsWith?: InputMaybe<Scalars['String']>;
+  mintTime_eq?: InputMaybe<Scalars['DateTime']>;
+  mintTime_gt?: InputMaybe<Scalars['DateTime']>;
+  mintTime_gte?: InputMaybe<Scalars['DateTime']>;
+  mintTime_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  mintTime_isNull?: InputMaybe<Scalars['Boolean']>;
+  mintTime_lt?: InputMaybe<Scalars['DateTime']>;
+  mintTime_lte?: InputMaybe<Scalars['DateTime']>;
+  mintTime_not_eq?: InputMaybe<Scalars['DateTime']>;
+  mintTime_not_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  nftId_eq?: InputMaybe<Scalars['Int']>;
+  nftId_gt?: InputMaybe<Scalars['Int']>;
+  nftId_gte?: InputMaybe<Scalars['Int']>;
+  nftId_in?: InputMaybe<Array<Scalars['Int']>>;
+  nftId_isNull?: InputMaybe<Scalars['Boolean']>;
+  nftId_lt?: InputMaybe<Scalars['Int']>;
+  nftId_lte?: InputMaybe<Scalars['Int']>;
+  nftId_not_eq?: InputMaybe<Scalars['Int']>;
+  nftId_not_in?: InputMaybe<Array<Scalars['Int']>>;
+  owner?: InputMaybe<AccountWhereInput>;
+  owner_isNull?: InputMaybe<Scalars['Boolean']>;
 };
 
 export type NftsConnection = {
-  readonly __typename?: 'NftsConnection';
-  readonly edges: ReadonlyArray<NftEdge>;
-  readonly pageInfo: PageInfo;
-  readonly totalCount: Scalars['Int'];
+  __typename?: 'NftsConnection';
+  edges: Array<NftEdge>;
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int'];
 };
 
 export type PageInfo = {
-  readonly __typename?: 'PageInfo';
-  readonly endCursor: Scalars['String'];
-  readonly hasNextPage: Scalars['Boolean'];
-  readonly hasPreviousPage: Scalars['Boolean'];
-  readonly startCursor: Scalars['String'];
+  __typename?: 'PageInfo';
+  endCursor: Scalars['String'];
+  hasNextPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean'];
+  startCursor: Scalars['String'];
 };
 
 export type Query = {
-  readonly __typename?: 'Query';
-  readonly accountById?: Maybe<Account>;
+  __typename?: 'Query';
+  accountById?: Maybe<Account>;
   /** @deprecated Use accountById */
-  readonly accountByUniqueInput?: Maybe<Account>;
-  readonly accounts: ReadonlyArray<Account>;
-  readonly accountsConnection: AccountsConnection;
-  readonly basePoolAprRecordById?: Maybe<BasePoolAprRecord>;
+  accountByUniqueInput?: Maybe<Account>;
+  accounts: Array<Account>;
+  accountsConnection: AccountsConnection;
+  basePoolAprRecordById?: Maybe<BasePoolAprRecord>;
   /** @deprecated Use basePoolAprRecordById */
-  readonly basePoolAprRecordByUniqueInput?: Maybe<BasePoolAprRecord>;
-  readonly basePoolAprRecords: ReadonlyArray<BasePoolAprRecord>;
-  readonly basePoolAprRecordsConnection: BasePoolAprRecordsConnection;
-  readonly basePoolById?: Maybe<BasePool>;
+  basePoolAprRecordByUniqueInput?: Maybe<BasePoolAprRecord>;
+  basePoolAprRecords: Array<BasePoolAprRecord>;
+  basePoolAprRecordsConnection: BasePoolAprRecordsConnection;
+  basePoolById?: Maybe<BasePool>;
   /** @deprecated Use basePoolById */
-  readonly basePoolByUniqueInput?: Maybe<BasePool>;
-  readonly basePoolWhitelistById?: Maybe<BasePoolWhitelist>;
+  basePoolByUniqueInput?: Maybe<BasePool>;
+  basePoolWhitelistById?: Maybe<BasePoolWhitelist>;
   /** @deprecated Use basePoolWhitelistById */
-  readonly basePoolWhitelistByUniqueInput?: Maybe<BasePoolWhitelist>;
-  readonly basePoolWhitelists: ReadonlyArray<BasePoolWhitelist>;
-  readonly basePoolWhitelistsConnection: BasePoolWhitelistsConnection;
-  readonly basePools: ReadonlyArray<BasePool>;
-  readonly basePoolsConnection: BasePoolsConnection;
-  readonly delegationById?: Maybe<Delegation>;
+  basePoolWhitelistByUniqueInput?: Maybe<BasePoolWhitelist>;
+  basePoolWhitelists: Array<BasePoolWhitelist>;
+  basePoolWhitelistsConnection: BasePoolWhitelistsConnection;
+  basePools: Array<BasePool>;
+  basePoolsConnection: BasePoolsConnection;
+  delegationById?: Maybe<Delegation>;
   /** @deprecated Use delegationById */
-  readonly delegationByUniqueInput?: Maybe<Delegation>;
-  readonly delegationValueRecordById?: Maybe<DelegationValueRecord>;
+  delegationByUniqueInput?: Maybe<Delegation>;
+  delegationValueRecordById?: Maybe<DelegationValueRecord>;
   /** @deprecated Use delegationValueRecordById */
-  readonly delegationValueRecordByUniqueInput?: Maybe<DelegationValueRecord>;
-  readonly delegationValueRecords: ReadonlyArray<DelegationValueRecord>;
-  readonly delegationValueRecordsConnection: DelegationValueRecordsConnection;
-  readonly delegations: ReadonlyArray<Delegation>;
-  readonly delegationsConnection: DelegationsConnection;
-  readonly globalStateById?: Maybe<GlobalState>;
+  delegationValueRecordByUniqueInput?: Maybe<DelegationValueRecord>;
+  delegationValueRecords: Array<DelegationValueRecord>;
+  delegationValueRecordsConnection: DelegationValueRecordsConnection;
+  delegations: Array<Delegation>;
+  delegationsConnection: DelegationsConnection;
+  globalStateById?: Maybe<GlobalState>;
   /** @deprecated Use globalStateById */
-  readonly globalStateByUniqueInput?: Maybe<GlobalState>;
-  readonly globalStates: ReadonlyArray<GlobalState>;
-  readonly globalStatesConnection: GlobalStatesConnection;
-  readonly nftById?: Maybe<Nft>;
+  globalStateByUniqueInput?: Maybe<GlobalState>;
+  globalStates: Array<GlobalState>;
+  globalStatesConnection: GlobalStatesConnection;
+  nftById?: Maybe<Nft>;
   /** @deprecated Use nftById */
-  readonly nftByUniqueInput?: Maybe<Nft>;
-  readonly nfts: ReadonlyArray<Nft>;
-  readonly nftsConnection: NftsConnection;
-  readonly rewardRecordById?: Maybe<RewardRecord>;
+  nftByUniqueInput?: Maybe<Nft>;
+  nfts: Array<Nft>;
+  nftsConnection: NftsConnection;
+  rewardRecordById?: Maybe<RewardRecord>;
   /** @deprecated Use rewardRecordById */
-  readonly rewardRecordByUniqueInput?: Maybe<RewardRecord>;
-  readonly rewardRecords: ReadonlyArray<RewardRecord>;
-  readonly rewardRecordsConnection: RewardRecordsConnection;
-  readonly sessionById?: Maybe<Session>;
+  rewardRecordByUniqueInput?: Maybe<RewardRecord>;
+  rewardRecords: Array<RewardRecord>;
+  rewardRecordsConnection: RewardRecordsConnection;
+  sessionById?: Maybe<Session>;
   /** @deprecated Use sessionById */
-  readonly sessionByUniqueInput?: Maybe<Session>;
-  readonly sessions: ReadonlyArray<Session>;
-  readonly sessionsConnection: SessionsConnection;
-  readonly squidStatus?: Maybe<SquidStatus>;
-  readonly stakePoolById?: Maybe<StakePool>;
+  sessionByUniqueInput?: Maybe<Session>;
+  sessions: Array<Session>;
+  sessionsConnection: SessionsConnection;
+  squidStatus?: Maybe<SquidStatus>;
+  stakePoolById?: Maybe<StakePool>;
   /** @deprecated Use stakePoolById */
-  readonly stakePoolByUniqueInput?: Maybe<StakePool>;
-  readonly stakePools: ReadonlyArray<StakePool>;
-  readonly stakePoolsConnection: StakePoolsConnection;
-  readonly vaultById?: Maybe<Vault>;
+  stakePoolByUniqueInput?: Maybe<StakePool>;
+  stakePools: Array<StakePool>;
+  stakePoolsConnection: StakePoolsConnection;
+  vaultById?: Maybe<Vault>;
   /** @deprecated Use vaultById */
-  readonly vaultByUniqueInput?: Maybe<Vault>;
-  readonly vaults: ReadonlyArray<Vault>;
-  readonly vaultsConnection: VaultsConnection;
-  readonly workerById?: Maybe<Worker>;
+  vaultByUniqueInput?: Maybe<Vault>;
+  vaults: Array<Vault>;
+  vaultsConnection: VaultsConnection;
+  workerById?: Maybe<Worker>;
   /** @deprecated Use workerById */
-  readonly workerByUniqueInput?: Maybe<Worker>;
-  readonly workers: ReadonlyArray<Worker>;
-  readonly workersConnection: WorkersConnection;
+  workerByUniqueInput?: Maybe<Worker>;
+  workers: Array<Worker>;
+  workersConnection: WorkersConnection;
 };
 
 
@@ -1395,7 +1395,7 @@ export type QueryAccountByUniqueInputArgs = {
 export type QueryAccountsArgs = {
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<ReadonlyArray<AccountOrderByInput>>;
+  orderBy?: InputMaybe<Array<AccountOrderByInput>>;
   where?: InputMaybe<AccountWhereInput>;
 };
 
@@ -1403,7 +1403,7 @@ export type QueryAccountsArgs = {
 export type QueryAccountsConnectionArgs = {
   after?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Int']>;
-  orderBy: ReadonlyArray<AccountOrderByInput>;
+  orderBy: Array<AccountOrderByInput>;
   where?: InputMaybe<AccountWhereInput>;
 };
 
@@ -1421,7 +1421,7 @@ export type QueryBasePoolAprRecordByUniqueInputArgs = {
 export type QueryBasePoolAprRecordsArgs = {
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<ReadonlyArray<BasePoolAprRecordOrderByInput>>;
+  orderBy?: InputMaybe<Array<BasePoolAprRecordOrderByInput>>;
   where?: InputMaybe<BasePoolAprRecordWhereInput>;
 };
 
@@ -1429,7 +1429,7 @@ export type QueryBasePoolAprRecordsArgs = {
 export type QueryBasePoolAprRecordsConnectionArgs = {
   after?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Int']>;
-  orderBy: ReadonlyArray<BasePoolAprRecordOrderByInput>;
+  orderBy: Array<BasePoolAprRecordOrderByInput>;
   where?: InputMaybe<BasePoolAprRecordWhereInput>;
 };
 
@@ -1457,7 +1457,7 @@ export type QueryBasePoolWhitelistByUniqueInputArgs = {
 export type QueryBasePoolWhitelistsArgs = {
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<ReadonlyArray<BasePoolWhitelistOrderByInput>>;
+  orderBy?: InputMaybe<Array<BasePoolWhitelistOrderByInput>>;
   where?: InputMaybe<BasePoolWhitelistWhereInput>;
 };
 
@@ -1465,7 +1465,7 @@ export type QueryBasePoolWhitelistsArgs = {
 export type QueryBasePoolWhitelistsConnectionArgs = {
   after?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Int']>;
-  orderBy: ReadonlyArray<BasePoolWhitelistOrderByInput>;
+  orderBy: Array<BasePoolWhitelistOrderByInput>;
   where?: InputMaybe<BasePoolWhitelistWhereInput>;
 };
 
@@ -1473,7 +1473,7 @@ export type QueryBasePoolWhitelistsConnectionArgs = {
 export type QueryBasePoolsArgs = {
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<ReadonlyArray<BasePoolOrderByInput>>;
+  orderBy?: InputMaybe<Array<BasePoolOrderByInput>>;
   where?: InputMaybe<BasePoolWhereInput>;
 };
 
@@ -1481,7 +1481,7 @@ export type QueryBasePoolsArgs = {
 export type QueryBasePoolsConnectionArgs = {
   after?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Int']>;
-  orderBy: ReadonlyArray<BasePoolOrderByInput>;
+  orderBy: Array<BasePoolOrderByInput>;
   where?: InputMaybe<BasePoolWhereInput>;
 };
 
@@ -1509,7 +1509,7 @@ export type QueryDelegationValueRecordByUniqueInputArgs = {
 export type QueryDelegationValueRecordsArgs = {
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<ReadonlyArray<DelegationValueRecordOrderByInput>>;
+  orderBy?: InputMaybe<Array<DelegationValueRecordOrderByInput>>;
   where?: InputMaybe<DelegationValueRecordWhereInput>;
 };
 
@@ -1517,7 +1517,7 @@ export type QueryDelegationValueRecordsArgs = {
 export type QueryDelegationValueRecordsConnectionArgs = {
   after?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Int']>;
-  orderBy: ReadonlyArray<DelegationValueRecordOrderByInput>;
+  orderBy: Array<DelegationValueRecordOrderByInput>;
   where?: InputMaybe<DelegationValueRecordWhereInput>;
 };
 
@@ -1525,7 +1525,7 @@ export type QueryDelegationValueRecordsConnectionArgs = {
 export type QueryDelegationsArgs = {
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<ReadonlyArray<DelegationOrderByInput>>;
+  orderBy?: InputMaybe<Array<DelegationOrderByInput>>;
   where?: InputMaybe<DelegationWhereInput>;
 };
 
@@ -1533,7 +1533,7 @@ export type QueryDelegationsArgs = {
 export type QueryDelegationsConnectionArgs = {
   after?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Int']>;
-  orderBy: ReadonlyArray<DelegationOrderByInput>;
+  orderBy: Array<DelegationOrderByInput>;
   where?: InputMaybe<DelegationWhereInput>;
 };
 
@@ -1551,7 +1551,7 @@ export type QueryGlobalStateByUniqueInputArgs = {
 export type QueryGlobalStatesArgs = {
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<ReadonlyArray<GlobalStateOrderByInput>>;
+  orderBy?: InputMaybe<Array<GlobalStateOrderByInput>>;
   where?: InputMaybe<GlobalStateWhereInput>;
 };
 
@@ -1559,7 +1559,7 @@ export type QueryGlobalStatesArgs = {
 export type QueryGlobalStatesConnectionArgs = {
   after?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Int']>;
-  orderBy: ReadonlyArray<GlobalStateOrderByInput>;
+  orderBy: Array<GlobalStateOrderByInput>;
   where?: InputMaybe<GlobalStateWhereInput>;
 };
 
@@ -1577,7 +1577,7 @@ export type QueryNftByUniqueInputArgs = {
 export type QueryNftsArgs = {
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<ReadonlyArray<NftOrderByInput>>;
+  orderBy?: InputMaybe<Array<NftOrderByInput>>;
   where?: InputMaybe<NftWhereInput>;
 };
 
@@ -1585,7 +1585,7 @@ export type QueryNftsArgs = {
 export type QueryNftsConnectionArgs = {
   after?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Int']>;
-  orderBy: ReadonlyArray<NftOrderByInput>;
+  orderBy: Array<NftOrderByInput>;
   where?: InputMaybe<NftWhereInput>;
 };
 
@@ -1603,7 +1603,7 @@ export type QueryRewardRecordByUniqueInputArgs = {
 export type QueryRewardRecordsArgs = {
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<ReadonlyArray<RewardRecordOrderByInput>>;
+  orderBy?: InputMaybe<Array<RewardRecordOrderByInput>>;
   where?: InputMaybe<RewardRecordWhereInput>;
 };
 
@@ -1611,7 +1611,7 @@ export type QueryRewardRecordsArgs = {
 export type QueryRewardRecordsConnectionArgs = {
   after?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Int']>;
-  orderBy: ReadonlyArray<RewardRecordOrderByInput>;
+  orderBy: Array<RewardRecordOrderByInput>;
   where?: InputMaybe<RewardRecordWhereInput>;
 };
 
@@ -1629,7 +1629,7 @@ export type QuerySessionByUniqueInputArgs = {
 export type QuerySessionsArgs = {
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<ReadonlyArray<SessionOrderByInput>>;
+  orderBy?: InputMaybe<Array<SessionOrderByInput>>;
   where?: InputMaybe<SessionWhereInput>;
 };
 
@@ -1637,7 +1637,7 @@ export type QuerySessionsArgs = {
 export type QuerySessionsConnectionArgs = {
   after?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Int']>;
-  orderBy: ReadonlyArray<SessionOrderByInput>;
+  orderBy: Array<SessionOrderByInput>;
   where?: InputMaybe<SessionWhereInput>;
 };
 
@@ -1655,7 +1655,7 @@ export type QueryStakePoolByUniqueInputArgs = {
 export type QueryStakePoolsArgs = {
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<ReadonlyArray<StakePoolOrderByInput>>;
+  orderBy?: InputMaybe<Array<StakePoolOrderByInput>>;
   where?: InputMaybe<StakePoolWhereInput>;
 };
 
@@ -1663,7 +1663,7 @@ export type QueryStakePoolsArgs = {
 export type QueryStakePoolsConnectionArgs = {
   after?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Int']>;
-  orderBy: ReadonlyArray<StakePoolOrderByInput>;
+  orderBy: Array<StakePoolOrderByInput>;
   where?: InputMaybe<StakePoolWhereInput>;
 };
 
@@ -1681,7 +1681,7 @@ export type QueryVaultByUniqueInputArgs = {
 export type QueryVaultsArgs = {
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<ReadonlyArray<VaultOrderByInput>>;
+  orderBy?: InputMaybe<Array<VaultOrderByInput>>;
   where?: InputMaybe<VaultWhereInput>;
 };
 
@@ -1689,7 +1689,7 @@ export type QueryVaultsArgs = {
 export type QueryVaultsConnectionArgs = {
   after?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Int']>;
-  orderBy: ReadonlyArray<VaultOrderByInput>;
+  orderBy: Array<VaultOrderByInput>;
   where?: InputMaybe<VaultWhereInput>;
 };
 
@@ -1707,7 +1707,7 @@ export type QueryWorkerByUniqueInputArgs = {
 export type QueryWorkersArgs = {
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<ReadonlyArray<WorkerOrderByInput>>;
+  orderBy?: InputMaybe<Array<WorkerOrderByInput>>;
   where?: InputMaybe<WorkerWhereInput>;
 };
 
@@ -1715,22 +1715,22 @@ export type QueryWorkersArgs = {
 export type QueryWorkersConnectionArgs = {
   after?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Int']>;
-  orderBy: ReadonlyArray<WorkerOrderByInput>;
+  orderBy: Array<WorkerOrderByInput>;
   where?: InputMaybe<WorkerWhereInput>;
 };
 
 export type RewardRecord = {
-  readonly __typename?: 'RewardRecord';
-  readonly id: Scalars['String'];
+  __typename?: 'RewardRecord';
+  id: Scalars['String'];
   /** block time */
-  readonly time: Scalars['DateTime'];
-  readonly value: Scalars['BigDecimal'];
+  time: Scalars['DateTime'];
+  value: Scalars['BigDecimal'];
 };
 
 export type RewardRecordEdge = {
-  readonly __typename?: 'RewardRecordEdge';
-  readonly cursor: Scalars['String'];
-  readonly node: RewardRecord;
+  __typename?: 'RewardRecordEdge';
+  cursor: Scalars['String'];
+  node: RewardRecord;
 };
 
 export const RewardRecordOrderByInput = {
@@ -1744,73 +1744,73 @@ export const RewardRecordOrderByInput = {
 
 export type RewardRecordOrderByInput = typeof RewardRecordOrderByInput[keyof typeof RewardRecordOrderByInput];
 export type RewardRecordWhereInput = {
-  readonly AND?: InputMaybe<ReadonlyArray<RewardRecordWhereInput>>;
-  readonly OR?: InputMaybe<ReadonlyArray<RewardRecordWhereInput>>;
-  readonly id_contains?: InputMaybe<Scalars['String']>;
-  readonly id_containsInsensitive?: InputMaybe<Scalars['String']>;
-  readonly id_endsWith?: InputMaybe<Scalars['String']>;
-  readonly id_eq?: InputMaybe<Scalars['String']>;
-  readonly id_gt?: InputMaybe<Scalars['String']>;
-  readonly id_gte?: InputMaybe<Scalars['String']>;
-  readonly id_in?: InputMaybe<ReadonlyArray<Scalars['String']>>;
-  readonly id_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly id_lt?: InputMaybe<Scalars['String']>;
-  readonly id_lte?: InputMaybe<Scalars['String']>;
-  readonly id_not_contains?: InputMaybe<Scalars['String']>;
-  readonly id_not_containsInsensitive?: InputMaybe<Scalars['String']>;
-  readonly id_not_endsWith?: InputMaybe<Scalars['String']>;
-  readonly id_not_eq?: InputMaybe<Scalars['String']>;
-  readonly id_not_in?: InputMaybe<ReadonlyArray<Scalars['String']>>;
-  readonly id_not_startsWith?: InputMaybe<Scalars['String']>;
-  readonly id_startsWith?: InputMaybe<Scalars['String']>;
-  readonly time_eq?: InputMaybe<Scalars['DateTime']>;
-  readonly time_gt?: InputMaybe<Scalars['DateTime']>;
-  readonly time_gte?: InputMaybe<Scalars['DateTime']>;
-  readonly time_in?: InputMaybe<ReadonlyArray<Scalars['DateTime']>>;
-  readonly time_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly time_lt?: InputMaybe<Scalars['DateTime']>;
-  readonly time_lte?: InputMaybe<Scalars['DateTime']>;
-  readonly time_not_eq?: InputMaybe<Scalars['DateTime']>;
-  readonly time_not_in?: InputMaybe<ReadonlyArray<Scalars['DateTime']>>;
-  readonly value_eq?: InputMaybe<Scalars['BigDecimal']>;
-  readonly value_gt?: InputMaybe<Scalars['BigDecimal']>;
-  readonly value_gte?: InputMaybe<Scalars['BigDecimal']>;
-  readonly value_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
-  readonly value_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly value_lt?: InputMaybe<Scalars['BigDecimal']>;
-  readonly value_lte?: InputMaybe<Scalars['BigDecimal']>;
-  readonly value_not_eq?: InputMaybe<Scalars['BigDecimal']>;
-  readonly value_not_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
+  AND?: InputMaybe<Array<RewardRecordWhereInput>>;
+  OR?: InputMaybe<Array<RewardRecordWhereInput>>;
+  id_contains?: InputMaybe<Scalars['String']>;
+  id_containsInsensitive?: InputMaybe<Scalars['String']>;
+  id_endsWith?: InputMaybe<Scalars['String']>;
+  id_eq?: InputMaybe<Scalars['String']>;
+  id_gt?: InputMaybe<Scalars['String']>;
+  id_gte?: InputMaybe<Scalars['String']>;
+  id_in?: InputMaybe<Array<Scalars['String']>>;
+  id_isNull?: InputMaybe<Scalars['Boolean']>;
+  id_lt?: InputMaybe<Scalars['String']>;
+  id_lte?: InputMaybe<Scalars['String']>;
+  id_not_contains?: InputMaybe<Scalars['String']>;
+  id_not_containsInsensitive?: InputMaybe<Scalars['String']>;
+  id_not_endsWith?: InputMaybe<Scalars['String']>;
+  id_not_eq?: InputMaybe<Scalars['String']>;
+  id_not_in?: InputMaybe<Array<Scalars['String']>>;
+  id_not_startsWith?: InputMaybe<Scalars['String']>;
+  id_startsWith?: InputMaybe<Scalars['String']>;
+  time_eq?: InputMaybe<Scalars['DateTime']>;
+  time_gt?: InputMaybe<Scalars['DateTime']>;
+  time_gte?: InputMaybe<Scalars['DateTime']>;
+  time_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  time_isNull?: InputMaybe<Scalars['Boolean']>;
+  time_lt?: InputMaybe<Scalars['DateTime']>;
+  time_lte?: InputMaybe<Scalars['DateTime']>;
+  time_not_eq?: InputMaybe<Scalars['DateTime']>;
+  time_not_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  value_eq?: InputMaybe<Scalars['BigDecimal']>;
+  value_gt?: InputMaybe<Scalars['BigDecimal']>;
+  value_gte?: InputMaybe<Scalars['BigDecimal']>;
+  value_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  value_isNull?: InputMaybe<Scalars['Boolean']>;
+  value_lt?: InputMaybe<Scalars['BigDecimal']>;
+  value_lte?: InputMaybe<Scalars['BigDecimal']>;
+  value_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  value_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
 };
 
 export type RewardRecordsConnection = {
-  readonly __typename?: 'RewardRecordsConnection';
-  readonly edges: ReadonlyArray<RewardRecordEdge>;
-  readonly pageInfo: PageInfo;
-  readonly totalCount: Scalars['Int'];
+  __typename?: 'RewardRecordsConnection';
+  edges: Array<RewardRecordEdge>;
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int'];
 };
 
 export type Session = {
-  readonly __typename?: 'Session';
-  readonly coolingDownStartTime?: Maybe<Scalars['DateTime']>;
+  __typename?: 'Session';
+  coolingDownStartTime?: Maybe<Scalars['DateTime']>;
   /** session account address */
-  readonly id: Scalars['String'];
-  readonly isBound: Scalars['Boolean'];
-  readonly pInit: Scalars['Int'];
-  readonly pInstant: Scalars['Int'];
-  readonly stake: Scalars['BigDecimal'];
-  readonly stakePool?: Maybe<StakePool>;
-  readonly state: WorkerState;
-  readonly totalReward: Scalars['BigDecimal'];
-  readonly v: Scalars['BigDecimal'];
-  readonly ve: Scalars['BigDecimal'];
-  readonly worker?: Maybe<Worker>;
+  id: Scalars['String'];
+  isBound: Scalars['Boolean'];
+  pInit: Scalars['Int'];
+  pInstant: Scalars['Int'];
+  stake: Scalars['BigDecimal'];
+  stakePool?: Maybe<StakePool>;
+  state: WorkerState;
+  totalReward: Scalars['BigDecimal'];
+  v: Scalars['BigDecimal'];
+  ve: Scalars['BigDecimal'];
+  worker?: Maybe<Worker>;
 };
 
 export type SessionEdge = {
-  readonly __typename?: 'SessionEdge';
-  readonly cursor: Scalars['String'];
-  readonly node: Session;
+  __typename?: 'SessionEdge';
+  cursor: Scalars['String'];
+  node: Session;
 };
 
 export const SessionOrderByInput = {
@@ -1860,143 +1860,143 @@ export const SessionOrderByInput = {
 
 export type SessionOrderByInput = typeof SessionOrderByInput[keyof typeof SessionOrderByInput];
 export type SessionWhereInput = {
-  readonly AND?: InputMaybe<ReadonlyArray<SessionWhereInput>>;
-  readonly OR?: InputMaybe<ReadonlyArray<SessionWhereInput>>;
-  readonly coolingDownStartTime_eq?: InputMaybe<Scalars['DateTime']>;
-  readonly coolingDownStartTime_gt?: InputMaybe<Scalars['DateTime']>;
-  readonly coolingDownStartTime_gte?: InputMaybe<Scalars['DateTime']>;
-  readonly coolingDownStartTime_in?: InputMaybe<ReadonlyArray<Scalars['DateTime']>>;
-  readonly coolingDownStartTime_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly coolingDownStartTime_lt?: InputMaybe<Scalars['DateTime']>;
-  readonly coolingDownStartTime_lte?: InputMaybe<Scalars['DateTime']>;
-  readonly coolingDownStartTime_not_eq?: InputMaybe<Scalars['DateTime']>;
-  readonly coolingDownStartTime_not_in?: InputMaybe<ReadonlyArray<Scalars['DateTime']>>;
-  readonly id_contains?: InputMaybe<Scalars['String']>;
-  readonly id_containsInsensitive?: InputMaybe<Scalars['String']>;
-  readonly id_endsWith?: InputMaybe<Scalars['String']>;
-  readonly id_eq?: InputMaybe<Scalars['String']>;
-  readonly id_gt?: InputMaybe<Scalars['String']>;
-  readonly id_gte?: InputMaybe<Scalars['String']>;
-  readonly id_in?: InputMaybe<ReadonlyArray<Scalars['String']>>;
-  readonly id_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly id_lt?: InputMaybe<Scalars['String']>;
-  readonly id_lte?: InputMaybe<Scalars['String']>;
-  readonly id_not_contains?: InputMaybe<Scalars['String']>;
-  readonly id_not_containsInsensitive?: InputMaybe<Scalars['String']>;
-  readonly id_not_endsWith?: InputMaybe<Scalars['String']>;
-  readonly id_not_eq?: InputMaybe<Scalars['String']>;
-  readonly id_not_in?: InputMaybe<ReadonlyArray<Scalars['String']>>;
-  readonly id_not_startsWith?: InputMaybe<Scalars['String']>;
-  readonly id_startsWith?: InputMaybe<Scalars['String']>;
-  readonly isBound_eq?: InputMaybe<Scalars['Boolean']>;
-  readonly isBound_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly isBound_not_eq?: InputMaybe<Scalars['Boolean']>;
-  readonly pInit_eq?: InputMaybe<Scalars['Int']>;
-  readonly pInit_gt?: InputMaybe<Scalars['Int']>;
-  readonly pInit_gte?: InputMaybe<Scalars['Int']>;
-  readonly pInit_in?: InputMaybe<ReadonlyArray<Scalars['Int']>>;
-  readonly pInit_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly pInit_lt?: InputMaybe<Scalars['Int']>;
-  readonly pInit_lte?: InputMaybe<Scalars['Int']>;
-  readonly pInit_not_eq?: InputMaybe<Scalars['Int']>;
-  readonly pInit_not_in?: InputMaybe<ReadonlyArray<Scalars['Int']>>;
-  readonly pInstant_eq?: InputMaybe<Scalars['Int']>;
-  readonly pInstant_gt?: InputMaybe<Scalars['Int']>;
-  readonly pInstant_gte?: InputMaybe<Scalars['Int']>;
-  readonly pInstant_in?: InputMaybe<ReadonlyArray<Scalars['Int']>>;
-  readonly pInstant_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly pInstant_lt?: InputMaybe<Scalars['Int']>;
-  readonly pInstant_lte?: InputMaybe<Scalars['Int']>;
-  readonly pInstant_not_eq?: InputMaybe<Scalars['Int']>;
-  readonly pInstant_not_in?: InputMaybe<ReadonlyArray<Scalars['Int']>>;
-  readonly stakePool?: InputMaybe<StakePoolWhereInput>;
-  readonly stakePool_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly stake_eq?: InputMaybe<Scalars['BigDecimal']>;
-  readonly stake_gt?: InputMaybe<Scalars['BigDecimal']>;
-  readonly stake_gte?: InputMaybe<Scalars['BigDecimal']>;
-  readonly stake_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
-  readonly stake_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly stake_lt?: InputMaybe<Scalars['BigDecimal']>;
-  readonly stake_lte?: InputMaybe<Scalars['BigDecimal']>;
-  readonly stake_not_eq?: InputMaybe<Scalars['BigDecimal']>;
-  readonly stake_not_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
-  readonly state_eq?: InputMaybe<WorkerState>;
-  readonly state_in?: InputMaybe<ReadonlyArray<WorkerState>>;
-  readonly state_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly state_not_eq?: InputMaybe<WorkerState>;
-  readonly state_not_in?: InputMaybe<ReadonlyArray<WorkerState>>;
-  readonly totalReward_eq?: InputMaybe<Scalars['BigDecimal']>;
-  readonly totalReward_gt?: InputMaybe<Scalars['BigDecimal']>;
-  readonly totalReward_gte?: InputMaybe<Scalars['BigDecimal']>;
-  readonly totalReward_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
-  readonly totalReward_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly totalReward_lt?: InputMaybe<Scalars['BigDecimal']>;
-  readonly totalReward_lte?: InputMaybe<Scalars['BigDecimal']>;
-  readonly totalReward_not_eq?: InputMaybe<Scalars['BigDecimal']>;
-  readonly totalReward_not_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
-  readonly v_eq?: InputMaybe<Scalars['BigDecimal']>;
-  readonly v_gt?: InputMaybe<Scalars['BigDecimal']>;
-  readonly v_gte?: InputMaybe<Scalars['BigDecimal']>;
-  readonly v_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
-  readonly v_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly v_lt?: InputMaybe<Scalars['BigDecimal']>;
-  readonly v_lte?: InputMaybe<Scalars['BigDecimal']>;
-  readonly v_not_eq?: InputMaybe<Scalars['BigDecimal']>;
-  readonly v_not_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
-  readonly ve_eq?: InputMaybe<Scalars['BigDecimal']>;
-  readonly ve_gt?: InputMaybe<Scalars['BigDecimal']>;
-  readonly ve_gte?: InputMaybe<Scalars['BigDecimal']>;
-  readonly ve_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
-  readonly ve_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly ve_lt?: InputMaybe<Scalars['BigDecimal']>;
-  readonly ve_lte?: InputMaybe<Scalars['BigDecimal']>;
-  readonly ve_not_eq?: InputMaybe<Scalars['BigDecimal']>;
-  readonly ve_not_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
-  readonly worker?: InputMaybe<WorkerWhereInput>;
-  readonly worker_isNull?: InputMaybe<Scalars['Boolean']>;
+  AND?: InputMaybe<Array<SessionWhereInput>>;
+  OR?: InputMaybe<Array<SessionWhereInput>>;
+  coolingDownStartTime_eq?: InputMaybe<Scalars['DateTime']>;
+  coolingDownStartTime_gt?: InputMaybe<Scalars['DateTime']>;
+  coolingDownStartTime_gte?: InputMaybe<Scalars['DateTime']>;
+  coolingDownStartTime_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  coolingDownStartTime_isNull?: InputMaybe<Scalars['Boolean']>;
+  coolingDownStartTime_lt?: InputMaybe<Scalars['DateTime']>;
+  coolingDownStartTime_lte?: InputMaybe<Scalars['DateTime']>;
+  coolingDownStartTime_not_eq?: InputMaybe<Scalars['DateTime']>;
+  coolingDownStartTime_not_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  id_contains?: InputMaybe<Scalars['String']>;
+  id_containsInsensitive?: InputMaybe<Scalars['String']>;
+  id_endsWith?: InputMaybe<Scalars['String']>;
+  id_eq?: InputMaybe<Scalars['String']>;
+  id_gt?: InputMaybe<Scalars['String']>;
+  id_gte?: InputMaybe<Scalars['String']>;
+  id_in?: InputMaybe<Array<Scalars['String']>>;
+  id_isNull?: InputMaybe<Scalars['Boolean']>;
+  id_lt?: InputMaybe<Scalars['String']>;
+  id_lte?: InputMaybe<Scalars['String']>;
+  id_not_contains?: InputMaybe<Scalars['String']>;
+  id_not_containsInsensitive?: InputMaybe<Scalars['String']>;
+  id_not_endsWith?: InputMaybe<Scalars['String']>;
+  id_not_eq?: InputMaybe<Scalars['String']>;
+  id_not_in?: InputMaybe<Array<Scalars['String']>>;
+  id_not_startsWith?: InputMaybe<Scalars['String']>;
+  id_startsWith?: InputMaybe<Scalars['String']>;
+  isBound_eq?: InputMaybe<Scalars['Boolean']>;
+  isBound_isNull?: InputMaybe<Scalars['Boolean']>;
+  isBound_not_eq?: InputMaybe<Scalars['Boolean']>;
+  pInit_eq?: InputMaybe<Scalars['Int']>;
+  pInit_gt?: InputMaybe<Scalars['Int']>;
+  pInit_gte?: InputMaybe<Scalars['Int']>;
+  pInit_in?: InputMaybe<Array<Scalars['Int']>>;
+  pInit_isNull?: InputMaybe<Scalars['Boolean']>;
+  pInit_lt?: InputMaybe<Scalars['Int']>;
+  pInit_lte?: InputMaybe<Scalars['Int']>;
+  pInit_not_eq?: InputMaybe<Scalars['Int']>;
+  pInit_not_in?: InputMaybe<Array<Scalars['Int']>>;
+  pInstant_eq?: InputMaybe<Scalars['Int']>;
+  pInstant_gt?: InputMaybe<Scalars['Int']>;
+  pInstant_gte?: InputMaybe<Scalars['Int']>;
+  pInstant_in?: InputMaybe<Array<Scalars['Int']>>;
+  pInstant_isNull?: InputMaybe<Scalars['Boolean']>;
+  pInstant_lt?: InputMaybe<Scalars['Int']>;
+  pInstant_lte?: InputMaybe<Scalars['Int']>;
+  pInstant_not_eq?: InputMaybe<Scalars['Int']>;
+  pInstant_not_in?: InputMaybe<Array<Scalars['Int']>>;
+  stakePool?: InputMaybe<StakePoolWhereInput>;
+  stakePool_isNull?: InputMaybe<Scalars['Boolean']>;
+  stake_eq?: InputMaybe<Scalars['BigDecimal']>;
+  stake_gt?: InputMaybe<Scalars['BigDecimal']>;
+  stake_gte?: InputMaybe<Scalars['BigDecimal']>;
+  stake_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  stake_isNull?: InputMaybe<Scalars['Boolean']>;
+  stake_lt?: InputMaybe<Scalars['BigDecimal']>;
+  stake_lte?: InputMaybe<Scalars['BigDecimal']>;
+  stake_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  stake_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  state_eq?: InputMaybe<WorkerState>;
+  state_in?: InputMaybe<Array<WorkerState>>;
+  state_isNull?: InputMaybe<Scalars['Boolean']>;
+  state_not_eq?: InputMaybe<WorkerState>;
+  state_not_in?: InputMaybe<Array<WorkerState>>;
+  totalReward_eq?: InputMaybe<Scalars['BigDecimal']>;
+  totalReward_gt?: InputMaybe<Scalars['BigDecimal']>;
+  totalReward_gte?: InputMaybe<Scalars['BigDecimal']>;
+  totalReward_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  totalReward_isNull?: InputMaybe<Scalars['Boolean']>;
+  totalReward_lt?: InputMaybe<Scalars['BigDecimal']>;
+  totalReward_lte?: InputMaybe<Scalars['BigDecimal']>;
+  totalReward_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  totalReward_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  v_eq?: InputMaybe<Scalars['BigDecimal']>;
+  v_gt?: InputMaybe<Scalars['BigDecimal']>;
+  v_gte?: InputMaybe<Scalars['BigDecimal']>;
+  v_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  v_isNull?: InputMaybe<Scalars['Boolean']>;
+  v_lt?: InputMaybe<Scalars['BigDecimal']>;
+  v_lte?: InputMaybe<Scalars['BigDecimal']>;
+  v_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  v_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  ve_eq?: InputMaybe<Scalars['BigDecimal']>;
+  ve_gt?: InputMaybe<Scalars['BigDecimal']>;
+  ve_gte?: InputMaybe<Scalars['BigDecimal']>;
+  ve_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  ve_isNull?: InputMaybe<Scalars['Boolean']>;
+  ve_lt?: InputMaybe<Scalars['BigDecimal']>;
+  ve_lte?: InputMaybe<Scalars['BigDecimal']>;
+  ve_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  ve_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  worker?: InputMaybe<WorkerWhereInput>;
+  worker_isNull?: InputMaybe<Scalars['Boolean']>;
 };
 
 export type SessionsConnection = {
-  readonly __typename?: 'SessionsConnection';
-  readonly edges: ReadonlyArray<SessionEdge>;
-  readonly pageInfo: PageInfo;
-  readonly totalCount: Scalars['Int'];
+  __typename?: 'SessionsConnection';
+  edges: Array<SessionEdge>;
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int'];
 };
 
 export type SquidStatus = {
-  readonly __typename?: 'SquidStatus';
+  __typename?: 'SquidStatus';
   /** The height of the processed part of the chain */
-  readonly height?: Maybe<Scalars['Int']>;
+  height?: Maybe<Scalars['Int']>;
 };
 
 export type StakePool = {
-  readonly __typename?: 'StakePool';
-  readonly basePool: BasePool;
+  __typename?: 'StakePool';
+  basePool: BasePool;
   /** null means infinite */
-  readonly capacity?: Maybe<Scalars['BigDecimal']>;
+  capacity?: Maybe<Scalars['BigDecimal']>;
   /** null means infinite */
-  readonly delegable?: Maybe<Scalars['BigDecimal']>;
+  delegable?: Maybe<Scalars['BigDecimal']>;
   /** pid */
-  readonly id: Scalars['String'];
-  readonly idleWorkerCount: Scalars['Int'];
-  readonly idleWorkerShares: Scalars['BigDecimal'];
-  readonly ownerReward: Scalars['BigDecimal'];
-  readonly workerCount: Scalars['Int'];
-  readonly workers: ReadonlyArray<Worker>;
+  id: Scalars['String'];
+  idleWorkerCount: Scalars['Int'];
+  idleWorkerShares: Scalars['BigDecimal'];
+  ownerReward: Scalars['BigDecimal'];
+  workerCount: Scalars['Int'];
+  workers: Array<Worker>;
 };
 
 
 export type StakePoolWorkersArgs = {
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<ReadonlyArray<WorkerOrderByInput>>;
+  orderBy?: InputMaybe<Array<WorkerOrderByInput>>;
   where?: InputMaybe<WorkerWhereInput>;
 };
 
 export type StakePoolEdge = {
-  readonly __typename?: 'StakePoolEdge';
-  readonly cursor: Scalars['String'];
-  readonly node: StakePool;
+  __typename?: 'StakePoolEdge';
+  cursor: Scalars['String'];
+  node: StakePool;
 };
 
 export const StakePoolOrderByInput = {
@@ -2048,121 +2048,121 @@ export const StakePoolOrderByInput = {
 
 export type StakePoolOrderByInput = typeof StakePoolOrderByInput[keyof typeof StakePoolOrderByInput];
 export type StakePoolWhereInput = {
-  readonly AND?: InputMaybe<ReadonlyArray<StakePoolWhereInput>>;
-  readonly OR?: InputMaybe<ReadonlyArray<StakePoolWhereInput>>;
-  readonly basePool?: InputMaybe<BasePoolWhereInput>;
-  readonly basePool_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly capacity_eq?: InputMaybe<Scalars['BigDecimal']>;
-  readonly capacity_gt?: InputMaybe<Scalars['BigDecimal']>;
-  readonly capacity_gte?: InputMaybe<Scalars['BigDecimal']>;
-  readonly capacity_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
-  readonly capacity_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly capacity_lt?: InputMaybe<Scalars['BigDecimal']>;
-  readonly capacity_lte?: InputMaybe<Scalars['BigDecimal']>;
-  readonly capacity_not_eq?: InputMaybe<Scalars['BigDecimal']>;
-  readonly capacity_not_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
-  readonly delegable_eq?: InputMaybe<Scalars['BigDecimal']>;
-  readonly delegable_gt?: InputMaybe<Scalars['BigDecimal']>;
-  readonly delegable_gte?: InputMaybe<Scalars['BigDecimal']>;
-  readonly delegable_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
-  readonly delegable_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly delegable_lt?: InputMaybe<Scalars['BigDecimal']>;
-  readonly delegable_lte?: InputMaybe<Scalars['BigDecimal']>;
-  readonly delegable_not_eq?: InputMaybe<Scalars['BigDecimal']>;
-  readonly delegable_not_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
-  readonly id_contains?: InputMaybe<Scalars['String']>;
-  readonly id_containsInsensitive?: InputMaybe<Scalars['String']>;
-  readonly id_endsWith?: InputMaybe<Scalars['String']>;
-  readonly id_eq?: InputMaybe<Scalars['String']>;
-  readonly id_gt?: InputMaybe<Scalars['String']>;
-  readonly id_gte?: InputMaybe<Scalars['String']>;
-  readonly id_in?: InputMaybe<ReadonlyArray<Scalars['String']>>;
-  readonly id_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly id_lt?: InputMaybe<Scalars['String']>;
-  readonly id_lte?: InputMaybe<Scalars['String']>;
-  readonly id_not_contains?: InputMaybe<Scalars['String']>;
-  readonly id_not_containsInsensitive?: InputMaybe<Scalars['String']>;
-  readonly id_not_endsWith?: InputMaybe<Scalars['String']>;
-  readonly id_not_eq?: InputMaybe<Scalars['String']>;
-  readonly id_not_in?: InputMaybe<ReadonlyArray<Scalars['String']>>;
-  readonly id_not_startsWith?: InputMaybe<Scalars['String']>;
-  readonly id_startsWith?: InputMaybe<Scalars['String']>;
-  readonly idleWorkerCount_eq?: InputMaybe<Scalars['Int']>;
-  readonly idleWorkerCount_gt?: InputMaybe<Scalars['Int']>;
-  readonly idleWorkerCount_gte?: InputMaybe<Scalars['Int']>;
-  readonly idleWorkerCount_in?: InputMaybe<ReadonlyArray<Scalars['Int']>>;
-  readonly idleWorkerCount_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly idleWorkerCount_lt?: InputMaybe<Scalars['Int']>;
-  readonly idleWorkerCount_lte?: InputMaybe<Scalars['Int']>;
-  readonly idleWorkerCount_not_eq?: InputMaybe<Scalars['Int']>;
-  readonly idleWorkerCount_not_in?: InputMaybe<ReadonlyArray<Scalars['Int']>>;
-  readonly idleWorkerShares_eq?: InputMaybe<Scalars['BigDecimal']>;
-  readonly idleWorkerShares_gt?: InputMaybe<Scalars['BigDecimal']>;
-  readonly idleWorkerShares_gte?: InputMaybe<Scalars['BigDecimal']>;
-  readonly idleWorkerShares_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
-  readonly idleWorkerShares_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly idleWorkerShares_lt?: InputMaybe<Scalars['BigDecimal']>;
-  readonly idleWorkerShares_lte?: InputMaybe<Scalars['BigDecimal']>;
-  readonly idleWorkerShares_not_eq?: InputMaybe<Scalars['BigDecimal']>;
-  readonly idleWorkerShares_not_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
-  readonly ownerReward_eq?: InputMaybe<Scalars['BigDecimal']>;
-  readonly ownerReward_gt?: InputMaybe<Scalars['BigDecimal']>;
-  readonly ownerReward_gte?: InputMaybe<Scalars['BigDecimal']>;
-  readonly ownerReward_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
-  readonly ownerReward_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly ownerReward_lt?: InputMaybe<Scalars['BigDecimal']>;
-  readonly ownerReward_lte?: InputMaybe<Scalars['BigDecimal']>;
-  readonly ownerReward_not_eq?: InputMaybe<Scalars['BigDecimal']>;
-  readonly ownerReward_not_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
-  readonly workerCount_eq?: InputMaybe<Scalars['Int']>;
-  readonly workerCount_gt?: InputMaybe<Scalars['Int']>;
-  readonly workerCount_gte?: InputMaybe<Scalars['Int']>;
-  readonly workerCount_in?: InputMaybe<ReadonlyArray<Scalars['Int']>>;
-  readonly workerCount_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly workerCount_lt?: InputMaybe<Scalars['Int']>;
-  readonly workerCount_lte?: InputMaybe<Scalars['Int']>;
-  readonly workerCount_not_eq?: InputMaybe<Scalars['Int']>;
-  readonly workerCount_not_in?: InputMaybe<ReadonlyArray<Scalars['Int']>>;
-  readonly workers_every?: InputMaybe<WorkerWhereInput>;
-  readonly workers_none?: InputMaybe<WorkerWhereInput>;
-  readonly workers_some?: InputMaybe<WorkerWhereInput>;
+  AND?: InputMaybe<Array<StakePoolWhereInput>>;
+  OR?: InputMaybe<Array<StakePoolWhereInput>>;
+  basePool?: InputMaybe<BasePoolWhereInput>;
+  basePool_isNull?: InputMaybe<Scalars['Boolean']>;
+  capacity_eq?: InputMaybe<Scalars['BigDecimal']>;
+  capacity_gt?: InputMaybe<Scalars['BigDecimal']>;
+  capacity_gte?: InputMaybe<Scalars['BigDecimal']>;
+  capacity_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  capacity_isNull?: InputMaybe<Scalars['Boolean']>;
+  capacity_lt?: InputMaybe<Scalars['BigDecimal']>;
+  capacity_lte?: InputMaybe<Scalars['BigDecimal']>;
+  capacity_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  capacity_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  delegable_eq?: InputMaybe<Scalars['BigDecimal']>;
+  delegable_gt?: InputMaybe<Scalars['BigDecimal']>;
+  delegable_gte?: InputMaybe<Scalars['BigDecimal']>;
+  delegable_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  delegable_isNull?: InputMaybe<Scalars['Boolean']>;
+  delegable_lt?: InputMaybe<Scalars['BigDecimal']>;
+  delegable_lte?: InputMaybe<Scalars['BigDecimal']>;
+  delegable_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  delegable_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  id_contains?: InputMaybe<Scalars['String']>;
+  id_containsInsensitive?: InputMaybe<Scalars['String']>;
+  id_endsWith?: InputMaybe<Scalars['String']>;
+  id_eq?: InputMaybe<Scalars['String']>;
+  id_gt?: InputMaybe<Scalars['String']>;
+  id_gte?: InputMaybe<Scalars['String']>;
+  id_in?: InputMaybe<Array<Scalars['String']>>;
+  id_isNull?: InputMaybe<Scalars['Boolean']>;
+  id_lt?: InputMaybe<Scalars['String']>;
+  id_lte?: InputMaybe<Scalars['String']>;
+  id_not_contains?: InputMaybe<Scalars['String']>;
+  id_not_containsInsensitive?: InputMaybe<Scalars['String']>;
+  id_not_endsWith?: InputMaybe<Scalars['String']>;
+  id_not_eq?: InputMaybe<Scalars['String']>;
+  id_not_in?: InputMaybe<Array<Scalars['String']>>;
+  id_not_startsWith?: InputMaybe<Scalars['String']>;
+  id_startsWith?: InputMaybe<Scalars['String']>;
+  idleWorkerCount_eq?: InputMaybe<Scalars['Int']>;
+  idleWorkerCount_gt?: InputMaybe<Scalars['Int']>;
+  idleWorkerCount_gte?: InputMaybe<Scalars['Int']>;
+  idleWorkerCount_in?: InputMaybe<Array<Scalars['Int']>>;
+  idleWorkerCount_isNull?: InputMaybe<Scalars['Boolean']>;
+  idleWorkerCount_lt?: InputMaybe<Scalars['Int']>;
+  idleWorkerCount_lte?: InputMaybe<Scalars['Int']>;
+  idleWorkerCount_not_eq?: InputMaybe<Scalars['Int']>;
+  idleWorkerCount_not_in?: InputMaybe<Array<Scalars['Int']>>;
+  idleWorkerShares_eq?: InputMaybe<Scalars['BigDecimal']>;
+  idleWorkerShares_gt?: InputMaybe<Scalars['BigDecimal']>;
+  idleWorkerShares_gte?: InputMaybe<Scalars['BigDecimal']>;
+  idleWorkerShares_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  idleWorkerShares_isNull?: InputMaybe<Scalars['Boolean']>;
+  idleWorkerShares_lt?: InputMaybe<Scalars['BigDecimal']>;
+  idleWorkerShares_lte?: InputMaybe<Scalars['BigDecimal']>;
+  idleWorkerShares_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  idleWorkerShares_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  ownerReward_eq?: InputMaybe<Scalars['BigDecimal']>;
+  ownerReward_gt?: InputMaybe<Scalars['BigDecimal']>;
+  ownerReward_gte?: InputMaybe<Scalars['BigDecimal']>;
+  ownerReward_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  ownerReward_isNull?: InputMaybe<Scalars['Boolean']>;
+  ownerReward_lt?: InputMaybe<Scalars['BigDecimal']>;
+  ownerReward_lte?: InputMaybe<Scalars['BigDecimal']>;
+  ownerReward_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  ownerReward_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  workerCount_eq?: InputMaybe<Scalars['Int']>;
+  workerCount_gt?: InputMaybe<Scalars['Int']>;
+  workerCount_gte?: InputMaybe<Scalars['Int']>;
+  workerCount_in?: InputMaybe<Array<Scalars['Int']>>;
+  workerCount_isNull?: InputMaybe<Scalars['Boolean']>;
+  workerCount_lt?: InputMaybe<Scalars['Int']>;
+  workerCount_lte?: InputMaybe<Scalars['Int']>;
+  workerCount_not_eq?: InputMaybe<Scalars['Int']>;
+  workerCount_not_in?: InputMaybe<Array<Scalars['Int']>>;
+  workers_every?: InputMaybe<WorkerWhereInput>;
+  workers_none?: InputMaybe<WorkerWhereInput>;
+  workers_some?: InputMaybe<WorkerWhereInput>;
 };
 
 export type StakePoolsConnection = {
-  readonly __typename?: 'StakePoolsConnection';
-  readonly edges: ReadonlyArray<StakePoolEdge>;
-  readonly pageInfo: PageInfo;
-  readonly totalCount: Scalars['Int'];
+  __typename?: 'StakePoolsConnection';
+  edges: Array<StakePoolEdge>;
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int'];
 };
 
 export type Subscription = {
-  readonly __typename?: 'Subscription';
-  readonly accountById?: Maybe<Account>;
-  readonly accounts: ReadonlyArray<Account>;
-  readonly basePoolAprRecordById?: Maybe<BasePoolAprRecord>;
-  readonly basePoolAprRecords: ReadonlyArray<BasePoolAprRecord>;
-  readonly basePoolById?: Maybe<BasePool>;
-  readonly basePoolWhitelistById?: Maybe<BasePoolWhitelist>;
-  readonly basePoolWhitelists: ReadonlyArray<BasePoolWhitelist>;
-  readonly basePools: ReadonlyArray<BasePool>;
-  readonly delegationById?: Maybe<Delegation>;
-  readonly delegationValueRecordById?: Maybe<DelegationValueRecord>;
-  readonly delegationValueRecords: ReadonlyArray<DelegationValueRecord>;
-  readonly delegations: ReadonlyArray<Delegation>;
-  readonly globalStateById?: Maybe<GlobalState>;
-  readonly globalStates: ReadonlyArray<GlobalState>;
-  readonly nftById?: Maybe<Nft>;
-  readonly nfts: ReadonlyArray<Nft>;
-  readonly rewardRecordById?: Maybe<RewardRecord>;
-  readonly rewardRecords: ReadonlyArray<RewardRecord>;
-  readonly sessionById?: Maybe<Session>;
-  readonly sessions: ReadonlyArray<Session>;
-  readonly stakePoolById?: Maybe<StakePool>;
-  readonly stakePools: ReadonlyArray<StakePool>;
-  readonly vaultById?: Maybe<Vault>;
-  readonly vaults: ReadonlyArray<Vault>;
-  readonly workerById?: Maybe<Worker>;
-  readonly workers: ReadonlyArray<Worker>;
+  __typename?: 'Subscription';
+  accountById?: Maybe<Account>;
+  accounts: Array<Account>;
+  basePoolAprRecordById?: Maybe<BasePoolAprRecord>;
+  basePoolAprRecords: Array<BasePoolAprRecord>;
+  basePoolById?: Maybe<BasePool>;
+  basePoolWhitelistById?: Maybe<BasePoolWhitelist>;
+  basePoolWhitelists: Array<BasePoolWhitelist>;
+  basePools: Array<BasePool>;
+  delegationById?: Maybe<Delegation>;
+  delegationValueRecordById?: Maybe<DelegationValueRecord>;
+  delegationValueRecords: Array<DelegationValueRecord>;
+  delegations: Array<Delegation>;
+  globalStateById?: Maybe<GlobalState>;
+  globalStates: Array<GlobalState>;
+  nftById?: Maybe<Nft>;
+  nfts: Array<Nft>;
+  rewardRecordById?: Maybe<RewardRecord>;
+  rewardRecords: Array<RewardRecord>;
+  sessionById?: Maybe<Session>;
+  sessions: Array<Session>;
+  stakePoolById?: Maybe<StakePool>;
+  stakePools: Array<StakePool>;
+  vaultById?: Maybe<Vault>;
+  vaults: Array<Vault>;
+  workerById?: Maybe<Worker>;
+  workers: Array<Worker>;
 };
 
 
@@ -2174,7 +2174,7 @@ export type SubscriptionAccountByIdArgs = {
 export type SubscriptionAccountsArgs = {
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<ReadonlyArray<AccountOrderByInput>>;
+  orderBy?: InputMaybe<Array<AccountOrderByInput>>;
   where?: InputMaybe<AccountWhereInput>;
 };
 
@@ -2187,7 +2187,7 @@ export type SubscriptionBasePoolAprRecordByIdArgs = {
 export type SubscriptionBasePoolAprRecordsArgs = {
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<ReadonlyArray<BasePoolAprRecordOrderByInput>>;
+  orderBy?: InputMaybe<Array<BasePoolAprRecordOrderByInput>>;
   where?: InputMaybe<BasePoolAprRecordWhereInput>;
 };
 
@@ -2205,7 +2205,7 @@ export type SubscriptionBasePoolWhitelistByIdArgs = {
 export type SubscriptionBasePoolWhitelistsArgs = {
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<ReadonlyArray<BasePoolWhitelistOrderByInput>>;
+  orderBy?: InputMaybe<Array<BasePoolWhitelistOrderByInput>>;
   where?: InputMaybe<BasePoolWhitelistWhereInput>;
 };
 
@@ -2213,7 +2213,7 @@ export type SubscriptionBasePoolWhitelistsArgs = {
 export type SubscriptionBasePoolsArgs = {
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<ReadonlyArray<BasePoolOrderByInput>>;
+  orderBy?: InputMaybe<Array<BasePoolOrderByInput>>;
   where?: InputMaybe<BasePoolWhereInput>;
 };
 
@@ -2231,7 +2231,7 @@ export type SubscriptionDelegationValueRecordByIdArgs = {
 export type SubscriptionDelegationValueRecordsArgs = {
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<ReadonlyArray<DelegationValueRecordOrderByInput>>;
+  orderBy?: InputMaybe<Array<DelegationValueRecordOrderByInput>>;
   where?: InputMaybe<DelegationValueRecordWhereInput>;
 };
 
@@ -2239,7 +2239,7 @@ export type SubscriptionDelegationValueRecordsArgs = {
 export type SubscriptionDelegationsArgs = {
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<ReadonlyArray<DelegationOrderByInput>>;
+  orderBy?: InputMaybe<Array<DelegationOrderByInput>>;
   where?: InputMaybe<DelegationWhereInput>;
 };
 
@@ -2252,7 +2252,7 @@ export type SubscriptionGlobalStateByIdArgs = {
 export type SubscriptionGlobalStatesArgs = {
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<ReadonlyArray<GlobalStateOrderByInput>>;
+  orderBy?: InputMaybe<Array<GlobalStateOrderByInput>>;
   where?: InputMaybe<GlobalStateWhereInput>;
 };
 
@@ -2265,7 +2265,7 @@ export type SubscriptionNftByIdArgs = {
 export type SubscriptionNftsArgs = {
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<ReadonlyArray<NftOrderByInput>>;
+  orderBy?: InputMaybe<Array<NftOrderByInput>>;
   where?: InputMaybe<NftWhereInput>;
 };
 
@@ -2278,7 +2278,7 @@ export type SubscriptionRewardRecordByIdArgs = {
 export type SubscriptionRewardRecordsArgs = {
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<ReadonlyArray<RewardRecordOrderByInput>>;
+  orderBy?: InputMaybe<Array<RewardRecordOrderByInput>>;
   where?: InputMaybe<RewardRecordWhereInput>;
 };
 
@@ -2291,7 +2291,7 @@ export type SubscriptionSessionByIdArgs = {
 export type SubscriptionSessionsArgs = {
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<ReadonlyArray<SessionOrderByInput>>;
+  orderBy?: InputMaybe<Array<SessionOrderByInput>>;
   where?: InputMaybe<SessionWhereInput>;
 };
 
@@ -2304,7 +2304,7 @@ export type SubscriptionStakePoolByIdArgs = {
 export type SubscriptionStakePoolsArgs = {
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<ReadonlyArray<StakePoolOrderByInput>>;
+  orderBy?: InputMaybe<Array<StakePoolOrderByInput>>;
   where?: InputMaybe<StakePoolWhereInput>;
 };
 
@@ -2317,7 +2317,7 @@ export type SubscriptionVaultByIdArgs = {
 export type SubscriptionVaultsArgs = {
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<ReadonlyArray<VaultOrderByInput>>;
+  orderBy?: InputMaybe<Array<VaultOrderByInput>>;
   where?: InputMaybe<VaultWhereInput>;
 };
 
@@ -2330,24 +2330,24 @@ export type SubscriptionWorkerByIdArgs = {
 export type SubscriptionWorkersArgs = {
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<ReadonlyArray<WorkerOrderByInput>>;
+  orderBy?: InputMaybe<Array<WorkerOrderByInput>>;
   where?: InputMaybe<WorkerWhereInput>;
 };
 
 export type Vault = {
-  readonly __typename?: 'Vault';
-  readonly basePool: BasePool;
-  readonly claimableOwnerShares: Scalars['BigDecimal'];
+  __typename?: 'Vault';
+  basePool: BasePool;
+  claimableOwnerShares: Scalars['BigDecimal'];
   /** pid */
-  readonly id: Scalars['String'];
+  id: Scalars['String'];
   /** share price of owner's last gain */
-  readonly lastSharePriceCheckpoint: Scalars['BigDecimal'];
+  lastSharePriceCheckpoint: Scalars['BigDecimal'];
 };
 
 export type VaultEdge = {
-  readonly __typename?: 'VaultEdge';
-  readonly cursor: Scalars['String'];
-  readonly node: Vault;
+  __typename?: 'VaultEdge';
+  cursor: Scalars['String'];
+  node: Vault;
 };
 
 export const VaultOrderByInput = {
@@ -2391,73 +2391,73 @@ export const VaultOrderByInput = {
 
 export type VaultOrderByInput = typeof VaultOrderByInput[keyof typeof VaultOrderByInput];
 export type VaultWhereInput = {
-  readonly AND?: InputMaybe<ReadonlyArray<VaultWhereInput>>;
-  readonly OR?: InputMaybe<ReadonlyArray<VaultWhereInput>>;
-  readonly basePool?: InputMaybe<BasePoolWhereInput>;
-  readonly basePool_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly claimableOwnerShares_eq?: InputMaybe<Scalars['BigDecimal']>;
-  readonly claimableOwnerShares_gt?: InputMaybe<Scalars['BigDecimal']>;
-  readonly claimableOwnerShares_gte?: InputMaybe<Scalars['BigDecimal']>;
-  readonly claimableOwnerShares_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
-  readonly claimableOwnerShares_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly claimableOwnerShares_lt?: InputMaybe<Scalars['BigDecimal']>;
-  readonly claimableOwnerShares_lte?: InputMaybe<Scalars['BigDecimal']>;
-  readonly claimableOwnerShares_not_eq?: InputMaybe<Scalars['BigDecimal']>;
-  readonly claimableOwnerShares_not_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
-  readonly id_contains?: InputMaybe<Scalars['String']>;
-  readonly id_containsInsensitive?: InputMaybe<Scalars['String']>;
-  readonly id_endsWith?: InputMaybe<Scalars['String']>;
-  readonly id_eq?: InputMaybe<Scalars['String']>;
-  readonly id_gt?: InputMaybe<Scalars['String']>;
-  readonly id_gte?: InputMaybe<Scalars['String']>;
-  readonly id_in?: InputMaybe<ReadonlyArray<Scalars['String']>>;
-  readonly id_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly id_lt?: InputMaybe<Scalars['String']>;
-  readonly id_lte?: InputMaybe<Scalars['String']>;
-  readonly id_not_contains?: InputMaybe<Scalars['String']>;
-  readonly id_not_containsInsensitive?: InputMaybe<Scalars['String']>;
-  readonly id_not_endsWith?: InputMaybe<Scalars['String']>;
-  readonly id_not_eq?: InputMaybe<Scalars['String']>;
-  readonly id_not_in?: InputMaybe<ReadonlyArray<Scalars['String']>>;
-  readonly id_not_startsWith?: InputMaybe<Scalars['String']>;
-  readonly id_startsWith?: InputMaybe<Scalars['String']>;
-  readonly lastSharePriceCheckpoint_eq?: InputMaybe<Scalars['BigDecimal']>;
-  readonly lastSharePriceCheckpoint_gt?: InputMaybe<Scalars['BigDecimal']>;
-  readonly lastSharePriceCheckpoint_gte?: InputMaybe<Scalars['BigDecimal']>;
-  readonly lastSharePriceCheckpoint_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
-  readonly lastSharePriceCheckpoint_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly lastSharePriceCheckpoint_lt?: InputMaybe<Scalars['BigDecimal']>;
-  readonly lastSharePriceCheckpoint_lte?: InputMaybe<Scalars['BigDecimal']>;
-  readonly lastSharePriceCheckpoint_not_eq?: InputMaybe<Scalars['BigDecimal']>;
-  readonly lastSharePriceCheckpoint_not_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
+  AND?: InputMaybe<Array<VaultWhereInput>>;
+  OR?: InputMaybe<Array<VaultWhereInput>>;
+  basePool?: InputMaybe<BasePoolWhereInput>;
+  basePool_isNull?: InputMaybe<Scalars['Boolean']>;
+  claimableOwnerShares_eq?: InputMaybe<Scalars['BigDecimal']>;
+  claimableOwnerShares_gt?: InputMaybe<Scalars['BigDecimal']>;
+  claimableOwnerShares_gte?: InputMaybe<Scalars['BigDecimal']>;
+  claimableOwnerShares_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  claimableOwnerShares_isNull?: InputMaybe<Scalars['Boolean']>;
+  claimableOwnerShares_lt?: InputMaybe<Scalars['BigDecimal']>;
+  claimableOwnerShares_lte?: InputMaybe<Scalars['BigDecimal']>;
+  claimableOwnerShares_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  claimableOwnerShares_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  id_contains?: InputMaybe<Scalars['String']>;
+  id_containsInsensitive?: InputMaybe<Scalars['String']>;
+  id_endsWith?: InputMaybe<Scalars['String']>;
+  id_eq?: InputMaybe<Scalars['String']>;
+  id_gt?: InputMaybe<Scalars['String']>;
+  id_gte?: InputMaybe<Scalars['String']>;
+  id_in?: InputMaybe<Array<Scalars['String']>>;
+  id_isNull?: InputMaybe<Scalars['Boolean']>;
+  id_lt?: InputMaybe<Scalars['String']>;
+  id_lte?: InputMaybe<Scalars['String']>;
+  id_not_contains?: InputMaybe<Scalars['String']>;
+  id_not_containsInsensitive?: InputMaybe<Scalars['String']>;
+  id_not_endsWith?: InputMaybe<Scalars['String']>;
+  id_not_eq?: InputMaybe<Scalars['String']>;
+  id_not_in?: InputMaybe<Array<Scalars['String']>>;
+  id_not_startsWith?: InputMaybe<Scalars['String']>;
+  id_startsWith?: InputMaybe<Scalars['String']>;
+  lastSharePriceCheckpoint_eq?: InputMaybe<Scalars['BigDecimal']>;
+  lastSharePriceCheckpoint_gt?: InputMaybe<Scalars['BigDecimal']>;
+  lastSharePriceCheckpoint_gte?: InputMaybe<Scalars['BigDecimal']>;
+  lastSharePriceCheckpoint_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  lastSharePriceCheckpoint_isNull?: InputMaybe<Scalars['Boolean']>;
+  lastSharePriceCheckpoint_lt?: InputMaybe<Scalars['BigDecimal']>;
+  lastSharePriceCheckpoint_lte?: InputMaybe<Scalars['BigDecimal']>;
+  lastSharePriceCheckpoint_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  lastSharePriceCheckpoint_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
 };
 
 export type VaultsConnection = {
-  readonly __typename?: 'VaultsConnection';
-  readonly edges: ReadonlyArray<VaultEdge>;
-  readonly pageInfo: PageInfo;
-  readonly totalCount: Scalars['Int'];
+  __typename?: 'VaultsConnection';
+  edges: Array<VaultEdge>;
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int'];
 };
 
 export type WhereIdInput = {
-  readonly id: Scalars['String'];
+  id: Scalars['String'];
 };
 
 export type Worker = {
-  readonly __typename?: 'Worker';
-  readonly confidenceLevel: Scalars['Int'];
+  __typename?: 'Worker';
+  confidenceLevel: Scalars['Int'];
   /** worker public key */
-  readonly id: Scalars['String'];
-  readonly initialScore?: Maybe<Scalars['Int']>;
-  readonly session?: Maybe<Session>;
-  readonly shares?: Maybe<Scalars['BigDecimal']>;
-  readonly stakePool?: Maybe<StakePool>;
+  id: Scalars['String'];
+  initialScore?: Maybe<Scalars['Int']>;
+  session?: Maybe<Session>;
+  shares?: Maybe<Scalars['BigDecimal']>;
+  stakePool?: Maybe<StakePool>;
 };
 
 export type WorkerEdge = {
-  readonly __typename?: 'WorkerEdge';
-  readonly cursor: Scalars['String'];
-  readonly node: Worker;
+  __typename?: 'WorkerEdge';
+  cursor: Scalars['String'];
+  node: Worker;
 };
 
 export const WorkerOrderByInput = {
@@ -2515,63 +2515,63 @@ export const WorkerState = {
 
 export type WorkerState = typeof WorkerState[keyof typeof WorkerState];
 export type WorkerWhereInput = {
-  readonly AND?: InputMaybe<ReadonlyArray<WorkerWhereInput>>;
-  readonly OR?: InputMaybe<ReadonlyArray<WorkerWhereInput>>;
-  readonly confidenceLevel_eq?: InputMaybe<Scalars['Int']>;
-  readonly confidenceLevel_gt?: InputMaybe<Scalars['Int']>;
-  readonly confidenceLevel_gte?: InputMaybe<Scalars['Int']>;
-  readonly confidenceLevel_in?: InputMaybe<ReadonlyArray<Scalars['Int']>>;
-  readonly confidenceLevel_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly confidenceLevel_lt?: InputMaybe<Scalars['Int']>;
-  readonly confidenceLevel_lte?: InputMaybe<Scalars['Int']>;
-  readonly confidenceLevel_not_eq?: InputMaybe<Scalars['Int']>;
-  readonly confidenceLevel_not_in?: InputMaybe<ReadonlyArray<Scalars['Int']>>;
-  readonly id_contains?: InputMaybe<Scalars['String']>;
-  readonly id_containsInsensitive?: InputMaybe<Scalars['String']>;
-  readonly id_endsWith?: InputMaybe<Scalars['String']>;
-  readonly id_eq?: InputMaybe<Scalars['String']>;
-  readonly id_gt?: InputMaybe<Scalars['String']>;
-  readonly id_gte?: InputMaybe<Scalars['String']>;
-  readonly id_in?: InputMaybe<ReadonlyArray<Scalars['String']>>;
-  readonly id_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly id_lt?: InputMaybe<Scalars['String']>;
-  readonly id_lte?: InputMaybe<Scalars['String']>;
-  readonly id_not_contains?: InputMaybe<Scalars['String']>;
-  readonly id_not_containsInsensitive?: InputMaybe<Scalars['String']>;
-  readonly id_not_endsWith?: InputMaybe<Scalars['String']>;
-  readonly id_not_eq?: InputMaybe<Scalars['String']>;
-  readonly id_not_in?: InputMaybe<ReadonlyArray<Scalars['String']>>;
-  readonly id_not_startsWith?: InputMaybe<Scalars['String']>;
-  readonly id_startsWith?: InputMaybe<Scalars['String']>;
-  readonly initialScore_eq?: InputMaybe<Scalars['Int']>;
-  readonly initialScore_gt?: InputMaybe<Scalars['Int']>;
-  readonly initialScore_gte?: InputMaybe<Scalars['Int']>;
-  readonly initialScore_in?: InputMaybe<ReadonlyArray<Scalars['Int']>>;
-  readonly initialScore_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly initialScore_lt?: InputMaybe<Scalars['Int']>;
-  readonly initialScore_lte?: InputMaybe<Scalars['Int']>;
-  readonly initialScore_not_eq?: InputMaybe<Scalars['Int']>;
-  readonly initialScore_not_in?: InputMaybe<ReadonlyArray<Scalars['Int']>>;
-  readonly session?: InputMaybe<SessionWhereInput>;
-  readonly session_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly shares_eq?: InputMaybe<Scalars['BigDecimal']>;
-  readonly shares_gt?: InputMaybe<Scalars['BigDecimal']>;
-  readonly shares_gte?: InputMaybe<Scalars['BigDecimal']>;
-  readonly shares_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
-  readonly shares_isNull?: InputMaybe<Scalars['Boolean']>;
-  readonly shares_lt?: InputMaybe<Scalars['BigDecimal']>;
-  readonly shares_lte?: InputMaybe<Scalars['BigDecimal']>;
-  readonly shares_not_eq?: InputMaybe<Scalars['BigDecimal']>;
-  readonly shares_not_in?: InputMaybe<ReadonlyArray<Scalars['BigDecimal']>>;
-  readonly stakePool?: InputMaybe<StakePoolWhereInput>;
-  readonly stakePool_isNull?: InputMaybe<Scalars['Boolean']>;
+  AND?: InputMaybe<Array<WorkerWhereInput>>;
+  OR?: InputMaybe<Array<WorkerWhereInput>>;
+  confidenceLevel_eq?: InputMaybe<Scalars['Int']>;
+  confidenceLevel_gt?: InputMaybe<Scalars['Int']>;
+  confidenceLevel_gte?: InputMaybe<Scalars['Int']>;
+  confidenceLevel_in?: InputMaybe<Array<Scalars['Int']>>;
+  confidenceLevel_isNull?: InputMaybe<Scalars['Boolean']>;
+  confidenceLevel_lt?: InputMaybe<Scalars['Int']>;
+  confidenceLevel_lte?: InputMaybe<Scalars['Int']>;
+  confidenceLevel_not_eq?: InputMaybe<Scalars['Int']>;
+  confidenceLevel_not_in?: InputMaybe<Array<Scalars['Int']>>;
+  id_contains?: InputMaybe<Scalars['String']>;
+  id_containsInsensitive?: InputMaybe<Scalars['String']>;
+  id_endsWith?: InputMaybe<Scalars['String']>;
+  id_eq?: InputMaybe<Scalars['String']>;
+  id_gt?: InputMaybe<Scalars['String']>;
+  id_gte?: InputMaybe<Scalars['String']>;
+  id_in?: InputMaybe<Array<Scalars['String']>>;
+  id_isNull?: InputMaybe<Scalars['Boolean']>;
+  id_lt?: InputMaybe<Scalars['String']>;
+  id_lte?: InputMaybe<Scalars['String']>;
+  id_not_contains?: InputMaybe<Scalars['String']>;
+  id_not_containsInsensitive?: InputMaybe<Scalars['String']>;
+  id_not_endsWith?: InputMaybe<Scalars['String']>;
+  id_not_eq?: InputMaybe<Scalars['String']>;
+  id_not_in?: InputMaybe<Array<Scalars['String']>>;
+  id_not_startsWith?: InputMaybe<Scalars['String']>;
+  id_startsWith?: InputMaybe<Scalars['String']>;
+  initialScore_eq?: InputMaybe<Scalars['Int']>;
+  initialScore_gt?: InputMaybe<Scalars['Int']>;
+  initialScore_gte?: InputMaybe<Scalars['Int']>;
+  initialScore_in?: InputMaybe<Array<Scalars['Int']>>;
+  initialScore_isNull?: InputMaybe<Scalars['Boolean']>;
+  initialScore_lt?: InputMaybe<Scalars['Int']>;
+  initialScore_lte?: InputMaybe<Scalars['Int']>;
+  initialScore_not_eq?: InputMaybe<Scalars['Int']>;
+  initialScore_not_in?: InputMaybe<Array<Scalars['Int']>>;
+  session?: InputMaybe<SessionWhereInput>;
+  session_isNull?: InputMaybe<Scalars['Boolean']>;
+  shares_eq?: InputMaybe<Scalars['BigDecimal']>;
+  shares_gt?: InputMaybe<Scalars['BigDecimal']>;
+  shares_gte?: InputMaybe<Scalars['BigDecimal']>;
+  shares_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  shares_isNull?: InputMaybe<Scalars['Boolean']>;
+  shares_lt?: InputMaybe<Scalars['BigDecimal']>;
+  shares_lte?: InputMaybe<Scalars['BigDecimal']>;
+  shares_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  shares_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  stakePool?: InputMaybe<StakePoolWhereInput>;
+  stakePool_isNull?: InputMaybe<Scalars['Boolean']>;
 };
 
 export type WorkersConnection = {
-  readonly __typename?: 'WorkersConnection';
-  readonly edges: ReadonlyArray<WorkerEdge>;
-  readonly pageInfo: PageInfo;
-  readonly totalCount: Scalars['Int'];
+  __typename?: 'WorkersConnection';
+  edges: Array<WorkerEdge>;
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int'];
 };
 
 export type AccountByIdQueryVariables = Exact<{
@@ -2579,9 +2579,9 @@ export type AccountByIdQueryVariables = Exact<{
 }>;
 
 
-export type AccountByIdQuery = { readonly __typename?: 'Query', readonly accountById?: { readonly __typename?: 'Account', readonly id: string, readonly identityDisplay?: string | null, readonly identityLevel?: IdentityLevel | null, readonly stakePoolNftCount: number, readonly stakePoolValue: string, readonly stakePoolAvgAprMultiplier: string, readonly vaultNftCount: number, readonly vaultValue: string, readonly vaultAvgAprMultiplier: string, readonly ownedPools: ReadonlyArray<{ readonly __typename?: 'BasePool', readonly id: string, readonly account: { readonly __typename?: 'Account', readonly id: string, readonly stakePoolNftCount: number, readonly stakePoolValue: string, readonly stakePoolAvgAprMultiplier: string, readonly vaultNftCount: number, readonly vaultValue: string, readonly vaultAvgAprMultiplier: string } }> } | null };
+export type AccountByIdQuery = { __typename?: 'Query', accountById?: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null, stakePoolNftCount: number, stakePoolValue: string, stakePoolAvgAprMultiplier: string, vaultNftCount: number, vaultValue: string, vaultAvgAprMultiplier: string, ownedPools: Array<{ __typename?: 'BasePool', id: string, account: { __typename?: 'Account', id: string, stakePoolNftCount: number, stakePoolValue: string, stakePoolAvgAprMultiplier: string, vaultNftCount: number, vaultValue: string, vaultAvgAprMultiplier: string } }> } | null };
 
-export type BasePoolCommonFragment = { readonly __typename?: 'BasePool', readonly cid: number, readonly commission: string, readonly delegatorCount: number, readonly freeValue: string, readonly id: string, readonly kind: BasePoolKind, readonly aprMultiplier: string, readonly pid: string, readonly releasingValue: string, readonly sharePrice: string, readonly totalShares: string, readonly totalValue: string, readonly whitelistEnabled: boolean, readonly withdrawingShares: string, readonly withdrawingValue: string, readonly account: { readonly __typename?: 'Account', readonly id: string, readonly stakePoolNftCount: number, readonly stakePoolValue: string }, readonly owner: { readonly __typename?: 'Account', readonly id: string, readonly identityDisplay?: string | null, readonly identityLevel?: IdentityLevel | null }, readonly stakePool?: { readonly __typename?: 'StakePool', readonly capacity?: string | null, readonly delegable?: string | null, readonly idleWorkerCount: number, readonly ownerReward: string, readonly workerCount: number } | null, readonly vault?: { readonly __typename?: 'Vault', readonly claimableOwnerShares: string, readonly lastSharePriceCheckpoint: string } | null };
+export type BasePoolCommonFragment = { __typename?: 'BasePool', cid: number, commission: string, delegatorCount: number, freeValue: string, id: string, kind: BasePoolKind, aprMultiplier: string, pid: string, releasingValue: string, sharePrice: string, totalShares: string, totalValue: string, whitelistEnabled: boolean, withdrawingShares: string, withdrawingValue: string, account: { __typename?: 'Account', id: string, stakePoolNftCount: number, stakePoolValue: string }, owner: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null }, stakePool?: { __typename?: 'StakePool', capacity?: string | null, delegable?: string | null, idleWorkerCount: number, ownerReward: string, workerCount: number } | null, vault?: { __typename?: 'Vault', claimableOwnerShares: string, lastSharePriceCheckpoint: string } | null };
 
 export type BasePoolByIdQueryVariables = Exact<{
   id: Scalars['String'];
@@ -2589,10 +2589,10 @@ export type BasePoolByIdQueryVariables = Exact<{
 }>;
 
 
-export type BasePoolByIdQuery = { readonly __typename?: 'Query', readonly basePoolById?: { readonly __typename?: 'BasePool', readonly cid: number, readonly commission: string, readonly delegatorCount: number, readonly freeValue: string, readonly id: string, readonly kind: BasePoolKind, readonly aprMultiplier: string, readonly pid: string, readonly releasingValue: string, readonly sharePrice: string, readonly totalShares: string, readonly totalValue: string, readonly whitelistEnabled: boolean, readonly withdrawingShares: string, readonly withdrawingValue: string, readonly whitelists: ReadonlyArray<{ readonly __typename?: 'BasePoolWhitelist', readonly account: { readonly __typename?: 'Account', readonly id: string } }>, readonly account: { readonly __typename?: 'Account', readonly id: string, readonly stakePoolNftCount: number, readonly stakePoolValue: string }, readonly owner: { readonly __typename?: 'Account', readonly id: string, readonly identityDisplay?: string | null, readonly identityLevel?: IdentityLevel | null }, readonly stakePool?: { readonly __typename?: 'StakePool', readonly capacity?: string | null, readonly delegable?: string | null, readonly idleWorkerCount: number, readonly ownerReward: string, readonly workerCount: number } | null, readonly vault?: { readonly __typename?: 'Vault', readonly claimableOwnerShares: string, readonly lastSharePriceCheckpoint: string } | null } | null };
+export type BasePoolByIdQuery = { __typename?: 'Query', basePoolById?: { __typename?: 'BasePool', cid: number, commission: string, delegatorCount: number, freeValue: string, id: string, kind: BasePoolKind, aprMultiplier: string, pid: string, releasingValue: string, sharePrice: string, totalShares: string, totalValue: string, whitelistEnabled: boolean, withdrawingShares: string, withdrawingValue: string, whitelists: Array<{ __typename?: 'BasePoolWhitelist', account: { __typename?: 'Account', id: string } }>, account: { __typename?: 'Account', id: string, stakePoolNftCount: number, stakePoolValue: string }, owner: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null }, stakePool?: { __typename?: 'StakePool', capacity?: string | null, delegable?: string | null, idleWorkerCount: number, ownerReward: string, workerCount: number } | null, vault?: { __typename?: 'Vault', claimableOwnerShares: string, lastSharePriceCheckpoint: string } | null } | null };
 
 export type BasePoolsConnectionQueryVariables = Exact<{
-  orderBy: ReadonlyArray<BasePoolOrderByInput> | BasePoolOrderByInput;
+  orderBy: Array<BasePoolOrderByInput> | BasePoolOrderByInput;
   first?: InputMaybe<Scalars['Int']>;
   after?: InputMaybe<Scalars['String']>;
   where?: InputMaybe<BasePoolWhereInput>;
@@ -2600,7 +2600,7 @@ export type BasePoolsConnectionQueryVariables = Exact<{
 }>;
 
 
-export type BasePoolsConnectionQuery = { readonly __typename?: 'Query', readonly basePoolsConnection: { readonly __typename?: 'BasePoolsConnection', readonly totalCount: number, readonly pageInfo: { readonly __typename?: 'PageInfo', readonly endCursor: string, readonly hasNextPage: boolean, readonly hasPreviousPage: boolean, readonly startCursor: string }, readonly edges: ReadonlyArray<{ readonly __typename?: 'BasePoolEdge', readonly cursor: string, readonly node: { readonly __typename?: 'BasePool', readonly cid: number, readonly commission: string, readonly delegatorCount: number, readonly freeValue: string, readonly id: string, readonly kind: BasePoolKind, readonly aprMultiplier: string, readonly pid: string, readonly releasingValue: string, readonly sharePrice: string, readonly totalShares: string, readonly totalValue: string, readonly whitelistEnabled: boolean, readonly withdrawingShares: string, readonly withdrawingValue: string, readonly whitelists: ReadonlyArray<{ readonly __typename?: 'BasePoolWhitelist', readonly account: { readonly __typename?: 'Account', readonly id: string } }>, readonly account: { readonly __typename?: 'Account', readonly id: string, readonly stakePoolNftCount: number, readonly stakePoolValue: string }, readonly owner: { readonly __typename?: 'Account', readonly id: string, readonly identityDisplay?: string | null, readonly identityLevel?: IdentityLevel | null }, readonly stakePool?: { readonly __typename?: 'StakePool', readonly capacity?: string | null, readonly delegable?: string | null, readonly idleWorkerCount: number, readonly ownerReward: string, readonly workerCount: number } | null, readonly vault?: { readonly __typename?: 'Vault', readonly claimableOwnerShares: string, readonly lastSharePriceCheckpoint: string } | null } }> } };
+export type BasePoolsConnectionQuery = { __typename?: 'Query', basePoolsConnection: { __typename?: 'BasePoolsConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', endCursor: string, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string }, edges: Array<{ __typename?: 'BasePoolEdge', cursor: string, node: { __typename?: 'BasePool', cid: number, commission: string, delegatorCount: number, freeValue: string, id: string, kind: BasePoolKind, aprMultiplier: string, pid: string, releasingValue: string, sharePrice: string, totalShares: string, totalValue: string, whitelistEnabled: boolean, withdrawingShares: string, withdrawingValue: string, whitelists: Array<{ __typename?: 'BasePoolWhitelist', account: { __typename?: 'Account', id: string } }>, account: { __typename?: 'Account', id: string, stakePoolNftCount: number, stakePoolValue: string }, owner: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null }, stakePool?: { __typename?: 'StakePool', capacity?: string | null, delegable?: string | null, idleWorkerCount: number, ownerReward: string, workerCount: number } | null, vault?: { __typename?: 'Vault', claimableOwnerShares: string, lastSharePriceCheckpoint: string } | null } }> } };
 
 export type ClaimableStakePoolsQueryVariables = Exact<{
   accountId?: InputMaybe<Scalars['String']>;
@@ -2608,106 +2608,106 @@ export type ClaimableStakePoolsQueryVariables = Exact<{
 }>;
 
 
-export type ClaimableStakePoolsQuery = { readonly __typename?: 'Query', readonly basePoolsConnection: { readonly __typename?: 'BasePoolsConnection', readonly edges: ReadonlyArray<{ readonly __typename?: 'BasePoolEdge', readonly node: { readonly __typename?: 'BasePool', readonly id: string, readonly stakePool?: { readonly __typename?: 'StakePool', readonly ownerReward: string } | null } }> } };
+export type ClaimableStakePoolsQuery = { __typename?: 'Query', basePoolsConnection: { __typename?: 'BasePoolsConnection', edges: Array<{ __typename?: 'BasePoolEdge', node: { __typename?: 'BasePool', id: string, stakePool?: { __typename?: 'StakePool', ownerReward: string } | null } }> } };
 
 export type OwnedVaultsQueryVariables = Exact<{
   accountId?: InputMaybe<Scalars['String']>;
 }>;
 
 
-export type OwnedVaultsQuery = { readonly __typename?: 'Query', readonly basePoolsConnection: { readonly __typename?: 'BasePoolsConnection', readonly edges: ReadonlyArray<{ readonly __typename?: 'BasePoolEdge', readonly node: { readonly __typename?: 'BasePool', readonly id: string, readonly totalShares: string, readonly sharePrice: string, readonly commission: string, readonly vault?: { readonly __typename?: 'Vault', readonly claimableOwnerShares: string, readonly lastSharePriceCheckpoint: string } | null } }> } };
+export type OwnedVaultsQuery = { __typename?: 'Query', basePoolsConnection: { __typename?: 'BasePoolsConnection', edges: Array<{ __typename?: 'BasePoolEdge', node: { __typename?: 'BasePool', id: string, totalShares: string, sharePrice: string, commission: string, vault?: { __typename?: 'Vault', claimableOwnerShares: string, lastSharePriceCheckpoint: string } | null } }> } };
 
 export type BasePoolAprRecordsConnectionQueryVariables = Exact<{
-  orderBy: ReadonlyArray<BasePoolAprRecordOrderByInput> | BasePoolAprRecordOrderByInput;
+  orderBy: Array<BasePoolAprRecordOrderByInput> | BasePoolAprRecordOrderByInput;
   after?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Int']>;
   where?: InputMaybe<BasePoolAprRecordWhereInput>;
 }>;
 
 
-export type BasePoolAprRecordsConnectionQuery = { readonly __typename?: 'Query', readonly basePoolAprRecordsConnection: { readonly __typename?: 'BasePoolAprRecordsConnection', readonly totalCount: number, readonly edges: ReadonlyArray<{ readonly __typename?: 'BasePoolAprRecordEdge', readonly cursor: string, readonly node: { readonly __typename?: 'BasePoolAprRecord', readonly id: string, readonly updatedTime: string, readonly value: string } }> } };
+export type BasePoolAprRecordsConnectionQuery = { __typename?: 'Query', basePoolAprRecordsConnection: { __typename?: 'BasePoolAprRecordsConnection', totalCount: number, edges: Array<{ __typename?: 'BasePoolAprRecordEdge', cursor: string, node: { __typename?: 'BasePoolAprRecord', id: string, updatedTime: string, value: string } }> } };
 
-export type DelegationCommonFragment = { readonly __typename?: 'Delegation', readonly id: string, readonly shares: string, readonly value: string, readonly withdrawalStartTime?: string | null, readonly withdrawingShares: string, readonly withdrawingValue: string, readonly basePool: { readonly __typename?: 'BasePool', readonly id: string, readonly kind: BasePoolKind, readonly freeValue: string, readonly sharePrice: string, readonly aprMultiplier: string, readonly withdrawingShares: string }, readonly delegationNft: { readonly __typename?: 'Nft', readonly cid: number, readonly nftId: number, readonly mintTime?: string | null }, readonly withdrawalNft?: { readonly __typename?: 'Nft', readonly cid: number, readonly nftId: number } | null, readonly account: { readonly __typename?: 'Account', readonly id: string, readonly identityDisplay?: string | null, readonly identityLevel?: IdentityLevel | null } };
+export type DelegationCommonFragment = { __typename?: 'Delegation', id: string, shares: string, value: string, withdrawalStartTime?: string | null, withdrawingShares: string, withdrawingValue: string, basePool: { __typename?: 'BasePool', id: string, kind: BasePoolKind, freeValue: string, sharePrice: string, aprMultiplier: string, withdrawingShares: string }, delegationNft: { __typename?: 'Nft', cid: number, nftId: number, mintTime?: string | null }, withdrawalNft?: { __typename?: 'Nft', cid: number, nftId: number } | null, account: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null } };
 
 export type DelegationByIdQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
 
 
-export type DelegationByIdQuery = { readonly __typename?: 'Query', readonly delegationById?: { readonly __typename?: 'Delegation', readonly id: string, readonly shares: string, readonly value: string, readonly withdrawalStartTime?: string | null, readonly withdrawingShares: string, readonly withdrawingValue: string, readonly basePool: { readonly __typename?: 'BasePool', readonly id: string, readonly kind: BasePoolKind, readonly freeValue: string, readonly sharePrice: string, readonly aprMultiplier: string, readonly withdrawingShares: string }, readonly delegationNft: { readonly __typename?: 'Nft', readonly cid: number, readonly nftId: number, readonly mintTime?: string | null }, readonly withdrawalNft?: { readonly __typename?: 'Nft', readonly cid: number, readonly nftId: number } | null, readonly account: { readonly __typename?: 'Account', readonly id: string, readonly identityDisplay?: string | null, readonly identityLevel?: IdentityLevel | null } } | null };
+export type DelegationByIdQuery = { __typename?: 'Query', delegationById?: { __typename?: 'Delegation', id: string, shares: string, value: string, withdrawalStartTime?: string | null, withdrawingShares: string, withdrawingValue: string, basePool: { __typename?: 'BasePool', id: string, kind: BasePoolKind, freeValue: string, sharePrice: string, aprMultiplier: string, withdrawingShares: string }, delegationNft: { __typename?: 'Nft', cid: number, nftId: number, mintTime?: string | null }, withdrawalNft?: { __typename?: 'Nft', cid: number, nftId: number } | null, account: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null } } | null };
 
 export type DelegationsConnectionQueryVariables = Exact<{
-  orderBy: ReadonlyArray<DelegationOrderByInput> | DelegationOrderByInput;
+  orderBy: Array<DelegationOrderByInput> | DelegationOrderByInput;
   after?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Int']>;
   where?: InputMaybe<DelegationWhereInput>;
 }>;
 
 
-export type DelegationsConnectionQuery = { readonly __typename?: 'Query', readonly delegationsConnection: { readonly __typename?: 'DelegationsConnection', readonly totalCount: number, readonly edges: ReadonlyArray<{ readonly __typename?: 'DelegationEdge', readonly cursor: string, readonly node: { readonly __typename?: 'Delegation', readonly id: string, readonly shares: string, readonly value: string, readonly withdrawalStartTime?: string | null, readonly withdrawingShares: string, readonly withdrawingValue: string, readonly basePool: { readonly __typename?: 'BasePool', readonly id: string, readonly kind: BasePoolKind, readonly freeValue: string, readonly sharePrice: string, readonly aprMultiplier: string, readonly withdrawingShares: string }, readonly delegationNft: { readonly __typename?: 'Nft', readonly cid: number, readonly nftId: number, readonly mintTime?: string | null }, readonly withdrawalNft?: { readonly __typename?: 'Nft', readonly cid: number, readonly nftId: number } | null, readonly account: { readonly __typename?: 'Account', readonly id: string, readonly identityDisplay?: string | null, readonly identityLevel?: IdentityLevel | null } } }>, readonly pageInfo: { readonly __typename?: 'PageInfo', readonly endCursor: string, readonly hasNextPage: boolean, readonly hasPreviousPage: boolean, readonly startCursor: string } } };
+export type DelegationsConnectionQuery = { __typename?: 'Query', delegationsConnection: { __typename?: 'DelegationsConnection', totalCount: number, edges: Array<{ __typename?: 'DelegationEdge', cursor: string, node: { __typename?: 'Delegation', id: string, shares: string, value: string, withdrawalStartTime?: string | null, withdrawingShares: string, withdrawingValue: string, basePool: { __typename?: 'BasePool', id: string, kind: BasePoolKind, freeValue: string, sharePrice: string, aprMultiplier: string, withdrawingShares: string }, delegationNft: { __typename?: 'Nft', cid: number, nftId: number, mintTime?: string | null }, withdrawalNft?: { __typename?: 'Nft', cid: number, nftId: number } | null, account: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null } } }>, pageInfo: { __typename?: 'PageInfo', endCursor: string, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string } } };
 
 export type DelegationValueRecordsConnectionQueryVariables = Exact<{
-  orderBy: ReadonlyArray<DelegationValueRecordOrderByInput> | DelegationValueRecordOrderByInput;
+  orderBy: Array<DelegationValueRecordOrderByInput> | DelegationValueRecordOrderByInput;
   after?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Int']>;
   where?: InputMaybe<DelegationValueRecordWhereInput>;
 }>;
 
 
-export type DelegationValueRecordsConnectionQuery = { readonly __typename?: 'Query', readonly delegationValueRecordsConnection: { readonly __typename?: 'DelegationValueRecordsConnection', readonly totalCount: number, readonly edges: ReadonlyArray<{ readonly __typename?: 'DelegationValueRecordEdge', readonly cursor: string, readonly node: { readonly __typename?: 'DelegationValueRecord', readonly id: string, readonly updatedTime: string, readonly value: string } }> } };
+export type DelegationValueRecordsConnectionQuery = { __typename?: 'Query', delegationValueRecordsConnection: { __typename?: 'DelegationValueRecordsConnection', totalCount: number, edges: Array<{ __typename?: 'DelegationValueRecordEdge', cursor: string, node: { __typename?: 'DelegationValueRecord', id: string, updatedTime: string, value: string } }> } };
 
 export type GlobalStateQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GlobalStateQuery = { readonly __typename?: 'Query', readonly squidStatus?: { readonly __typename?: 'SquidStatus', readonly height?: number | null } | null, readonly globalStateById?: { readonly __typename?: 'GlobalState', readonly averageBlockTime: number, readonly averageAprMultiplier: string, readonly height: number, readonly totalValue: string, readonly idleWorkerShares: string } | null };
+export type GlobalStateQuery = { __typename?: 'Query', squidStatus?: { __typename?: 'SquidStatus', height?: number | null } | null, globalStateById?: { __typename?: 'GlobalState', averageBlockTime: number, averageAprMultiplier: string, height: number, totalValue: string, idleWorkerShares: string } | null };
 
 export type NftsConnectionQueryVariables = Exact<{
-  orderBy: ReadonlyArray<NftOrderByInput> | NftOrderByInput;
+  orderBy: Array<NftOrderByInput> | NftOrderByInput;
   after?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Int']>;
   where?: InputMaybe<NftWhereInput>;
 }>;
 
 
-export type NftsConnectionQuery = { readonly __typename?: 'Query', readonly nftsConnection: { readonly __typename?: 'NftsConnection', readonly totalCount: number, readonly edges: ReadonlyArray<{ readonly __typename?: 'NftEdge', readonly cursor: string, readonly node: { readonly __typename?: 'Nft', readonly id: string, readonly cid: number, readonly nftId: number, readonly mintTime?: string | null, readonly owner: { readonly __typename?: 'Account', readonly id: string }, readonly delegation?: { readonly __typename?: 'Delegation', readonly value: string, readonly basePool: { readonly __typename?: 'BasePool', readonly kind: BasePoolKind } } | null } }>, readonly pageInfo: { readonly __typename?: 'PageInfo', readonly hasNextPage: boolean, readonly hasPreviousPage: boolean, readonly startCursor: string, readonly endCursor: string } } };
+export type NftsConnectionQuery = { __typename?: 'Query', nftsConnection: { __typename?: 'NftsConnection', totalCount: number, edges: Array<{ __typename?: 'NftEdge', cursor: string, node: { __typename?: 'Nft', id: string, cid: number, nftId: number, mintTime?: string | null, owner: { __typename?: 'Account', id: string }, delegation?: { __typename?: 'Delegation', value: string, basePool: { __typename?: 'BasePool', kind: BasePoolKind } } | null } }>, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string, endCursor: string } } };
 
 export type RewardRecordsConnectionQueryVariables = Exact<{
-  orderBy: ReadonlyArray<RewardRecordOrderByInput> | RewardRecordOrderByInput;
+  orderBy: Array<RewardRecordOrderByInput> | RewardRecordOrderByInput;
   where?: InputMaybe<RewardRecordWhereInput>;
   after?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Int']>;
 }>;
 
 
-export type RewardRecordsConnectionQuery = { readonly __typename?: 'Query', readonly rewardRecordsConnection: { readonly __typename?: 'RewardRecordsConnection', readonly totalCount: number, readonly edges: ReadonlyArray<{ readonly __typename?: 'RewardRecordEdge', readonly node: { readonly __typename?: 'RewardRecord', readonly id: string, readonly time: string, readonly value: string } }> } };
+export type RewardRecordsConnectionQuery = { __typename?: 'Query', rewardRecordsConnection: { __typename?: 'RewardRecordsConnection', totalCount: number, edges: Array<{ __typename?: 'RewardRecordEdge', node: { __typename?: 'RewardRecord', id: string, time: string, value: string } }> } };
 
 export type BasePoolWhitelistsConnectionQueryVariables = Exact<{
-  orderBy: ReadonlyArray<BasePoolWhitelistOrderByInput> | BasePoolWhitelistOrderByInput;
+  orderBy: Array<BasePoolWhitelistOrderByInput> | BasePoolWhitelistOrderByInput;
   after?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Int']>;
   where?: InputMaybe<BasePoolWhitelistWhereInput>;
 }>;
 
 
-export type BasePoolWhitelistsConnectionQuery = { readonly __typename?: 'Query', readonly basePoolWhitelistsConnection: { readonly __typename?: 'BasePoolWhitelistsConnection', readonly totalCount: number, readonly edges: ReadonlyArray<{ readonly __typename?: 'BasePoolWhitelistEdge', readonly cursor: string, readonly node: { readonly __typename?: 'BasePoolWhitelist', readonly createTime: string, readonly id: string, readonly account: { readonly __typename?: 'Account', readonly id: string, readonly identityDisplay?: string | null, readonly identityLevel?: IdentityLevel | null } } }>, readonly pageInfo: { readonly __typename?: 'PageInfo', readonly endCursor: string, readonly hasNextPage: boolean, readonly hasPreviousPage: boolean, readonly startCursor: string } } };
+export type BasePoolWhitelistsConnectionQuery = { __typename?: 'Query', basePoolWhitelistsConnection: { __typename?: 'BasePoolWhitelistsConnection', totalCount: number, edges: Array<{ __typename?: 'BasePoolWhitelistEdge', cursor: string, node: { __typename?: 'BasePoolWhitelist', createTime: string, id: string, account: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null } } }>, pageInfo: { __typename?: 'PageInfo', endCursor: string, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string } } };
 
 export type WorkersConnectionQueryVariables = Exact<{
-  orderBy: ReadonlyArray<WorkerOrderByInput> | WorkerOrderByInput;
+  orderBy: Array<WorkerOrderByInput> | WorkerOrderByInput;
   after?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Int']>;
   where?: InputMaybe<WorkerWhereInput>;
 }>;
 
 
-export type WorkersConnectionQuery = { readonly __typename?: 'Query', readonly workersConnection: { readonly __typename?: 'WorkersConnection', readonly totalCount: number, readonly edges: ReadonlyArray<{ readonly __typename?: 'WorkerEdge', readonly cursor: string, readonly node: { readonly __typename?: 'Worker', readonly id: string, readonly confidenceLevel: number, readonly initialScore?: number | null, readonly shares?: string | null, readonly stakePool?: { readonly __typename?: 'StakePool', readonly id: string, readonly basePool: { readonly __typename?: 'BasePool', readonly freeValue: string } } | null, readonly session?: { readonly __typename?: 'Session', readonly coolingDownStartTime?: string | null, readonly pInit: number, readonly pInstant: number, readonly stake: string, readonly state: WorkerState, readonly totalReward: string, readonly v: string, readonly ve: string } | null } }>, readonly pageInfo: { readonly __typename?: 'PageInfo', readonly hasNextPage: boolean, readonly hasPreviousPage: boolean, readonly startCursor: string, readonly endCursor: string } } };
+export type WorkersConnectionQuery = { __typename?: 'Query', workersConnection: { __typename?: 'WorkersConnection', totalCount: number, edges: Array<{ __typename?: 'WorkerEdge', cursor: string, node: { __typename?: 'Worker', id: string, confidenceLevel: number, initialScore?: number | null, shares?: string | null, stakePool?: { __typename?: 'StakePool', id: string, basePool: { __typename?: 'BasePool', freeValue: string } } | null, session?: { __typename?: 'Session', coolingDownStartTime?: string | null, pInit: number, pInstant: number, stake: string, state: WorkerState, totalReward: string, v: string, ve: string } | null } }>, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string, endCursor: string } } };
 
 export type ReclaimableWorkersConnectionQueryVariables = Exact<{
-  orderBy: ReadonlyArray<WorkerOrderByInput> | WorkerOrderByInput;
+  orderBy: Array<WorkerOrderByInput> | WorkerOrderByInput;
   where?: InputMaybe<WorkerWhereInput>;
 }>;
 
 
-export type ReclaimableWorkersConnectionQuery = { readonly __typename?: 'Query', readonly workersConnection: { readonly __typename?: 'WorkersConnection', readonly totalCount: number, readonly edges: ReadonlyArray<{ readonly __typename?: 'WorkerEdge', readonly cursor: string, readonly node: { readonly __typename?: 'Worker', readonly id: string, readonly session?: { readonly __typename?: 'Session', readonly id: string, readonly coolingDownStartTime?: string | null, readonly stake: string } | null } }> } };
+export type ReclaimableWorkersConnectionQuery = { __typename?: 'Query', workersConnection: { __typename?: 'WorkersConnection', totalCount: number, edges: Array<{ __typename?: 'WorkerEdge', cursor: string, node: { __typename?: 'Worker', id: string, session?: { __typename?: 'Session', id: string, coolingDownStartTime?: string | null, stake: string } | null } }> } };
 
 export const BasePoolCommonFragmentDoc = `
     fragment BasePoolCommon on BasePool {

@@ -35,7 +35,9 @@ import DelegateInput from './DelegateInput'
 import ExtraProperties from './ExtraProperties'
 import Intro from './Intro'
 
-const DelegateCard: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
+const DelegateCard: FC<{
+  basePool: BasePoolCommonFragment & {whitelists?: {account: {id: string}}[]}
+}> = ({basePool}) => {
   const getApr = useGetApr()
   const theme = useTheme()
   const [account] = useAtom(polkadotAccountAtom)
@@ -55,7 +57,7 @@ const DelegateCard: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
   const isClosed =
     basePool.whitelistEnabled &&
     basePool.owner.id !== account?.address &&
-    basePool.whitelists.findIndex((x) => x.account.id === account?.address) ===
+    basePool.whitelists?.findIndex((x) => x.account.id === account?.address) ===
       -1
 
   return (
