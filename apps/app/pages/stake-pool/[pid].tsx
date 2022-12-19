@@ -6,6 +6,8 @@ import getBasePoolServerSideProps, {
 import {subsquidClient} from '@/lib/graphql'
 import {useBasePoolByIdQuery} from '@/lib/subsquidQuery'
 import {Box} from '@mui/material'
+import {polkadotAccountAtom} from '@phala/store'
+import {useAtom} from 'jotai'
 import {NextPage} from 'next'
 
 export const getServerSideProps = getBasePoolServerSideProps('StakePool')
@@ -15,9 +17,10 @@ const StakePool: NextPage<BasePoolServerSideProps> = ({
   initialData,
   initialDataUpdatedAt,
 }) => {
+  const [account] = useAtom(polkadotAccountAtom)
   const {data} = useBasePoolByIdQuery(
     subsquidClient,
-    {id: pid},
+    {id: pid, accountId: account?.address},
     {initialData: initialData || undefined, initialDataUpdatedAt}
   )
 

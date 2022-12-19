@@ -2573,24 +2573,26 @@ type AccountByIdQueryVariables = Exact<{
 
 type AccountByIdQuery = { readonly __typename?: 'Query', readonly accountById?: { readonly __typename?: 'Account', readonly id: string, readonly identityDisplay?: string | null, readonly identityLevel?: IdentityLevel | null, readonly stakePoolNftCount: number, readonly stakePoolValue: string, readonly stakePoolAvgAprMultiplier: string, readonly vaultNftCount: number, readonly vaultValue: string, readonly vaultAvgAprMultiplier: string, readonly ownedPools: ReadonlyArray<{ readonly __typename?: 'BasePool', readonly id: string, readonly account: { readonly __typename?: 'Account', readonly id: string, readonly stakePoolNftCount: number, readonly stakePoolValue: string, readonly stakePoolAvgAprMultiplier: string, readonly vaultNftCount: number, readonly vaultValue: string, readonly vaultAvgAprMultiplier: string } }> } | null };
 
-type BasePoolCommonFragment = { readonly __typename?: 'BasePool', readonly cid: number, readonly commission: string, readonly delegatorCount: number, readonly freeValue: string, readonly id: string, readonly kind: BasePoolKind, readonly aprMultiplier: string, readonly pid: string, readonly releasingValue: string, readonly sharePrice: string, readonly totalShares: string, readonly totalValue: string, readonly whitelistEnabled: boolean, readonly withdrawingShares: string, readonly withdrawingValue: string, readonly account: { readonly __typename?: 'Account', readonly id: string, readonly stakePoolNftCount: number, readonly stakePoolValue: string }, readonly owner: { readonly __typename?: 'Account', readonly id: string, readonly identityDisplay?: string | null, readonly identityLevel?: IdentityLevel | null }, readonly stakePool?: { readonly __typename?: 'StakePool', readonly capacity?: string | null, readonly delegable?: string | null, readonly idleWorkerCount: number, readonly ownerReward: string, readonly workerCount: number } | null, readonly vault?: { readonly __typename?: 'Vault', readonly claimableOwnerShares: string, readonly lastSharePriceCheckpoint: string } | null, readonly whitelists: ReadonlyArray<{ readonly __typename?: 'BasePoolWhitelist', readonly account: { readonly __typename?: 'Account', readonly id: string } }> };
+type BasePoolCommonFragment = { readonly __typename?: 'BasePool', readonly cid: number, readonly commission: string, readonly delegatorCount: number, readonly freeValue: string, readonly id: string, readonly kind: BasePoolKind, readonly aprMultiplier: string, readonly pid: string, readonly releasingValue: string, readonly sharePrice: string, readonly totalShares: string, readonly totalValue: string, readonly whitelistEnabled: boolean, readonly withdrawingShares: string, readonly withdrawingValue: string, readonly account: { readonly __typename?: 'Account', readonly id: string, readonly stakePoolNftCount: number, readonly stakePoolValue: string }, readonly owner: { readonly __typename?: 'Account', readonly id: string, readonly identityDisplay?: string | null, readonly identityLevel?: IdentityLevel | null }, readonly stakePool?: { readonly __typename?: 'StakePool', readonly capacity?: string | null, readonly delegable?: string | null, readonly idleWorkerCount: number, readonly ownerReward: string, readonly workerCount: number } | null, readonly vault?: { readonly __typename?: 'Vault', readonly claimableOwnerShares: string, readonly lastSharePriceCheckpoint: string } | null };
 
 type BasePoolByIdQueryVariables = Exact<{
   id: Scalars['String'];
+  accountId?: InputMaybe<Scalars['String']>;
 }>;
 
 
-type BasePoolByIdQuery = { readonly __typename?: 'Query', readonly basePoolById?: { readonly __typename?: 'BasePool', readonly cid: number, readonly commission: string, readonly delegatorCount: number, readonly freeValue: string, readonly id: string, readonly kind: BasePoolKind, readonly aprMultiplier: string, readonly pid: string, readonly releasingValue: string, readonly sharePrice: string, readonly totalShares: string, readonly totalValue: string, readonly whitelistEnabled: boolean, readonly withdrawingShares: string, readonly withdrawingValue: string, readonly account: { readonly __typename?: 'Account', readonly id: string, readonly stakePoolNftCount: number, readonly stakePoolValue: string }, readonly owner: { readonly __typename?: 'Account', readonly id: string, readonly identityDisplay?: string | null, readonly identityLevel?: IdentityLevel | null }, readonly stakePool?: { readonly __typename?: 'StakePool', readonly capacity?: string | null, readonly delegable?: string | null, readonly idleWorkerCount: number, readonly ownerReward: string, readonly workerCount: number } | null, readonly vault?: { readonly __typename?: 'Vault', readonly claimableOwnerShares: string, readonly lastSharePriceCheckpoint: string } | null, readonly whitelists: ReadonlyArray<{ readonly __typename?: 'BasePoolWhitelist', readonly account: { readonly __typename?: 'Account', readonly id: string } }> } | null };
+type BasePoolByIdQuery = { readonly __typename?: 'Query', readonly basePoolById?: { readonly __typename?: 'BasePool', readonly cid: number, readonly commission: string, readonly delegatorCount: number, readonly freeValue: string, readonly id: string, readonly kind: BasePoolKind, readonly aprMultiplier: string, readonly pid: string, readonly releasingValue: string, readonly sharePrice: string, readonly totalShares: string, readonly totalValue: string, readonly whitelistEnabled: boolean, readonly withdrawingShares: string, readonly withdrawingValue: string, readonly whitelists: ReadonlyArray<{ readonly __typename?: 'BasePoolWhitelist', readonly account: { readonly __typename?: 'Account', readonly id: string } }>, readonly account: { readonly __typename?: 'Account', readonly id: string, readonly stakePoolNftCount: number, readonly stakePoolValue: string }, readonly owner: { readonly __typename?: 'Account', readonly id: string, readonly identityDisplay?: string | null, readonly identityLevel?: IdentityLevel | null }, readonly stakePool?: { readonly __typename?: 'StakePool', readonly capacity?: string | null, readonly delegable?: string | null, readonly idleWorkerCount: number, readonly ownerReward: string, readonly workerCount: number } | null, readonly vault?: { readonly __typename?: 'Vault', readonly claimableOwnerShares: string, readonly lastSharePriceCheckpoint: string } | null } | null };
 
 type BasePoolsConnectionQueryVariables = Exact<{
   orderBy: ReadonlyArray<BasePoolOrderByInput> | BasePoolOrderByInput;
   first?: InputMaybe<Scalars['Int']>;
   after?: InputMaybe<Scalars['String']>;
   where?: InputMaybe<BasePoolWhereInput>;
+  accountId?: InputMaybe<Scalars['String']>;
 }>;
 
 
-type BasePoolsConnectionQuery = { readonly __typename?: 'Query', readonly basePoolsConnection: { readonly __typename?: 'BasePoolsConnection', readonly totalCount: number, readonly pageInfo: { readonly __typename?: 'PageInfo', readonly endCursor: string, readonly hasNextPage: boolean, readonly hasPreviousPage: boolean, readonly startCursor: string }, readonly edges: ReadonlyArray<{ readonly __typename?: 'BasePoolEdge', readonly cursor: string, readonly node: { readonly __typename?: 'BasePool', readonly cid: number, readonly commission: string, readonly delegatorCount: number, readonly freeValue: string, readonly id: string, readonly kind: BasePoolKind, readonly aprMultiplier: string, readonly pid: string, readonly releasingValue: string, readonly sharePrice: string, readonly totalShares: string, readonly totalValue: string, readonly whitelistEnabled: boolean, readonly withdrawingShares: string, readonly withdrawingValue: string, readonly account: { readonly __typename?: 'Account', readonly id: string, readonly stakePoolNftCount: number, readonly stakePoolValue: string }, readonly owner: { readonly __typename?: 'Account', readonly id: string, readonly identityDisplay?: string | null, readonly identityLevel?: IdentityLevel | null }, readonly stakePool?: { readonly __typename?: 'StakePool', readonly capacity?: string | null, readonly delegable?: string | null, readonly idleWorkerCount: number, readonly ownerReward: string, readonly workerCount: number } | null, readonly vault?: { readonly __typename?: 'Vault', readonly claimableOwnerShares: string, readonly lastSharePriceCheckpoint: string } | null, readonly whitelists: ReadonlyArray<{ readonly __typename?: 'BasePoolWhitelist', readonly account: { readonly __typename?: 'Account', readonly id: string } }> } }> } };
+type BasePoolsConnectionQuery = { readonly __typename?: 'Query', readonly basePoolsConnection: { readonly __typename?: 'BasePoolsConnection', readonly totalCount: number, readonly pageInfo: { readonly __typename?: 'PageInfo', readonly endCursor: string, readonly hasNextPage: boolean, readonly hasPreviousPage: boolean, readonly startCursor: string }, readonly edges: ReadonlyArray<{ readonly __typename?: 'BasePoolEdge', readonly cursor: string, readonly node: { readonly __typename?: 'BasePool', readonly cid: number, readonly commission: string, readonly delegatorCount: number, readonly freeValue: string, readonly id: string, readonly kind: BasePoolKind, readonly aprMultiplier: string, readonly pid: string, readonly releasingValue: string, readonly sharePrice: string, readonly totalShares: string, readonly totalValue: string, readonly whitelistEnabled: boolean, readonly withdrawingShares: string, readonly withdrawingValue: string, readonly whitelists: ReadonlyArray<{ readonly __typename?: 'BasePoolWhitelist', readonly account: { readonly __typename?: 'Account', readonly id: string } }>, readonly account: { readonly __typename?: 'Account', readonly id: string, readonly stakePoolNftCount: number, readonly stakePoolValue: string }, readonly owner: { readonly __typename?: 'Account', readonly id: string, readonly identityDisplay?: string | null, readonly identityLevel?: IdentityLevel | null }, readonly stakePool?: { readonly __typename?: 'StakePool', readonly capacity?: string | null, readonly delegable?: string | null, readonly idleWorkerCount: number, readonly ownerReward: string, readonly workerCount: number } | null, readonly vault?: { readonly __typename?: 'Vault', readonly claimableOwnerShares: string, readonly lastSharePriceCheckpoint: string } | null } }> } };
 
 type ClaimableStakePoolsQueryVariables = Exact<{
   accountId?: InputMaybe<Scalars['String']>;
@@ -2737,11 +2739,6 @@ export const BasePoolCommonFragmentDoc = gql`
     claimableOwnerShares
     lastSharePriceCheckpoint
   }
-  whitelists(limit: 200) {
-    account {
-      id
-    }
-  }
 }
     `;
 export const DelegationCommonFragmentDoc = gql`
@@ -2804,14 +2801,19 @@ export const DelegationCommonFragmentDoc = gql`
 }
     `;
  const BasePoolByIdDocument = gql`
-    query BasePoolById($id: String!) {
+    query BasePoolById($id: String!, $accountId: String) {
   basePoolById(id: $id) {
     ...BasePoolCommon
+    whitelists(where: {account: {id_eq: $accountId}}, limit: 1) {
+      account {
+        id
+      }
+    }
   }
 }
     ${BasePoolCommonFragmentDoc}`;
  const BasePoolsConnectionDocument = gql`
-    query BasePoolsConnection($orderBy: [BasePoolOrderByInput!]!, $first: Int, $after: String, $where: BasePoolWhereInput) {
+    query BasePoolsConnection($orderBy: [BasePoolOrderByInput!]!, $first: Int, $after: String, $where: BasePoolWhereInput, $accountId: String) {
   basePoolsConnection(
     orderBy: $orderBy
     first: $first
@@ -2828,6 +2830,11 @@ export const DelegationCommonFragmentDoc = gql`
     edges {
       node {
         ...BasePoolCommon
+        whitelists(where: {account: {id_eq: $accountId}}, limit: 1) {
+          account {
+            id
+          }
+        }
       }
       cursor
     }

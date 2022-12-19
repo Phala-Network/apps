@@ -183,7 +183,12 @@ const BasePoolList: FC<{
     useInfiniteBasePoolsConnectionQuery(
       'after',
       subsquidClient,
-      {first: 20, orderBy, where: {AND: where.filter(isTruthy)}},
+      {
+        first: 20,
+        orderBy,
+        where: {AND: where.filter(isTruthy)},
+        accountId: polkadotAccount?.address,
+      },
       {
         enabled,
         keepPreviousData: true,
