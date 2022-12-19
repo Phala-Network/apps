@@ -8,6 +8,7 @@ import {colors} from '@/lib/theme'
 import {chainAtom} from '@/store/common'
 import {assetVisibleAtom, walletDialogOpenAtom} from '@/store/ui'
 import ContentCopy from '@mui/icons-material/ContentCopy'
+import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight'
 import RemoveRedEye from '@mui/icons-material/RemoveRedEye'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
 import {
@@ -25,6 +26,7 @@ import {toCurrency, trimAddress} from '@phala/util'
 import Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
 import dynamic from 'next/dynamic'
+import {useRouter} from 'next/router'
 import {useSnackbar} from 'notistack'
 import {FC} from 'react'
 
@@ -42,6 +44,7 @@ const Identicon = dynamic(() => import('@polkadot/react-identicon'), {
 })
 
 const DashboardAccount: FC = () => {
+  const router = useRouter()
   const [chain] = useAtom(chainAtom)
   const [, setWalletDialogOpen] = useAtom(walletDialogOpenAtom)
   const wrapAsset = useWrapAsset()
@@ -59,6 +62,7 @@ const DashboardAccount: FC = () => {
     data?.accountById === null
       ? {vaultValue: '0', stakePoolValue: '0'}
       : data?.accountById
+  const isDelegationClickable = !!account && chain === 'khala'
   return (
     <Paper
       sx={{
@@ -161,34 +165,55 @@ const DashboardAccount: FC = () => {
               )}
             </Typography>
           </BalanceBox>
-          <BalanceBox>
-            <Typography
-              variant="subtitle1"
-              color="text.secondary"
-              lineHeight={1}
-            >
-              Delegation
-            </Typography>
-            <Typography variant="num3" mt={1} component="div" lineHeight={1}>
-              {account && chain === 'khala' ? (
-                accountData && wrapped ? (
-                  <>
-                    {wrapAsset(
-                      toCurrency(
-                        new Decimal(accountData.vaultValue)
-                          .plus(accountData.stakePoolValue)
-                          .plus(wrapped)
-                      )
-                    )}
-                    <sub>PHA</sub>
-                  </>
-                ) : (
-                  <Skeleton width={120} />
-                )
-              ) : (
-                '-'
+          <BalanceBox
+            sx={{cursor: isDelegationClickable ? 'pointer' : 'auto'}}
+            onClick={() => {
+              if (isDelegationClickable) {
+                router.push('/delegate/my-delegation', undefined, {
+                  shallow: true,
+                })
+              }
+            }}
+          >
+            <Stack direction="row" alignItems="center">
+              <Box>
+                <Typography
+                  variant="subtitle1"
+                  color="text.secondary"
+                  lineHeight={1}
+                >
+                  Delegation
+                </Typography>
+                <Typography
+                  variant="num3"
+                  mt={1}
+                  component="div"
+                  lineHeight={1}
+                >
+                  {account && chain === 'khala' ? (
+                    accountData && wrapped ? (
+                      <>
+                        {wrapAsset(
+                          toCurrency(
+                            new Decimal(accountData.vaultValue)
+                              .plus(accountData.stakePoolValue)
+                              .plus(wrapped)
+                          )
+                        )}
+                        <sub>PHA</sub>
+                      </>
+                    ) : (
+                      <Skeleton width={120} />
+                    )
+                  ) : (
+                    '-'
+                  )}
+                </Typography>
+              </Box>
+              {isDelegationClickable && (
+                <KeyboardArrowRight sx={{ml: 'auto'}} />
               )}
-            </Typography>
+            </Stack>
           </BalanceBox>
         </Stack>
       </Box>

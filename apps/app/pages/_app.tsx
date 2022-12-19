@@ -1,4 +1,5 @@
 import Layout from '@/components/Layout'
+import ZendeskWidget from '@/components/ZendeskWidget'
 import {createEmotionCache} from '@/lib/createEmotionCache'
 import {globalStyles} from '@/lib/styles'
 import {theme} from '@/lib/theme'
@@ -46,6 +47,7 @@ const App: FC<MyAppProps> = (props) => {
               <GlobalStyles styles={css([globalStyles])} />
               <Layout>
                 <Component {...pageProps} />
+                <ZendeskWidget />
               </Layout>
             </MuiThemeProvider>
           </CacheProvider>

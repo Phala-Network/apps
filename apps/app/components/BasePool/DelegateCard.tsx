@@ -15,6 +15,7 @@ import VerifiedOutlined from '@mui/icons-material/VerifiedOutlined'
 import {
   alpha,
   Box,
+  Chip,
   Collapse,
   IconButton,
   Link,
@@ -25,7 +26,9 @@ import {
   Typography,
   useTheme,
 } from '@mui/material'
+import {polkadotAccountAtom} from '@phala/store'
 import {toCurrency, toPercentage, trimAddress} from '@phala/util'
+import {useAtom} from 'jotai'
 import {FC, useState} from 'react'
 import BasePoolAprChart from './AprChart'
 import DelegateInput from './DelegateInput'
@@ -35,6 +38,7 @@ import Intro from './Intro'
 const DelegateCard: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
   const getApr = useGetApr()
   const theme = useTheme()
+  const [account] = useAtom(polkadotAccountAtom)
   const [collapsed, setCollapsed] = useState(true)
   const {vault, stakePool, owner} = basePool
   const [isFavorite, toggleFavorite] = usePoolFavorite(basePool.pid)
@@ -48,6 +52,11 @@ const DelegateCard: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
     </Stack>
   )
   const apr = getApr(basePool.aprMultiplier)
+  const isClosed =
+    basePool.whitelistEnabled &&
+    basePool.owner.id !== account?.address &&
+    basePool.whitelists.findIndex((x) => x.account.id === account?.address) ===
+      -1
 
   return (
     <Paper>
@@ -168,7 +177,9 @@ const DelegateCard: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
             </Property>
           )}
         </Stack>
-        <Stack flex="1 0" direction="row"></Stack>
+        <Stack flex="1 0" direction="row">
+          {isClosed && <Chip size="small" label="Closed" />}
+        </Stack>
         <Box display={{xs: 'none', md: 'block'}}>{actions}</Box>
       </Stack>
       <Collapse in={!collapsed} mountOnEnter unmountOnExit>

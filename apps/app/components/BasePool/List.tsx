@@ -102,7 +102,7 @@ const BasePoolList: FC<{
   const [verifiedFilter, setVerifiedFilter] = useState(false)
   const [favoriteFilter, setFavoriteFilter] = useState(false)
   const [delegatedFilter, setDelegatedFilter] = useState(false)
-  const [closedFilter, setClosedFilter] = useState(false)
+  const [hideClosedFilter, setHideClosedFilter] = useState(true)
   const [stakePoolOrderBy, setStakePoolOrderBy] =
     useState<BasePoolOrderByInput>(
       variant === 'farm' ? 'pid_ASC' : 'aprMultiplier_DESC'
@@ -145,7 +145,7 @@ const BasePoolList: FC<{
       },
     },
     favoriteFilter && {id_in: favoritePools},
-    !closedFilter &&
+    hideClosedFilter &&
       !!delegatorAddress && {
         OR: [
           {owner: {id_eq: delegatorAddress}},
@@ -214,7 +214,7 @@ const BasePoolList: FC<{
     setVerifiedFilter(false)
     setFavoriteFilter(false)
     setDelegatedFilter(false)
-    setClosedFilter(false)
+    setHideClosedFilter(false)
     if (kind === 'StakePool') {
       setMinDelegable('')
       setMinApr('')
@@ -228,7 +228,7 @@ const BasePoolList: FC<{
     verifiedFilter ||
     favoriteFilter ||
     delegatedFilter ||
-    closedFilter ||
+    hideClosedFilter ||
     (kind === 'StakePool' && minDelegable !== '') ||
     minTvl !== '' ||
     (kind === 'StakePool' && minApr !== '') ||
@@ -273,11 +273,11 @@ const BasePoolList: FC<{
         control={
           <Checkbox
             color={color}
-            checked={closedFilter}
-            onChange={(e) => setClosedFilter(e.target.checked)}
+            checked={hideClosedFilter}
+            onChange={(e) => setHideClosedFilter(e.target.checked)}
           />
         }
-        label="Closed"
+        label="Hide closed"
       />
       <Typography variant="h5" component="div">
         Property
