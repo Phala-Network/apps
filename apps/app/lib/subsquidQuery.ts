@@ -2745,7 +2745,7 @@ export const BasePoolCommonFragmentDoc = `
     claimableOwnerShares
     lastSharePriceCheckpoint
   }
-  whitelists {
+  whitelists(limit: 200) {
     account {
       id
     }
