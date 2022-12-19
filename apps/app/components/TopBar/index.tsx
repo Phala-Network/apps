@@ -1,5 +1,6 @@
 import PhalaLogo from '@/assets/phala_logo.svg'
 import {montserrat} from '@/lib/theme'
+import {chainAtom} from '@/store/common'
 import {faDiscord, faTwitter} from '@fortawesome/free-brands-svg-icons'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {
@@ -11,6 +12,7 @@ import {
   Tooltip,
   useTheme,
 } from '@mui/material'
+import {useAtom} from 'jotai'
 import NextLink from 'next/link'
 import {FC} from 'react'
 import Account from './Account'
@@ -19,45 +21,17 @@ import Chain from './Chain'
 interface NavItem {
   label: string
   href?: string
+  disabled?: boolean
   sub?: NavItem[]
 }
 
-const navItems: NavItem[] = [
-  {label: 'Dashboard', href: '/'},
-  {
-    label: 'Delegate',
-    sub: [
-      {label: 'Delegate', href: '/delegate/vault'},
-      {label: 'My Delegation', href: '/delegate/my-delegation'},
-    ],
-  },
-  {
-    label: 'Farm',
-    sub: [
-      {label: 'Vault', href: '/farm/vault'},
-      {label: 'StakePool', href: '/farm/stake-pool'},
-    ],
-  },
-  {label: 'SubBridge', href: 'https://subbridge.io'},
-  {
-    label: 'DAO',
-    sub: [
-      {label: 'Forum', href: 'https://forum.phala.network/'},
-      {
-        label: 'Governance',
-        href: 'https://polkadot.js.org/apps/?rpc=wss%3A%2F%2Fkhala-api.phala.network%2Fws#/democracy',
-      },
-      {label: 'Subsquare.io', href: 'https://khala.subsquare.io/'},
-    ],
-  },
-]
-
-const NavItem: FC<{item: NavItem}> = ({item: {label, href}}) => {
+const NavItem: FC<{item: NavItem}> = ({item: {label, href, disabled}}) => {
   const isExternal = !href || !href.startsWith('/')
   const theme = useTheme()
 
   const link = (
     <Button
+      disabled={disabled}
       variant="text"
       className={montserrat.className}
       sx={{
@@ -85,7 +59,39 @@ const NavItem: FC<{item: NavItem}> = ({item: {label, href}}) => {
 NavItem.displayName = 'NavItem'
 
 const TopBar: FC = () => {
+  const [chain] = useAtom(chainAtom)
   const theme = useTheme()
+  const navItems: NavItem[] = [
+    {label: 'Dashboard', href: '/'},
+    {
+      label: 'Delegate',
+      disabled: chain !== 'khala',
+      sub: [
+        {label: 'Delegate', href: '/delegate/vault'},
+        {label: 'My Delegation', href: '/delegate/my-delegation'},
+      ],
+    },
+    {
+      label: 'Farm',
+      disabled: chain !== 'khala',
+      sub: [
+        {label: 'Vault', href: '/farm/vault'},
+        {label: 'StakePool', href: '/farm/stake-pool'},
+      ],
+    },
+    {label: 'SubBridge', href: 'https://subbridge.io'},
+    {
+      label: 'DAO',
+      sub: [
+        {label: 'Forum', href: 'https://forum.phala.network/'},
+        {
+          label: 'Governance',
+          href: 'https://polkadot.js.org/apps/?rpc=wss%3A%2F%2Fkhala-api.phala.network%2Fws#/democracy',
+        },
+        {label: 'Subsquare.io', href: 'https://khala.subsquare.io/'},
+      ],
+    },
+  ]
   return (
     <AppBar
       position="sticky"
@@ -112,6 +118,9 @@ const TopBar: FC = () => {
             }
             return (
               <Tooltip
+                disableFocusListener={item.disabled}
+                disableHoverListener={item.disabled}
+                disableTouchListener={item.disabled}
                 leaveDelay={200}
                 enterTouchDelay={0}
                 title={

@@ -4,6 +4,7 @@ import useWrapAsset from '@/hooks/useWrapAsset'
 import {subsquidClient} from '@/lib/graphql'
 import {useAccountByIdQuery} from '@/lib/subsquidQuery'
 import {colors} from '@/lib/theme'
+import {chainAtom} from '@/store/common'
 import {assetVisibleAtom, walletDialogOpenAtom} from '@/store/ui'
 import ContentCopy from '@mui/icons-material/ContentCopy'
 import RemoveRedEye from '@mui/icons-material/RemoveRedEye'
@@ -40,6 +41,7 @@ const Identicon = dynamic(() => import('@polkadot/react-identicon'), {
 })
 
 const DashboardAccount: FC = () => {
+  const [chain] = useAtom(chainAtom)
   const [, setWalletDialogOpen] = useAtom(walletDialogOpenAtom)
   const wrapAsset = useWrapAsset()
   const {enqueueSnackbar} = useSnackbar()
@@ -166,7 +168,7 @@ const DashboardAccount: FC = () => {
               Delegation
             </Typography>
             <Typography variant="num3" mt={1} component="div" lineHeight={1}>
-              {account ? (
+              {account && chain === 'khala' ? (
                 accountData ? (
                   <>
                     {wrapAsset(

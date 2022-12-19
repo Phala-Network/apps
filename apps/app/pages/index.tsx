@@ -3,10 +3,13 @@ import DashboardAssetList from '@/components/DashboardAssetList'
 import DashboardCarousel from '@/components/DashboardCarousel'
 import DashboardNftList from '@/components/DashboardNftList'
 import Title from '@/components/Title'
+import {chainAtom} from '@/store/common'
 import {Box, Paper, Stack} from '@mui/material'
+import {useAtom} from 'jotai'
 import {FC} from 'react'
 
 const Dashboard: FC = () => {
+  const [chain] = useAtom(chainAtom)
   return (
     <>
       <Title>Dashboard</Title>
@@ -32,9 +35,11 @@ const Dashboard: FC = () => {
       <Box component="section" mt={4}>
         <DashboardAssetList />
       </Box>
-      <Box component="section" mt={4}>
-        <DashboardNftList />
-      </Box>
+      {chain === 'khala' && (
+        <Box component="section" mt={4}>
+          <DashboardNftList />
+        </Box>
+      )}
     </>
   )
 }
