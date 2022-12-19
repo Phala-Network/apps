@@ -1,4 +1,5 @@
 import PhalaLogo from '@/assets/phala_logo.svg'
+import {WPHA_ASSET_ID} from '@/config'
 import useAssetBalance from '@/hooks/useAssetBalance'
 import useWrapAsset from '@/hooks/useWrapAsset'
 import {subsquidClient} from '@/lib/graphql'
@@ -48,6 +49,7 @@ const DashboardAccount: FC = () => {
   const [assetVisible, setAssetVisible] = useAtom(assetVisibleAtom)
   const [account] = useAtom(polkadotAccountAtom)
   const freeBalance = useAssetBalance(account?.address)
+  const wrapped = useAssetBalance(account?.address, WPHA_ASSET_ID)
   const {data} = useAccountByIdQuery(
     subsquidClient,
     {accountId: account?.address ?? ''},
@@ -169,13 +171,13 @@ const DashboardAccount: FC = () => {
             </Typography>
             <Typography variant="num3" mt={1} component="div" lineHeight={1}>
               {account && chain === 'khala' ? (
-                accountData ? (
+                accountData && wrapped ? (
                   <>
                     {wrapAsset(
                       toCurrency(
-                        new Decimal(accountData.vaultValue).plus(
-                          accountData.stakePoolValue
-                        )
+                        new Decimal(accountData.vaultValue)
+                          .plus(accountData.stakePoolValue)
+                          .plus(wrapped)
                       )
                     )}
                     <sub>PHA</sub>

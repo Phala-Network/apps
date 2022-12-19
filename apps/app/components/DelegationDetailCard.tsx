@@ -29,7 +29,7 @@ import {FC, useMemo} from 'react'
 import DelegatorSelect from './DelegatorSelect'
 import PromiseButton from './PromiseButton'
 
-const DelegateDataCard: FC<{
+const DelegationDataCard: FC<{
   kind: BasePoolKind
   count?: number
   value?: string | false
@@ -97,7 +97,7 @@ const DelegateDataCard: FC<{
   )
 }
 
-const DelegateDetailCard: FC<{sx?: SxProps}> = ({sx}) => {
+const DelegationDetailCard: FC<{sx?: SxProps}> = ({sx}) => {
   const {data} = useAccountQuery()
   const theme = useTheme()
   const api = usePolkadotApi()
@@ -129,9 +129,20 @@ const DelegateDetailCard: FC<{sx?: SxProps}> = ({sx}) => {
     {}
 
   const totalValue = useMemo(() => {
-    if (!stakePoolValue || !vaultValue) return
-    return toCurrency(new Decimal(stakePoolValue).plus(vaultValue), 0)
-  }, [stakePoolValue, vaultValue])
+    if (
+      !stakePoolValue ||
+      !vaultValue ||
+      (!wrapped && selectedVaultState === null)
+    ) {
+      return
+    }
+
+    let total = new Decimal(stakePoolValue).plus(vaultValue)
+    if (selectedVaultState === null && wrapped) {
+      total = total.plus(wrapped)
+    }
+    return toCurrency(total, 0)
+  }, [stakePoolValue, vaultValue, selectedVaultState, wrapped])
 
   const unwrapAll = async () => {
     if (!api) return
@@ -197,13 +208,13 @@ const DelegateDetailCard: FC<{sx?: SxProps}> = ({sx}) => {
           spacing={{xs: 1.5, sm: 2}}
           sx={{'>div': {flex: '1 0'}}}
         >
-          <DelegateDataCard
+          <DelegationDataCard
             kind="Vault"
             count={vaultNftCount}
             value={asAccount && vaultValue}
             aprMultiplier={asAccount && vaultAvgAprMultiplier}
           />
-          <DelegateDataCard
+          <DelegationDataCard
             kind="StakePool"
             count={stakePoolNftCount}
             value={stakePoolValue}
@@ -250,7 +261,12 @@ const DelegateDetailCard: FC<{sx?: SxProps}> = ({sx}) => {
                 >
                   Unwrap All
                 </PromiseButton>
-                <Button variant="text" size="small">
+                <Button
+                  variant="text"
+                  size="small"
+                  href="https://polkadot.js.org/apps/?rpc=wss%3A%2F%2Fkhala-api.phala.network%2Fws#/chainstate"
+                  target="_blank"
+                >
                   Track
                 </Button>
               </>
@@ -262,4 +278,4 @@ const DelegateDetailCard: FC<{sx?: SxProps}> = ({sx}) => {
   )
 }
 
-export default DelegateDetailCard
+export default DelegationDetailCard

@@ -3,6 +3,7 @@ import {montserrat} from '@/lib/theme'
 import {chainAtom} from '@/store/common'
 import {faDiscord, faTwitter} from '@fortawesome/free-brands-svg-icons'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import Language from '@mui/icons-material/Language'
 import {
   AppBar,
   Button,
@@ -168,6 +169,19 @@ const TopBar: FC = () => {
               <FontAwesomeIcon
                 icon={faTwitter}
                 color={theme.palette.text.secondary}
+              />
+            </IconButton>
+            <IconButton
+              size="small"
+              href="https://phala.network"
+              target="_blank"
+            >
+              <Language
+                sx={{
+                  width: 18,
+                  height: 18,
+                  color: theme.palette.text.secondary,
+                }}
               />
             </IconButton>
           </Stack>

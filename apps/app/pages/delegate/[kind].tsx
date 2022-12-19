@@ -1,7 +1,7 @@
 import StakePoolIcon from '@/assets/stake_pool.svg'
 import VaultIcon from '@/assets/vault.svg'
 import BasePoolList from '@/components/BasePool/List'
-import DelegateDetailCard from '@/components/DelegateDetailCard'
+import DelegationDetailCard from '@/components/DelegationDetailCard'
 import DelegationValueChart from '@/components/DelegationValueChart'
 import NetworkOverview from '@/components/NetworkOverview'
 import PageHeader from '@/components/PageHeader'
@@ -114,7 +114,7 @@ const Delegate: NextPage = () => {
       </PageHeader>
 
       <Stack direction={{xs: 'column', md: 'row'}} spacing={2}>
-        <DelegateDetailCard sx={{flex: {xs: 'none', md: '1'}}} />
+        <DelegationDetailCard sx={{flex: {xs: 'none', md: '1'}}} />
         <Paper
           sx={{
             background: 'none',

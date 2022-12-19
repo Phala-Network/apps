@@ -1,5 +1,5 @@
-import DelegateDetailCard from '@/components/DelegateDetailCard'
 import DelegationList from '@/components/Delegation/List'
+import DelegationDetailCard from '@/components/DelegationDetailCard'
 import DelegationScatterChart from '@/components/DelegationScatterChart'
 import PageHeader from '@/components/PageHeader'
 import useSelectedVaultState from '@/hooks/useSelectedVaultState'
@@ -15,7 +15,7 @@ const MyDelegation: FC = () => {
     <>
       <PageHeader title="My Delegation"></PageHeader>
       <Stack direction={{xs: 'column', md: 'row'}} spacing={2}>
-        <DelegateDetailCard sx={{flex: {xs: 'none', md: '1 0'}}} />
+        <DelegationDetailCard sx={{flex: {xs: 'none', md: '1 0'}}} />
         <Paper
           sx={{
             p: {xs: 1.5, sm: 2},

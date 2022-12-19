@@ -18,7 +18,7 @@ const useAssetBalance = (account?: string, assetId?: number) => {
     let unmounted = false
     if (assetId === undefined) {
       api.derive.balances
-        .account(account, ({freeBalance}) => {
+        .all(account, ({freeBalance}) => {
           if (!unmounted) {
             setBalance(new Decimal(freeBalance.toString()).div(1e12))
           }
@@ -27,13 +27,8 @@ const useAssetBalance = (account?: string, assetId?: number) => {
           unsub = fn
         })
     } else {
-      // TODO: remove hardcode
-      const assetMetadata = assetsMetadata?.[assetId] || {
-        assetId: 1,
-        symbol: 'WPHA',
-        name: 'Wrapped PHA',
-        decimals: 12,
-      }
+      const assetMetadata = assetsMetadata?.[assetId]
+      if (!assetMetadata) return
 
       api.query.assets
         .account(assetId, account, (res) => {

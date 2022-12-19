@@ -130,7 +130,12 @@ const Asset: FC<{asset: Asset; onAction: OnAction}> = ({asset, onAction}) => {
       >
         Transfer
       </Button>
-      <Button size="small" variant="text">
+      <Button
+        size="small"
+        variant="text"
+        href="https://subbridge.io"
+        target="_blank"
+      >
         Bridge
       </Button>
     </Stack>
