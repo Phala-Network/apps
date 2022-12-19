@@ -296,6 +296,7 @@ const BasePoolList: FC<{
         <Stack spacing={3} pt={2}>
           {kind === 'StakePool' && (
             <TextField
+              color={color}
               value={minDelegable}
               placeholder="0.00"
               label="Min Delegable"
@@ -313,6 +314,7 @@ const BasePoolList: FC<{
             />
           )}
           <TextField
+            color={color}
             value={minTvl}
             label="Min TVL"
             placeholder="0.00"
@@ -330,6 +332,7 @@ const BasePoolList: FC<{
           />
           {kind === 'StakePool' && (
             <TextField
+              color={color}
               value={minApr}
               label="Min APR"
               size="small"
@@ -348,6 +351,7 @@ const BasePoolList: FC<{
           )}
           {kind === 'Vault' && (
             <TextField
+              color={color}
               value={minApy}
               label="Min APY"
               size="small"
@@ -364,7 +368,11 @@ const BasePoolList: FC<{
               }}
             />
           )}
-          <Button onClick={clearFilters} disabled={!canClearFilters}>
+          <Button
+            onClick={clearFilters}
+            disabled={!canClearFilters}
+            color={color}
+          >
             Clear Filters
           </Button>
         </Stack>
