@@ -19,6 +19,7 @@ import {
   Box,
   Checkbox,
   Dialog,
+  Drawer,
   FormControlLabel,
   IconButton,
   MenuItem,
@@ -72,7 +73,7 @@ const DelegationList: FC<{
   const [vaultFilter, setVaultFilter] = useState(true)
   const [stakePoolFilter, setStakePoolFilter] = useState(true)
   const [withdrawingFilter, setWithdrawingFilterFilter] = useState(false)
-
+  const [drawerOpen, setDrawerOpen] = useState(false)
   const [searchString, setSearchString] = useState('')
   const debouncedSearchString = useDebounced(searchString, 500)
   const where: Array<DelegationWhereInput | false> = [
@@ -166,9 +167,6 @@ const DelegationList: FC<{
         }
         label="Withdrawing"
       />
-      <Typography variant="h5" component="div">
-        Property
-      </Typography>
     </Stack>
   )
 
@@ -183,7 +181,10 @@ const DelegationList: FC<{
         </Box>
         <Box flex="1 0">
           <Stack direction="row" alignItems="center" spacing={{xs: 1, md: 2}}>
-            <IconButton sx={{display: {xl: 'none'}}}>
+            <IconButton
+              sx={{display: {xl: 'none'}}}
+              onClick={() => setDrawerOpen(true)}
+            >
               <FilterList />
             </IconButton>
             <TextField
@@ -282,6 +283,15 @@ const DelegationList: FC<{
           </>
         )}
       </Dialog>
+
+      <Drawer
+        PaperProps={{sx: {p: 3}}}
+        anchor="left"
+        open={drawerOpen}
+        onClose={() => setDrawerOpen(false)}
+      >
+        {filters}
+      </Drawer>
     </>
   )
 }
