@@ -122,7 +122,7 @@ const HorizonCard: FC<{
               <Skeleton width={32} />
             )}
           </Property>
-          <Property label="Pool's Free" sx={{width: 120}}>{`${toCurrency(
+          <Property label="Pool free" sx={{width: 120}}>{`${toCurrency(
             delegation.basePool.freeValue
           )} PHA`}</Property>
           {hasWithdrawal && (

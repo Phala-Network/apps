@@ -5,17 +5,17 @@ import {DelegationCommonFragment} from '@/lib/subsquidQuery'
 import {barlow} from '@/lib/theme'
 import {LoadingButton} from '@mui/lab'
 import {
-  Checkbox,
+  Button,
+  ButtonGroup,
   DialogActions,
   DialogContent,
   DialogTitle,
-  FormControlLabel,
   Stack,
   TextField,
 } from '@mui/material'
 import {getDecimalPattern, toCurrency} from '@phala/util'
 import Decimal from 'decimal.js'
-import {FC, useState} from 'react'
+import {FC, useMemo, useState} from 'react'
 import Property from '../Property'
 
 const Withdraw: FC<{
@@ -28,18 +28,18 @@ const Withdraw: FC<{
   const signAndSend = useSignAndSend()
   const [loading, setLoading] = useState(false)
   const [amountString, setAmountString] = useState('')
-  const [withdrawAll, setWithdrawAll] = useState(false)
   const selectedVaultState = useSelectedVaultState()
 
   const onClick = () => {
     if (!api || selectedVaultState === undefined) return
-    const shares = withdrawAll
-      ? new Decimal(delegation.shares).times(1e12).toHex()
-      : new Decimal(amountString)
-          .div(basePool.sharePrice)
-          .times(1e12)
-          .floor()
-          .toHex()
+    const shares =
+      amountString === delegation.value
+        ? new Decimal(delegation.shares).times(1e12).toHex()
+        : new Decimal(amountString)
+            .div(basePool.sharePrice)
+            .times(1e12)
+            .floor()
+            .toHex()
 
     const extrinsic = isVault
       ? api.tx.phalaVault.withdraw(basePool.id, shares)
@@ -59,44 +59,53 @@ const Withdraw: FC<{
       })
   }
 
+  const isValid = useMemo(() => {
+    try {
+      const amount = new Decimal(amountString)
+      return amount.lte(delegation.value) && amount.gt(0)
+    } catch (err) {
+      // noop
+    }
+    return false
+  }, [amountString, delegation.value])
+
   return (
     <>
       <DialogTitle>Withdraw</DialogTitle>
       <DialogContent>
-        <FormControlLabel
-          control={
-            <Checkbox
-              checked={withdrawAll}
-              onChange={(e) => {
-                setWithdrawAll(e.target.checked)
-              }}
-            />
-          }
-          label="Withdraw All"
+        <TextField
+          autoFocus
+          disabled={loading}
+          fullWidth
+          placeholder="0.00"
+          value={amountString}
+          InputProps={{
+            endAdornment: 'PHA',
+            sx: {fontFamily: barlow.style.fontFamily, fontWeight: 600},
+          }}
+          inputProps={{inputMode: 'decimal', pattern: getDecimalPattern(12)}}
+          size="small"
+          onChange={(e) => {
+            if (!e.target.validity.patternMismatch) {
+              setAmountString(e.target.value)
+            }
+          }}
         />
 
-        {!withdrawAll && (
-          <TextField
-            autoFocus
-            disabled={loading}
-            fullWidth
-            placeholder="0.00"
-            value={amountString}
-            InputProps={{
-              endAdornment: 'PHA',
-              sx: {fontFamily: barlow.style.fontFamily, fontWeight: 600},
-            }}
-            inputProps={{inputMode: 'decimal', pattern: getDecimalPattern(12)}}
-            size="small"
-            onChange={(e) => {
-              if (!e.target.validity.patternMismatch) {
-                setAmountString(e.target.value)
-              }
-            }}
-          />
-        )}
+        <ButtonGroup fullWidth size="small" sx={{mt: 2}}>
+          <Button
+            onClick={() =>
+              setAmountString(
+                new Decimal(delegation.basePool.freeValue).toDP(2, 0).toString()
+              )
+            }
+          >
+            All free
+          </Button>
+          <Button onClick={() => setAmountString(delegation.value)}>All</Button>
+        </ButtonGroup>
         <Stack mt={2} spacing={0.5}>
-          <Property label="Pool Free Value" size="small">
+          <Property label="Pool free" size="small">
             {`${toCurrency(basePool.freeValue)} PHA`}
           </Property>
         </Stack>
@@ -106,7 +115,7 @@ const Withdraw: FC<{
           loading={loading}
           variant="text"
           onClick={onClick}
-          disabled={!amountString && !withdrawAll}
+          disabled={!isValid}
         >
           Submit
         </LoadingButton>

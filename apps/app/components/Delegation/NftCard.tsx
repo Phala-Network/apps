@@ -134,7 +134,7 @@ const NftCard: FC<{
             </Property>
           )}
           {!compact && (
-            <Property size="small" label="Pool's Free" fullWidth>
+            <Property size="small" label="Pool free" fullWidth>
               {`${toCurrency(delegation.basePool.freeValue)} PHA`}
             </Property>
           )}
