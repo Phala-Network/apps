@@ -127,10 +127,15 @@ const NftCard: FC<{
           {`+ PHA / 7d`}
         </Typography>
 
-        <Stack spacing={0.5} mt="auto">
+        <Stack mt="auto">
           {hasWithdrawal && (
             <Property size="small" label="Withdrawing" fullWidth>
               {`${toCurrency(withdrawingValue)} PHA`}
+            </Property>
+          )}
+          {!compact && (
+            <Property size="small" label="Pool's Free" fullWidth>
+              {`${toCurrency(delegation.basePool.freeValue)} PHA`}
             </Property>
           )}
           {!compact && (
