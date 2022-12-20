@@ -36,7 +36,10 @@ import ExtraProperties from './ExtraProperties'
 import Intro from './Intro'
 
 const DelegateCard: FC<{
-  basePool: BasePoolCommonFragment & {whitelists?: {account: {id: string}}[]}
+  basePool: BasePoolCommonFragment & {
+    whitelists: {account: {id: string}}[]
+    delegations: {value: string}[]
+  }
 }> = ({basePool}) => {
   const getApr = useGetApr()
   const theme = useTheme()
@@ -57,8 +60,10 @@ const DelegateCard: FC<{
   const isClosed =
     basePool.whitelistEnabled &&
     basePool.owner.id !== account?.address &&
-    basePool.whitelists?.findIndex((x) => x.account.id === account?.address) ===
+    basePool.whitelists.findIndex((x) => x.account.id === account?.address) ===
       -1
+  const hasDelegation =
+    basePool.delegations.length > 0 && basePool.delegations[0].value !== '0'
 
   return (
     <Paper>
@@ -176,6 +181,11 @@ const DelegateCard: FC<{
           {vault && (
             <Property label="TVL" sx={{width: 120}}>
               {`${toCurrency(basePool.totalValue)} PHA`}
+            </Property>
+          )}
+          {hasDelegation && (
+            <Property label="Delegated" sx={{width: 120}}>
+              {`${toCurrency(basePool.delegations[0].value)} PHA`}
             </Property>
           )}
         </Stack>

@@ -2592,7 +2592,7 @@ type BasePoolsConnectionQueryVariables = Exact<{
 }>;
 
 
-type BasePoolsConnectionQuery = { __typename?: 'Query', basePoolsConnection: { __typename?: 'BasePoolsConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', endCursor: string, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string }, edges: Array<{ __typename?: 'BasePoolEdge', cursor: string, node: { __typename?: 'BasePool', cid: number, commission: string, delegatorCount: number, freeValue: string, id: string, kind: BasePoolKind, aprMultiplier: string, pid: string, releasingValue: string, sharePrice: string, totalShares: string, totalValue: string, whitelistEnabled: boolean, withdrawingShares: string, withdrawingValue: string, whitelists: Array<{ __typename?: 'BasePoolWhitelist', account: { __typename?: 'Account', id: string } }>, account: { __typename?: 'Account', id: string, stakePoolNftCount: number, stakePoolValue: string }, owner: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null }, stakePool?: { __typename?: 'StakePool', capacity?: string | null, delegable?: string | null, idleWorkerCount: number, ownerReward: string, workerCount: number } | null, vault?: { __typename?: 'Vault', claimableOwnerShares: string, lastSharePriceCheckpoint: string } | null } }> } };
+type BasePoolsConnectionQuery = { __typename?: 'Query', basePoolsConnection: { __typename?: 'BasePoolsConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', endCursor: string, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string }, edges: Array<{ __typename?: 'BasePoolEdge', cursor: string, node: { __typename?: 'BasePool', cid: number, commission: string, delegatorCount: number, freeValue: string, id: string, kind: BasePoolKind, aprMultiplier: string, pid: string, releasingValue: string, sharePrice: string, totalShares: string, totalValue: string, whitelistEnabled: boolean, withdrawingShares: string, withdrawingValue: string, whitelists: Array<{ __typename?: 'BasePoolWhitelist', account: { __typename?: 'Account', id: string } }>, delegations: Array<{ __typename?: 'Delegation', value: string }>, account: { __typename?: 'Account', id: string, stakePoolNftCount: number, stakePoolValue: string }, owner: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null }, stakePool?: { __typename?: 'StakePool', capacity?: string | null, delegable?: string | null, idleWorkerCount: number, ownerReward: string, workerCount: number } | null, vault?: { __typename?: 'Vault', claimableOwnerShares: string, lastSharePriceCheckpoint: string } | null } }> } };
 
 type ClaimableStakePoolsQueryVariables = Exact<{
   accountId?: InputMaybe<Scalars['String']>;
@@ -2834,6 +2834,9 @@ export const DelegationCommonFragmentDoc = gql`
           account {
             id
           }
+        }
+        delegations(where: {account: {id_eq: $accountId}}, limit: 1) {
+          value
         }
       }
       cursor
