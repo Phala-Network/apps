@@ -91,6 +91,9 @@ const MuiThemeProvider: FC<{children: ReactNode}> = ({children}) => {
           MuiChip: {
             defaultProps: {variant: 'outlined'},
           },
+          MuiInput: {
+            defaultProps: {disableUnderline: true},
+          },
         },
       }),
     [mode]
