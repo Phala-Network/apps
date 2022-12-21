@@ -123,9 +123,9 @@ const NftCard: FC<{
           {toCurrency(value)}
           <sub>PHA</sub>
         </Typography>
-        <Typography variant="caption" color={theme.palette.success.main}>
+        {/* <Typography variant="caption" color={theme.palette.success.main}>
           {`+ PHA / 7d`}
-        </Typography>
+        </Typography> */}
 
         <Stack mt="auto">
           {hasWithdrawal && (
