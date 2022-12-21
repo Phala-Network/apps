@@ -109,6 +109,7 @@ const WalletDialog: FC = () => {
                       variant="caption"
                       component="div"
                       color={isActive ? undefined : 'text.secondary'}
+                      sx={{wordBreak: 'break-all'}}
                     >
                       {account.address}
                     </Typography>

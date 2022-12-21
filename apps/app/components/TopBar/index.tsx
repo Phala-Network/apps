@@ -107,8 +107,8 @@ const TopBar: FC = () => {
       <Toolbar>
         <PhalaLogo width={30} css={{flexShrink: 0}} />
         <Stack
-          ml={2}
-          spacing={1}
+          ml={{md: 1, lg: 2}}
+          spacing={{lg: 1}}
           component="nav"
           direction="row"
           display={{xs: 'none', md: 'flex'}}

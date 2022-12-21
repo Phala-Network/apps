@@ -15,7 +15,7 @@ const Dashboard: FC = () => {
       <Title>Dashboard</Title>
       <Stack
         spacing={{xs: 2, md: 2.5}}
-        mt={5}
+        mt={{xs: 2, md: 5}}
         direction={{xs: 'column', md: 'row'}}
       >
         <DashboardAccount />

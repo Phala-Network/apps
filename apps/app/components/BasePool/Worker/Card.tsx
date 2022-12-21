@@ -43,7 +43,7 @@ const WorkerCard: FC<{
     if (!session) return []
     return [
       ['Stake', `${toCurrency(session.stake)} PHA`],
-      ['Reward', `${toCurrency(session.totalReward)} PHA`],
+      ['Cumulative rewards', `${toCurrency(session.totalReward)} PHA`],
       ['V', toFixed(session.v, 2)],
       ['Ve', toFixed(session.ve, 2)],
       ['P Instant', session.pInstant],
@@ -69,7 +69,7 @@ const WorkerCard: FC<{
         <Box color={theme.palette.text.secondary} width={48} flexShrink="0">
           <WorkerIcon css={{display: 'block'}} />
         </Box>
-        <Box>
+        <Box flex="1">
           <Typography
             color={theme.palette.primary.main}
             sx={{wordBreak: 'break-all', cursor: 'pointer'}}
@@ -81,13 +81,13 @@ const WorkerCard: FC<{
             {worker.id}
           </Typography>
           <Stack
-            width={580}
+            maxWidth={580}
             direction={{xs: 'column', sm: 'row'}}
             mt={1}
             spacing={{xs: 0.5, sm: 3}}
           >
             {Array.from({length: groups}).map((_, i) => (
-              <Stack flex="1 0" spacing={0.5} key={i}>
+              <Stack flex={i > 0 ? 1 : 2} spacing={0.5} key={i}>
                 {entries
                   .slice(i * count, (i + 1) * count)
                   .map(([label, value]: [string, ReactNode]) => (
@@ -103,7 +103,6 @@ const WorkerCard: FC<{
           alignItems="flex-end"
           justifyContent="space-between"
           alignSelf="stretch"
-          flex="1 0"
         >
           {session && (
             <Chip

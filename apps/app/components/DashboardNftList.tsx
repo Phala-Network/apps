@@ -51,11 +51,11 @@ const collectionSymbolFetcher = async ([api, cid]: [
 const NftCard: FC<{nft: Nft}> = ({nft}) => {
   const api = usePolkadotApi()
   const {data: name} = useSWRImmutable(
-    api ? [api, nft.cid, nft.nftId] : null,
+    api ? [api, nft.cid, nft.nftId, 'nftName'] : null,
     nftNameFetcher
   )
   const {data: collectionSymbol} = useSWRImmutable(
-    api ? [api, nft.cid] : null,
+    api ? [api, nft.cid, 'nftCollection'] : null,
     collectionSymbolFetcher
   )
   return (
@@ -131,11 +131,11 @@ const DashboardNftList: FC = () => {
         )}
       </SectionHeader>
 
-      <Grid container spacing={{xs: 2, md: 3}}>
+      <Grid container spacing={{xs: 1, sm: 2, md: 3}}>
         {data &&
           data.nftsConnection.edges.map((edge) => {
             return (
-              <Grid key={edge.cursor} xs={12} sm={6} md={4} lg={3}>
+              <Grid key={edge.cursor} xs={6} md={4} lg={3}>
                 <NftCard nft={edge.node} />
               </Grid>
             )

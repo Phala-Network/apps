@@ -118,7 +118,9 @@ const DashboardAccount: FC = () => {
                   ? trimAddress(account.address)
                   : 'To host, connect, and gain in the world of Web3'}
               </Typography>
-              <ContentCopy sx={{ml: 1, width: 16}} color="disabled" />
+              {!!account && (
+                <ContentCopy sx={{ml: 1, width: 16}} color="disabled" />
+              )}
             </Stack>
           </Stack>
           {account ? (
@@ -131,7 +133,7 @@ const DashboardAccount: FC = () => {
             </IconButton>
           ) : (
             <Button
-              sx={{flexShrink: 0}}
+              sx={{flexShrink: 0, display: {xs: 'none', sm: 'inline-flex'}}}
               onClick={() => {
                 setWalletDialogOpen(true)
               }}
