@@ -3,6 +3,7 @@ import {WPHA_ASSET_ID} from '@/config'
 import useAccountQuery from '@/hooks/useAccountQuery'
 import useAssetBalance from '@/hooks/useAssetBalance'
 import useGetApr from '@/hooks/useGetApr'
+import useLockedWrappedBalance from '@/hooks/useLockedWrappedBalance'
 import usePolkadotApi from '@/hooks/usePolkadotApi'
 import useSelectedVaultState from '@/hooks/useSelectedVaultState'
 import useSignAndSend from '@/hooks/useSignAndSend'
@@ -103,6 +104,7 @@ const DelegationDetailCard: FC<{sx?: SxProps}> = ({sx}) => {
   const api = usePolkadotApi()
   const signAndSend = useSignAndSend()
   const [account] = useAtom(polkadotAccountAtom)
+  const lockedWrappedBalance = useLockedWrappedBalance(account?.address)
   const wrapped = useAssetBalance(account?.address, WPHA_ASSET_ID)
   const accountState = data?.accountById
   const selectedVaultState = useSelectedVaultState()
@@ -247,7 +249,20 @@ const DelegationDetailCard: FC<{sx?: SxProps}> = ({sx}) => {
             alignSelf="baseline"
           >
             <ClientOnly fallback={<Skeleton width={100} />}>
-              {asAccount ? wrapped && `${toCurrency(wrapped)} PHA` : '-'}
+              {asAccount
+                ? wrapped &&
+                  lockedWrappedBalance && (
+                    <>
+                      {toCurrency(wrapped)} PHA
+                      {lockedWrappedBalance.gt(0) && (
+                        <Box component="span" color="text.secondary">
+                          {' '}
+                          / {toCurrency(lockedWrappedBalance)} PHA Locked
+                        </Box>
+                      )}
+                    </>
+                  )
+                : '-'}
             </ClientOnly>
           </Typography>
           <NoSsr>
