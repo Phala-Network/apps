@@ -113,7 +113,9 @@ const Intro: FC<{
             const icon = iconMap[label]
             let href
             if (label === 'telegram') {
-              href = `https://t.me/${value}`
+              href = `https://t.me/${
+                typeof value === 'string' ? value.replace(/^@/, '') : value
+              }`
             } else if (label === 'twitter') {
               href = `https://twitter.com/${value}`
             } else if (label === 'email') {
