@@ -85,6 +85,7 @@ const DelegatorSelect: FC<{isVault?: boolean}> = ({isVault = false}) => {
               maxWidth: '40px',
               overflow: 'hidden',
               textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap',
             }}
           >
             {account.name}

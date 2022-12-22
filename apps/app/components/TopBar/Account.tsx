@@ -32,7 +32,7 @@ const Account: FC = () => {
       }
     >
       {polkadotAccount ? (
-        <Box textOverflow="ellipsis" overflow="hidden">
+        <Box textOverflow="ellipsis" overflow="hidden" whiteSpace="nowrap">
           {polkadotAccount.name}
         </Box>
       ) : (

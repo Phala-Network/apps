@@ -192,7 +192,7 @@ const BasePoolList: FC<{
         first: 20,
         orderBy,
         where: {AND: where.filter(isTruthy)},
-        accountId: polkadotAccount?.address,
+        accountId: polkadotAccount?.address || '',
       },
       {
         enabled,

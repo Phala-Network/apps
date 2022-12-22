@@ -184,7 +184,7 @@ const DelegateCard: FC<{
             </Property>
           )}
           {hasDelegation && (
-            <Property label="Delegated" sx={{width: 120}}>
+            <Property label="Delegated" sx={{width: 140}}>
               {`${toCurrency(basePool.delegations[0].value)} PHA`}
             </Property>
           )}
