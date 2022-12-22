@@ -150,7 +150,7 @@ const BasePoolList: FC<{
         OR: [
           {owner: {id_eq: delegatorAddress}},
           {whitelistEnabled_eq: false},
-          {whitelists_some: {id_eq: delegatorAddress}},
+          {whitelists_some: {account: {id_eq: delegatorAddress}}},
         ],
       },
     delegatedFilter &&
@@ -192,7 +192,7 @@ const BasePoolList: FC<{
         first: 20,
         orderBy,
         where: {AND: where.filter(isTruthy)},
-        accountId: polkadotAccount?.address || '',
+        accountId: delegatorAddress || '',
       },
       {
         enabled,
