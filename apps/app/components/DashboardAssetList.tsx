@@ -1,4 +1,5 @@
 import AssetIcon from '@/assets/asset.svg'
+import {WPHA_ASSET_ID} from '@/config'
 import useAssetBalance from '@/hooks/useAssetBalance'
 import useAssetsMetadata, {
   AssetMetadata,
@@ -154,6 +155,7 @@ const Assets: FC<{
   const allAssets: Record<number, Asset> = {}
   for (const stringAssetId in assetsMetadata) {
     const assetId = Number(stringAssetId)
+    if (assetId === WPHA_ASSET_ID) continue
     // MEMO: because assetsMetadata is immutable, we can safely disable the rule
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const balance = useAssetBalance(account?.address, assetId)
