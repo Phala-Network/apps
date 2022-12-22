@@ -179,7 +179,7 @@ const DelegateCard: FC<{
             </Property>
           )}
           {vault && (
-            <Property label="TVL" sx={{width: 120}}>
+            <Property label="TVL" sx={{width: 140}}>
               {`${toCurrency(basePool.totalValue)} PHA`}
             </Property>
           )}

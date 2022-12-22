@@ -186,7 +186,7 @@ const FarmCard: FC<{
             </Property>
           )}
           {vault && (
-            <Property label="TVL" sx={{width: 120}}>
+            <Property label="TVL" sx={{width: 140}}>
               {`${toCurrency(basePool.totalValue)} PHA`}
             </Property>
           )}
@@ -205,7 +205,7 @@ const FarmCard: FC<{
           {basePool.withdrawingShares !== '0' && (
             <Chip
               size="small"
-              label="Insufficient Stake"
+              label="Withdrawal Queued"
               sx={{color: theme.palette.warning.dark}}
             />
           )}

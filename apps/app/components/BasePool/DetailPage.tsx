@@ -20,7 +20,6 @@ import Settings from '@mui/icons-material/Settings'
 import {
   Box,
   Button,
-  Chip,
   Dialog,
   IconButton,
   Paper,
@@ -178,19 +177,10 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
                   </Property>
                 )}
                 {vault && (
-                  <Property label="TVL" sx={{width: 120}}>
+                  <Property label="TVL" sx={{width: 140}}>
                     {basePool && `${toCurrency(basePool.totalValue)} PHA`}
                   </Property>
                 )}
-                <Stack flex="1 0" direction="row">
-                  {basePool?.withdrawingValue !== '0' && (
-                    <Chip
-                      size="small"
-                      label="Insufficient Stake"
-                      sx={{color: theme.palette.warning.dark}}
-                    />
-                  )}
-                </Stack>
               </Stack>
               <Box ml="auto" display={{xs: 'none', sm: 'block', lg: 'none'}}>
                 {actions}
