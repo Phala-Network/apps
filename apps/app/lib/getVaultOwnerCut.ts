@@ -9,18 +9,21 @@ const getVaultOwnerCut = (
   const {vault, sharePrice, commission, totalShares} = basePool
   if (!vault) return new Decimal(0)
   const {lastSharePriceCheckpoint} = vault
-  return new Decimal(sharePrice)
-    .minus(lastSharePriceCheckpoint)
-    .times(commission)
-    .times(totalShares)
-    .div(
-      new Decimal(sharePrice).minus(
-        new Decimal(sharePrice)
-          .minus(lastSharePriceCheckpoint)
-          .times(commission)
+  return Decimal.max(
+    new Decimal(sharePrice)
+      .minus(lastSharePriceCheckpoint)
+      .times(commission)
+      .times(totalShares)
+      .div(
+        new Decimal(sharePrice).minus(
+          new Decimal(sharePrice)
+            .minus(lastSharePriceCheckpoint)
+            .times(commission)
+        )
       )
-    )
-    .times(sharePrice)
+      .times(sharePrice),
+    0
+  )
 }
 
 export default getVaultOwnerCut
