@@ -4,6 +4,7 @@ import CollapsedIcon from '@/components/CollapsedIcon'
 import Property from '@/components/Property'
 import useGetApr from '@/hooks/useGetApr'
 import usePoolFavorite from '@/hooks/usePoolFavorite'
+import useSelectedVaultState from '@/hooks/useSelectedVaultState'
 import {aprToApy} from '@/lib/apr'
 import getPoolPath from '@/lib/getPoolPath'
 import {BasePoolCommonFragment, IdentityLevel} from '@/lib/subsquidQuery'
@@ -43,7 +44,12 @@ const DelegateCard: FC<{
 }> = ({basePool}) => {
   const getApr = useGetApr()
   const theme = useTheme()
+  const selectedVaultState = useSelectedVaultState()
   const [account] = useAtom(polkadotAccountAtom)
+  const delegatorAddress =
+    selectedVaultState === null
+      ? account?.address
+      : selectedVaultState?.account.id
   const [collapsed, setCollapsed] = useState(true)
   const {vault, stakePool, owner} = basePool
   const [isFavorite, toggleFavorite] = usePoolFavorite(basePool.pid)
@@ -60,7 +66,7 @@ const DelegateCard: FC<{
   const isClosed =
     basePool.whitelistEnabled &&
     basePool.owner.id !== account?.address &&
-    basePool.whitelists.findIndex((x) => x.account.id === account?.address) ===
+    basePool.whitelists.findIndex((x) => x.account.id === delegatorAddress) ===
       -1
   const hasDelegation =
     basePool.delegations.length > 0 && basePool.delegations[0].value !== '0'
