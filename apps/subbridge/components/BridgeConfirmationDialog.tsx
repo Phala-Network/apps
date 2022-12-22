@@ -11,7 +11,7 @@ import {
   fromChainAtom,
   toChainAtom,
 } from '@/store/bridge'
-import {ArrowDownward} from '@mui/icons-material'
+import ArrowDownward from '@mui/icons-material/ArrowDownward'
 import {LoadingButton} from '@mui/lab'
 import {
   Box,
@@ -31,7 +31,7 @@ import {
 } from '@mui/material'
 import {TransitionProps} from '@mui/material/transitions'
 import {BoxProps} from '@mui/system'
-import {sleep} from '@phala/utils'
+import {sleep} from '@phala/util'
 import {encodeAddress} from '@polkadot/util-crypto'
 import Decimal from 'decimal.js'
 import {useAtom, useAtomValue} from 'jotai'

@@ -4,7 +4,7 @@ import {ethersBalanceFetcher} from '@/lib/ethersFetcher'
 import {fromChainAtom} from '@/store/bridge'
 import {evmAccountAtom, isNetworkWrongAtom} from '@/store/ethers'
 import {Button} from '@mui/material'
-import {formatCurrency, trimAddress} from '@phala/utils'
+import {toCurrency, trimAddress} from '@phala/util'
 import {useAtom} from 'jotai'
 import {useSnackbar} from 'notistack'
 import {FC} from 'react'
@@ -41,7 +41,7 @@ const EvmAccount: FC = () => {
             Wrong Network
           </Button>
         ) : (
-          data && `${formatCurrency(data)} ${fromChain.currencySymbol}`
+          data && `${toCurrency(data)} ${fromChain.currencySymbol}`
         ))
       }
       ButtonProps={{

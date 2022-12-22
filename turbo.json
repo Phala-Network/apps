@@ -3,12 +3,7 @@
   "pipeline": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": ["out/**"],
-      "env": ["CONTEXT", "NODE_ENV"]
-    },
-    "@phala/app#build": {
-      "dependsOn": ["^build"],
-      "outputs": ["public/**"],
+      "outputs": ["out/**", ".next/**"],
       "env": ["CONTEXT", "NODE_ENV"]
     },
     "lint": {"outputs": []},

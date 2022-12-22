@@ -3,7 +3,7 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 })
 const withTM = require('next-transpile-modules')(
-  ['@phala/store', '@phala/utils', '@phala/react-libs'],
+  ['@phala/store', '@phala/util', '@phala/lib'],
   {
     // make peerDependencies work
     resolveSymlinks: false,

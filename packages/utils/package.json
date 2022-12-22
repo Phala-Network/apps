@@ -1,5 +1,5 @@
 {
-  "name": "@phala/utils",
+  "name": "@phala/util",
   "version": "0.0.1",
   "sideEffects": false,
   "type": "module",
@@ -10,9 +10,9 @@
     "typecheck": "tsc --project ./tsconfig.json --noEmit"
   },
   "dependencies": {
-    "@polkadot/keyring": "^10.1.12",
-    "@polkadot/util": "^10.1.12",
-    "decimal.js": "^10.4.2"
+    "@polkadot/keyring": "^10.2.1",
+    "@polkadot/util": "^10.2.1",
+    "decimal.js": "^10.4.3"
   },
   "devDependencies": {
     "@phala/eslint-config": "workspace:^"

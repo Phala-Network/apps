@@ -12,7 +12,7 @@ import {
   fromChainAtom,
   toChainAtom,
 } from '@/store/bridge'
-import {waitSignAndSend} from '@phala/react-libs'
+import {waitSignAndSend} from '@phala/lib'
 import {polkadotAccountAtom} from '@phala/store'
 import Decimal from 'decimal.js'
 import {useAtomValue} from 'jotai'

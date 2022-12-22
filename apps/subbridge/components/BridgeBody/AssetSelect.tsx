@@ -32,15 +32,7 @@ const AssetSelect: FC<TextFieldProps & {assetIds: AssetId[]}> = ({
       }}
       select
       variant="standard"
-      InputProps={{
-        disableUnderline: true,
-      }}
-      inputProps={{
-        sx: {
-          pl: 1,
-          py: 1,
-        },
-      }}
+      inputProps={{sx: {pl: 1, py: 1}}}
       {...props}
     >
       {assetIds.map((assetId) => {

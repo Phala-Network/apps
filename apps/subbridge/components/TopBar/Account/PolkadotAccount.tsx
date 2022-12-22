@@ -2,7 +2,7 @@ import {useCurrentPolkadotApi} from '@/hooks/usePolkadotApi'
 import {polkadotAvailableBalanceFetcher} from '@/lib/polkadotFetcher'
 import {polkadotWalletModalOpenAtom} from '@/store/polkadotWalletModal'
 import {polkadotAccountAtom} from '@phala/store'
-import {formatCurrency} from '@phala/utils'
+import {toCurrency} from '@phala/util'
 import {useAtom} from 'jotai'
 import {FC} from 'react'
 import useSWR from 'swr'
@@ -34,7 +34,7 @@ const PolkadotAccount: FC = () => {
     <AccountTemplate
       balance={
         tokenSymbol && data !== undefined
-          ? `${formatCurrency(data)} ${tokenSymbol}`
+          ? `${toCurrency(data)} ${tokenSymbol}`
           : undefined
       }
       account={polkadotAccount.name}

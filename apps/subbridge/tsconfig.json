@@ -1,7 +1,6 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "target": "es6",
     "lib": ["dom", "dom.iterable", "esnext"],
     "jsx": "preserve",
     "jsxImportSource": "@emotion/react",
@@ -13,7 +12,12 @@
       "@/config/*": ["config/*"],
       "@/assets/*": ["assets/*"],
       "@/store/*": ["store/*"]
-    }
+    },
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]

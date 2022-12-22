@@ -140,7 +140,7 @@ declare module '@polkadot/api-base/types/errors' {
        **/
       ExistingVestingSchedule: AugmentedError<ApiType>;
       /**
-       * Balance too low to send value
+       * Balance too low to send value.
        **/
       InsufficientBalance: AugmentedError<ApiType>;
       /**
@@ -467,17 +467,9 @@ declare module '@polkadot/api-base/types/errors' {
        **/
       AlreadyVetoed: AugmentedError<ApiType>;
       /**
-       * Preimage already noted
-       **/
-      DuplicatePreimage: AugmentedError<ApiType>;
-      /**
        * Proposal already made
        **/
       DuplicateProposal: AugmentedError<ApiType>;
-      /**
-       * Imminent
-       **/
-      Imminent: AugmentedError<ApiType>;
       /**
        * The instant referendum origin is currently disallowed.
        **/
@@ -515,10 +507,6 @@ declare module '@polkadot/api-base/types/errors' {
        **/
       NotDelegating: AugmentedError<ApiType>;
       /**
-       * Not imminent
-       **/
-      NotImminent: AugmentedError<ApiType>;
-      /**
        * Next external proposal not simple majority
        **/
       NotSimpleMajority: AugmentedError<ApiType>;
@@ -526,14 +514,6 @@ declare module '@polkadot/api-base/types/errors' {
        * The given account did not vote on the referendum.
        **/
       NotVoter: AugmentedError<ApiType>;
-      /**
-       * Invalid preimage
-       **/
-      PreimageInvalid: AugmentedError<ApiType>;
-      /**
-       * Preimage not found
-       **/
-      PreimageMissing: AugmentedError<ApiType>;
       /**
        * Proposal still blacklisted
        **/
@@ -547,13 +527,9 @@ declare module '@polkadot/api-base/types/errors' {
        **/
       ReferendumInvalid: AugmentedError<ApiType>;
       /**
-       * Too early
+       * Maximum number of items reached.
        **/
-      TooEarly: AugmentedError<ApiType>;
-      /**
-       * Maximum number of proposals reached.
-       **/
-      TooManyProposals: AugmentedError<ApiType>;
+      TooMany: AugmentedError<ApiType>;
       /**
        * Value too low
        **/
@@ -623,6 +599,10 @@ declare module '@polkadot/api-base/types/errors' {
        * Judgement given.
        **/
       JudgementGiven: AugmentedError<ApiType>;
+      /**
+       * Error that occurs when there is an issue paying for judgement.
+       **/
+      JudgementPaymentFailed: AugmentedError<ApiType>;
       /**
        * No identity found.
        **/
@@ -799,7 +779,90 @@ declare module '@polkadot/api-base/types/errors' {
        **/
       [key: string]: AugmentedError<ApiType>;
     };
-    phalaMining: {
+    phalaBasePool: {
+      /**
+       * Can not add the staker to whitelist because the staker is already in whitelist.
+       **/
+      AlreadyInContributeWhitelist: AugmentedError<ApiType>;
+      /**
+       * Tried to get a `NftGuard` when the nft is locked. It indicates an internal error occured.
+       **/
+      AttrLocked: AugmentedError<ApiType>;
+      /**
+       * Burn nft failed
+       **/
+      BurnNftFailed: AugmentedError<ApiType>;
+      /**
+       * Too long for pool description length
+       **/
+      ExceedMaxDescriptionLen: AugmentedError<ApiType>;
+      /**
+       * Too many stakers in contribution whitelist that exceed the limit
+       **/
+      ExceedWhitelistMaxLen: AugmentedError<ApiType>;
+      /**
+       * Occurs when pool's shares is zero
+       **/
+      InvalidSharePrice: AugmentedError<ApiType>;
+      /**
+       * CheckSub less than zero, indicate share amount is invalid
+       **/
+      InvalidShareToWithdraw: AugmentedError<ApiType>;
+      /**
+       * The withdrawal amount is too small (considered as dust)
+       **/
+      InvalidWithdrawalAmount: AugmentedError<ApiType>;
+      /**
+       * basepool's collection_id isn't founded
+       **/
+      MissCollectionId: AugmentedError<ApiType>;
+      /**
+       * NftId does not match any nft
+       **/
+      NftIdNotFound: AugmentedError<ApiType>;
+      /**
+       * Invalid staker to contribute because origin isn't in Pool's contribution whitelist.
+       **/
+      NotInContributeWhitelist: AugmentedError<ApiType>;
+      /**
+       * Migration root not authorized
+       **/
+      NotMigrationRoot: AugmentedError<ApiType>;
+      /**
+       * The pool hasn't have a whitelist created
+       **/
+      NoWhitelistCreated: AugmentedError<ApiType>;
+      /**
+       * The pool has already got all the stake completely slashed.
+       * 
+       * In this case, no more funds can be contributed to the pool until all the pending slash
+       * has been resolved.
+       **/
+      PoolBankrupt: AugmentedError<ApiType>;
+      /**
+       * The Specified pid does not match to any pool
+       **/
+      PoolDoesNotExist: AugmentedError<ApiType>;
+      /**
+       * Tried to access a pool type that doesn't match the actual pool type in the storage.
+       * 
+       * E.g. Try to access a vault but it's actually a  stake pool.
+       **/
+      PoolTypeNotMatch: AugmentedError<ApiType>;
+      /**
+       * RMRK errors
+       **/
+      RmrkError: AugmentedError<ApiType>;
+      /**
+       * The caller is not the owner of the pool
+       **/
+      UnauthorizedPoolOwner: AugmentedError<ApiType>;
+      /**
+       * Generic error
+       **/
+      [key: string]: AugmentedError<ApiType>;
+    };
+    phalaComputation: {
       /**
        * Deprecated
        **/
@@ -817,7 +880,7 @@ declare module '@polkadot/api-base/types/errors' {
        **/
       BenchmarkMissing: AugmentedError<ApiType>;
       /**
-       * Indicating the initial benchmark score is too low to start mining.
+       * Indicating the initial benchmark score is too low to start computing.
        **/
       BenchmarkTooLow: AugmentedError<ApiType>;
       /**
@@ -825,15 +888,15 @@ declare module '@polkadot/api-base/types/errors' {
        **/
       CoolDownNotReady: AugmentedError<ApiType>;
       /**
-       * Not permitted because the miner is already bound with another worker.
+       * Not permitted because the session is already bound with another worker.
        **/
-      DuplicateBoundMiner: AugmentedError<ApiType>;
+      DuplicateBoundSession: AugmentedError<ApiType>;
       /**
-       * Not permitted because the worker is already bound with another miner account.
+       * Not permitted because the worker is already bound with another session account.
        **/
       DuplicateBoundWorker: AugmentedError<ApiType>;
       /**
-       * Cannot start mining because there's too little stake.
+       * Cannot start computing because there's too little stake.
        **/
       InsufficientStake: AugmentedError<ApiType>;
       /**
@@ -841,33 +904,37 @@ declare module '@polkadot/api-base/types/errors' {
        **/
       InternalErrorBadTokenomicParameters: AugmentedError<ApiType>;
       /**
-       * Internal error. A miner should never start with existing stake in the storage.
+       * Internal error. A worker should never start with existing stake in the storage.
        **/
       InternalErrorCannotStartWithExistingStake: AugmentedError<ApiType>;
       /**
-       * Not permitted because the miner is not bound with a worker.
+       * Migration root not authorized
        **/
-      MinerNotBound: AugmentedError<ApiType>;
+      NotMigrationRoot: AugmentedError<ApiType>;
       /**
-       * Miner not found.
+       * Not permitted because the session is not bound with a worker.
        **/
-      MinerNotFound: AugmentedError<ApiType>;
+      SessionNotBound: AugmentedError<ApiType>;
       /**
-       * Miner is not in `Mining` state to stop mining.
+       * session not found.
        **/
-      MinerNotMining: AugmentedError<ApiType>;
+      SessionNotFound: AugmentedError<ApiType>;
       /**
-       * Miner is not in `Ready` state to proceed.
-       **/
-      MinerNotReady: AugmentedError<ApiType>;
-      /**
-       * Cannot start mining because there's too much stake (exceeds Vmax).
+       * Cannot start computing because there's too much stake (exceeds Vmax).
        **/
       TooMuchStake: AugmentedError<ApiType>;
       /**
-       * Not permitted because the worker is not bound with a miner account.
+       * Not permitted because the worker is not bound with a worker account.
        **/
       WorkerNotBound: AugmentedError<ApiType>;
+      /**
+       * Worker is not in `Computation` state to stop computing.
+       **/
+      WorkerNotComputing: AugmentedError<ApiType>;
+      /**
+       * Worker is not in `Ready` state to proceed.
+       **/
+      WorkerNotReady: AugmentedError<ApiType>;
       /**
        * The worker is not registered in the registry.
        **/
@@ -894,6 +961,7 @@ declare module '@polkadot/api-base/types/errors' {
       GenesisBlockHashNotFound: AugmentedError<ApiType>;
       GenesisBlockHashRejected: AugmentedError<ApiType>;
       InvalidBenchReport: AugmentedError<ApiType>;
+      InvalidConsensusVersion: AugmentedError<ApiType>;
       InvalidEndpointSigningTime: AugmentedError<ApiType>;
       InvalidGatekeeper: AugmentedError<ApiType>;
       InvalidIASSigningCert: AugmentedError<ApiType>;
@@ -912,8 +980,14 @@ declare module '@polkadot/api-base/types/errors' {
       MasterKeyInRotation: AugmentedError<ApiType>;
       MasterKeyMismatch: AugmentedError<ApiType>;
       MasterKeyUninitialized: AugmentedError<ApiType>;
+      NoneAttestationDisabled: AugmentedError<ApiType>;
       NotImplemented: AugmentedError<ApiType>;
+      /**
+       * Migration root not authorized
+       **/
+      NotMigrationRoot: AugmentedError<ApiType>;
       OutdatedIASReport: AugmentedError<ApiType>;
+      ParachainIdMismatch: AugmentedError<ApiType>;
       PRuntimeAlreadyExists: AugmentedError<ApiType>;
       PRuntimeNotFound: AugmentedError<ApiType>;
       PRuntimeRejected: AugmentedError<ApiType>;
@@ -927,11 +1001,13 @@ declare module '@polkadot/api-base/types/errors' {
       [key: string]: AugmentedError<ApiType>;
     };
     phalaStakePool: {
-      _PoolIsBusy: AugmentedError<ApiType>;
       /**
-       * Can not add the staker to whitelist because the staker is already in whitelist.
+       * Generic error
        **/
-      AlreadyInContributeWhitelist: AugmentedError<ApiType>;
+      [key: string]: AugmentedError<ApiType>;
+    };
+    phalaStakePoolv2: {
+      _PoolIsBusy: AugmentedError<ApiType>;
       /**
        * The worker doesn't have a valid benchmark when adding to the pool
        **/
@@ -941,17 +1017,9 @@ declare module '@polkadot/api-base/types/errors' {
        **/
       CannotRestartWithLessStake: AugmentedError<ApiType>;
       /**
-       * Too long for pool description length
+       * Couldn't bind worker and the pool computing subaccount
        **/
-      ExceedMaxDescriptionLen: AugmentedError<ApiType>;
-      /**
-       * Too many stakers in contribution whitelist that exceed the limit
-       **/
-      ExceedWhitelistMaxLen: AugmentedError<ApiType>;
-      /**
-       * Couldn't bind worker and the pool mining subaccount
-       **/
-      FailedToBindMinerAndWorker: AugmentedError<ApiType>;
+      FailedToBindSessionAndWorker: AugmentedError<ApiType>;
       /**
        * The StakePool is not enabled yet.
        **/
@@ -969,7 +1037,7 @@ declare module '@polkadot/api-base/types/errors' {
        **/
       InsufficientContribution: AugmentedError<ApiType>;
       /**
-       * Cannot start mining because there's no enough free stake
+       * Cannot start computing because there's no enough free stake
        **/
       InsufficientFreeStake: AugmentedError<ApiType>;
       /**
@@ -985,17 +1053,13 @@ declare module '@polkadot/api-base/types/errors' {
        **/
       InvalidWithdrawalAmount: AugmentedError<ApiType>;
       /**
+       * Stakepool's collection_id isn't founded
+       **/
+      MissingCollectionId: AugmentedError<ApiType>;
+      /**
        * There's no pending reward to claim
        **/
       NoRewardToClaim: AugmentedError<ApiType>;
-      /**
-       * Invalid staker to contribute because origin isn't in Pool's contribution whitelist.
-       **/
-      NotInContributeWhitelist: AugmentedError<ApiType>;
-      /**
-       * The pool hasn't have a whitelist created
-       **/
-      NoWhitelistCreated: AugmentedError<ApiType>;
       /**
        * The pool has already got all the stake completely slashed.
        * 
@@ -1012,6 +1076,10 @@ declare module '@polkadot/api-base/types/errors' {
        **/
       PoolStakeNotFound: AugmentedError<ApiType>;
       /**
+       * The target miner is not in the 	`miner` storage
+       **/
+      SessionDoesNotExist: AugmentedError<ApiType>;
+      /**
        * The stake added to a pool exceeds its capacity
        **/
       StakeExceedsCapacity: AugmentedError<ApiType>;
@@ -1026,6 +1094,18 @@ declare module '@polkadot/api-base/types/errors' {
        **/
       UnauthorizedPoolOwner: AugmentedError<ApiType>;
       /**
+       * Vault is forced locked for it has some expired withdrawal
+       **/
+      VaultIsLocked: AugmentedError<ApiType>;
+      /**
+       * Withdraw queue is not empty so that we can't restart computing
+       **/
+      WithdrawQueueNotEmpty: AugmentedError<ApiType>;
+      /**
+       * The worker is already in cd_workers
+       **/
+      WorkerAlreadyStopped: AugmentedError<ApiType>;
+      /**
        * The target worker is not in the pool
        **/
       WorkerDoesNotExist: AugmentedError<ApiType>;
@@ -1038,6 +1118,10 @@ declare module '@polkadot/api-base/types/errors' {
        **/
       WorkerInAnotherPool: AugmentedError<ApiType>;
       /**
+       * The target worker is not reclaimed and can not be removed from a pool.
+       **/
+      WorkerIsNotReady: AugmentedError<ApiType>;
+      /**
        * The worker is not registered in the registry when adding to the pool
        **/
       WorkerNotRegistered: AugmentedError<ApiType>;
@@ -1045,6 +1129,70 @@ declare module '@polkadot/api-base/types/errors' {
        * Failed to add a worker because the number of the workers exceeds the upper limit.
        **/
       WorkersExceedLimit: AugmentedError<ApiType>;
+      /**
+       * Generic error
+       **/
+      [key: string]: AugmentedError<ApiType>;
+    };
+    phalaVault: {
+      /**
+       * The asset account hasn't been created. It indicates an internal error.
+       **/
+      AssetAccountNotExist: AugmentedError<ApiType>;
+      /**
+       * Trying to contribute more than the available balance
+       **/
+      InsufficientBalance: AugmentedError<ApiType>;
+      /**
+       * The contributed stake is smaller than the minimum threshold
+       **/
+      InsufficientContribution: AugmentedError<ApiType>;
+      /**
+       * The withdrawal amount is too small or too large
+       **/
+      NoEnoughShareToClaim: AugmentedError<ApiType>;
+      /**
+       * The vault have no owner shares to claim
+       **/
+      NoRewardToClaim: AugmentedError<ApiType>;
+      /**
+       * The caller is not the owner of the pool
+       **/
+      UnauthorizedPoolOwner: AugmentedError<ApiType>;
+      /**
+       * The Vault was bankrupt; cannot interact with it unless all the shares are withdrawn.
+       **/
+      VaultBankrupt: AugmentedError<ApiType>;
+      /**
+       * Generic error
+       **/
+      [key: string]: AugmentedError<ApiType>;
+    };
+    phalaWrappedBalances: {
+      /**
+       * The Iteration exceed the max limitaion
+       **/
+      IterationsIsNotVaild: AugmentedError<ApiType>;
+      /**
+       * The vote is not currently on going
+       **/
+      ReferendumInvalid: AugmentedError<ApiType>;
+      /**
+       * The vote is now on going and the W-PHA used in voting can not be unlocked
+       **/
+      ReferendumOngoing: AugmentedError<ApiType>;
+      /**
+       * user's `FinanceAccount` does not exist in storage: `StakerAccounts`
+       **/
+      StakerAccountNotFound: AugmentedError<ApiType>;
+      /**
+       * Trying to unwrap more than the available balance
+       **/
+      UnwrapAmountExceedsAvaliableStake: AugmentedError<ApiType>;
+      /**
+       * Trying to vote more than the available balance
+       **/
+      VoteAmountLargerThanTotalStakes: AugmentedError<ApiType>;
       /**
        * Generic error
        **/
@@ -1209,7 +1357,7 @@ declare module '@polkadot/api-base/types/errors' {
       /**
        * Preimage is too large to store on-chain.
        **/
-      TooLarge: AugmentedError<ApiType>;
+      TooBig: AugmentedError<ApiType>;
       /**
        * Generic error
        **/
@@ -1267,6 +1415,7 @@ declare module '@polkadot/api-base/types/errors' {
       GenerationNotDetected: AugmentedError<ApiType>;
       HatchingInProgress: AugmentedError<ApiType>;
       MissingShellPartMetadata: AugmentedError<ApiType>;
+      NoFoodLeftToFeedOriginOfShell: AugmentedError<ApiType>;
       NoPermission: AugmentedError<ApiType>;
       NotOwner: AugmentedError<ApiType>;
       RaceNotDetected: AugmentedError<ApiType>;
@@ -1290,6 +1439,7 @@ declare module '@polkadot/api-base/types/errors' {
       InvalidStatusType: AugmentedError<ApiType>;
       KeyTooLong: AugmentedError<ApiType>;
       MustOwnSpiritToPurchase: AugmentedError<ApiType>;
+      NoAvailableCollectionId: AugmentedError<ApiType>;
       NoAvailableNftId: AugmentedError<ApiType>;
       NoAvailablePreorderId: AugmentedError<ApiType>;
       NoAvailableRaceGivewayLeft: AugmentedError<ApiType>;
@@ -1314,6 +1464,7 @@ declare module '@polkadot/api-base/types/errors' {
       RareOriginOfShellPurchaseNotAvailable: AugmentedError<ApiType>;
       RefundClaimNotDetected: AugmentedError<ApiType>;
       RequireOverlordAccount: AugmentedError<ApiType>;
+      SignerNotSet: AugmentedError<ApiType>;
       SpiritAlreadyClaimed: AugmentedError<ApiType>;
       SpiritClaimNotAvailable: AugmentedError<ApiType>;
       SpiritCollectionIdAlreadySet: AugmentedError<ApiType>;
@@ -1340,6 +1491,8 @@ declare module '@polkadot/api-base/types/errors' {
       CollectionNotEmpty: AugmentedError<ApiType>;
       CollectionUnknown: AugmentedError<ApiType>;
       EmptyResource: AugmentedError<ApiType>;
+      FailedTransferHooksPostTransfer: AugmentedError<ApiType>;
+      FailedTransferHooksPreCheck: AugmentedError<ApiType>;
       MetadataNotSet: AugmentedError<ApiType>;
       NftAlreadyExists: AugmentedError<ApiType>;
       NftIsLocked: AugmentedError<ApiType>;
@@ -1367,6 +1520,9 @@ declare module '@polkadot/api-base/types/errors' {
        **/
       StorageOverflow: AugmentedError<ApiType>;
       TooLong: AugmentedError<ApiType>;
+      /**
+       * The recursion limit has been reached.
+       **/
       TooManyRecursions: AugmentedError<ApiType>;
       /**
        * Generic error
@@ -1393,8 +1549,11 @@ declare module '@polkadot/api-base/types/errors' {
       PermissionError: AugmentedError<ApiType>;
       SlotAlreadyEquipped: AugmentedError<ApiType>;
       SlotNotEquipped: AugmentedError<ApiType>;
+      TooManyEquippables: AugmentedError<ApiType>;
       TooManyProperties: AugmentedError<ApiType>;
       UnequipperMustOwnEitherItemOrEquipper: AugmentedError<ApiType>;
+      UnexpectedTryFromIntError: AugmentedError<ApiType>;
+      UnexpectedVecConversionError: AugmentedError<ApiType>;
       UnknownError: AugmentedError<ApiType>;
       /**
        * Generic error
@@ -1472,6 +1631,10 @@ declare module '@polkadot/api-base/types/errors' {
        * Failed to schedule a call
        **/
       FailedToSchedule: AugmentedError<ApiType>;
+      /**
+       * Attempt to use a non-named function on a named task.
+       **/
+      Named: AugmentedError<ApiType>;
       /**
        * Cannot find the scheduled call.
        **/

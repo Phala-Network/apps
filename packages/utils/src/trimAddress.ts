@@ -1,7 +1,7 @@
-const trimAddress = (str: string): string => {
-  if (str.length < 10) return str
+const trimAddress = (str: string, start = 4, end = 4): string => {
+  if (str.length < start + end) return str
 
-  return `${str.slice(0, 6)}…${str.slice(-4)}`
+  return `${str.slice(0, start)}…${str.slice(-end)}`
 }
 
 export default trimAddress

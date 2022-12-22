@@ -2,7 +2,8 @@ import {
   colorSchemeSettingAtom,
   moreButtonBadgeVersionAtom,
 } from '@/store/common'
-import {Link, MoreHoriz} from '@mui/icons-material'
+import Link from '@mui/icons-material/Link'
+import MoreHoriz from '@mui/icons-material/MoreHoriz'
 import {Badge, Box, Button, ButtonGroup, Menu, MenuItem} from '@mui/material'
 import {useAtom} from 'jotai'
 import {FC, MouseEvent, useState} from 'react'
