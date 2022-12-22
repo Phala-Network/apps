@@ -96,7 +96,7 @@ const DelegateCard: FC<{
           </IconButton>
           {stakePool && <StakePoolIcon width={48} color={colors.main[300]} />}
           {vault && <VaultIcon width={48} color={colors.vault[400]} />}
-          <Box width={96} flex="1 0">
+          <Box width={150} flex="1 0">
             <Link
               color="inherit"
               variant="num4"
