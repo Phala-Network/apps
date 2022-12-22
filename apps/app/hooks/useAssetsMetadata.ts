@@ -1,3 +1,4 @@
+import {WPHA_ASSET_ID} from '@/config'
 import type {ApiPromise} from '@polkadot/api'
 import {hexToString} from '@polkadot/util'
 import useSWRImmutable from 'swr/immutable'
@@ -57,12 +58,14 @@ const assetsMetadataFetcher = async ([api]: [ApiPromise]) => {
     const symbol = hexToString(value.symbol.toHex())
     const decimals = value.decimals.toNumber()
     const iconSrc = iconMap[symbol]
-    assetsMetadata[assetId] = {
-      assetId,
-      name,
-      symbol,
-      decimals,
-      iconSrc,
+    if (assetId !== WPHA_ASSET_ID) {
+      assetsMetadata[assetId] = {
+        assetId,
+        name,
+        symbol,
+        decimals,
+        iconSrc,
+      }
     }
   }
   return assetsMetadata
