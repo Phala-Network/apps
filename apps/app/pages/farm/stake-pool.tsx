@@ -20,6 +20,7 @@ const MyStakePools: FC = () => {
     subsquidClient,
     {
       accountId: account?.address,
+      gt: '0',
     },
     {enabled: !!account}
   )
