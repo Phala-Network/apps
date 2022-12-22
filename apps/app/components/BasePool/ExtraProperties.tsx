@@ -2,6 +2,7 @@ import Property from '@/components/Property'
 import {BasePoolCommonFragment} from '@/lib/subsquidQuery'
 import {Box, Stack, SxProps} from '@mui/material'
 import {isTruthy, toCurrency, toPercentage} from '@phala/util'
+import Decimal from 'decimal.js'
 import {FC, ReactNode, useMemo} from 'react'
 
 const ExtraProperties: FC<{basePool: BasePoolCommonFragment; sx?: SxProps}> = ({
@@ -31,7 +32,12 @@ const ExtraProperties: FC<{basePool: BasePoolCommonFragment; sx?: SxProps}> = ({
       stakePool && ['Delegation', `${toCurrency(basePool.totalValue)} PHA`],
       ['Free', `${toCurrency(basePool.freeValue)} PHA`],
       ['Withdrawing', `${toCurrency(basePool.withdrawingValue)} PHA`],
-      ['Price', `${toCurrency(basePool.sharePrice)} PHA`],
+      [
+        'Price',
+        `${toCurrency(
+          new Decimal(basePool.sharePrice).toDP(2, Decimal.ROUND_HALF_UP)
+        )} PHA`,
+      ],
     ]
 
     return entries.filter(isTruthy)
