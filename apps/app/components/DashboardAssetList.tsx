@@ -6,6 +6,7 @@ import useAssetsMetadata, {
   phaMetadata,
 } from '@/hooks/useAssetsMetadata'
 import useWrapAsset from '@/hooks/useWrapAsset'
+import {chainAtom} from '@/store/common'
 import {hideSmallBalanceAtom} from '@/store/ui'
 import {
   Box,
@@ -203,6 +204,7 @@ const Assets: FC<{
 }
 
 const DashboardAssetList: FC = () => {
+  const [chain] = useAtom(chainAtom)
   const assetsMetadata = useAssetsMetadata()
   const [hideSmallBalance, setHideSmallBalance] = useAtom(hideSmallBalanceAtom)
 
@@ -226,7 +228,7 @@ const DashboardAssetList: FC = () => {
       </SectionHeader>
       <Paper sx={{background: 'transparent', overflow: 'hidden'}}>
         {assetsMetadata ? (
-          <Assets assetsMetadata={assetsMetadata} />
+          <Assets assetsMetadata={assetsMetadata} key={chain} />
         ) : (
           <Skeleton variant="rectangular" height={240} />
         )}
