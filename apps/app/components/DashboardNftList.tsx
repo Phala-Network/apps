@@ -136,7 +136,7 @@ const DashboardNftList: FC = () => {
         )}
       </SectionHeader>
 
-      <Grid container spacing={{xs: 1, sm: 2, md: 3}} minHeight="700px">
+      <Grid container spacing={{xs: 1, sm: 2, md: 3}}>
         {data &&
           data.nftsConnection.edges.map((edge) => {
             return (
