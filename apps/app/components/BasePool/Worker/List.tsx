@@ -252,14 +252,13 @@ const WorkerList: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
       )}
 
       <Dialog open={dialogOpen} onClose={onClose}>
-        {dialogAction === 'start' ||
-          (dialogAction === 'changeStake' && (
-            <ChangeStake
-              onClose={onClose}
-              worker={operatingWorker}
-              isChangeStake={dialogAction === 'changeStake'}
-            />
-          ))}
+        {(dialogAction === 'start' || dialogAction === 'changeStake') && (
+          <ChangeStake
+            onClose={onClose}
+            worker={operatingWorker}
+            isChangeStake={dialogAction === 'changeStake'}
+          />
+        )}
         {dialogAction === 'addWorker' && (
           <AddWorker onClose={onClose} pid={basePool.id} />
         )}
