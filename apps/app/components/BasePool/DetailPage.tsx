@@ -32,7 +32,6 @@ import {
 import {polkadotAccountAtom} from '@phala/store'
 import {toCurrency, toPercentage} from '@phala/util'
 import {useAtom} from 'jotai'
-import dynamic from 'next/dynamic'
 import {FC, useCallback, useState} from 'react'
 import Withdraw from '../Delegation/Withdraw'
 import Empty from '../Empty'
@@ -40,12 +39,11 @@ import PromiseButton from '../PromiseButton'
 import DelegateInput from './DelegateInput'
 import ExtraProperties from './ExtraProperties'
 import Intro from './Intro'
+import OwnerSettings from './OwnerSettings'
 import WhitelistList from './Whitelist/List'
 import WithdrawQueue from './WithdrawQueue'
 
 type DetailPageDialogAction = 'withdraw' | 'ownerSettings'
-
-const OwnerSettings = dynamic(() => import('./OwnerSettings'))
 
 const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
   const api = usePolkadotApi()

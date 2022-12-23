@@ -6,6 +6,7 @@ import useAssetsMetadata, {
   phaMetadata,
 } from '@/hooks/useAssetsMetadata'
 import useWrapAsset from '@/hooks/useWrapAsset'
+import {chainAtom} from '@/store/common'
 import {hideSmallBalanceAtom} from '@/store/ui'
 import {
   Box,
@@ -28,13 +29,11 @@ import {polkadotAccountAtom} from '@phala/store'
 import {toCurrency} from '@phala/util'
 import Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
-import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import {FC, useCallback, useState} from 'react'
+import AssetTransfer from './AssetTransfer'
 import SectionHeader from './SectionHeader'
 import Vest from './Vest'
-
-const AssetTransfer = dynamic(() => import('./AssetTransfer'))
 
 type AssetDialogAction = 'transfer' | 'buy' | 'claim'
 export type Asset = AssetMetadata & {balance: Decimal | undefined}
@@ -205,6 +204,7 @@ const Assets: FC<{
 }
 
 const DashboardAssetList: FC = () => {
+  const [chain] = useAtom(chainAtom)
   const assetsMetadata = useAssetsMetadata()
   const [hideSmallBalance, setHideSmallBalance] = useAtom(hideSmallBalanceAtom)
 
@@ -228,7 +228,7 @@ const DashboardAssetList: FC = () => {
       </SectionHeader>
       <Paper sx={{background: 'transparent', overflow: 'hidden'}}>
         {assetsMetadata ? (
-          <Assets assetsMetadata={assetsMetadata} />
+          <Assets assetsMetadata={assetsMetadata} key={chain} />
         ) : (
           <Skeleton variant="rectangular" height={240} />
         )}

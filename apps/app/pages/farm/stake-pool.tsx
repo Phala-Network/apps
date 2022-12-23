@@ -1,3 +1,4 @@
+import ClaimReward from '@/components/BasePool/ClaimReward'
 import BasePoolList from '@/components/BasePool/List'
 import CreateBasePoolButton from '@/components/CreateBasePoolButton'
 import PageHeader from '@/components/PageHeader'
@@ -8,10 +9,7 @@ import {polkadotAccountAtom} from '@phala/store'
 import {toCurrency} from '@phala/util'
 import Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
-import dynamic from 'next/dynamic'
 import {FC, useCallback, useMemo, useState} from 'react'
-
-const ClaimReward = dynamic(() => import('@/components/BasePool/ClaimReward'))
 
 const MyStakePools: FC = () => {
   const [account] = useAtom(polkadotAccountAtom)

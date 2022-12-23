@@ -13,6 +13,7 @@ import {
   useWorkersConnectionQuery,
   WorkerOrderByInput,
   WorkersConnectionQuery,
+  WorkerState,
 } from '@/lib/subsquidQuery'
 import Search from '@mui/icons-material/Search'
 import {
@@ -26,12 +27,10 @@ import {
 import {polkadotAccountAtom} from '@phala/store'
 import {addDays} from 'date-fns'
 import {useAtom} from 'jotai'
-import dynamic from 'next/dynamic'
 import {FC, useCallback, useState} from 'react'
+import AddWorker from './AddWorker'
 import WorkerCard from './Card'
-
-const ChangeStake = dynamic(() => import('./ChangeStake'))
-const AddWorker = dynamic(() => import('./AddWorker'))
+import ChangeStake from './ChangeStake'
 
 const orderByEntries: [string, WorkerOrderByInput][] = [
   ['Stake high to low', 'session_stake_DESC'],
@@ -44,6 +43,14 @@ const orderByEntries: [string, WorkerOrderByInput][] = [
   ['P Instant low to high', 'session_pInstant_ASC'],
   ['P Initial high to low', 'session_pInit_DESC'],
   ['P Initial low to high', 'session_pInit_ASC'],
+]
+
+const stateEntries: [string, WorkerState | 'All'][] = [
+  ['All state', 'All'],
+  ['Ready', 'Ready'],
+  ['Computing', 'WorkerIdle'],
+  ['Unresponsive', 'WorkerUnresponsive'],
+  ['CoolingDown', 'WorkerCoolingDown'],
 ]
 
 export type Worker =
@@ -67,6 +74,7 @@ const WorkerList: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
   const [searchString, setSearchString] = useState('')
   const debouncedSearchString = useDebounced(searchString, 500)
   const [orderBy, setOrderBy] = useState<WorkerOrderByInput>('session_v_DESC')
+  const [stateFilter, setStateFilter] = useState<WorkerState | 'All'>('All')
   const api = usePolkadotApi()
   const [account] = useAtom(polkadotAccountAtom)
   const signAndSend = useSignAndSend()
@@ -81,6 +89,9 @@ const WorkerList: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
           {stakePool: {id_eq: basePool.id}},
           ...(debouncedSearchString
             ? [{id_containsInsensitive: debouncedSearchString}]
+            : []),
+          ...(stateFilter !== 'All'
+            ? [{session: {state_eq: stateFilter}}]
             : []),
         ],
       },
@@ -168,6 +179,21 @@ const WorkerList: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
             }}
           >
             {orderByEntries.map(([label, value]) => (
+              <MenuItem key={value} value={value}>
+                {label}
+              </MenuItem>
+            ))}
+          </TextField>
+          <TextField
+            size="small"
+            select
+            sx={{width: 140}}
+            value={stateFilter}
+            onChange={(e) => {
+              setStateFilter(e.target.value as WorkerState | 'All')
+            }}
+          >
+            {stateEntries.map(([label, value]) => (
               <MenuItem key={value} value={value}>
                 {label}
               </MenuItem>
