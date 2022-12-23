@@ -61,7 +61,7 @@ export const transferByPolkadotXTokens = ({
   ) {
     currencyId = palletAssetId
   } else if (fromChainId === 'turing') {
-    currencyId = assetId === 'tur' ? 'Native' : asset.ormlToken
+    currencyId = asset.palletAssetId?.turing
   } else {
     currencyId = {
       [isTransferringBNCFromBifrost ? 'Native' : 'Token']: asset.ormlToken,
@@ -96,7 +96,9 @@ export const transferByPolkadotXTokens = ({
             },
       },
     },
-    fromChainId === 'parallel' || fromChainId === 'parallel-heiko'
+    fromChainId === 'parallel' ||
+      fromChainId === 'parallel-heiko' ||
+      fromChainId === 'karura'
       ? {Unlimited: null}
       : '6000000000'
   )

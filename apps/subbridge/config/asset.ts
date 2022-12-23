@@ -109,6 +109,7 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
       calamari: 13,
       shiden: '18446744073709551623',
       astar: '18446744073709551622',
+      turing: 7,
     },
   },
   movr: {
@@ -283,6 +284,7 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
     palletAssetId: {
       khala: 10,
       thala: 10,
+      turing: 0,
     },
     ormlToken: 'TUR',
     destChainTransactionFee: {

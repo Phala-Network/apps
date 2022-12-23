@@ -39,7 +39,7 @@ export const palletAssetBalanceFetcher = async (
 export const ormlTokenBalanceFetcher = async (
   polkadotApi: ApiPromise,
   address: string,
-  token: OrmlToken | {Token: OrmlToken},
+  token: OrmlToken | {Token: OrmlToken} | number,
   decimals: number
 ) => {
   const balance = await polkadotApi.query.tokens.accounts(address, token)
