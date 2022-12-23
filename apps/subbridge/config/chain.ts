@@ -262,8 +262,8 @@ export const CHAINS: Readonly<
     icon: parallelIcon,
     paraId: 2012,
     endpoint: [
-      'wss://parallel.api.onfinality.io/public-ws',
       'wss://rpc.parallel.fi',
+      'wss://parallel.api.onfinality.io/public-ws',
     ],
     ss58Format: 172,
     nativeAsset: 'para',
@@ -276,8 +276,8 @@ export const CHAINS: Readonly<
     icon: parallelHeikoIcon,
     paraId: 2085,
     endpoint: [
-      'wss://parallel-heiko.api.onfinality.io/public-ws',
       'wss://heiko-rpc.parallel.fi',
+      'wss://parallel-heiko.api.onfinality.io/public-ws',
       'wss://heiko-rpc.dwellir.com',
     ],
     ss58Format: 110,
