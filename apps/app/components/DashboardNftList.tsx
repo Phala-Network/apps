@@ -110,7 +110,12 @@ const DashboardNftList: FC = () => {
       after: page === 1 ? undefined : String((page - 1) * pageSize),
       orderBy: 'mintTime_DESC',
       first: pageSize,
-      where: {owner: {id_eq: account?.address}, burned_eq: false},
+      where: {
+        owner: {id_eq: account?.address},
+        burned_eq: false,
+        // TODO: remove this filter when PW NFTs are ready
+        cid_gte: 10000,
+      },
     },
     {
       enabled: !!account,
@@ -131,7 +136,7 @@ const DashboardNftList: FC = () => {
         )}
       </SectionHeader>
 
-      <Grid container spacing={{xs: 1, sm: 2, md: 3}}>
+      <Grid container spacing={{xs: 1, sm: 2, md: 3}} minHeight="700px">
         {data &&
           data.nftsConnection.edges.map((edge) => {
             return (
