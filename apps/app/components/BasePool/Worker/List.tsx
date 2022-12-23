@@ -46,7 +46,7 @@ const orderByEntries: [string, WorkerOrderByInput][] = [
 ]
 
 const stateEntries: [string, WorkerState | 'All'][] = [
-  ['All state', 'All'],
+  ['All states', 'All'],
   ['Ready', 'Ready'],
   ['Computing', 'WorkerIdle'],
   ['Unresponsive', 'WorkerUnresponsive'],
@@ -187,7 +187,7 @@ const WorkerList: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
           <TextField
             size="small"
             select
-            sx={{width: 140}}
+            sx={{width: 160}}
             value={stateFilter}
             onChange={(e) => {
               setStateFilter(e.target.value as WorkerState | 'All')

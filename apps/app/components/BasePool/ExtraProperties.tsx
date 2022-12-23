@@ -35,7 +35,8 @@ const ExtraProperties: FC<{basePool: BasePoolCommonFragment; sx?: SxProps}> = ({
       [
         'Price',
         `${toCurrency(
-          new Decimal(basePool.sharePrice).toDP(2, Decimal.ROUND_HALF_UP)
+          new Decimal(basePool.sharePrice).toDP(6, Decimal.ROUND_HALF_UP),
+          6
         )} PHA`,
       ],
     ]
