@@ -28,6 +28,7 @@
     "@phala/util": "workspace:^",
     "@polkadot/api": "^9.10.3",
     "@polkadot/extension-inject": "^0.44.6",
+    "@polkadot/keyring": "^10.2.1",
     "@polkadot/react-identicon": "^2.9.14",
     "@polkadot/types": "^9.10.3",
     "@polkadot/util": "^10.2.1",

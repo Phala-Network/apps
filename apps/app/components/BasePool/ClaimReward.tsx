@@ -10,6 +10,7 @@ import {
 } from '@mui/material'
 import {polkadotAccountAtom} from '@phala/store'
 import {validateAddress} from '@phala/util'
+import {decodeAddress, encodeAddress} from '@polkadot/keyring'
 import Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
 import {FC, useMemo, useState} from 'react'
@@ -53,11 +54,20 @@ const ClaimReward: FC<{
         }
       }
     }
-    calls.push(
-      api.tx.phalaWrappedBalances.unwrap(totalReward.times(1e12).toHex())
-    )
+    try {
+      if (
+        account?.address &&
+        encodeAddress(decodeAddress(address), 30) === account.address
+      ) {
+        calls.push(
+          api.tx.phalaWrappedBalances.unwrap(totalReward.times(1e12).toHex())
+        )
+      }
+    } catch (err) {
+      // noop
+    }
     setLoading(true)
-    signAndSend(api.tx.utility.batchAll(calls))
+    signAndSend(calls.length === 1 ? calls[0] : api.tx.utility.batchAll(calls))
       .then(() => {
         onClose()
       })
