@@ -28,13 +28,11 @@ import {polkadotAccountAtom} from '@phala/store'
 import {toCurrency} from '@phala/util'
 import Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
-import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import {FC, useCallback, useState} from 'react'
+import AssetTransfer from './AssetTransfer'
 import SectionHeader from './SectionHeader'
 import Vest from './Vest'
-
-const AssetTransfer = dynamic(() => import('./AssetTransfer'))
 
 type AssetDialogAction = 'transfer' | 'buy' | 'claim'
 export type Asset = AssetMetadata & {balance: Decimal | undefined}

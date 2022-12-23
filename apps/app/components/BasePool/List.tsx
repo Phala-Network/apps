@@ -39,15 +39,13 @@ import {
 import {polkadotAccountAtom} from '@phala/store'
 import {getDecimalPattern, isTruthy} from '@phala/util'
 import {useAtom} from 'jotai'
-import dynamic from 'next/dynamic'
 import {FC, useCallback, useEffect, useState} from 'react'
 import {useInView} from 'react-intersection-observer'
+import ClaimDelegation from './ClaimDelegation'
+import ClaimReward from './ClaimReward'
 import DelegateCard from './DelegateCard'
 import FarmCard from './FarmCard'
-
-const OwnerSettings = dynamic(() => import('./OwnerSettings'))
-const ClaimReward = dynamic(() => import('./ClaimReward'))
-const ClaimDelegation = dynamic(() => import('./ClaimDelegation'))
+import OwnerSettings from './OwnerSettings'
 
 type BasePoolListVariant = 'farm' | 'delegate'
 type OrderByEntries = [string, BasePoolOrderByInput][]

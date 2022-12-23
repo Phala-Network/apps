@@ -13,10 +13,8 @@ import {Button, Dialog, Stack, Theme, ThemeProvider} from '@mui/material'
 import {DataGrid, GridColDef} from '@mui/x-data-grid'
 import {polkadotAccountAtom} from '@phala/store'
 import {useAtom} from 'jotai'
-import dynamic from 'next/dynamic'
 import {FC, useCallback, useMemo, useState} from 'react'
-
-const AddWhitelist = dynamic(() => import('./AddWhitelist'))
+import AddWhitelist from './AddWhitelist'
 
 type RowModel = {id: string}
 

@@ -33,13 +33,11 @@ import {
   Unstable_Grid2 as Grid,
 } from '@mui/material'
 import {isTruthy} from '@phala/util'
-import dynamic from 'next/dynamic'
 import {FC, useCallback, useEffect, useState} from 'react'
 import {useInView} from 'react-intersection-observer'
 import HorizonCard from './HorizonCard'
 import NftCard from './NftCard'
-
-const Withdraw = dynamic(() => import('./Withdraw'))
+import Withdraw from './Withdraw'
 
 export type DelegationDialogAction = 'withdraw'
 export type OnAction = (
