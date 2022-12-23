@@ -77,7 +77,7 @@ export const useBalance = (): Decimal | undefined => {
     balanceSource === 'ormlToken' &&
       polkadotApi &&
       polkadotAccount &&
-      asset.ormlToken
+      (fromChain.id === 'turing' || asset.ormlToken)
       ? [
           polkadotApi,
           polkadotAccount.address,
@@ -86,6 +86,8 @@ export const useBalance = (): Decimal | undefined => {
           fromChain.id === 'bifrost' ||
           fromChain.id === 'bifrost-test'
             ? {Token: asset.ormlToken}
+            : fromChain.id === 'turing'
+            ? asset.palletAssetId?.[fromChain.id]
             : asset.ormlToken,
           decimals,
         ]
