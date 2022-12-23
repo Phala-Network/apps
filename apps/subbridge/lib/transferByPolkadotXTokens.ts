@@ -96,6 +96,8 @@ export const transferByPolkadotXTokens = ({
             },
       },
     },
-    '6000000000'
+    fromChainId === 'parallel' || fromChainId === 'parallel-heiko'
+      ? {Unlimited: null}
+      : '6000000000'
   )
 }
