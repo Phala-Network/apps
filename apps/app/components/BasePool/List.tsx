@@ -118,7 +118,7 @@ const BasePoolList: FC<{
   const [minApr, setMinApr] = useAtom(basePoolMinAprAtom)
   const debouncedMinApr = useDebounced(getAprMultiplier(minApr), 500)
   const [minApy, setMinApy] = useAtom(basePoolMinAprAtom)
-  const debouncedMinApy = useDebounced(getAprMultiplier(minApy), 500)
+  const debouncedMinApy = useDebounced(getAprMultiplier(minApy, true), 500)
   const orderByEntries = isVault ? vaultOrderByEntries : stakePoolOrderByEntries
   const orderBy = isVault ? vaultOrderBy : stakePoolOrderBy
   const where: Array<BasePoolWhereInput | false> = [
@@ -172,12 +172,12 @@ const BasePoolList: FC<{
     variant === 'delegate' &&
       kind === 'StakePool' &&
       !!debouncedMinApr && {
-        aprMultiplier_gte: debouncedMinApr.toDP(2).toString(),
+        aprMultiplier_gte: debouncedMinApr.toDP(6).toString(),
       },
     variant === 'delegate' &&
       kind === 'Vault' &&
       !!debouncedMinApy && {
-        aprMultiplier_gte: debouncedMinApy.toDP(2).toString(),
+        aprMultiplier_gte: debouncedMinApy.toDP(6).toString(),
       },
   ]
   const enabled =
