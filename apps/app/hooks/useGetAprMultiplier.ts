@@ -22,17 +22,15 @@ const useGetAprMultiplier = () => {
       const {budgetPerBlock, treasuryRatio} = tokenomicParameters
       try {
         const apr = isApy
-          ? apyToApr(new Decimal(aprOrApy))
-          : new Decimal(aprOrApy)
-        return apr
-          .div(100)
-          .div(
-            budgetPerBlock
-              .times(treasuryRatio.negated().add(1))
-              .times(ONE_YEAR)
-              .div(averageBlockTime)
-              .div(idleWorkerShares)
-          )
+          ? apyToApr(new Decimal(aprOrApy).div(100))
+          : new Decimal(aprOrApy).div(100)
+        return apr.div(
+          budgetPerBlock
+            .times(treasuryRatio.negated().add(1))
+            .times(ONE_YEAR)
+            .div(averageBlockTime)
+            .div(idleWorkerShares)
+        )
       } catch (err) {
         // noop
       }
