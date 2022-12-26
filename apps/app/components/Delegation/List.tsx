@@ -52,6 +52,7 @@ const orderByEntries: [string, DelegationOrderByInput][] = [
   ['APR low to high', 'basePool_aprMultiplier_ASC'],
   ['PID small to large', 'basePool_pid_ASC'],
   ['PID large to small', 'basePool_id_DESC'],
+  ['Most pool free', 'basePool_freeValue_DESC'],
 ]
 
 const DelegationList: FC<{
