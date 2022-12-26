@@ -59,7 +59,7 @@ const WorkerCard: FC<{
     const end = addDays(new Date(worker.session.coolingDownStartTime), 7)
     if (isAfter(start, end)) return
     return formatDuration(intervalToDuration({start, end}), {
-      format: ['d', 'h', 'm'],
+      format: ['days', 'hours', 'minutes'],
     })
   }, [worker.session?.coolingDownStartTime])
 
