@@ -170,7 +170,7 @@ const WithdrawQueue: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
       acc = acc.plus(row.value)
       const index = result.findIndex((item) => isSameDay(item.date, endTime))
       if (index === -1) continue
-      result[index].value = acc.toDP(2, 0).toNumber()
+      result[index].value = acc.toDP(2, Decimal.ROUND_DOWN).toNumber()
     }
     for (let i = 0; i < result.length; i++) {
       if (result[i].value === undefined) {
@@ -281,7 +281,7 @@ const WithdrawQueue: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
                   strokeDasharray="3 3"
                   y={new Decimal(basePool.freeValue)
                     .plus(basePool.releasingValue)
-                    .toDP(2, 0)
+                    .toDP(2, Decimal.ROUND_DOWN)
                     .toNumber()}
                 />
               </LineChart>

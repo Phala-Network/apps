@@ -75,7 +75,7 @@ const DelegationScatterChart: FC<{address?: string}> = ({address}) => {
         value: new Decimal(node.value).floor().toNumber(),
         apr: getApr(node.basePool.aprMultiplier)
           ?.times(100)
-          .toDP(2, 0)
+          .toDP(2, Decimal.ROUND_DOWN)
           .toNumber(),
       }
       if (node.basePool.kind === 'StakePool') {
