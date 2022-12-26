@@ -159,7 +159,7 @@ const WorkerList: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
   return (
     <>
       <SectionHeader title="Workers" icon={<WorkerIcon />}>
-        <Stack spacing={2} direction="row" ml="auto">
+        <Stack spacing={2} direction="row" ml="auto" flexWrap="wrap">
           <TextField
             value={searchString}
             placeholder="Search"
@@ -200,6 +200,7 @@ const WorkerList: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
             ))}
           </TextField>
           <PromiseButton
+            sx={{flexShrink: 0}}
             onClick={reclaimAll}
             disabled={
               !reclaimableData ||
@@ -210,6 +211,7 @@ const WorkerList: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
           </PromiseButton>
           {isOwner && (
             <Button
+              sx={{flexShrink: 0}}
               variant="contained"
               onClick={() => {
                 setDialogOpen(true)

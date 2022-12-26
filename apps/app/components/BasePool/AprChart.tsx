@@ -90,7 +90,10 @@ const BasePoolAprChart: FC<{basePool: BasePoolCommonFragment}> = ({
         if (isVault) {
           value = aprToApy(value)
         }
-        result[index].value = value.times(100).toDP(2, 0).toNumber()
+        result[index].value = value
+          .times(100)
+          .toDP(2, Decimal.ROUND_DOWN)
+          .toNumber()
       }
     }
 

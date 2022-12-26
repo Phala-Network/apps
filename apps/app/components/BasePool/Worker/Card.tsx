@@ -59,7 +59,7 @@ const WorkerCard: FC<{
     const end = addDays(new Date(worker.session.coolingDownStartTime), 7)
     if (isAfter(start, end)) return
     return formatDuration(intervalToDuration({start, end}), {
-      format: ['d', 'h', 'm'],
+      format: ['days', 'hours', 'minutes'],
     })
   }, [worker.session?.coolingDownStartTime])
 
@@ -111,9 +111,9 @@ const WorkerCard: FC<{
               sx={{color: workerStateColors[session.state]}}
             />
           )}
-          {isOwner && session && (
+          {session && (
             <Stack direction="row">
-              {session.state === 'Ready' && (
+              {isOwner && session.state === 'Ready' && (
                 <>
                   <Button
                     variant="text"
@@ -131,25 +131,26 @@ const WorkerCard: FC<{
                   </PromiseButton>
                 </>
               )}
-              {(session.state === 'WorkerIdle' ||
-                session.state === 'WorkerUnresponsive') && (
-                <>
-                  <PromiseButton
-                    variant="text"
-                    size="small"
-                    onClick={() => onAction(worker, 'stop')}
-                  >
-                    Stop
-                  </PromiseButton>
-                  <Button
-                    variant="text"
-                    size="small"
-                    onClick={() => onAction(worker, 'changeStake')}
-                  >
-                    Change Stake
-                  </Button>
-                </>
-              )}
+              {isOwner &&
+                (session.state === 'WorkerIdle' ||
+                  session.state === 'WorkerUnresponsive') && (
+                  <>
+                    <PromiseButton
+                      variant="text"
+                      size="small"
+                      onClick={() => onAction(worker, 'stop')}
+                    >
+                      Stop
+                    </PromiseButton>
+                    <Button
+                      variant="text"
+                      size="small"
+                      onClick={() => onAction(worker, 'changeStake')}
+                    >
+                      Change Stake
+                    </Button>
+                  </>
+                )}
               {session.state === 'WorkerCoolingDown' && (
                 <PromiseButton
                   disabled={Boolean(reclaimCountdown)}

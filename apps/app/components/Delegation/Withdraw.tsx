@@ -96,7 +96,9 @@ const Withdraw: FC<{
           <Button
             onClick={() =>
               setAmountString(
-                new Decimal(delegation.basePool.freeValue).toDP(2, 0).toString()
+                new Decimal(delegation.basePool.freeValue)
+                  .toDP(2, Decimal.ROUND_DOWN)
+                  .toString()
               )
             }
           >
