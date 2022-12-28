@@ -108,6 +108,7 @@ const DelegationValueChart: FC<{address?: string; days: number}> = ({
         </defs>
         <XAxis height={20} tickLine={false} dataKey="dateString" />
         <YAxis
+          domain={['auto', 'auto']}
           width={40}
           type="number"
           dataKey="value"
@@ -116,7 +117,7 @@ const DelegationValueChart: FC<{address?: string; days: number}> = ({
           tickFormatter={(value) =>
             Intl.NumberFormat('en-US', {
               notation: 'compact',
-              maximumFractionDigits: 0,
+              maximumFractionDigits: 2,
             }).format(value)
           }
         />
