@@ -30,7 +30,7 @@ const ExtraProperties: FC<{basePool: BasePoolCommonFragment; sx?: SxProps}> = ({
       vault && ['StakePools', basePool.account.stakePoolNftCount],
       ['Delegators', basePool.delegatorCount],
       stakePool && ['Delegation', `${toCurrency(basePool.totalValue)} PHA`],
-      ['Free', `${toCurrency(basePool.freeValue)} PHA`],
+      ['Free', `${toCurrency(Decimal.max(basePool.freeValue, 0))} PHA`],
       ['Withdrawing', `${toCurrency(basePool.withdrawingValue)} PHA`],
       [
         'Price',

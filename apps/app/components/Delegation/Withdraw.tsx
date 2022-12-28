@@ -1,5 +1,4 @@
 import usePolkadotApi from '@/hooks/usePolkadotApi'
-import useSelectedVaultState from '@/hooks/useSelectedVaultState'
 import useSignAndSend from '@/hooks/useSignAndSend'
 import {DelegationCommonFragment} from '@/lib/subsquidQuery'
 import {barlow} from '@/lib/theme'
@@ -28,10 +27,9 @@ const Withdraw: FC<{
   const signAndSend = useSignAndSend()
   const [loading, setLoading] = useState(false)
   const [amountString, setAmountString] = useState('')
-  const selectedVaultState = useSelectedVaultState()
 
   const onClick = () => {
-    if (!api || selectedVaultState === undefined) return
+    if (!api) return
     const shares =
       amountString === delegation.value
         ? new Decimal(delegation.shares).times(1e12).toHex()
@@ -46,7 +44,7 @@ const Withdraw: FC<{
       : api.tx.phalaStakePoolv2.withdraw(
           basePool.id,
           shares,
-          selectedVaultState === null ? null : selectedVaultState.id
+          delegation.account.basePool?.id ?? null
         )
 
     setLoading(true)
