@@ -137,13 +137,15 @@ const BasePoolList: FC<{
             ],
           }),
     variant === 'farm' && {owner: {id_eq: polkadotAccount?.address}},
-    verifiedFilter && {
-      owner: {
-        identityLevel_in: [IdentityLevel.KnownGood, IdentityLevel.Reasonable],
+    variant === 'delegate' &&
+      verifiedFilter && {
+        owner: {
+          identityLevel_in: [IdentityLevel.KnownGood, IdentityLevel.Reasonable],
+        },
       },
-    },
-    favoriteFilter && {id_in: favoritePools},
-    hideClosedFilter &&
+    variant === 'delegate' && favoriteFilter && {id_in: favoritePools},
+    variant === 'delegate' &&
+      hideClosedFilter &&
       !!delegatorAddress && {
         OR: [
           {owner: {id_eq: delegatorAddress}},
@@ -151,7 +153,8 @@ const BasePoolList: FC<{
           {whitelists_some: {account: {id_eq: delegatorAddress}}},
         ],
       },
-    delegatedFilter &&
+    variant === 'delegate' &&
+      delegatedFilter &&
       !!delegatorAddress && {
         delegations_some: {account: {id_eq: delegatorAddress}, shares_gt: '0'},
       },

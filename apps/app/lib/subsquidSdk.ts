@@ -2127,205 +2127,6 @@ type StakePoolsConnection = {
   totalCount: Scalars['Int'];
 };
 
-type Subscription = {
-  __typename?: 'Subscription';
-  accountById?: Maybe<Account>;
-  accounts: Array<Account>;
-  basePoolAprRecordById?: Maybe<BasePoolAprRecord>;
-  basePoolAprRecords: Array<BasePoolAprRecord>;
-  basePoolById?: Maybe<BasePool>;
-  basePoolWhitelistById?: Maybe<BasePoolWhitelist>;
-  basePoolWhitelists: Array<BasePoolWhitelist>;
-  basePools: Array<BasePool>;
-  delegationById?: Maybe<Delegation>;
-  delegationValueRecordById?: Maybe<DelegationValueRecord>;
-  delegationValueRecords: Array<DelegationValueRecord>;
-  delegations: Array<Delegation>;
-  globalStateById?: Maybe<GlobalState>;
-  globalStates: Array<GlobalState>;
-  nftById?: Maybe<Nft>;
-  nfts: Array<Nft>;
-  rewardRecordById?: Maybe<RewardRecord>;
-  rewardRecords: Array<RewardRecord>;
-  sessionById?: Maybe<Session>;
-  sessions: Array<Session>;
-  stakePoolById?: Maybe<StakePool>;
-  stakePools: Array<StakePool>;
-  vaultById?: Maybe<Vault>;
-  vaults: Array<Vault>;
-  workerById?: Maybe<Worker>;
-  workers: Array<Worker>;
-};
-
-
-type SubscriptionAccountByIdArgs = {
-  id: Scalars['String'];
-};
-
-
-type SubscriptionAccountsArgs = {
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<Array<AccountOrderByInput>>;
-  where?: InputMaybe<AccountWhereInput>;
-};
-
-
-type SubscriptionBasePoolAprRecordByIdArgs = {
-  id: Scalars['String'];
-};
-
-
-type SubscriptionBasePoolAprRecordsArgs = {
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<Array<BasePoolAprRecordOrderByInput>>;
-  where?: InputMaybe<BasePoolAprRecordWhereInput>;
-};
-
-
-type SubscriptionBasePoolByIdArgs = {
-  id: Scalars['String'];
-};
-
-
-type SubscriptionBasePoolWhitelistByIdArgs = {
-  id: Scalars['String'];
-};
-
-
-type SubscriptionBasePoolWhitelistsArgs = {
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<Array<BasePoolWhitelistOrderByInput>>;
-  where?: InputMaybe<BasePoolWhitelistWhereInput>;
-};
-
-
-type SubscriptionBasePoolsArgs = {
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<Array<BasePoolOrderByInput>>;
-  where?: InputMaybe<BasePoolWhereInput>;
-};
-
-
-type SubscriptionDelegationByIdArgs = {
-  id: Scalars['String'];
-};
-
-
-type SubscriptionDelegationValueRecordByIdArgs = {
-  id: Scalars['String'];
-};
-
-
-type SubscriptionDelegationValueRecordsArgs = {
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<Array<DelegationValueRecordOrderByInput>>;
-  where?: InputMaybe<DelegationValueRecordWhereInput>;
-};
-
-
-type SubscriptionDelegationsArgs = {
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<Array<DelegationOrderByInput>>;
-  where?: InputMaybe<DelegationWhereInput>;
-};
-
-
-type SubscriptionGlobalStateByIdArgs = {
-  id: Scalars['String'];
-};
-
-
-type SubscriptionGlobalStatesArgs = {
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<Array<GlobalStateOrderByInput>>;
-  where?: InputMaybe<GlobalStateWhereInput>;
-};
-
-
-type SubscriptionNftByIdArgs = {
-  id: Scalars['String'];
-};
-
-
-type SubscriptionNftsArgs = {
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<Array<NftOrderByInput>>;
-  where?: InputMaybe<NftWhereInput>;
-};
-
-
-type SubscriptionRewardRecordByIdArgs = {
-  id: Scalars['String'];
-};
-
-
-type SubscriptionRewardRecordsArgs = {
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<Array<RewardRecordOrderByInput>>;
-  where?: InputMaybe<RewardRecordWhereInput>;
-};
-
-
-type SubscriptionSessionByIdArgs = {
-  id: Scalars['String'];
-};
-
-
-type SubscriptionSessionsArgs = {
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<Array<SessionOrderByInput>>;
-  where?: InputMaybe<SessionWhereInput>;
-};
-
-
-type SubscriptionStakePoolByIdArgs = {
-  id: Scalars['String'];
-};
-
-
-type SubscriptionStakePoolsArgs = {
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<Array<StakePoolOrderByInput>>;
-  where?: InputMaybe<StakePoolWhereInput>;
-};
-
-
-type SubscriptionVaultByIdArgs = {
-  id: Scalars['String'];
-};
-
-
-type SubscriptionVaultsArgs = {
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<Array<VaultOrderByInput>>;
-  where?: InputMaybe<VaultWhereInput>;
-};
-
-
-type SubscriptionWorkerByIdArgs = {
-  id: Scalars['String'];
-};
-
-
-type SubscriptionWorkersArgs = {
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<Array<WorkerOrderByInput>>;
-  where?: InputMaybe<WorkerWhereInput>;
-};
-
 type Vault = {
   __typename?: 'Vault';
   basePool: BasePool;
@@ -2619,14 +2420,14 @@ type BasePoolAprRecordsConnectionQueryVariables = Exact<{
 
 type BasePoolAprRecordsConnectionQuery = { __typename?: 'Query', basePoolAprRecordsConnection: { __typename?: 'BasePoolAprRecordsConnection', totalCount: number, edges: Array<{ __typename?: 'BasePoolAprRecordEdge', cursor: string, node: { __typename?: 'BasePoolAprRecord', id: string, updatedTime: string, value: string } }> } };
 
-type DelegationCommonFragment = { __typename?: 'Delegation', id: string, shares: string, value: string, withdrawalStartTime?: string | null, withdrawingShares: string, withdrawingValue: string, basePool: { __typename?: 'BasePool', id: string, kind: BasePoolKind, freeValue: string, sharePrice: string, aprMultiplier: string, withdrawingShares: string }, delegationNft: { __typename?: 'Nft', cid: number, nftId: number, mintTime?: string | null }, withdrawalNft?: { __typename?: 'Nft', cid: number, nftId: number } | null, account: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null } };
+type DelegationCommonFragment = { __typename?: 'Delegation', id: string, shares: string, value: string, withdrawalStartTime?: string | null, withdrawingShares: string, withdrawingValue: string, basePool: { __typename?: 'BasePool', id: string, kind: BasePoolKind, freeValue: string, sharePrice: string, aprMultiplier: string, withdrawingShares: string }, delegationNft: { __typename?: 'Nft', cid: number, nftId: number, mintTime?: string | null }, withdrawalNft?: { __typename?: 'Nft', cid: number, nftId: number } | null, account: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null, basePool?: { __typename?: 'BasePool', id: string } | null } };
 
 type DelegationByIdQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
 
 
-type DelegationByIdQuery = { __typename?: 'Query', delegationById?: { __typename?: 'Delegation', id: string, shares: string, value: string, withdrawalStartTime?: string | null, withdrawingShares: string, withdrawingValue: string, basePool: { __typename?: 'BasePool', id: string, kind: BasePoolKind, freeValue: string, sharePrice: string, aprMultiplier: string, withdrawingShares: string }, delegationNft: { __typename?: 'Nft', cid: number, nftId: number, mintTime?: string | null }, withdrawalNft?: { __typename?: 'Nft', cid: number, nftId: number } | null, account: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null } } | null };
+type DelegationByIdQuery = { __typename?: 'Query', delegationById?: { __typename?: 'Delegation', id: string, shares: string, value: string, withdrawalStartTime?: string | null, withdrawingShares: string, withdrawingValue: string, basePool: { __typename?: 'BasePool', id: string, kind: BasePoolKind, freeValue: string, sharePrice: string, aprMultiplier: string, withdrawingShares: string }, delegationNft: { __typename?: 'Nft', cid: number, nftId: number, mintTime?: string | null }, withdrawalNft?: { __typename?: 'Nft', cid: number, nftId: number } | null, account: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null, basePool?: { __typename?: 'BasePool', id: string } | null } } | null };
 
 type DelegationsConnectionQueryVariables = Exact<{
   orderBy: Array<DelegationOrderByInput> | DelegationOrderByInput;
@@ -2636,7 +2437,7 @@ type DelegationsConnectionQueryVariables = Exact<{
 }>;
 
 
-type DelegationsConnectionQuery = { __typename?: 'Query', delegationsConnection: { __typename?: 'DelegationsConnection', totalCount: number, edges: Array<{ __typename?: 'DelegationEdge', cursor: string, node: { __typename?: 'Delegation', id: string, shares: string, value: string, withdrawalStartTime?: string | null, withdrawingShares: string, withdrawingValue: string, basePool: { __typename?: 'BasePool', id: string, kind: BasePoolKind, freeValue: string, sharePrice: string, aprMultiplier: string, withdrawingShares: string }, delegationNft: { __typename?: 'Nft', cid: number, nftId: number, mintTime?: string | null }, withdrawalNft?: { __typename?: 'Nft', cid: number, nftId: number } | null, account: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null } } }>, pageInfo: { __typename?: 'PageInfo', endCursor: string, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string } } };
+type DelegationsConnectionQuery = { __typename?: 'Query', delegationsConnection: { __typename?: 'DelegationsConnection', totalCount: number, edges: Array<{ __typename?: 'DelegationEdge', cursor: string, node: { __typename?: 'Delegation', id: string, shares: string, value: string, withdrawalStartTime?: string | null, withdrawingShares: string, withdrawingValue: string, basePool: { __typename?: 'BasePool', id: string, kind: BasePoolKind, freeValue: string, sharePrice: string, aprMultiplier: string, withdrawingShares: string }, delegationNft: { __typename?: 'Nft', cid: number, nftId: number, mintTime?: string | null }, withdrawalNft?: { __typename?: 'Nft', cid: number, nftId: number } | null, account: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null, basePool?: { __typename?: 'BasePool', id: string } | null } } }>, pageInfo: { __typename?: 'PageInfo', endCursor: string, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string } } };
 
 type DelegationValueRecordsConnectionQueryVariables = Exact<{
   orderBy: Array<DelegationValueRecordOrderByInput> | DelegationValueRecordOrderByInput;
@@ -2770,6 +2571,9 @@ export const DelegationCommonFragmentDoc = gql`
     id
     identityDisplay
     identityLevel
+    basePool {
+      id
+    }
   }
 }
     `;
