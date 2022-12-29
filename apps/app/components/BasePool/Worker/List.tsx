@@ -27,7 +27,7 @@ import {
 import {polkadotAccountAtom} from '@phala/store'
 import {addDays} from 'date-fns'
 import {useAtom} from 'jotai'
-import {FC, useCallback, useState} from 'react'
+import {FC, useCallback, useEffect, useState} from 'react'
 import AddWorker from './AddWorker'
 import WorkerCard from './Card'
 import ChangeStake from './ChangeStake'
@@ -145,6 +145,10 @@ const WorkerList: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
   const onClose = useCallback(() => {
     setDialogOpen(false)
   }, [])
+
+  useEffect(() => {
+    setPage(1)
+  }, [orderBy, stateFilter, debouncedSearchString])
 
   const reclaimAll = async () => {
     if (!api || !reclaimableData) return
