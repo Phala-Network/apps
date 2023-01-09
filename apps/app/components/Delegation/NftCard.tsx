@@ -25,6 +25,7 @@ import {
   useTheme,
 } from '@mui/material'
 import {toCurrency, toPercentage} from '@phala/util'
+import Decimal from 'decimal.js'
 import {FC, useRef, useState} from 'react'
 import {OnAction} from './List'
 
@@ -135,7 +136,9 @@ const NftCard: FC<{
           )}
           {!compact && (
             <Property size="small" label="Pool free" fullWidth>
-              {`${toCurrency(delegation.basePool.freeValue)} PHA`}
+              {`${toCurrency(
+                Decimal.max(0, delegation.basePool.freeValue)
+              )} PHA`}
             </Property>
           )}
           {!compact && (

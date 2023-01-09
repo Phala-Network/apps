@@ -61,13 +61,22 @@ const DelegateInput: FC<{basePool: BasePoolCommonFragment; sx?: SxProps}> = ({
     if (!apr) return
     try {
       const totalValue = new Decimal(basePool.totalValue)
-      const amount = new Decimal(amountString)
+      const amount = Decimal.max(
+        0,
+        new Decimal(amountString).minus(basePool.withdrawingValue)
+      )
 
       return apr.times(totalValue).div(totalValue.plus(amount))
     } catch (err) {
       return '-'
     }
-  }, [amountString, basePool.aprMultiplier, basePool.totalValue, getApr])
+  }, [
+    amountString,
+    basePool.aprMultiplier,
+    basePool.totalValue,
+    getApr,
+    basePool.withdrawingValue,
+  ])
   return (
     <Stack sx={sx} spacing={1}>
       <Stack direction="row" spacing={2}>

@@ -16,7 +16,7 @@ export const basePoolMinDelegableAtom = atomWithStorage<string>(
 
 export const basePoolMinTvlAtom = atomWithStorage<string>(
   'jotai:base_pool_min_tvl',
-  ''
+  '100'
 )
 
 export const basePoolMinAprAtom = atomWithStorage<string>(
