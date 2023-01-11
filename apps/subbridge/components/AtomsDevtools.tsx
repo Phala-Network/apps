@@ -1,4 +1,4 @@
-import {useAtomsDevtools} from 'jotai/devtools'
+import {useAtomsDevtools} from 'jotai-devtools'
 import {FC, ReactElement} from 'react'
 
 const AtomsDevtools: FC<{children: ReactElement}> = ({children}) => {

@@ -98,7 +98,9 @@ export const transferByPolkadotXTokens = ({
     },
     fromChainId === 'parallel' ||
       fromChainId === 'parallel-heiko' ||
-      fromChainId === 'karura'
+      fromChainId === 'karura' ||
+      fromChainId === 'bifrost' ||
+      fromChainId === 'bifrost-test'
       ? {Unlimited: null}
       : '6000000000'
   )
