@@ -1,7 +1,7 @@
 import {BasePoolKind} from '@/lib/subsquidQuery'
 import {addMonths, addWeeks, addYears, isBefore} from 'date-fns'
 import Decimal from 'decimal.js'
-import {FC, useRef, useState} from 'react'
+import {FC, useMemo, useRef, useState} from 'react'
 
 type CoverVariant = 'dashboard' | 'delegation'
 
@@ -12,7 +12,7 @@ const getNftCover = (
   kind: BasePoolKind,
   value: Decimal | string,
   mintTimeString?: string | null
-) => {
+): {video: string; poster: string} => {
   const level = Decimal.log10(new Decimal(value).div(10).ceil().times(10))
     .ceil()
     .toString()
@@ -34,11 +34,16 @@ const getNftCover = (
     }
   }
 
-  return `${PREFIX}${
-    variant === 'dashboard' ? 'without_card' : 'with_card'
-  }/${kind}/${
-    variant === 'dashboard' && kind === 'StakePool' ? 'Stake' : kind
-  }0${level}_${color}.mp4`
+  return {
+    video: `${PREFIX}${
+      variant === 'dashboard' ? 'without_card_new' : 'with_card'
+    }/${kind}/${
+      variant === 'dashboard' && kind === 'StakePool' ? 'Stake' : kind
+    }0${level}_${color}.mp4`,
+    poster: `${PREFIX}${
+      variant === 'dashboard' ? 'jpg_without_card' : 'jpg_with_card'
+    }/${kind}/${kind}0${level}_${color}.jpg`,
+  }
 }
 
 const DelegationNftCover: FC<{
@@ -48,8 +53,19 @@ const DelegationNftCover: FC<{
 }> = ({variant, delegation, nft}) => {
   const [loop, setLoop] = useState(false)
   const ref = useRef<HTMLVideoElement>(null)
+  const {video} = useMemo(
+    () =>
+      getNftCover(
+        variant,
+        delegation.basePool.kind,
+        delegation.value,
+        nft.mintTime
+      ),
+    [variant, delegation.basePool.kind, delegation.value, nft.mintTime]
+  )
   return (
     <video
+      // poster={poster}
       playsInline
       preload="auto"
       ref={ref}
@@ -76,15 +92,7 @@ const DelegationNftCover: FC<{
         height: '100%',
       }}
     >
-      <source
-        src={getNftCover(
-          variant,
-          delegation.basePool.kind,
-          delegation.value,
-          nft.mintTime
-        )}
-        type="video/mp4"
-      ></source>
+      <source src={video} type="video/mp4"></source>
     </video>
   )
 }
