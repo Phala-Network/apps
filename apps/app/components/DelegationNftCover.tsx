@@ -42,7 +42,9 @@ const getNftCover = (
     }0${level}_${color}.mp4`,
     poster: `${PREFIX}${
       variant === 'dashboard' ? 'jpg_without_card' : 'jpg_with_card'
-    }/${kind}/${kind}0${level}_${color}.jpg`,
+    }/${variant === 'dashboard' && kind === 'StakePool' ? 'Stakepool' : kind}/${
+      variant === 'dashboard' && kind === 'StakePool' ? 'Stake' : kind
+    }0${level}_${color}.jpg`,
   }
 }
 
@@ -53,7 +55,7 @@ const DelegationNftCover: FC<{
 }> = ({variant, delegation, nft}) => {
   const [loop, setLoop] = useState(false)
   const ref = useRef<HTMLVideoElement>(null)
-  const {video} = useMemo(
+  const {video, poster} = useMemo(
     () =>
       getNftCover(
         variant,
@@ -65,7 +67,7 @@ const DelegationNftCover: FC<{
   )
   return (
     <video
-      // poster={poster}
+      poster={poster}
       playsInline
       preload="auto"
       ref={ref}

@@ -163,7 +163,7 @@ const FarmCard: FC<{
             </Property>
           )}
           {stakePool && (
-            <Property label="Delegable" sx={{width: 120}}>
+            <Property label="Delegable" sx={{width: 140}}>
               {stakePool.delegable
                 ? `${toCurrency(stakePool.delegable)} PHA`
                 : '∞'}
@@ -186,7 +186,7 @@ const FarmCard: FC<{
             </Property>
           )}
           {vault && (
-            <Property label="TVL" sx={{width: 140}}>
+            <Property label="TVL" sx={{width: 150}}>
               {`${toCurrency(basePool.totalValue)} PHA`}
             </Property>
           )}

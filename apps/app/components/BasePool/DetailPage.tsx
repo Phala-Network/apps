@@ -157,7 +157,7 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
                   </Property>
                 )}
                 {stakePool && (
-                  <Property label="Delegable" sx={{width: 120}}>
+                  <Property label="Delegable" sx={{width: 140}}>
                     {stakePool.delegable
                       ? `${toCurrency(stakePool.delegable)} PHA`
                       : '∞'}
@@ -175,7 +175,7 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
                   </Property>
                 )}
                 {vault && (
-                  <Property label="TVL" sx={{width: 140}}>
+                  <Property label="TVL" sx={{width: 150}}>
                     {basePool && `${toCurrency(basePool.totalValue)} PHA`}
                   </Property>
                 )}
