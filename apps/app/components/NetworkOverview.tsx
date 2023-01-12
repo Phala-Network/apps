@@ -6,12 +6,13 @@ import {
 } from '@/lib/subsquidQuery'
 import {chainAtom} from '@/store/common'
 import {Box, Divider, Skeleton, Stack, Typography} from '@mui/material'
+import {useInterval} from '@phala/lib'
 import {toPercentage} from '@phala/util'
 import {useQuery} from '@tanstack/react-query'
 import {addDays} from 'date-fns'
 import Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
-import {FC, useMemo, useState} from 'react'
+import {FC, useEffect, useMemo, useState} from 'react'
 
 type CirculationData = {
   data?: {circulations?: {nodes?: [{amount: string}?]}}
@@ -23,13 +24,23 @@ const numberFormat = (value: Decimal) =>
     maximumFractionDigits: 2,
   }).format(BigInt(value.floor().toString()))
 
+const getYesterday = () => addDays(new Date(), -1).toISOString()
+
 const NetworkOverview: FC = () => {
   const getApr = useGetApr()
-  const [yesterday] = useState(() => addDays(new Date(), -1).toISOString())
+  const [yesterday, setYesterday] = useState<string>()
+  useEffect(() => {
+    // MEMO: use client date only
+    setYesterday(getYesterday())
+  }, [])
+  useInterval(() => {
+    setYesterday(getYesterday())
+  }, 60 * 60 * 1000)
   const [chain] = useAtom(chainAtom)
   const {data: rewardRecordsData} = useRewardRecordsConnectionQuery(
     subsquidClient,
-    {orderBy: 'time_DESC', where: {time_gt: yesterday}}
+    {orderBy: 'time_DESC', where: {time_gt: yesterday}},
+    {enabled: !!yesterday}
   )
   const {data: circulationData} = useQuery<CirculationData>(
     ['circulations', chain],
