@@ -853,6 +853,7 @@ declare module '@polkadot/api-base/types/errors' {
        * RMRK errors
        **/
       RmrkError: AugmentedError<ApiType>;
+      TransferSharesAmountInvalid: AugmentedError<ApiType>;
       /**
        * The caller is not the owner of the pool
        **/
@@ -1052,10 +1053,12 @@ declare module '@polkadot/api-base/types/errors' {
        * The withdrawal amount is too small (considered as dust)
        **/
       InvalidWithdrawalAmount: AugmentedError<ApiType>;
+      LockAccountStakeError: AugmentedError<ApiType>;
       /**
        * Stakepool's collection_id isn't founded
        **/
       MissingCollectionId: AugmentedError<ApiType>;
+      NoLegacyRewardToClaim: AugmentedError<ApiType>;
       /**
        * There's no pending reward to claim
        **/

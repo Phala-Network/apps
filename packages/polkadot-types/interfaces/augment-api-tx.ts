@@ -10,7 +10,7 @@ import type { Data } from '@polkadot/types';
 import type { Bytes, Compact, Option, U8aFixed, Vec, bool, u128, u16, u32, u64, u8 } from '@polkadot/types-codec';
 import type { AnyNumber, IMethod, ITuple } from '@polkadot/types-codec/types';
 import type { AccountId32, Call, H256, MultiAddress, Perbill, Permill } from '@polkadot/types/interfaces/runtime';
-import type { AssetsRegistryAssetProperties, CumulusPrimitivesParachainInherentParachainInherentData, FrameSupportPreimagesBounded, KhalaParachainRuntimeOpaqueSessionKeys, KhalaParachainRuntimeOriginCaller, KhalaParachainRuntimeProxyType, PalletAssetsDestroyWitness, PalletDemocracyConviction, PalletDemocracyVoteAccountVote, PalletElectionsPhragmenRenouncing, PalletIdentityBitFlags, PalletIdentityIdentityInfo, PalletIdentityJudgement, PalletMultisigTimepoint, PalletPhalaWorldCareerType, PalletPhalaWorldNftSaleType, PalletPhalaWorldRaceType, PalletPhalaWorldRarityType, PalletPhalaWorldShellParts, PalletPhalaWorldStatusType, PalletUniquesDestroyWitness, PalletVestingVestingInfo, PhalaMqSignedMessage, PhalaPalletsUtilsAttestationLegacyAttestation, PhalaTypesAttestationReport, PhalaTypesMessagingTokenomicParameters, PhalaTypesWorkerEndpointPayload, PhalaTypesWorkerRegistrationInfo, PhalaTypesWorkerRegistrationInfoV2, RmrkTraitsNftAccountIdOrCollectionNftTuple, RmrkTraitsPartEquippableList, RmrkTraitsPartPartType, RmrkTraitsResourceBasicResource, RmrkTraitsResourceComposableResource, RmrkTraitsResourceResourceInfoMin, RmrkTraitsResourceResourceTypes, RmrkTraitsResourceSlotResource, RmrkTraitsTheme, SpCoreSr25519Public, SpCoreSr25519Signature, SpRuntimeHeader, SpWeightsWeightV2Weight, XcmV1MultiAsset, XcmV1MultiLocation, XcmV2WeightLimit, XcmVersionedMultiAssets, XcmVersionedMultiLocation, XcmVersionedXcm } from '@polkadot/types/lookup';
+import type { AssetsRegistryAssetProperties, CumulusPrimitivesParachainInherentParachainInherentData, FrameSupportPreimagesBounded, KhalaParachainRuntimeOpaqueSessionKeys, KhalaParachainRuntimeOriginCaller, KhalaParachainRuntimeProxyType, PalletAssetsDestroyWitness, PalletDemocracyConviction, PalletDemocracyVoteAccountVote, PalletElectionsPhragmenRenouncing, PalletIdentityBitFlags, PalletIdentityIdentityInfo, PalletIdentityJudgement, PalletMultisigTimepoint, PalletPhalaWorldCareerType, PalletPhalaWorldNftSaleType, PalletPhalaWorldRaceType, PalletPhalaWorldRarityType, PalletPhalaWorldShellParts, PalletPhalaWorldStatusType, PalletUniquesDestroyWitness, PalletVestingVestingInfo, PhalaMqSignedMessage, PhalaPalletsComputePoolProxyPoolType, PhalaPalletsUtilsAttestationLegacyAttestation, PhalaTypesAttestationReport, PhalaTypesMessagingTokenomicParameters, PhalaTypesWorkerEndpointPayload, PhalaTypesWorkerRegistrationInfo, PhalaTypesWorkerRegistrationInfoV2, RmrkTraitsNftAccountIdOrCollectionNftTuple, RmrkTraitsPartEquippableList, RmrkTraitsPartPartType, RmrkTraitsResourceBasicResource, RmrkTraitsResourceComposableResource, RmrkTraitsResourceResourceInfoMin, RmrkTraitsResourceResourceTypes, RmrkTraitsResourceSlotResource, RmrkTraitsTheme, SpCoreSr25519Public, SpCoreSr25519Signature, SpRuntimeHeader, SpWeightsWeightV2Weight, XcmV1MultiAsset, XcmV1MultiLocation, XcmV2WeightLimit, XcmVersionedMultiAssets, XcmVersionedMultiLocation, XcmVersionedXcm } from '@polkadot/types/lookup';
 
 export type __AugmentedSubmittable = AugmentedSubmittable<() => unknown>;
 export type __SubmittableExtrinsic<ApiType extends ApiTypes> = SubmittableExtrinsic<ApiType>;
@@ -1948,6 +1948,7 @@ declare module '@polkadot/api-base/types/submittable' {
        * The whitelist has a lmit len of 100 stakers.
        **/
       addStakerToWhitelist: AugmentedSubmittable<(pid: u64 | AnyNumber | Uint8Array, staker: AccountId32 | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [u64, AccountId32]>;
+      backfillTransferShares: AugmentedSubmittable<(input: Vec<ITuple<[AccountId32, AccountId32, u64, u128, PhalaPalletsComputePoolProxyPoolType]>> | ([AccountId32 | string | Uint8Array, AccountId32 | string | Uint8Array, u64 | AnyNumber | Uint8Array, u128 | AnyNumber | Uint8Array, PhalaPalletsComputePoolProxyPoolType | 'StakePool' | 'Vault' | number | Uint8Array])[]) => SubmittableExtrinsic<ApiType>, [Vec<ITuple<[AccountId32, AccountId32, u64, u128, PhalaPalletsComputePoolProxyPoolType]>>]>;
       /**
        * Removes a staker accountid to contribution whitelist.
        * 
@@ -1955,6 +1956,8 @@ declare module '@polkadot/api-base/types/submittable' {
        * If the last staker in the whitelist is removed, the pool will return back to a normal pool that allow anyone to contribute.
        **/
       removeStakerFromWhitelist: AugmentedSubmittable<(pid: u64 | AnyNumber | Uint8Array, staker: AccountId32 | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [u64, AccountId32]>;
+      removeUnusedLock: AugmentedSubmittable<(maxIterations: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32]>;
+      resetLockIterPos: AugmentedSubmittable<() => SubmittableExtrinsic<ApiType>, []>;
       /**
        * Adds a description to the pool
        * 
@@ -1985,11 +1988,6 @@ declare module '@polkadot/api-base/types/submittable' {
        * Only for integration test.
        **/
       forceStopComputing: AugmentedSubmittable<(session: AccountId32 | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [AccountId32]>;
-      migrateMinerBindings: AugmentedSubmittable<(maxIterations: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32]>;
-      migrateMiners: AugmentedSubmittable<(maxIterations: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32]>;
-      migrateStakes: AugmentedSubmittable<(maxIterations: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32]>;
-      migrateStorageValues: AugmentedSubmittable<() => SubmittableExtrinsic<ApiType>, []>;
-      migrateWorkerBindings: AugmentedSubmittable<(maxIterations: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32]>;
       /**
        * Sets the cool down expiration time in seconds.
        * 
@@ -2067,7 +2065,6 @@ declare module '@polkadot/api-base/types/submittable' {
        * Can only be called by `GovernanceOrigin`.
        **/
       forceSetBenchmarkDuration: AugmentedSubmittable<(value: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32]>;
-      migrateWorkers: AugmentedSubmittable<(maxIterations: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32]>;
       /**
        * Register a gatekeeper.
        * 
@@ -2089,7 +2086,7 @@ declare module '@polkadot/api-base/types/submittable' {
        * Usually called by a bridging relayer program (`pherry` and `prb`). Can be called by
        * anyone on behalf of a worker.
        **/
-      registerWorkerV2: AugmentedSubmittable<(pruntimeInfo: PhalaTypesWorkerRegistrationInfoV2 | { version?: any; machineId?: any; pubkey?: any; ecdhPubkey?: any; genesisBlockHash?: any; features?: any; operator?: any; paraId?: any; maxConsensusVersioin?: any } | string | Uint8Array, attestation: Option<PhalaTypesAttestationReport> | null | Uint8Array | PhalaTypesAttestationReport | { SgxIas: any } | string) => SubmittableExtrinsic<ApiType>, [PhalaTypesWorkerRegistrationInfoV2, Option<PhalaTypesAttestationReport>]>;
+      registerWorkerV2: AugmentedSubmittable<(pruntimeInfo: PhalaTypesWorkerRegistrationInfoV2 | { version?: any; machineId?: any; pubkey?: any; ecdhPubkey?: any; genesisBlockHash?: any; features?: any; operator?: any; paraId?: any; maxConsensusVersion?: any } | string | Uint8Array, attestation: Option<PhalaTypesAttestationReport> | null | Uint8Array | PhalaTypesAttestationReport | { SgxIas: any } | string) => SubmittableExtrinsic<ApiType>, [PhalaTypesWorkerRegistrationInfoV2, Option<PhalaTypesAttestationReport>]>;
       /**
        * Removes a pruntime binary from [`PRuntimeAllowList`]
        * 
@@ -2144,6 +2141,7 @@ declare module '@polkadot/api-base/types/submittable' {
        * 2. The worker is not bound a pool
        **/
       addWorker: AugmentedSubmittable<(pid: u64 | AnyNumber | Uint8Array, pubkey: SpCoreSr25519Public | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [u64, SpCoreSr25519Public]>;
+      backfillAddMissingReward: AugmentedSubmittable<(input: Vec<ITuple<[AccountId32, u64, u128]>> | ([AccountId32 | string | Uint8Array, u64 | AnyNumber | Uint8Array, u128 | AnyNumber | Uint8Array])[]) => SubmittableExtrinsic<ApiType>, [Vec<ITuple<[AccountId32, u64, u128]>>]>;
       /**
        * Let any user to launch a stakepool withdraw. Then check if the pool need to be forced shutdown.
        * 
@@ -2152,6 +2150,7 @@ declare module '@polkadot/api-base/types/submittable' {
        * TODO(mingxuan): add more detail comment later.
        **/
       checkAndMaybeForceWithdraw: AugmentedSubmittable<(pid: u64 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u64]>;
+      claimLegacyRewards: AugmentedSubmittable<(pid: u64 | AnyNumber | Uint8Array, target: AccountId32 | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [u64, AccountId32]>;
       /**
        * Claims pool-owner's pending rewards of the sender and send to the `target`
        * 
@@ -2173,14 +2172,7 @@ declare module '@polkadot/api-base/types/submittable' {
        * Creates a new stake pool
        **/
       create: AugmentedSubmittable<() => SubmittableExtrinsic<ApiType>, []>;
-      drainStakepoolStorages: AugmentedSubmittable<(maxIterations: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32]>;
-      migrateContributionWhitelist: AugmentedSubmittable<(maxIterations: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32]>;
-      migratePoolDescription: AugmentedSubmittable<(maxIterations: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32]>;
-      migratePoolStakers: AugmentedSubmittable<(maxIterations: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32]>;
-      migrateStakeLedger: AugmentedSubmittable<(maxIterations: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32]>;
-      migrateStakepools: AugmentedSubmittable<(maxIterations: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32]>;
-      migrateSubaccountPreimage: AugmentedSubmittable<(maxIterations: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32]>;
-      migrateWorkerAssignments: AugmentedSubmittable<(maxIterations: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32]>;
+      fixMissingWorkerLock: AugmentedSubmittable<(maxIterations: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32]>;
       /**
        * Reclaims the releasing stake of a worker in a pool.
        **/

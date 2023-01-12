@@ -70,6 +70,7 @@ const ClaimDelegation: FC<{
           multiline
           rows={2}
           fullWidth
+          inputProps={{pattern: '^[0-9a-zA-Z]*$'}}
           InputProps={{
             endAdornment: !address && (
               <Button
