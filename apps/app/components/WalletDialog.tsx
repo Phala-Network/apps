@@ -36,12 +36,14 @@ const WalletDialog: FC = () => {
   useEffect(() => {
     let unmounted = false
     import('@talismn/connect-wallets').then(({getWallets}) => {
-      const sortedWallets = getWallets().sort((a, b) => {
-        return (
-          walletsOrder.indexOf(a.extensionName) -
-          walletsOrder.indexOf(b.extensionName)
-        )
-      })
+      const sortedWallets = getWallets()
+        .filter((x) => walletsOrder.includes(x.extensionName))
+        .sort((a, b) => {
+          return (
+            walletsOrder.indexOf(a.extensionName) -
+            walletsOrder.indexOf(b.extensionName)
+          )
+        })
       if (!unmounted) {
         setWallets(sortedWallets)
       }
