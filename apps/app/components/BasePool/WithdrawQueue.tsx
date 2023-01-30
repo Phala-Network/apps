@@ -3,14 +3,14 @@ import Empty from '@/components/Empty'
 import SectionHeader from '@/components/SectionHeader'
 import {subsquidClient} from '@/lib/graphql'
 import {
-  BasePoolCommonFragment,
   useDelegationsConnectionQuery,
+  type BasePoolCommonFragment,
 } from '@/lib/subsquidQuery'
 import {colors} from '@/lib/theme'
 import Check from '@mui/icons-material/Check'
 import WarningAmber from '@mui/icons-material/WarningAmber'
 import {Box, Paper, Stack, Tooltip, Typography, useTheme} from '@mui/material'
-import {DataGrid, GridColDef, GridSortModel} from '@mui/x-data-grid'
+import {DataGrid, type GridColDef, type GridSortModel} from '@mui/x-data-grid'
 import {toCurrency} from '@phala/util'
 import {
   addDays,
@@ -20,7 +20,7 @@ import {
   isSameDay,
 } from 'date-fns'
 import Decimal from 'decimal.js'
-import {FC, ReactElement, useMemo, useState} from 'react'
+import {useMemo, useState, type FC, type ReactElement} from 'react'
 import {
   Line,
   LineChart,
@@ -32,7 +32,7 @@ import {
 } from 'recharts'
 import Property from '../Property'
 
-type RowModel = {
+interface RowModel {
   id: string
   delegator: string
   value: string
@@ -44,13 +44,13 @@ const CustomTooltip = ({
   payload,
 }: {
   label?: string
-  payload?: {
+  payload?: Array<{
     name: string
     value: number | string
     unit?: string
-  }[]
+  }>
 }): ReactElement | null => {
-  if (payload?.[0]) {
+  if (payload?.[0] != null) {
     return (
       <Paper sx={{p: 1}}>
         <Typography variant="subtitle2">{label}</Typography>
@@ -64,7 +64,7 @@ const CustomTooltip = ({
   return null
 }
 
-const columns: GridColDef<RowModel>[] = [
+const columns: Array<GridColDef<RowModel>> = [
   {
     field: 'delegator',
     headerName: 'Delegator',
@@ -82,7 +82,7 @@ const columns: GridColDef<RowModel>[] = [
     field: 'countdown',
     headerName: 'Countdown',
     width: 200,
-    valueGetter: ({row}) => row.startTime && new Date(row.startTime),
+    valueGetter: ({row}) => row.startTime != null && new Date(row.startTime),
     valueFormatter: ({value}) => {
       const start = new Date()
       const end = addDays(new Date(value), 7)
@@ -96,7 +96,7 @@ const columns: GridColDef<RowModel>[] = [
     field: 'latestWithdrawal',
     headerName: 'Latest Withdrawal',
     width: 200,
-    valueGetter: ({row}) => row.startTime && new Date(row.startTime),
+    valueGetter: ({row}) => row.startTime != null && new Date(row.startTime),
     valueFormatter: ({value}) =>
       addDays(new Date(value), 14).toLocaleDateString(),
   },
@@ -139,11 +139,11 @@ const WithdrawQueue: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
     let baseValue = new Decimal(freeValue).plus(releasingValue)
     for (const row of rows) {
       baseValue = baseValue.minus(row.value)
-      if (baseValue.lt(0) && row.startTime) {
+      if (baseValue.lt(0) && row.startTime != null) {
         time = row.startTime
       }
     }
-    if (time) {
+    if (time != null) {
       return addDays(new Date(time), 7)
     }
   }, [basePool, rows])
@@ -153,7 +153,7 @@ const WithdrawQueue: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
   const chartData = useMemo(() => {
     const now = new Date()
     const days = 14
-    const result: {date: Date; dateString: string; value?: number}[] =
+    const result: Array<{date: Date; dateString: string; value?: number}> =
       Array.from({
         length: days,
       }).map((_, i) => {
@@ -165,7 +165,7 @@ const WithdrawQueue: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
       })
     let acc = new Decimal(0)
     for (const row of rows) {
-      if (!row.startTime) continue
+      if (row.startTime == null) continue
       const endTime = addDays(new Date(row.startTime), 7)
       acc = acc.plus(row.value)
       const index = result.findIndex((item) => isSameDay(item.date, endTime))
@@ -220,7 +220,7 @@ const WithdrawQueue: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
               </Typography>
               <Property label="Gap Value">{toCurrency(gapValue)} PHA</Property>
             </Stack>
-            {criticalTime && (
+            {criticalTime != null && (
               <Stack direction="row" spacing={1}>
                 {/* TODO: critical time explanation */}
                 <Tooltip title="">
@@ -270,7 +270,7 @@ const WithdrawQueue: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
                   }
                   strokeWidth={3}
                 />
-                {criticalTime && (
+                {criticalTime != null && (
                   <ReferenceLine
                     strokeDasharray="3 3"
                     x={criticalTime.toLocaleDateString()}
@@ -314,7 +314,9 @@ const WithdrawQueue: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
         disableSelectionOnClick
         autoHeight
         sortModel={sortModal}
-        onSortModelChange={(model) => setSortModal(model)}
+        onSortModelChange={(model) => {
+          setSortModal(model)
+        }}
       />
     </>
   )

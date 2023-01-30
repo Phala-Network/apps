@@ -1,7 +1,7 @@
 import usePolkadotApi from '@/hooks/usePolkadotApi'
-import usePoolIntro, {PoolIntro} from '@/hooks/usePoolIntro'
+import usePoolIntro, {type PoolIntro} from '@/hooks/usePoolIntro'
 import useSignAndSend from '@/hooks/useSignAndSend'
-import {BasePoolCommonFragment} from '@/lib/subsquidQuery'
+import {type BasePoolCommonFragment} from '@/lib/subsquidQuery'
 import {barlow} from '@/lib/theme'
 import {LoadingButton} from '@mui/lab'
 import {
@@ -15,7 +15,7 @@ import {
 import {getDecimalPattern} from '@phala/util'
 import {stringToHex} from '@polkadot/util'
 import Decimal from 'decimal.js'
-import {FC, useEffect, useMemo, useState} from 'react'
+import {useEffect, useMemo, useState, type FC} from 'react'
 
 const OwnerSettings: FC<{
   basePool: BasePoolCommonFragment
@@ -33,7 +33,9 @@ const OwnerSettings: FC<{
   )
   const [capacityLoading, setCapacityLoading] = useState(false)
   const [capacityString, setCapacityString] = useState(() =>
-    stakePool?.capacity ? new Decimal(stakePool.capacity).toString() : ''
+    stakePool?.capacity != null
+      ? new Decimal(stakePool.capacity).toString()
+      : ''
   )
 
   const [telegramString, setTelegramString] = useState('')
@@ -54,8 +56,8 @@ const OwnerSettings: FC<{
     }
   }, [commissionString])
 
-  const setCommission = () => {
-    if (!api) return
+  const setCommission = (): void => {
+    if (api == null) return
     const commission = new Decimal(commissionString).times(1e4).toHex()
     const extrinsic = isVault
       ? api.tx.phalaVault.setPayoutPref(basePool.id, commission)
@@ -66,8 +68,8 @@ const OwnerSettings: FC<{
     })
   }
 
-  const setCapacity = () => {
-    if (!api) return
+  const setCapacity = (): void => {
+    if (api == null) return
     const capacity = new Decimal(capacityString).times(1e12).toHex()
     const extrinsic = api.tx.phalaStakePoolv2.setCap(basePool.id, capacity)
     setCapacityLoading(true)
@@ -76,8 +78,8 @@ const OwnerSettings: FC<{
     })
   }
 
-  const saveIntro = () => {
-    if (!api) return
+  const saveIntro = async (): Promise<void> => {
+    if (api == null) return
     setSaveIntroLoading(true)
     const description: PoolIntro = {
       telegram: telegramString,
@@ -90,7 +92,7 @@ const OwnerSettings: FC<{
       version: 1,
     }
     const hex = stringToHex(JSON.stringify(description))
-    return signAndSend(
+    await signAndSend(
       api.tx.phalaBasePool.setPoolDescription(basePool.id, hex)
     ).finally(() => {
       setSaveIntroLoading(false)
@@ -98,14 +100,14 @@ const OwnerSettings: FC<{
   }
 
   useEffect(() => {
-    if (!poolIntro || introLoaded) return
-    setTelegramString(poolIntro.telegram || '')
-    setDiscordString(poolIntro.discord || '')
-    setWechatString(poolIntro.wechat || '')
-    setTwitterString(poolIntro.twitter || '')
-    setEmailString(poolIntro.email || '')
-    setForumString(poolIntro.forum || '')
-    setAnnString(poolIntro.ann || '')
+    if (poolIntro == null || introLoaded) return
+    setTelegramString(poolIntro.telegram ?? '')
+    setDiscordString(poolIntro.discord ?? '')
+    setWechatString(poolIntro.wechat ?? '')
+    setTwitterString(poolIntro.twitter ?? '')
+    setEmailString(poolIntro.email ?? '')
+    setForumString(poolIntro.forum ?? '')
+    setAnnString(poolIntro.ann ?? '')
     setIntroLoaded(true)
   }, [poolIntro, introLoaded])
 
@@ -175,7 +177,7 @@ const OwnerSettings: FC<{
               />
               <LoadingButton
                 onClick={setCapacity}
-                disabled={!capacityString}
+                disabled={capacityString === ''}
                 loading={capacityLoading}
                 color={color}
                 variant="contained"
@@ -298,7 +300,9 @@ const OwnerSettings: FC<{
         <Stack direction="row" justifyContent="flex-end">
           <LoadingButton
             disabled={!introLoaded}
-            onClick={saveIntro}
+            onClick={() => {
+              void saveIntro()
+            }}
             loading={saveIntroLoading}
             color={color}
             variant="contained"

@@ -7,7 +7,7 @@ import {
   DialogTitle,
   TextField,
 } from '@mui/material'
-import {FC, useMemo, useState} from 'react'
+import {useMemo, useState, type FC} from 'react'
 
 const AddWorker: FC<{
   pid: string
@@ -22,8 +22,8 @@ const AddWorker: FC<{
     [workerId]
   )
 
-  const onClick = () => {
-    if (!api) return
+  const onClick = (): void => {
+    if (api == null) return
     const extrinsic = api.tx.phalaStakePoolv2.addWorker(pid, workerId)
 
     setLoading(true)

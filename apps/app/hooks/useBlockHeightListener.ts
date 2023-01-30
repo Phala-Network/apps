@@ -5,7 +5,7 @@ import {useQueryClient} from '@tanstack/react-query'
 import {useAtom} from 'jotai'
 import {useEffect, useRef} from 'react'
 
-const useBlockHeightListener = () => {
+const useBlockHeightListener = (): void => {
   const [chain] = useAtom(chainAtom)
   const enabled = useRef(false)
   const {data} = useGlobalStateQuery(
@@ -17,18 +17,18 @@ const useBlockHeightListener = () => {
   const height = data?.squidStatus?.height
 
   useEffect(() => {
-    if (height && queryClient && chain === 'khala') {
+    if (height != null && chain === 'khala') {
       if (enabled.current) {
-        queryClient.invalidateQueries(['AccountById'])
-        queryClient.invalidateQueries(['BasePoolById'])
-        queryClient.invalidateQueries(['BasePoolsConnection.infinite'])
-        queryClient.invalidateQueries(['BasePoolWhitelistsConnection'])
-        queryClient.invalidateQueries(['DelegationById'])
-        queryClient.invalidateQueries(['DelegationsConnection'])
-        queryClient.invalidateQueries(['DelegationsConnection.infinite'])
-        queryClient.invalidateQueries(['WorkersConnection'])
-        queryClient.invalidateQueries(['OwnedVaults'])
-        queryClient.invalidateQueries(['ClaimableStakePools'])
+        void queryClient.invalidateQueries(['AccountById'])
+        void queryClient.invalidateQueries(['BasePoolById'])
+        void queryClient.invalidateQueries(['BasePoolsConnection.infinite'])
+        void queryClient.invalidateQueries(['BasePoolWhitelistsConnection'])
+        void queryClient.invalidateQueries(['DelegationById'])
+        void queryClient.invalidateQueries(['DelegationsConnection'])
+        void queryClient.invalidateQueries(['DelegationsConnection.infinite'])
+        void queryClient.invalidateQueries(['WorkersConnection'])
+        void queryClient.invalidateQueries(['OwnedVaults'])
+        void queryClient.invalidateQueries(['ClaimableStakePools'])
       } else {
         // Skip the first time
         enabled.current = true

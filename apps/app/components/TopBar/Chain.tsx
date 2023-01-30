@@ -1,10 +1,10 @@
 import {colors, montserrat} from '@/lib/theme'
-import {Chain, chainAtom} from '@/store/common'
+import {chainAtom, type Chain} from '@/store/common'
 import {MenuItem, Select} from '@mui/material'
 import {useAtom} from 'jotai'
-import {FC} from 'react'
+import {type FC} from 'react'
 
-const Chain: FC = () => {
+const ChainSelect: FC = () => {
   const [chain, setChain] = useAtom(chainAtom)
   const isKhala = chain === 'khala'
 
@@ -26,7 +26,9 @@ const Chain: FC = () => {
         },
       }}
       inputProps={{sx: {py: '6.5px'}}}
-      onChange={(e) => setChain(e.target.value as Chain)}
+      onChange={(e) => {
+        setChain(e.target.value as Chain)
+      }}
     >
       {['khala', 'phala'].map((value) => (
         <MenuItem
@@ -46,4 +48,4 @@ const Chain: FC = () => {
   )
 }
 
-export default Chain
+export default ChainSelect

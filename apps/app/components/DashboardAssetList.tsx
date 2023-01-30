@@ -2,8 +2,8 @@ import AssetIcon from '@/assets/asset.svg'
 import {WPHA_ASSET_ID} from '@/config'
 import useAssetBalance from '@/hooks/useAssetBalance'
 import useAssetsMetadata, {
-  AssetMetadata,
   phaMetadata,
+  type AssetMetadata,
 } from '@/hooks/useAssetsMetadata'
 import useWrapAsset from '@/hooks/useWrapAsset'
 import {chainAtom} from '@/store/common'
@@ -27,10 +27,10 @@ import {
 } from '@mui/material'
 import {polkadotAccountAtom} from '@phala/store'
 import {toCurrency} from '@phala/util'
-import Decimal from 'decimal.js'
+import type Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
 import Image from 'next/image'
-import {FC, useCallback, useState} from 'react'
+import {useCallback, useState, type FC} from 'react'
 import AssetTransfer from './AssetTransfer'
 import SectionHeader from './SectionHeader'
 import Vest from './Vest'
@@ -68,7 +68,10 @@ const BuyConfirmation: FC<{onClose: () => void}> = ({onClose}) => {
   )
 }
 
-const Asset: FC<{asset: Asset; onAction: OnAction}> = ({asset, onAction}) => {
+const AssetLine: FC<{asset: Asset; onAction: OnAction}> = ({
+  asset,
+  onAction,
+}) => {
   const wrapAsset = useWrapAsset()
   return (
     <Stack direction="row" py={2} px={{xs: 1, sm: 2}} alignItems="center">
@@ -79,10 +82,8 @@ const Asset: FC<{asset: Asset; onAction: OnAction}> = ({asset, onAction}) => {
         overflow="hidden"
         flexShrink="0"
       >
-        {asset.iconSrc ? (
+        {asset.iconSrc !== undefined && (
           <Image src={asset.iconSrc} width={28} height={28} alt={asset.name} />
-        ) : (
-          <></>
         )}
       </Box>
       <Typography
@@ -101,21 +102,25 @@ const Asset: FC<{asset: Asset; onAction: OnAction}> = ({asset, onAction}) => {
             variant="text"
             size="small"
             sx={{ml: 0.5}}
-            onClick={() => onAction(asset, 'buy')}
+            onClick={() => {
+              onAction(asset, 'buy')
+            }}
           >
             Buy
           </Button>
           <Button
             variant="text"
             size="small"
-            onClick={() => onAction(asset, 'claim')}
+            onClick={() => {
+              onAction(asset, 'claim')
+            }}
           >
             Claim
           </Button>
         </>
       )}
       <Typography variant="num6" ml="auto" flexShrink={0}>
-        {asset.balance ? (
+        {asset.balance != null ? (
           `${wrapAsset(toCurrency(asset.balance))} ${asset.symbol}`
         ) : (
           <Skeleton width={32} />
@@ -125,8 +130,10 @@ const Asset: FC<{asset: Asset; onAction: OnAction}> = ({asset, onAction}) => {
         size="small"
         variant="text"
         sx={{ml: 2}}
-        disabled={!asset.balance || asset.balance.eq(0)}
-        onClick={() => onAction(asset, 'transfer')}
+        disabled={asset.balance == null || asset.balance.eq(0)}
+        onClick={() => {
+          onAction(asset, 'transfer')
+        }}
       >
         Transfer
       </Button>
@@ -161,15 +168,17 @@ const Assets: FC<{
     allAssets[assetId] = {...assetsMetadata[assetId], balance}
   }
 
-  const getAssets = () => {
+  const getAssets = (): Asset[] => {
     let assets = Object.values(allAssets)
     if (hideSmallBalance) {
       assets = assets.filter((asset) => {
-        return asset.balance && asset.balance.gt('0.01')
+        return asset.balance?.gt('0.01')
       })
     }
     return assets.sort((a, b) =>
-      a.balance && b.balance && a.balance.greaterThan(b.balance) ? -1 : 1
+      a.balance != null && b.balance != null && a.balance.greaterThan(b.balance)
+        ? -1
+        : 1
     )
   }
   const onAction: OnAction = useCallback((asset, action) => {
@@ -184,16 +193,16 @@ const Assets: FC<{
   return (
     <>
       <Stack divider={<Divider flexItem />}>
-        <Asset
+        <AssetLine
           asset={{...phaMetadata, balance: phaBalance}}
           onAction={onAction}
         />
         {getAssets().map((asset) => (
-          <Asset asset={asset} key={asset.assetId} onAction={onAction} />
+          <AssetLine asset={asset} key={asset.assetId} onAction={onAction} />
         ))}
       </Stack>
       <Dialog open={dialogOpen} onClose={onClose}>
-        {operatingAsset && dialogAction === 'transfer' && (
+        {operatingAsset != null && dialogAction === 'transfer' && (
           <AssetTransfer asset={operatingAsset} onClose={onClose} />
         )}
         {dialogAction === 'buy' && <BuyConfirmation onClose={onClose} />}
@@ -227,7 +236,7 @@ const DashboardAssetList: FC = () => {
         </NoSsr>
       </SectionHeader>
       <Paper sx={{background: 'transparent', overflow: 'hidden'}}>
-        {assetsMetadata ? (
+        {assetsMetadata != null ? (
           <Assets assetsMetadata={assetsMetadata} key={chain} />
         ) : (
           <Skeleton variant="rectangular" height={240} />

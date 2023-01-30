@@ -1,7 +1,10 @@
 import NftsIcon from '@/assets/nfts.svg'
 import usePolkadotApi from '@/hooks/usePolkadotApi'
 import {subsquidClient} from '@/lib/graphql'
-import {NftsConnectionQuery, useNftsConnectionQuery} from '@/lib/subsquidQuery'
+import {
+  useNftsConnectionQuery,
+  type NftsConnectionQuery,
+} from '@/lib/subsquidQuery'
 import {chainAtom} from '@/store/common'
 import {
   Box,
@@ -14,9 +17,9 @@ import {
   Unstable_Grid2 as Grid,
 } from '@mui/material'
 import {polkadotAccountAtom} from '@phala/store'
-import {ApiPromise} from '@polkadot/api'
+import {type ApiPromise} from '@polkadot/api'
 import {useAtom} from 'jotai'
-import {FC, useState} from 'react'
+import {useState, type FC} from 'react'
 import useSWRImmutable from 'swr/immutable'
 import DelegationNftCover from './DelegationNftCover'
 import Empty from './Empty'
@@ -54,11 +57,13 @@ const NftCard: FC<{nft: Nft}> = ({nft}) => {
   const [chain] = useAtom(chainAtom)
   const isDelegationNft = nft.delegation != null
   const {data: name} = useSWRImmutable(
-    api && isDelegationNft ? [api, nft.cid, nft.nftId, 'nftName'] : null,
+    api != null && isDelegationNft
+      ? [api, nft.cid, nft.nftId, 'nftName']
+      : null,
     nftNameFetcher
   )
   const {data: collectionSymbol} = useSWRImmutable(
-    api && isDelegationNft ? [api, nft.cid, 'nftCollection'] : null,
+    api != null && isDelegationNft ? [api, nft.cid, 'nftCollection'] : null,
     collectionSymbolFetcher
   )
   const delegationNftPrefix = `${chain === 'khala' ? 'Khala' : 'Phala'} - ${
@@ -76,7 +81,7 @@ const NftCard: FC<{nft: Nft}> = ({nft}) => {
     >
       <Box pt="100%" bgcolor="#333" position="relative">
         <Box position="absolute" top={0} left={0} right={0} bottom={0}>
-          {nft.delegation && (
+          {nft.delegation != null && (
             <DelegationNftCover
               delegation={nft.delegation}
               nft={nft}
@@ -135,7 +140,7 @@ const DashboardNftList: FC = () => {
       },
     },
     {
-      enabled: !!account,
+      enabled: account !== null,
       keepPreviousData: true,
     }
   )
@@ -143,7 +148,7 @@ const DashboardNftList: FC = () => {
   return (
     <>
       <SectionHeader title="NFTs" icon={<NftsIcon />}>
-        {data && !isEmpty && (
+        {data != null && !isEmpty && (
           <Chip
             label={data?.nftsConnection.totalCount}
             color="primary"
@@ -154,25 +159,26 @@ const DashboardNftList: FC = () => {
       </SectionHeader>
 
       <Grid container spacing={{xs: 1, sm: 2, md: 3}}>
-        {data &&
-          data.nftsConnection.edges.map((edge) => {
-            return (
-              <Grid key={edge.cursor} xs={6} md={4} lg={3}>
-                <NftCard nft={edge.node} />
-              </Grid>
-            )
-          })}
+        {data?.nftsConnection.edges.map((edge) => {
+          return (
+            <Grid key={edge.cursor} xs={6} md={4} lg={3}>
+              <NftCard nft={edge.node} />
+            </Grid>
+          )
+        })}
       </Grid>
 
       {isEmpty && <Empty sx={{height: 400}} />}
 
-      {data && !isEmpty && (
+      {data != null && !isEmpty && (
         <Stack alignItems="center" mt={3}>
           <Pagination
             color="primary"
             page={page}
             count={Math.ceil(data.nftsConnection.totalCount / pageSize)}
-            onChange={(_, newPage) => setPage(newPage)}
+            onChange={(_, newPage) => {
+              setPage(newPage)
+            }}
             showFirstButton
             showLastButton
           />

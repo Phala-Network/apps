@@ -1,20 +1,20 @@
-import {VoidFn} from '@polkadot/api/types'
+import {type VoidFn} from '@polkadot/api/types'
 import Decimal from 'decimal.js'
 import {useEffect, useState} from 'react'
 import usePolkadotApi from './usePolkadotApi'
 
-const useLockedWrappedBalance = (account?: string) => {
+const useLockedWrappedBalance = (account?: string): Decimal | undefined => {
   const api = usePolkadotApi()
   const [balance, setBalance] = useState<Decimal>()
 
   useEffect(() => {
     setBalance(undefined)
-    if (!api || !account) {
+    if (api == null || account === undefined) {
       return
     }
     let unsub: VoidFn
     let unmounted = false
-    api.query.phalaWrappedBalances
+    void api.query.phalaWrappedBalances
       .stakerAccounts(account, (res) => {
         try {
           const unwrapped = res.unwrap()

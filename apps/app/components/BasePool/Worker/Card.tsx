@@ -1,7 +1,7 @@
 import WorkerIcon from '@/assets/worker.svg'
 import PromiseButton from '@/components/PromiseButton'
 import Property from '@/components/Property'
-import {WorkerState} from '@/lib/subsquidQuery'
+import {type WorkerState} from '@/lib/subsquidQuery'
 import {
   Box,
   Button,
@@ -14,22 +14,22 @@ import {
 import {toCurrency, toFixed} from '@phala/util'
 import {addDays, formatDuration, intervalToDuration, isAfter} from 'date-fns'
 import {useSnackbar} from 'notistack'
-import {FC, ReactNode, useMemo} from 'react'
-import {OnAction, Worker} from './List'
+import {useMemo, type FC, type ReactNode} from 'react'
+import {type OnAction, type Worker} from './List'
 
-const workerStateColors: Record<WorkerState, string> = {
+const workerStateColors = {
   Ready: '#5988FF',
   WorkerIdle: '#7EFF85',
   WorkerUnresponsive: '#FC5464',
   WorkerCoolingDown: '#FFDF64',
-}
+} satisfies Record<WorkerState, string>
 
-const workerStateLabels: Record<WorkerState, string> = {
+const workerStateLabels = {
   Ready: 'Ready',
   WorkerIdle: 'Computing',
   WorkerUnresponsive: 'Unresponsive',
   WorkerCoolingDown: 'CoolingDown',
-}
+} satisfies Record<WorkerState, string>
 
 const WorkerCard: FC<{
   worker: Worker
@@ -39,8 +39,8 @@ const WorkerCard: FC<{
   const theme = useTheme()
   const {enqueueSnackbar} = useSnackbar()
   const session = worker.session
-  const entries = useMemo<[string, ReactNode][]>(() => {
-    if (!session) return []
+  const entries = useMemo<Array<[string, ReactNode]>>(() => {
+    if (session == null) return []
     return [
       ['Stake', `${toCurrency(session.stake)} PHA`],
       ['Cumulative rewards', `${toCurrency(session.totalReward)} PHA`],
@@ -54,7 +54,7 @@ const WorkerCard: FC<{
   const count = Math.ceil(entries.length / groups)
 
   const reclaimCountdown = useMemo(() => {
-    if (!worker.session?.coolingDownStartTime) return
+    if (worker.session?.coolingDownStartTime == null) return
     const start = new Date()
     const end = addDays(new Date(worker.session.coolingDownStartTime), 7)
     if (isAfter(start, end)) return
@@ -74,7 +74,7 @@ const WorkerCard: FC<{
             color={theme.palette.primary.main}
             sx={{wordBreak: 'break-all', cursor: 'pointer'}}
             onClick={() => {
-              navigator.clipboard.writeText(worker.id)
+              void navigator.clipboard.writeText(worker.id)
               enqueueSnackbar('Copied to clipboard')
             }}
           >
@@ -104,28 +104,32 @@ const WorkerCard: FC<{
           justifyContent="space-between"
           alignSelf="stretch"
         >
-          {session && (
+          {session != null && (
             <Chip
               size="small"
               label={workerStateLabels[session.state]}
               sx={{color: workerStateColors[session.state]}}
             />
           )}
-          {session && (
+          {session != null && (
             <Stack direction="row">
               {isOwner && session.state === 'Ready' && (
                 <>
                   <Button
                     variant="text"
                     size="small"
-                    onClick={() => onAction(worker, 'start')}
+                    onClick={() => {
+                      void onAction(worker, 'start')
+                    }}
                   >
                     Start
                   </Button>
                   <PromiseButton
                     variant="text"
                     size="small"
-                    onClick={() => onAction(worker, 'remove')}
+                    onClick={async () => {
+                      await onAction(worker, 'remove')
+                    }}
                   >
                     Remove
                   </PromiseButton>
@@ -138,14 +142,18 @@ const WorkerCard: FC<{
                     <PromiseButton
                       variant="text"
                       size="small"
-                      onClick={() => onAction(worker, 'stop')}
+                      onClick={async () => {
+                        await onAction(worker, 'stop')
+                      }}
                     >
                       Stop
                     </PromiseButton>
                     <Button
                       variant="text"
                       size="small"
-                      onClick={() => onAction(worker, 'changeStake')}
+                      onClick={() => {
+                        void onAction(worker, 'changeStake')
+                      }}
                     >
                       Change Stake
                     </Button>
@@ -156,9 +164,11 @@ const WorkerCard: FC<{
                   disabled={Boolean(reclaimCountdown)}
                   variant="text"
                   size="small"
-                  onClick={() => onAction(worker, 'reclaim')}
+                  onClick={async () => {
+                    await onAction(worker, 'reclaim')
+                  }}
                 >
-                  {reclaimCountdown || 'Reclaim'}
+                  {reclaimCountdown ?? 'Reclaim'}
                 </PromiseButton>
               )}
             </Stack>

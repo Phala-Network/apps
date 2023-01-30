@@ -10,7 +10,6 @@ import {
   Backdrop,
   Box,
   Button,
-  ButtonProps,
   Collapse,
   Divider,
   IconButton,
@@ -18,25 +17,26 @@ import {
   Toolbar,
   Tooltip,
   useTheme,
+  type ButtonProps,
 } from '@mui/material'
 import {useAtom} from 'jotai'
 import NextLink from 'next/link'
-import {FC, useState} from 'react'
+import {useState, type FC} from 'react'
 import Account from './Account'
-import Chain from './Chain'
+import ChainSelect from './Chain'
 
-interface NavItem {
+interface INavItem {
   label: string
   href?: string
   disabled?: boolean
-  sub?: NavItem[]
+  sub?: INavItem[]
 }
 
-const NavItem: FC<{item: NavItem; onClick?: ButtonProps['onClick']}> = ({
+const NavItem: FC<{item: INavItem; onClick?: ButtonProps['onClick']}> = ({
   item: {label, href, disabled},
   onClick,
 }) => {
-  const isExternal = !href || !href.startsWith('/')
+  const isExternal = href === undefined || !href.startsWith('/')
   const theme = useTheme()
 
   const link = (
@@ -49,10 +49,10 @@ const NavItem: FC<{item: NavItem; onClick?: ButtonProps['onClick']}> = ({
         fontWeight: 600,
         color: theme.palette.text.primary,
         justifyContent: 'flex-start',
-        ...(!href && {cursor: 'default'}),
+        ...(href === undefined && {cursor: 'default'}),
       }}
       onClick={onClick}
-      {...(isExternal && href && {href, target: '_blank'})}
+      {...(isExternal && href !== undefined && {href, target: '_blank'})}
     >
       {label}
     </Button>
@@ -75,7 +75,7 @@ const TopBar: FC = () => {
   const [chain] = useAtom(chainAtom)
   const theme = useTheme()
   const [collapseIn, setCollapseIn] = useState(false)
-  const navItems: NavItem[] = [
+  const navItems: INavItem[] = [
     {label: 'Dashboard', href: '/'},
     {
       label: 'Delegate',
@@ -107,7 +107,7 @@ const TopBar: FC = () => {
     },
   ]
 
-  const toggleCollapse = () => {
+  const toggleCollapse = (): void => {
     setCollapseIn((prev) => !prev)
   }
 
@@ -171,7 +171,7 @@ const TopBar: FC = () => {
             display={{xs: 'none', md: 'flex'}}
           >
             {navItems.map((item) => {
-              if (!item.sub) {
+              if (item.sub == null) {
                 return <NavItem key={item.label} item={item} />
               }
               return (
@@ -199,7 +199,7 @@ const TopBar: FC = () => {
             })}
           </Stack>
           <Stack direction="row" ml="auto" spacing={2} alignItems="center">
-            <Chain />
+            <ChainSelect />
             <Account />
             <IconButton
               sx={{display: {sx: 'inline-flex', md: 'none'}}}
@@ -223,7 +223,7 @@ const TopBar: FC = () => {
         >
           <Stack divider={<Divider flexItem />} spacing={1} p={2}>
             {navItems.map((item) => {
-              if (!item.sub) {
+              if (item.sub == null) {
                 return (
                   <NavItem
                     onClick={toggleCollapse}

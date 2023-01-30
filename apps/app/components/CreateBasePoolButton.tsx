@@ -1,8 +1,8 @@
 import usePolkadotApi from '@/hooks/usePolkadotApi'
 import useSignAndSend from '@/hooks/useSignAndSend'
-import {BasePoolKind} from '@/lib/subsquidQuery'
-import {LoadingButtonProps} from '@mui/lab'
-import {FC} from 'react'
+import {type BasePoolKind} from '@/lib/subsquidQuery'
+import {type LoadingButtonProps} from '@mui/lab'
+import {type FC} from 'react'
 import PromiseButton from './PromiseButton'
 
 const CreateBasePoolButton: FC<
@@ -10,14 +10,14 @@ const CreateBasePoolButton: FC<
 > = ({kind, ...props}) => {
   const api = usePolkadotApi()
   const signAndSend = useSignAndSend()
-  const onClick = async () => {
-    if (!api) return
+  const onClick = async (): Promise<void> => {
+    if (api == null) return
     const extrinsic =
       kind === 'StakePool'
         ? api.tx.phalaStakePoolv2.create()
         : api.tx.phalaVault.create()
 
-    return signAndSend(extrinsic)
+    await signAndSend(extrinsic)
   }
 
   return (

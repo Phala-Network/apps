@@ -6,7 +6,7 @@ import useSelectedVaultState from '@/hooks/useSelectedVaultState'
 import {Box, Paper, Stack} from '@mui/material'
 import {polkadotAccountAtom} from '@phala/store'
 import {useAtom} from 'jotai'
-import {FC} from 'react'
+import {type FC} from 'react'
 
 const MyDelegation: FC = () => {
   const [polkadotAccount] = useAtom(polkadotAccountAtom)

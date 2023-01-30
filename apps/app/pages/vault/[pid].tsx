@@ -1,14 +1,14 @@
 import DetailPage from '@/components/BasePool/DetailPage'
 import DelegationList from '@/components/Delegation/List'
 import getBasePoolServerSideProps, {
-  BasePoolServerSideProps,
+  type BasePoolServerSideProps,
 } from '@/lib/getBasePoolServerSideProps'
 import {subsquidClient} from '@/lib/graphql'
 import {useBasePoolByIdQuery} from '@/lib/subsquidQuery'
 import {Box} from '@mui/material'
 import {polkadotAccountAtom} from '@phala/store'
 import {useAtom} from 'jotai'
-import {NextPage} from 'next'
+import {type NextPage} from 'next'
 
 export const getServerSideProps = getBasePoolServerSideProps('Vault')
 
@@ -21,11 +21,11 @@ const Vault: NextPage<BasePoolServerSideProps> = ({
   const {data} = useBasePoolByIdQuery(
     subsquidClient,
     {id: pid},
-    {initialData: initialData || undefined, initialDataUpdatedAt}
+    {initialData: initialData ?? undefined, initialDataUpdatedAt}
   )
 
   const basePool = data?.basePoolById
-  if (!basePool) return null
+  if (basePool == null) return null
 
   return (
     <>

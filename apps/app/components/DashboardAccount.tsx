@@ -28,7 +28,7 @@ import {useAtom} from 'jotai'
 import dynamic from 'next/dynamic'
 import {useRouter} from 'next/router'
 import {useSnackbar} from 'notistack'
-import {FC} from 'react'
+import {type FC} from 'react'
 
 const BalanceBox = styled(Box)(({theme}) =>
   theme.unstable_sx({
@@ -39,9 +39,12 @@ const BalanceBox = styled(Box)(({theme}) =>
   })
 )
 
-const Identicon = dynamic(() => import('@polkadot/react-identicon'), {
-  ssr: false,
-})
+const Identicon = dynamic(
+  async () => await import('@polkadot/react-identicon'),
+  {
+    ssr: false,
+  }
+)
 
 const DashboardAccount: FC = () => {
   const router = useRouter()
@@ -56,13 +59,13 @@ const DashboardAccount: FC = () => {
   const {data} = useAccountByIdQuery(
     subsquidClient,
     {accountId: account?.address ?? ''},
-    {enabled: !!account?.address}
+    {enabled: account?.address !== undefined}
   )
   const accountData =
     data?.accountById === null
       ? {vaultValue: '0', stakePoolValue: '0'}
       : data?.accountById
-  const isDelegationClickable = !!account && chain === 'khala'
+  const isDelegationClickable = account !== null && chain === 'khala'
   return (
     <Paper
       sx={{
@@ -81,7 +84,7 @@ const DashboardAccount: FC = () => {
             overflow="hidden"
             flexShrink="0"
           >
-            {account ? (
+            {account != null ? (
               <Identicon value={account.address} theme="polkadot" size={64} />
             ) : (
               <PhalaLogo width="100%" />
@@ -96,15 +99,15 @@ const DashboardAccount: FC = () => {
               whiteSpace="nowrap"
               minWidth={0}
             >
-              {account ? account.name : 'Phala App'}
+              {account != null ? account.name : 'Phala App'}
             </Typography>
             <Stack
               direction="row"
               alignItems="center"
-              sx={{cursor: account ? 'pointer' : 'auto'}}
+              sx={{cursor: account != null ? 'pointer' : 'auto'}}
               onClick={() => {
-                if (account) {
-                  navigator.clipboard.writeText(account.address)
+                if (account != null) {
+                  void navigator.clipboard.writeText(account.address)
                   enqueueSnackbar('Copied to clipboard')
                 }
               }}
@@ -114,17 +117,21 @@ const DashboardAccount: FC = () => {
                 color="text.secondary"
                 component="div"
               >
-                {account
+                {account != null
                   ? trimAddress(account.address)
                   : 'To host, connect, and gain in the world of Web3'}
               </Typography>
-              {!!account && (
+              {account !== null && (
                 <ContentCopy sx={{ml: 1, width: 16}} color="disabled" />
               )}
             </Stack>
           </Stack>
-          {account ? (
-            <IconButton onClick={() => setAssetVisible((x) => !x)}>
+          {account != null ? (
+            <IconButton
+              onClick={() => {
+                setAssetVisible((x) => !x)
+              }}
+            >
               {assetVisible ? (
                 <RemoveRedEye color="disabled" />
               ) : (
@@ -153,8 +160,8 @@ const DashboardAccount: FC = () => {
               Balance
             </Typography>
             <Typography variant="num3" mt={1} component="div" lineHeight={1}>
-              {account ? (
-                freeBalance ? (
+              {account != null ? (
+                freeBalance != null ? (
                   <>
                     {wrapAsset(toCurrency(freeBalance))}
                     <sub>PHA</sub>
@@ -171,7 +178,7 @@ const DashboardAccount: FC = () => {
             sx={{cursor: isDelegationClickable ? 'pointer' : 'auto'}}
             onClick={() => {
               if (isDelegationClickable) {
-                router.push('/delegate/my-delegation', undefined, {
+                void router.push('/delegate/my-delegation', undefined, {
                   shallow: true,
                 })
               }
@@ -192,8 +199,8 @@ const DashboardAccount: FC = () => {
                   component="div"
                   lineHeight={1}
                 >
-                  {account && chain === 'khala' ? (
-                    accountData && wrapped ? (
+                  {account != null && chain === 'khala' ? (
+                    accountData != null && wrapped != null ? (
                       <>
                         {wrapAsset(
                           toCurrency(

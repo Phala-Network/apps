@@ -1,6 +1,6 @@
 import KeyboardArrowUp from '@mui/icons-material/KeyboardArrowUp'
 import {Box, Fab, Fade, useScrollTrigger} from '@mui/material'
-import {FC} from 'react'
+import {type FC} from 'react'
 
 const ScrollTop: FC = () => {
   const trigger = useScrollTrigger({
@@ -8,7 +8,7 @@ const ScrollTop: FC = () => {
     threshold: 600,
   })
 
-  const handleClick = () => {
+  const handleClick = (): void => {
     window.scrollTo({top: 0, behavior: 'smooth'})
   }
 

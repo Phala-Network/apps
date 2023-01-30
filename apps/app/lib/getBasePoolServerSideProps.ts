@@ -1,9 +1,9 @@
 import {sleep} from '@phala/util'
-import {GetServerSideProps} from 'next'
+import {type GetServerSideProps} from 'next'
 import {subsquidSdk} from './graphql'
-import {BasePoolByIdQuery, BasePoolKind} from './subsquidQuery'
+import {type BasePoolByIdQuery, type BasePoolKind} from './subsquidQuery'
 
-export type BasePoolServerSideProps = {
+export interface BasePoolServerSideProps {
   pid: string
   initialData: BasePoolByIdQuery | null
   initialDataUpdatedAt: number
@@ -21,13 +21,13 @@ const getBasePoolServerSideProps =
       sleep(3000),
     ])
 
-    if (initialData && initialData.basePoolById?.kind !== kind) {
+    if (initialData != null && initialData.basePoolById?.kind !== kind) {
       return {notFound: true}
     }
     return {
       props: {
         pid,
-        initialData: initialData || null,
+        initialData: initialData ?? null,
         initialDataUpdatedAt: new Date().getTime(),
       },
     }

@@ -28,13 +28,19 @@ import {
 } from '@mui/material'
 import {polkadotAccountAtom} from '@phala/store'
 import {toCurrency, validateAddress} from '@phala/util'
+import {type SubmittableExtrinsic} from '@polkadot/api/types'
+import {type ISubmittableResult} from '@polkadot/types/types'
 import {useQuery} from '@tanstack/react-query'
 import Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
-import {NextPage} from 'next'
+import {type NextPage} from 'next'
 import {useEffect, useMemo, useState} from 'react'
 
-type Row = {pid: string; amount: Decimal; claimed: boolean}
+interface Row {
+  pid: string
+  amount: Decimal
+  claimed: boolean
+}
 
 const ClaimMissingDelegatorRewards: NextPage = () => {
   const signAndSend = useSignAndSend()
@@ -42,7 +48,7 @@ const ClaimMissingDelegatorRewards: NextPage = () => {
   const [loading, setLoading] = useState(false)
   const [dialogOpen, setDialogOpen] = useState(false)
   const [targetAddress, setTargetAddress] = useState('')
-  const onClose = () => {
+  const onClose = (): void => {
     setDialogOpen(false)
   }
   const [account] = useAtom(polkadotAccountAtom)
@@ -52,7 +58,12 @@ const ClaimMissingDelegatorRewards: NextPage = () => {
   const {data} = useQuery(
     ['legacyRewards', account?.address, list],
     async () => {
-      if (account?.address && api && list?.length) {
+      if (
+        account?.address !== undefined &&
+        api != null &&
+        list !== undefined &&
+        list.length > 0
+      ) {
         const result = list
         const legacyRewards =
           await api.query.phalaStakePoolv2.legacyRewards.multi(
@@ -68,18 +79,21 @@ const ClaimMissingDelegatorRewards: NextPage = () => {
       return []
     },
     {
-      enabled: !!list && !!account?.address && !!api,
+      enabled:
+        list !== undefined &&
+        account?.address !== undefined &&
+        api !== undefined,
       refetchInterval: 12000,
     }
   )
 
   useEffect(() => {
     let unmounted = false
-    import('@/assets/legacyRewards.json').then((res) => {
+    void import('@/assets/legacyRewards.json').then((res) => {
       const legacyRewardsMap = res.default.legacyRewards
       if (
         !unmounted &&
-        account?.address &&
+        account?.address !== undefined &&
         account.address in legacyRewardsMap
       ) {
         setList(
@@ -111,12 +125,14 @@ const ClaimMissingDelegatorRewards: NextPage = () => {
     [targetAddress]
   )
 
-  const claim = async () => {
-    if (!api || !data) return
-    const getExtrinsic = (pid: string) =>
+  const claim = async (): Promise<void> => {
+    if (api == null || data == null) return
+    const getExtrinsic = (
+      pid: string
+    ): SubmittableExtrinsic<'promise', ISubmittableResult> =>
       api.tx.phalaStakePoolv2.claimLegacyRewards(pid, targetAddress)
     const calls = []
-    if (pid) {
+    if (pid !== undefined) {
       calls.push(getExtrinsic(pid))
     } else {
       calls.push(
@@ -175,13 +191,13 @@ const ClaimMissingDelegatorRewards: NextPage = () => {
         </Typography>
       </Paper>
 
-      {!!account && (
+      {account !== null && (
         <Stack spacing={2} direction="row" alignItems="center" mt={4}>
           <Typography variant="h6" component="h2" color="text.secondary">
             Total Rewards
           </Typography>
           <Typography variant="num3">
-            {totalRewards ? (
+            {totalRewards != null ? (
               `${toCurrency(totalRewards)} PHA`
             ) : (
               <Skeleton width={100} />
@@ -189,7 +205,7 @@ const ClaimMissingDelegatorRewards: NextPage = () => {
           </Typography>
           <Button
             size="small"
-            disabled={!totalRewards || totalRewards.eq(0)}
+            disabled={totalRewards == null || totalRewards.eq(0)}
             onClick={() => {
               setTargetAddress('')
               setDialogOpen(true)
@@ -201,9 +217,9 @@ const ClaimMissingDelegatorRewards: NextPage = () => {
         </Stack>
       )}
 
-      {data && data.length === 0 && <Empty sx={{mt: 6}} />}
+      {data != null && data.length === 0 && <Empty sx={{mt: 6}} />}
 
-      {!!account && !data && (
+      {account !== null && data == null && (
         <Box
           display="flex"
           alignItems="center"
@@ -214,7 +230,7 @@ const ClaimMissingDelegatorRewards: NextPage = () => {
         </Box>
       )}
 
-      {!account && (
+      {account == null && (
         <Box
           display="flex"
           alignItems="center"
@@ -231,7 +247,7 @@ const ClaimMissingDelegatorRewards: NextPage = () => {
         </Box>
       )}
 
-      {data && data.length > 0 && (
+      {data != null && data.length > 0 && (
         <TableContainer
           component={Paper}
           variant="outlined"
@@ -291,13 +307,13 @@ const ClaimMissingDelegatorRewards: NextPage = () => {
             fullWidth
             inputProps={{pattern: '^[0-9a-zA-Z]*$'}}
             InputProps={{
-              endAdornment: !targetAddress && (
+              endAdornment: targetAddress === '' && (
                 <Button
                   size="small"
                   variant="text"
                   sx={{flexShrink: 0}}
                   onClick={() => {
-                    setTargetAddress(account?.address || '')
+                    setTargetAddress(account?.address ?? '')
                   }}
                 >
                   My Address
@@ -322,7 +338,9 @@ const ClaimMissingDelegatorRewards: NextPage = () => {
         <DialogActions>
           <LoadingButton
             variant="text"
-            onClick={claim}
+            onClick={() => {
+              void claim()
+            }}
             disabled={!addressValid}
             loading={loading}
           >

@@ -13,7 +13,7 @@ import {polkadotAccountAtom} from '@phala/store'
 import {toCurrency} from '@phala/util'
 import Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
-import {FC, useCallback, useMemo, useState} from 'react'
+import {useCallback, useMemo, useState, type FC} from 'react'
 
 const MyVaults: FC = () => {
   const api = usePolkadotApi()
@@ -26,17 +26,18 @@ const MyVaults: FC = () => {
   const {data, isLoading} = useOwnedVaultsQuery(
     subsquidClient,
     {accountId: account?.address},
-    {enabled: !!account}
+    {enabled: account !== null}
   )
   const edges = data?.basePoolsConnection.edges
   const vaultsWithOwnerCut = useMemo(() => {
-    return (
-      edges
-        ?.map((edge) => {
+    if (edges !== undefined) {
+      return edges
+        .map((edge) => {
           return [edge.node.id, getVaultOwnerCut(edge.node)] as const
         })
-        .filter(([, reward]) => reward.gt(0)) || []
-    )
+        .filter(([, reward]) => reward.gt(0))
+    }
+    return []
   }, [edges])
   const ownerCut = useMemo(() => {
     return vaultsWithOwnerCut.reduce(
@@ -44,18 +45,20 @@ const MyVaults: FC = () => {
       new Decimal(0)
     )
   }, [vaultsWithOwnerCut])
-  const vaultsWithOwnerRewards = useMemo(
-    () =>
-      edges
-        ?.map(({node}) => node)
+  const vaultsWithOwnerRewards = useMemo(() => {
+    if (edges !== undefined) {
+      return edges
+        .map(({node}) => node)
         .filter(
-          (node) => node.vault && node.vault.claimableOwnerShares !== '0'
-        ) || [],
-    [edges]
-  )
+          (node) =>
+            node.vault != null && node.vault.claimableOwnerShares !== '0'
+        )
+    }
+    return []
+  }, [edges])
   const ownerRewards = useMemo(() => {
     return vaultsWithOwnerRewards.reduce((acc, cur) => {
-      if (!cur.vault) return acc
+      if (cur.vault == null) return acc
       return acc.plus(
         new Decimal(cur.sharePrice).times(cur.vault?.claimableOwnerShares)
       )
@@ -63,7 +66,7 @@ const MyVaults: FC = () => {
   }, [vaultsWithOwnerRewards])
 
   const mintAll = useCallback(async () => {
-    if (!api) return
+    if (api == null) return
     let extrinsic
     const calls = vaultsWithOwnerCut.map(([id]) =>
       api.tx.phalaVault.maybeGainOwnerShares(id)
@@ -73,7 +76,7 @@ const MyVaults: FC = () => {
     } else {
       extrinsic = api.tx.utility.batch(calls)
     }
-    return signAndSend(extrinsic)
+    await signAndSend(extrinsic)
   }, [api, vaultsWithOwnerCut, signAndSend])
 
   return (
@@ -91,7 +94,7 @@ const MyVaults: FC = () => {
               Owner Cut
             </Typography>
             <Typography variant="num3">
-              {!isLoading && ownerCut ? (
+              {!isLoading ? (
                 `${toCurrency(ownerCut)} PHA`
               ) : (
                 <Skeleton width={100} />
@@ -100,7 +103,7 @@ const MyVaults: FC = () => {
             <PromiseButton
               size="small"
               onClick={mintAll}
-              disabled={!vaultsWithOwnerCut.length}
+              disabled={vaultsWithOwnerCut.length === 0}
             >
               Mint Cut
             </PromiseButton>
@@ -111,7 +114,7 @@ const MyVaults: FC = () => {
               Owner Rewards
             </Typography>
             <Typography variant="num3">
-              {!isLoading && ownerRewards ? (
+              {!isLoading ? (
                 `${toCurrency(ownerRewards)} PHA`
               ) : (
                 <Skeleton width={100} />
@@ -119,7 +122,7 @@ const MyVaults: FC = () => {
             </Typography>
             <Button
               size="small"
-              disabled={!vaultsWithOwnerRewards.length}
+              disabled={vaultsWithOwnerRewards.length === 0}
               onClick={() => {
                 setDialogOpen(true)
               }}

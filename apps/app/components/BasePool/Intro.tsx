@@ -1,7 +1,7 @@
 import Empty from '@/components/Empty'
 import usePoolIntro from '@/hooks/usePoolIntro'
-import {BasePoolCommonFragment} from '@/lib/subsquidQuery'
-import {IconProp} from '@fortawesome/fontawesome-svg-core'
+import {type BasePoolCommonFragment} from '@/lib/subsquidQuery'
+import {type IconProp} from '@fortawesome/fontawesome-svg-core'
 import {
   faDiscord,
   faTelegram,
@@ -18,24 +18,24 @@ import {
   Chip,
   Link,
   Stack,
-  SxProps,
   Tooltip,
   Typography,
   useTheme,
+  type SxProps,
 } from '@mui/material'
 import {trimAddress} from '@phala/util'
 import {useSnackbar} from 'notistack'
-import {FC, useMemo} from 'react'
+import {useMemo, type FC} from 'react'
 import TextSkeleton from '../TextSkeleton'
 
-const iconMap: Record<string, IconProp> = {
+const iconMap = {
   discord: faDiscord,
   telegram: faTelegram,
   twitter: faTwitter,
   wechat: faWeixin,
   email: faEnvelope,
   forum: faMessage,
-}
+} satisfies Record<string, IconProp>
 
 const Intro: FC<{
   basePool: BasePoolCommonFragment
@@ -49,8 +49,8 @@ const Intro: FC<{
     owner.identityLevel === 'KnownGood' || owner.identityLevel === 'Reasonable'
   const poolIntro = usePoolIntro(basePool.id)
 
-  const chips = useMemo(() => {
-    if (!poolIntro || variant === 'card') return []
+  const chips = useMemo<Array<[string, string]>>(() => {
+    if (poolIntro == null || variant === 'card') return []
     return Object.entries(poolIntro).filter(
       ([label, value]) =>
         label !== 'ann' && typeof value === 'string' && value.length > 0
@@ -74,10 +74,10 @@ const Intro: FC<{
               textDecorationColor: alpha(theme.palette.text.primary, 0.4),
             }}
           >
-            {owner.identityDisplay || trimAddress(owner.id)}
+            {owner.identityDisplay ?? trimAddress(owner.id)}
           </Link>
 
-          {owner.identityDisplay && (
+          {owner.identityDisplay != null && (
             <>
               <Tooltip title={owner.identityLevel ?? 'No Judgement'}>
                 {ownerVerified ? (
@@ -110,12 +110,12 @@ const Intro: FC<{
       {chips.length > 0 && variant === 'detail' && (
         <Box ml={-1}>
           {chips.map(([label, value]) => {
-            const icon = iconMap[label]
+            const hasIcon = (x: string): x is keyof typeof iconMap =>
+              x in iconMap
+            const icon = hasIcon(label) && iconMap[label]
             let href
             if (label === 'telegram') {
-              href = `https://t.me/${
-                typeof value === 'string' ? value.replace(/^@/, '') : value
-              }`
+              href = `https://t.me/${value.replace(/^@/, '')}`
             } else if (label === 'twitter') {
               href = `https://twitter.com/${value}`
             } else if (label === 'email') {
@@ -125,13 +125,13 @@ const Intro: FC<{
             }
             return (
               <Chip
-                {...(icon && {
+                {...(icon !== false && {
                   icon: <FontAwesomeIcon icon={icon} width={16} />,
                 })}
                 label={value}
                 key={label}
                 size="small"
-                {...(href
+                {...(href !== undefined
                   ? {
                       clickable: true,
                       href,
@@ -140,7 +140,7 @@ const Intro: FC<{
                     }
                   : {
                       onClick: () => {
-                        navigator.clipboard.writeText(value)
+                        void navigator.clipboard.writeText(value)
                         enqueueSnackbar('Copied to clipboard')
                       },
                     })}
@@ -151,8 +151,8 @@ const Intro: FC<{
         </Box>
       )}
 
-      {poolIntro ? (
-        poolIntro.ann ? (
+      {poolIntro != null ? (
+        poolIntro.ann !== undefined && poolIntro.ann.length > 0 ? (
           <Typography
             mt={variant === 'detail' ? 2 : 0}
             minHeight={0}

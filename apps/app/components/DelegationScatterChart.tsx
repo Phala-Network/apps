@@ -5,7 +5,7 @@ import {colors} from '@/lib/theme'
 import {Paper, Typography} from '@mui/material'
 import {toCurrency} from '@phala/util'
 import Decimal from 'decimal.js'
-import {FC, ReactElement, useMemo} from 'react'
+import {useMemo, type FC, type ReactElement} from 'react'
 import {
   CartesianGrid,
   ResponsiveContainer,
@@ -19,7 +19,7 @@ import {
 import Empty from './Empty'
 import Property from './Property'
 
-type ChartData = {
+interface ChartData {
   name: string
   value: number
   apr: number | undefined
@@ -28,14 +28,14 @@ type ChartData = {
 const CustomTooltip = ({
   payload,
 }: {
-  payload?: {
+  payload?: Array<{
     name: string
     payload: {name: string}
     value: number | string
     unit: string
-  }[]
+  }>
 }): ReactElement | null => {
-  if (payload?.[0]) {
+  if (payload?.[0] != null) {
     return (
       <Paper sx={{p: 1}}>
         <Typography variant="subtitle2">{payload[0].payload.name}</Typography>
@@ -60,11 +60,11 @@ const DelegationScatterChart: FC<{address?: string}> = ({address}) => {
       first: 50,
       where: {account: {id_eq: address}, value_gt: '1'},
     },
-    {enabled: !!address}
+    {enabled: address !== undefined}
   )
 
   const chartData = useMemo(() => {
-    if (!data) return {vault: [], stakePool: []}
+    if (data == null) return {vault: [], stakePool: []}
     const result: {vault: ChartData[]; stakePool: ChartData[]} = {
       vault: [],
       stakePool: [],
@@ -88,7 +88,8 @@ const DelegationScatterChart: FC<{address?: string}> = ({address}) => {
     return result
   }, [data, getApr])
 
-  const hasDelegation = !!chartData.vault.length || !!chartData.stakePool.length
+  const hasDelegation =
+    chartData.vault.length !== 0 || chartData.stakePool.length !== 0
 
   if (isLoading) return null
 

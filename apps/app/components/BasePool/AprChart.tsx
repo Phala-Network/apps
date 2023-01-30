@@ -2,14 +2,14 @@ import Property from '@/components/Property'
 import {aprToApy} from '@/lib/apr'
 import {subsquidClient} from '@/lib/graphql'
 import {
-  BasePoolCommonFragment,
-  useBasePoolAprRecordsConnectionQuery,
+  useBasePoolSnapshotsConnectionQuery,
+  type BasePoolCommonFragment,
 } from '@/lib/subsquidQuery'
 import {colors} from '@/lib/theme'
 import {Paper, Typography} from '@mui/material'
 import {addDays} from 'date-fns'
 import Decimal from 'decimal.js'
-import {FC, ReactElement, useMemo, useState} from 'react'
+import {useMemo, useState, type FC, type ReactElement} from 'react'
 import {
   Area,
   AreaChart,
@@ -26,13 +26,13 @@ const CustomTooltip = ({
 }: {
   isVault: boolean
   label?: string
-  payload?: {
+  payload?: Array<{
     name: string
     value: number | string
     unit?: string
-  }[]
+  }>
 }): ReactElement | null => {
-  if (payload?.[0]) {
+  if (payload?.[0] != null) {
     return (
       <Paper sx={{p: 1}}>
         <Typography variant="subtitle2">{label}</Typography>
@@ -60,8 +60,9 @@ const BasePoolAprChart: FC<{basePool: BasePoolCommonFragment}> = ({
     now.setMinutes(0, 0, 0)
     return now
   })
-  const {data} = useBasePoolAprRecordsConnectionQuery(subsquidClient, {
+  const {data} = useBasePoolSnapshotsConnectionQuery(subsquidClient, {
     orderBy: 'updatedTime_DESC',
+    first: days * 24,
     where: {
       basePool: {id_eq: basePool.id},
       updatedTime_gte: addDays(now, -days).toISOString(),
@@ -69,7 +70,7 @@ const BasePoolAprChart: FC<{basePool: BasePoolCommonFragment}> = ({
   })
 
   const chartData = useMemo(() => {
-    const result: {date: Date; dateString: string; value?: number}[] =
+    const result: Array<{date: Date; dateString: string; value?: number}> =
       Array.from({
         length: days,
       }).map((_, i) => {
@@ -80,13 +81,13 @@ const BasePoolAprChart: FC<{basePool: BasePoolCommonFragment}> = ({
         }
       })
 
-    if (!data) return result
+    if (data === undefined) return result
 
-    for (const {node} of data.basePoolAprRecordsConnection.edges) {
+    for (const {node} of data.basePoolSnapshotsConnection.edges) {
       const date = new Date(node.updatedTime)
       const index = result.findIndex((r) => r.date.getTime() >= date.getTime())
       if (index !== -1) {
-        let value = new Decimal(node.value)
+        let value = new Decimal(node.apr)
         if (isVault) {
           value = aprToApy(value)
         }

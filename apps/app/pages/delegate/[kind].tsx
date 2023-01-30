@@ -21,7 +21,7 @@ import {
 } from '@mui/material'
 import {polkadotAccountAtom} from '@phala/store'
 import {useAtom} from 'jotai'
-import {GetStaticPaths, GetStaticProps, NextPage} from 'next'
+import {type GetStaticPaths, type GetStaticProps, type NextPage} from 'next'
 import {useRouter} from 'next/router'
 import {useCallback, useEffect, useState} from 'react'
 
@@ -92,7 +92,7 @@ const Delegate: NextPage = () => {
   const handleSwitchChange = useCallback(
     (checked: boolean) => {
       setSwitchChecked(checked)
-      router.replace(
+      void router.replace(
         `/delegate/${checked ? 'stake-pool' : 'vault'}`,
         undefined,
         {shallow: true}

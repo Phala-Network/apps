@@ -13,6 +13,6 @@ export const walletAtom = atom<Wallet | null, Wallet | null>(
   (get) => get(originalWalletAtom),
   (get, set, update) => {
     set(originalWalletAtom, update)
-    set(walletNameAtom, update ? update.extensionName : null)
+    set(walletNameAtom, update !== null ? update.extensionName : null)
   }
 )

@@ -12,19 +12,19 @@ import {useQuery} from '@tanstack/react-query'
 import {addDays} from 'date-fns'
 import Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
-import {FC, useEffect, useMemo, useState} from 'react'
+import {useEffect, useMemo, useState, type FC} from 'react'
 
-type CirculationData = {
+interface CirculationData {
   data?: {circulations?: {nodes?: [{amount: string}?]}}
 }
 
-const numberFormat = (value: Decimal) =>
+const numberFormat = (value: Decimal): string =>
   Intl.NumberFormat('en-US', {
     notation: 'compact',
     maximumFractionDigits: 2,
   }).format(BigInt(value.floor().toString()))
 
-const getYesterday = () => addDays(new Date(), -1).toISOString()
+const getYesterday = (): string => addDays(new Date(), -1).toISOString()
 
 const NetworkOverview: FC = () => {
   const getApr = useGetApr()
@@ -40,7 +40,7 @@ const NetworkOverview: FC = () => {
   const {data: rewardRecordsData} = useRewardRecordsConnectionQuery(
     subsquidClient,
     {orderBy: 'time_DESC', where: {time_gt: yesterday}},
-    {enabled: !!yesterday}
+    {enabled: yesterday !== undefined}
   )
   const {data: circulationData} = useQuery<CirculationData>(
     ['circulations', chain],
@@ -48,22 +48,22 @@ const NetworkOverview: FC = () => {
       const res = await fetch(
         'https://api.subquery.network/sq/Phala-Network/khala-chainbridge__UGhhb?query=%7Bcirculations(first:1,orderBy:BLOCK_HEIGHT_DESC)%7Bnodes%7Bamount%7D%7D%7D'
       )
-      return res.json()
+      return await res.json()
     }
   )
   const {data: globalStateData} = useGlobalStateQuery(subsquidClient)
   const circulationValue =
     circulationData?.data?.circulations?.nodes?.[0]?.amount
   const {totalValue, averageAprMultiplier} =
-    globalStateData?.globalStateById || {}
+    globalStateData?.globalStateById ?? {}
   const stakeRatio = useMemo(() => {
-    if (!circulationValue || !totalValue) return
+    if (circulationValue === undefined || totalValue === undefined) return
     return toPercentage(
       new Decimal(totalValue).times(1e12).div(circulationValue)
     )
   }, [circulationValue, totalValue])
   const dailyRewards = useMemo(() => {
-    if (!rewardRecordsData) return
+    if (rewardRecordsData == null) return
     const sum = rewardRecordsData.rewardRecordsConnection.edges.reduce(
       (acc, cur) => acc.plus(cur.node.value),
       new Decimal(0)
@@ -71,14 +71,17 @@ const NetworkOverview: FC = () => {
     return numberFormat(sum)
   }, [rewardRecordsData])
   const avgApr = useMemo(() => {
-    if (!averageAprMultiplier) return
+    if (averageAprMultiplier === undefined) return
     const apr = getApr(averageAprMultiplier)
-    if (!apr) return
+    if (apr == null) return
     return toPercentage(apr)
   }, [getApr, averageAprMultiplier])
-  const items = useMemo<[string, string | undefined][]>(() => {
+  const items = useMemo<Array<[string, string | false | undefined]>>(() => {
     return [
-      ['Total Value', totalValue && numberFormat(new Decimal(totalValue))],
+      [
+        'Total Value',
+        totalValue !== undefined && numberFormat(new Decimal(totalValue)),
+      ],
       ['Stake Ratio', stakeRatio],
       ['Daily Rewards', dailyRewards],
       ['Avg APR', avgApr],
@@ -109,7 +112,7 @@ const NetworkOverview: FC = () => {
             component="div"
             color="primary"
           >
-            {value || <Skeleton width={80} />}
+            {value ?? <Skeleton width={80} />}
           </Typography>
           <Typography
             variant="num6"
@@ -117,7 +120,7 @@ const NetworkOverview: FC = () => {
             component="div"
             color="primary"
           >
-            {value || <Skeleton width={32} />}
+            {value ?? <Skeleton width={32} />}
           </Typography>
         </Box>
       ))}

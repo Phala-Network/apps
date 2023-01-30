@@ -3,7 +3,7 @@ import ZendeskWidget from '@/components/ZendeskWidget'
 import {createEmotionCache} from '@/lib/createEmotionCache'
 import {globalStyles} from '@/lib/styles'
 import {theme} from '@/lib/theme'
-import {CacheProvider, css, EmotionCache} from '@emotion/react'
+import {CacheProvider, css, type EmotionCache} from '@emotion/react'
 import {
   CssBaseline,
   GlobalStyles,
@@ -12,8 +12,8 @@ import {
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query'
 import {ReactQueryDevtools} from '@tanstack/react-query-devtools'
 import {Provider as JotaiProvider} from 'jotai'
-import {AppProps} from 'next/app'
-import {FC} from 'react'
+import {type AppProps} from 'next/app'
+import {type FC} from 'react'
 import {SWRConfig} from 'swr'
 
 // Client-side cache, shared for the whole session of the user in the browser.

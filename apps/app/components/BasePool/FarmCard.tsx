@@ -8,7 +8,7 @@ import useSignAndSend from '@/hooks/useSignAndSend'
 import {aprToApy} from '@/lib/apr'
 import getPoolPath from '@/lib/getPoolPath'
 import getVaultOwnerCut from '@/lib/getVaultOwnerCut'
-import {BasePoolCommonFragment} from '@/lib/subsquidQuery'
+import {type BasePoolCommonFragment} from '@/lib/subsquidQuery'
 import {colors} from '@/lib/theme'
 import Settings from '@mui/icons-material/Settings'
 import {
@@ -27,12 +27,12 @@ import {
 } from '@mui/material'
 import {toCurrency, toPercentage} from '@phala/util'
 import Decimal from 'decimal.js'
-import {FC, useCallback, useMemo, useState} from 'react'
+import {useCallback, useMemo, useState, type FC} from 'react'
 import PromiseButton from '../PromiseButton'
 import BasePoolAprChart from './AprChart'
 import ExtraProperties from './ExtraProperties'
 import Intro from './Intro'
-import {OnAction} from './List'
+import {type OnAction} from './List'
 
 const FarmCard: FC<{
   basePool: BasePoolCommonFragment
@@ -48,7 +48,7 @@ const FarmCard: FC<{
   const vaultOwnerCut = useMemo(() => getVaultOwnerCut(basePool), [basePool])
   const vaultOwnerReward = useMemo(
     () =>
-      basePool.vault
+      basePool.vault != null
         ? new Decimal(basePool.sharePrice).times(
             basePool.vault.claimableOwnerShares
           )
@@ -57,15 +57,15 @@ const FarmCard: FC<{
   )
 
   const mintCut = useCallback(async () => {
-    if (!api) return
-    return signAndSend(api.tx.phalaVault.maybeGainOwnerShares(basePool.id))
+    if (api == null) return
+    await signAndSend(api.tx.phalaVault.maybeGainOwnerShares(basePool.id))
   }, [api, signAndSend, basePool])
 
   const actions = (
     <Stack direction="row" alignItems="center">
-      {stakePool && (
+      {stakePool != null && (
         <Button
-          disabled={!stakePool || new Decimal(stakePool.ownerReward).lt('0.01')}
+          disabled={new Decimal(stakePool.ownerReward).lt('0.01')}
           variant="text"
           size="small"
           onClick={(e) => {
@@ -76,22 +76,22 @@ const FarmCard: FC<{
           Claim Reward
         </Button>
       )}
-      {vault && (
+      {vault != null && (
         <PromiseButton
-          disabled={!vault || vaultOwnerCut.lt('0.01')}
+          disabled={vaultOwnerCut.lt('0.01')}
           variant="text"
           size="small"
-          onClick={(e) => {
+          onClick={async (e) => {
             e.stopPropagation()
-            return mintCut()
+            await mintCut()
           }}
         >
           Mint Cut
         </PromiseButton>
       )}
-      {vault && (
+      {vault != null && (
         <Button
-          disabled={!vault || vaultOwnerReward.lt('0.01')}
+          disabled={vaultOwnerReward.lt('0.01')}
           variant="text"
           size="small"
           onClick={(e) => {
@@ -120,7 +120,9 @@ const FarmCard: FC<{
     <Paper>
       <Stack
         spacing={3}
-        onClick={() => setCollapsed((v) => !v)}
+        onClick={() => {
+          setCollapsed((v) => !v)
+        }}
         direction={{xs: 'column', md: 'row'}}
         alignItems={{xs: 'flex-start', md: 'center'}}
         borderRadius={`${theme.shape.borderRadius - 1}px`}
@@ -133,11 +135,15 @@ const FarmCard: FC<{
         }}
       >
         <Stack direction="row" spacing={2} alignItems="center">
-          {stakePool && <StakePoolIcon width={48} color={colors.main[300]} />}
-          {vault && <VaultIcon width={48} color={colors.vault[400]} />}
+          {stakePool != null && (
+            <StakePoolIcon width={48} color={colors.main[300]} />
+          )}
+          {vault != null && <VaultIcon width={48} color={colors.vault[400]} />}
           <Box flex="1 0" width={108}>
             <Link
-              onClick={(e) => e.stopPropagation()}
+              onClick={(e) => {
+                e.stopPropagation()
+              }}
               color="inherit"
               variant="num2"
               href={getPoolPath(basePool.kind, basePool.id)}
@@ -151,9 +157,9 @@ const FarmCard: FC<{
           </Box>
         </Stack>
         <Stack direction="row" spacing={2}>
-          {stakePool && (
+          {stakePool != null && (
             <Property label="Est. APR" sx={{width: 64, flexShrink: '0'}}>
-              {apr ? (
+              {apr != null ? (
                 <Box component="span" color={colors.main[300]}>
                   {toPercentage(apr)}
                 </Box>
@@ -162,21 +168,21 @@ const FarmCard: FC<{
               )}
             </Property>
           )}
-          {stakePool && (
+          {stakePool != null && (
             <Property label="Delegable" sx={{width: 140}}>
-              {stakePool.delegable
+              {stakePool.delegable != null
                 ? `${toCurrency(stakePool.delegable)} PHA`
                 : '∞'}
             </Property>
           )}
-          {stakePool && (
+          {stakePool != null && (
             <Property label="Owner Reward" sx={{width: 120}}>
               {`${toCurrency(stakePool.ownerReward)} PHA`}
             </Property>
           )}
-          {vault && (
+          {vault != null && (
             <Property label="Est. APY" sx={{width: 64, flexShrink: '0'}}>
-              {apr ? (
+              {apr != null ? (
                 <Box component="span" color={colors.vault[400]}>
                   {toPercentage(aprToApy(apr))}
                 </Box>
@@ -185,17 +191,17 @@ const FarmCard: FC<{
               )}
             </Property>
           )}
-          {vault && (
+          {vault != null && (
             <Property label="TVL" sx={{width: 150}}>
               {`${toCurrency(basePool.totalValue)} PHA`}
             </Property>
           )}
-          {vault && (
+          {vault != null && (
             <Property label="Owner Cut" sx={{width: 120}}>
               {`${toCurrency(getVaultOwnerCut(basePool))} PHA`}
             </Property>
           )}
-          {vault && (
+          {vault != null && (
             <Property label="Owner Reward" sx={{width: 150}}>
               {`${toCurrency(vaultOwnerReward)} PHA`}
             </Property>

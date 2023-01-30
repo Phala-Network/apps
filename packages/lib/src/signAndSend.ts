@@ -18,14 +18,14 @@ export interface ExtrinsicResult {
   section: string
 }
 
-export const waitSignAndSend = ({
+export const waitSignAndSend = async ({
   account,
   api,
   extrinsic,
   onStatus,
   signer,
   onReady,
-}: SignAndSendProps) => {
+}: SignAndSendProps): Promise<ExtrinsicResult> => {
   const extrinsicResultPromise = new Promise<ExtrinsicResult>(
     (resolve, reject) => {
       const {section, method} = extrinsic.method.toHuman() as {
@@ -38,7 +38,7 @@ export const waitSignAndSend = ({
           {signer, nonce: -1},
           ({status, isCompleted, txHash, dispatchError}) => {
             if (isCompleted) {
-              if (dispatchError) {
+              if (dispatchError != null) {
                 let errorInfo: string
                 if (dispatchError.isModule) {
                   const decoded = api.registry.findMetaError(
@@ -71,5 +71,5 @@ export const waitSignAndSend = ({
     }
   )
 
-  return extrinsicResultPromise
+  return await extrinsicResultPromise
 }

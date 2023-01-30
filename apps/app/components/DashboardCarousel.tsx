@@ -5,11 +5,11 @@ import b4 from '@/assets/b4.png'
 import b5 from '@/assets/b5.png'
 import {Box, LinearProgress, Stack} from '@mui/material'
 import Link from 'next/link'
-import {FC, useState} from 'react'
+import {type FC, useState} from 'react'
 import Carousel from 'react-multi-carousel'
 import 'react-multi-carousel/lib/styles.css'
 
-const contents: {name: string; imageUrl: string; href: string}[] = [
+const contents: Array<{name: string; imageUrl: string; href: string}> = [
   {
     name: 'Claim missing delegator rewards',
     href: '/claim-missing-delegator-rewards',

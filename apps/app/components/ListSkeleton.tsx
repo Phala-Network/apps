@@ -1,4 +1,4 @@
-import {Skeleton, SkeletonProps} from '@mui/material'
+import {Skeleton, type SkeletonProps} from '@mui/material'
 import {forwardRef} from 'react'
 
 const ListSkeleton = forwardRef<

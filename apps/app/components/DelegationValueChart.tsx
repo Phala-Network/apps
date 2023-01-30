@@ -1,10 +1,10 @@
 import {subsquidClient} from '@/lib/graphql'
-import {useDelegationValueRecordsConnectionQuery} from '@/lib/subsquidQuery'
+import {useAccountValueSnapshotsConnectionQuery} from '@/lib/subsquidQuery'
 import {Paper, Typography} from '@mui/material'
 import {toCurrency} from '@phala/util'
 import {addDays} from 'date-fns'
 import Decimal from 'decimal.js'
-import {FC, ReactElement, useMemo, useState} from 'react'
+import {useMemo, useState, type FC, type ReactElement} from 'react'
 import {
   Area,
   AreaChart,
@@ -20,13 +20,13 @@ const CustomTooltip = ({
   payload,
 }: {
   label?: string
-  payload?: {
+  payload?: Array<{
     name: string
     value: number | string
     unit?: string
-  }[]
+  }>
 }): ReactElement | null => {
-  if (payload?.[0]) {
+  if (payload?.[0] != null) {
     return (
       <Paper sx={{p: 1}}>
         <Typography variant="subtitle2">{label}</Typography>
@@ -49,7 +49,7 @@ const DelegationValueChart: FC<{address?: string; days: number}> = ({
     now.setMinutes(0, 0, 0)
     return now
   })
-  const {data} = useDelegationValueRecordsConnectionQuery(
+  const {data} = useAccountValueSnapshotsConnectionQuery(
     subsquidClient,
     {
       orderBy: 'updatedTime_DESC',
@@ -58,11 +58,11 @@ const DelegationValueChart: FC<{address?: string; days: number}> = ({
         updatedTime_gte: addDays(now, -days).toISOString(),
       },
     },
-    {enabled: !!address}
+    {enabled: address !== undefined}
   )
 
   const chartData = useMemo(() => {
-    const result: {date: Date; dateString: string; value?: number}[] =
+    const result: Array<{date: Date; dateString: string; value?: number}> =
       Array.from({
         length: days,
       }).map((_, i) => {
@@ -73,9 +73,9 @@ const DelegationValueChart: FC<{address?: string; days: number}> = ({
         }
       })
 
-    if (!data) return result
+    if (data == null) return result
 
-    for (const {node} of data.delegationValueRecordsConnection.edges) {
+    for (const {node} of data.accountValueSnapshotsConnection.edges) {
       const date = new Date(node.updatedTime)
       const index = result.findIndex((r) => r.date.getTime() >= date.getTime())
       if (index !== -1) {

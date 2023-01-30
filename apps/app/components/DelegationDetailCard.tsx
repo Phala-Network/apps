@@ -18,15 +18,15 @@ import {
   Paper,
   Skeleton,
   Stack,
-  SxProps,
   Typography,
   useTheme,
+  type SxProps,
 } from '@mui/material'
 import {polkadotAccountAtom} from '@phala/store'
 import {toCurrency, toPercentage} from '@phala/util'
 import Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
-import {FC, useMemo} from 'react'
+import {useMemo, type FC} from 'react'
 import DelegatorSelect from './DelegatorSelect'
 import PromiseButton from './PromiseButton'
 
@@ -40,7 +40,7 @@ const DelegationDataCard: FC<{
   const background = isVault ? colors.vault[300] : colors.main[500]
   const getApr = useGetApr()
 
-  const apr = aprMultiplier && getApr(aprMultiplier)
+  const apr = typeof aprMultiplier === 'string' && getApr(aprMultiplier)
 
   return (
     <Box
@@ -53,7 +53,9 @@ const DelegationDataCard: FC<{
         <Typography variant="subtitle1" color="text.secondary" lineHeight={1}>
           {kind}
         </Typography>
-        {!!count && <Chip size="small" label={count} sx={{ml: 'auto'}} />}
+        {typeof count === 'number' && count > 0 && (
+          <Chip size="small" label={count} sx={{ml: 'auto'}} />
+        )}
       </Stack>
       <Typography
         variant="num3"
@@ -64,7 +66,7 @@ const DelegationDataCard: FC<{
         <ClientOnly fallback={<Skeleton width={64} />}>
           {value === false
             ? '-'
-            : value && (
+            : typeof value === 'string' && (
                 <>
                   {toCurrency(value)}
                   <sub>PHA</sub>
@@ -90,7 +92,7 @@ const DelegationDataCard: FC<{
           <ClientOnly fallback={<Skeleton width={32} />}>
             {apr === false
               ? '-'
-              : apr && toPercentage(isVault ? aprToApy(apr) : apr)}
+              : apr != null && toPercentage(isVault ? aprToApy(apr) : apr)}
           </ClientOnly>
         </Typography>
       </Stack>
@@ -132,23 +134,23 @@ const DelegationDetailCard: FC<{sx?: SxProps}> = ({sx}) => {
 
   const totalValue = useMemo(() => {
     if (
-      !stakePoolValue ||
-      !vaultValue ||
-      (!wrapped && selectedVaultState === null)
+      stakePoolValue === undefined ||
+      vaultValue === undefined ||
+      (wrapped == null && selectedVaultState === null)
     ) {
       return
     }
 
     let total = new Decimal(stakePoolValue).plus(vaultValue)
-    if (selectedVaultState === null && wrapped) {
+    if (selectedVaultState === null && wrapped != null) {
       total = total.plus(wrapped)
     }
     return toCurrency(total, 0)
   }, [stakePoolValue, vaultValue, selectedVaultState, wrapped])
 
-  const unwrapAll = async () => {
-    if (!api) return
-    return signAndSend(api.tx.phalaWrappedBalances.unwrapAll())
+  const unwrapAll = async (): Promise<void> => {
+    if (api == null) return
+    await signAndSend(api.tx.phalaWrappedBalances.unwrapAll())
   }
 
   return (
@@ -178,7 +180,7 @@ const DelegationDetailCard: FC<{sx?: SxProps}> = ({sx}) => {
               display={{xs: 'none', md: 'block'}}
               lineHeight="1.2"
             >
-              {totalValue ? (
+              {typeof totalValue === 'string' ? (
                 <>
                   {totalValue}
                   <sub>PHA</sub>
@@ -193,7 +195,7 @@ const DelegationDetailCard: FC<{sx?: SxProps}> = ({sx}) => {
               display={{xs: 'block', md: 'none'}}
               lineHeight="36px"
             >
-              {totalValue ? (
+              {typeof totalValue === 'string' ? (
                 <>
                   {totalValue}
                   <sub>PHA</sub>
@@ -250,8 +252,8 @@ const DelegationDetailCard: FC<{sx?: SxProps}> = ({sx}) => {
           >
             <ClientOnly fallback={<Skeleton width={100} />}>
               {asAccount
-                ? wrapped &&
-                  lockedWrappedBalance && (
+                ? wrapped != null &&
+                  lockedWrappedBalance != null && (
                     <>
                       {toCurrency(wrapped)} PHA
                       {lockedWrappedBalance.gt(0) && (
@@ -271,7 +273,7 @@ const DelegationDetailCard: FC<{sx?: SxProps}> = ({sx}) => {
                 <PromiseButton
                   variant="text"
                   size="small"
-                  disabled={!wrapped || wrapped.eq(0)}
+                  disabled={wrapped == null || wrapped.eq(0)}
                   onClick={unwrapAll}
                 >
                   Unwrap All

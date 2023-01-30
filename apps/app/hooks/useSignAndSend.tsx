@@ -1,20 +1,22 @@
 import {Box, CircularProgress, Stack, Typography} from '@mui/material'
 import {waitSignAndSend} from '@phala/lib'
 import {polkadotAccountAtom} from '@phala/store'
-import {SubmittableExtrinsic} from '@polkadot/api/types'
+import {type SubmittableExtrinsic} from '@polkadot/api/types'
 import type {ISubmittableResult} from '@polkadot/types/types'
 import {useAtom} from 'jotai'
-import {SnackbarKey, useSnackbar} from 'notistack'
+import {useSnackbar, type SnackbarKey} from 'notistack'
 import {useCallback} from 'react'
 import usePolkadotApi from './usePolkadotApi'
 
-const useSignAndSend = () => {
+const useSignAndSend = (): ((
+  extrinsic: SubmittableExtrinsic<'promise', ISubmittableResult>
+) => Promise<void>) => {
   const api = usePolkadotApi()
   const [account] = useAtom(polkadotAccountAtom)
   const {enqueueSnackbar, closeSnackbar} = useSnackbar()
   const signAndSend = useCallback(
-    (extrinsic: SubmittableExtrinsic<'promise', ISubmittableResult>) => {
-      if (!account || !api) {
+    async (extrinsic: SubmittableExtrinsic<'promise', ISubmittableResult>) => {
+      if (account == null || api == null) {
         throw new Error('Account or api is not ready')
       }
       const section = extrinsic.method.section.toString()
@@ -23,7 +25,7 @@ const useSignAndSend = () => {
 
       let snackbarKey: SnackbarKey
 
-      return new Promise<void>((resolve, reject) => {
+      await new Promise<void>((resolve, reject) => {
         waitSignAndSend({
           api,
           account: account.address,
@@ -60,7 +62,7 @@ const useSignAndSend = () => {
           .catch((err) => {
             reject(err)
             closeSnackbar(snackbarKey)
-            if (err.message && err.message !== 'Cancelled') {
+            if (err.message != null && err.message !== 'Cancelled') {
               enqueueSnackbar(
                 <Box>
                   <Box>{name}</Box>

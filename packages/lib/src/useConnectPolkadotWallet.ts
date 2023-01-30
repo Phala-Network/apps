@@ -1,6 +1,6 @@
 import {polkadotAccountsAtom, walletAtom, walletNameAtom} from '@phala/store'
 import {transformAddress} from '@phala/util'
-import {WalletAccount} from '@talismn/connect-wallets'
+import {type WalletAccount} from '@talismn/connect-wallets'
 import {useAtom} from 'jotai'
 import {useEffect} from 'react'
 
@@ -13,12 +13,12 @@ export const useConnectPolkadotWallet = (
   const [walletName] = useAtom(walletNameAtom)
 
   useEffect(() => {
-    if (wallet || !walletName) return
+    if (wallet != null || walletName == null) return
     let unmounted = false
-    const connect = async () => {
+    const connect = async (): Promise<void> => {
       const {getWalletBySource} = await import('@talismn/connect-wallets')
       const newWallet = getWalletBySource(walletName)
-      if (newWallet) {
+      if (newWallet != null) {
         try {
           await newWallet.enable(dappName)
           if (!unmounted) {
@@ -29,7 +29,7 @@ export const useConnectPolkadotWallet = (
         }
       }
     }
-    connect()
+    void connect()
     return () => {
       unmounted = true
     }
@@ -38,8 +38,8 @@ export const useConnectPolkadotWallet = (
   useEffect(() => {
     let unsub: () => void
     let unmounted = false
-    const saveAccounts = (accounts?: WalletAccount[]) => {
-      if (!accounts || unmounted) return
+    const saveAccounts = (accounts?: WalletAccount[]): void => {
+      if (accounts == null || unmounted) return
       if (ss58Format === undefined) {
         setAccounts(accounts)
       } else {
@@ -53,8 +53,8 @@ export const useConnectPolkadotWallet = (
         )
       }
     }
-    const updateAccounts = async () => {
-      if (wallet) {
+    const updateAccounts = async (): Promise<void> => {
+      if (wallet != null) {
         // Some wallets don't implement subscribeAccounts correctly, so call getAccounts anyway
         const accounts = await wallet.getAccounts()
         saveAccounts(accounts)
@@ -65,7 +65,7 @@ export const useConnectPolkadotWallet = (
         setAccounts(null)
       }
     }
-    updateAccounts()
+    void updateAccounts()
     return () => {
       unmounted = true
       unsub?.()

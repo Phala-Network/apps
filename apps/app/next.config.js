@@ -12,7 +12,10 @@ const withTM = require('next-transpile-modules')(
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  eslint: {ignoreDuringBuilds: true},
+  eslint: {
+    ignoreDuringBuilds: true,
+    dirs: ['pages', 'components', 'lib', 'hooks', 'store', 'types'],
+  },
   reactStrictMode: true,
   swcMinify: true,
   images: {

@@ -1,6 +1,6 @@
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight'
 import {useTheme} from '@mui/material'
-import {FC} from 'react'
+import {type FC} from 'react'
 
 const CollapsedIcon: FC<{collapsed: boolean}> = ({collapsed}) => {
   const theme = useTheme()

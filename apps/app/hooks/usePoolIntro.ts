@@ -1,9 +1,8 @@
-import usePolkadotApi from './usePolkadotApi'
-
-import {ApiPromise} from '@polkadot/api'
+import {type ApiPromise} from '@polkadot/api'
 import {hexToString} from '@polkadot/util'
-import Ajv, {JSONSchemaType} from 'ajv'
+import Ajv, {type JSONSchemaType} from 'ajv'
 import useSWR from 'swr'
+import usePolkadotApi from './usePolkadotApi'
 
 export interface PoolIntro {
   telegram?: string
@@ -36,8 +35,11 @@ const schema: JSONSchemaType<PoolIntro> = {
 const ajv = new Ajv()
 const validate = ajv.compile(schema)
 
-const poolIntroFetcher = async ([api, pid]: [ApiPromise, string]) => {
-  return api.query.phalaBasePool.poolDescriptions(pid).then((bytes) => {
+const poolIntroFetcher = async ([api, pid]: [
+  ApiPromise,
+  string
+]): Promise<PoolIntro> => {
+  return await api.query.phalaBasePool.poolDescriptions(pid).then((bytes) => {
     try {
       const hex = bytes.unwrap().toHex()
       const string = hexToString(hex)
@@ -45,17 +47,17 @@ const poolIntroFetcher = async ([api, pid]: [ApiPromise, string]) => {
       if (validate(json)) {
         return json
       }
+      return {version: 1}
     } catch (err) {
-      return {version: 1} as PoolIntro
-      // noop
+      return {version: 1}
     }
   })
 }
 
-const usePoolIntro = (pid: string) => {
+const usePoolIntro = (pid: string): PoolIntro | undefined => {
   const api = usePolkadotApi()
   const {data} = useSWR(
-    api ? [api, pid, 'poolIntro'] : null,
+    api != null ? [api, pid, 'poolIntro'] : null,
     poolIntroFetcher,
     {
       refreshInterval: 12000,

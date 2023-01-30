@@ -4,7 +4,7 @@ import usePolkadotApi from '@/hooks/usePolkadotApi'
 import useSignAndSend from '@/hooks/useSignAndSend'
 import {aprToApy} from '@/lib/apr'
 import getPoolPath from '@/lib/getPoolPath'
-import {DelegationCommonFragment} from '@/lib/subsquidQuery'
+import {type DelegationCommonFragment} from '@/lib/subsquidQuery'
 import {colors} from '@/lib/theme'
 import Numbers from '@mui/icons-material/Numbers'
 import {
@@ -19,9 +19,9 @@ import {
   useTheme,
 } from '@mui/material'
 import {toCurrency, toPercentage} from '@phala/util'
-import {FC} from 'react'
+import {type FC} from 'react'
 import PromiseButton from '../PromiseButton'
-import {OnAction} from './List'
+import {type OnAction} from './List'
 
 const HorizonCard: FC<{
   delegation: DelegationCommonFragment
@@ -38,17 +38,14 @@ const HorizonCard: FC<{
   const apr = getApr(basePool.aprMultiplier)
   const hasWithdrawal = withdrawingValue !== '0'
   const poolHasWithdrawal = delegation.basePool.withdrawingShares !== '0'
-  const reclaim = async () => {
-    if (!api) return
-    return signAndSend(
+  const reclaim = async (): Promise<void> => {
+    if (api == null) return
+    await signAndSend(
       isVault
         ? api.tx.phalaVault.checkAndMaybeForceWithdraw(basePool.id)
         : api.tx.phalaStakePoolv2.checkAndMaybeForceWithdraw(basePool.id)
     )
   }
-
-  // TODO: handle withdrawal nft
-  if (!delegationNft) return null
 
   const actions = isOwner && (
     <Stack direction="row" alignItems="center">
@@ -111,7 +108,7 @@ const HorizonCard: FC<{
             >{`+ PHA`}</Box>
           </Property> */}
           <Property label={`Est. ${isVault ? 'APY' : 'APR'}`} sx={{width: 64}}>
-            {apr ? (
+            {apr != null ? (
               <Box
                 component="span"
                 color={isVault ? colors.vault[400] : colors.main[300]}

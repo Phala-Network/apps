@@ -1,5 +1,5 @@
-import {Stack, SxProps, Typography} from '@mui/material'
-import {FC} from 'react'
+import {Stack, type SxProps, Typography} from '@mui/material'
+import {type FC} from 'react'
 
 const Empty: FC<{message?: string; sx?: SxProps}> = ({
   message = 'No Results',

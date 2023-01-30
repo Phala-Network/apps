@@ -4,13 +4,13 @@ import usePolkadotApi from '@/hooks/usePolkadotApi'
 import useSelectedVaultState from '@/hooks/useSelectedVaultState'
 import useSignAndSend from '@/hooks/useSignAndSend'
 import {aprToApy} from '@/lib/apr'
-import {BasePoolCommonFragment} from '@/lib/subsquidQuery'
+import {type BasePoolCommonFragment} from '@/lib/subsquidQuery'
 import {barlow} from '@/lib/theme'
 import {LoadingButton} from '@mui/lab'
-import {Skeleton, Stack, SxProps, TextField} from '@mui/material'
+import {Skeleton, Stack, TextField, type SxProps} from '@mui/material'
 import {getDecimalPattern, toPercentage} from '@phala/util'
 import Decimal from 'decimal.js'
-import {FC, useMemo, useState} from 'react'
+import {useMemo, useState, type FC} from 'react'
 
 const DelegateInput: FC<{basePool: BasePoolCommonFragment; sx?: SxProps}> = ({
   basePool,
@@ -26,10 +26,10 @@ const DelegateInput: FC<{basePool: BasePoolCommonFragment; sx?: SxProps}> = ({
   const [amountString, setAmountString] = useState('')
   const asAccount = selectedVaultState === null
   const disabled = useMemo(() => {
-    return !amountString || selectedVaultState === undefined
+    return amountString === '' || selectedVaultState === undefined
   }, [amountString, selectedVaultState])
-  const delegate = () => {
-    if (!api || selectedVaultState === undefined) return
+  const delegate = (): void => {
+    if (api == null || selectedVaultState === undefined) return
     const amount = new Decimal(amountString).times(1e12).toHex()
     setLoading(true)
     const extrinsic = isVault
@@ -58,7 +58,7 @@ const DelegateInput: FC<{basePool: BasePoolCommonFragment; sx?: SxProps}> = ({
   }
   const delegatedApr = useMemo(() => {
     const apr = getApr(basePool.aprMultiplier)
-    if (!apr) return
+    if (apr == null) return
     try {
       const totalValue = new Decimal(basePool.totalValue)
       const amount = Decimal.max(
@@ -116,7 +116,7 @@ const DelegateInput: FC<{basePool: BasePoolCommonFragment; sx?: SxProps}> = ({
       >
         {typeof delegatedApr === 'string' ? (
           '-'
-        ) : delegatedApr ? (
+        ) : delegatedApr != null ? (
           toPercentage(isVault ? aprToApy(delegatedApr) : delegatedApr)
         ) : (
           <Skeleton width={32} />

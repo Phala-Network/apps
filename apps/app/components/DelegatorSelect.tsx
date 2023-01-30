@@ -18,7 +18,7 @@ import {polkadotAccountAtom} from '@phala/store'
 import {toCurrency} from '@phala/util'
 import {useAtom} from 'jotai'
 import Image from 'next/image'
-import {FC, useMemo} from 'react'
+import {useMemo, type FC} from 'react'
 
 const ACCOUNT = 'account'
 
@@ -34,29 +34,31 @@ const DelegatorSelect: FC<{isVault?: boolean}> = ({isVault = false}) => {
   const selectedVaultState = useSelectedVaultState()
   const balance = useAssetBalance(
     selectedVaultState !== undefined
-      ? selectedVaultState
+      ? selectedVaultState != null
         ? selectedVaultState.account.id
         : account?.address
       : undefined,
-    selectedVaultState ? WPHA_ASSET_ID : undefined
+    selectedVaultState != null ? WPHA_ASSET_ID : undefined
   )
-  if (!account || !accountData || !account.wallet) return null
+  if (account == null || accountData == null || account.wallet == null)
+    return null
   // MEMO: vault cannot delegate to another vault
-  const value = (!isVault && selectedVaultState?.id) || ACCOUNT
+  const value =
+    !isVault && selectedVaultState != null ? selectedVaultState.id : ACCOUNT
 
   return (
     <TextField
       value={value}
       select
       size="small"
-      disabled={isVault || !vaultIds.length}
+      disabled={isVault || vaultIds.length === 0}
       FormHelperTextProps={{sx: {textAlign: 'right', mx: 0}}}
       onChange={(e) => {
         setVaultId(e.target.value === ACCOUNT ? null : e.target.value)
       }}
       helperText={
         <Typography variant="num7">
-          {balance ? (
+          {balance != null ? (
             `${toCurrency(balance)} PHA`
           ) : (
             <Skeleton width={55} sx={{marginLeft: 'auto'}} />
