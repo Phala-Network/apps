@@ -3,6 +3,7 @@ import Empty from '@/components/Empty'
 import ListSkeleton from '@/components/ListSkeleton'
 import SectionHeader from '@/components/SectionHeader'
 import useDebounced from '@/hooks/useDebounced'
+import useYesterday from '@/hooks/useYesterday'
 import {subsquidClient} from '@/lib/graphql'
 import {
   useInfiniteDelegationsConnectionQuery,
@@ -33,6 +34,7 @@ import {
   Unstable_Grid2 as Grid,
 } from '@mui/material'
 import {isTruthy} from '@phala/util'
+import Decimal from 'decimal.js'
 import {useCallback, useEffect, useState, type FC} from 'react'
 import {useInView} from 'react-intersection-observer'
 import HorizonCard from './HorizonCard'
@@ -61,6 +63,7 @@ const DelegationList: FC<{
   isVault?: boolean
   isOwner?: boolean
 }> = ({address, isVault = false, showHeader = false, isOwner = false}) => {
+  const yesterday = useYesterday()
   const {ref, inView} = useInView()
   const [dialogOpen, setDialogOpen] = useState(false)
   const [dialogAction, setDialogAction] = useState<DelegationDialogAction>()
@@ -91,12 +94,17 @@ const DelegationList: FC<{
     },
     withdrawingFilter && {withdrawingValue_gt: '0'},
   ]
-  const enabled = address !== undefined
+  const enabled = address !== undefined && yesterday !== undefined
   const {data, isLoading, fetchNextPage, hasNextPage} =
     useInfiniteDelegationsConnectionQuery(
       'after',
       subsquidClient,
-      {first: 20, orderBy, where: {AND: where.filter(isTruthy)}},
+      {
+        first: 20,
+        orderBy,
+        where: {AND: where.filter(isTruthy)},
+        snapshotsWhere: {updatedTime_gte: yesterday},
+      },
       {
         keepPreviousData: true,
         enabled,
@@ -246,23 +254,40 @@ const DelegationList: FC<{
             ) : (
               data?.pages.map((page, index) => (
                 <Grid container key={index} spacing={2}>
-                  {page.delegationsConnection.edges.map((edge) => (
-                    <Grid key={edge.node.id} xs={12} md={showNftCard ? 6 : 12}>
-                      {showNftCard ? (
-                        <NftCard
-                          delegation={edge.node}
-                          onAction={onAction}
-                          isOwner={isOwner}
-                        />
-                      ) : (
-                        <HorizonCard
-                          delegation={edge.node}
-                          onAction={onAction}
-                          isOwner={isOwner}
-                        />
-                      )}
-                    </Grid>
-                  ))}
+                  {page.delegationsConnection.edges.map((edge) => {
+                    const delegation = edge.node
+                    const snapshot = edge.node.snapshots[0]
+                    let profit: Decimal | undefined
+                    if (snapshot != null) {
+                      profit = new Decimal(delegation.value)
+                        .minus(snapshot.value)
+                        .minus(delegation.cost)
+                        .plus(snapshot.cost)
+                    }
+                    return (
+                      <Grid
+                        key={edge.node.id}
+                        xs={12}
+                        md={showNftCard ? 6 : 12}
+                      >
+                        {showNftCard ? (
+                          <NftCard
+                            delegation={edge.node}
+                            onAction={onAction}
+                            isOwner={isOwner}
+                            profit={profit}
+                          />
+                        ) : (
+                          <HorizonCard
+                            delegation={edge.node}
+                            onAction={onAction}
+                            isOwner={isOwner}
+                            profit={profit}
+                          />
+                        )}
+                      </Grid>
+                    )
+                  })}
                 </Grid>
               ))
             )}

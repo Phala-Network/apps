@@ -33,11 +33,11 @@ const DelegatorSelect: FC<{isVault?: boolean}> = ({isVault = false}) => {
   )
   const selectedVaultState = useSelectedVaultState()
   const balance = useAssetBalance(
-    selectedVaultState !== undefined
-      ? selectedVaultState != null
-        ? selectedVaultState.account.id
-        : account?.address
-      : undefined,
+    selectedVaultState === undefined
+      ? undefined
+      : selectedVaultState === null
+      ? account?.address
+      : selectedVaultState.account.id,
     selectedVaultState != null ? WPHA_ASSET_ID : undefined
   )
   if (account == null || accountData == null || account.wallet == null)

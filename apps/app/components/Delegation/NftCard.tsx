@@ -34,7 +34,8 @@ const NftCard: FC<{
   delegation: DelegationCommonFragment
   onAction?: OnAction
   isOwner?: boolean
-}> = ({compact = false, delegation, onAction, isOwner = false}) => {
+  profit?: Decimal
+}> = ({compact = false, delegation, onAction, isOwner = false, profit}) => {
   const api = usePolkadotApi()
   const signAndSend = useSignAndSend()
   const [menuOpen, setMenuOpen] = useState(false)
@@ -121,9 +122,18 @@ const NftCard: FC<{
           {toCurrency(value)}
           <sub>PHA</sub>
         </Typography>
-        {/* <Typography variant="caption" color={theme.palette.success.main}>
-          {`+ PHA / 7d`}
-        </Typography> */}
+        {profit != null && (
+          <Typography
+            variant="body2"
+            color={
+              profit.gte(0.01)
+                ? theme.palette.success.main
+                : theme.palette.text.secondary
+            }
+          >
+            {`+ ${toCurrency(profit)} PHA / 24h`}
+          </Typography>
+        )}
 
         <Stack mt="auto">
           {hasWithdrawal && (

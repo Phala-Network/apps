@@ -8,7 +8,7 @@ const useVaultReset = (): void => {
   const [account] = useAtom(polkadotAccountAtom)
   const prevAccountAddress = useRef<string>()
   useEffect(() => {
-    if (prevAccountAddress.current === undefined) {
+    if (prevAccountAddress.current != null) {
       setVaultId(null)
     }
     prevAccountAddress.current = account?.address

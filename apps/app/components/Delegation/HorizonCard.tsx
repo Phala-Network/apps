@@ -19,6 +19,7 @@ import {
   useTheme,
 } from '@mui/material'
 import {toCurrency, toPercentage} from '@phala/util'
+import type Decimal from 'decimal.js'
 import {type FC} from 'react'
 import PromiseButton from '../PromiseButton'
 import {type OnAction} from './List'
@@ -27,7 +28,8 @@ const HorizonCard: FC<{
   delegation: DelegationCommonFragment
   onAction: OnAction
   isOwner?: boolean
-}> = ({delegation, onAction, isOwner = false}) => {
+  profit?: Decimal
+}> = ({delegation, onAction, isOwner = false, profit}) => {
   const api = usePolkadotApi()
   const signAndSend = useSignAndSend()
   const {value, basePool, delegationNft, withdrawingValue} = delegation
@@ -101,12 +103,18 @@ const HorizonCard: FC<{
           <Property label="Value" sx={{width: 120}}>{`${toCurrency(
             value
           )} PHA`}</Property>
-          {/* <Property label="7D Profit" sx={{width: 120}}>
-            <Box
-              component="span"
-              color={theme.palette.success.main}
-            >{`+ PHA`}</Box>
-          </Property> */}
+          {profit != null && (
+            <Property label="24h" sx={{width: 120}}>
+              <Box
+                component="span"
+                color={
+                  profit.gte(0.01)
+                    ? theme.palette.success.main
+                    : theme.palette.text.secondary
+                }
+              >{`+ ${toCurrency(profit)} PHA`}</Box>
+            </Property>
+          )}
           <Property label={`Est. ${isVault ? 'APY' : 'APR'}`} sx={{width: 64}}>
             {apr != null ? (
               <Box
