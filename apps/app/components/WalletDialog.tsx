@@ -1,3 +1,4 @@
+import novaLogo from '@/assets/nova_logo.png'
 import {walletDialogOpenAtom} from '@/store/ui'
 import {jsx} from '@emotion/react'
 import ArrowForwardIos from '@mui/icons-material/ArrowForwardIos'
@@ -36,7 +37,7 @@ const WalletDialog: FC = () => {
   useEffect(() => {
     let unmounted = false
     import('@talismn/connect-wallets').then(({getWallets}) => {
-      const sortedWallets = getWallets()
+      let sortedWallets = getWallets()
         .filter((x) => walletsOrder.includes(x.extensionName))
         .sort((a, b) => {
           return (
@@ -44,6 +45,18 @@ const WalletDialog: FC = () => {
             walletsOrder.indexOf(b.extensionName)
           )
         })
+      const polkadotJsWallet = sortedWallets.find(
+        (w) => w.extensionName === 'polkadot-js'
+      )
+      if (
+        polkadotJsWallet != null &&
+        (window as {walletExtension?: {isNovaWallet?: boolean}}).walletExtension
+          ?.isNovaWallet === true
+      ) {
+        polkadotJsWallet.title = 'Nova Wallet'
+        polkadotJsWallet.logo = {src: novaLogo.src, alt: 'Nova Wallet'}
+        sortedWallets = [polkadotJsWallet]
+      }
       if (!unmounted) {
         setWallets(sortedWallets)
       }
