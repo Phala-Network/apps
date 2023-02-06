@@ -2,6 +2,7 @@ import NftsIcon from '@/assets/nfts.svg'
 import usePolkadotApi from '@/hooks/usePolkadotApi'
 import {subsquidClient} from '@/lib/graphql'
 import {NftsConnectionQuery, useNftsConnectionQuery} from '@/lib/subsquidQuery'
+import {chainAtom} from '@/store/common'
 import {
   Box,
   Chip,
@@ -50,14 +51,20 @@ const collectionSymbolFetcher = async ([api, cid]: [
 
 const NftCard: FC<{nft: Nft}> = ({nft}) => {
   const api = usePolkadotApi()
+  const [chain] = useAtom(chainAtom)
+  const isDelegationNft = nft.delegation != null
   const {data: name} = useSWRImmutable(
-    api ? [api, nft.cid, nft.nftId, 'nftName'] : null,
+    api && isDelegationNft ? [api, nft.cid, nft.nftId, 'nftName'] : null,
     nftNameFetcher
   )
   const {data: collectionSymbol} = useSWRImmutable(
-    api ? [api, nft.cid, 'nftCollection'] : null,
+    api && isDelegationNft ? [api, nft.cid, 'nftCollection'] : null,
     collectionSymbolFetcher
   )
+  const delegationNftPrefix = `${chain === 'khala' ? 'Khala' : 'Phala'} - ${
+    nft.delegation?.basePool.kind ?? ''
+  }`
+
   return (
     <Paper
       sx={{
@@ -80,7 +87,15 @@ const NftCard: FC<{nft: Nft}> = ({nft}) => {
       </Box>
       <Stack p={1.5} justifyContent="space-between" flex="1" minHeight={90}>
         <Typography variant="subtitle2" component="div">
-          {name === undefined ? <Skeleton width="100%" /> : name}
+          {isDelegationNft ? (
+            `${delegationNftPrefix} Delegation NFT - #${
+              nft.delegation?.basePool.id ?? ''
+            } - ${nft.nftId}`
+          ) : name === undefined ? (
+            <Skeleton width="100%" />
+          ) : (
+            name
+          )}
         </Typography>
         <Typography
           variant="caption"
@@ -88,7 +103,9 @@ const NftCard: FC<{nft: Nft}> = ({nft}) => {
           color="text.secondary"
           mt={1}
         >
-          {collectionSymbol === undefined ? (
+          {isDelegationNft ? (
+            `${delegationNftPrefix} - #${nft.delegation?.basePool.id ?? ''}`
+          ) : collectionSymbol === undefined ? (
             <Skeleton width="30%" />
           ) : (
             collectionSymbol
