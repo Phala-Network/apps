@@ -2462,7 +2462,7 @@ type NftsConnectionQueryVariables = Exact<{
 }>;
 
 
-type NftsConnectionQuery = { __typename?: 'Query', nftsConnection: { __typename?: 'NftsConnection', totalCount: number, edges: Array<{ __typename?: 'NftEdge', cursor: string, node: { __typename?: 'Nft', id: string, cid: number, nftId: number, mintTime?: string | null, owner: { __typename?: 'Account', id: string }, delegation?: { __typename?: 'Delegation', value: string, basePool: { __typename?: 'BasePool', kind: BasePoolKind } } | null } }>, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string, endCursor: string } } };
+type NftsConnectionQuery = { __typename?: 'Query', nftsConnection: { __typename?: 'NftsConnection', totalCount: number, edges: Array<{ __typename?: 'NftEdge', cursor: string, node: { __typename?: 'Nft', id: string, cid: number, nftId: number, mintTime?: string | null, owner: { __typename?: 'Account', id: string }, delegation?: { __typename?: 'Delegation', value: string, basePool: { __typename?: 'BasePool', id: string, kind: BasePoolKind } } | null } }>, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string, endCursor: string } } };
 
 type RewardRecordsConnectionQueryVariables = Exact<{
   orderBy: Array<RewardRecordOrderByInput> | RewardRecordOrderByInput;
@@ -2787,6 +2787,7 @@ export const DelegationCommonFragmentDoc = gql`
         delegation {
           value
           basePool {
+            id
             kind
           }
         }
