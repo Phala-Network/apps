@@ -5,20 +5,22 @@ import usePolkadotApi from '@/hooks/usePolkadotApi'
 import useSignAndSend from '@/hooks/useSignAndSend'
 import {subsquidClient} from '@/lib/graphql'
 import {
-  BasePoolCommonFragment,
   useBasePoolWhitelistsConnectionQuery,
+  type BasePoolCommonFragment,
 } from '@/lib/subsquidQuery'
 import {theme} from '@/lib/theme'
-import {Button, Dialog, Stack, Theme, ThemeProvider} from '@mui/material'
-import {DataGrid, GridColDef} from '@mui/x-data-grid'
+import {Button, Dialog, Stack, ThemeProvider, type Theme} from '@mui/material'
+import {DataGrid, type GridColDef} from '@mui/x-data-grid'
 import {polkadotAccountAtom} from '@phala/store'
 import {useAtom} from 'jotai'
-import {FC, useCallback, useMemo, useState} from 'react'
+import {useCallback, useMemo, useState, type FC} from 'react'
 import AddWhitelist from './AddWhitelist'
 
-type RowModel = {id: string}
+interface RowModel {
+  id: string
+}
 
-const columns: GridColDef<RowModel>[] = [
+const columns: Array<GridColDef<RowModel>> = [
   {
     field: 'id',
     headerName: 'Address',
@@ -52,15 +54,15 @@ const WhitelistList: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
       }) ?? []
     )
   }, [data])
-  const removeSelected = () => {
-    if (!api || !selectedAddress.length) return
+  const removeSelected = (): void => {
+    if (api == null || selectedAddress.length === 0) return
     const calls = selectedAddress.map((address) => {
       return api.tx.phalaBasePool.removeStakerFromWhitelist(
         basePool.id,
         address
       )
     })
-    signAndSend(
+    void signAndSend(
       calls.length === 1 ? calls[0] : api.tx.utility.batch(calls)
     ).then(() => {
       setSelectedAddress([])
@@ -84,7 +86,9 @@ const WhitelistList: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
             <Button
               color={color}
               variant="contained"
-              onClick={() => setDialogOpen(true)}
+              onClick={() => {
+                setDialogOpen(true)
+              }}
             >
               Add
             </Button>

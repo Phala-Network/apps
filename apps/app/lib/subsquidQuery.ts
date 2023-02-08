@@ -111,6 +111,98 @@ export const AccountOrderByInput = {
 } as const;
 
 export type AccountOrderByInput = typeof AccountOrderByInput[keyof typeof AccountOrderByInput];
+export type AccountValueSnapshot = {
+  __typename?: 'AccountValueSnapshot';
+  account: Account;
+  id: Scalars['String'];
+  /** block time */
+  updatedTime: Scalars['DateTime'];
+  value: Scalars['BigDecimal'];
+};
+
+export type AccountValueSnapshotEdge = {
+  __typename?: 'AccountValueSnapshotEdge';
+  cursor: Scalars['String'];
+  node: AccountValueSnapshot;
+};
+
+export const AccountValueSnapshotOrderByInput = {
+  AccountIdAsc: 'account_id_ASC',
+  AccountIdDesc: 'account_id_DESC',
+  AccountIdentityDisplayAsc: 'account_identityDisplay_ASC',
+  AccountIdentityDisplayDesc: 'account_identityDisplay_DESC',
+  AccountIdentityLevelAsc: 'account_identityLevel_ASC',
+  AccountIdentityLevelDesc: 'account_identityLevel_DESC',
+  AccountStakePoolAvgAprMultiplierAsc: 'account_stakePoolAvgAprMultiplier_ASC',
+  AccountStakePoolAvgAprMultiplierDesc: 'account_stakePoolAvgAprMultiplier_DESC',
+  AccountStakePoolNftCountAsc: 'account_stakePoolNftCount_ASC',
+  AccountStakePoolNftCountDesc: 'account_stakePoolNftCount_DESC',
+  AccountStakePoolValueAsc: 'account_stakePoolValue_ASC',
+  AccountStakePoolValueDesc: 'account_stakePoolValue_DESC',
+  AccountVaultAvgAprMultiplierAsc: 'account_vaultAvgAprMultiplier_ASC',
+  AccountVaultAvgAprMultiplierDesc: 'account_vaultAvgAprMultiplier_DESC',
+  AccountVaultNftCountAsc: 'account_vaultNftCount_ASC',
+  AccountVaultNftCountDesc: 'account_vaultNftCount_DESC',
+  AccountVaultValueAsc: 'account_vaultValue_ASC',
+  AccountVaultValueDesc: 'account_vaultValue_DESC',
+  IdAsc: 'id_ASC',
+  IdDesc: 'id_DESC',
+  UpdatedTimeAsc: 'updatedTime_ASC',
+  UpdatedTimeDesc: 'updatedTime_DESC',
+  ValueAsc: 'value_ASC',
+  ValueDesc: 'value_DESC'
+} as const;
+
+export type AccountValueSnapshotOrderByInput = typeof AccountValueSnapshotOrderByInput[keyof typeof AccountValueSnapshotOrderByInput];
+export type AccountValueSnapshotWhereInput = {
+  AND?: InputMaybe<Array<AccountValueSnapshotWhereInput>>;
+  OR?: InputMaybe<Array<AccountValueSnapshotWhereInput>>;
+  account?: InputMaybe<AccountWhereInput>;
+  account_isNull?: InputMaybe<Scalars['Boolean']>;
+  id_contains?: InputMaybe<Scalars['String']>;
+  id_containsInsensitive?: InputMaybe<Scalars['String']>;
+  id_endsWith?: InputMaybe<Scalars['String']>;
+  id_eq?: InputMaybe<Scalars['String']>;
+  id_gt?: InputMaybe<Scalars['String']>;
+  id_gte?: InputMaybe<Scalars['String']>;
+  id_in?: InputMaybe<Array<Scalars['String']>>;
+  id_isNull?: InputMaybe<Scalars['Boolean']>;
+  id_lt?: InputMaybe<Scalars['String']>;
+  id_lte?: InputMaybe<Scalars['String']>;
+  id_not_contains?: InputMaybe<Scalars['String']>;
+  id_not_containsInsensitive?: InputMaybe<Scalars['String']>;
+  id_not_endsWith?: InputMaybe<Scalars['String']>;
+  id_not_eq?: InputMaybe<Scalars['String']>;
+  id_not_in?: InputMaybe<Array<Scalars['String']>>;
+  id_not_startsWith?: InputMaybe<Scalars['String']>;
+  id_startsWith?: InputMaybe<Scalars['String']>;
+  updatedTime_eq?: InputMaybe<Scalars['DateTime']>;
+  updatedTime_gt?: InputMaybe<Scalars['DateTime']>;
+  updatedTime_gte?: InputMaybe<Scalars['DateTime']>;
+  updatedTime_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  updatedTime_isNull?: InputMaybe<Scalars['Boolean']>;
+  updatedTime_lt?: InputMaybe<Scalars['DateTime']>;
+  updatedTime_lte?: InputMaybe<Scalars['DateTime']>;
+  updatedTime_not_eq?: InputMaybe<Scalars['DateTime']>;
+  updatedTime_not_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  value_eq?: InputMaybe<Scalars['BigDecimal']>;
+  value_gt?: InputMaybe<Scalars['BigDecimal']>;
+  value_gte?: InputMaybe<Scalars['BigDecimal']>;
+  value_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  value_isNull?: InputMaybe<Scalars['Boolean']>;
+  value_lt?: InputMaybe<Scalars['BigDecimal']>;
+  value_lte?: InputMaybe<Scalars['BigDecimal']>;
+  value_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  value_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+};
+
+export type AccountValueSnapshotsConnection = {
+  __typename?: 'AccountValueSnapshotsConnection';
+  edges: Array<AccountValueSnapshotEdge>;
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int'];
+};
+
 export type AccountWhereInput = {
   AND?: InputMaybe<Array<AccountWhereInput>>;
   OR?: InputMaybe<Array<AccountWhereInput>>;
@@ -266,110 +358,6 @@ export type BasePoolWhitelistsArgs = {
   where?: InputMaybe<BasePoolWhitelistWhereInput>;
 };
 
-export type BasePoolAprRecord = {
-  __typename?: 'BasePoolAprRecord';
-  basePool: BasePool;
-  id: Scalars['String'];
-  /** block time */
-  updatedTime: Scalars['DateTime'];
-  value: Scalars['BigDecimal'];
-};
-
-export type BasePoolAprRecordEdge = {
-  __typename?: 'BasePoolAprRecordEdge';
-  cursor: Scalars['String'];
-  node: BasePoolAprRecord;
-};
-
-export const BasePoolAprRecordOrderByInput = {
-  BasePoolAprMultiplierAsc: 'basePool_aprMultiplier_ASC',
-  BasePoolAprMultiplierDesc: 'basePool_aprMultiplier_DESC',
-  BasePoolCidAsc: 'basePool_cid_ASC',
-  BasePoolCidDesc: 'basePool_cid_DESC',
-  BasePoolCommissionAsc: 'basePool_commission_ASC',
-  BasePoolCommissionDesc: 'basePool_commission_DESC',
-  BasePoolDelegatorCountAsc: 'basePool_delegatorCount_ASC',
-  BasePoolDelegatorCountDesc: 'basePool_delegatorCount_DESC',
-  BasePoolFreeValueAsc: 'basePool_freeValue_ASC',
-  BasePoolFreeValueDesc: 'basePool_freeValue_DESC',
-  BasePoolIdAsc: 'basePool_id_ASC',
-  BasePoolIdDesc: 'basePool_id_DESC',
-  BasePoolKindAsc: 'basePool_kind_ASC',
-  BasePoolKindDesc: 'basePool_kind_DESC',
-  BasePoolPidAsc: 'basePool_pid_ASC',
-  BasePoolPidDesc: 'basePool_pid_DESC',
-  BasePoolReleasingValueAsc: 'basePool_releasingValue_ASC',
-  BasePoolReleasingValueDesc: 'basePool_releasingValue_DESC',
-  BasePoolSharePriceAsc: 'basePool_sharePrice_ASC',
-  BasePoolSharePriceDesc: 'basePool_sharePrice_DESC',
-  BasePoolTotalSharesAsc: 'basePool_totalShares_ASC',
-  BasePoolTotalSharesDesc: 'basePool_totalShares_DESC',
-  BasePoolTotalValueAsc: 'basePool_totalValue_ASC',
-  BasePoolTotalValueDesc: 'basePool_totalValue_DESC',
-  BasePoolWhitelistEnabledAsc: 'basePool_whitelistEnabled_ASC',
-  BasePoolWhitelistEnabledDesc: 'basePool_whitelistEnabled_DESC',
-  BasePoolWithdrawingSharesAsc: 'basePool_withdrawingShares_ASC',
-  BasePoolWithdrawingSharesDesc: 'basePool_withdrawingShares_DESC',
-  BasePoolWithdrawingValueAsc: 'basePool_withdrawingValue_ASC',
-  BasePoolWithdrawingValueDesc: 'basePool_withdrawingValue_DESC',
-  IdAsc: 'id_ASC',
-  IdDesc: 'id_DESC',
-  UpdatedTimeAsc: 'updatedTime_ASC',
-  UpdatedTimeDesc: 'updatedTime_DESC',
-  ValueAsc: 'value_ASC',
-  ValueDesc: 'value_DESC'
-} as const;
-
-export type BasePoolAprRecordOrderByInput = typeof BasePoolAprRecordOrderByInput[keyof typeof BasePoolAprRecordOrderByInput];
-export type BasePoolAprRecordWhereInput = {
-  AND?: InputMaybe<Array<BasePoolAprRecordWhereInput>>;
-  OR?: InputMaybe<Array<BasePoolAprRecordWhereInput>>;
-  basePool?: InputMaybe<BasePoolWhereInput>;
-  basePool_isNull?: InputMaybe<Scalars['Boolean']>;
-  id_contains?: InputMaybe<Scalars['String']>;
-  id_containsInsensitive?: InputMaybe<Scalars['String']>;
-  id_endsWith?: InputMaybe<Scalars['String']>;
-  id_eq?: InputMaybe<Scalars['String']>;
-  id_gt?: InputMaybe<Scalars['String']>;
-  id_gte?: InputMaybe<Scalars['String']>;
-  id_in?: InputMaybe<Array<Scalars['String']>>;
-  id_isNull?: InputMaybe<Scalars['Boolean']>;
-  id_lt?: InputMaybe<Scalars['String']>;
-  id_lte?: InputMaybe<Scalars['String']>;
-  id_not_contains?: InputMaybe<Scalars['String']>;
-  id_not_containsInsensitive?: InputMaybe<Scalars['String']>;
-  id_not_endsWith?: InputMaybe<Scalars['String']>;
-  id_not_eq?: InputMaybe<Scalars['String']>;
-  id_not_in?: InputMaybe<Array<Scalars['String']>>;
-  id_not_startsWith?: InputMaybe<Scalars['String']>;
-  id_startsWith?: InputMaybe<Scalars['String']>;
-  updatedTime_eq?: InputMaybe<Scalars['DateTime']>;
-  updatedTime_gt?: InputMaybe<Scalars['DateTime']>;
-  updatedTime_gte?: InputMaybe<Scalars['DateTime']>;
-  updatedTime_in?: InputMaybe<Array<Scalars['DateTime']>>;
-  updatedTime_isNull?: InputMaybe<Scalars['Boolean']>;
-  updatedTime_lt?: InputMaybe<Scalars['DateTime']>;
-  updatedTime_lte?: InputMaybe<Scalars['DateTime']>;
-  updatedTime_not_eq?: InputMaybe<Scalars['DateTime']>;
-  updatedTime_not_in?: InputMaybe<Array<Scalars['DateTime']>>;
-  value_eq?: InputMaybe<Scalars['BigDecimal']>;
-  value_gt?: InputMaybe<Scalars['BigDecimal']>;
-  value_gte?: InputMaybe<Scalars['BigDecimal']>;
-  value_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
-  value_isNull?: InputMaybe<Scalars['Boolean']>;
-  value_lt?: InputMaybe<Scalars['BigDecimal']>;
-  value_lte?: InputMaybe<Scalars['BigDecimal']>;
-  value_not_eq?: InputMaybe<Scalars['BigDecimal']>;
-  value_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
-};
-
-export type BasePoolAprRecordsConnection = {
-  __typename?: 'BasePoolAprRecordsConnection';
-  edges: Array<BasePoolAprRecordEdge>;
-  pageInfo: PageInfo;
-  totalCount: Scalars['Int'];
-};
-
 export type BasePoolEdge = {
   __typename?: 'BasePoolEdge';
   cursor: Scalars['String'];
@@ -472,6 +460,158 @@ export const BasePoolOrderByInput = {
 } as const;
 
 export type BasePoolOrderByInput = typeof BasePoolOrderByInput[keyof typeof BasePoolOrderByInput];
+export type BasePoolSnapshot = {
+  __typename?: 'BasePoolSnapshot';
+  apr: Scalars['BigDecimal'];
+  basePool: BasePool;
+  commission: Scalars['BigDecimal'];
+  delegatorCount: Scalars['Int'];
+  id: Scalars['String'];
+  sharePrice: Scalars['BigDecimal'];
+  totalValue: Scalars['BigDecimal'];
+  /** block time */
+  updatedTime: Scalars['DateTime'];
+};
+
+export type BasePoolSnapshotEdge = {
+  __typename?: 'BasePoolSnapshotEdge';
+  cursor: Scalars['String'];
+  node: BasePoolSnapshot;
+};
+
+export const BasePoolSnapshotOrderByInput = {
+  AprAsc: 'apr_ASC',
+  AprDesc: 'apr_DESC',
+  BasePoolAprMultiplierAsc: 'basePool_aprMultiplier_ASC',
+  BasePoolAprMultiplierDesc: 'basePool_aprMultiplier_DESC',
+  BasePoolCidAsc: 'basePool_cid_ASC',
+  BasePoolCidDesc: 'basePool_cid_DESC',
+  BasePoolCommissionAsc: 'basePool_commission_ASC',
+  BasePoolCommissionDesc: 'basePool_commission_DESC',
+  BasePoolDelegatorCountAsc: 'basePool_delegatorCount_ASC',
+  BasePoolDelegatorCountDesc: 'basePool_delegatorCount_DESC',
+  BasePoolFreeValueAsc: 'basePool_freeValue_ASC',
+  BasePoolFreeValueDesc: 'basePool_freeValue_DESC',
+  BasePoolIdAsc: 'basePool_id_ASC',
+  BasePoolIdDesc: 'basePool_id_DESC',
+  BasePoolKindAsc: 'basePool_kind_ASC',
+  BasePoolKindDesc: 'basePool_kind_DESC',
+  BasePoolPidAsc: 'basePool_pid_ASC',
+  BasePoolPidDesc: 'basePool_pid_DESC',
+  BasePoolReleasingValueAsc: 'basePool_releasingValue_ASC',
+  BasePoolReleasingValueDesc: 'basePool_releasingValue_DESC',
+  BasePoolSharePriceAsc: 'basePool_sharePrice_ASC',
+  BasePoolSharePriceDesc: 'basePool_sharePrice_DESC',
+  BasePoolTotalSharesAsc: 'basePool_totalShares_ASC',
+  BasePoolTotalSharesDesc: 'basePool_totalShares_DESC',
+  BasePoolTotalValueAsc: 'basePool_totalValue_ASC',
+  BasePoolTotalValueDesc: 'basePool_totalValue_DESC',
+  BasePoolWhitelistEnabledAsc: 'basePool_whitelistEnabled_ASC',
+  BasePoolWhitelistEnabledDesc: 'basePool_whitelistEnabled_DESC',
+  BasePoolWithdrawingSharesAsc: 'basePool_withdrawingShares_ASC',
+  BasePoolWithdrawingSharesDesc: 'basePool_withdrawingShares_DESC',
+  BasePoolWithdrawingValueAsc: 'basePool_withdrawingValue_ASC',
+  BasePoolWithdrawingValueDesc: 'basePool_withdrawingValue_DESC',
+  CommissionAsc: 'commission_ASC',
+  CommissionDesc: 'commission_DESC',
+  DelegatorCountAsc: 'delegatorCount_ASC',
+  DelegatorCountDesc: 'delegatorCount_DESC',
+  IdAsc: 'id_ASC',
+  IdDesc: 'id_DESC',
+  SharePriceAsc: 'sharePrice_ASC',
+  SharePriceDesc: 'sharePrice_DESC',
+  TotalValueAsc: 'totalValue_ASC',
+  TotalValueDesc: 'totalValue_DESC',
+  UpdatedTimeAsc: 'updatedTime_ASC',
+  UpdatedTimeDesc: 'updatedTime_DESC'
+} as const;
+
+export type BasePoolSnapshotOrderByInput = typeof BasePoolSnapshotOrderByInput[keyof typeof BasePoolSnapshotOrderByInput];
+export type BasePoolSnapshotWhereInput = {
+  AND?: InputMaybe<Array<BasePoolSnapshotWhereInput>>;
+  OR?: InputMaybe<Array<BasePoolSnapshotWhereInput>>;
+  apr_eq?: InputMaybe<Scalars['BigDecimal']>;
+  apr_gt?: InputMaybe<Scalars['BigDecimal']>;
+  apr_gte?: InputMaybe<Scalars['BigDecimal']>;
+  apr_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  apr_isNull?: InputMaybe<Scalars['Boolean']>;
+  apr_lt?: InputMaybe<Scalars['BigDecimal']>;
+  apr_lte?: InputMaybe<Scalars['BigDecimal']>;
+  apr_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  apr_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  basePool?: InputMaybe<BasePoolWhereInput>;
+  basePool_isNull?: InputMaybe<Scalars['Boolean']>;
+  commission_eq?: InputMaybe<Scalars['BigDecimal']>;
+  commission_gt?: InputMaybe<Scalars['BigDecimal']>;
+  commission_gte?: InputMaybe<Scalars['BigDecimal']>;
+  commission_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  commission_isNull?: InputMaybe<Scalars['Boolean']>;
+  commission_lt?: InputMaybe<Scalars['BigDecimal']>;
+  commission_lte?: InputMaybe<Scalars['BigDecimal']>;
+  commission_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  commission_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  delegatorCount_eq?: InputMaybe<Scalars['Int']>;
+  delegatorCount_gt?: InputMaybe<Scalars['Int']>;
+  delegatorCount_gte?: InputMaybe<Scalars['Int']>;
+  delegatorCount_in?: InputMaybe<Array<Scalars['Int']>>;
+  delegatorCount_isNull?: InputMaybe<Scalars['Boolean']>;
+  delegatorCount_lt?: InputMaybe<Scalars['Int']>;
+  delegatorCount_lte?: InputMaybe<Scalars['Int']>;
+  delegatorCount_not_eq?: InputMaybe<Scalars['Int']>;
+  delegatorCount_not_in?: InputMaybe<Array<Scalars['Int']>>;
+  id_contains?: InputMaybe<Scalars['String']>;
+  id_containsInsensitive?: InputMaybe<Scalars['String']>;
+  id_endsWith?: InputMaybe<Scalars['String']>;
+  id_eq?: InputMaybe<Scalars['String']>;
+  id_gt?: InputMaybe<Scalars['String']>;
+  id_gte?: InputMaybe<Scalars['String']>;
+  id_in?: InputMaybe<Array<Scalars['String']>>;
+  id_isNull?: InputMaybe<Scalars['Boolean']>;
+  id_lt?: InputMaybe<Scalars['String']>;
+  id_lte?: InputMaybe<Scalars['String']>;
+  id_not_contains?: InputMaybe<Scalars['String']>;
+  id_not_containsInsensitive?: InputMaybe<Scalars['String']>;
+  id_not_endsWith?: InputMaybe<Scalars['String']>;
+  id_not_eq?: InputMaybe<Scalars['String']>;
+  id_not_in?: InputMaybe<Array<Scalars['String']>>;
+  id_not_startsWith?: InputMaybe<Scalars['String']>;
+  id_startsWith?: InputMaybe<Scalars['String']>;
+  sharePrice_eq?: InputMaybe<Scalars['BigDecimal']>;
+  sharePrice_gt?: InputMaybe<Scalars['BigDecimal']>;
+  sharePrice_gte?: InputMaybe<Scalars['BigDecimal']>;
+  sharePrice_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  sharePrice_isNull?: InputMaybe<Scalars['Boolean']>;
+  sharePrice_lt?: InputMaybe<Scalars['BigDecimal']>;
+  sharePrice_lte?: InputMaybe<Scalars['BigDecimal']>;
+  sharePrice_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  sharePrice_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  totalValue_eq?: InputMaybe<Scalars['BigDecimal']>;
+  totalValue_gt?: InputMaybe<Scalars['BigDecimal']>;
+  totalValue_gte?: InputMaybe<Scalars['BigDecimal']>;
+  totalValue_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  totalValue_isNull?: InputMaybe<Scalars['Boolean']>;
+  totalValue_lt?: InputMaybe<Scalars['BigDecimal']>;
+  totalValue_lte?: InputMaybe<Scalars['BigDecimal']>;
+  totalValue_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  totalValue_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  updatedTime_eq?: InputMaybe<Scalars['DateTime']>;
+  updatedTime_gt?: InputMaybe<Scalars['DateTime']>;
+  updatedTime_gte?: InputMaybe<Scalars['DateTime']>;
+  updatedTime_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  updatedTime_isNull?: InputMaybe<Scalars['Boolean']>;
+  updatedTime_lt?: InputMaybe<Scalars['DateTime']>;
+  updatedTime_lte?: InputMaybe<Scalars['DateTime']>;
+  updatedTime_not_eq?: InputMaybe<Scalars['DateTime']>;
+  updatedTime_not_in?: InputMaybe<Array<Scalars['DateTime']>>;
+};
+
+export type BasePoolSnapshotsConnection = {
+  __typename?: 'BasePoolSnapshotsConnection';
+  edges: Array<BasePoolSnapshotEdge>;
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int'];
+};
+
 export type BasePoolWhereInput = {
   AND?: InputMaybe<Array<BasePoolWhereInput>>;
   OR?: InputMaybe<Array<BasePoolWhereInput>>;
@@ -748,15 +888,25 @@ export type Delegation = {
   __typename?: 'Delegation';
   account: Account;
   basePool: BasePool;
+  cost: Scalars['BigDecimal'];
   delegationNft: Nft;
   /** ${pid}-${accountId} */
   id: Scalars['String'];
   shares: Scalars['BigDecimal'];
+  snapshots: Array<DelegationSnapshot>;
   value: Scalars['BigDecimal'];
   withdrawalNft?: Maybe<Nft>;
   withdrawalStartTime?: Maybe<Scalars['DateTime']>;
   withdrawingShares: Scalars['BigDecimal'];
   withdrawingValue: Scalars['BigDecimal'];
+};
+
+
+export type DelegationSnapshotsArgs = {
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Array<DelegationSnapshotOrderByInput>>;
+  where?: InputMaybe<DelegationSnapshotWhereInput>;
 };
 
 export type DelegationEdge = {
@@ -814,6 +964,8 @@ export const DelegationOrderByInput = {
   BasePoolWithdrawingSharesDesc: 'basePool_withdrawingShares_DESC',
   BasePoolWithdrawingValueAsc: 'basePool_withdrawingValue_ASC',
   BasePoolWithdrawingValueDesc: 'basePool_withdrawingValue_DESC',
+  CostAsc: 'cost_ASC',
+  CostDesc: 'cost_DESC',
   DelegationNftBurnedAsc: 'delegationNft_burned_ASC',
   DelegationNftBurnedDesc: 'delegationNft_burned_DESC',
   DelegationNftCidAsc: 'delegationNft_cid_ASC',
@@ -849,40 +1001,39 @@ export const DelegationOrderByInput = {
 } as const;
 
 export type DelegationOrderByInput = typeof DelegationOrderByInput[keyof typeof DelegationOrderByInput];
-export type DelegationValueRecord = {
-  __typename?: 'DelegationValueRecord';
-  account: Account;
+export type DelegationSnapshot = {
+  __typename?: 'DelegationSnapshot';
+  cost: Scalars['BigDecimal'];
+  delegation: Delegation;
   id: Scalars['String'];
   /** block time */
   updatedTime: Scalars['DateTime'];
   value: Scalars['BigDecimal'];
 };
 
-export type DelegationValueRecordEdge = {
-  __typename?: 'DelegationValueRecordEdge';
+export type DelegationSnapshotEdge = {
+  __typename?: 'DelegationSnapshotEdge';
   cursor: Scalars['String'];
-  node: DelegationValueRecord;
+  node: DelegationSnapshot;
 };
 
-export const DelegationValueRecordOrderByInput = {
-  AccountIdAsc: 'account_id_ASC',
-  AccountIdDesc: 'account_id_DESC',
-  AccountIdentityDisplayAsc: 'account_identityDisplay_ASC',
-  AccountIdentityDisplayDesc: 'account_identityDisplay_DESC',
-  AccountIdentityLevelAsc: 'account_identityLevel_ASC',
-  AccountIdentityLevelDesc: 'account_identityLevel_DESC',
-  AccountStakePoolAvgAprMultiplierAsc: 'account_stakePoolAvgAprMultiplier_ASC',
-  AccountStakePoolAvgAprMultiplierDesc: 'account_stakePoolAvgAprMultiplier_DESC',
-  AccountStakePoolNftCountAsc: 'account_stakePoolNftCount_ASC',
-  AccountStakePoolNftCountDesc: 'account_stakePoolNftCount_DESC',
-  AccountStakePoolValueAsc: 'account_stakePoolValue_ASC',
-  AccountStakePoolValueDesc: 'account_stakePoolValue_DESC',
-  AccountVaultAvgAprMultiplierAsc: 'account_vaultAvgAprMultiplier_ASC',
-  AccountVaultAvgAprMultiplierDesc: 'account_vaultAvgAprMultiplier_DESC',
-  AccountVaultNftCountAsc: 'account_vaultNftCount_ASC',
-  AccountVaultNftCountDesc: 'account_vaultNftCount_DESC',
-  AccountVaultValueAsc: 'account_vaultValue_ASC',
-  AccountVaultValueDesc: 'account_vaultValue_DESC',
+export const DelegationSnapshotOrderByInput = {
+  CostAsc: 'cost_ASC',
+  CostDesc: 'cost_DESC',
+  DelegationCostAsc: 'delegation_cost_ASC',
+  DelegationCostDesc: 'delegation_cost_DESC',
+  DelegationIdAsc: 'delegation_id_ASC',
+  DelegationIdDesc: 'delegation_id_DESC',
+  DelegationSharesAsc: 'delegation_shares_ASC',
+  DelegationSharesDesc: 'delegation_shares_DESC',
+  DelegationValueAsc: 'delegation_value_ASC',
+  DelegationValueDesc: 'delegation_value_DESC',
+  DelegationWithdrawalStartTimeAsc: 'delegation_withdrawalStartTime_ASC',
+  DelegationWithdrawalStartTimeDesc: 'delegation_withdrawalStartTime_DESC',
+  DelegationWithdrawingSharesAsc: 'delegation_withdrawingShares_ASC',
+  DelegationWithdrawingSharesDesc: 'delegation_withdrawingShares_DESC',
+  DelegationWithdrawingValueAsc: 'delegation_withdrawingValue_ASC',
+  DelegationWithdrawingValueDesc: 'delegation_withdrawingValue_DESC',
   IdAsc: 'id_ASC',
   IdDesc: 'id_DESC',
   UpdatedTimeAsc: 'updatedTime_ASC',
@@ -891,12 +1042,21 @@ export const DelegationValueRecordOrderByInput = {
   ValueDesc: 'value_DESC'
 } as const;
 
-export type DelegationValueRecordOrderByInput = typeof DelegationValueRecordOrderByInput[keyof typeof DelegationValueRecordOrderByInput];
-export type DelegationValueRecordWhereInput = {
-  AND?: InputMaybe<Array<DelegationValueRecordWhereInput>>;
-  OR?: InputMaybe<Array<DelegationValueRecordWhereInput>>;
-  account?: InputMaybe<AccountWhereInput>;
-  account_isNull?: InputMaybe<Scalars['Boolean']>;
+export type DelegationSnapshotOrderByInput = typeof DelegationSnapshotOrderByInput[keyof typeof DelegationSnapshotOrderByInput];
+export type DelegationSnapshotWhereInput = {
+  AND?: InputMaybe<Array<DelegationSnapshotWhereInput>>;
+  OR?: InputMaybe<Array<DelegationSnapshotWhereInput>>;
+  cost_eq?: InputMaybe<Scalars['BigDecimal']>;
+  cost_gt?: InputMaybe<Scalars['BigDecimal']>;
+  cost_gte?: InputMaybe<Scalars['BigDecimal']>;
+  cost_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  cost_isNull?: InputMaybe<Scalars['Boolean']>;
+  cost_lt?: InputMaybe<Scalars['BigDecimal']>;
+  cost_lte?: InputMaybe<Scalars['BigDecimal']>;
+  cost_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  cost_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  delegation?: InputMaybe<DelegationWhereInput>;
+  delegation_isNull?: InputMaybe<Scalars['Boolean']>;
   id_contains?: InputMaybe<Scalars['String']>;
   id_containsInsensitive?: InputMaybe<Scalars['String']>;
   id_endsWith?: InputMaybe<Scalars['String']>;
@@ -934,9 +1094,9 @@ export type DelegationValueRecordWhereInput = {
   value_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
 };
 
-export type DelegationValueRecordsConnection = {
-  __typename?: 'DelegationValueRecordsConnection';
-  edges: Array<DelegationValueRecordEdge>;
+export type DelegationSnapshotsConnection = {
+  __typename?: 'DelegationSnapshotsConnection';
+  edges: Array<DelegationSnapshotEdge>;
   pageInfo: PageInfo;
   totalCount: Scalars['Int'];
 };
@@ -948,6 +1108,15 @@ export type DelegationWhereInput = {
   account_isNull?: InputMaybe<Scalars['Boolean']>;
   basePool?: InputMaybe<BasePoolWhereInput>;
   basePool_isNull?: InputMaybe<Scalars['Boolean']>;
+  cost_eq?: InputMaybe<Scalars['BigDecimal']>;
+  cost_gt?: InputMaybe<Scalars['BigDecimal']>;
+  cost_gte?: InputMaybe<Scalars['BigDecimal']>;
+  cost_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  cost_isNull?: InputMaybe<Scalars['Boolean']>;
+  cost_lt?: InputMaybe<Scalars['BigDecimal']>;
+  cost_lte?: InputMaybe<Scalars['BigDecimal']>;
+  cost_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  cost_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
   delegationNft?: InputMaybe<NftWhereInput>;
   delegationNft_isNull?: InputMaybe<Scalars['Boolean']>;
   id_contains?: InputMaybe<Scalars['String']>;
@@ -976,6 +1145,9 @@ export type DelegationWhereInput = {
   shares_lte?: InputMaybe<Scalars['BigDecimal']>;
   shares_not_eq?: InputMaybe<Scalars['BigDecimal']>;
   shares_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  snapshots_every?: InputMaybe<DelegationSnapshotWhereInput>;
+  snapshots_none?: InputMaybe<DelegationSnapshotWhereInput>;
+  snapshots_some?: InputMaybe<DelegationSnapshotWhereInput>;
   value_eq?: InputMaybe<Scalars['BigDecimal']>;
   value_gt?: InputMaybe<Scalars['BigDecimal']>;
   value_gte?: InputMaybe<Scalars['BigDecimal']>;
@@ -1201,6 +1373,8 @@ export const NftOrderByInput = {
   BurnedDesc: 'burned_DESC',
   CidAsc: 'cid_ASC',
   CidDesc: 'cid_DESC',
+  DelegationCostAsc: 'delegation_cost_ASC',
+  DelegationCostDesc: 'delegation_cost_DESC',
   DelegationIdAsc: 'delegation_id_ASC',
   DelegationIdDesc: 'delegation_id_DESC',
   DelegationSharesAsc: 'delegation_shares_ASC',
@@ -1316,16 +1490,21 @@ export type Query = {
   accountById?: Maybe<Account>;
   /** @deprecated Use accountById */
   accountByUniqueInput?: Maybe<Account>;
+  accountValueSnapshotById?: Maybe<AccountValueSnapshot>;
+  /** @deprecated Use accountValueSnapshotById */
+  accountValueSnapshotByUniqueInput?: Maybe<AccountValueSnapshot>;
+  accountValueSnapshots: Array<AccountValueSnapshot>;
+  accountValueSnapshotsConnection: AccountValueSnapshotsConnection;
   accounts: Array<Account>;
   accountsConnection: AccountsConnection;
-  basePoolAprRecordById?: Maybe<BasePoolAprRecord>;
-  /** @deprecated Use basePoolAprRecordById */
-  basePoolAprRecordByUniqueInput?: Maybe<BasePoolAprRecord>;
-  basePoolAprRecords: Array<BasePoolAprRecord>;
-  basePoolAprRecordsConnection: BasePoolAprRecordsConnection;
   basePoolById?: Maybe<BasePool>;
   /** @deprecated Use basePoolById */
   basePoolByUniqueInput?: Maybe<BasePool>;
+  basePoolSnapshotById?: Maybe<BasePoolSnapshot>;
+  /** @deprecated Use basePoolSnapshotById */
+  basePoolSnapshotByUniqueInput?: Maybe<BasePoolSnapshot>;
+  basePoolSnapshots: Array<BasePoolSnapshot>;
+  basePoolSnapshotsConnection: BasePoolSnapshotsConnection;
   basePoolWhitelistById?: Maybe<BasePoolWhitelist>;
   /** @deprecated Use basePoolWhitelistById */
   basePoolWhitelistByUniqueInput?: Maybe<BasePoolWhitelist>;
@@ -1336,11 +1515,11 @@ export type Query = {
   delegationById?: Maybe<Delegation>;
   /** @deprecated Use delegationById */
   delegationByUniqueInput?: Maybe<Delegation>;
-  delegationValueRecordById?: Maybe<DelegationValueRecord>;
-  /** @deprecated Use delegationValueRecordById */
-  delegationValueRecordByUniqueInput?: Maybe<DelegationValueRecord>;
-  delegationValueRecords: Array<DelegationValueRecord>;
-  delegationValueRecordsConnection: DelegationValueRecordsConnection;
+  delegationSnapshotById?: Maybe<DelegationSnapshot>;
+  /** @deprecated Use delegationSnapshotById */
+  delegationSnapshotByUniqueInput?: Maybe<DelegationSnapshot>;
+  delegationSnapshots: Array<DelegationSnapshot>;
+  delegationSnapshotsConnection: DelegationSnapshotsConnection;
   delegations: Array<Delegation>;
   delegationsConnection: DelegationsConnection;
   globalStateById?: Maybe<GlobalState>;
@@ -1392,6 +1571,32 @@ export type QueryAccountByUniqueInputArgs = {
 };
 
 
+export type QueryAccountValueSnapshotByIdArgs = {
+  id: Scalars['String'];
+};
+
+
+export type QueryAccountValueSnapshotByUniqueInputArgs = {
+  where: WhereIdInput;
+};
+
+
+export type QueryAccountValueSnapshotsArgs = {
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Array<AccountValueSnapshotOrderByInput>>;
+  where?: InputMaybe<AccountValueSnapshotWhereInput>;
+};
+
+
+export type QueryAccountValueSnapshotsConnectionArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy: Array<AccountValueSnapshotOrderByInput>;
+  where?: InputMaybe<AccountValueSnapshotWhereInput>;
+};
+
+
 export type QueryAccountsArgs = {
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
@@ -1408,32 +1613,6 @@ export type QueryAccountsConnectionArgs = {
 };
 
 
-export type QueryBasePoolAprRecordByIdArgs = {
-  id: Scalars['String'];
-};
-
-
-export type QueryBasePoolAprRecordByUniqueInputArgs = {
-  where: WhereIdInput;
-};
-
-
-export type QueryBasePoolAprRecordsArgs = {
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<Array<BasePoolAprRecordOrderByInput>>;
-  where?: InputMaybe<BasePoolAprRecordWhereInput>;
-};
-
-
-export type QueryBasePoolAprRecordsConnectionArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  orderBy: Array<BasePoolAprRecordOrderByInput>;
-  where?: InputMaybe<BasePoolAprRecordWhereInput>;
-};
-
-
 export type QueryBasePoolByIdArgs = {
   id: Scalars['String'];
 };
@@ -1441,6 +1620,32 @@ export type QueryBasePoolByIdArgs = {
 
 export type QueryBasePoolByUniqueInputArgs = {
   where: WhereIdInput;
+};
+
+
+export type QueryBasePoolSnapshotByIdArgs = {
+  id: Scalars['String'];
+};
+
+
+export type QueryBasePoolSnapshotByUniqueInputArgs = {
+  where: WhereIdInput;
+};
+
+
+export type QueryBasePoolSnapshotsArgs = {
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Array<BasePoolSnapshotOrderByInput>>;
+  where?: InputMaybe<BasePoolSnapshotWhereInput>;
+};
+
+
+export type QueryBasePoolSnapshotsConnectionArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy: Array<BasePoolSnapshotOrderByInput>;
+  where?: InputMaybe<BasePoolSnapshotWhereInput>;
 };
 
 
@@ -1496,29 +1701,29 @@ export type QueryDelegationByUniqueInputArgs = {
 };
 
 
-export type QueryDelegationValueRecordByIdArgs = {
+export type QueryDelegationSnapshotByIdArgs = {
   id: Scalars['String'];
 };
 
 
-export type QueryDelegationValueRecordByUniqueInputArgs = {
+export type QueryDelegationSnapshotByUniqueInputArgs = {
   where: WhereIdInput;
 };
 
 
-export type QueryDelegationValueRecordsArgs = {
+export type QueryDelegationSnapshotsArgs = {
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<Array<DelegationValueRecordOrderByInput>>;
-  where?: InputMaybe<DelegationValueRecordWhereInput>;
+  orderBy?: InputMaybe<Array<DelegationSnapshotOrderByInput>>;
+  where?: InputMaybe<DelegationSnapshotWhereInput>;
 };
 
 
-export type QueryDelegationValueRecordsConnectionArgs = {
+export type QueryDelegationSnapshotsConnectionArgs = {
   after?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Int']>;
-  orderBy: Array<DelegationValueRecordOrderByInput>;
-  where?: InputMaybe<DelegationValueRecordWhereInput>;
+  orderBy: Array<DelegationSnapshotOrderByInput>;
+  where?: InputMaybe<DelegationSnapshotWhereInput>;
 };
 
 
@@ -2382,6 +2587,16 @@ export type AccountByIdQueryVariables = Exact<{
 
 export type AccountByIdQuery = { __typename?: 'Query', accountById?: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null, stakePoolNftCount: number, stakePoolValue: string, stakePoolAvgAprMultiplier: string, vaultNftCount: number, vaultValue: string, vaultAvgAprMultiplier: string, ownedPools: Array<{ __typename?: 'BasePool', id: string, account: { __typename?: 'Account', id: string, stakePoolNftCount: number, stakePoolValue: string, stakePoolAvgAprMultiplier: string, vaultNftCount: number, vaultValue: string, vaultAvgAprMultiplier: string } }> } | null };
 
+export type AccountValueSnapshotsConnectionQueryVariables = Exact<{
+  orderBy: Array<AccountValueSnapshotOrderByInput> | AccountValueSnapshotOrderByInput;
+  after?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<AccountValueSnapshotWhereInput>;
+}>;
+
+
+export type AccountValueSnapshotsConnectionQuery = { __typename?: 'Query', accountValueSnapshotsConnection: { __typename?: 'AccountValueSnapshotsConnection', totalCount: number, edges: Array<{ __typename?: 'AccountValueSnapshotEdge', cursor: string, node: { __typename?: 'AccountValueSnapshot', updatedTime: string, value: string } }> } };
+
 export type BasePoolCommonFragment = { __typename?: 'BasePool', cid: number, commission: string, delegatorCount: number, freeValue: string, id: string, kind: BasePoolKind, aprMultiplier: string, pid: string, releasingValue: string, sharePrice: string, totalShares: string, totalValue: string, whitelistEnabled: boolean, withdrawingShares: string, withdrawingValue: string, account: { __typename?: 'Account', id: string, stakePoolNftCount: number, stakePoolValue: string }, owner: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null }, stakePool?: { __typename?: 'StakePool', capacity?: string | null, delegable?: string | null, idleWorkerCount: number, ownerReward: string, workerCount: number } | null, vault?: { __typename?: 'Vault', claimableOwnerShares: string, lastSharePriceCheckpoint: string } | null };
 
 export type BasePoolByIdQueryVariables = Exact<{
@@ -2418,44 +2633,46 @@ export type OwnedVaultsQueryVariables = Exact<{
 
 export type OwnedVaultsQuery = { __typename?: 'Query', basePoolsConnection: { __typename?: 'BasePoolsConnection', edges: Array<{ __typename?: 'BasePoolEdge', node: { __typename?: 'BasePool', id: string, totalShares: string, sharePrice: string, commission: string, vault?: { __typename?: 'Vault', claimableOwnerShares: string, lastSharePriceCheckpoint: string } | null } }> } };
 
-export type BasePoolAprRecordsConnectionQueryVariables = Exact<{
-  orderBy: Array<BasePoolAprRecordOrderByInput> | BasePoolAprRecordOrderByInput;
+export type BasePoolSnapshotsConnectionQueryVariables = Exact<{
+  orderBy: Array<BasePoolSnapshotOrderByInput> | BasePoolSnapshotOrderByInput;
   after?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Int']>;
-  where?: InputMaybe<BasePoolAprRecordWhereInput>;
+  where?: InputMaybe<BasePoolSnapshotWhereInput>;
 }>;
 
 
-export type BasePoolAprRecordsConnectionQuery = { __typename?: 'Query', basePoolAprRecordsConnection: { __typename?: 'BasePoolAprRecordsConnection', totalCount: number, edges: Array<{ __typename?: 'BasePoolAprRecordEdge', cursor: string, node: { __typename?: 'BasePoolAprRecord', id: string, updatedTime: string, value: string } }> } };
+export type BasePoolSnapshotsConnectionQuery = { __typename?: 'Query', basePoolSnapshotsConnection: { __typename?: 'BasePoolSnapshotsConnection', totalCount: number, edges: Array<{ __typename?: 'BasePoolSnapshotEdge', cursor: string, node: { __typename?: 'BasePoolSnapshot', updatedTime: string, apr: string } }> } };
 
-export type DelegationCommonFragment = { __typename?: 'Delegation', id: string, shares: string, value: string, withdrawalStartTime?: string | null, withdrawingShares: string, withdrawingValue: string, basePool: { __typename?: 'BasePool', id: string, kind: BasePoolKind, freeValue: string, sharePrice: string, aprMultiplier: string, withdrawingShares: string }, delegationNft: { __typename?: 'Nft', cid: number, nftId: number, mintTime?: string | null }, withdrawalNft?: { __typename?: 'Nft', cid: number, nftId: number } | null, account: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null, basePool?: { __typename?: 'BasePool', id: string } | null } };
+export type DelegationCommonFragment = { __typename?: 'Delegation', id: string, shares: string, value: string, cost: string, withdrawalStartTime?: string | null, withdrawingShares: string, withdrawingValue: string, basePool: { __typename?: 'BasePool', id: string, kind: BasePoolKind, freeValue: string, sharePrice: string, aprMultiplier: string, withdrawingShares: string }, delegationNft: { __typename?: 'Nft', cid: number, nftId: number, mintTime?: string | null }, withdrawalNft?: { __typename?: 'Nft', cid: number, nftId: number } | null, account: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null, basePool?: { __typename?: 'BasePool', id: string } | null } };
 
 export type DelegationByIdQueryVariables = Exact<{
   id: Scalars['String'];
+  snapshotsWhere?: InputMaybe<DelegationSnapshotWhereInput>;
 }>;
 
 
-export type DelegationByIdQuery = { __typename?: 'Query', delegationById?: { __typename?: 'Delegation', id: string, shares: string, value: string, withdrawalStartTime?: string | null, withdrawingShares: string, withdrawingValue: string, basePool: { __typename?: 'BasePool', id: string, kind: BasePoolKind, freeValue: string, sharePrice: string, aprMultiplier: string, withdrawingShares: string }, delegationNft: { __typename?: 'Nft', cid: number, nftId: number, mintTime?: string | null }, withdrawalNft?: { __typename?: 'Nft', cid: number, nftId: number } | null, account: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null, basePool?: { __typename?: 'BasePool', id: string } | null } } | null };
+export type DelegationByIdQuery = { __typename?: 'Query', delegationById?: { __typename?: 'Delegation', id: string, shares: string, value: string, cost: string, withdrawalStartTime?: string | null, withdrawingShares: string, withdrawingValue: string, snapshots: Array<{ __typename?: 'DelegationSnapshot', cost: string, value: string, updatedTime: string }>, basePool: { __typename?: 'BasePool', id: string, kind: BasePoolKind, freeValue: string, sharePrice: string, aprMultiplier: string, withdrawingShares: string }, delegationNft: { __typename?: 'Nft', cid: number, nftId: number, mintTime?: string | null }, withdrawalNft?: { __typename?: 'Nft', cid: number, nftId: number } | null, account: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null, basePool?: { __typename?: 'BasePool', id: string } | null } } | null };
 
 export type DelegationsConnectionQueryVariables = Exact<{
   orderBy: Array<DelegationOrderByInput> | DelegationOrderByInput;
   after?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Int']>;
   where?: InputMaybe<DelegationWhereInput>;
+  snapshotsWhere?: InputMaybe<DelegationSnapshotWhereInput>;
 }>;
 
 
-export type DelegationsConnectionQuery = { __typename?: 'Query', delegationsConnection: { __typename?: 'DelegationsConnection', totalCount: number, edges: Array<{ __typename?: 'DelegationEdge', cursor: string, node: { __typename?: 'Delegation', id: string, shares: string, value: string, withdrawalStartTime?: string | null, withdrawingShares: string, withdrawingValue: string, basePool: { __typename?: 'BasePool', id: string, kind: BasePoolKind, freeValue: string, sharePrice: string, aprMultiplier: string, withdrawingShares: string }, delegationNft: { __typename?: 'Nft', cid: number, nftId: number, mintTime?: string | null }, withdrawalNft?: { __typename?: 'Nft', cid: number, nftId: number } | null, account: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null, basePool?: { __typename?: 'BasePool', id: string } | null } } }>, pageInfo: { __typename?: 'PageInfo', endCursor: string, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string } } };
+export type DelegationsConnectionQuery = { __typename?: 'Query', delegationsConnection: { __typename?: 'DelegationsConnection', totalCount: number, edges: Array<{ __typename?: 'DelegationEdge', cursor: string, node: { __typename?: 'Delegation', id: string, shares: string, value: string, cost: string, withdrawalStartTime?: string | null, withdrawingShares: string, withdrawingValue: string, snapshots: Array<{ __typename?: 'DelegationSnapshot', cost: string, value: string, updatedTime: string }>, basePool: { __typename?: 'BasePool', id: string, kind: BasePoolKind, freeValue: string, sharePrice: string, aprMultiplier: string, withdrawingShares: string }, delegationNft: { __typename?: 'Nft', cid: number, nftId: number, mintTime?: string | null }, withdrawalNft?: { __typename?: 'Nft', cid: number, nftId: number } | null, account: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null, basePool?: { __typename?: 'BasePool', id: string } | null } } }>, pageInfo: { __typename?: 'PageInfo', endCursor: string, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string } } };
 
-export type DelegationValueRecordsConnectionQueryVariables = Exact<{
-  orderBy: Array<DelegationValueRecordOrderByInput> | DelegationValueRecordOrderByInput;
+export type DelegationSnapshotsConnectionQueryVariables = Exact<{
+  orderBy: Array<DelegationSnapshotOrderByInput> | DelegationSnapshotOrderByInput;
   after?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Int']>;
-  where?: InputMaybe<DelegationValueRecordWhereInput>;
+  where?: InputMaybe<DelegationSnapshotWhereInput>;
 }>;
 
 
-export type DelegationValueRecordsConnectionQuery = { __typename?: 'Query', delegationValueRecordsConnection: { __typename?: 'DelegationValueRecordsConnection', totalCount: number, edges: Array<{ __typename?: 'DelegationValueRecordEdge', cursor: string, node: { __typename?: 'DelegationValueRecord', id: string, updatedTime: string, value: string } }> } };
+export type DelegationSnapshotsConnectionQuery = { __typename?: 'Query', delegationSnapshotsConnection: { __typename?: 'DelegationSnapshotsConnection', totalCount: number, edges: Array<{ __typename?: 'DelegationSnapshotEdge', cursor: string, node: { __typename?: 'DelegationSnapshot', updatedTime: string, cost: string, value: string } }> } };
 
 export type GlobalStateQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2563,6 +2780,7 @@ export const DelegationCommonFragmentDoc = `
   id
   shares
   value
+  cost
   withdrawalStartTime
   withdrawingShares
   withdrawingValue
@@ -2638,7 +2856,56 @@ export const useInfiniteAccountByIdQuery = <
     ) =>
     useInfiniteQuery<AccountByIdQuery, TError, TData>(
       ['AccountById.infinite', variables],
-      (metaData) => fetcher<AccountByIdQuery, AccountByIdQueryVariables>(client, AccountByIdDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
+      (metaData) => fetcher<AccountByIdQuery, AccountByIdQueryVariables>(client, AccountByIdDocument, {...variables, ...(metaData.pageParam ?? {})}, headers)(),
+      options
+    );
+
+export const AccountValueSnapshotsConnectionDocument = `
+    query AccountValueSnapshotsConnection($orderBy: [AccountValueSnapshotOrderByInput!]!, $after: String, $first: Int, $where: AccountValueSnapshotWhereInput) {
+  accountValueSnapshotsConnection(
+    orderBy: $orderBy
+    after: $after
+    first: $first
+    where: $where
+  ) {
+    totalCount
+    edges {
+      node {
+        updatedTime
+        value
+      }
+      cursor
+    }
+  }
+}
+    `;
+export const useAccountValueSnapshotsConnectionQuery = <
+      TData = AccountValueSnapshotsConnectionQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: AccountValueSnapshotsConnectionQueryVariables,
+      options?: UseQueryOptions<AccountValueSnapshotsConnectionQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<AccountValueSnapshotsConnectionQuery, TError, TData>(
+      ['AccountValueSnapshotsConnection', variables],
+      fetcher<AccountValueSnapshotsConnectionQuery, AccountValueSnapshotsConnectionQueryVariables>(client, AccountValueSnapshotsConnectionDocument, variables, headers),
+      options
+    );
+export const useInfiniteAccountValueSnapshotsConnectionQuery = <
+      TData = AccountValueSnapshotsConnectionQuery,
+      TError = unknown
+    >(
+      pageParamKey: keyof AccountValueSnapshotsConnectionQueryVariables,
+      client: GraphQLClient,
+      variables: AccountValueSnapshotsConnectionQueryVariables,
+      options?: UseInfiniteQueryOptions<AccountValueSnapshotsConnectionQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useInfiniteQuery<AccountValueSnapshotsConnectionQuery, TError, TData>(
+      ['AccountValueSnapshotsConnection.infinite', variables],
+      (metaData) => fetcher<AccountValueSnapshotsConnectionQuery, AccountValueSnapshotsConnectionQueryVariables>(client, AccountValueSnapshotsConnectionDocument, {...variables, ...(metaData.pageParam ?? {})}, headers)(),
       options
     );
 
@@ -2680,7 +2947,7 @@ export const useInfiniteBasePoolByIdQuery = <
     ) =>
     useInfiniteQuery<BasePoolByIdQuery, TError, TData>(
       ['BasePoolById.infinite', variables],
-      (metaData) => fetcher<BasePoolByIdQuery, BasePoolByIdQueryVariables>(client, BasePoolByIdDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
+      (metaData) => fetcher<BasePoolByIdQuery, BasePoolByIdQueryVariables>(client, BasePoolByIdDocument, {...variables, ...(metaData.pageParam ?? {})}, headers)(),
       options
     );
 
@@ -2742,7 +3009,7 @@ export const useInfiniteBasePoolsConnectionQuery = <
     ) =>
     useInfiniteQuery<BasePoolsConnectionQuery, TError, TData>(
       ['BasePoolsConnection.infinite', variables],
-      (metaData) => fetcher<BasePoolsConnectionQuery, BasePoolsConnectionQueryVariables>(client, BasePoolsConnectionDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
+      (metaData) => fetcher<BasePoolsConnectionQuery, BasePoolsConnectionQueryVariables>(client, BasePoolsConnectionDocument, {...variables, ...(metaData.pageParam ?? {})}, headers)(),
       options
     );
 
@@ -2789,7 +3056,7 @@ export const useInfiniteClaimableStakePoolsQuery = <
     ) =>
     useInfiniteQuery<ClaimableStakePoolsQuery, TError, TData>(
       variables === undefined ? ['ClaimableStakePools.infinite'] : ['ClaimableStakePools.infinite', variables],
-      (metaData) => fetcher<ClaimableStakePoolsQuery, ClaimableStakePoolsQueryVariables>(client, ClaimableStakePoolsDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
+      (metaData) => fetcher<ClaimableStakePoolsQuery, ClaimableStakePoolsQueryVariables>(client, ClaimableStakePoolsDocument, {...variables, ...(metaData.pageParam ?? {})}, headers)(),
       options
     );
 
@@ -2840,13 +3107,13 @@ export const useInfiniteOwnedVaultsQuery = <
     ) =>
     useInfiniteQuery<OwnedVaultsQuery, TError, TData>(
       variables === undefined ? ['OwnedVaults.infinite'] : ['OwnedVaults.infinite', variables],
-      (metaData) => fetcher<OwnedVaultsQuery, OwnedVaultsQueryVariables>(client, OwnedVaultsDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
+      (metaData) => fetcher<OwnedVaultsQuery, OwnedVaultsQueryVariables>(client, OwnedVaultsDocument, {...variables, ...(metaData.pageParam ?? {})}, headers)(),
       options
     );
 
-export const BasePoolAprRecordsConnectionDocument = `
-    query BasePoolAprRecordsConnection($orderBy: [BasePoolAprRecordOrderByInput!]!, $after: String, $first: Int, $where: BasePoolAprRecordWhereInput) {
-  basePoolAprRecordsConnection(
+export const BasePoolSnapshotsConnectionDocument = `
+    query BasePoolSnapshotsConnection($orderBy: [BasePoolSnapshotOrderByInput!]!, $after: String, $first: Int, $where: BasePoolSnapshotWhereInput) {
+  basePoolSnapshotsConnection(
     orderBy: $orderBy
     after: $after
     first: $first
@@ -2854,9 +3121,8 @@ export const BasePoolAprRecordsConnectionDocument = `
   ) {
     edges {
       node {
-        id
         updatedTime
-        value
+        apr
       }
       cursor
     }
@@ -2864,40 +3130,45 @@ export const BasePoolAprRecordsConnectionDocument = `
   }
 }
     `;
-export const useBasePoolAprRecordsConnectionQuery = <
-      TData = BasePoolAprRecordsConnectionQuery,
+export const useBasePoolSnapshotsConnectionQuery = <
+      TData = BasePoolSnapshotsConnectionQuery,
       TError = unknown
     >(
       client: GraphQLClient,
-      variables: BasePoolAprRecordsConnectionQueryVariables,
-      options?: UseQueryOptions<BasePoolAprRecordsConnectionQuery, TError, TData>,
+      variables: BasePoolSnapshotsConnectionQueryVariables,
+      options?: UseQueryOptions<BasePoolSnapshotsConnectionQuery, TError, TData>,
       headers?: RequestInit['headers']
     ) =>
-    useQuery<BasePoolAprRecordsConnectionQuery, TError, TData>(
-      ['BasePoolAprRecordsConnection', variables],
-      fetcher<BasePoolAprRecordsConnectionQuery, BasePoolAprRecordsConnectionQueryVariables>(client, BasePoolAprRecordsConnectionDocument, variables, headers),
+    useQuery<BasePoolSnapshotsConnectionQuery, TError, TData>(
+      ['BasePoolSnapshotsConnection', variables],
+      fetcher<BasePoolSnapshotsConnectionQuery, BasePoolSnapshotsConnectionQueryVariables>(client, BasePoolSnapshotsConnectionDocument, variables, headers),
       options
     );
-export const useInfiniteBasePoolAprRecordsConnectionQuery = <
-      TData = BasePoolAprRecordsConnectionQuery,
+export const useInfiniteBasePoolSnapshotsConnectionQuery = <
+      TData = BasePoolSnapshotsConnectionQuery,
       TError = unknown
     >(
-      pageParamKey: keyof BasePoolAprRecordsConnectionQueryVariables,
+      pageParamKey: keyof BasePoolSnapshotsConnectionQueryVariables,
       client: GraphQLClient,
-      variables: BasePoolAprRecordsConnectionQueryVariables,
-      options?: UseInfiniteQueryOptions<BasePoolAprRecordsConnectionQuery, TError, TData>,
+      variables: BasePoolSnapshotsConnectionQueryVariables,
+      options?: UseInfiniteQueryOptions<BasePoolSnapshotsConnectionQuery, TError, TData>,
       headers?: RequestInit['headers']
     ) =>
-    useInfiniteQuery<BasePoolAprRecordsConnectionQuery, TError, TData>(
-      ['BasePoolAprRecordsConnection.infinite', variables],
-      (metaData) => fetcher<BasePoolAprRecordsConnectionQuery, BasePoolAprRecordsConnectionQueryVariables>(client, BasePoolAprRecordsConnectionDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
+    useInfiniteQuery<BasePoolSnapshotsConnectionQuery, TError, TData>(
+      ['BasePoolSnapshotsConnection.infinite', variables],
+      (metaData) => fetcher<BasePoolSnapshotsConnectionQuery, BasePoolSnapshotsConnectionQueryVariables>(client, BasePoolSnapshotsConnectionDocument, {...variables, ...(metaData.pageParam ?? {})}, headers)(),
       options
     );
 
 export const DelegationByIdDocument = `
-    query DelegationById($id: String!) {
+    query DelegationById($id: String!, $snapshotsWhere: DelegationSnapshotWhereInput) {
   delegationById(id: $id) {
     ...DelegationCommon
+    snapshots(where: $snapshotsWhere, orderBy: updatedTime_ASC, limit: 1, offset: 0) {
+      cost
+      value
+      updatedTime
+    }
   }
 }
     ${DelegationCommonFragmentDoc}`;
@@ -2927,12 +3198,12 @@ export const useInfiniteDelegationByIdQuery = <
     ) =>
     useInfiniteQuery<DelegationByIdQuery, TError, TData>(
       ['DelegationById.infinite', variables],
-      (metaData) => fetcher<DelegationByIdQuery, DelegationByIdQueryVariables>(client, DelegationByIdDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
+      (metaData) => fetcher<DelegationByIdQuery, DelegationByIdQueryVariables>(client, DelegationByIdDocument, {...variables, ...(metaData.pageParam ?? {})}, headers)(),
       options
     );
 
 export const DelegationsConnectionDocument = `
-    query DelegationsConnection($orderBy: [DelegationOrderByInput!]!, $after: String, $first: Int, $where: DelegationWhereInput) {
+    query DelegationsConnection($orderBy: [DelegationOrderByInput!]!, $after: String, $first: Int, $where: DelegationWhereInput, $snapshotsWhere: DelegationSnapshotWhereInput) {
   delegationsConnection(
     orderBy: $orderBy
     after: $after
@@ -2943,6 +3214,11 @@ export const DelegationsConnectionDocument = `
       cursor
       node {
         ...DelegationCommon
+        snapshots(where: $snapshotsWhere, orderBy: updatedTime_ASC, limit: 1, offset: 0) {
+          cost
+          value
+          updatedTime
+        }
       }
     }
     pageInfo {
@@ -2981,13 +3257,13 @@ export const useInfiniteDelegationsConnectionQuery = <
     ) =>
     useInfiniteQuery<DelegationsConnectionQuery, TError, TData>(
       ['DelegationsConnection.infinite', variables],
-      (metaData) => fetcher<DelegationsConnectionQuery, DelegationsConnectionQueryVariables>(client, DelegationsConnectionDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
+      (metaData) => fetcher<DelegationsConnectionQuery, DelegationsConnectionQueryVariables>(client, DelegationsConnectionDocument, {...variables, ...(metaData.pageParam ?? {})}, headers)(),
       options
     );
 
-export const DelegationValueRecordsConnectionDocument = `
-    query DelegationValueRecordsConnection($orderBy: [DelegationValueRecordOrderByInput!]!, $after: String, $first: Int, $where: DelegationValueRecordWhereInput) {
-  delegationValueRecordsConnection(
+export const DelegationSnapshotsConnectionDocument = `
+    query DelegationSnapshotsConnection($orderBy: [DelegationSnapshotOrderByInput!]!, $after: String, $first: Int, $where: DelegationSnapshotWhereInput) {
+  delegationSnapshotsConnection(
     orderBy: $orderBy
     after: $after
     first: $first
@@ -2996,8 +3272,8 @@ export const DelegationValueRecordsConnectionDocument = `
     totalCount
     edges {
       node {
-        id
         updatedTime
+        cost
         value
       }
       cursor
@@ -3005,33 +3281,33 @@ export const DelegationValueRecordsConnectionDocument = `
   }
 }
     `;
-export const useDelegationValueRecordsConnectionQuery = <
-      TData = DelegationValueRecordsConnectionQuery,
+export const useDelegationSnapshotsConnectionQuery = <
+      TData = DelegationSnapshotsConnectionQuery,
       TError = unknown
     >(
       client: GraphQLClient,
-      variables: DelegationValueRecordsConnectionQueryVariables,
-      options?: UseQueryOptions<DelegationValueRecordsConnectionQuery, TError, TData>,
+      variables: DelegationSnapshotsConnectionQueryVariables,
+      options?: UseQueryOptions<DelegationSnapshotsConnectionQuery, TError, TData>,
       headers?: RequestInit['headers']
     ) =>
-    useQuery<DelegationValueRecordsConnectionQuery, TError, TData>(
-      ['DelegationValueRecordsConnection', variables],
-      fetcher<DelegationValueRecordsConnectionQuery, DelegationValueRecordsConnectionQueryVariables>(client, DelegationValueRecordsConnectionDocument, variables, headers),
+    useQuery<DelegationSnapshotsConnectionQuery, TError, TData>(
+      ['DelegationSnapshotsConnection', variables],
+      fetcher<DelegationSnapshotsConnectionQuery, DelegationSnapshotsConnectionQueryVariables>(client, DelegationSnapshotsConnectionDocument, variables, headers),
       options
     );
-export const useInfiniteDelegationValueRecordsConnectionQuery = <
-      TData = DelegationValueRecordsConnectionQuery,
+export const useInfiniteDelegationSnapshotsConnectionQuery = <
+      TData = DelegationSnapshotsConnectionQuery,
       TError = unknown
     >(
-      pageParamKey: keyof DelegationValueRecordsConnectionQueryVariables,
+      pageParamKey: keyof DelegationSnapshotsConnectionQueryVariables,
       client: GraphQLClient,
-      variables: DelegationValueRecordsConnectionQueryVariables,
-      options?: UseInfiniteQueryOptions<DelegationValueRecordsConnectionQuery, TError, TData>,
+      variables: DelegationSnapshotsConnectionQueryVariables,
+      options?: UseInfiniteQueryOptions<DelegationSnapshotsConnectionQuery, TError, TData>,
       headers?: RequestInit['headers']
     ) =>
-    useInfiniteQuery<DelegationValueRecordsConnectionQuery, TError, TData>(
-      ['DelegationValueRecordsConnection.infinite', variables],
-      (metaData) => fetcher<DelegationValueRecordsConnectionQuery, DelegationValueRecordsConnectionQueryVariables>(client, DelegationValueRecordsConnectionDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
+    useInfiniteQuery<DelegationSnapshotsConnectionQuery, TError, TData>(
+      ['DelegationSnapshotsConnection.infinite', variables],
+      (metaData) => fetcher<DelegationSnapshotsConnectionQuery, DelegationSnapshotsConnectionQueryVariables>(client, DelegationSnapshotsConnectionDocument, {...variables, ...(metaData.pageParam ?? {})}, headers)(),
       options
     );
 
@@ -3075,7 +3351,7 @@ export const useInfiniteGlobalStateQuery = <
     ) =>
     useInfiniteQuery<GlobalStateQuery, TError, TData>(
       variables === undefined ? ['GlobalState.infinite'] : ['GlobalState.infinite', variables],
-      (metaData) => fetcher<GlobalStateQuery, GlobalStateQueryVariables>(client, GlobalStateDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
+      (metaData) => fetcher<GlobalStateQuery, GlobalStateQueryVariables>(client, GlobalStateDocument, {...variables, ...(metaData.pageParam ?? {})}, headers)(),
       options
     );
 
@@ -3137,7 +3413,7 @@ export const useInfiniteNftsConnectionQuery = <
     ) =>
     useInfiniteQuery<NftsConnectionQuery, TError, TData>(
       ['NftsConnection.infinite', variables],
-      (metaData) => fetcher<NftsConnectionQuery, NftsConnectionQueryVariables>(client, NftsConnectionDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
+      (metaData) => fetcher<NftsConnectionQuery, NftsConnectionQueryVariables>(client, NftsConnectionDocument, {...variables, ...(metaData.pageParam ?? {})}, headers)(),
       options
     );
 
@@ -3186,7 +3462,7 @@ export const useInfiniteRewardRecordsConnectionQuery = <
     ) =>
     useInfiniteQuery<RewardRecordsConnectionQuery, TError, TData>(
       ['RewardRecordsConnection.infinite', variables],
-      (metaData) => fetcher<RewardRecordsConnectionQuery, RewardRecordsConnectionQueryVariables>(client, RewardRecordsConnectionDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
+      (metaData) => fetcher<RewardRecordsConnectionQuery, RewardRecordsConnectionQueryVariables>(client, RewardRecordsConnectionDocument, {...variables, ...(metaData.pageParam ?? {})}, headers)(),
       options
     );
 
@@ -3246,7 +3522,7 @@ export const useInfiniteBasePoolWhitelistsConnectionQuery = <
     ) =>
     useInfiniteQuery<BasePoolWhitelistsConnectionQuery, TError, TData>(
       ['BasePoolWhitelistsConnection.infinite', variables],
-      (metaData) => fetcher<BasePoolWhitelistsConnectionQuery, BasePoolWhitelistsConnectionQueryVariables>(client, BasePoolWhitelistsConnectionDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
+      (metaData) => fetcher<BasePoolWhitelistsConnectionQuery, BasePoolWhitelistsConnectionQueryVariables>(client, BasePoolWhitelistsConnectionDocument, {...variables, ...(metaData.pageParam ?? {})}, headers)(),
       options
     );
 
@@ -3319,7 +3595,7 @@ export const useInfiniteWorkersConnectionQuery = <
     ) =>
     useInfiniteQuery<WorkersConnectionQuery, TError, TData>(
       ['WorkersConnection.infinite', variables],
-      (metaData) => fetcher<WorkersConnectionQuery, WorkersConnectionQueryVariables>(client, WorkersConnectionDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
+      (metaData) => fetcher<WorkersConnectionQuery, WorkersConnectionQueryVariables>(client, WorkersConnectionDocument, {...variables, ...(metaData.pageParam ?? {})}, headers)(),
       options
     );
 
@@ -3367,6 +3643,6 @@ export const useInfiniteReclaimableWorkersConnectionQuery = <
     ) =>
     useInfiniteQuery<ReclaimableWorkersConnectionQuery, TError, TData>(
       ['ReclaimableWorkersConnection.infinite', variables],
-      (metaData) => fetcher<ReclaimableWorkersConnectionQuery, ReclaimableWorkersConnectionQueryVariables>(client, ReclaimableWorkersConnectionDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
+      (metaData) => fetcher<ReclaimableWorkersConnectionQuery, ReclaimableWorkersConnectionQueryVariables>(client, ReclaimableWorkersConnectionDocument, {...variables, ...(metaData.pageParam ?? {})}, headers)(),
       options
     );

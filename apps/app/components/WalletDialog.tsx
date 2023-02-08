@@ -20,7 +20,7 @@ import {
 import type {Wallet} from '@talismn/connect-wallets'
 import {useAtom} from 'jotai'
 import Image from 'next/image'
-import {FC, useEffect, useState} from 'react'
+import {useEffect, useState, type FC} from 'react'
 
 const walletsOrder = ['talisman', 'polkadot-js', 'subwallet-js']
 
@@ -32,11 +32,11 @@ const WalletDialog: FC = () => {
   const [, setWallet] = useAtom(walletAtom)
   const [wallets, setWallets] = useState<Wallet[]>([])
 
-  const connected = !!polkadotAccounts
+  const connected = polkadotAccounts !== null
 
   useEffect(() => {
     let unmounted = false
-    import('@talismn/connect-wallets').then(({getWallets}) => {
+    void import('@talismn/connect-wallets').then(({getWallets}) => {
       let sortedWallets = getWallets()
         .filter((x) => walletsOrder.includes(x.extensionName))
         .sort((a, b) => {
@@ -93,7 +93,7 @@ const WalletDialog: FC = () => {
         )}
       </DialogTitle>
       {connected ? (
-        polkadotAccounts.length ? (
+        polkadotAccounts.length > 0 ? (
           <Stack px={3} pb={3} spacing={2}>
             {polkadotAccounts.map((account) => {
               const isActive = polkadotAccount?.address === account.address
@@ -153,21 +153,23 @@ const WalletDialog: FC = () => {
                 color: 'rgba(255, 255, 255, 0.12)',
                 textAlign: 'initial',
               }}
-              {...(w.installed
+              {...(w.installed === true
                 ? {
-                    onClick: async () => {
-                      await w.enable('Phala App')
-                      setWallet(w)
+                    onClick: () => {
+                      void (async () => {
+                        await w.enable('Phala App')
+                        setWallet(w)
+                      })()
                     },
                   }
                 : {href: w.installUrl, target: '_blank'})}
             >
               <Image src={w.logo.src} alt={w.logo.alt} width={24} height={24} />
               <Typography ml={2} color="text.primary">
-                {!w.installed && 'Install '}
+                {w.installed !== true && 'Install '}
                 {w.title}
               </Typography>
-              {jsx(w.installed ? ArrowForwardIos : Download, {
+              {jsx(w.installed === true ? ArrowForwardIos : Download, {
                 fontSize: 'small',
                 sx: {ml: 'auto', color: theme.palette.text.secondary},
               })}

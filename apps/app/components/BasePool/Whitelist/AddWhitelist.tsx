@@ -8,7 +8,7 @@ import {
   TextField,
 } from '@mui/material'
 import {validateAddress} from '@phala/util'
-import {FC, useMemo, useState} from 'react'
+import {useMemo, useState, type FC} from 'react'
 
 const AddWhitelist: FC<{
   pid: string
@@ -20,8 +20,8 @@ const AddWhitelist: FC<{
   const [address, setAddress] = useState('')
   const isValid = useMemo(() => validateAddress(address), [address])
 
-  const onClick = () => {
-    if (!api) return
+  const onClick = (): void => {
+    if (api == null) return
     const extrinsic = api.tx.phalaBasePool.addStakerToWhitelist(pid, address)
 
     setLoading(true)

@@ -6,7 +6,7 @@ import Title from '@/components/Title'
 import {chainAtom} from '@/store/common'
 import {Box, Paper, Stack} from '@mui/material'
 import {useAtom} from 'jotai'
-import {FC} from 'react'
+import {type FC} from 'react'
 
 const Dashboard: FC = () => {
   const [chain] = useAtom(chainAtom)

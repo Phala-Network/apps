@@ -2,7 +2,7 @@ import Property from '@/components/Property'
 import usePolkadotApi from '@/hooks/usePolkadotApi'
 import useSignAndSend from '@/hooks/useSignAndSend'
 import useTokenomicParameters, {
-  TokenomicParameters,
+  type TokenomicParameters,
 } from '@/hooks/useTokenomicParameters'
 import {barlow} from '@/lib/theme'
 import {LoadingButton} from '@mui/lab'
@@ -16,17 +16,17 @@ import {
 } from '@mui/material'
 import {getDecimalPattern, toCurrency} from '@phala/util'
 import Decimal from 'decimal.js'
-import {FC, useMemo, useState} from 'react'
-import {Worker} from './List'
+import {useMemo, useState, type FC} from 'react'
+import {type Worker} from './List'
 
 type ConfidenceLevel = 1 | 2 | 3 | 4 | 5
-const confidenceScoreMap: Record<ConfidenceLevel, string> = {
+const confidenceScoreMap = {
   1: '1',
   2: '1',
   3: '1',
   4: '0.8',
   5: '0.7',
-}
+} satisfies Record<ConfidenceLevel, string>
 
 const getSMin = (
   worker: Worker,
@@ -70,20 +70,20 @@ const ChangeStake: FC<{
   const [amountString, setAmountString] = useState('')
   const tokenomicParameters = useTokenomicParameters()
   const sMin = useMemo(() => {
-    if (worker && tokenomicParameters) {
+    if (worker != null && tokenomicParameters != null) {
       return getSMin(worker, tokenomicParameters)
     }
   }, [worker, tokenomicParameters])
   const sMax = useMemo(() => {
-    if (worker && tokenomicParameters) {
+    if (worker != null && tokenomicParameters != null) {
       return getSMax(worker, tokenomicParameters)
     }
   }, [worker, tokenomicParameters])
 
-  if (!worker) return null
+  if (worker == null) return null
 
-  const onClick = () => {
-    if (!api || !worker.stakePool) return
+  const onClick = (): void => {
+    if (api == null || worker.stakePool == null) return
     const amount = new Decimal(amountString).times(1e12).toHex()
     const extrinsic = isChangeStake
       ? api.tx.phalaStakePoolv2.restartComputing(
@@ -135,14 +135,18 @@ const ChangeStake: FC<{
         <Stack mt={2} spacing={0.5}>
           {!isChangeStake && (
             <Property size="small" label="SMin">
-              {sMin ? `${toCurrency(sMin)} PHA` : <Skeleton width={32} />}
+              {sMin != null ? (
+                `${toCurrency(sMin)} PHA`
+              ) : (
+                <Skeleton width={32} />
+              )}
             </Property>
           )}
           <Property size="small" label="SMax">
-            {sMax ? `${toCurrency(sMax)} PHA` : <Skeleton width={32} />}
+            {sMax != null ? `${toCurrency(sMax)} PHA` : <Skeleton width={32} />}
           </Property>
           <Property size="small" label="Free Value">
-            {worker.stakePool?.basePool.freeValue &&
+            {worker.stakePool?.basePool.freeValue !== undefined &&
               `${toCurrency(worker.stakePool.basePool.freeValue)} PHA`}
           </Property>
         </Stack>
@@ -152,7 +156,7 @@ const ChangeStake: FC<{
           loading={loading}
           variant="text"
           onClick={onClick}
-          disabled={!amountString}
+          disabled={amountString === ''}
         >
           Submit
         </LoadingButton>

@@ -5,12 +5,12 @@ import useGetAprMultiplier from '@/hooks/useGetAprMultiplier'
 import useSelectedVaultState from '@/hooks/useSelectedVaultState'
 import {subsquidClient} from '@/lib/graphql'
 import {
-  BasePoolCommonFragment,
-  BasePoolKind,
-  BasePoolOrderByInput,
-  BasePoolWhereInput,
   IdentityLevel,
   useInfiniteBasePoolsConnectionQuery,
+  type BasePoolCommonFragment,
+  type BasePoolKind,
+  type BasePoolOrderByInput,
+  type BasePoolWhereInput,
 } from '@/lib/subsquidQuery'
 import {barlow} from '@/lib/theme'
 import {
@@ -32,14 +32,14 @@ import {
   MenuItem,
   NoSsr,
   Stack,
-  SxProps,
   TextField,
   Typography,
+  type SxProps,
 } from '@mui/material'
 import {polkadotAccountAtom} from '@phala/store'
 import {getDecimalPattern, isTruthy} from '@phala/util'
 import {useAtom} from 'jotai'
-import {FC, useCallback, useEffect, useState} from 'react'
+import {useCallback, useEffect, useState, type FC} from 'react'
 import {useInView} from 'react-intersection-observer'
 import ClaimDelegation from './ClaimDelegation'
 import ClaimReward from './ClaimReward'
@@ -48,7 +48,7 @@ import FarmCard from './FarmCard'
 import OwnerSettings from './OwnerSettings'
 
 type BasePoolListVariant = 'farm' | 'delegate'
-type OrderByEntries = [string, BasePoolOrderByInput][]
+type OrderByEntries = Array<[string, BasePoolOrderByInput]>
 export type PoolDialogAction =
   | 'ownerSettings'
   | 'claimReward'
@@ -123,7 +123,7 @@ const BasePoolList: FC<{
   const orderBy = isVault ? vaultOrderBy : stakePoolOrderBy
   const where: Array<BasePoolWhereInput | false> = [
     {kind_eq: kind},
-    !!debouncedSearchString &&
+    debouncedSearchString !== '' &&
       (isSearchingPid
         ? {id_startsWith: debouncedSearchString}
         : {
@@ -146,7 +146,7 @@ const BasePoolList: FC<{
     variant === 'delegate' && favoriteFilter && {id_in: favoritePools},
     variant === 'delegate' &&
       hideClosedFilter &&
-      !!delegatorAddress && {
+      delegatorAddress !== undefined && {
         OR: [
           {owner: {id_eq: delegatorAddress}},
           {whitelistEnabled_eq: false},
@@ -155,12 +155,13 @@ const BasePoolList: FC<{
       },
     variant === 'delegate' &&
       delegatedFilter &&
-      !!delegatorAddress && {
+      delegatorAddress !== undefined && {
         delegations_some: {account: {id_eq: delegatorAddress}, shares_gt: '0'},
       },
     variant === 'delegate' &&
       kind === 'StakePool' &&
-      !!debouncedMinDelegable && {
+      debouncedMinDelegable !== '' &&
+      debouncedMinDelegable !== '0' && {
         stakePool: {
           OR: [
             {delegable_gte: debouncedMinDelegable},
@@ -169,22 +170,26 @@ const BasePoolList: FC<{
         },
       },
     variant === 'delegate' &&
-      !!debouncedMinTvl && {
+      debouncedMinTvl !== '' &&
+      debouncedMinTvl !== '0' && {
         totalValue_gte: debouncedMinTvl,
       },
     variant === 'delegate' &&
       kind === 'StakePool' &&
-      !!debouncedMinApr && {
+      debouncedMinApr !== undefined &&
+      debouncedMinApr.gt(0) && {
         aprMultiplier_gte: debouncedMinApr.toDP(6).toString(),
       },
     variant === 'delegate' &&
       kind === 'Vault' &&
-      !!debouncedMinApy && {
+      debouncedMinApy !== undefined &&
+      debouncedMinApy.gt(0) && {
         aprMultiplier_gte: debouncedMinApy.toDP(6).toString(),
       },
   ]
   const enabled =
-    variant === 'delegate' || (!!polkadotAccount?.address && variant === 'farm')
+    variant === 'delegate' ||
+    (polkadotAccount?.address !== undefined && variant === 'farm')
   const {data, isLoading, fetchNextPage, hasNextPage} =
     useInfiniteBasePoolsConnectionQuery(
       'after',
@@ -193,7 +198,7 @@ const BasePoolList: FC<{
         first: 20,
         orderBy,
         where: {AND: where.filter(isTruthy)},
-        accountId: delegatorAddress || '',
+        accountId: delegatorAddress ?? '',
       },
       {
         enabled,
@@ -217,11 +222,11 @@ const BasePoolList: FC<{
 
   useEffect(() => {
     if (inView && enabled) {
-      fetchNextPage()
+      void fetchNextPage()
     }
   }, [inView, fetchNextPage, enabled])
 
-  const clearFilters = () => {
+  const clearFilters = (): void => {
     setVerifiedFilter(false)
     setFavoriteFilter(false)
     setDelegatedFilter(false)
@@ -255,7 +260,9 @@ const BasePoolList: FC<{
           <Checkbox
             color={color}
             checked={verifiedFilter}
-            onChange={(e) => setVerifiedFilter(e.target.checked)}
+            onChange={(e) => {
+              setVerifiedFilter(e.target.checked)
+            }}
           />
         }
         label="Verified"
@@ -265,7 +272,9 @@ const BasePoolList: FC<{
           <Checkbox
             color={color}
             checked={favoriteFilter}
-            onChange={(e) => setFavoriteFilter(e.target.checked)}
+            onChange={(e) => {
+              setFavoriteFilter(e.target.checked)
+            }}
           />
         }
         label="Favorite"
@@ -275,7 +284,9 @@ const BasePoolList: FC<{
           <Checkbox
             color={color}
             checked={delegatedFilter}
-            onChange={(e) => setDelegatedFilter(e.target.checked)}
+            onChange={(e) => {
+              setDelegatedFilter(e.target.checked)
+            }}
           />
         }
         label="Delegated"
@@ -285,7 +296,9 @@ const BasePoolList: FC<{
           <Checkbox
             color={color}
             checked={hideClosedFilter}
-            onChange={(e) => setHideClosedFilter(e.target.checked)}
+            onChange={(e) => {
+              setHideClosedFilter(e.target.checked)
+            }}
           />
         }
         label="Hide closed"
@@ -397,7 +410,9 @@ const BasePoolList: FC<{
         <Box flex="1 0">
           <Stack direction="row" spacing={{xs: 1, md: 2}} alignItems="center">
             <IconButton
-              onClick={() => setDrawerOpen(true)}
+              onClick={() => {
+                setDrawerOpen(true)
+              }}
               sx={{
                 display: {
                   xs: variant === 'delegate' ? undefined : 'none',
@@ -415,7 +430,9 @@ const BasePoolList: FC<{
               size="small"
               value={searchString}
               InputProps={{endAdornment: <Search />}}
-              onChange={(e) => setSearchString(e.target.value)}
+              onChange={(e) => {
+                setSearchString(e.target.value)
+              }}
               sx={{flex: '1 0', ml: {xl: '0!important'}}}
             />
             <TextField
@@ -460,14 +477,19 @@ const BasePoolList: FC<{
               ))
             )}
 
-            {(isLoading || hasNextPage) && (
+            {(isLoading || hasNextPage === true) && (
               <ListSkeleton ref={ref} height={100} />
             )}
           </Stack>
         </Box>
       </Stack>
-      <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
-        {operatingPool && (
+      <Dialog
+        open={dialogOpen}
+        onClose={() => {
+          setDialogOpen(false)
+        }}
+      >
+        {operatingPool != null && (
           <>
             {dialogAction === 'ownerSettings' && (
               <OwnerSettings basePool={operatingPool} />
@@ -486,7 +508,9 @@ const BasePoolList: FC<{
           PaperProps={{sx: {pt: 3, pl: 3}}}
           anchor="left"
           open={drawerOpen}
-          onClose={() => setDrawerOpen(false)}
+          onClose={() => {
+            setDrawerOpen(false)
+          }}
         >
           {filters}
         </Drawer>

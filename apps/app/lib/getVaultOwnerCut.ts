@@ -1,13 +1,13 @@
 import Decimal from 'decimal.js'
-import {BasePool, Vault} from './subsquidQuery'
+import {type BasePool, type Vault} from './subsquidQuery'
 
 const getVaultOwnerCut = (
   basePool: Pick<BasePool, 'sharePrice' | 'commission' | 'totalShares'> & {
     vault?: Pick<Vault, 'lastSharePriceCheckpoint'> | null
   }
-) => {
+): Decimal => {
   const {vault, sharePrice, commission, totalShares} = basePool
-  if (!vault) return new Decimal(0)
+  if (vault == null) return new Decimal(0)
   const {lastSharePriceCheckpoint} = vault
   return Decimal.max(
     new Decimal(sharePrice)

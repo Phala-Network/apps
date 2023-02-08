@@ -1,5 +1,5 @@
-import {LoadingButton, LoadingButtonProps} from '@mui/lab'
-import {FC, useState} from 'react'
+import {LoadingButton, type LoadingButtonProps} from '@mui/lab'
+import {useState, type FC} from 'react'
 
 const PromiseButton: FC<
   Omit<LoadingButtonProps, 'onClick'> & {
@@ -10,8 +10,8 @@ const PromiseButton: FC<
 > = ({onClick, ...props}) => {
   const [loading, setLoading] = useState(false)
 
-  const handleClick: LoadingButtonProps['onClick'] = async (e) => {
-    if (onClick) {
+  const handleClick: LoadingButtonProps['onClick'] = (e) => {
+    if (onClick != null) {
       setLoading(true)
       onClick(e).finally(() => {
         setLoading(false)

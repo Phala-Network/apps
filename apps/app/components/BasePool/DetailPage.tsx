@@ -11,8 +11,8 @@ import useSignAndSend from '@/hooks/useSignAndSend'
 import {aprToApy} from '@/lib/apr'
 import {subsquidClient} from '@/lib/graphql'
 import {
-  BasePoolCommonFragment,
   useDelegationByIdQuery,
+  type BasePoolCommonFragment,
 } from '@/lib/subsquidQuery'
 import {colors} from '@/lib/theme'
 import Settings from '@mui/icons-material/Settings'
@@ -32,7 +32,7 @@ import {
 import {polkadotAccountAtom} from '@phala/store'
 import {toCurrency, toPercentage} from '@phala/util'
 import {useAtom} from 'jotai'
-import {FC, useCallback, useState} from 'react'
+import {useCallback, useState, type FC} from 'react'
 import Withdraw from '../Delegation/Withdraw'
 import Empty from '../Empty'
 import PromiseButton from '../PromiseButton'
@@ -55,7 +55,7 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
   const {vault, stakePool, owner} = basePool
   const getApr = useGetApr()
   const theme = useTheme()
-  const isVault = !!vault
+  const isVault = vault != null
   // const color = isVault ? 'secondary' : 'primary'
   const isOwner = owner.id === account?.address
 
@@ -79,21 +79,21 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
       subsquidClient,
       {
         id: `${basePool.id}-${
-          selectedVaultState?.account.id || account?.address
+          selectedVaultState?.account.id ?? account?.address ?? ''
         }`,
       },
-      {enabled: !!selectedVaultState || !!account}
+      {enabled: selectedVaultState != null || account !== null}
     )
   const onClose = useCallback(() => {
     setDialogOpen(false)
   }, [])
-  const {delegationById: delegation} = delegationData || {}
-  const hasDelegation = !!delegation && delegation.shares !== '0'
+  const {delegationById: delegation} = delegationData ?? {}
+  const hasDelegation = delegation != null && delegation.shares !== '0'
   const poolHasWithdrawal = basePool.withdrawingShares !== '0'
 
-  const reclaim = async () => {
-    if (!api) return
-    return signAndSend(
+  const reclaim = async (): Promise<void> => {
+    if (api == null) return
+    await signAndSend(
       isVault
         ? api.tx.phalaVault.checkAndMaybeForceWithdraw(basePool.id)
         : api.tx.phalaStakePoolv2.checkAndMaybeForceWithdraw(basePool.id)
@@ -127,10 +127,12 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
                 alignItems="center"
                 width={{xs: 1, sm: 'initial'}}
               >
-                {stakePool && (
+                {stakePool != null && (
                   <StakePoolIcon width={48} color={colors.main[300]} />
                 )}
-                {vault && <VaultIcon width={48} color={colors.vault[400]} />}
+                {vault != null && (
+                  <VaultIcon width={48} color={colors.vault[400]} />
+                )}
                 <Box flex="1 0" width={108}>
                   <Tooltip title={basePool.account.id} placement="bottom-start">
                     <Typography
@@ -145,9 +147,9 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
                 <Box display={{xs: 'block', sm: 'none'}}>{actions}</Box>
               </Stack>
               <Stack direction="row" spacing={2} alignItems="center" flex="1 0">
-                {stakePool && (
+                {stakePool != null && (
                   <Property label="Est. APR" sx={{width: 64, flexShrink: '0'}}>
-                    {apr ? (
+                    {apr != null ? (
                       <Box component="span" color={colors.main[300]}>
                         {toPercentage(apr)}
                       </Box>
@@ -156,16 +158,16 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
                     )}
                   </Property>
                 )}
-                {stakePool && (
+                {stakePool != null && (
                   <Property label="Delegable" sx={{width: 140}}>
-                    {stakePool.delegable
+                    {stakePool.delegable != null
                       ? `${toCurrency(stakePool.delegable)} PHA`
                       : '∞'}
                   </Property>
                 )}
-                {vault && (
+                {vault != null && (
                   <Property label="Est. APY" sx={{width: 64, flexShrink: '0'}}>
-                    {apr ? (
+                    {apr != null ? (
                       <Box component="span" color={colors.vault[400]}>
                         {toPercentage(aprToApy(apr))}
                       </Box>
@@ -174,9 +176,9 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
                     )}
                   </Property>
                 )}
-                {vault && (
+                {vault != null && (
                   <Property label="TVL" sx={{width: 150}}>
-                    {basePool && `${toCurrency(basePool.totalValue)} PHA`}
+                    {`${toCurrency(basePool.totalValue)} PHA`}
                   </Property>
                 )}
               </Stack>
@@ -184,12 +186,10 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
                 {actions}
               </Box>
             </Stack>
-            {basePool && (
-              <ExtraProperties
-                basePool={basePool}
-                sx={{width: {xs: 1, lg: 450}}}
-              />
-            )}
+            <ExtraProperties
+              basePool={basePool}
+              sx={{width: {xs: 1, lg: 450}}}
+            />
             <Box display={{xs: 'none', lg: 'block'}}>{actions}</Box>
           </Stack>
         </Paper>

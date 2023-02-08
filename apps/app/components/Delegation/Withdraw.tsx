@@ -1,6 +1,6 @@
 import usePolkadotApi from '@/hooks/usePolkadotApi'
 import useSignAndSend from '@/hooks/useSignAndSend'
-import {DelegationCommonFragment} from '@/lib/subsquidQuery'
+import {type DelegationCommonFragment} from '@/lib/subsquidQuery'
 import {barlow} from '@/lib/theme'
 import {LoadingButton} from '@mui/lab'
 import {
@@ -14,7 +14,7 @@ import {
 } from '@mui/material'
 import {getDecimalPattern, toCurrency} from '@phala/util'
 import Decimal from 'decimal.js'
-import {FC, useMemo, useState} from 'react'
+import {useMemo, useState, type FC} from 'react'
 import Property from '../Property'
 
 const Withdraw: FC<{
@@ -28,8 +28,8 @@ const Withdraw: FC<{
   const [loading, setLoading] = useState(false)
   const [amountString, setAmountString] = useState('')
 
-  const onClick = () => {
-    if (!api) return
+  const onClick = (): void => {
+    if (api == null) return
     const shares =
       amountString === delegation.value
         ? new Decimal(delegation.shares).times(1e12).toHex()
@@ -92,17 +92,23 @@ const Withdraw: FC<{
 
         <ButtonGroup fullWidth size="small" sx={{mt: 2}}>
           <Button
-            onClick={() =>
+            onClick={() => {
               setAmountString(
                 new Decimal(delegation.basePool.freeValue)
                   .toDP(2, Decimal.ROUND_DOWN)
                   .toString()
               )
-            }
+            }}
           >
             All free
           </Button>
-          <Button onClick={() => setAmountString(delegation.value)}>All</Button>
+          <Button
+            onClick={() => {
+              setAmountString(delegation.value)
+            }}
+          >
+            All
+          </Button>
         </ButtonGroup>
         <Stack mt={2} spacing={0.5}>
           <Property label="Pool free" size="small">

@@ -1,4 +1,4 @@
-import {FC, ReactNode, useEffect, useState} from 'react'
+import {useEffect, useState, type FC, type ReactNode} from 'react'
 
 // MEMO: different from MUI <NoSsr />, fallback content will be also rendered when children is falsy
 const ClientOnly: FC<{children: ReactNode; fallback?: ReactNode}> = ({
@@ -11,7 +11,13 @@ const ClientOnly: FC<{children: ReactNode; fallback?: ReactNode}> = ({
     setHasMounted(true)
   }, [])
 
-  return <>{(hasMounted && children) || fallback}</>
+  return (
+    <>
+      {hasMounted && children != null && children !== false
+        ? children
+        : fallback}
+    </>
+  )
 }
 
 export default ClientOnly

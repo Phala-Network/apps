@@ -7,7 +7,7 @@ import usePoolFavorite from '@/hooks/usePoolFavorite'
 import useSelectedVaultState from '@/hooks/useSelectedVaultState'
 import {aprToApy} from '@/lib/apr'
 import getPoolPath from '@/lib/getPoolPath'
-import {BasePoolCommonFragment, IdentityLevel} from '@/lib/subsquidQuery'
+import {IdentityLevel, type BasePoolCommonFragment} from '@/lib/subsquidQuery'
 import {colors} from '@/lib/theme'
 import RemoveCircleOutline from '@mui/icons-material/RemoveCircleOutline'
 import Star from '@mui/icons-material/Star'
@@ -30,7 +30,7 @@ import {
 import {polkadotAccountAtom} from '@phala/store'
 import {toCurrency, toPercentage, trimAddress} from '@phala/util'
 import {useAtom} from 'jotai'
-import {FC, useState} from 'react'
+import {useState, type FC} from 'react'
 import BasePoolAprChart from './AprChart'
 import DelegateInput from './DelegateInput'
 import ExtraProperties from './ExtraProperties'
@@ -38,8 +38,8 @@ import Intro from './Intro'
 
 const DelegateCard: FC<{
   basePool: BasePoolCommonFragment & {
-    whitelists: {account: {id: string}}[]
-    delegations: {value: string}[]
+    whitelists: Array<{account: {id: string}}>
+    delegations: Array<{value: string}>
   }
 }> = ({basePool}) => {
   const getApr = useGetApr()
@@ -75,7 +75,9 @@ const DelegateCard: FC<{
     <Paper>
       <Stack
         spacing={3}
-        onClick={() => setCollapsed((v) => !v)}
+        onClick={() => {
+          setCollapsed((v) => !v)
+        }}
         direction={{xs: 'column', md: 'row'}}
         alignItems={{xs: 'flex-start', md: 'center'}}
         borderRadius={`${theme.shape.borderRadius - 1}px`}
@@ -100,8 +102,10 @@ const DelegateCard: FC<{
               <StarBorder color="disabled" />
             )}
           </IconButton>
-          {stakePool && <StakePoolIcon width={48} color={colors.main[300]} />}
-          {vault && <VaultIcon width={48} color={colors.vault[400]} />}
+          {stakePool != null && (
+            <StakePoolIcon width={48} color={colors.main[300]} />
+          )}
+          {vault != null && <VaultIcon width={48} color={colors.vault[400]} />}
           <Box width={150} flex="1 0">
             <Link
               color="inherit"
@@ -114,7 +118,11 @@ const DelegateCard: FC<{
             <Stack direction="row" alignItems="center">
               <Tooltip
                 title={owner.id}
-                PopperProps={{onClick: (e) => e.stopPropagation()}}
+                PopperProps={{
+                  onClick: (e) => {
+                    e.stopPropagation()
+                  },
+                }}
               >
                 <Link
                   textOverflow="ellipsis"
@@ -127,13 +135,17 @@ const DelegateCard: FC<{
                   lineHeight="24px"
                   whiteSpace="nowrap"
                 >
-                  {owner.identityDisplay || trimAddress(owner.id)}
+                  {owner.identityDisplay ?? trimAddress(owner.id)}
                 </Link>
               </Tooltip>
-              {owner.identityDisplay && (
+              {owner.identityDisplay != null && (
                 <Tooltip
                   title={owner.identityLevel ?? 'No Judgement'}
-                  PopperProps={{onClick: (e) => e.stopPropagation()}}
+                  PopperProps={{
+                    onClick: (e) => {
+                      e.stopPropagation()
+                    },
+                  }}
                 >
                   {ownerVerified ? (
                     <VerifiedOutlined
@@ -155,9 +167,9 @@ const DelegateCard: FC<{
           </Box>
         </Stack>
         <Stack direction="row" spacing={2}>
-          {stakePool && (
+          {stakePool != null && (
             <Property label="Est. APR" sx={{width: 64, flexShrink: '0'}}>
-              {apr ? (
+              {apr != null ? (
                 <Box component="span" color={colors.main[300]}>
                   {toPercentage(apr)}
                 </Box>
@@ -166,16 +178,16 @@ const DelegateCard: FC<{
               )}
             </Property>
           )}
-          {stakePool && (
+          {stakePool != null && (
             <Property label="Delegable" sx={{width: 140}}>
-              {stakePool.delegable
+              {stakePool.delegable != null
                 ? `${toCurrency(stakePool.delegable)} PHA`
                 : '∞'}
             </Property>
           )}
-          {vault && (
+          {vault != null && (
             <Property label="Est. APY" sx={{width: 64, flexShrink: '0'}}>
-              {apr ? (
+              {apr != null ? (
                 <Box component="span" color={colors.vault[400]}>
                   {toPercentage(aprToApy(apr))}
                 </Box>
@@ -184,7 +196,7 @@ const DelegateCard: FC<{
               )}
             </Property>
           )}
-          {vault && (
+          {vault != null && (
             <Property label="TVL" sx={{width: 150}}>
               {`${toCurrency(basePool.totalValue)} PHA`}
             </Property>

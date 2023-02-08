@@ -5,9 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build && next export",
-    "start": "next start",
-    "lint": "next lint",
-    "lint:fix": "next lint --fix"
+    "start": "next start"
   },
   "dependencies": {
     "@emotion/react": "^11.10.5",
@@ -16,23 +14,23 @@
     "@metamask/detect-provider": "^2.0.0",
     "@metamask/providers": "^10.2.1",
     "@mui/icons-material": "^5.11.0",
-    "@mui/lab": "5.0.0-alpha.115",
-    "@mui/material": "^5.11.4",
-    "@next/bundle-analyzer": "^13.1.1",
+    "@mui/lab": "5.0.0-alpha.119",
+    "@mui/material": "^5.11.8",
+    "@next/bundle-analyzer": "^13.1.6",
     "@phala/lib": "workspace:^",
     "@phala/store": "workspace:^",
     "@phala/util": "workspace:^",
-    "@polkadot/api": "^9.11.1",
-    "@polkadot/util": "^10.2.3",
-    "@polkadot/util-crypto": "^10.2.3",
-    "@talismn/connect-components": "^1.1.6",
+    "@polkadot/api": "^9.13.6",
+    "@polkadot/util": "^10.3.1",
+    "@polkadot/util-crypto": "^10.3.1",
+    "@talismn/connect-components": "^1.1.7",
     "@talismn/connect-ui": "^1.1.2",
     "@talismn/connect-wallets": "^1.2.3",
     "decimal.js": "^10.4.3",
     "ethers": "^5.7.2",
-    "jotai": "^1.13.0",
+    "jotai": "^1.13.1",
     "jotai-devtools": "^0.1.0",
-    "next": "13.1.1",
+    "next": "13.1.6",
     "next-images": "^1.8.4",
     "notistack": "^2.0.8",
     "react": "^18.2.0",
@@ -42,12 +40,12 @@
   "devDependencies": {
     "@phala/eslint-config": "workspace:^",
     "@svgr/webpack": "^6.5.1",
-    "@types/node": "^16.18.9",
-    "@types/react": "^18.0.26",
-    "@types/react-dom": "^18.0.9",
-    "eslint": "^8.31.0",
-    "eslint-config-next": "^13.1.1",
+    "@types/node": "^16.18.12",
+    "@types/react": "^18.0.27",
+    "@types/react-dom": "^18.0.10",
+    "eslint": "^8.33.0",
+    "eslint-config-next": "^13.1.6",
     "next-transpile-modules": "^10.0.0",
-    "typescript": "^4.9.4"
+    "typescript": "^4.9.5"
   }
 }

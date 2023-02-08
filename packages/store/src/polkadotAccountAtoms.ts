@@ -14,11 +14,11 @@ polkadotAccountAddressAtom.debugLabel = 'polkadotAccountAddress'
 export const polkadotAccountAtom = atom<WalletAccount | null, string | null>(
   (get) => {
     const polkadotAccountAddress = get(polkadotAccountAddressAtom)
-    if (!polkadotAccountAddress) return null
+    if (polkadotAccountAddress == null) return null
     return (
       get(polkadotAccountsAtom)?.find(
         (account) => account.address === get(polkadotAccountAddressAtom)
-      ) || null
+      ) ?? null
     )
   },
   (get, set, account) => {

@@ -1,13 +1,20 @@
 import {useEffect, useRef} from 'react'
 
-export const useInterval = (callback: () => void, delay: number | null) => {
+export const useInterval = (
+  callback: () => void,
+  delay: number | null
+): void => {
   const savedCallback = useRef(callback)
   savedCallback.current = callback
   useEffect(() => {
-    if (!delay && delay !== 0) {
+    if (delay == null) {
       return
     }
-    const id = setInterval(() => savedCallback.current(), delay)
-    return () => clearInterval(id)
+    const id = setInterval(() => {
+      savedCallback.current()
+    }, delay)
+    return () => {
+      clearInterval(id)
+    }
   }, [delay])
 }

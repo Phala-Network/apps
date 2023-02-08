@@ -1,9 +1,9 @@
 import Property from '@/components/Property'
-import {BasePoolCommonFragment} from '@/lib/subsquidQuery'
-import {Box, Stack, SxProps} from '@mui/material'
+import {type BasePoolCommonFragment} from '@/lib/subsquidQuery'
+import {Box, Stack, type SxProps} from '@mui/material'
 import {isTruthy, toCurrency, toPercentage} from '@phala/util'
 import Decimal from 'decimal.js'
-import {FC, ReactNode, useMemo} from 'react'
+import {useMemo, type FC, type ReactNode} from 'react'
 
 const ExtraProperties: FC<{basePool: BasePoolCommonFragment; sx?: SxProps}> = ({
   basePool,
@@ -12,13 +12,15 @@ const ExtraProperties: FC<{basePool: BasePoolCommonFragment; sx?: SxProps}> = ({
   const entries = useMemo<Array<[string, ReactNode]>>(() => {
     const {vault, stakePool} = basePool
 
-    const entries: Array<[string, ReactNode] | undefined | null> = [
-      stakePool && [
+    const entries: Array<[string, ReactNode] | false> = [
+      stakePool != null && [
         'Capacity',
-        stakePool.capacity ? `${toCurrency(stakePool.capacity)} PHA` : '∞',
+        stakePool.capacity != null
+          ? `${toCurrency(stakePool.capacity)} PHA`
+          : '∞',
       ],
       ['Commission', toPercentage(basePool.commission)],
-      stakePool && [
+      stakePool != null && [
         'Workers',
         <>
           {`${stakePool.idleWorkerCount} Idle`}
@@ -27,9 +29,12 @@ const ExtraProperties: FC<{basePool: BasePoolCommonFragment; sx?: SxProps}> = ({
           </Box>
         </>,
       ],
-      vault && ['StakePools', basePool.account.stakePoolNftCount],
+      vault != null && ['StakePools', basePool.account.stakePoolNftCount],
       ['Delegators', basePool.delegatorCount],
-      stakePool && ['Delegation', `${toCurrency(basePool.totalValue)} PHA`],
+      stakePool != null && [
+        'Delegation',
+        `${toCurrency(basePool.totalValue)} PHA`,
+      ],
       ['Free', `${toCurrency(Decimal.max(basePool.freeValue, 0))} PHA`],
       ['Withdrawing', `${toCurrency(basePool.withdrawingValue)} PHA`],
       [

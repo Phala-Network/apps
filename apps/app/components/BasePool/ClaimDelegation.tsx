@@ -10,11 +10,16 @@ import {
 } from '@mui/material'
 import {polkadotAccountAtom} from '@phala/store'
 import {isTruthy, validateAddress} from '@phala/util'
+import {type SubmittableExtrinsic} from '@polkadot/api/types'
+import {type ISubmittableResult} from '@polkadot/types/types'
 import Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
-import {FC, useMemo, useState} from 'react'
+import {useMemo, useState, type FC} from 'react'
 
-type ClaimablePool = {id: string; vault?: {claimableOwnerShares: string} | null}
+interface ClaimablePool {
+  id: string
+  vault?: {claimableOwnerShares: string} | null
+}
 
 const ClaimDelegation: FC<{
   basePool?: ClaimablePool
@@ -29,19 +34,23 @@ const ClaimDelegation: FC<{
 
   const addressValid = useMemo(() => validateAddress(address), [address])
 
-  const claimReward = () => {
-    if (!api || (!basePool && !basePools)) return
-    const getExtrinsic = (pool: ClaimablePool) =>
-      !!pool.vault &&
-      api.tx.phalaVault.claimOwnerShares(
-        pool.id,
-        address,
-        new Decimal(pool.vault.claimableOwnerShares).times(1e12).toHex()
-      )
+  const claimReward = (): void => {
+    if (api == null || (basePool == null && basePools == null)) return
+    const getExtrinsic = (
+      pool: ClaimablePool
+    ): SubmittableExtrinsic<'promise', ISubmittableResult> | undefined => {
+      if (pool.vault != null) {
+        return api.tx.phalaVault.claimOwnerShares(
+          pool.id,
+          address,
+          new Decimal(pool.vault.claimableOwnerShares).times(1e12).toHex()
+        )
+      }
+    }
     let extrinsic
-    if (basePool) {
+    if (basePool != null) {
       extrinsic = getExtrinsic(basePool)
-    } else if (basePools) {
+    } else if (basePools != null) {
       extrinsic =
         basePools.length === 1
           ? getExtrinsic(basePools[0])
@@ -49,7 +58,7 @@ const ClaimDelegation: FC<{
               basePools.map((pool) => getExtrinsic(pool)).filter(isTruthy)
             )
     }
-    if (!extrinsic) return
+    if (extrinsic == null) return
     setLoading(true)
     signAndSend(extrinsic)
       .then(() => {
@@ -72,13 +81,13 @@ const ClaimDelegation: FC<{
           fullWidth
           inputProps={{pattern: '^[0-9a-zA-Z]*$'}}
           InputProps={{
-            endAdornment: !address && (
+            endAdornment: address === '' && (
               <Button
                 size="small"
                 variant="text"
                 sx={{flexShrink: 0}}
                 onClick={() => {
-                  setAddress(account?.address || '')
+                  setAddress(account?.address ?? '')
                 }}
               >
                 My Address

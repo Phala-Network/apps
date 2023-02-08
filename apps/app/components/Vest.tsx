@@ -9,21 +9,21 @@ import {
 } from '@mui/material'
 import {polkadotAccountAtom} from '@phala/store'
 import {toCurrency} from '@phala/util'
-import {DeriveBalancesAll} from '@polkadot/api-derive/types'
+import {type DeriveBalancesAll} from '@polkadot/api-derive/types'
 import BN from 'bn.js'
 import Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
-import {FC, useEffect, useState} from 'react'
+import {useEffect, useState, type FC, type ReactElement} from 'react'
 import PromiseButton from './PromiseButton'
 import Property from './Property'
 
-const format = (bn?: BN) => {
-  if (bn) {
+const format = (bn?: BN): ReactElement => {
+  if (bn !== undefined) {
     // HACK: derived vestedClaimable may be negative
     if (bn.isNeg()) {
       bn = new BN(0)
     }
-    return `${toCurrency(new Decimal(bn.toString()).div(1e12))} PHA`
+    return <>{`${toCurrency(new Decimal(bn.toString()).div(1e12))} PHA`}</>
   }
   return <Skeleton width={32} variant="text" />
 }
@@ -36,8 +36,8 @@ const Vest: FC<{onClose: () => void}> = ({onClose}) => {
 
   useEffect(() => {
     let unmounted = false
-    if (api && account) {
-      api.derive.balances.all(account.address).then((all) => {
+    if (api != null && account != null) {
+      void api.derive.balances.all(account.address).then((all) => {
         if (!unmounted) {
           setAllBalances(all)
         }
@@ -48,9 +48,9 @@ const Vest: FC<{onClose: () => void}> = ({onClose}) => {
     }
   }, [api, account])
 
-  const vest = async () => {
-    if (api) {
-      return signAndSend(api.tx.vesting.vest()).then(onClose)
+  const vest = async (): Promise<void> => {
+    if (api !== undefined) {
+      await signAndSend(api.tx.vesting.vest()).then(onClose)
     }
   }
 
@@ -61,8 +61,7 @@ const Vest: FC<{onClose: () => void}> = ({onClose}) => {
         <Stack spacing={1}>
           <Property label="Unlocked" size="small">
             {format(
-              allBalances &&
-                allBalances.vestedBalance.sub(allBalances.vestedClaimable)
+              allBalances?.vestedBalance.sub(allBalances.vestedClaimable)
             )}
           </Property>
           <Property label="Locked" size="small">
@@ -76,7 +75,7 @@ const Vest: FC<{onClose: () => void}> = ({onClose}) => {
       <DialogActions>
         <PromiseButton
           disabled={
-            !allBalances ||
+            allBalances == null ||
             allBalances.vestedClaimable.isNeg() ||
             allBalances.vestedClaimable.isZero()
           }

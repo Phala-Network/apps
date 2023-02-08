@@ -8,12 +8,12 @@ import usePolkadotApi from '@/hooks/usePolkadotApi'
 import useSignAndSend from '@/hooks/useSignAndSend'
 import {subsquidClient} from '@/lib/graphql'
 import {
-  BasePoolCommonFragment,
   useReclaimableWorkersConnectionQuery,
   useWorkersConnectionQuery,
-  WorkerOrderByInput,
-  WorkersConnectionQuery,
-  WorkerState,
+  type BasePoolCommonFragment,
+  type WorkerOrderByInput,
+  type WorkersConnectionQuery,
+  type WorkerState,
 } from '@/lib/subsquidQuery'
 import Search from '@mui/icons-material/Search'
 import {
@@ -27,12 +27,12 @@ import {
 import {polkadotAccountAtom} from '@phala/store'
 import {addDays} from 'date-fns'
 import {useAtom} from 'jotai'
-import {FC, useCallback, useEffect, useState} from 'react'
+import {useCallback, useEffect, useState, type FC} from 'react'
 import AddWorker from './AddWorker'
 import WorkerCard from './Card'
 import ChangeStake from './ChangeStake'
 
-const orderByEntries: [string, WorkerOrderByInput][] = [
+const orderByEntries: Array<[string, WorkerOrderByInput]> = [
   ['Stake high to low', 'session_stake_DESC'],
   ['Stake low to high', 'session_stake_ASC'],
   ['V high to low', 'session_v_DESC'],
@@ -45,7 +45,7 @@ const orderByEntries: [string, WorkerOrderByInput][] = [
   ['P Initial low to high', 'session_pInit_ASC'],
 ]
 
-const stateEntries: [string, WorkerState | 'All'][] = [
+const stateEntries: Array<[string, WorkerState | 'All']> = [
   ['All states', 'All'],
   ['Ready', 'Ready'],
   ['Computing', 'WorkerIdle'],
@@ -82,12 +82,12 @@ const WorkerList: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
     subsquidClient,
     {
       after: page === 1 ? undefined : String((page - 1) * pageSize),
-      orderBy: orderBy,
+      orderBy,
       first: pageSize,
       where: {
         AND: [
           {stakePool: {id_eq: basePool.id}},
-          ...(debouncedSearchString
+          ...(debouncedSearchString !== ''
             ? [{id_containsInsensitive: debouncedSearchString}]
             : []),
           ...(stateFilter !== 'All'
@@ -124,7 +124,7 @@ const WorkerList: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
         setDialogAction(action)
         return
       }
-      if (!api || !worker.stakePool) return
+      if (api == null || worker.stakePool == null) return
       const pid = worker.stakePool.id
       let extrinsic
       if (action === 'reclaim') {
@@ -135,8 +135,8 @@ const WorkerList: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
         extrinsic = api.tx.phalaStakePoolv2.removeWorker(pid, worker.id)
       }
 
-      if (extrinsic) {
-        return signAndSend(extrinsic)
+      if (extrinsic != null) {
+        await signAndSend(extrinsic)
       }
     },
     [api, signAndSend]
@@ -150,12 +150,12 @@ const WorkerList: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
     setPage(1)
   }, [orderBy, stateFilter, debouncedSearchString])
 
-  const reclaimAll = async () => {
-    if (!api || !reclaimableData) return
+  const reclaimAll = async (): Promise<void> => {
+    if (api == null || reclaimableData == null) return
     const calls = reclaimableData.workersConnection.edges.map(({node}) =>
       api.tx.phalaStakePoolv2.reclaimPoolWorker(basePool.id, node.id)
     )
-    return signAndSend(
+    await signAndSend(
       calls.length === 1 ? calls[0] : api.tx.utility.batch(calls)
     )
   }
@@ -171,7 +171,9 @@ const WorkerList: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
             InputProps={{
               endAdornment: <Search />,
             }}
-            onChange={(e) => setSearchString(e.target.value)}
+            onChange={(e) => {
+              setSearchString(e.target.value)
+            }}
           />
           <TextField
             size="small"
@@ -207,7 +209,7 @@ const WorkerList: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
             sx={{flexShrink: 0}}
             onClick={reclaimAll}
             disabled={
-              !reclaimableData ||
+              reclaimableData == null ||
               reclaimableData.workersConnection.edges.length === 0
             }
           >
@@ -244,13 +246,15 @@ const WorkerList: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
         )}
       </Stack>
 
-      {data && !isEmpty && (
+      {data != null && !isEmpty && (
         <Stack alignItems="center" mt={3}>
           <Pagination
             color="primary"
             page={page}
             count={Math.ceil(data.workersConnection.totalCount / pageSize)}
-            onChange={(_, newPage) => setPage(newPage)}
+            onChange={(_, newPage) => {
+              setPage(newPage)
+            }}
             showFirstButton
             showLastButton
           />

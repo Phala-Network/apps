@@ -2,7 +2,7 @@ import {favoritePoolsAtom} from '@/store/common'
 import {useAtom} from 'jotai'
 import {useCallback, useMemo} from 'react'
 
-const usePoolFavorite = (pid: string) => {
+const usePoolFavorite = (pid: string): [boolean, () => void] => {
   const [favoritePools, setFavoritePools] = useAtom(favoritePoolsAtom)
   const isFavorite = useMemo(
     () => favoritePools.includes(pid),
@@ -14,7 +14,7 @@ const usePoolFavorite = (pid: string) => {
     )
   }, [setFavoritePools, pid])
 
-  return [isFavorite, toggleFavorite] as const
+  return [isFavorite, toggleFavorite]
 }
 
 export default usePoolFavorite

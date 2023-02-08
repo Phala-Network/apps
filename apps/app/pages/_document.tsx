@@ -4,7 +4,7 @@ import createEmotionServer from '@emotion/server/create-instance'
 import Document, {Head, Html, Main, NextScript} from 'next/document'
 
 export default class MyDocument extends Document {
-  render() {
+  render(): JSX.Element {
     return (
       <Html lang="en">
         <Head>

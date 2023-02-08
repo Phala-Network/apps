@@ -1,7 +1,7 @@
-import {BasePoolKind} from '@/lib/subsquidQuery'
+import {type BasePoolKind} from '@/lib/subsquidQuery'
 import {addMonths, addWeeks, addYears, isBefore} from 'date-fns'
 import Decimal from 'decimal.js'
-import {FC, useMemo, useRef, useState} from 'react'
+import {useMemo, useRef, useState, type FC} from 'react'
 
 type CoverVariant = 'dashboard' | 'delegation'
 
@@ -18,7 +18,7 @@ const getNftCover = (
     .toString()
 
   let color = '01'
-  if (mintTimeString) {
+  if (mintTimeString != null) {
     const now = new Date()
     const mintTime = new Date(mintTimeString)
     if (isBefore(addYears(mintTime, 1), now)) {
@@ -72,8 +72,8 @@ const DelegationNftCover: FC<{
       preload="auto"
       ref={ref}
       onMouseEnter={() => {
-        if (ref.current) {
-          ref.current.play()
+        if (ref.current != null) {
+          void ref.current.play()
         }
         setLoop(true)
       }}
@@ -81,7 +81,7 @@ const DelegationNftCover: FC<{
         setLoop(false)
       }}
       onPause={() => {
-        if (ref.current) {
+        if (ref.current != null) {
           ref.current.currentTime = 0
         }
       }}

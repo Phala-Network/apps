@@ -5,7 +5,7 @@ import usePolkadotApi from '@/hooks/usePolkadotApi'
 import useSignAndSend from '@/hooks/useSignAndSend'
 import {aprToApy} from '@/lib/apr'
 import getPoolPath from '@/lib/getPoolPath'
-import {DelegationCommonFragment} from '@/lib/subsquidQuery'
+import {type DelegationCommonFragment} from '@/lib/subsquidQuery'
 import {colors} from '@/lib/theme'
 import MoreVert from '@mui/icons-material/MoreVert'
 import Numbers from '@mui/icons-material/Numbers'
@@ -26,15 +26,16 @@ import {
 } from '@mui/material'
 import {toCurrency, toPercentage} from '@phala/util'
 import Decimal from 'decimal.js'
-import {FC, useRef, useState} from 'react'
-import {OnAction} from './List'
+import {useRef, useState, type FC} from 'react'
+import {type OnAction} from './List'
 
 const NftCard: FC<{
   compact?: boolean
   delegation: DelegationCommonFragment
   onAction?: OnAction
   isOwner?: boolean
-}> = ({compact = false, delegation, onAction, isOwner = false}) => {
+  profit?: Decimal
+}> = ({compact = false, delegation, onAction, isOwner = false, profit}) => {
   const api = usePolkadotApi()
   const signAndSend = useSignAndSend()
   const [menuOpen, setMenuOpen] = useState(false)
@@ -47,17 +48,14 @@ const NftCard: FC<{
   const apr = getApr(basePool.aprMultiplier)
   const hasWithdrawal = withdrawingValue !== '0'
   const poolHasWithdrawal = delegation.basePool.withdrawingShares !== '0'
-  const reclaim = async () => {
-    if (!api) return
-    return signAndSend(
+  const reclaim = async (): Promise<void> => {
+    if (api == null) return
+    await signAndSend(
       isVault
         ? api.tx.phalaVault.checkAndMaybeForceWithdraw(basePool.id)
         : api.tx.phalaStakePoolv2.checkAndMaybeForceWithdraw(basePool.id)
     )
   }
-
-  // TODO: handle withdrawal nft
-  if (!delegationNft) return null
 
   return (
     <Paper
@@ -124,9 +122,18 @@ const NftCard: FC<{
           {toCurrency(value)}
           <sub>PHA</sub>
         </Typography>
-        {/* <Typography variant="caption" color={theme.palette.success.main}>
-          {`+ PHA / 7d`}
-        </Typography> */}
+        {profit != null && (
+          <Typography
+            variant="body2"
+            color={
+              profit.gte(0.01)
+                ? theme.palette.success.main
+                : theme.palette.text.secondary
+            }
+          >
+            {`+ ${toCurrency(profit)} PHA / 24h`}
+          </Typography>
+        )}
 
         <Stack mt="auto">
           {hasWithdrawal && (
@@ -147,7 +154,7 @@ const NftCard: FC<{
               label={`Est. ${isVault ? 'APY' : 'APR'}`}
               fullWidth
             >
-              {apr ? (
+              {apr != null ? (
                 toPercentage(isVault ? aprToApy(apr) : apr)
               ) : (
                 <Skeleton width={32} />
@@ -162,7 +169,9 @@ const NftCard: FC<{
           <>
             <IconButton
               ref={moreRef}
-              onClick={() => setMenuOpen(true)}
+              onClick={() => {
+                setMenuOpen(true)
+              }}
               sx={{position: 'absolute', top: 5, right: 5}}
             >
               <MoreVert />
@@ -170,11 +179,13 @@ const NftCard: FC<{
             <Menu
               open={menuOpen}
               anchorEl={moreRef.current}
-              onClose={() => setMenuOpen(false)}
+              onClose={() => {
+                setMenuOpen(false)
+              }}
             >
               <MenuItem
                 onClick={() => {
-                  onAction && onAction(delegation, 'withdraw')
+                  onAction?.(delegation, 'withdraw')
                   setMenuOpen(false)
                 }}
               >
@@ -183,7 +194,7 @@ const NftCard: FC<{
               <MenuItem
                 disabled={!poolHasWithdrawal}
                 onClick={() => {
-                  reclaim()
+                  void reclaim()
                   setMenuOpen(false)
                 }}
               >

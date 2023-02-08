@@ -10,12 +10,14 @@ import {
 } from '@mui/material'
 import {polkadotAccountAtom} from '@phala/store'
 import {validateAddress} from '@phala/util'
+import {type SubmittableExtrinsic} from '@polkadot/api/types'
 import {decodeAddress, encodeAddress} from '@polkadot/keyring'
+import {type ISubmittableResult} from '@polkadot/types/types'
 import Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
-import {FC, useMemo, useState} from 'react'
+import {useMemo, useState, type FC} from 'react'
 
-type BasePoolWithOwnerReward = {
+interface BasePoolWithOwnerReward {
   id: string
   stakePool?: {
     ownerReward: string
@@ -35,28 +37,30 @@ const ClaimReward: FC<{
 
   const addressValid = useMemo(() => validateAddress(address), [address])
 
-  const claimReward = () => {
-    if (!api || (!basePool && !basePools)) return
-    const getExtrinsic = (id: string) =>
+  const claimReward = (): void => {
+    if (api == null || (basePool == null && basePools == null)) return
+    const getExtrinsic = (
+      id: string
+    ): SubmittableExtrinsic<'promise', ISubmittableResult> =>
       api.tx.phalaStakePoolv2.claimOwnerRewards(id, address)
     const calls = []
     let totalReward = new Decimal(0)
-    if (basePool) {
+    if (basePool != null) {
       calls.push(getExtrinsic(basePool.id))
-      if (basePool.stakePool) {
+      if (basePool.stakePool != null) {
         totalReward = totalReward.plus(basePool.stakePool.ownerReward)
       }
-    } else if (basePools) {
+    } else if (basePools != null) {
       calls.push(...basePools.map(({id}) => getExtrinsic(id)))
       for (const {stakePool} of basePools) {
-        if (stakePool) {
+        if (stakePool != null) {
           totalReward = totalReward.plus(stakePool.ownerReward)
         }
       }
     }
     try {
       if (
-        account?.address &&
+        account?.address !== undefined &&
         encodeAddress(decodeAddress(address), 30) === account.address
       ) {
         calls.push(
@@ -88,13 +92,13 @@ const ClaimReward: FC<{
           fullWidth
           inputProps={{pattern: '^[0-9a-zA-Z]*$'}}
           InputProps={{
-            endAdornment: !address && (
+            endAdornment: address === '' && (
               <Button
                 size="small"
                 variant="text"
                 sx={{flexShrink: 0}}
                 onClick={() => {
-                  setAddress(account?.address || '')
+                  setAddress(account?.address ?? '')
                 }}
               >
                 My Address

@@ -3,7 +3,7 @@ import {hexToString} from '@polkadot/util'
 import useSWRImmutable from 'swr/immutable'
 import usePolkadotApi from './usePolkadotApi'
 
-const iconMap: Record<string, string> = {
+const iconMap = {
   PHA: 'https://s2.coinmarketcap.com/static/img/coins/64x64/6841.png',
   // Khala
   KSM: 'https://s2.coinmarketcap.com/static/img/coins/64x64/5034.png',
@@ -30,9 +30,12 @@ const iconMap: Record<string, string> = {
   ACA: 'https://s2.coinmarketcap.com/static/img/coins/64x64/6756.png',
   RING: 'https://s2.coinmarketcap.com/static/img/coins/64x64/5798.png',
   LDOT: 'https://s2.coinmarketcap.com/static/img/coins/64x64/20725.png',
-}
+} satisfies Record<string, string>
 
-export type AssetMetadata = {
+const hasIcon = (symbol: string): symbol is keyof typeof iconMap =>
+  symbol in iconMap
+
+export interface AssetMetadata {
   assetId: number
   name: string
   symbol: string
@@ -45,10 +48,12 @@ export const phaMetadata: AssetMetadata = {
   name: 'Phala Network',
   symbol: 'PHA',
   decimals: 12,
-  iconSrc: iconMap['PHA'],
+  iconSrc: iconMap.PHA,
 }
 
-const assetsMetadataFetcher = async ([api]: [ApiPromise]) => {
+const assetsMetadataFetcher = async ([api]: [ApiPromise]): Promise<
+  Record<number, AssetMetadata>
+> => {
   const entries = await api.query.assets.metadata.entries()
   const assetsMetadata: Record<number, AssetMetadata> = {}
   for (const [key, value] of entries) {
@@ -56,7 +61,7 @@ const assetsMetadataFetcher = async ([api]: [ApiPromise]) => {
     const name = hexToString(value.name.toHex())
     const symbol = hexToString(value.symbol.toHex())
     const decimals = value.decimals.toNumber()
-    const iconSrc = iconMap[symbol]
+    const iconSrc = hasIcon(symbol) ? iconMap[symbol] : undefined
     assetsMetadata[assetId] = {
       assetId,
       name,
@@ -68,10 +73,10 @@ const assetsMetadataFetcher = async ([api]: [ApiPromise]) => {
   return assetsMetadata
 }
 
-const useAssetsMetadata = () => {
+const useAssetsMetadata = (): Record<number, AssetMetadata> | undefined => {
   const api = usePolkadotApi()
   const {data} = useSWRImmutable(
-    api ? [api, 'assetsMetadata'] : null,
+    api != null ? [api, 'assetsMetadata'] : null,
     assetsMetadataFetcher
   )
   return data

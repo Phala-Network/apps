@@ -13,8 +13,8 @@ import {
 import {getDecimalPattern, toCurrency, validateAddress} from '@phala/util'
 import Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
-import {FC, useMemo, useState} from 'react'
-import {Asset} from './DashboardAssetList'
+import {useMemo, useState, type FC} from 'react'
+import {type Asset} from './DashboardAssetList'
 import Property from './Property'
 
 const AssetTransfer: FC<{asset: Asset; onClose: () => void}> = ({
@@ -27,8 +27,8 @@ const AssetTransfer: FC<{asset: Asset; onClose: () => void}> = ({
   const [loading, setLoading] = useState(false)
   const [address, setAddress] = useState('')
   const [amountString, setAmountString] = useState('')
-  const transfer = () => {
-    if (!api) return
+  const transfer = (): void => {
+    if (api == null) return
     const amount = new Decimal(amountString)
       .times(Decimal.pow(10, asset.decimals))
       .toHex()
@@ -51,7 +51,7 @@ const AssetTransfer: FC<{asset: Asset; onClose: () => void}> = ({
   }
   const isValid: boolean = useMemo(() => {
     try {
-      if (!asset.balance) return false
+      if (asset.balance == null) return false
       const amount = new Decimal(amountString)
       return (
         validateAddress(address) && amount.gt(0) && amount.lte(asset.balance)
@@ -101,7 +101,8 @@ const AssetTransfer: FC<{asset: Asset; onClose: () => void}> = ({
           }}
         />
         <Property label="Transferable" size="small" sx={{mt: 2}}>
-          {asset.balance && `${toCurrency(asset.balance)} ${asset.symbol}`}
+          {asset.balance != null &&
+            `${toCurrency(asset.balance)} ${asset.symbol}`}
         </Property>
         <Alert severity="warning" sx={{mt: 2}} icon={false}>
           You are transferring on{' '}

@@ -9,7 +9,7 @@ import {polkadotAccountAtom} from '@phala/store'
 import {toCurrency} from '@phala/util'
 import Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
-import {FC, useCallback, useMemo, useState} from 'react'
+import {useCallback, useMemo, useState, type FC} from 'react'
 
 const MyStakePools: FC = () => {
   const [account] = useAtom(polkadotAccountAtom)
@@ -20,19 +20,19 @@ const MyStakePools: FC = () => {
       accountId: account?.address,
       gt: '0',
     },
-    {enabled: !!account}
+    {enabled: account !== null}
   )
   const ownerReward = useMemo(() => {
-    if (!data) return
+    if (data == null) return
     return data.basePoolsConnection.edges.reduce((acc, cur) => {
-      if (cur.node.stakePool) {
+      if (cur.node.stakePool != null) {
         return acc.plus(cur.node.stakePool.ownerReward)
       }
       return acc
     }, new Decimal(0))
   }, [data])
   const claimablePools = useMemo(() => {
-    if (!data) return []
+    if (data == null) return []
     return data.basePoolsConnection.edges.map((edge) => edge.node)
   }, [data])
 
@@ -53,7 +53,7 @@ const MyStakePools: FC = () => {
             Owner Rewards
           </Typography>
           <Typography variant="num3">
-            {ownerReward ? (
+            {ownerReward != null ? (
               `${toCurrency(ownerReward)} PHA`
             ) : (
               <Skeleton width={100} />
@@ -62,7 +62,7 @@ const MyStakePools: FC = () => {
 
           <Button
             size="small"
-            disabled={!ownerReward || ownerReward.eq(0)}
+            disabled={ownerReward == null || ownerReward.eq(0)}
             onClick={() => {
               setDialogOpen(true)
             }}

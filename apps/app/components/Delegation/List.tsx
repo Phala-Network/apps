@@ -3,13 +3,14 @@ import Empty from '@/components/Empty'
 import ListSkeleton from '@/components/ListSkeleton'
 import SectionHeader from '@/components/SectionHeader'
 import useDebounced from '@/hooks/useDebounced'
+import useYesterday from '@/hooks/useYesterday'
 import {subsquidClient} from '@/lib/graphql'
 import {
-  BasePoolKind,
-  DelegationCommonFragment,
-  DelegationOrderByInput,
-  DelegationWhereInput,
   useInfiniteDelegationsConnectionQuery,
+  type BasePoolKind,
+  type DelegationCommonFragment,
+  type DelegationOrderByInput,
+  type DelegationWhereInput,
 } from '@/lib/subsquidQuery'
 import FilterList from '@mui/icons-material/FilterList'
 import FormatListBulleted from '@mui/icons-material/FormatListBulleted'
@@ -33,7 +34,8 @@ import {
   Unstable_Grid2 as Grid,
 } from '@mui/material'
 import {isTruthy} from '@phala/util'
-import {FC, useCallback, useEffect, useState} from 'react'
+import Decimal from 'decimal.js'
+import {useCallback, useEffect, useState, type FC} from 'react'
 import {useInView} from 'react-intersection-observer'
 import HorizonCard from './HorizonCard'
 import NftCard from './NftCard'
@@ -45,7 +47,7 @@ export type OnAction = (
   action: DelegationDialogAction
 ) => void
 
-const orderByEntries: [string, DelegationOrderByInput][] = [
+const orderByEntries: Array<[string, DelegationOrderByInput]> = [
   ['Value high to low', 'value_DESC'],
   ['Value low to high', 'value_ASC'],
   ['APR high to low', 'basePool_aprMultiplier_DESC'],
@@ -61,6 +63,7 @@ const DelegationList: FC<{
   isVault?: boolean
   isOwner?: boolean
 }> = ({address, isVault = false, showHeader = false, isOwner = false}) => {
+  const yesterday = useYesterday()
   const {ref, inView} = useInView()
   const [dialogOpen, setDialogOpen] = useState(false)
   const [dialogAction, setDialogAction] = useState<DelegationDialogAction>()
@@ -78,7 +81,7 @@ const DelegationList: FC<{
   const where: Array<DelegationWhereInput | false> = [
     {account: {id_eq: address}},
     {shares_gt: '0'},
-    !!debouncedSearchString && {
+    debouncedSearchString !== '' && {
       OR: [{basePool: {id_startsWith: debouncedSearchString}}],
     },
     !isVault && {
@@ -91,15 +94,20 @@ const DelegationList: FC<{
     },
     withdrawingFilter && {withdrawingValue_gt: '0'},
   ]
-  const enabled = !!address
+  const enabled = address !== undefined && yesterday !== undefined
   const {data, isLoading, fetchNextPage, hasNextPage} =
     useInfiniteDelegationsConnectionQuery(
       'after',
       subsquidClient,
-      {first: 20, orderBy, where: {AND: where.filter(isTruthy)}},
+      {
+        first: 20,
+        orderBy,
+        where: {AND: where.filter(isTruthy)},
+        snapshotsWhere: {updatedTime_gte: yesterday},
+      },
       {
         keepPreviousData: true,
-        enabled: !!address,
+        enabled,
         getNextPageParam: (lastPage) =>
           lastPage.delegationsConnection.pageInfo.hasNextPage
             ? lastPage.delegationsConnection.pageInfo.endCursor
@@ -109,7 +117,7 @@ const DelegationList: FC<{
 
   useEffect(() => {
     if (enabled && inView) {
-      fetchNextPage()
+      void fetchNextPage()
     }
   }, [inView, fetchNextPage, enabled])
 
@@ -136,7 +144,9 @@ const DelegationList: FC<{
               <Checkbox
                 color={color}
                 checked={vaultFilter}
-                onChange={(e) => setVaultFilter(e.target.checked)}
+                onChange={(e) => {
+                  setVaultFilter(e.target.checked)
+                }}
               />
             }
             label="Vault"
@@ -146,7 +156,9 @@ const DelegationList: FC<{
               <Checkbox
                 color={color}
                 checked={stakePoolFilter}
-                onChange={(e) => setStakePoolFilter(e.target.checked)}
+                onChange={(e) => {
+                  setStakePoolFilter(e.target.checked)
+                }}
               />
             }
             label="StakePool"
@@ -161,7 +173,9 @@ const DelegationList: FC<{
           <Checkbox
             color={color}
             checked={withdrawingFilter}
-            onChange={(e) => setWithdrawingFilterFilter(e.target.checked)}
+            onChange={(e) => {
+              setWithdrawingFilterFilter(e.target.checked)
+            }}
           />
         }
         label="Withdrawing"
@@ -182,7 +196,9 @@ const DelegationList: FC<{
           <Stack direction="row" alignItems="center" spacing={{xs: 1, md: 2}}>
             <IconButton
               sx={{display: {xl: 'none'}}}
-              onClick={() => setDrawerOpen(true)}
+              onClick={() => {
+                setDrawerOpen(true)
+              }}
             >
               <FilterList />
             </IconButton>
@@ -192,7 +208,9 @@ const DelegationList: FC<{
               placeholder="Search PID"
               size="small"
               InputProps={{endAdornment: <Search />}}
-              onChange={(e) => setSearchString(e.target.value)}
+              onChange={(e) => {
+                setSearchString(e.target.value)
+              }}
               sx={{flex: '1', ml: {xl: '0!important'}}}
             />
             <TextField
@@ -236,28 +254,45 @@ const DelegationList: FC<{
             ) : (
               data?.pages.map((page, index) => (
                 <Grid container key={index} spacing={2}>
-                  {page.delegationsConnection.edges.map((edge) => (
-                    <Grid key={edge.node.id} xs={12} md={showNftCard ? 6 : 12}>
-                      {showNftCard ? (
-                        <NftCard
-                          delegation={edge.node}
-                          onAction={onAction}
-                          isOwner={isOwner}
-                        />
-                      ) : (
-                        <HorizonCard
-                          delegation={edge.node}
-                          onAction={onAction}
-                          isOwner={isOwner}
-                        />
-                      )}
-                    </Grid>
-                  ))}
+                  {page.delegationsConnection.edges.map((edge) => {
+                    const delegation = edge.node
+                    const snapshot = edge.node.snapshots[0]
+                    let profit: Decimal | undefined
+                    if (snapshot != null) {
+                      profit = new Decimal(delegation.value)
+                        .minus(snapshot.value)
+                        .minus(delegation.cost)
+                        .plus(snapshot.cost)
+                    }
+                    return (
+                      <Grid
+                        key={edge.node.id}
+                        xs={12}
+                        md={showNftCard ? 6 : 12}
+                      >
+                        {showNftCard ? (
+                          <NftCard
+                            delegation={edge.node}
+                            onAction={onAction}
+                            isOwner={isOwner}
+                            profit={profit}
+                          />
+                        ) : (
+                          <HorizonCard
+                            delegation={edge.node}
+                            onAction={onAction}
+                            isOwner={isOwner}
+                            profit={profit}
+                          />
+                        )}
+                      </Grid>
+                    )
+                  })}
                 </Grid>
               ))
             )}
 
-            {(isLoading || hasNextPage) &&
+            {(isLoading || hasNextPage === true) &&
               (showNftCard ? (
                 <Grid container spacing={2} ref={ref}>
                   {Array.from({length: 6}).map((_, index) => (
@@ -274,7 +309,7 @@ const DelegationList: FC<{
       </Stack>
 
       <Dialog open={dialogOpen} onClose={onClose}>
-        {operatingDelegation && (
+        {operatingDelegation != null && (
           <>
             {dialogAction === 'withdraw' && (
               <Withdraw onClose={onClose} delegation={operatingDelegation} />
@@ -287,7 +322,9 @@ const DelegationList: FC<{
         PaperProps={{sx: {p: 3}}}
         anchor="left"
         open={drawerOpen}
-        onClose={() => setDrawerOpen(false)}
+        onClose={() => {
+          setDrawerOpen(false)
+        }}
       >
         {filters}
       </Drawer>
