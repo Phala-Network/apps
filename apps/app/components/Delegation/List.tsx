@@ -263,6 +263,7 @@ const DelegationList: FC<{
                         .minus(snapshot.value)
                         .minus(delegation.cost)
                         .plus(snapshot.cost)
+                        .minus(delegation.withdrawingValue)
                     }
                     return (
                       <Grid
