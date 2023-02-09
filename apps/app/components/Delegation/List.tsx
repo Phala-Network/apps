@@ -100,7 +100,7 @@ const DelegationList: FC<{
       'after',
       subsquidClient,
       {
-        first: 200,
+        first: 20,
         orderBy,
         where: {AND: where.filter(isTruthy)},
         snapshotsWhere: {updatedTime_gte: yesterday},

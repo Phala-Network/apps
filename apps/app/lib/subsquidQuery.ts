@@ -2856,7 +2856,7 @@ export const useInfiniteAccountByIdQuery = <
     ) =>
     useInfiniteQuery<AccountByIdQuery, TError, TData>(
       ['AccountById.infinite', variables],
-      (metaData) => fetcher<AccountByIdQuery, AccountByIdQueryVariables>(client, AccountByIdDocument, {...variables, ...(metaData.pageParam ?? {})}, headers)(),
+      (metaData) => fetcher<AccountByIdQuery, AccountByIdQueryVariables>(client, AccountByIdDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
       options
     );
 
@@ -2905,7 +2905,7 @@ export const useInfiniteAccountValueSnapshotsConnectionQuery = <
     ) =>
     useInfiniteQuery<AccountValueSnapshotsConnectionQuery, TError, TData>(
       ['AccountValueSnapshotsConnection.infinite', variables],
-      (metaData) => fetcher<AccountValueSnapshotsConnectionQuery, AccountValueSnapshotsConnectionQueryVariables>(client, AccountValueSnapshotsConnectionDocument, {...variables, ...(metaData.pageParam ?? {})}, headers)(),
+      (metaData) => fetcher<AccountValueSnapshotsConnectionQuery, AccountValueSnapshotsConnectionQueryVariables>(client, AccountValueSnapshotsConnectionDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
       options
     );
 
@@ -2947,7 +2947,7 @@ export const useInfiniteBasePoolByIdQuery = <
     ) =>
     useInfiniteQuery<BasePoolByIdQuery, TError, TData>(
       ['BasePoolById.infinite', variables],
-      (metaData) => fetcher<BasePoolByIdQuery, BasePoolByIdQueryVariables>(client, BasePoolByIdDocument, {...variables, ...(metaData.pageParam ?? {})}, headers)(),
+      (metaData) => fetcher<BasePoolByIdQuery, BasePoolByIdQueryVariables>(client, BasePoolByIdDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
       options
     );
 
@@ -3009,7 +3009,7 @@ export const useInfiniteBasePoolsConnectionQuery = <
     ) =>
     useInfiniteQuery<BasePoolsConnectionQuery, TError, TData>(
       ['BasePoolsConnection.infinite', variables],
-      (metaData) => fetcher<BasePoolsConnectionQuery, BasePoolsConnectionQueryVariables>(client, BasePoolsConnectionDocument, {...variables, ...(metaData.pageParam ?? {})}, headers)(),
+      (metaData) => fetcher<BasePoolsConnectionQuery, BasePoolsConnectionQueryVariables>(client, BasePoolsConnectionDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
       options
     );
 
@@ -3056,7 +3056,7 @@ export const useInfiniteClaimableStakePoolsQuery = <
     ) =>
     useInfiniteQuery<ClaimableStakePoolsQuery, TError, TData>(
       variables === undefined ? ['ClaimableStakePools.infinite'] : ['ClaimableStakePools.infinite', variables],
-      (metaData) => fetcher<ClaimableStakePoolsQuery, ClaimableStakePoolsQueryVariables>(client, ClaimableStakePoolsDocument, {...variables, ...(metaData.pageParam ?? {})}, headers)(),
+      (metaData) => fetcher<ClaimableStakePoolsQuery, ClaimableStakePoolsQueryVariables>(client, ClaimableStakePoolsDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
       options
     );
 
@@ -3107,7 +3107,7 @@ export const useInfiniteOwnedVaultsQuery = <
     ) =>
     useInfiniteQuery<OwnedVaultsQuery, TError, TData>(
       variables === undefined ? ['OwnedVaults.infinite'] : ['OwnedVaults.infinite', variables],
-      (metaData) => fetcher<OwnedVaultsQuery, OwnedVaultsQueryVariables>(client, OwnedVaultsDocument, {...variables, ...(metaData.pageParam ?? {})}, headers)(),
+      (metaData) => fetcher<OwnedVaultsQuery, OwnedVaultsQueryVariables>(client, OwnedVaultsDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
       options
     );
 
@@ -3156,7 +3156,7 @@ export const useInfiniteBasePoolSnapshotsConnectionQuery = <
     ) =>
     useInfiniteQuery<BasePoolSnapshotsConnectionQuery, TError, TData>(
       ['BasePoolSnapshotsConnection.infinite', variables],
-      (metaData) => fetcher<BasePoolSnapshotsConnectionQuery, BasePoolSnapshotsConnectionQueryVariables>(client, BasePoolSnapshotsConnectionDocument, {...variables, ...(metaData.pageParam ?? {})}, headers)(),
+      (metaData) => fetcher<BasePoolSnapshotsConnectionQuery, BasePoolSnapshotsConnectionQueryVariables>(client, BasePoolSnapshotsConnectionDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
       options
     );
 
@@ -3198,7 +3198,7 @@ export const useInfiniteDelegationByIdQuery = <
     ) =>
     useInfiniteQuery<DelegationByIdQuery, TError, TData>(
       ['DelegationById.infinite', variables],
-      (metaData) => fetcher<DelegationByIdQuery, DelegationByIdQueryVariables>(client, DelegationByIdDocument, {...variables, ...(metaData.pageParam ?? {})}, headers)(),
+      (metaData) => fetcher<DelegationByIdQuery, DelegationByIdQueryVariables>(client, DelegationByIdDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
       options
     );
 
@@ -3257,7 +3257,7 @@ export const useInfiniteDelegationsConnectionQuery = <
     ) =>
     useInfiniteQuery<DelegationsConnectionQuery, TError, TData>(
       ['DelegationsConnection.infinite', variables],
-      (metaData) => fetcher<DelegationsConnectionQuery, DelegationsConnectionQueryVariables>(client, DelegationsConnectionDocument, {...variables, ...(metaData.pageParam ?? {})}, headers)(),
+      (metaData) => fetcher<DelegationsConnectionQuery, DelegationsConnectionQueryVariables>(client, DelegationsConnectionDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
       options
     );
 
@@ -3307,7 +3307,7 @@ export const useInfiniteDelegationSnapshotsConnectionQuery = <
     ) =>
     useInfiniteQuery<DelegationSnapshotsConnectionQuery, TError, TData>(
       ['DelegationSnapshotsConnection.infinite', variables],
-      (metaData) => fetcher<DelegationSnapshotsConnectionQuery, DelegationSnapshotsConnectionQueryVariables>(client, DelegationSnapshotsConnectionDocument, {...variables, ...(metaData.pageParam ?? {})}, headers)(),
+      (metaData) => fetcher<DelegationSnapshotsConnectionQuery, DelegationSnapshotsConnectionQueryVariables>(client, DelegationSnapshotsConnectionDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
       options
     );
 
@@ -3351,7 +3351,7 @@ export const useInfiniteGlobalStateQuery = <
     ) =>
     useInfiniteQuery<GlobalStateQuery, TError, TData>(
       variables === undefined ? ['GlobalState.infinite'] : ['GlobalState.infinite', variables],
-      (metaData) => fetcher<GlobalStateQuery, GlobalStateQueryVariables>(client, GlobalStateDocument, {...variables, ...(metaData.pageParam ?? {})}, headers)(),
+      (metaData) => fetcher<GlobalStateQuery, GlobalStateQueryVariables>(client, GlobalStateDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
       options
     );
 
@@ -3413,7 +3413,7 @@ export const useInfiniteNftsConnectionQuery = <
     ) =>
     useInfiniteQuery<NftsConnectionQuery, TError, TData>(
       ['NftsConnection.infinite', variables],
-      (metaData) => fetcher<NftsConnectionQuery, NftsConnectionQueryVariables>(client, NftsConnectionDocument, {...variables, ...(metaData.pageParam ?? {})}, headers)(),
+      (metaData) => fetcher<NftsConnectionQuery, NftsConnectionQueryVariables>(client, NftsConnectionDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
       options
     );
 
@@ -3462,7 +3462,7 @@ export const useInfiniteRewardRecordsConnectionQuery = <
     ) =>
     useInfiniteQuery<RewardRecordsConnectionQuery, TError, TData>(
       ['RewardRecordsConnection.infinite', variables],
-      (metaData) => fetcher<RewardRecordsConnectionQuery, RewardRecordsConnectionQueryVariables>(client, RewardRecordsConnectionDocument, {...variables, ...(metaData.pageParam ?? {})}, headers)(),
+      (metaData) => fetcher<RewardRecordsConnectionQuery, RewardRecordsConnectionQueryVariables>(client, RewardRecordsConnectionDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
       options
     );
 
@@ -3522,7 +3522,7 @@ export const useInfiniteBasePoolWhitelistsConnectionQuery = <
     ) =>
     useInfiniteQuery<BasePoolWhitelistsConnectionQuery, TError, TData>(
       ['BasePoolWhitelistsConnection.infinite', variables],
-      (metaData) => fetcher<BasePoolWhitelistsConnectionQuery, BasePoolWhitelistsConnectionQueryVariables>(client, BasePoolWhitelistsConnectionDocument, {...variables, ...(metaData.pageParam ?? {})}, headers)(),
+      (metaData) => fetcher<BasePoolWhitelistsConnectionQuery, BasePoolWhitelistsConnectionQueryVariables>(client, BasePoolWhitelistsConnectionDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
       options
     );
 
@@ -3595,7 +3595,7 @@ export const useInfiniteWorkersConnectionQuery = <
     ) =>
     useInfiniteQuery<WorkersConnectionQuery, TError, TData>(
       ['WorkersConnection.infinite', variables],
-      (metaData) => fetcher<WorkersConnectionQuery, WorkersConnectionQueryVariables>(client, WorkersConnectionDocument, {...variables, ...(metaData.pageParam ?? {})}, headers)(),
+      (metaData) => fetcher<WorkersConnectionQuery, WorkersConnectionQueryVariables>(client, WorkersConnectionDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
       options
     );
 
@@ -3643,6 +3643,6 @@ export const useInfiniteReclaimableWorkersConnectionQuery = <
     ) =>
     useInfiniteQuery<ReclaimableWorkersConnectionQuery, TError, TData>(
       ['ReclaimableWorkersConnection.infinite', variables],
-      (metaData) => fetcher<ReclaimableWorkersConnectionQuery, ReclaimableWorkersConnectionQueryVariables>(client, ReclaimableWorkersConnectionDocument, {...variables, ...(metaData.pageParam ?? {})}, headers)(),
+      (metaData) => fetcher<ReclaimableWorkersConnectionQuery, ReclaimableWorkersConnectionQueryVariables>(client, ReclaimableWorkersConnectionDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
       options
     );
