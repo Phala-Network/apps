@@ -257,12 +257,13 @@ const DelegationList: FC<{
                   {page.delegationsConnection.edges.map((edge) => {
                     const delegation = edge.node
                     const snapshot = edge.node.snapshots[0]
-                    let profit: Decimal | undefined
+                    let profit = new Decimal(0)
                     if (snapshot != null) {
                       profit = new Decimal(delegation.value)
                         .minus(snapshot.value)
                         .minus(delegation.cost)
                         .plus(snapshot.cost)
+                      profit = Decimal.max(profit, 0)
                     }
                     return (
                       <Grid
