@@ -3,6 +3,7 @@ import useYesterday from '@/hooks/useYesterday'
 import {subsquidClient} from '@/lib/graphql'
 import {
   useGlobalStateQuery,
+  useIdleWorkerCountQuery,
   useRewardRecordsConnectionQuery,
 } from '@/lib/subsquidQuery'
 import {chainAtom} from '@/store/common'
@@ -17,11 +18,13 @@ interface CirculationData {
   data?: {circulations?: {nodes?: [{amount: string}?]}}
 }
 
-const numberFormat = (value: Decimal): string =>
+const numberFormat = (value: Decimal | number): string =>
   Intl.NumberFormat('en-US', {
     notation: 'compact',
     maximumFractionDigits: 2,
-  }).format(BigInt(value.floor().toString()))
+  }).format(
+    typeof value === 'number' ? value : BigInt(value.floor().toString())
+  )
 
 const NetworkOverview: FC = () => {
   const getApr = useGetApr()
@@ -42,6 +45,7 @@ const NetworkOverview: FC = () => {
     }
   )
   const {data: globalStateData} = useGlobalStateQuery(subsquidClient)
+  const {data: idleWorkerCountData} = useIdleWorkerCountQuery(subsquidClient)
   const circulationValue =
     circulationData?.data?.circulations?.nodes?.[0]?.amount
   const {totalValue, averageAprMultiplier} =
@@ -66,6 +70,10 @@ const NetworkOverview: FC = () => {
     if (apr == null) return
     return toPercentage(apr)
   }, [getApr, averageAprMultiplier])
+  const idleWorkerCount = useMemo(() => {
+    const count = idleWorkerCountData?.sessionsConnection.totalCount
+    return typeof count === 'number' && numberFormat(count)
+  }, [idleWorkerCountData])
   const items = useMemo<Array<[string, string | false | undefined]>>(() => {
     return [
       [
@@ -75,8 +83,9 @@ const NetworkOverview: FC = () => {
       ['Stake Ratio', stakeRatio],
       ['Daily Rewards', dailyRewards],
       ['Avg APR', avgApr],
+      ['Online Workers', idleWorkerCount],
     ]
-  }, [stakeRatio, totalValue, dailyRewards, avgApr])
+  }, [stakeRatio, totalValue, dailyRewards, avgApr, idleWorkerCount])
 
   return (
     <Stack

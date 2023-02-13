@@ -248,7 +248,7 @@ const DelegationList: FC<{
               </ToggleButton>
             </ToggleButtonGroup>
           </Stack>
-          <Stack spacing={2} mt={2}>
+          <Stack sx={{'>:not(style)+:not(style)': {mt: 1}}} mt={2}>
             {isEmpty ? (
               <Empty sx={{minHeight: 400}} />
             ) : (
@@ -263,7 +263,6 @@ const DelegationList: FC<{
                         .minus(snapshot.value)
                         .minus(delegation.cost)
                         .plus(snapshot.cost)
-                        .minus(delegation.withdrawingValue)
                     }
                     return (
                       <Grid

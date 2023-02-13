@@ -1060,6 +1060,10 @@ declare module '@polkadot/api-base/types/errors' {
       MissingCollectionId: AugmentedError<ApiType>;
       NoLegacyRewardToClaim: AugmentedError<ApiType>;
       /**
+       * The caller has no nft to withdraw
+       **/
+      NoNftToWithdraw: AugmentedError<ApiType>;
+      /**
        * There's no pending reward to claim
        **/
       NoRewardToClaim: AugmentedError<ApiType>;
@@ -1154,6 +1158,10 @@ declare module '@polkadot/api-base/types/errors' {
        * The withdrawal amount is too small or too large
        **/
       NoEnoughShareToClaim: AugmentedError<ApiType>;
+      /**
+       * The caller has no nft to withdraw
+       **/
+      NoNftToWithdraw: AugmentedError<ApiType>;
       /**
        * The vault have no owner shares to claim
        **/

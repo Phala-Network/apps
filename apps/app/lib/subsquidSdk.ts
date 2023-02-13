@@ -459,10 +459,12 @@ type BasePoolSnapshot = {
   commission: Scalars['BigDecimal'];
   delegatorCount: Scalars['Int'];
   id: Scalars['String'];
+  idleWorkerCount?: Maybe<Scalars['Int']>;
   sharePrice: Scalars['BigDecimal'];
   totalValue: Scalars['BigDecimal'];
   /** block time */
   updatedTime: Scalars['DateTime'];
+  workerCount?: Maybe<Scalars['Int']>;
 };
 
 type BasePoolSnapshotEdge = {
@@ -510,12 +512,16 @@ const BasePoolSnapshotOrderByInput = {
   DelegatorCountDesc: 'delegatorCount_DESC',
   IdAsc: 'id_ASC',
   IdDesc: 'id_DESC',
+  IdleWorkerCountAsc: 'idleWorkerCount_ASC',
+  IdleWorkerCountDesc: 'idleWorkerCount_DESC',
   SharePriceAsc: 'sharePrice_ASC',
   SharePriceDesc: 'sharePrice_DESC',
   TotalValueAsc: 'totalValue_ASC',
   TotalValueDesc: 'totalValue_DESC',
   UpdatedTimeAsc: 'updatedTime_ASC',
-  UpdatedTimeDesc: 'updatedTime_DESC'
+  UpdatedTimeDesc: 'updatedTime_DESC',
+  WorkerCountAsc: 'workerCount_ASC',
+  WorkerCountDesc: 'workerCount_DESC'
 } as const;
 
 export type BasePoolSnapshotOrderByInput = typeof BasePoolSnapshotOrderByInput[keyof typeof BasePoolSnapshotOrderByInput];
@@ -568,6 +574,15 @@ type BasePoolSnapshotWhereInput = {
   id_not_in?: InputMaybe<Array<Scalars['String']>>;
   id_not_startsWith?: InputMaybe<Scalars['String']>;
   id_startsWith?: InputMaybe<Scalars['String']>;
+  idleWorkerCount_eq?: InputMaybe<Scalars['Int']>;
+  idleWorkerCount_gt?: InputMaybe<Scalars['Int']>;
+  idleWorkerCount_gte?: InputMaybe<Scalars['Int']>;
+  idleWorkerCount_in?: InputMaybe<Array<Scalars['Int']>>;
+  idleWorkerCount_isNull?: InputMaybe<Scalars['Boolean']>;
+  idleWorkerCount_lt?: InputMaybe<Scalars['Int']>;
+  idleWorkerCount_lte?: InputMaybe<Scalars['Int']>;
+  idleWorkerCount_not_eq?: InputMaybe<Scalars['Int']>;
+  idleWorkerCount_not_in?: InputMaybe<Array<Scalars['Int']>>;
   sharePrice_eq?: InputMaybe<Scalars['BigDecimal']>;
   sharePrice_gt?: InputMaybe<Scalars['BigDecimal']>;
   sharePrice_gte?: InputMaybe<Scalars['BigDecimal']>;
@@ -595,6 +610,15 @@ type BasePoolSnapshotWhereInput = {
   updatedTime_lte?: InputMaybe<Scalars['DateTime']>;
   updatedTime_not_eq?: InputMaybe<Scalars['DateTime']>;
   updatedTime_not_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  workerCount_eq?: InputMaybe<Scalars['Int']>;
+  workerCount_gt?: InputMaybe<Scalars['Int']>;
+  workerCount_gte?: InputMaybe<Scalars['Int']>;
+  workerCount_in?: InputMaybe<Array<Scalars['Int']>>;
+  workerCount_isNull?: InputMaybe<Scalars['Boolean']>;
+  workerCount_lt?: InputMaybe<Scalars['Int']>;
+  workerCount_lte?: InputMaybe<Scalars['Int']>;
+  workerCount_not_eq?: InputMaybe<Scalars['Int']>;
+  workerCount_not_in?: InputMaybe<Array<Scalars['Int']>>;
 };
 
 type BasePoolSnapshotsConnection = {
@@ -1548,6 +1572,11 @@ type Query = {
   workerById?: Maybe<Worker>;
   /** @deprecated Use workerById */
   workerByUniqueInput?: Maybe<Worker>;
+  workerSnapshotById?: Maybe<WorkerSnapshot>;
+  /** @deprecated Use workerSnapshotById */
+  workerSnapshotByUniqueInput?: Maybe<WorkerSnapshot>;
+  workerSnapshots: Array<WorkerSnapshot>;
+  workerSnapshotsConnection: WorkerSnapshotsConnection;
   workers: Array<Worker>;
   workersConnection: WorkersConnection;
 };
@@ -1898,6 +1927,32 @@ type QueryWorkerByIdArgs = {
 
 type QueryWorkerByUniqueInputArgs = {
   where: WhereIdInput;
+};
+
+
+type QueryWorkerSnapshotByIdArgs = {
+  id: Scalars['String'];
+};
+
+
+type QueryWorkerSnapshotByUniqueInputArgs = {
+  where: WhereIdInput;
+};
+
+
+type QueryWorkerSnapshotsArgs = {
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Array<WorkerSnapshotOrderByInput>>;
+  where?: InputMaybe<WorkerSnapshotWhereInput>;
+};
+
+
+type QueryWorkerSnapshotsConnectionArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy: Array<WorkerSnapshotOrderByInput>;
+  where?: InputMaybe<WorkerSnapshotWhereInput>;
 };
 
 
@@ -2504,6 +2559,220 @@ const WorkerOrderByInput = {
 } as const;
 
 export type WorkerOrderByInput = typeof WorkerOrderByInput[keyof typeof WorkerOrderByInput];
+type WorkerSnapshot = {
+  __typename?: 'WorkerSnapshot';
+  confidenceLevel: Scalars['Int'];
+  id: Scalars['String'];
+  initialScore?: Maybe<Scalars['Int']>;
+  pInit?: Maybe<Scalars['Int']>;
+  pInstant?: Maybe<Scalars['Int']>;
+  sessionId?: Maybe<Scalars['String']>;
+  stake?: Maybe<Scalars['BigDecimal']>;
+  stakePoolId?: Maybe<Scalars['String']>;
+  state?: Maybe<WorkerState>;
+  totalReward?: Maybe<Scalars['BigDecimal']>;
+  /** block time */
+  updatedTime: Scalars['DateTime'];
+  v?: Maybe<Scalars['BigDecimal']>;
+  ve?: Maybe<Scalars['BigDecimal']>;
+  worker: Worker;
+};
+
+type WorkerSnapshotEdge = {
+  __typename?: 'WorkerSnapshotEdge';
+  cursor: Scalars['String'];
+  node: WorkerSnapshot;
+};
+
+const WorkerSnapshotOrderByInput = {
+  ConfidenceLevelAsc: 'confidenceLevel_ASC',
+  ConfidenceLevelDesc: 'confidenceLevel_DESC',
+  IdAsc: 'id_ASC',
+  IdDesc: 'id_DESC',
+  InitialScoreAsc: 'initialScore_ASC',
+  InitialScoreDesc: 'initialScore_DESC',
+  PInitAsc: 'pInit_ASC',
+  PInitDesc: 'pInit_DESC',
+  PInstantAsc: 'pInstant_ASC',
+  PInstantDesc: 'pInstant_DESC',
+  SessionIdAsc: 'sessionId_ASC',
+  SessionIdDesc: 'sessionId_DESC',
+  StakePoolIdAsc: 'stakePoolId_ASC',
+  StakePoolIdDesc: 'stakePoolId_DESC',
+  StakeAsc: 'stake_ASC',
+  StakeDesc: 'stake_DESC',
+  StateAsc: 'state_ASC',
+  StateDesc: 'state_DESC',
+  TotalRewardAsc: 'totalReward_ASC',
+  TotalRewardDesc: 'totalReward_DESC',
+  UpdatedTimeAsc: 'updatedTime_ASC',
+  UpdatedTimeDesc: 'updatedTime_DESC',
+  VAsc: 'v_ASC',
+  VDesc: 'v_DESC',
+  VeAsc: 've_ASC',
+  VeDesc: 've_DESC',
+  WorkerConfidenceLevelAsc: 'worker_confidenceLevel_ASC',
+  WorkerConfidenceLevelDesc: 'worker_confidenceLevel_DESC',
+  WorkerIdAsc: 'worker_id_ASC',
+  WorkerIdDesc: 'worker_id_DESC',
+  WorkerInitialScoreAsc: 'worker_initialScore_ASC',
+  WorkerInitialScoreDesc: 'worker_initialScore_DESC',
+  WorkerSharesAsc: 'worker_shares_ASC',
+  WorkerSharesDesc: 'worker_shares_DESC'
+} as const;
+
+export type WorkerSnapshotOrderByInput = typeof WorkerSnapshotOrderByInput[keyof typeof WorkerSnapshotOrderByInput];
+type WorkerSnapshotWhereInput = {
+  AND?: InputMaybe<Array<WorkerSnapshotWhereInput>>;
+  OR?: InputMaybe<Array<WorkerSnapshotWhereInput>>;
+  confidenceLevel_eq?: InputMaybe<Scalars['Int']>;
+  confidenceLevel_gt?: InputMaybe<Scalars['Int']>;
+  confidenceLevel_gte?: InputMaybe<Scalars['Int']>;
+  confidenceLevel_in?: InputMaybe<Array<Scalars['Int']>>;
+  confidenceLevel_isNull?: InputMaybe<Scalars['Boolean']>;
+  confidenceLevel_lt?: InputMaybe<Scalars['Int']>;
+  confidenceLevel_lte?: InputMaybe<Scalars['Int']>;
+  confidenceLevel_not_eq?: InputMaybe<Scalars['Int']>;
+  confidenceLevel_not_in?: InputMaybe<Array<Scalars['Int']>>;
+  id_contains?: InputMaybe<Scalars['String']>;
+  id_containsInsensitive?: InputMaybe<Scalars['String']>;
+  id_endsWith?: InputMaybe<Scalars['String']>;
+  id_eq?: InputMaybe<Scalars['String']>;
+  id_gt?: InputMaybe<Scalars['String']>;
+  id_gte?: InputMaybe<Scalars['String']>;
+  id_in?: InputMaybe<Array<Scalars['String']>>;
+  id_isNull?: InputMaybe<Scalars['Boolean']>;
+  id_lt?: InputMaybe<Scalars['String']>;
+  id_lte?: InputMaybe<Scalars['String']>;
+  id_not_contains?: InputMaybe<Scalars['String']>;
+  id_not_containsInsensitive?: InputMaybe<Scalars['String']>;
+  id_not_endsWith?: InputMaybe<Scalars['String']>;
+  id_not_eq?: InputMaybe<Scalars['String']>;
+  id_not_in?: InputMaybe<Array<Scalars['String']>>;
+  id_not_startsWith?: InputMaybe<Scalars['String']>;
+  id_startsWith?: InputMaybe<Scalars['String']>;
+  initialScore_eq?: InputMaybe<Scalars['Int']>;
+  initialScore_gt?: InputMaybe<Scalars['Int']>;
+  initialScore_gte?: InputMaybe<Scalars['Int']>;
+  initialScore_in?: InputMaybe<Array<Scalars['Int']>>;
+  initialScore_isNull?: InputMaybe<Scalars['Boolean']>;
+  initialScore_lt?: InputMaybe<Scalars['Int']>;
+  initialScore_lte?: InputMaybe<Scalars['Int']>;
+  initialScore_not_eq?: InputMaybe<Scalars['Int']>;
+  initialScore_not_in?: InputMaybe<Array<Scalars['Int']>>;
+  pInit_eq?: InputMaybe<Scalars['Int']>;
+  pInit_gt?: InputMaybe<Scalars['Int']>;
+  pInit_gte?: InputMaybe<Scalars['Int']>;
+  pInit_in?: InputMaybe<Array<Scalars['Int']>>;
+  pInit_isNull?: InputMaybe<Scalars['Boolean']>;
+  pInit_lt?: InputMaybe<Scalars['Int']>;
+  pInit_lte?: InputMaybe<Scalars['Int']>;
+  pInit_not_eq?: InputMaybe<Scalars['Int']>;
+  pInit_not_in?: InputMaybe<Array<Scalars['Int']>>;
+  pInstant_eq?: InputMaybe<Scalars['Int']>;
+  pInstant_gt?: InputMaybe<Scalars['Int']>;
+  pInstant_gte?: InputMaybe<Scalars['Int']>;
+  pInstant_in?: InputMaybe<Array<Scalars['Int']>>;
+  pInstant_isNull?: InputMaybe<Scalars['Boolean']>;
+  pInstant_lt?: InputMaybe<Scalars['Int']>;
+  pInstant_lte?: InputMaybe<Scalars['Int']>;
+  pInstant_not_eq?: InputMaybe<Scalars['Int']>;
+  pInstant_not_in?: InputMaybe<Array<Scalars['Int']>>;
+  sessionId_contains?: InputMaybe<Scalars['String']>;
+  sessionId_containsInsensitive?: InputMaybe<Scalars['String']>;
+  sessionId_endsWith?: InputMaybe<Scalars['String']>;
+  sessionId_eq?: InputMaybe<Scalars['String']>;
+  sessionId_gt?: InputMaybe<Scalars['String']>;
+  sessionId_gte?: InputMaybe<Scalars['String']>;
+  sessionId_in?: InputMaybe<Array<Scalars['String']>>;
+  sessionId_isNull?: InputMaybe<Scalars['Boolean']>;
+  sessionId_lt?: InputMaybe<Scalars['String']>;
+  sessionId_lte?: InputMaybe<Scalars['String']>;
+  sessionId_not_contains?: InputMaybe<Scalars['String']>;
+  sessionId_not_containsInsensitive?: InputMaybe<Scalars['String']>;
+  sessionId_not_endsWith?: InputMaybe<Scalars['String']>;
+  sessionId_not_eq?: InputMaybe<Scalars['String']>;
+  sessionId_not_in?: InputMaybe<Array<Scalars['String']>>;
+  sessionId_not_startsWith?: InputMaybe<Scalars['String']>;
+  sessionId_startsWith?: InputMaybe<Scalars['String']>;
+  stakePoolId_contains?: InputMaybe<Scalars['String']>;
+  stakePoolId_containsInsensitive?: InputMaybe<Scalars['String']>;
+  stakePoolId_endsWith?: InputMaybe<Scalars['String']>;
+  stakePoolId_eq?: InputMaybe<Scalars['String']>;
+  stakePoolId_gt?: InputMaybe<Scalars['String']>;
+  stakePoolId_gte?: InputMaybe<Scalars['String']>;
+  stakePoolId_in?: InputMaybe<Array<Scalars['String']>>;
+  stakePoolId_isNull?: InputMaybe<Scalars['Boolean']>;
+  stakePoolId_lt?: InputMaybe<Scalars['String']>;
+  stakePoolId_lte?: InputMaybe<Scalars['String']>;
+  stakePoolId_not_contains?: InputMaybe<Scalars['String']>;
+  stakePoolId_not_containsInsensitive?: InputMaybe<Scalars['String']>;
+  stakePoolId_not_endsWith?: InputMaybe<Scalars['String']>;
+  stakePoolId_not_eq?: InputMaybe<Scalars['String']>;
+  stakePoolId_not_in?: InputMaybe<Array<Scalars['String']>>;
+  stakePoolId_not_startsWith?: InputMaybe<Scalars['String']>;
+  stakePoolId_startsWith?: InputMaybe<Scalars['String']>;
+  stake_eq?: InputMaybe<Scalars['BigDecimal']>;
+  stake_gt?: InputMaybe<Scalars['BigDecimal']>;
+  stake_gte?: InputMaybe<Scalars['BigDecimal']>;
+  stake_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  stake_isNull?: InputMaybe<Scalars['Boolean']>;
+  stake_lt?: InputMaybe<Scalars['BigDecimal']>;
+  stake_lte?: InputMaybe<Scalars['BigDecimal']>;
+  stake_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  stake_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  state_eq?: InputMaybe<WorkerState>;
+  state_in?: InputMaybe<Array<WorkerState>>;
+  state_isNull?: InputMaybe<Scalars['Boolean']>;
+  state_not_eq?: InputMaybe<WorkerState>;
+  state_not_in?: InputMaybe<Array<WorkerState>>;
+  totalReward_eq?: InputMaybe<Scalars['BigDecimal']>;
+  totalReward_gt?: InputMaybe<Scalars['BigDecimal']>;
+  totalReward_gte?: InputMaybe<Scalars['BigDecimal']>;
+  totalReward_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  totalReward_isNull?: InputMaybe<Scalars['Boolean']>;
+  totalReward_lt?: InputMaybe<Scalars['BigDecimal']>;
+  totalReward_lte?: InputMaybe<Scalars['BigDecimal']>;
+  totalReward_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  totalReward_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  updatedTime_eq?: InputMaybe<Scalars['DateTime']>;
+  updatedTime_gt?: InputMaybe<Scalars['DateTime']>;
+  updatedTime_gte?: InputMaybe<Scalars['DateTime']>;
+  updatedTime_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  updatedTime_isNull?: InputMaybe<Scalars['Boolean']>;
+  updatedTime_lt?: InputMaybe<Scalars['DateTime']>;
+  updatedTime_lte?: InputMaybe<Scalars['DateTime']>;
+  updatedTime_not_eq?: InputMaybe<Scalars['DateTime']>;
+  updatedTime_not_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  v_eq?: InputMaybe<Scalars['BigDecimal']>;
+  v_gt?: InputMaybe<Scalars['BigDecimal']>;
+  v_gte?: InputMaybe<Scalars['BigDecimal']>;
+  v_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  v_isNull?: InputMaybe<Scalars['Boolean']>;
+  v_lt?: InputMaybe<Scalars['BigDecimal']>;
+  v_lte?: InputMaybe<Scalars['BigDecimal']>;
+  v_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  v_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  ve_eq?: InputMaybe<Scalars['BigDecimal']>;
+  ve_gt?: InputMaybe<Scalars['BigDecimal']>;
+  ve_gte?: InputMaybe<Scalars['BigDecimal']>;
+  ve_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  ve_isNull?: InputMaybe<Scalars['Boolean']>;
+  ve_lt?: InputMaybe<Scalars['BigDecimal']>;
+  ve_lte?: InputMaybe<Scalars['BigDecimal']>;
+  ve_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  ve_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  worker?: InputMaybe<WorkerWhereInput>;
+  worker_isNull?: InputMaybe<Scalars['Boolean']>;
+};
+
+type WorkerSnapshotsConnection = {
+  __typename?: 'WorkerSnapshotsConnection';
+  edges: Array<WorkerSnapshotEdge>;
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int'];
+};
+
 const WorkerState = {
   Ready: 'Ready',
   WorkerCoolingDown: 'WorkerCoolingDown',
@@ -2670,6 +2939,11 @@ type GlobalStateQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 type GlobalStateQuery = { __typename?: 'Query', squidStatus?: { __typename?: 'SquidStatus', height?: number | null } | null, globalStateById?: { __typename?: 'GlobalState', averageBlockTime: number, averageAprMultiplier: string, height: number, totalValue: string, idleWorkerShares: string } | null };
+
+type IdleWorkerCountQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+type IdleWorkerCountQuery = { __typename?: 'Query', sessionsConnection: { __typename?: 'SessionsConnection', totalCount: number } };
 
 type NftsConnectionQueryVariables = Exact<{
   orderBy: Array<NftOrderByInput> | NftOrderByInput;
@@ -3017,6 +3291,13 @@ export const DelegationCommonFragmentDoc = gql`
   }
 }
     `;
+ const IdleWorkerCountDocument = gql`
+    query IdleWorkerCount {
+  sessionsConnection(orderBy: id_ASC, where: {state_eq: WorkerIdle}) {
+    totalCount
+  }
+}
+    `;
  const NftsConnectionDocument = gql`
     query NftsConnection($orderBy: [NftOrderByInput!]!, $after: String, $first: Int, $where: NftWhereInput) {
   nftsConnection(orderBy: $orderBy, after: $after, first: $first, where: $where) {
@@ -3199,6 +3480,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     GlobalState(variables?: GlobalStateQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GlobalStateQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GlobalStateQuery>(GlobalStateDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GlobalState', 'query');
+    },
+    IdleWorkerCount(variables?: IdleWorkerCountQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<IdleWorkerCountQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<IdleWorkerCountQuery>(IdleWorkerCountDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'IdleWorkerCount', 'query');
     },
     NftsConnection(variables: NftsConnectionQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<NftsConnectionQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<NftsConnectionQuery>(NftsConnectionDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'NftsConnection', 'query');
