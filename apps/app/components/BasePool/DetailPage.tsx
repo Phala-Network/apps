@@ -8,6 +8,7 @@ import useGetApr from '@/hooks/useGetApr'
 import usePolkadotApi from '@/hooks/usePolkadotApi'
 import useSelectedVaultState from '@/hooks/useSelectedVaultState'
 import useSignAndSend from '@/hooks/useSignAndSend'
+import useYesterday from '@/hooks/useYesterday'
 import {aprToApy} from '@/lib/apr'
 import {subsquidClient} from '@/lib/graphql'
 import {
@@ -31,8 +32,9 @@ import {
 } from '@mui/material'
 import {polkadotAccountAtom} from '@phala/store'
 import {toCurrency, toPercentage} from '@phala/util'
+import Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
-import {useCallback, useState, type FC} from 'react'
+import {useCallback, useMemo, useState, type FC} from 'react'
 import Withdraw from '../Delegation/Withdraw'
 import Empty from '../Empty'
 import PromiseButton from '../PromiseButton'
@@ -47,6 +49,7 @@ type DetailPageDialogAction = 'withdraw' | 'ownerSettings'
 
 const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
   const api = usePolkadotApi()
+  const yesterday = useYesterday()
   const signAndSend = useSignAndSend()
   const [dialogOpen, setDialogOpen] = useState(false)
   const [dialogAction, setDialogAction] = useState<DetailPageDialogAction>()
@@ -81,6 +84,7 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
         id: `${basePool.id}-${
           selectedVaultState?.account.id ?? account?.address ?? ''
         }`,
+        snapshotsWhere: {updatedTime_gte: yesterday},
       },
       {enabled: selectedVaultState != null || account !== null}
     )
@@ -99,6 +103,19 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
         : api.tx.phalaStakePoolv2.checkAndMaybeForceWithdraw(basePool.id)
     )
   }
+
+  const delegationProfit = useMemo(() => {
+    let profit = new Decimal(0)
+    const snapshot = delegation?.snapshots[0]
+    if (delegation != null && snapshot != null) {
+      profit = new Decimal(delegation.value)
+        .minus(snapshot.value)
+        .minus(delegation.cost)
+        .plus(snapshot.cost)
+      profit = Decimal.max(profit, 0)
+    }
+    return profit
+  }, [delegation])
 
   return (
     <>
@@ -253,7 +270,11 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
                 alignItems="flex-end"
               >
                 <Box width="400px">
-                  <NftCard compact delegation={delegation} />
+                  <NftCard
+                    compact
+                    delegation={delegation}
+                    profit={delegationProfit}
+                  />
                 </Box>
                 <Stack spacing={2}>
                   <PromiseButton
