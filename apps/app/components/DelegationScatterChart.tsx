@@ -111,6 +111,7 @@ const DelegationScatterChart: FC<{address?: string}> = ({address}) => {
                   maximumFractionDigits: 0,
                 }).format(value)
               }
+              domain={[0, (dataMax: number) => dataMax * 1.05]}
             />
             <YAxis
               type="number"
@@ -119,6 +120,7 @@ const DelegationScatterChart: FC<{address?: string}> = ({address}) => {
               unit="%"
               tickLine={false}
               width={35}
+              domain={[0, (dataMax: number) => Math.ceil(dataMax) + 2]}
             />
             <ZAxis range={[120, 120]} />
             <Scatter data={chartData.vault} fill={colors.vault[400]}></Scatter>

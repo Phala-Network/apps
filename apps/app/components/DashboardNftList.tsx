@@ -137,6 +137,7 @@ const DashboardNftList: FC = () => {
         burned_eq: false,
         // TODO: remove this filter when PW NFTs are ready
         cid_gte: 10000,
+        delegation: {shares_gt: '0'},
       },
     },
     {
