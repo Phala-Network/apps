@@ -221,7 +221,7 @@ const DelegateCard: FC<{
             <Intro
               basePool={basePool}
               variant="card"
-              sx={{height: 100, overflow: 'auto', my: 1}}
+              sx={{height: 120, overflow: 'auto', my: 1}}
             />
             <ExtraProperties basePool={basePool} />
           </Stack>

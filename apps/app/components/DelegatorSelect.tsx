@@ -32,16 +32,17 @@ const DelegatorSelect: FC<{isVault?: boolean}> = ({isVault = false}) => {
     [accountData?.accountById?.ownedPools]
   )
   const selectedVaultState = useSelectedVaultState()
-  const balance = useAssetBalance(
-    selectedVaultState === undefined
-      ? undefined
-      : selectedVaultState === null
+  const delegatorAddress =
+    selectedVaultState === null
       ? account?.address
-      : selectedVaultState.account.id,
+      : selectedVaultState?.account.id
+  const balance = useAssetBalance(
+    delegatorAddress,
     selectedVaultState != null ? WPHA_ASSET_ID : undefined
   )
-  if (account == null || accountData == null || account.wallet == null)
+  if (account == null || accountData == null || account.wallet == null) {
     return null
+  }
   // MEMO: vault cannot delegate to another vault
   const value =
     !isVault && selectedVaultState != null ? selectedVaultState.id : ACCOUNT

@@ -1,4 +1,6 @@
 import Property from '@/components/Property'
+import {WPHA_ASSET_ID} from '@/config'
+import useAssetBalance from '@/hooks/useAssetBalance'
 import useGetApr from '@/hooks/useGetApr'
 import usePolkadotApi from '@/hooks/usePolkadotApi'
 import useSelectedVaultState from '@/hooks/useSelectedVaultState'
@@ -8,8 +10,10 @@ import {type BasePoolCommonFragment} from '@/lib/subsquidQuery'
 import {barlow} from '@/lib/theme'
 import {LoadingButton} from '@mui/lab'
 import {Skeleton, Stack, TextField, type SxProps} from '@mui/material'
-import {getDecimalPattern, toPercentage} from '@phala/util'
+import {polkadotAccountAtom} from '@phala/store'
+import {getDecimalPattern, toCurrency, toPercentage} from '@phala/util'
 import Decimal from 'decimal.js'
+import {useAtom} from 'jotai'
 import {useMemo, useState, type FC} from 'react'
 
 const DelegateInput: FC<{basePool: BasePoolCommonFragment; sx?: SxProps}> = ({
@@ -21,6 +25,7 @@ const DelegateInput: FC<{basePool: BasePoolCommonFragment; sx?: SxProps}> = ({
   const api = usePolkadotApi()
   const getApr = useGetApr()
   const [loading, setLoading] = useState(false)
+  const [account] = useAtom(polkadotAccountAtom)
   const selectedVaultState = useSelectedVaultState()
   const signAndSend = useSignAndSend()
   const [amountString, setAmountString] = useState('')
@@ -28,23 +33,42 @@ const DelegateInput: FC<{basePool: BasePoolCommonFragment; sx?: SxProps}> = ({
   const disabled = useMemo(() => {
     return amountString === '' || selectedVaultState === undefined
   }, [amountString, selectedVaultState])
+  const delegatorAddress = asAccount
+    ? account?.address
+    : selectedVaultState?.account.id
+  const wrappedBalance = useAssetBalance(delegatorAddress, WPHA_ASSET_ID)
+  const freeBalance = useAssetBalance(asAccount ? account?.address : undefined)
+  const delegableBalance = useMemo(() => {
+    if (wrappedBalance == null) return
+    if (asAccount) {
+      if (freeBalance == null) return
+      return wrappedBalance.plus(freeBalance)
+    }
+    return wrappedBalance
+  }, [freeBalance, wrappedBalance, asAccount])
   const delegate = (): void => {
-    if (api == null || selectedVaultState === undefined) return
-    const amount = new Decimal(amountString).times(1e12).toHex()
+    if (
+      api == null ||
+      selectedVaultState === undefined ||
+      wrappedBalance === undefined
+    ) {
+      return
+    }
+    const amount = new Decimal(amountString).times(1e12)
+    const wrapAmount = amount.minus(wrappedBalance.times(1e12))
     setLoading(true)
     const extrinsic = isVault
-      ? api.tx.phalaVault.contribute(basePool.pid, amount)
+      ? api.tx.phalaVault.contribute(basePool.pid, amount.toHex())
       : api.tx.phalaStakePoolv2.contribute(
           basePool.pid,
-          amount,
+          amount.toHex(),
           asAccount ? null : selectedVaultState.id
         )
 
     signAndSend(
-      asAccount
+      asAccount && wrapAmount.gt(0)
         ? api.tx.utility.batchAll([
-            // TODO: use current w-pha balance
-            api.tx.phalaWrappedBalances.wrap(amount),
+            api.tx.phalaWrappedBalances.wrap(wrapAmount.toHex()),
             extrinsic,
           ])
         : extrinsic
@@ -78,7 +102,7 @@ const DelegateInput: FC<{basePool: BasePoolCommonFragment; sx?: SxProps}> = ({
     basePool.withdrawingValue,
   ])
   return (
-    <Stack sx={sx} spacing={1}>
+    <Stack sx={sx}>
       <Stack direction="row" spacing={2}>
         <TextField
           placeholder="0.00"
@@ -110,9 +134,17 @@ const DelegateInput: FC<{basePool: BasePoolCommonFragment; sx?: SxProps}> = ({
           Delegate
         </LoadingButton>
       </Stack>
+      <Property size="small" label="Delegable balance" sx={{mt: 1}}>
+        {delegableBalance != null ? (
+          `${toCurrency(delegableBalance)} PHA`
+        ) : (
+          <Skeleton width={32} />
+        )}
+      </Property>
       <Property
         size="small"
         label={`Est. delegated ${isVault ? 'APY' : 'APR'}`}
+        sx={{mt: 0.5}}
       >
         {typeof delegatedApr === 'string' ? (
           '-'
