@@ -129,6 +129,7 @@ const BasePoolAprChart: FC<{basePool: BasePoolCommonFragment}> = ({
           name={isVault ? 'APY' : 'APR'}
           unit="%"
           tickLine={false}
+          domain={[0, (dataMax: number) => Math.ceil(dataMax)]}
         />
         <Tooltip
           isAnimationActive={false}

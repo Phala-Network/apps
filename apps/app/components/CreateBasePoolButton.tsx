@@ -22,6 +22,7 @@ const CreateBasePoolButton: FC<
 
   return (
     <PromiseButton
+      color={kind === 'StakePool' ? 'primary' : 'secondary'}
       variant="contained"
       onClick={onClick}
       {...props}

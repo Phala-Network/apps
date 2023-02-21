@@ -10,23 +10,11 @@ import {
 } from '@fortawesome/free-brands-svg-icons'
 import {faEnvelope, faMessage} from '@fortawesome/free-solid-svg-icons'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import RemoveCircleOutline from '@mui/icons-material/RemoveCircleOutline'
-import VerifiedOutlined from '@mui/icons-material/VerifiedOutlined'
-import {
-  alpha,
-  Box,
-  Chip,
-  Link,
-  Stack,
-  Tooltip,
-  Typography,
-  useTheme,
-  type SxProps,
-} from '@mui/material'
-import {trimAddress} from '@phala/util'
+import {Box, Chip, Stack, Typography, type SxProps} from '@mui/material'
 import {useSnackbar} from 'notistack'
 import {useMemo, type FC} from 'react'
 import TextSkeleton from '../TextSkeleton'
+import Identity from './Identity'
 
 const iconMap = {
   discord: faDiscord,
@@ -43,10 +31,7 @@ const Intro: FC<{
   variant: 'detail' | 'card'
 }> = ({basePool, sx, variant}) => {
   const {enqueueSnackbar} = useSnackbar()
-  const theme = useTheme()
   const {owner} = basePool
-  const ownerVerified =
-    owner.identityLevel === 'KnownGood' || owner.identityLevel === 'Reasonable'
   const poolIntro = usePoolIntro(basePool.id)
 
   const chips = useMemo<Array<[string, string]>>(() => {
@@ -59,53 +44,7 @@ const Intro: FC<{
 
   return (
     <Stack sx={sx}>
-      {variant === 'detail' && (
-        <Stack direction="row" alignItems="center" spacing={1}>
-          <Link
-            variant="h6"
-            color="inherit"
-            href={`https://khala.subscan.io/account/${owner?.id}`}
-            target="_blank"
-            rel="noopener"
-            overflow="hidden"
-            textOverflow="ellipsis"
-            whiteSpace="nowrap"
-            sx={{
-              textDecorationColor: alpha(theme.palette.text.primary, 0.4),
-            }}
-          >
-            {owner.identityDisplay ?? trimAddress(owner.id)}
-          </Link>
-
-          {owner.identityDisplay != null && (
-            <>
-              <Tooltip title={owner.identityLevel ?? 'No Judgement'}>
-                {ownerVerified ? (
-                  <VerifiedOutlined
-                    color="success"
-                    sx={{width: 22, flexShrink: 0}}
-                  />
-                ) : (
-                  <RemoveCircleOutline
-                    color="disabled"
-                    sx={{width: 22, flexShrink: 0}}
-                  />
-                )}
-              </Tooltip>
-              <Tooltip title={owner.id}>
-                <Typography
-                  flexShrink="0"
-                  variant="subtitle2"
-                  component="div"
-                  color="text.secondary"
-                >
-                  {trimAddress(owner.id)}
-                </Typography>
-              </Tooltip>
-            </>
-          )}
-        </Stack>
-      )}
+      {variant === 'detail' && <Identity {...owner} detail />}
 
       {chips.length > 0 && variant === 'detail' && (
         <Box ml={-1}>

@@ -5,7 +5,7 @@ import b4 from '@/assets/b4.png'
 import b5 from '@/assets/b5.png'
 import {Box, LinearProgress, Stack} from '@mui/material'
 import Link from 'next/link'
-import {type FC, useState} from 'react'
+import {useState, type FC} from 'react'
 import Carousel from 'react-multi-carousel'
 import 'react-multi-carousel/lib/styles.css'
 
@@ -73,7 +73,7 @@ const DashboardCarousel: FC = () => {
             <Box
               component={isExternal ? 'a' : Link}
               href={content.href}
-              shallow
+              shallow={isExternal ? undefined : true}
               {...(isExternal && {target: '_blank'})}
               display="block"
               width="100%"

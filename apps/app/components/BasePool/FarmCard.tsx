@@ -1,6 +1,5 @@
 import StakePoolIcon from '@/assets/stake_pool_detailed.svg'
 import VaultIcon from '@/assets/vault_detailed.svg'
-import CollapsedIcon from '@/components/CollapsedIcon'
 import Property from '@/components/Property'
 import useGetApr from '@/hooks/useGetApr'
 import usePolkadotApi from '@/hooks/usePolkadotApi'
@@ -10,16 +9,18 @@ import getPoolPath from '@/lib/getPoolPath'
 import getVaultOwnerCut from '@/lib/getVaultOwnerCut'
 import {type BasePoolCommonFragment} from '@/lib/subsquidQuery'
 import {colors} from '@/lib/theme'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import Settings from '@mui/icons-material/Settings'
 import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
   alpha,
   Box,
   Button,
   Chip,
-  Collapse,
   IconButton,
   Link,
-  Paper,
   Skeleton,
   Stack,
   Typography,
@@ -27,7 +28,7 @@ import {
 } from '@mui/material'
 import {toCurrency, toPercentage} from '@phala/util'
 import Decimal from 'decimal.js'
-import {useCallback, useMemo, useState, type FC} from 'react'
+import {useCallback, useMemo, type FC} from 'react'
 import PromiseButton from '../PromiseButton'
 import BasePoolAprChart from './AprChart'
 import ExtraProperties from './ExtraProperties'
@@ -42,7 +43,6 @@ const FarmCard: FC<{
   const signAndSend = useSignAndSend()
   const getApr = useGetApr()
   const theme = useTheme()
-  const [collapsed, setCollapsed] = useState(true)
   const {vault, stakePool} = basePool
 
   const vaultOwnerCut = useMemo(() => getVaultOwnerCut(basePool), [basePool])
@@ -110,116 +110,129 @@ const FarmCard: FC<{
       >
         <Settings />
       </IconButton>
-      <CollapsedIcon collapsed={collapsed} />
     </Stack>
   )
 
   const apr = getApr(basePool.aprMultiplier)
 
   return (
-    <Paper>
-      <Stack
-        spacing={3}
-        onClick={() => {
-          setCollapsed((v) => !v)
-        }}
-        direction={{xs: 'column', md: 'row'}}
-        alignItems={{xs: 'flex-start', md: 'center'}}
-        borderRadius={`${theme.shape.borderRadius - 1}px`}
+    <Accordion
+      square
+      disableGutters
+      TransitionProps={{mountOnEnter: true, unmountOnExit: true}}
+      sx={{
+        '&:before': {display: 'none'},
+        borderRadius: `${theme.shape.borderRadius}px`,
+      }}
+    >
+      <AccordionSummary
+        expandIcon={<ExpandMoreIcon />}
         sx={{
-          cursor: 'pointer',
           background: colors.cardBackground,
-          pl: {xs: 2, md: 3},
-          py: {xs: 2, md: 3},
-          pr: 2,
+          borderRadius: `${theme.shape.borderRadius - 1}px`,
         }}
       >
-        <Stack direction="row" spacing={2} alignItems="center">
-          {stakePool != null && (
-            <StakePoolIcon width={48} color={colors.main[300]} />
-          )}
-          {vault != null && <VaultIcon width={48} color={colors.vault[400]} />}
-          <Box flex="1 0" width={108}>
-            <Link
-              onClick={(e) => {
-                e.stopPropagation()
-              }}
-              color="inherit"
-              variant="num2"
-              href={getPoolPath(basePool.kind, basePool.id)}
-              target="_blank"
-              rel="noopener"
-              sx={{textDecorationColor: alpha(theme.palette.text.primary, 0.4)}}
-            >{`#${basePool.id}`}</Link>
-          </Box>
-          <Box ml="auto" display={{xs: 'block', md: 'none'}}>
-            {actions}
-          </Box>
+        <Stack
+          spacing={3}
+          direction={{xs: 'column', md: 'row'}}
+          alignItems={{xs: 'flex-start', md: 'center'}}
+          width={1}
+          sx={{
+            pl: {xs: 0, md: 1},
+            py: {xs: 0, md: 1},
+          }}
+        >
+          <Stack direction="row" spacing={2} alignItems="center">
+            {stakePool != null && (
+              <StakePoolIcon width={48} color={colors.main[300]} />
+            )}
+            {vault != null && (
+              <VaultIcon width={48} color={colors.vault[400]} />
+            )}
+            <Box flex="1 0" width={108}>
+              <Link
+                onClick={(e) => {
+                  e.stopPropagation()
+                }}
+                color="inherit"
+                variant="num2"
+                href={getPoolPath(basePool.kind, basePool.id)}
+                target="_blank"
+                rel="noopener"
+                sx={{
+                  textDecorationColor: alpha(theme.palette.text.primary, 0.4),
+                }}
+              >{`#${basePool.id}`}</Link>
+            </Box>
+            <Box ml="auto" display={{xs: 'block', md: 'none'}}>
+              {actions}
+            </Box>
+          </Stack>
+          <Stack direction="row" spacing={2}>
+            {stakePool != null && (
+              <Property label="Est. APR" sx={{width: 64, flexShrink: '0'}}>
+                {apr != null ? (
+                  <Box component="span" color={colors.main[300]}>
+                    {toPercentage(apr)}
+                  </Box>
+                ) : (
+                  <Skeleton width={32} />
+                )}
+              </Property>
+            )}
+            {stakePool != null && (
+              <Property label="Delegable" sx={{width: 140}}>
+                {stakePool.delegable != null
+                  ? `${toCurrency(stakePool.delegable)} PHA`
+                  : '∞'}
+              </Property>
+            )}
+            {stakePool != null && (
+              <Property label="Owner Reward" sx={{width: 120}}>
+                {`${toCurrency(stakePool.ownerReward)} PHA`}
+              </Property>
+            )}
+            {vault != null && (
+              <Property label="Est. APY" sx={{width: 64, flexShrink: '0'}}>
+                {apr != null ? (
+                  <Box component="span" color={colors.vault[400]}>
+                    {toPercentage(aprToApy(apr))}
+                  </Box>
+                ) : (
+                  <Skeleton width={32} />
+                )}
+              </Property>
+            )}
+            {vault != null && (
+              <Property label="TVL" sx={{width: 150}}>
+                {`${toCurrency(basePool.totalValue)} PHA`}
+              </Property>
+            )}
+            {vault != null && (
+              <Property label="Owner Cut" sx={{width: 120}}>
+                {`${toCurrency(getVaultOwnerCut(basePool))} PHA`}
+              </Property>
+            )}
+            {vault != null && (
+              <Property label="Owner Reward" sx={{width: 150}}>
+                {`${toCurrency(vaultOwnerReward)} PHA`}
+              </Property>
+            )}
+          </Stack>
+          <Stack flex="1 0" direction="row">
+            {basePool.withdrawingShares !== '0' && (
+              <Chip
+                size="small"
+                label="Withdrawal Queued"
+                sx={{color: theme.palette.warning.dark}}
+              />
+            )}
+          </Stack>
+          <Box display={{xs: 'none', md: 'block'}}>{actions}</Box>
         </Stack>
-        <Stack direction="row" spacing={2}>
-          {stakePool != null && (
-            <Property label="Est. APR" sx={{width: 64, flexShrink: '0'}}>
-              {apr != null ? (
-                <Box component="span" color={colors.main[300]}>
-                  {toPercentage(apr)}
-                </Box>
-              ) : (
-                <Skeleton width={32} />
-              )}
-            </Property>
-          )}
-          {stakePool != null && (
-            <Property label="Delegable" sx={{width: 140}}>
-              {stakePool.delegable != null
-                ? `${toCurrency(stakePool.delegable)} PHA`
-                : '∞'}
-            </Property>
-          )}
-          {stakePool != null && (
-            <Property label="Owner Reward" sx={{width: 120}}>
-              {`${toCurrency(stakePool.ownerReward)} PHA`}
-            </Property>
-          )}
-          {vault != null && (
-            <Property label="Est. APY" sx={{width: 64, flexShrink: '0'}}>
-              {apr != null ? (
-                <Box component="span" color={colors.vault[400]}>
-                  {toPercentage(aprToApy(apr))}
-                </Box>
-              ) : (
-                <Skeleton width={32} />
-              )}
-            </Property>
-          )}
-          {vault != null && (
-            <Property label="TVL" sx={{width: 150}}>
-              {`${toCurrency(basePool.totalValue)} PHA`}
-            </Property>
-          )}
-          {vault != null && (
-            <Property label="Owner Cut" sx={{width: 120}}>
-              {`${toCurrency(getVaultOwnerCut(basePool))} PHA`}
-            </Property>
-          )}
-          {vault != null && (
-            <Property label="Owner Reward" sx={{width: 150}}>
-              {`${toCurrency(vaultOwnerReward)} PHA`}
-            </Property>
-          )}
-        </Stack>
-        <Stack flex="1 0" direction="row">
-          {basePool.withdrawingShares !== '0' && (
-            <Chip
-              size="small"
-              label="Withdrawal Queued"
-              sx={{color: theme.palette.warning.dark}}
-            />
-          )}
-        </Stack>
-        <Box display={{xs: 'none', md: 'block'}}>{actions}</Box>
-      </Stack>
-      <Collapse in={!collapsed} mountOnEnter unmountOnExit>
-        <Stack direction={{xs: 'column', md: 'row'}} p={2} spacing={3}>
+      </AccordionSummary>
+      <AccordionDetails>
+        <Stack direction={{xs: 'column', md: 'row'}} pt={1} spacing={3}>
           <Stack flex="1 0">
             <Typography variant="h6" lineHeight={1}>
               Announcement
@@ -235,8 +248,8 @@ const FarmCard: FC<{
             <BasePoolAprChart basePool={basePool} />
           </Box>
         </Stack>
-      </Collapse>
-    </Paper>
+      </AccordionDetails>
+    </Accordion>
   )
 }
 
