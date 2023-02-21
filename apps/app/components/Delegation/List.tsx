@@ -53,7 +53,7 @@ const orderByEntries: Array<[string, DelegationOrderByInput]> = [
   ['APR high to low', 'basePool_aprMultiplier_DESC'],
   ['APR low to high', 'basePool_aprMultiplier_ASC'],
   ['PID small to large', 'basePool_pid_ASC'],
-  ['PID large to small', 'basePool_id_DESC'],
+  ['PID large to small', 'basePool_pid_DESC'],
   ['Most pool free', 'basePool_freeValue_DESC'],
 ]
 
