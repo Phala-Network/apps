@@ -9,7 +9,7 @@ import {
   TextField,
 } from '@mui/material'
 import {polkadotAccountAtom} from '@phala/store'
-import {isTruthy, validateAddress} from '@phala/util'
+import {validateAddress} from '@phala/util'
 import {type SubmittableExtrinsic} from '@polkadot/api/types'
 import {type ISubmittableResult} from '@polkadot/types/types'
 import Decimal from 'decimal.js'
@@ -47,7 +47,9 @@ const ClaimDelegation: FC<{
         )
       }
     }
-    let extrinsic
+    let extrinsic:
+      | SubmittableExtrinsic<'promise', ISubmittableResult>
+      | undefined
     if (basePool != null) {
       extrinsic = getExtrinsic(basePool)
     } else if (basePools != null) {
@@ -55,10 +57,12 @@ const ClaimDelegation: FC<{
         basePools.length === 1
           ? getExtrinsic(basePools[0])
           : api.tx.utility.batch(
-              basePools.map((pool) => getExtrinsic(pool)).filter(isTruthy)
+              basePools.map((pool) => getExtrinsic(pool)).filter(Boolean)
             )
     }
-    if (extrinsic == null) return
+    if (extrinsic === undefined) {
+      return
+    }
     setLoading(true)
     signAndSend(extrinsic)
       .then(() => {

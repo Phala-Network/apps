@@ -33,7 +33,6 @@ import {
   Typography,
   Unstable_Grid2 as Grid,
 } from '@mui/material'
-import {isTruthy} from '@phala/util'
 import Decimal from 'decimal.js'
 import {useCallback, useEffect, useState, type FC} from 'react'
 import {useInView} from 'react-intersection-observer'
@@ -89,7 +88,7 @@ const DelegationList: FC<{
         kind_in: [
           vaultFilter && ('Vault' as BasePoolKind),
           stakePoolFilter && ('StakePool' as BasePoolKind),
-        ].filter(isTruthy),
+        ].filter(Boolean),
       },
     },
     withdrawingFilter && {withdrawingValue_gt: '0'},
@@ -102,7 +101,7 @@ const DelegationList: FC<{
       {
         first: 20,
         orderBy,
-        where: {AND: where.filter(isTruthy)},
+        where: {AND: where.filter(Boolean)},
         snapshotsWhere: {updatedTime_gte: yesterday},
       },
       {

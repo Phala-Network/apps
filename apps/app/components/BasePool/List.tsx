@@ -37,7 +37,7 @@ import {
   type SxProps,
 } from '@mui/material'
 import {polkadotAccountAtom} from '@phala/store'
-import {getDecimalPattern, isTruthy} from '@phala/util'
+import {getDecimalPattern} from '@phala/util'
 import {useAtom} from 'jotai'
 import {useCallback, useEffect, useState, type FC} from 'react'
 import {useInView} from 'react-intersection-observer'
@@ -197,7 +197,7 @@ const BasePoolList: FC<{
       {
         first: 20,
         orderBy,
-        where: {AND: where.filter(isTruthy)},
+        where: {AND: where.filter(Boolean)},
         accountId: delegatorAddress ?? '',
       },
       {

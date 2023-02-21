@@ -1,7 +1,7 @@
 import Property from '@/components/Property'
 import {type BasePoolCommonFragment} from '@/lib/subsquidQuery'
 import {Box, Stack, type SxProps} from '@mui/material'
-import {isTruthy, toCurrency, toPercentage} from '@phala/util'
+import {toCurrency, toPercentage} from '@phala/util'
 import Decimal from 'decimal.js'
 import {useMemo, type FC, type ReactNode} from 'react'
 
@@ -46,7 +46,7 @@ const ExtraProperties: FC<{basePool: BasePoolCommonFragment; sx?: SxProps}> = ({
       ],
     ]
 
-    return entries.filter(isTruthy)
+    return entries.filter(Boolean)
   }, [basePool])
 
   const groups = 2
