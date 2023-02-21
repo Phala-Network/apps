@@ -1,5 +1,6 @@
 import {type Account} from '@/lib/subsquidQuery'
-import {RemoveCircleOutline, VerifiedOutlined} from '@mui/icons-material'
+import RemoveCircleOutline from '@mui/icons-material/RemoveCircleOutline'
+import VerifiedOutlined from '@mui/icons-material/VerifiedOutlined'
 import {alpha, Link, Stack, Tooltip, Typography, useTheme} from '@mui/material'
 import {trimAddress} from '@phala/util'
 import {type FC} from 'react'
