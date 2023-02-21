@@ -44,7 +44,7 @@ const NetworkOverview: FC = () => {
       return await res.json()
     }
   )
-  const {data: globalStateData} = useGlobalStateQuery(subsquidClient)
+  const {data: globalStateData} = useGlobalStateQuery(subsquidClient, {})
   const {data: idleWorkerCountData} = useIdleWorkerCountQuery(subsquidClient)
   const circulationValue =
     circulationData?.data?.circulations?.nodes?.[0]?.amount

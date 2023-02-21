@@ -18,7 +18,7 @@ const ChainSelect: FC = () => {
   const color = `${isKhala ? '#03ffff' : colors.main[400]} !important`
   const backgroundColor = isKhala ? '#1E565E' : colors.main[700]
 
-  const {data: globalStateData} = useGlobalStateQuery(subsquidClient)
+  const {data: globalStateData} = useGlobalStateQuery(subsquidClient, {})
   const subsquidHeight = globalStateData?.squidStatus?.height
   const apiConnected = api?.isConnected
 
