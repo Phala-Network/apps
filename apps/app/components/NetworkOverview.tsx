@@ -88,42 +88,50 @@ const NetworkOverview: FC = () => {
   }, [stakeRatio, totalValue, dailyRewards, avgApr, idleWorkerCount])
 
   return (
-    <Stack
-      direction="row"
-      spacing={{xs: 1.5, sm: 3}}
-      divider={<Divider orientation="vertical" flexItem />}
-    >
-      {items.map(([label, value]) => (
-        <Box key={label} flexShrink={0}>
-          <Typography
-            variant="subtitle2"
-            display={{xs: 'none', sm: 'block'}}
-            component="div"
+    <>
+      <Stack
+        display={{xs: 'none', sm: 'flex'}}
+        direction="row"
+        spacing={2}
+        divider={<Divider orientation="vertical" flexItem />}
+      >
+        {items.map(([label, value]) => (
+          <Box key={label} flexShrink={0}>
+            <Typography variant="subtitle2" component="div">
+              {label}
+            </Typography>
+
+            <Typography variant="num3" component="div" color="primary">
+              {value ?? <Skeleton width={80} />}
+            </Typography>
+          </Box>
+        ))}
+      </Stack>
+      <Stack
+        display={{sm: 'none', xs: 'flex'}}
+        direction="row"
+        justifyContent="space-between"
+        flexWrap="wrap"
+      >
+        {items.map(([label, value]) => (
+          <Stack
+            key={label}
+            direction="row"
+            justifyContent="space-between"
+            width={0.48}
+            flexShrink={0}
+            alignItems="baseline"
           >
-            {label}
-          </Typography>
-          <Typography variant="caption" display={{sm: 'none'}} component="div">
-            {label}
-          </Typography>
-          <Typography
-            variant="num3"
-            display={{xs: 'none', sm: 'block'}}
-            component="div"
-            color="primary"
-          >
-            {value ?? <Skeleton width={80} />}
-          </Typography>
-          <Typography
-            variant="num6"
-            display={{sm: 'none'}}
-            component="div"
-            color="primary"
-          >
-            {value ?? <Skeleton width={32} />}
-          </Typography>
-        </Box>
-      ))}
-    </Stack>
+            <Typography variant="subtitle2" component="div">
+              {label}
+            </Typography>
+            <Typography variant="num6" component="div" color="primary">
+              {value ?? <Skeleton width={32} />}
+            </Typography>
+          </Stack>
+        ))}
+      </Stack>
+    </>
   )
 }
 
