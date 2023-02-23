@@ -8,7 +8,7 @@ import useGetApr from '@/hooks/useGetApr'
 import usePolkadotApi from '@/hooks/usePolkadotApi'
 import useSelectedVaultState from '@/hooks/useSelectedVaultState'
 import useSignAndSend from '@/hooks/useSignAndSend'
-import useYesterday from '@/hooks/useYesterday'
+import useSWRValue from '@/hooks/useSWRValue'
 import {aprToApy} from '@/lib/apr'
 import {subsquidClient} from '@/lib/graphql'
 import {
@@ -17,6 +17,7 @@ import {
 } from '@/lib/subsquidQuery'
 import {colors} from '@/lib/theme'
 import Settings from '@mui/icons-material/Settings'
+import {TabContext, TabList, TabPanel} from '@mui/lab'
 
 import {
   Box,
@@ -26,18 +27,21 @@ import {
   Paper,
   Skeleton,
   Stack,
+  Tab,
   Tooltip,
   Typography,
   useTheme,
 } from '@mui/material'
 import {polkadotAccountAtom} from '@phala/store'
 import {toCurrency, toPercentage} from '@phala/util'
+import {addDays} from 'date-fns'
 import Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
 import {useCallback, useMemo, useState, type FC} from 'react'
 import Withdraw from '../Delegation/Withdraw'
 import Empty from '../Empty'
 import PromiseButton from '../PromiseButton'
+import BasePoolChart, {type ChartKind} from './Chart'
 import DelegateInput from './DelegateInput'
 import ExtraProperties from './ExtraProperties'
 import Intro from './Intro'
@@ -49,7 +53,8 @@ type DetailPageDialogAction = 'withdraw' | 'ownerSettings'
 
 const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
   const api = usePolkadotApi()
-  const yesterday = useYesterday()
+  const [chartTab, setChartTab] = useState<ChartKind>('totalValue')
+  const yesterday = useSWRValue(() => addDays(new Date(), -1).toISOString())
   const signAndSend = useSignAndSend()
   const [dialogOpen, setDialogOpen] = useState(false)
   const [dialogAction, setDialogAction] = useState<DetailPageDialogAction>()
@@ -59,7 +64,7 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
   const getApr = useGetApr()
   const theme = useTheme()
   const isVault = vault != null
-  // const color = isVault ? 'secondary' : 'primary'
+  const color = isVault ? 'secondary' : 'primary'
   const isOwner = owner.id === account?.address
 
   const actions = (
@@ -211,7 +216,7 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
           </Stack>
         </Paper>
 
-        {/* <Paper
+        <Paper
           component="section"
           sx={{
             p: {xs: 1, md: 2},
@@ -219,12 +224,41 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
             background: 'transparent',
           }}
         >
-          <Tabs value="intergrated" indicatorColor={color} textColor={color}>
-            <Tab label="Intergrated" value="intergrated" />
-            <Tab label="Delegation" value="delegation" />
-            <Tab label="Commission" value="commission" />
-          </Tabs>
-        </Paper> */}
+          <TabContext value={chartTab}>
+            <TabList
+              indicatorColor={color}
+              textColor={color}
+              onChange={(e, newValue) => {
+                setChartTab(newValue)
+              }}
+            >
+              <Tab
+                label={basePool.kind === 'Vault' ? 'APY' : 'APR'}
+                value="apr"
+              />
+              <Tab
+                label={basePool.kind === 'Vault' ? 'TVL' : 'Delegation'}
+                value="totalValue"
+              />
+              <Tab label="Commission" value="commission" />
+            </TabList>
+            <TabPanel value="apr" sx={{px: 0, pb: 0}}>
+              <Box height={200}>
+                <BasePoolChart basePool={basePool} kind="apr" />
+              </Box>
+            </TabPanel>
+            <TabPanel value="totalValue" sx={{px: 0, pb: 0}}>
+              <Box height={200}>
+                <BasePoolChart basePool={basePool} kind="totalValue" />
+              </Box>
+            </TabPanel>
+            <TabPanel value="commission" sx={{px: 0, pb: 0}}>
+              <Box height={200}>
+                <BasePoolChart basePool={basePool} kind="commission" />
+              </Box>
+            </TabPanel>
+          </TabContext>
+        </Paper>
 
         <Stack direction={{xs: 'column', lg: 'row'}} spacing={{xs: 2, lg: 2.5}}>
           <Paper

@@ -29,7 +29,7 @@ import {polkadotAccountAtom} from '@phala/store'
 import {toCurrency, toPercentage} from '@phala/util'
 import {useAtom} from 'jotai'
 import {type FC} from 'react'
-import BasePoolAprChart from './AprChart'
+import BasePoolChart from './Chart'
 import DelegateInput from './DelegateInput'
 import ExtraProperties from './ExtraProperties'
 import Identity from './Identity'
@@ -179,7 +179,7 @@ const DelegateCard: FC<{
           </Stack>
           <Stack flex="1 0">
             <Box flex="1 0">
-              <BasePoolAprChart basePool={basePool} />
+              <BasePoolChart basePool={basePool} kind="apr" />
             </Box>
             <DelegateInput basePool={basePool} />
           </Stack>

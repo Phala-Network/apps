@@ -1,4 +1,5 @@
 import Property from '@/components/Property'
+import useSWRValue from '@/hooks/useSWRValue'
 import {aprToApy} from '@/lib/apr'
 import {subsquidClient} from '@/lib/graphql'
 import {
@@ -7,9 +8,9 @@ import {
 } from '@/lib/subsquidQuery'
 import {colors} from '@/lib/theme'
 import {Paper, Typography} from '@mui/material'
-import {addDays} from 'date-fns'
+import {addDays, addHours} from 'date-fns'
 import Decimal from 'decimal.js'
-import {useMemo, useState, type FC, type ReactElement} from 'react'
+import {useMemo, type FC, type ReactElement} from 'react'
 import {
   Area,
   AreaChart,
@@ -30,12 +31,17 @@ const CustomTooltip = ({
     name: string
     value: number | string
     unit?: string
+    payload: {
+      date: Date
+    }
   }>
 }): ReactElement | null => {
   if (payload?.[0] != null) {
     return (
       <Paper sx={{p: 1}}>
-        <Typography variant="subtitle2">{label}</Typography>
+        <Typography variant="subtitle2">
+          {payload[0].payload.date.toLocaleString()}
+        </Typography>
         <Property
           fullWidth
           size="small"
@@ -50,19 +56,27 @@ const CustomTooltip = ({
 
 const days = 7
 
-const BasePoolAprChart: FC<{basePool: BasePoolCommonFragment}> = ({
-  basePool,
-}) => {
+export type ChartKind = 'totalValue' | 'commission' | 'apr' | 'delegatorCount'
+
+const BasePoolChart: FC<{
+  basePool: BasePoolCommonFragment
+  kind: ChartKind
+}> = ({basePool, kind}) => {
+  const isPercentage = kind === 'apr' || kind === 'commission'
   const isVault = basePool.kind === 'Vault'
   const color = isVault ? colors.vault[500] : colors.main[400]
-  const [now] = useState(() => {
+  const now = useSWRValue(() => {
     const now = new Date()
     now.setMinutes(0, 0, 0)
     return now
   })
   const {data} = useBasePoolSnapshotsConnectionQuery(subsquidClient, {
-    orderBy: 'updatedTime_DESC',
-    first: days * 24,
+    orderBy: 'updatedTime_ASC',
+    first: days * 24 + 1,
+    withApr: kind === 'apr',
+    withCommission: kind === 'commission',
+    withTotalValue: kind === 'totalValue',
+    withDelegatorCount: kind === 'delegatorCount',
     where: {
       basePool: {id_eq: basePool.id},
       updatedTime_gte: addDays(now, -days).toISOString(),
@@ -72,11 +86,11 @@ const BasePoolAprChart: FC<{basePool: BasePoolCommonFragment}> = ({
   const chartData = useMemo(() => {
     const result: Array<{date: Date; dateString: string; value?: number}> =
       Array.from({
-        length: days,
+        length: days * 24 + 1,
       }).map((_, i) => {
-        const date = addDays(now, i - days + 1)
+        const date = addHours(now, i - days * 24)
         return {
-          dateString: date.toLocaleDateString(),
+          dateString: date.toLocaleString(),
           date,
         }
       })
@@ -87,14 +101,22 @@ const BasePoolAprChart: FC<{basePool: BasePoolCommonFragment}> = ({
       const date = new Date(node.updatedTime)
       const index = result.findIndex((r) => r.date.getTime() >= date.getTime())
       if (index !== -1) {
-        let value = new Decimal(node.apr)
-        if (isVault) {
-          value = aprToApy(value)
+        let value
+        if (kind === 'totalValue' && node.totalValue != null) {
+          value = new Decimal(node.totalValue)
+        } else if (kind === 'apr' && node.apr != null) {
+          value = new Decimal(node.apr)
+          if (isVault) {
+            value = aprToApy(value)
+          }
+        } else if (kind === 'commission' && node.commission != null) {
+          value = new Decimal(node.commission)
         }
-        result[index].value = value
-          .times(100)
-          .toDP(2, Decimal.ROUND_DOWN)
-          .toNumber()
+        if (value == null) continue
+        if (isPercentage) {
+          value = value.times(100)
+        }
+        result[index].value = value.toDP(2, Decimal.ROUND_DOWN).toNumber()
       }
     }
 
@@ -107,7 +129,7 @@ const BasePoolAprChart: FC<{basePool: BasePoolCommonFragment}> = ({
     }
 
     return result
-  }, [data, isVault, now])
+  }, [data, isVault, now, kind, isPercentage])
 
   return (
     <ResponsiveContainer width="100%" height="100%">
@@ -123,13 +145,26 @@ const BasePoolAprChart: FC<{basePool: BasePoolCommonFragment}> = ({
         </defs>
         <XAxis tickLine={false} dataKey="dateString" />
         <YAxis
-          width={38}
+          width={45}
           type="number"
           dataKey="value"
           name={isVault ? 'APY' : 'APR'}
-          unit="%"
+          unit={kind === 'apr' || kind === 'commission' ? '%' : undefined}
           tickLine={false}
-          domain={[0, (dataMax: number) => Math.ceil(dataMax)]}
+          domain={
+            isPercentage
+              ? [0, (dataMax: number) => Math.ceil(dataMax)]
+              : ['auto', 'auto']
+          }
+          tickFormatter={
+            isPercentage
+              ? undefined
+              : (value) =>
+                  Intl.NumberFormat('en-US', {
+                    notation: 'compact',
+                    maximumFractionDigits: 2,
+                  }).format(value)
+          }
         />
         <Tooltip
           isAnimationActive={false}
@@ -149,4 +184,4 @@ const BasePoolAprChart: FC<{basePool: BasePoolCommonFragment}> = ({
   )
 }
 
-export default BasePoolAprChart
+export default BasePoolChart
