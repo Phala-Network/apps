@@ -29,6 +29,7 @@ import {useAtom} from 'jotai'
 import {useMemo, type FC} from 'react'
 import DelegatorSelect from './DelegatorSelect'
 import PromiseButton from './PromiseButton'
+import WikiButton from './Wiki/Button'
 
 const DelegationDataCard: FC<{
   kind: BasePoolKind
@@ -157,7 +158,7 @@ const DelegationDetailCard: FC<{sx?: SxProps}> = ({sx}) => {
     <Paper
       sx={[
         {p: {xs: 1.5, sm: 2}, background: 'none'},
-        // bypass unknown type error
+        // pass isArray type check
         ...(Array.isArray(sx) ? (sx as any[]) : [sx]),
       ]}
     >
@@ -242,7 +243,7 @@ const DelegationDetailCard: FC<{sx?: SxProps}> = ({sx}) => {
             color="text.secondary"
             alignSelf="baseline"
           >
-            Wrapped
+            Wrapped <WikiButton entry="wrapped" />
           </Typography>
           <Typography
             variant="num6"

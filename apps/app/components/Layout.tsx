@@ -9,6 +9,7 @@ import {type FC, type ReactNode} from 'react'
 import ScrollTop from './ScrollTop'
 import TopBar from './TopBar'
 import WalletDialog from './WalletDialog'
+import WikiDialog from './Wiki/Dialog'
 
 const Layout: FC<{children: ReactNode}> = ({children}) => {
   const theme = useTheme()
@@ -32,6 +33,7 @@ const Layout: FC<{children: ReactNode}> = ({children}) => {
         {children}
       </Container>
       <WalletDialog />
+      <WikiDialog />
       <ScrollTop />
     </SnackbarProvider>
   )
