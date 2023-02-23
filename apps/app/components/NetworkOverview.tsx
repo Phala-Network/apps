@@ -41,7 +41,7 @@ const NetworkOverview: FC = () => {
       const res = await fetch(
         'https://api.subquery.network/sq/Phala-Network/khala-chainbridge__UGhhb?query=%7Bcirculations(first:1,orderBy:BLOCK_HEIGHT_DESC)%7Bnodes%7Bamount%7D%7D%7D'
       )
-      return await res.json()
+      return (await res.json()) as CirculationData
     }
   )
   const {data: globalStateData} = useGlobalStateQuery(subsquidClient, {})

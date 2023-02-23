@@ -157,7 +157,8 @@ const DelegationDetailCard: FC<{sx?: SxProps}> = ({sx}) => {
     <Paper
       sx={[
         {p: {xs: 1.5, sm: 2}, background: 'none'},
-        ...(Array.isArray(sx) ? sx : [sx]),
+        // bypass unknown type error
+        ...(Array.isArray(sx) ? (sx as any[]) : [sx]),
       ]}
     >
       <Stack spacing={{xs: 1.5, sm: 2}}>
