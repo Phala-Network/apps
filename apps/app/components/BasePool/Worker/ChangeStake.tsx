@@ -1,9 +1,8 @@
 import Property from '@/components/Property'
 import usePolkadotApi from '@/hooks/usePolkadotApi'
 import useSignAndSend from '@/hooks/useSignAndSend'
-import useTokenomicParameters, {
-  type TokenomicParameters,
-} from '@/hooks/useTokenomicParameters'
+import {subsquidClient} from '@/lib/graphql'
+import {useGlobalStateQuery, type GlobalStateQuery} from '@/lib/subsquidQuery'
 import {barlow} from '@/lib/theme'
 import {LoadingButton} from '@mui/lab'
 import {
@@ -30,20 +29,22 @@ const confidenceScoreMap = {
 
 const getSMin = (
   worker: Worker,
-  tokenomicParameters: TokenomicParameters
+  globalState: Exclude<GlobalStateQuery['globalStateById'], null | undefined>
 ): Decimal | undefined => {
   const {initialScore} = worker
-  const {k} = tokenomicParameters
+  const {k} = globalState
   if (typeof initialScore !== 'number') return
-  return k.times(new Decimal(initialScore).sqrt()).toDP(12, Decimal.ROUND_UP)
+  return new Decimal(k)
+    .times(new Decimal(initialScore).sqrt())
+    .toDP(12, Decimal.ROUND_UP)
 }
 
 const getSMax = (
   worker: Worker,
-  tokenomicParameters: TokenomicParameters
+  globalState: Exclude<GlobalStateQuery['globalStateById'], null | undefined>
 ): Decimal | undefined => {
   const {initialScore, confidenceLevel} = worker
-  const {vMax, re, phaRate} = tokenomicParameters
+  const {vMax, re, phaRate} = globalState
   if (typeof initialScore !== 'number') return
   if (
     confidenceLevel === 1 ||
@@ -53,8 +54,8 @@ const getSMax = (
     confidenceLevel === 5
   ) {
     const confidenceScore = confidenceScoreMap[confidenceLevel]
-    return vMax
-      .div(re.minus(1).times(confidenceScore).plus(1))
+    return new Decimal(vMax)
+      .div(new Decimal(re).minus(1).times(confidenceScore).plus(1))
       .minus(new Decimal(initialScore).times('0.3').div(phaRate))
       .toDP(12, Decimal.ROUND_DOWN)
   }
@@ -68,17 +69,18 @@ const ChangeStake: FC<{
   const signAndSend = useSignAndSend()
   const [loading, setLoading] = useState(false)
   const [amountString, setAmountString] = useState('')
-  const tokenomicParameters = useTokenomicParameters()
+  const {data: globalStateData} = useGlobalStateQuery(subsquidClient, {})
+  const globalState = globalStateData?.globalStateById
   const sMin = useMemo(() => {
-    if (worker != null && tokenomicParameters != null) {
-      return getSMin(worker, tokenomicParameters)
+    if (worker != null && globalState != null) {
+      return getSMin(worker, globalState)
     }
-  }, [worker, tokenomicParameters])
+  }, [worker, globalState])
   const sMax = useMemo(() => {
-    if (worker != null && tokenomicParameters != null) {
-      return getSMax(worker, tokenomicParameters)
+    if (worker != null && globalState != null) {
+      return getSMax(worker, globalState)
     }
-  }, [worker, tokenomicParameters])
+  }, [worker, globalState])
 
   if (worker == null) return null
 
