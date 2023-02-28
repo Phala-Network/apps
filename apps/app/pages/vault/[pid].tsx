@@ -31,7 +31,7 @@ const Vault: NextPage<BasePoolServerSideProps> = ({
     <>
       <DetailPage basePool={basePool} />
 
-      <Box component="section">
+      <Box component="section" mt={2} display="flow-root">
         <DelegationList
           isVault
           showHeader

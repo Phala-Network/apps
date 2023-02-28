@@ -53,7 +53,7 @@ const CustomTooltip = ({
 
 const DelegationScatterChart: FC<{address?: string}> = ({address}) => {
   const getApr = useGetApr()
-  const {data, isLoading} = useDelegationsConnectionQuery(
+  const {data} = useDelegationsConnectionQuery(
     subsquidClient,
     {
       orderBy: 'value_DESC',
@@ -91,7 +91,9 @@ const DelegationScatterChart: FC<{address?: string}> = ({address}) => {
   const hasDelegation =
     chartData.vault.length !== 0 || chartData.stakePool.length !== 0
 
-  if (isLoading) return null
+  if (data == null) {
+    return null
+  }
 
   return (
     <>

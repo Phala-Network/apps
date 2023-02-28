@@ -1,3 +1,4 @@
+import NftsIcon from '@/assets/nfts.svg'
 import StakePoolIcon from '@/assets/stake_pool_detailed.svg'
 import VaultIcon from '@/assets/vault_detailed.svg'
 import NftCard from '@/components/Delegation/NftCard'
@@ -10,6 +11,7 @@ import useSelectedVaultState from '@/hooks/useSelectedVaultState'
 import useSignAndSend from '@/hooks/useSignAndSend'
 import useSWRValue from '@/hooks/useSWRValue'
 import {aprToApy} from '@/lib/apr'
+import getDelegationProfit from '@/lib/getDelegationProfit'
 import {subsquidClient} from '@/lib/graphql'
 import {
   useDelegationByIdQuery,
@@ -38,10 +40,12 @@ import {addDays} from 'date-fns'
 import Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
 import {useCallback, useMemo, useState, type FC} from 'react'
+import DelegationChart from '../Delegation/Chart'
 import Withdraw from '../Delegation/Withdraw'
 import Empty from '../Empty'
 import PromiseButton from '../PromiseButton'
-import BasePoolChart, {type ChartKind} from './Chart'
+import SectionHeader from '../SectionHeader'
+import BasePoolChart, {type BasePoolChartKind} from './Chart'
 import DelegateInput from './DelegateInput'
 import ExtraProperties from './ExtraProperties'
 import Intro from './Intro'
@@ -53,7 +57,7 @@ type DetailPageDialogAction = 'withdraw' | 'ownerSettings'
 
 const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
   const api = usePolkadotApi()
-  const [chartTab, setChartTab] = useState<ChartKind>('totalValue')
+  const [chartTab, setChartTab] = useState<BasePoolChartKind>('apr')
   const yesterday = useSWRValue(() => addDays(new Date(), -1).toISOString())
   const signAndSend = useSignAndSend()
   const [dialogOpen, setDialogOpen] = useState(false)
@@ -113,14 +117,18 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
     let profit = new Decimal(0)
     const snapshot = delegation?.snapshots[0]
     if (delegation != null && snapshot != null) {
-      profit = new Decimal(delegation.value)
-        .minus(snapshot.value)
-        .minus(delegation.cost)
-        .plus(snapshot.cost)
-      profit = Decimal.max(profit, 0)
+      profit = getDelegationProfit(delegation, snapshot)
     }
     return profit
   }, [delegation])
+
+  const charts = useMemo<Array<[string, BasePoolChartKind]>>(() => {
+    return [
+      [isVault ? 'APY' : 'APR', 'apr'],
+      [isVault ? 'TVL' : 'Delegation', 'totalValue'],
+      ['Commission', 'commission'],
+    ]
+  }, [isVault])
 
   return (
     <>
@@ -128,7 +136,7 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
         title={`${basePool.kind} #${basePool.pid}`}
         pageTitle={basePool.kind}
       />
-      <Stack spacing={{xs: 2, lg: 2.5}}>
+      <Stack spacing={2}>
         <Paper sx={{background: 'transparent'}} component="section">
           <Stack
             spacing={2}
@@ -219,122 +227,142 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
         <Paper
           component="section"
           sx={{
-            p: {xs: 1, md: 2},
-            pt: {xs: 0.5, md: 1},
+            px: {xs: 2, md: 3},
             background: 'transparent',
           }}
         >
-          <TabContext value={chartTab}>
-            <TabList
-              indicatorColor={color}
-              textColor={color}
-              onChange={(e, newValue) => {
-                setChartTab(newValue)
+          <Stack direction={{xs: 'column', lg: 'row'}} spacing={3}>
+            <Box
+              sx={{
+                py: {xs: 1.5, md: 2},
+                flex: {xs: 'none', lg: '1 0'},
+                height: 280,
+                minWidth: 0,
               }}
             >
-              <Tab
-                label={basePool.kind === 'Vault' ? 'APY' : 'APR'}
-                value="apr"
-              />
-              <Tab
-                label={basePool.kind === 'Vault' ? 'TVL' : 'Delegation'}
-                value="totalValue"
-              />
-              <Tab label="Commission" value="commission" />
-            </TabList>
-            <TabPanel value="apr" sx={{px: 0, pb: 0}}>
-              <Box height={200}>
-                <BasePoolChart basePool={basePool} kind="apr" />
+              <Box position="relative" height="100%">
+                <Intro
+                  variant="detail"
+                  basePool={basePool}
+                  sx={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                  }}
+                />
               </Box>
-            </TabPanel>
-            <TabPanel value="totalValue" sx={{px: 0, pb: 0}}>
-              <Box height={200}>
-                <BasePoolChart basePool={basePool} kind="totalValue" />
-              </Box>
-            </TabPanel>
-            <TabPanel value="commission" sx={{px: 0, pb: 0}}>
-              <Box height={200}>
-                <BasePoolChart basePool={basePool} kind="commission" />
-              </Box>
-            </TabPanel>
-          </TabContext>
+            </Box>
+            <Stack
+              component="section"
+              sx={{
+                py: 1,
+                background: 'transparent',
+                flex: {xs: 'none', lg: '1 0'},
+                minWidth: 0,
+                height: 280,
+              }}
+            >
+              <TabContext value={chartTab}>
+                <TabList
+                  indicatorColor={color}
+                  textColor={color}
+                  onChange={(e, newValue) => {
+                    setChartTab(newValue)
+                  }}
+                >
+                  {charts.map(([label, value]) => (
+                    <Tab label={label} value={value} key={value} />
+                  ))}
+                </TabList>
+                {charts.map(([label, value]) => (
+                  <TabPanel
+                    value={value}
+                    sx={{px: 0, pb: 0, flex: 1}}
+                    key={value}
+                  >
+                    <BasePoolChart basePool={basePool} kind={value} />
+                  </TabPanel>
+                ))}
+              </TabContext>
+            </Stack>
+          </Stack>
         </Paper>
 
-        <Stack direction={{xs: 'column', lg: 'row'}} spacing={{xs: 2, lg: 2.5}}>
+        <Box component="section">
+          <SectionHeader icon={<NftsIcon />} title="Delegate" />
           <Paper
-            component="section"
             sx={{
               p: {xs: 2, md: 3},
               pt: {xs: 1.5, md: 2},
               background: 'transparent',
-              flex: {xs: 'none', lg: '1 0'},
-              height: {xs: 300, lg: 'auto'},
             }}
           >
-            <Box position="relative" height="100%">
-              <Intro
-                variant="detail"
-                basePool={basePool}
+            <Stack direction={{xs: 'column', lg: 'row'}} spacing={3}>
+              <Box
+                component="section"
                 sx={{
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
+                  minWidth: 0,
+                  position: 'relative',
+                  flex: {xs: 'none', lg: '1 0'},
                 }}
-              />
-            </Box>
-          </Paper>
-          <Paper
-            component="section"
-            sx={{
-              position: 'relative',
-              p: 2,
-              background: 'transparent',
-              flex: {xs: 'none', lg: '1 0'},
-            }}
-          >
-            <Box position="absolute" right={16} top={16}>
-              <DelegatorSelect isVault={isVault} />
-            </Box>
-            {hasDelegation ? (
-              <Stack
-                direction="row"
-                justifyContent="space-between"
-                alignItems="flex-end"
               >
-                <Box width="400px">
-                  <NftCard
-                    compact
-                    delegation={delegation}
-                    profit={delegationProfit}
-                  />
+                <Box position="absolute" right={0} top={0}>
+                  <DelegatorSelect isVault={isVault} />
                 </Box>
-                <Stack spacing={2}>
-                  <PromiseButton
-                    onClick={reclaim}
-                    disabled={!poolHasWithdrawal}
+                {hasDelegation ? (
+                  <Stack
+                    direction="row"
+                    justifyContent="space-between"
+                    alignItems="flex-end"
                   >
-                    Reclaim
-                  </PromiseButton>
-                  <Button
-                    onClick={() => {
-                      setDialogOpen(true)
-                      setDialogAction('withdraw')
-                    }}
-                  >
-                    Withdraw
-                  </Button>
-                </Stack>
-              </Stack>
-            ) : (
-              <Box height="240px">
-                {!isDelegationLoading && <Empty message="No Delegation" />}
+                    <Box width="400px">
+                      <NftCard
+                        compact
+                        delegation={delegation}
+                        profit={delegationProfit}
+                      />
+                    </Box>
+                    <Stack spacing={2}>
+                      <PromiseButton
+                        color={color}
+                        onClick={reclaim}
+                        disabled={!poolHasWithdrawal}
+                      >
+                        Reclaim
+                      </PromiseButton>
+                      <Button
+                        color={color}
+                        onClick={() => {
+                          setDialogOpen(true)
+                          setDialogAction('withdraw')
+                        }}
+                      >
+                        Withdraw
+                      </Button>
+                    </Stack>
+                  </Stack>
+                ) : (
+                  <Box height="240px">
+                    {!isDelegationLoading && <Empty message="No Delegation" />}
+                  </Box>
+                )}
               </Box>
-            )}
-            <DelegateInput basePool={basePool} sx={{mt: 3}} />
+              <Stack flex={1} minWidth={0}>
+                <Box flex={1}>
+                  {delegation != null && (
+                    <DelegationChart
+                      delegation={delegation}
+                      kind="dailyReward"
+                    />
+                  )}
+                </Box>
+                <DelegateInput basePool={basePool} sx={{mt: 1}} />
+              </Stack>
+            </Stack>
           </Paper>
-        </Stack>
+        </Box>
 
         <Box component="section">
           <WithdrawQueue basePool={basePool} />

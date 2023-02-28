@@ -8,6 +8,7 @@ import {
 } from '@/lib/subsquidQuery'
 import {colors} from '@/lib/theme'
 import {Paper, Typography} from '@mui/material'
+import {toCurrency} from '@phala/util'
 import {addDays, addHours} from 'date-fns'
 import Decimal from 'decimal.js'
 import {useMemo, type FC, type ReactElement} from 'react'
@@ -21,32 +22,32 @@ import {
 } from 'recharts'
 
 const CustomTooltip = ({
-  isVault,
   label,
+  tooltipLabel,
+  isPercentage,
+  isPHA,
   payload,
 }: {
-  isVault: boolean
   label?: string
+  tooltipLabel?: string
+  isPercentage: boolean
+  isPHA: boolean
   payload?: Array<{
-    name: string
     value: number | string
-    unit?: string
     payload: {
       date: Date
     }
   }>
 }): ReactElement | null => {
   if (payload?.[0] != null) {
+    const unit = isPercentage ? '%' : isPHA ? ' PHA' : ''
+    const value = payload[0].value
     return (
       <Paper sx={{p: 1}}>
-        <Typography variant="subtitle2">
-          {payload[0].payload.date.toLocaleString()}
-        </Typography>
-        <Property
-          fullWidth
-          size="small"
-          label={isVault ? 'APY' : 'APR'}
-        >{`${payload[0].value}%`}</Property>
+        <Typography variant="subtitle2">{label}</Typography>
+        <Property fullWidth size="small" label={tooltipLabel}>{`${
+          isPHA ? toCurrency(value) : value
+        }${unit}`}</Property>
       </Paper>
     )
   }
@@ -56,13 +57,18 @@ const CustomTooltip = ({
 
 const days = 7
 
-export type ChartKind = 'totalValue' | 'commission' | 'apr' | 'delegatorCount'
+export type BasePoolChartKind =
+  | 'totalValue'
+  | 'commission'
+  | 'apr'
+  | 'delegatorCount'
 
 const BasePoolChart: FC<{
   basePool: BasePoolCommonFragment
-  kind: ChartKind
+  kind: BasePoolChartKind
 }> = ({basePool, kind}) => {
   const isPercentage = kind === 'apr' || kind === 'commission'
+  const isPHA = kind === 'totalValue'
   const isVault = basePool.kind === 'Vault'
   const color = isVault ? colors.vault[500] : colors.main[400]
   const now = useSWRValue(() => {
@@ -70,18 +76,26 @@ const BasePoolChart: FC<{
     now.setMinutes(0, 0, 0)
     return now
   })
-  const {data} = useBasePoolSnapshotsConnectionQuery(subsquidClient, {
-    orderBy: 'updatedTime_ASC',
-    first: days * 24 + 1,
-    withApr: kind === 'apr',
-    withCommission: kind === 'commission',
-    withTotalValue: kind === 'totalValue',
-    withDelegatorCount: kind === 'delegatorCount',
-    where: {
-      basePool: {id_eq: basePool.id},
-      updatedTime_gte: addDays(now, -days).toISOString(),
+  const {data} = useBasePoolSnapshotsConnectionQuery(
+    subsquidClient,
+    {
+      orderBy: 'updatedTime_ASC',
+      first: days * 24 + 1,
+      withApr: kind === 'apr',
+      withCommission: kind === 'commission',
+      withTotalValue: kind === 'totalValue',
+      withDelegatorCount: kind === 'delegatorCount',
+      where: {
+        basePool: {id_eq: basePool.id},
+        updatedTime_gte: addDays(now, -days).toISOString(),
+      },
     },
-  })
+    {
+      refetchOnMount: false,
+      refetchOnWindowFocus: false,
+      refetchOnReconnect: false,
+    }
+  )
 
   const chartData = useMemo(() => {
     const result: Array<{date: Date; dateString: string; value?: number}> =
@@ -131,6 +145,23 @@ const BasePoolChart: FC<{
     return result
   }, [data, isVault, now, kind, isPercentage])
 
+  const label = useMemo(() => {
+    switch (kind) {
+      case 'totalValue':
+        return isVault ? 'TVL' : 'Delegation'
+      case 'commission':
+        return 'Commission'
+      case 'apr':
+        return isVault ? 'APY' : 'APR'
+      case 'delegatorCount':
+        return 'Delegator Count'
+    }
+  }, [kind, isVault])
+
+  if (data == null) {
+    return null
+  }
+
   return (
     <ResponsiveContainer width="100%" height="100%">
       <AreaChart
@@ -149,7 +180,7 @@ const BasePoolChart: FC<{
           type="number"
           dataKey="value"
           name={isVault ? 'APY' : 'APR'}
-          unit={kind === 'apr' || kind === 'commission' ? '%' : undefined}
+          unit={isPercentage ? '%' : undefined}
           tickLine={false}
           domain={
             isPercentage
@@ -168,7 +199,13 @@ const BasePoolChart: FC<{
         />
         <Tooltip
           isAnimationActive={false}
-          content={<CustomTooltip isVault={isVault} />}
+          content={
+            <CustomTooltip
+              tooltipLabel={label}
+              isPHA={isPHA}
+              isPercentage={isPercentage}
+            />
+          }
         />
         <Area
           connectNulls

@@ -94,6 +94,10 @@ const DelegationValueChart: FC<{address?: string; days: number}> = ({
     return result
   }, [data, days, now])
 
+  if (data == null) {
+    return null
+  }
+
   return (
     <ResponsiveContainer width="100%" height="100%">
       <AreaChart

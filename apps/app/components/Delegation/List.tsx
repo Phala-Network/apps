@@ -4,6 +4,7 @@ import ListSkeleton from '@/components/ListSkeleton'
 import SectionHeader from '@/components/SectionHeader'
 import useDebounced from '@/hooks/useDebounced'
 import useSWRValue from '@/hooks/useSWRValue'
+import getDelegationProfit from '@/lib/getDelegationProfit'
 import {subsquidClient} from '@/lib/graphql'
 import {
   useInfiniteDelegationsConnectionQuery,
@@ -259,11 +260,7 @@ const DelegationList: FC<{
                     const snapshot = edge.node.snapshots[0]
                     let profit = new Decimal(0)
                     if (snapshot != null) {
-                      profit = new Decimal(delegation.value)
-                        .minus(snapshot.value)
-                        .minus(delegation.cost)
-                        .plus(snapshot.cost)
-                      profit = Decimal.max(profit, 0)
+                      profit = getDelegationProfit(delegation, snapshot)
                     }
                     return (
                       <Grid
