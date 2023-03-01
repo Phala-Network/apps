@@ -1,3 +1,5 @@
+import StakePoolIcon from '@/assets/stake_pool_detailed.svg'
+import VaultIcon from '@/assets/vault_detailed.svg'
 import Property from '@/components/Property'
 import useGetApr from '@/hooks/useGetApr'
 import usePolkadotApi from '@/hooks/usePolkadotApi'
@@ -6,7 +8,7 @@ import {aprToApy} from '@/lib/apr'
 import getPoolPath from '@/lib/getPoolPath'
 import {type DelegationCommonFragment} from '@/lib/subsquidQuery'
 import {colors} from '@/lib/theme'
-import Numbers from '@mui/icons-material/Numbers'
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp'
 import {
   alpha,
   Box,
@@ -16,11 +18,13 @@ import {
   Paper,
   Skeleton,
   Stack,
+  Typography,
   useTheme,
 } from '@mui/material'
 import {toCurrency, toPercentage} from '@phala/util'
 import type Decimal from 'decimal.js'
 import {type FC} from 'react'
+import Identity from '../BasePool/Identity'
 import PromiseButton from '../PromiseButton'
 import {type OnAction} from './List'
 
@@ -32,9 +36,8 @@ const HorizonCard: FC<{
 }> = ({delegation, onAction, isOwner = false, profit}) => {
   const api = usePolkadotApi()
   const signAndSend = useSignAndSend()
-  const {value, basePool, delegationNft, withdrawingValue} = delegation
+  const {value, basePool, withdrawingValue} = delegation
   const isVault = basePool.kind === 'Vault'
-  const color = isVault ? 'secondary' : 'primary'
   const theme = useTheme()
   const getApr = useGetApr()
   const apr = getApr(basePool.aprMultiplier)
@@ -80,39 +83,56 @@ const HorizonCard: FC<{
       }}
     >
       <Stack direction="row" spacing={2} alignItems="center">
-        <Box width={140}>
-          <Chip
-            icon={<Numbers />}
-            label={delegationNft.nftId}
-            color={color}
-            size="small"
-          />
-          <Link
-            display="block"
-            color="inherit"
-            variant="subtitle1"
-            target="_blank"
-            rel="noopener"
-            href={getPoolPath(basePool.kind, basePool.id)}
-            fontWeight="500"
-            mt={1}
-            sx={{textDecorationColor: alpha(theme.palette.text.primary, 0.4)}}
-          >{`${basePool.kind} #${basePool.id}`}</Link>
-        </Box>
+        <Stack direction="row" spacing={1} alignItems="center">
+          <Box flex="none" width={40} height={40}>
+            {basePool.kind === 'StakePool' && (
+              <StakePoolIcon color={colors.main[300]} />
+            )}
+            {basePool.kind === 'Vault' && (
+              <VaultIcon color={colors.vault[400]} />
+            )}
+          </Box>
+          <Stack flex="1 0" width={140}>
+            <Link
+              lineHeight={1.3}
+              onClick={(e) => {
+                e.stopPropagation()
+              }}
+              color="inherit"
+              variant="num4"
+              href={getPoolPath(basePool.kind, basePool.id)}
+              target="_blank"
+              rel="noopener"
+              sx={{
+                textDecorationColor: alpha(theme.palette.text.primary, 0.4),
+              }}
+            >{`#${basePool.id}`}</Link>
+            <Identity {...basePool.owner} />
+          </Stack>
+        </Stack>
         <Stack direction="row" spacing={{xs: 1, md: 2}}>
-          <Property label="Value" sx={{width: 120}}>{`${toCurrency(
+          <Property label="Value" sx={{width: 130}}>{`${toCurrency(
             value
           )} PHA`}</Property>
           {profit != null && (
             <Property label="24h" sx={{width: 120}}>
-              <Box
-                component="span"
+              <Stack
+                direction="row"
+                alignItems="center"
                 color={
                   profit.gte(0.01)
                     ? theme.palette.success.main
                     : theme.palette.text.secondary
                 }
-              >{`+ ${toCurrency(profit)} PHA`}</Box>
+              >
+                <ArrowDropUpIcon
+                  sx={{mx: '-3px', transform: `translate(0, 2px)`}}
+                />
+
+                <Typography variant="num6">
+                  {`${toCurrency(profit)} PHA`}
+                </Typography>
+              </Stack>
             </Property>
           )}
           <Property label={`Est. ${isVault ? 'APY' : 'APR'}`} sx={{width: 64}}>

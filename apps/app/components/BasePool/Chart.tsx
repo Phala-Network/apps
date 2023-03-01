@@ -62,6 +62,8 @@ export type BasePoolChartKind =
   | 'commission'
   | 'apr'
   | 'delegatorCount'
+  | 'workerCount'
+  | 'stakePoolCount'
 
 const BasePoolChart: FC<{
   basePool: BasePoolCommonFragment
@@ -70,6 +72,7 @@ const BasePoolChart: FC<{
   const isPercentage = kind === 'apr' || kind === 'commission'
   const isPHA = kind === 'totalValue'
   const isVault = basePool.kind === 'Vault'
+  const isInteger = kind === 'delegatorCount' || kind === 'workerCount'
   const color = isVault ? colors.vault[500] : colors.main[400]
   const now = useSWRValue(() => {
     const now = new Date()
@@ -85,6 +88,8 @@ const BasePoolChart: FC<{
       withCommission: kind === 'commission',
       withTotalValue: kind === 'totalValue',
       withDelegatorCount: kind === 'delegatorCount',
+      withWorkerCount: kind === 'workerCount',
+      withStakePoolCount: kind === 'stakePoolCount',
       where: {
         basePool: {id_eq: basePool.id},
         updatedTime_gte: addDays(now, -days).toISOString(),
@@ -125,12 +130,20 @@ const BasePoolChart: FC<{
           }
         } else if (kind === 'commission' && node.commission != null) {
           value = new Decimal(node.commission)
+        } else if (kind === 'delegatorCount') {
+          value = node.delegatorCount
+        } else if (kind === 'workerCount') {
+          value = node.idleWorkerCount
+        } else if (kind === 'stakePoolCount') {
+          value = node.stakePoolCount
         }
         if (value == null) continue
-        if (isPercentage) {
+        if (isPercentage && Decimal.isDecimal(value)) {
           value = value.times(100)
         }
-        result[index].value = value.toDP(2, Decimal.ROUND_DOWN).toNumber()
+        result[index].value = Decimal.isDecimal(value)
+          ? value.toDP(2, Decimal.ROUND_DOWN).toNumber()
+          : value
       }
     }
 
@@ -183,12 +196,12 @@ const BasePoolChart: FC<{
           unit={isPercentage ? '%' : undefined}
           tickLine={false}
           domain={
-            isPercentage
+            isPercentage || isInteger
               ? [0, (dataMax: number) => Math.ceil(dataMax)]
               : ['auto', 'auto']
           }
           tickFormatter={
-            isPercentage
+            isPercentage || isInteger
               ? undefined
               : (value) =>
                   Intl.NumberFormat('en-US', {

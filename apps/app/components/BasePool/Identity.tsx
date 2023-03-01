@@ -16,7 +16,7 @@ const Identity: FC<
 
   const link = (
     <Link
-      variant={detail ? 'h6' : 'body2'}
+      variant={detail ? 'h6' : 'caption'}
       color={detail ? 'inherit' : 'text.secondary'}
       href={`https://khala.subscan.io/account/${id}`}
       target="_blank"
@@ -64,12 +64,12 @@ const Identity: FC<
             {verified ? (
               <VerifiedOutlined
                 color="success"
-                sx={{width: detail ? 22 : 18, flexShrink: 0}}
+                sx={{width: detail ? 22 : 16, flexShrink: 0}}
               />
             ) : (
               <RemoveCircleOutline
                 color="disabled"
-                sx={{width: detail ? 22 : 18, flexShrink: 0}}
+                sx={{width: detail ? 22 : 16, flexShrink: 0}}
               />
             )}
           </Tooltip>

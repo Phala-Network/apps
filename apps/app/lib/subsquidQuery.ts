@@ -3002,7 +3002,7 @@ export type BasePoolSnapshotsConnectionQueryVariables = Exact<{
 
 export type BasePoolSnapshotsConnectionQuery = { __typename?: 'Query', basePoolSnapshotsConnection: { __typename?: 'BasePoolSnapshotsConnection', totalCount: number, edges: Array<{ __typename?: 'BasePoolSnapshotEdge', cursor: string, node: { __typename?: 'BasePoolSnapshot', updatedTime: string, apr?: string, commission?: string, totalValue?: string, delegatorCount?: number, workerCount?: number | null, idleWorkerCount?: number | null, stakePoolCount?: number | null } }> } };
 
-export type DelegationCommonFragment = { __typename?: 'Delegation', id: string, shares: string, value: string, cost: string, withdrawalStartTime?: string | null, withdrawingShares: string, withdrawingValue: string, basePool: { __typename?: 'BasePool', id: string, kind: BasePoolKind, freeValue: string, sharePrice: string, aprMultiplier: string, withdrawingShares: string }, delegationNft: { __typename?: 'Nft', cid: number, nftId: number, mintTime?: string | null }, withdrawalNft?: { __typename?: 'Nft', cid: number, nftId: number } | null, account: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null, basePool?: { __typename?: 'BasePool', id: string } | null } };
+export type DelegationCommonFragment = { __typename?: 'Delegation', id: string, shares: string, value: string, cost: string, withdrawalStartTime?: string | null, withdrawingShares: string, withdrawingValue: string, basePool: { __typename?: 'BasePool', id: string, kind: BasePoolKind, freeValue: string, sharePrice: string, aprMultiplier: string, withdrawingShares: string, owner: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null } }, delegationNft: { __typename?: 'Nft', cid: number, nftId: number, mintTime?: string | null }, withdrawalNft?: { __typename?: 'Nft', cid: number, nftId: number } | null, account: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null, basePool?: { __typename?: 'BasePool', id: string } | null } };
 
 export type DelegationByIdQueryVariables = Exact<{
   id: Scalars['String'];
@@ -3010,7 +3010,7 @@ export type DelegationByIdQueryVariables = Exact<{
 }>;
 
 
-export type DelegationByIdQuery = { __typename?: 'Query', delegationById?: { __typename?: 'Delegation', id: string, shares: string, value: string, cost: string, withdrawalStartTime?: string | null, withdrawingShares: string, withdrawingValue: string, snapshots: Array<{ __typename?: 'DelegationSnapshot', cost: string, value: string, updatedTime: string }>, basePool: { __typename?: 'BasePool', id: string, kind: BasePoolKind, freeValue: string, sharePrice: string, aprMultiplier: string, withdrawingShares: string }, delegationNft: { __typename?: 'Nft', cid: number, nftId: number, mintTime?: string | null }, withdrawalNft?: { __typename?: 'Nft', cid: number, nftId: number } | null, account: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null, basePool?: { __typename?: 'BasePool', id: string } | null } } | null };
+export type DelegationByIdQuery = { __typename?: 'Query', delegationById?: { __typename?: 'Delegation', id: string, shares: string, value: string, cost: string, withdrawalStartTime?: string | null, withdrawingShares: string, withdrawingValue: string, snapshots: Array<{ __typename?: 'DelegationSnapshot', cost: string, value: string, updatedTime: string }>, basePool: { __typename?: 'BasePool', id: string, kind: BasePoolKind, freeValue: string, sharePrice: string, aprMultiplier: string, withdrawingShares: string, owner: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null } }, delegationNft: { __typename?: 'Nft', cid: number, nftId: number, mintTime?: string | null }, withdrawalNft?: { __typename?: 'Nft', cid: number, nftId: number } | null, account: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null, basePool?: { __typename?: 'BasePool', id: string } | null } } | null };
 
 export type DelegationsConnectionQueryVariables = Exact<{
   orderBy: Array<DelegationOrderByInput> | DelegationOrderByInput;
@@ -3021,7 +3021,7 @@ export type DelegationsConnectionQueryVariables = Exact<{
 }>;
 
 
-export type DelegationsConnectionQuery = { __typename?: 'Query', delegationsConnection: { __typename?: 'DelegationsConnection', totalCount: number, edges: Array<{ __typename?: 'DelegationEdge', cursor: string, node: { __typename?: 'Delegation', id: string, shares: string, value: string, cost: string, withdrawalStartTime?: string | null, withdrawingShares: string, withdrawingValue: string, snapshots: Array<{ __typename?: 'DelegationSnapshot', cost: string, value: string, updatedTime: string }>, basePool: { __typename?: 'BasePool', id: string, kind: BasePoolKind, freeValue: string, sharePrice: string, aprMultiplier: string, withdrawingShares: string }, delegationNft: { __typename?: 'Nft', cid: number, nftId: number, mintTime?: string | null }, withdrawalNft?: { __typename?: 'Nft', cid: number, nftId: number } | null, account: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null, basePool?: { __typename?: 'BasePool', id: string } | null } } }>, pageInfo: { __typename?: 'PageInfo', endCursor: string, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string } } };
+export type DelegationsConnectionQuery = { __typename?: 'Query', delegationsConnection: { __typename?: 'DelegationsConnection', totalCount: number, edges: Array<{ __typename?: 'DelegationEdge', cursor: string, node: { __typename?: 'Delegation', id: string, shares: string, value: string, cost: string, withdrawalStartTime?: string | null, withdrawingShares: string, withdrawingValue: string, snapshots: Array<{ __typename?: 'DelegationSnapshot', cost: string, value: string, updatedTime: string }>, basePool: { __typename?: 'BasePool', id: string, kind: BasePoolKind, freeValue: string, sharePrice: string, aprMultiplier: string, withdrawingShares: string, owner: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null } }, delegationNft: { __typename?: 'Nft', cid: number, nftId: number, mintTime?: string | null }, withdrawalNft?: { __typename?: 'Nft', cid: number, nftId: number } | null, account: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null, basePool?: { __typename?: 'BasePool', id: string } | null } } }>, pageInfo: { __typename?: 'PageInfo', endCursor: string, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string } } };
 
 export type DelegationSnapshotsConnectionQueryVariables = Exact<{
   orderBy: Array<DelegationSnapshotOrderByInput> | DelegationSnapshotOrderByInput;
@@ -3145,6 +3145,11 @@ export const DelegationCommonFragmentDoc = `
     sharePrice
     aprMultiplier
     withdrawingShares
+    owner {
+      id
+      identityDisplay
+      identityLevel
+    }
   }
   id
   shares

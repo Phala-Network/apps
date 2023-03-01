@@ -1,3 +1,5 @@
+import StakePoolIcon from '@/assets/stake_pool_detailed.svg'
+import VaultIcon from '@/assets/vault_detailed.svg'
 import DelegationNftCover from '@/components/DelegationNftCover'
 import Property from '@/components/Property'
 import useGetApr from '@/hooks/useGetApr'
@@ -7,13 +9,12 @@ import {aprToApy} from '@/lib/apr'
 import getPoolPath from '@/lib/getPoolPath'
 import {type DelegationCommonFragment} from '@/lib/subsquidQuery'
 import {colors} from '@/lib/theme'
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp'
 import MoreVert from '@mui/icons-material/MoreVert'
-import Numbers from '@mui/icons-material/Numbers'
 import {
   Alert,
   alpha,
   Box,
-  Chip,
   IconButton,
   Link,
   Menu,
@@ -27,6 +28,7 @@ import {
 import {toCurrency, toPercentage} from '@phala/util'
 import Decimal from 'decimal.js'
 import {useRef, useState, type FC} from 'react'
+import Identity from '../BasePool/Identity'
 import {type OnAction} from './List'
 
 const NftCard: FC<{
@@ -42,7 +44,6 @@ const NftCard: FC<{
   const moreRef = useRef(null)
   const {value, shares, basePool, delegationNft, withdrawingValue} = delegation
   const isVault = basePool.kind === 'Vault'
-  const color = isVault ? 'secondary' : 'primary'
   const theme = useTheme()
   const getApr = useGetApr()
   const apr = getApr(basePool.aprMultiplier)
@@ -99,40 +100,57 @@ const NftCard: FC<{
         )}
       </Box>
       <Stack flex="1" py={compact ? 0 : 2} px={2.5} position="relative">
-        <Box width={140}>
-          <Chip
-            icon={<Numbers />}
-            label={delegationNft.nftId}
-            color={color}
-            size="small"
-          />
-          <Link
-            display="block"
-            color="inherit"
-            variant="subtitle1"
-            target="_blank"
-            rel="noopener"
-            href={getPoolPath(basePool.kind, basePool.id)}
-            fontWeight="500"
-            mt={1}
-            sx={{textDecorationColor: alpha(theme.palette.text.primary, 0.4)}}
-          >{`${basePool.kind} #${basePool.id}`}</Link>
-        </Box>
+        {!compact && (
+          <Stack direction="row" spacing={1} alignItems="center">
+            <Box flex="none" width={40} height={40}>
+              {basePool.kind === 'StakePool' && (
+                <StakePoolIcon color={colors.main[300]} />
+              )}
+              {basePool.kind === 'Vault' && (
+                <VaultIcon color={colors.vault[400]} />
+              )}
+            </Box>
+            <Stack flex="1 0">
+              <Link
+                lineHeight={1.2}
+                onClick={(e) => {
+                  e.stopPropagation()
+                }}
+                color="inherit"
+                variant="num4"
+                href={getPoolPath(basePool.kind, basePool.id)}
+                target="_blank"
+                rel="noopener"
+                sx={{
+                  textDecorationColor: alpha(theme.palette.text.primary, 0.4),
+                }}
+              >{`#${basePool.id}`}</Link>
+              <Identity {...basePool.owner} />
+            </Stack>
+          </Stack>
+        )}
         <Typography variant="num3" mt={1}>
           {toCurrency(value)}
           <sub>PHA</sub>
         </Typography>
         {profit != null && (
-          <Typography
-            variant="body2"
+          <Stack
+            direction="row"
+            alignItems="center"
             color={
               profit.gte(0.01)
                 ? theme.palette.success.main
                 : theme.palette.text.secondary
             }
           >
-            {`+ ${toCurrency(profit)} PHA / 24h`}
-          </Typography>
+            <ArrowDropUpIcon
+              sx={{mx: '-3px', transform: `translate(0, 2px)`}}
+            />
+
+            <Typography variant="num6">
+              {`${toCurrency(profit)} PHA / 24h`}
+            </Typography>
+          </Stack>
         )}
 
         <Stack mt="auto">

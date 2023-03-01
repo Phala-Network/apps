@@ -127,6 +127,8 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
       [isVault ? 'APY' : 'APR', 'apr'],
       [isVault ? 'TVL' : 'Delegation', 'totalValue'],
       ['Commission', 'commission'],
+      ['Delegator', 'delegatorCount'],
+      isVault ? ['StakePool', 'stakePoolCount'] : ['Worker', 'workerCount'],
     ]
   }, [isVault])
 
@@ -308,7 +310,7 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
                   flex: {xs: 'none', lg: '1 0'},
                 }}
               >
-                <Box position="absolute" right={0} top={0}>
+                <Box position="absolute" right={16} top={0}>
                   <DelegatorSelect isVault={isVault} />
                 </Box>
                 {hasDelegation ? (
@@ -316,8 +318,9 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
                     direction="row"
                     justifyContent="space-between"
                     alignItems="flex-end"
+                    mr={1}
                   >
-                    <Box width="400px">
+                    <Box width="380px">
                       <NftCard
                         compact
                         delegation={delegation}
@@ -350,6 +353,7 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
                 )}
               </Box>
               <Stack flex={1} minWidth={0}>
+                <Typography variant="h6">Daily Rewards</Typography>
                 <Box flex={1}>
                   {delegation != null && (
                     <DelegationChart
