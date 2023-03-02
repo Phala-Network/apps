@@ -353,13 +353,9 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
                 )}
               </Box>
               <Stack flex={1} minWidth={0}>
-                <Typography variant="h6">Daily Rewards</Typography>
                 <Box flex={1}>
                   {delegation != null && (
-                    <DelegationChart
-                      delegation={delegation}
-                      kind="dailyReward"
-                    />
+                    <DelegationChart delegation={delegation} />
                   )}
                 </Box>
                 <DelegateInput basePool={basePool} sx={{mt: 1}} />

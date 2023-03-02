@@ -1,17 +1,15 @@
-import Property from '@/components/Property'
 import useSWRValue from '@/hooks/useSWRValue'
 import {aprToApy} from '@/lib/apr'
+import compactFormat from '@/lib/compactFormat'
 import {subsquidClient} from '@/lib/graphql'
 import {
   useBasePoolSnapshotsConnectionQuery,
   type BasePoolCommonFragment,
 } from '@/lib/subsquidQuery'
 import {colors} from '@/lib/theme'
-import {Paper, Typography} from '@mui/material'
-import {toCurrency} from '@phala/util'
 import {addDays, addHours} from 'date-fns'
 import Decimal from 'decimal.js'
-import {useMemo, type FC, type ReactElement} from 'react'
+import {useMemo, type FC} from 'react'
 import {
   Area,
   AreaChart,
@@ -20,40 +18,7 @@ import {
   XAxis,
   YAxis,
 } from 'recharts'
-
-const CustomTooltip = ({
-  label,
-  tooltipLabel,
-  isPercentage,
-  isPHA,
-  payload,
-}: {
-  label?: string
-  tooltipLabel?: string
-  isPercentage: boolean
-  isPHA: boolean
-  payload?: Array<{
-    value: number | string
-    payload: {
-      date: Date
-    }
-  }>
-}): ReactElement | null => {
-  if (payload?.[0] != null) {
-    const unit = isPercentage ? '%' : isPHA ? ' PHA' : ''
-    const value = payload[0].value
-    return (
-      <Paper sx={{p: 1}}>
-        <Typography variant="subtitle2">{label}</Typography>
-        <Property fullWidth size="small" label={tooltipLabel}>{`${
-          isPHA ? toCurrency(value) : value
-        }${unit}`}</Property>
-      </Paper>
-    )
-  }
-
-  return null
-}
+import RechartsTooltip from '../RechartsTooltip'
 
 const days = 7
 
@@ -167,7 +132,11 @@ const BasePoolChart: FC<{
       case 'apr':
         return isVault ? 'APY' : 'APR'
       case 'delegatorCount':
-        return 'Delegator Count'
+        return 'Delegator count'
+      case 'workerCount':
+        return 'Idle worker count'
+      case 'stakePoolCount':
+        return 'StakePool count'
     }
   }, [kind, isVault])
 
@@ -192,7 +161,7 @@ const BasePoolChart: FC<{
           width={45}
           type="number"
           dataKey="value"
-          name={isVault ? 'APY' : 'APR'}
+          name={label}
           unit={isPercentage ? '%' : undefined}
           tickLine={false}
           domain={
@@ -200,27 +169,12 @@ const BasePoolChart: FC<{
               ? [0, (dataMax: number) => Math.ceil(dataMax)]
               : ['auto', 'auto']
           }
-          tickFormatter={
-            isPercentage || isInteger
-              ? undefined
-              : (value) =>
-                  Intl.NumberFormat('en-US', {
-                    notation: 'compact',
-                    maximumFractionDigits: 2,
-                  }).format(value)
-          }
+          tickFormatter={isPercentage || isInteger ? undefined : compactFormat}
         />
-        <Tooltip
-          isAnimationActive={false}
-          content={
-            <CustomTooltip
-              tooltipLabel={label}
-              isPHA={isPHA}
-              isPercentage={isPercentage}
-            />
-          }
-        />
+        <Tooltip isAnimationActive={false} content={<RechartsTooltip />} />
         <Area
+          name={label}
+          unit={isPercentage ? '%' : isPHA ? ' PHA' : undefined}
           connectNulls
           type="monotone"
           dataKey="value"

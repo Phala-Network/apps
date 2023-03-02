@@ -1,6 +1,7 @@
 import WithdrawalQueueIcon from '@/assets/withdraw_queue.svg'
 import Empty from '@/components/Empty'
 import SectionHeader from '@/components/SectionHeader'
+import compactFormat from '@/lib/compactFormat'
 import {subsquidClient} from '@/lib/graphql'
 import {
   useDelegationsConnectionQuery,
@@ -248,12 +249,7 @@ const WithdrawQueue: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
                   dataKey="value"
                   name="Value"
                   tickLine={false}
-                  tickFormatter={(value) =>
-                    Intl.NumberFormat('en-US', {
-                      notation: 'compact',
-                      maximumFractionDigits: 0,
-                    }).format(value)
-                  }
+                  tickFormatter={(value) => compactFormat(value, 0)}
                 />
                 <RechartsTooltip
                   isAnimationActive={false}
@@ -277,7 +273,7 @@ const WithdrawQueue: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
                   />
                 )}
                 <ReferenceLine
-                  alwaysShow
+                  ifOverflow="extendDomain"
                   strokeDasharray="3 3"
                   y={new Decimal(basePool.freeValue)
                     .plus(basePool.releasingValue)

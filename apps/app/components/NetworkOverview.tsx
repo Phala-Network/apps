@@ -1,5 +1,6 @@
 import useGetApr from '@/hooks/useGetApr'
 import useSWRValue from '@/hooks/useSWRValue'
+import compactFormat from '@/lib/compactFormat'
 import {subsquidClient} from '@/lib/graphql'
 import {
   useGlobalStateQuery,
@@ -18,14 +19,6 @@ import {useMemo, type FC} from 'react'
 interface CirculationData {
   data?: {circulations?: {nodes?: [{amount: string}?]}}
 }
-
-const numberFormat = (value: Decimal | number): string =>
-  Intl.NumberFormat('en-US', {
-    notation: 'compact',
-    maximumFractionDigits: 2,
-  }).format(
-    typeof value === 'number' ? value : BigInt(value.floor().toString())
-  )
 
 const NetworkOverview: FC = () => {
   const getApr = useGetApr()
@@ -62,7 +55,7 @@ const NetworkOverview: FC = () => {
       (acc, cur) => acc.plus(cur.node.value),
       new Decimal(0)
     )
-    return numberFormat(sum)
+    return compactFormat(sum)
   }, [rewardRecordsData])
   const avgApr = useMemo(() => {
     if (averageAprMultiplier === undefined) return
@@ -72,13 +65,13 @@ const NetworkOverview: FC = () => {
   }, [getApr, averageAprMultiplier])
   const idleWorkerCount = useMemo(() => {
     const count = idleWorkerCountData?.sessionsConnection.totalCount
-    return typeof count === 'number' && numberFormat(count)
+    return typeof count === 'number' && compactFormat(count)
   }, [idleWorkerCountData])
   const items = useMemo<Array<[string, string | false | undefined]>>(() => {
     return [
       [
         'Total Value',
-        totalValue !== undefined && numberFormat(new Decimal(totalValue)),
+        totalValue !== undefined && compactFormat(new Decimal(totalValue)),
       ],
       ['Stake Ratio', stakeRatio],
       ['Daily Rewards', dailyRewards],
