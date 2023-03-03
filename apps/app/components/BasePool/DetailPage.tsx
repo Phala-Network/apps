@@ -1,3 +1,4 @@
+import NftsIcon from '@/assets/nfts.svg'
 import StakePoolIcon from '@/assets/stake_pool_detailed.svg'
 import VaultIcon from '@/assets/vault_detailed.svg'
 import NftCard from '@/components/Delegation/NftCard'
@@ -8,8 +9,9 @@ import useGetApr from '@/hooks/useGetApr'
 import usePolkadotApi from '@/hooks/usePolkadotApi'
 import useSelectedVaultState from '@/hooks/useSelectedVaultState'
 import useSignAndSend from '@/hooks/useSignAndSend'
-import useYesterday from '@/hooks/useYesterday'
+import useSWRValue from '@/hooks/useSWRValue'
 import {aprToApy} from '@/lib/apr'
+import getDelegationProfit from '@/lib/getDelegationProfit'
 import {subsquidClient} from '@/lib/graphql'
 import {
   useDelegationByIdQuery,
@@ -17,6 +19,7 @@ import {
 } from '@/lib/subsquidQuery'
 import {colors} from '@/lib/theme'
 import Settings from '@mui/icons-material/Settings'
+import {TabContext, TabList, TabPanel} from '@mui/lab'
 
 import {
   Box,
@@ -26,18 +29,23 @@ import {
   Paper,
   Skeleton,
   Stack,
+  Tab,
   Tooltip,
   Typography,
   useTheme,
 } from '@mui/material'
 import {polkadotAccountAtom} from '@phala/store'
 import {toCurrency, toPercentage} from '@phala/util'
+import {addDays} from 'date-fns'
 import Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
 import {useCallback, useMemo, useState, type FC} from 'react'
+import DelegationChart from '../Delegation/Chart'
 import Withdraw from '../Delegation/Withdraw'
 import Empty from '../Empty'
 import PromiseButton from '../PromiseButton'
+import SectionHeader from '../SectionHeader'
+import BasePoolChart, {type BasePoolChartKind} from './Chart'
 import DelegateInput from './DelegateInput'
 import ExtraProperties from './ExtraProperties'
 import Intro from './Intro'
@@ -49,7 +57,8 @@ type DetailPageDialogAction = 'withdraw' | 'ownerSettings'
 
 const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
   const api = usePolkadotApi()
-  const yesterday = useYesterday()
+  const [chartTab, setChartTab] = useState<BasePoolChartKind>('apr')
+  const yesterday = useSWRValue(() => addDays(new Date(), -1).toISOString())
   const signAndSend = useSignAndSend()
   const [dialogOpen, setDialogOpen] = useState(false)
   const [dialogAction, setDialogAction] = useState<DetailPageDialogAction>()
@@ -59,7 +68,7 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
   const getApr = useGetApr()
   const theme = useTheme()
   const isVault = vault != null
-  // const color = isVault ? 'secondary' : 'primary'
+  const color = isVault ? 'secondary' : 'primary'
   const isOwner = owner.id === account?.address
 
   const actions = (
@@ -108,14 +117,20 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
     let profit = new Decimal(0)
     const snapshot = delegation?.snapshots[0]
     if (delegation != null && snapshot != null) {
-      profit = new Decimal(delegation.value)
-        .minus(snapshot.value)
-        .minus(delegation.cost)
-        .plus(snapshot.cost)
-      profit = Decimal.max(profit, 0)
+      profit = getDelegationProfit(delegation, snapshot)
     }
     return profit
   }, [delegation])
+
+  const charts = useMemo<Array<[string, BasePoolChartKind]>>(() => {
+    return [
+      [isVault ? 'APY' : 'APR', 'apr'],
+      [isVault ? 'TVL' : 'Delegation', 'totalValue'],
+      ['Commission', 'commission'],
+      ['Delegator', 'delegatorCount'],
+      isVault ? ['StakePool', 'stakePoolCount'] : ['Worker', 'workerCount'],
+    ]
+  }, [isVault])
 
   return (
     <>
@@ -123,7 +138,7 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
         title={`${basePool.kind} #${basePool.pid}`}
         pageTitle={basePool.kind}
       />
-      <Stack spacing={{xs: 2, lg: 2.5}}>
+      <Stack spacing={2}>
         <Paper sx={{background: 'transparent'}} component="section">
           <Stack
             spacing={2}
@@ -211,96 +226,143 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
           </Stack>
         </Paper>
 
-        {/* <Paper
+        <Paper
           component="section"
           sx={{
-            p: {xs: 1, md: 2},
-            pt: {xs: 0.5, md: 1},
+            px: {xs: 2, md: 3},
             background: 'transparent',
           }}
         >
-          <Tabs value="intergrated" indicatorColor={color} textColor={color}>
-            <Tab label="Intergrated" value="intergrated" />
-            <Tab label="Delegation" value="delegation" />
-            <Tab label="Commission" value="commission" />
-          </Tabs>
-        </Paper> */}
+          <Stack direction={{xs: 'column', lg: 'row'}} spacing={3}>
+            <Box
+              sx={{
+                py: {xs: 1.5, md: 2},
+                flex: {xs: 'none', lg: '1 0'},
+                height: 280,
+                minWidth: 0,
+              }}
+            >
+              <Box position="relative" height="100%">
+                <Intro
+                  variant="detail"
+                  basePool={basePool}
+                  sx={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                  }}
+                />
+              </Box>
+            </Box>
+            <Stack
+              component="section"
+              sx={{
+                py: 1,
+                background: 'transparent',
+                flex: {xs: 'none', lg: '1 0'},
+                minWidth: 0,
+                height: 280,
+              }}
+            >
+              <TabContext value={chartTab}>
+                <TabList
+                  indicatorColor={color}
+                  textColor={color}
+                  onChange={(e, newValue) => {
+                    setChartTab(newValue)
+                  }}
+                >
+                  {charts.map(([label, value]) => (
+                    <Tab label={label} value={value} key={value} />
+                  ))}
+                </TabList>
+                {charts.map(([label, value]) => (
+                  <TabPanel
+                    value={value}
+                    sx={{px: 0, pb: 0, flex: 1}}
+                    key={value}
+                  >
+                    <BasePoolChart basePool={basePool} kind={value} />
+                  </TabPanel>
+                ))}
+              </TabContext>
+            </Stack>
+          </Stack>
+        </Paper>
 
-        <Stack direction={{xs: 'column', lg: 'row'}} spacing={{xs: 2, lg: 2.5}}>
+        <Box component="section">
+          <SectionHeader icon={<NftsIcon />} title="Delegate" />
           <Paper
-            component="section"
             sx={{
               p: {xs: 2, md: 3},
               pt: {xs: 1.5, md: 2},
               background: 'transparent',
-              flex: {xs: 'none', lg: '1 0'},
-              height: {xs: 300, lg: 'auto'},
             }}
           >
-            <Box position="relative" height="100%">
-              <Intro
-                variant="detail"
-                basePool={basePool}
+            <Stack direction={{xs: 'column', lg: 'row'}} spacing={3}>
+              <Box
+                component="section"
                 sx={{
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
+                  minWidth: 0,
+                  position: 'relative',
+                  flex: {xs: 'none', lg: '1 0'},
                 }}
-              />
-            </Box>
-          </Paper>
-          <Paper
-            component="section"
-            sx={{
-              position: 'relative',
-              p: 2,
-              background: 'transparent',
-              flex: {xs: 'none', lg: '1 0'},
-            }}
-          >
-            <Box position="absolute" right={16} top={16}>
-              <DelegatorSelect isVault={isVault} />
-            </Box>
-            {hasDelegation ? (
-              <Stack
-                direction="row"
-                justifyContent="space-between"
-                alignItems="flex-end"
               >
-                <Box width="400px">
-                  <NftCard
-                    compact
-                    delegation={delegation}
-                    profit={delegationProfit}
-                  />
+                <Box position="absolute" right={16} top={0}>
+                  <DelegatorSelect isVault={isVault} />
                 </Box>
-                <Stack spacing={2}>
-                  <PromiseButton
-                    onClick={reclaim}
-                    disabled={!poolHasWithdrawal}
+                {hasDelegation ? (
+                  <Stack
+                    direction="row"
+                    justifyContent="space-between"
+                    alignItems="flex-end"
+                    mr={1}
                   >
-                    Reclaim
-                  </PromiseButton>
-                  <Button
-                    onClick={() => {
-                      setDialogOpen(true)
-                      setDialogAction('withdraw')
-                    }}
-                  >
-                    Withdraw
-                  </Button>
-                </Stack>
-              </Stack>
-            ) : (
-              <Box height="240px">
-                {!isDelegationLoading && <Empty message="No Delegation" />}
+                    <Box width="380px">
+                      <NftCard
+                        compact
+                        delegation={delegation}
+                        profit={delegationProfit}
+                      />
+                    </Box>
+                    <Stack spacing={2}>
+                      <PromiseButton
+                        color={color}
+                        onClick={reclaim}
+                        disabled={!poolHasWithdrawal}
+                      >
+                        Reclaim
+                      </PromiseButton>
+                      <Button
+                        color={color}
+                        onClick={() => {
+                          setDialogOpen(true)
+                          setDialogAction('withdraw')
+                        }}
+                      >
+                        Withdraw
+                      </Button>
+                    </Stack>
+                  </Stack>
+                ) : (
+                  <Box height="240px">
+                    {!isDelegationLoading && <Empty message="No Delegation" />}
+                  </Box>
+                )}
               </Box>
-            )}
-            <DelegateInput basePool={basePool} sx={{mt: 3}} />
+              <Stack flex={1} minWidth={0}>
+                <Box flex={1}>
+                  {delegation != null && (
+                    <DelegationChart delegation={delegation} />
+                  )}
+                </Box>
+                <DelegateInput basePool={basePool} sx={{mt: 1}} />
+              </Stack>
+            </Stack>
           </Paper>
-        </Stack>
+        </Box>
 
         <Box component="section">
           <WithdrawQueue basePool={basePool} />

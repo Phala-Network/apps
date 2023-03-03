@@ -1,10 +1,9 @@
+import compactFormat from '@/lib/compactFormat'
 import {subsquidClient} from '@/lib/graphql'
 import {useAccountValueSnapshotsConnectionQuery} from '@/lib/subsquidQuery'
-import {Paper, Typography} from '@mui/material'
-import {toCurrency} from '@phala/util'
 import {addDays} from 'date-fns'
 import Decimal from 'decimal.js'
-import {useMemo, useState, type FC, type ReactElement} from 'react'
+import {useMemo, useState, type FC} from 'react'
 import {
   Area,
   AreaChart,
@@ -13,32 +12,7 @@ import {
   XAxis,
   YAxis,
 } from 'recharts'
-import Property from './Property'
-
-const CustomTooltip = ({
-  label,
-  payload,
-}: {
-  label?: string
-  payload?: Array<{
-    name: string
-    value: number | string
-    unit?: string
-  }>
-}): ReactElement | null => {
-  if (payload?.[0] != null) {
-    return (
-      <Paper sx={{p: 1}}>
-        <Typography variant="subtitle2">{label}</Typography>
-        <Property fullWidth size="small" label="Value">{`${toCurrency(
-          payload[0].value
-        )} PHA`}</Property>
-      </Paper>
-    )
-  }
-
-  return null
-}
+import RechartsTooltip from './RechartsTooltip'
 
 const DelegationValueChart: FC<{address?: string; days: number}> = ({
   address,
@@ -58,7 +32,12 @@ const DelegationValueChart: FC<{address?: string; days: number}> = ({
         updatedTime_gte: addDays(now, -days).toISOString(),
       },
     },
-    {enabled: address !== undefined}
+    {
+      enabled: address !== undefined,
+      refetchOnMount: false,
+      refetchOnWindowFocus: false,
+      refetchOnReconnect: false,
+    }
   )
 
   const chartData = useMemo(() => {
@@ -94,6 +73,10 @@ const DelegationValueChart: FC<{address?: string; days: number}> = ({
     return result
   }, [data, days, now])
 
+  if (data == null) {
+    return null
+  }
+
   return (
     <ResponsiveContainer width="100%" height="100%">
       <AreaChart
@@ -114,15 +97,12 @@ const DelegationValueChart: FC<{address?: string; days: number}> = ({
           dataKey="value"
           name="Value"
           tickLine={false}
-          tickFormatter={(value) =>
-            Intl.NumberFormat('en-US', {
-              notation: 'compact',
-              maximumFractionDigits: 2,
-            }).format(value)
-          }
+          tickFormatter={compactFormat}
         />
-        <Tooltip isAnimationActive={false} content={<CustomTooltip />} />
+        <Tooltip isAnimationActive={false} content={<RechartsTooltip />} />
         <Area
+          unit=" PHA"
+          name="Value"
           connectNulls
           type="monotone"
           dataKey="value"

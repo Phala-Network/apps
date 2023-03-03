@@ -3,7 +3,6 @@ import {subsquidClient} from '@/lib/graphql'
 import {useGlobalStateQuery} from '@/lib/subsquidQuery'
 import Decimal from 'decimal.js'
 import {useCallback} from 'react'
-import useTokenomicParameters from './useTokenomicParameters'
 
 const ONE_YEAR = 365 * 24 * 60 * 60 * 1000
 
@@ -12,9 +11,8 @@ const useGetAprMultiplier = (): ((
   isApy?: boolean
 ) => Decimal | undefined) => {
   const {data: globalStateData} = useGlobalStateQuery(subsquidClient, {})
-  const tokenomicParameters = useTokenomicParameters()
 
-  const {averageBlockTime, idleWorkerShares} =
+  const {averageBlockTime, idleWorkerShares, budgetPerBlock, treasuryRatio} =
     globalStateData?.globalStateById ?? {}
 
   return useCallback(
@@ -22,18 +20,18 @@ const useGetAprMultiplier = (): ((
       if (
         averageBlockTime === undefined ||
         idleWorkerShares === undefined ||
-        tokenomicParameters === undefined
+        budgetPerBlock === undefined ||
+        treasuryRatio === undefined
       ) {
         return
       }
-      const {budgetPerBlock, treasuryRatio} = tokenomicParameters
       try {
         const apr = isApy
           ? apyToApr(new Decimal(aprOrApy).div(100))
           : new Decimal(aprOrApy).div(100)
         return apr.div(
-          budgetPerBlock
-            .times(treasuryRatio.negated().add(1))
+          new Decimal(budgetPerBlock)
+            .times(new Decimal(1).minus(treasuryRatio))
             .times(ONE_YEAR)
             .div(averageBlockTime)
             .div(idleWorkerShares)
@@ -42,7 +40,7 @@ const useGetAprMultiplier = (): ((
         // noop
       }
     },
-    [averageBlockTime, tokenomicParameters, idleWorkerShares]
+    [averageBlockTime, budgetPerBlock, idleWorkerShares, treasuryRatio]
   )
 }
 

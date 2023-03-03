@@ -3,7 +3,8 @@ import Empty from '@/components/Empty'
 import ListSkeleton from '@/components/ListSkeleton'
 import SectionHeader from '@/components/SectionHeader'
 import useDebounced from '@/hooks/useDebounced'
-import useYesterday from '@/hooks/useYesterday'
+import useSWRValue from '@/hooks/useSWRValue'
+import getDelegationProfit from '@/lib/getDelegationProfit'
 import {subsquidClient} from '@/lib/graphql'
 import {
   useInfiniteDelegationsConnectionQuery,
@@ -33,6 +34,7 @@ import {
   Typography,
   Unstable_Grid2 as Grid,
 } from '@mui/material'
+import {addDays} from 'date-fns'
 import Decimal from 'decimal.js'
 import {useCallback, useEffect, useState, type FC} from 'react'
 import {useInView} from 'react-intersection-observer'
@@ -62,7 +64,7 @@ const DelegationList: FC<{
   isVault?: boolean
   isOwner?: boolean
 }> = ({address, isVault = false, showHeader = false, isOwner = false}) => {
-  const yesterday = useYesterday()
+  const yesterday = useSWRValue(() => addDays(new Date(), -1).toISOString())
   const {ref, inView} = useInView()
   const [dialogOpen, setDialogOpen] = useState(false)
   const [dialogAction, setDialogAction] = useState<DelegationDialogAction>()
@@ -93,7 +95,7 @@ const DelegationList: FC<{
     },
     withdrawingFilter && {withdrawingValue_gt: '0'},
   ]
-  const enabled = address !== undefined && yesterday !== undefined
+  const enabled = address !== undefined
   const {data, isLoading, fetchNextPage, hasNextPage} =
     useInfiniteDelegationsConnectionQuery(
       'after',
@@ -258,11 +260,7 @@ const DelegationList: FC<{
                     const snapshot = edge.node.snapshots[0]
                     let profit = new Decimal(0)
                     if (snapshot != null) {
-                      profit = new Decimal(delegation.value)
-                        .minus(snapshot.value)
-                        .minus(delegation.cost)
-                        .plus(snapshot.cost)
-                      profit = Decimal.max(profit, 0)
+                      profit = getDelegationProfit(delegation, snapshot)
                     }
                     return (
                       <Grid

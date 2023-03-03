@@ -29,7 +29,7 @@ import {polkadotAccountAtom} from '@phala/store'
 import {toCurrency, toPercentage} from '@phala/util'
 import {useAtom} from 'jotai'
 import {type FC} from 'react'
-import BasePoolAprChart from './AprChart'
+import BasePoolChart from './Chart'
 import DelegateInput from './DelegateInput'
 import ExtraProperties from './ExtraProperties'
 import Identity from './Identity'
@@ -82,10 +82,11 @@ const DelegateCard: FC<{
           spacing={3}
           direction={{xs: 'column', md: 'row'}}
           alignItems={{xs: 'flex-start', md: 'center'}}
-          py={{xs: 0, md: 1}}
+          py={{xs: 0, md: 0.5}}
         >
-          <Stack direction="row" spacing={2} alignItems="center">
+          <Stack direction="row" spacing={1.5} alignItems="center">
             <IconButton
+              size="small"
               onClick={(e) => {
                 e.stopPropagation()
                 toggleFavorite()
@@ -98,17 +99,18 @@ const DelegateCard: FC<{
               )}
             </IconButton>
             {stakePool != null && (
-              <StakePoolIcon width={48} color={colors.main[300]} />
+              <StakePoolIcon width={40} color={colors.main[300]} />
             )}
             {vault != null && (
-              <VaultIcon width={48} color={colors.vault[400]} />
+              <VaultIcon width={40} color={colors.vault[400]} />
             )}
-            <Box width={150} flex="1 0">
+            <Stack width={150} flex="1 0">
               <Link
                 onClick={(e) => {
                   e.stopPropagation()
                 }}
                 color="inherit"
+                lineHeight={1.3}
                 variant="num4"
                 href={getPoolPath(basePool.kind, basePool.id)}
                 target="_blank"
@@ -118,7 +120,7 @@ const DelegateCard: FC<{
                 }}
               >{`#${basePool.id}`}</Link>
               <Identity {...owner} />
-            </Box>
+            </Stack>
           </Stack>
           <Stack direction="row" spacing={2}>
             {stakePool != null && (
@@ -179,7 +181,7 @@ const DelegateCard: FC<{
           </Stack>
           <Stack flex="1 0">
             <Box flex="1 0">
-              <BasePoolAprChart basePool={basePool} />
+              <BasePoolChart basePool={basePool} kind="apr" />
             </Box>
             <DelegateInput basePool={basePool} />
           </Stack>

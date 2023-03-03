@@ -30,7 +30,7 @@ import {toCurrency, toPercentage} from '@phala/util'
 import Decimal from 'decimal.js'
 import {useCallback, useMemo, type FC} from 'react'
 import PromiseButton from '../PromiseButton'
-import BasePoolAprChart from './AprChart'
+import BasePoolChart from './Chart'
 import ExtraProperties from './ExtraProperties'
 import Intro from './Intro'
 import {type OnAction} from './List'
@@ -245,7 +245,7 @@ const FarmCard: FC<{
             <ExtraProperties basePool={basePool} />
           </Stack>
           <Box flex="1 0">
-            <BasePoolAprChart basePool={basePool} />
+            <BasePoolChart basePool={basePool} kind="apr" />
           </Box>
         </Stack>
       </AccordionDetails>

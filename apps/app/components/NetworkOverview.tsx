@@ -1,5 +1,6 @@
 import useGetApr from '@/hooks/useGetApr'
-import useYesterday from '@/hooks/useYesterday'
+import useSWRValue from '@/hooks/useSWRValue'
+import compactFormat from '@/lib/compactFormat'
 import {subsquidClient} from '@/lib/graphql'
 import {
   useGlobalStateQuery,
@@ -10,6 +11,7 @@ import {chainAtom} from '@/store/common'
 import {Box, Divider, Skeleton, Stack, Typography} from '@mui/material'
 import {toPercentage} from '@phala/util'
 import {useQuery} from '@tanstack/react-query'
+import {addDays} from 'date-fns'
 import Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
 import {useMemo, type FC} from 'react'
@@ -18,22 +20,13 @@ interface CirculationData {
   data?: {circulations?: {nodes?: [{amount: string}?]}}
 }
 
-const numberFormat = (value: Decimal | number): string =>
-  Intl.NumberFormat('en-US', {
-    notation: 'compact',
-    maximumFractionDigits: 2,
-  }).format(
-    typeof value === 'number' ? value : BigInt(value.floor().toString())
-  )
-
 const NetworkOverview: FC = () => {
   const getApr = useGetApr()
-  const yesterday = useYesterday()
+  const yesterday = useSWRValue(() => addDays(new Date(), -1).toISOString())
   const [chain] = useAtom(chainAtom)
   const {data: rewardRecordsData} = useRewardRecordsConnectionQuery(
     subsquidClient,
-    {orderBy: 'time_DESC', where: {time_gt: yesterday}},
-    {enabled: yesterday !== undefined}
+    {orderBy: 'time_DESC', where: {time_gt: yesterday}}
   )
   const {data: circulationData} = useQuery<CirculationData>(
     ['circulations', chain],
@@ -41,7 +34,7 @@ const NetworkOverview: FC = () => {
       const res = await fetch(
         'https://api.subquery.network/sq/Phala-Network/khala-chainbridge__UGhhb?query=%7Bcirculations(first:1,orderBy:BLOCK_HEIGHT_DESC)%7Bnodes%7Bamount%7D%7D%7D'
       )
-      return await res.json()
+      return (await res.json()) as CirculationData
     }
   )
   const {data: globalStateData} = useGlobalStateQuery(subsquidClient, {})
@@ -62,7 +55,7 @@ const NetworkOverview: FC = () => {
       (acc, cur) => acc.plus(cur.node.value),
       new Decimal(0)
     )
-    return numberFormat(sum)
+    return compactFormat(sum)
   }, [rewardRecordsData])
   const avgApr = useMemo(() => {
     if (averageAprMultiplier === undefined) return
@@ -72,13 +65,13 @@ const NetworkOverview: FC = () => {
   }, [getApr, averageAprMultiplier])
   const idleWorkerCount = useMemo(() => {
     const count = idleWorkerCountData?.sessionsConnection.totalCount
-    return typeof count === 'number' && numberFormat(count)
+    return typeof count === 'number' && compactFormat(count)
   }, [idleWorkerCountData])
   const items = useMemo<Array<[string, string | false | undefined]>>(() => {
     return [
       [
         'Total Value',
-        totalValue !== undefined && numberFormat(new Decimal(totalValue)),
+        totalValue !== undefined && compactFormat(new Decimal(totalValue)),
       ],
       ['Stake Ratio', stakeRatio],
       ['Daily Rewards', dailyRewards],

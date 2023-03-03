@@ -461,6 +461,7 @@ type BasePoolSnapshot = {
   id: Scalars['String'];
   idleWorkerCount?: Maybe<Scalars['Int']>;
   sharePrice: Scalars['BigDecimal'];
+  stakePoolCount?: Maybe<Scalars['Int']>;
   totalValue: Scalars['BigDecimal'];
   /** block time */
   updatedTime: Scalars['DateTime'];
@@ -516,6 +517,8 @@ const BasePoolSnapshotOrderByInput = {
   IdleWorkerCountDesc: 'idleWorkerCount_DESC',
   SharePriceAsc: 'sharePrice_ASC',
   SharePriceDesc: 'sharePrice_DESC',
+  StakePoolCountAsc: 'stakePoolCount_ASC',
+  StakePoolCountDesc: 'stakePoolCount_DESC',
   TotalValueAsc: 'totalValue_ASC',
   TotalValueDesc: 'totalValue_DESC',
   UpdatedTimeAsc: 'updatedTime_ASC',
@@ -592,6 +595,15 @@ type BasePoolSnapshotWhereInput = {
   sharePrice_lte?: InputMaybe<Scalars['BigDecimal']>;
   sharePrice_not_eq?: InputMaybe<Scalars['BigDecimal']>;
   sharePrice_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  stakePoolCount_eq?: InputMaybe<Scalars['Int']>;
+  stakePoolCount_gt?: InputMaybe<Scalars['Int']>;
+  stakePoolCount_gte?: InputMaybe<Scalars['Int']>;
+  stakePoolCount_in?: InputMaybe<Array<Scalars['Int']>>;
+  stakePoolCount_isNull?: InputMaybe<Scalars['Boolean']>;
+  stakePoolCount_lt?: InputMaybe<Scalars['Int']>;
+  stakePoolCount_lte?: InputMaybe<Scalars['Int']>;
+  stakePoolCount_not_eq?: InputMaybe<Scalars['Int']>;
+  stakePoolCount_not_in?: InputMaybe<Array<Scalars['Int']>>;
   totalValue_eq?: InputMaybe<Scalars['BigDecimal']>;
   totalValue_gt?: InputMaybe<Scalars['BigDecimal']>;
   totalValue_gte?: InputMaybe<Scalars['BigDecimal']>;
@@ -1218,12 +1230,18 @@ type GlobalState = {
   averageBlockTime: Scalars['Int'];
   averageBlockTimeUpdatedHeight: Scalars['Int'];
   averageBlockTimeUpdatedTime: Scalars['DateTime'];
+  budgetPerBlock: Scalars['BigDecimal'];
   height: Scalars['Int'];
   /** constant 0 */
   id: Scalars['String'];
   /** for apr calculation */
   idleWorkerShares: Scalars['BigDecimal'];
+  k: Scalars['BigDecimal'];
+  phaRate: Scalars['BigDecimal'];
+  re: Scalars['BigDecimal'];
   totalValue: Scalars['BigDecimal'];
+  treasuryRatio: Scalars['BigDecimal'];
+  vMax: Scalars['BigDecimal'];
 };
 
 type GlobalStateEdge = {
@@ -1243,14 +1261,26 @@ const GlobalStateOrderByInput = {
   AverageBlockTimeUpdatedTimeDesc: 'averageBlockTimeUpdatedTime_DESC',
   AverageBlockTimeAsc: 'averageBlockTime_ASC',
   AverageBlockTimeDesc: 'averageBlockTime_DESC',
+  BudgetPerBlockAsc: 'budgetPerBlock_ASC',
+  BudgetPerBlockDesc: 'budgetPerBlock_DESC',
   HeightAsc: 'height_ASC',
   HeightDesc: 'height_DESC',
   IdAsc: 'id_ASC',
   IdDesc: 'id_DESC',
   IdleWorkerSharesAsc: 'idleWorkerShares_ASC',
   IdleWorkerSharesDesc: 'idleWorkerShares_DESC',
+  KAsc: 'k_ASC',
+  KDesc: 'k_DESC',
+  PhaRateAsc: 'phaRate_ASC',
+  PhaRateDesc: 'phaRate_DESC',
+  ReAsc: 're_ASC',
+  ReDesc: 're_DESC',
   TotalValueAsc: 'totalValue_ASC',
-  TotalValueDesc: 'totalValue_DESC'
+  TotalValueDesc: 'totalValue_DESC',
+  TreasuryRatioAsc: 'treasuryRatio_ASC',
+  TreasuryRatioDesc: 'treasuryRatio_DESC',
+  VMaxAsc: 'vMax_ASC',
+  VMaxDesc: 'vMax_DESC'
 } as const;
 
 export type GlobalStateOrderByInput = typeof GlobalStateOrderByInput[keyof typeof GlobalStateOrderByInput];
@@ -1302,6 +1332,15 @@ type GlobalStateWhereInput = {
   averageBlockTime_lte?: InputMaybe<Scalars['Int']>;
   averageBlockTime_not_eq?: InputMaybe<Scalars['Int']>;
   averageBlockTime_not_in?: InputMaybe<Array<Scalars['Int']>>;
+  budgetPerBlock_eq?: InputMaybe<Scalars['BigDecimal']>;
+  budgetPerBlock_gt?: InputMaybe<Scalars['BigDecimal']>;
+  budgetPerBlock_gte?: InputMaybe<Scalars['BigDecimal']>;
+  budgetPerBlock_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  budgetPerBlock_isNull?: InputMaybe<Scalars['Boolean']>;
+  budgetPerBlock_lt?: InputMaybe<Scalars['BigDecimal']>;
+  budgetPerBlock_lte?: InputMaybe<Scalars['BigDecimal']>;
+  budgetPerBlock_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  budgetPerBlock_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
   height_eq?: InputMaybe<Scalars['Int']>;
   height_gt?: InputMaybe<Scalars['Int']>;
   height_gte?: InputMaybe<Scalars['Int']>;
@@ -1337,6 +1376,33 @@ type GlobalStateWhereInput = {
   idleWorkerShares_lte?: InputMaybe<Scalars['BigDecimal']>;
   idleWorkerShares_not_eq?: InputMaybe<Scalars['BigDecimal']>;
   idleWorkerShares_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  k_eq?: InputMaybe<Scalars['BigDecimal']>;
+  k_gt?: InputMaybe<Scalars['BigDecimal']>;
+  k_gte?: InputMaybe<Scalars['BigDecimal']>;
+  k_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  k_isNull?: InputMaybe<Scalars['Boolean']>;
+  k_lt?: InputMaybe<Scalars['BigDecimal']>;
+  k_lte?: InputMaybe<Scalars['BigDecimal']>;
+  k_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  k_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  phaRate_eq?: InputMaybe<Scalars['BigDecimal']>;
+  phaRate_gt?: InputMaybe<Scalars['BigDecimal']>;
+  phaRate_gte?: InputMaybe<Scalars['BigDecimal']>;
+  phaRate_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  phaRate_isNull?: InputMaybe<Scalars['Boolean']>;
+  phaRate_lt?: InputMaybe<Scalars['BigDecimal']>;
+  phaRate_lte?: InputMaybe<Scalars['BigDecimal']>;
+  phaRate_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  phaRate_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  re_eq?: InputMaybe<Scalars['BigDecimal']>;
+  re_gt?: InputMaybe<Scalars['BigDecimal']>;
+  re_gte?: InputMaybe<Scalars['BigDecimal']>;
+  re_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  re_isNull?: InputMaybe<Scalars['Boolean']>;
+  re_lt?: InputMaybe<Scalars['BigDecimal']>;
+  re_lte?: InputMaybe<Scalars['BigDecimal']>;
+  re_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  re_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
   totalValue_eq?: InputMaybe<Scalars['BigDecimal']>;
   totalValue_gt?: InputMaybe<Scalars['BigDecimal']>;
   totalValue_gte?: InputMaybe<Scalars['BigDecimal']>;
@@ -1346,6 +1412,24 @@ type GlobalStateWhereInput = {
   totalValue_lte?: InputMaybe<Scalars['BigDecimal']>;
   totalValue_not_eq?: InputMaybe<Scalars['BigDecimal']>;
   totalValue_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  treasuryRatio_eq?: InputMaybe<Scalars['BigDecimal']>;
+  treasuryRatio_gt?: InputMaybe<Scalars['BigDecimal']>;
+  treasuryRatio_gte?: InputMaybe<Scalars['BigDecimal']>;
+  treasuryRatio_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  treasuryRatio_isNull?: InputMaybe<Scalars['Boolean']>;
+  treasuryRatio_lt?: InputMaybe<Scalars['BigDecimal']>;
+  treasuryRatio_lte?: InputMaybe<Scalars['BigDecimal']>;
+  treasuryRatio_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  treasuryRatio_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  vMax_eq?: InputMaybe<Scalars['BigDecimal']>;
+  vMax_gt?: InputMaybe<Scalars['BigDecimal']>;
+  vMax_gte?: InputMaybe<Scalars['BigDecimal']>;
+  vMax_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  vMax_isNull?: InputMaybe<Scalars['Boolean']>;
+  vMax_lt?: InputMaybe<Scalars['BigDecimal']>;
+  vMax_lte?: InputMaybe<Scalars['BigDecimal']>;
+  vMax_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  vMax_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
 };
 
 type GlobalStatesConnection = {
@@ -2858,7 +2942,7 @@ type AccountValueSnapshotsConnectionQueryVariables = Exact<{
 
 type AccountValueSnapshotsConnectionQuery = { __typename?: 'Query', accountValueSnapshotsConnection: { __typename?: 'AccountValueSnapshotsConnection', totalCount: number, edges: Array<{ __typename?: 'AccountValueSnapshotEdge', cursor: string, node: { __typename?: 'AccountValueSnapshot', updatedTime: string, value: string } }> } };
 
-type BasePoolCommonFragment = { __typename?: 'BasePool', cid: number, commission: string, delegatorCount: number, freeValue: string, id: string, kind: BasePoolKind, aprMultiplier: string, pid: string, releasingValue: string, sharePrice: string, totalShares: string, totalValue: string, whitelistEnabled: boolean, withdrawingShares: string, withdrawingValue: string, account: { __typename?: 'Account', id: string, stakePoolNftCount: number, stakePoolValue: string }, owner: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null }, stakePool?: { __typename?: 'StakePool', capacity?: string | null, delegable?: string | null, idleWorkerCount: number, ownerReward: string, workerCount: number } | null, vault?: { __typename?: 'Vault', claimableOwnerShares: string, lastSharePriceCheckpoint: string } | null };
+type BasePoolCommonFragment = { __typename?: 'BasePool', cid: number, commission: string, delegatorCount: number, freeValue: string, id: string, kind: BasePoolKind, aprMultiplier: string, pid: string, releasingValue: string, sharePrice: string, totalShares: string, totalValue: string, whitelistEnabled: boolean, withdrawingShares: string, withdrawingValue: string, account: { __typename?: 'Account', id: string, stakePoolNftCount: number, stakePoolValue: string }, owner: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null }, stakePool?: { __typename?: 'StakePool', capacity?: string | null, delegable?: string | null, idleWorkerCount: number, ownerReward: string, workerCount: number } | null, vault?: { __typename?: 'Vault', claimableOwnerShares: string, lastSharePriceCheckpoint: string } | null, whitelists: Array<{ __typename?: 'BasePoolWhitelist', account: { __typename?: 'Account', id: string } }> };
 
 type BasePoolByIdQueryVariables = Exact<{
   id: Scalars['String'];
@@ -2866,7 +2950,7 @@ type BasePoolByIdQueryVariables = Exact<{
 }>;
 
 
-type BasePoolByIdQuery = { __typename?: 'Query', basePoolById?: { __typename?: 'BasePool', cid: number, commission: string, delegatorCount: number, freeValue: string, id: string, kind: BasePoolKind, aprMultiplier: string, pid: string, releasingValue: string, sharePrice: string, totalShares: string, totalValue: string, whitelistEnabled: boolean, withdrawingShares: string, withdrawingValue: string, whitelists: Array<{ __typename?: 'BasePoolWhitelist', account: { __typename?: 'Account', id: string } }>, account: { __typename?: 'Account', id: string, stakePoolNftCount: number, stakePoolValue: string }, owner: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null }, stakePool?: { __typename?: 'StakePool', capacity?: string | null, delegable?: string | null, idleWorkerCount: number, ownerReward: string, workerCount: number } | null, vault?: { __typename?: 'Vault', claimableOwnerShares: string, lastSharePriceCheckpoint: string } | null } | null };
+type BasePoolByIdQuery = { __typename?: 'Query', basePoolById?: { __typename?: 'BasePool', cid: number, commission: string, delegatorCount: number, freeValue: string, id: string, kind: BasePoolKind, aprMultiplier: string, pid: string, releasingValue: string, sharePrice: string, totalShares: string, totalValue: string, whitelistEnabled: boolean, withdrawingShares: string, withdrawingValue: string, account: { __typename?: 'Account', id: string, stakePoolNftCount: number, stakePoolValue: string }, owner: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null }, stakePool?: { __typename?: 'StakePool', capacity?: string | null, delegable?: string | null, idleWorkerCount: number, ownerReward: string, workerCount: number } | null, vault?: { __typename?: 'Vault', claimableOwnerShares: string, lastSharePriceCheckpoint: string } | null, whitelists: Array<{ __typename?: 'BasePoolWhitelist', account: { __typename?: 'Account', id: string } }> } | null };
 
 type BasePoolsConnectionQueryVariables = Exact<{
   orderBy: Array<BasePoolOrderByInput> | BasePoolOrderByInput;
@@ -2877,7 +2961,7 @@ type BasePoolsConnectionQueryVariables = Exact<{
 }>;
 
 
-type BasePoolsConnectionQuery = { __typename?: 'Query', basePoolsConnection: { __typename?: 'BasePoolsConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', endCursor: string, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string }, edges: Array<{ __typename?: 'BasePoolEdge', cursor: string, node: { __typename?: 'BasePool', cid: number, commission: string, delegatorCount: number, freeValue: string, id: string, kind: BasePoolKind, aprMultiplier: string, pid: string, releasingValue: string, sharePrice: string, totalShares: string, totalValue: string, whitelistEnabled: boolean, withdrawingShares: string, withdrawingValue: string, whitelists: Array<{ __typename?: 'BasePoolWhitelist', account: { __typename?: 'Account', id: string } }>, delegations: Array<{ __typename?: 'Delegation', value: string }>, account: { __typename?: 'Account', id: string, stakePoolNftCount: number, stakePoolValue: string }, owner: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null }, stakePool?: { __typename?: 'StakePool', capacity?: string | null, delegable?: string | null, idleWorkerCount: number, ownerReward: string, workerCount: number } | null, vault?: { __typename?: 'Vault', claimableOwnerShares: string, lastSharePriceCheckpoint: string } | null } }> } };
+type BasePoolsConnectionQuery = { __typename?: 'Query', basePoolsConnection: { __typename?: 'BasePoolsConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', endCursor: string, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string }, edges: Array<{ __typename?: 'BasePoolEdge', cursor: string, node: { __typename?: 'BasePool', cid: number, commission: string, delegatorCount: number, freeValue: string, id: string, kind: BasePoolKind, aprMultiplier: string, pid: string, releasingValue: string, sharePrice: string, totalShares: string, totalValue: string, whitelistEnabled: boolean, withdrawingShares: string, withdrawingValue: string, delegations: Array<{ __typename?: 'Delegation', value: string }>, account: { __typename?: 'Account', id: string, stakePoolNftCount: number, stakePoolValue: string }, owner: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null }, stakePool?: { __typename?: 'StakePool', capacity?: string | null, delegable?: string | null, idleWorkerCount: number, ownerReward: string, workerCount: number } | null, vault?: { __typename?: 'Vault', claimableOwnerShares: string, lastSharePriceCheckpoint: string } | null, whitelists: Array<{ __typename?: 'BasePoolWhitelist', account: { __typename?: 'Account', id: string } }> } }> } };
 
 type ClaimableStakePoolsQueryVariables = Exact<{
   accountId?: InputMaybe<Scalars['String']>;
@@ -2899,12 +2983,18 @@ type BasePoolSnapshotsConnectionQueryVariables = Exact<{
   after?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Int']>;
   where?: InputMaybe<BasePoolSnapshotWhereInput>;
+  withApr?: InputMaybe<Scalars['Boolean']>;
+  withCommission?: InputMaybe<Scalars['Boolean']>;
+  withTotalValue?: InputMaybe<Scalars['Boolean']>;
+  withDelegatorCount?: InputMaybe<Scalars['Boolean']>;
+  withWorkerCount?: InputMaybe<Scalars['Boolean']>;
+  withStakePoolCount?: InputMaybe<Scalars['Boolean']>;
 }>;
 
 
-type BasePoolSnapshotsConnectionQuery = { __typename?: 'Query', basePoolSnapshotsConnection: { __typename?: 'BasePoolSnapshotsConnection', totalCount: number, edges: Array<{ __typename?: 'BasePoolSnapshotEdge', cursor: string, node: { __typename?: 'BasePoolSnapshot', updatedTime: string, apr: string } }> } };
+type BasePoolSnapshotsConnectionQuery = { __typename?: 'Query', basePoolSnapshotsConnection: { __typename?: 'BasePoolSnapshotsConnection', totalCount: number, edges: Array<{ __typename?: 'BasePoolSnapshotEdge', cursor: string, node: { __typename?: 'BasePoolSnapshot', updatedTime: string, apr?: string, commission?: string, totalValue?: string, delegatorCount?: number, workerCount?: number | null, idleWorkerCount?: number | null, stakePoolCount?: number | null } }> } };
 
-type DelegationCommonFragment = { __typename?: 'Delegation', id: string, shares: string, value: string, cost: string, withdrawalStartTime?: string | null, withdrawingShares: string, withdrawingValue: string, basePool: { __typename?: 'BasePool', id: string, kind: BasePoolKind, freeValue: string, sharePrice: string, aprMultiplier: string, withdrawingShares: string }, delegationNft: { __typename?: 'Nft', cid: number, nftId: number, mintTime?: string | null }, withdrawalNft?: { __typename?: 'Nft', cid: number, nftId: number } | null, account: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null, basePool?: { __typename?: 'BasePool', id: string } | null } };
+type DelegationCommonFragment = { __typename?: 'Delegation', id: string, shares: string, value: string, cost: string, withdrawalStartTime?: string | null, withdrawingShares: string, withdrawingValue: string, basePool: { __typename?: 'BasePool', id: string, kind: BasePoolKind, freeValue: string, sharePrice: string, aprMultiplier: string, withdrawingShares: string, owner: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null } }, delegationNft: { __typename?: 'Nft', cid: number, nftId: number, mintTime?: string | null }, withdrawalNft?: { __typename?: 'Nft', cid: number, nftId: number } | null, account: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null, basePool?: { __typename?: 'BasePool', id: string } | null } };
 
 type DelegationByIdQueryVariables = Exact<{
   id: Scalars['String'];
@@ -2912,7 +3002,7 @@ type DelegationByIdQueryVariables = Exact<{
 }>;
 
 
-type DelegationByIdQuery = { __typename?: 'Query', delegationById?: { __typename?: 'Delegation', id: string, shares: string, value: string, cost: string, withdrawalStartTime?: string | null, withdrawingShares: string, withdrawingValue: string, snapshots: Array<{ __typename?: 'DelegationSnapshot', cost: string, value: string, updatedTime: string }>, basePool: { __typename?: 'BasePool', id: string, kind: BasePoolKind, freeValue: string, sharePrice: string, aprMultiplier: string, withdrawingShares: string }, delegationNft: { __typename?: 'Nft', cid: number, nftId: number, mintTime?: string | null }, withdrawalNft?: { __typename?: 'Nft', cid: number, nftId: number } | null, account: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null, basePool?: { __typename?: 'BasePool', id: string } | null } } | null };
+type DelegationByIdQuery = { __typename?: 'Query', delegationById?: { __typename?: 'Delegation', id: string, shares: string, value: string, cost: string, withdrawalStartTime?: string | null, withdrawingShares: string, withdrawingValue: string, snapshots: Array<{ __typename?: 'DelegationSnapshot', cost: string, value: string, updatedTime: string }>, basePool: { __typename?: 'BasePool', id: string, kind: BasePoolKind, freeValue: string, sharePrice: string, aprMultiplier: string, withdrawingShares: string, owner: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null } }, delegationNft: { __typename?: 'Nft', cid: number, nftId: number, mintTime?: string | null }, withdrawalNft?: { __typename?: 'Nft', cid: number, nftId: number } | null, account: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null, basePool?: { __typename?: 'BasePool', id: string } | null } } | null };
 
 type DelegationsConnectionQueryVariables = Exact<{
   orderBy: Array<DelegationOrderByInput> | DelegationOrderByInput;
@@ -2923,7 +3013,7 @@ type DelegationsConnectionQueryVariables = Exact<{
 }>;
 
 
-type DelegationsConnectionQuery = { __typename?: 'Query', delegationsConnection: { __typename?: 'DelegationsConnection', totalCount: number, edges: Array<{ __typename?: 'DelegationEdge', cursor: string, node: { __typename?: 'Delegation', id: string, shares: string, value: string, cost: string, withdrawalStartTime?: string | null, withdrawingShares: string, withdrawingValue: string, snapshots: Array<{ __typename?: 'DelegationSnapshot', cost: string, value: string, updatedTime: string }>, basePool: { __typename?: 'BasePool', id: string, kind: BasePoolKind, freeValue: string, sharePrice: string, aprMultiplier: string, withdrawingShares: string }, delegationNft: { __typename?: 'Nft', cid: number, nftId: number, mintTime?: string | null }, withdrawalNft?: { __typename?: 'Nft', cid: number, nftId: number } | null, account: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null, basePool?: { __typename?: 'BasePool', id: string } | null } } }>, pageInfo: { __typename?: 'PageInfo', endCursor: string, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string } } };
+type DelegationsConnectionQuery = { __typename?: 'Query', delegationsConnection: { __typename?: 'DelegationsConnection', totalCount: number, edges: Array<{ __typename?: 'DelegationEdge', cursor: string, node: { __typename?: 'Delegation', id: string, shares: string, value: string, cost: string, withdrawalStartTime?: string | null, withdrawingShares: string, withdrawingValue: string, snapshots: Array<{ __typename?: 'DelegationSnapshot', cost: string, value: string, updatedTime: string }>, basePool: { __typename?: 'BasePool', id: string, kind: BasePoolKind, freeValue: string, sharePrice: string, aprMultiplier: string, withdrawingShares: string, owner: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null } }, delegationNft: { __typename?: 'Nft', cid: number, nftId: number, mintTime?: string | null }, withdrawalNft?: { __typename?: 'Nft', cid: number, nftId: number } | null, account: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null, basePool?: { __typename?: 'BasePool', id: string } | null } } }>, pageInfo: { __typename?: 'PageInfo', endCursor: string, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string } } };
 
 type DelegationSnapshotsConnectionQueryVariables = Exact<{
   orderBy: Array<DelegationSnapshotOrderByInput> | DelegationSnapshotOrderByInput;
@@ -2938,7 +3028,7 @@ type DelegationSnapshotsConnectionQuery = { __typename?: 'Query', delegationSnap
 type GlobalStateQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-type GlobalStateQuery = { __typename?: 'Query', squidStatus?: { __typename?: 'SquidStatus', height?: number | null } | null, globalStateById?: { __typename?: 'GlobalState', averageBlockTime: number, averageAprMultiplier: string, height: number, totalValue: string, idleWorkerShares: string } | null };
+type GlobalStateQuery = { __typename?: 'Query', squidStatus?: { __typename?: 'SquidStatus', height?: number | null } | null, globalStateById?: { __typename?: 'GlobalState', averageBlockTime: number, averageAprMultiplier: string, height: number, totalValue: string, idleWorkerShares: string, budgetPerBlock: string, k: string, phaRate: string, re: string, treasuryRatio: string, vMax: string } | null };
 
 type IdleWorkerCountQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -3031,6 +3121,11 @@ export const BasePoolCommonFragmentDoc = gql`
     claimableOwnerShares
     lastSharePriceCheckpoint
   }
+  whitelists(where: {account: {id_eq: $accountId}}, limit: 1) {
+    account {
+      id
+    }
+  }
 }
     `;
 export const DelegationCommonFragmentDoc = gql`
@@ -3042,6 +3137,11 @@ export const DelegationCommonFragmentDoc = gql`
     sharePrice
     aprMultiplier
     withdrawingShares
+    owner {
+      id
+      identityDisplay
+      identityLevel
+    }
   }
   id
   shares
@@ -3119,11 +3219,6 @@ export const DelegationCommonFragmentDoc = gql`
     query BasePoolById($id: String!, $accountId: String) {
   basePoolById(id: $id) {
     ...BasePoolCommon
-    whitelists(where: {account: {id_eq: $accountId}}, limit: 1) {
-      account {
-        id
-      }
-    }
   }
 }
     ${BasePoolCommonFragmentDoc}`;
@@ -3145,11 +3240,6 @@ export const DelegationCommonFragmentDoc = gql`
     edges {
       node {
         ...BasePoolCommon
-        whitelists(where: {account: {id_eq: $accountId}}, limit: 1) {
-          account {
-            id
-          }
-        }
         delegations(where: {account: {id_eq: $accountId}}, limit: 1) {
           value
         }
@@ -3198,7 +3288,7 @@ export const DelegationCommonFragmentDoc = gql`
 }
     `;
  const BasePoolSnapshotsConnectionDocument = gql`
-    query BasePoolSnapshotsConnection($orderBy: [BasePoolSnapshotOrderByInput!]!, $after: String, $first: Int, $where: BasePoolSnapshotWhereInput) {
+    query BasePoolSnapshotsConnection($orderBy: [BasePoolSnapshotOrderByInput!]!, $after: String, $first: Int, $where: BasePoolSnapshotWhereInput, $withApr: Boolean = false, $withCommission: Boolean = false, $withTotalValue: Boolean = false, $withDelegatorCount: Boolean = false, $withWorkerCount: Boolean = false, $withStakePoolCount: Boolean = false) {
   basePoolSnapshotsConnection(
     orderBy: $orderBy
     after: $after
@@ -3208,7 +3298,13 @@ export const DelegationCommonFragmentDoc = gql`
     edges {
       node {
         updatedTime
-        apr
+        apr @include(if: $withApr)
+        commission @include(if: $withCommission)
+        totalValue @include(if: $withTotalValue)
+        delegatorCount @include(if: $withDelegatorCount)
+        workerCount @include(if: $withWorkerCount)
+        idleWorkerCount @include(if: $withWorkerCount)
+        stakePoolCount @include(if: $withStakePoolCount)
       }
       cursor
     }
@@ -3288,6 +3384,12 @@ export const DelegationCommonFragmentDoc = gql`
     height
     totalValue
     idleWorkerShares
+    budgetPerBlock
+    k
+    phaRate
+    re
+    treasuryRatio
+    vMax
   }
 }
     `;

@@ -1,8 +1,7 @@
 import {subsquidClient} from '@/lib/graphql'
 import {useGlobalStateQuery} from '@/lib/subsquidQuery'
-import type Decimal from 'decimal.js'
+import Decimal from 'decimal.js'
 import {useCallback} from 'react'
-import useTokenomicParameters from './useTokenomicParameters'
 
 const ONE_YEAR = 365 * 24 * 60 * 60 * 1000
 
@@ -10,9 +9,8 @@ const useGetApr = (): ((
   aprMultiplier: string | Decimal
 ) => Decimal | undefined) => {
   const {data: globalStateData} = useGlobalStateQuery(subsquidClient, {})
-  const tokenomicParameters = useTokenomicParameters()
 
-  const {averageBlockTime, idleWorkerShares} =
+  const {averageBlockTime, idleWorkerShares, budgetPerBlock, treasuryRatio} =
     globalStateData?.globalStateById ?? {}
 
   return useCallback(
@@ -20,19 +18,19 @@ const useGetApr = (): ((
       if (
         averageBlockTime === undefined ||
         idleWorkerShares === undefined ||
-        tokenomicParameters === undefined
+        budgetPerBlock === undefined ||
+        treasuryRatio === undefined
       ) {
         return
       }
-      const {budgetPerBlock, treasuryRatio} = tokenomicParameters
-      return budgetPerBlock
-        .times(treasuryRatio.negated().add(1))
+      return new Decimal(budgetPerBlock)
+        .times(new Decimal(1).minus(treasuryRatio))
         .times(ONE_YEAR)
         .div(averageBlockTime)
         .div(idleWorkerShares)
         .times(aprMultiplier)
     },
-    [averageBlockTime, tokenomicParameters, idleWorkerShares]
+    [averageBlockTime, idleWorkerShares, budgetPerBlock, treasuryRatio]
   )
 }
 

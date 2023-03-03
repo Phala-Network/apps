@@ -1,11 +1,10 @@
 import useGetApr from '@/hooks/useGetApr'
+import compactFormat from '@/lib/compactFormat'
 import {subsquidClient} from '@/lib/graphql'
 import {useDelegationsConnectionQuery} from '@/lib/subsquidQuery'
 import {colors} from '@/lib/theme'
-import {Paper, Typography} from '@mui/material'
-import {toCurrency} from '@phala/util'
 import Decimal from 'decimal.js'
-import {useMemo, type FC, type ReactElement} from 'react'
+import {useMemo, type FC} from 'react'
 import {
   CartesianGrid,
   ResponsiveContainer,
@@ -17,7 +16,7 @@ import {
   ZAxis,
 } from 'recharts'
 import Empty from './Empty'
-import Property from './Property'
+import RechartsTooltip from './RechartsTooltip'
 
 interface ChartData {
   name: string
@@ -25,35 +24,9 @@ interface ChartData {
   apr: number | undefined
 }
 
-const CustomTooltip = ({
-  payload,
-}: {
-  payload?: Array<{
-    name: string
-    payload: {name: string}
-    value: number | string
-    unit: string
-  }>
-}): ReactElement | null => {
-  if (payload?.[0] != null) {
-    return (
-      <Paper sx={{p: 1}}>
-        <Typography variant="subtitle2">{payload[0].payload.name}</Typography>
-        {payload.map(({name, value, unit}) => (
-          <Property fullWidth size="small" label={name} key={name}>{`${
-            name === 'Value' ? toCurrency(value) : value
-          }${name === 'Value' ? ' PHA' : unit}`}</Property>
-        ))}
-      </Paper>
-    )
-  }
-
-  return null
-}
-
 const DelegationScatterChart: FC<{address?: string}> = ({address}) => {
   const getApr = useGetApr()
-  const {data, isLoading} = useDelegationsConnectionQuery(
+  const {data} = useDelegationsConnectionQuery(
     subsquidClient,
     {
       orderBy: 'value_DESC',
@@ -91,7 +64,9 @@ const DelegationScatterChart: FC<{address?: string}> = ({address}) => {
   const hasDelegation =
     chartData.vault.length !== 0 || chartData.stakePool.length !== 0
 
-  if (isLoading) return null
+  if (data == null) {
+    return null
+  }
 
   return (
     <>
@@ -104,13 +79,9 @@ const DelegationScatterChart: FC<{address?: string}> = ({address}) => {
               type="number"
               dataKey="value"
               name="Value"
+              unit=" PHA"
               tickLine={false}
-              tickFormatter={(value) =>
-                Intl.NumberFormat('en-US', {
-                  notation: 'compact',
-                  maximumFractionDigits: 0,
-                }).format(value)
-              }
+              tickFormatter={(value) => compactFormat(value, 0)}
               domain={[0, (dataMax: number) => dataMax * 1.05]}
             />
             <YAxis
@@ -123,12 +94,9 @@ const DelegationScatterChart: FC<{address?: string}> = ({address}) => {
               domain={[0, (dataMax: number) => Math.ceil(dataMax) + 2]}
             />
             <ZAxis range={[120, 120]} />
-            <Scatter data={chartData.vault} fill={colors.vault[400]}></Scatter>
-            <Scatter
-              data={chartData.stakePool}
-              fill={colors.main[300]}
-            ></Scatter>
-            <Tooltip isAnimationActive={false} content={<CustomTooltip />} />
+            <Scatter data={chartData.vault} fill={colors.vault[400]} />
+            <Scatter data={chartData.stakePool} fill={colors.main[300]} />
+            <Tooltip isAnimationActive={false} content={<RechartsTooltip />} />
           </ScatterChart>
         </ResponsiveContainer>
       ) : (
