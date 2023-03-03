@@ -114,7 +114,7 @@ const DelegationChart: FC<{
           tickLine={false}
           name="Value"
           domain={['auto', 'auto']}
-          tickFormatter={compactFormat}
+          tickFormatter={(value) => compactFormat(value, 1)}
         />
         <YAxis
           width={45}

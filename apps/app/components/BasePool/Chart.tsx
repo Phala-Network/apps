@@ -169,7 +169,11 @@ const BasePoolChart: FC<{
               ? [0, (dataMax: number) => Math.ceil(dataMax)]
               : ['auto', 'auto']
           }
-          tickFormatter={isPercentage || isInteger ? undefined : compactFormat}
+          tickFormatter={
+            isPercentage || isInteger
+              ? undefined
+              : (value) => compactFormat(value, 1)
+          }
         />
         <Tooltip isAnimationActive={false} content={<RechartsTooltip />} />
         <Area

@@ -110,7 +110,7 @@ const HorizonCard: FC<{
             <Identity {...basePool.owner} />
           </Stack>
         </Stack>
-        <Stack direction="row" spacing={{xs: 1, md: 2}}>
+        <Stack direction="row" spacing={{xs: 1, md: 2}} alignItems="center">
           <Property label="Value" sx={{width: 130}}>{`${toCurrency(
             value
           )} PHA`}</Property>
