@@ -30,4 +30,4 @@ export const basePoolMinWorkersAtom = atomWithStorage<string>(
   ''
 )
 
-export const wikiExpandAtom = atom<string | null>(null)
+export const wikiExpandEntryAtom = atom<string | null>(null)

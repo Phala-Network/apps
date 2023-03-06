@@ -1,24 +1,8 @@
 import {wikiDialogOpenAtom} from '@/store/ui'
-import {
-  Dialog,
-  DialogContent,
-  Slide,
-  useMediaQuery,
-  useTheme,
-} from '@mui/material'
-import {type TransitionProps} from '@mui/material/transitions'
+import {Dialog, DialogContent, useMediaQuery, useTheme} from '@mui/material'
 import {useAtom} from 'jotai'
-import {forwardRef, type FC, type Ref} from 'react'
+import {type FC} from 'react'
 import Wiki from '.'
-
-const Transition = forwardRef(function Transition(
-  props: TransitionProps & {
-    children: React.ReactElement
-  },
-  ref: Ref<unknown>
-) {
-  return <Slide direction="up" ref={ref} {...props} />
-})
 
 const WikiDialog: FC = () => {
   const [open, setOpen] = useAtom(wikiDialogOpenAtom)
@@ -27,22 +11,12 @@ const WikiDialog: FC = () => {
 
   return (
     <Dialog
-      {...(fullScreen
-        ? {fullScreen: true}
-        : {
-            maxWidth: 'md',
-            fullWidth: true,
-          })}
-      TransitionComponent={Transition}
+      {...(fullScreen ? {fullScreen: true} : {maxWidth: 'md', fullWidth: true})}
       open={open}
       onClose={() => {
         setOpen(false)
       }}
-      PaperProps={{
-        sx: {
-          height: '100vh',
-        },
-      }}
+      PaperProps={{sx: {height: fullScreen ? undefined : '500px'}}}
     >
       <DialogContent>
         <Wiki></Wiki>

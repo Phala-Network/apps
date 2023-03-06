@@ -15,12 +15,13 @@ import {addDays} from 'date-fns'
 import Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
 import {useMemo, type FC} from 'react'
+import WikiButton from './Wiki/Button'
 
 interface CirculationData {
   data?: {circulations?: {nodes?: [{amount: string}?]}}
 }
 
-const NetworkOverview: FC = () => {
+const NetworkStats: FC = () => {
   const getApr = useGetApr()
   const yesterday = useSWRValue(() => addDays(new Date(), -1).toISOString())
   const [chain] = useAtom(chainAtom)
@@ -67,16 +68,19 @@ const NetworkOverview: FC = () => {
     const count = idleWorkerCountData?.sessionsConnection.totalCount
     return typeof count === 'number' && compactFormat(count)
   }, [idleWorkerCountData])
-  const items = useMemo<Array<[string, string | false | undefined]>>(() => {
+  const items = useMemo<
+    Array<[string, string | false | undefined, string | undefined]>
+  >(() => {
     return [
       [
         'Total Value',
         totalValue !== undefined && compactFormat(new Decimal(totalValue)),
+        'totalValue',
       ],
-      ['Stake Ratio', stakeRatio],
-      ['Daily Rewards', dailyRewards],
-      ['Avg APR', avgApr],
-      ['Online Workers', idleWorkerCount],
+      ['Stake Ratio', stakeRatio, 'stakeRatio'],
+      ['Daily Rewards', dailyRewards, 'dailyRewards'],
+      ['Avg APR', avgApr, 'avgApr'],
+      ['Online Workers', idleWorkerCount, 'onlineWorkers'],
     ]
   }, [stakeRatio, totalValue, dailyRewards, avgApr, idleWorkerCount])
 
@@ -88,17 +92,30 @@ const NetworkOverview: FC = () => {
         spacing={2}
         divider={<Divider orientation="vertical" flexItem />}
       >
-        {items.map(([label, value]) => (
-          <Box key={label} flexShrink={0}>
-            <Typography variant="subtitle2" component="div">
+        {items.map(([label, value, wikiEntry]) => {
+          const title = (
+            <Typography
+              variant="subtitle2"
+              component="div"
+              color="text.secondary"
+            >
               {label}
             </Typography>
+          )
+          return (
+            <Box key={label} flexShrink={0}>
+              {wikiEntry == null ? (
+                title
+              ) : (
+                <WikiButton entry={wikiEntry}>{title}</WikiButton>
+              )}
 
-            <Typography variant="num3" component="div" color="primary">
-              {value ?? <Skeleton width={80} />}
-            </Typography>
-          </Box>
-        ))}
+              <Typography variant="num3" component="div" color="primary">
+                {value ?? <Skeleton width={80} />}
+              </Typography>
+            </Box>
+          )
+        })}
       </Stack>
       <Stack
         display={{sm: 'none', xs: 'flex'}}
@@ -115,10 +132,14 @@ const NetworkOverview: FC = () => {
             flexShrink={0}
             alignItems="baseline"
           >
-            <Typography variant="subtitle2" component="div">
+            <Typography
+              variant="subtitle2"
+              component="div"
+              color="text.secondary"
+            >
               {label}
             </Typography>
-            <Typography variant="num6" component="div" color="primary">
+            <Typography variant="num5" component="div" color="primary">
               {value ?? <Skeleton width={32} />}
             </Typography>
           </Stack>
@@ -128,4 +149,4 @@ const NetworkOverview: FC = () => {
   )
 }
 
-export default NetworkOverview
+export default NetworkStats

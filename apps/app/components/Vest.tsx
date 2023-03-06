@@ -56,7 +56,7 @@ const Vest: FC<{onClose: () => void}> = ({onClose}) => {
 
   return (
     <>
-      <DialogTitle>Claim PHA</DialogTitle>
+      <DialogTitle>Claim Crowdloan Reward</DialogTitle>
       <DialogContent>
         <Stack spacing={1}>
           <Property label="Unlocked" size="small">

@@ -7,7 +7,7 @@ const WikiPage: NextPage = () => {
   return (
     <Container maxWidth="lg" sx={{p: 0}}>
       <PageHeader title="Wiki"></PageHeader>
-      <Wiki></Wiki>
+      <Wiki defaultExpanded></Wiki>
     </Container>
   )
 }

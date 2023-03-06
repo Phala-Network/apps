@@ -271,7 +271,7 @@ const ClaimMissingDelegatorRewards: NextPage = () => {
                     <Typography variant="body1">{`#${row.pid}`}</Typography>
                   </TableCell>
                   <TableCell>
-                    <Typography variant="num6">
+                    <Typography variant="num5">
                       {`${toCurrency(row.amount)} PHA`}
                     </Typography>
                   </TableCell>

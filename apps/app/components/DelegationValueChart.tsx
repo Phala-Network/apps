@@ -97,7 +97,7 @@ const DelegationValueChart: FC<{address?: string; days: number}> = ({
           dataKey="value"
           name="Value"
           tickLine={false}
-          tickFormatter={compactFormat}
+          tickFormatter={(value) => compactFormat(value, 2)}
         />
         <Tooltip isAnimationActive={false} content={<RechartsTooltip />} />
         <Area

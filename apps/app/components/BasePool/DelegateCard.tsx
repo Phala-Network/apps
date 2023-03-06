@@ -111,7 +111,7 @@ const DelegateCard: FC<{
                 }}
                 color="inherit"
                 lineHeight={1.3}
-                variant="num4"
+                variant="num3"
                 href={getPoolPath(basePool.kind, basePool.id)}
                 target="_blank"
                 rel="noopener"
@@ -124,7 +124,11 @@ const DelegateCard: FC<{
           </Stack>
           <Stack direction="row" spacing={2}>
             {stakePool != null && (
-              <Property label="Est. APR" sx={{width: 64, flexShrink: '0'}}>
+              <Property
+                label="Est. APR"
+                sx={{width: 80, flexShrink: '0'}}
+                wikiEntry="delegable"
+              >
                 {apr != null ? (
                   <Box component="span" color={colors.main[300]}>
                     {toPercentage(apr)}
@@ -135,14 +139,22 @@ const DelegateCard: FC<{
               </Property>
             )}
             {stakePool != null && (
-              <Property label="Delegable" sx={{width: 140}}>
+              <Property
+                label="Delegable"
+                sx={{width: 140}}
+                wikiEntry="delegable"
+              >
                 {stakePool.delegable != null
                   ? `${toCurrency(stakePool.delegable)} PHA`
                   : '∞'}
               </Property>
             )}
             {vault != null && (
-              <Property label="Est. APY" sx={{width: 64, flexShrink: '0'}}>
+              <Property
+                label="Est. APY"
+                sx={{width: 80, flexShrink: '0'}}
+                wikiEntry="estApr"
+              >
                 {apr != null ? (
                   <Box component="span" color={colors.vault[400]}>
                     {toPercentage(aprToApy(apr))}
@@ -153,7 +165,7 @@ const DelegateCard: FC<{
               </Property>
             )}
             {vault != null && (
-              <Property label="TVL" sx={{width: 150}}>
+              <Property label="TVL" sx={{width: 150}} wikiEntry="tvl">
                 {`${toCurrency(basePool.totalValue)} PHA`}
               </Property>
             )}

@@ -1,0 +1,100 @@
+{
+  "balance": {
+    "title": "Balance",
+    "content": "Balance = PHA (Free status) + PHA (locked by governance)\nThe locked balance cannot be used for staking."
+  },
+  "delegation": {
+    "title": "Delegation",
+    "content": "Delegation is the total value of all assets you have delegated, including the total value of delegation NFTs and the wPHA assets in your account. wPHA can be directly delegated into the pools to generate profitable delegation NFTs."
+  },
+
+  "totalValue": {
+    "title": "Total Value",
+    "content": "All delegated PHA across the network"
+  },
+  "stakeRatio": {
+    "title": "Stake Ratio",
+    "content": "Stake Ratio = All delegated PHA across the network / All circulating PHA."
+  },
+  "dailyRewards": {
+    "title": "Daily Rewards",
+    "content": "The total amount of computation rewards distributed across the network in the past 24 hours (refreshed hourly)."
+  },
+  "avgApr": {
+    "title": "Avg APR",
+    "content": "The average annual percentage rate of return for all delegations across the network. (no consideration of compound interest)"
+  },
+  "onlineWorkers": {
+    "title": "Online Workers",
+    "content": "The total number of online workers across the network."
+  },
+
+  "delegationValue": {
+    "title": "Delegation Value",
+    "content": "The trend of your delegation value over time, with a daily snapshot taken at UTC 0:00."
+  },
+  "estApr": {
+    "title": "EST. APR/APY",
+    "content": "APR: Estimated APR for Delegators on this pool without compound interests.\nNote: This APR is based on the pool’s real-time status, extrapolated over a year. The APR could change based on factors such as the pool’s commission, worker’s scores, and daily rewards\n\nAPY: Estimated APY for Delegators on this pool with daily compound interests.\nNote: This APY is based on the pool’s real-time status, extrapolated over a year. The APY could change based on factors such as Vault’s commission and related StakePools’ APR, which this vault delegated with.\n\nWhy does Vault use APY while StakePool uses APR to measure returns?\nThe Vault owner will generate income from the reinvested interest through manual scheduling, so the income of the Vault is closer to APY. However, the reinvestment income of StakePool is easier to reach the upper limit, so it is more accurate to use APR."
+  },
+  "wrappedPHA": {
+    "title": "Wrapped PHA",
+    "content": "wPHA is used to contribute to StakePool or Vault to obtain Delegation NFT and earns delegation rewards. Here is the wPHA amount in your address. It can be exchanged for PHA via an on-chain pallet automatically. wPHA can be directly delegated into the Vault or StakePool."
+  },
+
+  "vault": {
+    "title": "Vault",
+    "content": "Vault is a function designed for delegation proxy. Vaults are pools of funds with an associated strategy that aims to maximize returns on the assets they hold.\nDelegators can also skip Vault and delegate to StakePool directly."
+  },
+  "stakePool": {
+    "title": "StakePool",
+    "content": "StakePool is a container for computing providers to manage their workers staking and also serves as a fund pool for collecting delegated tokens from delegators. Delegators or Vaults can delegate their tokens into StakePool. Computing providers add their workers to StakePool and stake them using the tokens delegated by users, starting to provide computing power."
+  },
+
+  "basePoolStatus": {
+    "title": "Pool Status",
+    "content": "Verified\nKhala's on-chain verification function. Each user can set a nickname for their address, The address with a check mark after the nickname is the address confirmed by the Khala registrar, including its email, Twitter, and other related contacts. This does not mean that the verified address is more advanced or more credible; please note that certification does not represent any financial recommendation.\n\nFavorite\nClick the star on the left side of the pool card to add the pool to your favorites. Note that this is stored locally and will not be inherited if you change browsers or devices.\n\nDelegated\nPools where you currently hold Delegation NFTs.\n\nHide closed\nIf selected, you will not be able to see pools that have been whitelisted (if you are not on the whitelist)."
+  },
+
+  "tvl": {
+    "title": "TVL",
+    "content": "Total Value Locked in the pool includes the tokens already delegated by the Vault to the StakePool, as well as the liquid funds still held within the Vault."
+  },
+  "freeValue": {
+    "title": "Vault's Free",
+    "content": "Liquid funds held within the Vault/StakePool."
+  },
+  "commission": {
+    "title": "Commission",
+    "content": "The percentage of earnings collected by the pool operator from the pool."
+  },
+  "withdrawing": {
+    "title": "Withdrawing",
+    "content": "Vault:\nThe total amount of withdrawals requested by Vault users in the withdrawal queue. The withdrawal queue is subject to changes due to new delegates and withdrawal operations. The rewards automatically reinvested into the pool will be first deposited into the Free delegation and will not be used to automatically clear the withdrawal queue. Users need to manually “reclaim” their delegation or wait for new stake and withdrawal operations to clear the withdrawal by exsiting free delegation.\n\nStakePool:\nThe total amount of withdrawals requested by by StakePool users, including user withdrawals and withdrawals from the Vault to the StakePool. The withdrawal queue is subject to changes due to new delegates and withdrawal operations. The rewards automatically reinvested into the pool are first deposited into the Free delegation and will not be used to automatically clear withdrawals.Users need to manually “reclaim” their delegation or wait for new stake and withdrawal operations to clear the withdrawal by exsiting free delegation."
+  },
+  "price": {
+    "title": "Price",
+    "content": "Price = TVL / total shares held by users in the pool\nThe price may vary across different pools and is subject to increase with reward distribution and decrease with slashing. It will not change due to delegate or withdrawal operations.\nDetails: **[https://wiki.phala.network/en-us/general/applications/share/](https://wiki.phala.network/en-us/general/applications/share/)**"
+  },
+  "delegableBalance": {
+    "title": "Delegable balance",
+    "content": "The total amount of assets available for delegation, including unlocked PHA balance and all wPHA assets held. The wPHA assets locked from voting can also be used for delegation."
+  },
+  "estDelegatedApr": {
+    "title": "Est. delegated APY/APR",
+    "content": "The estimated annual percentage yield of the pool after you delegate the expected amount, assuming no further action by the owner. If there is significant changes in yield, it is recommended to contact the pool operator before your delegate operation."
+  },
+
+  "delegable": {
+    "title": "StakePool Delegable",
+    "content": "The maximum amount of PHA that can be extra added to the pool as a delegation.\ndelegable amount = cap - total delegation + withdrawing\nIf the cap is smaller than the pool's total delegation, the pool cannot accept any more delegation regardless of the withdrawal amount."
+  },
+  "capacity": {
+    "title": "Capacity",
+    "content": "The maximum amount of PHA that a pool can accept as delegation. If the total delegation exceeds the cap, the pool cannot accept any more delegation. This does not affect the automatic reinvestment of rewards."
+  },
+  "totalDelegation": {
+    "title": "Total Delegation",
+    "content": "The sum of all PHA delegated to a pool, including the tokens that the StakePool has delegated to Workers and the funds that are still in the StakePool."
+  }
+}

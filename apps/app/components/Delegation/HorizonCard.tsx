@@ -99,7 +99,7 @@ const HorizonCard: FC<{
                 e.stopPropagation()
               }}
               color="inherit"
-              variant="num4"
+              variant="num3"
               href={getPoolPath(basePool.kind, basePool.id)}
               target="_blank"
               rel="noopener"
@@ -129,7 +129,7 @@ const HorizonCard: FC<{
                   sx={{mx: '-3px', transform: `translate(0, 2px)`}}
                 />
 
-                <Typography variant="num6">
+                <Typography variant="num5">
                   {`${toCurrency(profit)} PHA`}
                 </Typography>
               </Stack>

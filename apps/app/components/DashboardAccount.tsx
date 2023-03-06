@@ -29,12 +29,13 @@ import dynamic from 'next/dynamic'
 import {useRouter} from 'next/router'
 import {useSnackbar} from 'notistack'
 import {type FC} from 'react'
+import WikiButton from './Wiki/Button'
 
 const BalanceBox = styled(Box)(({theme}) =>
   theme.unstable_sx({
     flex: 1,
     background: colors.main[500],
-    padding: {xs: 1, sm: 2},
+    padding: {xs: 1, sm: 1.5},
     borderRadius: '2px',
   })
 )
@@ -152,13 +153,16 @@ const DashboardAccount: FC = () => {
 
         <Stack spacing={{xs: 2, md: 2.5}} direction="row" mt={{xs: 2, md: 2.5}}>
           <BalanceBox>
-            <Typography
-              variant="subtitle1"
-              color="text.secondary"
-              lineHeight={1}
-            >
-              Balance
-            </Typography>
+            <WikiButton entry="balance">
+              <Typography
+                variant="subtitle1"
+                color="text.secondary"
+                lineHeight={1}
+              >
+                Balance
+              </Typography>
+            </WikiButton>
+
             <Typography variant="num3" mt={1} component="div" lineHeight={1}>
               {account != null ? (
                 freeBalance != null ? (
@@ -186,13 +190,15 @@ const DashboardAccount: FC = () => {
           >
             <Stack direction="row" alignItems="center">
               <Box>
-                <Typography
-                  variant="subtitle1"
-                  color="text.secondary"
-                  lineHeight={1}
-                >
-                  Delegation
-                </Typography>
+                <WikiButton entry="delegation">
+                  <Typography
+                    variant="subtitle1"
+                    color="text.secondary"
+                    lineHeight={1}
+                  >
+                    Delegation
+                  </Typography>
+                </WikiButton>
                 <Typography
                   variant="num3"
                   mt={1}

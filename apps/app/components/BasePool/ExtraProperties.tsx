@@ -9,17 +9,22 @@ const ExtraProperties: FC<{basePool: BasePoolCommonFragment; sx?: SxProps}> = ({
   basePool,
   sx,
 }) => {
-  const entries = useMemo<Array<[string, ReactNode]>>(() => {
+  const entries = useMemo<
+    Array<[string, ReactNode] | [string, ReactNode, string]>
+  >(() => {
     const {vault, stakePool} = basePool
 
-    const entries: Array<[string, ReactNode] | false> = [
+    const entries: Array<
+      [string, ReactNode] | [string, ReactNode, string] | false
+    > = [
       stakePool != null && [
         'Capacity',
         stakePool.capacity != null
           ? `${toCurrency(stakePool.capacity)} PHA`
           : '∞',
+        'capacity',
       ],
-      ['Commission', toPercentage(basePool.commission)],
+      ['Commission', toPercentage(basePool.commission), 'commission'],
       stakePool != null && [
         'Workers',
         <>
@@ -34,15 +39,25 @@ const ExtraProperties: FC<{basePool: BasePoolCommonFragment; sx?: SxProps}> = ({
       stakePool != null && [
         'Delegation',
         `${toCurrency(basePool.totalValue)} PHA`,
+        'totalDelegation',
       ],
-      ['Free', `${toCurrency(Decimal.max(basePool.freeValue, 0))} PHA`],
-      ['Withdrawing', `${toCurrency(basePool.withdrawingValue)} PHA`],
+      [
+        'Free',
+        `${toCurrency(Decimal.max(basePool.freeValue, 0))} PHA`,
+        'freeValue',
+      ],
+      [
+        'Withdrawing',
+        `${toCurrency(basePool.withdrawingValue)} PHA`,
+        'withdrawing',
+      ],
       [
         'Price',
         `${toCurrency(
           new Decimal(basePool.sharePrice).toDP(6, Decimal.ROUND_HALF_UP),
           6
         )} PHA`,
+        'price',
       ],
     ]
 
@@ -62,8 +77,14 @@ const ExtraProperties: FC<{basePool: BasePoolCommonFragment; sx?: SxProps}> = ({
         <Stack flex="1 0" spacing={0.5} key={i}>
           {entries
             .slice(i * count, (i + 1) * count)
-            .map(([label, value]: [string, ReactNode]) => (
-              <Property size="small" label={label} key={label} fullWidth>
+            .map(([label, value, wikiEntry]) => (
+              <Property
+                size="small"
+                label={label}
+                key={label}
+                fullWidth
+                wikiEntry={wikiEntry}
+              >
                 {value}
               </Property>
             ))}

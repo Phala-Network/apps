@@ -41,6 +41,7 @@ import {getDecimalPattern} from '@phala/util'
 import {useAtom} from 'jotai'
 import {useCallback, useEffect, useState, type FC} from 'react'
 import {useInView} from 'react-intersection-observer'
+import WikiButton from '../Wiki/Button'
 import ClaimDelegation from './ClaimDelegation'
 import ClaimReward from './ClaimReward'
 import DelegateCard from './DelegateCard'
@@ -252,9 +253,11 @@ const BasePoolList: FC<{
 
   const filters = variant === 'delegate' && (
     <Stack spacing={2} pr={5}>
-      <Typography variant="h5" component="div">
-        Status
-      </Typography>
+      <WikiButton entry="basePoolStatus">
+        <Typography variant="h5" component="div">
+          Status
+        </Typography>
+      </WikiButton>
       <FormControlLabel
         control={
           <Checkbox
