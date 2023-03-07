@@ -45,6 +45,7 @@ import Withdraw from '../Delegation/Withdraw'
 import Empty from '../Empty'
 import PromiseButton from '../PromiseButton'
 import SectionHeader from '../SectionHeader'
+import WikiButton from '../Wiki/Button'
 import BasePoolChart, {type BasePoolChartKind} from './Chart'
 import DelegateInput from './DelegateInput'
 import ExtraProperties from './ExtraProperties'
@@ -328,13 +329,15 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
                       />
                     </Box>
                     <Stack spacing={2}>
-                      <PromiseButton
-                        color={color}
-                        onClick={reclaim}
-                        disabled={!poolHasWithdrawal}
-                      >
-                        Reclaim
-                      </PromiseButton>
+                      <WikiButton entry="reclaimPool">
+                        <PromiseButton
+                          color={color}
+                          onClick={reclaim}
+                          disabled={!poolHasWithdrawal}
+                        >
+                          Reclaim
+                        </PromiseButton>
+                      </WikiButton>
                       <Button
                         color={color}
                         onClick={() => {

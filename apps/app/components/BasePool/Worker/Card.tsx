@@ -1,6 +1,7 @@
 import WorkerIcon from '@/assets/worker.svg'
 import PromiseButton from '@/components/PromiseButton'
 import Property from '@/components/Property'
+import WikiButton from '@/components/Wiki/Button'
 import {type WorkerState} from '@/lib/subsquidQuery'
 import {
   Box,
@@ -105,11 +106,13 @@ const WorkerCard: FC<{
           alignSelf="stretch"
         >
           {session != null && (
-            <Chip
-              size="small"
-              label={workerStateLabels[session.state]}
-              sx={{color: workerStateColors[session.state]}}
-            />
+            <WikiButton entry="workerState">
+              <Chip
+                size="small"
+                label={workerStateLabels[session.state]}
+                sx={{color: workerStateColors[session.state]}}
+              />
+            </WikiButton>
           )}
           {session != null && (
             <Stack direction="row">
@@ -160,16 +163,18 @@ const WorkerCard: FC<{
                   </>
                 )}
               {session.state === 'WorkerCoolingDown' && (
-                <PromiseButton
-                  disabled={Boolean(reclaimCountdown)}
-                  variant="text"
-                  size="small"
-                  onClick={async () => {
-                    await onAction(worker, 'reclaim')
-                  }}
-                >
-                  {reclaimCountdown ?? 'Reclaim'}
-                </PromiseButton>
+                <WikiButton entry="reclaimWorker">
+                  <PromiseButton
+                    disabled={Boolean(reclaimCountdown)}
+                    variant="text"
+                    size="small"
+                    onClick={async () => {
+                      await onAction(worker, 'reclaim')
+                    }}
+                  >
+                    {reclaimCountdown ?? 'Reclaim'}
+                  </PromiseButton>
+                </WikiButton>
               )}
             </Stack>
           )}

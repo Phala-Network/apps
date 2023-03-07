@@ -1,3 +1,4 @@
+import {type WikiEntry} from '@/assets/wikiData'
 import {atom} from 'jotai'
 import {atomWithStorage} from 'jotai/utils'
 
@@ -30,4 +31,4 @@ export const basePoolMinWorkersAtom = atomWithStorage<string>(
   ''
 )
 
-export const wikiExpandEntryAtom = atom<string | null>(null)
+export const wikiExpandEntryAtom = atom<WikiEntry | null>(null)

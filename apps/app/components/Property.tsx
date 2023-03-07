@@ -1,3 +1,4 @@
+import {type WikiEntry} from '@/assets/wikiData'
 import {Stack, Typography, type SxProps} from '@mui/material'
 import {type FC, type ReactNode} from 'react'
 import WikiButton from './Wiki/Button'
@@ -8,7 +9,7 @@ const Property: FC<{
   children: ReactNode
   fullWidth?: boolean
   sx?: SxProps
-  wikiEntry?: string
+  wikiEntry?: WikiEntry
 }> = ({size = 'medium', label, children, fullWidth = false, sx, wikiEntry}) => {
   const labelNode = (
     <Typography
@@ -25,7 +26,6 @@ const Property: FC<{
     <Stack
       sx={sx}
       direction={size === 'medium' ? 'column' : 'row'}
-      overflow="hidden"
       alignItems={size === 'medium' ? 'flex-start' : 'baseline'}
       {...(fullWidth && {justifyContent: 'space-between'})}
     >
@@ -35,7 +35,13 @@ const Property: FC<{
         <WikiButton entry={wikiEntry}>{labelNode}</WikiButton>
       )}
       {size === 'medium' ? (
-        <Typography lineHeight={1.3} variant="num5" component="div" mt={0.25}>
+        <Typography
+          lineHeight={1.3}
+          variant="num5"
+          component="div"
+          mt={0.25}
+          whiteSpace="nowrap"
+        >
           {children}
         </Typography>
       ) : (
@@ -44,6 +50,7 @@ const Property: FC<{
           variant="num6"
           component="div"
           ml={0.5}
+          whiteSpace="nowrap"
           sx={{wordBreak: 'break-all'}}
         >
           {children}

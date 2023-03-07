@@ -1,3 +1,4 @@
+import {type WikiEntry} from '@/assets/wikiData'
 import useGetApr from '@/hooks/useGetApr'
 import useSWRValue from '@/hooks/useSWRValue'
 import compactFormat from '@/lib/compactFormat'
@@ -69,7 +70,7 @@ const NetworkStats: FC = () => {
     return typeof count === 'number' && compactFormat(count)
   }, [idleWorkerCountData])
   const items = useMemo<
-    Array<[string, string | false | undefined, string | undefined]>
+    Array<[string, string | false | undefined, WikiEntry]>
   >(() => {
     return [
       [

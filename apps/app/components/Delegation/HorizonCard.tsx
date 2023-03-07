@@ -111,11 +111,13 @@ const HorizonCard: FC<{
           </Stack>
         </Stack>
         <Stack direction="row" spacing={{xs: 1, md: 2}} alignItems="center">
-          <Property label="Value" sx={{width: 130}}>{`${toCurrency(
-            value
-          )} PHA`}</Property>
+          <Property
+            label="Value"
+            sx={{width: 130}}
+            wikiEntry="nftValue"
+          >{`${toCurrency(value)} PHA`}</Property>
           {profit != null && (
-            <Property label="24h" sx={{width: 120}}>
+            <Property label="24h" sx={{width: 120}} wikiEntry="oneDayRewards">
               <Stack
                 direction="row"
                 alignItems="center"
@@ -135,7 +137,11 @@ const HorizonCard: FC<{
               </Stack>
             </Property>
           )}
-          <Property label={`Est. ${isVault ? 'APY' : 'APR'}`} sx={{width: 64}}>
+          <Property
+            label={`Est. ${isVault ? 'APY' : 'APR'}`}
+            sx={{width: 80}}
+            wikiEntry="estApr"
+          >
             {apr != null ? (
               <Box
                 component="span"
@@ -147,13 +153,17 @@ const HorizonCard: FC<{
               <Skeleton width={32} />
             )}
           </Property>
-          <Property label="Pool free" sx={{width: 120}}>{`${toCurrency(
-            delegation.basePool.freeValue
-          )} PHA`}</Property>
+          <Property
+            label="Pool free"
+            sx={{width: 120}}
+            wikiEntry="freeValue"
+          >{`${toCurrency(delegation.basePool.freeValue)} PHA`}</Property>
           {hasWithdrawal && (
-            <Property label="Withdrawing" sx={{width: 120}}>{`${toCurrency(
-              withdrawingValue
-            )} PHA`}</Property>
+            <Property
+              label="Withdrawing"
+              sx={{width: 120}}
+              wikiEntry="withdrawing"
+            >{`${toCurrency(withdrawingValue)} PHA`}</Property>
           )}
         </Stack>
 

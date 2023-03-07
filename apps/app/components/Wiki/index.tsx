@@ -1,4 +1,4 @@
-import wikiEntries from '@/assets/wiki.json'
+import wikiEntries from '@/assets/wikiData'
 import {colors} from '@/lib/theme'
 import {wikiExpandEntryAtom} from '@/store/common'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
@@ -7,7 +7,6 @@ import {
   AccordionDetails,
   AccordionSummary,
   Button,
-  Paper,
   Stack,
   Typography,
   useTheme,
@@ -57,24 +56,27 @@ const Entry: FC<{
 const Wiki: FC<{defaultExpanded?: boolean}> = ({defaultExpanded}) => {
   const [expandEntry] = useAtom(wikiExpandEntryAtom)
 
-  const expand =
-    expandEntry != null
-      ? wikiEntries[expandEntry as keyof typeof wikiEntries]
-      : undefined
+  const expand = expandEntry != null ? wikiEntries[expandEntry] : undefined
 
   return (
     <>
       {expand != null && (
-        <Paper sx={{p: 2, background: colors.cardBackground}}>
-          <Typography variant="h6">{expand.title}</Typography>
+        <>
+          <Typography variant="h4">{expand.title}</Typography>
           <Typography mt={2} whiteSpace="pre-wrap" variant="body1">
             {expand.content}
           </Typography>
-        </Paper>
+        </>
       )}
 
       {expandEntry != null && (
-        <Stack justifyContent="space-between" direction="row" mt={4} mb={2}>
+        <Stack
+          justifyContent="space-between"
+          alignItems="center"
+          direction="row"
+          mt={4}
+          mb={2}
+        >
           <Typography variant="subtitle1">More</Typography>
           <Button href="/wiki" target="_blank" variant="text">
             View all

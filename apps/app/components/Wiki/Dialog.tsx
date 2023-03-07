@@ -16,7 +16,7 @@ const WikiDialog: FC = () => {
       onClose={() => {
         setOpen(false)
       }}
-      PaperProps={{sx: {height: fullScreen ? undefined : '500px'}}}
+      PaperProps={{sx: {height: fullScreen ? undefined : '700px'}}}
     >
       <DialogContent>
         <Wiki></Wiki>

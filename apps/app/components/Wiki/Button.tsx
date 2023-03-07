@@ -1,3 +1,4 @@
+import {type WikiEntry} from '@/assets/wikiData'
 import {wikiExpandEntryAtom} from '@/store/common'
 import {wikiDialogOpenAtom} from '@/store/ui'
 import InfoIcon from '@mui/icons-material/Info'
@@ -5,7 +6,7 @@ import {IconButton, Stack} from '@mui/material'
 import {useAtom} from 'jotai'
 import {type FC, type ReactNode} from 'react'
 
-const WikiButton: FC<{entry: string; children?: ReactNode}> = ({
+const WikiButton: FC<{entry: WikiEntry; children?: ReactNode}> = ({
   entry,
   children,
 }) => {

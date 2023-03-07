@@ -170,7 +170,11 @@ const FarmCard: FC<{
           </Stack>
           <Stack direction="row" spacing={2}>
             {stakePool != null && (
-              <Property label="Est. APR" sx={{width: 64, flexShrink: '0'}}>
+              <Property
+                label="Est. APR"
+                sx={{width: 80, flexShrink: '0'}}
+                wikiEntry="estApr"
+              >
                 {apr != null ? (
                   <Box component="span" color={colors.main[300]}>
                     {toPercentage(apr)}
@@ -181,19 +185,31 @@ const FarmCard: FC<{
               </Property>
             )}
             {stakePool != null && (
-              <Property label="Delegable" sx={{width: 140}}>
+              <Property
+                label="Delegable"
+                sx={{width: 140}}
+                wikiEntry="delegable"
+              >
                 {stakePool.delegable != null
                   ? `${toCurrency(stakePool.delegable)} PHA`
                   : '∞'}
               </Property>
             )}
             {stakePool != null && (
-              <Property label="Owner Reward" sx={{width: 120}}>
+              <Property
+                label="Owner Reward"
+                sx={{width: 120}}
+                wikiEntry="stakePoolOwnerRewards"
+              >
                 {`${toCurrency(stakePool.ownerReward)} PHA`}
               </Property>
             )}
             {vault != null && (
-              <Property label="Est. APY" sx={{width: 64, flexShrink: '0'}}>
+              <Property
+                label="Est. APY"
+                sx={{width: 80, flexShrink: '0'}}
+                wikiEntry="estApr"
+              >
                 {apr != null ? (
                   <Box component="span" color={colors.vault[400]}>
                     {toPercentage(aprToApy(apr))}
@@ -204,17 +220,25 @@ const FarmCard: FC<{
               </Property>
             )}
             {vault != null && (
-              <Property label="TVL" sx={{width: 150}}>
+              <Property label="TVL" sx={{width: 150}} wikiEntry="tvl">
                 {`${toCurrency(basePool.totalValue)} PHA`}
               </Property>
             )}
             {vault != null && (
-              <Property label="Owner Cut" sx={{width: 120}}>
+              <Property
+                label="Owner Cut"
+                sx={{width: 120}}
+                wikiEntry="ownerCut"
+              >
                 {`${toCurrency(getVaultOwnerCut(basePool))} PHA`}
               </Property>
             )}
             {vault != null && (
-              <Property label="Owner Reward" sx={{width: 150}}>
+              <Property
+                label="Owner Reward"
+                sx={{width: 150}}
+                wikiEntry="vaultOwnerRewards"
+              >
                 {`${toCurrency(vaultOwnerReward)} PHA`}
               </Property>
             )}

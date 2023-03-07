@@ -32,6 +32,7 @@ import {
   YAxis,
 } from 'recharts'
 import Property from '../Property'
+import WikiButton from '../Wiki/Button'
 
 interface RowModel {
   id: string
@@ -196,9 +197,11 @@ const WithdrawQueue: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
               ) : (
                 <Check fontSize="large" color="success" />
               )}
-              <Typography variant="h6" ml={1}>
-                {isInsufficient ? 'Insufficient Stake' : 'Sufficient Stake'}
-              </Typography>
+              <WikiButton entry="sufficientStake">
+                <Typography variant="h6" ml={1}>
+                  {isInsufficient ? 'Insufficient Stake' : 'Sufficient Stake'}
+                </Typography>
+              </WikiButton>
             </Stack>
             <Stack direction="row" alignItems="center" spacing={2}>
               <Property label="Total Withdraw">

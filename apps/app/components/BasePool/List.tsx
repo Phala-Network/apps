@@ -481,7 +481,7 @@ const BasePoolList: FC<{
             )}
 
             {(isLoading || hasNextPage === true) && (
-              <ListSkeleton ref={ref} height={100} />
+              <ListSkeleton ref={ref} height={82} />
             )}
           </Stack>
         </Box>

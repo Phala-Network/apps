@@ -1,3 +1,4 @@
+import {type WikiEntry} from '@/assets/wikiData'
 import Property from '@/components/Property'
 import {type BasePoolCommonFragment} from '@/lib/subsquidQuery'
 import {Box, Stack, type SxProps} from '@mui/material'
@@ -10,12 +11,12 @@ const ExtraProperties: FC<{basePool: BasePoolCommonFragment; sx?: SxProps}> = ({
   sx,
 }) => {
   const entries = useMemo<
-    Array<[string, ReactNode] | [string, ReactNode, string]>
+    Array<[string, ReactNode] | [string, ReactNode, WikiEntry]>
   >(() => {
     const {vault, stakePool} = basePool
 
     const entries: Array<
-      [string, ReactNode] | [string, ReactNode, string] | false
+      [string, ReactNode] | [string, ReactNode, WikiEntry] | false
     > = [
       stakePool != null && [
         'Capacity',
