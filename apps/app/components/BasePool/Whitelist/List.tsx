@@ -101,9 +101,7 @@ const WhitelistList: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
       </SectionHeader>
       <ThemeProvider theme={isVault ? vaultTheme : theme}>
         <DataGrid
-          components={{
-            NoRowsOverlay: () => <Empty />,
-          }}
+          components={{NoRowsOverlay: () => <Empty />}}
           sx={{
             '&,.MuiDataGrid-columnHeaders,.MuiDataGrid-cell,.MuiDataGrid-footerContainer':
               {borderColor: theme.palette.divider},
@@ -115,19 +113,19 @@ const WhitelistList: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
           }}
           loading={isLoading}
           rows={rows}
+          initialState={{pagination: {paginationModel: {pageSize: 5}}}}
           columns={columns}
-          pageSize={5}
-          rowsPerPageOptions={[5]}
+          pageSizeOptions={[5]}
           checkboxSelection={isOwner}
-          selectionModel={selectedAddress}
-          onSelectionModelChange={(selection) => {
+          rowSelectionModel={selectedAddress}
+          onRowSelectionModelChange={(selection) => {
             setSelectedAddress(selection as string[])
           }}
           autoHeight
           disableColumnMenu
           disableColumnSelector
           disableColumnFilter
-          disableSelectionOnClick
+          disableRowSelectionOnClick
         />
 
         <Dialog open={dialogOpen} onClose={onClose}>

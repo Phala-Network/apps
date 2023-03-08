@@ -1,6 +1,6 @@
 import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown'
 import {createTheme} from '@mui/material'
-import {Barlow, Montserrat, Roboto} from '@next/font/google'
+import {Barlow, Montserrat, Roboto} from 'next/font/google'
 
 export const roboto = Roboto({
   weight: ['300', '400', '500', '700'],
