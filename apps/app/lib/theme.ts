@@ -1,6 +1,6 @@
 import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown'
 import {createTheme} from '@mui/material'
-import {Barlow, Montserrat, Roboto} from '@next/font/google'
+import {Barlow, Montserrat, Roboto} from 'next/font/google'
 
 export const roboto = Roboto({
   weight: ['300', '400', '500', '700'],
@@ -65,40 +65,37 @@ export const theme = createTheme({
       fontWeight: 500,
       fontSize: '2.125rem',
     },
+    subtitle1: {fontWeight: 500},
+    subtitle2: {fontSize: '0.8rem'},
     num1: {
       fontFamily: barlow.style.fontFamily,
       fontWeight: 700,
-      fontSize: '2.75rem',
+      fontSize: '2rem',
     },
     num2: {
       fontFamily: barlow.style.fontFamily,
       fontWeight: 700,
-      fontSize: '2.125rem',
+      fontSize: '1.5rem',
     },
     num3: {
       fontFamily: barlow.style.fontFamily,
       fontWeight: 700,
-      fontSize: '1.5rem',
+      fontSize: '1.25rem',
     },
     num4: {
       fontFamily: barlow.style.fontFamily,
       fontWeight: 600,
-      fontSize: '1.375rem',
-    },
-    num5: {
-      fontFamily: barlow.style.fontFamily,
-      fontWeight: 500,
       fontSize: '1.125rem',
     },
-    num6: {
+    num5: {
       fontFamily: barlow.style.fontFamily,
       fontWeight: 600,
       fontSize: '1rem',
     },
-    num7: {
+    num6: {
       fontFamily: barlow.style.fontFamily,
       fontWeight: 600,
-      fontSize: '0.875rem',
+      fontSize: '0.9rem',
     },
     fontFamily: roboto.style.fontFamily,
   },

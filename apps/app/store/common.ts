@@ -1,3 +1,5 @@
+import {type WikiEntry} from '@/assets/wikiData'
+import {atom} from 'jotai'
 import {atomWithStorage} from 'jotai/utils'
 
 export type Chain = 'khala' | 'phala'
@@ -28,3 +30,5 @@ export const basePoolMinWorkersAtom = atomWithStorage<string>(
   'jotai:base_pool_min_workers',
   ''
 )
+
+export const wikiExpandEntryAtom = atom<WikiEntry | null>(null)

@@ -29,6 +29,7 @@ import {useAtom} from 'jotai'
 import {useMemo, type FC} from 'react'
 import DelegatorSelect from './DelegatorSelect'
 import PromiseButton from './PromiseButton'
+import WikiButton from './Wiki/Button'
 
 const DelegationDataCard: FC<{
   kind: BasePoolKind
@@ -43,26 +44,18 @@ const DelegationDataCard: FC<{
   const apr = typeof aprMultiplier === 'string' && getApr(aprMultiplier)
 
   return (
-    <Box
-      sx={{background}}
-      borderRadius="2px"
-      px={{xs: 1.5, sm: 2}}
-      py={{xs: 1, sm: 1.5}}
-    >
+    <Box sx={{background}} borderRadius="2px" px={1.5} py={1}>
       <Stack direction="row" alignItems="center" height={24}>
-        <Typography variant="subtitle1" color="text.secondary" lineHeight={1}>
-          {kind}
-        </Typography>
+        <WikiButton entry={isVault ? 'vault' : 'stakePool'}>
+          <Typography variant="subtitle1" color="text.secondary" lineHeight={1}>
+            {kind}
+          </Typography>
+        </WikiButton>
         {typeof count === 'number' && count > 0 && (
           <Chip size="small" label={count} sx={{ml: 'auto'}} />
         )}
       </Stack>
-      <Typography
-        variant="num3"
-        component="div"
-        mb={{xs: 0, md: 0.5}}
-        mt={{xs: -0.5, md: 0}}
-      >
+      <Typography variant="num3" component="div" mt={{xs: -0.5, md: 0}}>
         <ClientOnly fallback={<Skeleton width={64} />}>
           {value === false
             ? '-'
@@ -75,16 +68,18 @@ const DelegationDataCard: FC<{
         </ClientOnly>
       </Typography>
       <Stack direction="row" alignItems="baseline" spacing={1}>
+        <WikiButton entry="estApr">
+          <Typography
+            variant="caption"
+            component="div"
+            color="text.secondary"
+            flexShrink="0"
+          >
+            {isVault ? 'Est. APY' : 'Est. APR'}
+          </Typography>
+        </WikiButton>
         <Typography
-          variant="caption"
-          component="div"
-          color="text.secondary"
-          flexShrink="0"
-        >
-          {isVault ? 'Est. APY' : 'Est. APR'}
-        </Typography>
-        <Typography
-          variant="num7"
+          variant="num6"
           component="div"
           maxWidth="100px"
           overflow="hidden"
@@ -157,7 +152,7 @@ const DelegationDetailCard: FC<{sx?: SxProps}> = ({sx}) => {
     <Paper
       sx={[
         {p: {xs: 1.5, sm: 2}, background: 'none'},
-        // bypass unknown type error
+        // pass isArray type check
         ...(Array.isArray(sx) ? (sx as any[]) : [sx]),
       ]}
     >
@@ -168,13 +163,15 @@ const DelegationDetailCard: FC<{sx?: SxProps}> = ({sx}) => {
           alignItems="flex-start"
         >
           <Box>
-            <Typography
-              variant="subtitle1"
-              component="div"
-              color="text.secondary"
-            >
-              Delegation
-            </Typography>
+            <WikiButton entry="delegation">
+              <Typography
+                variant="subtitle1"
+                component="div"
+                color="text.secondary"
+              >
+                Delegation
+              </Typography>
+            </WikiButton>
             <Typography
               variant="num1"
               component="div"
@@ -230,27 +227,23 @@ const DelegationDetailCard: FC<{sx?: SxProps}> = ({sx}) => {
           direction="row"
           alignItems="center"
           borderRadius="2px"
-          pl={{xs: 1, sm: 2}}
+          pl={1.5}
           pr={0.5}
-          py={1}
+          py={0.75}
           sx={{background: theme.palette.action.hover}}
         >
-          <Typography
-            lineHeight="32px"
-            variant="subtitle1"
-            component="div"
-            color="text.secondary"
-            alignSelf="baseline"
-          >
-            Wrapped
-          </Typography>
-          <Typography
-            variant="num6"
-            component="div"
-            flex="1 0"
-            ml={1.5}
-            alignSelf="baseline"
-          >
+          <WikiButton entry="wrappedPHA">
+            <Typography
+              lineHeight="32px"
+              variant="subtitle1"
+              component="div"
+              color="text.secondary"
+              alignSelf="baseline"
+            >
+              Wrapped
+            </Typography>
+          </WikiButton>
+          <Typography variant="num5" component="div" flex="1 0" ml={1.5}>
             <ClientOnly fallback={<Skeleton width={100} />}>
               {asAccount
                 ? wrapped != null &&

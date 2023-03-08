@@ -117,7 +117,7 @@ const NftCard: FC<{
                   e.stopPropagation()
                 }}
                 color="inherit"
-                variant="num4"
+                variant="num3"
                 href={getPoolPath(basePool.kind, basePool.id)}
                 target="_blank"
                 rel="noopener"
@@ -129,7 +129,7 @@ const NftCard: FC<{
             </Stack>
           </Stack>
         )}
-        <Typography variant="num3" mt={1}>
+        <Typography variant="num2" mt={1}>
           {toCurrency(value)}
           <sub>PHA</sub>
         </Typography>
@@ -147,7 +147,7 @@ const NftCard: FC<{
               sx={{mx: '-3px', transform: `translate(0, 2px)`}}
             />
 
-            <Typography variant="num6">
+            <Typography variant="num5">
               {`${toCurrency(profit)} PHA / 24h`}
             </Typography>
           </Stack>
@@ -155,12 +155,22 @@ const NftCard: FC<{
 
         <Stack mt="auto">
           {hasWithdrawal && (
-            <Property size="small" label="Withdrawing" fullWidth>
+            <Property
+              size="small"
+              label="Withdrawing"
+              fullWidth
+              wikiEntry="withdrawing"
+            >
               {`${toCurrency(withdrawingValue)} PHA`}
             </Property>
           )}
           {!compact && (
-            <Property size="small" label="Pool free" fullWidth>
+            <Property
+              size="small"
+              label="Pool free"
+              fullWidth
+              wikiEntry="freeValue"
+            >
               {`${toCurrency(
                 Decimal.max(0, delegation.basePool.freeValue)
               )} PHA`}
@@ -171,6 +181,7 @@ const NftCard: FC<{
               size="small"
               label={`Est. ${isVault ? 'APY' : 'APR'}`}
               fullWidth
+              wikiEntry="estApr"
             >
               {apr != null ? (
                 toPercentage(isVault ? aprToApy(apr) : apr)
@@ -179,7 +190,7 @@ const NftCard: FC<{
               )}
             </Property>
           )}
-          <Property size="small" label="Shares" fullWidth>
+          <Property size="small" label="Shares" fullWidth wikiEntry="shares">
             {toCurrency(shares)}
           </Property>
         </Stack>

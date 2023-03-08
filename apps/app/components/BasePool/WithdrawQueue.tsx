@@ -21,7 +21,7 @@ import {
   isSameDay,
 } from 'date-fns'
 import Decimal from 'decimal.js'
-import {useMemo, useState, type FC, type ReactElement} from 'react'
+import {useMemo, useState, type FC} from 'react'
 import {
   Line,
   LineChart,
@@ -32,37 +32,14 @@ import {
   YAxis,
 } from 'recharts'
 import Property from '../Property'
+import CustomRechartsTooltip from '../RechartsTooltip'
+import WikiButton from '../Wiki/Button'
 
 interface RowModel {
   id: string
   delegator: string
   value: string
   startTime?: string | null
-}
-
-const CustomTooltip = ({
-  label,
-  payload,
-}: {
-  label?: string
-  payload?: Array<{
-    name: string
-    value: number | string
-    unit?: string
-  }>
-}): ReactElement | null => {
-  if (payload?.[0] != null) {
-    return (
-      <Paper sx={{p: 1}}>
-        <Typography variant="subtitle2">{label}</Typography>
-        <Property fullWidth size="small" label="Due withdrawal">{`${toCurrency(
-          payload[0].value
-        )} PHA`}</Property>
-      </Paper>
-    )
-  }
-
-  return null
 }
 
 const columns: Array<GridColDef<RowModel>> = [
@@ -196,9 +173,11 @@ const WithdrawQueue: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
               ) : (
                 <Check fontSize="large" color="success" />
               )}
-              <Typography variant="h6" ml={1}>
-                {isInsufficient ? 'Insufficient Stake' : 'Sufficient Stake'}
-              </Typography>
+              <WikiButton entry="sufficientStake">
+                <Typography variant="h6" ml={1}>
+                  {isInsufficient ? 'Insufficient Stake' : 'Sufficient Stake'}
+                </Typography>
+              </WikiButton>
             </Stack>
             <Stack direction="row" alignItems="center" spacing={2}>
               <Property label="Total Withdraw">
@@ -253,9 +232,10 @@ const WithdrawQueue: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
                 />
                 <RechartsTooltip
                   isAnimationActive={false}
-                  content={<CustomTooltip />}
+                  content={<CustomRechartsTooltip />}
                 />
                 <Line
+                  unit=" PHA"
                   dot={false}
                   type="stepAfter"
                   dataKey="value"
@@ -265,6 +245,7 @@ const WithdrawQueue: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
                       : colors.main[400]
                   }
                   strokeWidth={3}
+                  name="Due withdrawal"
                 />
                 {criticalTime != null && (
                   <ReferenceLine
@@ -302,12 +283,12 @@ const WithdrawQueue: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
         loading={isLoading}
         rows={rows}
         columns={columns}
-        pageSize={5}
-        rowsPerPageOptions={[5]}
+        pageSizeOptions={[5]}
+        initialState={{pagination: {paginationModel: {pageSize: 5}}}}
         disableColumnMenu
         disableColumnSelector
         disableColumnFilter
-        disableSelectionOnClick
+        disableRowSelectionOnClick
         autoHeight
         sortModel={sortModal}
         onSortModelChange={(model) => {

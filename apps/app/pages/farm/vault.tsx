@@ -3,6 +3,7 @@ import BasePoolList from '@/components/BasePool/List'
 import CreateBasePoolButton from '@/components/CreateBasePoolButton'
 import PageHeader from '@/components/PageHeader'
 import PromiseButton from '@/components/PromiseButton'
+import WikiButton from '@/components/Wiki/Button'
 import usePolkadotApi from '@/hooks/usePolkadotApi'
 import useSignAndSend from '@/hooks/useSignAndSend'
 import getVaultOwnerCut from '@/lib/getVaultOwnerCut'
@@ -90,9 +91,11 @@ const MyVaults: FC = () => {
       >
         <Stack spacing={0.5}>
           <Stack spacing={2} direction="row" alignItems="center">
-            <Typography variant="h6" component="h2" color="text.secondary">
-              Owner Cut
-            </Typography>
+            <WikiButton entry="ownerCut">
+              <Typography variant="h6" component="h2" color="text.secondary">
+                Owner Cut
+              </Typography>
+            </WikiButton>
             <Typography variant="num3">
               {!isLoading ? (
                 `${toCurrency(ownerCut)} PHA`
@@ -110,9 +113,11 @@ const MyVaults: FC = () => {
           </Stack>
 
           <Stack spacing={2} direction="row" alignItems="center">
-            <Typography variant="h6" component="h2" color="text.secondary">
-              Owner Rewards
-            </Typography>
+            <WikiButton entry="vaultOwnerRewards">
+              <Typography variant="h6" component="h2" color="text.secondary">
+                Owner Rewards
+              </Typography>
+            </WikiButton>
             <Typography variant="num3">
               {!isLoading ? (
                 `${toCurrency(ownerRewards)} PHA`

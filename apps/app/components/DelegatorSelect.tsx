@@ -58,7 +58,7 @@ const DelegatorSelect: FC<{isVault?: boolean}> = ({isVault = false}) => {
         setVaultId(e.target.value === ACCOUNT ? null : e.target.value)
       }}
       helperText={
-        <Typography variant="num7">
+        <Typography variant="num6">
           {balance != null ? (
             `${toCurrency(balance)} PHA`
           ) : (

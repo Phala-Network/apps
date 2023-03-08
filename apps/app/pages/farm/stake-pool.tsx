@@ -2,6 +2,7 @@ import ClaimReward from '@/components/BasePool/ClaimReward'
 import BasePoolList from '@/components/BasePool/List'
 import CreateBasePoolButton from '@/components/CreateBasePoolButton'
 import PageHeader from '@/components/PageHeader'
+import WikiButton from '@/components/Wiki/Button'
 import {subsquidClient} from '@/lib/graphql'
 import {useClaimableStakePoolsQuery} from '@/lib/subsquidQuery'
 import {Box, Button, Dialog, Skeleton, Stack, Typography} from '@mui/material'
@@ -49,9 +50,11 @@ const MyStakePools: FC = () => {
         justifyContent="space-between"
       >
         <Stack spacing={2} direction="row" alignItems="center">
-          <Typography variant="h6" component="h2" color="text.secondary">
-            Owner Rewards
-          </Typography>
+          <WikiButton entry="stakePoolOwnerRewards">
+            <Typography variant="h6" component="h2" color="text.secondary">
+              Owner Rewards
+            </Typography>
+          </WikiButton>
           <Typography variant="num3">
             {ownerReward != null ? (
               `${toCurrency(ownerReward)} PHA`

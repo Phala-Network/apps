@@ -134,7 +134,12 @@ const DelegateInput: FC<{basePool: BasePoolCommonFragment; sx?: SxProps}> = ({
           Delegate
         </LoadingButton>
       </Stack>
-      <Property size="small" label="Delegable balance" sx={{mt: 1}}>
+      <Property
+        size="small"
+        label="Delegable balance"
+        sx={{mt: 1}}
+        wikiEntry="delegableBalance"
+      >
         {delegableBalance != null ? (
           `${toCurrency(delegableBalance)} PHA`
         ) : (
@@ -145,6 +150,7 @@ const DelegateInput: FC<{basePool: BasePoolCommonFragment; sx?: SxProps}> = ({
         size="small"
         label={`Est. delegated ${isVault ? 'APY' : 'APR'}`}
         sx={{mt: 0.5}}
+        wikiEntry="estDelegatedApr"
       >
         {typeof delegatedApr === 'string' ? (
           '-'

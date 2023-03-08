@@ -30,7 +30,7 @@ const StakePool: NextPage<BasePoolServerSideProps> = ({
   return (
     <>
       <DetailPage basePool={basePool} />
-      <Box component="section">
+      <Box component="section" mt={2} display="flow-root">
         <WorkerList basePool={basePool} />
       </Box>
     </>

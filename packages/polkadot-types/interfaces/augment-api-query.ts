@@ -665,7 +665,7 @@ declare module '@polkadot/api-base/types/storage' {
       /**
        * The bound worker for a session account
        **/
-      sessionBindings: AugmentedQuery<ApiType, (arg: AccountId32 | string | Uint8Array) => Observable<Option<U8aFixed>>, [AccountId32]> & QueryableStorageEntry<ApiType, [AccountId32]>;
+      sessionBindings: AugmentedQuery<ApiType, (arg: AccountId32 | string | Uint8Array) => Observable<Option<SpCoreSr25519Public>>, [AccountId32]> & QueryableStorageEntry<ApiType, [AccountId32]>;
       /**
        * The miner state.
        * 
@@ -714,11 +714,11 @@ declare module '@polkadot/api-base/types/storage' {
        * The number of blocks to run the benchmark
        **/
       benchmarkDuration: AugmentedQuery<ApiType, () => Observable<Option<u32>>, []> & QueryableStorageEntry<ApiType, []>;
-      clusterKeys: AugmentedQuery<ApiType, (arg: H256 | string | Uint8Array) => Observable<Option<U8aFixed>>, [H256]> & QueryableStorageEntry<ApiType, [H256]>;
+      clusterKeys: AugmentedQuery<ApiType, (arg: H256 | string | Uint8Array) => Observable<Option<SpCoreSr25519Public>>, [H256]> & QueryableStorageEntry<ApiType, [H256]>;
       /**
        * Mapping from contract address to pubkey
        **/
-      contractKeys: AugmentedQuery<ApiType, (arg: H256 | string | Uint8Array) => Observable<Option<U8aFixed>>, [H256]> & QueryableStorageEntry<ApiType, [H256]>;
+      contractKeys: AugmentedQuery<ApiType, (arg: H256 | string | Uint8Array) => Observable<Option<SpCoreSr25519Public>>, [H256]> & QueryableStorageEntry<ApiType, [H256]>;
       /**
        * Mapping from worker pubkey to Phala Network identity
        **/

@@ -119,7 +119,7 @@ const AssetLine: FC<{asset: Asset; onAction: OnAction}> = ({
           </Button>
         </>
       )}
-      <Typography variant="num6" ml="auto" flexShrink={0}>
+      <Typography variant="num5" ml="auto" flexShrink={0}>
         {asset.balance != null ? (
           `${wrapAsset(toCurrency(asset.balance))} ${asset.symbol}`
         ) : (
