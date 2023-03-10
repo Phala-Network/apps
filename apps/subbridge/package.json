@@ -16,7 +16,7 @@
     "@mui/icons-material": "^5.11.11",
     "@mui/lab": "5.0.0-alpha.122",
     "@mui/material": "^5.11.12",
-    "@next/bundle-analyzer": "^13.2.3",
+    "@next/bundle-analyzer": "^13.2.4",
     "@phala/lib": "workspace:^",
     "@phala/store": "workspace:^",
     "@phala/util": "workspace:^",
@@ -30,7 +30,7 @@
     "ethers": "^5.7.2",
     "jotai": "^1.13.1",
     "jotai-devtools": "^0.2.0",
-    "next": "13.2.3",
+    "next": "13.2.4",
     "next-images": "^1.8.4",
     "notistack": "^2.0.8",
     "react": "^18.2.0",
@@ -44,7 +44,7 @@
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
     "eslint": "^8.35.0",
-    "eslint-config-next": "^13.2.3",
+    "eslint-config-next": "^13.2.4",
     "next-transpile-modules": "^10.0.0",
     "typescript": "^4.9.5"
   }

@@ -1,9 +1,10 @@
+import useSWRValue from '@/hooks/useSWRValue'
 import compactFormat from '@/lib/compactFormat'
 import {subsquidClient} from '@/lib/graphql'
-import {useAccountValueSnapshotsConnectionQuery} from '@/lib/subsquidQuery'
+import {useAccountSnapshotsConnectionQuery} from '@/lib/subsquidQuery'
 import {addDays} from 'date-fns'
 import Decimal from 'decimal.js'
-import {useMemo, useState, type FC} from 'react'
+import {useMemo, type FC} from 'react'
 import {
   Area,
   AreaChart,
@@ -18,18 +19,18 @@ const DelegationValueChart: FC<{address?: string; days: number}> = ({
   address,
   days,
 }) => {
-  const [now] = useState(() => {
-    const now = new Date()
-    now.setMinutes(0, 0, 0)
-    return now
+  const startTime = useSWRValue([days], () => {
+    const date = new Date()
+    date.setUTCHours(0, 0, 0, 0)
+    return addDays(date, -days).toISOString()
   })
-  const {data} = useAccountValueSnapshotsConnectionQuery(
+  const {data} = useAccountSnapshotsConnectionQuery(
     subsquidClient,
     {
       orderBy: 'updatedTime_DESC',
       where: {
         account: {id_eq: address},
-        updatedTime_gte: addDays(now, -days).toISOString(),
+        updatedTime_gte: startTime,
       },
     },
     {
@@ -41,24 +42,20 @@ const DelegationValueChart: FC<{address?: string; days: number}> = ({
   )
 
   const chartData = useMemo(() => {
+    if (data == null) return []
     const result: Array<{date: Date; dateString: string; value?: number}> =
-      Array.from({
-        length: days,
-      }).map((_, i) => {
-        const date = addDays(now, i - days + 1)
-        return {
-          dateString: date.toLocaleDateString(),
-          date,
-        }
+      Array.from({length: days}).map((_, i) => {
+        const date = addDays(new Date(startTime), i)
+        return {dateString: date.toLocaleDateString(), date}
       })
 
-    if (data == null) return result
-
-    for (const {node} of data.accountValueSnapshotsConnection.edges) {
+    for (const {node} of data.accountSnapshotsConnection.edges) {
       const date = new Date(node.updatedTime)
       const index = result.findIndex((r) => r.date.getTime() >= date.getTime())
       if (index !== -1) {
-        result[index].value = new Decimal(node.value).floor().toNumber()
+        result[index].value = new Decimal(node.delegationValue)
+          .floor()
+          .toNumber()
       }
     }
 
@@ -71,15 +68,16 @@ const DelegationValueChart: FC<{address?: string; days: number}> = ({
     }
 
     return result
-  }, [data, days, now])
+  }, [data, days, startTime])
 
-  if (data == null) {
+  if (chartData.length === 0) {
     return null
   }
 
   return (
     <ResponsiveContainer width="100%" height="100%">
       <AreaChart
+        key={days}
         data={chartData}
         margin={{top: 10, right: 20, left: 0, bottom: 0}}
       >

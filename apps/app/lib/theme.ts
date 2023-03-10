@@ -63,7 +63,7 @@ export const theme = createTheme({
     h4: {
       fontFamily: montserrat.style.fontFamily,
       fontWeight: 500,
-      fontSize: '2.125rem',
+      fontSize: '2rem',
     },
     subtitle1: {fontWeight: 500},
     subtitle2: {fontSize: '0.8rem'},

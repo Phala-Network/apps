@@ -4,9 +4,9 @@ import useSWRValue from '@/hooks/useSWRValue'
 import compactFormat from '@/lib/compactFormat'
 import {subsquidClient} from '@/lib/graphql'
 import {
+  useGlobalRewardsSnapshotsConnectionQuery,
   useGlobalStateQuery,
   useIdleWorkerCountQuery,
-  useRewardRecordsConnectionQuery,
 } from '@/lib/subsquidQuery'
 import {chainAtom} from '@/store/common'
 import {Box, Divider, Skeleton, Stack, Typography} from '@mui/material'
@@ -24,12 +24,18 @@ interface CirculationData {
 
 const NetworkStats: FC = () => {
   const getApr = useGetApr()
-  const yesterday = useSWRValue(() => addDays(new Date(), -1).toISOString())
+  const yesterday = useSWRValue([], () => {
+    const date = new Date()
+    date.setUTCMinutes(0, 0, 0)
+    return addDays(date, -1).toISOString()
+  })
   const [chain] = useAtom(chainAtom)
-  const {data: rewardRecordsData} = useRewardRecordsConnectionQuery(
-    subsquidClient,
-    {orderBy: 'time_DESC', where: {time_gt: yesterday}}
-  )
+  const {data: globalRewardsSnapshotData} =
+    useGlobalRewardsSnapshotsConnectionQuery(subsquidClient, {
+      orderBy: 'updatedTime_ASC',
+      where: {updatedTime_gte: yesterday},
+      first: 1,
+    })
   const {data: circulationData} = useQuery<CirculationData>(
     ['circulations', chain],
     async () => {
@@ -52,13 +58,17 @@ const NetworkStats: FC = () => {
     )
   }, [circulationValue, totalValue])
   const dailyRewards = useMemo(() => {
-    if (rewardRecordsData == null) return
-    const sum = rewardRecordsData.rewardRecordsConnection.edges.reduce(
-      (acc, cur) => acc.plus(cur.node.value),
-      new Decimal(0)
+    const value =
+      globalRewardsSnapshotData?.globalRewardsSnapshotsConnection.edges[0]?.node
+        .value
+    if (value == null || globalStateData?.globalStateById == null) return
+
+    return compactFormat(
+      new Decimal(globalStateData.globalStateById.cumulativeRewards).minus(
+        value
+      )
     )
-    return compactFormat(sum)
-  }, [rewardRecordsData])
+  }, [globalRewardsSnapshotData, globalStateData])
   const avgApr = useMemo(() => {
     if (averageAprMultiplier === undefined) return
     const apr = getApr(averageAprMultiplier)
@@ -67,15 +77,13 @@ const NetworkStats: FC = () => {
   }, [getApr, averageAprMultiplier])
   const idleWorkerCount = useMemo(() => {
     const count = idleWorkerCountData?.sessionsConnection.totalCount
-    return typeof count === 'number' && compactFormat(count)
+    return typeof count === 'number' ? compactFormat(count) : undefined
   }, [idleWorkerCountData])
-  const items = useMemo<
-    Array<[string, string | false | undefined, WikiEntry]>
-  >(() => {
+  const items = useMemo<Array<[string, string | undefined, WikiEntry]>>(() => {
     return [
       [
         'Total Value',
-        totalValue !== undefined && compactFormat(new Decimal(totalValue)),
+        totalValue == null ? undefined : compactFormat(new Decimal(totalValue)),
         'totalValue',
       ],
       ['Stake Ratio', stakeRatio, 'stakeRatio'],

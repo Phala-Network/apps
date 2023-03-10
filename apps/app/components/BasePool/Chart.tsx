@@ -12,7 +12,8 @@ import Decimal from 'decimal.js'
 import {useMemo, type FC} from 'react'
 import {
   Area,
-  AreaChart,
+  Bar,
+  ComposedChart,
   ResponsiveContainer,
   Tooltip,
   XAxis,
@@ -29,6 +30,7 @@ export type BasePoolChartKind =
   | 'delegatorCount'
   | 'workerCount'
   | 'stakePoolCount'
+  | 'ownerRewards'
 
 const BasePoolChart: FC<{
   basePool: BasePoolCommonFragment
@@ -39,25 +41,36 @@ const BasePoolChart: FC<{
   const isVault = basePool.kind === 'Vault'
   const isInteger = kind === 'delegatorCount' || kind === 'workerCount'
   const color = isVault ? colors.vault[500] : colors.main[400]
-  const now = useSWRValue(() => {
-    const now = new Date()
-    now.setMinutes(0, 0, 0)
-    return now
+  const dimension = kind === 'ownerRewards' ? 'day' : 'hour'
+  const startTime = useSWRValue([days], () => {
+    const date = new Date()
+    date.setUTCMinutes(0, 0, 0)
+    return addDays(date, -days).toISOString()
+  })
+  const duration = useSWRValue([days], () => {
+    const date = new Date()
+    date.setUTCHours(0, 0, 0, 0)
+    return Array.from({length: days + 1}).map((_, i) =>
+      addDays(date, i - days).toISOString()
+    )
   })
   const {data} = useBasePoolSnapshotsConnectionQuery(
     subsquidClient,
     {
       orderBy: 'updatedTime_ASC',
-      first: days * 24 + 1,
+      first: dimension === 'day' ? days + 1 : days * 24 + 1,
       withApr: kind === 'apr',
       withCommission: kind === 'commission',
       withTotalValue: kind === 'totalValue',
       withDelegatorCount: kind === 'delegatorCount',
       withWorkerCount: kind === 'workerCount',
       withStakePoolCount: kind === 'stakePoolCount',
+      withCumulativeOwnerRewards: kind === 'ownerRewards',
       where: {
         basePool: {id_eq: basePool.id},
-        updatedTime_gte: addDays(now, -days).toISOString(),
+        ...(dimension === 'day'
+          ? {updatedTime_in: duration}
+          : {updatedTime_gte: startTime}),
       },
     },
     {
@@ -68,18 +81,41 @@ const BasePoolChart: FC<{
   )
 
   const chartData = useMemo(() => {
-    const result: Array<{date: Date; dateString: string; value?: number}> =
-      Array.from({
-        length: days * 24 + 1,
-      }).map((_, i) => {
-        const date = addHours(now, i - days * 24)
-        return {
-          dateString: date.toLocaleString(),
-          date,
-        }
-      })
+    if (data == null) return []
+    type ChartData = Array<{date: Date; dateString: string; value?: number}>
+    if (kind === 'ownerRewards') {
+      const result: ChartData = []
+      const edges = data.basePoolSnapshotsConnection.edges
 
-    if (data === undefined) return result
+      for (let i = 1; i < edges.length; i++) {
+        const current = edges[i].node
+        const prev = edges[i - 1].node
+        const date = new Date(current.updatedTime)
+        let value = new Decimal(0)
+        if (
+          current.cumulativeOwnerRewards != null &&
+          prev.cumulativeOwnerRewards != null
+        ) {
+          value = new Decimal(current.cumulativeOwnerRewards).minus(
+            prev.cumulativeOwnerRewards
+          )
+        }
+
+        result.push({
+          date,
+          dateString: date.toLocaleDateString(),
+          value: value.toDP(2, Decimal.ROUND_DOWN).toNumber(),
+        })
+      }
+      return result
+    }
+
+    const result: ChartData = Array.from({
+      length: dimension === 'day' ? days : days * 24 + 1,
+    }).map((_, i) => {
+      const date = addHours(new Date(startTime), i)
+      return {dateString: date.toLocaleString(), date}
+    })
 
     for (const {node} of data.basePoolSnapshotsConnection.edges) {
       const date = new Date(node.updatedTime)
@@ -121,7 +157,7 @@ const BasePoolChart: FC<{
     }
 
     return result
-  }, [data, isVault, now, kind, isPercentage])
+  }, [data, kind, dimension, startTime, isPercentage, isVault])
 
   const label = useMemo(() => {
     switch (kind) {
@@ -140,13 +176,13 @@ const BasePoolChart: FC<{
     }
   }, [kind, isVault])
 
-  if (data == null) {
+  if (chartData.length === 0) {
     return null
   }
 
   return (
     <ResponsiveContainer width="100%" height="100%">
-      <AreaChart
+      <ComposedChart
         data={chartData}
         margin={{top: 10, right: 30, left: 0, bottom: 0}}
       >
@@ -165,8 +201,8 @@ const BasePoolChart: FC<{
           unit={isPercentage ? '%' : undefined}
           tickLine={false}
           domain={
-            isPercentage || isInteger
-              ? [0, (dataMax: number) => Math.ceil(dataMax)]
+            isPercentage || isInteger || kind === 'ownerRewards'
+              ? [0, 'auto']
               : ['auto', 'auto']
           }
           tickFormatter={
@@ -176,18 +212,28 @@ const BasePoolChart: FC<{
           }
         />
         <Tooltip isAnimationActive={false} content={<RechartsTooltip />} />
-        <Area
-          name={label}
-          unit={isPercentage ? '%' : isPHA ? ' PHA' : undefined}
-          connectNulls
-          type="monotone"
-          dataKey="value"
-          stroke={color}
-          strokeWidth={3}
-          fillOpacity={1}
-          fill={`url(#${basePool.kind})`}
-        />
-      </AreaChart>
+        {kind === 'ownerRewards' ? (
+          <Bar
+            dataKey="value"
+            name="Reward"
+            unit=" PHA"
+            fill={color}
+            barSize={24}
+          />
+        ) : (
+          <Area
+            name={label}
+            unit={isPercentage ? '%' : isPHA ? ' PHA' : undefined}
+            connectNulls
+            type="monotone"
+            dataKey="value"
+            stroke={color}
+            strokeWidth={3}
+            fillOpacity={1}
+            fill={`url(#${basePool.kind})`}
+          />
+        )}
+      </ComposedChart>
     </ResponsiveContainer>
   )
 }

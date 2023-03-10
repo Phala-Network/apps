@@ -64,7 +64,7 @@ const DelegationList: FC<{
   isVault?: boolean
   isOwner?: boolean
 }> = ({address, isVault = false, showHeader = false, isOwner = false}) => {
-  const yesterday = useSWRValue(() => addDays(new Date(), -1).toISOString())
+  const yesterday = useSWRValue([], () => addDays(new Date(), -1).toISOString())
   const {ref, inView} = useInView()
   const [dialogOpen, setDialogOpen] = useState(false)
   const [dialogAction, setDialogAction] = useState<DelegationDialogAction>()
