@@ -219,6 +219,7 @@ const BasePoolChart: FC<{
             unit=" PHA"
             fill={color}
             barSize={24}
+            radius={[4, 4, 0, 0]}
           />
         ) : (
           <Area

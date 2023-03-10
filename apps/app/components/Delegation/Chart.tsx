@@ -117,6 +117,7 @@ const DelegationChart: FC<{
           unit=" PHA"
           fill="#666"
           barSize={24}
+          radius={[4, 4, 0, 0]}
         />
         <Line
           yAxisId="left"

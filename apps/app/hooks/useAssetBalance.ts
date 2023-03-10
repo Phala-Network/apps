@@ -1,6 +1,5 @@
-import {type VoidFn} from '@polkadot/api/types'
 import Decimal from 'decimal.js'
-import {useEffect, useState} from 'react'
+import useSWRSubscription from 'swr/subscription'
 import useAssetsMetadata from './useAssetsMetadata'
 import usePolkadotApi from './usePolkadotApi'
 
@@ -10,51 +9,47 @@ const useAssetBalance = (
 ): Decimal | undefined => {
   const api = usePolkadotApi()
   const assetsMetadata = useAssetsMetadata()
-  const [balance, setBalance] = useState<Decimal>()
+  const {data} = useSWRSubscription(
+    account != null &&
+      api != null &&
+      assetsMetadata != null && ['assetBalance', account, assetId, api],
+    (_, {next}) => {
+      let unsubscribe = (): void => {}
+      if (api == null || account == null) {
+        return unsubscribe
+      }
+      if (assetId == null) {
+        void api.derive.balances
+          .all(account, ({freeBalance}) => {
+            next(null, new Decimal(freeBalance.toString()).div(1e12))
+          })
+          .then((fn) => {
+            unsubscribe = fn
+          })
+      } else {
+        const assetMetadata = assetsMetadata?.[assetId]
+        if (assetMetadata == null) return unsubscribe
 
-  useEffect(() => {
-    setBalance(undefined)
-    if (api == null || account === undefined) {
-      return
-    }
-    let unsub: VoidFn
-    let unmounted = false
-    if (assetId === undefined) {
-      void api.derive.balances
-        .all(account, ({freeBalance}) => {
-          if (!unmounted) {
-            setBalance(new Decimal(freeBalance.toString()).div(1e12))
-          }
-        })
-        .then((fn) => {
-          unsub = fn
-        })
-    } else {
-      const assetMetadata = assetsMetadata?.[assetId]
-      if (assetMetadata == null) return
-
-      void api.query.assets
-        .account(assetId, account, (res) => {
-          const unwrapped = res.unwrapOr({balance: 0})
-          if (!unmounted) {
-            setBalance(
+        void api.query.assets
+          .account(assetId, account, (res) => {
+            const unwrapped = res.unwrapOr({balance: 0})
+            next(
+              null,
               new Decimal(unwrapped.balance.toString()).div(
                 Decimal.pow(10, assetMetadata.decimals)
               )
             )
-          }
-        })
-        .then((fn) => {
-          unsub = fn
-        })
-    }
-    return () => {
-      unmounted = true
-      unsub?.()
-    }
-  }, [api, assetId, account, assetsMetadata])
+          })
+          .then((fn) => {
+            unsubscribe = fn
+          })
+      }
 
-  return balance
+      return unsubscribe
+    }
+  )
+
+  return data
 }
 
 export default useAssetBalance

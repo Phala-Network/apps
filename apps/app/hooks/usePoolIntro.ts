@@ -57,11 +57,8 @@ const poolIntroFetcher = async ([api, pid]: [
 const usePoolIntro = (pid: string): PoolIntro | undefined => {
   const api = usePolkadotApi()
   const {data} = useSWR(
-    api != null ? [api, pid, 'poolIntro'] : null,
-    poolIntroFetcher,
-    {
-      refreshInterval: 12000,
-    }
+    api != null && [api, pid, 'poolIntro'],
+    poolIntroFetcher
   )
 
   return data

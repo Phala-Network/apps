@@ -24,7 +24,7 @@ const ChainSelect: FC = () => {
   const blockTime = globalStateData?.globalStateById?.averageBlockTime
   const apiConnected = api?.isConnected
   const {data: chainHeight} = useSWRSubscription(
-    api != null ? ['height', api] : null,
+    api != null && ['height', api],
     (_, {next}) => {
       let unsubscribe = (): void => {}
       if (api == null) {
@@ -34,13 +34,11 @@ const ChainSelect: FC = () => {
         .subscribeNewHeads((header) => {
           next(null, header.number.toNumber())
         })
-        .then((_unsubscribe) => {
-          unsubscribe = _unsubscribe
+        .then((fn) => {
+          unsubscribe = fn
         })
 
-      return () => {
-        unsubscribe()
-      }
+      return unsubscribe
     }
   )
   const status: 'success' | 'warning' | 'error' = useMemo(() => {
