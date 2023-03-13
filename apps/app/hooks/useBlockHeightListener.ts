@@ -8,13 +8,17 @@ import {useEffect, useRef} from 'react'
 const useBlockHeightListener = (): void => {
   const [chain] = useAtom(chainAtom)
   const enabled = useRef(false)
-  const {data} = useGlobalStateQuery(
+  const {data: squidStatus} = useGlobalStateQuery(
     subsquidClient,
     {},
-    {refetchInterval: 3000, enabled: chain === 'khala'}
+    {
+      refetchInterval: 3000,
+      enabled: chain === 'khala',
+      select: (data) => data.squidStatus,
+    }
   )
   const queryClient = useQueryClient()
-  const height = data?.squidStatus?.height
+  const height = squidStatus?.height
 
   useEffect(() => {
     if (height != null && chain === 'khala') {

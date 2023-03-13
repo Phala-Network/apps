@@ -10,10 +10,14 @@ const useGetAprMultiplier = (): ((
   aprOrApy: string | Decimal,
   isApy?: boolean
 ) => Decimal | undefined) => {
-  const {data: globalStateData} = useGlobalStateQuery(subsquidClient, {})
+  const {data: globalState} = useGlobalStateQuery(
+    subsquidClient,
+    {},
+    {select: (data) => data.globalStateById}
+  )
 
   const {averageBlockTime, idleWorkerShares, budgetPerBlock, treasuryRatio} =
-    globalStateData?.globalStateById ?? {}
+    globalState ?? {}
 
   return useCallback(
     (aprOrApy: string | Decimal, isApy = false) => {

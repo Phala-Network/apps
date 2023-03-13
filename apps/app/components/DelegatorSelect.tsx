@@ -28,8 +28,8 @@ const DelegatorSelect: FC<{isVault?: boolean}> = ({isVault = false}) => {
   const [, setVaultId] = useAtom(vaultIdAtom)
   const {data: accountData} = useAccountQuery()
   const vaultIds = useMemo(
-    () => accountData?.accountById?.ownedPools.map((x) => x.id) ?? [],
-    [accountData?.accountById?.ownedPools]
+    () => accountData?.ownedPools.map((x) => x.id) ?? [],
+    [accountData?.ownedPools]
   )
   const selectedVaultState = useSelectedVaultState()
   const delegatorAddress =

@@ -16,9 +16,9 @@ const useSelectedVaultState = ():
 
   const selectedVault = useMemo(() => {
     return vaultId != null
-      ? accountData?.accountById?.ownedPools.find((x) => x.id === vaultId)
+      ? accountData?.ownedPools.find((x) => x.id === vaultId)
       : null
-  }, [accountData?.accountById?.ownedPools, vaultId])
+  }, [accountData?.ownedPools, vaultId])
 
   return selectedVault
 }

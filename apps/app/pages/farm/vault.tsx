@@ -24,12 +24,14 @@ const MyVaults: FC = () => {
   }, [])
   const [account] = useAtom(polkadotAccountAtom)
   const signAndSend = useSignAndSend()
-  const {data, isLoading} = useOwnedVaultsQuery(
+  const {data: edges, isLoading} = useOwnedVaultsQuery(
     subsquidClient,
     {accountId: account?.address},
-    {enabled: account !== null}
+    {
+      enabled: account !== null,
+      select: (data) => data.basePoolsConnection.edges,
+    }
   )
-  const edges = data?.basePoolsConnection.edges
   const vaultsWithOwnerCut = useMemo(() => {
     if (edges !== undefined) {
       return edges

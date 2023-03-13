@@ -57,15 +57,16 @@ const DashboardAccount: FC = () => {
   const [account] = useAtom(polkadotAccountAtom)
   const freeBalance = useAssetBalance(account?.address)
   const wrapped = useAssetBalance(account?.address, WPHA_ASSET_ID)
-  const {data} = useAccountByIdQuery(
+  const {data: accountData} = useAccountByIdQuery(
     subsquidClient,
     {accountId: account?.address ?? ''},
-    {enabled: account?.address !== undefined}
+    {
+      enabled: account?.address !== undefined,
+      select: (data) =>
+        data.accountById ?? {vaultValue: '0', stakePoolValue: '0'},
+    }
   )
-  const accountData =
-    data?.accountById === null
-      ? {vaultValue: '0', stakePoolValue: '0'}
-      : data?.accountById
+
   const isDelegationClickable = account !== null && chain === 'khala'
   return (
     <Paper

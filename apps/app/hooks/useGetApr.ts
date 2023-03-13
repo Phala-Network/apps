@@ -8,10 +8,14 @@ const ONE_YEAR = 365 * 24 * 60 * 60 * 1000
 const useGetApr = (): ((
   aprMultiplier: string | Decimal
 ) => Decimal | undefined) => {
-  const {data: globalStateData} = useGlobalStateQuery(subsquidClient, {})
+  const {data: globalStateData} = useGlobalStateQuery(
+    subsquidClient,
+    {},
+    {select: (data) => data.globalStateById}
+  )
 
   const {averageBlockTime, idleWorkerShares, budgetPerBlock, treasuryRatio} =
-    globalStateData?.globalStateById ?? {}
+    globalStateData ?? {}
 
   return useCallback(
     (aprMultiplier: string | Decimal) => {
