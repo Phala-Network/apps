@@ -3,12 +3,13 @@ import {useState} from 'react'
 import useSWR from 'swr'
 
 const useSWRValue = <T>(
+  key: any[],
   getter: () => T,
   refreshInterval = 60 * 60 * 1000
 ): T => {
   const id = useState(uniqueId())
   const [fallbackData] = useState(getter())
-  const {data} = useSWR(['value', id], async () => getter(), {
+  const {data} = useSWR(['value', id, ...key], async () => getter(), {
     fallbackData,
     refreshInterval,
     revalidateOnFocus: false,

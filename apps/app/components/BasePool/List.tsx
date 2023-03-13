@@ -3,6 +3,7 @@ import ListSkeleton from '@/components/ListSkeleton'
 import useDebounced from '@/hooks/useDebounced'
 import useGetAprMultiplier from '@/hooks/useGetAprMultiplier'
 import useSelectedVaultState from '@/hooks/useSelectedVaultState'
+import fixBasePoolFree from '@/lib/fixBasePoolFree'
 import {subsquidClient} from '@/lib/graphql'
 import {
   IdentityLevel,
@@ -204,6 +205,22 @@ const BasePoolList: FC<{
       {
         enabled,
         keepPreviousData: true,
+        select: (data) => {
+          return {
+            ...data,
+            pages: data.pages.map((page) => {
+              return {
+                ...page,
+                basePoolsConnection: {
+                  ...page.basePoolsConnection,
+                  edges: page.basePoolsConnection.edges.map((edge) => {
+                    return {...edge, node: fixBasePoolFree(edge.node)}
+                  }),
+                },
+              }
+            }),
+          }
+        },
         getNextPageParam: (lastPage) =>
           lastPage.basePoolsConnection.pageInfo.hasNextPage
             ? lastPage.basePoolsConnection.pageInfo.endCursor

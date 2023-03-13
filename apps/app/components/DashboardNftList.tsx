@@ -63,7 +63,7 @@ const NftCard: FC<{nft: Nft}> = ({nft}) => {
     nftNameFetcher
   )
   const {data: collectionSymbol} = useSWRImmutable(
-    api != null && isDelegationNft ? [api, nft.cid, 'nftCollection'] : null,
+    api != null && isDelegationNft && [api, nft.cid, 'nftCollection'],
     collectionSymbolFetcher
   )
   const delegationNftPrefix = `${chain === 'khala' ? 'Khala' : 'Phala'} - ${

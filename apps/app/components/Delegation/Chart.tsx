@@ -29,22 +29,18 @@ const DelegationChart: FC<{
   const isVault = delegation.basePool.kind === 'Vault'
   const color = isVault ? colors.vault[500] : colors.main[400]
 
-  const updatedTime = useSWRValue(() => {
-    const today = new Date()
-    today.setUTCHours(0, 0, 0, 0)
+  const duration = useSWRValue([], () => {
+    const date = new Date()
+    date.setUTCHours(0, 0, 0, 0)
     return Array.from({length: days + 1}).map((_, i) =>
-      addDays(today, i - days).toISOString()
+      addDays(date, i - days).toISOString()
     )
   })
   const {data} = useDelegationSnapshotsConnectionQuery(
     subsquidClient,
     {
       orderBy: 'updatedTime_ASC',
-      where: {
-        delegation: {id_eq: delegation.id},
-        updatedTime_in: updatedTime,
-        // updatedTime_gte: addDays(today, -days - 1).toISOString(),
-      },
+      where: {delegation: {id_eq: delegation.id}, updatedTime_in: duration},
     },
     {
       refetchOnMount: false,
@@ -54,7 +50,7 @@ const DelegationChart: FC<{
   )
 
   const chartData = useMemo(() => {
-    if (data === undefined) return []
+    if (data == null) return []
     const result: Array<{
       date: Date
       value: number
@@ -83,7 +79,7 @@ const DelegationChart: FC<{
     return result
   }, [data])
 
-  if (data == null) {
+  if (chartData.length === 0) {
     return null
   }
 
@@ -93,18 +89,6 @@ const DelegationChart: FC<{
         data={chartData}
         margin={{top: 10, right: 30, left: 0, bottom: 0}}
       >
-        <defs>
-          <linearGradient
-            id={delegation.basePool.kind}
-            x1="0"
-            y1="0"
-            x2="0"
-            y2="1"
-          >
-            <stop offset="5%" stopColor={color} stopOpacity={0.3} />
-            <stop offset="95%" stopColor={color} stopOpacity={0} />
-          </linearGradient>
-        </defs>
         <XAxis tickLine={false} dataKey="dateString" />
         <YAxis
           yAxisId="left"
@@ -124,7 +108,6 @@ const DelegationChart: FC<{
           dataKey="reward"
           name="Reward"
           tickLine={false}
-          domain={[0, (dataMax: number) => dataMax * 2]}
           tickFormatter={(value) => compactFormat(value, 0)}
         />
         <Bar
@@ -134,6 +117,7 @@ const DelegationChart: FC<{
           unit=" PHA"
           fill="#666"
           barSize={24}
+          radius={[4, 4, 0, 0]}
         />
         <Line
           yAxisId="left"

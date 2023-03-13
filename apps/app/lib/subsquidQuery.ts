@@ -32,6 +32,8 @@ export type Scalars = {
 export type Account = {
   __typename?: 'Account';
   basePool?: Maybe<BasePool>;
+  cumulativeStakePoolOwnerRewards: Scalars['BigDecimal'];
+  cumulativeVaultOwnerRewards: Scalars['BigDecimal'];
   /** account address */
   id: Scalars['String'];
   identityDisplay?: Maybe<Scalars['String']>;
@@ -66,6 +68,8 @@ export const AccountOrderByInput = {
   BasePoolCidDesc: 'basePool_cid_DESC',
   BasePoolCommissionAsc: 'basePool_commission_ASC',
   BasePoolCommissionDesc: 'basePool_commission_DESC',
+  BasePoolCumulativeOwnerRewardsAsc: 'basePool_cumulativeOwnerRewards_ASC',
+  BasePoolCumulativeOwnerRewardsDesc: 'basePool_cumulativeOwnerRewards_DESC',
   BasePoolDelegatorCountAsc: 'basePool_delegatorCount_ASC',
   BasePoolDelegatorCountDesc: 'basePool_delegatorCount_DESC',
   BasePoolFreeValueAsc: 'basePool_freeValue_ASC',
@@ -90,6 +94,10 @@ export const AccountOrderByInput = {
   BasePoolWithdrawingSharesDesc: 'basePool_withdrawingShares_DESC',
   BasePoolWithdrawingValueAsc: 'basePool_withdrawingValue_ASC',
   BasePoolWithdrawingValueDesc: 'basePool_withdrawingValue_DESC',
+  CumulativeStakePoolOwnerRewardsAsc: 'cumulativeStakePoolOwnerRewards_ASC',
+  CumulativeStakePoolOwnerRewardsDesc: 'cumulativeStakePoolOwnerRewards_DESC',
+  CumulativeVaultOwnerRewardsAsc: 'cumulativeVaultOwnerRewards_ASC',
+  CumulativeVaultOwnerRewardsDesc: 'cumulativeVaultOwnerRewards_DESC',
   IdAsc: 'id_ASC',
   IdDesc: 'id_DESC',
   IdentityDisplayAsc: 'identityDisplay_ASC',
@@ -111,22 +119,28 @@ export const AccountOrderByInput = {
 } as const;
 
 export type AccountOrderByInput = typeof AccountOrderByInput[keyof typeof AccountOrderByInput];
-export type AccountValueSnapshot = {
-  __typename?: 'AccountValueSnapshot';
+export type AccountSnapshot = {
+  __typename?: 'AccountSnapshot';
   account: Account;
+  cumulativeStakePoolOwnerRewards: Scalars['BigDecimal'];
+  cumulativeVaultOwnerRewards: Scalars['BigDecimal'];
+  delegationValue: Scalars['BigDecimal'];
   id: Scalars['String'];
   /** block time */
   updatedTime: Scalars['DateTime'];
-  value: Scalars['BigDecimal'];
 };
 
-export type AccountValueSnapshotEdge = {
-  __typename?: 'AccountValueSnapshotEdge';
+export type AccountSnapshotEdge = {
+  __typename?: 'AccountSnapshotEdge';
   cursor: Scalars['String'];
-  node: AccountValueSnapshot;
+  node: AccountSnapshot;
 };
 
-export const AccountValueSnapshotOrderByInput = {
+export const AccountSnapshotOrderByInput = {
+  AccountCumulativeStakePoolOwnerRewardsAsc: 'account_cumulativeStakePoolOwnerRewards_ASC',
+  AccountCumulativeStakePoolOwnerRewardsDesc: 'account_cumulativeStakePoolOwnerRewards_DESC',
+  AccountCumulativeVaultOwnerRewardsAsc: 'account_cumulativeVaultOwnerRewards_ASC',
+  AccountCumulativeVaultOwnerRewardsDesc: 'account_cumulativeVaultOwnerRewards_DESC',
   AccountIdAsc: 'account_id_ASC',
   AccountIdDesc: 'account_id_DESC',
   AccountIdentityDisplayAsc: 'account_identityDisplay_ASC',
@@ -145,20 +159,51 @@ export const AccountValueSnapshotOrderByInput = {
   AccountVaultNftCountDesc: 'account_vaultNftCount_DESC',
   AccountVaultValueAsc: 'account_vaultValue_ASC',
   AccountVaultValueDesc: 'account_vaultValue_DESC',
+  CumulativeStakePoolOwnerRewardsAsc: 'cumulativeStakePoolOwnerRewards_ASC',
+  CumulativeStakePoolOwnerRewardsDesc: 'cumulativeStakePoolOwnerRewards_DESC',
+  CumulativeVaultOwnerRewardsAsc: 'cumulativeVaultOwnerRewards_ASC',
+  CumulativeVaultOwnerRewardsDesc: 'cumulativeVaultOwnerRewards_DESC',
+  DelegationValueAsc: 'delegationValue_ASC',
+  DelegationValueDesc: 'delegationValue_DESC',
   IdAsc: 'id_ASC',
   IdDesc: 'id_DESC',
   UpdatedTimeAsc: 'updatedTime_ASC',
-  UpdatedTimeDesc: 'updatedTime_DESC',
-  ValueAsc: 'value_ASC',
-  ValueDesc: 'value_DESC'
+  UpdatedTimeDesc: 'updatedTime_DESC'
 } as const;
 
-export type AccountValueSnapshotOrderByInput = typeof AccountValueSnapshotOrderByInput[keyof typeof AccountValueSnapshotOrderByInput];
-export type AccountValueSnapshotWhereInput = {
-  AND?: InputMaybe<Array<AccountValueSnapshotWhereInput>>;
-  OR?: InputMaybe<Array<AccountValueSnapshotWhereInput>>;
+export type AccountSnapshotOrderByInput = typeof AccountSnapshotOrderByInput[keyof typeof AccountSnapshotOrderByInput];
+export type AccountSnapshotWhereInput = {
+  AND?: InputMaybe<Array<AccountSnapshotWhereInput>>;
+  OR?: InputMaybe<Array<AccountSnapshotWhereInput>>;
   account?: InputMaybe<AccountWhereInput>;
   account_isNull?: InputMaybe<Scalars['Boolean']>;
+  cumulativeStakePoolOwnerRewards_eq?: InputMaybe<Scalars['BigDecimal']>;
+  cumulativeStakePoolOwnerRewards_gt?: InputMaybe<Scalars['BigDecimal']>;
+  cumulativeStakePoolOwnerRewards_gte?: InputMaybe<Scalars['BigDecimal']>;
+  cumulativeStakePoolOwnerRewards_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  cumulativeStakePoolOwnerRewards_isNull?: InputMaybe<Scalars['Boolean']>;
+  cumulativeStakePoolOwnerRewards_lt?: InputMaybe<Scalars['BigDecimal']>;
+  cumulativeStakePoolOwnerRewards_lte?: InputMaybe<Scalars['BigDecimal']>;
+  cumulativeStakePoolOwnerRewards_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  cumulativeStakePoolOwnerRewards_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  cumulativeVaultOwnerRewards_eq?: InputMaybe<Scalars['BigDecimal']>;
+  cumulativeVaultOwnerRewards_gt?: InputMaybe<Scalars['BigDecimal']>;
+  cumulativeVaultOwnerRewards_gte?: InputMaybe<Scalars['BigDecimal']>;
+  cumulativeVaultOwnerRewards_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  cumulativeVaultOwnerRewards_isNull?: InputMaybe<Scalars['Boolean']>;
+  cumulativeVaultOwnerRewards_lt?: InputMaybe<Scalars['BigDecimal']>;
+  cumulativeVaultOwnerRewards_lte?: InputMaybe<Scalars['BigDecimal']>;
+  cumulativeVaultOwnerRewards_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  cumulativeVaultOwnerRewards_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  delegationValue_eq?: InputMaybe<Scalars['BigDecimal']>;
+  delegationValue_gt?: InputMaybe<Scalars['BigDecimal']>;
+  delegationValue_gte?: InputMaybe<Scalars['BigDecimal']>;
+  delegationValue_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  delegationValue_isNull?: InputMaybe<Scalars['Boolean']>;
+  delegationValue_lt?: InputMaybe<Scalars['BigDecimal']>;
+  delegationValue_lte?: InputMaybe<Scalars['BigDecimal']>;
+  delegationValue_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  delegationValue_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
   id_contains?: InputMaybe<Scalars['String']>;
   id_containsInsensitive?: InputMaybe<Scalars['String']>;
   id_endsWith?: InputMaybe<Scalars['String']>;
@@ -185,20 +230,11 @@ export type AccountValueSnapshotWhereInput = {
   updatedTime_lte?: InputMaybe<Scalars['DateTime']>;
   updatedTime_not_eq?: InputMaybe<Scalars['DateTime']>;
   updatedTime_not_in?: InputMaybe<Array<Scalars['DateTime']>>;
-  value_eq?: InputMaybe<Scalars['BigDecimal']>;
-  value_gt?: InputMaybe<Scalars['BigDecimal']>;
-  value_gte?: InputMaybe<Scalars['BigDecimal']>;
-  value_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
-  value_isNull?: InputMaybe<Scalars['Boolean']>;
-  value_lt?: InputMaybe<Scalars['BigDecimal']>;
-  value_lte?: InputMaybe<Scalars['BigDecimal']>;
-  value_not_eq?: InputMaybe<Scalars['BigDecimal']>;
-  value_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
 };
 
-export type AccountValueSnapshotsConnection = {
-  __typename?: 'AccountValueSnapshotsConnection';
-  edges: Array<AccountValueSnapshotEdge>;
+export type AccountSnapshotsConnection = {
+  __typename?: 'AccountSnapshotsConnection';
+  edges: Array<AccountSnapshotEdge>;
   pageInfo: PageInfo;
   totalCount: Scalars['Int'];
 };
@@ -208,6 +244,24 @@ export type AccountWhereInput = {
   OR?: InputMaybe<Array<AccountWhereInput>>;
   basePool?: InputMaybe<BasePoolWhereInput>;
   basePool_isNull?: InputMaybe<Scalars['Boolean']>;
+  cumulativeStakePoolOwnerRewards_eq?: InputMaybe<Scalars['BigDecimal']>;
+  cumulativeStakePoolOwnerRewards_gt?: InputMaybe<Scalars['BigDecimal']>;
+  cumulativeStakePoolOwnerRewards_gte?: InputMaybe<Scalars['BigDecimal']>;
+  cumulativeStakePoolOwnerRewards_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  cumulativeStakePoolOwnerRewards_isNull?: InputMaybe<Scalars['Boolean']>;
+  cumulativeStakePoolOwnerRewards_lt?: InputMaybe<Scalars['BigDecimal']>;
+  cumulativeStakePoolOwnerRewards_lte?: InputMaybe<Scalars['BigDecimal']>;
+  cumulativeStakePoolOwnerRewards_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  cumulativeStakePoolOwnerRewards_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  cumulativeVaultOwnerRewards_eq?: InputMaybe<Scalars['BigDecimal']>;
+  cumulativeVaultOwnerRewards_gt?: InputMaybe<Scalars['BigDecimal']>;
+  cumulativeVaultOwnerRewards_gte?: InputMaybe<Scalars['BigDecimal']>;
+  cumulativeVaultOwnerRewards_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  cumulativeVaultOwnerRewards_isNull?: InputMaybe<Scalars['Boolean']>;
+  cumulativeVaultOwnerRewards_lt?: InputMaybe<Scalars['BigDecimal']>;
+  cumulativeVaultOwnerRewards_lte?: InputMaybe<Scalars['BigDecimal']>;
+  cumulativeVaultOwnerRewards_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  cumulativeVaultOwnerRewards_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
   id_contains?: InputMaybe<Scalars['String']>;
   id_containsInsensitive?: InputMaybe<Scalars['String']>;
   id_endsWith?: InputMaybe<Scalars['String']>;
@@ -321,6 +375,7 @@ export type BasePool = {
   cid: Scalars['Int'];
   /** decimal percentage, 1 means 100% */
   commission: Scalars['BigDecimal'];
+  cumulativeOwnerRewards: Scalars['BigDecimal'];
   delegations: Array<Delegation>;
   delegatorCount: Scalars['Int'];
   freeValue: Scalars['BigDecimal'];
@@ -371,6 +426,10 @@ export const BasePoolKind = {
 
 export type BasePoolKind = typeof BasePoolKind[keyof typeof BasePoolKind];
 export const BasePoolOrderByInput = {
+  AccountCumulativeStakePoolOwnerRewardsAsc: 'account_cumulativeStakePoolOwnerRewards_ASC',
+  AccountCumulativeStakePoolOwnerRewardsDesc: 'account_cumulativeStakePoolOwnerRewards_DESC',
+  AccountCumulativeVaultOwnerRewardsAsc: 'account_cumulativeVaultOwnerRewards_ASC',
+  AccountCumulativeVaultOwnerRewardsDesc: 'account_cumulativeVaultOwnerRewards_DESC',
   AccountIdAsc: 'account_id_ASC',
   AccountIdDesc: 'account_id_DESC',
   AccountIdentityDisplayAsc: 'account_identityDisplay_ASC',
@@ -395,6 +454,8 @@ export const BasePoolOrderByInput = {
   CidDesc: 'cid_DESC',
   CommissionAsc: 'commission_ASC',
   CommissionDesc: 'commission_DESC',
+  CumulativeOwnerRewardsAsc: 'cumulativeOwnerRewards_ASC',
+  CumulativeOwnerRewardsDesc: 'cumulativeOwnerRewards_DESC',
   DelegatorCountAsc: 'delegatorCount_ASC',
   DelegatorCountDesc: 'delegatorCount_DESC',
   FreeValueAsc: 'freeValue_ASC',
@@ -403,6 +464,10 @@ export const BasePoolOrderByInput = {
   IdDesc: 'id_DESC',
   KindAsc: 'kind_ASC',
   KindDesc: 'kind_DESC',
+  OwnerCumulativeStakePoolOwnerRewardsAsc: 'owner_cumulativeStakePoolOwnerRewards_ASC',
+  OwnerCumulativeStakePoolOwnerRewardsDesc: 'owner_cumulativeStakePoolOwnerRewards_DESC',
+  OwnerCumulativeVaultOwnerRewardsAsc: 'owner_cumulativeVaultOwnerRewards_ASC',
+  OwnerCumulativeVaultOwnerRewardsDesc: 'owner_cumulativeVaultOwnerRewards_DESC',
   OwnerIdAsc: 'owner_id_ASC',
   OwnerIdDesc: 'owner_id_DESC',
   OwnerIdentityDisplayAsc: 'owner_identityDisplay_ASC',
@@ -465,6 +530,7 @@ export type BasePoolSnapshot = {
   apr: Scalars['BigDecimal'];
   basePool: BasePool;
   commission: Scalars['BigDecimal'];
+  cumulativeOwnerRewards: Scalars['BigDecimal'];
   delegatorCount: Scalars['Int'];
   id: Scalars['String'];
   idleWorkerCount?: Maybe<Scalars['Int']>;
@@ -491,6 +557,8 @@ export const BasePoolSnapshotOrderByInput = {
   BasePoolCidDesc: 'basePool_cid_DESC',
   BasePoolCommissionAsc: 'basePool_commission_ASC',
   BasePoolCommissionDesc: 'basePool_commission_DESC',
+  BasePoolCumulativeOwnerRewardsAsc: 'basePool_cumulativeOwnerRewards_ASC',
+  BasePoolCumulativeOwnerRewardsDesc: 'basePool_cumulativeOwnerRewards_DESC',
   BasePoolDelegatorCountAsc: 'basePool_delegatorCount_ASC',
   BasePoolDelegatorCountDesc: 'basePool_delegatorCount_DESC',
   BasePoolFreeValueAsc: 'basePool_freeValue_ASC',
@@ -517,6 +585,8 @@ export const BasePoolSnapshotOrderByInput = {
   BasePoolWithdrawingValueDesc: 'basePool_withdrawingValue_DESC',
   CommissionAsc: 'commission_ASC',
   CommissionDesc: 'commission_DESC',
+  CumulativeOwnerRewardsAsc: 'cumulativeOwnerRewards_ASC',
+  CumulativeOwnerRewardsDesc: 'cumulativeOwnerRewards_DESC',
   DelegatorCountAsc: 'delegatorCount_ASC',
   DelegatorCountDesc: 'delegatorCount_DESC',
   IdAsc: 'id_ASC',
@@ -559,6 +629,15 @@ export type BasePoolSnapshotWhereInput = {
   commission_lte?: InputMaybe<Scalars['BigDecimal']>;
   commission_not_eq?: InputMaybe<Scalars['BigDecimal']>;
   commission_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  cumulativeOwnerRewards_eq?: InputMaybe<Scalars['BigDecimal']>;
+  cumulativeOwnerRewards_gt?: InputMaybe<Scalars['BigDecimal']>;
+  cumulativeOwnerRewards_gte?: InputMaybe<Scalars['BigDecimal']>;
+  cumulativeOwnerRewards_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  cumulativeOwnerRewards_isNull?: InputMaybe<Scalars['Boolean']>;
+  cumulativeOwnerRewards_lt?: InputMaybe<Scalars['BigDecimal']>;
+  cumulativeOwnerRewards_lte?: InputMaybe<Scalars['BigDecimal']>;
+  cumulativeOwnerRewards_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  cumulativeOwnerRewards_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
   delegatorCount_eq?: InputMaybe<Scalars['Int']>;
   delegatorCount_gt?: InputMaybe<Scalars['Int']>;
   delegatorCount_gte?: InputMaybe<Scalars['Int']>;
@@ -680,6 +759,15 @@ export type BasePoolWhereInput = {
   commission_lte?: InputMaybe<Scalars['BigDecimal']>;
   commission_not_eq?: InputMaybe<Scalars['BigDecimal']>;
   commission_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  cumulativeOwnerRewards_eq?: InputMaybe<Scalars['BigDecimal']>;
+  cumulativeOwnerRewards_gt?: InputMaybe<Scalars['BigDecimal']>;
+  cumulativeOwnerRewards_gte?: InputMaybe<Scalars['BigDecimal']>;
+  cumulativeOwnerRewards_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  cumulativeOwnerRewards_isNull?: InputMaybe<Scalars['Boolean']>;
+  cumulativeOwnerRewards_lt?: InputMaybe<Scalars['BigDecimal']>;
+  cumulativeOwnerRewards_lte?: InputMaybe<Scalars['BigDecimal']>;
+  cumulativeOwnerRewards_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  cumulativeOwnerRewards_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
   delegations_every?: InputMaybe<DelegationWhereInput>;
   delegations_none?: InputMaybe<DelegationWhereInput>;
   delegations_some?: InputMaybe<DelegationWhereInput>;
@@ -816,6 +904,10 @@ export type BasePoolWhitelistEdge = {
 };
 
 export const BasePoolWhitelistOrderByInput = {
+  AccountCumulativeStakePoolOwnerRewardsAsc: 'account_cumulativeStakePoolOwnerRewards_ASC',
+  AccountCumulativeStakePoolOwnerRewardsDesc: 'account_cumulativeStakePoolOwnerRewards_DESC',
+  AccountCumulativeVaultOwnerRewardsAsc: 'account_cumulativeVaultOwnerRewards_ASC',
+  AccountCumulativeVaultOwnerRewardsDesc: 'account_cumulativeVaultOwnerRewards_DESC',
   AccountIdAsc: 'account_id_ASC',
   AccountIdDesc: 'account_id_DESC',
   AccountIdentityDisplayAsc: 'account_identityDisplay_ASC',
@@ -840,6 +932,8 @@ export const BasePoolWhitelistOrderByInput = {
   BasePoolCidDesc: 'basePool_cid_DESC',
   BasePoolCommissionAsc: 'basePool_commission_ASC',
   BasePoolCommissionDesc: 'basePool_commission_DESC',
+  BasePoolCumulativeOwnerRewardsAsc: 'basePool_cumulativeOwnerRewards_ASC',
+  BasePoolCumulativeOwnerRewardsDesc: 'basePool_cumulativeOwnerRewards_DESC',
   BasePoolDelegatorCountAsc: 'basePool_delegatorCount_ASC',
   BasePoolDelegatorCountDesc: 'basePool_delegatorCount_DESC',
   BasePoolFreeValueAsc: 'basePool_freeValue_ASC',
@@ -952,6 +1046,10 @@ export type DelegationEdge = {
 };
 
 export const DelegationOrderByInput = {
+  AccountCumulativeStakePoolOwnerRewardsAsc: 'account_cumulativeStakePoolOwnerRewards_ASC',
+  AccountCumulativeStakePoolOwnerRewardsDesc: 'account_cumulativeStakePoolOwnerRewards_DESC',
+  AccountCumulativeVaultOwnerRewardsAsc: 'account_cumulativeVaultOwnerRewards_ASC',
+  AccountCumulativeVaultOwnerRewardsDesc: 'account_cumulativeVaultOwnerRewards_DESC',
   AccountIdAsc: 'account_id_ASC',
   AccountIdDesc: 'account_id_DESC',
   AccountIdentityDisplayAsc: 'account_identityDisplay_ASC',
@@ -976,6 +1074,8 @@ export const DelegationOrderByInput = {
   BasePoolCidDesc: 'basePool_cid_DESC',
   BasePoolCommissionAsc: 'basePool_commission_ASC',
   BasePoolCommissionDesc: 'basePool_commission_DESC',
+  BasePoolCumulativeOwnerRewardsAsc: 'basePool_cumulativeOwnerRewards_ASC',
+  BasePoolCumulativeOwnerRewardsDesc: 'basePool_cumulativeOwnerRewards_DESC',
   BasePoolDelegatorCountAsc: 'basePool_delegatorCount_ASC',
   BasePoolDelegatorCountDesc: 'basePool_delegatorCount_DESC',
   BasePoolFreeValueAsc: 'basePool_freeValue_ASC',
@@ -1231,6 +1331,77 @@ export type DelegationsConnection = {
   totalCount: Scalars['Int'];
 };
 
+export type GlobalRewardsSnapshot = {
+  __typename?: 'GlobalRewardsSnapshot';
+  id: Scalars['String'];
+  /** block time */
+  updatedTime: Scalars['DateTime'];
+  value: Scalars['BigDecimal'];
+};
+
+export type GlobalRewardsSnapshotEdge = {
+  __typename?: 'GlobalRewardsSnapshotEdge';
+  cursor: Scalars['String'];
+  node: GlobalRewardsSnapshot;
+};
+
+export const GlobalRewardsSnapshotOrderByInput = {
+  IdAsc: 'id_ASC',
+  IdDesc: 'id_DESC',
+  UpdatedTimeAsc: 'updatedTime_ASC',
+  UpdatedTimeDesc: 'updatedTime_DESC',
+  ValueAsc: 'value_ASC',
+  ValueDesc: 'value_DESC'
+} as const;
+
+export type GlobalRewardsSnapshotOrderByInput = typeof GlobalRewardsSnapshotOrderByInput[keyof typeof GlobalRewardsSnapshotOrderByInput];
+export type GlobalRewardsSnapshotWhereInput = {
+  AND?: InputMaybe<Array<GlobalRewardsSnapshotWhereInput>>;
+  OR?: InputMaybe<Array<GlobalRewardsSnapshotWhereInput>>;
+  id_contains?: InputMaybe<Scalars['String']>;
+  id_containsInsensitive?: InputMaybe<Scalars['String']>;
+  id_endsWith?: InputMaybe<Scalars['String']>;
+  id_eq?: InputMaybe<Scalars['String']>;
+  id_gt?: InputMaybe<Scalars['String']>;
+  id_gte?: InputMaybe<Scalars['String']>;
+  id_in?: InputMaybe<Array<Scalars['String']>>;
+  id_isNull?: InputMaybe<Scalars['Boolean']>;
+  id_lt?: InputMaybe<Scalars['String']>;
+  id_lte?: InputMaybe<Scalars['String']>;
+  id_not_contains?: InputMaybe<Scalars['String']>;
+  id_not_containsInsensitive?: InputMaybe<Scalars['String']>;
+  id_not_endsWith?: InputMaybe<Scalars['String']>;
+  id_not_eq?: InputMaybe<Scalars['String']>;
+  id_not_in?: InputMaybe<Array<Scalars['String']>>;
+  id_not_startsWith?: InputMaybe<Scalars['String']>;
+  id_startsWith?: InputMaybe<Scalars['String']>;
+  updatedTime_eq?: InputMaybe<Scalars['DateTime']>;
+  updatedTime_gt?: InputMaybe<Scalars['DateTime']>;
+  updatedTime_gte?: InputMaybe<Scalars['DateTime']>;
+  updatedTime_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  updatedTime_isNull?: InputMaybe<Scalars['Boolean']>;
+  updatedTime_lt?: InputMaybe<Scalars['DateTime']>;
+  updatedTime_lte?: InputMaybe<Scalars['DateTime']>;
+  updatedTime_not_eq?: InputMaybe<Scalars['DateTime']>;
+  updatedTime_not_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  value_eq?: InputMaybe<Scalars['BigDecimal']>;
+  value_gt?: InputMaybe<Scalars['BigDecimal']>;
+  value_gte?: InputMaybe<Scalars['BigDecimal']>;
+  value_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  value_isNull?: InputMaybe<Scalars['Boolean']>;
+  value_lt?: InputMaybe<Scalars['BigDecimal']>;
+  value_lte?: InputMaybe<Scalars['BigDecimal']>;
+  value_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  value_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+};
+
+export type GlobalRewardsSnapshotsConnection = {
+  __typename?: 'GlobalRewardsSnapshotsConnection';
+  edges: Array<GlobalRewardsSnapshotEdge>;
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int'];
+};
+
 export type GlobalState = {
   __typename?: 'GlobalState';
   averageAprMultiplier: Scalars['BigDecimal'];
@@ -1239,6 +1410,7 @@ export type GlobalState = {
   averageBlockTimeUpdatedHeight: Scalars['Int'];
   averageBlockTimeUpdatedTime: Scalars['DateTime'];
   budgetPerBlock: Scalars['BigDecimal'];
+  cumulativeRewards: Scalars['BigDecimal'];
   height: Scalars['Int'];
   /** constant 0 */
   id: Scalars['String'];
@@ -1271,6 +1443,8 @@ export const GlobalStateOrderByInput = {
   AverageBlockTimeDesc: 'averageBlockTime_DESC',
   BudgetPerBlockAsc: 'budgetPerBlock_ASC',
   BudgetPerBlockDesc: 'budgetPerBlock_DESC',
+  CumulativeRewardsAsc: 'cumulativeRewards_ASC',
+  CumulativeRewardsDesc: 'cumulativeRewards_DESC',
   HeightAsc: 'height_ASC',
   HeightDesc: 'height_DESC',
   IdAsc: 'id_ASC',
@@ -1349,6 +1523,15 @@ export type GlobalStateWhereInput = {
   budgetPerBlock_lte?: InputMaybe<Scalars['BigDecimal']>;
   budgetPerBlock_not_eq?: InputMaybe<Scalars['BigDecimal']>;
   budgetPerBlock_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  cumulativeRewards_eq?: InputMaybe<Scalars['BigDecimal']>;
+  cumulativeRewards_gt?: InputMaybe<Scalars['BigDecimal']>;
+  cumulativeRewards_gte?: InputMaybe<Scalars['BigDecimal']>;
+  cumulativeRewards_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  cumulativeRewards_isNull?: InputMaybe<Scalars['Boolean']>;
+  cumulativeRewards_lt?: InputMaybe<Scalars['BigDecimal']>;
+  cumulativeRewards_lte?: InputMaybe<Scalars['BigDecimal']>;
+  cumulativeRewards_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  cumulativeRewards_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
   height_eq?: InputMaybe<Scalars['Int']>;
   height_gt?: InputMaybe<Scalars['Int']>;
   height_gte?: InputMaybe<Scalars['Int']>;
@@ -1501,6 +1684,10 @@ export const NftOrderByInput = {
   MintTimeDesc: 'mintTime_DESC',
   NftIdAsc: 'nftId_ASC',
   NftIdDesc: 'nftId_DESC',
+  OwnerCumulativeStakePoolOwnerRewardsAsc: 'owner_cumulativeStakePoolOwnerRewards_ASC',
+  OwnerCumulativeStakePoolOwnerRewardsDesc: 'owner_cumulativeStakePoolOwnerRewards_DESC',
+  OwnerCumulativeVaultOwnerRewardsAsc: 'owner_cumulativeVaultOwnerRewards_ASC',
+  OwnerCumulativeVaultOwnerRewardsDesc: 'owner_cumulativeVaultOwnerRewards_DESC',
   OwnerIdAsc: 'owner_id_ASC',
   OwnerIdDesc: 'owner_id_DESC',
   OwnerIdentityDisplayAsc: 'owner_identityDisplay_ASC',
@@ -1598,11 +1785,11 @@ export type Query = {
   accountById?: Maybe<Account>;
   /** @deprecated Use accountById */
   accountByUniqueInput?: Maybe<Account>;
-  accountValueSnapshotById?: Maybe<AccountValueSnapshot>;
-  /** @deprecated Use accountValueSnapshotById */
-  accountValueSnapshotByUniqueInput?: Maybe<AccountValueSnapshot>;
-  accountValueSnapshots: Array<AccountValueSnapshot>;
-  accountValueSnapshotsConnection: AccountValueSnapshotsConnection;
+  accountSnapshotById?: Maybe<AccountSnapshot>;
+  /** @deprecated Use accountSnapshotById */
+  accountSnapshotByUniqueInput?: Maybe<AccountSnapshot>;
+  accountSnapshots: Array<AccountSnapshot>;
+  accountSnapshotsConnection: AccountSnapshotsConnection;
   accounts: Array<Account>;
   accountsConnection: AccountsConnection;
   basePoolById?: Maybe<BasePool>;
@@ -1630,6 +1817,11 @@ export type Query = {
   delegationSnapshotsConnection: DelegationSnapshotsConnection;
   delegations: Array<Delegation>;
   delegationsConnection: DelegationsConnection;
+  globalRewardsSnapshotById?: Maybe<GlobalRewardsSnapshot>;
+  /** @deprecated Use globalRewardsSnapshotById */
+  globalRewardsSnapshotByUniqueInput?: Maybe<GlobalRewardsSnapshot>;
+  globalRewardsSnapshots: Array<GlobalRewardsSnapshot>;
+  globalRewardsSnapshotsConnection: GlobalRewardsSnapshotsConnection;
   globalStateById?: Maybe<GlobalState>;
   /** @deprecated Use globalStateById */
   globalStateByUniqueInput?: Maybe<GlobalState>;
@@ -1640,11 +1832,6 @@ export type Query = {
   nftByUniqueInput?: Maybe<Nft>;
   nfts: Array<Nft>;
   nftsConnection: NftsConnection;
-  rewardRecordById?: Maybe<RewardRecord>;
-  /** @deprecated Use rewardRecordById */
-  rewardRecordByUniqueInput?: Maybe<RewardRecord>;
-  rewardRecords: Array<RewardRecord>;
-  rewardRecordsConnection: RewardRecordsConnection;
   sessionById?: Maybe<Session>;
   /** @deprecated Use sessionById */
   sessionByUniqueInput?: Maybe<Session>;
@@ -1684,29 +1871,29 @@ export type QueryAccountByUniqueInputArgs = {
 };
 
 
-export type QueryAccountValueSnapshotByIdArgs = {
+export type QueryAccountSnapshotByIdArgs = {
   id: Scalars['String'];
 };
 
 
-export type QueryAccountValueSnapshotByUniqueInputArgs = {
+export type QueryAccountSnapshotByUniqueInputArgs = {
   where: WhereIdInput;
 };
 
 
-export type QueryAccountValueSnapshotsArgs = {
+export type QueryAccountSnapshotsArgs = {
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<Array<AccountValueSnapshotOrderByInput>>;
-  where?: InputMaybe<AccountValueSnapshotWhereInput>;
+  orderBy?: InputMaybe<Array<AccountSnapshotOrderByInput>>;
+  where?: InputMaybe<AccountSnapshotWhereInput>;
 };
 
 
-export type QueryAccountValueSnapshotsConnectionArgs = {
+export type QueryAccountSnapshotsConnectionArgs = {
   after?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Int']>;
-  orderBy: Array<AccountValueSnapshotOrderByInput>;
-  where?: InputMaybe<AccountValueSnapshotWhereInput>;
+  orderBy: Array<AccountSnapshotOrderByInput>;
+  where?: InputMaybe<AccountSnapshotWhereInput>;
 };
 
 
@@ -1856,6 +2043,32 @@ export type QueryDelegationsConnectionArgs = {
 };
 
 
+export type QueryGlobalRewardsSnapshotByIdArgs = {
+  id: Scalars['String'];
+};
+
+
+export type QueryGlobalRewardsSnapshotByUniqueInputArgs = {
+  where: WhereIdInput;
+};
+
+
+export type QueryGlobalRewardsSnapshotsArgs = {
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Array<GlobalRewardsSnapshotOrderByInput>>;
+  where?: InputMaybe<GlobalRewardsSnapshotWhereInput>;
+};
+
+
+export type QueryGlobalRewardsSnapshotsConnectionArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy: Array<GlobalRewardsSnapshotOrderByInput>;
+  where?: InputMaybe<GlobalRewardsSnapshotWhereInput>;
+};
+
+
 export type QueryGlobalStateByIdArgs = {
   id: Scalars['String'];
 };
@@ -1905,32 +2118,6 @@ export type QueryNftsConnectionArgs = {
   first?: InputMaybe<Scalars['Int']>;
   orderBy: Array<NftOrderByInput>;
   where?: InputMaybe<NftWhereInput>;
-};
-
-
-export type QueryRewardRecordByIdArgs = {
-  id: Scalars['String'];
-};
-
-
-export type QueryRewardRecordByUniqueInputArgs = {
-  where: WhereIdInput;
-};
-
-
-export type QueryRewardRecordsArgs = {
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<Array<RewardRecordOrderByInput>>;
-  where?: InputMaybe<RewardRecordWhereInput>;
-};
-
-
-export type QueryRewardRecordsConnectionArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  orderBy: Array<RewardRecordOrderByInput>;
-  where?: InputMaybe<RewardRecordWhereInput>;
 };
 
 
@@ -2061,77 +2248,6 @@ export type QueryWorkersConnectionArgs = {
   first?: InputMaybe<Scalars['Int']>;
   orderBy: Array<WorkerOrderByInput>;
   where?: InputMaybe<WorkerWhereInput>;
-};
-
-export type RewardRecord = {
-  __typename?: 'RewardRecord';
-  id: Scalars['String'];
-  /** block time */
-  time: Scalars['DateTime'];
-  value: Scalars['BigDecimal'];
-};
-
-export type RewardRecordEdge = {
-  __typename?: 'RewardRecordEdge';
-  cursor: Scalars['String'];
-  node: RewardRecord;
-};
-
-export const RewardRecordOrderByInput = {
-  IdAsc: 'id_ASC',
-  IdDesc: 'id_DESC',
-  TimeAsc: 'time_ASC',
-  TimeDesc: 'time_DESC',
-  ValueAsc: 'value_ASC',
-  ValueDesc: 'value_DESC'
-} as const;
-
-export type RewardRecordOrderByInput = typeof RewardRecordOrderByInput[keyof typeof RewardRecordOrderByInput];
-export type RewardRecordWhereInput = {
-  AND?: InputMaybe<Array<RewardRecordWhereInput>>;
-  OR?: InputMaybe<Array<RewardRecordWhereInput>>;
-  id_contains?: InputMaybe<Scalars['String']>;
-  id_containsInsensitive?: InputMaybe<Scalars['String']>;
-  id_endsWith?: InputMaybe<Scalars['String']>;
-  id_eq?: InputMaybe<Scalars['String']>;
-  id_gt?: InputMaybe<Scalars['String']>;
-  id_gte?: InputMaybe<Scalars['String']>;
-  id_in?: InputMaybe<Array<Scalars['String']>>;
-  id_isNull?: InputMaybe<Scalars['Boolean']>;
-  id_lt?: InputMaybe<Scalars['String']>;
-  id_lte?: InputMaybe<Scalars['String']>;
-  id_not_contains?: InputMaybe<Scalars['String']>;
-  id_not_containsInsensitive?: InputMaybe<Scalars['String']>;
-  id_not_endsWith?: InputMaybe<Scalars['String']>;
-  id_not_eq?: InputMaybe<Scalars['String']>;
-  id_not_in?: InputMaybe<Array<Scalars['String']>>;
-  id_not_startsWith?: InputMaybe<Scalars['String']>;
-  id_startsWith?: InputMaybe<Scalars['String']>;
-  time_eq?: InputMaybe<Scalars['DateTime']>;
-  time_gt?: InputMaybe<Scalars['DateTime']>;
-  time_gte?: InputMaybe<Scalars['DateTime']>;
-  time_in?: InputMaybe<Array<Scalars['DateTime']>>;
-  time_isNull?: InputMaybe<Scalars['Boolean']>;
-  time_lt?: InputMaybe<Scalars['DateTime']>;
-  time_lte?: InputMaybe<Scalars['DateTime']>;
-  time_not_eq?: InputMaybe<Scalars['DateTime']>;
-  time_not_in?: InputMaybe<Array<Scalars['DateTime']>>;
-  value_eq?: InputMaybe<Scalars['BigDecimal']>;
-  value_gt?: InputMaybe<Scalars['BigDecimal']>;
-  value_gte?: InputMaybe<Scalars['BigDecimal']>;
-  value_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
-  value_isNull?: InputMaybe<Scalars['Boolean']>;
-  value_lt?: InputMaybe<Scalars['BigDecimal']>;
-  value_lte?: InputMaybe<Scalars['BigDecimal']>;
-  value_not_eq?: InputMaybe<Scalars['BigDecimal']>;
-  value_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
-};
-
-export type RewardRecordsConnection = {
-  __typename?: 'RewardRecordsConnection';
-  edges: Array<RewardRecordEdge>;
-  pageInfo: PageInfo;
-  totalCount: Scalars['Int'];
 };
 
 export type Session = {
@@ -2350,6 +2466,8 @@ export const StakePoolOrderByInput = {
   BasePoolCidDesc: 'basePool_cid_DESC',
   BasePoolCommissionAsc: 'basePool_commission_ASC',
   BasePoolCommissionDesc: 'basePool_commission_DESC',
+  BasePoolCumulativeOwnerRewardsAsc: 'basePool_cumulativeOwnerRewards_ASC',
+  BasePoolCumulativeOwnerRewardsDesc: 'basePool_cumulativeOwnerRewards_DESC',
   BasePoolDelegatorCountAsc: 'basePool_delegatorCount_ASC',
   BasePoolDelegatorCountDesc: 'basePool_delegatorCount_DESC',
   BasePoolFreeValueAsc: 'basePool_freeValue_ASC',
@@ -2502,6 +2620,8 @@ export const VaultOrderByInput = {
   BasePoolCidDesc: 'basePool_cid_DESC',
   BasePoolCommissionAsc: 'basePool_commission_ASC',
   BasePoolCommissionDesc: 'basePool_commission_DESC',
+  BasePoolCumulativeOwnerRewardsAsc: 'basePool_cumulativeOwnerRewards_ASC',
+  BasePoolCumulativeOwnerRewardsDesc: 'basePool_cumulativeOwnerRewards_DESC',
   BasePoolDelegatorCountAsc: 'basePool_delegatorCount_ASC',
   BasePoolDelegatorCountDesc: 'basePool_delegatorCount_DESC',
   BasePoolFreeValueAsc: 'basePool_freeValue_ASC',
@@ -2940,15 +3060,15 @@ export type AccountByIdQueryVariables = Exact<{
 
 export type AccountByIdQuery = { __typename?: 'Query', accountById?: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null, stakePoolNftCount: number, stakePoolValue: string, stakePoolAvgAprMultiplier: string, vaultNftCount: number, vaultValue: string, vaultAvgAprMultiplier: string, ownedPools: Array<{ __typename?: 'BasePool', id: string, account: { __typename?: 'Account', id: string, stakePoolNftCount: number, stakePoolValue: string, stakePoolAvgAprMultiplier: string, vaultNftCount: number, vaultValue: string, vaultAvgAprMultiplier: string } }> } | null };
 
-export type AccountValueSnapshotsConnectionQueryVariables = Exact<{
-  orderBy: Array<AccountValueSnapshotOrderByInput> | AccountValueSnapshotOrderByInput;
+export type AccountSnapshotsConnectionQueryVariables = Exact<{
+  orderBy: Array<AccountSnapshotOrderByInput> | AccountSnapshotOrderByInput;
   after?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Int']>;
-  where?: InputMaybe<AccountValueSnapshotWhereInput>;
+  where?: InputMaybe<AccountSnapshotWhereInput>;
 }>;
 
 
-export type AccountValueSnapshotsConnectionQuery = { __typename?: 'Query', accountValueSnapshotsConnection: { __typename?: 'AccountValueSnapshotsConnection', totalCount: number, edges: Array<{ __typename?: 'AccountValueSnapshotEdge', cursor: string, node: { __typename?: 'AccountValueSnapshot', updatedTime: string, value: string } }> } };
+export type AccountSnapshotsConnectionQuery = { __typename?: 'Query', accountSnapshotsConnection: { __typename?: 'AccountSnapshotsConnection', totalCount: number, edges: Array<{ __typename?: 'AccountSnapshotEdge', cursor: string, node: { __typename?: 'AccountSnapshot', updatedTime: string, delegationValue: string } }> } };
 
 export type BasePoolCommonFragment = { __typename?: 'BasePool', cid: number, commission: string, delegatorCount: number, freeValue: string, id: string, kind: BasePoolKind, aprMultiplier: string, pid: string, releasingValue: string, sharePrice: string, totalShares: string, totalValue: string, whitelistEnabled: boolean, withdrawingShares: string, withdrawingValue: string, account: { __typename?: 'Account', id: string, stakePoolNftCount: number, stakePoolValue: string }, owner: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null }, stakePool?: { __typename?: 'StakePool', capacity?: string | null, delegable?: string | null, idleWorkerCount: number, ownerReward: string, workerCount: number } | null, vault?: { __typename?: 'Vault', claimableOwnerShares: string, lastSharePriceCheckpoint: string } | null, whitelists: Array<{ __typename?: 'BasePoolWhitelist', account: { __typename?: 'Account', id: string } }> };
 
@@ -2997,10 +3117,11 @@ export type BasePoolSnapshotsConnectionQueryVariables = Exact<{
   withDelegatorCount?: InputMaybe<Scalars['Boolean']>;
   withWorkerCount?: InputMaybe<Scalars['Boolean']>;
   withStakePoolCount?: InputMaybe<Scalars['Boolean']>;
+  withCumulativeOwnerRewards?: InputMaybe<Scalars['Boolean']>;
 }>;
 
 
-export type BasePoolSnapshotsConnectionQuery = { __typename?: 'Query', basePoolSnapshotsConnection: { __typename?: 'BasePoolSnapshotsConnection', totalCount: number, edges: Array<{ __typename?: 'BasePoolSnapshotEdge', cursor: string, node: { __typename?: 'BasePoolSnapshot', updatedTime: string, apr?: string, commission?: string, totalValue?: string, delegatorCount?: number, workerCount?: number | null, idleWorkerCount?: number | null, stakePoolCount?: number | null } }> } };
+export type BasePoolSnapshotsConnectionQuery = { __typename?: 'Query', basePoolSnapshotsConnection: { __typename?: 'BasePoolSnapshotsConnection', totalCount: number, edges: Array<{ __typename?: 'BasePoolSnapshotEdge', cursor: string, node: { __typename?: 'BasePoolSnapshot', updatedTime: string, apr?: string, commission?: string, totalValue?: string, delegatorCount?: number, workerCount?: number | null, idleWorkerCount?: number | null, stakePoolCount?: number | null, cumulativeOwnerRewards?: string } }> } };
 
 export type DelegationCommonFragment = { __typename?: 'Delegation', id: string, shares: string, value: string, cost: string, withdrawalStartTime?: string | null, withdrawingShares: string, withdrawingValue: string, basePool: { __typename?: 'BasePool', id: string, kind: BasePoolKind, freeValue: string, sharePrice: string, aprMultiplier: string, withdrawingShares: string, owner: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null } }, delegationNft: { __typename?: 'Nft', cid: number, nftId: number, mintTime?: string | null }, withdrawalNft?: { __typename?: 'Nft', cid: number, nftId: number } | null, account: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null, basePool?: { __typename?: 'BasePool', id: string } | null } };
 
@@ -3033,10 +3154,19 @@ export type DelegationSnapshotsConnectionQueryVariables = Exact<{
 
 export type DelegationSnapshotsConnectionQuery = { __typename?: 'Query', delegationSnapshotsConnection: { __typename?: 'DelegationSnapshotsConnection', totalCount: number, edges: Array<{ __typename?: 'DelegationSnapshotEdge', cursor: string, node: { __typename?: 'DelegationSnapshot', updatedTime: string, cost: string, value: string } }> } };
 
+export type GlobalRewardsSnapshotsConnectionQueryVariables = Exact<{
+  orderBy: Array<GlobalRewardsSnapshotOrderByInput> | GlobalRewardsSnapshotOrderByInput;
+  first?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<GlobalRewardsSnapshotWhereInput>;
+}>;
+
+
+export type GlobalRewardsSnapshotsConnectionQuery = { __typename?: 'Query', globalRewardsSnapshotsConnection: { __typename?: 'GlobalRewardsSnapshotsConnection', edges: Array<{ __typename?: 'GlobalRewardsSnapshotEdge', node: { __typename?: 'GlobalRewardsSnapshot', value: string } }> } };
+
 export type GlobalStateQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GlobalStateQuery = { __typename?: 'Query', squidStatus?: { __typename?: 'SquidStatus', height?: number | null } | null, globalStateById?: { __typename?: 'GlobalState', averageBlockTime: number, averageAprMultiplier: string, height: number, totalValue: string, idleWorkerShares: string, budgetPerBlock: string, k: string, phaRate: string, re: string, treasuryRatio: string, vMax: string } | null };
+export type GlobalStateQuery = { __typename?: 'Query', squidStatus?: { __typename?: 'SquidStatus', height?: number | null } | null, globalStateById?: { __typename?: 'GlobalState', averageBlockTime: number, averageAprMultiplier: string, height: number, totalValue: string, idleWorkerShares: string, budgetPerBlock: string, k: string, phaRate: string, re: string, treasuryRatio: string, vMax: string, cumulativeRewards: string } | null };
 
 export type IdleWorkerCountQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -3052,16 +3182,6 @@ export type NftsConnectionQueryVariables = Exact<{
 
 
 export type NftsConnectionQuery = { __typename?: 'Query', nftsConnection: { __typename?: 'NftsConnection', totalCount: number, edges: Array<{ __typename?: 'NftEdge', cursor: string, node: { __typename?: 'Nft', id: string, cid: number, nftId: number, mintTime?: string | null, owner: { __typename?: 'Account', id: string }, delegation?: { __typename?: 'Delegation', value: string, basePool: { __typename?: 'BasePool', id: string, kind: BasePoolKind } } | null } }>, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string, endCursor: string } } };
-
-export type RewardRecordsConnectionQueryVariables = Exact<{
-  orderBy: Array<RewardRecordOrderByInput> | RewardRecordOrderByInput;
-  where?: InputMaybe<RewardRecordWhereInput>;
-  after?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-}>;
-
-
-export type RewardRecordsConnectionQuery = { __typename?: 'Query', rewardRecordsConnection: { __typename?: 'RewardRecordsConnection', totalCount: number, edges: Array<{ __typename?: 'RewardRecordEdge', node: { __typename?: 'RewardRecord', id: string, time: string, value: string } }> } };
 
 export type BasePoolWhitelistsConnectionQueryVariables = Exact<{
   orderBy: Array<BasePoolWhitelistOrderByInput> | BasePoolWhitelistOrderByInput;
@@ -3234,9 +3354,9 @@ export const useInfiniteAccountByIdQuery = <
       options
     );
 
-export const AccountValueSnapshotsConnectionDocument = `
-    query AccountValueSnapshotsConnection($orderBy: [AccountValueSnapshotOrderByInput!]!, $after: String, $first: Int, $where: AccountValueSnapshotWhereInput) {
-  accountValueSnapshotsConnection(
+export const AccountSnapshotsConnectionDocument = `
+    query AccountSnapshotsConnection($orderBy: [AccountSnapshotOrderByInput!]!, $after: String, $first: Int, $where: AccountSnapshotWhereInput) {
+  accountSnapshotsConnection(
     orderBy: $orderBy
     after: $after
     first: $first
@@ -3246,40 +3366,40 @@ export const AccountValueSnapshotsConnectionDocument = `
     edges {
       node {
         updatedTime
-        value
+        delegationValue
       }
       cursor
     }
   }
 }
     `;
-export const useAccountValueSnapshotsConnectionQuery = <
-      TData = AccountValueSnapshotsConnectionQuery,
+export const useAccountSnapshotsConnectionQuery = <
+      TData = AccountSnapshotsConnectionQuery,
       TError = unknown
     >(
       client: GraphQLClient,
-      variables: AccountValueSnapshotsConnectionQueryVariables,
-      options?: UseQueryOptions<AccountValueSnapshotsConnectionQuery, TError, TData>,
+      variables: AccountSnapshotsConnectionQueryVariables,
+      options?: UseQueryOptions<AccountSnapshotsConnectionQuery, TError, TData>,
       headers?: RequestInit['headers']
     ) =>
-    useQuery<AccountValueSnapshotsConnectionQuery, TError, TData>(
-      ['AccountValueSnapshotsConnection', variables],
-      fetcher<AccountValueSnapshotsConnectionQuery, AccountValueSnapshotsConnectionQueryVariables>(client, AccountValueSnapshotsConnectionDocument, variables, headers),
+    useQuery<AccountSnapshotsConnectionQuery, TError, TData>(
+      ['AccountSnapshotsConnection', variables],
+      fetcher<AccountSnapshotsConnectionQuery, AccountSnapshotsConnectionQueryVariables>(client, AccountSnapshotsConnectionDocument, variables, headers),
       options
     );
-export const useInfiniteAccountValueSnapshotsConnectionQuery = <
-      TData = AccountValueSnapshotsConnectionQuery,
+export const useInfiniteAccountSnapshotsConnectionQuery = <
+      TData = AccountSnapshotsConnectionQuery,
       TError = unknown
     >(
-      pageParamKey: keyof AccountValueSnapshotsConnectionQueryVariables,
+      pageParamKey: keyof AccountSnapshotsConnectionQueryVariables,
       client: GraphQLClient,
-      variables: AccountValueSnapshotsConnectionQueryVariables,
-      options?: UseInfiniteQueryOptions<AccountValueSnapshotsConnectionQuery, TError, TData>,
+      variables: AccountSnapshotsConnectionQueryVariables,
+      options?: UseInfiniteQueryOptions<AccountSnapshotsConnectionQuery, TError, TData>,
       headers?: RequestInit['headers']
     ) =>
-    useInfiniteQuery<AccountValueSnapshotsConnectionQuery, TError, TData>(
-      ['AccountValueSnapshotsConnection.infinite', variables],
-      (metaData) => fetcher<AccountValueSnapshotsConnectionQuery, AccountValueSnapshotsConnectionQueryVariables>(client, AccountValueSnapshotsConnectionDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
+    useInfiniteQuery<AccountSnapshotsConnectionQuery, TError, TData>(
+      ['AccountSnapshotsConnection.infinite', variables],
+      (metaData) => fetcher<AccountSnapshotsConnectionQuery, AccountSnapshotsConnectionQueryVariables>(client, AccountSnapshotsConnectionDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
       options
     );
 
@@ -3476,7 +3596,7 @@ export const useInfiniteOwnedVaultsQuery = <
     );
 
 export const BasePoolSnapshotsConnectionDocument = `
-    query BasePoolSnapshotsConnection($orderBy: [BasePoolSnapshotOrderByInput!]!, $after: String, $first: Int, $where: BasePoolSnapshotWhereInput, $withApr: Boolean = false, $withCommission: Boolean = false, $withTotalValue: Boolean = false, $withDelegatorCount: Boolean = false, $withWorkerCount: Boolean = false, $withStakePoolCount: Boolean = false) {
+    query BasePoolSnapshotsConnection($orderBy: [BasePoolSnapshotOrderByInput!]!, $after: String, $first: Int, $where: BasePoolSnapshotWhereInput, $withApr: Boolean = false, $withCommission: Boolean = false, $withTotalValue: Boolean = false, $withDelegatorCount: Boolean = false, $withWorkerCount: Boolean = false, $withStakePoolCount: Boolean = false, $withCumulativeOwnerRewards: Boolean = false) {
   basePoolSnapshotsConnection(
     orderBy: $orderBy
     after: $after
@@ -3493,6 +3613,7 @@ export const BasePoolSnapshotsConnectionDocument = `
         workerCount @include(if: $withWorkerCount)
         idleWorkerCount @include(if: $withWorkerCount)
         stakePoolCount @include(if: $withStakePoolCount)
+        cumulativeOwnerRewards @include(if: $withCumulativeOwnerRewards)
       }
       cursor
     }
@@ -3681,6 +3802,51 @@ export const useInfiniteDelegationSnapshotsConnectionQuery = <
       options
     );
 
+export const GlobalRewardsSnapshotsConnectionDocument = `
+    query GlobalRewardsSnapshotsConnection($orderBy: [GlobalRewardsSnapshotOrderByInput!]!, $first: Int, $where: GlobalRewardsSnapshotWhereInput) {
+  globalRewardsSnapshotsConnection(
+    orderBy: $orderBy
+    first: $first
+    where: $where
+  ) {
+    edges {
+      node {
+        value
+      }
+    }
+  }
+}
+    `;
+export const useGlobalRewardsSnapshotsConnectionQuery = <
+      TData = GlobalRewardsSnapshotsConnectionQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GlobalRewardsSnapshotsConnectionQueryVariables,
+      options?: UseQueryOptions<GlobalRewardsSnapshotsConnectionQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GlobalRewardsSnapshotsConnectionQuery, TError, TData>(
+      ['GlobalRewardsSnapshotsConnection', variables],
+      fetcher<GlobalRewardsSnapshotsConnectionQuery, GlobalRewardsSnapshotsConnectionQueryVariables>(client, GlobalRewardsSnapshotsConnectionDocument, variables, headers),
+      options
+    );
+export const useInfiniteGlobalRewardsSnapshotsConnectionQuery = <
+      TData = GlobalRewardsSnapshotsConnectionQuery,
+      TError = unknown
+    >(
+      pageParamKey: keyof GlobalRewardsSnapshotsConnectionQueryVariables,
+      client: GraphQLClient,
+      variables: GlobalRewardsSnapshotsConnectionQueryVariables,
+      options?: UseInfiniteQueryOptions<GlobalRewardsSnapshotsConnectionQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useInfiniteQuery<GlobalRewardsSnapshotsConnectionQuery, TError, TData>(
+      ['GlobalRewardsSnapshotsConnection.infinite', variables],
+      (metaData) => fetcher<GlobalRewardsSnapshotsConnectionQuery, GlobalRewardsSnapshotsConnectionQueryVariables>(client, GlobalRewardsSnapshotsConnectionDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
+      options
+    );
+
 export const GlobalStateDocument = `
     query GlobalState {
   squidStatus {
@@ -3698,6 +3864,7 @@ export const GlobalStateDocument = `
     re
     treasuryRatio
     vMax
+    cumulativeRewards
   }
 }
     `;
@@ -3827,55 +3994,6 @@ export const useInfiniteNftsConnectionQuery = <
     useInfiniteQuery<NftsConnectionQuery, TError, TData>(
       ['NftsConnection.infinite', variables],
       (metaData) => fetcher<NftsConnectionQuery, NftsConnectionQueryVariables>(client, NftsConnectionDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
-      options
-    );
-
-export const RewardRecordsConnectionDocument = `
-    query RewardRecordsConnection($orderBy: [RewardRecordOrderByInput!]!, $where: RewardRecordWhereInput, $after: String, $first: Int) {
-  rewardRecordsConnection(
-    orderBy: $orderBy
-    where: $where
-    after: $after
-    first: $first
-  ) {
-    edges {
-      node {
-        id
-        time
-        value
-      }
-    }
-    totalCount
-  }
-}
-    `;
-export const useRewardRecordsConnectionQuery = <
-      TData = RewardRecordsConnectionQuery,
-      TError = unknown
-    >(
-      client: GraphQLClient,
-      variables: RewardRecordsConnectionQueryVariables,
-      options?: UseQueryOptions<RewardRecordsConnectionQuery, TError, TData>,
-      headers?: RequestInit['headers']
-    ) =>
-    useQuery<RewardRecordsConnectionQuery, TError, TData>(
-      ['RewardRecordsConnection', variables],
-      fetcher<RewardRecordsConnectionQuery, RewardRecordsConnectionQueryVariables>(client, RewardRecordsConnectionDocument, variables, headers),
-      options
-    );
-export const useInfiniteRewardRecordsConnectionQuery = <
-      TData = RewardRecordsConnectionQuery,
-      TError = unknown
-    >(
-      pageParamKey: keyof RewardRecordsConnectionQueryVariables,
-      client: GraphQLClient,
-      variables: RewardRecordsConnectionQueryVariables,
-      options?: UseInfiniteQueryOptions<RewardRecordsConnectionQuery, TError, TData>,
-      headers?: RequestInit['headers']
-    ) =>
-    useInfiniteQuery<RewardRecordsConnectionQuery, TError, TData>(
-      ['RewardRecordsConnection.infinite', variables],
-      (metaData) => fetcher<RewardRecordsConnectionQuery, RewardRecordsConnectionQueryVariables>(client, RewardRecordsConnectionDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
       options
     );
 

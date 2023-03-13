@@ -1,4 +1,4 @@
-import {Stack, type SxProps, Typography} from '@mui/material'
+import {Stack, Typography, type SxProps} from '@mui/material'
 import {type FC, type ReactNode} from 'react'
 
 const SectionHeader: FC<{
@@ -14,7 +14,7 @@ const SectionHeader: FC<{
           alignItems="center"
           justifyContent="center"
           flexShrink="0"
-          width={{xs: 32, md: 48}}
+          width={{xs: 32, md: 40}}
         >
           {icon}
         </Stack>

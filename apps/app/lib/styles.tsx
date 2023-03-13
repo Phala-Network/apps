@@ -27,7 +27,7 @@ export const globalStyles = css`
   }
 
   sub {
-    font-size: 50%;
+    font-size: 62.5%;
     vertical-align: baseline;
     margin-left: 0.25em;
   }

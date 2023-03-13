@@ -76,7 +76,7 @@ const assetsMetadataFetcher = async ([api]: [ApiPromise]): Promise<
 const useAssetsMetadata = (): Record<number, AssetMetadata> | undefined => {
   const api = usePolkadotApi()
   const {data} = useSWRImmutable(
-    api != null ? [api, 'assetsMetadata'] : null,
+    api != null && [api, 'assetsMetadata'],
     assetsMetadataFetcher
   )
   return data

@@ -140,7 +140,9 @@ const Delegate: NextPage = () => {
                 size="small"
                 value={chartDays}
                 onChange={(_, value) => {
-                  setChartDays(value)
+                  if (value != null) {
+                    setChartDays(value)
+                  }
                 }}
               >
                 <ToggleButton sx={{width: 40}} value={7}>
@@ -172,7 +174,7 @@ const Delegate: NextPage = () => {
         {asAccount && (
           <Stack
             direction="row"
-            mt={{xs: 2, md: 5}}
+            mt={{xs: 2, md: 4}}
             alignItems="center"
             justifyContent="center"
           >
@@ -226,7 +228,7 @@ const Delegate: NextPage = () => {
       </NoSsr>
 
       <BasePoolList
-        sx={{mt: {xs: 2, md: 5}}}
+        sx={{mt: {xs: 2, md: 4}}}
         variant="delegate"
         kind={isVault ? 'Vault' : 'StakePool'}
       />

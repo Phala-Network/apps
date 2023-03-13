@@ -192,7 +192,10 @@ const DelegateCard: FC<{
             <ExtraProperties basePool={basePool} />
           </Stack>
           <Stack flex="1 0">
-            <Box flex="1 0">
+            <Box
+              flex={{xs: 'none', md: '1 0'}}
+              height={{xs: 130, md: undefined}}
+            >
               <BasePoolChart basePool={basePool} kind="apr" />
             </Box>
             <DelegateInput basePool={basePool} />

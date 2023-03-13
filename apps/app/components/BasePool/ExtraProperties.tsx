@@ -42,11 +42,7 @@ const ExtraProperties: FC<{basePool: BasePoolCommonFragment; sx?: SxProps}> = ({
         `${toCurrency(basePool.totalValue)} PHA`,
         'totalDelegation',
       ],
-      [
-        'Free',
-        `${toCurrency(Decimal.max(basePool.freeValue, 0))} PHA`,
-        'freeValue',
-      ],
+      ['Free', `${toCurrency(basePool.freeValue)} PHA`, 'freeValue'],
       [
         'Withdrawing',
         `${toCurrency(basePool.withdrawingValue)} PHA`,

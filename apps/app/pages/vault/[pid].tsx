@@ -1,5 +1,6 @@
 import DetailPage from '@/components/BasePool/DetailPage'
 import DelegationList from '@/components/Delegation/List'
+import fixBasePoolFree from '@/lib/fixBasePoolFree'
 import getBasePoolServerSideProps, {
   type BasePoolServerSideProps,
 } from '@/lib/getBasePoolServerSideProps'
@@ -18,13 +19,20 @@ const Vault: NextPage<BasePoolServerSideProps> = ({
   initialDataUpdatedAt,
 }) => {
   const [account] = useAtom(polkadotAccountAtom)
-  const {data} = useBasePoolByIdQuery(
+  const {data: basePool} = useBasePoolByIdQuery(
     subsquidClient,
     {id: pid},
-    {initialData: initialData ?? undefined, initialDataUpdatedAt}
+    {
+      initialData: initialData ?? undefined,
+      initialDataUpdatedAt,
+      select: (data) => {
+        if (data.basePoolById != null) {
+          return fixBasePoolFree(data.basePoolById)
+        }
+      },
+    }
   )
 
-  const basePool = data?.basePoolById
   if (basePool == null) return null
 
   return (

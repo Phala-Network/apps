@@ -1,40 +1,30 @@
-import {type VoidFn} from '@polkadot/api/types'
 import Decimal from 'decimal.js'
-import {useEffect, useState} from 'react'
+import useSWRSubscription from 'swr/subscription'
 import usePolkadotApi from './usePolkadotApi'
 
 const useLockedWrappedBalance = (account?: string): Decimal | undefined => {
   const api = usePolkadotApi()
-  const [balance, setBalance] = useState<Decimal>()
+  const {data} = useSWRSubscription(
+    api != null && account != null && ['lockedWrappedBalance', account, api],
+    (_, {next}) => {
+      let unsubscribe = (): void => {}
+      if (api == null || account == null) {
+        return unsubscribe
+      }
+      void api.query.phalaWrappedBalances
+        .stakerAccounts(account, (res) => {
+          const unwrapped = res.unwrapOr({locked: 0})
+          next(null, new Decimal(unwrapped.locked.toString()).div(1e12))
+        })
+        .then((fn) => {
+          unsubscribe = fn
+        })
 
-  useEffect(() => {
-    setBalance(undefined)
-    if (api == null || account === undefined) {
-      return
+      return unsubscribe
     }
-    let unsub: VoidFn
-    let unmounted = false
-    void api.query.phalaWrappedBalances
-      .stakerAccounts(account, (res) => {
-        try {
-          const unwrapped = res.unwrap()
-          if (!unmounted) {
-            setBalance(new Decimal(unwrapped.locked.toString()).div(1e12))
-          }
-        } catch (err) {
-          setBalance(new Decimal(0))
-        }
-      })
-      .then((fn) => {
-        unsub = fn
-      })
-    return () => {
-      unmounted = true
-      unsub?.()
-    }
-  }, [api, account])
+  )
 
-  return balance
+  return data
 }
 
 export default useLockedWrappedBalance

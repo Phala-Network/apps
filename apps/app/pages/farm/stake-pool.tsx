@@ -15,27 +15,27 @@ import {useCallback, useMemo, useState, type FC} from 'react'
 const MyStakePools: FC = () => {
   const [account] = useAtom(polkadotAccountAtom)
   const [dialogOpen, setDialogOpen] = useState(false)
-  const {data} = useClaimableStakePoolsQuery(
+  const {data: edges} = useClaimableStakePoolsQuery(
     subsquidClient,
+    {accountId: account?.address, gt: '0'},
     {
-      accountId: account?.address,
-      gt: '0',
-    },
-    {enabled: account !== null}
+      enabled: account !== null,
+      select: (data) => data.basePoolsConnection.edges,
+    }
   )
   const ownerReward = useMemo(() => {
-    if (data == null) return
-    return data.basePoolsConnection.edges.reduce((acc, cur) => {
+    if (edges == null) return
+    return edges.reduce((acc, cur) => {
       if (cur.node.stakePool != null) {
         return acc.plus(cur.node.stakePool.ownerReward)
       }
       return acc
     }, new Decimal(0))
-  }, [data])
+  }, [edges])
   const claimablePools = useMemo(() => {
-    if (data == null) return []
-    return data.basePoolsConnection.edges.map((edge) => edge.node)
-  }, [data])
+    if (edges == null) return []
+    return edges.map((edge) => edge.node)
+  }, [edges])
 
   const onClose = useCallback(() => {
     setDialogOpen(false)

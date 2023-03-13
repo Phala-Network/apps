@@ -96,14 +96,13 @@ const DelegationDataCard: FC<{
 }
 
 const DelegationDetailCard: FC<{sx?: SxProps}> = ({sx}) => {
-  const {data} = useAccountQuery()
+  const {data: accountData} = useAccountQuery()
   const theme = useTheme()
   const api = usePolkadotApi()
   const signAndSend = useSignAndSend()
   const [account] = useAtom(polkadotAccountAtom)
   const lockedWrappedBalance = useLockedWrappedBalance(account?.address)
   const wrapped = useAssetBalance(account?.address, WPHA_ASSET_ID)
-  const accountState = data?.accountById
   const selectedVaultState = useSelectedVaultState()
   const asAccount = selectedVaultState === null
   const {
@@ -115,7 +114,7 @@ const DelegationDetailCard: FC<{sx?: SxProps}> = ({sx}) => {
     vaultAvgAprMultiplier,
   } =
     selectedVaultState?.account ??
-    (accountState === null
+    (accountData === null
       ? {
           stakePoolNftCount: 0,
           stakePoolValue: '0',
@@ -124,7 +123,7 @@ const DelegationDetailCard: FC<{sx?: SxProps}> = ({sx}) => {
           vaultValue: '0',
           vaultAvgAprMultiplier: '0',
         }
-      : accountState) ??
+      : accountData) ??
     {}
 
   const totalValue = useMemo(() => {

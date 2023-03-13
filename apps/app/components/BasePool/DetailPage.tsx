@@ -59,7 +59,7 @@ type DetailPageDialogAction = 'withdraw' | 'ownerSettings'
 const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
   const api = usePolkadotApi()
   const [chartTab, setChartTab] = useState<BasePoolChartKind>('apr')
-  const yesterday = useSWRValue(() => addDays(new Date(), -1).toISOString())
+  const yesterday = useSWRValue([], () => addDays(new Date(), -1).toISOString())
   const signAndSend = useSignAndSend()
   const [dialogOpen, setDialogOpen] = useState(false)
   const [dialogAction, setDialogAction] = useState<DetailPageDialogAction>()
@@ -145,7 +145,7 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
             spacing={2}
             direction={{xs: 'column', lg: 'row'}}
             alignItems={{xs: 'flex-start', lg: 'center'}}
-            sx={{p: {xs: 2, lg: 2.5}}}
+            sx={{px: 3, py: 2}}
           >
             <Stack
               flex="1 0"

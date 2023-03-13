@@ -268,9 +268,19 @@ const FarmCard: FC<{
             />
             <ExtraProperties basePool={basePool} />
           </Stack>
-          <Box flex="1 0">
-            <BasePoolChart basePool={basePool} kind="apr" />
-          </Box>
+          <Stack flex="1 0">
+            <Typography variant="h6" lineHeight={1}>
+              Daily Owner Rewards
+            </Typography>
+            <Box
+              mb={-2}
+              mt={2}
+              flex={{xs: 'none', md: '1 0'}}
+              height={{xs: 130, md: undefined}}
+            >
+              <BasePoolChart basePool={basePool} kind="ownerRewards" />
+            </Box>
+          </Stack>
         </Stack>
       </AccordionDetails>
     </Accordion>
