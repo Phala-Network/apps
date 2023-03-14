@@ -11,8 +11,11 @@ import useSelectedVaultState from '@/hooks/useSelectedVaultState'
 import useSignAndSend from '@/hooks/useSignAndSend'
 import useSWRValue from '@/hooks/useSWRValue'
 import {aprToApy} from '@/lib/apr'
+import fixBasePoolFree from '@/lib/fixBasePoolFree'
 import getDelegationProfit from '@/lib/getDelegationProfit'
 import {subsquidClient} from '@/lib/graphql'
+import {create} from 'mutative'
+
 import {
   useDelegationByIdQuery,
   type BasePoolCommonFragment,
@@ -87,7 +90,7 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
     </>
   )
   const apr = getApr(basePool.aprMultiplier)
-  const {data: delegationData, isLoading: isDelegationLoading} =
+  const {data: delegation, isLoading: isDelegationLoading} =
     useDelegationByIdQuery(
       subsquidClient,
       {
@@ -96,12 +99,20 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
         }`,
         snapshotsWhere: {updatedTime_gte: yesterday},
       },
-      {enabled: selectedVaultState != null || account !== null}
+      {
+        enabled: selectedVaultState != null || account !== null,
+        select: (data) => {
+          if (data.delegationById != null) {
+            return create(data.delegationById, (draft) => {
+              fixBasePoolFree(draft.basePool)
+            })
+          }
+        },
+      }
     )
   const onClose = useCallback(() => {
     setDialogOpen(false)
   }, [])
-  const {delegationById: delegation} = delegationData ?? {}
   const hasDelegation = delegation != null && delegation.shares !== '0'
   const poolHasWithdrawal = basePool.withdrawingShares !== '0'
 

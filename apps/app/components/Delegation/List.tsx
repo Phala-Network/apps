@@ -4,6 +4,7 @@ import ListSkeleton from '@/components/ListSkeleton'
 import SectionHeader from '@/components/SectionHeader'
 import useDebounced from '@/hooks/useDebounced'
 import useSWRValue from '@/hooks/useSWRValue'
+import fixBasePoolFree from '@/lib/fixBasePoolFree'
 import getDelegationProfit from '@/lib/getDelegationProfit'
 import {subsquidClient} from '@/lib/graphql'
 import {
@@ -36,6 +37,7 @@ import {
 } from '@mui/material'
 import {addDays} from 'date-fns'
 import Decimal from 'decimal.js'
+import {create} from 'mutative'
 import {useCallback, useEffect, useState, type FC} from 'react'
 import {useInView} from 'react-intersection-observer'
 import HorizonCard from './HorizonCard'
@@ -113,6 +115,15 @@ const DelegationList: FC<{
           lastPage.delegationsConnection.pageInfo.hasNextPage
             ? lastPage.delegationsConnection.pageInfo.endCursor
             : undefined,
+        select: (data) => {
+          return create(data, (draft) => {
+            draft.pages.forEach((page) => {
+              page.delegationsConnection.edges.forEach((edge) => {
+                fixBasePoolFree(edge.node.basePool)
+              })
+            })
+          })
+        },
       }
     )
 

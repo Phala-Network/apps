@@ -9,6 +9,7 @@ import {useBasePoolByIdQuery} from '@/lib/subsquidQuery'
 import {Box} from '@mui/material'
 import {polkadotAccountAtom} from '@phala/store'
 import {useAtom} from 'jotai'
+import {create} from 'mutative'
 import {type NextPage} from 'next'
 
 export const getServerSideProps = getBasePoolServerSideProps('Vault')
@@ -27,7 +28,7 @@ const Vault: NextPage<BasePoolServerSideProps> = ({
       initialDataUpdatedAt,
       select: (data) => {
         if (data.basePoolById != null) {
-          return fixBasePoolFree(data.basePoolById)
+          return create(data.basePoolById, fixBasePoolFree)
         }
       },
     }

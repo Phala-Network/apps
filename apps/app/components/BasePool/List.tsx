@@ -40,6 +40,7 @@ import {
 import {polkadotAccountAtom} from '@phala/store'
 import {getDecimalPattern} from '@phala/util'
 import {useAtom} from 'jotai'
+import {create} from 'mutative'
 import {useCallback, useEffect, useState, type FC} from 'react'
 import {useInView} from 'react-intersection-observer'
 import WikiButton from '../Wiki/Button'
@@ -206,20 +207,13 @@ const BasePoolList: FC<{
         enabled,
         keepPreviousData: true,
         select: (data) => {
-          return {
-            ...data,
-            pages: data.pages.map((page) => {
-              return {
-                ...page,
-                basePoolsConnection: {
-                  ...page.basePoolsConnection,
-                  edges: page.basePoolsConnection.edges.map((edge) => {
-                    return {...edge, node: fixBasePoolFree(edge.node)}
-                  }),
-                },
-              }
-            }),
-          }
+          return create(data, (draft) => {
+            draft.pages.forEach((page) => {
+              page.basePoolsConnection.edges.forEach((edge) => {
+                fixBasePoolFree(edge.node)
+              })
+            })
+          })
         },
         getNextPageParam: (lastPage) =>
           lastPage.basePoolsConnection.pageInfo.hasNextPage
