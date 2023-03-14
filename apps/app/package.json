@@ -47,6 +47,7 @@
     "jotai": "^1.13.1",
     "jotai-devtools": "^0.2.0",
     "lodash-es": "^4.17.21",
+    "mutative": "^0.4.2",
     "next": "^13.2.4",
     "notistack": "^2.0.8",
     "react": "^18.2.0",

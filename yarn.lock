@@ -2673,6 +2673,7 @@ __metadata:
     jotai: ^1.13.1
     jotai-devtools: ^0.2.0
     lodash-es: ^4.17.21
+    mutative: ^0.4.2
     next: ^13.2.4
     next-transpile-modules: ^10.0.0
     notistack: ^2.0.8
@@ -8272,6 +8273,13 @@ __metadata:
     duplexer2: ^0.1.2
     object-assign: ^4.1.0
   checksum: 99cf8934714da7f9ce03e1f0a99621a41443217d80849c62e22b31b6ac356b9acd22f41e555fd7a759f1c7c9d3273e7abff2fb82dff8285f00a6a1022727e4ab
+  languageName: node
+  linkType: hard
+
+"mutative@npm:^0.4.2":
+  version: 0.4.2
+  resolution: "mutative@npm:0.4.2"
+  checksum: fe5c579071bebbb32eb8da921fc4044bd1ca2ca399f998f49271d0bb35ff2c56eff0adcb66a2b398d62207f48ff6bc902bc9101278a30b8cb74ba2acce961a76
   languageName: node
   linkType: hard
 
