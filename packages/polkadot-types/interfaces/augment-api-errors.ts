@@ -17,6 +17,10 @@ declare module '@polkadot/api-base/types/errors' {
        **/
       AlreadyExists: AugmentedError<ApiType>;
       /**
+       * The asset is not live, and likely being destroyed.
+       **/
+      AssetNotLive: AugmentedError<ApiType>;
+      /**
        * Invalid metadata given.
        **/
       BadMetadata: AugmentedError<ApiType>;
@@ -33,9 +37,18 @@ declare module '@polkadot/api-base/types/errors' {
        **/
       Frozen: AugmentedError<ApiType>;
       /**
+       * The asset status is not the expected status.
+       **/
+      IncorrectStatus: AugmentedError<ApiType>;
+      /**
        * The asset ID is already taken.
        **/
       InUse: AugmentedError<ApiType>;
+      /**
+       * The asset is a live asset and is actively being used. Usually emit for operations such
+       * as `start_destroy` which require the asset to be in a destroying state.
+       **/
+      LiveAsset: AugmentedError<ApiType>;
       /**
        * Minimum balance should be non-zero.
        **/
@@ -58,6 +71,10 @@ declare module '@polkadot/api-base/types/errors' {
        * maximum number of consumers has been reached.
        **/
       NoProvider: AugmentedError<ApiType>;
+      /**
+       * The asset should be frozen before the given operation.
+       **/
+      NotFrozen: AugmentedError<ApiType>;
       /**
        * No approval exists that would allow the transfer.
        **/
@@ -1442,6 +1459,12 @@ declare module '@polkadot/api-base/types/errors' {
        **/
       [key: string]: AugmentedError<ApiType>;
     };
+    pwMarketplace: {
+      /**
+       * Generic error
+       **/
+      [key: string]: AugmentedError<ApiType>;
+    };
     pwNftSale: {
       BelowMinimumBalanceThreshold: AugmentedError<ApiType>;
       InvalidMetadata: AugmentedError<ApiType>;
@@ -1581,6 +1604,10 @@ declare module '@polkadot/api-base/types/errors' {
        **/
       CannotBuyOwnToken: AugmentedError<ApiType>;
       /**
+       * Cannot list NFT based on downstream logic implemented for MarketplaceHooks trait
+       **/
+      CannotListNft: AugmentedError<ApiType>;
+      /**
        * Cannot list NFT owned by a NFT
        **/
       CannotListNftOwnedByNft: AugmentedError<ApiType>;
@@ -1600,6 +1627,10 @@ declare module '@polkadot/api-base/types/errors' {
        * Listing has expired and cannot be bought
        **/
       ListingHasExpired: AugmentedError<ApiType>;
+      /**
+       * Marketplace owner not configured
+       **/
+      MarketplaceOwnerNotSet: AugmentedError<ApiType>;
       /**
        * Not possible to list non-transferable NFT
        **/

@@ -50,7 +50,7 @@ const DelegateInput: FC<{basePool: BasePoolCommonFragment; sx?: SxProps}> = ({
     if (
       api == null ||
       selectedVaultState === undefined ||
-      wrappedBalance === undefined
+      wrappedBalance == null
     ) {
       return
     }

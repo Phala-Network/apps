@@ -3,7 +3,6 @@ import useChainGuard from '@/hooks/useChainGuard'
 import useVaultReset from '@/hooks/useVaultReset'
 import {Container, useMediaQuery, useTheme} from '@mui/material'
 import {useConnectPolkadotWallet} from '@phala/lib'
-import {useAtomsDevtools} from 'jotai-devtools'
 import {SnackbarProvider} from 'notistack'
 import {type FC, type ReactNode} from 'react'
 import ScrollTop from './ScrollTop'
@@ -14,7 +13,6 @@ import WikiDialog from './Wiki/Dialog'
 const Layout: FC<{children: ReactNode}> = ({children}) => {
   const theme = useTheme()
   const matches = useMediaQuery(theme.breakpoints.up('md'))
-  useAtomsDevtools('Phala App')
   useConnectPolkadotWallet('Phala App', 30)
   useBlockHeightListener()
   useVaultReset()

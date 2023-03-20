@@ -1,7 +1,7 @@
-import {Asset, AssetId, ASSETS} from '@/config/asset'
-import {BridgeKind, BRIDGES} from '@/config/bridge'
-import {Chain, ChainId, CHAINS} from '@/config/chain'
-import {BridgeError, BRIDGE_ERROR_MESSAGES} from '@/config/error'
+import {ASSETS, type AssetId} from '@/config/asset'
+import {BRIDGES, type BridgeKind} from '@/config/bridge'
+import {CHAINS, type ChainId} from '@/config/chain'
+import {BRIDGE_ERROR_MESSAGES, type BridgeError} from '@/config/error'
 import {polkadotAccountAtom} from '@phala/store'
 import Decimal from 'decimal.js'
 import {atom} from 'jotai'
@@ -13,27 +13,27 @@ amountAtom.debugLabel = 'amount'
 
 const assetIdAtom = atom<AssetId>('pha')
 assetIdAtom.debugLabel = 'assetId'
-export const assetAtom = atom<Asset, AssetId>(
+export const assetAtom = atom(
   (get) => ASSETS[get(assetIdAtom)],
-  (get, set, update) => {
+  (get, set, update: AssetId) => {
     set(assetIdAtom, update)
   }
 )
 
 const fromChainIdAtom = atom<ChainId>('ethereum')
 fromChainIdAtom.debugLabel = 'fromChainId'
-export const fromChainAtom = atom<Chain, ChainId>(
+export const fromChainAtom = atom(
   (get) => CHAINS[get(fromChainIdAtom)],
-  (get, set, update) => {
+  (get, set, update: ChainId) => {
     set(fromChainIdAtom, update)
   }
 )
 
 const toChainIdAtom = atom<ChainId>('phala')
 toChainIdAtom.debugLabel = 'toChain'
-export const toChainAtom = atom<Chain, ChainId>(
+export const toChainAtom = atom(
   (get) => CHAINS[get(toChainIdAtom)],
-  (get, set, update) => {
+  (get, set, update: ChainId) => {
     set(toChainIdAtom, update)
   }
 )
@@ -45,8 +45,8 @@ export const fromAccountAtom = atom<string | null>((get) => {
   if (fromChain.kind === 'evm') {
     return evmAccount
   }
-  if (fromChain.kind === 'polkadot') {
-    return polkadotAccount && polkadotAccount.address
+  if (fromChain.kind === 'polkadot' && polkadotAccount != null) {
+    return polkadotAccount.address
   }
   return null
 })
@@ -72,7 +72,7 @@ export const existentialDepositAtom = atom<Decimal>((get) => {
   const asset = get(assetAtom)
   const existentialDeposit = asset.existentialDeposit[toChain.id]
 
-  if (!existentialDeposit) {
+  if (existentialDeposit == null) {
     return new Decimal(0)
   }
 
@@ -94,7 +94,7 @@ export const bridgeInfoAtom = atom<{
   return {
     kind: bridge?.kind ?? null,
     estimatedTime: bridge?.estimatedTime ?? null,
-    isThroughKhala: bridge?.isThroughKhala || false,
+    isThroughKhala: bridge?.isThroughKhala ?? false,
   }
 })
 
@@ -103,7 +103,7 @@ export const destChainTransactionFeeAtom = atom<Decimal>((get) => {
   const toChain = get(toChainAtom)
   const asset = get(assetAtom)
   const destChainTransactionFee = asset.destChainTransactionFee[toChain.id]
-  const khalaFee = asset.destChainTransactionFee['khala'] ?? new Decimal(0)
+  const khalaFee = asset.destChainTransactionFee.khala ?? new Decimal(0)
 
   if (kind !== 'evmChainBridge' && isThroughKhala) {
     return khalaFee.add(destChainTransactionFee ?? 0)
@@ -111,7 +111,7 @@ export const destChainTransactionFeeAtom = atom<Decimal>((get) => {
 
   if (
     (kind === 'evmChainBridge' && !isThroughKhala) ||
-    !destChainTransactionFee
+    destChainTransactionFee == null
   ) {
     return new Decimal(0)
   }

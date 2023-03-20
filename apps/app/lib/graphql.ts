@@ -3,6 +3,7 @@ import {getSdk} from './subsquidSdk'
 
 export const subsquidClient = new GraphQLClient(
   process.env.NEXT_PUBLIC_SUBSQUID_URL ??
-    'https://squid.subsquid.io/phala-computation/graphql'
+    'https://squid.subsquid.io/phala-computation/graphql',
+  {method: 'GET'}
 )
 export const subsquidSdk = getSdk(subsquidClient)

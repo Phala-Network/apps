@@ -1,4 +1,4 @@
-import fs from 'fs'
+import {writeFileSync} from 'node:fs'
 import WebSocket from 'ws'
 
 const address = process.env.ADDRESS ?? 'wss://khala-api.phala.network/ws'
@@ -9,6 +9,6 @@ ws.on('open', () => {
 })
 ws.on('message', (data) => {
   // eslint-disable-next-line @typescript-eslint/no-base-to-string
-  fs.writeFileSync('metadata.json', data.toString())
+  writeFileSync('metadata.json', data.toString())
   process.exit(0)
 })
