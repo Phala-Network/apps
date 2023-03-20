@@ -36,7 +36,7 @@ import SectionHeader from './SectionHeader'
 import Vest from './Vest'
 
 type AssetDialogAction = 'transfer' | 'buy' | 'claim'
-export type Asset = AssetMetadata & {balance: Decimal | undefined}
+export type Asset = AssetMetadata & {balance: Decimal | undefined | null}
 type OnAction = (asset: Asset, action: AssetDialogAction) => void
 
 const BuyConfirmation: FC<{onClose: () => void}> = ({onClose}) => {

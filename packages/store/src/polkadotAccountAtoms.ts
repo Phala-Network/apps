@@ -11,7 +11,7 @@ const polkadotAccountAddressAtom = atomWithStorage<string | null>(
 )
 polkadotAccountAddressAtom.debugLabel = 'polkadotAccountAddress'
 
-export const polkadotAccountAtom = atom<WalletAccount | null, string | null>(
+export const polkadotAccountAtom = atom(
   (get) => {
     const polkadotAccountAddress = get(polkadotAccountAddressAtom)
     if (polkadotAccountAddress == null) return null
@@ -21,7 +21,7 @@ export const polkadotAccountAtom = atom<WalletAccount | null, string | null>(
       ) ?? null
     )
   },
-  (get, set, account) => {
+  (get, set, account: string | null) => {
     set(polkadotAccountAddressAtom, account)
   }
 )

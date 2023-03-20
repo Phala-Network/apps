@@ -9,10 +9,10 @@ export const walletNameAtom = atomWithStorage<string | null>(
 
 const originalWalletAtom = atom<Wallet | null>(null)
 originalWalletAtom.debugLabel = 'wallet'
-export const walletAtom = atom<Wallet | null, Wallet | null>(
+export const walletAtom = atom(
   (get) => get(originalWalletAtom),
-  (get, set, update) => {
-    set(originalWalletAtom, update)
-    set(walletNameAtom, update !== null ? update.extensionName : null)
+  (_get, set, newWallet: Wallet | null) => {
+    set(originalWalletAtom, newWallet)
+    set(walletNameAtom, newWallet != null ? newWallet.extensionName : null)
   }
 )

@@ -44,8 +44,8 @@
     "graphql": "^16.6.0",
     "graphql-request": "^5.2.0",
     "graphql-tag": "^2.12.6",
-    "jotai": "^1.13.1",
-    "jotai-devtools": "^0.2.0",
+    "jotai": "^2.0.3",
+    "jotai-devtools": "^0.3.1",
     "lodash-es": "^4.17.21",
     "mutative": "^0.4.2",
     "next": "^13.2.4",
@@ -63,7 +63,6 @@
     "@next/bundle-analyzer": "^13.2.4",
     "@svgr/webpack": "^6.5.1",
     "@types/lodash-es": "^4.17.7",
-    "@types/sharp": "^0.31.1",
-    "next-transpile-modules": "^10.0.0"
+    "@types/sharp": "^0.31.1"
   }
 }

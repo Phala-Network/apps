@@ -12,6 +12,7 @@ import {
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query'
 import {ReactQueryDevtools} from '@tanstack/react-query-devtools'
 import {Provider as JotaiProvider} from 'jotai'
+import {DevTools as JotaiDevTools} from 'jotai-devtools'
 import {type AppProps} from 'next/app'
 import {type FC} from 'react'
 import {SWRConfig} from 'swr'
@@ -51,6 +52,7 @@ const App: FC<MyAppProps> = (props) => {
               </Layout>
             </MuiThemeProvider>
           </CacheProvider>
+          {process.env.NODE_ENV === 'development' && <JotaiDevTools />}
         </JotaiProvider>
         <ReactQueryDevtools />
       </QueryClientProvider>

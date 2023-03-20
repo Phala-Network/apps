@@ -2,17 +2,11 @@
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 })
-const withTM = require('next-transpile-modules')(
-  ['@phala/store', '@phala/util', '@phala/lib'],
-  {
-    // make peerDependencies work
-    resolveSymlinks: false,
-  }
-)
 const withImages = require('next-images')
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  transpilePackages: ['jotai-devtools'],
   eslint: {ignoreDuringBuilds: true},
   images: {disableStaticImages: true},
   env: {
@@ -42,4 +36,4 @@ const nextConfig = {
   },
 }
 
-module.exports = withBundleAnalyzer(withTM(withImages(nextConfig)))
+module.exports = withBundleAnalyzer(withImages(nextConfig))
