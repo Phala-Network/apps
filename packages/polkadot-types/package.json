@@ -1,11 +1,12 @@
 {
   "name": "@phala/polkadot-types",
   "version": "0.0.1",
+  "type": "module",
   "scripts": {
-    "updateMetadata": "ts-node --skip-project updateMetadata.ts",
+    "updateMetadata": "node updateMetadata",
     "generate": "npm run generate:defs && npm run generate:meta",
-    "generate:defs": "ts-node --skip-project ../../node_modules/.bin/polkadot-types-from-defs --package @phala/polkadot-types/interfaces  --endpoint metadata.json --input ./interfaces",
-    "generate:meta": "ts-node --skip-project ../../node_modules/.bin/polkadot-types-from-chain --package @phala/polkadot-types/interfaces --endpoint metadata.json --output ./interfaces",
+    "generate:defs": "node --loader ts-node/esm  ../../node_modules/.bin/polkadot-types-from-defs --package @phala/polkadot-types/interfaces  --endpoint metadata.json --input ./interfaces",
+    "generate:meta": "node --loader ts-node/esm  ../../node_modules/.bin/polkadot-types-from-chain --package @phala/polkadot-types/interfaces --endpoint metadata.json --output ./interfaces",
     "lint": "eslint --cache --ext .ts,.tsx .",
     "lint:fix": "eslint --fix --cache --ext .ts,.tsx ."
   },
