@@ -1,26 +1,18 @@
+import {useQuery} from '@tanstack/react-query'
 import Decimal from 'decimal.js'
-import useSWRSubscription from 'swr/subscription'
 import usePolkadotApi from './usePolkadotApi'
 
 const useLockedWrappedBalance = (account?: string): Decimal | undefined => {
   const api = usePolkadotApi()
-  const {data} = useSWRSubscription(
-    api != null && account != null && ['lockedWrappedBalance', account, api],
-    (_, {next}) => {
-      let unsubscribe = (): void => {}
+  const {data} = useQuery(
+    ['lockedWrappedBalance', api?.runtimeChain, account],
+    async () => {
       if (api == null || account == null) {
-        return unsubscribe
+        return
       }
-      void api.query.phalaWrappedBalances
-        .stakerAccounts(account, (res) => {
-          const unwrapped = res.unwrapOr({locked: 0})
-          next(null, new Decimal(unwrapped.locked.toString()).div(1e12))
-        })
-        .then((fn) => {
-          unsubscribe = fn
-        })
-
-      return unsubscribe
+      const res = await api.query.phalaWrappedBalances.stakerAccounts(account)
+      const unwrapped = res.unwrapOr({locked: 0})
+      return new Decimal(unwrapped.locked.toString()).div(1e12)
     }
   )
 

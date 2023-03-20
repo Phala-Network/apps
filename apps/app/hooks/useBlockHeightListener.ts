@@ -33,6 +33,8 @@ const useBlockHeightListener = (): void => {
         void queryClient.invalidateQueries(['WorkersConnection'])
         void queryClient.invalidateQueries(['OwnedVaults'])
         void queryClient.invalidateQueries(['ClaimableStakePools'])
+        void queryClient.invalidateQueries(['lockedWrappedBalance'])
+        void queryClient.invalidateQueries(['assetBalance'])
       } else {
         // Skip the first time
         enabled.current = true
