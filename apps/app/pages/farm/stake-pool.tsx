@@ -2,10 +2,10 @@ import ClaimReward from '@/components/BasePool/ClaimReward'
 import BasePoolList from '@/components/BasePool/List'
 import CreateBasePoolButton from '@/components/CreateBasePoolButton'
 import PageHeader from '@/components/PageHeader'
-import WikiButton from '@/components/Wiki/Button'
+import Property from '@/components/Property'
 import {subsquidClient} from '@/lib/graphql'
 import {useClaimableStakePoolsQuery} from '@/lib/subsquidQuery'
-import {Box, Button, Dialog, Skeleton, Stack, Typography} from '@mui/material'
+import {Box, Button, Dialog, Skeleton, Stack} from '@mui/material'
 import {polkadotAccountAtom} from '@phala/store'
 import {toCurrency} from '@phala/util'
 import Decimal from 'decimal.js'
@@ -50,18 +50,17 @@ const MyStakePools: FC = () => {
         justifyContent="space-between"
       >
         <Stack spacing={2} direction="row" alignItems="center">
-          <WikiButton entry="stakePoolOwnerRewards">
-            <Typography variant="h6" component="h2" color="text.secondary">
-              Owner Rewards
-            </Typography>
-          </WikiButton>
-          <Typography variant="num3">
+          <Property
+            label="Owner Rewards"
+            wikiEntry="stakePoolOwnerRewards"
+            size="large"
+          >
             {ownerReward != null ? (
               `${toCurrency(ownerReward)} PHA`
             ) : (
               <Skeleton width={100} />
             )}
-          </Typography>
+          </Property>
 
           <Button
             size="small"

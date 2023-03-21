@@ -78,6 +78,7 @@ const FarmCard: FC<{
       )}
       {vault != null && (
         <PromiseButton
+          color="secondary"
           disabled={vaultOwnerCut.lt('0.01')}
           variant="text"
           size="small"
@@ -91,6 +92,7 @@ const FarmCard: FC<{
       )}
       {vault != null && (
         <Button
+          color="secondary"
           disabled={vaultOwnerReward.lt('0.01')}
           variant="text"
           size="small"

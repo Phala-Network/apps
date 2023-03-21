@@ -13,15 +13,7 @@ const getVaultOwnerCut = (
     new Decimal(sharePrice)
       .minus(lastSharePriceCheckpoint)
       .times(commission)
-      .times(totalShares)
-      .div(
-        new Decimal(sharePrice).minus(
-          new Decimal(sharePrice)
-            .minus(lastSharePriceCheckpoint)
-            .times(commission)
-        )
-      )
-      .times(sharePrice),
+      .times(totalShares),
     0
   )
 }
