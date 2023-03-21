@@ -4,7 +4,7 @@ import {type FC, type ReactNode} from 'react'
 import WikiButton from './Wiki/Button'
 
 const Property: FC<{
-  size?: 'medium' | 'small'
+  size?: 'large' | 'medium' | 'small'
   label: ReactNode
   children: ReactNode
   fullWidth?: boolean
@@ -14,7 +14,7 @@ const Property: FC<{
   const labelNode = (
     <Typography
       lineHeight={1.3}
-      variant="subtitle2"
+      variant={size === 'large' ? 'subtitle1' : 'subtitle2'}
       component="div"
       color="text.secondary"
       flexShrink={0}
@@ -25,8 +25,8 @@ const Property: FC<{
   return (
     <Stack
       sx={sx}
-      direction={size === 'medium' ? 'column' : 'row'}
-      alignItems={size === 'medium' ? 'flex-start' : 'baseline'}
+      direction={size === 'small' ? 'row' : 'column'}
+      alignItems={size === 'small' ? 'baseline' : 'flex-start'}
       {...(fullWidth && {justifyContent: 'space-between'})}
     >
       {wikiEntry == null ? (
@@ -34,7 +34,17 @@ const Property: FC<{
       ) : (
         <WikiButton entry={wikiEntry}>{labelNode}</WikiButton>
       )}
-      {size === 'medium' ? (
+      {size === 'large' && (
+        <Typography
+          lineHeight={1.3}
+          variant="num1"
+          component="div"
+          whiteSpace="nowrap"
+        >
+          {children}
+        </Typography>
+      )}
+      {size === 'medium' && (
         <Typography
           lineHeight={1.3}
           variant="num5"
@@ -44,7 +54,8 @@ const Property: FC<{
         >
           {children}
         </Typography>
-      ) : (
+      )}
+      {size === 'small' && (
         <Typography
           lineHeight={1.3}
           variant="num6"

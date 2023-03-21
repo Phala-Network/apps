@@ -83,6 +83,8 @@ const DelegateCard: FC<{
           direction={{xs: 'column', md: 'row'}}
           alignItems={{xs: 'flex-start', md: 'center'}}
           py={{xs: 0, md: 0.5}}
+          flex={{xs: 1, md: 'none'}}
+          pr={{xs: 2, md: 0}}
         >
           <Stack direction="row" spacing={1.5} alignItems="center">
             <IconButton
@@ -104,7 +106,7 @@ const DelegateCard: FC<{
             {vault != null && (
               <VaultIcon width={40} color={colors.vault[400]} />
             )}
-            <Stack width={150} flex="1 0">
+            <Stack width={{xs: 'auto', md: 150}} flex="1 0">
               <Link
                 onClick={(e) => {
                   e.stopPropagation()
@@ -122,7 +124,7 @@ const DelegateCard: FC<{
               <Identity {...owner} />
             </Stack>
           </Stack>
-          <Stack direction="row" spacing={2}>
+          <Stack direction="row" spacing={2} display={{xs: 'none', md: 'flex'}}>
             {stakePool != null && (
               <Property
                 label="Est. APR"
@@ -171,6 +173,62 @@ const DelegateCard: FC<{
             )}
             {hasDelegation && (
               <Property label="Delegated" sx={{width: 140}}>
+                {`${toCurrency(basePool.delegations[0].value)} PHA`}
+              </Property>
+            )}
+          </Stack>
+          <Stack spacing={1} display={{xs: 'flex', md: 'none'}} width={1}>
+            {stakePool != null && (
+              <Property
+                size="small"
+                fullWidth
+                label="Est. APR"
+                wikiEntry="delegable"
+              >
+                {apr != null ? (
+                  <Box component="span" color={colors.main[300]}>
+                    {toPercentage(apr)}
+                  </Box>
+                ) : (
+                  <Skeleton width={32} />
+                )}
+              </Property>
+            )}
+            {stakePool != null && (
+              <Property
+                size="small"
+                fullWidth
+                label="Delegable"
+                wikiEntry="delegable"
+              >
+                {stakePool.delegable != null
+                  ? `${toCurrency(stakePool.delegable)} PHA`
+                  : '∞'}
+              </Property>
+            )}
+            {vault != null && (
+              <Property
+                size="small"
+                fullWidth
+                label="Est. APY"
+                wikiEntry="estApr"
+              >
+                {apr != null ? (
+                  <Box component="span" color={colors.vault[400]}>
+                    {toPercentage(aprToApy(apr))}
+                  </Box>
+                ) : (
+                  <Skeleton width={32} />
+                )}
+              </Property>
+            )}
+            {vault != null && (
+              <Property size="small" fullWidth label="TVL" wikiEntry="tvl">
+                {`${toCurrency(basePool.totalValue)} PHA`}
+              </Property>
+            )}
+            {hasDelegation && (
+              <Property size="small" fullWidth label="Delegated">
                 {`${toCurrency(basePool.delegations[0].value)} PHA`}
               </Property>
             )}

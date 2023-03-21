@@ -29,6 +29,7 @@ import {useAtom} from 'jotai'
 import {useMemo, type FC} from 'react'
 import DelegatorSelect from './DelegatorSelect'
 import PromiseButton from './PromiseButton'
+import Property from './Property'
 import WikiButton from './Wiki/Button'
 
 const DelegationDataCard: FC<{
@@ -161,47 +162,16 @@ const DelegationDetailCard: FC<{sx?: SxProps}> = ({sx}) => {
           justifyContent="space-between"
           alignItems="flex-start"
         >
-          <Box>
-            <WikiButton entry="delegation">
-              <Typography
-                variant="subtitle1"
-                component="div"
-                color="text.secondary"
-              >
-                Delegation
-              </Typography>
-            </WikiButton>
-            <Typography
-              variant="num1"
-              component="div"
-              display={{xs: 'none', md: 'block'}}
-              lineHeight="1.2"
-            >
-              {typeof totalValue === 'string' ? (
-                <>
-                  {totalValue}
-                  <sub>PHA</sub>
-                </>
-              ) : (
-                <Skeleton width={128} />
-              )}
-            </Typography>
-            <Typography
-              variant="num2"
-              component="div"
-              display={{xs: 'block', md: 'none'}}
-              lineHeight="36px"
-            >
-              {typeof totalValue === 'string' ? (
-                <>
-                  {totalValue}
-                  <sub>PHA</sub>
-                </>
-              ) : (
-                <Skeleton width={64} />
-              )}
-            </Typography>
-          </Box>
+          <Property label="Delegation" wikiEntry="delegation" size="large">
+            {typeof totalValue === 'string' ? (
+              <>
+                {totalValue}
+                <sub>PHA</sub>
+              </>
+            ) : (
+              <Skeleton width={128} />
+            )}
+          </Property>
           <DelegatorSelect />
         </Stack>
         <Stack

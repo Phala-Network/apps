@@ -33,7 +33,7 @@ const MyVaults: FC = () => {
     }
   )
   const vaultsWithOwnerCut = useMemo(() => {
-    if (edges !== undefined) {
+    if (edges != null) {
       return edges
         .map((edge) => {
           return [edge.node.id, getVaultOwnerCut(edge.node)] as const
@@ -106,6 +106,7 @@ const MyVaults: FC = () => {
               )}
             </Typography>
             <PromiseButton
+              color="secondary"
               size="small"
               onClick={mintAll}
               disabled={vaultsWithOwnerCut.length === 0}
@@ -128,6 +129,7 @@ const MyVaults: FC = () => {
               )}
             </Typography>
             <Button
+              color="secondary"
               size="small"
               disabled={vaultsWithOwnerRewards.length === 0}
               onClick={() => {
