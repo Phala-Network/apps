@@ -12,14 +12,14 @@
   },
   "devDependencies": {
     "@phala/typedefs": "^0.2.33",
-    "@polkadot/typegen": "^10.1.4",
-    "@types/node": "^18.15.3",
+    "@polkadot/typegen": "^10.2.1",
+    "@types/node": "^18.15.10",
     "@types/ws": "^8.5.4",
     "ts-node": "^10.9.1",
     "typescript": "^5.0.2",
     "ws": "^8.13.0"
   },
   "dependencies": {
-    "@polkadot/api": "^10.1.4"
+    "@polkadot/api": "^10.2.1"
   }
 }
