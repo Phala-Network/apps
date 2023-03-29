@@ -1,12 +1,12 @@
 import type {ApiPromise} from '@polkadot/api'
 import type {AddressOrPair, SubmittableExtrinsic} from '@polkadot/api/types'
 import type {ExtrinsicStatus} from '@polkadot/types/interfaces'
-import type {ISubmittableResult, Signer} from '@polkadot/types/types'
+import type {Signer} from '@polkadot/types/types'
 
 interface SignAndSendProps {
   account: AddressOrPair
   api: ApiPromise
-  extrinsic: SubmittableExtrinsic<'promise', ISubmittableResult>
+  extrinsic: SubmittableExtrinsic<'promise'>
   signer: Signer
   onStatus?: (status: ExtrinsicStatus) => void
   onReady?: () => void

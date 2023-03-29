@@ -18,32 +18,32 @@ export const useEthereumProviderInitialization = (): void => {
   )
 
   useEffect(() => {
-    if (ethereumProvider) return
-    const init = async () => {
+    if (ethereumProvider != null) return
+    const init = async (): Promise<void> => {
       const {default: detectEthereumProvider} = await import(
         '@metamask/detect-provider'
       )
       const provider = await detectEthereumProvider({silent: true})
-      if (!provider) return
+      if (provider == null) return
       const ethereum = provider as ethers.providers.ExternalProvider
       setEthereumProvider(ethereum)
-      const updateAccounts = (accounts: unknown) => {
+      const updateAccounts = (accounts: unknown): void => {
         const account = (accounts as string[])[0]
-        setEvmAccount(account || null)
+        setEvmAccount(account ?? null)
       }
-      const updateChainId = (chainId: unknown) => {
+      const updateChainId = (chainId: unknown): void => {
         setEvmChainId(parseInt(chainId as string, 16))
       }
 
       ethereum.on('accountsChanged', updateAccounts)
       ethereum.on('chainChanged', updateChainId)
-      ethereum.request({method: 'eth_chainId'}).then(updateChainId)
+      void ethereum.request({method: 'eth_chainId'}).then(updateChainId)
       if (isEvmWalletAuthorized) {
         ethereum
           .request({method: 'eth_requestAccounts'})
           .then((accounts) => {
             const account = (accounts as string[])[0]
-            setEvmAccount(account || null)
+            setEvmAccount(account ?? null)
           })
           .catch((error) => {
             // User rejected
@@ -56,7 +56,7 @@ export const useEthereumProviderInitialization = (): void => {
       }
     }
 
-    init()
+    void init()
   }, [
     ethereumProvider,
     isEvmWalletAuthorized,
@@ -67,7 +67,7 @@ export const useEthereumProviderInitialization = (): void => {
   ])
 
   useEffect(() => {
-    if (evmAccount) {
+    if (evmAccount != null) {
       setIsEvmWalletAuthorized(true)
     }
   }, [evmAccount, setIsEvmWalletAuthorized])

@@ -1,8 +1,9 @@
 import {transferByChainBridge} from '@/lib/transferByChainBridge'
+import {transferEvmSygma} from '@/lib/transferByEvmSygma'
 import {transferByEvmXTokens} from '@/lib/transferByEvmXTokens'
-import {transferByKhalaXTransfer} from '@/lib/transferByKhalaXTransfer'
-import {transferByPolkadotXcm} from '@/lib/transferByPolkadotXcm'
+import {transferByPhalaXTransfer} from '@/lib/transferByPhalaXTransfer'
 import {transferByPolkadotXTokens} from '@/lib/transferByPolkadotXTokens'
+import {transferByPolkadotXcm} from '@/lib/transferByPolkadotXcm'
 import {
   amountAtom,
   assetAtom,
@@ -12,18 +13,29 @@ import {
   fromChainAtom,
   toChainAtom,
 } from '@/store/bridge'
-import {waitSignAndSend} from '@phala/lib'
+import {evmAccountAtom} from '@/store/ethers'
+import {type DepositEvent} from '@buildwithsygma/sygma-contracts/dist/ethers/Bridge'
+import {waitSignAndSend, type ExtrinsicResult} from '@phala/lib'
 import {polkadotAccountAtom} from '@phala/store'
 import Decimal from 'decimal.js'
+import {type ContractTransaction} from 'ethers'
 import {useAtomValue} from 'jotai'
 import {useMemo} from 'react'
 import {
   useEthersChainBridgeContract,
   useEthersXTokensContract,
 } from './useEthersContract'
+import {useEthersWeb3Provider} from './useEthersProvider'
 import {useCurrentPolkadotApi, usePolkadotApi} from './usePolkadotApi'
 
-export const useTransfer = () => {
+export const useTransfer = (): (({
+  onReady,
+}: {
+  onReady: () => void
+}) => Promise<
+  ContractTransaction | ExtrinsicResult | DepositEvent | undefined
+>) => {
+  const ethersWeb3Provider = useEthersWeb3Provider()
   const ethersChainBridgeContract = useEthersChainBridgeContract()
   const ethersXTokensBridgeContract = useEthersXTokensContract()
   const asset = useAtomValue(assetAtom)
@@ -32,6 +44,7 @@ export const useTransfer = () => {
   const destinationAccount = useAtomValue(destinationAccountAtom)
   const amount = useAtomValue(amountAtom)
   const decimals = useAtomValue(decimalsAtom)
+  const evmAccount = useAtomValue(evmAccountAtom)
   const polkadotAccount = useAtomValue(polkadotAccountAtom)
   const {kind: bridgeKind, isThroughKhala} = useAtomValue(bridgeInfoAtom)
   const khalaApi = usePolkadotApi(
@@ -41,19 +54,19 @@ export const useTransfer = () => {
 
   const rawAmount = useMemo(
     () =>
-      amount
+      amount !== ''
         ? new Decimal(amount).times(Decimal.pow(10, decimals)).toFixed()
         : '0',
     [amount, decimals]
   )
 
-  return ({onReady}: {onReady: () => void}) => {
+  return async ({onReady}: {onReady: () => void}) => {
     if (bridgeKind === 'evmChainBridge') {
-      if (!ethersChainBridgeContract || !khalaApi) {
+      if (ethersChainBridgeContract == null || khalaApi == null) {
         throw new Error('Transfer missing required parameters')
       }
 
-      return transferByChainBridge({
+      return await transferByChainBridge({
         contract: ethersChainBridgeContract,
         khalaApi,
         assetId: asset.id,
@@ -67,7 +80,7 @@ export const useTransfer = () => {
     }
 
     if (bridgeKind === 'polkadotXTokens') {
-      if (!polkadotApi || !polkadotAccount?.wallet?.signer) {
+      if (polkadotApi == null || polkadotAccount?.wallet?.signer == null) {
         throw new Error('Transfer missing required parameters')
       }
       const extrinsic = transferByPolkadotXTokens({
@@ -79,7 +92,7 @@ export const useTransfer = () => {
         destinationAccount,
         isThroughKhala,
       })
-      return waitSignAndSend({
+      return await waitSignAndSend({
         api: polkadotApi,
         extrinsic,
         account: polkadotAccount.address,
@@ -88,37 +101,36 @@ export const useTransfer = () => {
       })
     }
 
-    if (bridgeKind === 'khalaXTransfer') {
-      if (!polkadotApi || !polkadotAccount?.wallet?.signer) {
+    if (bridgeKind === 'phalaChainBridge' || bridgeKind === 'phalaSygma') {
+      if (polkadotApi == null || polkadotAccount?.wallet?.signer == null) {
         throw new Error('Transfer missing required parameters')
       }
 
-      const extrinsic = transferByKhalaXTransfer({
+      const extrinsic = transferByPhalaXTransfer({
         api: polkadotApi,
         fromChainId: fromChain.id,
         toChainId: toChain.id,
         amount: rawAmount,
         destinationAccount,
         assetId: asset.id,
+        kind: bridgeKind,
       })
 
-      if (extrinsic) {
-        return waitSignAndSend({
-          api: polkadotApi,
-          extrinsic,
-          signer: polkadotAccount.wallet.signer,
-          account: polkadotAccount.address,
-          onReady,
-        })
-      }
+      return await waitSignAndSend({
+        api: polkadotApi,
+        extrinsic,
+        signer: polkadotAccount.wallet.signer,
+        account: polkadotAccount.address,
+        onReady,
+      })
     }
 
     if (bridgeKind === 'evmXTokens') {
-      if (!ethersXTokensBridgeContract) {
+      if (ethersXTokensBridgeContract == null) {
         throw new Error('Transfer missing required parameters')
       }
 
-      return transferByEvmXTokens({
+      return await transferByEvmXTokens({
         contract: ethersXTokensBridgeContract,
         assetId: asset.id,
         amount: rawAmount,
@@ -133,7 +145,7 @@ export const useTransfer = () => {
     }
 
     if (bridgeKind === 'polkadotXcm') {
-      if (!polkadotApi || !polkadotAccount?.wallet?.signer) {
+      if (polkadotApi == null || polkadotAccount?.wallet?.signer == null) {
         throw new Error('Transfer missing required parameters')
       }
       const extrinsic = transferByPolkadotXcm({
@@ -144,11 +156,27 @@ export const useTransfer = () => {
         toChainId: toChain.id,
         destinationAccount,
       })
-      return waitSignAndSend({
+      return await waitSignAndSend({
         api: polkadotApi,
         extrinsic,
         account: polkadotAccount.address,
         signer: polkadotAccount.wallet.signer,
+        onReady,
+      })
+    }
+
+    if (bridgeKind === 'evmSygma') {
+      if (ethersWeb3Provider == null || evmAccount == null) {
+        throw new Error('Transfer missing required parameters')
+      }
+      return await transferEvmSygma({
+        provider: ethersWeb3Provider,
+        sender: evmAccount,
+        amount: rawAmount,
+        fromChainId: fromChain.id,
+        toChainId: toChain.id,
+        destinationAccount,
+        assetId: asset.id,
         onReady,
       })
     }

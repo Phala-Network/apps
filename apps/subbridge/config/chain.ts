@@ -21,11 +21,13 @@ export type EvmChainId =
   | 'moonbeam'
   | 'moonriver'
   | 'moonbase-alpha'
+  | 'goerli'
 export type PolkadotChainId =
   | 'phala'
   | 'khala'
   | 'karura'
   | 'thala'
+  | 'rhala'
   | 'karura-test'
   | 'bifrost-kusama'
   | 'bifrost-test'
@@ -47,6 +49,7 @@ interface BaseChain {
   isTest?: boolean
   nativeAsset?: AssetId
   explorerURL?: string
+  sygmaChainId?: number
 }
 
 export interface EvmChain extends BaseChain {
@@ -63,6 +66,7 @@ export interface EvmChain extends BaseChain {
   }
   xTokensContractAddress?: `0x${string}`
   generalIndex?: number // for khala chain bridge
+  sygmaHandler?: string
 }
 
 export interface PolkadotChain extends BaseChain {
@@ -88,6 +92,7 @@ export const CHAINS: Readonly<
     paraId: 2035,
     nativeAsset: 'pha',
     explorerURL: 'https://phala.subscan.io/',
+    sygmaChainId: 5233,
   },
   khala: {
     id: 'khala',
@@ -103,6 +108,7 @@ export const CHAINS: Readonly<
     paraId: 2004,
     nativeAsset: 'pha',
     explorerURL: 'https://khala.subscan.io/',
+    sygmaChainId: 5232,
   },
   karura: {
     id: 'karura',
@@ -139,6 +145,21 @@ export const CHAINS: Readonly<
     },
     generalIndex: 0,
     explorerURL: 'https://etherscan.io/',
+    sygmaChainId: 1,
+    sygmaHandler: '0xC832588193cd5ED2185daDA4A531e0B26eC5B830',
+  },
+  goerli: {
+    id: 'goerli',
+    name: 'Goerli',
+    icon: ethereumIcon,
+    kind: 'evm',
+    evmChainId: 5,
+    currencySymbol: 'GoerliETH',
+    isTest: true,
+    explorerURL: 'https://goerli.etherscan.io/',
+    generalIndex: 1,
+    sygmaChainId: 5,
+    sygmaHandler: '0x7Ed4B14a82B2F2C4DfB13DC4Eac00205EDEff6C2',
   },
   thala: {
     id: 'thala',
@@ -150,6 +171,18 @@ export const CHAINS: Readonly<
     isTest: true,
     paraId: 2004,
     nativeAsset: 'pha',
+  },
+  rhala: {
+    id: 'rhala',
+    name: 'Rhala',
+    icon: khalaIcon,
+    kind: 'polkadot',
+    endpoint: 'wss://subbridge-test.phala.network/rhala/ws',
+    ss58Format: 30,
+    isTest: true,
+    paraId: 2004,
+    nativeAsset: 'pha',
+    sygmaChainId: 5231,
   },
   'karura-test': {
     id: 'karura-test',

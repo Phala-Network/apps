@@ -1,3 +1,4 @@
+import {type EvmChain} from '@/config/chain'
 import {useBridgeFee} from '@/hooks/useBridgeFee'
 import {useEstimatedGasFee} from '@/hooks/useEstimatedGasFee'
 import {useCurrentPolkadotApi} from '@/hooks/usePolkadotApi'
@@ -77,6 +78,7 @@ const ExtraInfo: FC<PaperProps> = ({sx, ...props}) => {
   const polkadotApi = useCurrentPolkadotApi()
   const estimatedGas = useEstimatedGasFee()
   const bridgeFee = useBridgeFee()
+  const bridge = useAtomValue(bridgeInfoAtom)
   const asset = useAtomValue(assetAtom)
   const destChainTransactionFee = useAtomValue(destChainTransactionFeeAtom)
   const {estimatedTime} = useAtomValue(bridgeInfoAtom)
@@ -89,7 +91,7 @@ const ExtraInfo: FC<PaperProps> = ({sx, ...props}) => {
           background: theme.palette.action.hover,
           border: 'none',
         },
-        ...(Array.isArray(sx) ? sx : [sx]),
+        ...(Array.isArray(sx) ? (sx as any) : [sx]),
       ]}
       {...props}
     >
@@ -99,7 +101,11 @@ const ExtraInfo: FC<PaperProps> = ({sx, ...props}) => {
           tooltip="This transaction will charge a bridge fee to cover the destination chain’s gas fee."
         >
           {bridgeFee != null ? (
-            `${toCurrency(bridgeFee, 8)} ${asset.symbol}`
+            `${toCurrency(bridgeFee, 8)} ${
+              bridge.kind === 'evmSygma'
+                ? (fromChain as EvmChain).currencySymbol
+                : asset.symbol
+            }`
           ) : (
             <Skeleton width={80} />
           )}

@@ -1,3 +1,4 @@
+import {type EvmChain} from '@/config/chain'
 import {useCurrentEthersAssetContract} from '@/hooks/useEthersContract'
 import {useSwitchNetwork} from '@/hooks/useSwitchNetwork'
 import {ethersContractAllowanceFetcher} from '@/lib/ethersFetcher'
@@ -31,9 +32,15 @@ const EvmAction: FC<{onConfirm: () => void}> = ({onConfirm}) => {
   const {kind: bridgeKind} = useAtomValue(bridgeInfoAtom)
   const switchNetwork = useSwitchNetwork()
   const decimals = useAtomValue(decimalsAtom)
-  const needApproval = bridgeKind === 'evmChainBridge'
+  const needApproval =
+    bridgeKind === 'evmChainBridge' || bridgeKind === 'evmSygma'
   let spender: string | undefined
-  if (fromChain.kind === 'evm' && fromChain.chainBridgeContract != null) {
+  if (bridgeKind === 'evmSygma') {
+    spender = (fromChain as EvmChain).sygmaHandler
+  } else if (
+    fromChain.kind === 'evm' &&
+    fromChain.chainBridgeContract != null
+  ) {
     spender =
       fromChain.chainBridgeContract.spender[toChain.id] ??
       fromChain.chainBridgeContract.spender.default
