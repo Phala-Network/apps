@@ -17,7 +17,16 @@ const moonbeamParaId = CHAINS.moonbeam.paraId
 const shidenParaId = CHAINS.shiden.paraId
 const astarParaId = CHAINS.astar.paraId
 
-const assetConcreteId: {
+type Hex = `0x${string}`
+
+const getGeneralKey = (hex: Hex): {length: number; data: Hex} => {
+  return {
+    length: (hex.length - 2) / 2,
+    data: `${hex}${'0'.repeat(66 - hex.length)}`,
+  }
+}
+
+const assetConcrete: {
   [fromChainId in ChainId]?: {[assetId in AssetId]?: Record<string, unknown>}
 } = {
   phala: {
@@ -28,7 +37,12 @@ const assetConcreteId: {
     },
     para: {
       parents: 1,
-      interior: {X2: [{Parachain: parallelParaId}, {GeneralKey: 'PARA'}]},
+      interior: {
+        X2: [
+          {Parachain: parallelParaId},
+          {GeneralKey: getGeneralKey('0x50415241')}, // string "PARA"
+        ],
+      },
     },
     astr: {parents: 1, interior: {X1: {Parachain: astarParaId}}},
   },
@@ -40,23 +54,36 @@ const assetConcreteId: {
     },
     kar: {
       parents: 1,
-      interior: {X2: [{Parachain: karuraParaId}, {GeneralKey: '0x0080'}]},
+      interior: {
+        X2: [{Parachain: karuraParaId}, {GeneralKey: getGeneralKey('0x0080')}],
+      },
     },
     bnc: {
       parents: 1,
-      interior: {X2: [{Parachain: bifrostParaId}, {GeneralKey: '0x0001'}]},
+      interior: {
+        X2: [{Parachain: bifrostParaId}, {GeneralKey: getGeneralKey('0x0001')}],
+      },
     },
     zlk: {
       parents: 1,
-      interior: {X2: [{Parachain: bifrostParaId}, {GeneralKey: '0x0207'}]},
+      interior: {
+        X2: [{Parachain: bifrostParaId}, {GeneralKey: getGeneralKey('0x0207')}],
+      },
     },
     ausd: {
       parents: 1,
-      interior: {X2: [{Parachain: karuraParaId}, {GeneralKey: '0x0081'}]},
+      interior: {
+        X2: [{Parachain: karuraParaId}, {GeneralKey: getGeneralKey('0x0081')}],
+      },
     },
     hko: {
       parents: 1,
-      interior: {X2: [{Parachain: parallelHeikoParaId}, {GeneralKey: 'HKO'}]},
+      interior: {
+        X2: [
+          {Parachain: parallelHeikoParaId},
+          {GeneralKey: getGeneralKey('0x484b4f')}, // string "HKO"
+        ],
+      },
     },
     bsx: {
       parents: 1,
@@ -94,8 +121,8 @@ export const transferByKhalaXTransfer = ({
     assetId === 'zlk'
   const generalIndex = toChain.kind === 'evm' ? toChain.generalIndex : null
 
-  const concreteId = assetConcreteId[fromChainId]?.[assetId]
-  if (!concreteId) {
+  const concrete = assetConcrete[fromChainId]?.[assetId]
+  if (!concrete) {
     throw new Error(`Unsupported asset: ${assetId}`)
   }
 
@@ -107,7 +134,7 @@ export const transferByKhalaXTransfer = ({
 
   return api.tx.xTransfer.transfer(
     {
-      id: {Concrete: concreteId},
+      id: {Concrete: concrete},
       fun: {Fungible: amount},
     },
     {
@@ -115,24 +142,18 @@ export const transferByKhalaXTransfer = ({
       interior: isThroughChainBridge
         ? {
             X3: [
-              {GeneralKey: '0x6362'}, // string "cb"
+              {GeneralKey: getGeneralKey('0x6362')}, // string "cb"
               {GeneralIndex: generalIndex},
-              {GeneralKey: destinationAccount},
+              {GeneralKey: getGeneralKey(destinationAccount as Hex)},
             ],
           }
         : {
             X2: [
               {Parachain: toChain.paraId},
               toChain.kind === 'evm'
-                ? {
-                    AccountKey20: {
-                      network: 'Any',
-                      key: destinationAccount,
-                    },
-                  }
+                ? {AccountKey20: {key: destinationAccount}}
                 : {
                     AccountId32: {
-                      network: 'Any',
                       id: u8aToHex(decodeAddress(destinationAccount)),
                     },
                   },
@@ -141,6 +162,6 @@ export const transferByKhalaXTransfer = ({
     },
     isThroughChainBridge
       ? null // No need to specify a certain weight if transfer will not through XCM
-      : '6000000000'
+      : {refTime: '6000000000', proofSize: '0'}
   )
 }
