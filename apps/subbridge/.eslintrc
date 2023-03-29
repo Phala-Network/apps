@@ -1,7 +1,7 @@
 {
   "extends": [
     "@phala/eslint-config",
-    "@phala/eslint-config/react",
+    // "@phala/eslint-config/react",
     "next/core-web-vitals"
   ],
   "rules": {

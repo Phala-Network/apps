@@ -32,7 +32,6 @@ export const useValidation = () => {
   useEffect(() => {
     let unmounted = false
     const validate = async (): Promise<BridgeError | null> => {
-      return null
       if (!amount) {
         return 'InvalidAmount'
       }
