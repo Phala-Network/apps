@@ -1,6 +1,8 @@
-import {AssetId} from '@/config/asset'
-import {ChainId, CHAINS} from '@/config/chain'
+import {type AssetId} from '@/config/asset'
+import {CHAINS, type ChainId} from '@/config/chain'
 import type {ApiPromise} from '@polkadot/api'
+import {type SubmittableExtrinsic} from '@polkadot/api/types'
+import {type ISubmittableResult} from '@polkadot/types/types'
 import {u8aToHex} from '@polkadot/util'
 import {decodeAddress} from '@polkadot/util-crypto'
 
@@ -40,7 +42,7 @@ const assetConcrete: {
       interior: {
         X2: [
           {Parachain: parallelParaId},
-          {GeneralKey: getGeneralKey('0x50415241')}, // string "PARA"
+          {GeneralKey: '0x50415241'}, // string "PARA"
         ],
       },
     },
@@ -113,7 +115,7 @@ export const transferByKhalaXTransfer = ({
   toChainId: ChainId
   destinationAccount: string
   assetId: AssetId
-}) => {
+}): SubmittableExtrinsic<'promise', ISubmittableResult> => {
   const toChain = CHAINS[toChainId]
   const isToEthereum = toChainId === 'ethereum' || toChainId === 'kovan'
   const isTransferringZLKToMoonriver =
@@ -122,7 +124,7 @@ export const transferByKhalaXTransfer = ({
   const generalIndex = toChain.kind === 'evm' ? toChain.generalIndex : null
 
   const concrete = assetConcrete[fromChainId]?.[assetId]
-  if (!concrete) {
+  if (concrete == null) {
     throw new Error(`Unsupported asset: ${assetId}`)
   }
 
@@ -142,18 +144,32 @@ export const transferByKhalaXTransfer = ({
       interior: isThroughChainBridge
         ? {
             X3: [
-              {GeneralKey: getGeneralKey('0x6362')}, // string "cb"
+              {
+                GeneralKey:
+                  fromChainId === 'phala' ? '0x6362' : getGeneralKey('0x6362'),
+              }, // string "cb"
               {GeneralIndex: generalIndex},
-              {GeneralKey: getGeneralKey(destinationAccount as Hex)},
+              {
+                GeneralKey:
+                  fromChainId === 'phala'
+                    ? destinationAccount
+                    : getGeneralKey(destinationAccount as Hex),
+              },
             ],
           }
         : {
             X2: [
               {Parachain: toChain.paraId},
               toChain.kind === 'evm'
-                ? {AccountKey20: {key: destinationAccount}}
+                ? {
+                    AccountKey20: {
+                      network: fromChainId === 'phala' ? 'Any' : undefined,
+                      key: destinationAccount,
+                    },
+                  }
                 : {
                     AccountId32: {
+                      network: fromChainId === 'phala' ? 'Any' : undefined,
                       id: u8aToHex(decodeAddress(destinationAccount)),
                     },
                   },
@@ -162,6 +178,8 @@ export const transferByKhalaXTransfer = ({
     },
     isThroughChainBridge
       ? null // No need to specify a certain weight if transfer will not through XCM
+      : fromChainId === 'phala'
+      ? '6000000000'
       : {refTime: '6000000000', proofSize: '0'}
   )
 }
