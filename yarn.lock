@@ -2539,9 +2539,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mui/x-data-grid@npm:^6.0.3":
-  version: 6.0.3
-  resolution: "@mui/x-data-grid@npm:6.0.3"
+"@mui/x-data-grid@npm:^6.0.4":
+  version: 6.0.4
+  resolution: "@mui/x-data-grid@npm:6.0.4"
   dependencies:
     "@babel/runtime": ^7.21.0
     "@mui/utils": ^5.11.13
@@ -2553,7 +2553,7 @@ __metadata:
     "@mui/system": ^5.4.1
     react: ^17.0.2 || ^18.0.0
     react-dom: ^17.0.2 || ^18.0.0
-  checksum: fc8f3c6152ef65ca0381a6334c1114a6da77632e844a571c9ef37177706377fb9f04bb06f9b7738af095c1cc4d2b16c59ed1e310f30b1ddde3905ab3d8614508
+  checksum: 8f84071287e803807aa4b058583081d400f69c0c2935522b0a67672f623d2606bdcc75aa912deb9ca9d12850faae555ab95a28fdd705af3c6177d346d68da7f0
   languageName: node
   linkType: hard
 
@@ -2749,7 +2749,7 @@ __metadata:
     "@mui/icons-material": ^5.11.11
     "@mui/lab": 5.0.0-alpha.124
     "@mui/material": ^5.11.15
-    "@mui/x-data-grid": ^6.0.3
+    "@mui/x-data-grid": ^6.0.4
     "@next/bundle-analyzer": ^13.2.4
     "@phala/lib": "workspace:^"
     "@phala/store": "workspace:^"
@@ -2789,7 +2789,7 @@ __metadata:
     recharts: ^2.5.0
     sharp: ^0.31.3
     swr: ^2.1.1
-    typescript: ^5.0.2
+    typescript: ^5.0.3
   languageName: unknown
   linkType: soft
 
@@ -2809,7 +2809,7 @@ __metadata:
     eslint-plugin-react: ^7.32.2
     eslint-plugin-react-hooks: ^4.6.0
     prettier: ^2.8.7
-    typescript: ^5.0.2
+    typescript: ^5.0.3
   languageName: unknown
   linkType: soft
 
@@ -2840,7 +2840,7 @@ __metadata:
     "@types/node": ^18.15.11
     "@types/ws": ^8.5.4
     ts-node: ^10.9.1
-    typescript: ^5.0.2
+    typescript: ^5.0.3
     ws: ^8.13.0
   languageName: unknown
   linkType: soft
@@ -2899,7 +2899,7 @@ __metadata:
     react: ^18.2.0
     react-dom: ^18.2.0
     swr: ^1.3.0
-    typescript: ^5.0.2
+    typescript: ^5.0.3
   languageName: unknown
   linkType: soft
 
@@ -9108,8 +9108,8 @@ __metadata:
     "@types/node": ^18.15.11
     husky: ^8.0.3
     prettier: ^2.8.7
-    turbo: ^1.8.6
-    typescript: ^5.0.2
+    turbo: ^1.8.8
+    typescript: ^5.0.3
   languageName: unknown
   linkType: soft
 
@@ -11609,58 +11609,58 @@ __metadata:
   languageName: node
   linkType: hard
 
-"turbo-darwin-64@npm:1.8.6":
-  version: 1.8.6
-  resolution: "turbo-darwin-64@npm:1.8.6"
+"turbo-darwin-64@npm:1.8.8":
+  version: 1.8.8
+  resolution: "turbo-darwin-64@npm:1.8.8"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-"turbo-darwin-arm64@npm:1.8.6":
-  version: 1.8.6
-  resolution: "turbo-darwin-arm64@npm:1.8.6"
+"turbo-darwin-arm64@npm:1.8.8":
+  version: 1.8.8
+  resolution: "turbo-darwin-arm64@npm:1.8.8"
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
-"turbo-linux-64@npm:1.8.6":
-  version: 1.8.6
-  resolution: "turbo-linux-64@npm:1.8.6"
+"turbo-linux-64@npm:1.8.8":
+  version: 1.8.8
+  resolution: "turbo-linux-64@npm:1.8.8"
   conditions: os=linux & cpu=x64
   languageName: node
   linkType: hard
 
-"turbo-linux-arm64@npm:1.8.6":
-  version: 1.8.6
-  resolution: "turbo-linux-arm64@npm:1.8.6"
+"turbo-linux-arm64@npm:1.8.8":
+  version: 1.8.8
+  resolution: "turbo-linux-arm64@npm:1.8.8"
   conditions: os=linux & cpu=arm64
   languageName: node
   linkType: hard
 
-"turbo-windows-64@npm:1.8.6":
-  version: 1.8.6
-  resolution: "turbo-windows-64@npm:1.8.6"
+"turbo-windows-64@npm:1.8.8":
+  version: 1.8.8
+  resolution: "turbo-windows-64@npm:1.8.8"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
 
-"turbo-windows-arm64@npm:1.8.6":
-  version: 1.8.6
-  resolution: "turbo-windows-arm64@npm:1.8.6"
+"turbo-windows-arm64@npm:1.8.8":
+  version: 1.8.8
+  resolution: "turbo-windows-arm64@npm:1.8.8"
   conditions: os=win32 & cpu=arm64
   languageName: node
   linkType: hard
 
-"turbo@npm:^1.8.6":
-  version: 1.8.6
-  resolution: "turbo@npm:1.8.6"
+"turbo@npm:^1.8.8":
+  version: 1.8.8
+  resolution: "turbo@npm:1.8.8"
   dependencies:
-    turbo-darwin-64: 1.8.6
-    turbo-darwin-arm64: 1.8.6
-    turbo-linux-64: 1.8.6
-    turbo-linux-arm64: 1.8.6
-    turbo-windows-64: 1.8.6
-    turbo-windows-arm64: 1.8.6
+    turbo-darwin-64: 1.8.8
+    turbo-darwin-arm64: 1.8.8
+    turbo-linux-64: 1.8.8
+    turbo-linux-arm64: 1.8.8
+    turbo-windows-64: 1.8.8
+    turbo-windows-arm64: 1.8.8
   dependenciesMeta:
     turbo-darwin-64:
       optional: true
@@ -11676,7 +11676,7 @@ __metadata:
       optional: true
   bin:
     turbo: bin/turbo
-  checksum: f20983be69ac689eb8193adff5838fbc1248dc987fbecfa7433996ee50934dc5574c98f2b09e552bfae48386f2077ce810e203a8a9961819106098384bf4e806
+  checksum: 6dcfd7b38e2dd9abe279bda54e474be3463df51428f0b91c5e0539e9fd8c9b1efec562df629946f5ca92ede05f0aba35027481065d054249334e11692085ddb7
   languageName: node
   linkType: hard
 
@@ -11713,13 +11713,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:^5.0.2":
-  version: 5.0.2
-  resolution: "typescript@npm:5.0.2"
+"typescript@npm:^5.0.3":
+  version: 5.0.3
+  resolution: "typescript@npm:5.0.3"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: bef1dcd166acfc6934b2ec4d72f93edb8961a5fab36b8dd2aaf6f4f4cd5c0210f2e0850aef4724f3b4913d5aef203a94a28ded731b370880c8bcff7e4ff91fc1
+  checksum: 3cce0576d218cb4277ff8b6adfef1a706e9114a98b4261a38ad658a7642f1b274a8396394f6cbff8c0ba852996d7ed2e233e9b8431d5d55ac7c2f6fea645af02
   languageName: node
   linkType: hard
 
@@ -11733,13 +11733,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@^5.0.2#~builtin<compat/typescript>":
-  version: 5.0.2
-  resolution: "typescript@patch:typescript@npm%3A5.0.2#~builtin<compat/typescript>::version=5.0.2&hash=85af82"
+"typescript@patch:typescript@^5.0.3#~builtin<compat/typescript>":
+  version: 5.0.3
+  resolution: "typescript@patch:typescript@npm%3A5.0.3#~builtin<compat/typescript>::version=5.0.3&hash=85af82"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: b63cb742fbb9aeb3085e002ad8f10d5fd963606aa4d6b3b65b4e76c396ff09739f03b5dbae08e1698c3bce9d5619d3f67aeb7ee470ed4016bd345b3cfe37b54a
+  checksum: 5580367025ff7ee1f2a61e5affdbddccfe6e893bc662aa33fefdbf12de7e493173fa7d47475e9e15121828691004c4ed13bcd115e57866baed97b54c60954e1c
   languageName: node
   linkType: hard
 

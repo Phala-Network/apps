@@ -21,7 +21,7 @@
     "@mui/icons-material": "^5.11.11",
     "@mui/lab": "5.0.0-alpha.124",
     "@mui/material": "^5.11.15",
-    "@mui/x-data-grid": "^6.0.3",
+    "@mui/x-data-grid": "^6.0.4",
     "@phala/lib": "workspace:^",
     "@phala/store": "workspace:^",
     "@phala/util": "workspace:^",
@@ -57,7 +57,7 @@
     "recharts": "^2.5.0",
     "sharp": "^0.31.3",
     "swr": "^2.1.1",
-    "typescript": "^5.0.2"
+    "typescript": "^5.0.3"
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^13.2.4",
