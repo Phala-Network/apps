@@ -14,15 +14,15 @@
     "@metamask/detect-provider": "^2.0.0",
     "@metamask/providers": "^10.2.1",
     "@mui/icons-material": "^5.11.11",
-    "@mui/lab": "5.0.0-alpha.123",
-    "@mui/material": "^5.11.13",
+    "@mui/lab": "5.0.0-alpha.124",
+    "@mui/material": "^5.11.15",
     "@next/bundle-analyzer": "^13.2.4",
     "@phala/lib": "workspace:^",
     "@phala/store": "workspace:^",
     "@phala/util": "workspace:^",
-    "@polkadot/api": "^10.1.4",
-    "@polkadot/util": "^11.1.1",
-    "@polkadot/util-crypto": "^11.1.1",
+    "@polkadot/api": "^10.2.1",
+    "@polkadot/util": "^11.1.2",
+    "@polkadot/util-crypto": "^11.1.2",
     "@talismn/connect-components": "^1.1.7",
     "@talismn/connect-ui": "^1.1.2",
     "@talismn/connect-wallets": "^1.2.3",
@@ -40,11 +40,11 @@
   "devDependencies": {
     "@phala/eslint-config": "workspace:^",
     "@svgr/webpack": "^6.5.1",
-    "@types/node": "^18.15.3",
-    "@types/react": "^18.0.28",
+    "@types/node": "^18.15.11",
+    "@types/react": "^18.0.31",
     "@types/react-dom": "^18.0.11",
-    "eslint": "^8.36.0",
+    "eslint": "^8.37.0",
     "eslint-config-next": "^13.2.4",
-    "typescript": "^5.0.2"
+    "typescript": "^5.0.3"
   }
 }
