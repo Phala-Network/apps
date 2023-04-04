@@ -1,8 +1,9 @@
-import {BridgeError} from '@/config/error'
+import {type BridgeError} from '@/config/error'
 import {
   amountAtom,
   assetAtom,
   bridgeErrorAtom,
+  bridgeInfoAtom,
   destChainTransactionFeeAtom,
   destinationAccountAtom,
   existentialDepositAtom,
@@ -16,7 +17,7 @@ import {useBalance} from './useBalance'
 import {useBridgeFee} from './useBridgeFee'
 import {useBridgeLimit} from './useBridgeLimit'
 
-export const useValidation = () => {
+export const useValidation = (): void => {
   const [, setBridgeError] = useAtom(bridgeErrorAtom)
   const [amount] = useAtom(amountAtom)
   const [fromChain] = useAtom(fromChainAtom)
@@ -28,15 +29,19 @@ export const useValidation = () => {
   const destChainTransactionFee = useAtomValue(destChainTransactionFeeAtom)
   const existentialDeposit = useAtomValue(existentialDepositAtom)
   const bridgeLimit = useBridgeLimit()
+  const [bridgeInfo] = useAtom(bridgeInfoAtom)
 
   useEffect(() => {
     let unmounted = false
     const validate = async (): Promise<BridgeError | null> => {
-      if (!amount) {
+      if (bridgeInfo.disabled) {
+        return 'Disabled'
+      }
+      if (amount.length === 0) {
         return 'InvalidAmount'
       }
       if (
-        !destinationAccount ||
+        destinationAccount.length === 0 ||
         (toChain.kind === 'polkadot' && !validateAddress(destinationAccount)) ||
         (toChain.kind === 'evm' &&
           !(
@@ -46,12 +51,12 @@ export const useValidation = () => {
       ) {
         return 'InvalidAccount'
       }
-      if (!balance || balance.lt(amount)) {
+      if (balance == null || balance.lt(amount)) {
         return 'InsufficientBalance'
       }
 
       let minAmount = destChainTransactionFee.add(existentialDeposit)
-      if (bridgeFee) {
+      if (bridgeFee != null) {
         minAmount = minAmount.add(bridgeFee)
       }
 
@@ -59,14 +64,14 @@ export const useValidation = () => {
         return 'AmountTooSmall'
       }
 
-      if (!bridgeLimit || bridgeLimit.lt(amount)) {
+      if (bridgeLimit == null || bridgeLimit.lt(amount)) {
         return 'InsufficientReserve'
       }
 
       if (
         (fromChain.id === 'astar' || fromChain.id === 'shiden') &&
         asset.id === 'pha' &&
-        amount &&
+        amount.length > 0 &&
         balance.eq(amount)
       ) {
         return 'MinBalanceLimit'
@@ -75,7 +80,7 @@ export const useValidation = () => {
       return null
     }
 
-    validate().then((error) => {
+    void validate().then((error) => {
       if (!unmounted) {
         setBridgeError(error)
       }

@@ -1,5 +1,5 @@
 import {ASSETS, type AssetId} from '@/config/asset'
-import {BRIDGES, type BridgeKind} from '@/config/bridge'
+import {BRIDGES} from '@/config/bridge'
 import {CHAINS, type ChainId} from '@/config/chain'
 import {BRIDGE_ERROR_MESSAGES, type BridgeError} from '@/config/error'
 import {polkadotAccountAtom} from '@phala/store'
@@ -61,13 +61,13 @@ export const bridgeErrorMessageAtom = atom<string | null>((get) => {
   return BRIDGE_ERROR_MESSAGES[error]
 })
 
-export const decimalsAtom = atom<number>((get) => {
+export const decimalsAtom = atom((get) => {
   const fromChain = get(fromChainAtom)
   const asset = get(assetAtom)
   return asset.decimals[fromChain.id] ?? asset.decimals.default
 })
 
-export const existentialDepositAtom = atom<Decimal>((get) => {
+export const existentialDepositAtom = atom((get) => {
   const toChain = get(toChainAtom)
   const asset = get(assetAtom)
   const existentialDeposit = asset.existentialDeposit[toChain.id]
@@ -79,26 +79,26 @@ export const existentialDepositAtom = atom<Decimal>((get) => {
   return existentialDeposit
 })
 
-export const bridgeInfoAtom = atom<{
-  kind: BridgeKind | null
-  estimatedTime: string | null
-  isThroughKhala: boolean
-}>((get) => {
+export const bridgeInfoAtom = atom((get) => {
   const fromChain = get(fromChainAtom)
   const toChain = get(toChainAtom)
   const asset = get(assetAtom)
-  const bridge = BRIDGES.find((bridge) => bridge.fromChain === fromChain.id)
-    ?.toChains.find((x) => x.id === toChain.id)
-    ?.assets.find((assetConfig) => assetConfig.assetId === asset.id)
+  const toChainConfig = BRIDGES.find(
+    (bridge) => bridge.fromChain === fromChain.id
+  )?.toChains.find((x) => x.id === toChain.id)
+  const bridge = toChainConfig?.assets.find(
+    (assetConfig) => assetConfig.assetId === asset.id
+  )
 
   return {
     kind: bridge?.kind ?? null,
     estimatedTime: bridge?.estimatedTime ?? null,
     isThroughKhala: bridge?.isThroughKhala ?? false,
+    disabled: toChainConfig?.disabled ?? bridge?.disabled ?? false,
   }
 })
 
-export const destChainTransactionFeeAtom = atom<Decimal>((get) => {
+export const destChainTransactionFeeAtom = atom((get) => {
   const {kind, isThroughKhala} = get(bridgeInfoAtom)
   const toChain = get(toChainAtom)
   const asset = get(assetAtom)
