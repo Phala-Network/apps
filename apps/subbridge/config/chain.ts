@@ -6,7 +6,6 @@ import crabChainIcon from '@/assets/crab_chain_icon.svg'
 import ethereumIcon from '@/assets/ethereum_chain_icon.jpg'
 import karuraIcon from '@/assets/karura_chain_icon.png'
 import khalaIcon from '@/assets/khala_chain_icon.svg'
-import kovanIcon from '@/assets/kovan_chain_icon.png'
 import moonbaseAlphaIcon from '@/assets/moonbase_alpha_chain_icon.png'
 import moonbeamIcon from '@/assets/moonbeam_chain_icon.png'
 import moonriverIcon from '@/assets/moonriver_chain_icon.png'
@@ -15,11 +14,10 @@ import parallelHeikoIcon from '@/assets/parallel_heiko_chain_icon.svg'
 import phalaIcon from '@/assets/phala_chain_icon.svg'
 import shidenIcon from '@/assets/shiden_chain_icon.png'
 import turingIcon from '@/assets/turing_chain_icon.png'
-import {AssetId} from './asset'
+import {type AssetId} from './asset'
 
 export type EvmChainId =
   | 'ethereum'
-  | 'kovan'
   | 'moonbeam'
   | 'moonriver'
   | 'moonbase-alpha'
@@ -143,23 +141,6 @@ export const CHAINS: Readonly<
     },
     generalIndex: 0,
     explorerURL: 'https://etherscan.io/',
-  },
-  kovan: {
-    id: 'kovan',
-    name: 'Kovan',
-    icon: kovanIcon,
-    kind: 'evm',
-    evmChainId: 42,
-    currencySymbol: 'kETH',
-    isTest: true,
-    chainBridgeContract: {
-      address: '0x82db1f1717487cADEAf6F0C74825495d6D89E08e',
-      spender: {
-        thala: '0xF69b08D649B744A4d4781CB1B86E30Cc9Ac9991b',
-      },
-    },
-    generalIndex: 0,
-    explorerURL: 'https://kovan.etherscan.io/',
   },
   thala: {
     id: 'thala',

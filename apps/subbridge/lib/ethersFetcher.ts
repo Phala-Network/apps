@@ -1,5 +1,5 @@
-import {ChainId} from '@/config/chain'
-import {ApiPromise} from '@polkadot/api'
+import {type ChainId} from '@/config/chain'
+import {type ApiPromise} from '@polkadot/api'
 import {hexStripPrefix, u8aToHex} from '@polkadot/util'
 import {decodeAddress} from '@polkadot/util-crypto'
 import Decimal from 'decimal.js'
@@ -39,7 +39,7 @@ export const ethersContractAllowanceFetcher = async (
 
 export const ethersGasPriceFetcher = async (
   provider: ethers.providers.Web3Provider
-) => {
+): Promise<Decimal> => {
   const {ethers} = await import('ethers')
   return new Decimal(ethers.utils.formatEther(await provider.getGasPrice()))
 }
@@ -59,7 +59,7 @@ export const evmChainBridgeEstimatedGasFetcher = async (
       khalaApi,
       // Try to use fixed amount to reduce requests
       ALICE,
-      '1',
+      '0',
       toChainId
     )
   )

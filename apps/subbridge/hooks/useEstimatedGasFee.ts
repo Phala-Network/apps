@@ -15,7 +15,7 @@ import {
   fromChainAtom,
   toChainAtom,
 } from '@/store/bridge'
-import Decimal from 'decimal.js'
+import type Decimal from 'decimal.js'
 import {useAtomValue} from 'jotai'
 import useSWR from 'swr'
 import {
@@ -44,14 +44,14 @@ export const useEstimatedGasFee = (): Decimal | undefined => {
       : asset.chainBridgeResourceId?.[toChain.id]
 
   const {data: ethersGasPrice} = useSWR(
-    ethersWeb3Provider ? [ethersWeb3Provider] : null,
+    ethersWeb3Provider != null ? [ethersWeb3Provider] : null,
     ethersGasPriceFetcher
   )
   const {data: evmChainBridgeEstimatedGas} = useSWR(
     bridgeKind === 'evmChainBridge' &&
-      ethersChainBridgeContract &&
-      khalaApi &&
-      resourceId
+      ethersChainBridgeContract != null &&
+      khalaApi != null &&
+      resourceId != null
       ? [ethersChainBridgeContract, khalaApi, resourceId, toChain.id]
       : null,
     evmChainBridgeEstimatedGasFetcher
@@ -59,9 +59,9 @@ export const useEstimatedGasFee = (): Decimal | undefined => {
 
   const {data: evmXTokensEstimatedGas} = useSWR(
     bridgeKind === 'evmXTokens' &&
-      ethersXTokensContract &&
-      toChain.paraId &&
-      asset.xc20Address?.[fromChain.id]
+      ethersXTokensContract != null &&
+      toChain.paraId != null &&
+      asset.xc20Address?.[fromChain.id] != null
       ? [
           ethersXTokensContract,
           asset.xc20Address[fromChain.id],
@@ -73,34 +73,37 @@ export const useEstimatedGasFee = (): Decimal | undefined => {
   )
 
   const {data: xTokensPartialFee} = useSWR(
-    bridgeKind === 'polkadotXTokens' && polkadotApi
+    bridgeKind === 'polkadotXTokens' && polkadotApi != null
       ? [polkadotApi, fromChain.id, toChain.id, asset.id, isThroughKhala]
       : null,
     xTokensPartialFeeFetcher
   )
 
   const {data: khalaPartialFee} = useSWR(
-    bridgeKind === 'khalaXTransfer' && polkadotApi
+    bridgeKind === 'khalaXTransfer' && polkadotApi != null
       ? [polkadotApi, fromChain.id, toChain.id, asset.id]
       : null,
     khalaXTransferPartialFeeFetcher
   )
 
   const {data: polkadotXcmPartialFee} = useSWR(
-    bridgeKind === 'polkadotXcm' && polkadotApi
+    bridgeKind === 'polkadotXcm' && polkadotApi != null
       ? [polkadotApi, fromChain.id, toChain.id, asset.id]
       : null,
     polkadotXcmTransferPartialFeeFetcher
   )
 
   return (
-    (ethersGasPrice &&
-      ((evmChainBridgeEstimatedGas &&
-        ethersGasPrice.times(evmChainBridgeEstimatedGas)) ||
-        (evmXTokensEstimatedGas &&
-          ethersGasPrice.times(evmXTokensEstimatedGas)))) ||
-    xTokensPartialFee ||
-    khalaPartialFee ||
+    (ethersGasPrice != null
+      ? (evmChainBridgeEstimatedGas != null
+          ? ethersGasPrice.times(evmChainBridgeEstimatedGas)
+          : undefined) ??
+        (evmXTokensEstimatedGas != null
+          ? ethersGasPrice.times(evmXTokensEstimatedGas)
+          : undefined)
+      : undefined) ??
+    xTokensPartialFee ??
+    khalaPartialFee ??
     polkadotXcmPartialFee
   )
 }

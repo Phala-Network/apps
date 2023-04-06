@@ -1,5 +1,5 @@
-import {AssetId, ASSETS} from '@/config/asset'
-import {ChainId, CHAINS} from '@/config/chain'
+import {ASSETS, type AssetId} from '@/config/asset'
+import {CHAINS, type ChainId} from '@/config/chain'
 import type {ApiPromise} from '@polkadot/api'
 import {u8aToHex} from '@polkadot/util'
 import {decodeAddress} from '@polkadot/util-crypto'
@@ -16,32 +16,34 @@ export const createChainBridgeData = async (
     toChainId === 'phala' || toChainId === 'khala' || toChainId === 'thala'
   const toChain = CHAINS[toChainId]
   const accountId = u8aToHex(decodeAddress(destinationAccount))
-  const dest = khalaApi
-    .createType('XcmV1MultiLocation', {
-      // parents = 1 means we wanna send to other parachains or relaychain
-      parents: isToKhala ? 0 : 1,
-      interior: isToKhala
-        ? {
-            X1: {
-              AccountId32: {
-                network: 'Any',
-                id: accountId,
-              },
+  let dest
+
+  try {
+    dest = khalaApi
+      .createType('XcmV3MultiLocation', {
+        // parents = 1 means we wanna send to other parachains or relaychain
+        parents: isToKhala ? 0 : 1,
+        interior: isToKhala
+          ? {X1: {AccountId32: {id: accountId}}}
+          : {X2: [{Parachain: toChain.paraId}, {AccountId32: {id: accountId}}]},
+      })
+      .toHex()
+  } catch (err) {
+    dest = khalaApi
+      .createType('XcmV1MultiLocation', {
+        // parents = 1 means we wanna send to other parachains or relaychain
+        parents: isToKhala ? 0 : 1,
+        interior: isToKhala
+          ? {X1: {AccountId32: {network: 'Any', id: accountId}}}
+          : {
+              X2: [
+                {Parachain: toChain.paraId},
+                {AccountId32: {network: 'Any', id: accountId}},
+              ],
             },
-          }
-        : {
-            X2: [
-              {Parachain: toChain.paraId},
-              {
-                AccountId32: {
-                  network: 'Any',
-                  id: accountId,
-                },
-              },
-            ],
-          },
-    })
-    .toHex()
+      })
+      .toHex()
+  }
 
   const data = ethers.utils.hexConcat([
     ethers.utils.hexZeroPad(BigNumber.from(amount).toHexString(), 32),
@@ -72,7 +74,7 @@ export const transferByChainBridge = async ({
     typeof asset.chainBridgeResourceId === 'string'
       ? asset.chainBridgeResourceId
       : asset.chainBridgeResourceId?.[toChainId]
-  if (!resourceId) {
+  if (resourceId == null) {
     throw new Error('Transfer missing required parameters')
   }
   // TODO: make deposit chain configurable

@@ -117,7 +117,7 @@ export const transferByKhalaXTransfer = ({
   assetId: AssetId
 }): SubmittableExtrinsic<'promise', ISubmittableResult> => {
   const toChain = CHAINS[toChainId]
-  const isToEthereum = toChainId === 'ethereum' || toChainId === 'kovan'
+  const isToEthereum = toChainId === 'ethereum'
   const isTransferringZLKToMoonriver =
     (toChainId === 'moonriver' || toChainId === 'moonbase-alpha') &&
     assetId === 'zlk'
