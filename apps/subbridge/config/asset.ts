@@ -14,7 +14,7 @@ import sdnIcon from '@/assets/sdn_asset_icon.png'
 import turIcon from '@/assets/tur_asset_icon.png'
 import zlkIcon from '@/assets/zlk_asset_icon.png'
 import Decimal from 'decimal.js'
-import {ChainId, EvmChainId} from './chain'
+import {type ChainId, type EvmChainId} from './chain'
 
 export type AssetId =
   | 'pha'
@@ -66,7 +66,6 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
     },
     erc20TokenContractAddress: {
       ethereum: '0x6c5bA91642F10282b576d91922Ae6448C9d52f4E',
-      kovan: '0x512f7a3c14b6ee86c2015bc8ac1fe97e657f75f2',
       moonbeam: '0xFFFfFfFf63d24eCc8eB8a7b5D0803e900F7b6cED',
       moonriver: '0xffFfFFff8E6b63d9e447B6d4C45BDA8AF9dc9603',
     },
@@ -76,7 +75,7 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
       khala:
         '0x00e6dfb61a2fb903df487c401663825643bb825d41695e63df8af6162ab145a6',
     },
-    decimals: {ethereum: 18, kovan: 18, default: 12},
+    decimals: {ethereum: 18, default: 12},
     destChainTransactionFee: {
       phala: new Decimal('0.092696'),
       khala: new Decimal('0.092696'),

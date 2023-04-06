@@ -14,15 +14,14 @@ export const useBridgeFee = (): Decimal | undefined => {
   const api = useCurrentPolkadotApi()
   const isFromKhalaToEthereum =
     (fromChain.id === 'phala' && toChain.id === 'ethereum') ||
-    (fromChain.id === 'khala' && toChain.id === 'ethereum') ||
-    (fromChain.id === 'thala' && toChain.id === 'kovan')
+    (fromChain.id === 'khala' && toChain.id === 'ethereum')
   const isTransferringZlkThroughChainBridge =
     fromChain.kind === 'polkadot' &&
     toChain.kind === 'evm' &&
     asset.id === 'zlk'
 
   const {data: khalaToEthereumBridgeFee} = useSWR(
-    api && isFromKhalaToEthereum ? [api] : null,
+    api != null && isFromKhalaToEthereum ? [api] : null,
     khalaToEthereumBridgeFeeFetcher
   )
 

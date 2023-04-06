@@ -102,5 +102,6 @@ export const useValidation = (): void => {
     fromChain.id,
     toChain.id,
     asset.id,
+    bridgeInfo.disabled,
   ])
 }

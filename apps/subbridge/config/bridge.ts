@@ -117,10 +117,6 @@ export const BRIDGES: Readonly<Bridge[]> = [
     ],
   },
   {
-    fromChain: 'kovan',
-    toChains: [{id: 'thala', assets: ethereumToKhalaAssets}],
-  },
-  {
     fromChain: 'phala',
     toChains: [
       {
@@ -208,7 +204,6 @@ export const BRIDGES: Readonly<Bridge[]> = [
   {
     fromChain: 'thala',
     toChains: [
-      {id: 'kovan', assets: khalaToEthereumAssets},
       {id: 'karura-test', assets: khalaToKaruraAssets},
       {id: 'moonbase-alpha', assets: khalaToMoonriverAssets},
       {id: 'bifrost-test', assets: khalaToBifrostAssets},
