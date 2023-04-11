@@ -15,8 +15,8 @@
   },
   "peerDependencies": {
     "@phala/store": "workspace:^",
-    "@polkadot/api": "^9",
-    "@polkadot/types": "^9",
+    "@polkadot/api": "^10",
+    "@polkadot/types": "^10",
     "@talismn/connect-wallets": "^1.1.3",
     "jotai": "^2",
     "react": ">=17"
