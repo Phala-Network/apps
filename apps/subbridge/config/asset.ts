@@ -80,7 +80,7 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
       phala: new Decimal('0.092696'),
       khala: new Decimal('0.092696'),
       thala: new Decimal('0.092696'),
-      bifrost: new Decimal('0.0256'),
+      'bifrost-kusama': new Decimal('0.0256'),
       'bifrost-test': new Decimal('0.0256'),
       karura: new Decimal('0.0512'),
       'karura-test': new Decimal('0.0512'),
@@ -99,7 +99,7 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
       thala: new Decimal('0.01'),
       karura: new Decimal('0.04'),
       'karura-test': new Decimal('0.04'),
-      bifrost: new Decimal('0.04'),
+      'bifrost-kusama': new Decimal('0.04'),
       'bifrost-test': new Decimal('0.04'),
     },
     palletAssetId: {
@@ -163,7 +163,7 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
     destChainTransactionFee: {
       khala: new Decimal('0.000000016'),
       thala: new Decimal('0.000000016'),
-      bifrost: new Decimal('0.0096'),
+      'bifrost-kusama': new Decimal('0.0096'),
       'bifrost-test': new Decimal('0.0096'),
     },
     decimals: {default: 18},
@@ -174,7 +174,7 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
     chainBridgeResourceId:
       '0x0261dbbb2bbd171398896bc686aa9656e537532fa9fe72fc7666dc2f8dcd2f38',
     existentialDeposit: {
-      bifrost: new Decimal('0.01'),
+      'bifrost-kusama': new Decimal('0.01'),
       'bifrost-test': new Decimal('0.01'),
     },
   },
@@ -189,13 +189,13 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
     ormlToken: 'BNC',
     decimals: {default: 12},
     destChainTransactionFee: {
-      bifrost: new Decimal('0.0051'),
+      'bifrost-kusama': new Decimal('0.0051'),
       'bifrost-test': new Decimal('0.0051'),
       khala: new Decimal('0.016'),
       thala: new Decimal('0.016'),
     },
     existentialDeposit: {
-      bifrost: new Decimal('0.01'),
+      'bifrost-kusama': new Decimal('0.01'),
       'bifrost-test': new Decimal('0.01'),
       khala: new Decimal('0.01'),
       thala: new Decimal('0.01'),
