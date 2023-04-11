@@ -172,7 +172,7 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
       'moonbase-alpha': '0xD8E0B625177f6A41260A36f9B88D574fBAc77a3A',
     },
     chainBridgeResourceId:
-      '0x028da1efb56e124f659fa6d5d95b3cc541ce207cbfee2f4f066061cc92d37bae',
+      '0x0261dbbb2bbd171398896bc686aa9656e537532fa9fe72fc7666dc2f8dcd2f38',
     existentialDeposit: {
       bifrost: new Decimal('0.01'),
       'bifrost-test': new Decimal('0.01'),
