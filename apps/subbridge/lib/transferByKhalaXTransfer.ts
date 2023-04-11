@@ -42,7 +42,7 @@ const assetConcrete: {
       interior: {
         X2: [
           {Parachain: parallelParaId},
-          {GeneralKey: '0x50415241'}, // string "PARA"
+          {GeneralKey: getGeneralKey('0x50415241')}, // string "PARA"
         ],
       },
     },
@@ -144,32 +144,18 @@ export const transferByKhalaXTransfer = ({
       interior: isThroughChainBridge
         ? {
             X3: [
-              {
-                GeneralKey:
-                  fromChainId === 'phala' ? '0x6362' : getGeneralKey('0x6362'),
-              }, // string "cb"
+              {GeneralKey: getGeneralKey('0x6362')}, // string "cb"
               {GeneralIndex: generalIndex},
-              {
-                GeneralKey:
-                  fromChainId === 'phala'
-                    ? destinationAccount
-                    : getGeneralKey(destinationAccount as Hex),
-              },
+              {GeneralKey: getGeneralKey(destinationAccount as Hex)},
             ],
           }
         : {
             X2: [
               {Parachain: toChain.paraId},
               toChain.kind === 'evm'
-                ? {
-                    AccountKey20: {
-                      network: fromChainId === 'phala' ? 'Any' : undefined,
-                      key: destinationAccount,
-                    },
-                  }
+                ? {AccountKey20: {key: destinationAccount}}
                 : {
                     AccountId32: {
-                      network: fromChainId === 'phala' ? 'Any' : undefined,
                       id: u8aToHex(decodeAddress(destinationAccount)),
                     },
                   },
@@ -178,8 +164,6 @@ export const transferByKhalaXTransfer = ({
     },
     isThroughChainBridge
       ? null // No need to specify a certain weight if transfer will not through XCM
-      : fromChainId === 'phala'
-      ? '6000000000'
       : {refTime: '6000000000', proofSize: '0'}
   )
 }

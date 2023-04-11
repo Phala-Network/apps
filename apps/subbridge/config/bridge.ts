@@ -48,23 +48,13 @@ const karuraToKhalaAssets: AssetsConfig = [
 const khalaToMoonriverAssets: AssetsConfig = [
   {assetId: 'pha', estimatedTime: '< 1 min', kind: 'khalaXTransfer'},
   {assetId: 'movr', estimatedTime: '< 1 min', kind: 'khalaXTransfer'},
-  {
-    assetId: 'zlk',
-    estimatedTime: '~ 5 mins',
-    kind: 'khalaXTransfer',
-    disabled: true,
-  },
+  {assetId: 'zlk', estimatedTime: '~ 5 mins', kind: 'khalaXTransfer'},
 ]
 
 const moonriverToKhalaAssets: AssetsConfig = [
   {assetId: 'movr', estimatedTime: '< 1 min', kind: 'evmXTokens'},
   {assetId: 'pha', estimatedTime: '< 1 min', kind: 'evmXTokens'},
-  {
-    assetId: 'zlk',
-    estimatedTime: '< 3 mins',
-    kind: 'evmChainBridge',
-    disabled: true,
-  },
+  {assetId: 'zlk', estimatedTime: '< 3 mins', kind: 'evmChainBridge'},
 ]
 
 const khalaToBifrostAssets: AssetsConfig = [
@@ -85,7 +75,6 @@ const moonriverToBifrostAssets: AssetsConfig = [
     estimatedTime: '< 3 mins',
     kind: 'evmChainBridge',
     isThroughKhala: true,
-    disabled: true,
   },
 ]
 
@@ -95,7 +84,6 @@ const bifrostToMoonriverAssets: AssetsConfig = [
     estimatedTime: '~ 5 mins',
     kind: 'polkadotXTokens',
     isThroughKhala: true,
-    disabled: true,
   },
 ]
 
