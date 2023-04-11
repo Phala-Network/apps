@@ -1,5 +1,5 @@
-import {AssetId, ASSETS} from '@/config/asset'
-import {ChainId, CHAINS} from '@/config/chain'
+import {ASSETS, type AssetId} from '@/config/asset'
+import {CHAINS, type ChainId} from '@/config/chain'
 import {hexStripPrefix, u8aToHex} from '@polkadot/util'
 import {decodeAddress} from '@polkadot/util-crypto'
 import Decimal from 'decimal.js'
@@ -26,7 +26,7 @@ export const transferByEvmXTokens = async ({
   const asset = ASSETS[assetId]
   const toChain = CHAINS[toChainId]
 
-  if (!asset.xc20Address?.[fromChainId] || !toChain.paraId) {
+  if (asset.xc20Address?.[fromChainId] == null || toChain.paraId == null) {
     throw new Error('Transfer missing required parameters')
   }
 

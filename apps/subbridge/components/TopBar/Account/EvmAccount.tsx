@@ -7,7 +7,7 @@ import {Button} from '@mui/material'
 import {toCurrency, trimAddress} from '@phala/util'
 import {useAtom} from 'jotai'
 import {useSnackbar} from 'notistack'
-import {FC} from 'react'
+import {type FC} from 'react'
 import useSWR from 'swr'
 import AccountTemplate from './AccountTemplate'
 
@@ -19,12 +19,13 @@ const EvmAccount: FC = () => {
   const [isNetworkWrong] = useAtom(isNetworkWrongAtom)
   const switchNetwork = useSwitchNetwork()
   const {data} = useSWR(
-    evmAccount && ethersWeb3Provider ? [ethersWeb3Provider, evmAccount] : null,
+    evmAccount != null &&
+      ethersWeb3Provider != null && [ethersWeb3Provider, evmAccount],
     ethersBalanceFetcher,
     {refreshInterval: 12000}
   )
 
-  if (!evmAccount) return null
+  if (evmAccount == null) return null
 
   return (
     <AccountTemplate
@@ -36,12 +37,14 @@ const EvmAccount: FC = () => {
             variant="text"
             size="small"
             color="error"
-            onClick={() => switchNetwork()}
+            onClick={() => {
+              void switchNetwork()
+            }}
           >
             Wrong Network
           </Button>
         ) : (
-          data && `${toCurrency(data)} ${fromChain.currencySymbol}`
+          data != null && `${toCurrency(data)} ${fromChain.currencySymbol}`
         ))
       }
       ButtonProps={{

@@ -10,18 +10,18 @@ import {isWalletConnectAtom} from '@/store/common'
 import {isNetworkWrongAtom} from '@/store/ethers'
 import {
   Box,
-  InputProps,
   Link,
   Skeleton,
   TextField,
   Typography,
+  type InputProps,
 } from '@mui/material'
-import {BoxProps} from '@mui/system'
+import {type BoxProps} from '@mui/system'
 import {toCurrency} from '@phala/util'
 import {useAtom} from 'jotai'
-import {FC} from 'react'
+import {type FC} from 'react'
 
-const getDecimalPattern = (decimals: number) =>
+const getDecimalPattern = (decimals: number): string =>
   `^[0-9]+\\.?[0-9]{0,${decimals}}$`
 
 const AmountInput: FC<BoxProps & Pick<InputProps, 'endAdornment'>> = ({
@@ -38,7 +38,9 @@ const AmountInput: FC<BoxProps & Pick<InputProps, 'endAdornment'>> = ({
   const bridgeLimit = useBridgeLimit()
 
   const showMax = Boolean(
-    balance && !balance.eq(0) && (!amount || !balance.eq(amount))
+    balance != null &&
+      !balance.eq(0) &&
+      (amount.length === 0 || !balance.eq(amount))
   )
 
   const fromNativeChain =
@@ -78,7 +80,7 @@ const AmountInput: FC<BoxProps & Pick<InputProps, 'endAdornment'>> = ({
             mb: -4,
           }}
         >
-          {(!bridgeLimit || bridgeLimit.isFinite()) && (
+          {(bridgeLimit == null || bridgeLimit.isFinite()) && (
             <Box
               sx={{
                 display: 'flex',
@@ -90,7 +92,7 @@ const AmountInput: FC<BoxProps & Pick<InputProps, 'endAdornment'>> = ({
               <Typography variant="caption" sx={{fontWeight: 500}}>
                 Limit:{' '}
               </Typography>
-              {bridgeLimit ? (
+              {bridgeLimit != null ? (
                 <Typography variant="caption" sx={{fontWeight: 500}}>
                   {`${toCurrency(bridgeLimit, 1)} ${asset.symbol}`}
                 </Typography>
@@ -107,7 +109,7 @@ const AmountInput: FC<BoxProps & Pick<InputProps, 'endAdornment'>> = ({
               cursor: showMax ? 'pointer' : 'default',
             }}
             onClick={() => {
-              if (showMax && balance) {
+              if (showMax && balance != null) {
                 setAmount(balance.toString())
               }
             }}
@@ -115,7 +117,7 @@ const AmountInput: FC<BoxProps & Pick<InputProps, 'endAdornment'>> = ({
             <Typography variant="caption" sx={{fontWeight: 500}}>
               {fromNativeChain ? 'Transferrable' : 'Balance'}:{' '}
             </Typography>
-            {balance ? (
+            {balance != null ? (
               <Typography variant="caption" sx={{fontWeight: 500}}>
                 {`${toCurrency(balance)} ${asset.symbol}`}
               </Typography>

@@ -49,12 +49,12 @@ const App: FC<MyAppProps> = (props) => {
               <Layout>
                 <Component {...pageProps} />
                 <ZendeskWidget />
+                {process.env.NODE_ENV === 'development' && <JotaiDevTools />}
+                <ReactQueryDevtools />
               </Layout>
             </MuiThemeProvider>
           </CacheProvider>
-          {process.env.NODE_ENV === 'development' && <JotaiDevTools />}
         </JotaiProvider>
-        <ReactQueryDevtools />
       </QueryClientProvider>
     </SWRConfig>
   )

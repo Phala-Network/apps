@@ -57,11 +57,9 @@ export interface EvmChain extends BaseChain {
   paraId?: number // for compatible chains
   chainBridgeContract?: {
     address: `0x${string}`
-    spender:
-      | `0x${string}`
-      | {
-          [toChainId in ChainId]?: `0x${string}`
-        }
+    spender: {
+      [toChainId in ChainId | 'default']?: `0x${string}`
+    }
   }
   xTokensContractAddress?: `0x${string}`
   generalIndex?: number // for khala chain bridge
@@ -187,7 +185,7 @@ export const CHAINS: Readonly<
     nativeAsset: 'movr',
     chainBridgeContract: {
       address: '0xCe6652551A989C13B41f70cac504341A5F711c8d',
-      spender: '0xf88337a0db6e24Dff0fCD7F92ab0655B97A68d38',
+      spender: {default: '0xf88337a0db6e24Dff0fCD7F92ab0655B97A68d38'},
     },
     xTokensContractAddress: '0x0000000000000000000000000000000000000804',
     generalIndex: 2,
@@ -202,7 +200,7 @@ export const CHAINS: Readonly<
     currencySymbol: 'DEV',
     chainBridgeContract: {
       address: '0x1e4ED6d37685D2FB254e47C5b58Cf95173326E4c',
-      spender: '0x0B674CC89F54a47Be4Eb6C1A125bB8f04A529181',
+      spender: {default: '0x0B674CC89F54a47Be4Eb6C1A125bB8f04A529181'},
     },
     isTest: true,
     generalIndex: 2,

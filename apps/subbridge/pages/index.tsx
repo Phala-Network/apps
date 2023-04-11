@@ -7,7 +7,7 @@ import type {NextPage} from 'next'
 import dynamic from 'next/dynamic'
 
 const PolkadotWalletDialog = dynamic(
-  () => import('@/components/PolkadotWalletDialog'),
+  async () => await import('@/components/PolkadotWalletDialog'),
   {ssr: false}
 )
 

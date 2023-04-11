@@ -1,5 +1,5 @@
-import {AssetId} from '@/config/asset'
-import {ChainId, CHAINS} from '@/config/chain'
+import {type AssetId} from '@/config/asset'
+import {type ChainId, CHAINS} from '@/config/chain'
 import type {ApiPromise} from '@polkadot/api'
 import type {SubmittableExtrinsic} from '@polkadot/api/types'
 import type {ISubmittableResult} from '@polkadot/types/types'

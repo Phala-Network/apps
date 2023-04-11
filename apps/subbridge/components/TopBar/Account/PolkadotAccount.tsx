@@ -4,7 +4,7 @@ import {polkadotWalletModalOpenAtom} from '@/store/polkadotWalletModal'
 import {polkadotAccountAtom} from '@phala/store'
 import {toCurrency} from '@phala/util'
 import {useAtom} from 'jotai'
-import {FC} from 'react'
+import {type FC} from 'react'
 import useSWR from 'swr'
 import AccountTemplate from './AccountTemplate'
 
@@ -13,9 +13,8 @@ const PolkadotAccount: FC = () => {
   const [polkadotAccount] = useAtom(polkadotAccountAtom)
   const polkadotApi = useCurrentPolkadotApi()
   const {data} = useSWR(
-    polkadotApi && polkadotAccount
-      ? [polkadotApi, polkadotAccount.address]
-      : null,
+    polkadotApi != null &&
+      polkadotAccount != null && [polkadotApi, polkadotAccount.address],
     polkadotAvailableBalanceFetcher,
     {
       refreshInterval: 12000,
@@ -24,16 +23,16 @@ const PolkadotAccount: FC = () => {
 
   const tokenSymbol = polkadotApi?.registry.chainTokens[0]
 
-  const handleClick = () => {
+  const handleClick = (): void => {
     setPolkadotWalletModalOpen(true)
   }
 
-  if (!polkadotAccount) return null
+  if (polkadotAccount == null) return null
 
   return (
     <AccountTemplate
       balance={
-        tokenSymbol && data !== undefined
+        tokenSymbol != null && data != null
           ? `${toCurrency(data)} ${tokenSymbol}`
           : undefined
       }

@@ -4,14 +4,14 @@ import {polkadotWalletModalOpenAtom} from '@/store/polkadotWalletModal'
 import {LoadingButton} from '@mui/lab'
 import {
   Button,
-  ButtonProps,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
+  type ButtonProps,
 } from '@mui/material'
 import {useAtom} from 'jotai'
-import {FC, useState} from 'react'
+import {useState, type FC} from 'react'
 
 const ConnectEvmWalletButton: FC<ButtonProps> = (props) => {
   const [open, setOpen] = useState(false)
@@ -19,8 +19,8 @@ const ConnectEvmWalletButton: FC<ButtonProps> = (props) => {
   const [, setEvmAccount] = useAtom(evmAccountAtom)
   const [loading, setLoading] = useState(false)
 
-  const handleClick = () => {
-    if (!ethereum) {
+  const handleClick = (): void => {
+    if (ethereum == null) {
       setOpen(true)
       return
     }
@@ -28,8 +28,11 @@ const ConnectEvmWalletButton: FC<ButtonProps> = (props) => {
     ethereum
       .request({method: 'eth_requestAccounts'})
       .then((accounts) => {
-        const account = (accounts as string[])[0]
-        setEvmAccount(account || null)
+        if (Array.isArray(accounts) && accounts.length > 0) {
+          setEvmAccount(accounts[0])
+        } else {
+          setEvmAccount(null)
+        }
       })
       .finally(() => {
         setLoading(false)
@@ -46,7 +49,7 @@ const ConnectEvmWalletButton: FC<ButtonProps> = (props) => {
           props.onClick?.(e)
         }}
       >
-        {props.children || 'Connect Wallet'}
+        {props.children ?? 'Connect Wallet'}
       </LoadingButton>
       <Dialog
         open={open}
@@ -65,7 +68,12 @@ const ConnectEvmWalletButton: FC<ButtonProps> = (props) => {
           >
             Install Metamask
           </Button>
-          <Button variant="text" onClick={() => window.location.reload()}>
+          <Button
+            variant="text"
+            onClick={() => {
+              window.location.reload()
+            }}
+          >
             Refresh
           </Button>
         </DialogActions>
@@ -77,7 +85,7 @@ const ConnectEvmWalletButton: FC<ButtonProps> = (props) => {
 const ConnectPolkadotButton: FC<ButtonProps> = (props) => {
   const [, setPolkadotWalletModalOpen] = useAtom(polkadotWalletModalOpenAtom)
 
-  const handleClick = () => {
+  const handleClick = (): void => {
     setPolkadotWalletModalOpen(true)
   }
 
@@ -89,7 +97,7 @@ const ConnectPolkadotButton: FC<ButtonProps> = (props) => {
         props.onClick?.(e)
       }}
     >
-      {props.children || 'Connect Wallet'}
+      {props.children ?? 'Connect Wallet'}
     </Button>
   )
 }

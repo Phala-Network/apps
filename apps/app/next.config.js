@@ -11,7 +11,6 @@ const nextConfig = {
     dirs: ['pages', 'components', 'lib', 'hooks', 'store', 'types'],
   },
   reactStrictMode: true,
-  swcMinify: true,
   images: {
     remotePatterns: [
       {

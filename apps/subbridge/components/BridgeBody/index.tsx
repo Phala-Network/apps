@@ -1,6 +1,6 @@
-import {AssetId} from '@/config/asset'
+import {type AssetId} from '@/config/asset'
 import {ALL_FROM_CHAINS, BRIDGES} from '@/config/bridge'
-import {ChainId} from '@/config/chain'
+import {type ChainId} from '@/config/chain'
 import {
   amountAtom,
   assetAtom,
@@ -11,9 +11,9 @@ import {
 import ArrowDownward from '@mui/icons-material/ArrowDownward'
 import ArrowForward from '@mui/icons-material/ArrowForward'
 import {Box, Collapse, IconButton, Paper, Stack, useTheme} from '@mui/material'
-import {BoxProps} from '@mui/system'
+import {type BoxProps} from '@mui/system'
 import {useAtom, useAtomValue} from 'jotai'
-import {FC, useState} from 'react'
+import {useState, type FC} from 'react'
 import Action from './Action'
 import AmountInput from './AmountInput'
 import AssetSelect from './AssetSelect'
@@ -25,7 +25,7 @@ import ExtraInfo from './Extra'
 const getToChainIds = (fromChainId: ChainId): ChainId[] =>
   BRIDGES.find((bridge) => bridge.fromChain === fromChainId)
     ?.toChains.filter((x) => x.assets.length > 0)
-    .map((x) => x.id) || []
+    .map((x) => x.id) ?? []
 
 const getAssetIds = (fromChainId: ChainId, toChainId: ChainId): AssetId[] =>
   BRIDGES.find((bridge) => bridge.fromChain === fromChainId)
@@ -46,7 +46,7 @@ const BridgeBody: FC<BoxProps> = (props) => {
   )
   const destinationAccount = useAtomValue(destinationAccountAtom)
 
-  const handleSelectFromChain = (newFromChainId: ChainId) => {
+  const handleSelectFromChain = (newFromChainId: ChainId): void => {
     setFromChain(newFromChainId)
     setAmount('')
     const newToChainIds = getToChainIds(newFromChainId)
@@ -70,7 +70,7 @@ const BridgeBody: FC<BoxProps> = (props) => {
     setAssetIds(newAssetIds)
   }
 
-  const handleSelectToChain = (newToChainId: ChainId) => {
+  const handleSelectToChain = (newToChainId: ChainId): void => {
     setToChain(newToChainId)
     const newAssetIds = getAssetIds(fromChain.id, newToChainId)
     if (!newAssetIds.includes(asset.id)) {
@@ -79,7 +79,7 @@ const BridgeBody: FC<BoxProps> = (props) => {
     setAssetIds(newAssetIds)
   }
 
-  const handleSwitchChain = () => {
+  const handleSwitchChain = (): void => {
     if (ALL_FROM_CHAINS.includes(toChain.id)) {
       handleSelectFromChain(toChain.id)
     }

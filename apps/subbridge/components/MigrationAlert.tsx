@@ -1,7 +1,7 @@
 import {migrationAlertOpenAtom} from '@/store/common'
-import {Alert, AlertProps} from '@mui/material'
+import {Alert, type AlertProps} from '@mui/material'
 import {useAtom} from 'jotai'
-import {FC, useEffect, useState} from 'react'
+import {type FC, useEffect, useState} from 'react'
 
 const MigrationAlert: FC<AlertProps> = ({sx, ...props}) => {
   const [open, setOpen] = useAtom(migrationAlertOpenAtom)

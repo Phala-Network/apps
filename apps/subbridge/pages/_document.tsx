@@ -3,7 +3,7 @@ import createEmotionServer from '@emotion/server/create-instance'
 import Document, {Head, Html, Main, NextScript} from 'next/document'
 
 export default class MyDocument extends Document {
-  render() {
+  render(): JSX.Element {
     return (
       <Html lang="en">
         <Head>
@@ -63,8 +63,8 @@ MyDocument.getInitialProps = async (ctx) => {
   const cache = createEmotionCache()
   const {extractCriticalToChunks} = createEmotionServer(cache)
 
-  ctx.renderPage = () =>
-    originalRenderPage({
+  ctx.renderPage = async () =>
+    await originalRenderPage({
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       enhanceApp: (App: any) =>
         function EnhanceApp(props) {

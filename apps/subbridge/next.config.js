@@ -7,11 +7,8 @@ const withImages = require('next-images')
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   transpilePackages: ['jotai-devtools'],
-  eslint: {ignoreDuringBuilds: true},
   images: {disableStaticImages: true},
-  env: {
-    CONTEXT: process.env.CONTEXT,
-  },
+  env: {CONTEXT: process.env.CONTEXT},
   reactStrictMode: true,
   webpack(config) {
     for (const rule of config.module.rules) {

@@ -21,7 +21,7 @@ export const useBridgeFee = (): Decimal | undefined => {
     asset.id === 'zlk'
 
   const {data: khalaToEthereumBridgeFee} = useSWR(
-    api != null && isFromKhalaToEthereum ? [api] : null,
+    isFromKhalaToEthereum && api,
     khalaToEthereumBridgeFeeFetcher
   )
 
