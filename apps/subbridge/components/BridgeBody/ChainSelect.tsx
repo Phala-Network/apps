@@ -1,13 +1,13 @@
-import {ChainId, CHAINS} from '@/config/chain'
+import {CHAINS, type ChainId} from '@/config/chain'
 import {
   Box,
   MenuItem,
   TextField,
-  TextFieldProps,
   Typography,
   useTheme,
+  type TextFieldProps,
 } from '@mui/material'
-import {FC, useEffect} from 'react'
+import {useEffect, type FC} from 'react'
 
 const shouldShowTest =
   process.env.NODE_ENV === 'development' ||
@@ -25,7 +25,7 @@ const ChainSelect: FC<
     // Preload chain icons
     chainIds.forEach((chainId) => {
       const {icon, isTest} = CHAINS[chainId]
-      if (!shouldShowTest && isTest) return
+      if (!shouldShowTest && isTest === true) return
       const image = new Image()
       image.src = icon
     })
@@ -47,7 +47,7 @@ const ChainSelect: FC<
       {chainIds.map((chainId) => {
         const {icon, name, isTest} = CHAINS[chainId]
 
-        if (!shouldShowTest && isTest) {
+        if (!shouldShowTest && isTest === true) {
           return null
         }
 
@@ -57,6 +57,7 @@ const ChainSelect: FC<
               <img
                 css={{flex: 'none', width: 20, height: 20, display: 'block'}}
                 src={icon}
+                alt={name}
               />
               <Typography
                 variant="body1"
@@ -64,7 +65,7 @@ const ChainSelect: FC<
                 sx={{
                   ml: 1,
                   lineHeight: 1,
-                  ...(isTest && {color: theme.palette.warning.main}),
+                  ...(isTest === true && {color: theme.palette.warning.main}),
                 }}
               >
                 {name}

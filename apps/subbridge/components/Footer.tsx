@@ -1,6 +1,6 @@
 import PhalaBrandLogo from '@/assets/phala_brand_logo.svg?react'
 import {Box, Typography, useTheme} from '@mui/material'
-import {FC} from 'react'
+import {type FC} from 'react'
 
 const Footer: FC = () => {
   const theme = useTheme()

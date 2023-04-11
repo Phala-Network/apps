@@ -9,19 +9,19 @@ import {
 } from '@/store/bridge'
 import {
   Box,
-  BoxProps,
   Divider,
   Paper,
-  PaperProps,
   Skeleton,
   Stack,
   Tooltip,
   Typography,
   useTheme,
+  type BoxProps,
+  type PaperProps,
 } from '@mui/material'
 import {toCurrency} from '@phala/util'
 import {useAtomValue} from 'jotai'
-import {FC, ReactNode} from 'react'
+import {type FC, type ReactNode} from 'react'
 
 const Info: FC<
   {label: string; tooltip?: string; children: ReactNode} & BoxProps
@@ -35,7 +35,7 @@ const Info: FC<
         flex: 'none',
         mr: 2,
         color: theme.palette.text.secondary,
-        ...(tooltip && {
+        ...(tooltip != null && {
           textDecoration: 'dotted underline',
           cursor: 'help',
         }),
@@ -53,7 +53,7 @@ const Info: FC<
       }}
       {...boxProps}
     >
-      {tooltip ? (
+      {tooltip != null ? (
         <Tooltip title={tooltip} placement="bottom-start">
           {labelNode}
         </Tooltip>
@@ -98,7 +98,7 @@ const ExtraInfo: FC<PaperProps> = ({sx, ...props}) => {
           label="Bridge Fee"
           tooltip="This transaction will charge a bridge fee to cover the destination chain’s gas fee."
         >
-          {bridgeFee ? (
+          {bridgeFee != null ? (
             `${toCurrency(bridgeFee, 8)} ${asset.symbol}`
           ) : (
             <Skeleton width={80} />
@@ -117,11 +117,11 @@ const ExtraInfo: FC<PaperProps> = ({sx, ...props}) => {
         <Info label="Estimated time">{estimatedTime}</Info>
 
         <Info label="Estimated gas fee">
-          {estimatedGas ? (
+          {estimatedGas != null ? (
             `${toCurrency(estimatedGas, 8)} ${
               fromChain.kind === 'evm'
                 ? fromChain.currencySymbol
-                : polkadotApi?.registry.chainTokens[0]
+                : polkadotApi?.registry.chainTokens[0] ?? ''
             } `
           ) : (
             <Skeleton width={80} />

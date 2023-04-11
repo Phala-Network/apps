@@ -13,7 +13,7 @@ import {LoadingButton} from '@mui/lab'
 import {Button, Stack} from '@mui/material'
 import {useAtom, useAtomValue} from 'jotai'
 import {useSnackbar} from 'notistack'
-import {FC, useState} from 'react'
+import {useState, type FC} from 'react'
 import useSWR from 'swr'
 
 const EvmAction: FC<{onConfirm: () => void}> = ({onConfirm}) => {
@@ -29,22 +29,24 @@ const EvmAction: FC<{onConfirm: () => void}> = ({onConfirm}) => {
   const switchNetwork = useSwitchNetwork()
   const decimals = useAtomValue(decimalsAtom)
   const needApproval = bridgeKind === 'evmChainBridge'
-  const spender =
-    fromChain.kind === 'evm' && fromChain.chainBridgeContract?.spender
-      ? typeof fromChain.chainBridgeContract.spender === 'string'
-        ? fromChain.chainBridgeContract.spender
-        : fromChain.chainBridgeContract.spender[toChain.id]
-      : undefined
+  let spender: string | undefined
+  if (fromChain.kind === 'evm' && fromChain.chainBridgeContract != null) {
+    spender =
+      fromChain.chainBridgeContract.spender[toChain.id] ??
+      fromChain.chainBridgeContract.spender.default
+  }
+
   const {data: approved} = useSWR(
-    needApproval && ethersAssetContract && evmAccount && spender
-      ? [ethersAssetContract, evmAccount, spender]
-      : null,
+    needApproval &&
+      ethersAssetContract != null &&
+      evmAccount != null &&
+      spender != null && [ethersAssetContract, evmAccount, spender],
     ethersContractAllowanceFetcher,
-    {refreshInterval: (latestData) => (latestData ? 0 : 3000)}
+    {refreshInterval: (latestData) => (latestData === true ? 0 : 3000)}
   )
 
-  const handleApprove = async () => {
-    if (ethersAssetContract && spender) {
+  const handleApprove = async (): Promise<void> => {
+    if (ethersAssetContract != null && spender != null) {
       setApproveLoading(true)
       try {
         const {ethers} = await import('ethers')
@@ -67,7 +69,9 @@ const EvmAction: FC<{onConfirm: () => void}> = ({onConfirm}) => {
       <Button
         variant="contained"
         size="large"
-        onClick={() => switchNetwork()}
+        onClick={() => {
+          void switchNetwork()
+        }}
         fullWidth
       >
         Switch Network
@@ -85,28 +89,32 @@ const EvmAction: FC<{onConfirm: () => void}> = ({onConfirm}) => {
     >
       {needApproval && (
         <LoadingButton
-          loading={(!approved && approveLoading) || approved === undefined}
+          loading={approved === false && approveLoading}
           size="large"
           sx={{flex: 1}}
           disabled={
             approved === undefined ||
             approved ||
-            !ethersAssetContract ||
-            !spender
+            ethersAssetContract == null ||
+            spender == null
           }
-          onClick={handleApprove}
+          onClick={() => {
+            void handleApprove()
+          }}
         >
-          {approved ? 'Approved' : 'Approve'}
+          {approved === true ? 'Approved' : 'Approve'}
         </LoadingButton>
       )}
       <Button
         size="large"
         sx={{flex: 1}}
         variant="contained"
-        disabled={(!approved && needApproval) || Boolean(bridgeErrorMessage)}
+        disabled={
+          (approved === false && needApproval) || bridgeErrorMessage != null
+        }
         onClick={onConfirm}
       >
-        {(approved || !needApproval) && bridgeErrorMessage
+        {(approved === true || !needApproval) && bridgeErrorMessage != null
           ? bridgeErrorMessage
           : 'Transfer'}
       </Button>

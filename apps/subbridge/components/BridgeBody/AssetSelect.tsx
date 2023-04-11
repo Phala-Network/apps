@@ -1,14 +1,14 @@
-import {AssetId, ASSETS} from '@/config/asset'
+import {type AssetId, ASSETS} from '@/config/asset'
 import {assetAtom} from '@/store/bridge'
 import {
   Box,
   MenuItem,
   TextField,
-  TextFieldProps,
+  type TextFieldProps,
   Typography,
 } from '@mui/material'
 import {useAtom} from 'jotai'
-import {FC, useEffect} from 'react'
+import {type FC, useEffect} from 'react'
 
 const AssetSelect: FC<TextFieldProps & {assetIds: AssetId[]}> = ({
   assetIds,

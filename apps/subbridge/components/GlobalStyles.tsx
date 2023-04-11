@@ -1,9 +1,9 @@
 import backgroundWaves from '@/assets/background_waves.svg'
-import {css, Global} from '@emotion/react'
-import {Theme, useTheme} from '@mui/material'
-import {FC, useEffect, useState} from 'react'
+import {css, Global, type SerializedStyles} from '@emotion/react'
+import {useTheme, type Theme} from '@mui/material'
+import {useEffect, useState, type FC} from 'react'
 
-const talismanConnectStyles = (theme: Theme) => css`
+const talismanConnectStyles = (theme: Theme): SerializedStyles => css`
   :root {
     --talisman-connect-modal-z-index: ${theme.zIndex.modal};
     --talisman-connect-control-background: ${theme.palette.action.hover};
@@ -27,7 +27,7 @@ const commonStyles = css`
   }
 `
 
-const background = (theme: Theme) => css`
+const background = (theme: Theme): SerializedStyles => css`
   body {
     background-image: url('${backgroundWaves}');
     background-position: bottom center;

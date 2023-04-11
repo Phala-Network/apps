@@ -4,12 +4,12 @@ import {ethereumProviderAtom} from '@/store/ethers'
 import {useAtom} from 'jotai'
 import {useCallback} from 'react'
 
-export const useSwitchNetwork = () => {
+export const useSwitchNetwork = (): (() => Promise<void>) => {
   const [fromChain] = useAtom(fromChainAtom)
   const [ethereum] = useAtom(ethereumProviderAtom)
 
   const switchNetwork = useCallback(async () => {
-    if (!ethereum || fromChain.kind !== 'evm') return
+    if (ethereum == null || fromChain.kind !== 'evm') return
     try {
       await ethereum.request({
         method: 'wallet_switchEthereumChain',

@@ -6,7 +6,7 @@ import {
 } from '@phala/store'
 import {WalletSelect} from '@talismn/connect-components'
 import {useAtom} from 'jotai'
-import {FC} from 'react'
+import {type FC} from 'react'
 
 const PolkadotWalletDialog: FC = () => {
   const [open, setOpen] = useAtom(polkadotWalletModalOpenAtom)
@@ -18,14 +18,16 @@ const PolkadotWalletDialog: FC = () => {
       dappName="SubBridge"
       open={open}
       showAccountsList
-      onWalletConnectClose={() => setOpen(false)}
+      onWalletConnectClose={() => {
+        setOpen(false)
+      }}
       onWalletSelected={(wallet) => {
-        if (wallet.installed) {
+        if (wallet.installed === true) {
           setWallet(wallet)
         }
       }}
       onUpdatedAccounts={(accounts) => {
-        if (accounts) {
+        if (accounts != null) {
           setPolkadotAccounts(accounts)
         }
       }}

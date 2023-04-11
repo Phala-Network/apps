@@ -44,16 +44,19 @@ export const useEstimatedGasFee = (): Decimal | undefined => {
       : asset.chainBridgeResourceId?.[toChain.id]
 
   const {data: ethersGasPrice} = useSWR(
-    ethersWeb3Provider != null ? [ethersWeb3Provider] : null,
+    ethersWeb3Provider,
     ethersGasPriceFetcher
   )
   const {data: evmChainBridgeEstimatedGas} = useSWR(
     bridgeKind === 'evmChainBridge' &&
       ethersChainBridgeContract != null &&
       khalaApi != null &&
-      resourceId != null
-      ? [ethersChainBridgeContract, khalaApi, resourceId, toChain.id]
-      : null,
+      resourceId != null && [
+        ethersChainBridgeContract,
+        khalaApi,
+        resourceId,
+        toChain.id,
+      ],
     evmChainBridgeEstimatedGasFetcher
   )
 
@@ -61,35 +64,36 @@ export const useEstimatedGasFee = (): Decimal | undefined => {
     bridgeKind === 'evmXTokens' &&
       ethersXTokensContract != null &&
       toChain.paraId != null &&
-      asset.xc20Address?.[fromChain.id] != null
-      ? [
-          ethersXTokensContract,
-          asset.xc20Address[fromChain.id],
-          toChain.paraId,
-          decimals,
-        ]
-      : null,
+      asset.xc20Address?.[fromChain.id] != null && [
+        ethersXTokensContract,
+        asset.xc20Address[fromChain.id],
+        toChain.paraId,
+        decimals,
+      ],
     evmXTokensEstimatedGasFetcher
   )
 
   const {data: xTokensPartialFee} = useSWR(
-    bridgeKind === 'polkadotXTokens' && polkadotApi != null
-      ? [polkadotApi, fromChain.id, toChain.id, asset.id, isThroughKhala]
-      : null,
+    bridgeKind === 'polkadotXTokens' &&
+      polkadotApi != null && [
+        polkadotApi,
+        fromChain.id,
+        toChain.id,
+        asset.id,
+        isThroughKhala,
+      ],
     xTokensPartialFeeFetcher
   )
 
   const {data: khalaPartialFee} = useSWR(
-    bridgeKind === 'khalaXTransfer' && polkadotApi != null
-      ? [polkadotApi, fromChain.id, toChain.id, asset.id]
-      : null,
+    bridgeKind === 'khalaXTransfer' &&
+      polkadotApi != null && [polkadotApi, fromChain.id, toChain.id, asset.id],
     khalaXTransferPartialFeeFetcher
   )
 
   const {data: polkadotXcmPartialFee} = useSWR(
-    bridgeKind === 'polkadotXcm' && polkadotApi != null
-      ? [polkadotApi, fromChain.id, toChain.id, asset.id]
-      : null,
+    bridgeKind === 'polkadotXcm' &&
+      polkadotApi != null && [polkadotApi, fromChain.id, toChain.id, asset.id],
     polkadotXcmTransferPartialFeeFetcher
   )
 

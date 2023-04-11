@@ -1,5 +1,5 @@
 import Script from 'next/script'
-import {FC} from 'react'
+import {type FC} from 'react'
 
 // https://nextjs.org/docs/messages/next-script-for-ga
 const GtagScript: FC = () => {

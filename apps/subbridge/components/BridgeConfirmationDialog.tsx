@@ -1,5 +1,5 @@
-import {Asset} from '@/config/asset'
-import {Chain} from '@/config/chain'
+import {type Asset} from '@/config/asset'
+import {type Chain} from '@/config/chain'
 import {useBridgeFee} from '@/hooks/useBridgeFee'
 import {useTransfer} from '@/hooks/useTransfer'
 import {
@@ -18,26 +18,34 @@ import {
   Button,
   CircularProgress,
   Dialog,
-  DialogProps,
   DialogTitle,
   Paper,
-  PaperProps,
   Skeleton,
   Slide,
   Stack,
   Typography,
   useMediaQuery,
   useTheme,
+  type DialogProps,
+  type PaperProps,
 } from '@mui/material'
-import {TransitionProps} from '@mui/material/transitions'
-import {BoxProps} from '@mui/system'
+import {type TransitionProps} from '@mui/material/transitions'
+import {type BoxProps} from '@mui/system'
 import {sleep} from '@phala/util'
 import {encodeAddress} from '@polkadot/util-crypto'
 import Decimal from 'decimal.js'
 import {useAtom, useAtomValue} from 'jotai'
 import {RESET} from 'jotai/utils'
 import {useSnackbar} from 'notistack'
-import {FC, forwardRef, ReactNode, Ref, useMemo, useRef, useState} from 'react'
+import {
+  forwardRef,
+  useMemo,
+  useRef,
+  useState,
+  type FC,
+  type ReactNode,
+  type Ref,
+} from 'react'
 import ExtraInfo from './BridgeBody/Extra'
 import ExplorerLink from './ExplorerLink'
 
@@ -96,7 +104,7 @@ const Detail: FC<
   }
 > = ({kind, chain, account, asset, amount, ...paperProps}) => {
   const displayAccount = useMemo(() => {
-    if (chain.kind === 'polkadot' && account) {
+    if (chain.kind === 'polkadot' && account.length > 0) {
       const {ss58Format} = chain
       return encodeAddress(account, ss58Format)
     }
@@ -109,7 +117,11 @@ const Detail: FC<
       <Stack spacing={2}>
         <Info label={kind}>
           <Box sx={{display: 'flex', alignItems: 'center'}}>
-            <img css={{width: 16, height: 16}} src={chain.icon} />
+            <img
+              css={{width: 16, height: 16}}
+              src={chain.icon}
+              alt={chain.name}
+            />
             <Typography variant="body2" component="span" sx={{ml: 1}}>
               {chain.name}
             </Typography>
@@ -138,10 +150,14 @@ const Detail: FC<
             }}
           >
             <Typography variant="body2" sx={{fontWeight: 600}}>
-              {amount || <Skeleton width={64} />}
+              {amount ?? <Skeleton width={64} />}
             </Typography>
             <Box sx={{display: 'flex', alignItems: 'center', ml: 1}}>
-              <img css={{width: 16, height: 16}} src={asset.icon} />
+              <img
+                css={{width: 16, height: 16}}
+                src={asset.icon}
+                alt={asset.symbol}
+              />
               <Typography variant="body2" sx={{ml: 1}}>
                 {asset.symbol}
               </Typography>
@@ -164,7 +180,7 @@ const DialogBody: FC<BoxProps> = (props) => {
   const bridgeFee = useBridgeFee()
 
   const toAmount = useMemo(() => {
-    if (!bridgeFee) {
+    if (bridgeFee == null) {
       return null
     }
     const value = new Decimal(amount)
@@ -174,7 +190,7 @@ const DialogBody: FC<BoxProps> = (props) => {
     return value.toString()
   }, [amount, bridgeFee, destChainTransactionFee])
 
-  if (!fromAccount) return null
+  if (fromAccount == null) return null
 
   return (
     <Box {...props}>
@@ -210,11 +226,11 @@ const BridgeConfirmationDialog: FC<DialogProps> = ({onClose, ...props}) => {
   const transferredRef = useRef(false)
   const {enqueueSnackbar, closeSnackbar} = useSnackbar()
 
-  const close = () => {
+  const close = (): void => {
     onClose?.({}, 'backdropClick')
   }
 
-  const onSubmit = async () => {
+  const onSubmit = async (): Promise<void> => {
     let key
     setConfirming(true)
     try {
@@ -244,7 +260,7 @@ const BridgeConfirmationDialog: FC<DialogProps> = ({onClose, ...props}) => {
         enqueueSnackbar(
           <>
             Transaction confirmed
-            {fromChain.explorerURL && (
+            {fromChain.explorerURL != null && (
               <ExplorerLink
                 kind="tx"
                 hash={transactionHash}
@@ -265,7 +281,7 @@ const BridgeConfirmationDialog: FC<DialogProps> = ({onClose, ...props}) => {
         enqueueSnackbar(
           <>
             Extrinsic Success
-            {fromChain.explorerURL && (
+            {fromChain.explorerURL != null && (
               <ExplorerLink
                 kind="extrinsic"
                 hash={txHash}
@@ -282,16 +298,16 @@ const BridgeConfirmationDialog: FC<DialogProps> = ({onClose, ...props}) => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       setConfirming(false)
-      if (key) {
+      if (key != null) {
         closeSnackbar(key)
         await sleep(1000)
       }
 
-      if (err.receipt) {
+      if (err.receipt != null) {
         enqueueSnackbar(
           <>
-            {err.reason || 'Transaction failed'}
-            {fromChain.explorerURL && (
+            {err.reason ?? 'Transaction failed'}
+            {fromChain.explorerURL != null && (
               <ExplorerLink
                 kind="tx"
                 hash={err.receipt.transactionHash}
@@ -304,7 +320,7 @@ const BridgeConfirmationDialog: FC<DialogProps> = ({onClose, ...props}) => {
           </>,
           {variant: 'error'}
         )
-      } else if (err.message) {
+      } else if (err.message != null) {
         enqueueSnackbar(err.message, {variant: 'error'})
       }
     }
@@ -338,7 +354,9 @@ const BridgeConfirmationDialog: FC<DialogProps> = ({onClose, ...props}) => {
           size="large"
           variant="contained"
           fullWidth
-          onClick={onSubmit}
+          onClick={() => {
+            void onSubmit()
+          }}
         >
           Submit
         </LoadingButton>

@@ -6,31 +6,31 @@ import Decimal from 'decimal.js'
 import type {BigNumber, ethers} from 'ethers'
 import {createChainBridgeData} from './transferByChainBridge'
 
-export const ethersBalanceFetcher = async (
-  provider: ethers.providers.Web3Provider,
-  address: `0x${string}`
-): Promise<Decimal> => {
+export const ethersBalanceFetcher = async ([provider, address]: [
+  ethers.providers.Web3Provider,
+  `0x${string}`
+]): Promise<Decimal> => {
   const {ethers} = await import('ethers')
   const balance = await provider.getBalance(address)
   return new Decimal(ethers.utils.formatEther(balance))
 }
 
-export const ethersContractBalanceFetcher = async (
-  contract: ethers.Contract,
-  account: `0x${string}`,
-  decimals: number
-): Promise<Decimal> => {
+export const ethersContractBalanceFetcher = async ([
+  contract,
+  account,
+  decimals,
+]: [ethers.Contract, `0x${string}`, number]): Promise<Decimal> => {
   const {ethers} = await import('ethers')
   const balance = (await contract.balanceOf(account)) as BigNumber
 
   return new Decimal(ethers.utils.formatUnits(balance, decimals))
 }
 
-export const ethersContractAllowanceFetcher = async (
-  contract: ethers.Contract,
-  owner: `0x${string}`,
-  spender: `0x${string}`
-): Promise<boolean> => {
+export const ethersContractAllowanceFetcher = async ([
+  contract,
+  owner,
+  spender,
+]: [ethers.Contract, `0x${string}`, `0x${string}`]): Promise<boolean> => {
   const balance = (await contract.allowance(owner, spender)) as BigNumber
 
   // FIXME: should compare to amount user inputted
@@ -46,12 +46,12 @@ export const ethersGasPriceFetcher = async (
 
 const ALICE = '5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY'
 
-export const evmChainBridgeEstimatedGasFetcher = async (
-  contract: ethers.Contract,
-  khalaApi: ApiPromise,
-  resourceId: string,
-  toChainId: ChainId
-): Promise<Decimal> => {
+export const evmChainBridgeEstimatedGasFetcher = async ([
+  contract,
+  khalaApi,
+  resourceId,
+  toChainId,
+]: [ethers.Contract, ApiPromise, string, ChainId]): Promise<Decimal> => {
   const estimateGas = await contract.estimateGas.deposit(
     1,
     resourceId,
@@ -67,16 +67,16 @@ export const evmChainBridgeEstimatedGasFetcher = async (
   return new Decimal(estimateGas.toString())
 }
 
-export const evmXTokensEstimatedGasFetcher = async (
-  contract: ethers.Contract,
-  xc20Address: `0x${string}`,
-  paraId: number,
-  decimals: number
-): Promise<Decimal> => {
+export const evmXTokensEstimatedGasFetcher = async ([
+  contract,
+  xc20Address,
+  paraId,
+  decimals,
+]: [ethers.Contract, `0x${string}`, number, number]): Promise<Decimal> => {
   const {ethers} = await import('ethers')
   const estimateGas = await contract.estimateGas.transfer(
     xc20Address,
-    '1',
+    '0',
     {
       parents: 1,
       interior: [

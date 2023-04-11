@@ -1,11 +1,11 @@
 import {
   Button,
-  ButtonProps as MuiButtonProps,
+  type ButtonProps as MuiButtonProps,
   Paper,
   Skeleton,
   Typography,
 } from '@mui/material'
-import {FC, ReactNode} from 'react'
+import {type FC, type ReactNode} from 'react'
 
 const AccountTemplate: FC<{
   balance?: ReactNode

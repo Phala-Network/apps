@@ -6,13 +6,20 @@ import {
 import {isWalletConnectAtom} from '@/store/common'
 import {evmAccountAtom} from '@/store/ethers'
 import HighlightOff from '@mui/icons-material/HighlightOff'
-import {Box, BoxProps, IconButton, Link, TextField} from '@mui/material'
+import {Box, IconButton, Link, TextField, type BoxProps} from '@mui/material'
 import {polkadotAccountAtom} from '@phala/store'
 import {trimAddress} from '@phala/util'
 import {encodeAddress} from '@polkadot/util-crypto'
 import {useAtom} from 'jotai'
 import {RESET} from 'jotai/utils'
-import {FC, useEffect, useLayoutEffect, useMemo, useRef, useState} from 'react'
+import {
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+  type FC,
+} from 'react'
 
 const useIsomorphicLayoutEffect =
   typeof window !== 'undefined' ? useLayoutEffect : useEffect
@@ -34,9 +41,16 @@ const DestinationAccountInput: FC<BoxProps> = (props) => {
 
   useIsomorphicLayoutEffect(() => {
     if (useSameAccountEnabled) {
-      if (fromChain.kind === 'evm' && evmAccount) {
+      if (
+        fromChain.kind === 'evm' &&
+        evmAccount != null &&
+        evmAccount.length > 0
+      ) {
         setDestinationAccount(evmAccount)
-      } else if (fromChain.kind === 'polkadot' && polkadotAccount?.address) {
+      } else if (
+        fromChain.kind === 'polkadot' &&
+        polkadotAccount?.address != null
+      ) {
         setDestinationAccount(polkadotAccount.address)
       }
     } else {
@@ -60,12 +74,12 @@ const DestinationAccountInput: FC<BoxProps> = (props) => {
     if (
       toChain.kind === 'polkadot' &&
       useSameAccountEnabled &&
-      polkadotAccount &&
+      polkadotAccount != null &&
       polkadotAccount.address === destinationAccount
     ) {
       const {name, address} = polkadotAccount
 
-      return `${name} (${trimAddress(
+      return `${name ?? ''} (${trimAddress(
         encodeAddress(address, toChain.ss58Format)
       )})`
     }

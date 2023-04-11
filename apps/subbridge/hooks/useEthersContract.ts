@@ -1,8 +1,8 @@
 import chainBridgeAbi from '@/assets/chainbridge_abi.json'
 import moonriverXTokensAbi from '@/assets/moonriver_xtokens_abi.json'
 import tokenStandardAbi from '@/assets/token_standard_abi.json'
-import {AssetId, ASSETS} from '@/config/asset'
-import {EvmChainId} from '@/config/chain'
+import {ASSETS, type AssetId} from '@/config/asset'
+import {type EvmChainId} from '@/config/chain'
 import {assetAtom, fromChainAtom} from '@/store/bridge'
 import type {ethers} from 'ethers'
 import {useAtomValue} from 'jotai'
@@ -16,11 +16,11 @@ const abi: Record<AbiKind, ethers.ContractInterface> = {
   tokenStandard: tokenStandardAbi,
 }
 
-const fetcher = async (
-  provider: ethers.providers.Web3Provider | ethers.providers.JsonRpcProvider,
-  address: string,
-  abiKind: AbiKind
-) => {
+const fetcher = async ([provider, address, abiKind]: [
+  ethers.providers.Web3Provider | ethers.providers.JsonRpcProvider,
+  string,
+  AbiKind
+]): Promise<ethers.Contract> => {
   const {ethers} = await import('ethers')
   return new ethers.Contract(
     address,
@@ -38,18 +38,22 @@ export function useEthersAssetContract(
     | undefined,
   chainId: EvmChainId,
   assetId: AssetId
-) {
+): ethers.Contract | undefined {
   const address = ASSETS[assetId].erc20TokenContractAddress?.[chainId]
 
   const {data} = useSWRImmutable(
-    provider && address ? [provider, address, 'tokenStandard'] : null,
+    provider != null && address != null
+      ? [provider, address, 'tokenStandard']
+      : null,
     fetcher
   )
 
   return data
 }
 
-export const useCurrentEthersAssetContract = () => {
+export const useCurrentEthersAssetContract = ():
+  | ethers.Contract
+  | undefined => {
   const fromChain = useAtomValue(fromChainAtom)
   const asset = useAtomValue(assetAtom)
   const address =
@@ -58,28 +62,32 @@ export const useCurrentEthersAssetContract = () => {
       : undefined
   const provider = useEthersWeb3Provider()
   const {data} = useSWRImmutable(
-    provider && address ? [provider, address, 'tokenStandard'] : null,
+    provider != null && address != null
+      ? [provider, address, 'tokenStandard']
+      : null,
     fetcher
   )
 
   return data
 }
 
-export const useEthersXTokensContract = () => {
+export const useEthersXTokensContract = (): ethers.Contract | undefined => {
   const fromChain = useAtomValue(fromChainAtom)
   const provider = useEthersWeb3Provider()
   const address =
     fromChain.kind === 'evm' ? fromChain.xTokensContractAddress : undefined
 
   const {data} = useSWRImmutable(
-    provider && address ? [provider, address, 'moonriverXTokens'] : null,
+    provider != null && address != null
+      ? [provider, address, 'moonriverXTokens']
+      : null,
     fetcher
   )
 
   return data
 }
 
-export const useEthersChainBridgeContract = () => {
+export const useEthersChainBridgeContract = (): ethers.Contract | undefined => {
   const fromChain = useAtomValue(fromChainAtom)
   const provider = useEthersWeb3Provider()
   const address =
@@ -87,7 +95,9 @@ export const useEthersChainBridgeContract = () => {
       ? fromChain.chainBridgeContract?.address
       : undefined
   const {data} = useSWRImmutable(
-    provider && address ? [provider, address, 'chainBridge'] : null,
+    provider != null && address != null
+      ? [provider, address, 'chainBridge']
+      : null,
     fetcher
   )
 
