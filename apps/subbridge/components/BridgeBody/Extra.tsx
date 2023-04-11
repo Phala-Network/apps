@@ -122,7 +122,7 @@ const ExtraInfo: FC<PaperProps> = ({sx, ...props}) => {
               fromChain.kind === 'evm'
                 ? fromChain.currencySymbol
                 : polkadotApi?.registry.chainTokens[0] ?? ''
-            } `
+            }`
           ) : (
             <Skeleton width={80} />
           )}

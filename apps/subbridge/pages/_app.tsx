@@ -1,4 +1,3 @@
-import AtomsDevtools from '@/components/AtomsDevtools'
 import GlobalStyles from '@/components/GlobalStyles'
 import GtagScript from '@/components/GtagScript'
 import Layout from '@/components/Layout'
@@ -7,6 +6,7 @@ import {createEmotionCache} from '@/lib/createEmotionCache'
 import {CacheProvider, type EmotionCache} from '@emotion/react'
 import {CssBaseline} from '@mui/material'
 import {Provider as JotaiProvider} from 'jotai'
+import {DevTools as JotaiDevTools} from 'jotai-devtools'
 import {type AppProps} from 'next/app'
 import Head from 'next/head'
 import {SnackbarProvider} from 'notistack'
@@ -46,25 +46,24 @@ const MyApp: FC<MyAppProps> = (props) => {
         }}
       >
         <JotaiProvider>
-          <AtomsDevtools>
-            <CacheProvider value={emotionCache}>
-              <MuiThemeProvider>
-                <SnackbarProvider
-                  preventDuplicate
-                  anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'center',
-                  }}
-                >
-                  <CssBaseline enableColorScheme />
-                  <GlobalStyles />
-                  <Layout>
-                    <Component {...pageProps} />
-                  </Layout>
-                </SnackbarProvider>
-              </MuiThemeProvider>
-            </CacheProvider>
-          </AtomsDevtools>
+          <CacheProvider value={emotionCache}>
+            <MuiThemeProvider>
+              <SnackbarProvider
+                preventDuplicate
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'center',
+                }}
+              >
+                <CssBaseline enableColorScheme />
+                <GlobalStyles />
+                <Layout>
+                  <Component {...pageProps} />
+                  {process.env.NODE_ENV === 'development' && <JotaiDevTools />}
+                </Layout>
+              </SnackbarProvider>
+            </MuiThemeProvider>
+          </CacheProvider>
         </JotaiProvider>
       </SWRConfig>
     </>

@@ -1,9 +1,9 @@
 import {
   Button,
-  type ButtonProps as MuiButtonProps,
   Paper,
   Skeleton,
   Typography,
+  type ButtonProps as MuiButtonProps,
 } from '@mui/material'
 import {type FC, type ReactNode} from 'react'
 
@@ -14,7 +14,7 @@ const AccountTemplate: FC<{
 }> = ({balance, account, ButtonProps}) => {
   return (
     <Paper sx={{display: 'flex', alignItems: 'center'}}>
-      {balance === undefined ? (
+      {balance == null || balance === false ? (
         <Skeleton width={80} height={20} sx={{mx: 1}} />
       ) : (
         <Typography

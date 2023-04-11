@@ -89,7 +89,7 @@ const EvmAction: FC<{onConfirm: () => void}> = ({onConfirm}) => {
     >
       {needApproval && (
         <LoadingButton
-          loading={approved === false && approveLoading}
+          loading={(approved === false && approveLoading) || approved == null}
           size="large"
           sx={{flex: 1}}
           disabled={
@@ -110,7 +110,7 @@ const EvmAction: FC<{onConfirm: () => void}> = ({onConfirm}) => {
         sx={{flex: 1}}
         variant="contained"
         disabled={
-          (approved === false && needApproval) || bridgeErrorMessage != null
+          (approved !== true && needApproval) || bridgeErrorMessage != null
         }
         onClick={onConfirm}
       >
