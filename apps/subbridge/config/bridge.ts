@@ -146,7 +146,7 @@ export const BRIDGES: Readonly<Bridge[]> = [
       {id: 'ethereum', assets: khalaToEthereumAssets},
       {id: 'karura', assets: khalaToKaruraAssets},
       {id: 'moonriver', assets: khalaToMoonriverAssets},
-      {id: 'bifrost', assets: khalaToBifrostAssets},
+      {id: 'bifrost-kusama', assets: khalaToBifrostAssets},
       {
         id: 'parallel-heiko',
         assets: [
@@ -221,7 +221,7 @@ export const BRIDGES: Readonly<Bridge[]> = [
     fromChain: 'moonriver',
     toChains: [
       {id: 'khala', assets: moonriverToKhalaAssets},
-      {id: 'bifrost', assets: moonriverToBifrostAssets},
+      {id: 'bifrost-kusama', assets: moonriverToBifrostAssets},
     ],
   },
   {
@@ -232,7 +232,7 @@ export const BRIDGES: Readonly<Bridge[]> = [
     ],
   },
   {
-    fromChain: 'bifrost',
+    fromChain: 'bifrost-kusama',
     toChains: [
       {id: 'khala', assets: bifrostToKhalaAssets},
       {id: 'moonriver', assets: bifrostToMoonriverAssets},

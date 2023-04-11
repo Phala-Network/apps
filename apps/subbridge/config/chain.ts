@@ -27,7 +27,7 @@ export type PolkadotChainId =
   | 'karura'
   | 'thala'
   | 'karura-test'
-  | 'bifrost'
+  | 'bifrost-kusama'
   | 'bifrost-test'
   | 'parallel'
   | 'parallel-heiko'
@@ -208,9 +208,9 @@ export const CHAINS: Readonly<
     generalIndex: 2,
     explorerURL: 'https://moonbase.moonscan.io/',
   },
-  bifrost: {
-    id: 'bifrost',
-    name: 'Bifrost',
+  'bifrost-kusama': {
+    id: 'bifrost-kusama',
+    name: 'Bifrost Kusama',
     icon: bifrostIcon,
     kind: 'polkadot',
     endpoint: [
@@ -223,7 +223,7 @@ export const CHAINS: Readonly<
     ss58Format: 6,
     paraId: 2001,
     nativeAsset: 'bnc',
-    explorerURL: 'https://bifrost.subscan.io/',
+    explorerURL: 'https://bifrost-kusama.subscan.io',
   },
   'bifrost-test': {
     id: 'bifrost-test',

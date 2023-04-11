@@ -11,10 +11,10 @@ import {usePolkadotApi} from './usePolkadotApi'
 // TODO: if there were more assets need reserve account, add it to config
 const moonriverZlkReserveAccount = '0xf88337a0db6e24Dff0fCD7F92ab0655B97A68d38'
 const khalaZlkReserveAccount =
-  '45eHPJrHZNZjsQLr8vhycrqGdHZ9XxerqL7pWYnZTLsnSU9j'
+  '441RSFVuGcTybwYi7NPKAqYzEkDwnGDwLdTYrViNXr8RXVfG'
 const refreshInterval = 12000
 
-export const useBridgeLimit = () => {
+export const useBridgeLimit = (): Decimal | undefined => {
   const fromChain = useAtomValue(fromChainAtom)
   const toChain = useAtomValue(toChainAtom)
   const asset = useAtomValue(assetAtom)
@@ -33,31 +33,31 @@ export const useBridgeLimit = () => {
     asset.id === 'zlk'
 
   const {data: moonriverReservedZlk} = useSWR(
-    toChain.id === 'moonriver' && asset.id === 'zlk' && moonriverZlkContract
-      ? [
-          moonriverZlkContract,
-          moonriverZlkReserveAccount,
-          asset.decimals.moonriver ?? asset.decimals.default,
-        ]
-      : null,
+    toChain.id === 'moonriver' &&
+      asset.id === 'zlk' &&
+      moonriverZlkContract != null && [
+        moonriverZlkContract,
+        moonriverZlkReserveAccount,
+        asset.decimals.moonriver ?? asset.decimals.default,
+      ],
     ethersContractBalanceFetcher,
     {refreshInterval}
   )
 
   const {data: khalaReservedZlk} = useSWR(
-    khalaApi && fromChain.id === 'moonriver' && asset.id === 'zlk'
-      ? [
-          khalaApi,
-          khalaZlkReserveAccount,
-          asset.palletAssetId?.khala,
-          asset.decimals.khala ?? asset.decimals.default,
-        ]
-      : null,
+    khalaApi != null &&
+      fromChain.id === 'moonriver' &&
+      asset.id === 'zlk' && [
+        khalaApi,
+        khalaZlkReserveAccount,
+        asset.palletAssetId?.khala,
+        asset.decimals.khala ?? asset.decimals.default,
+      ],
     palletAssetBalanceFetcher,
     {refreshInterval}
   )
 
   return hasLimit
-    ? moonriverReservedZlk || khalaReservedZlk
+    ? moonriverReservedZlk ?? khalaReservedZlk
     : new Decimal(Infinity)
 }

@@ -1,5 +1,5 @@
-import {AssetId, ASSETS} from '@/config/asset'
-import {ChainId, CHAINS} from '@/config/chain'
+import {ASSETS, type AssetId} from '@/config/asset'
+import {CHAINS, type ChainId} from '@/config/chain'
 import type {ApiPromise} from '@polkadot/api'
 import type {SubmittableExtrinsic} from '@polkadot/api/types'
 import type {ISubmittableResult} from '@polkadot/types/types'
@@ -34,7 +34,7 @@ export const transferByPolkadotXTokens = ({
     fromChainId === 'basilisk'
   const palletAssetId = asset.palletAssetId?.[fromChainId]
   const isTransferringBNCFromBifrost =
-    (fromChainId === 'bifrost' || fromChainId === 'bifrost-test') &&
+    (fromChainId === 'bifrost-kusama' || fromChainId === 'bifrost-test') &&
     assetId === 'bnc'
   const generalIndex = toChain.kind === 'evm' ? toChain.generalIndex : null
 
@@ -42,7 +42,7 @@ export const transferByPolkadotXTokens = ({
     (shouldUsePalletAssetId
       ? palletAssetId === undefined
       : asset.ormlToken === undefined) ||
-    !toChain.paraId ||
+    toChain.paraId == null ||
     (isThroughKhala && typeof generalIndex !== 'number')
   ) {
     throw new Error('Transfer missing required parameters')
@@ -99,7 +99,7 @@ export const transferByPolkadotXTokens = ({
     fromChainId === 'parallel' ||
       fromChainId === 'parallel-heiko' ||
       fromChainId === 'karura' ||
-      fromChainId === 'bifrost' ||
+      fromChainId === 'bifrost-kusama' ||
       fromChainId === 'bifrost-test'
       ? {Unlimited: null}
       : '6000000000'

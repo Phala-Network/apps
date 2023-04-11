@@ -8,7 +8,7 @@ import {decodeAddress} from '@polkadot/util-crypto'
 
 const moonriverParaId = CHAINS.moonriver.paraId
 const karuraParaId = CHAINS.karura.paraId
-const bifrostParaId = CHAINS.bifrost.paraId
+const bifrostKusamaParaId = CHAINS['bifrost-kusama'].paraId
 const parallelParaId = CHAINS.parallel.paraId
 const parallelHeikoParaId = CHAINS['parallel-heiko'].paraId
 const basiliskParaId = CHAINS.basilisk.paraId
@@ -63,13 +63,19 @@ const assetConcrete: {
     bnc: {
       parents: 1,
       interior: {
-        X2: [{Parachain: bifrostParaId}, {GeneralKey: getGeneralKey('0x0001')}],
+        X2: [
+          {Parachain: bifrostKusamaParaId},
+          {GeneralKey: getGeneralKey('0x0001')},
+        ],
       },
     },
     zlk: {
       parents: 1,
       interior: {
-        X2: [{Parachain: bifrostParaId}, {GeneralKey: getGeneralKey('0x0207')}],
+        X2: [
+          {Parachain: bifrostKusamaParaId},
+          {GeneralKey: getGeneralKey('0x0207')},
+        ],
       },
     },
     ausd: {
