@@ -7,6 +7,7 @@
       "env": ["CONTEXT", "NODE_ENV"]
     },
     "lint": {"outputs": []},
-    "lint:fix": {"outputs": []}
+    "lint:fix": {"outputs": []},
+    "typecheck": {"outputs": []}
   }
 }
