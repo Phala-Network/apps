@@ -19,14 +19,15 @@
     "prepare": "husky install",
     "build": "turbo run build",
     "lint": "turbo run lint",
-    "lint:fix": "turbo run lint:fix"
+    "lint:fix": "turbo run lint:fix",
+    "typecheck": "turbo run typecheck"
   },
   "devDependencies": {
     "@total-typescript/ts-reset": "^0.4.2",
     "@types/node": "^18.15.11",
     "husky": "^8.0.3",
     "prettier": "^2.8.7",
-    "turbo": "^1.8.8",
+    "turbo": "latest",
     "typescript": "^5.0.4"
   },
   "packageManager": "yarn@3.5.0"

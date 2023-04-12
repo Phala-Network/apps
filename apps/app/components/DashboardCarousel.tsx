@@ -3,6 +3,8 @@ import b2 from '@/assets/b2.png'
 import b3 from '@/assets/b3.png'
 import b4 from '@/assets/b4.png'
 import b5 from '@/assets/b5.png'
+import b6 from '@/assets/b6.png'
+import b7 from '@/assets/b7.png'
 import {Box, LinearProgress, Stack} from '@mui/material'
 import Link from 'next/link'
 import {useState, type FC} from 'react'
@@ -10,6 +12,16 @@ import Carousel from 'react-multi-carousel'
 import 'react-multi-carousel/lib/styles.css'
 
 const contents: Array<{name: string; imageUrl: string; href: string}> = [
+  {
+    name: 'Launch Gemini Tokenomic on Phala',
+    href: 'https://khala.subsquare.io/democracy/referendum/89',
+    imageUrl: b7.src,
+  },
+  {
+    name: 'Phala World Marketplace',
+    href: 'https://phala.world/marketplace',
+    imageUrl: b6.src,
+  },
   {
     name: 'Claim missing delegator rewards',
     href: '/claim-missing-delegator-rewards',
