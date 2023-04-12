@@ -20,6 +20,10 @@ const Layout: FC<{children: ReactNode}> = ({children}) => {
 
   return (
     <SnackbarProvider
+      classes={{
+        containerAnchorOriginTopRight:
+          'notistack-containerAnchorOriginTopRight',
+      }}
       autoHideDuration={3000}
       anchorOrigin={{
         vertical: matches ? 'top' : 'bottom',

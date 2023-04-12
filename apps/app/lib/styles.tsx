@@ -22,8 +22,8 @@ export const globalStyles = css`
     }
   }
 
-  .SnackbarContainer-root.SnackbarContainer-top.SnackbarContainer-right {
-    top: 72px;
+  .notistack-containerAnchorOriginTopRight {
+    top: 72px !important;
   }
 
   sub {
