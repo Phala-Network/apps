@@ -37,15 +37,18 @@ const DelegateInput: FC<{basePool: BasePoolCommonFragment; sx?: SxProps}> = ({
     ? account?.address
     : selectedVaultState?.account.id
   const wrappedBalance = useAssetBalance(delegatorAddress, WPHA_ASSET_ID)
-  const freeBalance = useAssetBalance(asAccount ? account?.address : undefined)
+  const availableBalance = useAssetBalance(
+    asAccount ? account?.address : undefined,
+    'available'
+  )
   const delegableBalance = useMemo(() => {
-    if (wrappedBalance == null) return
-    if (asAccount) {
-      if (freeBalance == null) return
-      return wrappedBalance.plus(freeBalance)
+    if (wrappedBalance != null) {
+      if (asAccount) {
+        return availableBalance?.plus(wrappedBalance)
+      }
+      return wrappedBalance
     }
-    return wrappedBalance
-  }, [freeBalance, wrappedBalance, asAccount])
+  }, [availableBalance, wrappedBalance, asAccount])
   const delegate = (): void => {
     if (
       api == null ||

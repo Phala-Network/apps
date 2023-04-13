@@ -244,7 +244,7 @@ const DelegationDetailCard: FC<{sx?: SxProps}> = ({sx}) => {
                 <Button
                   variant="text"
                   size="small"
-                  href="https://polkadot.js.org/apps/?rpc=wss%3A%2F%2Fkhala-api.phala.network%2Fws#/chainstate"
+                  href="https://wiki.phala.network/en-us/general/applications/use-delegation-to-vote/#the-voting-is-over-how-can-i-unlock-my-voting-rights"
                   target="_blank"
                 >
                   Track

@@ -157,7 +157,7 @@ const Assets: FC<{
   const [dialogAction, setDialogAction] = useState<AssetDialogAction>()
   const [operatingAsset, setOperatingAsset] = useState<Asset>()
   const [account] = useAtom(polkadotAccountAtom)
-  const phaBalance = useAssetBalance(account?.address)
+  const phaBalance = useAssetBalance(account?.address, 'free')
   const allAssets: Record<number, Asset> = {}
   for (const stringAssetId in assetsMetadata) {
     const assetId = Number(stringAssetId)
