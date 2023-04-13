@@ -18,8 +18,8 @@ import {
   Paper,
   Skeleton,
   Stack,
-  styled,
   Typography,
+  styled,
 } from '@mui/material'
 import {polkadotAccountAtom} from '@phala/store'
 import {toCurrency, trimAddress} from '@phala/util'
@@ -55,7 +55,7 @@ const DashboardAccount: FC = () => {
   const {enqueueSnackbar} = useSnackbar()
   const [assetVisible, setAssetVisible] = useAtom(assetVisibleAtom)
   const [account] = useAtom(polkadotAccountAtom)
-  const freeBalance = useAssetBalance(account?.address)
+  const freeBalance = useAssetBalance(account?.address, 'free')
   const wrapped = useAssetBalance(account?.address, WPHA_ASSET_ID)
   const {data: accountData} = useAccountByIdQuery(
     subsquidClient,
