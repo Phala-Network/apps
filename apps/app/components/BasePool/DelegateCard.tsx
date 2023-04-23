@@ -129,7 +129,7 @@ const DelegateCard: FC<{
               <Property
                 label="Est. APR"
                 sx={{width: 80, flexShrink: '0'}}
-                wikiEntry="delegable"
+                wikiEntry="estApr"
               >
                 {apr != null ? (
                   <Box component="span" color={colors.main[300]}>
@@ -183,7 +183,7 @@ const DelegateCard: FC<{
                 size="small"
                 fullWidth
                 label="Est. APR"
-                wikiEntry="delegable"
+                wikiEntry="estApr"
               >
                 {apr != null ? (
                   <Box component="span" color={colors.main[300]}>
