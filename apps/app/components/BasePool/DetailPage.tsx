@@ -192,7 +192,11 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
               </Stack>
               <Stack direction="row" spacing={2} alignItems="center" flex="1 0">
                 {stakePool != null && (
-                  <Property label="Est. APR" sx={{width: 64, flexShrink: '0'}}>
+                  <Property
+                    label="Est. APR"
+                    sx={{width: 64, flexShrink: '0'}}
+                    wikiEntry="estApr"
+                  >
                     {apr != null ? (
                       <Box component="span" color={colors.main[300]}>
                         {toPercentage(apr)}
@@ -203,7 +207,11 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
                   </Property>
                 )}
                 {stakePool != null && (
-                  <Property label="Delegable" sx={{width: 140}}>
+                  <Property
+                    label="Delegable"
+                    sx={{width: 140}}
+                    wikiEntry="delegable"
+                  >
                     {stakePool.delegable != null
                       ? `${toCurrency(stakePool.delegable)} PHA`
                       : '∞'}

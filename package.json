@@ -24,10 +24,10 @@
   },
   "devDependencies": {
     "@total-typescript/ts-reset": "^0.4.2",
-    "@types/node": "^18.15.11",
+    "@types/node": "^18.16.0",
     "husky": "^8.0.3",
-    "prettier": "^2.8.7",
-    "turbo": "latest",
+    "prettier": "^2.8.8",
+    "turbo": "^1.9.3",
     "typescript": "^5.0.4"
   },
   "packageManager": "yarn@3.5.0"
