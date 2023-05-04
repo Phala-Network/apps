@@ -2,13 +2,12 @@ import {type WikiEntry} from '@/assets/wikiData'
 import useGetApr from '@/hooks/useGetApr'
 import useSWRValue from '@/hooks/useSWRValue'
 import compactFormat from '@/lib/compactFormat'
-import {subsquidClient} from '@/lib/graphql'
 import {
   useGlobalRewardsSnapshotsConnectionQuery,
   useGlobalStateQuery,
   useIdleWorkerCountQuery,
 } from '@/lib/subsquidQuery'
-import {chainAtom} from '@/store/common'
+import {chainAtom, subsquidClientAtom} from '@/store/common'
 import {Box, Divider, Skeleton, Stack, Typography} from '@mui/material'
 import {toPercentage} from '@phala/util'
 import {useQuery} from '@tanstack/react-query'
@@ -30,6 +29,7 @@ const NetworkStats: FC = () => {
     return addDays(date, -1).toISOString()
   })
   const [chain] = useAtom(chainAtom)
+  const [subsquidClient] = useAtom(subsquidClientAtom)
   const {data: globalRewardsSnapshotData} =
     useGlobalRewardsSnapshotsConnectionQuery(subsquidClient, {
       orderBy: 'updatedTime_ASC',

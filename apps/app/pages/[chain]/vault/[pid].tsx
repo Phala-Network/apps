@@ -4,8 +4,8 @@ import fixBasePoolFree from '@/lib/fixBasePoolFree'
 import getBasePoolServerSideProps, {
   type BasePoolServerSideProps,
 } from '@/lib/getBasePoolServerSideProps'
-import {subsquidClient} from '@/lib/graphql'
 import {useBasePoolByIdQuery} from '@/lib/subsquidQuery'
+import {subsquidClientAtom} from '@/store/common'
 import {Box} from '@mui/material'
 import {polkadotAccountAtom} from '@phala/store'
 import {useAtom} from 'jotai'
@@ -20,6 +20,7 @@ const Vault: NextPage<BasePoolServerSideProps> = ({
   initialDataUpdatedAt,
 }) => {
   const [account] = useAtom(polkadotAccountAtom)
+  const [subsquidClient] = useAtom(subsquidClientAtom)
   const {data: basePool} = useBasePoolByIdQuery(
     subsquidClient,
     {id: pid},

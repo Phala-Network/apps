@@ -1,9 +1,10 @@
 import useGetApr from '@/hooks/useGetApr'
 import compactFormat from '@/lib/compactFormat'
-import {subsquidClient} from '@/lib/graphql'
 import {useDelegationsConnectionQuery} from '@/lib/subsquidQuery'
 import {colors} from '@/lib/theme'
+import {subsquidClientAtom} from '@/store/common'
 import Decimal from 'decimal.js'
+import {useAtom} from 'jotai'
 import {useMemo, type FC} from 'react'
 import {
   CartesianGrid,
@@ -26,6 +27,7 @@ interface ChartData {
 
 const DelegationScatterChart: FC<{address?: string}> = ({address}) => {
   const getApr = useGetApr()
+  const [subsquidClient] = useAtom(subsquidClientAtom)
   const {data} = useDelegationsConnectionQuery(
     subsquidClient,
     {

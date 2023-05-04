@@ -4,12 +4,12 @@ import SectionHeader from '@/components/SectionHeader'
 import WikiButton from '@/components/Wiki/Button'
 import usePolkadotApi from '@/hooks/usePolkadotApi'
 import useSignAndSend from '@/hooks/useSignAndSend'
-import {subsquidClient} from '@/lib/graphql'
 import {
   useBasePoolWhitelistsConnectionQuery,
   type BasePoolCommonFragment,
 } from '@/lib/subsquidQuery'
 import {theme} from '@/lib/theme'
+import {subsquidClientAtom} from '@/store/common'
 import {Button, Dialog, Stack, ThemeProvider, type Theme} from '@mui/material'
 import {DataGrid, type GridColDef} from '@mui/x-data-grid'
 import {polkadotAccountAtom} from '@phala/store'
@@ -44,6 +44,7 @@ const WhitelistList: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
   const api = usePolkadotApi()
   const signAndSend = useSignAndSend()
   const [selectedAddress, setSelectedAddress] = useState<string[]>([])
+  const [subsquidClient] = useAtom(subsquidClientAtom)
   const {data, isLoading} = useBasePoolWhitelistsConnectionQuery(
     subsquidClient,
     {orderBy: 'createTime_ASC', where: {basePool: {id_eq: basePool.id}}}

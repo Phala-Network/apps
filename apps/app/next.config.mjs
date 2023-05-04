@@ -1,5 +1,6 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-const withBundleAnalyzer = require('@next/bundle-analyzer')({
+import withBundleAnalyzer from '@next/bundle-analyzer'
+
+const bundleAnalyzer = withBundleAnalyzer({
   enabled: process.env.ANALYZE === 'true',
 })
 
@@ -32,17 +33,33 @@ const nextConfig = {
   async redirects() {
     return [
       {
+        source: '/',
+        destination: '/khala',
+        permanent: true,
+      },
+      {
         source: '/delegate',
-        destination: '/delegate/vault',
+        destination: '/khala/delegate/vault',
         permanent: true,
       },
       {
         source: '/farm',
-        destination: '/farm/stake-pool',
+        destination: '/khala/farm/stake-pool',
+        permanent: true,
+      },
+      {
+        source: '/:root(delegate|farm|vault|stake-pool)/:path*',
+        destination: '/khala/:root/:path*',
         permanent: true,
       },
     ]
   },
+  experimental: {
+    swcPlugins: [
+      // ['@swc-jotai/debug-label', {}],
+      // ['@swc-jotai/react-refresh', {}],
+    ],
+  },
 }
 
-module.exports = withBundleAnalyzer(nextConfig)
+export default bundleAnalyzer(nextConfig)

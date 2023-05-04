@@ -8,17 +8,17 @@ import PageHeader from '@/components/PageHeader'
 import WikiButton from '@/components/Wiki/Button'
 import useSelectedVaultState from '@/hooks/useSelectedVaultState'
 import {colors} from '@/lib/theme'
-import {vaultIdAtom} from '@/store/common'
+import {chainAtom, vaultIdAtom} from '@/store/common'
 import {
   Box,
   NoSsr,
   Paper,
   Stack,
-  styled,
   Switch,
   ToggleButton,
   ToggleButtonGroup,
   Typography,
+  styled,
 } from '@mui/material'
 import {polkadotAccountAtom} from '@phala/store'
 import {useAtom} from 'jotai'
@@ -64,7 +64,12 @@ export const getStaticProps: GetStaticProps = async () => {
 
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
-    paths: [{params: {kind: 'vault'}}, {params: {kind: 'stake-pool'}}],
+    paths: [
+      {params: {chain: 'phala', kind: 'vault'}},
+      {params: {chain: 'phala', kind: 'stake-pool'}},
+      {params: {chain: 'khala', kind: 'vault'}},
+      {params: {chain: 'khala', kind: 'stake-pool'}},
+    ],
     fallback: 'blocking',
   }
 }
@@ -73,6 +78,7 @@ const Delegate: NextPage = () => {
   const {
     query: {kind},
   } = useRouter()
+  const [chain] = useAtom(chainAtom)
   const [account] = useAtom(polkadotAccountAtom)
   const router = useRouter()
   const isVault = kind === 'vault'
@@ -94,12 +100,12 @@ const Delegate: NextPage = () => {
     (checked: boolean) => {
       setSwitchChecked(checked)
       void router.replace(
-        `/delegate/${checked ? 'stake-pool' : 'vault'}`,
+        `/${chain}/delegate/${checked ? 'stake-pool' : 'vault'}`,
         undefined,
         {shallow: true}
       )
     },
-    [router]
+    [router, chain]
   )
 
   useEffect(() => {

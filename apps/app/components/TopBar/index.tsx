@@ -38,6 +38,7 @@ const NavItem: FC<{item: INavItem; onClick?: ButtonProps['onClick']}> = ({
 }) => {
   const isExternal = href === undefined || !href.startsWith('/')
   const theme = useTheme()
+  const [chain] = useAtom(chainAtom)
 
   const link = (
     <Button
@@ -63,7 +64,7 @@ const NavItem: FC<{item: INavItem; onClick?: ButtonProps['onClick']}> = ({
   }
 
   return (
-    <NextLink href={href} passHref legacyBehavior shallow>
+    <NextLink href={`/${chain}${href}`} passHref legacyBehavior shallow>
       {link}
     </NextLink>
   )
@@ -72,14 +73,12 @@ const NavItem: FC<{item: INavItem; onClick?: ButtonProps['onClick']}> = ({
 NavItem.displayName = 'NavItem'
 
 const TopBar: FC = () => {
-  const [chain] = useAtom(chainAtom)
   const theme = useTheme()
   const [collapseIn, setCollapseIn] = useState(false)
   const navItems: INavItem[] = [
     {label: 'Dashboard', href: '/'},
     {
       label: 'Delegate',
-      disabled: chain !== 'khala',
       sub: [
         {label: 'Delegate', href: '/delegate/vault'},
         {label: 'My Delegation', href: '/delegate/my-delegation'},
@@ -87,7 +86,6 @@ const TopBar: FC = () => {
     },
     {
       label: 'Farm',
-      disabled: chain !== 'khala',
       sub: [
         {label: 'Vault', href: '/farm/vault'},
         {label: 'StakePool', href: '/farm/stake-pool'},
@@ -210,7 +208,6 @@ const TopBar: FC = () => {
             <Box display={{xs: 'none', md: 'block'}}>{icons}</Box>
           </Stack>
         </Toolbar>
-
         <Collapse
           sx={{
             position: 'absolute',

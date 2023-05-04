@@ -8,6 +8,7 @@ import {aprToApy} from '@/lib/apr'
 import getPoolPath from '@/lib/getPoolPath'
 import {type BasePoolCommonFragment} from '@/lib/subsquidQuery'
 import {colors} from '@/lib/theme'
+import {chainAtom} from '@/store/common'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import Star from '@mui/icons-material/Star'
 import StarBorder from '@mui/icons-material/StarBorder'
@@ -45,6 +46,7 @@ const DelegateCard: FC<{
   const theme = useTheme()
   const selectedVaultState = useSelectedVaultState()
   const [account] = useAtom(polkadotAccountAtom)
+  const [chain] = useAtom(chainAtom)
   const delegatorAddress =
     selectedVaultState === null
       ? account?.address
@@ -114,7 +116,7 @@ const DelegateCard: FC<{
                 color="inherit"
                 lineHeight={1.3}
                 variant="num3"
-                href={getPoolPath(basePool.kind, basePool.id)}
+                href={getPoolPath(chain, basePool.kind, basePool.id)}
                 target="_blank"
                 rel="noopener"
                 sx={{

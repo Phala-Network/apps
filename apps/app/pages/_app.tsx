@@ -1,8 +1,10 @@
+import HydrateAtoms from '@/components/HydrateAtoms'
 import Layout from '@/components/Layout'
 import ZendeskWidget from '@/components/ZendeskWidget'
 import {createEmotionCache} from '@/lib/createEmotionCache'
 import {globalStyles} from '@/lib/styles'
 import {theme} from '@/lib/theme'
+import {chainAtom} from '@/store/common'
 import {CacheProvider, css, type EmotionCache} from '@emotion/react'
 import {
   CssBaseline,
@@ -27,7 +29,12 @@ interface MyAppProps extends AppProps {
 }
 
 const App: FC<MyAppProps> = (props) => {
-  const {Component, emotionCache = clientSideEmotionCache, pageProps} = props
+  const {
+    Component,
+    emotionCache = clientSideEmotionCache,
+    pageProps,
+    router,
+  } = props
 
   return (
     <SWRConfig
@@ -42,18 +49,26 @@ const App: FC<MyAppProps> = (props) => {
     >
       <QueryClientProvider client={queryClient}>
         <JotaiProvider>
-          <CacheProvider value={emotionCache}>
-            <MuiThemeProvider theme={theme}>
-              <CssBaseline />
-              <GlobalStyles styles={css([globalStyles])} />
-              <Layout>
-                <Component {...pageProps} />
-                <ZendeskWidget />
-                {process.env.NODE_ENV === 'development' && <JotaiDevTools />}
-                <ReactQueryDevtools />
-              </Layout>
-            </MuiThemeProvider>
-          </CacheProvider>
+          <HydrateAtoms
+            initialValues={
+              typeof router.query.chain === 'string'
+                ? [[chainAtom, router.query.chain]]
+                : []
+            }
+          >
+            <CacheProvider value={emotionCache}>
+              <MuiThemeProvider theme={theme}>
+                <CssBaseline />
+                <GlobalStyles styles={css([globalStyles])} />
+                <Layout>
+                  <Component {...pageProps} />
+                  <ZendeskWidget />
+                  {process.env.NODE_ENV === 'development' && <JotaiDevTools />}
+                  <ReactQueryDevtools />
+                </Layout>
+              </MuiThemeProvider>
+            </CacheProvider>
+          </HydrateAtoms>
         </JotaiProvider>
       </QueryClientProvider>
     </SWRConfig>

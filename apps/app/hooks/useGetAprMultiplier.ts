@@ -1,7 +1,8 @@
 import {apyToApr} from '@/lib/apr'
-import {subsquidClient} from '@/lib/graphql'
 import {useGlobalStateQuery} from '@/lib/subsquidQuery'
+import {subsquidClientAtom} from '@/store/common'
 import Decimal from 'decimal.js'
+import {useAtom} from 'jotai'
 import {useCallback} from 'react'
 
 const ONE_YEAR = 365 * 24 * 60 * 60 * 1000
@@ -10,6 +11,7 @@ const useGetAprMultiplier = (): ((
   aprOrApy: string | Decimal,
   isApy?: boolean
 ) => Decimal | undefined) => {
+  const [subsquidClient] = useAtom(subsquidClientAtom)
   const {data: globalState} = useGlobalStateQuery(
     subsquidClient,
     {},

@@ -9,6 +9,7 @@ import getPoolPath from '@/lib/getPoolPath'
 import getVaultOwnerCut from '@/lib/getVaultOwnerCut'
 import {type BasePoolCommonFragment} from '@/lib/subsquidQuery'
 import {colors} from '@/lib/theme'
+import {chainAtom} from '@/store/common'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import Settings from '@mui/icons-material/Settings'
 import {
@@ -28,6 +29,7 @@ import {
 } from '@mui/material'
 import {toCurrency, toPercentage} from '@phala/util'
 import Decimal from 'decimal.js'
+import {useAtom} from 'jotai'
 import {useCallback, useMemo, type FC} from 'react'
 import PromiseButton from '../PromiseButton'
 import BasePoolChart from './Chart'
@@ -41,6 +43,7 @@ const FarmCard: FC<{
 }> = ({basePool, onAction}) => {
   const api = usePolkadotApi()
   const signAndSend = useSignAndSend()
+  const [chain] = useAtom(chainAtom)
   const getApr = useGetApr()
   const theme = useTheme()
   const {vault, stakePool} = basePool
@@ -158,7 +161,7 @@ const FarmCard: FC<{
                 }}
                 color="inherit"
                 variant="num2"
-                href={getPoolPath(basePool.kind, basePool.id)}
+                href={getPoolPath(chain, basePool.kind, basePool.id)}
                 target="_blank"
                 rel="noopener"
                 sx={{

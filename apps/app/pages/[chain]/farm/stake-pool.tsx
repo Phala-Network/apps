@@ -3,8 +3,8 @@ import BasePoolList from '@/components/BasePool/List'
 import CreateBasePoolButton from '@/components/CreateBasePoolButton'
 import PageHeader from '@/components/PageHeader'
 import Property from '@/components/Property'
-import {subsquidClient} from '@/lib/graphql'
 import {useClaimableStakePoolsQuery} from '@/lib/subsquidQuery'
+import {subsquidClientAtom} from '@/store/common'
 import {Box, Button, Dialog, Skeleton, Stack} from '@mui/material'
 import {polkadotAccountAtom} from '@phala/store'
 import {toCurrency} from '@phala/util'
@@ -15,6 +15,7 @@ import {useCallback, useMemo, useState, type FC} from 'react'
 const MyStakePools: FC = () => {
   const [account] = useAtom(polkadotAccountAtom)
   const [dialogOpen, setDialogOpen] = useState(false)
+  const [subsquidClient] = useAtom(subsquidClientAtom)
   const {data: edges} = useClaimableStakePoolsQuery(
     subsquidClient,
     {accountId: account?.address, gt: '0'},

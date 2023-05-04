@@ -13,7 +13,6 @@ import useSWRValue from '@/hooks/useSWRValue'
 import {aprToApy} from '@/lib/apr'
 import fixBasePoolFree from '@/lib/fixBasePoolFree'
 import getDelegationProfit from '@/lib/getDelegationProfit'
-import {subsquidClient} from '@/lib/graphql'
 import {create} from 'mutative'
 
 import {
@@ -24,6 +23,7 @@ import {colors} from '@/lib/theme'
 import Settings from '@mui/icons-material/Settings'
 import {TabContext, TabList, TabPanel} from '@mui/lab'
 
+import {subsquidClientAtom} from '@/store/common'
 import {
   Box,
   Button,
@@ -90,6 +90,7 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
     </>
   )
   const apr = getApr(basePool.aprMultiplier)
+  const [subsquidClient] = useAtom(subsquidClientAtom)
   const {data: delegation, isLoading: isDelegationLoading} =
     useDelegationByIdQuery(
       subsquidClient,

@@ -8,6 +8,7 @@ import {aprToApy} from '@/lib/apr'
 import getPoolPath from '@/lib/getPoolPath'
 import {type DelegationCommonFragment} from '@/lib/subsquidQuery'
 import {colors} from '@/lib/theme'
+import {chainAtom} from '@/store/common'
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp'
 import {
   alpha,
@@ -23,6 +24,7 @@ import {
 } from '@mui/material'
 import {toCurrency, toPercentage} from '@phala/util'
 import type Decimal from 'decimal.js'
+import {useAtom} from 'jotai'
 import {type FC} from 'react'
 import Identity from '../BasePool/Identity'
 import PromiseButton from '../PromiseButton'
@@ -38,6 +40,7 @@ const HorizonCard: FC<{
   const signAndSend = useSignAndSend()
   const {value, basePool, withdrawingValue} = delegation
   const isVault = basePool.kind === 'Vault'
+  const [chain] = useAtom(chainAtom)
   const theme = useTheme()
   const getApr = useGetApr()
   const apr = getApr(basePool.aprMultiplier)
@@ -100,7 +103,7 @@ const HorizonCard: FC<{
               }}
               color="inherit"
               variant="num3"
-              href={getPoolPath(basePool.kind, basePool.id)}
+              href={getPoolPath(chain, basePool.kind, basePool.id)}
               target="_blank"
               rel="noopener"
               sx={{

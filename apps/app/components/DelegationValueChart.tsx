@@ -1,9 +1,10 @@
 import useSWRValue from '@/hooks/useSWRValue'
 import compactFormat from '@/lib/compactFormat'
-import {subsquidClient} from '@/lib/graphql'
 import {useAccountSnapshotsConnectionQuery} from '@/lib/subsquidQuery'
+import {subsquidClientAtom} from '@/store/common'
 import {addDays} from 'date-fns'
 import Decimal from 'decimal.js'
+import {useAtom} from 'jotai'
 import {useMemo, type FC} from 'react'
 import {
   Area,
@@ -19,6 +20,7 @@ const DelegationValueChart: FC<{address?: string; days: number}> = ({
   address,
   days,
 }) => {
+  const [subsquidClient] = useAtom(subsquidClientAtom)
   const startTime = useSWRValue([days], () => {
     const date = new Date()
     date.setUTCHours(0, 0, 0, 0)

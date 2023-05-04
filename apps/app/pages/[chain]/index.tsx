@@ -3,13 +3,22 @@ import DashboardAssetList from '@/components/DashboardAssetList'
 import DashboardCarousel from '@/components/DashboardCarousel'
 import DashboardNftList from '@/components/DashboardNftList'
 import Title from '@/components/Title'
-import {chainAtom} from '@/store/common'
 import {Box, Paper, Stack} from '@mui/material'
-import {useAtom} from 'jotai'
+import {type GetStaticPaths, type GetStaticProps} from 'next'
 import {type FC} from 'react'
 
+export const getStaticProps: GetStaticProps = async () => {
+  return {props: {}}
+}
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  return {
+    paths: [{params: {chain: 'phala'}}, {params: {chain: 'khala'}}],
+    fallback: 'blocking',
+  }
+}
+
 const Dashboard: FC = () => {
-  const [chain] = useAtom(chainAtom)
   return (
     <>
       <Title>Dashboard</Title>
@@ -35,11 +44,9 @@ const Dashboard: FC = () => {
       <Box component="section" mt={4}>
         <DashboardAssetList />
       </Box>
-      {chain === 'khala' && (
-        <Box component="section" mt={4}>
-          <DashboardNftList />
-        </Box>
-      )}
+      <Box component="section" mt={4}>
+        <DashboardNftList />
+      </Box>
     </>
   )
 }

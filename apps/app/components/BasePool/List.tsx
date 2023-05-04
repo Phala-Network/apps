@@ -4,7 +4,6 @@ import useDebounced from '@/hooks/useDebounced'
 import useGetAprMultiplier from '@/hooks/useGetAprMultiplier'
 import useSelectedVaultState from '@/hooks/useSelectedVaultState'
 import fixBasePoolFree from '@/lib/fixBasePoolFree'
-import {subsquidClient} from '@/lib/graphql'
 import {
   IdentityLevel,
   useInfiniteBasePoolsConnectionQuery,
@@ -19,6 +18,7 @@ import {
   basePoolMinDelegableAtom,
   basePoolMinTvlAtom,
   favoritePoolsAtom,
+  subsquidClientAtom,
 } from '@/store/common'
 import FilterList from '@mui/icons-material/FilterList'
 import Search from '@mui/icons-material/Search'
@@ -193,6 +193,7 @@ const BasePoolList: FC<{
   const enabled =
     variant === 'delegate' ||
     (polkadotAccount?.address !== undefined && variant === 'farm')
+  const [subsquidClient] = useAtom(subsquidClientAtom)
   const {data, isLoading, fetchNextPage, hasNextPage} =
     useInfiniteBasePoolsConnectionQuery(
       'after',
@@ -205,7 +206,6 @@ const BasePoolList: FC<{
       },
       {
         enabled,
-        keepPreviousData: true,
         select: (data) => {
           return create(data, (draft) => {
             draft.pages.forEach((page) => {

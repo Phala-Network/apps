@@ -2,10 +2,9 @@ import PhalaLogo from '@/assets/phala_logo.svg'
 import {WPHA_ASSET_ID} from '@/config'
 import useAssetBalance from '@/hooks/useAssetBalance'
 import useWrapAsset from '@/hooks/useWrapAsset'
-import {subsquidClient} from '@/lib/graphql'
 import {useAccountByIdQuery} from '@/lib/subsquidQuery'
 import {colors} from '@/lib/theme'
-import {chainAtom} from '@/store/common'
+import {chainAtom, subsquidClientAtom} from '@/store/common'
 import {assetVisibleAtom, walletDialogOpenAtom} from '@/store/ui'
 import ContentCopy from '@mui/icons-material/ContentCopy'
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight'
@@ -57,6 +56,7 @@ const DashboardAccount: FC = () => {
   const [account] = useAtom(polkadotAccountAtom)
   const freeBalance = useAssetBalance(account?.address, 'free')
   const wrapped = useAssetBalance(account?.address, WPHA_ASSET_ID)
+  const [subsquidClient] = useAtom(subsquidClientAtom)
   const {data: accountData} = useAccountByIdQuery(
     subsquidClient,
     {accountId: account?.address ?? ''},
@@ -67,7 +67,7 @@ const DashboardAccount: FC = () => {
     }
   )
 
-  const isDelegationClickable = account !== null && chain === 'khala'
+  const isDelegationClickable = account !== null
   return (
     <Paper
       sx={{
@@ -183,9 +183,13 @@ const DashboardAccount: FC = () => {
             sx={{cursor: isDelegationClickable ? 'pointer' : 'auto'}}
             onClick={() => {
               if (isDelegationClickable) {
-                void router.push('/delegate/my-delegation', undefined, {
-                  shallow: true,
-                })
+                void router.push(
+                  `/${chain}/delegate/my-delegation`,
+                  undefined,
+                  {
+                    shallow: true,
+                  }
+                )
               }
             }}
           >
@@ -206,7 +210,7 @@ const DashboardAccount: FC = () => {
                   component="div"
                   lineHeight={1}
                 >
-                  {account != null && chain === 'khala' ? (
+                  {account != null ? (
                     accountData != null && wrapped != null ? (
                       <>
                         {wrapAsset(
