@@ -170,6 +170,6 @@ export const transferByKhalaXTransfer = ({
     },
     isThroughChainBridge
       ? null // No need to specify a certain weight if transfer will not through XCM
-      : {refTime: '6000000000', proofSize: '0'}
+      : {refTime: '6000000000', proofSize: '1000000'}
   )
 }
