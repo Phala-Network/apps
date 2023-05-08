@@ -7,10 +7,10 @@ import {LoadingButton} from '@mui/lab'
 import {
   DialogContent,
   DialogTitle,
+  Unstable_Grid2 as Grid,
   Stack,
   TextField,
   Typography,
-  Unstable_Grid2 as Grid,
 } from '@mui/material'
 import {getDecimalPattern} from '@phala/util'
 import {stringToHex} from '@polkadot/util'
@@ -286,13 +286,13 @@ const OwnerSettings: FC<{
               rows={4}
               label="Announcement"
               value={annString}
-              inputProps={{maxLength: 240}}
+              inputProps={{maxLength: 480}}
               color={color}
               size="small"
               onChange={(e) => {
                 setAnnString(e.target.value)
               }}
-              helperText={`${annString.length}/240`}
+              helperText={`${annString.length}/480`}
             />
           </Grid>
         </Grid>

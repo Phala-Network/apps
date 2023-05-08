@@ -51,9 +51,11 @@ const App: FC<MyAppProps> = (props) => {
         <JotaiProvider>
           <HydrateAtoms
             initialValues={
-              typeof router.query.chain === 'string'
-                ? [[chainAtom, router.query.chain]]
-                : []
+              new Map(
+                typeof router.query.chain === 'string'
+                  ? [[chainAtom, router.query.chain]]
+                  : []
+              )
             }
           >
             <CacheProvider value={emotionCache}>
