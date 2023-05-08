@@ -74,11 +74,13 @@ NavItem.displayName = 'NavItem'
 
 const TopBar: FC = () => {
   const theme = useTheme()
+  const [chain] = useAtom(chainAtom)
   const [collapseIn, setCollapseIn] = useState(false)
   const navItems: INavItem[] = [
     {label: 'Dashboard', href: '/'},
     {
       label: 'Delegate',
+      disabled: chain === 'phala',
       sub: [
         {label: 'Delegate', href: '/delegate/vault'},
         {label: 'My Delegation', href: '/delegate/my-delegation'},
@@ -86,6 +88,7 @@ const TopBar: FC = () => {
     },
     {
       label: 'Farm',
+      disabled: chain === 'phala',
       sub: [
         {label: 'Vault', href: '/farm/vault'},
         {label: 'StakePool', href: '/farm/stake-pool'},

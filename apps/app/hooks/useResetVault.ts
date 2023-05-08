@@ -3,7 +3,7 @@ import {polkadotAccountAtom} from '@phala/store'
 import {useAtom} from 'jotai'
 import {useEffect, useRef} from 'react'
 
-const useVaultReset = (): void => {
+const useResetVault = (): void => {
   const [, setVaultId] = useAtom(vaultIdAtom)
   const [account] = useAtom(polkadotAccountAtom)
   const prevAccountAddress = useRef<string>()
@@ -15,4 +15,4 @@ const useVaultReset = (): void => {
   }, [account?.address, setVaultId])
 }
 
-export default useVaultReset
+export default useResetVault

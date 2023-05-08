@@ -4,7 +4,7 @@ import {useQueryClient} from '@tanstack/react-query'
 import {useAtom} from 'jotai'
 import {useEffect, useRef} from 'react'
 
-const useBlockHeightListener = (): void => {
+const useListenBlockHeight = (): void => {
   const [chain] = useAtom(chainAtom)
   const enabled = useRef(false)
   const [subsquidClient] = useAtom(subsquidClientAtom)
@@ -39,4 +39,4 @@ const useBlockHeightListener = (): void => {
   }, [queryClient, height, chain])
 }
 
-export default useBlockHeightListener
+export default useListenBlockHeight

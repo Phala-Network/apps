@@ -66,8 +66,9 @@ const DashboardAccount: FC = () => {
         data.accountById ?? {vaultValue: '0', stakePoolValue: '0'},
     }
   )
-
-  const isDelegationClickable = account !== null
+  const isProd = process.env.CONTEXT === 'production'
+  const isDelegationClickable =
+    account !== null && !(isProd && chain === 'phala')
   return (
     <Paper
       sx={{
@@ -186,9 +187,7 @@ const DashboardAccount: FC = () => {
                 void router.push(
                   `/${chain}/delegate/my-delegation`,
                   undefined,
-                  {
-                    shallow: true,
-                  }
+                  {shallow: true}
                 )
               }
             }}
