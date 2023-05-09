@@ -2807,10 +2807,8 @@ __metadata:
     "@polkadot/api": ^10.6.1
     "@polkadot/typegen": ^10.6.1
     "@types/node": ^18.16.5
-    "@types/ws": ^8.5.4
     ts-node: ^10.9.1
     typescript: ^5.0.4
-    ws: ^8.13.0
   languageName: unknown
   linkType: soft
 
@@ -4265,15 +4263,6 @@ __metadata:
   dependencies:
     sharp: "*"
   checksum: 9d0ca925ebb18e870740db0e0abcaaa2458645673068166b9f26e042640fa430644fe39aada320e03834f7ba3600e678de822201ffc312f9df1f515ba107ebd5
-  languageName: node
-  linkType: hard
-
-"@types/ws@npm:^8.5.4":
-  version: 8.5.4
-  resolution: "@types/ws@npm:8.5.4"
-  dependencies:
-    "@types/node": "*"
-  checksum: fefbad20d211929bb996285c4e6f699b12192548afedbe4930ab4384f8a94577c9cd421acaad163cacd36b88649509970a05a0b8f20615b30c501ed5269038d1
   languageName: node
   linkType: hard
 

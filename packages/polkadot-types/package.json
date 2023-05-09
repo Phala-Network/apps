@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "type": "module",
   "scripts": {
-    "updateMetadata": "node updateMetadata",
+    "updateMetadata": "ts-node-esm updateMetadata.ts",
     "generate": "npm run generate:defs && npm run generate:meta",
     "generate:defs": "node --loader ts-node/esm  ../../node_modules/.bin/polkadot-types-from-defs --package @phala/polkadot-types/interfaces  --endpoint metadata.json --input ./interfaces",
     "generate:meta": "node --loader ts-node/esm  ../../node_modules/.bin/polkadot-types-from-chain --package @phala/polkadot-types/interfaces --endpoint metadata.json --output ./interfaces",
@@ -14,10 +14,8 @@
     "@phala/typedefs": "^0.2.33",
     "@polkadot/typegen": "^10.6.1",
     "@types/node": "^18.16.5",
-    "@types/ws": "^8.5.4",
     "ts-node": "^10.9.1",
-    "typescript": "^5.0.4",
-    "ws": "^8.13.0"
+    "typescript": "^5.0.4"
   },
   "dependencies": {
     "@polkadot/api": "^10.6.1"
