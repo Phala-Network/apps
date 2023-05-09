@@ -247,18 +247,19 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
           </Stack>
         </Paper>
 
-        <Paper
-          component="section"
-          sx={{
-            px: {xs: 2, md: 3},
-            background: 'transparent',
-          }}
-        >
-          <Stack direction={{xs: 'column', lg: 'row'}} spacing={3}>
+        <Stack direction={{xs: 'column', lg: 'row'}} spacing={2}>
+          <Paper
+            component="section"
+            sx={{
+              flex: {xs: 'none', lg: '1'},
+              minWidth: 0,
+              background: 'transparent',
+            }}
+          >
             <Box
               sx={{
+                mx: {xs: 2, md: 3},
                 py: {xs: 1.5, md: 2},
-                flex: {xs: 'none', lg: '1 0'},
                 height: 280,
                 minWidth: 0,
               }}
@@ -277,13 +278,19 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
                 />
               </Box>
             </Box>
+          </Paper>
+          <Paper
+            component="section"
+            sx={{
+              flex: {xs: 'none', lg: '1'},
+              background: 'transparent',
+            }}
+          >
             <Stack
               component="section"
               sx={{
                 py: 1,
-                background: 'transparent',
-                flex: {xs: 'none', lg: '1 0'},
-                minWidth: 0,
+                mx: 1,
                 height: 280,
               }}
             >
@@ -310,8 +317,8 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
                 ))}
               </TabContext>
             </Stack>
-          </Stack>
-        </Paper>
+          </Paper>
+        </Stack>
 
         <Box component="section">
           <SectionHeader icon={<NftsIcon />} title="Delegate" />
@@ -336,7 +343,7 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
                 </Box>
                 {hasDelegation ? (
                   <Stack
-                    direction="row"
+                    direction={{xs: 'column', lg: 'row'}}
                     justifyContent="space-between"
                     alignItems="flex-end"
                     mr={1}
@@ -348,7 +355,7 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
                         profit={delegationProfit}
                       />
                     </Box>
-                    <Stack spacing={2}>
+                    <Stack spacing={2} direction={{xs: 'row', lg: 'column'}}>
                       <WikiButton entry="reclaimPool">
                         <PromiseButton
                           color={color}

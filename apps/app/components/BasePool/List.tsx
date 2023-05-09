@@ -46,6 +46,7 @@ import {useInView} from 'react-intersection-observer'
 import WikiButton from '../Wiki/Button'
 import ClaimDelegation from './ClaimDelegation'
 import ClaimReward from './ClaimReward'
+import CreateButton from './CreateButton'
 import DelegateCard from './DelegateCard'
 import FarmCard from './FarmCard'
 import OwnerSettings from './OwnerSettings'
@@ -469,6 +470,7 @@ const BasePoolList: FC<{
                 </MenuItem>
               ))}
             </TextField>
+            {variant === 'farm' && <CreateButton kind={kind} />}
           </Stack>
           <Stack spacing={2} mt={2}>
             {isEmpty ? (

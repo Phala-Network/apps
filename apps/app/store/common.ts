@@ -1,19 +1,14 @@
 import {type WikiEntry} from '@/assets/wikiData'
-import {KHALA_SUBSQUID_URL, PHALA_SUBSQUID_URL} from '@/config'
-import {GraphQLClient} from 'graphql-request'
+import {khalaSubsquidClient, phalaSubsquidClient} from '@/config'
 import {atom} from 'jotai'
 import {atomWithStorage} from 'jotai/utils'
 
 export type Chain = 'khala' | 'phala'
 
 export const chainAtom = atom<Chain>('khala')
-export const subsquidClientAtom = atom((get) => {
-  const url =
-    process.env.NEXT_PUBLIC_SUBSQUID_URL ??
-    (get(chainAtom) === 'khala' ? KHALA_SUBSQUID_URL : PHALA_SUBSQUID_URL)
-
-  return new GraphQLClient(url)
-})
+export const subsquidClientAtom = atom((get) =>
+  get(chainAtom) === 'khala' ? khalaSubsquidClient : phalaSubsquidClient
+)
 export const khalaVaultIdAtom = atomWithStorage<string | null>(
   'jotai:khala_vault',
   null
