@@ -8,14 +8,14 @@ import {
   useIdleWorkerCountQuery,
 } from '@/lib/subsquidQuery'
 import {chainAtom, subsquidClientAtom} from '@/store/common'
-import {Box, Divider, Skeleton, Stack, Typography} from '@mui/material'
+import {Divider, Skeleton, Stack, Typography} from '@mui/material'
 import {toPercentage} from '@phala/util'
 import {useQuery} from '@tanstack/react-query'
 import {addDays} from 'date-fns'
 import Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
 import {useMemo, type FC} from 'react'
-import WikiButton from './Wiki/Button'
+import Property from '../Property'
 
 interface CirculationData {
   data?: {circulations?: {nodes?: [{amount: string}?]}}
@@ -102,28 +102,38 @@ const NetworkStats: FC = () => {
         divider={<Divider orientation="vertical" flexItem />}
       >
         {items.map(([label, value, wikiEntry]) => {
-          const title = (
-            <Typography
-              variant="subtitle2"
-              component="div"
-              color="text.secondary"
-            >
-              {label}
-            </Typography>
-          )
           return (
-            <Box key={label} flexShrink={0}>
-              {wikiEntry == null ? (
-                title
-              ) : (
-                <WikiButton entry={wikiEntry}>{title}</WikiButton>
-              )}
-
-              <Typography variant="num3" component="div" color="primary">
-                {value ?? <Skeleton width={80} />}
-              </Typography>
-            </Box>
+            <Property
+              size="small"
+              label={label}
+              wikiEntry={wikiEntry}
+              key={label}
+            >
+              {value ?? <Skeleton width={80} />}
+            </Property>
           )
+          // const title = (
+          //   <Typography
+          //     variant="subtitle2"
+          //     component="div"
+          //     color="text.secondary"
+          //   >
+          //     {label}
+          //   </Typography>
+          // )
+          // return (
+          //   <Box key={label} flexShrink={0}>
+          //     {wikiEntry == null ? (
+          //       title
+          //     ) : (
+          //       <WikiButton entry={wikiEntry}>{title}</WikiButton>
+          //     )}
+
+          //     <Typography variant="num3" component="div" color="primary">
+          //       {value ?? <Skeleton width={80} />}
+          //     </Typography>
+          //   </Box>
+          // )
         })}
       </Stack>
       <Stack

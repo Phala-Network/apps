@@ -16,6 +16,7 @@ import {
   Stack,
   Toolbar,
   Tooltip,
+  Typography,
   useTheme,
   type ButtonProps,
 } from '@mui/material'
@@ -24,6 +25,7 @@ import NextLink from 'next/link'
 import {useState, type FC} from 'react'
 import Account from './Account'
 import ChainSelect from './Chain'
+import NetworkStats from './NetworkStats'
 
 interface INavItem {
   label: string
@@ -162,6 +164,19 @@ const TopBar: FC = () => {
           mb: 1,
         }}
       >
+        <Stack
+          height={40}
+          bgcolor="#2C303F"
+          alignItems="center"
+          direction="row"
+          px={2}
+          spacing={2}
+        >
+          <Typography>foooobar</Typography>
+          <Box flex={1}></Box>
+          <NetworkStats />
+          <Box display={{xs: 'none', md: 'block'}}>{icons}</Box>
+        </Stack>
         <Toolbar>
           <PhalaLogo width={30} css={{flexShrink: 0}} />
           <Stack
@@ -208,7 +223,6 @@ const TopBar: FC = () => {
             >
               <Menu />
             </IconButton>
-            <Box display={{xs: 'none', md: 'block'}}>{icons}</Box>
           </Stack>
         </Toolbar>
         <Collapse
