@@ -6,7 +6,6 @@ import useDebounced from '@/hooks/useDebounced'
 import useSWRValue from '@/hooks/useSWRValue'
 import fixBasePoolFree from '@/lib/fixBasePoolFree'
 import getDelegationProfit from '@/lib/getDelegationProfit'
-import {subsquidClient} from '@/lib/graphql'
 import {
   useInfiniteDelegationsConnectionQuery,
   type BasePoolKind,
@@ -14,6 +13,7 @@ import {
   type DelegationOrderByInput,
   type DelegationWhereInput,
 } from '@/lib/subsquidQuery'
+import {subsquidClientAtom} from '@/store/common'
 import FilterList from '@mui/icons-material/FilterList'
 import FormatListBulleted from '@mui/icons-material/FormatListBulleted'
 import GridView from '@mui/icons-material/GridView'
@@ -24,6 +24,7 @@ import {
   Dialog,
   Drawer,
   FormControlLabel,
+  Unstable_Grid2 as Grid,
   IconButton,
   MenuItem,
   NoSsr,
@@ -33,10 +34,10 @@ import {
   ToggleButton,
   ToggleButtonGroup,
   Typography,
-  Unstable_Grid2 as Grid,
 } from '@mui/material'
 import {addDays} from 'date-fns'
 import Decimal from 'decimal.js'
+import {useAtom} from 'jotai'
 import {create} from 'mutative'
 import {useCallback, useEffect, useState, type FC} from 'react'
 import {useInView} from 'react-intersection-observer'
@@ -98,6 +99,7 @@ const DelegationList: FC<{
     withdrawingFilter && {withdrawingValue_gt: '0'},
   ]
   const enabled = address !== undefined
+  const [subsquidClient] = useAtom(subsquidClientAtom)
   const {data, isLoading, fetchNextPage, hasNextPage} =
     useInfiniteDelegationsConnectionQuery(
       'after',
@@ -109,7 +111,6 @@ const DelegationList: FC<{
         snapshotsWhere: {updatedTime_gte: yesterday},
       },
       {
-        keepPreviousData: true,
         enabled,
         getNextPageParam: (lastPage) =>
           lastPage.delegationsConnection.pageInfo.hasNextPage

@@ -1,45 +1,37 @@
 import usePolkadotApi from '@/hooks/usePolkadotApi'
-import {subsquidClient} from '@/lib/graphql'
 import {useGlobalStateQuery} from '@/lib/subsquidQuery'
 import {colors, montserrat} from '@/lib/theme'
-import {chainAtom, type Chain} from '@/store/common'
+import {chainAtom, subsquidClientAtom, type Chain} from '@/store/common'
 import CircleIcon from '@mui/icons-material/Circle'
 import {MenuItem, Select, Stack, Tooltip} from '@mui/material'
 import {toCurrency} from '@phala/util'
+import {useQuery, useQueryClient} from '@tanstack/react-query'
 import {useAtom} from 'jotai'
 import {useMemo, type FC} from 'react'
-import useSWRSubscription from 'swr/subscription'
 import Property from '../Property'
 
 const ChainSelect: FC = () => {
   const api = usePolkadotApi()
   const [chain, setChain] = useAtom(chainAtom)
+  const queryClient = useQueryClient()
   const isKhala = chain === 'khala'
 
   const color = `${isKhala ? '#03ffff' : colors.main[400]} !important`
   const backgroundColor = isKhala ? '#1E565E' : colors.main[700]
 
+  const [subsquidClient] = useAtom(subsquidClientAtom)
   const {data: globalStateData} = useGlobalStateQuery(subsquidClient, {})
   const subsquidHeight = globalStateData?.squidStatus?.height
   const blockTime = globalStateData?.globalStateById?.averageBlockTime
   const apiConnected = api?.isConnected
-  const {data: chainHeight} = useSWRSubscription(
-    api != null && ['height', api],
-    (_, {next}) => {
-      let unsubscribe = (): void => {}
-      if (api == null) {
-        return unsubscribe
-      }
-      void api.rpc.chain
-        .subscribeNewHeads((header) => {
-          next(null, header.number.toNumber())
-        })
-        .then((fn) => {
-          unsubscribe = fn
-        })
-
-      return unsubscribe
-    }
+  const {data: chainHeight} = useQuery(
+    ['chainHeight', chain],
+    async () => {
+      if (api == null) return null
+      const lastHeader = await api.rpc.chain.getHeader()
+      return lastHeader.number.toNumber()
+    },
+    {refetchInterval: 3000}
   )
   const status: 'success' | 'warning' | 'error' = useMemo(() => {
     if (apiConnected === true) {
@@ -72,7 +64,9 @@ const ChainSelect: FC = () => {
       }}
       inputProps={{sx: {py: '6.5px'}}}
       onChange={(e) => {
-        setChain(e.target.value as Chain)
+        const nextValue = e.target.value as Chain
+        setChain(nextValue)
+        queryClient.clear()
       }}
     >
       {['khala', 'phala'].map((value) => (
@@ -87,7 +81,7 @@ const ChainSelect: FC = () => {
           }}
         >
           <Stack direction="row" alignItems="center" spacing={1}>
-            {value === 'khala' && chain === 'khala' && (
+            {value === chain && (
               <Tooltip
                 PopperProps={{
                   sx: {minWidth: 200},

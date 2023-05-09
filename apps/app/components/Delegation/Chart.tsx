@@ -1,14 +1,15 @@
 import useSWRValue from '@/hooks/useSWRValue'
 import compactFormat from '@/lib/compactFormat'
 import getDelegationProfit from '@/lib/getDelegationProfit'
-import {subsquidClient} from '@/lib/graphql'
 import {
   useDelegationSnapshotsConnectionQuery,
   type DelegationCommonFragment,
 } from '@/lib/subsquidQuery'
 import {colors} from '@/lib/theme'
+import {subsquidClientAtom} from '@/store/common'
 import {addDays} from 'date-fns'
 import Decimal from 'decimal.js'
+import {useAtom} from 'jotai'
 import {useMemo, type FC} from 'react'
 import {
   Bar,
@@ -36,6 +37,7 @@ const DelegationChart: FC<{
       addDays(date, i - days).toISOString()
     )
   })
+  const [subsquidClient] = useAtom(subsquidClientAtom)
   const {data} = useDelegationSnapshotsConnectionQuery(
     subsquidClient,
     {

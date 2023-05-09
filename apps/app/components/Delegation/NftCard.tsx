@@ -9,6 +9,7 @@ import {aprToApy} from '@/lib/apr'
 import getPoolPath from '@/lib/getPoolPath'
 import {type DelegationCommonFragment} from '@/lib/subsquidQuery'
 import {colors} from '@/lib/theme'
+import {chainAtom} from '@/store/common'
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp'
 import MoreVert from '@mui/icons-material/MoreVert'
 import {
@@ -27,6 +28,7 @@ import {
 } from '@mui/material'
 import {toCurrency, toPercentage} from '@phala/util'
 import Decimal from 'decimal.js'
+import {useAtom} from 'jotai'
 import {useRef, useState, type FC} from 'react'
 import Identity from '../BasePool/Identity'
 import {type OnAction} from './List'
@@ -40,6 +42,7 @@ const NftCard: FC<{
 }> = ({compact = false, delegation, onAction, isOwner = false, profit}) => {
   const api = usePolkadotApi()
   const signAndSend = useSignAndSend()
+  const [chain] = useAtom(chainAtom)
   const [menuOpen, setMenuOpen] = useState(false)
   const moreRef = useRef(null)
   const {value, shares, basePool, delegationNft, withdrawingValue} = delegation
@@ -118,7 +121,7 @@ const NftCard: FC<{
                 }}
                 color="inherit"
                 variant="num3"
-                href={getPoolPath(basePool.kind, basePool.id)}
+                href={getPoolPath(chain, basePool.kind, basePool.id)}
                 target="_blank"
                 rel="noopener"
                 sx={{

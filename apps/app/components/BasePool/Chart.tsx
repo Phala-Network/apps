@@ -1,14 +1,15 @@
 import useSWRValue from '@/hooks/useSWRValue'
 import {aprToApy} from '@/lib/apr'
 import compactFormat from '@/lib/compactFormat'
-import {subsquidClient} from '@/lib/graphql'
 import {
   useBasePoolSnapshotsConnectionQuery,
   type BasePoolCommonFragment,
 } from '@/lib/subsquidQuery'
 import {colors} from '@/lib/theme'
+import {subsquidClientAtom} from '@/store/common'
 import {addDays, addHours} from 'date-fns'
 import Decimal from 'decimal.js'
+import {useAtom} from 'jotai'
 import {useMemo, type FC} from 'react'
 import {
   Area,
@@ -54,6 +55,7 @@ const BasePoolChart: FC<{
       addDays(date, i - days).toISOString()
     )
   })
+  const [subsquidClient] = useAtom(subsquidClientAtom)
   const {data} = useBasePoolSnapshotsConnectionQuery(
     subsquidClient,
     {

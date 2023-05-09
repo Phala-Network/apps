@@ -7,8 +7,8 @@ import WikiButton from '@/components/Wiki/Button'
 import usePolkadotApi from '@/hooks/usePolkadotApi'
 import useSignAndSend from '@/hooks/useSignAndSend'
 import getVaultOwnerCut from '@/lib/getVaultOwnerCut'
-import {subsquidClient} from '@/lib/graphql'
 import {useOwnedVaultsQuery} from '@/lib/subsquidQuery'
+import {subsquidClientAtom} from '@/store/common'
 import {Box, Button, Dialog, Skeleton, Stack, Typography} from '@mui/material'
 import {polkadotAccountAtom} from '@phala/store'
 import {toCurrency} from '@phala/util'
@@ -24,6 +24,7 @@ const MyVaults: FC = () => {
   }, [])
   const [account] = useAtom(polkadotAccountAtom)
   const signAndSend = useSignAndSend()
+  const [subsquidClient] = useAtom(subsquidClientAtom)
   const {data: edges, isLoading} = useOwnedVaultsQuery(
     subsquidClient,
     {accountId: account?.address},

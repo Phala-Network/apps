@@ -1,7 +1,9 @@
+import {KHALA_SUBSQUID_URL, PHALA_SUBSQUID_URL} from '@/config'
 import {sleep} from '@phala/util'
+import {GraphQLClient} from 'graphql-request'
 import {type GetServerSideProps} from 'next'
-import {subsquidSdk} from './graphql'
 import {type BasePoolByIdQuery, type BasePoolKind} from './subsquidQuery'
+import {getSdk} from './subsquidSdk'
 
 export interface BasePoolServerSideProps {
   pid: string
@@ -12,10 +14,15 @@ export interface BasePoolServerSideProps {
 const getBasePoolServerSideProps =
   (kind: BasePoolKind): GetServerSideProps<BasePoolServerSideProps> =>
   async (ctx) => {
-    const pid = ctx.params?.pid
-    if (typeof pid !== 'string') {
-      throw new Error('Invalid pid')
+    const {pid, chain} = ctx.params ?? {}
+    if (typeof pid !== 'string' || (chain !== 'khala' && chain !== 'phala')) {
+      throw new Error('Invalid params')
     }
+    const subsquidSdk = getSdk(
+      new GraphQLClient(
+        chain === 'phala' ? PHALA_SUBSQUID_URL : KHALA_SUBSQUID_URL
+      )
+    )
     const initialData = await Promise.race([
       subsquidSdk.BasePoolById({id: pid}),
       sleep(3000),

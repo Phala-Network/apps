@@ -1,27 +1,23 @@
-import {subsquidClient} from '@/lib/graphql'
 import {useGlobalStateQuery} from '@/lib/subsquidQuery'
-import {chainAtom} from '@/store/common'
+import {chainAtom, subsquidClientAtom} from '@/store/common'
 import {useQueryClient} from '@tanstack/react-query'
 import {useAtom} from 'jotai'
 import {useEffect, useRef} from 'react'
 
-const useBlockHeightListener = (): void => {
+const useListenBlockHeight = (): void => {
   const [chain] = useAtom(chainAtom)
   const enabled = useRef(false)
+  const [subsquidClient] = useAtom(subsquidClientAtom)
   const {data: squidStatus} = useGlobalStateQuery(
     subsquidClient,
     {},
-    {
-      refetchInterval: 3000,
-      enabled: chain === 'khala',
-      select: (data) => data.squidStatus,
-    }
+    {refetchInterval: 3000, select: (data) => data.squidStatus}
   )
   const queryClient = useQueryClient()
   const height = squidStatus?.height
 
   useEffect(() => {
-    if (height != null && chain === 'khala') {
+    if (height != null) {
       if (enabled.current) {
         void queryClient.invalidateQueries(['AccountById'])
         void queryClient.invalidateQueries(['BasePoolById'])
@@ -43,4 +39,4 @@ const useBlockHeightListener = (): void => {
   }, [queryClient, height, chain])
 }
 
-export default useBlockHeightListener
+export default useListenBlockHeight

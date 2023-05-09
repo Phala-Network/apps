@@ -1,20 +1,19 @@
 import NftsIcon from '@/assets/nfts.svg'
 import usePolkadotApi from '@/hooks/usePolkadotApi'
-import {subsquidClient} from '@/lib/graphql'
 import {
   useNftsConnectionQuery,
   type NftsConnectionQuery,
 } from '@/lib/subsquidQuery'
-import {chainAtom} from '@/store/common'
+import {chainAtom, subsquidClientAtom} from '@/store/common'
 import {
   Box,
   Chip,
+  Unstable_Grid2 as Grid,
   Pagination,
   Paper,
   Skeleton,
   Stack,
   Typography,
-  Unstable_Grid2 as Grid,
 } from '@mui/material'
 import {polkadotAccountAtom} from '@phala/store'
 import {type ApiPromise} from '@polkadot/api'
@@ -126,6 +125,7 @@ const pageSize = 8
 const DashboardNftList: FC = () => {
   const [page, setPage] = useState(1)
   const [account] = useAtom(polkadotAccountAtom)
+  const [subsquidClient] = useAtom(subsquidClientAtom)
   const {data} = useNftsConnectionQuery(
     subsquidClient,
     {

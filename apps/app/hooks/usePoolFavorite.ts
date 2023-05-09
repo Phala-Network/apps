@@ -9,10 +9,12 @@ const usePoolFavorite = (pid: string): [boolean, () => void] => {
     [pid, favoritePools]
   )
   const toggleFavorite = useCallback(() => {
-    setFavoritePools((x) =>
-      x.includes(pid) ? x.filter((v) => v !== pid) : [...x, pid]
+    setFavoritePools(
+      favoritePools.includes(pid)
+        ? favoritePools.filter((v) => v !== pid)
+        : [...favoritePools, pid]
     )
-  }, [setFavoritePools, pid])
+  }, [setFavoritePools, favoritePools, pid])
 
   return [isFavorite, toggleFavorite]
 }

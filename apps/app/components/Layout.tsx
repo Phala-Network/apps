@@ -1,6 +1,6 @@
-import useBlockHeightListener from '@/hooks/useBlockHeightListener'
-import useChainGuard from '@/hooks/useChainGuard'
-import useVaultReset from '@/hooks/useVaultReset'
+import useListenBlockHeight from '@/hooks/useListenBlockHeight'
+import useResetVault from '@/hooks/useResetVault'
+import useSyncPath from '@/hooks/useSyncPath'
 import {Container, useMediaQuery, useTheme} from '@mui/material'
 import {useConnectPolkadotWallet} from '@phala/lib'
 import {SnackbarProvider} from 'notistack'
@@ -13,10 +13,11 @@ import WikiDialog from './Wiki/Dialog'
 const Layout: FC<{children: ReactNode}> = ({children}) => {
   const theme = useTheme()
   const matches = useMediaQuery(theme.breakpoints.up('md'))
+
   useConnectPolkadotWallet('Phala App', 30)
-  useBlockHeightListener()
-  useVaultReset()
-  useChainGuard()
+  useListenBlockHeight()
+  useResetVault()
+  useSyncPath()
 
   return (
     <SnackbarProvider

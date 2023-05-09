@@ -2,12 +2,12 @@ import WithdrawalQueueIcon from '@/assets/withdraw_queue.svg'
 import Empty from '@/components/Empty'
 import SectionHeader from '@/components/SectionHeader'
 import compactFormat from '@/lib/compactFormat'
-import {subsquidClient} from '@/lib/graphql'
 import {
   useDelegationsConnectionQuery,
   type BasePoolCommonFragment,
 } from '@/lib/subsquidQuery'
 import {colors} from '@/lib/theme'
+import {subsquidClientAtom} from '@/store/common'
 import Check from '@mui/icons-material/Check'
 import WarningAmber from '@mui/icons-material/WarningAmber'
 import {Box, Paper, Stack, Tooltip, Typography, useTheme} from '@mui/material'
@@ -21,13 +21,14 @@ import {
   isSameDay,
 } from 'date-fns'
 import Decimal from 'decimal.js'
+import {useAtom} from 'jotai'
 import {useMemo, useState, type FC} from 'react'
 import {
   Line,
   LineChart,
+  Tooltip as RechartsTooltip,
   ReferenceLine,
   ResponsiveContainer,
-  Tooltip as RechartsTooltip,
   XAxis,
   YAxis,
 } from 'recharts'
@@ -85,6 +86,7 @@ const WithdrawQueue: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
   const [sortModal, setSortModal] = useState<GridSortModel>([
     {field: 'countdown', sort: 'asc'},
   ])
+  const [subsquidClient] = useAtom(subsquidClientAtom)
   const {data, isLoading} = useDelegationsConnectionQuery(subsquidClient, {
     orderBy: 'withdrawalStartTime_ASC',
     where: {
