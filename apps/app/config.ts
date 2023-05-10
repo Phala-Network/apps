@@ -15,5 +15,5 @@ export const PHALA_ENDPOINTS = [
 ]
 export const PHALA_SUBSQUID_URL =
   'https://squid.subsquid.io/phala-computation/v/v1/graphql'
-export const phalaSubsquidClient = new GraphQLClient(KHALA_SUBSQUID_URL)
+export const phalaSubsquidClient = new GraphQLClient(PHALA_SUBSQUID_URL)
 export const WPHA_ASSET_ID = 10000
