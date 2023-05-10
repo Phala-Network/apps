@@ -181,7 +181,12 @@ const WithdrawQueue: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
                 </Typography>
               </WikiButton>
             </Stack>
-            <Stack direction="row" alignItems="center" spacing={2}>
+            <Stack
+              direction="row"
+              alignItems="center"
+              spacing={2}
+              flexWrap="wrap"
+            >
               <Property label="Total Withdraw">
                 {toCurrency(basePool.withdrawingValue)} PHA
               </Property>

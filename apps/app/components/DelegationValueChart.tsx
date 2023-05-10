@@ -34,6 +34,7 @@ const DelegationValueChart: FC<{address?: string; days: number}> = ({
         account: {id_eq: address},
         updatedTime_gte: startTime,
       },
+      withDelegationValue: true,
     },
     {
       enabled: address !== undefined,
@@ -54,7 +55,7 @@ const DelegationValueChart: FC<{address?: string; days: number}> = ({
     for (const {node} of data.accountSnapshotsConnection.edges) {
       const date = new Date(node.updatedTime)
       const index = result.findIndex((r) => r.date.getTime() >= date.getTime())
-      if (index !== -1) {
+      if (index !== -1 && node.delegationValue != null) {
         result[index].value = new Decimal(node.delegationValue)
           .floor()
           .toNumber()

@@ -1,15 +1,23 @@
 import ClaimDelegation from '@/components/BasePool/ClaimDelegation'
 import BasePoolList from '@/components/BasePool/List'
-import CreateBasePoolButton from '@/components/CreateBasePoolButton'
+import FarmChart from '@/components/FarmChart'
 import PageHeader from '@/components/PageHeader'
 import PromiseButton from '@/components/PromiseButton'
-import WikiButton from '@/components/Wiki/Button'
+import Property from '@/components/Property'
 import usePolkadotApi from '@/hooks/usePolkadotApi'
 import useSignAndSend from '@/hooks/useSignAndSend'
 import getVaultOwnerCut from '@/lib/getVaultOwnerCut'
 import {useOwnedVaultsQuery} from '@/lib/subsquidQuery'
 import {subsquidClientAtom} from '@/store/common'
-import {Box, Button, Dialog, Skeleton, Stack, Typography} from '@mui/material'
+import {
+  Box,
+  Button,
+  Dialog,
+  Paper,
+  Skeleton,
+  Stack,
+  Typography,
+} from '@mui/material'
 import {polkadotAccountAtom} from '@phala/store'
 import {toCurrency} from '@phala/util'
 import Decimal from 'decimal.js'
@@ -87,28 +95,29 @@ const MyVaults: FC = () => {
     <>
       <PageHeader title="My Vaults" />
       <Stack
-        direction="row"
+        mt={{xs: 0, md: -12}}
+        direction={{xs: 'column', md: 'row'}}
+        alignItems={{xs: 'unset', md: 'flex-end'}}
         spacing={2}
-        alignItems="flex-end"
-        justifyContent="space-between"
       >
-        <Stack spacing={0.5}>
+        <Stack
+          flex={{xs: 0, md: 1}}
+          spacing={3}
+          direction={{xs: 'column', md: 'row'}}
+        >
           <Stack spacing={2} direction="row" alignItems="center">
-            <WikiButton entry="ownerCut">
-              <Typography variant="h6" component="h2" color="text.secondary">
-                Owner Cut
-              </Typography>
-            </WikiButton>
-            <Typography variant="num3">
+            <Property label="Owner Cut" wikiEntry="ownerCut">
               {!isLoading ? (
                 `${toCurrency(ownerCut)} PHA`
               ) : (
                 <Skeleton width={100} />
               )}
-            </Typography>
+            </Property>
+
             <PromiseButton
-              color="secondary"
               size="small"
+              color="secondary"
+              variant="contained"
               onClick={mintAll}
               disabled={vaultsWithOwnerCut.length === 0}
             >
@@ -117,21 +126,18 @@ const MyVaults: FC = () => {
           </Stack>
 
           <Stack spacing={2} direction="row" alignItems="center">
-            <WikiButton entry="vaultOwnerRewards">
-              <Typography variant="h6" component="h2" color="text.secondary">
-                Owner Rewards
-              </Typography>
-            </WikiButton>
-            <Typography variant="num3">
+            <Property label="Owner Rewards" wikiEntry="vaultOwnerRewards">
               {!isLoading ? (
                 `${toCurrency(ownerRewards)} PHA`
               ) : (
                 <Skeleton width={100} />
               )}
-            </Typography>
+            </Property>
+
             <Button
-              color="secondary"
               size="small"
+              color="secondary"
+              variant="contained"
               disabled={vaultsWithOwnerRewards.length === 0}
               onClick={() => {
                 setDialogOpen(true)
@@ -141,8 +147,16 @@ const MyVaults: FC = () => {
             </Button>
           </Stack>
         </Stack>
-
-        <CreateBasePoolButton kind="Vault" />
+        <Paper sx={{background: 'transparent', flex: {xs: 0, md: 1}}}>
+          <Typography variant="h6" lineHeight={1} m={2}>
+            Total Daily Owner Rewards
+          </Typography>
+          <Box height={140}>
+            {account != null && (
+              <FarmChart account={account.address} kind="Vault" />
+            )}
+          </Box>
+        </Paper>
       </Stack>
       <Box mt={3}>
         <BasePoolList kind="Vault" variant="farm" />

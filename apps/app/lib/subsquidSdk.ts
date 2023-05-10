@@ -3057,10 +3057,13 @@ type AccountSnapshotsConnectionQueryVariables = Exact<{
   after?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Int']>;
   where?: InputMaybe<AccountSnapshotWhereInput>;
+  withDelegationValue?: InputMaybe<Scalars['Boolean']>;
+  withCumulativeStakePoolOwnerRewards?: InputMaybe<Scalars['Boolean']>;
+  withCumulativeVaultOwnerRewards?: InputMaybe<Scalars['Boolean']>;
 }>;
 
 
-type AccountSnapshotsConnectionQuery = { __typename?: 'Query', accountSnapshotsConnection: { __typename?: 'AccountSnapshotsConnection', totalCount: number, edges: Array<{ __typename?: 'AccountSnapshotEdge', cursor: string, node: { __typename?: 'AccountSnapshot', updatedTime: string, delegationValue: string } }> } };
+type AccountSnapshotsConnectionQuery = { __typename?: 'Query', accountSnapshotsConnection: { __typename?: 'AccountSnapshotsConnection', totalCount: number, edges: Array<{ __typename?: 'AccountSnapshotEdge', cursor: string, node: { __typename?: 'AccountSnapshot', updatedTime: string, delegationValue?: string, cumulativeStakePoolOwnerRewards?: string, cumulativeVaultOwnerRewards?: string } }> } };
 
 type BasePoolCommonFragment = { __typename?: 'BasePool', cid: number, commission: string, delegatorCount: number, freeValue: string, id: string, kind: BasePoolKind, aprMultiplier: string, pid: string, releasingValue: string, sharePrice: string, totalShares: string, totalValue: string, whitelistEnabled: boolean, withdrawingShares: string, withdrawingValue: string, account: { __typename?: 'Account', id: string, stakePoolNftCount: number, stakePoolValue: string }, owner: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null }, stakePool?: { __typename?: 'StakePool', capacity?: string | null, delegable?: string | null, idleWorkerCount: number, ownerReward: string, workerCount: number } | null, vault?: { __typename?: 'Vault', claimableOwnerShares: string, lastSharePriceCheckpoint: string } | null, whitelists: Array<{ __typename?: 'BasePoolWhitelist', account: { __typename?: 'Account', id: string } }> };
 
@@ -3317,7 +3320,7 @@ export const DelegationCommonFragmentDoc = gql`
 }
     `;
  const AccountSnapshotsConnectionDocument = gql`
-    query AccountSnapshotsConnection($orderBy: [AccountSnapshotOrderByInput!]!, $after: String, $first: Int, $where: AccountSnapshotWhereInput) {
+    query AccountSnapshotsConnection($orderBy: [AccountSnapshotOrderByInput!]!, $after: String, $first: Int, $where: AccountSnapshotWhereInput, $withDelegationValue: Boolean = false, $withCumulativeStakePoolOwnerRewards: Boolean = false, $withCumulativeVaultOwnerRewards: Boolean = false) {
   accountSnapshotsConnection(
     orderBy: $orderBy
     after: $after
@@ -3328,7 +3331,9 @@ export const DelegationCommonFragmentDoc = gql`
     edges {
       node {
         updatedTime
-        delegationValue
+        delegationValue @include(if: $withDelegationValue)
+        cumulativeStakePoolOwnerRewards @include(if: $withCumulativeStakePoolOwnerRewards)
+        cumulativeVaultOwnerRewards @include(if: $withCumulativeVaultOwnerRewards)
       }
       cursor
     }

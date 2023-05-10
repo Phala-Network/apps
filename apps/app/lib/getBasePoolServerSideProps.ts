@@ -1,6 +1,5 @@
-import {KHALA_SUBSQUID_URL, PHALA_SUBSQUID_URL} from '@/config'
+import {khalaSubsquidClient, phalaSubsquidClient} from '@/config'
 import {sleep} from '@phala/util'
-import {GraphQLClient} from 'graphql-request'
 import {type GetServerSideProps} from 'next'
 import {type BasePoolByIdQuery, type BasePoolKind} from './subsquidQuery'
 import {getSdk} from './subsquidSdk'
@@ -19,9 +18,7 @@ const getBasePoolServerSideProps =
       throw new Error('Invalid params')
     }
     const subsquidSdk = getSdk(
-      new GraphQLClient(
-        chain === 'phala' ? PHALA_SUBSQUID_URL : KHALA_SUBSQUID_URL
-      )
+      chain === 'phala' ? phalaSubsquidClient : khalaSubsquidClient
     )
     const initialData = await Promise.race([
       subsquidSdk.BasePoolById({id: pid}),

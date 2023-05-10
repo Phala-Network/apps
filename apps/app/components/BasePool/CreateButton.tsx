@@ -3,9 +3,9 @@ import useSignAndSend from '@/hooks/useSignAndSend'
 import {type BasePoolKind} from '@/lib/subsquidQuery'
 import {type LoadingButtonProps} from '@mui/lab'
 import {type FC} from 'react'
-import PromiseButton from './PromiseButton'
+import PromiseButton from '../PromiseButton'
 
-const CreateBasePoolButton: FC<
+const CreateButton: FC<
   {kind: BasePoolKind} & Omit<LoadingButtonProps, 'onClick'>
 > = ({kind, ...props}) => {
   const api = usePolkadotApi()
@@ -30,4 +30,4 @@ const CreateBasePoolButton: FC<
   )
 }
 
-export default CreateBasePoolButton
+export default CreateButton
