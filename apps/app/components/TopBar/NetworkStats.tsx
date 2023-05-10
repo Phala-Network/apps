@@ -1,4 +1,5 @@
 import {type WikiEntry} from '@/assets/wikiData'
+import {khalaSubsquidClient, phalaSubsquidClient} from '@/config'
 import useGetApr from '@/hooks/useGetApr'
 import useSWRValue from '@/hooks/useSWRValue'
 import compactFormat from '@/lib/compactFormat'
@@ -7,8 +8,8 @@ import {
   useGlobalStateQuery,
   useIdleWorkerCountQuery,
 } from '@/lib/subsquidQuery'
-import {chainAtom, subsquidClientAtom} from '@/store/common'
-import {Divider, Skeleton, Stack, Typography} from '@mui/material'
+import {chainAtom} from '@/store/common'
+import {Skeleton, Stack} from '@mui/material'
 import {toPercentage} from '@phala/util'
 import {useQuery} from '@tanstack/react-query'
 import {addDays} from 'date-fns'
@@ -29,9 +30,14 @@ const NetworkStats: FC = () => {
     return addDays(date, -1).toISOString()
   })
   const [chain] = useAtom(chainAtom)
-  const [subsquidClient] = useAtom(subsquidClientAtom)
-  const {data: globalRewardsSnapshotData} =
-    useGlobalRewardsSnapshotsConnectionQuery(subsquidClient, {
+  const {data: phalaGlobalRewardsSnapshotData} =
+    useGlobalRewardsSnapshotsConnectionQuery(phalaSubsquidClient, {
+      orderBy: 'updatedTime_ASC',
+      where: {updatedTime_gte: yesterday},
+      first: 1,
+    })
+  const {data: khalaGlobalRewardsSnapshotData} =
+    useGlobalRewardsSnapshotsConnectionQuery(khalaSubsquidClient, {
       orderBy: 'updatedTime_ASC',
       where: {updatedTime_gte: yesterday},
       first: 1,
@@ -45,45 +51,71 @@ const NetworkStats: FC = () => {
       return (await res.json()) as CirculationData
     }
   )
-  const {data: globalStateData} = useGlobalStateQuery(subsquidClient, {})
-  const {data: idleWorkerCountData} = useIdleWorkerCountQuery(subsquidClient)
+  const {data: phalaGlobalStateData} = useGlobalStateQuery(
+    phalaSubsquidClient,
+    {}
+  )
+  const {data: khalaGlobalStateData} = useGlobalStateQuery(
+    khalaSubsquidClient,
+    {}
+  )
+  const {data: phalaIdleWorkerCountData} =
+    useIdleWorkerCountQuery(phalaSubsquidClient)
+  const {data: khalaIdleWorkerCountData} =
+    useIdleWorkerCountQuery(khalaSubsquidClient)
   const circulationValue =
     circulationData?.data?.circulations?.nodes?.[0]?.amount
-  const {totalValue, averageAprMultiplier} =
-    globalStateData?.globalStateById ?? {}
+  const {
+    totalValue: phalaTotalValue,
+    averageAprMultiplier: phalaAverageAprMultiplier,
+  } = phalaGlobalStateData?.globalStateById ?? {}
+  const {
+    totalValue: khalaTotalValue,
+    averageAprMultiplier: khalaAverageAprMultiplier,
+  } = khalaGlobalStateData?.globalStateById ?? {}
   const stakeRatio = useMemo(() => {
-    if (circulationValue === undefined || totalValue === undefined) return
-    return toPercentage(
-      new Decimal(totalValue).times(1e12).div(circulationValue)
+    if (
+      circulationValue === undefined ||
+      phalaTotalValue === undefined ||
+      khalaTotalValue === undefined
     )
-  }, [circulationValue, totalValue])
+      return
+    return toPercentage(
+      new Decimal(phalaTotalValue)
+        .plus(khalaTotalValue)
+        .times(1e12)
+        .div(circulationValue)
+    )
+  }, [circulationValue, phalaTotalValue, khalaTotalValue])
   const dailyRewards = useMemo(() => {
     const value =
-      globalRewardsSnapshotData?.globalRewardsSnapshotsConnection.edges[0]?.node
-        .value
-    if (value == null || globalStateData?.globalStateById == null) return
+      phalaGlobalRewardsSnapshotData?.globalRewardsSnapshotsConnection.edges[0]
+        ?.node.value
+    if (value == null || phalaGlobalStateData?.globalStateById == null) return
 
     return compactFormat(
-      new Decimal(globalStateData.globalStateById.cumulativeRewards).minus(
+      new Decimal(phalaGlobalStateData.globalStateById.cumulativeRewards).minus(
         value
       )
     )
-  }, [globalRewardsSnapshotData, globalStateData])
+  }, [phalaGlobalRewardsSnapshotData, phalaGlobalStateData])
   const avgApr = useMemo(() => {
-    if (averageAprMultiplier === undefined) return
-    const apr = getApr(averageAprMultiplier)
+    if (phalaAverageAprMultiplier === undefined) return
+    const apr = getApr(phalaAverageAprMultiplier)
     if (apr == null) return
     return toPercentage(apr)
-  }, [getApr, averageAprMultiplier])
+  }, [getApr, phalaAverageAprMultiplier])
   const idleWorkerCount = useMemo(() => {
-    const count = idleWorkerCountData?.sessionsConnection.totalCount
+    const count = phalaIdleWorkerCountData?.sessionsConnection.totalCount
     return typeof count === 'number' ? compactFormat(count) : undefined
-  }, [idleWorkerCountData])
+  }, [phalaIdleWorkerCountData])
   const items = useMemo<Array<[string, string | undefined, WikiEntry]>>(() => {
     return [
       [
         'Total Value',
-        totalValue == null ? undefined : compactFormat(new Decimal(totalValue)),
+        phalaTotalValue == null
+          ? undefined
+          : compactFormat(new Decimal(phalaTotalValue)),
         'totalValue',
       ],
       ['Stake Ratio', stakeRatio, 'stakeRatio'],
@@ -91,80 +123,50 @@ const NetworkStats: FC = () => {
       ['Avg APR', avgApr, 'avgApr'],
       ['Online Workers', idleWorkerCount, 'onlineWorkers'],
     ]
-  }, [stakeRatio, totalValue, dailyRewards, avgApr, idleWorkerCount])
+  }, [stakeRatio, phalaTotalValue, dailyRewards, avgApr, idleWorkerCount])
 
   return (
-    <>
-      <Stack
-        display={{xs: 'none', sm: 'flex'}}
-        direction="row"
-        spacing={2}
-        divider={<Divider orientation="vertical" flexItem />}
-      >
-        {items.map(([label, value, wikiEntry]) => {
-          return (
-            <Property
-              size="small"
-              label={label}
-              wikiEntry={wikiEntry}
-              key={label}
-            >
-              {value ?? <Skeleton width={80} />}
-            </Property>
-          )
-          // const title = (
-          //   <Typography
-          //     variant="subtitle2"
-          //     component="div"
-          //     color="text.secondary"
-          //   >
-          //     {label}
-          //   </Typography>
-          // )
-          // return (
-          //   <Box key={label} flexShrink={0}>
-          //     {wikiEntry == null ? (
-          //       title
-          //     ) : (
-          //       <WikiButton entry={wikiEntry}>{title}</WikiButton>
-          //     )}
-
-          //     <Typography variant="num3" component="div" color="primary">
-          //       {value ?? <Skeleton width={80} />}
-          //     </Typography>
-          //   </Box>
-          // )
-        })}
-      </Stack>
-      <Stack
-        display={{sm: 'none', xs: 'flex'}}
-        direction="row"
-        justifyContent="space-between"
-        flexWrap="wrap"
-      >
-        {items.map(([label, value]) => (
-          <Stack
+    <Stack
+      display={{xs: 'none', sm: 'flex'}}
+      direction={{xs: 'column', lg: 'row'}}
+      spacing={3}
+      flex="none"
+    >
+      {items.map(([label, value, wikiEntry]) => {
+        return (
+          <Property
+            size="small"
+            label={label}
+            wikiEntry={wikiEntry}
             key={label}
-            direction="row"
-            justifyContent="space-between"
-            width={0.48}
-            flexShrink={0}
-            alignItems="baseline"
           >
-            <Typography
-              variant="subtitle2"
-              component="div"
-              color="text.secondary"
-            >
-              {label}
-            </Typography>
-            <Typography variant="num5" component="div" color="primary">
-              {value ?? <Skeleton width={32} />}
-            </Typography>
-          </Stack>
-        ))}
-      </Stack>
-    </>
+            {value ?? <Skeleton width={80} />}
+          </Property>
+        )
+        // const title = (
+        //   <Typography
+        //     variant="subtitle2"
+        //     component="div"
+        //     color="text.secondary"
+        //   >
+        //     {label}
+        //   </Typography>
+        // )
+        // return (
+        //   <Box key={label} flexShrink={0}>
+        //     {wikiEntry == null ? (
+        //       title
+        //     ) : (
+        //       <WikiButton entry={wikiEntry}>{title}</WikiButton>
+        //     )}
+
+        //     <Typography variant="num3" component="div" color="primary">
+        //       {value ?? <Skeleton width={80} />}
+        //     </Typography>
+        //   </Box>
+        // )
+      })}
+    </Stack>
   )
 }
 

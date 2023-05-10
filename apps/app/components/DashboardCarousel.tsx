@@ -1,15 +1,15 @@
-import b1 from '@/assets/b1.jpeg'
 import b2 from '@/assets/b2.png'
 import b3 from '@/assets/b3.png'
 import b4 from '@/assets/b4.png'
 import b5 from '@/assets/b5.png'
 import b6 from '@/assets/b6.png'
 import b7 from '@/assets/b7.png'
-import {Box, LinearProgress, Stack} from '@mui/material'
+import {ArrowBackIos, ArrowForwardIos} from '@mui/icons-material'
+import {Box, IconButton, LinearProgress, Stack} from '@mui/material'
+import {useInterval} from '@phala/lib'
 import Link from 'next/link'
-import {useState, type FC} from 'react'
-import Carousel from 'react-multi-carousel'
-import 'react-multi-carousel/lib/styles.css'
+import {useMemo, useState, type FC} from 'react'
+import {useSnapCarousel} from 'react-snap-carousel'
 
 const contents: Array<{name: string; imageUrl: string; href: string}> = [
   {
@@ -26,11 +26,6 @@ const contents: Array<{name: string; imageUrl: string; href: string}> = [
     name: 'Claim missing delegator rewards',
     href: '/claim-missing-delegator-rewards',
     imageUrl: b5.src,
-  },
-  {
-    name: 'Phala App 2.0',
-    href: 'https://medium.com/phala-network/discover-phala-apps-exciting-new-features-which-make-your-delegation-smarter-791ef80c3b6d',
-    imageUrl: b1.src,
   },
   {
     name: 'Vaults feature',
@@ -50,34 +45,64 @@ const contents: Array<{name: string; imageUrl: string; href: string}> = [
 ]
 
 const DashboardCarousel: FC = () => {
-  const [progress, setProgress] = useState(Math.floor(100 / contents.length))
+  const [hover, setHover] = useState(false)
+  const {
+    scrollRef,
+    activePageIndex,
+    prev: originalPrev,
+    next: originalNext,
+    goTo,
+  } = useSnapCarousel()
+
+  const prev = (): void => {
+    if (activePageIndex === 0) {
+      goTo(contents.length - 1)
+    } else {
+      originalPrev()
+    }
+  }
+
+  const next = (): void => {
+    if (activePageIndex === contents.length - 1) {
+      goTo(0)
+    } else {
+      originalNext()
+    }
+  }
+
+  const progress = useMemo(() => {
+    return Math.floor(((activePageIndex + 1) / contents.length) * 100)
+  }, [activePageIndex])
+
+  useInterval(
+    () => {
+      next()
+    },
+    hover ? null : 5000
+  )
+
   return (
-    <Stack height="100%">
-      <Carousel
-        css={{
-          flex: 1,
-          '.react-multi-carousel-track': {
-            height: '100%',
-          },
+    <Stack
+      height="100%"
+      position="relative"
+      onMouseEnter={() => {
+        setHover(true)
+      }}
+      onMouseLeave={() => {
+        setHover(false)
+      }}
+    >
+      <Stack
+        flex={1}
+        width="100%"
+        direction="row"
+        overflow="auto"
+        sx={{
+          scrollSnapType: 'x mandatory',
+          '::-webkit-scrollbar': {display: 'none'},
+          scrollbarWidth: 'none',
         }}
-        draggable={false}
-        autoPlay
-        autoPlaySpeed={10000}
-        infinite
-        pauseOnHover
-        responsive={{
-          all: {
-            breakpoint: {min: 0, max: 4000},
-            items: 1,
-          },
-        }}
-        beforeChange={(next) => {
-          setProgress(
-            Math.floor(
-              (100 / contents.length) * (((next - 2) % contents.length) + 1)
-            )
-          )
-        }}
+        ref={scrollRef}
       >
         {contents.map((content, index) => {
           const isExternal = content.href.startsWith('http')
@@ -90,18 +115,42 @@ const DashboardCarousel: FC = () => {
               display="block"
               width="100%"
               height="100%"
+              flexShrink={0}
               sx={{
                 backgroundImage: `url(${content.imageUrl})`,
                 backgroundSize: 'cover',
                 backgroundRepeat: 'no-repeat',
                 backgroundPosition: 'center left',
+                scrollSnapAlign: 'start',
               }}
               key={index}
-            ></Box>
+            />
           )
         })}
-      </Carousel>
+      </Stack>
       <LinearProgress variant="determinate" value={progress} />
+      <IconButton
+        sx={{
+          position: 'absolute',
+          top: '50%',
+          transform: 'translateY(-50%)',
+          left: 0,
+        }}
+        onClick={prev}
+      >
+        <ArrowBackIos />
+      </IconButton>
+      <IconButton
+        sx={{
+          position: 'absolute',
+          top: '50%',
+          transform: 'translateY(-50%)',
+          right: 0,
+        }}
+        onClick={next}
+      >
+        <ArrowForwardIos />
+      </IconButton>
     </Stack>
   )
 }

@@ -2754,7 +2754,7 @@ __metadata:
     react: ^18.2.0
     react-dom: ^18.2.0
     react-intersection-observer: ^9.4.3
-    react-multi-carousel: ^2.8.3
+    react-snap-carousel: ^0.3.1
     recharts: ^2.5.0
     sharp: ^0.32.1
     swr: ^2.1.5
@@ -10417,13 +10417,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-multi-carousel@npm:^2.8.3":
-  version: 2.8.3
-  resolution: "react-multi-carousel@npm:2.8.3"
-  checksum: f011d2bee97e0937f34de02612a26a170aaac7b7d1399d7a49d5f0b43d018260470ebe4ba970009f42f7c877eac4e4e2bee6d5dd1bb661d0c0f088c3fba6c2e4
-  languageName: node
-  linkType: hard
-
 "react-remove-scroll-bar@npm:^2.3.3":
   version: 2.3.4
   resolution: "react-remove-scroll-bar@npm:2.3.4"
@@ -10492,6 +10485,15 @@ __metadata:
     react: ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
     react-dom: ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
   checksum: 6b0a40a17314657ac6a187a3ad01fcdaa61d498979b6a07c424e20832110c99b4394c33209a0b39b897c13d113d8cb044e7a691b4965386a11b15bbfbacfba25
+  languageName: node
+  linkType: hard
+
+"react-snap-carousel@npm:^0.3.1":
+  version: 0.3.1
+  resolution: "react-snap-carousel@npm:0.3.1"
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+  checksum: d865a22b2730c0e5ed4f957ef792f8fb61ad670446ce1b41019b6f7863e0fa051512f8cef21c0f06197514e6745e60e28bb9a968c6eb459fb38b1acc531f70fb
   languageName: node
   linkType: hard
 
