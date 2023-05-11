@@ -12,11 +12,9 @@ const useGetAprMultiplier = (): ((
   isApy?: boolean
 ) => Decimal | undefined) => {
   const [subsquidClient] = useAtom(subsquidClientAtom)
-  const {data: globalState} = useGlobalStateQuery(
-    subsquidClient,
-    {},
-    {select: (data) => data.globalStateById}
-  )
+  const {data: globalState} = useGlobalStateQuery(subsquidClient, undefined, {
+    select: (data) => data.globalStateById,
+  })
 
   const {averageBlockTime, idleWorkerShares, budgetPerBlock, treasuryRatio} =
     globalState ?? {}

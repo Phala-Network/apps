@@ -13,10 +13,10 @@ import {
   Collapse,
   Divider,
   IconButton,
+  NoSsr,
   Stack,
   Toolbar,
   Tooltip,
-  Typography,
   useTheme,
   type ButtonProps,
 } from '@mui/material'
@@ -172,9 +172,11 @@ const TopBar: FC = () => {
           px={2}
           spacing={2}
         >
-          <Typography>foooobar</Typography>
+          {/* <Typography></Typography> */}
           <Box flex={1}></Box>
-          <NetworkStats />
+          <NoSsr>
+            <NetworkStats />
+          </NoSsr>
           <Box display={{xs: 'none', md: 'block'}}>{icons}</Box>
         </Stack>
         <Toolbar>
