@@ -169,15 +169,15 @@ const TopBar: FC = () => {
           bgcolor="#2C303F"
           alignItems="center"
           direction="row"
-          px={2}
+          px={[2, 3]}
           spacing={2}
         >
           {/* <Typography></Typography> */}
-          <Box flex={1}></Box>
           <NoSsr>
             <NetworkStats />
           </NoSsr>
-          <Box display={{xs: 'none', md: 'block'}}>{icons}</Box>
+          <Box flex={1}></Box>
+          {icons}
         </Stack>
         <Toolbar>
           <PhalaLogo width={30} css={{flexShrink: 0}} />
@@ -230,7 +230,7 @@ const TopBar: FC = () => {
         <Collapse
           sx={{
             position: 'absolute',
-            top: 57,
+            top: 97,
             left: 0,
             right: 0,
             background,
@@ -263,7 +263,6 @@ const TopBar: FC = () => {
                 ))
               }
             })}
-            <Box py={1}>{icons}</Box>
           </Stack>
         </Collapse>
       </AppBar>
