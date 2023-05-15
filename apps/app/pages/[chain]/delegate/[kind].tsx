@@ -3,7 +3,6 @@ import VaultIcon from '@/assets/vault.svg'
 import BasePoolList from '@/components/BasePool/List'
 import DelegationDetailCard from '@/components/DelegationDetailCard'
 import DelegationValueChart from '@/components/DelegationValueChart'
-import NetworkStats from '@/components/NetworkStats'
 import PageHeader from '@/components/PageHeader'
 import WikiButton from '@/components/Wiki/Button'
 import useSelectedVaultState from '@/hooks/useSelectedVaultState'
@@ -116,9 +115,7 @@ const Delegate: NextPage = () => {
 
   return (
     <>
-      <PageHeader title="Delegate">
-        <NetworkStats />
-      </PageHeader>
+      <PageHeader title="Delegate"></PageHeader>
 
       <Stack direction={{xs: 'column', md: 'row'}} spacing={2}>
         <DelegationDetailCard sx={{flex: {xs: 'none', md: '1'}}} />

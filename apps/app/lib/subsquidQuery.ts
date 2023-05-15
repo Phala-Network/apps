@@ -30,7 +30,6 @@ export type Scalars = {
 };
 
 export type Account = {
-  __typename?: 'Account';
   basePool?: Maybe<BasePool>;
   cumulativeStakePoolOwnerRewards: Scalars['BigDecimal'];
   cumulativeVaultOwnerRewards: Scalars['BigDecimal'];
@@ -56,7 +55,6 @@ export type AccountOwnedPoolsArgs = {
 };
 
 export type AccountEdge = {
-  __typename?: 'AccountEdge';
   cursor: Scalars['String'];
   node: Account;
 };
@@ -120,7 +118,6 @@ export const AccountOrderByInput = {
 
 export type AccountOrderByInput = typeof AccountOrderByInput[keyof typeof AccountOrderByInput];
 export type AccountSnapshot = {
-  __typename?: 'AccountSnapshot';
   account: Account;
   cumulativeStakePoolOwnerRewards: Scalars['BigDecimal'];
   cumulativeVaultOwnerRewards: Scalars['BigDecimal'];
@@ -131,7 +128,6 @@ export type AccountSnapshot = {
 };
 
 export type AccountSnapshotEdge = {
-  __typename?: 'AccountSnapshotEdge';
   cursor: Scalars['String'];
   node: AccountSnapshot;
 };
@@ -233,7 +229,6 @@ export type AccountSnapshotWhereInput = {
 };
 
 export type AccountSnapshotsConnection = {
-  __typename?: 'AccountSnapshotsConnection';
   edges: Array<AccountSnapshotEdge>;
   pageInfo: PageInfo;
   totalCount: Scalars['Int'];
@@ -361,14 +356,12 @@ export type AccountWhereInput = {
 };
 
 export type AccountsConnection = {
-  __typename?: 'AccountsConnection';
   edges: Array<AccountEdge>;
   pageInfo: PageInfo;
   totalCount: Scalars['Int'];
 };
 
 export type BasePool = {
-  __typename?: 'BasePool';
   account: Account;
   aprMultiplier: Scalars['BigDecimal'];
   /** NFT collection id */
@@ -414,7 +407,6 @@ export type BasePoolWhitelistsArgs = {
 };
 
 export type BasePoolEdge = {
-  __typename?: 'BasePoolEdge';
   cursor: Scalars['String'];
   node: BasePool;
 };
@@ -526,7 +518,6 @@ export const BasePoolOrderByInput = {
 
 export type BasePoolOrderByInput = typeof BasePoolOrderByInput[keyof typeof BasePoolOrderByInput];
 export type BasePoolSnapshot = {
-  __typename?: 'BasePoolSnapshot';
   apr: Scalars['BigDecimal'];
   basePool: BasePool;
   commission: Scalars['BigDecimal'];
@@ -543,7 +534,6 @@ export type BasePoolSnapshot = {
 };
 
 export type BasePoolSnapshotEdge = {
-  __typename?: 'BasePoolSnapshotEdge';
   cursor: Scalars['String'];
   node: BasePoolSnapshot;
 };
@@ -721,7 +711,6 @@ export type BasePoolSnapshotWhereInput = {
 };
 
 export type BasePoolSnapshotsConnection = {
-  __typename?: 'BasePoolSnapshotsConnection';
   edges: Array<BasePoolSnapshotEdge>;
   pageInfo: PageInfo;
   totalCount: Scalars['Int'];
@@ -889,7 +878,6 @@ export type BasePoolWhereInput = {
 };
 
 export type BasePoolWhitelist = {
-  __typename?: 'BasePoolWhitelist';
   account: Account;
   basePool: BasePool;
   createTime: Scalars['DateTime'];
@@ -898,7 +886,6 @@ export type BasePoolWhitelist = {
 };
 
 export type BasePoolWhitelistEdge = {
-  __typename?: 'BasePoolWhitelistEdge';
   cursor: Scalars['String'];
   node: BasePoolWhitelist;
 };
@@ -1001,21 +988,18 @@ export type BasePoolWhitelistWhereInput = {
 };
 
 export type BasePoolWhitelistsConnection = {
-  __typename?: 'BasePoolWhitelistsConnection';
   edges: Array<BasePoolWhitelistEdge>;
   pageInfo: PageInfo;
   totalCount: Scalars['Int'];
 };
 
 export type BasePoolsConnection = {
-  __typename?: 'BasePoolsConnection';
   edges: Array<BasePoolEdge>;
   pageInfo: PageInfo;
   totalCount: Scalars['Int'];
 };
 
 export type Delegation = {
-  __typename?: 'Delegation';
   account: Account;
   basePool: BasePool;
   cost: Scalars['BigDecimal'];
@@ -1040,7 +1024,6 @@ export type DelegationSnapshotsArgs = {
 };
 
 export type DelegationEdge = {
-  __typename?: 'DelegationEdge';
   cursor: Scalars['String'];
   node: Delegation;
 };
@@ -1138,7 +1121,6 @@ export const DelegationOrderByInput = {
 
 export type DelegationOrderByInput = typeof DelegationOrderByInput[keyof typeof DelegationOrderByInput];
 export type DelegationSnapshot = {
-  __typename?: 'DelegationSnapshot';
   cost: Scalars['BigDecimal'];
   delegation: Delegation;
   id: Scalars['String'];
@@ -1148,7 +1130,6 @@ export type DelegationSnapshot = {
 };
 
 export type DelegationSnapshotEdge = {
-  __typename?: 'DelegationSnapshotEdge';
   cursor: Scalars['String'];
   node: DelegationSnapshot;
 };
@@ -1231,7 +1212,6 @@ export type DelegationSnapshotWhereInput = {
 };
 
 export type DelegationSnapshotsConnection = {
-  __typename?: 'DelegationSnapshotsConnection';
   edges: Array<DelegationSnapshotEdge>;
   pageInfo: PageInfo;
   totalCount: Scalars['Int'];
@@ -1325,14 +1305,12 @@ export type DelegationWhereInput = {
 };
 
 export type DelegationsConnection = {
-  __typename?: 'DelegationsConnection';
   edges: Array<DelegationEdge>;
   pageInfo: PageInfo;
   totalCount: Scalars['Int'];
 };
 
 export type GlobalRewardsSnapshot = {
-  __typename?: 'GlobalRewardsSnapshot';
   id: Scalars['String'];
   /** block time */
   updatedTime: Scalars['DateTime'];
@@ -1340,7 +1318,6 @@ export type GlobalRewardsSnapshot = {
 };
 
 export type GlobalRewardsSnapshotEdge = {
-  __typename?: 'GlobalRewardsSnapshotEdge';
   cursor: Scalars['String'];
   node: GlobalRewardsSnapshot;
 };
@@ -1396,14 +1373,12 @@ export type GlobalRewardsSnapshotWhereInput = {
 };
 
 export type GlobalRewardsSnapshotsConnection = {
-  __typename?: 'GlobalRewardsSnapshotsConnection';
   edges: Array<GlobalRewardsSnapshotEdge>;
   pageInfo: PageInfo;
   totalCount: Scalars['Int'];
 };
 
 export type GlobalState = {
-  __typename?: 'GlobalState';
   averageAprMultiplier: Scalars['BigDecimal'];
   averageAprMultiplierUpdatedTime: Scalars['DateTime'];
   averageBlockTime: Scalars['Int'];
@@ -1425,7 +1400,6 @@ export type GlobalState = {
 };
 
 export type GlobalStateEdge = {
-  __typename?: 'GlobalStateEdge';
   cursor: Scalars['String'];
   node: GlobalState;
 };
@@ -1624,7 +1598,6 @@ export type GlobalStateWhereInput = {
 };
 
 export type GlobalStatesConnection = {
-  __typename?: 'GlobalStatesConnection';
   edges: Array<GlobalStateEdge>;
   pageInfo: PageInfo;
   totalCount: Scalars['Int'];
@@ -1642,7 +1615,6 @@ export const IdentityLevel = {
 
 export type IdentityLevel = typeof IdentityLevel[keyof typeof IdentityLevel];
 export type Nft = {
-  __typename?: 'Nft';
   burned: Scalars['Boolean'];
   cid: Scalars['Int'];
   delegation?: Maybe<Delegation>;
@@ -1654,7 +1626,6 @@ export type Nft = {
 };
 
 export type NftEdge = {
-  __typename?: 'NftEdge';
   cursor: Scalars['String'];
   node: Nft;
 };
@@ -1766,14 +1737,12 @@ export type NftWhereInput = {
 };
 
 export type NftsConnection = {
-  __typename?: 'NftsConnection';
   edges: Array<NftEdge>;
   pageInfo: PageInfo;
   totalCount: Scalars['Int'];
 };
 
 export type PageInfo = {
-  __typename?: 'PageInfo';
   endCursor: Scalars['String'];
   hasNextPage: Scalars['Boolean'];
   hasPreviousPage: Scalars['Boolean'];
@@ -1781,7 +1750,6 @@ export type PageInfo = {
 };
 
 export type Query = {
-  __typename?: 'Query';
   accountById?: Maybe<Account>;
   /** @deprecated Use accountById */
   accountByUniqueInput?: Maybe<Account>;
@@ -2251,7 +2219,6 @@ export type QueryWorkersConnectionArgs = {
 };
 
 export type Session = {
-  __typename?: 'Session';
   coolingDownStartTime?: Maybe<Scalars['DateTime']>;
   /** session account address */
   id: Scalars['String'];
@@ -2268,7 +2235,6 @@ export type Session = {
 };
 
 export type SessionEdge = {
-  __typename?: 'SessionEdge';
   cursor: Scalars['String'];
   node: Session;
 };
@@ -2417,20 +2383,17 @@ export type SessionWhereInput = {
 };
 
 export type SessionsConnection = {
-  __typename?: 'SessionsConnection';
   edges: Array<SessionEdge>;
   pageInfo: PageInfo;
   totalCount: Scalars['Int'];
 };
 
 export type SquidStatus = {
-  __typename?: 'SquidStatus';
   /** The height of the processed part of the chain */
   height?: Maybe<Scalars['Int']>;
 };
 
 export type StakePool = {
-  __typename?: 'StakePool';
   basePool: BasePool;
   /** null means infinite */
   capacity?: Maybe<Scalars['BigDecimal']>;
@@ -2454,7 +2417,6 @@ export type StakePoolWorkersArgs = {
 };
 
 export type StakePoolEdge = {
-  __typename?: 'StakePoolEdge';
   cursor: Scalars['String'];
   node: StakePool;
 };
@@ -2591,14 +2553,12 @@ export type StakePoolWhereInput = {
 };
 
 export type StakePoolsConnection = {
-  __typename?: 'StakePoolsConnection';
   edges: Array<StakePoolEdge>;
   pageInfo: PageInfo;
   totalCount: Scalars['Int'];
 };
 
 export type Vault = {
-  __typename?: 'Vault';
   basePool: BasePool;
   claimableOwnerShares: Scalars['BigDecimal'];
   /** pid */
@@ -2608,7 +2568,6 @@ export type Vault = {
 };
 
 export type VaultEdge = {
-  __typename?: 'VaultEdge';
   cursor: Scalars['String'];
   node: Vault;
 };
@@ -2698,7 +2657,6 @@ export type VaultWhereInput = {
 };
 
 export type VaultsConnection = {
-  __typename?: 'VaultsConnection';
   edges: Array<VaultEdge>;
   pageInfo: PageInfo;
   totalCount: Scalars['Int'];
@@ -2709,7 +2667,6 @@ export type WhereIdInput = {
 };
 
 export type Worker = {
-  __typename?: 'Worker';
   confidenceLevel: Scalars['Int'];
   /** worker public key */
   id: Scalars['String'];
@@ -2720,7 +2677,6 @@ export type Worker = {
 };
 
 export type WorkerEdge = {
-  __typename?: 'WorkerEdge';
   cursor: Scalars['String'];
   node: Worker;
 };
@@ -2772,7 +2728,6 @@ export const WorkerOrderByInput = {
 
 export type WorkerOrderByInput = typeof WorkerOrderByInput[keyof typeof WorkerOrderByInput];
 export type WorkerSnapshot = {
-  __typename?: 'WorkerSnapshot';
   confidenceLevel: Scalars['Int'];
   id: Scalars['String'];
   initialScore?: Maybe<Scalars['Int']>;
@@ -2791,7 +2746,6 @@ export type WorkerSnapshot = {
 };
 
 export type WorkerSnapshotEdge = {
-  __typename?: 'WorkerSnapshotEdge';
   cursor: Scalars['String'];
   node: WorkerSnapshot;
 };
@@ -2979,7 +2933,6 @@ export type WorkerSnapshotWhereInput = {
 };
 
 export type WorkerSnapshotsConnection = {
-  __typename?: 'WorkerSnapshotsConnection';
   edges: Array<WorkerSnapshotEdge>;
   pageInfo: PageInfo;
   totalCount: Scalars['Int'];
@@ -3047,7 +3000,6 @@ export type WorkerWhereInput = {
 };
 
 export type WorkersConnection = {
-  __typename?: 'WorkersConnection';
   edges: Array<WorkerEdge>;
   pageInfo: PageInfo;
   totalCount: Scalars['Int'];
@@ -3058,7 +3010,7 @@ export type AccountByIdQueryVariables = Exact<{
 }>;
 
 
-export type AccountByIdQuery = { __typename?: 'Query', accountById?: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null, stakePoolNftCount: number, stakePoolValue: string, stakePoolAvgAprMultiplier: string, vaultNftCount: number, vaultValue: string, vaultAvgAprMultiplier: string, ownedPools: Array<{ __typename?: 'BasePool', id: string, account: { __typename?: 'Account', id: string, stakePoolNftCount: number, stakePoolValue: string, stakePoolAvgAprMultiplier: string, vaultNftCount: number, vaultValue: string, vaultAvgAprMultiplier: string } }> } | null };
+export type AccountByIdQuery = { accountById?: { id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null, stakePoolNftCount: number, stakePoolValue: string, stakePoolAvgAprMultiplier: string, vaultNftCount: number, vaultValue: string, vaultAvgAprMultiplier: string, ownedPools: Array<{ id: string, account: { id: string, stakePoolNftCount: number, stakePoolValue: string, stakePoolAvgAprMultiplier: string, vaultNftCount: number, vaultValue: string, vaultAvgAprMultiplier: string } }> } | null };
 
 export type AccountSnapshotsConnectionQueryVariables = Exact<{
   orderBy: Array<AccountSnapshotOrderByInput> | AccountSnapshotOrderByInput;
@@ -3071,9 +3023,9 @@ export type AccountSnapshotsConnectionQueryVariables = Exact<{
 }>;
 
 
-export type AccountSnapshotsConnectionQuery = { __typename?: 'Query', accountSnapshotsConnection: { __typename?: 'AccountSnapshotsConnection', totalCount: number, edges: Array<{ __typename?: 'AccountSnapshotEdge', cursor: string, node: { __typename?: 'AccountSnapshot', updatedTime: string, delegationValue?: string, cumulativeStakePoolOwnerRewards?: string, cumulativeVaultOwnerRewards?: string } }> } };
+export type AccountSnapshotsConnectionQuery = { accountSnapshotsConnection: { totalCount: number, edges: Array<{ cursor: string, node: { updatedTime: string, delegationValue?: string, cumulativeStakePoolOwnerRewards?: string, cumulativeVaultOwnerRewards?: string } }> } };
 
-export type BasePoolCommonFragment = { __typename?: 'BasePool', cid: number, commission: string, delegatorCount: number, freeValue: string, id: string, kind: BasePoolKind, aprMultiplier: string, pid: string, releasingValue: string, sharePrice: string, totalShares: string, totalValue: string, whitelistEnabled: boolean, withdrawingShares: string, withdrawingValue: string, account: { __typename?: 'Account', id: string, stakePoolNftCount: number, stakePoolValue: string }, owner: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null }, stakePool?: { __typename?: 'StakePool', capacity?: string | null, delegable?: string | null, idleWorkerCount: number, ownerReward: string, workerCount: number } | null, vault?: { __typename?: 'Vault', claimableOwnerShares: string, lastSharePriceCheckpoint: string } | null, whitelists: Array<{ __typename?: 'BasePoolWhitelist', account: { __typename?: 'Account', id: string } }> };
+export type BasePoolCommonFragment = { cid: number, commission: string, delegatorCount: number, freeValue: string, id: string, kind: BasePoolKind, aprMultiplier: string, pid: string, releasingValue: string, sharePrice: string, totalShares: string, totalValue: string, whitelistEnabled: boolean, withdrawingShares: string, withdrawingValue: string, account: { id: string, stakePoolNftCount: number, stakePoolValue: string }, owner: { id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null }, stakePool?: { capacity?: string | null, delegable?: string | null, idleWorkerCount: number, ownerReward: string, workerCount: number } | null, vault?: { claimableOwnerShares: string, lastSharePriceCheckpoint: string } | null, whitelists: Array<{ account: { id: string } }> };
 
 export type BasePoolByIdQueryVariables = Exact<{
   id: Scalars['String'];
@@ -3081,7 +3033,7 @@ export type BasePoolByIdQueryVariables = Exact<{
 }>;
 
 
-export type BasePoolByIdQuery = { __typename?: 'Query', basePoolById?: { __typename?: 'BasePool', cid: number, commission: string, delegatorCount: number, freeValue: string, id: string, kind: BasePoolKind, aprMultiplier: string, pid: string, releasingValue: string, sharePrice: string, totalShares: string, totalValue: string, whitelistEnabled: boolean, withdrawingShares: string, withdrawingValue: string, account: { __typename?: 'Account', id: string, stakePoolNftCount: number, stakePoolValue: string }, owner: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null }, stakePool?: { __typename?: 'StakePool', capacity?: string | null, delegable?: string | null, idleWorkerCount: number, ownerReward: string, workerCount: number } | null, vault?: { __typename?: 'Vault', claimableOwnerShares: string, lastSharePriceCheckpoint: string } | null, whitelists: Array<{ __typename?: 'BasePoolWhitelist', account: { __typename?: 'Account', id: string } }> } | null };
+export type BasePoolByIdQuery = { basePoolById?: { cid: number, commission: string, delegatorCount: number, freeValue: string, id: string, kind: BasePoolKind, aprMultiplier: string, pid: string, releasingValue: string, sharePrice: string, totalShares: string, totalValue: string, whitelistEnabled: boolean, withdrawingShares: string, withdrawingValue: string, account: { id: string, stakePoolNftCount: number, stakePoolValue: string }, owner: { id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null }, stakePool?: { capacity?: string | null, delegable?: string | null, idleWorkerCount: number, ownerReward: string, workerCount: number } | null, vault?: { claimableOwnerShares: string, lastSharePriceCheckpoint: string } | null, whitelists: Array<{ account: { id: string } }> } | null };
 
 export type BasePoolsConnectionQueryVariables = Exact<{
   orderBy: Array<BasePoolOrderByInput> | BasePoolOrderByInput;
@@ -3092,7 +3044,7 @@ export type BasePoolsConnectionQueryVariables = Exact<{
 }>;
 
 
-export type BasePoolsConnectionQuery = { __typename?: 'Query', basePoolsConnection: { __typename?: 'BasePoolsConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', endCursor: string, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string }, edges: Array<{ __typename?: 'BasePoolEdge', cursor: string, node: { __typename?: 'BasePool', cid: number, commission: string, delegatorCount: number, freeValue: string, id: string, kind: BasePoolKind, aprMultiplier: string, pid: string, releasingValue: string, sharePrice: string, totalShares: string, totalValue: string, whitelistEnabled: boolean, withdrawingShares: string, withdrawingValue: string, delegations: Array<{ __typename?: 'Delegation', value: string }>, account: { __typename?: 'Account', id: string, stakePoolNftCount: number, stakePoolValue: string }, owner: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null }, stakePool?: { __typename?: 'StakePool', capacity?: string | null, delegable?: string | null, idleWorkerCount: number, ownerReward: string, workerCount: number } | null, vault?: { __typename?: 'Vault', claimableOwnerShares: string, lastSharePriceCheckpoint: string } | null, whitelists: Array<{ __typename?: 'BasePoolWhitelist', account: { __typename?: 'Account', id: string } }> } }> } };
+export type BasePoolsConnectionQuery = { basePoolsConnection: { totalCount: number, pageInfo: { endCursor: string, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string }, edges: Array<{ cursor: string, node: { cid: number, commission: string, delegatorCount: number, freeValue: string, id: string, kind: BasePoolKind, aprMultiplier: string, pid: string, releasingValue: string, sharePrice: string, totalShares: string, totalValue: string, whitelistEnabled: boolean, withdrawingShares: string, withdrawingValue: string, delegations: Array<{ value: string }>, account: { id: string, stakePoolNftCount: number, stakePoolValue: string }, owner: { id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null }, stakePool?: { capacity?: string | null, delegable?: string | null, idleWorkerCount: number, ownerReward: string, workerCount: number } | null, vault?: { claimableOwnerShares: string, lastSharePriceCheckpoint: string } | null, whitelists: Array<{ account: { id: string } }> } }> } };
 
 export type ClaimableStakePoolsQueryVariables = Exact<{
   accountId?: InputMaybe<Scalars['String']>;
@@ -3100,14 +3052,14 @@ export type ClaimableStakePoolsQueryVariables = Exact<{
 }>;
 
 
-export type ClaimableStakePoolsQuery = { __typename?: 'Query', basePoolsConnection: { __typename?: 'BasePoolsConnection', edges: Array<{ __typename?: 'BasePoolEdge', node: { __typename?: 'BasePool', id: string, stakePool?: { __typename?: 'StakePool', ownerReward: string } | null } }> } };
+export type ClaimableStakePoolsQuery = { basePoolsConnection: { edges: Array<{ node: { id: string, stakePool?: { ownerReward: string } | null } }> } };
 
 export type OwnedVaultsQueryVariables = Exact<{
   accountId?: InputMaybe<Scalars['String']>;
 }>;
 
 
-export type OwnedVaultsQuery = { __typename?: 'Query', basePoolsConnection: { __typename?: 'BasePoolsConnection', edges: Array<{ __typename?: 'BasePoolEdge', node: { __typename?: 'BasePool', id: string, totalShares: string, sharePrice: string, commission: string, vault?: { __typename?: 'Vault', claimableOwnerShares: string, lastSharePriceCheckpoint: string } | null } }> } };
+export type OwnedVaultsQuery = { basePoolsConnection: { edges: Array<{ node: { id: string, totalShares: string, sharePrice: string, commission: string, vault?: { claimableOwnerShares: string, lastSharePriceCheckpoint: string } | null } }> } };
 
 export type BasePoolSnapshotsConnectionQueryVariables = Exact<{
   orderBy: Array<BasePoolSnapshotOrderByInput> | BasePoolSnapshotOrderByInput;
@@ -3124,9 +3076,9 @@ export type BasePoolSnapshotsConnectionQueryVariables = Exact<{
 }>;
 
 
-export type BasePoolSnapshotsConnectionQuery = { __typename?: 'Query', basePoolSnapshotsConnection: { __typename?: 'BasePoolSnapshotsConnection', totalCount: number, edges: Array<{ __typename?: 'BasePoolSnapshotEdge', cursor: string, node: { __typename?: 'BasePoolSnapshot', updatedTime: string, apr?: string, commission?: string, totalValue?: string, delegatorCount?: number, workerCount?: number | null, idleWorkerCount?: number | null, stakePoolCount?: number | null, cumulativeOwnerRewards?: string } }> } };
+export type BasePoolSnapshotsConnectionQuery = { basePoolSnapshotsConnection: { totalCount: number, edges: Array<{ cursor: string, node: { updatedTime: string, apr?: string, commission?: string, totalValue?: string, delegatorCount?: number, workerCount?: number | null, idleWorkerCount?: number | null, stakePoolCount?: number | null, cumulativeOwnerRewards?: string } }> } };
 
-export type DelegationCommonFragment = { __typename?: 'Delegation', id: string, shares: string, value: string, cost: string, withdrawalStartTime?: string | null, withdrawingShares: string, withdrawingValue: string, basePool: { __typename?: 'BasePool', id: string, kind: BasePoolKind, freeValue: string, sharePrice: string, aprMultiplier: string, withdrawingShares: string, owner: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null } }, delegationNft: { __typename?: 'Nft', cid: number, nftId: number, mintTime?: string | null }, withdrawalNft?: { __typename?: 'Nft', cid: number, nftId: number } | null, account: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null, basePool?: { __typename?: 'BasePool', id: string } | null } };
+export type DelegationCommonFragment = { id: string, shares: string, value: string, cost: string, withdrawalStartTime?: string | null, withdrawingShares: string, withdrawingValue: string, basePool: { id: string, kind: BasePoolKind, freeValue: string, sharePrice: string, aprMultiplier: string, withdrawingShares: string, owner: { id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null } }, delegationNft: { cid: number, nftId: number, mintTime?: string | null }, withdrawalNft?: { cid: number, nftId: number } | null, account: { id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null, basePool?: { id: string } | null } };
 
 export type DelegationByIdQueryVariables = Exact<{
   id: Scalars['String'];
@@ -3134,7 +3086,7 @@ export type DelegationByIdQueryVariables = Exact<{
 }>;
 
 
-export type DelegationByIdQuery = { __typename?: 'Query', delegationById?: { __typename?: 'Delegation', id: string, shares: string, value: string, cost: string, withdrawalStartTime?: string | null, withdrawingShares: string, withdrawingValue: string, snapshots: Array<{ __typename?: 'DelegationSnapshot', cost: string, value: string, updatedTime: string }>, basePool: { __typename?: 'BasePool', id: string, kind: BasePoolKind, freeValue: string, sharePrice: string, aprMultiplier: string, withdrawingShares: string, owner: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null } }, delegationNft: { __typename?: 'Nft', cid: number, nftId: number, mintTime?: string | null }, withdrawalNft?: { __typename?: 'Nft', cid: number, nftId: number } | null, account: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null, basePool?: { __typename?: 'BasePool', id: string } | null } } | null };
+export type DelegationByIdQuery = { delegationById?: { id: string, shares: string, value: string, cost: string, withdrawalStartTime?: string | null, withdrawingShares: string, withdrawingValue: string, snapshots: Array<{ cost: string, value: string, updatedTime: string }>, basePool: { id: string, kind: BasePoolKind, freeValue: string, sharePrice: string, aprMultiplier: string, withdrawingShares: string, owner: { id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null } }, delegationNft: { cid: number, nftId: number, mintTime?: string | null }, withdrawalNft?: { cid: number, nftId: number } | null, account: { id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null, basePool?: { id: string } | null } } | null };
 
 export type DelegationsConnectionQueryVariables = Exact<{
   orderBy: Array<DelegationOrderByInput> | DelegationOrderByInput;
@@ -3145,7 +3097,7 @@ export type DelegationsConnectionQueryVariables = Exact<{
 }>;
 
 
-export type DelegationsConnectionQuery = { __typename?: 'Query', delegationsConnection: { __typename?: 'DelegationsConnection', totalCount: number, edges: Array<{ __typename?: 'DelegationEdge', cursor: string, node: { __typename?: 'Delegation', id: string, shares: string, value: string, cost: string, withdrawalStartTime?: string | null, withdrawingShares: string, withdrawingValue: string, snapshots: Array<{ __typename?: 'DelegationSnapshot', cost: string, value: string, updatedTime: string }>, basePool: { __typename?: 'BasePool', id: string, kind: BasePoolKind, freeValue: string, sharePrice: string, aprMultiplier: string, withdrawingShares: string, owner: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null } }, delegationNft: { __typename?: 'Nft', cid: number, nftId: number, mintTime?: string | null }, withdrawalNft?: { __typename?: 'Nft', cid: number, nftId: number } | null, account: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null, basePool?: { __typename?: 'BasePool', id: string } | null } } }>, pageInfo: { __typename?: 'PageInfo', endCursor: string, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string } } };
+export type DelegationsConnectionQuery = { delegationsConnection: { totalCount: number, edges: Array<{ cursor: string, node: { id: string, shares: string, value: string, cost: string, withdrawalStartTime?: string | null, withdrawingShares: string, withdrawingValue: string, snapshots: Array<{ cost: string, value: string, updatedTime: string }>, basePool: { id: string, kind: BasePoolKind, freeValue: string, sharePrice: string, aprMultiplier: string, withdrawingShares: string, owner: { id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null } }, delegationNft: { cid: number, nftId: number, mintTime?: string | null }, withdrawalNft?: { cid: number, nftId: number } | null, account: { id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null, basePool?: { id: string } | null } } }>, pageInfo: { endCursor: string, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string } } };
 
 export type DelegationSnapshotsConnectionQueryVariables = Exact<{
   orderBy: Array<DelegationSnapshotOrderByInput> | DelegationSnapshotOrderByInput;
@@ -3155,7 +3107,7 @@ export type DelegationSnapshotsConnectionQueryVariables = Exact<{
 }>;
 
 
-export type DelegationSnapshotsConnectionQuery = { __typename?: 'Query', delegationSnapshotsConnection: { __typename?: 'DelegationSnapshotsConnection', totalCount: number, edges: Array<{ __typename?: 'DelegationSnapshotEdge', cursor: string, node: { __typename?: 'DelegationSnapshot', updatedTime: string, cost: string, value: string } }> } };
+export type DelegationSnapshotsConnectionQuery = { delegationSnapshotsConnection: { totalCount: number, edges: Array<{ cursor: string, node: { updatedTime: string, cost: string, value: string } }> } };
 
 export type GlobalRewardsSnapshotsConnectionQueryVariables = Exact<{
   orderBy: Array<GlobalRewardsSnapshotOrderByInput> | GlobalRewardsSnapshotOrderByInput;
@@ -3164,17 +3116,17 @@ export type GlobalRewardsSnapshotsConnectionQueryVariables = Exact<{
 }>;
 
 
-export type GlobalRewardsSnapshotsConnectionQuery = { __typename?: 'Query', globalRewardsSnapshotsConnection: { __typename?: 'GlobalRewardsSnapshotsConnection', edges: Array<{ __typename?: 'GlobalRewardsSnapshotEdge', node: { __typename?: 'GlobalRewardsSnapshot', value: string } }> } };
+export type GlobalRewardsSnapshotsConnectionQuery = { globalRewardsSnapshotsConnection: { edges: Array<{ node: { value: string } }> } };
 
 export type GlobalStateQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GlobalStateQuery = { __typename?: 'Query', squidStatus?: { __typename?: 'SquidStatus', height?: number | null } | null, globalStateById?: { __typename?: 'GlobalState', averageBlockTime: number, averageAprMultiplier: string, height: number, totalValue: string, idleWorkerShares: string, budgetPerBlock: string, k: string, phaRate: string, re: string, treasuryRatio: string, vMax: string, cumulativeRewards: string } | null };
+export type GlobalStateQuery = { squidStatus?: { height?: number | null } | null, globalStateById?: { averageBlockTime: number, averageAprMultiplier: string, height: number, totalValue: string, idleWorkerShares: string, budgetPerBlock: string, k: string, phaRate: string, re: string, treasuryRatio: string, vMax: string, cumulativeRewards: string } | null };
 
 export type IdleWorkerCountQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type IdleWorkerCountQuery = { __typename?: 'Query', sessionsConnection: { __typename?: 'SessionsConnection', totalCount: number } };
+export type IdleWorkerCountQuery = { sessionsConnection: { totalCount: number } };
 
 export type NftsConnectionQueryVariables = Exact<{
   orderBy: Array<NftOrderByInput> | NftOrderByInput;
@@ -3184,7 +3136,7 @@ export type NftsConnectionQueryVariables = Exact<{
 }>;
 
 
-export type NftsConnectionQuery = { __typename?: 'Query', nftsConnection: { __typename?: 'NftsConnection', totalCount: number, edges: Array<{ __typename?: 'NftEdge', cursor: string, node: { __typename?: 'Nft', id: string, cid: number, nftId: number, mintTime?: string | null, owner: { __typename?: 'Account', id: string }, delegation?: { __typename?: 'Delegation', value: string, basePool: { __typename?: 'BasePool', id: string, kind: BasePoolKind } } | null } }>, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string, endCursor: string } } };
+export type NftsConnectionQuery = { nftsConnection: { totalCount: number, edges: Array<{ cursor: string, node: { id: string, cid: number, nftId: number, mintTime?: string | null, owner: { id: string }, delegation?: { value: string, basePool: { id: string, kind: BasePoolKind } } | null } }>, pageInfo: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string, endCursor: string } } };
 
 export type BasePoolWhitelistsConnectionQueryVariables = Exact<{
   orderBy: Array<BasePoolWhitelistOrderByInput> | BasePoolWhitelistOrderByInput;
@@ -3194,7 +3146,7 @@ export type BasePoolWhitelistsConnectionQueryVariables = Exact<{
 }>;
 
 
-export type BasePoolWhitelistsConnectionQuery = { __typename?: 'Query', basePoolWhitelistsConnection: { __typename?: 'BasePoolWhitelistsConnection', totalCount: number, edges: Array<{ __typename?: 'BasePoolWhitelistEdge', cursor: string, node: { __typename?: 'BasePoolWhitelist', createTime: string, id: string, account: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null } } }>, pageInfo: { __typename?: 'PageInfo', endCursor: string, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string } } };
+export type BasePoolWhitelistsConnectionQuery = { basePoolWhitelistsConnection: { totalCount: number, edges: Array<{ cursor: string, node: { createTime: string, id: string, account: { id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null } } }>, pageInfo: { endCursor: string, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string } } };
 
 export type WorkersConnectionQueryVariables = Exact<{
   orderBy: Array<WorkerOrderByInput> | WorkerOrderByInput;
@@ -3204,7 +3156,7 @@ export type WorkersConnectionQueryVariables = Exact<{
 }>;
 
 
-export type WorkersConnectionQuery = { __typename?: 'Query', workersConnection: { __typename?: 'WorkersConnection', totalCount: number, edges: Array<{ __typename?: 'WorkerEdge', cursor: string, node: { __typename?: 'Worker', id: string, confidenceLevel: number, initialScore?: number | null, shares?: string | null, stakePool?: { __typename?: 'StakePool', id: string, basePool: { __typename?: 'BasePool', freeValue: string } } | null, session?: { __typename?: 'Session', coolingDownStartTime?: string | null, pInit: number, pInstant: number, stake: string, state: WorkerState, totalReward: string, v: string, ve: string } | null } }>, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string, endCursor: string } } };
+export type WorkersConnectionQuery = { workersConnection: { totalCount: number, edges: Array<{ cursor: string, node: { id: string, confidenceLevel: number, initialScore?: number | null, shares?: string | null, stakePool?: { id: string, basePool: { freeValue: string } } | null, session?: { coolingDownStartTime?: string | null, pInit: number, pInstant: number, stake: string, state: WorkerState, totalReward: string, v: string, ve: string } | null } }>, pageInfo: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string, endCursor: string } } };
 
 export type ReclaimableWorkersConnectionQueryVariables = Exact<{
   orderBy: Array<WorkerOrderByInput> | WorkerOrderByInput;
@@ -3212,7 +3164,7 @@ export type ReclaimableWorkersConnectionQueryVariables = Exact<{
 }>;
 
 
-export type ReclaimableWorkersConnectionQuery = { __typename?: 'Query', workersConnection: { __typename?: 'WorkersConnection', totalCount: number, edges: Array<{ __typename?: 'WorkerEdge', cursor: string, node: { __typename?: 'Worker', id: string, session?: { __typename?: 'Session', id: string, coolingDownStartTime?: string | null, stake: string } | null } }> } };
+export type ReclaimableWorkersConnectionQuery = { workersConnection: { totalCount: number, edges: Array<{ cursor: string, node: { id: string, session?: { id: string, coolingDownStartTime?: string | null, stake: string } | null } }> } };
 
 export const BasePoolCommonFragmentDoc = `
     fragment BasePoolCommon on BasePool {
@@ -3337,7 +3289,7 @@ export const useAccountByIdQuery = <
       headers?: RequestInit['headers']
     ) =>
     useQuery<AccountByIdQuery, TError, TData>(
-      ['AccountById', variables],
+      ['AccountById', variables, client.url],
       fetcher<AccountByIdQuery, AccountByIdQueryVariables>(client, AccountByIdDocument, variables, headers),
       options
     );
@@ -3352,7 +3304,7 @@ export const useInfiniteAccountByIdQuery = <
       headers?: RequestInit['headers']
     ) =>
     useInfiniteQuery<AccountByIdQuery, TError, TData>(
-      ['AccountById.infinite', variables],
+      ['AccountById.infinite', variables, client.url],
       (metaData) => fetcher<AccountByIdQuery, AccountByIdQueryVariables>(client, AccountByIdDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
       options
     );
@@ -3388,7 +3340,7 @@ export const useAccountSnapshotsConnectionQuery = <
       headers?: RequestInit['headers']
     ) =>
     useQuery<AccountSnapshotsConnectionQuery, TError, TData>(
-      ['AccountSnapshotsConnection', variables],
+      ['AccountSnapshotsConnection', variables, client.url],
       fetcher<AccountSnapshotsConnectionQuery, AccountSnapshotsConnectionQueryVariables>(client, AccountSnapshotsConnectionDocument, variables, headers),
       options
     );
@@ -3403,7 +3355,7 @@ export const useInfiniteAccountSnapshotsConnectionQuery = <
       headers?: RequestInit['headers']
     ) =>
     useInfiniteQuery<AccountSnapshotsConnectionQuery, TError, TData>(
-      ['AccountSnapshotsConnection.infinite', variables],
+      ['AccountSnapshotsConnection.infinite', variables, client.url],
       (metaData) => fetcher<AccountSnapshotsConnectionQuery, AccountSnapshotsConnectionQueryVariables>(client, AccountSnapshotsConnectionDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
       options
     );
@@ -3425,7 +3377,7 @@ export const useBasePoolByIdQuery = <
       headers?: RequestInit['headers']
     ) =>
     useQuery<BasePoolByIdQuery, TError, TData>(
-      ['BasePoolById', variables],
+      ['BasePoolById', variables, client.url],
       fetcher<BasePoolByIdQuery, BasePoolByIdQueryVariables>(client, BasePoolByIdDocument, variables, headers),
       options
     );
@@ -3440,7 +3392,7 @@ export const useInfiniteBasePoolByIdQuery = <
       headers?: RequestInit['headers']
     ) =>
     useInfiniteQuery<BasePoolByIdQuery, TError, TData>(
-      ['BasePoolById.infinite', variables],
+      ['BasePoolById.infinite', variables, client.url],
       (metaData) => fetcher<BasePoolByIdQuery, BasePoolByIdQueryVariables>(client, BasePoolByIdDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
       options
     );
@@ -3482,7 +3434,7 @@ export const useBasePoolsConnectionQuery = <
       headers?: RequestInit['headers']
     ) =>
     useQuery<BasePoolsConnectionQuery, TError, TData>(
-      ['BasePoolsConnection', variables],
+      ['BasePoolsConnection', variables, client.url],
       fetcher<BasePoolsConnectionQuery, BasePoolsConnectionQueryVariables>(client, BasePoolsConnectionDocument, variables, headers),
       options
     );
@@ -3497,7 +3449,7 @@ export const useInfiniteBasePoolsConnectionQuery = <
       headers?: RequestInit['headers']
     ) =>
     useInfiniteQuery<BasePoolsConnectionQuery, TError, TData>(
-      ['BasePoolsConnection.infinite', variables],
+      ['BasePoolsConnection.infinite', variables, client.url],
       (metaData) => fetcher<BasePoolsConnectionQuery, BasePoolsConnectionQueryVariables>(client, BasePoolsConnectionDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
       options
     );
@@ -3529,7 +3481,7 @@ export const useClaimableStakePoolsQuery = <
       headers?: RequestInit['headers']
     ) =>
     useQuery<ClaimableStakePoolsQuery, TError, TData>(
-      variables === undefined ? ['ClaimableStakePools'] : ['ClaimableStakePools', variables],
+      variables === undefined ? ['ClaimableStakePools', client.url] : ['ClaimableStakePools', variables, client.url],
       fetcher<ClaimableStakePoolsQuery, ClaimableStakePoolsQueryVariables>(client, ClaimableStakePoolsDocument, variables, headers),
       options
     );
@@ -3544,7 +3496,7 @@ export const useInfiniteClaimableStakePoolsQuery = <
       headers?: RequestInit['headers']
     ) =>
     useInfiniteQuery<ClaimableStakePoolsQuery, TError, TData>(
-      variables === undefined ? ['ClaimableStakePools.infinite'] : ['ClaimableStakePools.infinite', variables],
+      variables === undefined ? ['ClaimableStakePools.infinite', client.url] : ['ClaimableStakePools.infinite', variables, client.url],
       (metaData) => fetcher<ClaimableStakePoolsQuery, ClaimableStakePoolsQueryVariables>(client, ClaimableStakePoolsDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
       options
     );
@@ -3580,7 +3532,7 @@ export const useOwnedVaultsQuery = <
       headers?: RequestInit['headers']
     ) =>
     useQuery<OwnedVaultsQuery, TError, TData>(
-      variables === undefined ? ['OwnedVaults'] : ['OwnedVaults', variables],
+      variables === undefined ? ['OwnedVaults', client.url] : ['OwnedVaults', variables, client.url],
       fetcher<OwnedVaultsQuery, OwnedVaultsQueryVariables>(client, OwnedVaultsDocument, variables, headers),
       options
     );
@@ -3595,7 +3547,7 @@ export const useInfiniteOwnedVaultsQuery = <
       headers?: RequestInit['headers']
     ) =>
     useInfiniteQuery<OwnedVaultsQuery, TError, TData>(
-      variables === undefined ? ['OwnedVaults.infinite'] : ['OwnedVaults.infinite', variables],
+      variables === undefined ? ['OwnedVaults.infinite', client.url] : ['OwnedVaults.infinite', variables, client.url],
       (metaData) => fetcher<OwnedVaultsQuery, OwnedVaultsQueryVariables>(client, OwnedVaultsDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
       options
     );
@@ -3636,7 +3588,7 @@ export const useBasePoolSnapshotsConnectionQuery = <
       headers?: RequestInit['headers']
     ) =>
     useQuery<BasePoolSnapshotsConnectionQuery, TError, TData>(
-      ['BasePoolSnapshotsConnection', variables],
+      ['BasePoolSnapshotsConnection', variables, client.url],
       fetcher<BasePoolSnapshotsConnectionQuery, BasePoolSnapshotsConnectionQueryVariables>(client, BasePoolSnapshotsConnectionDocument, variables, headers),
       options
     );
@@ -3651,7 +3603,7 @@ export const useInfiniteBasePoolSnapshotsConnectionQuery = <
       headers?: RequestInit['headers']
     ) =>
     useInfiniteQuery<BasePoolSnapshotsConnectionQuery, TError, TData>(
-      ['BasePoolSnapshotsConnection.infinite', variables],
+      ['BasePoolSnapshotsConnection.infinite', variables, client.url],
       (metaData) => fetcher<BasePoolSnapshotsConnectionQuery, BasePoolSnapshotsConnectionQueryVariables>(client, BasePoolSnapshotsConnectionDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
       options
     );
@@ -3678,7 +3630,7 @@ export const useDelegationByIdQuery = <
       headers?: RequestInit['headers']
     ) =>
     useQuery<DelegationByIdQuery, TError, TData>(
-      ['DelegationById', variables],
+      ['DelegationById', variables, client.url],
       fetcher<DelegationByIdQuery, DelegationByIdQueryVariables>(client, DelegationByIdDocument, variables, headers),
       options
     );
@@ -3693,7 +3645,7 @@ export const useInfiniteDelegationByIdQuery = <
       headers?: RequestInit['headers']
     ) =>
     useInfiniteQuery<DelegationByIdQuery, TError, TData>(
-      ['DelegationById.infinite', variables],
+      ['DelegationById.infinite', variables, client.url],
       (metaData) => fetcher<DelegationByIdQuery, DelegationByIdQueryVariables>(client, DelegationByIdDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
       options
     );
@@ -3737,7 +3689,7 @@ export const useDelegationsConnectionQuery = <
       headers?: RequestInit['headers']
     ) =>
     useQuery<DelegationsConnectionQuery, TError, TData>(
-      ['DelegationsConnection', variables],
+      ['DelegationsConnection', variables, client.url],
       fetcher<DelegationsConnectionQuery, DelegationsConnectionQueryVariables>(client, DelegationsConnectionDocument, variables, headers),
       options
     );
@@ -3752,7 +3704,7 @@ export const useInfiniteDelegationsConnectionQuery = <
       headers?: RequestInit['headers']
     ) =>
     useInfiniteQuery<DelegationsConnectionQuery, TError, TData>(
-      ['DelegationsConnection.infinite', variables],
+      ['DelegationsConnection.infinite', variables, client.url],
       (metaData) => fetcher<DelegationsConnectionQuery, DelegationsConnectionQueryVariables>(client, DelegationsConnectionDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
       options
     );
@@ -3787,7 +3739,7 @@ export const useDelegationSnapshotsConnectionQuery = <
       headers?: RequestInit['headers']
     ) =>
     useQuery<DelegationSnapshotsConnectionQuery, TError, TData>(
-      ['DelegationSnapshotsConnection', variables],
+      ['DelegationSnapshotsConnection', variables, client.url],
       fetcher<DelegationSnapshotsConnectionQuery, DelegationSnapshotsConnectionQueryVariables>(client, DelegationSnapshotsConnectionDocument, variables, headers),
       options
     );
@@ -3802,7 +3754,7 @@ export const useInfiniteDelegationSnapshotsConnectionQuery = <
       headers?: RequestInit['headers']
     ) =>
     useInfiniteQuery<DelegationSnapshotsConnectionQuery, TError, TData>(
-      ['DelegationSnapshotsConnection.infinite', variables],
+      ['DelegationSnapshotsConnection.infinite', variables, client.url],
       (metaData) => fetcher<DelegationSnapshotsConnectionQuery, DelegationSnapshotsConnectionQueryVariables>(client, DelegationSnapshotsConnectionDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
       options
     );
@@ -3832,7 +3784,7 @@ export const useGlobalRewardsSnapshotsConnectionQuery = <
       headers?: RequestInit['headers']
     ) =>
     useQuery<GlobalRewardsSnapshotsConnectionQuery, TError, TData>(
-      ['GlobalRewardsSnapshotsConnection', variables],
+      ['GlobalRewardsSnapshotsConnection', variables, client.url],
       fetcher<GlobalRewardsSnapshotsConnectionQuery, GlobalRewardsSnapshotsConnectionQueryVariables>(client, GlobalRewardsSnapshotsConnectionDocument, variables, headers),
       options
     );
@@ -3847,7 +3799,7 @@ export const useInfiniteGlobalRewardsSnapshotsConnectionQuery = <
       headers?: RequestInit['headers']
     ) =>
     useInfiniteQuery<GlobalRewardsSnapshotsConnectionQuery, TError, TData>(
-      ['GlobalRewardsSnapshotsConnection.infinite', variables],
+      ['GlobalRewardsSnapshotsConnection.infinite', variables, client.url],
       (metaData) => fetcher<GlobalRewardsSnapshotsConnectionQuery, GlobalRewardsSnapshotsConnectionQueryVariables>(client, GlobalRewardsSnapshotsConnectionDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
       options
     );
@@ -3883,7 +3835,7 @@ export const useGlobalStateQuery = <
       headers?: RequestInit['headers']
     ) =>
     useQuery<GlobalStateQuery, TError, TData>(
-      variables === undefined ? ['GlobalState'] : ['GlobalState', variables],
+      variables === undefined ? ['GlobalState', client.url] : ['GlobalState', variables, client.url],
       fetcher<GlobalStateQuery, GlobalStateQueryVariables>(client, GlobalStateDocument, variables, headers),
       options
     );
@@ -3898,7 +3850,7 @@ export const useInfiniteGlobalStateQuery = <
       headers?: RequestInit['headers']
     ) =>
     useInfiniteQuery<GlobalStateQuery, TError, TData>(
-      variables === undefined ? ['GlobalState.infinite'] : ['GlobalState.infinite', variables],
+      variables === undefined ? ['GlobalState.infinite', client.url] : ['GlobalState.infinite', variables, client.url],
       (metaData) => fetcher<GlobalStateQuery, GlobalStateQueryVariables>(client, GlobalStateDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
       options
     );
@@ -3920,7 +3872,7 @@ export const useIdleWorkerCountQuery = <
       headers?: RequestInit['headers']
     ) =>
     useQuery<IdleWorkerCountQuery, TError, TData>(
-      variables === undefined ? ['IdleWorkerCount'] : ['IdleWorkerCount', variables],
+      variables === undefined ? ['IdleWorkerCount', client.url] : ['IdleWorkerCount', variables, client.url],
       fetcher<IdleWorkerCountQuery, IdleWorkerCountQueryVariables>(client, IdleWorkerCountDocument, variables, headers),
       options
     );
@@ -3935,7 +3887,7 @@ export const useInfiniteIdleWorkerCountQuery = <
       headers?: RequestInit['headers']
     ) =>
     useInfiniteQuery<IdleWorkerCountQuery, TError, TData>(
-      variables === undefined ? ['IdleWorkerCount.infinite'] : ['IdleWorkerCount.infinite', variables],
+      variables === undefined ? ['IdleWorkerCount.infinite', client.url] : ['IdleWorkerCount.infinite', variables, client.url],
       (metaData) => fetcher<IdleWorkerCountQuery, IdleWorkerCountQueryVariables>(client, IdleWorkerCountDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
       options
     );
@@ -3982,7 +3934,7 @@ export const useNftsConnectionQuery = <
       headers?: RequestInit['headers']
     ) =>
     useQuery<NftsConnectionQuery, TError, TData>(
-      ['NftsConnection', variables],
+      ['NftsConnection', variables, client.url],
       fetcher<NftsConnectionQuery, NftsConnectionQueryVariables>(client, NftsConnectionDocument, variables, headers),
       options
     );
@@ -3997,7 +3949,7 @@ export const useInfiniteNftsConnectionQuery = <
       headers?: RequestInit['headers']
     ) =>
     useInfiniteQuery<NftsConnectionQuery, TError, TData>(
-      ['NftsConnection.infinite', variables],
+      ['NftsConnection.infinite', variables, client.url],
       (metaData) => fetcher<NftsConnectionQuery, NftsConnectionQueryVariables>(client, NftsConnectionDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
       options
     );
@@ -4042,7 +3994,7 @@ export const useBasePoolWhitelistsConnectionQuery = <
       headers?: RequestInit['headers']
     ) =>
     useQuery<BasePoolWhitelistsConnectionQuery, TError, TData>(
-      ['BasePoolWhitelistsConnection', variables],
+      ['BasePoolWhitelistsConnection', variables, client.url],
       fetcher<BasePoolWhitelistsConnectionQuery, BasePoolWhitelistsConnectionQueryVariables>(client, BasePoolWhitelistsConnectionDocument, variables, headers),
       options
     );
@@ -4057,7 +4009,7 @@ export const useInfiniteBasePoolWhitelistsConnectionQuery = <
       headers?: RequestInit['headers']
     ) =>
     useInfiniteQuery<BasePoolWhitelistsConnectionQuery, TError, TData>(
-      ['BasePoolWhitelistsConnection.infinite', variables],
+      ['BasePoolWhitelistsConnection.infinite', variables, client.url],
       (metaData) => fetcher<BasePoolWhitelistsConnectionQuery, BasePoolWhitelistsConnectionQueryVariables>(client, BasePoolWhitelistsConnectionDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
       options
     );
@@ -4115,7 +4067,7 @@ export const useWorkersConnectionQuery = <
       headers?: RequestInit['headers']
     ) =>
     useQuery<WorkersConnectionQuery, TError, TData>(
-      ['WorkersConnection', variables],
+      ['WorkersConnection', variables, client.url],
       fetcher<WorkersConnectionQuery, WorkersConnectionQueryVariables>(client, WorkersConnectionDocument, variables, headers),
       options
     );
@@ -4130,7 +4082,7 @@ export const useInfiniteWorkersConnectionQuery = <
       headers?: RequestInit['headers']
     ) =>
     useInfiniteQuery<WorkersConnectionQuery, TError, TData>(
-      ['WorkersConnection.infinite', variables],
+      ['WorkersConnection.infinite', variables, client.url],
       (metaData) => fetcher<WorkersConnectionQuery, WorkersConnectionQueryVariables>(client, WorkersConnectionDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
       options
     );
@@ -4163,7 +4115,7 @@ export const useReclaimableWorkersConnectionQuery = <
       headers?: RequestInit['headers']
     ) =>
     useQuery<ReclaimableWorkersConnectionQuery, TError, TData>(
-      ['ReclaimableWorkersConnection', variables],
+      ['ReclaimableWorkersConnection', variables, client.url],
       fetcher<ReclaimableWorkersConnectionQuery, ReclaimableWorkersConnectionQueryVariables>(client, ReclaimableWorkersConnectionDocument, variables, headers),
       options
     );
@@ -4178,7 +4130,7 @@ export const useInfiniteReclaimableWorkersConnectionQuery = <
       headers?: RequestInit['headers']
     ) =>
     useInfiniteQuery<ReclaimableWorkersConnectionQuery, TError, TData>(
-      ['ReclaimableWorkersConnection.infinite', variables],
+      ['ReclaimableWorkersConnection.infinite', variables, client.url],
       (metaData) => fetcher<ReclaimableWorkersConnectionQuery, ReclaimableWorkersConnectionQueryVariables>(client, ReclaimableWorkersConnectionDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
       options
     );

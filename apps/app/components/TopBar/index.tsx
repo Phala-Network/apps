@@ -13,6 +13,7 @@ import {
   Collapse,
   Divider,
   IconButton,
+  NoSsr,
   Stack,
   Toolbar,
   Tooltip,
@@ -24,6 +25,7 @@ import NextLink from 'next/link'
 import {useState, type FC} from 'react'
 import Account from './Account'
 import ChainSelect from './Chain'
+import NetworkStats from './NetworkStats'
 
 interface INavItem {
   label: string
@@ -162,6 +164,21 @@ const TopBar: FC = () => {
           mb: 1,
         }}
       >
+        <Stack
+          height={40}
+          bgcolor="#2C303F"
+          alignItems="center"
+          direction="row"
+          px={[2, 3]}
+          spacing={2}
+        >
+          {/* <Typography></Typography> */}
+          <NoSsr>
+            <NetworkStats />
+          </NoSsr>
+          <Box flex={1}></Box>
+          {icons}
+        </Stack>
         <Toolbar>
           <PhalaLogo width={30} css={{flexShrink: 0}} />
           <Stack
@@ -208,13 +225,12 @@ const TopBar: FC = () => {
             >
               <Menu />
             </IconButton>
-            <Box display={{xs: 'none', md: 'block'}}>{icons}</Box>
           </Stack>
         </Toolbar>
         <Collapse
           sx={{
             position: 'absolute',
-            top: 57,
+            top: 97,
             left: 0,
             right: 0,
             background,
@@ -247,7 +263,6 @@ const TopBar: FC = () => {
                 ))
               }
             })}
-            <Box py={1}>{icons}</Box>
           </Stack>
         </Collapse>
       </AppBar>

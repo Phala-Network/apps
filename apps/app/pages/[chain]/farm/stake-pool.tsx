@@ -59,12 +59,6 @@ const MyStakePools: FC = () => {
         alignItems={{xs: 'flex-start', md: 'flex-end'}}
         spacing={2}
       >
-        {/* <Paper
-          sx={{
-            background: 'transparent',
-            flex: {xs: 0, md: 1},
-          }}
-        > */}
         <Stack flex={{xs: 0, md: 1}}>
           <Stack flex={1} spacing={4} direction="row" alignItems="center">
             <Property
@@ -90,7 +84,6 @@ const MyStakePools: FC = () => {
             </Button>
           </Stack>
         </Stack>
-        {/* </Paper> */}
         <Paper sx={{background: 'transparent', flex: {xs: 0, md: 1}}}>
           <Typography variant="h6" lineHeight={1} m={2}>
             Total Daily Owner Rewards

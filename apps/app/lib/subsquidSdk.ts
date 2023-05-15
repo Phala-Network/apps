@@ -22,7 +22,6 @@ type Scalars = {
 };
 
 type Account = {
-  __typename?: 'Account';
   basePool?: Maybe<BasePool>;
   cumulativeStakePoolOwnerRewards: Scalars['BigDecimal'];
   cumulativeVaultOwnerRewards: Scalars['BigDecimal'];
@@ -48,7 +47,6 @@ type AccountOwnedPoolsArgs = {
 };
 
 type AccountEdge = {
-  __typename?: 'AccountEdge';
   cursor: Scalars['String'];
   node: Account;
 };
@@ -112,7 +110,6 @@ const AccountOrderByInput = {
 
 export type AccountOrderByInput = typeof AccountOrderByInput[keyof typeof AccountOrderByInput];
 type AccountSnapshot = {
-  __typename?: 'AccountSnapshot';
   account: Account;
   cumulativeStakePoolOwnerRewards: Scalars['BigDecimal'];
   cumulativeVaultOwnerRewards: Scalars['BigDecimal'];
@@ -123,7 +120,6 @@ type AccountSnapshot = {
 };
 
 type AccountSnapshotEdge = {
-  __typename?: 'AccountSnapshotEdge';
   cursor: Scalars['String'];
   node: AccountSnapshot;
 };
@@ -225,7 +221,6 @@ type AccountSnapshotWhereInput = {
 };
 
 type AccountSnapshotsConnection = {
-  __typename?: 'AccountSnapshotsConnection';
   edges: Array<AccountSnapshotEdge>;
   pageInfo: PageInfo;
   totalCount: Scalars['Int'];
@@ -353,14 +348,12 @@ type AccountWhereInput = {
 };
 
 type AccountsConnection = {
-  __typename?: 'AccountsConnection';
   edges: Array<AccountEdge>;
   pageInfo: PageInfo;
   totalCount: Scalars['Int'];
 };
 
 type BasePool = {
-  __typename?: 'BasePool';
   account: Account;
   aprMultiplier: Scalars['BigDecimal'];
   /** NFT collection id */
@@ -406,7 +399,6 @@ type BasePoolWhitelistsArgs = {
 };
 
 type BasePoolEdge = {
-  __typename?: 'BasePoolEdge';
   cursor: Scalars['String'];
   node: BasePool;
 };
@@ -518,7 +510,6 @@ const BasePoolOrderByInput = {
 
 export type BasePoolOrderByInput = typeof BasePoolOrderByInput[keyof typeof BasePoolOrderByInput];
 type BasePoolSnapshot = {
-  __typename?: 'BasePoolSnapshot';
   apr: Scalars['BigDecimal'];
   basePool: BasePool;
   commission: Scalars['BigDecimal'];
@@ -535,7 +526,6 @@ type BasePoolSnapshot = {
 };
 
 type BasePoolSnapshotEdge = {
-  __typename?: 'BasePoolSnapshotEdge';
   cursor: Scalars['String'];
   node: BasePoolSnapshot;
 };
@@ -713,7 +703,6 @@ type BasePoolSnapshotWhereInput = {
 };
 
 type BasePoolSnapshotsConnection = {
-  __typename?: 'BasePoolSnapshotsConnection';
   edges: Array<BasePoolSnapshotEdge>;
   pageInfo: PageInfo;
   totalCount: Scalars['Int'];
@@ -881,7 +870,6 @@ type BasePoolWhereInput = {
 };
 
 type BasePoolWhitelist = {
-  __typename?: 'BasePoolWhitelist';
   account: Account;
   basePool: BasePool;
   createTime: Scalars['DateTime'];
@@ -890,7 +878,6 @@ type BasePoolWhitelist = {
 };
 
 type BasePoolWhitelistEdge = {
-  __typename?: 'BasePoolWhitelistEdge';
   cursor: Scalars['String'];
   node: BasePoolWhitelist;
 };
@@ -993,21 +980,18 @@ type BasePoolWhitelistWhereInput = {
 };
 
 type BasePoolWhitelistsConnection = {
-  __typename?: 'BasePoolWhitelistsConnection';
   edges: Array<BasePoolWhitelistEdge>;
   pageInfo: PageInfo;
   totalCount: Scalars['Int'];
 };
 
 type BasePoolsConnection = {
-  __typename?: 'BasePoolsConnection';
   edges: Array<BasePoolEdge>;
   pageInfo: PageInfo;
   totalCount: Scalars['Int'];
 };
 
 type Delegation = {
-  __typename?: 'Delegation';
   account: Account;
   basePool: BasePool;
   cost: Scalars['BigDecimal'];
@@ -1032,7 +1016,6 @@ type DelegationSnapshotsArgs = {
 };
 
 type DelegationEdge = {
-  __typename?: 'DelegationEdge';
   cursor: Scalars['String'];
   node: Delegation;
 };
@@ -1130,7 +1113,6 @@ const DelegationOrderByInput = {
 
 export type DelegationOrderByInput = typeof DelegationOrderByInput[keyof typeof DelegationOrderByInput];
 type DelegationSnapshot = {
-  __typename?: 'DelegationSnapshot';
   cost: Scalars['BigDecimal'];
   delegation: Delegation;
   id: Scalars['String'];
@@ -1140,7 +1122,6 @@ type DelegationSnapshot = {
 };
 
 type DelegationSnapshotEdge = {
-  __typename?: 'DelegationSnapshotEdge';
   cursor: Scalars['String'];
   node: DelegationSnapshot;
 };
@@ -1223,7 +1204,6 @@ type DelegationSnapshotWhereInput = {
 };
 
 type DelegationSnapshotsConnection = {
-  __typename?: 'DelegationSnapshotsConnection';
   edges: Array<DelegationSnapshotEdge>;
   pageInfo: PageInfo;
   totalCount: Scalars['Int'];
@@ -1317,14 +1297,12 @@ type DelegationWhereInput = {
 };
 
 type DelegationsConnection = {
-  __typename?: 'DelegationsConnection';
   edges: Array<DelegationEdge>;
   pageInfo: PageInfo;
   totalCount: Scalars['Int'];
 };
 
 type GlobalRewardsSnapshot = {
-  __typename?: 'GlobalRewardsSnapshot';
   id: Scalars['String'];
   /** block time */
   updatedTime: Scalars['DateTime'];
@@ -1332,7 +1310,6 @@ type GlobalRewardsSnapshot = {
 };
 
 type GlobalRewardsSnapshotEdge = {
-  __typename?: 'GlobalRewardsSnapshotEdge';
   cursor: Scalars['String'];
   node: GlobalRewardsSnapshot;
 };
@@ -1388,14 +1365,12 @@ type GlobalRewardsSnapshotWhereInput = {
 };
 
 type GlobalRewardsSnapshotsConnection = {
-  __typename?: 'GlobalRewardsSnapshotsConnection';
   edges: Array<GlobalRewardsSnapshotEdge>;
   pageInfo: PageInfo;
   totalCount: Scalars['Int'];
 };
 
 type GlobalState = {
-  __typename?: 'GlobalState';
   averageAprMultiplier: Scalars['BigDecimal'];
   averageAprMultiplierUpdatedTime: Scalars['DateTime'];
   averageBlockTime: Scalars['Int'];
@@ -1417,7 +1392,6 @@ type GlobalState = {
 };
 
 type GlobalStateEdge = {
-  __typename?: 'GlobalStateEdge';
   cursor: Scalars['String'];
   node: GlobalState;
 };
@@ -1616,7 +1590,6 @@ type GlobalStateWhereInput = {
 };
 
 type GlobalStatesConnection = {
-  __typename?: 'GlobalStatesConnection';
   edges: Array<GlobalStateEdge>;
   pageInfo: PageInfo;
   totalCount: Scalars['Int'];
@@ -1634,7 +1607,6 @@ const IdentityLevel = {
 
 export type IdentityLevel = typeof IdentityLevel[keyof typeof IdentityLevel];
 type Nft = {
-  __typename?: 'Nft';
   burned: Scalars['Boolean'];
   cid: Scalars['Int'];
   delegation?: Maybe<Delegation>;
@@ -1646,7 +1618,6 @@ type Nft = {
 };
 
 type NftEdge = {
-  __typename?: 'NftEdge';
   cursor: Scalars['String'];
   node: Nft;
 };
@@ -1758,14 +1729,12 @@ type NftWhereInput = {
 };
 
 type NftsConnection = {
-  __typename?: 'NftsConnection';
   edges: Array<NftEdge>;
   pageInfo: PageInfo;
   totalCount: Scalars['Int'];
 };
 
 type PageInfo = {
-  __typename?: 'PageInfo';
   endCursor: Scalars['String'];
   hasNextPage: Scalars['Boolean'];
   hasPreviousPage: Scalars['Boolean'];
@@ -1773,7 +1742,6 @@ type PageInfo = {
 };
 
 type Query = {
-  __typename?: 'Query';
   accountById?: Maybe<Account>;
   /** @deprecated Use accountById */
   accountByUniqueInput?: Maybe<Account>;
@@ -2243,7 +2211,6 @@ type QueryWorkersConnectionArgs = {
 };
 
 type Session = {
-  __typename?: 'Session';
   coolingDownStartTime?: Maybe<Scalars['DateTime']>;
   /** session account address */
   id: Scalars['String'];
@@ -2260,7 +2227,6 @@ type Session = {
 };
 
 type SessionEdge = {
-  __typename?: 'SessionEdge';
   cursor: Scalars['String'];
   node: Session;
 };
@@ -2409,20 +2375,17 @@ type SessionWhereInput = {
 };
 
 type SessionsConnection = {
-  __typename?: 'SessionsConnection';
   edges: Array<SessionEdge>;
   pageInfo: PageInfo;
   totalCount: Scalars['Int'];
 };
 
 type SquidStatus = {
-  __typename?: 'SquidStatus';
   /** The height of the processed part of the chain */
   height?: Maybe<Scalars['Int']>;
 };
 
 type StakePool = {
-  __typename?: 'StakePool';
   basePool: BasePool;
   /** null means infinite */
   capacity?: Maybe<Scalars['BigDecimal']>;
@@ -2446,7 +2409,6 @@ type StakePoolWorkersArgs = {
 };
 
 type StakePoolEdge = {
-  __typename?: 'StakePoolEdge';
   cursor: Scalars['String'];
   node: StakePool;
 };
@@ -2583,14 +2545,12 @@ type StakePoolWhereInput = {
 };
 
 type StakePoolsConnection = {
-  __typename?: 'StakePoolsConnection';
   edges: Array<StakePoolEdge>;
   pageInfo: PageInfo;
   totalCount: Scalars['Int'];
 };
 
 type Vault = {
-  __typename?: 'Vault';
   basePool: BasePool;
   claimableOwnerShares: Scalars['BigDecimal'];
   /** pid */
@@ -2600,7 +2560,6 @@ type Vault = {
 };
 
 type VaultEdge = {
-  __typename?: 'VaultEdge';
   cursor: Scalars['String'];
   node: Vault;
 };
@@ -2690,7 +2649,6 @@ type VaultWhereInput = {
 };
 
 type VaultsConnection = {
-  __typename?: 'VaultsConnection';
   edges: Array<VaultEdge>;
   pageInfo: PageInfo;
   totalCount: Scalars['Int'];
@@ -2701,7 +2659,6 @@ type WhereIdInput = {
 };
 
 type Worker = {
-  __typename?: 'Worker';
   confidenceLevel: Scalars['Int'];
   /** worker public key */
   id: Scalars['String'];
@@ -2712,7 +2669,6 @@ type Worker = {
 };
 
 type WorkerEdge = {
-  __typename?: 'WorkerEdge';
   cursor: Scalars['String'];
   node: Worker;
 };
@@ -2764,7 +2720,6 @@ const WorkerOrderByInput = {
 
 export type WorkerOrderByInput = typeof WorkerOrderByInput[keyof typeof WorkerOrderByInput];
 type WorkerSnapshot = {
-  __typename?: 'WorkerSnapshot';
   confidenceLevel: Scalars['Int'];
   id: Scalars['String'];
   initialScore?: Maybe<Scalars['Int']>;
@@ -2783,7 +2738,6 @@ type WorkerSnapshot = {
 };
 
 type WorkerSnapshotEdge = {
-  __typename?: 'WorkerSnapshotEdge';
   cursor: Scalars['String'];
   node: WorkerSnapshot;
 };
@@ -2971,7 +2925,6 @@ type WorkerSnapshotWhereInput = {
 };
 
 type WorkerSnapshotsConnection = {
-  __typename?: 'WorkerSnapshotsConnection';
   edges: Array<WorkerSnapshotEdge>;
   pageInfo: PageInfo;
   totalCount: Scalars['Int'];
@@ -3039,7 +2992,6 @@ type WorkerWhereInput = {
 };
 
 type WorkersConnection = {
-  __typename?: 'WorkersConnection';
   edges: Array<WorkerEdge>;
   pageInfo: PageInfo;
   totalCount: Scalars['Int'];
@@ -3050,7 +3002,7 @@ type AccountByIdQueryVariables = Exact<{
 }>;
 
 
-type AccountByIdQuery = { __typename?: 'Query', accountById?: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null, stakePoolNftCount: number, stakePoolValue: string, stakePoolAvgAprMultiplier: string, vaultNftCount: number, vaultValue: string, vaultAvgAprMultiplier: string, ownedPools: Array<{ __typename?: 'BasePool', id: string, account: { __typename?: 'Account', id: string, stakePoolNftCount: number, stakePoolValue: string, stakePoolAvgAprMultiplier: string, vaultNftCount: number, vaultValue: string, vaultAvgAprMultiplier: string } }> } | null };
+type AccountByIdQuery = { accountById?: { id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null, stakePoolNftCount: number, stakePoolValue: string, stakePoolAvgAprMultiplier: string, vaultNftCount: number, vaultValue: string, vaultAvgAprMultiplier: string, ownedPools: Array<{ id: string, account: { id: string, stakePoolNftCount: number, stakePoolValue: string, stakePoolAvgAprMultiplier: string, vaultNftCount: number, vaultValue: string, vaultAvgAprMultiplier: string } }> } | null };
 
 type AccountSnapshotsConnectionQueryVariables = Exact<{
   orderBy: Array<AccountSnapshotOrderByInput> | AccountSnapshotOrderByInput;
@@ -3063,9 +3015,9 @@ type AccountSnapshotsConnectionQueryVariables = Exact<{
 }>;
 
 
-type AccountSnapshotsConnectionQuery = { __typename?: 'Query', accountSnapshotsConnection: { __typename?: 'AccountSnapshotsConnection', totalCount: number, edges: Array<{ __typename?: 'AccountSnapshotEdge', cursor: string, node: { __typename?: 'AccountSnapshot', updatedTime: string, delegationValue?: string, cumulativeStakePoolOwnerRewards?: string, cumulativeVaultOwnerRewards?: string } }> } };
+type AccountSnapshotsConnectionQuery = { accountSnapshotsConnection: { totalCount: number, edges: Array<{ cursor: string, node: { updatedTime: string, delegationValue?: string, cumulativeStakePoolOwnerRewards?: string, cumulativeVaultOwnerRewards?: string } }> } };
 
-type BasePoolCommonFragment = { __typename?: 'BasePool', cid: number, commission: string, delegatorCount: number, freeValue: string, id: string, kind: BasePoolKind, aprMultiplier: string, pid: string, releasingValue: string, sharePrice: string, totalShares: string, totalValue: string, whitelistEnabled: boolean, withdrawingShares: string, withdrawingValue: string, account: { __typename?: 'Account', id: string, stakePoolNftCount: number, stakePoolValue: string }, owner: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null }, stakePool?: { __typename?: 'StakePool', capacity?: string | null, delegable?: string | null, idleWorkerCount: number, ownerReward: string, workerCount: number } | null, vault?: { __typename?: 'Vault', claimableOwnerShares: string, lastSharePriceCheckpoint: string } | null, whitelists: Array<{ __typename?: 'BasePoolWhitelist', account: { __typename?: 'Account', id: string } }> };
+type BasePoolCommonFragment = { cid: number, commission: string, delegatorCount: number, freeValue: string, id: string, kind: BasePoolKind, aprMultiplier: string, pid: string, releasingValue: string, sharePrice: string, totalShares: string, totalValue: string, whitelistEnabled: boolean, withdrawingShares: string, withdrawingValue: string, account: { id: string, stakePoolNftCount: number, stakePoolValue: string }, owner: { id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null }, stakePool?: { capacity?: string | null, delegable?: string | null, idleWorkerCount: number, ownerReward: string, workerCount: number } | null, vault?: { claimableOwnerShares: string, lastSharePriceCheckpoint: string } | null, whitelists: Array<{ account: { id: string } }> };
 
 type BasePoolByIdQueryVariables = Exact<{
   id: Scalars['String'];
@@ -3073,7 +3025,7 @@ type BasePoolByIdQueryVariables = Exact<{
 }>;
 
 
-type BasePoolByIdQuery = { __typename?: 'Query', basePoolById?: { __typename?: 'BasePool', cid: number, commission: string, delegatorCount: number, freeValue: string, id: string, kind: BasePoolKind, aprMultiplier: string, pid: string, releasingValue: string, sharePrice: string, totalShares: string, totalValue: string, whitelistEnabled: boolean, withdrawingShares: string, withdrawingValue: string, account: { __typename?: 'Account', id: string, stakePoolNftCount: number, stakePoolValue: string }, owner: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null }, stakePool?: { __typename?: 'StakePool', capacity?: string | null, delegable?: string | null, idleWorkerCount: number, ownerReward: string, workerCount: number } | null, vault?: { __typename?: 'Vault', claimableOwnerShares: string, lastSharePriceCheckpoint: string } | null, whitelists: Array<{ __typename?: 'BasePoolWhitelist', account: { __typename?: 'Account', id: string } }> } | null };
+type BasePoolByIdQuery = { basePoolById?: { cid: number, commission: string, delegatorCount: number, freeValue: string, id: string, kind: BasePoolKind, aprMultiplier: string, pid: string, releasingValue: string, sharePrice: string, totalShares: string, totalValue: string, whitelistEnabled: boolean, withdrawingShares: string, withdrawingValue: string, account: { id: string, stakePoolNftCount: number, stakePoolValue: string }, owner: { id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null }, stakePool?: { capacity?: string | null, delegable?: string | null, idleWorkerCount: number, ownerReward: string, workerCount: number } | null, vault?: { claimableOwnerShares: string, lastSharePriceCheckpoint: string } | null, whitelists: Array<{ account: { id: string } }> } | null };
 
 type BasePoolsConnectionQueryVariables = Exact<{
   orderBy: Array<BasePoolOrderByInput> | BasePoolOrderByInput;
@@ -3084,7 +3036,7 @@ type BasePoolsConnectionQueryVariables = Exact<{
 }>;
 
 
-type BasePoolsConnectionQuery = { __typename?: 'Query', basePoolsConnection: { __typename?: 'BasePoolsConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', endCursor: string, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string }, edges: Array<{ __typename?: 'BasePoolEdge', cursor: string, node: { __typename?: 'BasePool', cid: number, commission: string, delegatorCount: number, freeValue: string, id: string, kind: BasePoolKind, aprMultiplier: string, pid: string, releasingValue: string, sharePrice: string, totalShares: string, totalValue: string, whitelistEnabled: boolean, withdrawingShares: string, withdrawingValue: string, delegations: Array<{ __typename?: 'Delegation', value: string }>, account: { __typename?: 'Account', id: string, stakePoolNftCount: number, stakePoolValue: string }, owner: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null }, stakePool?: { __typename?: 'StakePool', capacity?: string | null, delegable?: string | null, idleWorkerCount: number, ownerReward: string, workerCount: number } | null, vault?: { __typename?: 'Vault', claimableOwnerShares: string, lastSharePriceCheckpoint: string } | null, whitelists: Array<{ __typename?: 'BasePoolWhitelist', account: { __typename?: 'Account', id: string } }> } }> } };
+type BasePoolsConnectionQuery = { basePoolsConnection: { totalCount: number, pageInfo: { endCursor: string, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string }, edges: Array<{ cursor: string, node: { cid: number, commission: string, delegatorCount: number, freeValue: string, id: string, kind: BasePoolKind, aprMultiplier: string, pid: string, releasingValue: string, sharePrice: string, totalShares: string, totalValue: string, whitelistEnabled: boolean, withdrawingShares: string, withdrawingValue: string, delegations: Array<{ value: string }>, account: { id: string, stakePoolNftCount: number, stakePoolValue: string }, owner: { id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null }, stakePool?: { capacity?: string | null, delegable?: string | null, idleWorkerCount: number, ownerReward: string, workerCount: number } | null, vault?: { claimableOwnerShares: string, lastSharePriceCheckpoint: string } | null, whitelists: Array<{ account: { id: string } }> } }> } };
 
 type ClaimableStakePoolsQueryVariables = Exact<{
   accountId?: InputMaybe<Scalars['String']>;
@@ -3092,14 +3044,14 @@ type ClaimableStakePoolsQueryVariables = Exact<{
 }>;
 
 
-type ClaimableStakePoolsQuery = { __typename?: 'Query', basePoolsConnection: { __typename?: 'BasePoolsConnection', edges: Array<{ __typename?: 'BasePoolEdge', node: { __typename?: 'BasePool', id: string, stakePool?: { __typename?: 'StakePool', ownerReward: string } | null } }> } };
+type ClaimableStakePoolsQuery = { basePoolsConnection: { edges: Array<{ node: { id: string, stakePool?: { ownerReward: string } | null } }> } };
 
 type OwnedVaultsQueryVariables = Exact<{
   accountId?: InputMaybe<Scalars['String']>;
 }>;
 
 
-type OwnedVaultsQuery = { __typename?: 'Query', basePoolsConnection: { __typename?: 'BasePoolsConnection', edges: Array<{ __typename?: 'BasePoolEdge', node: { __typename?: 'BasePool', id: string, totalShares: string, sharePrice: string, commission: string, vault?: { __typename?: 'Vault', claimableOwnerShares: string, lastSharePriceCheckpoint: string } | null } }> } };
+type OwnedVaultsQuery = { basePoolsConnection: { edges: Array<{ node: { id: string, totalShares: string, sharePrice: string, commission: string, vault?: { claimableOwnerShares: string, lastSharePriceCheckpoint: string } | null } }> } };
 
 type BasePoolSnapshotsConnectionQueryVariables = Exact<{
   orderBy: Array<BasePoolSnapshotOrderByInput> | BasePoolSnapshotOrderByInput;
@@ -3116,9 +3068,9 @@ type BasePoolSnapshotsConnectionQueryVariables = Exact<{
 }>;
 
 
-type BasePoolSnapshotsConnectionQuery = { __typename?: 'Query', basePoolSnapshotsConnection: { __typename?: 'BasePoolSnapshotsConnection', totalCount: number, edges: Array<{ __typename?: 'BasePoolSnapshotEdge', cursor: string, node: { __typename?: 'BasePoolSnapshot', updatedTime: string, apr?: string, commission?: string, totalValue?: string, delegatorCount?: number, workerCount?: number | null, idleWorkerCount?: number | null, stakePoolCount?: number | null, cumulativeOwnerRewards?: string } }> } };
+type BasePoolSnapshotsConnectionQuery = { basePoolSnapshotsConnection: { totalCount: number, edges: Array<{ cursor: string, node: { updatedTime: string, apr?: string, commission?: string, totalValue?: string, delegatorCount?: number, workerCount?: number | null, idleWorkerCount?: number | null, stakePoolCount?: number | null, cumulativeOwnerRewards?: string } }> } };
 
-type DelegationCommonFragment = { __typename?: 'Delegation', id: string, shares: string, value: string, cost: string, withdrawalStartTime?: string | null, withdrawingShares: string, withdrawingValue: string, basePool: { __typename?: 'BasePool', id: string, kind: BasePoolKind, freeValue: string, sharePrice: string, aprMultiplier: string, withdrawingShares: string, owner: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null } }, delegationNft: { __typename?: 'Nft', cid: number, nftId: number, mintTime?: string | null }, withdrawalNft?: { __typename?: 'Nft', cid: number, nftId: number } | null, account: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null, basePool?: { __typename?: 'BasePool', id: string } | null } };
+type DelegationCommonFragment = { id: string, shares: string, value: string, cost: string, withdrawalStartTime?: string | null, withdrawingShares: string, withdrawingValue: string, basePool: { id: string, kind: BasePoolKind, freeValue: string, sharePrice: string, aprMultiplier: string, withdrawingShares: string, owner: { id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null } }, delegationNft: { cid: number, nftId: number, mintTime?: string | null }, withdrawalNft?: { cid: number, nftId: number } | null, account: { id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null, basePool?: { id: string } | null } };
 
 type DelegationByIdQueryVariables = Exact<{
   id: Scalars['String'];
@@ -3126,7 +3078,7 @@ type DelegationByIdQueryVariables = Exact<{
 }>;
 
 
-type DelegationByIdQuery = { __typename?: 'Query', delegationById?: { __typename?: 'Delegation', id: string, shares: string, value: string, cost: string, withdrawalStartTime?: string | null, withdrawingShares: string, withdrawingValue: string, snapshots: Array<{ __typename?: 'DelegationSnapshot', cost: string, value: string, updatedTime: string }>, basePool: { __typename?: 'BasePool', id: string, kind: BasePoolKind, freeValue: string, sharePrice: string, aprMultiplier: string, withdrawingShares: string, owner: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null } }, delegationNft: { __typename?: 'Nft', cid: number, nftId: number, mintTime?: string | null }, withdrawalNft?: { __typename?: 'Nft', cid: number, nftId: number } | null, account: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null, basePool?: { __typename?: 'BasePool', id: string } | null } } | null };
+type DelegationByIdQuery = { delegationById?: { id: string, shares: string, value: string, cost: string, withdrawalStartTime?: string | null, withdrawingShares: string, withdrawingValue: string, snapshots: Array<{ cost: string, value: string, updatedTime: string }>, basePool: { id: string, kind: BasePoolKind, freeValue: string, sharePrice: string, aprMultiplier: string, withdrawingShares: string, owner: { id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null } }, delegationNft: { cid: number, nftId: number, mintTime?: string | null }, withdrawalNft?: { cid: number, nftId: number } | null, account: { id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null, basePool?: { id: string } | null } } | null };
 
 type DelegationsConnectionQueryVariables = Exact<{
   orderBy: Array<DelegationOrderByInput> | DelegationOrderByInput;
@@ -3137,7 +3089,7 @@ type DelegationsConnectionQueryVariables = Exact<{
 }>;
 
 
-type DelegationsConnectionQuery = { __typename?: 'Query', delegationsConnection: { __typename?: 'DelegationsConnection', totalCount: number, edges: Array<{ __typename?: 'DelegationEdge', cursor: string, node: { __typename?: 'Delegation', id: string, shares: string, value: string, cost: string, withdrawalStartTime?: string | null, withdrawingShares: string, withdrawingValue: string, snapshots: Array<{ __typename?: 'DelegationSnapshot', cost: string, value: string, updatedTime: string }>, basePool: { __typename?: 'BasePool', id: string, kind: BasePoolKind, freeValue: string, sharePrice: string, aprMultiplier: string, withdrawingShares: string, owner: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null } }, delegationNft: { __typename?: 'Nft', cid: number, nftId: number, mintTime?: string | null }, withdrawalNft?: { __typename?: 'Nft', cid: number, nftId: number } | null, account: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null, basePool?: { __typename?: 'BasePool', id: string } | null } } }>, pageInfo: { __typename?: 'PageInfo', endCursor: string, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string } } };
+type DelegationsConnectionQuery = { delegationsConnection: { totalCount: number, edges: Array<{ cursor: string, node: { id: string, shares: string, value: string, cost: string, withdrawalStartTime?: string | null, withdrawingShares: string, withdrawingValue: string, snapshots: Array<{ cost: string, value: string, updatedTime: string }>, basePool: { id: string, kind: BasePoolKind, freeValue: string, sharePrice: string, aprMultiplier: string, withdrawingShares: string, owner: { id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null } }, delegationNft: { cid: number, nftId: number, mintTime?: string | null }, withdrawalNft?: { cid: number, nftId: number } | null, account: { id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null, basePool?: { id: string } | null } } }>, pageInfo: { endCursor: string, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string } } };
 
 type DelegationSnapshotsConnectionQueryVariables = Exact<{
   orderBy: Array<DelegationSnapshotOrderByInput> | DelegationSnapshotOrderByInput;
@@ -3147,7 +3099,7 @@ type DelegationSnapshotsConnectionQueryVariables = Exact<{
 }>;
 
 
-type DelegationSnapshotsConnectionQuery = { __typename?: 'Query', delegationSnapshotsConnection: { __typename?: 'DelegationSnapshotsConnection', totalCount: number, edges: Array<{ __typename?: 'DelegationSnapshotEdge', cursor: string, node: { __typename?: 'DelegationSnapshot', updatedTime: string, cost: string, value: string } }> } };
+type DelegationSnapshotsConnectionQuery = { delegationSnapshotsConnection: { totalCount: number, edges: Array<{ cursor: string, node: { updatedTime: string, cost: string, value: string } }> } };
 
 type GlobalRewardsSnapshotsConnectionQueryVariables = Exact<{
   orderBy: Array<GlobalRewardsSnapshotOrderByInput> | GlobalRewardsSnapshotOrderByInput;
@@ -3156,17 +3108,17 @@ type GlobalRewardsSnapshotsConnectionQueryVariables = Exact<{
 }>;
 
 
-type GlobalRewardsSnapshotsConnectionQuery = { __typename?: 'Query', globalRewardsSnapshotsConnection: { __typename?: 'GlobalRewardsSnapshotsConnection', edges: Array<{ __typename?: 'GlobalRewardsSnapshotEdge', node: { __typename?: 'GlobalRewardsSnapshot', value: string } }> } };
+type GlobalRewardsSnapshotsConnectionQuery = { globalRewardsSnapshotsConnection: { edges: Array<{ node: { value: string } }> } };
 
 type GlobalStateQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-type GlobalStateQuery = { __typename?: 'Query', squidStatus?: { __typename?: 'SquidStatus', height?: number | null } | null, globalStateById?: { __typename?: 'GlobalState', averageBlockTime: number, averageAprMultiplier: string, height: number, totalValue: string, idleWorkerShares: string, budgetPerBlock: string, k: string, phaRate: string, re: string, treasuryRatio: string, vMax: string, cumulativeRewards: string } | null };
+type GlobalStateQuery = { squidStatus?: { height?: number | null } | null, globalStateById?: { averageBlockTime: number, averageAprMultiplier: string, height: number, totalValue: string, idleWorkerShares: string, budgetPerBlock: string, k: string, phaRate: string, re: string, treasuryRatio: string, vMax: string, cumulativeRewards: string } | null };
 
 type IdleWorkerCountQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-type IdleWorkerCountQuery = { __typename?: 'Query', sessionsConnection: { __typename?: 'SessionsConnection', totalCount: number } };
+type IdleWorkerCountQuery = { sessionsConnection: { totalCount: number } };
 
 type NftsConnectionQueryVariables = Exact<{
   orderBy: Array<NftOrderByInput> | NftOrderByInput;
@@ -3176,7 +3128,7 @@ type NftsConnectionQueryVariables = Exact<{
 }>;
 
 
-type NftsConnectionQuery = { __typename?: 'Query', nftsConnection: { __typename?: 'NftsConnection', totalCount: number, edges: Array<{ __typename?: 'NftEdge', cursor: string, node: { __typename?: 'Nft', id: string, cid: number, nftId: number, mintTime?: string | null, owner: { __typename?: 'Account', id: string }, delegation?: { __typename?: 'Delegation', value: string, basePool: { __typename?: 'BasePool', id: string, kind: BasePoolKind } } | null } }>, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string, endCursor: string } } };
+type NftsConnectionQuery = { nftsConnection: { totalCount: number, edges: Array<{ cursor: string, node: { id: string, cid: number, nftId: number, mintTime?: string | null, owner: { id: string }, delegation?: { value: string, basePool: { id: string, kind: BasePoolKind } } | null } }>, pageInfo: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string, endCursor: string } } };
 
 type BasePoolWhitelistsConnectionQueryVariables = Exact<{
   orderBy: Array<BasePoolWhitelistOrderByInput> | BasePoolWhitelistOrderByInput;
@@ -3186,7 +3138,7 @@ type BasePoolWhitelistsConnectionQueryVariables = Exact<{
 }>;
 
 
-type BasePoolWhitelistsConnectionQuery = { __typename?: 'Query', basePoolWhitelistsConnection: { __typename?: 'BasePoolWhitelistsConnection', totalCount: number, edges: Array<{ __typename?: 'BasePoolWhitelistEdge', cursor: string, node: { __typename?: 'BasePoolWhitelist', createTime: string, id: string, account: { __typename?: 'Account', id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null } } }>, pageInfo: { __typename?: 'PageInfo', endCursor: string, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string } } };
+type BasePoolWhitelistsConnectionQuery = { basePoolWhitelistsConnection: { totalCount: number, edges: Array<{ cursor: string, node: { createTime: string, id: string, account: { id: string, identityDisplay?: string | null, identityLevel?: IdentityLevel | null } } }>, pageInfo: { endCursor: string, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string } } };
 
 type WorkersConnectionQueryVariables = Exact<{
   orderBy: Array<WorkerOrderByInput> | WorkerOrderByInput;
@@ -3196,7 +3148,7 @@ type WorkersConnectionQueryVariables = Exact<{
 }>;
 
 
-type WorkersConnectionQuery = { __typename?: 'Query', workersConnection: { __typename?: 'WorkersConnection', totalCount: number, edges: Array<{ __typename?: 'WorkerEdge', cursor: string, node: { __typename?: 'Worker', id: string, confidenceLevel: number, initialScore?: number | null, shares?: string | null, stakePool?: { __typename?: 'StakePool', id: string, basePool: { __typename?: 'BasePool', freeValue: string } } | null, session?: { __typename?: 'Session', coolingDownStartTime?: string | null, pInit: number, pInstant: number, stake: string, state: WorkerState, totalReward: string, v: string, ve: string } | null } }>, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string, endCursor: string } } };
+type WorkersConnectionQuery = { workersConnection: { totalCount: number, edges: Array<{ cursor: string, node: { id: string, confidenceLevel: number, initialScore?: number | null, shares?: string | null, stakePool?: { id: string, basePool: { freeValue: string } } | null, session?: { coolingDownStartTime?: string | null, pInit: number, pInstant: number, stake: string, state: WorkerState, totalReward: string, v: string, ve: string } | null } }>, pageInfo: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string, endCursor: string } } };
 
 type ReclaimableWorkersConnectionQueryVariables = Exact<{
   orderBy: Array<WorkerOrderByInput> | WorkerOrderByInput;
@@ -3204,7 +3156,7 @@ type ReclaimableWorkersConnectionQueryVariables = Exact<{
 }>;
 
 
-type ReclaimableWorkersConnectionQuery = { __typename?: 'Query', workersConnection: { __typename?: 'WorkersConnection', totalCount: number, edges: Array<{ __typename?: 'WorkerEdge', cursor: string, node: { __typename?: 'Worker', id: string, session?: { __typename?: 'Session', id: string, coolingDownStartTime?: string | null, stake: string } | null } }> } };
+type ReclaimableWorkersConnectionQuery = { workersConnection: { totalCount: number, edges: Array<{ cursor: string, node: { id: string, session?: { id: string, coolingDownStartTime?: string | null, stake: string } | null } }> } };
 
 export const BasePoolCommonFragmentDoc = gql`
     fragment BasePoolCommon on BasePool {

@@ -8,11 +8,10 @@ const useListenBlockHeight = (): void => {
   const [chain] = useAtom(chainAtom)
   const enabled = useRef(false)
   const [subsquidClient] = useAtom(subsquidClientAtom)
-  const {data: squidStatus} = useGlobalStateQuery(
-    subsquidClient,
-    {},
-    {refetchInterval: 3000, select: (data) => data.squidStatus}
-  )
+  const {data: squidStatus} = useGlobalStateQuery(subsquidClient, undefined, {
+    refetchInterval: 3000,
+    select: (data) => data.squidStatus,
+  })
   const queryClient = useQueryClient()
   const height = squidStatus?.height
 

@@ -71,7 +71,7 @@ const ChangeStake: FC<{
   const [loading, setLoading] = useState(false)
   const [amountString, setAmountString] = useState('')
   const [subsquidClient] = useAtom(subsquidClientAtom)
-  const {data: globalStateData} = useGlobalStateQuery(subsquidClient, {})
+  const {data: globalStateData} = useGlobalStateQuery(subsquidClient)
   const globalState = globalStateData?.globalStateById
   const sMin = useMemo(() => {
     if (worker != null && globalState != null) {
