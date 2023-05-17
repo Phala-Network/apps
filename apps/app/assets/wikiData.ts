@@ -14,26 +14,27 @@ const wikiData = {
 
   totalValue: {
     title: 'Total Value',
-    content: 'All delegated PHA across the network',
+    content: 'All delegated PHA across the Phala & Khala network',
   },
   stakeRatio: {
     title: 'Stake Ratio',
     content:
-      'Stake Ratio = All delegated PHA across the network / All circulating PHA.',
+      'Stake Ratio = All delegated PHA across the Phala & Khala network / All circulating PHA.',
   },
   dailyRewards: {
     title: 'Daily Rewards',
     content:
-      'The total amount of computation rewards distributed across the network in the past 24 hours (refreshed hourly).',
+      'The total amount of computation rewards distributed across the Phala & Khala network in the past 24 hours (refreshed hourly).',
   },
   avgApr: {
     title: 'Avg APR',
     content:
-      'The average annual percentage rate of return for all delegations across the network. (no consideration of compound interest)',
+      'The average annual percentage rate of return for all delegations across the Phala & Khala network. (no consideration of compound interest)',
   },
   onlineWorkers: {
     title: 'Online Workers',
-    content: 'The total number of online workers across the network.',
+    content:
+      'The total number of online workers across the Phala & Khala network.',
   },
 
   delegationValue: {
