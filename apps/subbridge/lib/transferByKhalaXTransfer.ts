@@ -5,6 +5,7 @@ import {type SubmittableExtrinsic} from '@polkadot/api/types'
 import {type ISubmittableResult} from '@polkadot/types/types'
 import {u8aToHex} from '@polkadot/util'
 import {decodeAddress} from '@polkadot/util-crypto'
+import getGeneralKey, {type Hex} from './getGeneralKey'
 
 const moonriverParaId = CHAINS.moonriver.paraId
 const karuraParaId = CHAINS.karura.paraId
@@ -18,15 +19,6 @@ const crabParaId = CHAINS.crab.paraId
 const moonbeamParaId = CHAINS.moonbeam.paraId
 const shidenParaId = CHAINS.shiden.paraId
 const astarParaId = CHAINS.astar.paraId
-
-type Hex = `0x${string}`
-
-const getGeneralKey = (hex: Hex): {length: number; data: Hex} => {
-  return {
-    length: (hex.length - 2) / 2,
-    data: `${hex}${'0'.repeat(66 - hex.length)}`,
-  }
-}
 
 const assetConcrete: {
   [fromChainId in ChainId]?: {[assetId in AssetId]?: Record<string, unknown>}

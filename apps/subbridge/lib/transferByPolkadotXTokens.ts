@@ -5,6 +5,7 @@ import type {SubmittableExtrinsic} from '@polkadot/api/types'
 import type {ISubmittableResult} from '@polkadot/types/types'
 import {u8aToHex} from '@polkadot/util'
 import {decodeAddress} from '@polkadot/util-crypto'
+import getGeneralKey, {type Hex} from './getGeneralKey'
 
 const khalaParaId = CHAINS.khala.paraId
 
@@ -71,36 +72,61 @@ export const transferByPolkadotXTokens = ({
   return polkadotApi.tx.xTokens.transfer(
     currencyId,
     amount,
-    {
-      V1: {
-        parents: 1,
-        interior: isThroughKhala
-          ? {
-              X4: [
-                {Parachain: khalaParaId},
-                {GeneralKey: '0x6362'}, // string "cb"
-                {GeneralIndex: generalIndex},
-                {GeneralKey: destinationAccount},
-              ],
-            }
-          : {
-              X2: [
-                {Parachain: toChain.paraId},
-                {
-                  AccountId32: {
-                    network: 'Any',
-                    id: u8aToHex(decodeAddress(destinationAccount)),
-                  },
+    fromChainId === 'bifrost-kusama' || fromChainId === 'bifrost-test'
+      ? {
+          V3: {
+            parents: 1,
+            interior: isThroughKhala
+              ? {
+                  X4: [
+                    {Parachain: khalaParaId},
+                    {GeneralKey: getGeneralKey('0x6362')},
+                    {GeneralIndex: generalIndex},
+                    {GeneralKey: getGeneralKey(destinationAccount as Hex)},
+                  ],
+                }
+              : {
+                  X2: [
+                    {Parachain: toChain.paraId},
+                    {
+                      AccountId32: {
+                        id: u8aToHex(decodeAddress(destinationAccount)),
+                      },
+                    },
+                  ],
                 },
-              ],
-            },
-      },
-    },
-    fromChainId === 'parallel' ||
-      fromChainId === 'parallel-heiko' ||
-      fromChainId === 'karura' ||
-      fromChainId === 'bifrost-kusama' ||
-      fromChainId === 'bifrost-test'
+          },
+        }
+      : {
+          V1: {
+            parents: 1,
+            interior: isThroughKhala
+              ? {
+                  X4: [
+                    {Parachain: khalaParaId},
+                    {GeneralKey: '0x6362'}, // string "cb"
+                    {GeneralIndex: generalIndex},
+                    {GeneralKey: destinationAccount},
+                  ],
+                }
+              : {
+                  X2: [
+                    {Parachain: toChain.paraId},
+                    {
+                      AccountId32: {
+                        network: 'Any',
+                        id: u8aToHex(decodeAddress(destinationAccount)),
+                      },
+                    },
+                  ],
+                },
+          },
+        },
+    fromChainId === 'bifrost-kusama' || fromChainId === 'bifrost-test'
+      ? {Limited: {refTime: '6000000000', proofSize: '1000000'}}
+      : fromChainId === 'parallel' ||
+        fromChainId === 'parallel-heiko' ||
+        fromChainId === 'karura'
       ? {Unlimited: null}
       : '6000000000'
   )
