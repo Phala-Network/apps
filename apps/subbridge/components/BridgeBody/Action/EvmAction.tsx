@@ -2,6 +2,7 @@ import {useCurrentEthersAssetContract} from '@/hooks/useEthersContract'
 import {useSwitchNetwork} from '@/hooks/useSwitchNetwork'
 import {ethersContractAllowanceFetcher} from '@/lib/ethersFetcher'
 import {
+  amountAtom,
   bridgeErrorMessageAtom,
   bridgeInfoAtom,
   decimalsAtom,
@@ -11,9 +12,10 @@ import {
 import {evmAccountAtom, isNetworkWrongAtom} from '@/store/ethers'
 import {LoadingButton} from '@mui/lab'
 import {Button, Stack} from '@mui/material'
+import Decimal from 'decimal.js'
 import {useAtom, useAtomValue} from 'jotai'
 import {useSnackbar} from 'notistack'
-import {useState, type FC} from 'react'
+import {useEffect, useState, type FC} from 'react'
 import useSWR from 'swr'
 
 const EvmAction: FC<{onConfirm: () => void}> = ({onConfirm}) => {
@@ -21,6 +23,7 @@ const EvmAction: FC<{onConfirm: () => void}> = ({onConfirm}) => {
   const {enqueueSnackbar} = useSnackbar()
   const [fromChain] = useAtom(fromChainAtom)
   const [toChain] = useAtom(toChainAtom)
+  const [amount] = useAtom(amountAtom)
   const ethersAssetContract = useCurrentEthersAssetContract()
   const [evmAccount] = useAtom(evmAccountAtom)
   const [isNetworkWrong] = useAtom(isNetworkWrongAtom)
@@ -36,24 +39,45 @@ const EvmAction: FC<{onConfirm: () => void}> = ({onConfirm}) => {
       fromChain.chainBridgeContract.spender.default
   }
 
-  const {data: approved} = useSWR(
+  const {data: allowance} = useSWR(
     needApproval &&
       ethersAssetContract != null &&
       evmAccount != null &&
       spender != null && [ethersAssetContract, evmAccount, spender],
     ethersContractAllowanceFetcher,
-    {refreshInterval: (latestData) => (latestData === true ? 0 : 3000)}
+    {
+      refreshInterval: (latestData) =>
+        amount.length > 0 &&
+        latestData != null &&
+        latestData.gte(new Decimal(amount).times(Decimal.pow(10, decimals)))
+          ? 0
+          : 3000,
+    }
   )
+  const allowanceString = allowance?.toString()
+
+  const approved =
+    amount.length > 0 &&
+    allowance != null &&
+    allowance.gte(new Decimal(amount).times(Decimal.pow(10, decimals)))
+
+  useEffect(() => {
+    if (allowanceString != null) {
+      setApproveLoading(false)
+    }
+  }, [allowanceString])
 
   const handleApprove = async (): Promise<void> => {
     if (ethersAssetContract != null && spender != null) {
       setApproveLoading(true)
       try {
         const {ethers} = await import('ethers')
-        await ethersAssetContract.approve(
+        const tx = await ethersAssetContract.approve(
           spender,
-          ethers.utils.parseUnits('1000000000', decimals)
+          ethers.utils.parseUnits(amount, decimals)
         )
+        await tx.wait()
+        setApproveLoading(false)
       } catch (err) {
         if (err instanceof Error) {
           enqueueSnackbar(err.message, {variant: 'error'})
@@ -89,32 +113,27 @@ const EvmAction: FC<{onConfirm: () => void}> = ({onConfirm}) => {
     >
       {needApproval && (
         <LoadingButton
-          loading={(approved === false && approveLoading) || approved == null}
+          loading={!approved && approveLoading}
           size="large"
           sx={{flex: 1}}
           disabled={
-            approved === undefined ||
-            approved ||
-            ethersAssetContract == null ||
-            spender == null
+            amount.length === 0 || approved || ethersAssetContract == null
           }
           onClick={() => {
             void handleApprove()
           }}
         >
-          {approved === true ? 'Approved' : 'Approve'}
+          {approved ? 'Approved' : 'Approve'}
         </LoadingButton>
       )}
       <Button
         size="large"
         sx={{flex: 1}}
         variant="contained"
-        disabled={
-          (approved !== true && needApproval) || bridgeErrorMessage != null
-        }
+        disabled={(!approved && needApproval) || bridgeErrorMessage != null}
         onClick={onConfirm}
       >
-        {(approved === true || !needApproval) && bridgeErrorMessage != null
+        {(approved || !needApproval) && bridgeErrorMessage != null
           ? bridgeErrorMessage
           : 'Transfer'}
       </Button>
