@@ -30,11 +30,10 @@ export const ethersContractAllowanceFetcher = async ([
   contract,
   owner,
   spender,
-]: [ethers.Contract, `0x${string}`, `0x${string}`]): Promise<boolean> => {
+]: [ethers.Contract, `0x${string}`, `0x${string}`]): Promise<Decimal> => {
   const balance = (await contract.allowance(owner, spender)) as BigNumber
 
-  // FIXME: should compare to amount user inputted
-  return balance.gt(0)
+  return new Decimal(balance.toHexString())
 }
 
 export const ethersGasPriceFetcher = async (
