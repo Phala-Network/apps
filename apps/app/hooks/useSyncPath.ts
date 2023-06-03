@@ -7,10 +7,7 @@ const useSyncPath = (): void => {
   const router = useRouter()
   const [chain] = useAtom(chainAtom)
   useEffect(() => {
-    const isProd = process.env.CONTEXT === 'production'
-    if (isProd && chain === 'phala') {
-      void router.replace('/phala')
-    } else if (router.query.chain !== chain && router.isReady) {
+    if (router.query.chain !== chain && router.isReady) {
       void router.replace(
         router.asPath.replace(/^\/(phala|khala)/, `/${chain}`),
         undefined,
