@@ -66,9 +66,7 @@ const DashboardAccount: FC = () => {
         data.accountById ?? {vaultValue: '0', stakePoolValue: '0'},
     }
   )
-  const isProd = process.env.CONTEXT === 'production'
-  const isDelegationClickable =
-    account !== null && !(isProd && chain === 'phala')
+
   return (
     <Paper
       sx={{
@@ -181,15 +179,10 @@ const DashboardAccount: FC = () => {
             </Typography>
           </BalanceBox>
           <BalanceBox
-            sx={{cursor: isDelegationClickable ? 'pointer' : 'auto'}}
             onClick={() => {
-              if (isDelegationClickable) {
-                void router.push(
-                  `/${chain}/delegate/my-delegation`,
-                  undefined,
-                  {shallow: true}
-                )
-              }
+              void router.push(`/${chain}/delegate/my-delegation`, undefined, {
+                shallow: true,
+              })
             }}
           >
             <Stack direction="row" alignItems="center">
@@ -229,9 +222,7 @@ const DashboardAccount: FC = () => {
                   )}
                 </Typography>
               </Box>
-              {isDelegationClickable && (
-                <KeyboardArrowRight sx={{ml: 'auto'}} />
-              )}
+              <KeyboardArrowRight sx={{ml: 'auto'}} />
             </Stack>
           </BalanceBox>
         </Stack>
