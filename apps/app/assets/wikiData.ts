@@ -1,3 +1,4 @@
+import shareEquation from '@/assets/share_equation.png'
 import {type ReactNode} from 'react'
 
 const wikiData = {
@@ -175,6 +176,48 @@ const wikiData = {
   reclaimPool: {
     title: 'Reclaim Pool',
     content: `When there is a withdrawal queue in the pool, anyone can use the "reclaim" operation to adjust the free liquidity of the pool, that is, use the existing free liquidity to pay off the withdrawal queue.\nAt the same time, if there is a withdrawal queue in the pool for more than 7 days, and there is no delegation being released or enough free liquidity, the pool will be frozen. A full delegation withdrawal request will be initiated to all StakePools (for Vault), or a stop request will be initiated to all workers in the pool (for StakePool).`,
+  },
+  dailyBudgetPerShare: {
+    title: 'Daily budget/share',
+    content: `It's roughly equal to the daily income of a 10,000V worker before the 20% take away to the Treasury.
+
+Daily budget per share means the reward budget for each unit of computing power per day.
+    
+The calculation formula is:
+
+Daily budget per share = (Phala budget per share * Phala total share + Khala budget per share * Khala total share)  / (Phala total share + Khala total share)
+
+- Phala budget per share = Phala budget * 24 * 60 * 60 / Phala block speed / (Phala total share/10000)
+- Khala budget per share = Khala budget * 24 * 60 * 60 / Khala block speed / (Khala total share/10000)
+
+This budget is adjusted by the budget balancer at UTC 0 o'clock every day, to ensure that the unit computing power earnings between Phala and Khala networks are as similar as possible.
+
+The adjustment calculation logic is based on days, and the key factors for allocation are: 
+
+- the current halving period
+- the total standard budget of the entire network
+- the average block speed of the previous day
+- the computing power snapshot at 0 o'clock.
+
+Here is detailed intro for Budget Balancer which includes the specific formula:
+
+[https://docs.phala.network/v1/compute-providers/basic-info/budget-balancer](https://docs.phala.network/v1/compute-providers/basic-info/budget-balancer)
+
+**If you find that the result on Phala/Khala are inconsistent, it's normal. Because we will use the block time of the previous day to calculate the budget allocation for the new day, this is reasonable, as the "losses" from the previous day will be compensated in the new day.**
+
+In addition, the unit of share in the current indicator here is 10,000 real shares, which can more intuitively show the income of the workers. 
+
+Because the calculation of machine share depends on the “real-time V value”, “worker confidence level”, and “real-time P value”. 
+
+A worker with a full V value (30,000) has a share of 30,000-33,000 (the interval part mainly depends on the worker’s P value). Therefore, if the Daily budget/share is 10, the income of a full v worker is about 24PHA/day (excluding the commission of the treasury - 20%)
+
+The specific formula for share is:
+
+![](${shareEquation.src})
+
+Here is the detailed intro for worker rewards:
+
+[https://docs.phala.network/v1/compute-providers/basic-info/worker-rewards](https://docs.phala.network/v1/compute-providers/basic-info/worker-rewards)`,
   },
 } satisfies Record<string, {title: string; content: ReactNode}>
 

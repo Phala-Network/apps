@@ -7,16 +7,33 @@ import {
   AccordionDetails,
   AccordionSummary,
   Button,
+  Link,
   Stack,
   Typography,
   useTheme,
 } from '@mui/material'
 import {useAtom} from 'jotai'
 import {type FC, type ReactNode} from 'react'
+import Markdown from 'react-markdown'
+
+const Content: FC<{children: string}> = ({children}) => {
+  return (
+    <Markdown
+      components={{
+        p: ({node, ...props}) => (
+          <Typography variant="body1" mt={2} {...props} />
+        ),
+        a: ({node, ...props}) => <Link target="_blank" {...props} />,
+      }}
+    >
+      {children}
+    </Markdown>
+  )
+}
 
 const Entry: FC<{
   title: ReactNode
-  children?: ReactNode
+  children: string
   defaultExpanded?: boolean
 }> = ({title, defaultExpanded = false, children}) => {
   const theme = useTheme()
@@ -47,7 +64,7 @@ const Entry: FC<{
         )}
       </AccordionSummary>
       <AccordionDetails>
-        <Typography whiteSpace="pre-wrap">{children}</Typography>
+        <Content>{children}</Content>
       </AccordionDetails>
     </Accordion>
   )
@@ -62,10 +79,10 @@ const Wiki: FC<{defaultExpanded?: boolean}> = ({defaultExpanded}) => {
     <>
       {expand != null && (
         <>
-          <Typography variant="h4">{expand.title}</Typography>
-          <Typography mt={2} whiteSpace="pre-wrap" variant="body1">
-            {expand.content}
+          <Typography variant="h4" mb={2}>
+            {expand.title}
           </Typography>
+          <Content>{expand.content}</Content>
         </>
       )}
 
