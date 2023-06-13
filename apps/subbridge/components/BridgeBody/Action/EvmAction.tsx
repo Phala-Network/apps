@@ -71,10 +71,12 @@ const EvmAction: FC<{onConfirm: () => void}> = ({onConfirm}) => {
     if (ethersAssetContract != null && spender != null) {
       setApproveLoading(true)
       try {
-        const {ethers} = await import('ethers')
         const tx = await ethersAssetContract.approve(
           spender,
-          ethers.utils.parseUnits(amount, decimals)
+          new Decimal(amount)
+            .toDP(0, Decimal.ROUND_UP)
+            .times(Decimal.pow(10, decimals))
+            .toHex()
         )
         await tx.wait()
         setApproveLoading(false)
