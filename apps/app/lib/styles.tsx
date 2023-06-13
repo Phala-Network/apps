@@ -23,7 +23,7 @@ export const globalStyles = css`
   }
 
   .notistack-containerAnchorOriginTopRight {
-    top: 72px !important;
+    top: 112px !important;
   }
 
   sub {

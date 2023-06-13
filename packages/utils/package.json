@@ -10,8 +10,8 @@
     "typecheck": "tsc --project ./tsconfig.json --noEmit"
   },
   "dependencies": {
-    "@polkadot/keyring": "^12.1.2",
-    "@polkadot/util": "^12.1.2",
+    "@polkadot/keyring": "^12.2.2",
+    "@polkadot/util": "^12.2.2",
     "decimal.js": "^10.4.3"
   },
   "devDependencies": {

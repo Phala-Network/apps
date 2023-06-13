@@ -9,7 +9,7 @@ import {
   useIdleWorkerCountQuery,
 } from '@/lib/subsquidQuery'
 import {chainAtom} from '@/store/common'
-import {Skeleton, Stack, useMediaQuery, useTheme} from '@mui/material'
+import {Skeleton, Stack, Tooltip, useMediaQuery, useTheme} from '@mui/material'
 import {useInterval} from '@phala/lib'
 import {toPercentage} from '@phala/util'
 import {useQuery} from '@tanstack/react-query'
@@ -18,7 +18,6 @@ import Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
 import {useMemo, useState, type FC} from 'react'
 import Property from '../Property'
-
 interface CirculationData {
   data?: {circulations?: {nodes?: [{amount: string}?]}}
 }
@@ -66,97 +65,239 @@ const NetworkStats: FC = () => {
   const {
     totalValue: phalaTotalValue,
     averageAprMultiplier: phalaAverageAprMultiplier,
+    idleWorkerShares: phalaIdleWorkerShares,
+    budgetPerBlock: phalaBudgetPerBlock,
+    averageBlockTime: phalaAverageBlockTime,
   } = phalaGlobalStateData?.globalStateById ?? {}
   const {
     totalValue: khalaTotalValue,
     averageAprMultiplier: khalaAverageAprMultiplier,
+    idleWorkerShares: khalaIdleWorkerShares,
+    budgetPerBlock: khalaBudgetPerBlock,
+    averageBlockTime: khalaAverageBlockTime,
   } = khalaGlobalStateData?.globalStateById ?? {}
-  const totalValue = useMemo(() => {
-    if (phalaTotalValue === undefined || khalaTotalValue === undefined) return
-    return new Decimal(phalaTotalValue).plus(khalaTotalValue)
-  }, [phalaTotalValue, khalaTotalValue])
-  const stakeRatio = useMemo(() => {
-    if (circulationValue === undefined || totalValue === undefined) return
-    return toPercentage(totalValue.times(1e12).div(circulationValue))
-  }, [circulationValue, totalValue])
-  const dailyRewards = useMemo(() => {
-    const phalaValue =
+  const phalaTotalValueDecimal = useMemo(() => {
+    if (phalaTotalValue == null) return null
+    return new Decimal(phalaTotalValue)
+  }, [phalaTotalValue])
+  const khalaTotalValueDecimal = useMemo(() => {
+    if (khalaTotalValue == null) return null
+    return new Decimal(khalaTotalValue)
+  }, [khalaTotalValue])
+  const phalaBudgetPerShare = useMemo(() => {
+    if (
+      phalaBudgetPerBlock == null ||
+      phalaIdleWorkerShares == null ||
+      phalaAverageBlockTime == null
+    )
+      return null
+    return new Decimal(phalaBudgetPerBlock)
+      .div(phalaIdleWorkerShares)
+      .div(phalaAverageBlockTime)
+      .times(1e7 * 24 * 60 * 60)
+  }, [phalaAverageBlockTime, phalaBudgetPerBlock, phalaIdleWorkerShares])
+  const khalaBudgetPerShare = useMemo(() => {
+    if (
+      khalaBudgetPerBlock == null ||
+      khalaIdleWorkerShares == null ||
+      khalaAverageBlockTime == null
+    )
+      return null
+    return new Decimal(khalaBudgetPerBlock)
+      .div(khalaIdleWorkerShares)
+      .div(khalaAverageBlockTime)
+      .times(1e7 * 24 * 60 * 60)
+  }, [khalaAverageBlockTime, khalaBudgetPerBlock, khalaIdleWorkerShares])
+  const totalBudgetPerShare = useMemo(() => {
+    if (
+      phalaBudgetPerBlock == null ||
+      phalaIdleWorkerShares == null ||
+      phalaAverageBlockTime == null ||
+      khalaBudgetPerBlock == null ||
+      khalaIdleWorkerShares == null ||
+      khalaAverageBlockTime == null
+    )
+      return null
+
+    return new Decimal(phalaBudgetPerBlock)
+      .div(phalaAverageBlockTime)
+      .plus(new Decimal(khalaBudgetPerBlock).div(khalaAverageBlockTime))
+      .times(1e7 * 24 * 60 * 60)
+      .div(new Decimal(phalaIdleWorkerShares).plus(khalaIdleWorkerShares))
+  }, [
+    khalaAverageBlockTime,
+    khalaBudgetPerBlock,
+    khalaIdleWorkerShares,
+    phalaAverageBlockTime,
+    phalaBudgetPerBlock,
+    phalaIdleWorkerShares,
+  ])
+  const totalValueDecimal = useMemo(() => {
+    if (phalaTotalValueDecimal == null || khalaTotalValueDecimal == null)
+      return null
+    return phalaTotalValueDecimal.add(khalaTotalValueDecimal)
+  }, [phalaTotalValueDecimal, khalaTotalValueDecimal])
+  const phalaStakeRatio = useMemo(() => {
+    if (phalaTotalValueDecimal == null || circulationValue == null) return null
+    return toPercentage(
+      phalaTotalValueDecimal.times(1e12).div(circulationValue)
+    )
+  }, [circulationValue, phalaTotalValueDecimal])
+  const khalaStakeRatio = useMemo(() => {
+    if (khalaTotalValueDecimal == null || circulationValue == null) return null
+    return toPercentage(
+      khalaTotalValueDecimal.times(1e12).div(circulationValue)
+    )
+  }, [circulationValue, khalaTotalValueDecimal])
+  const totalStakeRatio = useMemo(() => {
+    if (circulationValue == null || totalValueDecimal == null) return null
+    return toPercentage(totalValueDecimal.times(1e12).div(circulationValue))
+  }, [circulationValue, totalValueDecimal])
+  const phalaDailyRewards = useMemo(() => {
+    const prevRewards =
       phalaGlobalRewardsSnapshotData?.globalRewardsSnapshotsConnection.edges[0]
         ?.node.value
-    const khalaValue =
+    const currentRewards =
+      phalaGlobalStateData?.globalStateById?.cumulativeRewards
+    if (prevRewards == null || currentRewards == null) return null
+    return new Decimal(currentRewards).minus(prevRewards)
+  }, [phalaGlobalRewardsSnapshotData, phalaGlobalStateData])
+  const khalaDailyRewards = useMemo(() => {
+    const prevRewards =
       khalaGlobalRewardsSnapshotData?.globalRewardsSnapshotsConnection.edges[0]
         ?.node.value
-    if (
-      phalaValue == null ||
-      khalaValue == null ||
-      phalaGlobalStateData?.globalStateById == null ||
-      khalaGlobalStateData?.globalStateById == null
-    ) {
-      return
+    const currentRewards =
+      khalaGlobalStateData?.globalStateById?.cumulativeRewards
+    if (prevRewards == null || currentRewards == null) return null
+    return new Decimal(currentRewards).minus(prevRewards)
+  }, [khalaGlobalRewardsSnapshotData, khalaGlobalStateData])
+  const totalDailyRewards = useMemo(() => {
+    if (phalaDailyRewards == null || khalaDailyRewards == null) {
+      return null
     }
-
-    return compactFormat(
-      new Decimal(phalaGlobalStateData.globalStateById.cumulativeRewards)
-        .minus(phalaValue)
-        .plus(khalaGlobalStateData.globalStateById.cumulativeRewards)
-        .minus(khalaValue)
-    )
-  }, [
-    khalaGlobalRewardsSnapshotData?.globalRewardsSnapshotsConnection.edges,
-    khalaGlobalStateData?.globalStateById,
-    phalaGlobalRewardsSnapshotData?.globalRewardsSnapshotsConnection.edges,
-    phalaGlobalStateData?.globalStateById,
-  ])
-  const avgApr = useMemo(() => {
+    return phalaDailyRewards.plus(khalaDailyRewards)
+  }, [phalaDailyRewards, khalaDailyRewards])
+  const phalaAvgApr = useMemo(() => {
+    if (phalaAverageAprMultiplier == null) return null
+    return getPhalaApr(phalaAverageAprMultiplier)
+  }, [getPhalaApr, phalaAverageAprMultiplier])
+  const khalaAvgApr = useMemo(() => {
+    if (khalaAverageAprMultiplier == null) return null
+    return getKhalaApr(khalaAverageAprMultiplier)
+  }, [getKhalaApr, khalaAverageAprMultiplier])
+  const totalAvgApr = useMemo(() => {
     if (
-      phalaAverageAprMultiplier == null ||
-      khalaAverageAprMultiplier == null ||
-      phalaTotalValue == null ||
-      khalaTotalValue == null
+      phalaTotalValueDecimal == null ||
+      khalaTotalValueDecimal == null ||
+      phalaAvgApr == null ||
+      khalaAvgApr == null ||
+      totalValueDecimal == null
     ) {
-      return
+      return null
     }
-    const phalaApr = getPhalaApr(phalaAverageAprMultiplier)
-    const khalaApr = getKhalaApr(khalaAverageAprMultiplier)
-    if (phalaApr == null || khalaApr == null) return
-    const apr = phalaApr
-      .times(phalaTotalValue)
-      .plus(khalaApr.times(khalaTotalValue))
-      .div(new Decimal(phalaTotalValue).plus(khalaTotalValue))
-    return toPercentage(apr)
+    const apr = phalaAvgApr
+      .times(phalaTotalValueDecimal)
+      .plus(khalaAvgApr.times(khalaTotalValueDecimal))
+      .div(totalValueDecimal)
+    return apr
   }, [
-    getKhalaApr,
-    getPhalaApr,
-    khalaAverageAprMultiplier,
-    khalaTotalValue,
-    phalaAverageAprMultiplier,
-    phalaTotalValue,
+    khalaAvgApr,
+    khalaTotalValueDecimal,
+    phalaAvgApr,
+    phalaTotalValueDecimal,
+    totalValueDecimal,
   ])
+  const phalaIdleWorkerCount =
+    phalaIdleWorkerCountData?.sessionsConnection.totalCount
+  const khalaIdleWorkerCount =
+    khalaIdleWorkerCountData?.sessionsConnection.totalCount
   const idleWorkerCount = useMemo(() => {
-    const phalaCount = phalaIdleWorkerCountData?.sessionsConnection.totalCount
-    const khalaCount = khalaIdleWorkerCountData?.sessionsConnection.totalCount
-    return typeof phalaCount === 'number' && typeof khalaCount === 'number'
-      ? compactFormat(phalaCount + khalaCount)
+    return typeof phalaIdleWorkerCount === 'number' &&
+      typeof khalaIdleWorkerCount === 'number'
+      ? phalaIdleWorkerCount + khalaIdleWorkerCount
       : undefined
-  }, [
-    khalaIdleWorkerCountData?.sessionsConnection.totalCount,
-    phalaIdleWorkerCountData?.sessionsConnection.totalCount,
-  ])
+  }, [khalaIdleWorkerCount, phalaIdleWorkerCount])
+
+  type Value = string | undefined | null
   const items = useMemo<
-    Array<[string, string | undefined | false, WikiEntry]>
+    Array<{
+      label: string
+      value: Value
+      phalaValue: Value
+      khalaValue: Value
+      wikiEntry: WikiEntry
+    }>
   >(() => {
+    const format = (
+      value: Decimal | number | null | undefined
+    ): string | undefined | null => {
+      if (value == null) return value
+      return compactFormat(value)
+    }
     return [
-      [
-        'Total Value',
-        totalValue != null && compactFormat(totalValue),
-        'totalValue',
-      ],
-      ['Stake Ratio', stakeRatio, 'stakeRatio'],
-      ['Daily Rewards', dailyRewards, 'dailyRewards'],
-      ['Avg APR', avgApr, 'avgApr'],
-      ['Online Workers', idleWorkerCount, 'onlineWorkers'],
+      {
+        label: 'Total Value',
+        value: format(totalValueDecimal),
+        wikiEntry: 'totalValue',
+        phalaValue: format(phalaTotalValueDecimal),
+        khalaValue: format(khalaTotalValueDecimal),
+      },
+      {
+        label: 'Stake Ratio',
+        value: totalStakeRatio,
+        wikiEntry: 'stakeRatio',
+        phalaValue: `${phalaStakeRatio ?? ''}/${totalStakeRatio ?? ''}`,
+        khalaValue: `${khalaStakeRatio ?? ''}/${totalStakeRatio ?? ''}`,
+      },
+      {
+        label: 'Daily Rewards',
+        value: format(totalDailyRewards),
+        wikiEntry: 'dailyRewards',
+        phalaValue: format(phalaDailyRewards),
+        khalaValue: format(khalaDailyRewards),
+      },
+      {
+        label: 'Online Workers',
+        value: format(idleWorkerCount),
+        wikiEntry: 'onlineWorkers',
+        phalaValue: format(phalaIdleWorkerCount),
+        khalaValue: format(khalaIdleWorkerCount),
+      },
+      {
+        label: 'Avg APR',
+        value: toPercentage(totalAvgApr),
+        wikiEntry: 'avgApr',
+        phalaValue: toPercentage(phalaAvgApr),
+        khalaValue: toPercentage(khalaAvgApr),
+      },
+      {
+        label: 'Daily budget/share',
+        value: totalBudgetPerShare?.toDP(2).toString(),
+        wikiEntry: 'dailyBudgetPerShare',
+        phalaValue: phalaBudgetPerShare?.toDP(2).toString(),
+        khalaValue: khalaBudgetPerShare?.toDP(2).toString(),
+      },
     ]
-  }, [totalValue, stakeRatio, dailyRewards, avgApr, idleWorkerCount])
+  }, [
+    totalValueDecimal,
+    phalaTotalValueDecimal,
+    khalaTotalValueDecimal,
+    totalStakeRatio,
+    phalaStakeRatio,
+    khalaStakeRatio,
+    totalDailyRewards,
+    phalaDailyRewards,
+    khalaDailyRewards,
+    idleWorkerCount,
+    phalaIdleWorkerCount,
+    khalaIdleWorkerCount,
+    totalAvgApr,
+    phalaAvgApr,
+    khalaAvgApr,
+    totalBudgetPerShare,
+    phalaBudgetPerShare,
+    khalaBudgetPerShare,
+  ])
 
   const [currentIndex, setCurrentIndex] = useState(0)
   useInterval(
@@ -168,16 +309,42 @@ const NetworkStats: FC = () => {
 
   return (
     <Stack direction="row" spacing={{xs: 0, lg: 3}} flex="none">
-      {items.map(([label, value, wikiEntry], index) => {
+      {items.map(({label, value, wikiEntry, phalaValue, khalaValue}, index) => {
         return (
           <Property
+            key={label}
             size="small"
             label={label}
             wikiEntry={wikiEntry}
-            key={label}
-            sx={{display: match && currentIndex !== index ? 'none' : undefined}}
+            sx={{
+              display: match && currentIndex !== index ? 'none' : undefined,
+            }}
           >
-            {value ?? <Skeleton width={40} />}
+            <Tooltip
+              title={
+                <>
+                  <Property label="Phala" size="small">
+                    {phalaValue ?? <Skeleton width={40} />}
+                  </Property>
+                  <Property label="Khala" size="small">
+                    {khalaValue ?? <Skeleton width={40} />}
+                  </Property>
+                </>
+              }
+            >
+              {value == null ? (
+                <Skeleton width={40} />
+              ) : (
+                <span
+                  css={{
+                    textDecoration: 'underline dotted',
+                    textDecorationColor: theme.palette.text.secondary,
+                  }}
+                >
+                  {value}
+                </span>
+              )}
+            </Tooltip>
           </Property>
         )
       })}
