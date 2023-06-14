@@ -1,5 +1,5 @@
 import {type AssetId} from '@/config/asset'
-import {type ChainId, CHAINS} from '@/config/chain'
+import {CHAINS, type ChainId} from '@/config/chain'
 import type {ApiPromise} from '@polkadot/api'
 import type {SubmittableExtrinsic} from '@polkadot/api/types'
 import type {ISubmittableResult} from '@polkadot/types/types'
@@ -45,22 +45,24 @@ export const transferByPolkadotXcm = ({
     ? 'reserveTransferAssets'
     : 'reserveWithdrawAssets'
 
+  const xcmVersion = fromChainId === 'shiden' ? 'V3' : 'V1'
+
   return polkadotApi.tx.polkadotXcm[functionName](
-    {V1: {parents: 1, interior: {X1: {Parachain: toChain.paraId}}}},
+    {[xcmVersion]: {parents: 1, interior: {X1: {Parachain: toChain.paraId}}}},
     {
-      V1: {
+      [xcmVersion]: {
         parents: 0,
         interior: {
           X1: {
             AccountId32: {
-              network: 'Any',
+              ...(xcmVersion === 'V1' && {network: 'Any'}),
               id: u8aToHex(decodeAddress(destinationAccount)),
             },
           },
         },
       },
     },
-    {V1: [{id: {Concrete}, fun: {Fungible: amount}}]},
+    {[xcmVersion]: [{id: {Concrete}, fun: {Fungible: amount}}]},
     0
   )
 }
