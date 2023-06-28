@@ -121,8 +121,8 @@ export const transferByPhalaXTransfer = ({
   const isTransferringZLKToMoonriver =
     (toChainId === 'moonriver' || toChainId === 'moonbase-alpha') &&
     assetId === 'zlk'
-  const generalIndex = toChain.kind === 'evm' ? toChain.generalIndex : null
   const isSygma = kind === 'phalaSygma'
+  const generalIndex = toChain.kind === 'evm' ? toChain.generalIndex : null
 
   const concrete = assetConcrete[fromChainId]?.[assetId]
   if (concrete == null) {

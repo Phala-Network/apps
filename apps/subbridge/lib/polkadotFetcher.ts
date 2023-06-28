@@ -21,7 +21,7 @@ export const polkadotAvailableBalanceFetcher = async ([api, address]: [
   )
 }
 
-export const palletAssetBalanceFetcher = async ([
+export const assetPalletBalanceFetcher = async ([
   polkadotApi,
   address,
   palletAssetId,

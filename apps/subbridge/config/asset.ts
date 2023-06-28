@@ -45,6 +45,9 @@ export interface Asset {
   erc20TokenContractAddress?: {
     [chainId in EvmChainId]?: `0x${string}`
   }
+  reservedAddress?: {
+    [chainId in ChainId]?: string
+  }
   chainBridgeResourceId?:
     | `0x${string}`
     | {
@@ -110,6 +113,11 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
       shiden: '18446744073709551623',
       astar: '18446744073709551622',
       turing: 7,
+    },
+    reservedAddress: {
+      ethereum: '0xC832588193cd5ED2185daDA4A531e0B26eC5B830',
+      phala: '5EYCAe5jLbHcAAMKvLFSXgCTbPrLgBJusvPwfKcaKzuf5X5e',
+      khala: '5EYCAe5jLbHcAAMKvLFSXgCTbPrLgBJusvPwfKcaKzuf5X5e',
     },
   },
   movr: {
@@ -177,6 +185,10 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
     existentialDeposit: {
       'bifrost-kusama': new Decimal('0.01'),
       'bifrost-test': new Decimal('0.01'),
+    },
+    reservedAddress: {
+      moonriver: '0xf88337a0db6e24Dff0fCD7F92ab0655B97A68d38',
+      khala: '441RSFVuGcTybwYi7NPKAqYzEkDwnGDwLdTYrViNXr8RXVfG',
     },
   },
   bnc: {

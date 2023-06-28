@@ -65,7 +65,7 @@ export interface EvmChain extends BaseChain {
     }
   }
   xTokensContractAddress?: `0x${string}`
-  generalIndex?: number // for khala chain bridge
+  generalIndex?: number
   sygmaHandler?: string
 }
 
@@ -143,7 +143,7 @@ export const CHAINS: Readonly<
         khala: '0xEEc0fb4913119567cDfC0c5fc2Bf8f9F9B226c2d',
       },
     },
-    generalIndex: 0,
+    generalIndex: 1,
     explorerURL: 'https://etherscan.io/',
     sygmaChainId: 1,
     sygmaHandler: '0xC832588193cd5ED2185daDA4A531e0B26eC5B830',

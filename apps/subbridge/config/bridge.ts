@@ -87,11 +87,11 @@ export const BRIDGES: Readonly<Bridge[]> = [
     toChains: [
       {
         id: 'phala',
-        assets: [{assetId: 'pha', estimatedTime: '< 1 min', kind: 'evmSygma'}],
+        assets: [{assetId: 'pha', estimatedTime: '~ 5 mins', kind: 'evmSygma'}],
       },
       {
         id: 'khala',
-        assets: [{assetId: 'pha', estimatedTime: '< 1 min', kind: 'evmSygma'}],
+        assets: [{assetId: 'pha', estimatedTime: '~ 5 mins', kind: 'evmSygma'}],
       },
     ],
   },

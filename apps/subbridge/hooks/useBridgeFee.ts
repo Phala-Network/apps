@@ -1,3 +1,4 @@
+import {getEvmSygmaTransfer} from '@/lib/evmSygma'
 import {
   assetAtom,
   bridgeInfoAtom,
@@ -5,7 +6,6 @@ import {
   toChainAtom,
 } from '@/store/bridge'
 import {evmAccountAtom} from '@/store/ethers'
-import {type Fungible, type Transfer} from '@buildwithsygma/sygma-sdk-core'
 import Decimal from 'decimal.js'
 import {useAtomValue} from 'jotai'
 import useSWR from 'swr'
@@ -40,53 +40,15 @@ export const useBridgeFee = (): Decimal | undefined => {
         'sygmaFee',
       ],
     async ([provider, evmAccount, fromChain, toChain, asset]) => {
-      const isTest = fromChain.isTest === true
-      const {EVMAssetTransfer, Environment} = await import(
-        '@buildwithsygma/sygma-sdk-core'
-      )
-      const assetTransfer = new EVMAssetTransfer()
-      await assetTransfer.init(
+      const {fee} = await getEvmSygmaTransfer(
         provider,
-        isTest ? Environment.TESTNET : Environment.MAINNET
+        fromChain,
+        toChain,
+        evmAccount,
+        asset,
+        ALICE,
+        '1000000000000000000'
       )
-      const domains = assetTransfer.config.getDomains()
-      const resources = assetTransfer.config.getDomainResources()
-
-      const destinationMultiLocation = JSON.stringify({
-        parents: 0,
-        interior: {
-          X1: {AccountId32: {network: {any: null}, id: ALICE}},
-        },
-      })
-
-      const erc20Resource = resources.find(
-        (resource) => resource.symbol === asset.symbol
-      )
-      if (erc20Resource == null) {
-        throw new Error('Resource not found')
-      }
-      const from = domains.find(
-        (domain) => domain.chainId === fromChain.sygmaChainId
-      )
-      if (from == null) {
-        throw new Error(`Network ${fromChain.id} not supported`)
-      }
-      const to = domains.find(
-        (domain) => domain.chainId === toChain.sygmaChainId
-      )
-      if (to == null) {
-        throw new Error(`Network ${toChain.id} not supported`)
-      }
-      const transfer: Transfer<Fungible> = {
-        sender: evmAccount,
-        amount: {amount: '1000000000000'},
-        from,
-        to,
-        resource: erc20Resource,
-        recipient: destinationMultiLocation,
-      }
-
-      const fee = await assetTransfer.getFee(transfer)
       if (fee.feeData == null) {
         return
       }

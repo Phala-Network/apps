@@ -1,8 +1,8 @@
 import {ASSETS, type AssetId} from '@/config/asset'
 import {CHAINS, type ChainId} from '@/config/chain'
-import {type Fungible, type Transfer} from '@buildwithsygma/sygma-sdk-core'
 import {type TransactionResponse} from '@ethersproject/abstract-provider'
 import {type ethers} from 'ethers'
+import {getEvmSygmaTransfer} from './evmSygma'
 
 export const transferEvmSygma = async ({
   provider,
@@ -26,46 +26,16 @@ export const transferEvmSygma = async ({
   const fromChain = CHAINS[fromChainId]
   const toChain = CHAINS[toChainId]
   const asset = ASSETS[assetId]
-  const {EVMAssetTransfer, Environment} = await import(
-    '@buildwithsygma/sygma-sdk-core'
-  )
-  const assetTransfer = new EVMAssetTransfer()
-  await assetTransfer.init(
+  const {tx} = await getEvmSygmaTransfer(
     provider,
-    fromChain.isTest === true ? Environment.TESTNET : Environment.MAINNET
-  )
-  const domains = assetTransfer.config.getDomains()
-  const resources = assetTransfer.config.getDomainResources()
-
-  const erc20Resource = resources.find(
-    (resource) => resource.symbol === asset.symbol.toUpperCase()
-  )
-  if (erc20Resource == null) {
-    throw new Error('Resource not found')
-  }
-  const from = domains.find(
-    (domain) => domain.chainId === fromChain.sygmaChainId
-  )
-  if (from == null) {
-    throw new Error(`Network ${fromChainId} not supported`)
-  }
-  const to = domains.find((domain) => domain.chainId === toChain.sygmaChainId)
-  if (to == null) {
-    throw new Error(`Network ${toChainId} not supported`)
-  }
-
-  const transfer: Transfer<Fungible> = {
+    fromChain,
+    toChain,
     sender,
-    amount: {amount},
-    from,
-    to,
-    resource: erc20Resource,
-    recipient: destinationAccount,
-  }
-
-  const fee = await assetTransfer.getFee(transfer)
-  const transferTx = await assetTransfer.buildTransferTransaction(transfer, fee)
-  const res = await provider.getSigner().sendTransaction(transferTx)
+    asset,
+    destinationAccount,
+    amount
+  )
+  const res = await provider.getSigner().sendTransaction(tx)
   onReady()
   return res
 }

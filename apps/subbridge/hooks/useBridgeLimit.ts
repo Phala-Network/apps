@@ -1,6 +1,14 @@
 import {ethersContractBalanceFetcher} from '@/lib/ethersFetcher'
-import {palletAssetBalanceFetcher} from '@/lib/polkadotFetcher'
-import {assetAtom, fromChainAtom, toChainAtom} from '@/store/bridge'
+import {
+  assetPalletBalanceFetcher,
+  polkadotAvailableBalanceFetcher,
+} from '@/lib/polkadotFetcher'
+import {
+  assetAtom,
+  bridgeInfoAtom,
+  fromChainAtom,
+  toChainAtom,
+} from '@/store/bridge'
 import Decimal from 'decimal.js'
 import {useAtomValue} from 'jotai'
 import useSWR from 'swr'
@@ -8,16 +16,16 @@ import {useEthersAssetContract} from './useEthersContract'
 import {useEthersJsonRpcProvider} from './useEthersProvider'
 import {usePolkadotApi} from './usePolkadotApi'
 
-// TODO: if there were more assets need reserve account, add it to config
-const moonriverZlkReserveAccount = '0xf88337a0db6e24Dff0fCD7F92ab0655B97A68d38'
-const khalaZlkReserveAccount =
-  '441RSFVuGcTybwYi7NPKAqYzEkDwnGDwLdTYrViNXr8RXVfG'
 const refreshInterval = 12000
 
 export const useBridgeLimit = (): Decimal | undefined => {
   const fromChain = useAtomValue(fromChainAtom)
   const toChain = useAtomValue(toChainAtom)
   const asset = useAtomValue(assetAtom)
+  const bridge = useAtomValue(bridgeInfoAtom)
+  const ethereumJsonRpcProvider = useEthersJsonRpcProvider(
+    'https://rpc.ankr.com/eth'
+  )
   const moonriverJsonRpcProvider = useEthersJsonRpcProvider(
     'https://rpc.api.moonriver.moonbeam.network'
   )
@@ -26,18 +34,26 @@ export const useBridgeLimit = (): Decimal | undefined => {
     'moonriver',
     'zlk'
   )
+  const ethereumPhaContract = useEthersAssetContract(
+    ethereumJsonRpcProvider,
+    'ethereum',
+    'pha'
+  )
+  const phalaApi = usePolkadotApi('phala')
   const khalaApi = usePolkadotApi('khala')
 
   const hasLimit =
-    (fromChain.id === 'moonriver' || toChain.id === 'moonriver') &&
-    asset.id === 'zlk'
+    ((fromChain.id === 'moonriver' || toChain.id === 'moonriver') &&
+      asset.id === 'zlk') ||
+    bridge.kind === 'evmSygma' ||
+    bridge.kind === 'phalaSygma'
 
   const {data: moonriverReservedZlk} = useSWR(
     toChain.id === 'moonriver' &&
       asset.id === 'zlk' &&
       moonriverZlkContract != null && [
         moonriverZlkContract,
-        moonriverZlkReserveAccount,
+        asset.reservedAddress?.moonriver,
         asset.decimals.moonriver ?? asset.decimals.default,
       ],
     ethersContractBalanceFetcher,
@@ -49,15 +65,50 @@ export const useBridgeLimit = (): Decimal | undefined => {
       fromChain.id === 'moonriver' &&
       asset.id === 'zlk' && [
         khalaApi,
-        khalaZlkReserveAccount,
+        asset.reservedAddress?.khala,
         asset.palletAssetId?.khala,
         asset.decimals.khala ?? asset.decimals.default,
       ],
-    palletAssetBalanceFetcher,
+    assetPalletBalanceFetcher,
+    {refreshInterval}
+  )
+
+  const {data: ethereumReservedPha} = useSWR(
+    ethereumPhaContract != null &&
+      toChain.id === 'ethereum' &&
+      asset.id === 'pha' &&
+      bridge.kind === 'phalaSygma' && [
+        ethereumPhaContract,
+        asset.reservedAddress?.ethereum,
+        asset.decimals.ethereum ?? asset.decimals.default,
+      ],
+    ethersContractBalanceFetcher,
+    {refreshInterval}
+  )
+
+  const {data: phalaReservedPha} = useSWR(
+    phalaApi != null &&
+      toChain.id === 'phala' &&
+      asset.id === 'pha' &&
+      fromChain.id === 'ethereum' && [phalaApi, asset.reservedAddress?.phala],
+    polkadotAvailableBalanceFetcher,
+    {refreshInterval}
+  )
+
+  const {data: khalaReservedPha} = useSWR(
+    khalaApi != null &&
+      toChain.id === 'khala' &&
+      asset.id === 'pha' &&
+      fromChain.id === 'ethereum' && [khalaApi, asset.reservedAddress?.khala],
+    polkadotAvailableBalanceFetcher,
     {refreshInterval}
   )
 
   return hasLimit
-    ? moonriverReservedZlk ?? khalaReservedZlk
+    ? moonriverReservedZlk ??
+        khalaReservedZlk ??
+        phalaReservedPha ??
+        khalaReservedPha ??
+        ethereumReservedPha
     : new Decimal(Infinity)
 }
