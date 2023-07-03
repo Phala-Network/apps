@@ -7,10 +7,10 @@ import '@polkadot/api-base/types/submittable';
 
 import type { ApiTypes, AugmentedSubmittable, SubmittableExtrinsic, SubmittableExtrinsicFunction } from '@polkadot/api-base/types';
 import type { Data } from '@polkadot/types';
-import type { Bytes, Compact, Option, U8aFixed, Vec, bool, u128, u16, u32, u64, u8 } from '@polkadot/types-codec';
+import type { Bytes, Compact, Option, U256, U8aFixed, Vec, bool, u128, u16, u32, u64, u8 } from '@polkadot/types-codec';
 import type { AnyNumber, IMethod, ITuple } from '@polkadot/types-codec/types';
 import type { AccountId32, Call, H256, MultiAddress, Permill } from '@polkadot/types/interfaces/runtime';
-import type { AssetsRegistryAssetProperties, CumulusPrimitivesParachainInherentParachainInherentData, FrameSupportPreimagesBounded, KhalaParachainRuntimeOpaqueSessionKeys, KhalaParachainRuntimeOriginCaller, KhalaParachainRuntimeProxyType, PalletDemocracyConviction, PalletDemocracyMetadataOwner, PalletDemocracyVoteAccountVote, PalletElectionsPhragmenRenouncing, PalletIdentityBitFlags, PalletIdentityIdentityInfo, PalletIdentityJudgement, PalletMultisigTimepoint, PalletPhalaWorldCareerType, PalletPhalaWorldNftSaleType, PalletPhalaWorldRaceType, PalletPhalaWorldRarityType, PalletPhalaWorldShellParts, PalletPhalaWorldStatusType, PalletUniquesDestroyWitness, PalletVestingVestingInfo, PhalaMqSignedMessage, PhalaPalletsUtilsAttestationLegacyAttestation, PhalaTypesAttestationReport, PhalaTypesMessagingTokenomicParameters, PhalaTypesWorkerEndpointPayload, PhalaTypesWorkerRegistrationInfo, PhalaTypesWorkerRegistrationInfoV2, RmrkTraitsNftAccountIdOrCollectionNftTuple, RmrkTraitsNftRoyaltyInfo, RmrkTraitsPartEquippableList, RmrkTraitsPartPartType, RmrkTraitsResourceBasicResource, RmrkTraitsResourceComposableResource, RmrkTraitsResourceResourceInfoMin, RmrkTraitsResourceResourceTypes, RmrkTraitsResourceSlotResource, RmrkTraitsTheme, SpCoreSr25519Public, SpCoreSr25519Signature, SpWeightsWeightV2Weight, XcmV3MultiAsset, XcmV3MultiLocation, XcmV3MultiassetAssetId, XcmV3WeightLimit, XcmVersionedMultiAssets, XcmVersionedMultiLocation, XcmVersionedXcm } from '@polkadot/types/lookup';
+import type { AssetsRegistryAssetProperties, CumulusPrimitivesParachainInherentParachainInherentData, FrameSupportPreimagesBounded, PalletDemocracyConviction, PalletDemocracyMetadataOwner, PalletDemocracyVoteAccountVote, PalletElectionsPhragmenRenouncing, PalletIdentityBitFlags, PalletIdentityIdentityInfo, PalletIdentityJudgement, PalletMultisigTimepoint, PalletUniquesDestroyWitness, PalletVestingVestingInfo, PhalaMqSignedMessage, PhalaPalletsUtilsAttestationLegacyAttestation, PhalaParachainRuntimeOpaqueSessionKeys, PhalaParachainRuntimeOriginCaller, PhalaParachainRuntimeProxyType, PhalaTypesAttestationReport, PhalaTypesContractClusterPermission, PhalaTypesContractCodeIndex, PhalaTypesContractMessagingResourceType, PhalaTypesMessagingTokenomicParameters, PhalaTypesWorkerEndpointPayload, PhalaTypesWorkerRegistrationInfo, PhalaTypesWorkerRegistrationInfoV2, RmrkTraitsNftAccountIdOrCollectionNftTuple, RmrkTraitsPartEquippableList, RmrkTraitsPartPartType, RmrkTraitsResourceBasicResource, RmrkTraitsResourceComposableResource, RmrkTraitsResourceResourceInfoMin, RmrkTraitsResourceResourceTypes, RmrkTraitsResourceSlotResource, RmrkTraitsTheme, SpCoreSr25519Public, SpWeightsWeightV2Weight, SygmaBridgeProposal, SygmaFeeHandlerRouterFeeHandlerType, SygmaTraitsMpcAddress, XcmV3MultiAsset, XcmV3MultiLocation, XcmV3MultiassetAssetId, XcmV3WeightLimit, XcmVersionedMultiAssets, XcmVersionedMultiLocation, XcmVersionedXcm } from '@polkadot/types/lookup';
 
 export type __AugmentedSubmittable = AugmentedSubmittable<() => unknown>;
 export type __SubmittableExtrinsic<ApiType extends ApiTypes> = SubmittableExtrinsic<ApiType>;
@@ -533,11 +533,14 @@ declare module '@polkadot/api-base/types/submittable' {
     };
     balances: {
       /**
-       * Exactly as `transfer`, except the origin must be root and the source account may be
-       * specified.
-       * ## Complexity
-       * - Same as transfer, but additional read and write because the source account is not
-       * assumed to be in the overlay.
+       * Set the regular balance of a given account.
+       * 
+       * The dispatch origin for this call is `root`.
+       **/
+      forceSetBalance: AugmentedSubmittable<(who: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, newFree: Compact<u128> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [MultiAddress, Compact<u128>]>;
+      /**
+       * Exactly as `transfer_allow_death`, except the origin must be root and the source account
+       * may be specified.
        **/
       forceTransfer: AugmentedSubmittable<(source: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, dest: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, value: Compact<u128> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [MultiAddress, MultiAddress, Compact<u128>]>;
       /**
@@ -547,39 +550,18 @@ declare module '@polkadot/api-base/types/submittable' {
        **/
       forceUnreserve: AugmentedSubmittable<(who: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, amount: u128 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [MultiAddress, u128]>;
       /**
-       * Set the balances of a given account.
-       * 
-       * This will alter `FreeBalance` and `ReservedBalance` in storage. it will
-       * also alter the total issuance of the system (`TotalIssuance`) appropriately.
-       * If the new free or reserved balance is below the existential deposit,
-       * it will reset the account nonce (`frame_system::AccountNonce`).
+       * Set the regular balance of a given account; it also takes a reserved balance but this
+       * must be the same as the account's current reserved balance.
        * 
        * The dispatch origin for this call is `root`.
+       * 
+       * WARNING: This call is DEPRECATED! Use `force_set_balance` instead.
        **/
-      setBalance: AugmentedSubmittable<(who: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, newFree: Compact<u128> | AnyNumber | Uint8Array, newReserved: Compact<u128> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [MultiAddress, Compact<u128>, Compact<u128>]>;
+      setBalanceDeprecated: AugmentedSubmittable<(who: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, newFree: Compact<u128> | AnyNumber | Uint8Array, oldReserved: Compact<u128> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [MultiAddress, Compact<u128>, Compact<u128>]>;
       /**
-       * Transfer some liquid free balance to another account.
+       * Alias for `transfer_allow_death`, provided only for name-wise compatibility.
        * 
-       * `transfer` will set the `FreeBalance` of the sender and receiver.
-       * If the sender's account is below the existential deposit as a result
-       * of the transfer, the account will be reaped.
-       * 
-       * The dispatch origin for this call must be `Signed` by the transactor.
-       * 
-       * ## Complexity
-       * - Dependent on arguments but not critical, given proper implementations for input config
-       * types. See related functions below.
-       * - It contains a limited number of reads and writes internally and no complex
-       * computation.
-       * 
-       * Related functions:
-       * 
-       * - `ensure_can_withdraw` is always called internally but has a bounded complexity.
-       * - Transferring balances to accounts that did not exist before will cause
-       * `T::OnNewAccount::on_new_account` to be called.
-       * - Removing enough funds from an account will trigger `T::DustRemoval::on_unbalanced`.
-       * - `transfer_keep_alive` works the same way as `transfer`, but has an additional check
-       * that the transfer will not kill the origin account.
+       * WARNING: DEPRECATED! Will be released in approximately 3 months.
        **/
       transfer: AugmentedSubmittable<(dest: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, value: Compact<u128> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [MultiAddress, Compact<u128>]>;
       /**
@@ -597,19 +579,39 @@ declare module '@polkadot/api-base/types/submittable' {
        * - `keep_alive`: A boolean to determine if the `transfer_all` operation should send all
        * of the funds the account has, causing the sender account to be killed (false), or
        * transfer everything except at least the existential deposit, which will guarantee to
-       * keep the sender account alive (true). ## Complexity
-       * - O(1). Just like transfer, but reading the user's transferable balance first.
+       * keep the sender account alive (true).
        **/
       transferAll: AugmentedSubmittable<(dest: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, keepAlive: bool | boolean | Uint8Array) => SubmittableExtrinsic<ApiType>, [MultiAddress, bool]>;
       /**
-       * Same as the [`transfer`] call, but with a check that the transfer will not kill the
-       * origin account.
+       * Transfer some liquid free balance to another account.
        * 
-       * 99% of the time you want [`transfer`] instead.
+       * `transfer_allow_death` will set the `FreeBalance` of the sender and receiver.
+       * If the sender's account is below the existential deposit as a result
+       * of the transfer, the account will be reaped.
        * 
-       * [`transfer`]: struct.Pallet.html#method.transfer
+       * The dispatch origin for this call must be `Signed` by the transactor.
+       **/
+      transferAllowDeath: AugmentedSubmittable<(dest: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, value: Compact<u128> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [MultiAddress, Compact<u128>]>;
+      /**
+       * Same as the [`transfer_allow_death`] call, but with a check that the transfer will not
+       * kill the origin account.
+       * 
+       * 99% of the time you want [`transfer_allow_death`] instead.
+       * 
+       * [`transfer_allow_death`]: struct.Pallet.html#method.transfer
        **/
       transferKeepAlive: AugmentedSubmittable<(dest: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, value: Compact<u128> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [MultiAddress, Compact<u128>]>;
+      /**
+       * Upgrade a specified account.
+       * 
+       * - `origin`: Must be `Signed`.
+       * - `who`: The account to be upgraded.
+       * 
+       * This will waive the transaction fee if at least all but 10% of the accounts needed to
+       * be upgraded. (We let some not have to be upgraded just in order to allow for the
+       * possibililty of churn).
+       **/
+      upgradeAccounts: AugmentedSubmittable<(who: Vec<AccountId32> | (AccountId32 | string | Uint8Array)[]) => SubmittableExtrinsic<ApiType>, [Vec<AccountId32>]>;
       /**
        * Generic tx
        **/
@@ -1049,33 +1051,6 @@ declare module '@polkadot/api-base/types/submittable' {
        * - `P2` is proposal-count (code-bounded)
        **/
       close: AugmentedSubmittable<(proposalHash: H256 | string | Uint8Array, index: Compact<u32> | AnyNumber | Uint8Array, proposalWeightBound: SpWeightsWeightV2Weight | { refTime?: any; proofSize?: any } | string | Uint8Array, lengthBound: Compact<u32> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [H256, Compact<u32>, SpWeightsWeightV2Weight, Compact<u32>]>;
-      /**
-       * Close a vote that is either approved, disapproved or whose voting period has ended.
-       * 
-       * May be called by any signed account in order to finish voting and close the proposal.
-       * 
-       * If called before the end of the voting period it will only close the vote if it is
-       * has enough votes to be approved or disapproved.
-       * 
-       * If called after the end of the voting period abstentions are counted as rejections
-       * unless there is a prime member set and the prime member cast an approval.
-       * 
-       * If the close operation completes successfully with disapproval, the transaction fee will
-       * be waived. Otherwise execution of the approved operation will be charged to the caller.
-       * 
-       * + `proposal_weight_bound`: The maximum amount of weight consumed by executing the closed
-       * proposal.
-       * + `length_bound`: The upper bound for the length of the proposal in storage. Checked via
-       * `storage::read` so it is `size_of::<u32>() == 4` larger than the pure length.
-       * 
-       * ## Complexity
-       * - `O(B + M + P1 + P2)` where:
-       * - `B` is `proposal` size in bytes (length-fee-bounded)
-       * - `M` is members-count (code- and governance-bounded)
-       * - `P1` is the complexity of `proposal` preimage.
-       * - `P2` is proposal-count (code-bounded)
-       **/
-      closeOldWeight: AugmentedSubmittable<(proposalHash: H256 | string | Uint8Array, index: Compact<u32> | AnyNumber | Uint8Array, proposalWeightBound: Compact<u64> | AnyNumber | Uint8Array, lengthBound: Compact<u32> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [H256, Compact<u32>, Compact<u64>, Compact<u32>]>;
       /**
        * Disapprove a proposal, close, and remove it from the system, regardless of its current
        * state.
@@ -2006,6 +1981,65 @@ declare module '@polkadot/api-base/types/submittable' {
        **/
       [key: string]: SubmittableExtrinsicFunction<ApiType>;
     };
+    phalaPhatContracts: {
+      /**
+       * Create a new cluster
+       * 
+       * # Arguments
+       * - `owner` - The owner of the cluster.
+       * - `permission` - Who can deploy contracts in the cluster.
+       * - `deploy_workers` - Workers included in the cluster.
+       * - `deposit` - Transfer amount of tokens from the owner on chain to the owner in cluster.
+       * - `gas_price` - Gas price for contract transactions.
+       * - `deposit_per_item` - Price for contract storage per item.
+       * - `deposit_per_byte` - Price for contract storage per byte.
+       * - `treasury_account` - The treasury account used to collect the gas and storage fee.
+       **/
+      addCluster: AugmentedSubmittable<(owner: AccountId32 | string | Uint8Array, permission: PhalaTypesContractClusterPermission | { Public: any } | { OnlyOwner: any } | string | Uint8Array, deployWorkers: Vec<SpCoreSr25519Public> | (SpCoreSr25519Public | string | Uint8Array)[], deposit: u128 | AnyNumber | Uint8Array, gasPrice: u128 | AnyNumber | Uint8Array, depositPerItem: u128 | AnyNumber | Uint8Array, depositPerByte: u128 | AnyNumber | Uint8Array, treasuryAccount: AccountId32 | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [AccountId32, PhalaTypesContractClusterPermission, Vec<SpCoreSr25519Public>, u128, u128, u128, u128, AccountId32]>;
+      /**
+       * Add a new worker to a cluster
+       **/
+      addWorkerToCluster: AugmentedSubmittable<(workerPubkey: SpCoreSr25519Public | string | Uint8Array, clusterId: H256 | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [SpCoreSr25519Public, H256]>;
+      clusterDestroy: AugmentedSubmittable<(cluster: H256 | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [H256]>;
+      clusterUploadResource: AugmentedSubmittable<(clusterId: H256 | string | Uint8Array, resourceType: PhalaTypesContractMessagingResourceType | 'InkCode' | 'SidevmCode' | 'IndeterministicInkCode' | number | Uint8Array, resourceData: Bytes | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [H256, PhalaTypesContractMessagingResourceType, Bytes]>;
+      instantiateContract: AugmentedSubmittable<(codeIndex: PhalaTypesContractCodeIndex | { WasmCode: any } | string | Uint8Array, data: Bytes | string | Uint8Array, salt: Bytes | string | Uint8Array, clusterId: H256 | string | Uint8Array, transfer: u128 | AnyNumber | Uint8Array, gasLimit: u64 | AnyNumber | Uint8Array, storageDepositLimit: Option<u128> | null | Uint8Array | u128 | AnyNumber, deposit: u128 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [PhalaTypesContractCodeIndex, Bytes, Bytes, H256, u128, u64, Option<u128>, u128]>;
+      pushContractMessage: AugmentedSubmittable<(contractId: H256 | string | Uint8Array, payload: Bytes | string | Uint8Array, deposit: u128 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [H256, Bytes, u128]>;
+      /**
+       * Remove a new worker from a cluster
+       **/
+      removeWorkerFromCluster: AugmentedSubmittable<(workerPubkey: SpCoreSr25519Public | string | Uint8Array, clusterId: H256 | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [SpCoreSr25519Public, H256]>;
+      setPinkRuntimeVersion: AugmentedSubmittable<(version: ITuple<[u32, u32]> | [u32 | AnyNumber | Uint8Array, u32 | AnyNumber | Uint8Array]) => SubmittableExtrinsic<ApiType>, [ITuple<[u32, u32]>]>;
+      setPinkSystemCode: AugmentedSubmittable<(code: Bytes | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [Bytes]>;
+      /**
+       * Transfer `amount` of on-chain token to the `dest_account` in the cluster of id `cluster_id`.
+       **/
+      transferToCluster: AugmentedSubmittable<(amount: u128 | AnyNumber | Uint8Array, clusterId: H256 | string | Uint8Array, destAccount: AccountId32 | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [u128, H256, AccountId32]>;
+      /**
+       * Generic tx
+       **/
+      [key: string]: SubmittableExtrinsicFunction<ApiType>;
+    };
+    phalaPhatTokenomic: {
+      /**
+       * Adjust stake to given contract.
+       * 
+       * Phat contracts accept depoits from accounts. The deposit info would be sent the cluster's
+       * system contract. Then the system contract would invoke the driver contract (if installed)
+       * to process the deposit info. A public good cluster usually would set the contracts' scheduling
+       * weights according to the total depoit on contracts. More weights means it would get more
+       * compute resource to run the contract. The weights are applied on contract query and Sidevm
+       * CPU round scheduling.
+       * 
+       * If users stake on a contract doesn't deployed yet. The deposit would send to the cluster
+       * even if the contract is deployed later. User can re-stake with or without changing the amount
+       * to sync the depoit the the cluster after the contract is actually deployed.
+       **/
+      adjustStake: AugmentedSubmittable<(contract: H256 | string | Uint8Array, amount: u128 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [H256, u128]>;
+      /**
+       * Generic tx
+       **/
+      [key: string]: SubmittableExtrinsicFunction<ApiType>;
+    };
     phalaRegistry: {
       /**
        * Registers a pruntime binary to [`PRuntimeAllowList`]
@@ -2179,10 +2213,6 @@ declare module '@polkadot/api-base/types/submittable' {
        **/
       setPayoutPref: AugmentedSubmittable<(pid: u64 | AnyNumber | Uint8Array, payoutCommission: Option<Permill> | null | Uint8Array | Permill | AnyNumber) => SubmittableExtrinsic<ApiType>, [u64, Option<Permill>]>;
       /**
-       * Enables or disables computing. Must be called with the council or root permission.
-       **/
-      setWorkingEnabled: AugmentedSubmittable<(enable: bool | boolean | Uint8Array) => SubmittableExtrinsic<ApiType>, [bool]>;
-      /**
        * Starts a worker on behalf of the stake pool
        * 
        * Requires:
@@ -2250,6 +2280,7 @@ declare module '@polkadot/api-base/types/submittable' {
        * 1. The sender is the owner
        **/
       maybeGainOwnerShares: AugmentedSubmittable<(vaultPid: u64 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u64]>;
+      refreshVaultLockAndCheck: AugmentedSubmittable<(pid: u64 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u64]>;
       /**
        * Changes the vault commission rate
        * 
@@ -2435,22 +2466,29 @@ declare module '@polkadot/api-base/types/submittable' {
        * Set a safe XCM version (the version that XCM should be encoded with if the most recent
        * version a destination can accept is unknown).
        * 
-       * - `origin`: Must be Root.
+       * - `origin`: Must be an origin specified by AdminOrigin.
        * - `maybe_xcm_version`: The default XCM encoding version, or `None` to disable.
        **/
       forceDefaultXcmVersion: AugmentedSubmittable<(maybeXcmVersion: Option<u32> | null | Uint8Array | u32 | AnyNumber) => SubmittableExtrinsic<ApiType>, [Option<u32>]>;
       /**
        * Ask a location to notify us regarding their XCM version and any changes to it.
        * 
-       * - `origin`: Must be Root.
+       * - `origin`: Must be an origin specified by AdminOrigin.
        * - `location`: The location to which we should subscribe for XCM version notifications.
        **/
       forceSubscribeVersionNotify: AugmentedSubmittable<(location: XcmVersionedMultiLocation | { V2: any } | { V3: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [XcmVersionedMultiLocation]>;
       /**
+       * Set or unset the global suspension state of the XCM executor.
+       * 
+       * - `origin`: Must be an origin specified by AdminOrigin.
+       * - `suspended`: `true` to suspend, `false` to resume.
+       **/
+      forceSuspension: AugmentedSubmittable<(suspended: bool | boolean | Uint8Array) => SubmittableExtrinsic<ApiType>, [bool]>;
+      /**
        * Require that a particular destination should no longer notify us regarding any XCM
        * version changes.
        * 
-       * - `origin`: Must be Root.
+       * - `origin`: Must be an origin specified by AdminOrigin.
        * - `location`: The location to which we are currently subscribed for XCM version
        * notifications which we no longer desire.
        **/
@@ -2459,7 +2497,7 @@ declare module '@polkadot/api-base/types/submittable' {
        * Extoll that a particular destination can be communicated with through a particular
        * version of XCM.
        * 
-       * - `origin`: Must be Root.
+       * - `origin`: Must be an origin specified by AdminOrigin.
        * - `location`: The destination that is being described.
        * - `xcm_version`: The latest version of XCM that `location` supports.
        **/
@@ -2595,7 +2633,7 @@ declare module '@polkadot/api-base/types/submittable' {
        * - `delay`: The announcement period required of the initial proxy. Will generally be
        * zero.
        **/
-      addProxy: AugmentedSubmittable<(delegate: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, proxyType: KhalaParachainRuntimeProxyType | 'Any' | 'NonTransfer' | 'CancelProxy' | 'Governance' | 'Collator' | 'StakePoolManager' | number | Uint8Array, delay: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [MultiAddress, KhalaParachainRuntimeProxyType, u32]>;
+      addProxy: AugmentedSubmittable<(delegate: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, proxyType: PhalaParachainRuntimeProxyType | 'Any' | 'NonTransfer' | 'CancelProxy' | 'Governance' | 'Collator' | 'StakePoolManager' | number | Uint8Array, delay: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [MultiAddress, PhalaParachainRuntimeProxyType, u32]>;
       /**
        * Publish the hash of a proxy-call that will be made in the future.
        * 
@@ -2634,7 +2672,7 @@ declare module '@polkadot/api-base/types/submittable' {
        * 
        * Fails if there are insufficient funds to pay for deposit.
        **/
-      createPure: AugmentedSubmittable<(proxyType: KhalaParachainRuntimeProxyType | 'Any' | 'NonTransfer' | 'CancelProxy' | 'Governance' | 'Collator' | 'StakePoolManager' | number | Uint8Array, delay: u32 | AnyNumber | Uint8Array, index: u16 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [KhalaParachainRuntimeProxyType, u32, u16]>;
+      createPure: AugmentedSubmittable<(proxyType: PhalaParachainRuntimeProxyType | 'Any' | 'NonTransfer' | 'CancelProxy' | 'Governance' | 'Collator' | 'StakePoolManager' | number | Uint8Array, delay: u32 | AnyNumber | Uint8Array, index: u16 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [PhalaParachainRuntimeProxyType, u32, u16]>;
       /**
        * Removes a previously spawned pure proxy.
        * 
@@ -2653,7 +2691,7 @@ declare module '@polkadot/api-base/types/submittable' {
        * Fails with `NoPermission` in case the caller is not a previously created pure
        * account whose `pure` call has corresponding parameters.
        **/
-      killPure: AugmentedSubmittable<(spawner: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, proxyType: KhalaParachainRuntimeProxyType | 'Any' | 'NonTransfer' | 'CancelProxy' | 'Governance' | 'Collator' | 'StakePoolManager' | number | Uint8Array, index: u16 | AnyNumber | Uint8Array, height: Compact<u32> | AnyNumber | Uint8Array, extIndex: Compact<u32> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [MultiAddress, KhalaParachainRuntimeProxyType, u16, Compact<u32>, Compact<u32>]>;
+      killPure: AugmentedSubmittable<(spawner: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, proxyType: PhalaParachainRuntimeProxyType | 'Any' | 'NonTransfer' | 'CancelProxy' | 'Governance' | 'Collator' | 'StakePoolManager' | number | Uint8Array, index: u16 | AnyNumber | Uint8Array, height: Compact<u32> | AnyNumber | Uint8Array, extIndex: Compact<u32> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [MultiAddress, PhalaParachainRuntimeProxyType, u16, Compact<u32>, Compact<u32>]>;
       /**
        * Dispatch the given `call` from an account that the sender is authorised for through
        * `add_proxy`.
@@ -2665,7 +2703,7 @@ declare module '@polkadot/api-base/types/submittable' {
        * - `force_proxy_type`: Specify the exact proxy type to be used and checked for this call.
        * - `call`: The call to be made by the `real` account.
        **/
-      proxy: AugmentedSubmittable<(real: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, forceProxyType: Option<KhalaParachainRuntimeProxyType> | null | Uint8Array | KhalaParachainRuntimeProxyType | 'Any' | 'NonTransfer' | 'CancelProxy' | 'Governance' | 'Collator' | 'StakePoolManager' | number, call: Call | IMethod | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [MultiAddress, Option<KhalaParachainRuntimeProxyType>, Call]>;
+      proxy: AugmentedSubmittable<(real: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, forceProxyType: Option<PhalaParachainRuntimeProxyType> | null | Uint8Array | PhalaParachainRuntimeProxyType | 'Any' | 'NonTransfer' | 'CancelProxy' | 'Governance' | 'Collator' | 'StakePoolManager' | number, call: Call | IMethod | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [MultiAddress, Option<PhalaParachainRuntimeProxyType>, Call]>;
       /**
        * Dispatch the given `call` from an account that the sender is authorized for through
        * `add_proxy`.
@@ -2679,7 +2717,7 @@ declare module '@polkadot/api-base/types/submittable' {
        * - `force_proxy_type`: Specify the exact proxy type to be used and checked for this call.
        * - `call`: The call to be made by the `real` account.
        **/
-      proxyAnnounced: AugmentedSubmittable<(delegate: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, real: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, forceProxyType: Option<KhalaParachainRuntimeProxyType> | null | Uint8Array | KhalaParachainRuntimeProxyType | 'Any' | 'NonTransfer' | 'CancelProxy' | 'Governance' | 'Collator' | 'StakePoolManager' | number, call: Call | IMethod | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [MultiAddress, MultiAddress, Option<KhalaParachainRuntimeProxyType>, Call]>;
+      proxyAnnounced: AugmentedSubmittable<(delegate: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, real: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, forceProxyType: Option<PhalaParachainRuntimeProxyType> | null | Uint8Array | PhalaParachainRuntimeProxyType | 'Any' | 'NonTransfer' | 'CancelProxy' | 'Governance' | 'Collator' | 'StakePoolManager' | number, call: Call | IMethod | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [MultiAddress, MultiAddress, Option<PhalaParachainRuntimeProxyType>, Call]>;
       /**
        * Remove the given announcement of a delegate.
        * 
@@ -2724,317 +2762,7 @@ declare module '@polkadot/api-base/types/submittable' {
        * - `proxy`: The account that the `caller` would like to remove as a proxy.
        * - `proxy_type`: The permissions currently enabled for the removed proxy account.
        **/
-      removeProxy: AugmentedSubmittable<(delegate: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, proxyType: KhalaParachainRuntimeProxyType | 'Any' | 'NonTransfer' | 'CancelProxy' | 'Governance' | 'Collator' | 'StakePoolManager' | number | Uint8Array, delay: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [MultiAddress, KhalaParachainRuntimeProxyType, u32]>;
-      /**
-       * Generic tx
-       **/
-      [key: string]: SubmittableExtrinsicFunction<ApiType>;
-    };
-    pwIncubation: {
-      /**
-       * Sender tried to feed another Origin of Shell. This function will allocate a new daily
-       * daily ration of food if the sender has not sent food to another Origin of Shell within
-       * the current Era. If the sender has already sent food, the sender's FoodInfo will be
-       * mutated to update the food left and the origin of shells the sender has fed during the
-       * current Era.
-       * 
-       * Parameters:
-       * - origin: The origin of the extrinsic feeding the target Origin of Shell.
-       * - collection_id: The collection id of the Origin of Shell.
-       * - nft_id: The NFT id of the Origin of Shell.
-       **/
-      feedOriginOfShell: AugmentedSubmittable<(collectionId: u32 | AnyNumber | Uint8Array, nftId: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32, u32]>;
-      /**
-       * Hatch the origin_of_shell that is currently being hatched. This will trigger the end of
-       * the incubation process and the origin_of_shell will be burned. After burning, the user
-       * will receive the awakened Shell RMRK NFT and the nested NFT parts that renders the Shell
-       * NFT.
-       * 
-       * Parameters:
-       * - `origin`: Expected to be the `Overlord` account
-       * - `collection_id`: The collection id of the Origin of Shell RMRK NFT
-       * - `nft_id`: The NFT id of the Origin of Shell RMRK NFT
-       * - `default_shell_metadata`: File resource URI in decentralized storage for Shell NFT
-       * parts that render the Shell NFT
-       **/
-      hatchOriginOfShell: AugmentedSubmittable<(collectionId: u32 | AnyNumber | Uint8Array, nftId: u32 | AnyNumber | Uint8Array, defaultShellMetadata: Bytes | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32, u32, Bytes]>;
-      /**
-       * Privileged function to enable incubation phase for accounts to start the incubation
-       * process for their Origin of Shells.
-       * 
-       * Parameters:
-       * `origin`: Expected to be the `Overlord` account
-       * `status`: `bool` value to set for the status in storage
-       **/
-      setCanStartIncubationStatus: AugmentedSubmittable<(status: bool | boolean | Uint8Array) => SubmittableExtrinsic<ApiType>, [bool]>;
-      /**
-       * Privileged function to set the parts chosen by an account for a specific Origin of Shell.
-       * 
-       * Parameters:
-       * - `origin` - Expected Overlord admin account to set the chosen part to the Origin of Shell
-       * - `collection_id` - Collection ID of Origin of Shell
-       * - `nft_id` - NFT ID of the Origin of Shell
-       * - `chosen_parts` - Shell parts to be stored in Storage
-       **/
-      setOriginOfShellChosenParts: AugmentedSubmittable<(collectionId: u32 | AnyNumber | Uint8Array, nftId: u32 | AnyNumber | Uint8Array, chosenParts: PalletPhalaWorldShellParts | { parts?: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32, u32, PalletPhalaWorldShellParts]>;
-      /**
-       * Privileged function to set the collection id for the Awakened Shell collection.
-       * 
-       * Parameters:
-       * - `origin` - Expected Overlord admin account to set the Shell Collection ID
-       * - `collection_id` - Collection ID of the Shell Collection
-       **/
-      setShellCollectionId: AugmentedSubmittable<(collectionId: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32]>;
-      /**
-       * Privileged function to set the collection id for the Shell Parts collection.
-       * 
-       * Parameters:
-       * - `origin` - Expected Overlord admin account to set the Shell Parts Collection ID
-       * - `collection_id` - Collection ID of the Shell Parts Collection
-       **/
-      setShellPartsCollectionId: AugmentedSubmittable<(collectionId: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32]>;
-      /**
-       * Once users have received their origin_of_shells and the start incubation event has been
-       * triggered, they can start the incubation process and a timer will start for the
-       * origin_of_shell to awaken at a designated time. Origin of Shells can reduce their time
-       * by being in the top 10 of origin_of_shell's fed per era.
-       * 
-       * Parameters:
-       * - origin: The origin of the extrinsic starting the incubation process
-       * - collection_id: The collection id of the Origin of Shell RMRK NFT
-       * - nft_id: The NFT id of the Origin of Shell RMRK NFT
-       **/
-      startIncubation: AugmentedSubmittable<(collectionId: u32 | AnyNumber | Uint8Array, nftId: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32, u32]>;
-      /**
-       * Generic tx
-       **/
-      [key: string]: SubmittableExtrinsicFunction<ApiType>;
-    };
-    pwMarketplace: {
-      /**
-       * Privileged function that can be called by the `Overlord` account to set the
-       * `MarketplaceOwner` in the `pallet_rmrk_market` Storage.
-       * 
-       * Parameters:
-       * - `origin`: Expected to be called by Overlord admin account.
-       * - `new_marketplace_owner`: New `T::AccountId` of the new martketplace owner.
-       **/
-      setMarketplaceOwner: AugmentedSubmittable<(newMarketplaceOwner: AccountId32 | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [AccountId32]>;
-      /**
-       * Privileged function to update the RoyaltyInfo for PhalaWorld NFTs that will be sold in
-       * the marketplace.
-       * 
-       * Parameters:
-       * - `origin`: Expected to be called by Overlord admin account.
-       * - `royalty_info`: `RoyaltyInfo` to set the NFTs to.
-       * - `collection_id`: `T::CollectionId` of the PhalaWorld NFT collection.
-       * - `nft_ids`: `BoundedVec` NFT IDs to update in a collection bounded by T::IterLimit.
-       **/
-      setNftsRoyaltyInfo: AugmentedSubmittable<(royaltyInfo: RmrkTraitsNftRoyaltyInfo | { recipient?: any; amount?: any } | string | Uint8Array, collectionId: u32 | AnyNumber | Uint8Array, nftIds: Vec<u32> | (u32 | AnyNumber | Uint8Array)[]) => SubmittableExtrinsic<ApiType>, [RmrkTraitsNftRoyaltyInfo, u32, Vec<u32>]>;
-      /**
-       * Generic tx
-       **/
-      [key: string]: SubmittableExtrinsicFunction<ApiType>;
-    };
-    pwNftSale: {
-      /**
-       * Accounts that have been whitelisted can purchase an Origin of Shell. The only Origin of
-       * Shell type available for this purchase are Prime
-       * 
-       * Parameters:
-       * - origin: The origin of the extrinsic purchasing the Prime Origin of Shell
-       * - message: OverlordMessage with account and purpose
-       * - signature: The signature of the account that is claiming the spirit.
-       * - race: The race that the user has chosen (limited # of races)
-       * - career: The career that the user has chosen (unlimited careers)
-       **/
-      buyPrimeOriginOfShell: AugmentedSubmittable<(signature: SpCoreSr25519Signature | string | Uint8Array, race: PalletPhalaWorldRaceType | 'Cyborg' | 'AISpectre' | 'XGene' | 'Pandroid' | number | Uint8Array, career: PalletPhalaWorldCareerType | 'HackerWizard' | 'HardwareDruid' | 'RoboWarrior' | 'TradeNegotiator' | 'Web3Monk' | number | Uint8Array) => SubmittableExtrinsic<ApiType>, [SpCoreSr25519Signature, PalletPhalaWorldRaceType, PalletPhalaWorldCareerType]>;
-      /**
-       * Buy a rare origin_of_shell of either type Magic or Legendary. Both Rarity Types
-       * will have a set price. These will also be limited in quantity and on a first come, first
-       * serve basis.
-       * 
-       * Parameters:
-       * - origin: The origin of the extrinsic.
-       * - rarity_type: The type of origin_of_shell to be purchased.
-       * - race: The race of the origin_of_shell chosen by the user.
-       * - career: The career of the origin_of_shell chosen by the user or auto-generated based
-       * on metadata
-       **/
-      buyRareOriginOfShell: AugmentedSubmittable<(rarityType: PalletPhalaWorldRarityType | 'Prime' | 'Magic' | 'Legendary' | number | Uint8Array, race: PalletPhalaWorldRaceType | 'Cyborg' | 'AISpectre' | 'XGene' | 'Pandroid' | number | Uint8Array, career: PalletPhalaWorldCareerType | 'HackerWizard' | 'HardwareDruid' | 'RoboWarrior' | 'TradeNegotiator' | 'Web3Monk' | number | Uint8Array) => SubmittableExtrinsic<ApiType>, [PalletPhalaWorldRarityType, PalletPhalaWorldRaceType, PalletPhalaWorldCareerType]>;
-      /**
-       * Claim a spirit for any account with at least 10 PHA in their account
-       * 
-       * Parameters:
-       * - origin: The origin of the extrinsic.
-       **/
-      claimSpirit: AugmentedSubmittable<() => SubmittableExtrinsic<ApiType>, []>;
-      /**
-       * Phala World Zero Day is set to begin the tracking of the official time starting at the
-       * current timestamp when `initialize_world_clock` is called by the `Overlord`
-       * 
-       * Parameters:
-       * `origin`: Expected to be called by `Overlord` admin account
-       **/
-      initializeWorldClock: AugmentedSubmittable<() => SubmittableExtrinsic<ApiType>, []>;
-      /**
-       * Initialize the settings for the non-whitelist preorder period amount of races &
-       * giveaways available for the Origin of Shell NFTs. This is a privileged function and can
-       * only be executed by the Overlord account. This will call the helper function
-       * `set_initial_origin_of_shell_inventory`
-       * 
-       * Parameters:
-       * - `origin` - Expected Overlord admin account
-       **/
-      initRarityTypeCounts: AugmentedSubmittable<() => SubmittableExtrinsic<ApiType>, []>;
-      /**
-       * This is an admin only function that will mint the list of `Chosen` preorders and will
-       * mint the Origin of Shell NFT to the preorder owner.
-       * 
-       * Parameters:
-       * `origin`: Expected to come from Overlord admin account
-       * `preorders`: Vec of Preorder IDs that were `Chosen`
-       **/
-      mintChosenPreorders: AugmentedSubmittable<(preorders: Vec<u32> | (u32 | AnyNumber | Uint8Array)[]) => SubmittableExtrinsic<ApiType>, [Vec<u32>]>;
-      /**
-       * This is an admin only function that will be used to mint either a giveaway or a reserved Origin of Shell NFT
-       * 
-       * Parameters:
-       * `origin`: Expected to come from Overlord admin account
-       * `owner`: Owner to gift the Origin of Shell to
-       * - rarity_type: The type of origin_of_shell to be gifted.
-       * - `race`: The race of the origin_of_shell chosen by the user.
-       * - `career`: The career of the origin_of_shell chosen by the user or auto-generated based
-       * on metadata
-       * - `nft_sale_type`: Either a `NftSaleType::Giveaway` or `NftSaleType::Reserved`
-       **/
-      mintGiftOriginOfShell: AugmentedSubmittable<(owner: AccountId32 | string | Uint8Array, rarityType: PalletPhalaWorldRarityType | 'Prime' | 'Magic' | 'Legendary' | number | Uint8Array, race: PalletPhalaWorldRaceType | 'Cyborg' | 'AISpectre' | 'XGene' | 'Pandroid' | number | Uint8Array, career: PalletPhalaWorldCareerType | 'HackerWizard' | 'HardwareDruid' | 'RoboWarrior' | 'TradeNegotiator' | 'Web3Monk' | number | Uint8Array, nftSaleType: PalletPhalaWorldNftSaleType | 'ForSale' | 'Giveaway' | 'Reserved' | number | Uint8Array) => SubmittableExtrinsic<ApiType>, [AccountId32, PalletPhalaWorldRarityType, PalletPhalaWorldRaceType, PalletPhalaWorldCareerType, PalletPhalaWorldNftSaleType]>;
-      /**
-       * Users can pre-order an Origin of Shell. This will enable users that are non-whitelisted
-       * to be added to the queue of users that can claim Origin of Shells. Those that come after
-       * the whitelist pre-sale will be able to win the chance to acquire an Origin of Shell
-       * based on their choice of race and career as they will have a limited quantity.
-       * 
-       * Parameters:
-       * - origin: The origin of the extrinsic preordering the origin_of_shell
-       * - race: The race that the user has chosen (limited # of races)
-       * - career: The career that the user has chosen (limited # of careers)
-       **/
-      preorderOriginOfShell: AugmentedSubmittable<(race: PalletPhalaWorldRaceType | 'Cyborg' | 'AISpectre' | 'XGene' | 'Pandroid' | number | Uint8Array, career: PalletPhalaWorldCareerType | 'HackerWizard' | 'HardwareDruid' | 'RoboWarrior' | 'TradeNegotiator' | 'Web3Monk' | number | Uint8Array) => SubmittableExtrinsic<ApiType>, [PalletPhalaWorldRaceType, PalletPhalaWorldCareerType]>;
-      /**
-       * Privileged function to allow Overlord to mint the Spirit, Origin of Shell or Shell NFT
-       * Collections. This allows for only Overlord to be able to mint Collections on Phala &
-       * prevents other users from calling the RMRK Core `create_collection` function.
-       * 
-       * Parameters:
-       * - `origin`: Expected to be called by Overlord
-       * - `metadata`: Metadata pertaining to the collection
-       * - `max`: Optional max u32 for the size of the collection
-       * - `symbol`: BoundedString of the collection's symbol i.e 'OVRLD'
-       **/
-      pwCreateCollection: AugmentedSubmittable<(metadata: Bytes | string | Uint8Array, max: Option<u32> | null | Uint8Array | u32 | AnyNumber, symbol: Bytes | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [Bytes, Option<u32>, Bytes]>;
-      /**
-       * Redeem spirit function is called when an account has a `SpiritClaimTicket` that enables
-       * an account to acquire a Spirit NFT without the 10 PHA minimum requirement, such that,
-       * the account has a valid `SpiritClaimTicket` signed by the Overlord admin account.
-       * 
-       * Parameters:
-       * - origin: The origin of the extrinsic.
-       **/
-      redeemSpirit: AugmentedSubmittable<(signature: SpCoreSr25519Signature | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [SpCoreSr25519Signature]>;
-      /**
-       * This is an admin only function that will be used to refund the preorders that were not
-       * selected during the preorders drawing.
-       * 
-       * Parameters:
-       * `origin`: Expected to come from Overlord admin account
-       * `preorders`: Preorder ids of the not chosen preorders
-       **/
-      refundNotChosenPreorders: AugmentedSubmittable<(preorders: Vec<u32> | (u32 | AnyNumber | Uint8Array)[]) => SubmittableExtrinsic<ApiType>, [Vec<u32>]>;
-      /**
-       * Privileged function to set the collection id for the Origin of Shell collection
-       * 
-       * Parameters:
-       * - `origin` - Expected Overlord admin account to set the Origin of Shell Collection ID
-       * - `collection_id` - Collection ID of the Origin of Shell Collection
-       **/
-      setOriginOfShellCollectionId: AugmentedSubmittable<(collectionId: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32]>;
-      /**
-       * Privileged function to set the metadata for the Origin of Shells in the StorageMap
-       * `OriginOfShellsMetadata` where the key is a tuple of `(RaceType, CareerType)` with a
-       * value of a `BoundedVec<u8, T::StringLimit`.
-       * 
-       * Parameters:
-       * - `origin`: Expected to be called from the Overlord account
-       * - `origin_of_shells_metadata`: A Vec of `((RaceType, CareerType), BoundedVec<u8, T::StringLimit>>)` to be added in storage
-       **/
-      setOriginOfShellsMetadata: AugmentedSubmittable<(originOfShellsMetadata: Vec<ITuple<[PalletPhalaWorldRaceType, Bytes]>> | ([PalletPhalaWorldRaceType | 'Cyborg' | 'AISpectre' | 'XGene' | 'Pandroid' | number | Uint8Array, Bytes | string | Uint8Array])[]) => SubmittableExtrinsic<ApiType>, [Vec<ITuple<[PalletPhalaWorldRaceType, Bytes]>>]>;
-      /**
-       * Privileged function set the Overlord Admin account of Phala World
-       * 
-       * Parameters:
-       * - origin: Expected to be called by `GovernanceOrigin`
-       * - new_overlord: T::AccountId
-       **/
-      setOverlord: AugmentedSubmittable<(newOverlord: AccountId32 | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [AccountId32]>;
-      /**
-       * Privileged function set the Payee account of PhalaWorld.
-       * 
-       * Parameters:
-       * - origin: Expected to be called by `Overlord`.
-       * - new_payee: T::AccountId of the Payee account.
-       **/
-      setPayee: AugmentedSubmittable<(newPayee: AccountId32 | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [AccountId32]>;
-      /**
-       * Privileged function set the Signer account of PhalaWorld.
-       * 
-       * Parameters:
-       * - origin: Expected to be called by `Overlord`.
-       * - new_signer: T::AccountId of the Signer.
-       **/
-      setSigner: AugmentedSubmittable<(newSigner: AccountId32 | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [AccountId32]>;
-      /**
-       * Privileged function to set the collection id for the Spirits collection
-       * 
-       * Parameters:
-       * - `origin` - Expected Overlord admin account to set the Spirit Collection ID
-       * - `collection_id` - Collection ID of the Spirit Collection
-       **/
-      setSpiritCollectionId: AugmentedSubmittable<(collectionId: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32]>;
-      /**
-       * Privileged function to set the metadata for the Spirits in the StorageValue
-       * `SpiritMetadata` where the value is a `BoundedVec<u8, T::StringLimit`.
-       * 
-       * Parameters:
-       * - `origin`: Expected to be called from the Overlord account
-       * - `spirits_metadata`: `BoundedVec<u8, T::StringLimit>` to be added in storage
-       **/
-      setSpiritsMetadata: AugmentedSubmittable<(spiritsMetadata: Bytes | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [Bytes]>;
-      /**
-       * Privileged function to set the status for one of the defined StatusTypes like
-       * ClaimSpirits, PurchaseRareOriginOfShells, or PreorderOriginOfShells to enable
-       * functionality in Phala World
-       * 
-       * Parameters:
-       * - `origin` - Expected Overlord admin account to set the status
-       * - `status` - `bool` to set the status to
-       * - `status_type` - `StatusType` to set the status for
-       **/
-      setStatusType: AugmentedSubmittable<(status: bool | boolean | Uint8Array, statusType: PalletPhalaWorldStatusType | 'ClaimSpirits' | 'PurchaseRareOriginOfShells' | 'PurchasePrimeOriginOfShells' | 'PreorderOriginOfShells' | 'LastDayOfSale' | number | Uint8Array) => SubmittableExtrinsic<ApiType>, [bool, PalletPhalaWorldStatusType]>;
-      /**
-       * Update for the non-whitelist preorder period amount of races & giveaways available for
-       * the Origin of Shell NFTs. This is a privileged function and can only be executed by the
-       * Overlord account. Update the OriginOfShellInventory counts by incrementing them based on
-       * the defined counts
-       * 
-       * Parameters:
-       * - `origin` - Expected Overlord admin account
-       * - `rarity_type` - Type of Origin of Shell
-       * - `for_sale_count` - Number of Origin of Shells for sale
-       * - `giveaway_count` - Number of Origin of Shells for giveaways
-       * - `reserve_count` - Number of Origin of Shells to be reserved
-       **/
-      updateRarityTypeCounts: AugmentedSubmittable<(rarityType: PalletPhalaWorldRarityType | 'Prime' | 'Magic' | 'Legendary' | number | Uint8Array, forSaleCount: u32 | AnyNumber | Uint8Array, giveawayCount: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [PalletPhalaWorldRarityType, u32, u32]>;
+      removeProxy: AugmentedSubmittable<(delegate: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, proxyType: PhalaParachainRuntimeProxyType | 'Any' | 'NonTransfer' | 'CancelProxy' | 'Governance' | 'Collator' | 'StakePoolManager' | number | Uint8Array, delay: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [MultiAddress, PhalaParachainRuntimeProxyType, u32]>;
       /**
        * Generic tx
        **/
@@ -3394,7 +3122,75 @@ declare module '@polkadot/api-base/types/submittable' {
        * - `O(1)`. Actual cost depends on the number of length of `T::Keys::key_ids()` which is
        * fixed.
        **/
-      setKeys: AugmentedSubmittable<(keys: KhalaParachainRuntimeOpaqueSessionKeys | { aura?: any } | string | Uint8Array, proof: Bytes | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [KhalaParachainRuntimeOpaqueSessionKeys, Bytes]>;
+      setKeys: AugmentedSubmittable<(keys: PhalaParachainRuntimeOpaqueSessionKeys | { aura?: any } | string | Uint8Array, proof: Bytes | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [PhalaParachainRuntimeOpaqueSessionKeys, Bytes]>;
+      /**
+       * Generic tx
+       **/
+      [key: string]: SubmittableExtrinsicFunction<ApiType>;
+    };
+    sygmaAccessSegregator: {
+      /**
+       * Grants access to an account for a extrinsic.
+       **/
+      grantAccess: AugmentedSubmittable<(palletIndex: u8 | AnyNumber | Uint8Array, extrinsicName: Bytes | string | Uint8Array, who: AccountId32 | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [u8, Bytes, AccountId32]>;
+      /**
+       * Generic tx
+       **/
+      [key: string]: SubmittableExtrinsicFunction<ApiType>;
+    };
+    sygmaBasicFeeHandler: {
+      /**
+       * Set bridge fee for a specific asset
+       **/
+      setFee: AugmentedSubmittable<(domain: u8 | AnyNumber | Uint8Array, asset: XcmV3MultiassetAssetId | { Concrete: any } | { Abstract: any } | string | Uint8Array, amount: u128 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u8, XcmV3MultiassetAssetId, u128]>;
+      /**
+       * Generic tx
+       **/
+      [key: string]: SubmittableExtrinsicFunction<ApiType>;
+    };
+    sygmaBridge: {
+      /**
+       * Initiates a transfer.
+       **/
+      deposit: AugmentedSubmittable<(asset: XcmV3MultiAsset | { id?: any; fun?: any } | string | Uint8Array, dest: XcmV3MultiLocation | { parents?: any; interior?: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [XcmV3MultiAsset, XcmV3MultiLocation]>;
+      /**
+       * Executes a batch of deposit proposals (only if signature is signed by MPC).
+       **/
+      executeProposal: AugmentedSubmittable<(proposals: Vec<SygmaBridgeProposal> | (SygmaBridgeProposal | { originDomainId?: any; depositNonce?: any; resourceId?: any; data?: any } | string | Uint8Array)[], signature: Bytes | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [Vec<SygmaBridgeProposal>, Bytes]>;
+      /**
+       * Pause bridge, this would lead to bridge transfer failure before it being unpaused.
+       **/
+      pauseBridge: AugmentedSubmittable<(destDomainId: u8 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u8]>;
+      /**
+       * Mark the give dest domainID with chainID to be enabled
+       **/
+      registerDomain: AugmentedSubmittable<(destDomainId: u8 | AnyNumber | Uint8Array, destChainId: U256 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u8, U256]>;
+      /**
+       * This method is used to trigger the process for retrying failed deposits on the MPC side.
+       **/
+      retry: AugmentedSubmittable<(depositOnBlockHeight: u128 | AnyNumber | Uint8Array, destDomainId: u8 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u128, u8]>;
+      /**
+       * Mark an ECDSA address as a MPC account.
+       **/
+      setMpcAddress: AugmentedSubmittable<(addr: SygmaTraitsMpcAddress | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [SygmaTraitsMpcAddress]>;
+      /**
+       * Unpause bridge.
+       **/
+      unpauseBridge: AugmentedSubmittable<(destDomainId: u8 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u8]>;
+      /**
+       * Mark the give dest domainID with chainID to be disabled
+       **/
+      unregisterDomain: AugmentedSubmittable<(destDomainId: u8 | AnyNumber | Uint8Array, destChainId: U256 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u8, U256]>;
+      /**
+       * Generic tx
+       **/
+      [key: string]: SubmittableExtrinsicFunction<ApiType>;
+    };
+    sygmaFeeHandlerRouter: {
+      /**
+       * Set fee handler specific (domain, asset) pair
+       **/
+      setFeeHandler: AugmentedSubmittable<(domain: u8 | AnyNumber | Uint8Array, asset: XcmV3MultiassetAssetId | { Concrete: any } | { Abstract: any } | string | Uint8Array, handlerType: SygmaFeeHandlerRouterFeeHandlerType | 'BasicFeeHandler' | 'DynamicFeeHandler' | number | Uint8Array) => SubmittableExtrinsic<ApiType>, [u8, XcmV3MultiassetAssetId, SygmaFeeHandlerRouterFeeHandlerType]>;
       /**
        * Generic tx
        **/
@@ -3478,33 +3274,6 @@ declare module '@polkadot/api-base/types/submittable' {
        * - `P2` is proposal-count (code-bounded)
        **/
       close: AugmentedSubmittable<(proposalHash: H256 | string | Uint8Array, index: Compact<u32> | AnyNumber | Uint8Array, proposalWeightBound: SpWeightsWeightV2Weight | { refTime?: any; proofSize?: any } | string | Uint8Array, lengthBound: Compact<u32> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [H256, Compact<u32>, SpWeightsWeightV2Weight, Compact<u32>]>;
-      /**
-       * Close a vote that is either approved, disapproved or whose voting period has ended.
-       * 
-       * May be called by any signed account in order to finish voting and close the proposal.
-       * 
-       * If called before the end of the voting period it will only close the vote if it is
-       * has enough votes to be approved or disapproved.
-       * 
-       * If called after the end of the voting period abstentions are counted as rejections
-       * unless there is a prime member set and the prime member cast an approval.
-       * 
-       * If the close operation completes successfully with disapproval, the transaction fee will
-       * be waived. Otherwise execution of the approved operation will be charged to the caller.
-       * 
-       * + `proposal_weight_bound`: The maximum amount of weight consumed by executing the closed
-       * proposal.
-       * + `length_bound`: The upper bound for the length of the proposal in storage. Checked via
-       * `storage::read` so it is `size_of::<u32>() == 4` larger than the pure length.
-       * 
-       * ## Complexity
-       * - `O(B + M + P1 + P2)` where:
-       * - `B` is `proposal` size in bytes (length-fee-bounded)
-       * - `M` is members-count (code- and governance-bounded)
-       * - `P1` is the complexity of `proposal` preimage.
-       * - `P2` is proposal-count (code-bounded)
-       **/
-      closeOldWeight: AugmentedSubmittable<(proposalHash: H256 | string | Uint8Array, index: Compact<u32> | AnyNumber | Uint8Array, proposalWeightBound: Compact<u64> | AnyNumber | Uint8Array, lengthBound: Compact<u32> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [H256, Compact<u32>, Compact<u64>, Compact<u32>]>;
       /**
        * Disapprove a proposal, close, and remove it from the system, regardless of its current
        * state.
@@ -4339,7 +4108,7 @@ declare module '@polkadot/api-base/types/submittable' {
        * ## Complexity
        * - O(1).
        **/
-      dispatchAs: AugmentedSubmittable<(asOrigin: KhalaParachainRuntimeOriginCaller | { system: any } | { Void: any } | { CumulusXcm: any } | { PolkadotXcm: any } | { Council: any } | { TechnicalCommittee: any } | string | Uint8Array, call: Call | IMethod | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [KhalaParachainRuntimeOriginCaller, Call]>;
+      dispatchAs: AugmentedSubmittable<(asOrigin: PhalaParachainRuntimeOriginCaller | { system: any } | { Void: any } | { CumulusXcm: any } | { PolkadotXcm: any } | { Council: any } | { TechnicalCommittee: any } | string | Uint8Array, call: Call | IMethod | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [PhalaParachainRuntimeOriginCaller, Call]>;
       /**
        * Send a batch of dispatch calls.
        * Unlike `batch`, it allows errors and won't interrupt.

@@ -70,12 +70,6 @@ declare module '@polkadot/api-base/types/errors' {
        **/
       NoPermission: AugmentedError<ApiType>;
       /**
-       * Unable to increment the consumer reference counters on the account. Either no provider
-       * reference exists to allow a non-zero balance of a non-self-sufficient asset, or the
-       * maximum number of consumers has been reached.
-       **/
-      NoProvider: AugmentedError<ApiType>;
-      /**
        * The asset should be frozen before the given operation.
        **/
       NotFrozen: AugmentedError<ApiType>;
@@ -83,6 +77,12 @@ declare module '@polkadot/api-base/types/errors' {
        * No approval exists that would allow the transfer.
        **/
       Unapproved: AugmentedError<ApiType>;
+      /**
+       * Unable to increment the consumer reference counters on the account. Either no provider
+       * reference exists to allow a non-zero balance of a non-self-sufficient asset, or one
+       * fewer then the maximum number of consumers has been reached.
+       **/
+      UnavailableConsumer: AugmentedError<ApiType>;
       /**
        * The given asset ID is unknown.
        **/
@@ -115,35 +115,43 @@ declare module '@polkadot/api-base/types/errors' {
     };
     balances: {
       /**
-       * Beneficiary account must pre-exist
+       * Beneficiary account must pre-exist.
        **/
       DeadAccount: AugmentedError<ApiType>;
       /**
-       * Value too low to create account due to existential deposit
+       * Value too low to create account due to existential deposit.
        **/
       ExistentialDeposit: AugmentedError<ApiType>;
       /**
-       * A vesting schedule already exists for this account
+       * A vesting schedule already exists for this account.
        **/
       ExistingVestingSchedule: AugmentedError<ApiType>;
+      /**
+       * Transfer/payment would kill account.
+       **/
+      Expendability: AugmentedError<ApiType>;
       /**
        * Balance too low to send value.
        **/
       InsufficientBalance: AugmentedError<ApiType>;
       /**
-       * Transfer/payment would kill account
-       **/
-      KeepAlive: AugmentedError<ApiType>;
-      /**
-       * Account liquidity restrictions prevent withdrawal
+       * Account liquidity restrictions prevent withdrawal.
        **/
       LiquidityRestrictions: AugmentedError<ApiType>;
       /**
-       * Number of named reserves exceed MaxReserves
+       * Number of freezes exceed `MaxFreezes`.
+       **/
+      TooManyFreezes: AugmentedError<ApiType>;
+      /**
+       * Number of holds exceed `MaxHolds`.
+       **/
+      TooManyHolds: AugmentedError<ApiType>;
+      /**
+       * Number of named reserves exceed `MaxReserves`.
        **/
       TooManyReserves: AugmentedError<ApiType>;
       /**
-       * Vesting balance too high to send value
+       * Vesting balance too high to send value.
        **/
       VestingBalance: AugmentedError<ApiType>;
       /**
@@ -949,6 +957,10 @@ declare module '@polkadot/api-base/types/errors' {
        **/
       WorkerNotRegistered: AugmentedError<ApiType>;
       /**
+       * The worker need to be re-registered to be added to a pool.
+       **/
+      WorkerReregisterNeeded: AugmentedError<ApiType>;
+      /**
        * Generic error
        **/
       [key: string]: AugmentedError<ApiType>;
@@ -957,6 +969,32 @@ declare module '@polkadot/api-base/types/errors' {
       BadDestination: AugmentedError<ApiType>;
       BadSender: AugmentedError<ApiType>;
       BadSequence: AugmentedError<ApiType>;
+      /**
+       * Generic error
+       **/
+      [key: string]: AugmentedError<ApiType>;
+    };
+    phalaPhatContracts: {
+      ClusterNotDeployed: AugmentedError<ApiType>;
+      ClusterNotFound: AugmentedError<ApiType>;
+      ClusterPermissionDenied: AugmentedError<ApiType>;
+      CodeNotFound: AugmentedError<ApiType>;
+      ContractNotFound: AugmentedError<ApiType>;
+      DuplicatedContract: AugmentedError<ApiType>;
+      DuplicatedDeployment: AugmentedError<ApiType>;
+      InvalidSender: AugmentedError<ApiType>;
+      NoPinkSystemCode: AugmentedError<ApiType>;
+      NoWorkerSpecified: AugmentedError<ApiType>;
+      PayloadTooLarge: AugmentedError<ApiType>;
+      WorkerIsBusy: AugmentedError<ApiType>;
+      WorkerNotFound: AugmentedError<ApiType>;
+      /**
+       * Generic error
+       **/
+      [key: string]: AugmentedError<ApiType>;
+    };
+    phalaPhatTokenomic: {
+      InvalidAmountOfStake: AugmentedError<ApiType>;
       /**
        * Generic error
        **/
@@ -1448,91 +1486,6 @@ declare module '@polkadot/api-base/types/errors' {
        **/
       [key: string]: AugmentedError<ApiType>;
     };
-    pwIncubation: {
-      _Deprecated_MaxFoodFedLimitReached: AugmentedError<ApiType>;
-      _Deprecated_NoFoodAvailable: AugmentedError<ApiType>;
-      _Deprecated_NoHatchTimeDetected: AugmentedError<ApiType>;
-      AlreadySentFoodTwice: AugmentedError<ApiType>;
-      CannotHatchOriginOfShell: AugmentedError<ApiType>;
-      CannotSendFoodToOriginOfShell: AugmentedError<ApiType>;
-      CannotSetOriginOfShellChosenParts: AugmentedError<ApiType>;
-      CareerNotDetected: AugmentedError<ApiType>;
-      ChosenPartsNotDetected: AugmentedError<ApiType>;
-      FoodInfoUpdateError: AugmentedError<ApiType>;
-      GenerationNotDetected: AugmentedError<ApiType>;
-      HatchingInProgress: AugmentedError<ApiType>;
-      MissingShellPartMetadata: AugmentedError<ApiType>;
-      NoFoodLeftToFeedOriginOfShell: AugmentedError<ApiType>;
-      NoPermission: AugmentedError<ApiType>;
-      NotOwner: AugmentedError<ApiType>;
-      RaceNotDetected: AugmentedError<ApiType>;
-      RarityTypeNotDetected: AugmentedError<ApiType>;
-      ShellCollectionIdAlreadySet: AugmentedError<ApiType>;
-      ShellCollectionIdNotSet: AugmentedError<ApiType>;
-      ShellPartsCollectionIdAlreadySet: AugmentedError<ApiType>;
-      ShellPartsCollectionIdNotSet: AugmentedError<ApiType>;
-      StartIncubationNotAvailable: AugmentedError<ApiType>;
-      WrongCollectionId: AugmentedError<ApiType>;
-      /**
-       * Generic error
-       **/
-      [key: string]: AugmentedError<ApiType>;
-    };
-    pwMarketplace: {
-      /**
-       * Generic error
-       **/
-      [key: string]: AugmentedError<ApiType>;
-    };
-    pwNftSale: {
-      BelowMinimumBalanceThreshold: AugmentedError<ApiType>;
-      InvalidMetadata: AugmentedError<ApiType>;
-      InvalidPurchase: AugmentedError<ApiType>;
-      InvalidSpiritClaim: AugmentedError<ApiType>;
-      InvalidStatusType: AugmentedError<ApiType>;
-      KeyTooLong: AugmentedError<ApiType>;
-      MustOwnSpiritToPurchase: AugmentedError<ApiType>;
-      NoAvailableCollectionId: AugmentedError<ApiType>;
-      NoAvailableNftId: AugmentedError<ApiType>;
-      NoAvailablePreorderId: AugmentedError<ApiType>;
-      NoAvailableRaceGivewayLeft: AugmentedError<ApiType>;
-      NoAvailableRaceReservedLeft: AugmentedError<ApiType>;
-      NoAvailableResourceId: AugmentedError<ApiType>;
-      NotPreorderOwner: AugmentedError<ApiType>;
-      OriginOfShellAlreadyPurchased: AugmentedError<ApiType>;
-      OriginOfShellCollectionIdAlreadySet: AugmentedError<ApiType>;
-      OriginOfShellCollectionNotSet: AugmentedError<ApiType>;
-      OriginOfShellInventoryAlreadySet: AugmentedError<ApiType>;
-      OriginOfShellInventoryCorrupted: AugmentedError<ApiType>;
-      OriginOfShellsMetadataNotSet: AugmentedError<ApiType>;
-      OverlordNotSet: AugmentedError<ApiType>;
-      PayeeNotSet: AugmentedError<ApiType>;
-      PreorderClaimNotAvailable: AugmentedError<ApiType>;
-      PreorderClaimNotDetected: AugmentedError<ApiType>;
-      PreorderIsPending: AugmentedError<ApiType>;
-      PreorderOriginOfShellNotAvailable: AugmentedError<ApiType>;
-      PreordersCorrupted: AugmentedError<ApiType>;
-      PrimeOriginOfShellPurchaseNotAvailable: AugmentedError<ApiType>;
-      RaceMintMaxReached: AugmentedError<ApiType>;
-      RareOriginOfShellPurchaseNotAvailable: AugmentedError<ApiType>;
-      RefundClaimNotDetected: AugmentedError<ApiType>;
-      RequireOverlordAccount: AugmentedError<ApiType>;
-      SignerNotSet: AugmentedError<ApiType>;
-      SpiritAlreadyClaimed: AugmentedError<ApiType>;
-      SpiritClaimNotAvailable: AugmentedError<ApiType>;
-      SpiritCollectionIdAlreadySet: AugmentedError<ApiType>;
-      SpiritCollectionNotSet: AugmentedError<ApiType>;
-      SpiritsMetadataNotSet: AugmentedError<ApiType>;
-      ValueNotDetected: AugmentedError<ApiType>;
-      WhitelistVerificationFailed: AugmentedError<ApiType>;
-      WorldClockAlreadySet: AugmentedError<ApiType>;
-      WrongNftSaleType: AugmentedError<ApiType>;
-      WrongRarityType: AugmentedError<ApiType>;
-      /**
-       * Generic error
-       **/
-      [key: string]: AugmentedError<ApiType>;
-    };
     rmrkCore: {
       CannotAcceptNonOwnedNft: AugmentedError<ApiType>;
       CannotAcceptToNewOwner: AugmentedError<ApiType>;
@@ -1734,6 +1687,152 @@ declare module '@polkadot/api-base/types/errors' {
        * No keys are associated with this account.
        **/
       NoKeys: AugmentedError<ApiType>;
+      /**
+       * Generic error
+       **/
+      [key: string]: AugmentedError<ApiType>;
+    };
+    sygmaAccessSegregator: {
+      /**
+       * Failed to grant extrinsic access permission to an account
+       **/
+      GrantAccessFailed: AugmentedError<ApiType>;
+      /**
+       * Function unimplemented
+       **/
+      Unimplemented: AugmentedError<ApiType>;
+      /**
+       * Generic error
+       **/
+      [key: string]: AugmentedError<ApiType>;
+    };
+    sygmaBasicFeeHandler: {
+      /**
+       * Account has not gained access permission
+       **/
+      AccessDenied: AugmentedError<ApiType>;
+      /**
+       * Function unimplemented
+       **/
+      Unimplemented: AugmentedError<ApiType>;
+      /**
+       * Generic error
+       **/
+      [key: string]: AugmentedError<ApiType>;
+    };
+    sygmaBridge: {
+      /**
+       * Account has not gained access permission
+       **/
+      AccessDenied: AugmentedError<ApiType>;
+      /**
+       * Asset not bound to a resource id
+       **/
+      AssetNotBound: AugmentedError<ApiType>;
+      /**
+       * Protected operation, must be performed by relayer
+       **/
+      BadMpcSignature: AugmentedError<ApiType>;
+      /**
+       * Bridge is paused
+       **/
+      BridgePaused: AugmentedError<ApiType>;
+      /**
+       * Bridge is unpaused
+       **/
+      BridgeUnpaused: AugmentedError<ApiType>;
+      /**
+       * Failed on the decimal converter
+       **/
+      DecimalConversionFail: AugmentedError<ApiType>;
+      /**
+       * Deposit nonce has reached max integer qvalue
+       **/
+      DepositNonceOverflow: AugmentedError<ApiType>;
+      /**
+       * Dest chain id not match
+       **/
+      DestChainIDNotMatch: AugmentedError<ApiType>;
+      /**
+       * Dest domain not supported
+       **/
+      DestDomainNotSupported: AugmentedError<ApiType>;
+      /**
+       * Proposal list empty
+       **/
+      EmptyProposalList: AugmentedError<ApiType>;
+      /**
+       * Failed to extract destination data
+       **/
+      ExtractDestDataFailed: AugmentedError<ApiType>;
+      /**
+       * The withdrawn amount can not cover the fee payment
+       **/
+      FeeTooExpensive: AugmentedError<ApiType>;
+      /**
+       * Insufficient balance on sender account
+       **/
+      InsufficientBalance: AugmentedError<ApiType>;
+      /**
+       * Deposit data not correct
+       **/
+      InvalidDepositData: AugmentedError<ApiType>;
+      /**
+       * Fee config option missing
+       **/
+      MissingFeeConfig: AugmentedError<ApiType>;
+      /**
+       * MPC address not set
+       **/
+      MissingMpcAddress: AugmentedError<ApiType>;
+      /**
+       * MPC address can not be updated
+       **/
+      MpcAddrNotUpdatable: AugmentedError<ApiType>;
+      /**
+       * Proposal has either failed or succeeded
+       **/
+      ProposalAlreadyComplete: AugmentedError<ApiType>;
+      /**
+       * Asset transactor execution failed
+       **/
+      TransactFailed: AugmentedError<ApiType>;
+      /**
+       * Transactor operation failed
+       **/
+      TransactorFailed: AugmentedError<ApiType>;
+      /**
+       * Function unimplemented
+       **/
+      Unimplemented: AugmentedError<ApiType>;
+      /**
+       * Generic error
+       **/
+      [key: string]: AugmentedError<ApiType>;
+    };
+    sygmaFeeHandlerRouter: {
+      /**
+       * Account has not gained access permission
+       **/
+      AccessDenied: AugmentedError<ApiType>;
+      /**
+       * Function unimplemented
+       **/
+      Unimplemented: AugmentedError<ApiType>;
+      /**
+       * Generic error
+       **/
+      [key: string]: AugmentedError<ApiType>;
+    };
+    sygmaWrapper: {
+      /**
+       * Can not transfer asset to dest
+       **/
+      CannotDepositAsset: AugmentedError<ApiType>;
+      /**
+       * Unimplemented function
+       **/
+      Unimplemented: AugmentedError<ApiType>;
       /**
        * Generic error
        **/

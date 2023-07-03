@@ -6,9 +6,9 @@
 import '@polkadot/api-base/types/consts';
 
 import type { ApiTypes, AugmentedConst } from '@polkadot/api-base/types';
-import type { Option, U8aFixed, bool, u128, u16, u32, u64, u8 } from '@polkadot/types-codec';
+import type { Option, U256, U8aFixed, bool, u128, u16, u32, u64, u8 } from '@polkadot/types-codec';
 import type { Codec } from '@polkadot/types-codec/types';
-import type { AccountId32, Percent, Permill } from '@polkadot/types/interfaces/runtime';
+import type { AccountId32, H160, Percent, Permill } from '@polkadot/types/interfaces/runtime';
 import type { FrameSupportPalletId, FrameSystemLimitsBlockLength, FrameSystemLimitsBlockWeights, SpVersionRuntimeVersion, SpWeightsRuntimeDbWeight, SpWeightsWeightV2Weight, XcmV3MultiLocation } from '@polkadot/types/lookup';
 
 export type __AugmentedConst<ApiType extends ApiTypes> = AugmentedConst<ApiType>;
@@ -66,9 +66,24 @@ declare module '@polkadot/api-base/types/consts' {
     };
     balances: {
       /**
-       * The minimum amount required to keep an account open.
+       * The minimum amount required to keep an account open. MUST BE GREATER THAN ZERO!
+       * 
+       * If you *really* need it to be zero, you can enable the feature `insecure_zero_ed` for
+       * this pallet. However, you do so at your own risk: this will open up a major DoS vector.
+       * In case you have multiple sources of provider references, you may also get unexpected
+       * behaviour if you set this to zero.
+       * 
+       * Bottom line: Do yourself a favour and make it at least one!
        **/
       existentialDeposit: u128 & AugmentedConst<ApiType>;
+      /**
+       * The maximum number of individual freeze locks that can exist on an account at any time.
+       **/
+      maxFreezes: u32 & AugmentedConst<ApiType>;
+      /**
+       * The maximum number of holds that can exist on an account at any time.
+       **/
+      maxHolds: u32 & AugmentedConst<ApiType>;
       /**
        * The maximum number of locks that should exist on an account.
        * Not strictly enforced, but used for weight estimation.
@@ -159,6 +174,16 @@ declare module '@polkadot/api-base/types/consts' {
        * Maximum number of child bounties that can be added to a parent bounty.
        **/
       maxActiveChildBountyCount: u32 & AugmentedConst<ApiType>;
+      /**
+       * Generic const
+       **/
+      [key: string]: Codec;
+    };
+    council: {
+      /**
+       * The maximum weight of a dispatch call that can be proposed and executed.
+       **/
+      maxProposalWeight: SpWeightsWeightV2Weight & AugmentedConst<ApiType>;
       /**
        * Generic const
        **/
@@ -333,10 +358,6 @@ declare module '@polkadot/api-base/types/consts' {
     };
     phalaStakePoolv2: {
       /**
-       * If computing is enabled by default.
-       **/
-      computingEnabledByDefault: bool & AugmentedConst<ApiType>;
-      /**
        * The grace period for force withdraw request, in seconds.
        **/
       gracePeriod: u64 & AugmentedConst<ApiType>;
@@ -352,6 +373,7 @@ declare module '@polkadot/api-base/types/consts' {
     };
     phalaVault: {
       initialPriceCheckPoint: u128 & AugmentedConst<ApiType>;
+      vaultQueuePeriod: u64 & AugmentedConst<ApiType>;
       /**
        * Generic const
        **/
@@ -478,54 +500,6 @@ declare module '@polkadot/api-base/types/consts' {
        **/
       [key: string]: Codec;
     };
-    pwIncubation: {
-      /**
-       * Amount of food per Era.
-       **/
-      foodPerEra: u32 & AugmentedConst<ApiType>;
-      /**
-       * Duration of incubation process.
-       **/
-      incubationDurationSec: u64 & AugmentedConst<ApiType>;
-      /**
-       * Max food to feed your own Origin of Shell.
-       **/
-      maxFoodFeedSelf: u8 & AugmentedConst<ApiType>;
-      /**
-       * Generic const
-       **/
-      [key: string]: Codec;
-    };
-    pwNftSale: {
-      /**
-       * Max mint per Race
-       **/
-      iterLimit: u32 & AugmentedConst<ApiType>;
-      /**
-       * Price of Legendary Origin of Shell Price
-       **/
-      legendaryOriginOfShellPrice: u128 & AugmentedConst<ApiType>;
-      /**
-       * Price of Magic Origin of Shell Price
-       **/
-      magicOriginOfShellPrice: u128 & AugmentedConst<ApiType>;
-      /**
-       * Minimum amount of PHA to claim a Spirit
-       **/
-      minBalanceToClaimSpirit: u128 & AugmentedConst<ApiType>;
-      /**
-       * Price of Prime Origin of Shell Price
-       **/
-      primeOriginOfShellPrice: u128 & AugmentedConst<ApiType>;
-      /**
-       * Seconds per Era that will increment the Era storage value every interval
-       **/
-      secondsPerEra: u64 & AugmentedConst<ApiType>;
-      /**
-       * Generic const
-       **/
-      [key: string]: Codec;
-    };
     rmrkCore: {
       /**
        * The maximum number of resources that can be included in a setpriority extrinsic
@@ -587,8 +561,36 @@ declare module '@polkadot/api-base/types/consts' {
       maximumWeight: SpWeightsWeightV2Weight & AugmentedConst<ApiType>;
       /**
        * The maximum number of scheduled calls in the queue for a single block.
+       * 
+       * NOTE:
+       * + Dependent pallets' benchmarks might require a higher limit for the setting. Set a
+       * higher limit under `runtime-benchmarks` feature.
        **/
       maxScheduledPerBlock: u32 & AugmentedConst<ApiType>;
+      /**
+       * Generic const
+       **/
+      [key: string]: Codec;
+    };
+    sygmaBridge: {
+      /**
+       * EIP712 Verifying contract address
+       * This is used in EIP712 typed data domain
+       **/
+      destVerifyingContractAddress: H160 & AugmentedConst<ApiType>;
+      /**
+       * Pallet ChainID
+       * This is used in EIP712 typed data domain
+       **/
+      eip712ChainID: U256 & AugmentedConst<ApiType>;
+      /**
+       * Fee reserve account
+       **/
+      feeReserveAccount: AccountId32 & AugmentedConst<ApiType>;
+      /**
+       * Bridge transfer reserve account
+       **/
+      transferReserveAccount: AccountId32 & AugmentedConst<ApiType>;
       /**
        * Generic const
        **/
@@ -623,6 +625,16 @@ declare module '@polkadot/api-base/types/consts' {
        * Get the chain's current version.
        **/
       version: SpVersionRuntimeVersion & AugmentedConst<ApiType>;
+      /**
+       * Generic const
+       **/
+      [key: string]: Codec;
+    };
+    technicalCommittee: {
+      /**
+       * The maximum weight of a dispatch call that can be proposed and executed.
+       **/
+      maxProposalWeight: SpWeightsWeightV2Weight & AugmentedConst<ApiType>;
       /**
        * Generic const
        **/
