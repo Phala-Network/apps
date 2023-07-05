@@ -111,6 +111,7 @@ export const destChainTransactionFeeAtom = atom((get) => {
 
   if (
     (kind === 'evmChainBridge' && !isThroughKhala) ||
+    kind === 'evmSygma' ||
     destChainTransactionFee == null
   ) {
     return new Decimal(0)

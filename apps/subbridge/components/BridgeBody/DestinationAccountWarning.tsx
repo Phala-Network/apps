@@ -1,4 +1,4 @@
-import {Alert, type AlertProps, Typography} from '@mui/material'
+import {Alert, Typography, type AlertProps} from '@mui/material'
 import {type FC} from 'react'
 
 const DestinationAccountWarning: FC<AlertProps> = ({sx, ...props}) => {
@@ -6,7 +6,7 @@ const DestinationAccountWarning: FC<AlertProps> = ({sx, ...props}) => {
     <Alert
       icon={false}
       severity="warning"
-      sx={[{border: 'none'}, ...(Array.isArray(sx) ? sx : [sx])]}
+      sx={[{border: 'none'}, ...(Array.isArray(sx) ? (sx as any) : [sx])]}
       {...props}
     >
       <Typography variant="body2" component="span">

@@ -5,6 +5,7 @@ import {useTransfer} from '@/hooks/useTransfer'
 import {
   amountAtom,
   assetAtom,
+  bridgeInfoAtom,
   destChainTransactionFeeAtom,
   destinationAccountAtom,
   fromAccountAtom,
@@ -177,18 +178,20 @@ const DialogBody: FC<BoxProps> = (props) => {
   const [asset] = useAtom(assetAtom)
   const [destinationAccount] = useAtom(destinationAccountAtom)
   const destChainTransactionFee = useAtomValue(destChainTransactionFeeAtom)
+  const bridge = useAtomValue(bridgeInfoAtom)
   const bridgeFee = useBridgeFee()
 
   const toAmount = useMemo(() => {
     if (bridgeFee == null) {
       return null
     }
-    const value = new Decimal(amount)
-      .sub(bridgeFee)
-      .sub(destChainTransactionFee)
+    let value = new Decimal(amount).sub(destChainTransactionFee)
+    if (bridge.kind !== 'evmSygma') {
+      value = value.sub(bridgeFee)
+    }
 
     return value.toString()
-  }, [amount, bridgeFee, destChainTransactionFee])
+  }, [amount, bridge.kind, bridgeFee, destChainTransactionFee])
 
   if (fromAccount == null) return null
 
@@ -252,48 +255,50 @@ const BridgeConfirmationDialog: FC<DialogProps> = ({onClose, ...props}) => {
         },
       })
 
-      if ('wait' in res) {
-        // Ethers.js transaction
-        const {transactionHash} = await res.wait()
-        closeSnackbar(key)
-        await sleep(1000)
-        enqueueSnackbar(
-          <>
-            Transaction confirmed
-            {fromChain.explorerURL != null && (
-              <ExplorerLink
-                kind="tx"
-                hash={transactionHash}
-                url={fromChain.explorerURL}
-                sx={{ml: 1}}
-              >
-                View on explorer
-              </ExplorerLink>
-            )}
-          </>,
-          {variant: 'success'}
-        )
-      } else {
-        // Polkadot.js extrinsic
-        const {txHash} = res
-        closeSnackbar(key)
-        await sleep(1000)
-        enqueueSnackbar(
-          <>
-            Extrinsic Success
-            {fromChain.explorerURL != null && (
-              <ExplorerLink
-                kind="extrinsic"
-                hash={txHash}
-                url={fromChain.explorerURL}
-                sx={{ml: 1}}
-              >
-                View on explorer
-              </ExplorerLink>
-            )}
-          </>,
-          {variant: 'success'}
-        )
+      if (res != null) {
+        if (!('txHash' in res)) {
+          // Ethers.js transaction
+          const {transactionHash} = 'wait' in res ? await res.wait() : res
+          closeSnackbar(key)
+          await sleep(1000)
+          enqueueSnackbar(
+            <>
+              Transaction confirmed
+              {fromChain.explorerURL != null && (
+                <ExplorerLink
+                  kind="tx"
+                  hash={transactionHash}
+                  url={fromChain.explorerURL}
+                  sx={{ml: 1}}
+                >
+                  View on explorer
+                </ExplorerLink>
+              )}
+            </>,
+            {variant: 'success'}
+          )
+        } else {
+          // Polkadot.js extrinsic
+          const {txHash} = res
+          closeSnackbar(key)
+          await sleep(1000)
+          enqueueSnackbar(
+            <>
+              Extrinsic Success
+              {fromChain.explorerURL != null && (
+                <ExplorerLink
+                  kind="extrinsic"
+                  hash={txHash}
+                  url={fromChain.explorerURL}
+                  sx={{ml: 1}}
+                >
+                  View on explorer
+                </ExplorerLink>
+              )}
+            </>,
+            {variant: 'success'}
+          )
+        }
       }
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
@@ -323,6 +328,8 @@ const BridgeConfirmationDialog: FC<DialogProps> = ({onClose, ...props}) => {
       } else if (err.message != null) {
         enqueueSnackbar(err.message, {variant: 'error'})
       }
+
+      throw err
     }
   }
 

@@ -9,6 +9,10 @@ const nextConfig = {
   transpilePackages: ['jotai-devtools'],
   images: {disableStaticImages: true},
   env: {CONTEXT: process.env.CONTEXT},
+  eslint: {
+    ignoreDuringBuilds: true,
+    dirs: ['pages', 'components', 'lib', 'hooks', 'store', 'types'],
+  },
   reactStrictMode: true,
   webpack(config) {
     for (const rule of config.module.rules) {

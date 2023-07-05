@@ -1,8 +1,8 @@
 import {type AssetId} from '@/config/asset'
+import {type BridgeKind} from '@/config/bridge'
 import {CHAINS, type ChainId} from '@/config/chain'
 import type {ApiPromise} from '@polkadot/api'
 import {type SubmittableExtrinsic} from '@polkadot/api/types'
-import {type ISubmittableResult} from '@polkadot/types/types'
 import {u8aToHex} from '@polkadot/util'
 import {decodeAddress} from '@polkadot/util-crypto'
 import getGeneralKey, {type Hex} from './getGeneralKey'
@@ -23,6 +23,7 @@ const astarParaId = CHAINS.astar.paraId
 const assetConcrete: {
   [fromChainId in ChainId]?: {[assetId in AssetId]?: Record<string, unknown>}
 } = {
+  rhala: {pha: {parents: 0, interior: 'Here'}},
   phala: {
     pha: {parents: 0, interior: 'Here'},
     glmr: {
@@ -99,13 +100,14 @@ const assetConcrete: {
   },
 }
 
-export const transferByKhalaXTransfer = ({
+export const transferByPhalaXTransfer = ({
   api,
   amount,
   fromChainId,
   toChainId,
   destinationAccount,
   assetId,
+  kind,
 }: {
   api: ApiPromise
   amount: string
@@ -113,12 +115,13 @@ export const transferByKhalaXTransfer = ({
   toChainId: ChainId
   destinationAccount: string
   assetId: AssetId
-}): SubmittableExtrinsic<'promise', ISubmittableResult> => {
+  kind: BridgeKind
+}): SubmittableExtrinsic<'promise'> => {
   const toChain = CHAINS[toChainId]
-  const isToEthereum = toChainId === 'ethereum'
   const isTransferringZLKToMoonriver =
     (toChainId === 'moonriver' || toChainId === 'moonbase-alpha') &&
     assetId === 'zlk'
+  const isSygma = kind === 'phalaSygma'
   const generalIndex = toChain.kind === 'evm' ? toChain.generalIndex : null
 
   const concrete = assetConcrete[fromChainId]?.[assetId]
@@ -126,9 +129,9 @@ export const transferByKhalaXTransfer = ({
     throw new Error(`Unsupported asset: ${assetId}`)
   }
 
-  const isThroughChainBridge = isToEthereum || isTransferringZLKToMoonriver
+  const isThroughChainBridge = isTransferringZLKToMoonriver
 
-  if (isThroughChainBridge && typeof generalIndex !== 'number') {
+  if ((isThroughChainBridge || isSygma) && typeof generalIndex !== 'number') {
     throw new Error('Transfer missing required parameters')
   }
 
@@ -138,29 +141,34 @@ export const transferByKhalaXTransfer = ({
       fun: {Fungible: amount},
     },
     {
-      parents: isThroughChainBridge ? 0 : 1,
-      interior: isThroughChainBridge
-        ? {
-            X3: [
-              {GeneralKey: getGeneralKey('0x6362')}, // string "cb"
-              {GeneralIndex: generalIndex},
-              {GeneralKey: getGeneralKey(destinationAccount as Hex)},
-            ],
-          }
-        : {
-            X2: [
-              {Parachain: toChain.paraId},
-              toChain.kind === 'evm'
-                ? {AccountKey20: {key: destinationAccount}}
-                : {
-                    AccountId32: {
-                      id: u8aToHex(decodeAddress(destinationAccount)),
+      parents: isThroughChainBridge || isSygma ? 0 : 1,
+      interior:
+        isThroughChainBridge || isSygma
+          ? {
+              X3: [
+                {
+                  GeneralKey: isSygma
+                    ? getGeneralKey('0x7379676d61') // string "sygma"
+                    : getGeneralKey('0x6362'), // string "cb"
+                },
+                {GeneralIndex: generalIndex},
+                {GeneralKey: getGeneralKey(destinationAccount as Hex)},
+              ],
+            }
+          : {
+              X2: [
+                {Parachain: toChain.paraId},
+                toChain.kind === 'evm'
+                  ? {AccountKey20: {key: destinationAccount}}
+                  : {
+                      AccountId32: {
+                        id: u8aToHex(decodeAddress(destinationAccount)),
+                      },
                     },
-                  },
-            ],
-          },
+              ],
+            },
     },
-    isThroughChainBridge
+    isThroughChainBridge || isSygma
       ? null // No need to specify a certain weight if transfer will not through XCM
       : {refTime: '6000000000', proofSize: '1000000'}
   )

@@ -1,9 +1,11 @@
 import {type AssetId} from '@/config/asset'
 import {ALL_FROM_CHAINS, BRIDGES} from '@/config/bridge'
 import {type ChainId} from '@/config/chain'
+import {useBridgeLimit} from '@/hooks/useBridgeLimit'
 import {
   amountAtom,
   assetAtom,
+  bridgeInfoAtom,
   destinationAccountAtom,
   fromChainAtom,
   toChainAtom,
@@ -12,6 +14,7 @@ import ArrowDownward from '@mui/icons-material/ArrowDownward'
 import ArrowForward from '@mui/icons-material/ArrowForward'
 import {Box, Collapse, IconButton, Paper, Stack, useTheme} from '@mui/material'
 import {type BoxProps} from '@mui/system'
+import Decimal from 'decimal.js'
 import {useAtom, useAtomValue} from 'jotai'
 import {useState, type FC} from 'react'
 import Action from './Action'
@@ -21,6 +24,7 @@ import ChainSelect from './ChainSelect'
 import DestinationAccountInput from './DestinationAccountInput'
 import DestinationAccountWarning from './DestinationAccountWarning'
 import ExtraInfo from './Extra'
+import LargeAmountWarning from './LargeAmountWarning'
 
 const getToChainIds = (fromChainId: ChainId): ChainId[] =>
   BRIDGES.find((bridge) => bridge.fromChain === fromChainId)
@@ -45,6 +49,8 @@ const BridgeBody: FC<BoxProps> = (props) => {
     getAssetIds(fromChain.id, toChain.id)
   )
   const destinationAccount = useAtomValue(destinationAccountAtom)
+  const bridgeLimit = useBridgeLimit()
+  const bridgeInfo = useAtomValue(bridgeInfoAtom)
 
   const handleSelectFromChain = (newFromChainId: ChainId): void => {
     setFromChain(newFromChainId)
@@ -143,6 +149,13 @@ const BridgeBody: FC<BoxProps> = (props) => {
               {toChain.kind !== 'evm' && (
                 <DestinationAccountWarning sx={{mb: 3}} />
               )}
+              {(bridgeInfo.kind === 'evmSygma' ||
+                bridgeInfo.kind === 'phalaSygma') &&
+                Boolean(amount) &&
+                bridgeLimit != null &&
+                new Decimal(amount).gt(bridgeLimit) && (
+                  <LargeAmountWarning sx={{mb: 3}} />
+                )}
               <ExtraInfo sx={{mb: 3}} />
             </Collapse>
             <Action />

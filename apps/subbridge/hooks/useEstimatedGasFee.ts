@@ -3,8 +3,9 @@ import {
   evmChainBridgeEstimatedGasFetcher,
   evmXTokensEstimatedGasFetcher,
 } from '@/lib/ethersFetcher'
+import {getEvmSygmaTransfer} from '@/lib/evmSygma'
 import {
-  khalaXTransferPartialFeeFetcher,
+  phalaXTransferPartialFeeFetcher,
   polkadotXcmTransferPartialFeeFetcher,
   xTokensPartialFeeFetcher,
 } from '@/lib/polkadotFetcher'
@@ -15,7 +16,8 @@ import {
   fromChainAtom,
   toChainAtom,
 } from '@/store/bridge'
-import type Decimal from 'decimal.js'
+import {evmAccountAtom} from '@/store/ethers'
+import Decimal from 'decimal.js'
 import {useAtomValue} from 'jotai'
 import useSWR from 'swr'
 import {
@@ -32,6 +34,7 @@ export const useEstimatedGasFee = (): Decimal | undefined => {
   const toChain = useAtomValue(toChainAtom)
   const asset = useAtomValue(assetAtom)
   const ethersWeb3Provider = useEthersWeb3Provider()
+  const evmAccount = useAtomValue(evmAccountAtom)
   const decimals = useAtomValue(decimalsAtom)
   const khalaApi = usePolkadotApi(
     toChain.id === 'phala' || toChain.id === 'thala' ? toChain.id : 'khala'
@@ -73,6 +76,34 @@ export const useEstimatedGasFee = (): Decimal | undefined => {
     evmXTokensEstimatedGasFetcher
   )
 
+  const {data: evmSygmaEstimatedGas} = useSWR(
+    bridgeKind === 'evmSygma' &&
+      ethersWeb3Provider != null &&
+      evmAccount != null && [
+        ethersWeb3Provider,
+        evmAccount,
+        fromChain,
+        toChain,
+        asset,
+      ],
+    async ([provider, evmAccount, fromChain, toChain, asset]) => {
+      const ALICE = '5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY'
+      const {tx} = await getEvmSygmaTransfer(
+        provider,
+        fromChain,
+        toChain,
+        evmAccount,
+        asset,
+        ALICE,
+        '1000000000000000000'
+      )
+
+      return new Decimal(
+        (await provider.getSigner().estimateGas(tx)).toString()
+      )
+    }
+  )
+
   const {data: xTokensPartialFee} = useSWR(
     bridgeKind === 'polkadotXTokens' &&
       polkadotApi != null && [
@@ -85,10 +116,16 @@ export const useEstimatedGasFee = (): Decimal | undefined => {
     xTokensPartialFeeFetcher
   )
 
-  const {data: khalaPartialFee} = useSWR(
-    bridgeKind === 'khalaXTransfer' &&
-      polkadotApi != null && [polkadotApi, fromChain.id, toChain.id, asset.id],
-    khalaXTransferPartialFeeFetcher
+  const {data: phalaPartialFee} = useSWR(
+    (bridgeKind === 'phalaChainBridge' || bridgeKind === 'phalaSygma') &&
+      polkadotApi != null && [
+        polkadotApi,
+        fromChain.id,
+        toChain.id,
+        asset.id,
+        bridgeKind,
+      ],
+    phalaXTransferPartialFeeFetcher
   )
 
   const {data: polkadotXcmPartialFee} = useSWR(
@@ -104,10 +141,13 @@ export const useEstimatedGasFee = (): Decimal | undefined => {
           : undefined) ??
         (evmXTokensEstimatedGas != null
           ? ethersGasPrice.times(evmXTokensEstimatedGas)
+          : undefined) ??
+        (evmSygmaEstimatedGas != null
+          ? ethersGasPrice.times(evmSygmaEstimatedGas)
           : undefined)
       : undefined) ??
     xTokensPartialFee ??
-    khalaPartialFee ??
+    phalaPartialFee ??
     polkadotXcmPartialFee
   )
 }

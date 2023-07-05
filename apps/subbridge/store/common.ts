@@ -1,4 +1,4 @@
-import {PaletteMode} from '@mui/material'
+import {type PaletteMode} from '@mui/material'
 import {atom} from 'jotai'
 import {atomWithStorage} from 'jotai/utils'
 import {fromAccountAtom} from './bridge'

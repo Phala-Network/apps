@@ -3,8 +3,8 @@ import {
   ethersContractBalanceFetcher,
 } from '@/lib/ethersFetcher'
 import {
+  assetPalletBalanceFetcher,
   ormlTokenBalanceFetcher,
-  palletAssetBalanceFetcher,
   polkadotAvailableBalanceFetcher,
 } from '@/lib/polkadotFetcher'
 import {assetAtom, decimalsAtom, fromChainAtom} from '@/store/bridge'
@@ -103,7 +103,7 @@ export const useBalance = (): Decimal | undefined => {
         asset.palletAssetId[fromChain.id],
         decimals,
       ],
-    palletAssetBalanceFetcher,
+    assetPalletBalanceFetcher,
     {refreshInterval}
   )
   const {data: polkadotNativeChainBalance} = useSWR(

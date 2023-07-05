@@ -45,6 +45,9 @@ export interface Asset {
   erc20TokenContractAddress?: {
     [chainId in EvmChainId]?: `0x${string}`
   }
+  reservedAddress?: {
+    [chainId in ChainId]?: string
+  }
   chainBridgeResourceId?:
     | `0x${string}`
     | {
@@ -68,6 +71,7 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
       ethereum: '0x6c5bA91642F10282b576d91922Ae6448C9d52f4E',
       moonbeam: '0xFFFfFfFf63d24eCc8eB8a7b5D0803e900F7b6cED',
       moonriver: '0xffFfFFff8E6b63d9e447B6d4C45BDA8AF9dc9603',
+      goerli: '0xB376b0Ee6d8202721838e76376e81eEc0e2FE864',
     },
     chainBridgeResourceId: {
       phala:
@@ -75,7 +79,7 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
       khala:
         '0x00e6dfb61a2fb903df487c401663825643bb825d41695e63df8af6162ab145a6',
     },
-    decimals: {ethereum: 18, default: 12},
+    decimals: {ethereum: 18, goerli: 18, default: 12},
     destChainTransactionFee: {
       phala: new Decimal('0.092696'),
       khala: new Decimal('0.092696'),
@@ -109,6 +113,11 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
       shiden: '18446744073709551623',
       astar: '18446744073709551622',
       turing: 7,
+    },
+    reservedAddress: {
+      ethereum: '0xC832588193cd5ED2185daDA4A531e0B26eC5B830',
+      phala: '5EYCAe5jLbHcAAMKvLFSXgCTbPrLgBJusvPwfKcaKzuf5X5e',
+      khala: '5EYCAe5jLbHcAAMKvLFSXgCTbPrLgBJusvPwfKcaKzuf5X5e',
     },
   },
   movr: {
@@ -176,6 +185,10 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
     existentialDeposit: {
       'bifrost-kusama': new Decimal('0.01'),
       'bifrost-test': new Decimal('0.01'),
+    },
+    reservedAddress: {
+      moonriver: '0xf88337a0db6e24Dff0fCD7F92ab0655B97A68d38',
+      khala: '441RSFVuGcTybwYi7NPKAqYzEkDwnGDwLdTYrViNXr8RXVfG',
     },
   },
   bnc: {

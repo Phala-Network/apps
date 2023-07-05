@@ -1,8 +1,9 @@
 import {type AssetId, type OrmlToken} from '@/config/asset'
+import {type BridgeKind} from '@/config/bridge'
 import {CHAINS, type ChainId} from '@/config/chain'
 import type {ApiPromise} from '@polkadot/api'
 import Decimal from 'decimal.js'
-import {transferByKhalaXTransfer} from './transferByKhalaXTransfer'
+import {transferByPhalaXTransfer} from './transferByPhalaXTransfer'
 import {transferByPolkadotXTokens} from './transferByPolkadotXTokens'
 import {transferByPolkadotXcm} from './transferByPolkadotXcm'
 
@@ -20,7 +21,7 @@ export const polkadotAvailableBalanceFetcher = async ([api, address]: [
   )
 }
 
-export const palletAssetBalanceFetcher = async ([
+export const assetPalletBalanceFetcher = async ([
   polkadotApi,
   address,
   palletAssetId,
@@ -54,14 +55,6 @@ export const ormlTokenBalanceFetcher = async ([
   )
 }
 
-export const khalaToEthereumBridgeFeeFetcher = async (
-  khalaApi: ApiPromise
-): Promise<Decimal> => {
-  const fee = await khalaApi.query.chainBridge.bridgeFee(0)
-
-  return new Decimal(fee.toJSON() as number).div(Decimal.pow(10, 12))
-}
-
 export const xTokensPartialFeeFetcher = async ([
   polkadotApi,
   fromChainId,
@@ -84,20 +77,22 @@ export const xTokensPartialFeeFetcher = async ([
   return new Decimal(partialFee.toString()).div(Decimal.pow(10, decimals))
 }
 
-export const khalaXTransferPartialFeeFetcher = async ([
+export const phalaXTransferPartialFeeFetcher = async ([
   api,
   fromChainId,
   toChainId,
   assetId,
-]: [ApiPromise, ChainId, ChainId, AssetId]): Promise<Decimal> => {
+  kind,
+]: [ApiPromise, ChainId, ChainId, AssetId, BridgeKind]): Promise<Decimal> => {
   const toChain = CHAINS[toChainId]
-  const extrinsic = transferByKhalaXTransfer({
+  const extrinsic = transferByPhalaXTransfer({
     api,
     amount: '1',
     destinationAccount: toChain.kind === 'polkadot' ? ALICE : BLACK_HOLE,
     fromChainId,
     toChainId,
     assetId,
+    kind,
   })
   const decimals = api.registry.chainDecimals[0]
   const {partialFee} = await extrinsic.paymentInfo(ALICE)
