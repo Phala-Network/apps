@@ -72,7 +72,10 @@ export const transferByPolkadotXTokens = ({
   return polkadotApi.tx.xTokens.transfer(
     currencyId,
     amount,
-    fromChainId === 'bifrost-kusama' || fromChainId === 'bifrost-test'
+    fromChainId === 'bifrost-kusama' ||
+      fromChainId === 'bifrost-test' ||
+      fromChainId === 'karura' ||
+      fromChainId === 'karura-test'
       ? {
           V3: {
             parents: 1,
