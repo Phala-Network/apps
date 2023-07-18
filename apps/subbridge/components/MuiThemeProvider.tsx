@@ -96,7 +96,7 @@ const MuiThemeProvider: FC<{children: ReactNode}> = ({children}) => {
           },
         },
       }),
-    [mode]
+    [mode],
   )
 
   return (

@@ -49,10 +49,10 @@ const NetworkStats: FC = () => {
     ['circulations', chain],
     async () => {
       const res = await fetch(
-        'https://api.subquery.network/sq/Phala-Network/khala-chainbridge__UGhhb?query=%7Bcirculations(first:1,orderBy:BLOCK_HEIGHT_DESC)%7Bnodes%7Bamount%7D%7D%7D'
+        'https://api.subquery.network/sq/Phala-Network/khala-chainbridge__UGhhb?query=%7Bcirculations(first:1,orderBy:BLOCK_HEIGHT_DESC)%7Bnodes%7Bamount%7D%7D%7D',
       )
       return (await res.json()) as CirculationData
-    }
+    },
   )
   const {data: phalaGlobalStateData} = useGlobalStateQuery(phalaSubsquidClient)
   const {data: khalaGlobalStateData} = useGlobalStateQuery(khalaSubsquidClient)
@@ -140,13 +140,13 @@ const NetworkStats: FC = () => {
   const phalaStakeRatio = useMemo(() => {
     if (phalaTotalValueDecimal == null || circulationValue == null) return null
     return toPercentage(
-      phalaTotalValueDecimal.times(1e12).div(circulationValue)
+      phalaTotalValueDecimal.times(1e12).div(circulationValue),
     )
   }, [circulationValue, phalaTotalValueDecimal])
   const khalaStakeRatio = useMemo(() => {
     if (khalaTotalValueDecimal == null || circulationValue == null) return null
     return toPercentage(
-      khalaTotalValueDecimal.times(1e12).div(circulationValue)
+      khalaTotalValueDecimal.times(1e12).div(circulationValue),
     )
   }, [circulationValue, khalaTotalValueDecimal])
   const totalStakeRatio = useMemo(() => {
@@ -229,7 +229,7 @@ const NetworkStats: FC = () => {
     }>
   >(() => {
     const format = (
-      value: Decimal | number | null | undefined
+      value: Decimal | number | null | undefined,
     ): string | undefined | null => {
       if (value == null) return value
       return compactFormat(value)
@@ -304,7 +304,7 @@ const NetworkStats: FC = () => {
     () => {
       setCurrentIndex((prev) => (prev + 1) % items.length)
     },
-    match ? 5000 : null
+    match ? 5000 : null,
   )
 
   return (

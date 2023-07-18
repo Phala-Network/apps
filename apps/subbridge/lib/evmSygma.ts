@@ -15,7 +15,7 @@ export const getEvmSygmaTransfer = async (
   sender: string,
   asset: Asset,
   destinationAccount: string,
-  amount: string
+  amount: string,
 ): Promise<{
   assetTransfer: EVMAssetTransfer
   transfer: Transfer<Fungible>
@@ -28,19 +28,19 @@ export const getEvmSygmaTransfer = async (
   const assetTransfer = new EVMAssetTransfer()
   await assetTransfer.init(
     provider,
-    fromChain.isTest === true ? Environment.TESTNET : Environment.MAINNET
+    fromChain.isTest === true ? Environment.TESTNET : Environment.MAINNET,
   )
   const domains = assetTransfer.config.getDomains()
   const resources = assetTransfer.config.getDomainResources()
 
   const erc20Resource = resources.find(
-    (resource) => resource.symbol === asset.symbol.toUpperCase()
+    (resource) => resource.symbol === asset.symbol.toUpperCase(),
   )
   if (erc20Resource == null) {
     throw new Error('Resource not found')
   }
   const from = domains.find(
-    (domain) => domain.chainId === fromChain.sygmaChainId
+    (domain) => domain.chainId === fromChain.sygmaChainId,
   )
   if (from == null) {
     throw new Error(`Network ${fromChain.id} not supported`)

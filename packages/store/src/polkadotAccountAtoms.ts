@@ -7,7 +7,7 @@ polkadotAccountsAtom.debugLabel = 'polkadotAccounts'
 
 const polkadotAccountAddressAtom = atomWithStorage<string | null>(
   'jotai:polkadot_account_address',
-  null
+  null,
 )
 polkadotAccountAddressAtom.debugLabel = 'polkadotAccountAddress'
 
@@ -17,12 +17,12 @@ export const polkadotAccountAtom = atom(
     if (polkadotAccountAddress == null) return null
     return (
       get(polkadotAccountsAtom)?.find(
-        (account) => account.address === get(polkadotAccountAddressAtom)
+        (account) => account.address === get(polkadotAccountAddressAtom),
       ) ?? null
     )
   },
   (get, set, account: string | null) => {
     set(polkadotAccountAddressAtom, account)
-  }
+  },
 )
 polkadotAccountAtom.debugLabel = 'polkadotAccount'

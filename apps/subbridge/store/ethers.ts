@@ -5,7 +5,7 @@ import {fromChainAtom} from './bridge'
 
 export const isEvmWalletAuthorizedAtom = atomWithStorage(
   'jotai:is_evm_wallet_authorized',
-  false
+  false,
 )
 export const ethereumProviderAtom =
   atom<ethers.providers.ExternalProvider | null>(null)

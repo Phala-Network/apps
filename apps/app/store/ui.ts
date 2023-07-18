@@ -6,5 +6,5 @@ export const wikiDialogOpenAtom = atom(false)
 export const assetVisibleAtom = atomWithStorage('jotai:asset_visible', true)
 export const hideSmallBalanceAtom = atomWithStorage(
   'jotai:hide_small_balance',
-  true
+  true,
 )

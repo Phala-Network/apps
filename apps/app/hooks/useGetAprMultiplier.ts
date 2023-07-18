@@ -9,7 +9,7 @@ const ONE_YEAR = 365 * 24 * 60 * 60 * 1000
 
 const useGetAprMultiplier = (): ((
   aprOrApy: string | Decimal,
-  isApy?: boolean
+  isApy?: boolean,
 ) => Decimal | undefined) => {
   const [subsquidClient] = useAtom(subsquidClientAtom)
   const {data: globalState} = useGlobalStateQuery(subsquidClient, undefined, {
@@ -38,13 +38,13 @@ const useGetAprMultiplier = (): ((
             .times(new Decimal(1).minus(treasuryRatio))
             .times(ONE_YEAR)
             .div(averageBlockTime)
-            .div(idleWorkerShares)
+            .div(idleWorkerShares),
         )
       } catch (err) {
         // noop
       }
     },
-    [averageBlockTime, budgetPerBlock, idleWorkerShares, treasuryRatio]
+    [averageBlockTime, budgetPerBlock, idleWorkerShares, treasuryRatio],
   )
 }
 

@@ -19,7 +19,7 @@ const AddWorker: FC<{
   const [workerId, setWorkerId] = useState('')
   const isValid = useMemo(
     () => /^0x[0-9a-fA-F]{64}$/.test(workerId),
-    [workerId]
+    [workerId],
   )
 
   const onClick = (): void => {

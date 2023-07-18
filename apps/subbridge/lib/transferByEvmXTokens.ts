@@ -42,6 +42,6 @@ export const transferByEvmXTokens = async ({
     },
     Decimal.pow(10, decimals - 3)
       .times(6)
-      .toString()
+      .toString(),
   )
 }

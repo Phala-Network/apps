@@ -8,6 +8,7 @@ import {decodeAddress} from '@polkadot/util-crypto'
 import getGeneralKey, {type Hex} from './getGeneralKey'
 
 const moonriverParaId = CHAINS.moonriver.paraId
+const acalaParaId = CHAINS.acala.paraId
 const karuraParaId = CHAINS.karura.paraId
 const bifrostKusamaParaId = CHAINS['bifrost-kusama'].paraId
 const parallelParaId = CHAINS.parallel.paraId
@@ -40,6 +41,12 @@ const assetConcrete: {
       },
     },
     astr: {parents: 1, interior: {X1: {Parachain: astarParaId}}},
+    aca: {
+      parents: 1,
+      interior: {
+        X2: [{Parachain: acalaParaId, GeneralKey: getGeneralKey('0x0003')}],
+      },
+    },
   },
   khala: {
     pha: {parents: 0, interior: 'Here'},
@@ -170,6 +177,6 @@ export const transferByPhalaXTransfer = ({
     },
     isThroughChainBridge || isSygma
       ? null // No need to specify a certain weight if transfer will not through XCM
-      : {refTime: '6000000000', proofSize: '1000000'}
+      : {refTime: '6000000000', proofSize: '1000000'},
   )
 }

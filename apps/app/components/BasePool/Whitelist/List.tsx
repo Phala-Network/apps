@@ -47,7 +47,7 @@ const WhitelistList: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
   const [subsquidClient] = useAtom(subsquidClientAtom)
   const {data, isLoading} = useBasePoolWhitelistsConnectionQuery(
     subsquidClient,
-    {orderBy: 'createTime_ASC', where: {basePool: {id_eq: basePool.id}}}
+    {orderBy: 'createTime_ASC', where: {basePool: {id_eq: basePool.id}}},
   )
   const rows = useMemo<RowModel[]>(() => {
     return (
@@ -61,11 +61,11 @@ const WhitelistList: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
     const calls = selectedAddress.map((address) => {
       return api.tx.phalaBasePool.removeStakerFromWhitelist(
         basePool.id,
-        address
+        address,
       )
     })
     void signAndSend(
-      calls.length === 1 ? calls[0] : api.tx.utility.batch(calls)
+      calls.length === 1 ? calls[0] : api.tx.utility.batch(calls),
     ).then(() => {
       setSelectedAddress([])
     })

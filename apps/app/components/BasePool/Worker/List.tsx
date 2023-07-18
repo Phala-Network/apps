@@ -68,7 +68,7 @@ const pageSize = 5
 
 const WorkerList: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
   const [reclaimableDate] = useState(() =>
-    addDays(new Date(), -7).toISOString()
+    addDays(new Date(), -7).toISOString(),
   )
   const [page, setPage] = useState(1)
   const [searchString, setSearchString] = useState('')
@@ -97,7 +97,7 @@ const WorkerList: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
         ],
       },
     },
-    {keepPreviousData: true}
+    {keepPreviousData: true},
   )
   const {data: reclaimableData} = useReclaimableWorkersConnectionQuery(
     subsquidClient,
@@ -110,7 +110,7 @@ const WorkerList: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
           coolingDownStartTime_lte: reclaimableDate,
         },
       },
-    }
+    },
   )
   const isOwner = account?.address === basePool.owner.id
   const isEmpty = data?.workersConnection.totalCount === 0
@@ -140,7 +140,7 @@ const WorkerList: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
         await signAndSend(extrinsic)
       }
     },
-    [api, signAndSend]
+    [api, signAndSend],
   )
 
   const onClose = useCallback(() => {
@@ -154,10 +154,10 @@ const WorkerList: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
   const reclaimAll = async (): Promise<void> => {
     if (api == null || reclaimableData == null) return
     const calls = reclaimableData.workersConnection.edges.map(({node}) =>
-      api.tx.phalaStakePoolv2.reclaimPoolWorker(basePool.id, node.id)
+      api.tx.phalaStakePoolv2.reclaimPoolWorker(basePool.id, node.id),
     )
     await signAndSend(
-      calls.length === 1 ? calls[0] : api.tx.utility.batch(calls)
+      calls.length === 1 ? calls[0] : api.tx.utility.batch(calls),
     )
   }
 

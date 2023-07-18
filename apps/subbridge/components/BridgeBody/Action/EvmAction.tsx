@@ -59,7 +59,7 @@ const EvmAction: FC<{onConfirm: () => void}> = ({onConfirm}) => {
         latestData.gte(new Decimal(amount).times(Decimal.pow(10, decimals)))
           ? 0
           : 3000,
-    }
+    },
   )
   const allowanceString = allowance?.toString()
 
@@ -83,7 +83,7 @@ const EvmAction: FC<{onConfirm: () => void}> = ({onConfirm}) => {
           new Decimal(amount)
             .toDP(0, Decimal.ROUND_UP)
             .times(Decimal.pow(10, decimals))
-            .toHex()
+            .toHex(),
         )
         await tx.wait()
         setApproveLoading(false)

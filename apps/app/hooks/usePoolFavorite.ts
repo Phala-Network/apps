@@ -6,13 +6,13 @@ const usePoolFavorite = (pid: string): [boolean, () => void] => {
   const [favoritePools, setFavoritePools] = useAtom(favoritePoolsAtom)
   const isFavorite = useMemo(
     () => favoritePools.includes(pid),
-    [pid, favoritePools]
+    [pid, favoritePools],
   )
   const toggleFavorite = useCallback(() => {
     setFavoritePools(
       favoritePools.includes(pid)
         ? favoritePools.filter((v) => v !== pid)
-        : [...favoritePools, pid]
+        : [...favoritePools, pid],
     )
   }, [setFavoritePools, favoritePools, pid])
 

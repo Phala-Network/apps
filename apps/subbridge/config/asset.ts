@@ -1,3 +1,4 @@
+import acaIcon from '@/assets/aca_asset_icon.png'
 import astrIcon from '@/assets/astr_asset_icon.png'
 import ausdIcon from '@/assets/ausd_asset_icon.png'
 import bncIcon from '@/assets/bnc_asset_icon.png'
@@ -19,6 +20,7 @@ import {type ChainId, type EvmChainId} from './chain'
 export type AssetId =
   | 'pha'
   | 'movr'
+  | 'aca'
   | 'kar'
   | 'zlk'
   | 'bnc'
@@ -33,7 +35,15 @@ export type AssetId =
   | 'sdn'
   | 'astr'
 
-export type OrmlToken = 'PHA' | 'KAR' | 'ZLK' | 'BNC' | 'KUSD' | 'TUR' | 'ASTR'
+export type OrmlToken =
+  | 'PHA'
+  | 'KAR'
+  | 'ZLK'
+  | 'BNC'
+  | 'KUSD'
+  | 'TUR'
+  | 'ASTR'
+  | 'ACA'
 export interface Asset {
   id: AssetId
   symbol: string
@@ -136,6 +146,21 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
       thala: new Decimal('0.000000000266666666'),
     },
     existentialDeposit: {},
+  },
+  aca: {
+    id: 'aca',
+    symbol: 'ACA',
+    icon: acaIcon,
+    ormlToken: 'ACA',
+    decimals: {default: 12},
+    palletAssetId: {phala: 5},
+    destChainTransactionFee: {
+      acala: new Decimal('0.008083'),
+    },
+    existentialDeposit: {
+      acala: new Decimal('0.01'),
+      phala: new Decimal('0.01'),
+    },
   },
   kar: {
     id: 'kar',

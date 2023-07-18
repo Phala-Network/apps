@@ -57,7 +57,7 @@ const NftCard: FC<{
     await signAndSend(
       isVault
         ? api.tx.phalaVault.checkAndMaybeForceWithdraw(basePool.id)
-        : api.tx.phalaStakePoolv2.checkAndMaybeForceWithdraw(basePool.id)
+        : api.tx.phalaStakePoolv2.checkAndMaybeForceWithdraw(basePool.id),
     )
   }
 
@@ -175,7 +175,7 @@ const NftCard: FC<{
               wikiEntry="freeValue"
             >
               {`${toCurrency(
-                Decimal.max(0, delegation.basePool.freeValue)
+                Decimal.max(0, delegation.basePool.freeValue),
               )} PHA`}
             </Property>
           )}

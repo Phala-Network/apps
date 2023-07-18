@@ -24,20 +24,20 @@ export const useBridgeLimit = (): Decimal | undefined => {
   const asset = useAtomValue(assetAtom)
   const bridge = useAtomValue(bridgeInfoAtom)
   const ethereumJsonRpcProvider = useEthersJsonRpcProvider(
-    'https://rpc.ankr.com/eth'
+    'https://rpc.ankr.com/eth',
   )
   const moonriverJsonRpcProvider = useEthersJsonRpcProvider(
-    'https://rpc.api.moonriver.moonbeam.network'
+    'https://rpc.api.moonriver.moonbeam.network',
   )
   const moonriverZlkContract = useEthersAssetContract(
     moonriverJsonRpcProvider,
     'moonriver',
-    'zlk'
+    'zlk',
   )
   const ethereumPhaContract = useEthersAssetContract(
     ethereumJsonRpcProvider,
     'ethereum',
-    'pha'
+    'pha',
   )
   const phalaApi = usePolkadotApi('phala')
   const khalaApi = usePolkadotApi('khala')
@@ -57,7 +57,7 @@ export const useBridgeLimit = (): Decimal | undefined => {
         asset.decimals.moonriver ?? asset.decimals.default,
       ],
     ethersContractBalanceFetcher,
-    {refreshInterval}
+    {refreshInterval},
   )
 
   const {data: khalaReservedZlk} = useSWR(
@@ -70,7 +70,7 @@ export const useBridgeLimit = (): Decimal | undefined => {
         asset.decimals.khala ?? asset.decimals.default,
       ],
     assetPalletBalanceFetcher,
-    {refreshInterval}
+    {refreshInterval},
   )
 
   const {data: ethereumReservedPha} = useSWR(
@@ -83,7 +83,7 @@ export const useBridgeLimit = (): Decimal | undefined => {
         asset.decimals.ethereum ?? asset.decimals.default,
       ],
     ethersContractBalanceFetcher,
-    {refreshInterval}
+    {refreshInterval},
   )
 
   const {data: phalaReservedPha} = useSWR(
@@ -92,7 +92,7 @@ export const useBridgeLimit = (): Decimal | undefined => {
       asset.id === 'pha' &&
       fromChain.id === 'ethereum' && [phalaApi, asset.reservedAddress?.phala],
     polkadotAvailableBalanceFetcher,
-    {refreshInterval}
+    {refreshInterval},
   )
 
   const {data: khalaReservedPha} = useSWR(
@@ -101,7 +101,7 @@ export const useBridgeLimit = (): Decimal | undefined => {
       asset.id === 'pha' &&
       fromChain.id === 'ethereum' && [khalaApi, asset.reservedAddress?.khala],
     polkadotAvailableBalanceFetcher,
-    {refreshInterval}
+    {refreshInterval},
   )
 
   return hasLimit

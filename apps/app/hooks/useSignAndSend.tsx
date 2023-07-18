@@ -9,7 +9,7 @@ import {useCallback} from 'react'
 import usePolkadotApi from './usePolkadotApi'
 
 const useSignAndSend = (): ((
-  extrinsic: SubmittableExtrinsic<'promise', ISubmittableResult>
+  extrinsic: SubmittableExtrinsic<'promise', ISubmittableResult>,
 ) => Promise<void>) => {
   const api = usePolkadotApi()
   const [account] = useAtom(polkadotAccountAtom)
@@ -42,7 +42,7 @@ const useSignAndSend = (): ((
                   </Typography>
                 </Box>
               </Stack>,
-              {persist: true, variant: 'default'}
+              {persist: true, variant: 'default'},
             )
             resolve()
           },
@@ -56,7 +56,7 @@ const useSignAndSend = (): ((
                   In Block
                 </Typography>
               </Box>,
-              {variant: 'success'}
+              {variant: 'success'},
             )
           })
           .catch((err) => {
@@ -74,13 +74,13 @@ const useSignAndSend = (): ((
                   autoHideDuration: 6000,
                   variant: 'error',
                   style: {maxWidth: '400px'},
-                }
+                },
               )
             }
           })
       })
     },
-    [account, api, enqueueSnackbar, closeSnackbar]
+    [account, api, enqueueSnackbar, closeSnackbar],
   )
   return signAndSend
 }

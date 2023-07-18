@@ -2,7 +2,7 @@ import Decimal from 'decimal.js'
 
 export function toFixed(
   value: number | Decimal | string,
-  fractionDigits = 4
+  fractionDigits = 4,
 ): string {
   if (typeof value === 'string') {
     value = new Decimal(value)

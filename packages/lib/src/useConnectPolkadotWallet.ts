@@ -6,7 +6,7 @@ import {useEffect} from 'react'
 
 export const useConnectPolkadotWallet = (
   dappName: string,
-  ss58Format?: number
+  ss58Format?: number,
 ): void => {
   const [, setAccounts] = useAtom(polkadotAccountsAtom)
   const [wallet, setWallet] = useAtom(walletAtom)
@@ -49,7 +49,7 @@ export const useConnectPolkadotWallet = (
               ...a,
               address: transformAddress(a.address, ss58Format),
             }
-          })
+          }),
         )
       }
     }

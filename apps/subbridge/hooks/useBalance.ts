@@ -91,7 +91,7 @@ export const useBalance = (): Decimal | undefined => {
         decimals,
       ],
     ormlTokenBalanceFetcher,
-    {refreshInterval}
+    {refreshInterval},
   )
   const {data: palletAssetBalance} = useSWR(
     balanceSource === 'palletAsset' &&
@@ -104,14 +104,14 @@ export const useBalance = (): Decimal | undefined => {
         decimals,
       ],
     assetPalletBalanceFetcher,
-    {refreshInterval}
+    {refreshInterval},
   )
   const {data: polkadotNativeChainBalance} = useSWR(
     balanceSource === 'polkadotNative' &&
       polkadotApi != null &&
       polkadotAccount != null && [polkadotApi, polkadotAccount.address],
     polkadotAvailableBalanceFetcher,
-    {refreshInterval}
+    {refreshInterval},
   )
   const {data: evmNativeBalance} = useSWR(
     balanceSource === 'evmBalance' &&
@@ -119,7 +119,7 @@ export const useBalance = (): Decimal | undefined => {
       evmAccount != null &&
       ethersWeb3Provider != null && [ethersWeb3Provider, evmAccount],
     ethersBalanceFetcher,
-    {refreshInterval}
+    {refreshInterval},
   )
   const {data: ethersContractBalance} = useSWR(
     balanceSource === 'evmContract' &&
@@ -131,7 +131,7 @@ export const useBalance = (): Decimal | undefined => {
         decimals,
       ],
     ethersContractBalanceFetcher,
-    {refreshInterval}
+    {refreshInterval},
   )
 
   const balance: Decimal | undefined =

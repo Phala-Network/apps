@@ -35,7 +35,7 @@ const DelegationScatterChart: FC<{address?: string}> = ({address}) => {
       first: 50,
       where: {account: {id_eq: address}, value_gt: '1'},
     },
-    {enabled: address !== undefined}
+    {enabled: address !== undefined},
   )
 
   const chartData = useMemo(() => {

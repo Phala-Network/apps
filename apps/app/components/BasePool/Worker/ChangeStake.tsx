@@ -30,7 +30,7 @@ const confidenceScoreMap = {
 
 const getSMin = (
   worker: Worker,
-  globalState: Exclude<GlobalStateQuery['globalStateById'], null | undefined>
+  globalState: Exclude<GlobalStateQuery['globalStateById'], null | undefined>,
 ): Decimal | undefined => {
   const {initialScore} = worker
   const {k} = globalState
@@ -42,7 +42,7 @@ const getSMin = (
 
 const getSMax = (
   worker: Worker,
-  globalState: Exclude<GlobalStateQuery['globalStateById'], null | undefined>
+  globalState: Exclude<GlobalStateQuery['globalStateById'], null | undefined>,
 ): Decimal | undefined => {
   const {initialScore, confidenceLevel} = worker
   const {vMax, re, phaRate} = globalState
@@ -93,12 +93,12 @@ const ChangeStake: FC<{
       ? api.tx.phalaStakePoolv2.restartComputing(
           worker.stakePool.id,
           worker.id,
-          amount
+          amount,
         )
       : api.tx.phalaStakePoolv2.startComputing(
           worker.stakePool.id,
           worker.id,
-          amount
+          amount,
         )
 
     setLoading(true)

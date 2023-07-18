@@ -30,7 +30,7 @@ const MyStakePools: FC = () => {
     {
       enabled: account !== null,
       select: (data) => data.basePoolsConnection.edges,
-    }
+    },
   )
   const ownerReward = useMemo(() => {
     if (edges == null) return

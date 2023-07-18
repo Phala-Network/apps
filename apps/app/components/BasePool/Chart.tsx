@@ -52,7 +52,7 @@ const BasePoolChart: FC<{
     const date = new Date()
     date.setUTCHours(0, 0, 0, 0)
     return Array.from({length: days + 1}).map((_, i) =>
-      addDays(date, i - days).toISOString()
+      addDays(date, i - days).toISOString(),
     )
   })
   const [subsquidClient] = useAtom(subsquidClientAtom)
@@ -79,7 +79,7 @@ const BasePoolChart: FC<{
       refetchOnMount: false,
       refetchOnWindowFocus: false,
       refetchOnReconnect: false,
-    }
+    },
   )
 
   const chartData = useMemo(() => {
@@ -99,7 +99,7 @@ const BasePoolChart: FC<{
           prev.cumulativeOwnerRewards != null
         ) {
           value = new Decimal(current.cumulativeOwnerRewards).minus(
-            prev.cumulativeOwnerRewards
+            prev.cumulativeOwnerRewards,
           )
         }
 

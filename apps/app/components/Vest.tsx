@@ -61,7 +61,7 @@ const Vest: FC<{onClose: () => void}> = ({onClose}) => {
         <Stack spacing={1}>
           <Property label="Unlocked" size="small">
             {format(
-              allBalances?.vestedBalance.sub(allBalances.vestedClaimable)
+              allBalances?.vestedBalance.sub(allBalances.vestedClaimable),
             )}
           </Property>
           <Property label="Locked" size="small">

@@ -19,7 +19,7 @@ const abi: Record<AbiKind, ethers.ContractInterface> = {
 const fetcher = async ([provider, address, abiKind]: [
   ethers.providers.Web3Provider | ethers.providers.JsonRpcProvider,
   string,
-  AbiKind
+  AbiKind,
 ]): Promise<ethers.Contract> => {
   const {ethers} = await import('ethers')
   return new ethers.Contract(
@@ -27,7 +27,7 @@ const fetcher = async ([provider, address, abiKind]: [
     abi[abiKind],
     provider instanceof ethers.providers.Web3Provider
       ? provider.getSigner()
-      : provider // JsonRpcProvider is readonly
+      : provider, // JsonRpcProvider is readonly
   )
 }
 
@@ -37,7 +37,7 @@ export function useEthersAssetContract(
     | ethers.providers.JsonRpcProvider
     | undefined,
   chainId: EvmChainId,
-  assetId: AssetId
+  assetId: AssetId,
 ): ethers.Contract | undefined {
   const address = ASSETS[assetId].erc20TokenContractAddress?.[chainId]
 
@@ -45,7 +45,7 @@ export function useEthersAssetContract(
     provider != null && address != null
       ? [provider, address, 'tokenStandard']
       : null,
-    fetcher
+    fetcher,
   )
 
   return data
@@ -65,7 +65,7 @@ export const useCurrentEthersAssetContract = ():
     provider != null && address != null
       ? [provider, address, 'tokenStandard']
       : null,
-    fetcher
+    fetcher,
   )
 
   return data
@@ -81,7 +81,7 @@ export const useEthersXTokensContract = (): ethers.Contract | undefined => {
     provider != null && address != null
       ? [provider, address, 'moonriverXTokens']
       : null,
-    fetcher
+    fetcher,
   )
 
   return data
@@ -98,7 +98,7 @@ export const useEthersChainBridgeContract = (): ethers.Contract | undefined => {
     provider != null && address != null
       ? [provider, address, 'chainBridge']
       : null,
-    fetcher
+    fetcher,
   )
 
   return data

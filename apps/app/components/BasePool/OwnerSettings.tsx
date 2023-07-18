@@ -29,13 +29,13 @@ const OwnerSettings: FC<{
   const signAndSend = useSignAndSend()
   const [commissionLoading, setCommissionLoading] = useState(false)
   const [commissionString, setCommissionString] = useState(
-    new Decimal(basePool.commission).times(100).toString()
+    new Decimal(basePool.commission).times(100).toString(),
   )
   const [capacityLoading, setCapacityLoading] = useState(false)
   const [capacityString, setCapacityString] = useState(() =>
     stakePool?.capacity != null
       ? new Decimal(stakePool.capacity).toString()
-      : ''
+      : '',
   )
 
   const [telegramString, setTelegramString] = useState('')
@@ -93,7 +93,7 @@ const OwnerSettings: FC<{
     }
     const hex = stringToHex(JSON.stringify(description))
     await signAndSend(
-      api.tx.phalaBasePool.setPoolDescription(basePool.id, hex)
+      api.tx.phalaBasePool.setPoolDescription(basePool.id, hex),
     ).finally(() => {
       setSaveIntroLoading(false)
     })

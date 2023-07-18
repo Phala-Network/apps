@@ -54,7 +54,7 @@ const App: FC<MyAppProps> = (props) => {
               new Map(
                 typeof router.query.chain === 'string'
                   ? [[chainAtom, router.query.chain]]
-                  : []
+                  : [],
               )
             }
           >

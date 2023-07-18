@@ -40,7 +40,7 @@ const AmountInput: FC<BoxProps & Pick<InputProps, 'endAdornment'>> = ({
   const showMax = Boolean(
     balance != null &&
       !balance.eq(0) &&
-      (amount.length === 0 || !balance.eq(amount))
+      (amount.length === 0 || !balance.eq(amount)),
   )
 
   const fromNativeChain =

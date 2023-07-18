@@ -67,7 +67,7 @@ const ClaimMissingDelegatorRewards: NextPage = () => {
         const result = list
         const legacyRewards =
           await api.query.phalaStakePoolv2.legacyRewards.multi(
-            list.map((x) => [account.address, x.pid])
+            list.map((x) => [account.address, x.pid]),
           )
         for (let i = 0; i < legacyRewards.length; i++) {
           if (legacyRewards[i].isNone) {
@@ -84,7 +84,7 @@ const ClaimMissingDelegatorRewards: NextPage = () => {
         account?.address !== undefined &&
         api !== undefined,
       refetchInterval: 12000,
-    }
+    },
   )
 
   useEffect(() => {
@@ -103,7 +103,7 @@ const ClaimMissingDelegatorRewards: NextPage = () => {
             pid,
             amount: new Decimal(amount).div(1e12),
             claimed: false,
-          }))
+          })),
         )
       } else {
         setList([])
@@ -122,13 +122,13 @@ const ClaimMissingDelegatorRewards: NextPage = () => {
 
   const addressValid = useMemo(
     () => validateAddress(targetAddress),
-    [targetAddress]
+    [targetAddress],
   )
 
   const claim = async (): Promise<void> => {
     if (api == null || data == null) return
     const getExtrinsic = (
-      pid: string
+      pid: string,
     ): SubmittableExtrinsic<'promise', ISubmittableResult> =>
       api.tx.phalaStakePoolv2.claimLegacyRewards(pid, targetAddress)
     const calls = []
@@ -136,7 +136,7 @@ const ClaimMissingDelegatorRewards: NextPage = () => {
       calls.push(getExtrinsic(pid))
     } else {
       calls.push(
-        ...data.filter((x) => !x.claimed).map(({pid}) => getExtrinsic(pid))
+        ...data.filter((x) => !x.claimed).map(({pid}) => getExtrinsic(pid)),
       )
     }
     setLoading(true)

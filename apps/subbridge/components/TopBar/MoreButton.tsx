@@ -20,10 +20,10 @@ const externalLinks = [
 
 const MoreButton: FC = () => {
   const [colorSchemeSetting, setColorSchemeSetting] = useAtom(
-    colorSchemeSettingAtom
+    colorSchemeSettingAtom,
   )
   const [moreButtonBadgeVersion, setMoreButtonBadgeVersion] = useAtom(
-    moreButtonBadgeVersionAtom
+    moreButtonBadgeVersionAtom,
   )
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)

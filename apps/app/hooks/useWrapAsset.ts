@@ -8,7 +8,7 @@ const useWrapAsset = (): (<T>(asset: T) => string | T) => {
     <T>(asset: T): T | string => {
       return assetVisible ? asset : '***'
     },
-    [assetVisible]
+    [assetVisible],
   )
 }
 

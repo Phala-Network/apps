@@ -11,7 +11,7 @@ const useSyncPath = (): void => {
       void router.replace(
         router.asPath.replace(/^\/(phala|khala)/, `/${chain}`),
         undefined,
-        {shallow: true}
+        {shallow: true},
       )
     }
   }, [chain, router, router.isReady, router.query.chain, router.asPath])

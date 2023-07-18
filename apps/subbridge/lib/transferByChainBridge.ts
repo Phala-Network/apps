@@ -9,7 +9,7 @@ export const createChainBridgeData = async (
   khalaApi: ApiPromise,
   destinationAccount: string,
   amount: string,
-  toChainId: ChainId
+  toChainId: ChainId,
 ): Promise<string> => {
   const {ethers, BigNumber} = await import('ethers')
   const isToKhala =
@@ -82,6 +82,11 @@ export const transferByChainBridge = async ({
   return contract.deposit(
     depositChainId,
     resourceId,
-    await createChainBridgeData(khalaApi, destinationAccount, amount, toChainId)
+    await createChainBridgeData(
+      khalaApi,
+      destinationAccount,
+      amount,
+      toChainId,
+    ),
   )
 }

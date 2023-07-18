@@ -54,7 +54,7 @@ const PoolSwitch = styled(Switch)(({theme}) =>
       backgroundColor: '#212330 !important',
       opacity: '1 !important',
     },
-  })
+  }),
 )
 
 export const getStaticProps: GetStaticProps = async () => {
@@ -101,10 +101,10 @@ const Delegate: NextPage = () => {
       void router.replace(
         `/${chain}/delegate/${checked ? 'stake-pool' : 'vault'}`,
         undefined,
-        {shallow: true}
+        {shallow: true},
       )
     },
-    [router, chain]
+    [router, chain],
   )
 
   useEffect(() => {

@@ -31,7 +31,7 @@ const DestinationAccountInput: FC<BoxProps> = (props) => {
   const [toChain] = useAtom(toChainAtom)
   const [evmAccount] = useAtom(evmAccountAtom)
   const [destinationAccount, setDestinationAccount] = useAtom(
-    destinationAccountAtom
+    destinationAccountAtom,
   )
   const [polkadotAccount] = useAtom(polkadotAccountAtom)
   const [isWalletConnected] = useAtom(isWalletConnectAtom)
@@ -80,7 +80,7 @@ const DestinationAccountInput: FC<BoxProps> = (props) => {
       const {name, address} = polkadotAccount
 
       return `${name ?? ''} (${trimAddress(
-        encodeAddress(address, toChain.ss58Format)
+        encodeAddress(address, toChain.ss58Format),
       )})`
     }
     return destinationAccount

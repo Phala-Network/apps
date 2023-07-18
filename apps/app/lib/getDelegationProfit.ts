@@ -3,7 +3,7 @@ import {type Delegation, type DelegationSnapshot} from './subsquidQuery'
 
 const getDelegationProfit = (
   delegation: Pick<Delegation, 'cost' | 'value'>,
-  snapshot: Pick<DelegationSnapshot, 'cost' | 'value'>
+  snapshot: Pick<DelegationSnapshot, 'cost' | 'value'>,
 ): Decimal => {
   let profit = new Decimal(delegation.value)
     .minus(snapshot.value)

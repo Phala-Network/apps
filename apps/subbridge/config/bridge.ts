@@ -129,6 +129,13 @@ export const BRIDGES: Readonly<Bridge[]> = [
           {assetId: 'astr', estimatedTime: '< 1 min', kind: 'phalaChainBridge'},
         ],
       },
+      {
+        id: 'acala',
+        assets: [
+          {assetId: 'pha', estimatedTime: '< 1 min', kind: 'phalaChainBridge'},
+          {assetId: 'aca', estimatedTime: '< 1 min', kind: 'phalaChainBridge'},
+        ],
+      },
     ],
   },
   {

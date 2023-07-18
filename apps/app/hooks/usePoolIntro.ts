@@ -37,7 +37,7 @@ const validate = ajv.compile(schema)
 
 const poolIntroFetcher = async ([api, pid]: [
   ApiPromise,
-  string
+  string,
 ]): Promise<PoolIntro> => {
   return await api.query.phalaBasePool.poolDescriptions(pid).then((bytes) => {
     try {
@@ -58,7 +58,7 @@ const usePoolIntro = (pid: string): PoolIntro | undefined => {
   const api = usePolkadotApi()
   const {data} = useSWR(
     api != null && [api, pid, 'poolIntro'],
-    poolIntroFetcher
+    poolIntroFetcher,
   )
 
   return data

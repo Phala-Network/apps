@@ -4,7 +4,7 @@ import {atomWithStorage} from 'jotai/utils'
 
 export const walletNameAtom = atomWithStorage<string | null>(
   'jotai:wallet_name',
-  null
+  null,
 )
 
 const originalWalletAtom = atom<Wallet | null>(null)
@@ -14,5 +14,5 @@ export const walletAtom = atom(
   (_get, set, newWallet: Wallet | null) => {
     set(originalWalletAtom, newWallet)
     set(walletNameAtom, newWallet != null ? newWallet.extensionName : null)
-  }
+  },
 )

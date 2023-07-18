@@ -5,7 +5,7 @@ import usePolkadotApi from './usePolkadotApi'
 
 const useAssetBalance = (
   account: string | undefined,
-  assetId: number | 'free' | 'available'
+  assetId: number | 'free' | 'available',
 ): Decimal | null | undefined => {
   const api = usePolkadotApi()
   const assetsMetadata = useAssetsMetadata()
@@ -27,17 +27,17 @@ const useAssetBalance = (
         const res = await api.query.assets.account(assetId, account)
         const unwrapped = res.unwrapOr({balance: 0})
         return new Decimal(unwrapped.balance.toString()).div(
-          Decimal.pow(10, assetMetadata.decimals)
+          Decimal.pow(10, assetMetadata.decimals),
         )
       } else {
         const {availableBalance, freeBalance} = await api.derive.balances.all(
-          account
+          account,
         )
         return new Decimal(
-          (assetId === 'available' ? availableBalance : freeBalance).toHex()
+          (assetId === 'available' ? availableBalance : freeBalance).toHex(),
         ).div(1e12)
       }
-    }
+    },
   )
 
   return data

@@ -1,3 +1,4 @@
+import acalaIcon from '@/assets/acala_chain_icon.svg'
 import astarIcon from '@/assets/astar_chain_icon.png'
 import basiliskIcon from '@/assets/basilisk_chain_icon.png'
 import bifrostIcon from '@/assets/bifrost_chain_icon.svg'
@@ -25,6 +26,7 @@ export type EvmChainId =
 export type PolkadotChainId =
   | 'phala'
   | 'khala'
+  | 'acala'
   | 'karura'
   | 'thala'
   | 'rhala'
@@ -109,6 +111,24 @@ export const CHAINS: Readonly<
     nativeAsset: 'pha',
     explorerURL: 'https://khala.subscan.io/',
     sygmaChainId: 5232,
+  },
+  acala: {
+    id: 'acala',
+    name: 'Acala',
+    icon: acalaIcon,
+    kind: 'polkadot',
+    endpoint: [
+      'wss://acala-rpc-0.aca-api.network',
+      'wss://acala-rpc-1.aca-api.network',
+      'wss://acala-rpc-3.aca-api.network/ws',
+      'wss://acala-rpc.dwellir.com',
+      'wss://acala-polkadot.api.onfinality.io/public-ws',
+      'wss://acala.polkawallet.io',
+    ],
+    ss58Format: 10,
+    paraId: 2000,
+    nativeAsset: 'aca',
+    explorerURL: 'https://acala.subscan.io/',
   },
   karura: {
     id: 'karura',

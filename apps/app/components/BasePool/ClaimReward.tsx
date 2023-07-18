@@ -40,7 +40,7 @@ const ClaimReward: FC<{
   const claimReward = (): void => {
     if (api == null || (basePool == null && basePools == null)) return
     const getExtrinsic = (
-      id: string
+      id: string,
     ): SubmittableExtrinsic<'promise', ISubmittableResult> =>
       api.tx.phalaStakePoolv2.claimOwnerRewards(id, address)
     const calls = []
@@ -64,7 +64,7 @@ const ClaimReward: FC<{
         encodeAddress(decodeAddress(address), 30) === account.address
       ) {
         calls.push(
-          api.tx.phalaWrappedBalances.unwrap(totalReward.times(1e12).toHex())
+          api.tx.phalaWrappedBalances.unwrap(totalReward.times(1e12).toHex()),
         )
       }
     } catch (err) {

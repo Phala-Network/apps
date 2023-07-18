@@ -29,7 +29,7 @@ type Nft = NftsConnectionQuery['nftsConnection']['edges'][number]['node']
 const nftNameFetcher = async ([api, cid, nftId]: [
   ApiPromise,
   number,
-  number
+  number,
 ]): Promise<string | undefined> => {
   const property = await api.query.rmrkCore.properties(cid, nftId, 'name')
   try {
@@ -41,7 +41,7 @@ const nftNameFetcher = async ([api, cid, nftId]: [
 
 const collectionSymbolFetcher = async ([api, cid]: [
   ApiPromise,
-  number
+  number,
 ]): Promise<string | undefined> => {
   const collection = await api.query.rmrkCore.collections(cid)
   try {
@@ -59,11 +59,11 @@ const NftCard: FC<{nft: Nft}> = ({nft}) => {
     api != null && isDelegationNft
       ? [api, nft.cid, nft.nftId, 'nftName']
       : null,
-    nftNameFetcher
+    nftNameFetcher,
   )
   const {data: collectionSymbol} = useSWRImmutable(
     api != null && isDelegationNft && [api, nft.cid, 'nftCollection'],
-    collectionSymbolFetcher
+    collectionSymbolFetcher,
   )
   const delegationNftPrefix = `${chain === 'khala' ? 'Khala' : 'Phala'} - ${
     nft.delegation?.basePool.kind ?? ''
@@ -143,7 +143,7 @@ const DashboardNftList: FC = () => {
     {
       enabled: account !== null,
       keepPreviousData: true,
-    }
+    },
   )
   const isEmpty = data?.nftsConnection.totalCount === 0
   return (

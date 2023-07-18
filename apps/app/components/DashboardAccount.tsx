@@ -36,14 +36,14 @@ const BalanceBox = styled(Box)(({theme}) =>
     background: colors.main[500],
     padding: {xs: 1, sm: 1.5},
     borderRadius: '2px',
-  })
+  }),
 )
 
 const Identicon = dynamic(
   async () => await import('@polkadot/react-identicon'),
   {
     ssr: false,
-  }
+  },
 )
 
 const DashboardAccount: FC = () => {
@@ -64,7 +64,7 @@ const DashboardAccount: FC = () => {
       enabled: account?.address !== undefined,
       select: (data) =>
         data.accountById ?? {vaultValue: '0', stakePoolValue: '0'},
-    }
+    },
   )
 
   return (
@@ -209,8 +209,8 @@ const DashboardAccount: FC = () => {
                           toCurrency(
                             new Decimal(accountData.vaultValue)
                               .plus(accountData.stakePoolValue)
-                              .plus(wrapped)
-                          )
+                              .plus(wrapped),
+                          ),
                         )}
                         <sub>PHA</sub>
                       </>
