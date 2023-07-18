@@ -8,7 +8,7 @@ import {useCallback} from 'react'
 const ONE_YEAR = 365 * 24 * 60 * 60 * 1000
 
 const useGetApr = (
-  chain?: Chain
+  chain?: Chain,
 ): ((aprMultiplier: string | Decimal) => Decimal | undefined) => {
   const [subsquidClient] = useAtom(subsquidClientAtom)
   const {data: globalStateData} = useGlobalStateQuery(
@@ -18,7 +18,7 @@ const useGetApr = (
       ? phalaSubsquidClient
       : khalaSubsquidClient,
     undefined,
-    {select: (data) => data.globalStateById}
+    {select: (data) => data.globalStateById},
   )
 
   const {averageBlockTime, idleWorkerShares, budgetPerBlock, treasuryRatio} =
@@ -41,7 +41,7 @@ const useGetApr = (
         .div(idleWorkerShares)
         .times(aprMultiplier)
     },
-    [averageBlockTime, idleWorkerShares, budgetPerBlock, treasuryRatio]
+    [averageBlockTime, idleWorkerShares, budgetPerBlock, treasuryRatio],
   )
 }
 

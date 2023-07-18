@@ -13,7 +13,7 @@ const useAccountQuery = (): UseQueryResult<
   const query = useAccountByIdQuery(
     subsquidClient,
     {accountId: account?.address as string},
-    {enabled: account !== null, select: (data) => data.accountById}
+    {enabled: account !== null, select: (data) => data.accountById},
   )
   return query
 }

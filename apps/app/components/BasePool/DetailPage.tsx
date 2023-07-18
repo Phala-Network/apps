@@ -109,7 +109,7 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
             })
           }
         },
-      }
+      },
     )
   const onClose = useCallback(() => {
     setDialogOpen(false)
@@ -122,7 +122,7 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
     await signAndSend(
       isVault
         ? api.tx.phalaVault.checkAndMaybeForceWithdraw(basePool.id)
-        : api.tx.phalaStakePoolv2.checkAndMaybeForceWithdraw(basePool.id)
+        : api.tx.phalaStakePoolv2.checkAndMaybeForceWithdraw(basePool.id),
     )
   }
 

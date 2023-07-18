@@ -47,13 +47,13 @@ export const useBridgeFee = (): Decimal | undefined => {
         evmAccount,
         asset,
         ALICE,
-        '1000000000000000000'
+        '1000000000000000000',
       )
       if (fee.feeData == null) {
         return
       }
       return new Decimal(fee.feeData).div(Decimal.pow(10, 18))
-    }
+    },
   )
 
   const {data: phalaSygmaFee} = useSWR(
@@ -64,7 +64,7 @@ export const useBridgeFee = (): Decimal | undefined => {
         {concrete: {parents: 0, interior: 'Here'}},
       ])
       return new Decimal(fee.toString()).div(Decimal.pow(10, 12))
-    }
+    },
   )
 
   if (bridge.kind === 'phalaSygma') {

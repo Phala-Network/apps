@@ -63,6 +63,6 @@ export const transferByPolkadotXcm = ({
       },
     },
     {[xcmVersion]: [{id: {Concrete}, fun: {Fungible: amount}}]},
-    0
+    0,
   )
 }

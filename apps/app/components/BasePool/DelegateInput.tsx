@@ -39,7 +39,7 @@ const DelegateInput: FC<{basePool: BasePoolCommonFragment; sx?: SxProps}> = ({
   const wrappedBalance = useAssetBalance(delegatorAddress, WPHA_ASSET_ID)
   const availableBalance = useAssetBalance(
     asAccount ? account?.address : undefined,
-    'available'
+    'available',
   )
   const delegableBalance = useMemo(() => {
     if (wrappedBalance != null) {
@@ -65,7 +65,7 @@ const DelegateInput: FC<{basePool: BasePoolCommonFragment; sx?: SxProps}> = ({
       : api.tx.phalaStakePoolv2.contribute(
           basePool.pid,
           amount.toHex(),
-          asAccount ? null : selectedVaultState.id
+          asAccount ? null : selectedVaultState.id,
         )
 
     signAndSend(
@@ -74,7 +74,7 @@ const DelegateInput: FC<{basePool: BasePoolCommonFragment; sx?: SxProps}> = ({
             api.tx.phalaWrappedBalances.wrap(wrapAmount.toHex()),
             extrinsic,
           ])
-        : extrinsic
+        : extrinsic,
     )
       .then(() => {
         setAmountString('')
@@ -90,7 +90,7 @@ const DelegateInput: FC<{basePool: BasePoolCommonFragment; sx?: SxProps}> = ({
       const totalValue = new Decimal(basePool.totalValue)
       const amount = Decimal.max(
         0,
-        new Decimal(amountString).minus(basePool.withdrawingValue)
+        new Decimal(amountString).minus(basePool.withdrawingValue),
       )
 
       return apr.times(totalValue).div(totalValue.plus(amount))

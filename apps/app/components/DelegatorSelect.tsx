@@ -29,7 +29,7 @@ const DelegatorSelect: FC<{isVault?: boolean}> = ({isVault = false}) => {
   const {data: accountData} = useAccountQuery()
   const vaultIds = useMemo(
     () => accountData?.ownedPools.map((x) => x.id) ?? [],
-    [accountData?.ownedPools]
+    [accountData?.ownedPools],
   )
   const selectedVaultState = useSelectedVaultState()
   const delegatorAddress =
@@ -38,7 +38,7 @@ const DelegatorSelect: FC<{isVault?: boolean}> = ({isVault = false}) => {
       : selectedVaultState?.account.id
   const balance = useAssetBalance(
     delegatorAddress,
-    selectedVaultState != null ? WPHA_ASSET_ID : 'available'
+    selectedVaultState != null ? WPHA_ASSET_ID : 'available',
   )
   if (account == null || accountData == null || account.wallet == null) {
     return null

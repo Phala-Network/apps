@@ -37,13 +37,13 @@ const ClaimDelegation: FC<{
   const claimReward = (): void => {
     if (api == null || (basePool == null && basePools == null)) return
     const getExtrinsic = (
-      pool: ClaimablePool
+      pool: ClaimablePool,
     ): SubmittableExtrinsic<'promise', ISubmittableResult> | undefined => {
       if (pool.vault != null) {
         return api.tx.phalaVault.claimOwnerShares(
           pool.id,
           address,
-          new Decimal(pool.vault.claimableOwnerShares).times(1e12).toHex()
+          new Decimal(pool.vault.claimableOwnerShares).times(1e12).toHex(),
         )
       }
     }
@@ -57,7 +57,7 @@ const ClaimDelegation: FC<{
         basePools.length === 1
           ? getExtrinsic(basePools[0])
           : api.tx.utility.batch(
-              basePools.map((pool) => getExtrinsic(pool)).filter(Boolean)
+              basePools.map((pool) => getExtrinsic(pool)).filter(Boolean),
             )
     }
     if (extrinsic === undefined) {

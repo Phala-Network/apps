@@ -178,7 +178,7 @@ const Assets: FC<{
     return assets.sort((a, b) =>
       a.balance != null && b.balance != null && a.balance.greaterThan(b.balance)
         ? -1
-        : 1
+        : 1,
     )
   }
   const onAction: OnAction = useCallback((asset, action) => {

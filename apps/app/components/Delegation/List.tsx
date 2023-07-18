@@ -48,7 +48,7 @@ import Withdraw from './Withdraw'
 export type DelegationDialogAction = 'withdraw'
 export type OnAction = (
   delegation: DelegationCommonFragment,
-  action: DelegationDialogAction
+  action: DelegationDialogAction,
 ) => void
 
 const orderByEntries: Array<[string, DelegationOrderByInput]> = [
@@ -125,7 +125,7 @@ const DelegationList: FC<{
             })
           })
         },
-      }
+      },
     )
 
   useEffect(() => {

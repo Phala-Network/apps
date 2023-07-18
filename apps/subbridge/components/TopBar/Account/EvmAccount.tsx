@@ -22,7 +22,7 @@ const EvmAccount: FC = () => {
     evmAccount != null &&
       ethersWeb3Provider != null && [ethersWeb3Provider, evmAccount],
     ethersBalanceFetcher,
-    {refreshInterval: 12000}
+    {refreshInterval: 12000},
   )
 
   if (evmAccount == null) return null

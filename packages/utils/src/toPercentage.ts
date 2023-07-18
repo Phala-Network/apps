@@ -3,7 +3,7 @@ import {toFixed} from './toFixed'
 
 export function toPercentage(
   value: Decimal | string | number | null | undefined,
-  fractionDigits = 2
+  fractionDigits = 2,
 ): string | undefined | null {
   if (value == null) return value
   const decimal = new Decimal(value)

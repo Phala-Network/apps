@@ -9,7 +9,7 @@ const usePolkadotApi = (): ApiPromise | undefined => {
   const [chain] = useAtom(chainAtom)
   const {data: polkadotApi} = useSWRImmutable(
     [chain === 'khala' ? KHALA_ENDPOINTS : PHALA_ENDPOINTS, 'polkadotApi'],
-    createPolkadotApi
+    createPolkadotApi,
   )
 
   return polkadotApi

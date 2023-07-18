@@ -14,7 +14,7 @@ export const useEthereumProviderInitialization = (): void => {
   const [, setEvmAccount] = useAtom(evmAccountAtom)
   const [, setEvmChainId] = useAtom(evmChainIdAtom)
   const [isEvmWalletAuthorized, setIsEvmWalletAuthorized] = useAtom(
-    isEvmWalletAuthorizedAtom
+    isEvmWalletAuthorizedAtom,
   )
 
   useEffect(() => {

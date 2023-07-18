@@ -5,7 +5,7 @@ const useDebounced = <T>(state: T, delay = 500): T => {
   const [debouncedState, setDebouncedState] = useState(state)
   const debouncedSetState = useMemo(
     () => debounce(setDebouncedState, delay),
-    [delay]
+    [delay],
   )
 
   useEffect(() => {

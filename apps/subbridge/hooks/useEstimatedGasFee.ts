@@ -37,7 +37,7 @@ export const useEstimatedGasFee = (): Decimal | undefined => {
   const evmAccount = useAtomValue(evmAccountAtom)
   const decimals = useAtomValue(decimalsAtom)
   const khalaApi = usePolkadotApi(
-    toChain.id === 'phala' || toChain.id === 'thala' ? toChain.id : 'khala'
+    toChain.id === 'phala' || toChain.id === 'thala' ? toChain.id : 'khala',
   )
   const polkadotApi = useCurrentPolkadotApi()
   const {kind: bridgeKind, isThroughKhala} = useAtomValue(bridgeInfoAtom)
@@ -48,7 +48,7 @@ export const useEstimatedGasFee = (): Decimal | undefined => {
 
   const {data: ethersGasPrice} = useSWR(
     ethersWeb3Provider,
-    ethersGasPriceFetcher
+    ethersGasPriceFetcher,
   )
   const {data: evmChainBridgeEstimatedGas} = useSWR(
     bridgeKind === 'evmChainBridge' &&
@@ -60,7 +60,7 @@ export const useEstimatedGasFee = (): Decimal | undefined => {
         resourceId,
         toChain.id,
       ],
-    evmChainBridgeEstimatedGasFetcher
+    evmChainBridgeEstimatedGasFetcher,
   )
 
   const {data: evmXTokensEstimatedGas} = useSWR(
@@ -73,7 +73,7 @@ export const useEstimatedGasFee = (): Decimal | undefined => {
         toChain.paraId,
         decimals,
       ],
-    evmXTokensEstimatedGasFetcher
+    evmXTokensEstimatedGasFetcher,
   )
 
   const {data: evmSygmaEstimatedGas} = useSWR(
@@ -95,13 +95,13 @@ export const useEstimatedGasFee = (): Decimal | undefined => {
         evmAccount,
         asset,
         ALICE,
-        '1000000000000000000'
+        '1000000000000000000',
       )
 
       return new Decimal(
-        (await provider.getSigner().estimateGas(tx)).toString()
+        (await provider.getSigner().estimateGas(tx)).toString(),
       )
-    }
+    },
   )
 
   const {data: xTokensPartialFee} = useSWR(
@@ -113,7 +113,7 @@ export const useEstimatedGasFee = (): Decimal | undefined => {
         asset.id,
         isThroughKhala,
       ],
-    xTokensPartialFeeFetcher
+    xTokensPartialFeeFetcher,
   )
 
   const {data: phalaPartialFee} = useSWR(
@@ -125,13 +125,13 @@ export const useEstimatedGasFee = (): Decimal | undefined => {
         asset.id,
         bridgeKind,
       ],
-    phalaXTransferPartialFeeFetcher
+    phalaXTransferPartialFeeFetcher,
   )
 
   const {data: polkadotXcmPartialFee} = useSWR(
     bridgeKind === 'polkadotXcm' &&
       polkadotApi != null && [polkadotApi, fromChain.id, toChain.id, asset.id],
-    polkadotXcmTransferPartialFeeFetcher
+    polkadotXcmTransferPartialFeeFetcher,
   )
 
   return (

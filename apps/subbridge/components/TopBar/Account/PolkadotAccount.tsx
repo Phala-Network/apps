@@ -18,7 +18,7 @@ const PolkadotAccount: FC = () => {
     polkadotAvailableBalanceFetcher,
     {
       refreshInterval: 12000,
-    }
+    },
   )
 
   const tokenSymbol = polkadotApi?.registry.chainTokens[0]

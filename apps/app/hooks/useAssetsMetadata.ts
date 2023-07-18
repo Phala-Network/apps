@@ -77,7 +77,7 @@ const useAssetsMetadata = (): Record<number, AssetMetadata> | undefined => {
   const api = usePolkadotApi()
   const {data} = useSWRImmutable(
     api != null && [api, 'assetsMetadata'],
-    assetsMetadataFetcher
+    assetsMetadataFetcher,
   )
   return data
 }

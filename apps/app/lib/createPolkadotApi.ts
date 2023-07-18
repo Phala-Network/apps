@@ -1,7 +1,7 @@
 import {type ApiPromise} from '@polkadot/api'
 
 const createPolkadotApi = async ([endpoint]: [
-  string | string[]
+  string | string[],
 ]): Promise<ApiPromise> => {
   const {ApiPromise, WsProvider} = await import('@polkadot/api')
   const wsProvider = new WsProvider(endpoint)

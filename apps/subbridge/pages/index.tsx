@@ -8,7 +8,7 @@ import dynamic from 'next/dynamic'
 
 const PolkadotWalletDialog = dynamic(
   async () => await import('@/components/PolkadotWalletDialog'),
-  {ssr: false}
+  {ssr: false},
 )
 
 const Home: NextPage = () => {
@@ -25,7 +25,7 @@ const Home: NextPage = () => {
       <Box
         sx={{
           maxWidth: `calc(${theme.breakpoints.values.sm}px - ${theme.spacing(
-            3
+            3,
           )} * 2)`,
           mx: 'auto',
         }}

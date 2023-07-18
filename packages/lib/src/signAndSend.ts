@@ -42,7 +42,7 @@ export const waitSignAndSend = async ({
                 let errorInfo: string
                 if (dispatchError.isModule) {
                   const decoded = api.registry.findMetaError(
-                    dispatchError.asModule
+                    dispatchError.asModule,
                   )
                   errorInfo = `${decoded.section}.${
                     decoded.method
@@ -61,14 +61,14 @@ export const waitSignAndSend = async ({
             if (status.isReady) {
               onReady?.()
             }
-          }
+          },
         )
         .then((unsubscribe) => {
           extrinsicResultPromise.finally(() => {
             unsubscribe()
           })
         }, reject)
-    }
+    },
   )
 
   return await extrinsicResultPromise

@@ -43,10 +43,10 @@ const BridgeBody: FC<BoxProps> = (props) => {
   const [fromChain, setFromChain] = useAtom(fromChainAtom)
   const [toChain, setToChain] = useAtom(toChainAtom)
   const [toChainIds, setToChainIds] = useState<ChainId[]>(
-    getToChainIds(fromChain.id)
+    getToChainIds(fromChain.id),
   )
   const [assetIds, setAssetIds] = useState<AssetId[]>(
-    getAssetIds(fromChain.id, toChain.id)
+    getAssetIds(fromChain.id, toChain.id),
   )
   const destinationAccount = useAtomValue(destinationAccountAtom)
   const bridgeLimit = useBridgeLimit()

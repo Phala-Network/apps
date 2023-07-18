@@ -59,7 +59,7 @@ export type PoolDialogAction =
   | 'claimDelegation'
 export type OnAction = (
   basePool: BasePoolCommonFragment,
-  action: PoolDialogAction
+  action: PoolDialogAction,
 ) => void
 
 const commonOrderByEntries: OrderByEntries = [
@@ -107,10 +107,10 @@ const BasePoolList: FC<{
   const [hideClosedFilter, setHideClosedFilter] = useState(true)
   const [stakePoolOrderBy, setStakePoolOrderBy] =
     useState<BasePoolOrderByInput>(
-      variant === 'farm' ? 'pid_ASC' : 'aprMultiplier_DESC'
+      variant === 'farm' ? 'pid_ASC' : 'aprMultiplier_DESC',
     )
   const [vaultOrderBy, setVaultOrderBy] = useState<BasePoolOrderByInput>(
-    variant === 'farm' ? 'pid_ASC' : 'totalValue_DESC'
+    variant === 'farm' ? 'pid_ASC' : 'totalValue_DESC',
   )
   const [searchString, setSearchString] = useState('')
   const isSearchingPid = /^[0-9]+$/.test(searchString)
@@ -220,7 +220,7 @@ const BasePoolList: FC<{
           lastPage.basePoolsConnection.pageInfo.hasNextPage
             ? lastPage.basePoolsConnection.pageInfo.endCursor
             : undefined,
-      }
+      },
     )
   const isEmpty = data?.pages[0].basePoolsConnection.totalCount === 0
 
@@ -487,7 +487,7 @@ const BasePoolList: FC<{
                       />
                     ) : (
                       <DelegateCard key={edge.node.id} basePool={edge.node} />
-                    )
+                    ),
                   )}
                 </Stack>
               ))

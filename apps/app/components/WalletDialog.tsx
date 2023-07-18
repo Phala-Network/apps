@@ -46,7 +46,7 @@ const WalletDialog: FC = () => {
           )
         })
       const polkadotJsWallet = sortedWallets.find(
-        (w) => w.extensionName === 'polkadot-js'
+        (w) => w.extensionName === 'polkadot-js',
       )
       if (
         polkadotJsWallet != null &&

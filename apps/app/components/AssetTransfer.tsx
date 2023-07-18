@@ -39,7 +39,7 @@ const AssetTransfer: FC<{asset: Asset; onClose: () => void}> = ({
       extrinsic = api.tx.assets.transferKeepAlive(
         asset.assetId,
         address,
-        amount
+        amount,
       )
     }
     setLoading(true)

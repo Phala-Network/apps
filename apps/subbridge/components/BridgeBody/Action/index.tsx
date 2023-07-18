@@ -9,7 +9,7 @@ import PolkadotAction from './PolkadotAction'
 
 const BridgeConfirmationDialog = dynamic(
   async () => await import('../../BridgeConfirmationDialog'),
-  {ssr: false}
+  {ssr: false},
 )
 
 const Action: FC = () => {

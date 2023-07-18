@@ -5,7 +5,7 @@ import useSWR from 'swr'
 const useSWRValue = <T>(
   key: any[],
   getter: () => T,
-  refreshInterval = 60 * 60 * 1000
+  refreshInterval = 60 * 60 * 1000,
 ): T => {
   const id = useState(uniqueId())
   const [fallbackData] = useState(getter())

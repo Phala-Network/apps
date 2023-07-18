@@ -53,10 +53,10 @@ const FarmCard: FC<{
     () =>
       basePool.vault != null
         ? new Decimal(basePool.sharePrice).times(
-            basePool.vault.claimableOwnerShares
+            basePool.vault.claimableOwnerShares,
           )
         : new Decimal(0),
-    [basePool]
+    [basePool],
   )
 
   const mintCut = useCallback(async () => {

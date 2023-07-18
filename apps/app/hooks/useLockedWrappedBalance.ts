@@ -3,7 +3,7 @@ import Decimal from 'decimal.js'
 import usePolkadotApi from './usePolkadotApi'
 
 const useLockedWrappedBalance = (
-  account?: string
+  account?: string,
 ): Decimal | undefined | null => {
   const api = usePolkadotApi()
   const {data} = useQuery(
@@ -15,7 +15,7 @@ const useLockedWrappedBalance = (
       const res = await api.query.phalaWrappedBalances.stakerAccounts(account)
       const unwrapped = res.unwrapOr({locked: 0})
       return new Decimal(unwrapped.locked.toString()).div(1e12)
-    }
+    },
   )
 
   return data

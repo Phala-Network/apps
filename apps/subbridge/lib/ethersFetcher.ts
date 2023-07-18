@@ -8,7 +8,7 @@ import {createChainBridgeData} from './transferByChainBridge'
 
 export const ethersBalanceFetcher = async ([provider, address]: [
   ethers.providers.Web3Provider,
-  `0x${string}`
+  `0x${string}`,
 ]): Promise<Decimal> => {
   const {ethers} = await import('ethers')
   const balance = await provider.getBalance(address)
@@ -37,7 +37,7 @@ export const ethersContractAllowanceFetcher = async ([
 }
 
 export const ethersGasPriceFetcher = async (
-  provider: ethers.providers.Web3Provider
+  provider: ethers.providers.Web3Provider,
 ): Promise<Decimal> => {
   const {ethers} = await import('ethers')
   return new Decimal(ethers.utils.formatEther(await provider.getGasPrice()))
@@ -59,8 +59,8 @@ export const evmChainBridgeEstimatedGasFetcher = async ([
       // Try to use fixed amount to reduce requests
       ALICE,
       '0',
-      toChainId
-    )
+      toChainId,
+    ),
   )
 
   return new Decimal(estimateGas.toString())
@@ -85,7 +85,7 @@ export const evmXTokensEstimatedGasFetcher = async ([
     },
     Decimal.pow(10, decimals - 3)
       .times(6)
-      .toString()
+      .toString(),
   )
 
   return new Decimal(estimateGas.toString())

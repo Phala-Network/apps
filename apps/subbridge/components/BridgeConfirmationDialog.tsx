@@ -54,7 +54,7 @@ const Transition = forwardRef(function Transition(
   props: TransitionProps & {
     children: React.ReactElement
   },
-  ref: Ref<unknown>
+  ref: Ref<unknown>,
 ) {
   return <Slide direction="up" ref={ref} {...props} />
 })
@@ -247,7 +247,7 @@ const BridgeConfirmationDialog: FC<DialogProps> = ({onClose, ...props}) => {
             {
               variant: 'default',
               persist: true,
-            }
+            },
           )
           transferredRef.current = true
           setConfirming(false)
@@ -275,7 +275,7 @@ const BridgeConfirmationDialog: FC<DialogProps> = ({onClose, ...props}) => {
                 </ExplorerLink>
               )}
             </>,
-            {variant: 'success'}
+            {variant: 'success'},
           )
         } else {
           // Polkadot.js extrinsic
@@ -296,7 +296,7 @@ const BridgeConfirmationDialog: FC<DialogProps> = ({onClose, ...props}) => {
                 </ExplorerLink>
               )}
             </>,
-            {variant: 'success'}
+            {variant: 'success'},
           )
         }
       }
@@ -323,7 +323,7 @@ const BridgeConfirmationDialog: FC<DialogProps> = ({onClose, ...props}) => {
               </ExplorerLink>
             )}
           </>,
-          {variant: 'error'}
+          {variant: 'error'},
         )
       } else if (err.message != null) {
         enqueueSnackbar(err.message, {variant: 'error'})

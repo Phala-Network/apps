@@ -51,7 +51,7 @@ const HorizonCard: FC<{
     await signAndSend(
       isVault
         ? api.tx.phalaVault.checkAndMaybeForceWithdraw(basePool.id)
-        : api.tx.phalaStakePoolv2.checkAndMaybeForceWithdraw(basePool.id)
+        : api.tx.phalaStakePoolv2.checkAndMaybeForceWithdraw(basePool.id),
     )
   }
 

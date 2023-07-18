@@ -7,15 +7,15 @@ export type Chain = 'khala' | 'phala'
 
 export const chainAtom = atom<Chain>('khala')
 export const subsquidClientAtom = atom((get) =>
-  get(chainAtom) === 'khala' ? khalaSubsquidClient : phalaSubsquidClient
+  get(chainAtom) === 'khala' ? khalaSubsquidClient : phalaSubsquidClient,
 )
 export const khalaVaultIdAtom = atomWithStorage<string | null>(
   'jotai:khala_vault',
-  null
+  null,
 )
 export const phalaVaultIdAtom = atomWithStorage<string | null>(
   'jotai:phala_vault',
-  null
+  null,
 )
 export const vaultIdAtom = atom(
   (get) => {
@@ -29,16 +29,16 @@ export const vaultIdAtom = atom(
     } else {
       set(phalaVaultIdAtom, update)
     }
-  }
+  },
 )
 
 export const khalaFavoritePoolsAtom = atomWithStorage<string[]>(
   'jotai:favorite_pools',
-  []
+  [],
 )
 export const phalaFavoritePoolsAtom = atomWithStorage<string[]>(
   'jotai:phala_favorite_pools',
-  []
+  [],
 )
 export const favoritePoolsAtom = atom(
   (get) => {
@@ -54,27 +54,27 @@ export const favoritePoolsAtom = atom(
     } else {
       set(phalaFavoritePoolsAtom, update)
     }
-  }
+  },
 )
 
 export const basePoolMinDelegableAtom = atomWithStorage<string>(
   'jotai:base_pool_min_delegable',
-  '100'
+  '100',
 )
 
 export const basePoolMinTvlAtom = atomWithStorage<string>(
   'jotai:base_pool_min_tvl',
-  '100'
+  '100',
 )
 
 export const basePoolMinAprAtom = atomWithStorage<string>(
   'jotai:base_pool_min_apr',
-  ''
+  '',
 )
 
 export const basePoolMinWorkersAtom = atomWithStorage<string>(
   'jotai:base_pool_min_workers',
-  ''
+  '',
 )
 
 export const wikiExpandEntryAtom = atom<WikiEntry | null>(null)

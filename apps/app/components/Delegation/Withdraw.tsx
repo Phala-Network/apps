@@ -44,7 +44,7 @@ const Withdraw: FC<{
       : api.tx.phalaStakePoolv2.withdraw(
           basePool.id,
           shares,
-          delegation.account.basePool?.id ?? null
+          delegation.account.basePool?.id ?? null,
         )
 
     setLoading(true)
@@ -97,10 +97,10 @@ const Withdraw: FC<{
                 Decimal.min(
                   new Decimal(delegation.basePool.freeValue).toDP(
                     2,
-                    Decimal.ROUND_DOWN
+                    Decimal.ROUND_DOWN,
                   ),
-                  delegation.value
-                ).toString()
+                  delegation.value,
+                ).toString(),
               )
             }}
           >

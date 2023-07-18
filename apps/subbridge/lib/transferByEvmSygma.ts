@@ -33,7 +33,7 @@ export const transferEvmSygma = async ({
     sender,
     asset,
     destinationAccount,
-    amount
+    amount,
   )
   const res = await provider.getSigner().sendTransaction(tx)
   onReady()

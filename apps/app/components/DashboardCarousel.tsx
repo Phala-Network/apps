@@ -78,7 +78,7 @@ const DashboardCarousel: FC = () => {
     () => {
       next()
     },
-    hover ? null : 5000
+    hover ? null : 5000,
   )
 
   return (

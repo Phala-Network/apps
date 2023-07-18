@@ -30,7 +30,7 @@ const ChainSelect: FC = () => {
       const lastHeader = await api.rpc.chain.getHeader()
       return lastHeader.number.toNumber()
     },
-    {refetchInterval: 3000}
+    {refetchInterval: 3000},
   )
   const status: 'success' | 'warning' | 'error' = useMemo(() => {
     if (apiConnected === true) {

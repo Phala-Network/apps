@@ -32,7 +32,7 @@ const Vault: NextPage<BasePoolServerSideProps> = ({
           return create(data.basePoolById, fixBasePoolFree)
         }
       },
-    }
+    },
   )
 
   if (basePool == null) return null

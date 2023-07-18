@@ -177,6 +177,6 @@ export const transferByPhalaXTransfer = ({
     },
     isThroughChainBridge || isSygma
       ? null // No need to specify a certain weight if transfer will not through XCM
-      : {refTime: '6000000000', proofSize: '1000000'}
+      : {refTime: '6000000000', proofSize: '1000000'},
   )
 }

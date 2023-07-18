@@ -48,7 +48,7 @@ export const useTransfer = (): (({
   const polkadotAccount = useAtomValue(polkadotAccountAtom)
   const {kind: bridgeKind, isThroughKhala} = useAtomValue(bridgeInfoAtom)
   const khalaApi = usePolkadotApi(
-    toChain.id === 'phala' || toChain.id === 'thala' ? toChain.id : 'khala'
+    toChain.id === 'phala' || toChain.id === 'thala' ? toChain.id : 'khala',
   )
   const polkadotApi = useCurrentPolkadotApi()
 
@@ -57,7 +57,7 @@ export const useTransfer = (): (({
       amount !== ''
         ? new Decimal(amount).times(Decimal.pow(10, decimals)).toFixed()
         : '0',
-    [amount, decimals]
+    [amount, decimals],
   )
 
   return async ({onReady}: {onReady: () => void}) => {

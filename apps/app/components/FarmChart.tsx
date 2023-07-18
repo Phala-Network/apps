@@ -32,7 +32,7 @@ const FarmChart: FC<{
     const date = new Date()
     date.setUTCHours(0, 0, 0, 0)
     return Array.from({length: days + 1}).map((_, i) =>
-      addDays(date, i - days).toISOString()
+      addDays(date, i - days).toISOString(),
     )
   })
   const [subsquidClient] = useAtom(subsquidClientAtom)
@@ -52,7 +52,7 @@ const FarmChart: FC<{
       refetchOnMount: false,
       refetchOnWindowFocus: false,
       refetchOnReconnect: false,
-    }
+    },
   )
 
   const chartData = useMemo(() => {

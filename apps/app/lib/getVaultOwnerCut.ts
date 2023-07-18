@@ -4,7 +4,7 @@ import {type BasePool, type Vault} from './subsquidQuery'
 const getVaultOwnerCut = (
   basePool: Pick<BasePool, 'sharePrice' | 'commission' | 'totalShares'> & {
     vault?: Pick<Vault, 'lastSharePriceCheckpoint'> | null
-  }
+  },
 ): Decimal => {
   const {vault, sharePrice, commission, totalShares} = basePool
   if (vault == null) return new Decimal(0)
@@ -14,7 +14,7 @@ const getVaultOwnerCut = (
       .minus(lastSharePriceCheckpoint)
       .times(commission)
       .times(totalShares),
-    0
+    0,
   )
 }
 

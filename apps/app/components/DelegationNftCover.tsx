@@ -11,7 +11,7 @@ const getNftCover = (
   variant: CoverVariant,
   kind: BasePoolKind,
   value: Decimal | string,
-  mintTimeString?: string | null
+  mintTimeString?: string | null,
 ): {video: string; poster: string} => {
   const level = Decimal.log10(new Decimal(value).div(10).ceil().times(10))
     .ceil()
@@ -61,9 +61,9 @@ const DelegationNftCover: FC<{
         variant,
         delegation.basePool.kind,
         delegation.value,
-        nft.mintTime
+        nft.mintTime,
       ),
-    [variant, delegation.basePool.kind, delegation.value, nft.mintTime]
+    [variant, delegation.basePool.kind, delegation.value, nft.mintTime],
   )
   return (
     <video

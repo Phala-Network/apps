@@ -17,7 +17,7 @@ export const assetAtom = atom(
   (get) => ASSETS[get(assetIdAtom)],
   (get, set, update: AssetId) => {
     set(assetIdAtom, update)
-  }
+  },
 )
 
 const fromChainIdAtom = atom<ChainId>('ethereum')
@@ -26,7 +26,7 @@ export const fromChainAtom = atom(
   (get) => CHAINS[get(fromChainIdAtom)],
   (get, set, update: ChainId) => {
     set(fromChainIdAtom, update)
-  }
+  },
 )
 
 const toChainIdAtom = atom<ChainId>('phala')
@@ -35,7 +35,7 @@ export const toChainAtom = atom(
   (get) => CHAINS[get(toChainIdAtom)],
   (get, set, update: ChainId) => {
     set(toChainIdAtom, update)
-  }
+  },
 )
 
 export const fromAccountAtom = atom<string | null>((get) => {
@@ -84,10 +84,10 @@ export const bridgeInfoAtom = atom((get) => {
   const toChain = get(toChainAtom)
   const asset = get(assetAtom)
   const toChainConfig = BRIDGES.find(
-    (bridge) => bridge.fromChain === fromChain.id
+    (bridge) => bridge.fromChain === fromChain.id,
   )?.toChains.find((x) => x.id === toChain.id)
   const bridge = toChainConfig?.assets.find(
-    (assetConfig) => assetConfig.assetId === asset.id
+    (assetConfig) => assetConfig.assetId === asset.id,
   )
 
   return {

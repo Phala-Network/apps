@@ -38,7 +38,7 @@ const Intro: FC<{
     if (poolIntro == null || variant === 'card') return []
     return Object.entries(poolIntro).filter(
       ([label, value]) =>
-        label !== 'ann' && typeof value === 'string' && value.length > 0
+        label !== 'ann' && typeof value === 'string' && value.length > 0,
     )
   }, [poolIntro, variant])
 

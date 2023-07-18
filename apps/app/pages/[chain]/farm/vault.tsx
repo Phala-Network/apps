@@ -39,7 +39,7 @@ const MyVaults: FC = () => {
     {
       enabled: account !== null,
       select: (data) => data.basePoolsConnection.edges,
-    }
+    },
   )
   const vaultsWithOwnerCut = useMemo(() => {
     if (edges != null) {
@@ -54,7 +54,7 @@ const MyVaults: FC = () => {
   const ownerCut = useMemo(() => {
     return vaultsWithOwnerCut.reduce(
       (acc, [, reward]) => acc.plus(reward),
-      new Decimal(0)
+      new Decimal(0),
     )
   }, [vaultsWithOwnerCut])
   const vaultsWithOwnerRewards = useMemo(() => {
@@ -63,7 +63,7 @@ const MyVaults: FC = () => {
         .map(({node}) => node)
         .filter(
           (node) =>
-            node.vault != null && node.vault.claimableOwnerShares !== '0'
+            node.vault != null && node.vault.claimableOwnerShares !== '0',
         )
     }
     return []
@@ -72,7 +72,7 @@ const MyVaults: FC = () => {
     return vaultsWithOwnerRewards.reduce((acc, cur) => {
       if (cur.vault == null) return acc
       return acc.plus(
-        new Decimal(cur.sharePrice).times(cur.vault?.claimableOwnerShares)
+        new Decimal(cur.sharePrice).times(cur.vault?.claimableOwnerShares),
       )
     }, new Decimal(0))
   }, [vaultsWithOwnerRewards])
@@ -81,7 +81,7 @@ const MyVaults: FC = () => {
     if (api == null) return
     let extrinsic
     const calls = vaultsWithOwnerCut.map(([id]) =>
-      api.tx.phalaVault.maybeGainOwnerShares(id)
+      api.tx.phalaVault.maybeGainOwnerShares(id),
     )
     if (calls.length === 1) {
       extrinsic = calls[0]

@@ -41,7 +41,7 @@ const DelegationValueChart: FC<{address?: string; days: number}> = ({
       refetchOnMount: false,
       refetchOnWindowFocus: false,
       refetchOnReconnect: false,
-    }
+    },
   )
 
   const chartData = useMemo(() => {
