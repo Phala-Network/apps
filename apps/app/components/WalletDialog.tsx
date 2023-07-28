@@ -1,4 +1,5 @@
 import novaLogo from '@/assets/nova_logo.png'
+import subwalletLogo from '@/assets/subwallet_logo.png'
 import {walletDialogOpenAtom} from '@/store/ui'
 import {jsx} from '@emotion/react'
 import ArrowForwardIos from '@mui/icons-material/ArrowForwardIos'
@@ -22,7 +23,7 @@ import {useAtom} from 'jotai'
 import Image from 'next/image'
 import {useEffect, useState, type FC} from 'react'
 
-const walletsOrder = ['talisman', 'polkadot-js', 'subwallet-js']
+const walletsOrder = ['subwallet-js', 'talisman', 'polkadot-js']
 
 const WalletDialog: FC = () => {
   const theme = useTheme()
@@ -45,18 +46,33 @@ const WalletDialog: FC = () => {
             walletsOrder.indexOf(b.extensionName)
           )
         })
+      const subwalletWallet = sortedWallets.find(
+        (w) => w.extensionName === 'subwallet-js',
+      )
+      if (subwalletWallet != null) {
+        subwalletWallet.logo.src = subwalletLogo.src
+      }
       const polkadotJsWallet = sortedWallets.find(
         (w) => w.extensionName === 'polkadot-js',
       )
-      if (
-        polkadotJsWallet != null &&
-        (window as {walletExtension?: {isNovaWallet?: boolean}}).walletExtension
-          ?.isNovaWallet === true
-      ) {
-        polkadotJsWallet.title = 'Nova Wallet'
-        polkadotJsWallet.logo = {src: novaLogo.src, alt: 'Nova Wallet'}
-        sortedWallets = [polkadotJsWallet]
+      if (polkadotJsWallet != null) {
+        if (
+          (window as {SubWallet?: {isSubWallet?: boolean}}).SubWallet
+            ?.isSubWallet === true
+        ) {
+          polkadotJsWallet.title = 'SubWallet'
+          polkadotJsWallet.logo = {src: subwalletLogo.src, alt: 'SubWallet'}
+          sortedWallets = [polkadotJsWallet]
+        } else if (
+          (window as {walletExtension?: {isNovaWallet?: boolean}})
+            .walletExtension?.isNovaWallet === true
+        ) {
+          polkadotJsWallet.title = 'Nova Wallet'
+          polkadotJsWallet.logo = {src: novaLogo.src, alt: 'Nova Wallet'}
+          sortedWallets = [polkadotJsWallet]
+        }
       }
+
       if (!unmounted) {
         setWallets(sortedWallets)
       }
