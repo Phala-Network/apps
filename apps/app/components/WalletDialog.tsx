@@ -55,7 +55,10 @@ const WalletDialog: FC = () => {
       const polkadotJsWallet = sortedWallets.find(
         (w) => w.extensionName === 'polkadot-js',
       )
-      if (polkadotJsWallet != null) {
+      if (
+        polkadotJsWallet != null &&
+        window.matchMedia('(max-width: 767px)').matches
+      ) {
         if (
           (window as {SubWallet?: {isSubWallet?: boolean}}).SubWallet
             ?.isSubWallet === true
