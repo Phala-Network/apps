@@ -11,6 +11,7 @@ import {
   DialogTitle,
   Stack,
   Typography,
+  useMediaQuery,
   useTheme,
 } from '@mui/material'
 import {
@@ -32,6 +33,7 @@ const WalletDialog: FC = () => {
   const [polkadotAccounts] = useAtom(polkadotAccountsAtom)
   const [, setWallet] = useAtom(walletAtom)
   const [wallets, setWallets] = useState<Wallet[]>([])
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'))
 
   const connected = polkadotAccounts !== null
 
@@ -51,14 +53,15 @@ const WalletDialog: FC = () => {
       )
       if (subwalletWallet != null) {
         subwalletWallet.logo.src = subwalletLogo.src
+        if (isMobile) {
+          subwalletWallet.installUrl =
+            'https://mobile.subwallet.app/browser?url=https%3A%2F%2Fapp.phala.network'
+        }
       }
       const polkadotJsWallet = sortedWallets.find(
         (w) => w.extensionName === 'polkadot-js',
       )
-      if (
-        polkadotJsWallet != null &&
-        window.matchMedia('(max-width: 767px)').matches
-      ) {
+      if (polkadotJsWallet != null && isMobile) {
         if (
           (window as {SubWallet?: {isSubWallet?: boolean}}).SubWallet
             ?.isSubWallet === true
@@ -83,7 +86,7 @@ const WalletDialog: FC = () => {
     return () => {
       unmounted = true
     }
-  }, [])
+  }, [isMobile])
 
   return (
     <Dialog
@@ -185,13 +188,21 @@ const WalletDialog: FC = () => {
             >
               <Image src={w.logo.src} alt={w.logo.alt} width={24} height={24} />
               <Typography ml={2} color="text.primary">
-                {w.installed !== true && 'Install '}
+                {w.installed !== true &&
+                  !(w.extensionName === 'subwallet-js' && isMobile) &&
+                  'Install '}
                 {w.title}
               </Typography>
-              {jsx(w.installed === true ? ArrowForwardIos : Download, {
-                fontSize: 'small',
-                sx: {ml: 'auto', color: theme.palette.text.secondary},
-              })}
+              {jsx(
+                w.installed === true ||
+                  (w.extensionName === 'subwallet-js' && isMobile)
+                  ? ArrowForwardIos
+                  : Download,
+                {
+                  fontSize: 'small',
+                  sx: {ml: 'auto', color: theme.palette.text.secondary},
+                },
+              )}
             </Button>
           ))}
         </Stack>
