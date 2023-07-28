@@ -25,6 +25,7 @@ import DestinationAccountInput from './DestinationAccountInput'
 import DestinationAccountWarning from './DestinationAccountWarning'
 import ExtraInfo from './Extra'
 import LargeAmountWarning from './LargeAmountWarning'
+import PoweredBySygma from './PoweredBySygma'
 
 const getToChainIds = (fromChainId: ChainId): ChainId[] =>
   BRIDGES.find((bridge) => bridge.fromChain === fromChainId)
@@ -158,6 +159,12 @@ const BridgeBody: FC<BoxProps> = (props) => {
                 )}
               <ExtraInfo sx={{mb: 3}} />
             </Collapse>
+
+            {(bridgeInfo.kind === 'evmSygma' ||
+              bridgeInfo.kind === 'phalaSygma') && (
+              <PoweredBySygma sx={{mb: 3}} />
+            )}
+
             <Action />
           </Box>
         </Stack>
