@@ -16,6 +16,7 @@ const talismanConnectStyles = (theme: Theme): SerializedStyles => css`
     --talisman-connect-font-family: ${theme.typography.fontFamily};
     --talisman-connect-border-radius: ${theme.shape.borderRadius}px;
     --talisman-connect-modal-min-width: calc(100% - 2 * ${theme.spacing(2)});
+    --talisman-connect-modal-max-height: 100vh;
   }
 `
 
