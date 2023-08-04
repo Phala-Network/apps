@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@buildwithsygma/sygma-contracts": "2.3.0",
-    "@buildwithsygma/sygma-sdk-core": "2.1.0",
+    "@buildwithsygma/sygma-sdk-core": "2.2.0",
     "@emotion/react": "^11.11.1",
     "@emotion/server": "^11.11.0",
     "@emotion/styled": "^11.11.0",

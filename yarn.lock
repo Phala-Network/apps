@@ -1454,9 +1454,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@buildwithsygma/sygma-sdk-core@npm:2.1.0":
-  version: 2.1.0
-  resolution: "@buildwithsygma/sygma-sdk-core@npm:2.1.0"
+"@buildwithsygma/sygma-sdk-core@npm:2.2.0":
+  version: 2.2.0
+  resolution: "@buildwithsygma/sygma-sdk-core@npm:2.2.0"
   dependencies:
     "@buildwithsygma/sygma-contracts": 2.1.2
     "@ethersproject/abi": ^5.7.0
@@ -1474,7 +1474,7 @@ __metadata:
     axios: ^1.4.0
     cross-fetch: ^3.1.5
     ethers: 5.6.2
-  checksum: 9a70bb5be2a324b51caded6618b8301e65b6d1bd5a9f9dc92125c459631d7715d38937730c4c6ad6ddc0469a88b7a910cb2f1f6d43cef77023331c2aec194381
+  checksum: 221fc6675f54ada27848451ab6be6ae2fa61c8c908cb67928d6bdcfe11d40a692a984af00087d470114caf2da80c6ee4341f57282a3ca9170f9e531aa143e751
   languageName: node
   linkType: hard
 
@@ -3609,7 +3609,7 @@ __metadata:
   resolution: "@phala/subbridge@workspace:apps/subbridge"
   dependencies:
     "@buildwithsygma/sygma-contracts": 2.3.0
-    "@buildwithsygma/sygma-sdk-core": 2.1.0
+    "@buildwithsygma/sygma-sdk-core": 2.2.0
     "@emotion/react": ^11.11.1
     "@emotion/server": ^11.11.0
     "@emotion/styled": ^11.11.0

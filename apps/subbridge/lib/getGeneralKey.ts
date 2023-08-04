@@ -1,4 +1,8 @@
 export type Hex = `0x${string}`
+export interface GeneralKey {
+  length: number
+  data: Hex
+}
 
 const getGeneralKey = (hex: Hex): {length: number; data: Hex} => {
   return {

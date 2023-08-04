@@ -93,24 +93,24 @@ export const bridgeInfoAtom = atom((get) => {
   return {
     kind: bridge?.kind ?? null,
     estimatedTime: bridge?.estimatedTime ?? null,
-    isThroughKhala: bridge?.isThroughKhala ?? false,
+    proxy: bridge?.proxy,
     disabled: toChainConfig?.disabled ?? bridge?.disabled ?? false,
   }
 })
 
 export const destChainTransactionFeeAtom = atom((get) => {
-  const {kind, isThroughKhala} = get(bridgeInfoAtom)
+  const {kind, proxy} = get(bridgeInfoAtom)
   const toChain = get(toChainAtom)
   const asset = get(assetAtom)
   const destChainTransactionFee = asset.destChainTransactionFee[toChain.id]
-  const khalaFee = asset.destChainTransactionFee.khala ?? new Decimal(0)
 
-  if (kind !== 'evmChainBridge' && isThroughKhala) {
-    return khalaFee.add(destChainTransactionFee ?? 0)
+  if (kind !== 'evmChainBridge' && proxy != null) {
+    const proxyFee = asset.destChainTransactionFee[proxy] ?? new Decimal(0)
+    return proxyFee.add(destChainTransactionFee ?? 0)
   }
 
   if (
-    (kind === 'evmChainBridge' && !isThroughKhala) ||
+    (kind === 'evmChainBridge' && proxy == null) ||
     kind === 'evmSygma' ||
     destChainTransactionFee == null
   ) {

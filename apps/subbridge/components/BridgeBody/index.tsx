@@ -51,7 +51,7 @@ const BridgeBody: FC<BoxProps> = (props) => {
   )
   const destinationAccount = useAtomValue(destinationAccountAtom)
   const bridgeLimit = useBridgeLimit()
-  const bridgeInfo = useAtomValue(bridgeInfoAtom)
+  const bridge = useAtomValue(bridgeInfoAtom)
 
   const handleSelectFromChain = (newFromChainId: ChainId): void => {
     setFromChain(newFromChainId)
@@ -150,8 +150,7 @@ const BridgeBody: FC<BoxProps> = (props) => {
               {toChain.kind !== 'evm' && (
                 <DestinationAccountWarning sx={{mb: 3}} />
               )}
-              {(bridgeInfo.kind === 'evmSygma' ||
-                bridgeInfo.kind === 'phalaSygma') &&
+              {(bridge.kind === 'evmSygma' || bridge.kind === 'phalaSygma') &&
                 Boolean(amount) &&
                 bridgeLimit != null &&
                 new Decimal(amount).gt(bridgeLimit) && (
@@ -160,8 +159,7 @@ const BridgeBody: FC<BoxProps> = (props) => {
               <ExtraInfo sx={{mb: 3}} />
             </Collapse>
 
-            {(bridgeInfo.kind === 'evmSygma' ||
-              bridgeInfo.kind === 'phalaSygma') && (
+            {(bridge.kind === 'evmSygma' || bridge.kind === 'phalaSygma') && (
               <PoweredBySygma sx={{mb: 3}} />
             )}
 

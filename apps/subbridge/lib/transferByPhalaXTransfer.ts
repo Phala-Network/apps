@@ -136,9 +136,9 @@ export const transferByPhalaXTransfer = ({
     throw new Error(`Unsupported asset: ${assetId}`)
   }
 
-  const isThroughChainBridge = isTransferringZLKToMoonriver
+  const isChainBridge = isTransferringZLKToMoonriver
 
-  if ((isThroughChainBridge || isSygma) && typeof generalIndex !== 'number') {
+  if ((isChainBridge || isSygma) && typeof generalIndex !== 'number') {
     throw new Error('Transfer missing required parameters')
   }
 
@@ -148,9 +148,9 @@ export const transferByPhalaXTransfer = ({
       fun: {Fungible: amount},
     },
     {
-      parents: isThroughChainBridge || isSygma ? 0 : 1,
+      parents: isChainBridge || isSygma ? 0 : 1,
       interior:
-        isThroughChainBridge || isSygma
+        isChainBridge || isSygma
           ? {
               X3: [
                 {
@@ -175,7 +175,7 @@ export const transferByPhalaXTransfer = ({
               ],
             },
     },
-    isThroughChainBridge || isSygma
+    isChainBridge || isSygma
       ? null // No need to specify a certain weight if transfer will not through XCM
       : {refTime: '6000000000', proofSize: '1000000'},
   )

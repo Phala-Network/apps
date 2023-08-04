@@ -5,6 +5,8 @@ import type {SubmittableExtrinsic} from '@polkadot/api/types'
 import type {ISubmittableResult} from '@polkadot/types/types'
 import {u8aToHex} from '@polkadot/util'
 import {decodeAddress} from '@polkadot/util-crypto'
+import {createPhalaMultilocation} from './createPhalaMultilocation'
+import {type Hex} from './getGeneralKey'
 
 export const transferByPolkadotXcm = ({
   polkadotApi,
@@ -13,6 +15,7 @@ export const transferByPolkadotXcm = ({
   fromChainId,
   toChainId,
   destinationAccount,
+  proxy,
 }: {
   polkadotApi: ApiPromise
   assetId: AssetId
@@ -20,9 +23,11 @@ export const transferByPolkadotXcm = ({
   toChainId: ChainId
   amount: string
   destinationAccount: string
+  proxy?: ChainId
 }): SubmittableExtrinsic<'promise', ISubmittableResult> => {
   const fromChain = CHAINS[fromChainId]
   const toChain = CHAINS[toChainId]
+  const proxyChain = proxy != null ? CHAINS[proxy] : undefined
   let Concrete
   if (fromChainId === 'crab' && assetId === 'crab') {
     Concrete = {parents: 0, interior: {X1: {PalletInstance: 5}}}
@@ -39,30 +44,50 @@ export const transferByPolkadotXcm = ({
       Concrete = {parents: 0, interior: 'Here'}
     }
   }
+  const generalIndex = toChain.kind === 'evm' ? toChain.generalIndex : null
+
+  if (proxy != null && typeof generalIndex !== 'number') {
+    throw new Error('Transfer missing required parameters')
+  }
 
   const isNativeAsset = fromChain.nativeAsset === assetId
   const functionName = isNativeAsset
     ? 'reserveTransferAssets'
     : 'reserveWithdrawAssets'
 
-  const xcmVersion = fromChainId === 'shiden' ? 'V3' : 'V1'
-
   return polkadotApi.tx.polkadotXcm[functionName](
-    {[xcmVersion]: {parents: 1, interior: {X1: {Parachain: toChain.paraId}}}},
     {
-      [xcmVersion]: {
-        parents: 0,
+      V3: {
+        parents: 1,
         interior: {
           X1: {
-            AccountId32: {
-              ...(xcmVersion === 'V1' && {network: 'Any'}),
-              id: u8aToHex(decodeAddress(destinationAccount)),
-            },
+            Parachain: proxyChain == null ? toChain.paraId : proxyChain.paraId,
           },
         },
       },
     },
-    {[xcmVersion]: [{id: {Concrete}, fun: {Fungible: amount}}]},
+    {
+      V3: {
+        parents: 0,
+        interior:
+          proxy === null
+            ? {
+                X1: {
+                  AccountId32: {
+                    id: u8aToHex(decodeAddress(destinationAccount)),
+                  },
+                },
+              }
+            : {
+                X3: createPhalaMultilocation(
+                  'sygma',
+                  generalIndex as number,
+                  destinationAccount as Hex,
+                ),
+              },
+      },
+    },
+    {V3: [{id: {Concrete}, fun: {Fungible: amount}}]},
     0,
   )
 }

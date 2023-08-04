@@ -36,7 +36,7 @@ jobs:
         run: npm run lint
 
       - name: Typecheck
-        run: yarn typecheck
+        run: yarn check
 
       - name: Build all apps
         run: npm run build

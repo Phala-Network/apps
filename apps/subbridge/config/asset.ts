@@ -65,6 +65,7 @@ export interface Asset {
       }
   destChainTransactionFee: Partial<Record<ChainId, Decimal>>
   existentialDeposit: Partial<Record<ChainId, Decimal>>
+  sygmaResourceId?: string
 }
 
 export const ASSETS: Readonly<Record<AssetId, Asset>> = {
@@ -129,6 +130,8 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
       phala: '5EYCAe5jLbHcAAMKvLFSXgCTbPrLgBJusvPwfKcaKzuf5X5e',
       khala: '5EYCAe5jLbHcAAMKvLFSXgCTbPrLgBJusvPwfKcaKzuf5X5e',
     },
+    sygmaResourceId:
+      '0x0000000000000000000000000000000000000000000000000000000000000001',
   },
   movr: {
     id: 'movr',

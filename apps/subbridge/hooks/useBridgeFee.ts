@@ -10,7 +10,7 @@ import Decimal from 'decimal.js'
 import {useAtomValue} from 'jotai'
 import useSWR from 'swr'
 import {useEthersWeb3Provider} from './useEthersProvider'
-import {useCurrentPolkadotApi} from './usePolkadotApi'
+import {useCurrentPolkadotApi, usePolkadotApi} from './usePolkadotApi'
 
 const ALICE = '5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY'
 const zlkChainBridgeFee = new Decimal('0.25')
@@ -21,12 +21,16 @@ export const useBridgeFee = (): Decimal | undefined => {
   const asset = useAtomValue(assetAtom)
   const bridge = useAtomValue(bridgeInfoAtom)
   const api = useCurrentPolkadotApi()
+  const phalaApi = usePolkadotApi('phala')
   const provider = useEthersWeb3Provider()
   const evmAccount = useAtomValue(evmAccountAtom)
-  const isTransferringZlkThroughChainBridge =
+  const isTransferringZlkProxiedByChainBridge =
     fromChain.kind === 'polkadot' &&
     toChain.kind === 'evm' &&
     asset.id === 'zlk'
+
+  const isProxiedByPhalaSygma =
+    bridge.proxy === 'phala' && toChain.id === 'ethereum'
 
   const {data: evmSygmaFee} = useSWR(
     bridge.kind === 'evmSygma' &&
@@ -67,6 +71,22 @@ export const useBridgeFee = (): Decimal | undefined => {
     },
   )
 
+  const {data: phalaProxySygmaFee} = useSWR(
+    isProxiedByPhalaSygma &&
+      phalaApi != null && [phalaApi, 'phalaProxySygmaFee'],
+    async ([api]) => {
+      const fee = await api.query.sygmaBasicFeeHandler.assetFees([
+        1,
+        {concrete: {parents: 0, interior: 'Here'}},
+      ])
+      return new Decimal(fee.toString()).div(Decimal.pow(10, 12))
+    },
+  )
+
+  if (isProxiedByPhalaSygma) {
+    return phalaProxySygmaFee
+  }
+
   if (bridge.kind === 'phalaSygma') {
     return phalaSygmaFee
   }
@@ -75,7 +95,7 @@ export const useBridgeFee = (): Decimal | undefined => {
     return evmSygmaFee
   }
 
-  if (isTransferringZlkThroughChainBridge) {
+  if (isTransferringZlkProxiedByChainBridge) {
     return zlkChainBridgeFee
   }
 

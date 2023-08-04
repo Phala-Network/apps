@@ -46,7 +46,7 @@ export const useTransfer = (): (({
   const decimals = useAtomValue(decimalsAtom)
   const evmAccount = useAtomValue(evmAccountAtom)
   const polkadotAccount = useAtomValue(polkadotAccountAtom)
-  const {kind: bridgeKind, isThroughKhala} = useAtomValue(bridgeInfoAtom)
+  const bridge = useAtomValue(bridgeInfoAtom)
   const khalaApi = usePolkadotApi(
     toChain.id === 'phala' || toChain.id === 'thala' ? toChain.id : 'khala',
   )
@@ -61,7 +61,7 @@ export const useTransfer = (): (({
   )
 
   return async ({onReady}: {onReady: () => void}) => {
-    if (bridgeKind === 'evmChainBridge') {
+    if (bridge.kind === 'evmChainBridge') {
       if (ethersChainBridgeContract == null || khalaApi == null) {
         throw new Error('Transfer missing required parameters')
       }
@@ -79,7 +79,7 @@ export const useTransfer = (): (({
       })
     }
 
-    if (bridgeKind === 'polkadotXTokens') {
+    if (bridge.kind === 'polkadotXTokens') {
       if (polkadotApi == null || polkadotAccount?.wallet?.signer == null) {
         throw new Error('Transfer missing required parameters')
       }
@@ -90,7 +90,7 @@ export const useTransfer = (): (({
         fromChainId: fromChain.id,
         toChainId: toChain.id,
         destinationAccount,
-        isThroughKhala,
+        proxy: bridge.proxy,
       })
       return await waitSignAndSend({
         api: polkadotApi,
@@ -101,7 +101,7 @@ export const useTransfer = (): (({
       })
     }
 
-    if (bridgeKind === 'phalaChainBridge' || bridgeKind === 'phalaSygma') {
+    if (bridge.kind === 'phalaChainBridge' || bridge.kind === 'phalaSygma') {
       if (polkadotApi == null || polkadotAccount?.wallet?.signer == null) {
         throw new Error('Transfer missing required parameters')
       }
@@ -113,7 +113,7 @@ export const useTransfer = (): (({
         amount: rawAmount,
         destinationAccount,
         assetId: asset.id,
-        kind: bridgeKind,
+        kind: bridge.kind,
       })
 
       return await waitSignAndSend({
@@ -125,7 +125,7 @@ export const useTransfer = (): (({
       })
     }
 
-    if (bridgeKind === 'evmXTokens') {
+    if (bridge.kind === 'evmXTokens') {
       if (ethersXTokensBridgeContract == null) {
         throw new Error('Transfer missing required parameters')
       }
@@ -144,7 +144,7 @@ export const useTransfer = (): (({
       })
     }
 
-    if (bridgeKind === 'polkadotXcm') {
+    if (bridge.kind === 'polkadotXcm') {
       if (polkadotApi == null || polkadotAccount?.wallet?.signer == null) {
         throw new Error('Transfer missing required parameters')
       }
@@ -155,6 +155,7 @@ export const useTransfer = (): (({
         fromChainId: fromChain.id,
         toChainId: toChain.id,
         destinationAccount,
+        proxy: bridge.proxy,
       })
       return await waitSignAndSend({
         api: polkadotApi,
@@ -165,7 +166,7 @@ export const useTransfer = (): (({
       })
     }
 
-    if (bridgeKind === 'evmSygma') {
+    if (bridge.kind === 'evmSygma') {
       if (ethersWeb3Provider == null || evmAccount == null) {
         throw new Error('Transfer missing required parameters')
       }

@@ -29,12 +29,12 @@ export const useValidation = (): void => {
   const destChainTransactionFee = useAtomValue(destChainTransactionFeeAtom)
   const existentialDeposit = useAtomValue(existentialDepositAtom)
   const bridgeLimit = useBridgeLimit()
-  const [bridgeInfo] = useAtom(bridgeInfoAtom)
+  const [bridge] = useAtom(bridgeInfoAtom)
 
   useEffect(() => {
     let unmounted = false
     const validate = async (): Promise<BridgeError | null> => {
-      if (bridgeInfo.disabled) {
+      if (bridge.disabled) {
         return 'Disabled'
       }
       if (amount.length === 0) {
@@ -102,6 +102,6 @@ export const useValidation = (): void => {
     fromChain.id,
     toChain.id,
     asset.id,
-    bridgeInfo.disabled,
+    bridge.disabled,
   ])
 }
