@@ -95,7 +95,14 @@ export const BRIDGES: Readonly<Bridge[]> = [
       },
       {
         id: 'astar',
-        assets: [{assetId: 'pha', estimatedTime: '~ 5 mins', kind: 'evmSygma'}],
+        assets: [
+          {
+            assetId: 'pha',
+            estimatedTime: '~ 5 mins',
+            kind: 'evmSygma',
+            proxy: 'phala',
+          },
+        ],
       },
     ],
   },
