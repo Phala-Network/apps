@@ -20,7 +20,7 @@
     "build": "turbo run build",
     "lint": "turbo run lint",
     "lint:fix": "turbo run lint:fix",
-    "typecheck": "turbo run typecheck"
+    "check": "turbo run check"
   },
   "devDependencies": {
     "@total-typescript/ts-reset": "^0.4.2",

@@ -5,9 +5,8 @@ import type {SubmittableExtrinsic} from '@polkadot/api/types'
 import type {ISubmittableResult} from '@polkadot/types/types'
 import {u8aToHex} from '@polkadot/util'
 import {decodeAddress} from '@polkadot/util-crypto'
-import getGeneralKey, {type Hex} from './getGeneralKey'
-
-const khalaParaId = CHAINS.khala.paraId
+import {createPhalaMultilocation} from './createPhalaMultilocation'
+import {type Hex} from './getGeneralKey'
 
 export const transferByPolkadotXTokens = ({
   polkadotApi,
@@ -16,7 +15,7 @@ export const transferByPolkadotXTokens = ({
   fromChainId,
   toChainId,
   destinationAccount,
-  isThroughKhala = false,
+  proxy,
 }: {
   polkadotApi: ApiPromise
   assetId: AssetId
@@ -24,7 +23,7 @@ export const transferByPolkadotXTokens = ({
   toChainId: ChainId
   amount: string
   destinationAccount: string
-  isThroughKhala?: boolean
+  proxy?: ChainId
 }): SubmittableExtrinsic<'promise', ISubmittableResult> => {
   const asset = ASSETS[assetId]
   const toChain = CHAINS[toChainId]
@@ -44,7 +43,7 @@ export const transferByPolkadotXTokens = ({
       ? palletAssetId === undefined
       : asset.ormlToken === undefined) ||
     toChain.paraId == null ||
-    (isThroughKhala && typeof generalIndex !== 'number')
+    (proxy != null && typeof generalIndex !== 'number')
   ) {
     throw new Error('Transfer missing required parameters')
   }
@@ -79,50 +78,56 @@ export const transferByPolkadotXTokens = ({
       ? {
           V3: {
             parents: 1,
-            interior: isThroughKhala
-              ? {
-                  X4: [
-                    {Parachain: khalaParaId},
-                    {GeneralKey: getGeneralKey('0x6362')},
-                    {GeneralIndex: generalIndex},
-                    {GeneralKey: getGeneralKey(destinationAccount as Hex)},
-                  ],
-                }
-              : {
-                  X2: [
-                    {Parachain: toChain.paraId},
-                    {
-                      AccountId32: {
-                        id: u8aToHex(decodeAddress(destinationAccount)),
+            interior:
+              proxy != null
+                ? {
+                    X4: [
+                      {Parachain: CHAINS[proxy].paraId},
+                      ...createPhalaMultilocation(
+                        'cb',
+                        generalIndex as number,
+                        destinationAccount as Hex,
+                      ),
+                    ],
+                  }
+                : {
+                    X2: [
+                      {Parachain: toChain.paraId},
+                      {
+                        AccountId32: {
+                          id: u8aToHex(decodeAddress(destinationAccount)),
+                        },
                       },
-                    },
-                  ],
-                },
+                    ],
+                  },
           },
         }
       : {
           V1: {
             parents: 1,
-            interior: isThroughKhala
-              ? {
-                  X4: [
-                    {Parachain: khalaParaId},
-                    {GeneralKey: '0x6362'}, // string "cb"
-                    {GeneralIndex: generalIndex},
-                    {GeneralKey: destinationAccount},
-                  ],
-                }
-              : {
-                  X2: [
-                    {Parachain: toChain.paraId},
-                    {
-                      AccountId32: {
-                        network: 'Any',
-                        id: u8aToHex(decodeAddress(destinationAccount)),
+            interior:
+              proxy != null
+                ? {
+                    X4: [
+                      {Parachain: CHAINS[proxy].paraId},
+                      ...createPhalaMultilocation(
+                        'cb',
+                        generalIndex as number,
+                        destinationAccount as Hex,
+                      ),
+                    ],
+                  }
+                : {
+                    X2: [
+                      {Parachain: toChain.paraId},
+                      {
+                        AccountId32: {
+                          network: 'Any',
+                          id: u8aToHex(decodeAddress(destinationAccount)),
+                        },
                       },
-                    },
-                  ],
-                },
+                    ],
+                  },
           },
         },
     fromChainId === 'bifrost-kusama' || fromChainId === 'bifrost-test'

@@ -14,7 +14,7 @@ type AssetsConfig = Array<{
   assetId: AssetId
   estimatedTime: string
   kind: BridgeKind
-  isThroughKhala?: boolean
+  proxy?: ChainId
   disabled?: boolean
 }>
 
@@ -68,7 +68,7 @@ const moonriverToBifrostAssets: AssetsConfig = [
     assetId: 'zlk',
     estimatedTime: '< 3 mins',
     kind: 'evmChainBridge',
-    isThroughKhala: true,
+    proxy: 'khala',
   },
 ]
 
@@ -77,7 +77,7 @@ const bifrostToMoonriverAssets: AssetsConfig = [
     assetId: 'zlk',
     estimatedTime: '~ 5 mins',
     kind: 'polkadotXTokens',
-    isThroughKhala: true,
+    proxy: 'khala',
   },
 ]
 
@@ -91,6 +91,10 @@ export const BRIDGES: Readonly<Bridge[]> = [
       },
       {
         id: 'khala',
+        assets: [{assetId: 'pha', estimatedTime: '~ 5 mins', kind: 'evmSygma'}],
+      },
+      {
+        id: 'astar',
         assets: [{assetId: 'pha', estimatedTime: '~ 5 mins', kind: 'evmSygma'}],
       },
     ],
@@ -340,6 +344,17 @@ export const BRIDGES: Readonly<Bridge[]> = [
           {assetId: 'pha', estimatedTime: '< 1 min', kind: 'polkadotXcm'},
         ],
       },
+      {
+        id: 'ethereum',
+        assets: [
+          {
+            assetId: 'pha',
+            estimatedTime: '~ 5 mins',
+            kind: 'polkadotXcm',
+            proxy: 'phala',
+          },
+        ],
+      },
     ],
   },
   {
@@ -363,5 +378,5 @@ export const BRIDGES: Readonly<Bridge[]> = [
 ]
 
 export const ALL_FROM_CHAINS = BRIDGES.filter((bridge) =>
-  bridge.toChains.some((x) => x.assets.length > 0)
+  bridge.toChains.some((x) => x.assets.length > 0),
 ).map((bridge) => bridge.fromChain)

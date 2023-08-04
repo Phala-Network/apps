@@ -3,17 +3,17 @@
   "pipeline": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": ["out/**", ".next/**"],
+      "outputs": ["out/**", ".next/**", "build/**"],
       "env": ["CONTEXT", "NODE_ENV"]
     },
     "lint": {
       "outputs": [],
-      "inputs": ["../../.prettierrc", "../../packages/eslint-config/**"]
+      "inputs": ["./**", "../../.prettierrc", "../../packages/eslint-config/**"]
     },
     "lint:fix": {
       "outputs": [],
-      "inputs": ["../../.prettierrc", "../../packages/eslint-config/**"]
+      "inputs": ["./**", "../../.prettierrc", "../../packages/eslint-config/**"]
     },
-    "typecheck": {"outputs": []}
+    "check": {"outputs": []}
   }
 }

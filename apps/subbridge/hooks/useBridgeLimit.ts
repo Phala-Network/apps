@@ -46,7 +46,9 @@ export const useBridgeLimit = (): Decimal | undefined => {
     ((fromChain.id === 'moonriver' || toChain.id === 'moonriver') &&
       asset.id === 'zlk') ||
     bridge.kind === 'evmSygma' ||
-    bridge.kind === 'phalaSygma'
+    bridge.kind === 'phalaSygma' ||
+    (toChain.id === 'ethereum' &&
+      (bridge.proxy === 'phala' || bridge.proxy === 'khala'))
 
   const {data: moonriverReservedZlk} = useSWR(
     toChain.id === 'moonriver' &&
@@ -75,9 +77,11 @@ export const useBridgeLimit = (): Decimal | undefined => {
 
   const {data: ethereumReservedPha} = useSWR(
     ethereumPhaContract != null &&
+      (bridge.kind === 'phalaSygma' ||
+        bridge.proxy === 'phala' ||
+        bridge.proxy === 'khala') &&
       toChain.id === 'ethereum' &&
-      asset.id === 'pha' &&
-      bridge.kind === 'phalaSygma' && [
+      asset.id === 'pha' && [
         ethereumPhaContract,
         asset.reservedAddress?.ethereum,
         asset.decimals.ethereum ?? asset.decimals.default,
@@ -88,7 +92,7 @@ export const useBridgeLimit = (): Decimal | undefined => {
 
   const {data: phalaReservedPha} = useSWR(
     phalaApi != null &&
-      toChain.id === 'phala' &&
+      (toChain.id === 'phala' || bridge.proxy === 'phala') &&
       asset.id === 'pha' &&
       fromChain.id === 'ethereum' && [phalaApi, asset.reservedAddress?.phala],
     polkadotAvailableBalanceFetcher,

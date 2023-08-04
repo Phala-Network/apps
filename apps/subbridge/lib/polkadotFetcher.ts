@@ -60,8 +60,8 @@ export const xTokensPartialFeeFetcher = async ([
   fromChainId,
   toChainId,
   assetId,
-  isThroughKhala,
-]: [ApiPromise, ChainId, ChainId, AssetId, boolean]): Promise<Decimal> => {
+  proxy,
+]: [ApiPromise, ChainId, ChainId, AssetId, ChainId]): Promise<Decimal> => {
   const {partialFee} = await transferByPolkadotXTokens({
     polkadotApi,
     assetId,
@@ -69,7 +69,7 @@ export const xTokensPartialFeeFetcher = async ([
     fromChainId,
     toChainId,
     destinationAccount: ALICE,
-    isThroughKhala,
+    proxy,
   }).paymentInfo(ALICE)
 
   const decimals = polkadotApi.registry.chainDecimals[0]
@@ -104,14 +104,17 @@ export const polkadotXcmTransferPartialFeeFetcher = async ([
   fromChainId,
   toChainId,
   assetId,
-]: [ApiPromise, ChainId, ChainId, AssetId]): Promise<Decimal> => {
+  proxy,
+]: [ApiPromise, ChainId, ChainId, AssetId, ChainId]): Promise<Decimal> => {
+  const toChain = CHAINS[toChainId]
   const extrinsic = transferByPolkadotXcm({
     polkadotApi,
     amount: '1',
-    destinationAccount: ALICE,
+    destinationAccount: toChain.kind === 'polkadot' ? ALICE : BLACK_HOLE,
     fromChainId,
     toChainId,
     assetId,
+    proxy,
   })
   const decimals = polkadotApi.registry.chainDecimals[0]
   const {partialFee} = await extrinsic.paymentInfo(ALICE)

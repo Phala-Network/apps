@@ -120,7 +120,7 @@ const EvmAction: FC<{onConfirm: () => void}> = ({onConfirm}) => {
         mx: 'auto',
       }}
     >
-      {needApproval && (
+      {needApproval && bridgeErrorMessage == null && (
         <LoadingButton
           loading={!approved && approveLoading}
           size="large"
@@ -142,9 +142,7 @@ const EvmAction: FC<{onConfirm: () => void}> = ({onConfirm}) => {
         disabled={(!approved && needApproval) || bridgeErrorMessage != null}
         onClick={onConfirm}
       >
-        {(approved || !needApproval) && bridgeErrorMessage != null
-          ? bridgeErrorMessage
-          : 'Transfer'}
+        {bridgeErrorMessage != null ? bridgeErrorMessage : 'Transfer'}
       </Button>
     </Stack>
   )
