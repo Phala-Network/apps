@@ -159,9 +159,10 @@ const BridgeBody: FC<BoxProps> = (props) => {
               <ExtraInfo sx={{mb: 3}} />
             </Collapse>
 
-            {(bridge.kind === 'evmSygma' || bridge.kind === 'phalaSygma') && (
-              <PoweredBySygma sx={{mb: 3}} />
-            )}
+            {(bridge.kind === 'evmSygma' ||
+              bridge.kind === 'phalaSygma' ||
+              ((bridge.proxy === 'phala' || bridge.proxy === 'khala') &&
+                toChain.id === 'ethereum')) && <PoweredBySygma sx={{mb: 3}} />}
 
             <Action />
           </Box>
