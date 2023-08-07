@@ -1,15 +1,26 @@
-<script>
+<script lang="ts">
+  import {onMount} from 'svelte'
+  import Nav from '~/components/Nav.svelte'
+  import PhatContractChart from '~/components/PhatContractChart.svelte'
+  import {initChartJS} from '~/lib/chart'
+
+  onMount(() => {
+    initChartJS()
+  })
 </script>
 
 <svelte:head>
   <title>Phala Analytics</title>
 </svelte:head>
 
-<main class="flex flex-col items-center">
-  <header class="flex items-center my-6">
-    <img class="block w-10 mr-4" src="favicon.png" alt="Phala logo" />
-    <h1 class="text-2xl font-medium">Phala Analytics</h1>
-  </header>
+<header class="mx-auto px-4 md:px-6 mt-4 md:mt-6 max-w-6xl">
+  <Nav />
+</header>
 
-  <h2>Phat Contract execution count</h2>
+<main
+  class="grid gap-4 grid-cols-1 md:grid-cols-2 max-w-5xl mx-auto mt-6 md:mt-10 px-4 md:px-6"
+>
+  <section class="card h-80">
+    <PhatContractChart />
+  </section>
 </main>
