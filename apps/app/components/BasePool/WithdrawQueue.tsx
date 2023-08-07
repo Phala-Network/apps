@@ -11,8 +11,7 @@ import Check from '@mui/icons-material/Check'
 import WarningAmber from '@mui/icons-material/WarningAmber'
 import {Box, Paper, Stack, Tooltip, Typography, useTheme} from '@mui/material'
 import {DataGrid, type GridColDef, type GridSortModel} from '@mui/x-data-grid'
-import {compactFormat} from '@phala/lib'
-import {toCurrency} from '@phala/util'
+import {compactFormat, toCurrency} from '@phala/util'
 import {
   addDays,
   formatDuration,
