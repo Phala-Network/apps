@@ -2,7 +2,6 @@ import {type WikiEntry} from '@/assets/wikiData'
 import {khalaSubsquidClient, phalaSubsquidClient} from '@/config'
 import useGetApr from '@/hooks/useGetApr'
 import useSWRValue from '@/hooks/useSWRValue'
-import compactFormat from '@/lib/compactFormat'
 import {
   useGlobalRewardsSnapshotsConnectionQuery,
   useGlobalStateQuery,
@@ -10,7 +9,7 @@ import {
 } from '@/lib/subsquidQuery'
 import {chainAtom} from '@/store/common'
 import {Skeleton, Stack, Tooltip, useMediaQuery, useTheme} from '@mui/material'
-import {useInterval} from '@phala/lib'
+import {compactFormat, useInterval} from '@phala/lib'
 import {toPercentage} from '@phala/util'
 import {useQuery} from '@tanstack/react-query'
 import {addDays} from 'date-fns'

@@ -1,12 +1,12 @@
 import useSWRValue from '@/hooks/useSWRValue'
 import {aprToApy} from '@/lib/apr'
-import compactFormat from '@/lib/compactFormat'
 import {
   useBasePoolSnapshotsConnectionQuery,
   type BasePoolCommonFragment,
 } from '@/lib/subsquidQuery'
 import {colors} from '@/lib/theme'
 import {subsquidClientAtom} from '@/store/common'
+import {compactFormat} from '@phala/lib'
 import {addDays, addHours} from 'date-fns'
 import Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
