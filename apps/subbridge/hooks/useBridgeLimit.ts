@@ -43,12 +43,13 @@ export const useBridgeLimit = (): Decimal | undefined => {
   const khalaApi = usePolkadotApi('khala')
 
   const hasLimit =
-    ((fromChain.id === 'moonriver' || toChain.id === 'moonriver') &&
+    fromChain.isTest !== true &&
+    (((fromChain.id === 'moonriver' || toChain.id === 'moonriver') &&
       asset.id === 'zlk') ||
-    bridge.kind === 'evmSygma' ||
-    bridge.kind === 'phalaSygma' ||
-    (toChain.id === 'ethereum' &&
-      (bridge.proxy === 'phala' || bridge.proxy === 'khala'))
+      bridge.kind === 'evmSygma' ||
+      bridge.kind === 'phalaSygma' ||
+      (toChain.id === 'ethereum' &&
+        (bridge.proxy === 'phala' || bridge.proxy === 'khala')))
 
   const {data: moonriverReservedZlk} = useSWR(
     toChain.id === 'moonriver' &&
