@@ -1,15 +1,11 @@
 <script lang="ts">
-  import {compactFormat} from '@phala/lib'
+  import {compactFormat} from '@phala/util'
   import type {ChartData} from 'chart.js'
-  import {gql, request} from 'graphql-request'
+  import {addDays} from 'date-fns'
+  import {gql} from 'graphql-request'
   import {onMount} from 'svelte'
   import {Line} from 'svelte-chartjs'
-
-  interface Execution {
-    dt: Date
-    executionCount: number
-    userCount: number
-  }
+  import {phatClient} from '~/lib/graphql'
 
   interface ExecutionData {
     dt: string
@@ -17,48 +13,56 @@
     userCount: number
   }
 
-  const document = gql`
-    {
-      phatOfflineExecution(orderBy: {dt: DESC}, limit: 10) {
-        dt
-        executionCount
-        userCount
-      }
-    }
-  `
-  let executions: Execution[]
   let data: ChartData<'line', number[]>
-  $: current = executions?.[0]
-    ? compactFormat(executions[0].executionCount)
-    : null
-  $: if (executions) {
-    data = {
-      labels: executions.map((e) => e.dt),
-      datasets: [
-        {label: 'Execution', data: executions.map((e) => e.executionCount)},
-      ],
-    }
-  }
+  let latestExecutionCount: string
+
   onMount(() => {
-    request<{phatOfflineExecution: ExecutionData[]}>(
-      'https://offchain-metrics.phala.network/v1/graphql',
-      document
-    ).then((res) => {
-      executions = res.phatOfflineExecution.reverse().map((e) => {
-        return {...e, dt: new Date(e.dt)}
+    const days = 7
+    const startTime = addDays(new Date(), -days).toISOString()
+    const document = gql`
+      {
+        phatOfflineExecution(
+          orderBy: {dt: ASC}
+          where: {dt: {_gte: "${startTime}"}}
+        ) {
+          dt
+          executionCount
+          userCount
+        }
+      }
+    `
+
+    phatClient
+      .request<{phatOfflineExecution: ExecutionData[]}>(document)
+      .then((res) => {
+        let executions = res.phatOfflineExecution.map((e) => ({
+          ...e,
+          dt: new Date(e.dt),
+        }))
+        if (executions.length > 0) {
+          latestExecutionCount = compactFormat(executions[0].executionCount)
+        }
+        data = {
+          labels: executions.map((e) => e.dt),
+          datasets: [
+            {
+              label: 'Execution count',
+              data: executions.map((e) => e.executionCount),
+            },
+          ],
+        }
       })
-    })
   })
 </script>
 
-{#if executions != null}
-  <div class="flex flex-col h-full">
-    <div>
-      <h2 class="card-title">Phat Contract daily execution</h2>
-      <h1 class="card-head mt-1">{current}</h1>
-    </div>
+<div class="flex flex-col h-full">
+  <div>
+    <h1 class="data-label">Phat Contract daily execution</h1>
+    <div class="data-value mt-1">{latestExecutionCount ?? ''}</div>
+  </div>
 
-    <div class="mt-4 flex-1">
+  <div class="mt-4 flex-1">
+    {#if data != null}
       <Line
         {data}
         options={{
@@ -68,6 +72,6 @@
           },
         }}
       />
-    </div>
+    {/if}
   </div>
-{/if}
+</div>

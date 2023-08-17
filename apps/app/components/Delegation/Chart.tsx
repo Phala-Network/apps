@@ -6,7 +6,7 @@ import {
 } from '@/lib/subsquidQuery'
 import {colors} from '@/lib/theme'
 import {subsquidClientAtom} from '@/store/common'
-import {compactFormat} from '@phala/lib'
+import {compactFormat} from '@phala/util'
 import {addDays} from 'date-fns'
 import Decimal from 'decimal.js'
 import {useAtom} from 'jotai'

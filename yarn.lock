@@ -3480,6 +3480,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@phala/analytics@workspace:apps/analytics"
   dependencies:
+    "@phala/util": "workspace:^"
+    "@rgossiaux/svelte-headlessui": ^2.0.0
+    "@rgossiaux/svelte-heroicons": ^0.1.2
     "@sveltejs/adapter-auto": ^2.0.0
     "@sveltejs/adapter-static": ^2.0.3
     "@sveltejs/kit": ^1.20.4
@@ -3487,6 +3490,7 @@ __metadata:
     chart.js: ^4.3.3
     chartjs-adapter-date-fns: ^3.0.0
     date-fns: ^2.30.0
+    decimal.js: ^10.4.3
     graphql-request: ^6.1.0
     postcss: ^8.4.27
     svelte: ^4.0.5
@@ -4729,6 +4733,24 @@ __metadata:
   peerDependencies:
     redux: ^3.1.0 || ^4.0.0
   checksum: c89680e1af8bd47a0250478b491a79a55bc0d71206f5ab95a83fd05c7d815bdaef5703defb7b571f07fc8bd2c6d4e8da6fc0cfd09e7fe03e994f9070c15fd08d
+  languageName: node
+  linkType: hard
+
+"@rgossiaux/svelte-headlessui@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "@rgossiaux/svelte-headlessui@npm:2.0.0"
+  peerDependencies:
+    svelte: ^3.47.0
+  checksum: 061ad11b6dd3d2102325d18918cce53e9f20c4f65086a34183b7c757823ff659f7263598ecde91190acbf1e47fa6fe510c2f01a5667dc101bf11990a13cbaa86
+  languageName: node
+  linkType: hard
+
+"@rgossiaux/svelte-heroicons@npm:^0.1.2":
+  version: 0.1.2
+  resolution: "@rgossiaux/svelte-heroicons@npm:0.1.2"
+  peerDependencies:
+    svelte: ^3.44.0
+  checksum: 46d66225fa8650a425b8abc36cedc64688a72abbfdf69d967b93e7187f62fa5a492717da149af029077ad68cfcd5e86f9ca999bd48740698357f917ab56479eb
   languageName: node
   linkType: hard
 
