@@ -1302,31 +1302,180 @@ type DelegationsConnection = {
   totalCount: Scalars['Int'];
 };
 
-type GlobalRewardsSnapshot = {
+type GlobalState = {
+  averageApr: Scalars['BigDecimal'];
+  averageAprMultiplier: Scalars['BigDecimal'];
+  averageBlockTime: Scalars['Int'];
+  averageBlockTimeUpdatedHeight: Scalars['Int'];
+  averageBlockTimeUpdatedTime: Scalars['DateTime'];
+  budgetPerBlock: Scalars['BigDecimal'];
+  budgetPerShare: Scalars['BigDecimal'];
+  cumulativeRewards: Scalars['BigDecimal'];
+  delegatorCount: Scalars['Int'];
+  /** constant 0 */
   id: Scalars['String'];
-  /** block time */
-  updatedTime: Scalars['DateTime'];
-  value: Scalars['BigDecimal'];
+  idleWorkerCount: Scalars['Int'];
+  /** for apr calculation */
+  idleWorkerShares: Scalars['BigDecimal'];
+  k: Scalars['BigDecimal'];
+  phaRate: Scalars['BigDecimal'];
+  re: Scalars['BigDecimal'];
+  totalValue: Scalars['BigDecimal'];
+  treasuryRatio: Scalars['BigDecimal'];
+  vMax: Scalars['BigDecimal'];
+  workerCount: Scalars['Int'];
 };
 
-type GlobalRewardsSnapshotEdge = {
+type GlobalStateEdge = {
   cursor: Scalars['String'];
-  node: GlobalRewardsSnapshot;
+  node: GlobalState;
 };
 
-const GlobalRewardsSnapshotOrderByInput = {
+const GlobalStateOrderByInput = {
+  AverageAprMultiplierAsc: 'averageAprMultiplier_ASC',
+  AverageAprMultiplierDesc: 'averageAprMultiplier_DESC',
+  AverageAprAsc: 'averageApr_ASC',
+  AverageAprDesc: 'averageApr_DESC',
+  AverageBlockTimeUpdatedHeightAsc: 'averageBlockTimeUpdatedHeight_ASC',
+  AverageBlockTimeUpdatedHeightDesc: 'averageBlockTimeUpdatedHeight_DESC',
+  AverageBlockTimeUpdatedTimeAsc: 'averageBlockTimeUpdatedTime_ASC',
+  AverageBlockTimeUpdatedTimeDesc: 'averageBlockTimeUpdatedTime_DESC',
+  AverageBlockTimeAsc: 'averageBlockTime_ASC',
+  AverageBlockTimeDesc: 'averageBlockTime_DESC',
+  BudgetPerBlockAsc: 'budgetPerBlock_ASC',
+  BudgetPerBlockDesc: 'budgetPerBlock_DESC',
+  BudgetPerShareAsc: 'budgetPerShare_ASC',
+  BudgetPerShareDesc: 'budgetPerShare_DESC',
+  CumulativeRewardsAsc: 'cumulativeRewards_ASC',
+  CumulativeRewardsDesc: 'cumulativeRewards_DESC',
+  DelegatorCountAsc: 'delegatorCount_ASC',
+  DelegatorCountDesc: 'delegatorCount_DESC',
   IdAsc: 'id_ASC',
   IdDesc: 'id_DESC',
-  UpdatedTimeAsc: 'updatedTime_ASC',
-  UpdatedTimeDesc: 'updatedTime_DESC',
-  ValueAsc: 'value_ASC',
-  ValueDesc: 'value_DESC'
+  IdleWorkerCountAsc: 'idleWorkerCount_ASC',
+  IdleWorkerCountDesc: 'idleWorkerCount_DESC',
+  IdleWorkerSharesAsc: 'idleWorkerShares_ASC',
+  IdleWorkerSharesDesc: 'idleWorkerShares_DESC',
+  KAsc: 'k_ASC',
+  KDesc: 'k_DESC',
+  PhaRateAsc: 'phaRate_ASC',
+  PhaRateDesc: 'phaRate_DESC',
+  ReAsc: 're_ASC',
+  ReDesc: 're_DESC',
+  TotalValueAsc: 'totalValue_ASC',
+  TotalValueDesc: 'totalValue_DESC',
+  TreasuryRatioAsc: 'treasuryRatio_ASC',
+  TreasuryRatioDesc: 'treasuryRatio_DESC',
+  VMaxAsc: 'vMax_ASC',
+  VMaxDesc: 'vMax_DESC',
+  WorkerCountAsc: 'workerCount_ASC',
+  WorkerCountDesc: 'workerCount_DESC'
 } as const;
 
-export type GlobalRewardsSnapshotOrderByInput = typeof GlobalRewardsSnapshotOrderByInput[keyof typeof GlobalRewardsSnapshotOrderByInput];
-type GlobalRewardsSnapshotWhereInput = {
-  AND?: InputMaybe<Array<GlobalRewardsSnapshotWhereInput>>;
-  OR?: InputMaybe<Array<GlobalRewardsSnapshotWhereInput>>;
+export type GlobalStateOrderByInput = typeof GlobalStateOrderByInput[keyof typeof GlobalStateOrderByInput];
+type GlobalStateSnapshot = {
+  averageApr: Scalars['BigDecimal'];
+  averageBlockTime: Scalars['Int'];
+  budgetPerBlock: Scalars['BigDecimal'];
+  budgetPerShare: Scalars['BigDecimal'];
+  cumulativeRewards: Scalars['BigDecimal'];
+  delegatorCount: Scalars['Int'];
+  id: Scalars['String'];
+  idleWorkerCount: Scalars['Int'];
+  totalValue: Scalars['BigDecimal'];
+  /** block time */
+  updatedTime: Scalars['DateTime'];
+  workerCount: Scalars['Int'];
+};
+
+type GlobalStateSnapshotEdge = {
+  cursor: Scalars['String'];
+  node: GlobalStateSnapshot;
+};
+
+const GlobalStateSnapshotOrderByInput = {
+  AverageAprAsc: 'averageApr_ASC',
+  AverageAprDesc: 'averageApr_DESC',
+  AverageBlockTimeAsc: 'averageBlockTime_ASC',
+  AverageBlockTimeDesc: 'averageBlockTime_DESC',
+  BudgetPerBlockAsc: 'budgetPerBlock_ASC',
+  BudgetPerBlockDesc: 'budgetPerBlock_DESC',
+  BudgetPerShareAsc: 'budgetPerShare_ASC',
+  BudgetPerShareDesc: 'budgetPerShare_DESC',
+  CumulativeRewardsAsc: 'cumulativeRewards_ASC',
+  CumulativeRewardsDesc: 'cumulativeRewards_DESC',
+  DelegatorCountAsc: 'delegatorCount_ASC',
+  DelegatorCountDesc: 'delegatorCount_DESC',
+  IdAsc: 'id_ASC',
+  IdDesc: 'id_DESC',
+  IdleWorkerCountAsc: 'idleWorkerCount_ASC',
+  IdleWorkerCountDesc: 'idleWorkerCount_DESC',
+  TotalValueAsc: 'totalValue_ASC',
+  TotalValueDesc: 'totalValue_DESC',
+  UpdatedTimeAsc: 'updatedTime_ASC',
+  UpdatedTimeDesc: 'updatedTime_DESC',
+  WorkerCountAsc: 'workerCount_ASC',
+  WorkerCountDesc: 'workerCount_DESC'
+} as const;
+
+export type GlobalStateSnapshotOrderByInput = typeof GlobalStateSnapshotOrderByInput[keyof typeof GlobalStateSnapshotOrderByInput];
+type GlobalStateSnapshotWhereInput = {
+  AND?: InputMaybe<Array<GlobalStateSnapshotWhereInput>>;
+  OR?: InputMaybe<Array<GlobalStateSnapshotWhereInput>>;
+  averageApr_eq?: InputMaybe<Scalars['BigDecimal']>;
+  averageApr_gt?: InputMaybe<Scalars['BigDecimal']>;
+  averageApr_gte?: InputMaybe<Scalars['BigDecimal']>;
+  averageApr_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  averageApr_isNull?: InputMaybe<Scalars['Boolean']>;
+  averageApr_lt?: InputMaybe<Scalars['BigDecimal']>;
+  averageApr_lte?: InputMaybe<Scalars['BigDecimal']>;
+  averageApr_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  averageApr_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  averageBlockTime_eq?: InputMaybe<Scalars['Int']>;
+  averageBlockTime_gt?: InputMaybe<Scalars['Int']>;
+  averageBlockTime_gte?: InputMaybe<Scalars['Int']>;
+  averageBlockTime_in?: InputMaybe<Array<Scalars['Int']>>;
+  averageBlockTime_isNull?: InputMaybe<Scalars['Boolean']>;
+  averageBlockTime_lt?: InputMaybe<Scalars['Int']>;
+  averageBlockTime_lte?: InputMaybe<Scalars['Int']>;
+  averageBlockTime_not_eq?: InputMaybe<Scalars['Int']>;
+  averageBlockTime_not_in?: InputMaybe<Array<Scalars['Int']>>;
+  budgetPerBlock_eq?: InputMaybe<Scalars['BigDecimal']>;
+  budgetPerBlock_gt?: InputMaybe<Scalars['BigDecimal']>;
+  budgetPerBlock_gte?: InputMaybe<Scalars['BigDecimal']>;
+  budgetPerBlock_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  budgetPerBlock_isNull?: InputMaybe<Scalars['Boolean']>;
+  budgetPerBlock_lt?: InputMaybe<Scalars['BigDecimal']>;
+  budgetPerBlock_lte?: InputMaybe<Scalars['BigDecimal']>;
+  budgetPerBlock_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  budgetPerBlock_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  budgetPerShare_eq?: InputMaybe<Scalars['BigDecimal']>;
+  budgetPerShare_gt?: InputMaybe<Scalars['BigDecimal']>;
+  budgetPerShare_gte?: InputMaybe<Scalars['BigDecimal']>;
+  budgetPerShare_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  budgetPerShare_isNull?: InputMaybe<Scalars['Boolean']>;
+  budgetPerShare_lt?: InputMaybe<Scalars['BigDecimal']>;
+  budgetPerShare_lte?: InputMaybe<Scalars['BigDecimal']>;
+  budgetPerShare_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  budgetPerShare_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  cumulativeRewards_eq?: InputMaybe<Scalars['BigDecimal']>;
+  cumulativeRewards_gt?: InputMaybe<Scalars['BigDecimal']>;
+  cumulativeRewards_gte?: InputMaybe<Scalars['BigDecimal']>;
+  cumulativeRewards_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  cumulativeRewards_isNull?: InputMaybe<Scalars['Boolean']>;
+  cumulativeRewards_lt?: InputMaybe<Scalars['BigDecimal']>;
+  cumulativeRewards_lte?: InputMaybe<Scalars['BigDecimal']>;
+  cumulativeRewards_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  cumulativeRewards_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  delegatorCount_eq?: InputMaybe<Scalars['Int']>;
+  delegatorCount_gt?: InputMaybe<Scalars['Int']>;
+  delegatorCount_gte?: InputMaybe<Scalars['Int']>;
+  delegatorCount_in?: InputMaybe<Array<Scalars['Int']>>;
+  delegatorCount_isNull?: InputMaybe<Scalars['Boolean']>;
+  delegatorCount_lt?: InputMaybe<Scalars['Int']>;
+  delegatorCount_lte?: InputMaybe<Scalars['Int']>;
+  delegatorCount_not_eq?: InputMaybe<Scalars['Int']>;
+  delegatorCount_not_in?: InputMaybe<Array<Scalars['Int']>>;
   id_contains?: InputMaybe<Scalars['String']>;
   id_containsInsensitive?: InputMaybe<Scalars['String']>;
   id_endsWith?: InputMaybe<Scalars['String']>;
@@ -1344,6 +1493,24 @@ type GlobalRewardsSnapshotWhereInput = {
   id_not_in?: InputMaybe<Array<Scalars['String']>>;
   id_not_startsWith?: InputMaybe<Scalars['String']>;
   id_startsWith?: InputMaybe<Scalars['String']>;
+  idleWorkerCount_eq?: InputMaybe<Scalars['Int']>;
+  idleWorkerCount_gt?: InputMaybe<Scalars['Int']>;
+  idleWorkerCount_gte?: InputMaybe<Scalars['Int']>;
+  idleWorkerCount_in?: InputMaybe<Array<Scalars['Int']>>;
+  idleWorkerCount_isNull?: InputMaybe<Scalars['Boolean']>;
+  idleWorkerCount_lt?: InputMaybe<Scalars['Int']>;
+  idleWorkerCount_lte?: InputMaybe<Scalars['Int']>;
+  idleWorkerCount_not_eq?: InputMaybe<Scalars['Int']>;
+  idleWorkerCount_not_in?: InputMaybe<Array<Scalars['Int']>>;
+  totalValue_eq?: InputMaybe<Scalars['BigDecimal']>;
+  totalValue_gt?: InputMaybe<Scalars['BigDecimal']>;
+  totalValue_gte?: InputMaybe<Scalars['BigDecimal']>;
+  totalValue_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  totalValue_isNull?: InputMaybe<Scalars['Boolean']>;
+  totalValue_lt?: InputMaybe<Scalars['BigDecimal']>;
+  totalValue_lte?: InputMaybe<Scalars['BigDecimal']>;
+  totalValue_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  totalValue_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
   updatedTime_eq?: InputMaybe<Scalars['DateTime']>;
   updatedTime_gt?: InputMaybe<Scalars['DateTime']>;
   updatedTime_gte?: InputMaybe<Scalars['DateTime']>;
@@ -1353,97 +1520,26 @@ type GlobalRewardsSnapshotWhereInput = {
   updatedTime_lte?: InputMaybe<Scalars['DateTime']>;
   updatedTime_not_eq?: InputMaybe<Scalars['DateTime']>;
   updatedTime_not_in?: InputMaybe<Array<Scalars['DateTime']>>;
-  value_eq?: InputMaybe<Scalars['BigDecimal']>;
-  value_gt?: InputMaybe<Scalars['BigDecimal']>;
-  value_gte?: InputMaybe<Scalars['BigDecimal']>;
-  value_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
-  value_isNull?: InputMaybe<Scalars['Boolean']>;
-  value_lt?: InputMaybe<Scalars['BigDecimal']>;
-  value_lte?: InputMaybe<Scalars['BigDecimal']>;
-  value_not_eq?: InputMaybe<Scalars['BigDecimal']>;
-  value_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  workerCount_eq?: InputMaybe<Scalars['Int']>;
+  workerCount_gt?: InputMaybe<Scalars['Int']>;
+  workerCount_gte?: InputMaybe<Scalars['Int']>;
+  workerCount_in?: InputMaybe<Array<Scalars['Int']>>;
+  workerCount_isNull?: InputMaybe<Scalars['Boolean']>;
+  workerCount_lt?: InputMaybe<Scalars['Int']>;
+  workerCount_lte?: InputMaybe<Scalars['Int']>;
+  workerCount_not_eq?: InputMaybe<Scalars['Int']>;
+  workerCount_not_in?: InputMaybe<Array<Scalars['Int']>>;
 };
 
-type GlobalRewardsSnapshotsConnection = {
-  edges: Array<GlobalRewardsSnapshotEdge>;
+type GlobalStateSnapshotsConnection = {
+  edges: Array<GlobalStateSnapshotEdge>;
   pageInfo: PageInfo;
   totalCount: Scalars['Int'];
 };
 
-type GlobalState = {
-  averageAprMultiplier: Scalars['BigDecimal'];
-  averageAprMultiplierUpdatedTime: Scalars['DateTime'];
-  averageBlockTime: Scalars['Int'];
-  averageBlockTimeUpdatedHeight: Scalars['Int'];
-  averageBlockTimeUpdatedTime: Scalars['DateTime'];
-  budgetPerBlock: Scalars['BigDecimal'];
-  cumulativeRewards: Scalars['BigDecimal'];
-  height: Scalars['Int'];
-  /** constant 0 */
-  id: Scalars['String'];
-  /** for apr calculation */
-  idleWorkerShares: Scalars['BigDecimal'];
-  k: Scalars['BigDecimal'];
-  phaRate: Scalars['BigDecimal'];
-  re: Scalars['BigDecimal'];
-  totalValue: Scalars['BigDecimal'];
-  treasuryRatio: Scalars['BigDecimal'];
-  vMax: Scalars['BigDecimal'];
-};
-
-type GlobalStateEdge = {
-  cursor: Scalars['String'];
-  node: GlobalState;
-};
-
-const GlobalStateOrderByInput = {
-  AverageAprMultiplierUpdatedTimeAsc: 'averageAprMultiplierUpdatedTime_ASC',
-  AverageAprMultiplierUpdatedTimeDesc: 'averageAprMultiplierUpdatedTime_DESC',
-  AverageAprMultiplierAsc: 'averageAprMultiplier_ASC',
-  AverageAprMultiplierDesc: 'averageAprMultiplier_DESC',
-  AverageBlockTimeUpdatedHeightAsc: 'averageBlockTimeUpdatedHeight_ASC',
-  AverageBlockTimeUpdatedHeightDesc: 'averageBlockTimeUpdatedHeight_DESC',
-  AverageBlockTimeUpdatedTimeAsc: 'averageBlockTimeUpdatedTime_ASC',
-  AverageBlockTimeUpdatedTimeDesc: 'averageBlockTimeUpdatedTime_DESC',
-  AverageBlockTimeAsc: 'averageBlockTime_ASC',
-  AverageBlockTimeDesc: 'averageBlockTime_DESC',
-  BudgetPerBlockAsc: 'budgetPerBlock_ASC',
-  BudgetPerBlockDesc: 'budgetPerBlock_DESC',
-  CumulativeRewardsAsc: 'cumulativeRewards_ASC',
-  CumulativeRewardsDesc: 'cumulativeRewards_DESC',
-  HeightAsc: 'height_ASC',
-  HeightDesc: 'height_DESC',
-  IdAsc: 'id_ASC',
-  IdDesc: 'id_DESC',
-  IdleWorkerSharesAsc: 'idleWorkerShares_ASC',
-  IdleWorkerSharesDesc: 'idleWorkerShares_DESC',
-  KAsc: 'k_ASC',
-  KDesc: 'k_DESC',
-  PhaRateAsc: 'phaRate_ASC',
-  PhaRateDesc: 'phaRate_DESC',
-  ReAsc: 're_ASC',
-  ReDesc: 're_DESC',
-  TotalValueAsc: 'totalValue_ASC',
-  TotalValueDesc: 'totalValue_DESC',
-  TreasuryRatioAsc: 'treasuryRatio_ASC',
-  TreasuryRatioDesc: 'treasuryRatio_DESC',
-  VMaxAsc: 'vMax_ASC',
-  VMaxDesc: 'vMax_DESC'
-} as const;
-
-export type GlobalStateOrderByInput = typeof GlobalStateOrderByInput[keyof typeof GlobalStateOrderByInput];
 type GlobalStateWhereInput = {
   AND?: InputMaybe<Array<GlobalStateWhereInput>>;
   OR?: InputMaybe<Array<GlobalStateWhereInput>>;
-  averageAprMultiplierUpdatedTime_eq?: InputMaybe<Scalars['DateTime']>;
-  averageAprMultiplierUpdatedTime_gt?: InputMaybe<Scalars['DateTime']>;
-  averageAprMultiplierUpdatedTime_gte?: InputMaybe<Scalars['DateTime']>;
-  averageAprMultiplierUpdatedTime_in?: InputMaybe<Array<Scalars['DateTime']>>;
-  averageAprMultiplierUpdatedTime_isNull?: InputMaybe<Scalars['Boolean']>;
-  averageAprMultiplierUpdatedTime_lt?: InputMaybe<Scalars['DateTime']>;
-  averageAprMultiplierUpdatedTime_lte?: InputMaybe<Scalars['DateTime']>;
-  averageAprMultiplierUpdatedTime_not_eq?: InputMaybe<Scalars['DateTime']>;
-  averageAprMultiplierUpdatedTime_not_in?: InputMaybe<Array<Scalars['DateTime']>>;
   averageAprMultiplier_eq?: InputMaybe<Scalars['BigDecimal']>;
   averageAprMultiplier_gt?: InputMaybe<Scalars['BigDecimal']>;
   averageAprMultiplier_gte?: InputMaybe<Scalars['BigDecimal']>;
@@ -1453,6 +1549,15 @@ type GlobalStateWhereInput = {
   averageAprMultiplier_lte?: InputMaybe<Scalars['BigDecimal']>;
   averageAprMultiplier_not_eq?: InputMaybe<Scalars['BigDecimal']>;
   averageAprMultiplier_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  averageApr_eq?: InputMaybe<Scalars['BigDecimal']>;
+  averageApr_gt?: InputMaybe<Scalars['BigDecimal']>;
+  averageApr_gte?: InputMaybe<Scalars['BigDecimal']>;
+  averageApr_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  averageApr_isNull?: InputMaybe<Scalars['Boolean']>;
+  averageApr_lt?: InputMaybe<Scalars['BigDecimal']>;
+  averageApr_lte?: InputMaybe<Scalars['BigDecimal']>;
+  averageApr_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  averageApr_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
   averageBlockTimeUpdatedHeight_eq?: InputMaybe<Scalars['Int']>;
   averageBlockTimeUpdatedHeight_gt?: InputMaybe<Scalars['Int']>;
   averageBlockTimeUpdatedHeight_gte?: InputMaybe<Scalars['Int']>;
@@ -1489,6 +1594,15 @@ type GlobalStateWhereInput = {
   budgetPerBlock_lte?: InputMaybe<Scalars['BigDecimal']>;
   budgetPerBlock_not_eq?: InputMaybe<Scalars['BigDecimal']>;
   budgetPerBlock_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  budgetPerShare_eq?: InputMaybe<Scalars['BigDecimal']>;
+  budgetPerShare_gt?: InputMaybe<Scalars['BigDecimal']>;
+  budgetPerShare_gte?: InputMaybe<Scalars['BigDecimal']>;
+  budgetPerShare_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  budgetPerShare_isNull?: InputMaybe<Scalars['Boolean']>;
+  budgetPerShare_lt?: InputMaybe<Scalars['BigDecimal']>;
+  budgetPerShare_lte?: InputMaybe<Scalars['BigDecimal']>;
+  budgetPerShare_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  budgetPerShare_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
   cumulativeRewards_eq?: InputMaybe<Scalars['BigDecimal']>;
   cumulativeRewards_gt?: InputMaybe<Scalars['BigDecimal']>;
   cumulativeRewards_gte?: InputMaybe<Scalars['BigDecimal']>;
@@ -1498,15 +1612,15 @@ type GlobalStateWhereInput = {
   cumulativeRewards_lte?: InputMaybe<Scalars['BigDecimal']>;
   cumulativeRewards_not_eq?: InputMaybe<Scalars['BigDecimal']>;
   cumulativeRewards_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
-  height_eq?: InputMaybe<Scalars['Int']>;
-  height_gt?: InputMaybe<Scalars['Int']>;
-  height_gte?: InputMaybe<Scalars['Int']>;
-  height_in?: InputMaybe<Array<Scalars['Int']>>;
-  height_isNull?: InputMaybe<Scalars['Boolean']>;
-  height_lt?: InputMaybe<Scalars['Int']>;
-  height_lte?: InputMaybe<Scalars['Int']>;
-  height_not_eq?: InputMaybe<Scalars['Int']>;
-  height_not_in?: InputMaybe<Array<Scalars['Int']>>;
+  delegatorCount_eq?: InputMaybe<Scalars['Int']>;
+  delegatorCount_gt?: InputMaybe<Scalars['Int']>;
+  delegatorCount_gte?: InputMaybe<Scalars['Int']>;
+  delegatorCount_in?: InputMaybe<Array<Scalars['Int']>>;
+  delegatorCount_isNull?: InputMaybe<Scalars['Boolean']>;
+  delegatorCount_lt?: InputMaybe<Scalars['Int']>;
+  delegatorCount_lte?: InputMaybe<Scalars['Int']>;
+  delegatorCount_not_eq?: InputMaybe<Scalars['Int']>;
+  delegatorCount_not_in?: InputMaybe<Array<Scalars['Int']>>;
   id_contains?: InputMaybe<Scalars['String']>;
   id_containsInsensitive?: InputMaybe<Scalars['String']>;
   id_endsWith?: InputMaybe<Scalars['String']>;
@@ -1524,6 +1638,15 @@ type GlobalStateWhereInput = {
   id_not_in?: InputMaybe<Array<Scalars['String']>>;
   id_not_startsWith?: InputMaybe<Scalars['String']>;
   id_startsWith?: InputMaybe<Scalars['String']>;
+  idleWorkerCount_eq?: InputMaybe<Scalars['Int']>;
+  idleWorkerCount_gt?: InputMaybe<Scalars['Int']>;
+  idleWorkerCount_gte?: InputMaybe<Scalars['Int']>;
+  idleWorkerCount_in?: InputMaybe<Array<Scalars['Int']>>;
+  idleWorkerCount_isNull?: InputMaybe<Scalars['Boolean']>;
+  idleWorkerCount_lt?: InputMaybe<Scalars['Int']>;
+  idleWorkerCount_lte?: InputMaybe<Scalars['Int']>;
+  idleWorkerCount_not_eq?: InputMaybe<Scalars['Int']>;
+  idleWorkerCount_not_in?: InputMaybe<Array<Scalars['Int']>>;
   idleWorkerShares_eq?: InputMaybe<Scalars['BigDecimal']>;
   idleWorkerShares_gt?: InputMaybe<Scalars['BigDecimal']>;
   idleWorkerShares_gte?: InputMaybe<Scalars['BigDecimal']>;
@@ -1587,6 +1710,15 @@ type GlobalStateWhereInput = {
   vMax_lte?: InputMaybe<Scalars['BigDecimal']>;
   vMax_not_eq?: InputMaybe<Scalars['BigDecimal']>;
   vMax_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  workerCount_eq?: InputMaybe<Scalars['Int']>;
+  workerCount_gt?: InputMaybe<Scalars['Int']>;
+  workerCount_gte?: InputMaybe<Scalars['Int']>;
+  workerCount_in?: InputMaybe<Array<Scalars['Int']>>;
+  workerCount_isNull?: InputMaybe<Scalars['Boolean']>;
+  workerCount_lt?: InputMaybe<Scalars['Int']>;
+  workerCount_lte?: InputMaybe<Scalars['Int']>;
+  workerCount_not_eq?: InputMaybe<Scalars['Int']>;
+  workerCount_not_in?: InputMaybe<Array<Scalars['Int']>>;
 };
 
 type GlobalStatesConnection = {
@@ -1777,14 +1909,14 @@ type Query = {
   delegationSnapshotsConnection: DelegationSnapshotsConnection;
   delegations: Array<Delegation>;
   delegationsConnection: DelegationsConnection;
-  globalRewardsSnapshotById?: Maybe<GlobalRewardsSnapshot>;
-  /** @deprecated Use globalRewardsSnapshotById */
-  globalRewardsSnapshotByUniqueInput?: Maybe<GlobalRewardsSnapshot>;
-  globalRewardsSnapshots: Array<GlobalRewardsSnapshot>;
-  globalRewardsSnapshotsConnection: GlobalRewardsSnapshotsConnection;
   globalStateById?: Maybe<GlobalState>;
   /** @deprecated Use globalStateById */
   globalStateByUniqueInput?: Maybe<GlobalState>;
+  globalStateSnapshotById?: Maybe<GlobalStateSnapshot>;
+  /** @deprecated Use globalStateSnapshotById */
+  globalStateSnapshotByUniqueInput?: Maybe<GlobalStateSnapshot>;
+  globalStateSnapshots: Array<GlobalStateSnapshot>;
+  globalStateSnapshotsConnection: GlobalStateSnapshotsConnection;
   globalStates: Array<GlobalState>;
   globalStatesConnection: GlobalStatesConnection;
   nftById?: Maybe<Nft>;
@@ -2003,32 +2135,6 @@ type QueryDelegationsConnectionArgs = {
 };
 
 
-type QueryGlobalRewardsSnapshotByIdArgs = {
-  id: Scalars['String'];
-};
-
-
-type QueryGlobalRewardsSnapshotByUniqueInputArgs = {
-  where: WhereIdInput;
-};
-
-
-type QueryGlobalRewardsSnapshotsArgs = {
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<Array<GlobalRewardsSnapshotOrderByInput>>;
-  where?: InputMaybe<GlobalRewardsSnapshotWhereInput>;
-};
-
-
-type QueryGlobalRewardsSnapshotsConnectionArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  orderBy: Array<GlobalRewardsSnapshotOrderByInput>;
-  where?: InputMaybe<GlobalRewardsSnapshotWhereInput>;
-};
-
-
 type QueryGlobalStateByIdArgs = {
   id: Scalars['String'];
 };
@@ -2036,6 +2142,32 @@ type QueryGlobalStateByIdArgs = {
 
 type QueryGlobalStateByUniqueInputArgs = {
   where: WhereIdInput;
+};
+
+
+type QueryGlobalStateSnapshotByIdArgs = {
+  id: Scalars['String'];
+};
+
+
+type QueryGlobalStateSnapshotByUniqueInputArgs = {
+  where: WhereIdInput;
+};
+
+
+type QueryGlobalStateSnapshotsArgs = {
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Array<GlobalStateSnapshotOrderByInput>>;
+  where?: InputMaybe<GlobalStateSnapshotWhereInput>;
+};
+
+
+type QueryGlobalStateSnapshotsConnectionArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy: Array<GlobalStateSnapshotOrderByInput>;
+  where?: InputMaybe<GlobalStateSnapshotWhereInput>;
 };
 
 
@@ -3101,24 +3233,19 @@ type DelegationSnapshotsConnectionQueryVariables = Exact<{
 
 type DelegationSnapshotsConnectionQuery = { delegationSnapshotsConnection: { totalCount: number, edges: Array<{ cursor: string, node: { updatedTime: string, cost: string, value: string } }> } };
 
-type GlobalRewardsSnapshotsConnectionQueryVariables = Exact<{
-  orderBy: Array<GlobalRewardsSnapshotOrderByInput> | GlobalRewardsSnapshotOrderByInput;
-  first?: InputMaybe<Scalars['Int']>;
-  where?: InputMaybe<GlobalRewardsSnapshotWhereInput>;
-}>;
-
-
-type GlobalRewardsSnapshotsConnectionQuery = { globalRewardsSnapshotsConnection: { edges: Array<{ node: { value: string } }> } };
-
 type GlobalStateQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-type GlobalStateQuery = { squidStatus?: { height?: number | null } | null, globalStateById?: { averageBlockTime: number, averageAprMultiplier: string, height: number, totalValue: string, idleWorkerShares: string, budgetPerBlock: string, k: string, phaRate: string, re: string, treasuryRatio: string, vMax: string, cumulativeRewards: string } | null };
+type GlobalStateQuery = { squidStatus?: { height?: number | null } | null, globalStateById?: { averageBlockTime: number, averageApr: string, averageAprMultiplier: string, totalValue: string, idleWorkerShares: string, idleWorkerCount: number, budgetPerBlock: string, budgetPerShare: string, k: string, phaRate: string, re: string, treasuryRatio: string, vMax: string, cumulativeRewards: string } | null };
 
-type IdleWorkerCountQueryVariables = Exact<{ [key: string]: never; }>;
+type GlobalStateSnapshotsConnectionQueryVariables = Exact<{
+  orderBy: Array<GlobalStateSnapshotOrderByInput> | GlobalStateSnapshotOrderByInput;
+  first?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<GlobalStateSnapshotWhereInput>;
+}>;
 
 
-type IdleWorkerCountQuery = { sessionsConnection: { totalCount: number } };
+type GlobalStateSnapshotsConnectionQuery = { globalStateSnapshotsConnection: { edges: Array<{ node: { cumulativeRewards: string } }> } };
 
 type NftsConnectionQueryVariables = Exact<{
   orderBy: Array<NftOrderByInput> | NftOrderByInput;
@@ -3451,21 +3578,6 @@ export const DelegationCommonFragmentDoc = gql`
   }
 }
     `;
- const GlobalRewardsSnapshotsConnectionDocument = gql`
-    query GlobalRewardsSnapshotsConnection($orderBy: [GlobalRewardsSnapshotOrderByInput!]!, $first: Int, $where: GlobalRewardsSnapshotWhereInput) {
-  globalRewardsSnapshotsConnection(
-    orderBy: $orderBy
-    first: $first
-    where: $where
-  ) {
-    edges {
-      node {
-        value
-      }
-    }
-  }
-}
-    `;
  const GlobalStateDocument = gql`
     query GlobalState {
   squidStatus {
@@ -3473,11 +3585,13 @@ export const DelegationCommonFragmentDoc = gql`
   }
   globalStateById(id: "0") {
     averageBlockTime
+    averageApr
     averageAprMultiplier
-    height
     totalValue
     idleWorkerShares
+    idleWorkerCount
     budgetPerBlock
+    budgetPerShare
     k
     phaRate
     re
@@ -3487,10 +3601,14 @@ export const DelegationCommonFragmentDoc = gql`
   }
 }
     `;
- const IdleWorkerCountDocument = gql`
-    query IdleWorkerCount {
-  sessionsConnection(orderBy: id_ASC, where: {state_eq: WorkerIdle}) {
-    totalCount
+ const GlobalStateSnapshotsConnectionDocument = gql`
+    query GlobalStateSnapshotsConnection($orderBy: [GlobalStateSnapshotOrderByInput!]!, $first: Int, $where: GlobalStateSnapshotWhereInput) {
+  globalStateSnapshotsConnection(orderBy: $orderBy, first: $first, where: $where) {
+    edges {
+      node {
+        cumulativeRewards
+      }
+    }
   }
 }
     `;
@@ -3655,14 +3773,11 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     DelegationSnapshotsConnection(variables: DelegationSnapshotsConnectionQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<DelegationSnapshotsConnectionQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<DelegationSnapshotsConnectionQuery>(DelegationSnapshotsConnectionDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'DelegationSnapshotsConnection', 'query');
     },
-    GlobalRewardsSnapshotsConnection(variables: GlobalRewardsSnapshotsConnectionQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GlobalRewardsSnapshotsConnectionQuery> {
-      return withWrapper((wrappedRequestHeaders) => client.request<GlobalRewardsSnapshotsConnectionQuery>(GlobalRewardsSnapshotsConnectionDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GlobalRewardsSnapshotsConnection', 'query');
-    },
     GlobalState(variables?: GlobalStateQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GlobalStateQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GlobalStateQuery>(GlobalStateDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GlobalState', 'query');
     },
-    IdleWorkerCount(variables?: IdleWorkerCountQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<IdleWorkerCountQuery> {
-      return withWrapper((wrappedRequestHeaders) => client.request<IdleWorkerCountQuery>(IdleWorkerCountDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'IdleWorkerCount', 'query');
+    GlobalStateSnapshotsConnection(variables: GlobalStateSnapshotsConnectionQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GlobalStateSnapshotsConnectionQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GlobalStateSnapshotsConnectionQuery>(GlobalStateSnapshotsConnectionDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GlobalStateSnapshotsConnection', 'query');
     },
     NftsConnection(variables: NftsConnectionQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<NftsConnectionQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<NftsConnectionQuery>(NftsConnectionDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'NftsConnection', 'query');

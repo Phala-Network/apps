@@ -1310,31 +1310,180 @@ export type DelegationsConnection = {
   totalCount: Scalars['Int'];
 };
 
-export type GlobalRewardsSnapshot = {
+export type GlobalState = {
+  averageApr: Scalars['BigDecimal'];
+  averageAprMultiplier: Scalars['BigDecimal'];
+  averageBlockTime: Scalars['Int'];
+  averageBlockTimeUpdatedHeight: Scalars['Int'];
+  averageBlockTimeUpdatedTime: Scalars['DateTime'];
+  budgetPerBlock: Scalars['BigDecimal'];
+  budgetPerShare: Scalars['BigDecimal'];
+  cumulativeRewards: Scalars['BigDecimal'];
+  delegatorCount: Scalars['Int'];
+  /** constant 0 */
   id: Scalars['String'];
-  /** block time */
-  updatedTime: Scalars['DateTime'];
-  value: Scalars['BigDecimal'];
+  idleWorkerCount: Scalars['Int'];
+  /** for apr calculation */
+  idleWorkerShares: Scalars['BigDecimal'];
+  k: Scalars['BigDecimal'];
+  phaRate: Scalars['BigDecimal'];
+  re: Scalars['BigDecimal'];
+  totalValue: Scalars['BigDecimal'];
+  treasuryRatio: Scalars['BigDecimal'];
+  vMax: Scalars['BigDecimal'];
+  workerCount: Scalars['Int'];
 };
 
-export type GlobalRewardsSnapshotEdge = {
+export type GlobalStateEdge = {
   cursor: Scalars['String'];
-  node: GlobalRewardsSnapshot;
+  node: GlobalState;
 };
 
-export const GlobalRewardsSnapshotOrderByInput = {
+export const GlobalStateOrderByInput = {
+  AverageAprMultiplierAsc: 'averageAprMultiplier_ASC',
+  AverageAprMultiplierDesc: 'averageAprMultiplier_DESC',
+  AverageAprAsc: 'averageApr_ASC',
+  AverageAprDesc: 'averageApr_DESC',
+  AverageBlockTimeUpdatedHeightAsc: 'averageBlockTimeUpdatedHeight_ASC',
+  AverageBlockTimeUpdatedHeightDesc: 'averageBlockTimeUpdatedHeight_DESC',
+  AverageBlockTimeUpdatedTimeAsc: 'averageBlockTimeUpdatedTime_ASC',
+  AverageBlockTimeUpdatedTimeDesc: 'averageBlockTimeUpdatedTime_DESC',
+  AverageBlockTimeAsc: 'averageBlockTime_ASC',
+  AverageBlockTimeDesc: 'averageBlockTime_DESC',
+  BudgetPerBlockAsc: 'budgetPerBlock_ASC',
+  BudgetPerBlockDesc: 'budgetPerBlock_DESC',
+  BudgetPerShareAsc: 'budgetPerShare_ASC',
+  BudgetPerShareDesc: 'budgetPerShare_DESC',
+  CumulativeRewardsAsc: 'cumulativeRewards_ASC',
+  CumulativeRewardsDesc: 'cumulativeRewards_DESC',
+  DelegatorCountAsc: 'delegatorCount_ASC',
+  DelegatorCountDesc: 'delegatorCount_DESC',
   IdAsc: 'id_ASC',
   IdDesc: 'id_DESC',
-  UpdatedTimeAsc: 'updatedTime_ASC',
-  UpdatedTimeDesc: 'updatedTime_DESC',
-  ValueAsc: 'value_ASC',
-  ValueDesc: 'value_DESC'
+  IdleWorkerCountAsc: 'idleWorkerCount_ASC',
+  IdleWorkerCountDesc: 'idleWorkerCount_DESC',
+  IdleWorkerSharesAsc: 'idleWorkerShares_ASC',
+  IdleWorkerSharesDesc: 'idleWorkerShares_DESC',
+  KAsc: 'k_ASC',
+  KDesc: 'k_DESC',
+  PhaRateAsc: 'phaRate_ASC',
+  PhaRateDesc: 'phaRate_DESC',
+  ReAsc: 're_ASC',
+  ReDesc: 're_DESC',
+  TotalValueAsc: 'totalValue_ASC',
+  TotalValueDesc: 'totalValue_DESC',
+  TreasuryRatioAsc: 'treasuryRatio_ASC',
+  TreasuryRatioDesc: 'treasuryRatio_DESC',
+  VMaxAsc: 'vMax_ASC',
+  VMaxDesc: 'vMax_DESC',
+  WorkerCountAsc: 'workerCount_ASC',
+  WorkerCountDesc: 'workerCount_DESC'
 } as const;
 
-export type GlobalRewardsSnapshotOrderByInput = typeof GlobalRewardsSnapshotOrderByInput[keyof typeof GlobalRewardsSnapshotOrderByInput];
-export type GlobalRewardsSnapshotWhereInput = {
-  AND?: InputMaybe<Array<GlobalRewardsSnapshotWhereInput>>;
-  OR?: InputMaybe<Array<GlobalRewardsSnapshotWhereInput>>;
+export type GlobalStateOrderByInput = typeof GlobalStateOrderByInput[keyof typeof GlobalStateOrderByInput];
+export type GlobalStateSnapshot = {
+  averageApr: Scalars['BigDecimal'];
+  averageBlockTime: Scalars['Int'];
+  budgetPerBlock: Scalars['BigDecimal'];
+  budgetPerShare: Scalars['BigDecimal'];
+  cumulativeRewards: Scalars['BigDecimal'];
+  delegatorCount: Scalars['Int'];
+  id: Scalars['String'];
+  idleWorkerCount: Scalars['Int'];
+  totalValue: Scalars['BigDecimal'];
+  /** block time */
+  updatedTime: Scalars['DateTime'];
+  workerCount: Scalars['Int'];
+};
+
+export type GlobalStateSnapshotEdge = {
+  cursor: Scalars['String'];
+  node: GlobalStateSnapshot;
+};
+
+export const GlobalStateSnapshotOrderByInput = {
+  AverageAprAsc: 'averageApr_ASC',
+  AverageAprDesc: 'averageApr_DESC',
+  AverageBlockTimeAsc: 'averageBlockTime_ASC',
+  AverageBlockTimeDesc: 'averageBlockTime_DESC',
+  BudgetPerBlockAsc: 'budgetPerBlock_ASC',
+  BudgetPerBlockDesc: 'budgetPerBlock_DESC',
+  BudgetPerShareAsc: 'budgetPerShare_ASC',
+  BudgetPerShareDesc: 'budgetPerShare_DESC',
+  CumulativeRewardsAsc: 'cumulativeRewards_ASC',
+  CumulativeRewardsDesc: 'cumulativeRewards_DESC',
+  DelegatorCountAsc: 'delegatorCount_ASC',
+  DelegatorCountDesc: 'delegatorCount_DESC',
+  IdAsc: 'id_ASC',
+  IdDesc: 'id_DESC',
+  IdleWorkerCountAsc: 'idleWorkerCount_ASC',
+  IdleWorkerCountDesc: 'idleWorkerCount_DESC',
+  TotalValueAsc: 'totalValue_ASC',
+  TotalValueDesc: 'totalValue_DESC',
+  UpdatedTimeAsc: 'updatedTime_ASC',
+  UpdatedTimeDesc: 'updatedTime_DESC',
+  WorkerCountAsc: 'workerCount_ASC',
+  WorkerCountDesc: 'workerCount_DESC'
+} as const;
+
+export type GlobalStateSnapshotOrderByInput = typeof GlobalStateSnapshotOrderByInput[keyof typeof GlobalStateSnapshotOrderByInput];
+export type GlobalStateSnapshotWhereInput = {
+  AND?: InputMaybe<Array<GlobalStateSnapshotWhereInput>>;
+  OR?: InputMaybe<Array<GlobalStateSnapshotWhereInput>>;
+  averageApr_eq?: InputMaybe<Scalars['BigDecimal']>;
+  averageApr_gt?: InputMaybe<Scalars['BigDecimal']>;
+  averageApr_gte?: InputMaybe<Scalars['BigDecimal']>;
+  averageApr_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  averageApr_isNull?: InputMaybe<Scalars['Boolean']>;
+  averageApr_lt?: InputMaybe<Scalars['BigDecimal']>;
+  averageApr_lte?: InputMaybe<Scalars['BigDecimal']>;
+  averageApr_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  averageApr_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  averageBlockTime_eq?: InputMaybe<Scalars['Int']>;
+  averageBlockTime_gt?: InputMaybe<Scalars['Int']>;
+  averageBlockTime_gte?: InputMaybe<Scalars['Int']>;
+  averageBlockTime_in?: InputMaybe<Array<Scalars['Int']>>;
+  averageBlockTime_isNull?: InputMaybe<Scalars['Boolean']>;
+  averageBlockTime_lt?: InputMaybe<Scalars['Int']>;
+  averageBlockTime_lte?: InputMaybe<Scalars['Int']>;
+  averageBlockTime_not_eq?: InputMaybe<Scalars['Int']>;
+  averageBlockTime_not_in?: InputMaybe<Array<Scalars['Int']>>;
+  budgetPerBlock_eq?: InputMaybe<Scalars['BigDecimal']>;
+  budgetPerBlock_gt?: InputMaybe<Scalars['BigDecimal']>;
+  budgetPerBlock_gte?: InputMaybe<Scalars['BigDecimal']>;
+  budgetPerBlock_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  budgetPerBlock_isNull?: InputMaybe<Scalars['Boolean']>;
+  budgetPerBlock_lt?: InputMaybe<Scalars['BigDecimal']>;
+  budgetPerBlock_lte?: InputMaybe<Scalars['BigDecimal']>;
+  budgetPerBlock_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  budgetPerBlock_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  budgetPerShare_eq?: InputMaybe<Scalars['BigDecimal']>;
+  budgetPerShare_gt?: InputMaybe<Scalars['BigDecimal']>;
+  budgetPerShare_gte?: InputMaybe<Scalars['BigDecimal']>;
+  budgetPerShare_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  budgetPerShare_isNull?: InputMaybe<Scalars['Boolean']>;
+  budgetPerShare_lt?: InputMaybe<Scalars['BigDecimal']>;
+  budgetPerShare_lte?: InputMaybe<Scalars['BigDecimal']>;
+  budgetPerShare_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  budgetPerShare_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  cumulativeRewards_eq?: InputMaybe<Scalars['BigDecimal']>;
+  cumulativeRewards_gt?: InputMaybe<Scalars['BigDecimal']>;
+  cumulativeRewards_gte?: InputMaybe<Scalars['BigDecimal']>;
+  cumulativeRewards_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  cumulativeRewards_isNull?: InputMaybe<Scalars['Boolean']>;
+  cumulativeRewards_lt?: InputMaybe<Scalars['BigDecimal']>;
+  cumulativeRewards_lte?: InputMaybe<Scalars['BigDecimal']>;
+  cumulativeRewards_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  cumulativeRewards_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  delegatorCount_eq?: InputMaybe<Scalars['Int']>;
+  delegatorCount_gt?: InputMaybe<Scalars['Int']>;
+  delegatorCount_gte?: InputMaybe<Scalars['Int']>;
+  delegatorCount_in?: InputMaybe<Array<Scalars['Int']>>;
+  delegatorCount_isNull?: InputMaybe<Scalars['Boolean']>;
+  delegatorCount_lt?: InputMaybe<Scalars['Int']>;
+  delegatorCount_lte?: InputMaybe<Scalars['Int']>;
+  delegatorCount_not_eq?: InputMaybe<Scalars['Int']>;
+  delegatorCount_not_in?: InputMaybe<Array<Scalars['Int']>>;
   id_contains?: InputMaybe<Scalars['String']>;
   id_containsInsensitive?: InputMaybe<Scalars['String']>;
   id_endsWith?: InputMaybe<Scalars['String']>;
@@ -1352,6 +1501,24 @@ export type GlobalRewardsSnapshotWhereInput = {
   id_not_in?: InputMaybe<Array<Scalars['String']>>;
   id_not_startsWith?: InputMaybe<Scalars['String']>;
   id_startsWith?: InputMaybe<Scalars['String']>;
+  idleWorkerCount_eq?: InputMaybe<Scalars['Int']>;
+  idleWorkerCount_gt?: InputMaybe<Scalars['Int']>;
+  idleWorkerCount_gte?: InputMaybe<Scalars['Int']>;
+  idleWorkerCount_in?: InputMaybe<Array<Scalars['Int']>>;
+  idleWorkerCount_isNull?: InputMaybe<Scalars['Boolean']>;
+  idleWorkerCount_lt?: InputMaybe<Scalars['Int']>;
+  idleWorkerCount_lte?: InputMaybe<Scalars['Int']>;
+  idleWorkerCount_not_eq?: InputMaybe<Scalars['Int']>;
+  idleWorkerCount_not_in?: InputMaybe<Array<Scalars['Int']>>;
+  totalValue_eq?: InputMaybe<Scalars['BigDecimal']>;
+  totalValue_gt?: InputMaybe<Scalars['BigDecimal']>;
+  totalValue_gte?: InputMaybe<Scalars['BigDecimal']>;
+  totalValue_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  totalValue_isNull?: InputMaybe<Scalars['Boolean']>;
+  totalValue_lt?: InputMaybe<Scalars['BigDecimal']>;
+  totalValue_lte?: InputMaybe<Scalars['BigDecimal']>;
+  totalValue_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  totalValue_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
   updatedTime_eq?: InputMaybe<Scalars['DateTime']>;
   updatedTime_gt?: InputMaybe<Scalars['DateTime']>;
   updatedTime_gte?: InputMaybe<Scalars['DateTime']>;
@@ -1361,97 +1528,26 @@ export type GlobalRewardsSnapshotWhereInput = {
   updatedTime_lte?: InputMaybe<Scalars['DateTime']>;
   updatedTime_not_eq?: InputMaybe<Scalars['DateTime']>;
   updatedTime_not_in?: InputMaybe<Array<Scalars['DateTime']>>;
-  value_eq?: InputMaybe<Scalars['BigDecimal']>;
-  value_gt?: InputMaybe<Scalars['BigDecimal']>;
-  value_gte?: InputMaybe<Scalars['BigDecimal']>;
-  value_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
-  value_isNull?: InputMaybe<Scalars['Boolean']>;
-  value_lt?: InputMaybe<Scalars['BigDecimal']>;
-  value_lte?: InputMaybe<Scalars['BigDecimal']>;
-  value_not_eq?: InputMaybe<Scalars['BigDecimal']>;
-  value_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  workerCount_eq?: InputMaybe<Scalars['Int']>;
+  workerCount_gt?: InputMaybe<Scalars['Int']>;
+  workerCount_gte?: InputMaybe<Scalars['Int']>;
+  workerCount_in?: InputMaybe<Array<Scalars['Int']>>;
+  workerCount_isNull?: InputMaybe<Scalars['Boolean']>;
+  workerCount_lt?: InputMaybe<Scalars['Int']>;
+  workerCount_lte?: InputMaybe<Scalars['Int']>;
+  workerCount_not_eq?: InputMaybe<Scalars['Int']>;
+  workerCount_not_in?: InputMaybe<Array<Scalars['Int']>>;
 };
 
-export type GlobalRewardsSnapshotsConnection = {
-  edges: Array<GlobalRewardsSnapshotEdge>;
+export type GlobalStateSnapshotsConnection = {
+  edges: Array<GlobalStateSnapshotEdge>;
   pageInfo: PageInfo;
   totalCount: Scalars['Int'];
 };
 
-export type GlobalState = {
-  averageAprMultiplier: Scalars['BigDecimal'];
-  averageAprMultiplierUpdatedTime: Scalars['DateTime'];
-  averageBlockTime: Scalars['Int'];
-  averageBlockTimeUpdatedHeight: Scalars['Int'];
-  averageBlockTimeUpdatedTime: Scalars['DateTime'];
-  budgetPerBlock: Scalars['BigDecimal'];
-  cumulativeRewards: Scalars['BigDecimal'];
-  height: Scalars['Int'];
-  /** constant 0 */
-  id: Scalars['String'];
-  /** for apr calculation */
-  idleWorkerShares: Scalars['BigDecimal'];
-  k: Scalars['BigDecimal'];
-  phaRate: Scalars['BigDecimal'];
-  re: Scalars['BigDecimal'];
-  totalValue: Scalars['BigDecimal'];
-  treasuryRatio: Scalars['BigDecimal'];
-  vMax: Scalars['BigDecimal'];
-};
-
-export type GlobalStateEdge = {
-  cursor: Scalars['String'];
-  node: GlobalState;
-};
-
-export const GlobalStateOrderByInput = {
-  AverageAprMultiplierUpdatedTimeAsc: 'averageAprMultiplierUpdatedTime_ASC',
-  AverageAprMultiplierUpdatedTimeDesc: 'averageAprMultiplierUpdatedTime_DESC',
-  AverageAprMultiplierAsc: 'averageAprMultiplier_ASC',
-  AverageAprMultiplierDesc: 'averageAprMultiplier_DESC',
-  AverageBlockTimeUpdatedHeightAsc: 'averageBlockTimeUpdatedHeight_ASC',
-  AverageBlockTimeUpdatedHeightDesc: 'averageBlockTimeUpdatedHeight_DESC',
-  AverageBlockTimeUpdatedTimeAsc: 'averageBlockTimeUpdatedTime_ASC',
-  AverageBlockTimeUpdatedTimeDesc: 'averageBlockTimeUpdatedTime_DESC',
-  AverageBlockTimeAsc: 'averageBlockTime_ASC',
-  AverageBlockTimeDesc: 'averageBlockTime_DESC',
-  BudgetPerBlockAsc: 'budgetPerBlock_ASC',
-  BudgetPerBlockDesc: 'budgetPerBlock_DESC',
-  CumulativeRewardsAsc: 'cumulativeRewards_ASC',
-  CumulativeRewardsDesc: 'cumulativeRewards_DESC',
-  HeightAsc: 'height_ASC',
-  HeightDesc: 'height_DESC',
-  IdAsc: 'id_ASC',
-  IdDesc: 'id_DESC',
-  IdleWorkerSharesAsc: 'idleWorkerShares_ASC',
-  IdleWorkerSharesDesc: 'idleWorkerShares_DESC',
-  KAsc: 'k_ASC',
-  KDesc: 'k_DESC',
-  PhaRateAsc: 'phaRate_ASC',
-  PhaRateDesc: 'phaRate_DESC',
-  ReAsc: 're_ASC',
-  ReDesc: 're_DESC',
-  TotalValueAsc: 'totalValue_ASC',
-  TotalValueDesc: 'totalValue_DESC',
-  TreasuryRatioAsc: 'treasuryRatio_ASC',
-  TreasuryRatioDesc: 'treasuryRatio_DESC',
-  VMaxAsc: 'vMax_ASC',
-  VMaxDesc: 'vMax_DESC'
-} as const;
-
-export type GlobalStateOrderByInput = typeof GlobalStateOrderByInput[keyof typeof GlobalStateOrderByInput];
 export type GlobalStateWhereInput = {
   AND?: InputMaybe<Array<GlobalStateWhereInput>>;
   OR?: InputMaybe<Array<GlobalStateWhereInput>>;
-  averageAprMultiplierUpdatedTime_eq?: InputMaybe<Scalars['DateTime']>;
-  averageAprMultiplierUpdatedTime_gt?: InputMaybe<Scalars['DateTime']>;
-  averageAprMultiplierUpdatedTime_gte?: InputMaybe<Scalars['DateTime']>;
-  averageAprMultiplierUpdatedTime_in?: InputMaybe<Array<Scalars['DateTime']>>;
-  averageAprMultiplierUpdatedTime_isNull?: InputMaybe<Scalars['Boolean']>;
-  averageAprMultiplierUpdatedTime_lt?: InputMaybe<Scalars['DateTime']>;
-  averageAprMultiplierUpdatedTime_lte?: InputMaybe<Scalars['DateTime']>;
-  averageAprMultiplierUpdatedTime_not_eq?: InputMaybe<Scalars['DateTime']>;
-  averageAprMultiplierUpdatedTime_not_in?: InputMaybe<Array<Scalars['DateTime']>>;
   averageAprMultiplier_eq?: InputMaybe<Scalars['BigDecimal']>;
   averageAprMultiplier_gt?: InputMaybe<Scalars['BigDecimal']>;
   averageAprMultiplier_gte?: InputMaybe<Scalars['BigDecimal']>;
@@ -1461,6 +1557,15 @@ export type GlobalStateWhereInput = {
   averageAprMultiplier_lte?: InputMaybe<Scalars['BigDecimal']>;
   averageAprMultiplier_not_eq?: InputMaybe<Scalars['BigDecimal']>;
   averageAprMultiplier_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  averageApr_eq?: InputMaybe<Scalars['BigDecimal']>;
+  averageApr_gt?: InputMaybe<Scalars['BigDecimal']>;
+  averageApr_gte?: InputMaybe<Scalars['BigDecimal']>;
+  averageApr_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  averageApr_isNull?: InputMaybe<Scalars['Boolean']>;
+  averageApr_lt?: InputMaybe<Scalars['BigDecimal']>;
+  averageApr_lte?: InputMaybe<Scalars['BigDecimal']>;
+  averageApr_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  averageApr_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
   averageBlockTimeUpdatedHeight_eq?: InputMaybe<Scalars['Int']>;
   averageBlockTimeUpdatedHeight_gt?: InputMaybe<Scalars['Int']>;
   averageBlockTimeUpdatedHeight_gte?: InputMaybe<Scalars['Int']>;
@@ -1497,6 +1602,15 @@ export type GlobalStateWhereInput = {
   budgetPerBlock_lte?: InputMaybe<Scalars['BigDecimal']>;
   budgetPerBlock_not_eq?: InputMaybe<Scalars['BigDecimal']>;
   budgetPerBlock_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  budgetPerShare_eq?: InputMaybe<Scalars['BigDecimal']>;
+  budgetPerShare_gt?: InputMaybe<Scalars['BigDecimal']>;
+  budgetPerShare_gte?: InputMaybe<Scalars['BigDecimal']>;
+  budgetPerShare_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  budgetPerShare_isNull?: InputMaybe<Scalars['Boolean']>;
+  budgetPerShare_lt?: InputMaybe<Scalars['BigDecimal']>;
+  budgetPerShare_lte?: InputMaybe<Scalars['BigDecimal']>;
+  budgetPerShare_not_eq?: InputMaybe<Scalars['BigDecimal']>;
+  budgetPerShare_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
   cumulativeRewards_eq?: InputMaybe<Scalars['BigDecimal']>;
   cumulativeRewards_gt?: InputMaybe<Scalars['BigDecimal']>;
   cumulativeRewards_gte?: InputMaybe<Scalars['BigDecimal']>;
@@ -1506,15 +1620,15 @@ export type GlobalStateWhereInput = {
   cumulativeRewards_lte?: InputMaybe<Scalars['BigDecimal']>;
   cumulativeRewards_not_eq?: InputMaybe<Scalars['BigDecimal']>;
   cumulativeRewards_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
-  height_eq?: InputMaybe<Scalars['Int']>;
-  height_gt?: InputMaybe<Scalars['Int']>;
-  height_gte?: InputMaybe<Scalars['Int']>;
-  height_in?: InputMaybe<Array<Scalars['Int']>>;
-  height_isNull?: InputMaybe<Scalars['Boolean']>;
-  height_lt?: InputMaybe<Scalars['Int']>;
-  height_lte?: InputMaybe<Scalars['Int']>;
-  height_not_eq?: InputMaybe<Scalars['Int']>;
-  height_not_in?: InputMaybe<Array<Scalars['Int']>>;
+  delegatorCount_eq?: InputMaybe<Scalars['Int']>;
+  delegatorCount_gt?: InputMaybe<Scalars['Int']>;
+  delegatorCount_gte?: InputMaybe<Scalars['Int']>;
+  delegatorCount_in?: InputMaybe<Array<Scalars['Int']>>;
+  delegatorCount_isNull?: InputMaybe<Scalars['Boolean']>;
+  delegatorCount_lt?: InputMaybe<Scalars['Int']>;
+  delegatorCount_lte?: InputMaybe<Scalars['Int']>;
+  delegatorCount_not_eq?: InputMaybe<Scalars['Int']>;
+  delegatorCount_not_in?: InputMaybe<Array<Scalars['Int']>>;
   id_contains?: InputMaybe<Scalars['String']>;
   id_containsInsensitive?: InputMaybe<Scalars['String']>;
   id_endsWith?: InputMaybe<Scalars['String']>;
@@ -1532,6 +1646,15 @@ export type GlobalStateWhereInput = {
   id_not_in?: InputMaybe<Array<Scalars['String']>>;
   id_not_startsWith?: InputMaybe<Scalars['String']>;
   id_startsWith?: InputMaybe<Scalars['String']>;
+  idleWorkerCount_eq?: InputMaybe<Scalars['Int']>;
+  idleWorkerCount_gt?: InputMaybe<Scalars['Int']>;
+  idleWorkerCount_gte?: InputMaybe<Scalars['Int']>;
+  idleWorkerCount_in?: InputMaybe<Array<Scalars['Int']>>;
+  idleWorkerCount_isNull?: InputMaybe<Scalars['Boolean']>;
+  idleWorkerCount_lt?: InputMaybe<Scalars['Int']>;
+  idleWorkerCount_lte?: InputMaybe<Scalars['Int']>;
+  idleWorkerCount_not_eq?: InputMaybe<Scalars['Int']>;
+  idleWorkerCount_not_in?: InputMaybe<Array<Scalars['Int']>>;
   idleWorkerShares_eq?: InputMaybe<Scalars['BigDecimal']>;
   idleWorkerShares_gt?: InputMaybe<Scalars['BigDecimal']>;
   idleWorkerShares_gte?: InputMaybe<Scalars['BigDecimal']>;
@@ -1595,6 +1718,15 @@ export type GlobalStateWhereInput = {
   vMax_lte?: InputMaybe<Scalars['BigDecimal']>;
   vMax_not_eq?: InputMaybe<Scalars['BigDecimal']>;
   vMax_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  workerCount_eq?: InputMaybe<Scalars['Int']>;
+  workerCount_gt?: InputMaybe<Scalars['Int']>;
+  workerCount_gte?: InputMaybe<Scalars['Int']>;
+  workerCount_in?: InputMaybe<Array<Scalars['Int']>>;
+  workerCount_isNull?: InputMaybe<Scalars['Boolean']>;
+  workerCount_lt?: InputMaybe<Scalars['Int']>;
+  workerCount_lte?: InputMaybe<Scalars['Int']>;
+  workerCount_not_eq?: InputMaybe<Scalars['Int']>;
+  workerCount_not_in?: InputMaybe<Array<Scalars['Int']>>;
 };
 
 export type GlobalStatesConnection = {
@@ -1785,14 +1917,14 @@ export type Query = {
   delegationSnapshotsConnection: DelegationSnapshotsConnection;
   delegations: Array<Delegation>;
   delegationsConnection: DelegationsConnection;
-  globalRewardsSnapshotById?: Maybe<GlobalRewardsSnapshot>;
-  /** @deprecated Use globalRewardsSnapshotById */
-  globalRewardsSnapshotByUniqueInput?: Maybe<GlobalRewardsSnapshot>;
-  globalRewardsSnapshots: Array<GlobalRewardsSnapshot>;
-  globalRewardsSnapshotsConnection: GlobalRewardsSnapshotsConnection;
   globalStateById?: Maybe<GlobalState>;
   /** @deprecated Use globalStateById */
   globalStateByUniqueInput?: Maybe<GlobalState>;
+  globalStateSnapshotById?: Maybe<GlobalStateSnapshot>;
+  /** @deprecated Use globalStateSnapshotById */
+  globalStateSnapshotByUniqueInput?: Maybe<GlobalStateSnapshot>;
+  globalStateSnapshots: Array<GlobalStateSnapshot>;
+  globalStateSnapshotsConnection: GlobalStateSnapshotsConnection;
   globalStates: Array<GlobalState>;
   globalStatesConnection: GlobalStatesConnection;
   nftById?: Maybe<Nft>;
@@ -2011,32 +2143,6 @@ export type QueryDelegationsConnectionArgs = {
 };
 
 
-export type QueryGlobalRewardsSnapshotByIdArgs = {
-  id: Scalars['String'];
-};
-
-
-export type QueryGlobalRewardsSnapshotByUniqueInputArgs = {
-  where: WhereIdInput;
-};
-
-
-export type QueryGlobalRewardsSnapshotsArgs = {
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<Array<GlobalRewardsSnapshotOrderByInput>>;
-  where?: InputMaybe<GlobalRewardsSnapshotWhereInput>;
-};
-
-
-export type QueryGlobalRewardsSnapshotsConnectionArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  orderBy: Array<GlobalRewardsSnapshotOrderByInput>;
-  where?: InputMaybe<GlobalRewardsSnapshotWhereInput>;
-};
-
-
 export type QueryGlobalStateByIdArgs = {
   id: Scalars['String'];
 };
@@ -2044,6 +2150,32 @@ export type QueryGlobalStateByIdArgs = {
 
 export type QueryGlobalStateByUniqueInputArgs = {
   where: WhereIdInput;
+};
+
+
+export type QueryGlobalStateSnapshotByIdArgs = {
+  id: Scalars['String'];
+};
+
+
+export type QueryGlobalStateSnapshotByUniqueInputArgs = {
+  where: WhereIdInput;
+};
+
+
+export type QueryGlobalStateSnapshotsArgs = {
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Array<GlobalStateSnapshotOrderByInput>>;
+  where?: InputMaybe<GlobalStateSnapshotWhereInput>;
+};
+
+
+export type QueryGlobalStateSnapshotsConnectionArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy: Array<GlobalStateSnapshotOrderByInput>;
+  where?: InputMaybe<GlobalStateSnapshotWhereInput>;
 };
 
 
@@ -3109,24 +3241,19 @@ export type DelegationSnapshotsConnectionQueryVariables = Exact<{
 
 export type DelegationSnapshotsConnectionQuery = { delegationSnapshotsConnection: { totalCount: number, edges: Array<{ cursor: string, node: { updatedTime: string, cost: string, value: string } }> } };
 
-export type GlobalRewardsSnapshotsConnectionQueryVariables = Exact<{
-  orderBy: Array<GlobalRewardsSnapshotOrderByInput> | GlobalRewardsSnapshotOrderByInput;
-  first?: InputMaybe<Scalars['Int']>;
-  where?: InputMaybe<GlobalRewardsSnapshotWhereInput>;
-}>;
-
-
-export type GlobalRewardsSnapshotsConnectionQuery = { globalRewardsSnapshotsConnection: { edges: Array<{ node: { value: string } }> } };
-
 export type GlobalStateQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GlobalStateQuery = { squidStatus?: { height?: number | null } | null, globalStateById?: { averageBlockTime: number, averageAprMultiplier: string, height: number, totalValue: string, idleWorkerShares: string, budgetPerBlock: string, k: string, phaRate: string, re: string, treasuryRatio: string, vMax: string, cumulativeRewards: string } | null };
+export type GlobalStateQuery = { squidStatus?: { height?: number | null } | null, globalStateById?: { averageBlockTime: number, averageApr: string, averageAprMultiplier: string, totalValue: string, idleWorkerShares: string, idleWorkerCount: number, budgetPerBlock: string, budgetPerShare: string, k: string, phaRate: string, re: string, treasuryRatio: string, vMax: string, cumulativeRewards: string } | null };
 
-export type IdleWorkerCountQueryVariables = Exact<{ [key: string]: never; }>;
+export type GlobalStateSnapshotsConnectionQueryVariables = Exact<{
+  orderBy: Array<GlobalStateSnapshotOrderByInput> | GlobalStateSnapshotOrderByInput;
+  first?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<GlobalStateSnapshotWhereInput>;
+}>;
 
 
-export type IdleWorkerCountQuery = { sessionsConnection: { totalCount: number } };
+export type GlobalStateSnapshotsConnectionQuery = { globalStateSnapshotsConnection: { edges: Array<{ node: { cumulativeRewards: string } }> } };
 
 export type NftsConnectionQueryVariables = Exact<{
   orderBy: Array<NftOrderByInput> | NftOrderByInput;
@@ -3289,7 +3416,7 @@ export const useAccountByIdQuery = <
       headers?: RequestInit['headers']
     ) =>
     useQuery<AccountByIdQuery, TError, TData>(
-      ['AccountById', variables, client.url],
+      ['AccountById', variables],
       fetcher<AccountByIdQuery, AccountByIdQueryVariables>(client, AccountByIdDocument, variables, headers),
       options
     );
@@ -3304,7 +3431,7 @@ export const useInfiniteAccountByIdQuery = <
       headers?: RequestInit['headers']
     ) =>
     useInfiniteQuery<AccountByIdQuery, TError, TData>(
-      ['AccountById.infinite', variables, client.url],
+      ['AccountById.infinite', variables],
       (metaData) => fetcher<AccountByIdQuery, AccountByIdQueryVariables>(client, AccountByIdDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
       options
     );
@@ -3340,7 +3467,7 @@ export const useAccountSnapshotsConnectionQuery = <
       headers?: RequestInit['headers']
     ) =>
     useQuery<AccountSnapshotsConnectionQuery, TError, TData>(
-      ['AccountSnapshotsConnection', variables, client.url],
+      ['AccountSnapshotsConnection', variables],
       fetcher<AccountSnapshotsConnectionQuery, AccountSnapshotsConnectionQueryVariables>(client, AccountSnapshotsConnectionDocument, variables, headers),
       options
     );
@@ -3355,7 +3482,7 @@ export const useInfiniteAccountSnapshotsConnectionQuery = <
       headers?: RequestInit['headers']
     ) =>
     useInfiniteQuery<AccountSnapshotsConnectionQuery, TError, TData>(
-      ['AccountSnapshotsConnection.infinite', variables, client.url],
+      ['AccountSnapshotsConnection.infinite', variables],
       (metaData) => fetcher<AccountSnapshotsConnectionQuery, AccountSnapshotsConnectionQueryVariables>(client, AccountSnapshotsConnectionDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
       options
     );
@@ -3377,7 +3504,7 @@ export const useBasePoolByIdQuery = <
       headers?: RequestInit['headers']
     ) =>
     useQuery<BasePoolByIdQuery, TError, TData>(
-      ['BasePoolById', variables, client.url],
+      ['BasePoolById', variables],
       fetcher<BasePoolByIdQuery, BasePoolByIdQueryVariables>(client, BasePoolByIdDocument, variables, headers),
       options
     );
@@ -3392,7 +3519,7 @@ export const useInfiniteBasePoolByIdQuery = <
       headers?: RequestInit['headers']
     ) =>
     useInfiniteQuery<BasePoolByIdQuery, TError, TData>(
-      ['BasePoolById.infinite', variables, client.url],
+      ['BasePoolById.infinite', variables],
       (metaData) => fetcher<BasePoolByIdQuery, BasePoolByIdQueryVariables>(client, BasePoolByIdDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
       options
     );
@@ -3434,7 +3561,7 @@ export const useBasePoolsConnectionQuery = <
       headers?: RequestInit['headers']
     ) =>
     useQuery<BasePoolsConnectionQuery, TError, TData>(
-      ['BasePoolsConnection', variables, client.url],
+      ['BasePoolsConnection', variables],
       fetcher<BasePoolsConnectionQuery, BasePoolsConnectionQueryVariables>(client, BasePoolsConnectionDocument, variables, headers),
       options
     );
@@ -3449,7 +3576,7 @@ export const useInfiniteBasePoolsConnectionQuery = <
       headers?: RequestInit['headers']
     ) =>
     useInfiniteQuery<BasePoolsConnectionQuery, TError, TData>(
-      ['BasePoolsConnection.infinite', variables, client.url],
+      ['BasePoolsConnection.infinite', variables],
       (metaData) => fetcher<BasePoolsConnectionQuery, BasePoolsConnectionQueryVariables>(client, BasePoolsConnectionDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
       options
     );
@@ -3481,7 +3608,7 @@ export const useClaimableStakePoolsQuery = <
       headers?: RequestInit['headers']
     ) =>
     useQuery<ClaimableStakePoolsQuery, TError, TData>(
-      variables === undefined ? ['ClaimableStakePools', client.url] : ['ClaimableStakePools', variables, client.url],
+      variables === undefined ? ['ClaimableStakePools'] : ['ClaimableStakePools', variables],
       fetcher<ClaimableStakePoolsQuery, ClaimableStakePoolsQueryVariables>(client, ClaimableStakePoolsDocument, variables, headers),
       options
     );
@@ -3496,7 +3623,7 @@ export const useInfiniteClaimableStakePoolsQuery = <
       headers?: RequestInit['headers']
     ) =>
     useInfiniteQuery<ClaimableStakePoolsQuery, TError, TData>(
-      variables === undefined ? ['ClaimableStakePools.infinite', client.url] : ['ClaimableStakePools.infinite', variables, client.url],
+      variables === undefined ? ['ClaimableStakePools.infinite'] : ['ClaimableStakePools.infinite', variables],
       (metaData) => fetcher<ClaimableStakePoolsQuery, ClaimableStakePoolsQueryVariables>(client, ClaimableStakePoolsDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
       options
     );
@@ -3532,7 +3659,7 @@ export const useOwnedVaultsQuery = <
       headers?: RequestInit['headers']
     ) =>
     useQuery<OwnedVaultsQuery, TError, TData>(
-      variables === undefined ? ['OwnedVaults', client.url] : ['OwnedVaults', variables, client.url],
+      variables === undefined ? ['OwnedVaults'] : ['OwnedVaults', variables],
       fetcher<OwnedVaultsQuery, OwnedVaultsQueryVariables>(client, OwnedVaultsDocument, variables, headers),
       options
     );
@@ -3547,7 +3674,7 @@ export const useInfiniteOwnedVaultsQuery = <
       headers?: RequestInit['headers']
     ) =>
     useInfiniteQuery<OwnedVaultsQuery, TError, TData>(
-      variables === undefined ? ['OwnedVaults.infinite', client.url] : ['OwnedVaults.infinite', variables, client.url],
+      variables === undefined ? ['OwnedVaults.infinite'] : ['OwnedVaults.infinite', variables],
       (metaData) => fetcher<OwnedVaultsQuery, OwnedVaultsQueryVariables>(client, OwnedVaultsDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
       options
     );
@@ -3588,7 +3715,7 @@ export const useBasePoolSnapshotsConnectionQuery = <
       headers?: RequestInit['headers']
     ) =>
     useQuery<BasePoolSnapshotsConnectionQuery, TError, TData>(
-      ['BasePoolSnapshotsConnection', variables, client.url],
+      ['BasePoolSnapshotsConnection', variables],
       fetcher<BasePoolSnapshotsConnectionQuery, BasePoolSnapshotsConnectionQueryVariables>(client, BasePoolSnapshotsConnectionDocument, variables, headers),
       options
     );
@@ -3603,7 +3730,7 @@ export const useInfiniteBasePoolSnapshotsConnectionQuery = <
       headers?: RequestInit['headers']
     ) =>
     useInfiniteQuery<BasePoolSnapshotsConnectionQuery, TError, TData>(
-      ['BasePoolSnapshotsConnection.infinite', variables, client.url],
+      ['BasePoolSnapshotsConnection.infinite', variables],
       (metaData) => fetcher<BasePoolSnapshotsConnectionQuery, BasePoolSnapshotsConnectionQueryVariables>(client, BasePoolSnapshotsConnectionDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
       options
     );
@@ -3630,7 +3757,7 @@ export const useDelegationByIdQuery = <
       headers?: RequestInit['headers']
     ) =>
     useQuery<DelegationByIdQuery, TError, TData>(
-      ['DelegationById', variables, client.url],
+      ['DelegationById', variables],
       fetcher<DelegationByIdQuery, DelegationByIdQueryVariables>(client, DelegationByIdDocument, variables, headers),
       options
     );
@@ -3645,7 +3772,7 @@ export const useInfiniteDelegationByIdQuery = <
       headers?: RequestInit['headers']
     ) =>
     useInfiniteQuery<DelegationByIdQuery, TError, TData>(
-      ['DelegationById.infinite', variables, client.url],
+      ['DelegationById.infinite', variables],
       (metaData) => fetcher<DelegationByIdQuery, DelegationByIdQueryVariables>(client, DelegationByIdDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
       options
     );
@@ -3689,7 +3816,7 @@ export const useDelegationsConnectionQuery = <
       headers?: RequestInit['headers']
     ) =>
     useQuery<DelegationsConnectionQuery, TError, TData>(
-      ['DelegationsConnection', variables, client.url],
+      ['DelegationsConnection', variables],
       fetcher<DelegationsConnectionQuery, DelegationsConnectionQueryVariables>(client, DelegationsConnectionDocument, variables, headers),
       options
     );
@@ -3704,7 +3831,7 @@ export const useInfiniteDelegationsConnectionQuery = <
       headers?: RequestInit['headers']
     ) =>
     useInfiniteQuery<DelegationsConnectionQuery, TError, TData>(
-      ['DelegationsConnection.infinite', variables, client.url],
+      ['DelegationsConnection.infinite', variables],
       (metaData) => fetcher<DelegationsConnectionQuery, DelegationsConnectionQueryVariables>(client, DelegationsConnectionDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
       options
     );
@@ -3739,7 +3866,7 @@ export const useDelegationSnapshotsConnectionQuery = <
       headers?: RequestInit['headers']
     ) =>
     useQuery<DelegationSnapshotsConnectionQuery, TError, TData>(
-      ['DelegationSnapshotsConnection', variables, client.url],
+      ['DelegationSnapshotsConnection', variables],
       fetcher<DelegationSnapshotsConnectionQuery, DelegationSnapshotsConnectionQueryVariables>(client, DelegationSnapshotsConnectionDocument, variables, headers),
       options
     );
@@ -3754,53 +3881,8 @@ export const useInfiniteDelegationSnapshotsConnectionQuery = <
       headers?: RequestInit['headers']
     ) =>
     useInfiniteQuery<DelegationSnapshotsConnectionQuery, TError, TData>(
-      ['DelegationSnapshotsConnection.infinite', variables, client.url],
+      ['DelegationSnapshotsConnection.infinite', variables],
       (metaData) => fetcher<DelegationSnapshotsConnectionQuery, DelegationSnapshotsConnectionQueryVariables>(client, DelegationSnapshotsConnectionDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
-      options
-    );
-
-export const GlobalRewardsSnapshotsConnectionDocument = `
-    query GlobalRewardsSnapshotsConnection($orderBy: [GlobalRewardsSnapshotOrderByInput!]!, $first: Int, $where: GlobalRewardsSnapshotWhereInput) {
-  globalRewardsSnapshotsConnection(
-    orderBy: $orderBy
-    first: $first
-    where: $where
-  ) {
-    edges {
-      node {
-        value
-      }
-    }
-  }
-}
-    `;
-export const useGlobalRewardsSnapshotsConnectionQuery = <
-      TData = GlobalRewardsSnapshotsConnectionQuery,
-      TError = unknown
-    >(
-      client: GraphQLClient,
-      variables: GlobalRewardsSnapshotsConnectionQueryVariables,
-      options?: UseQueryOptions<GlobalRewardsSnapshotsConnectionQuery, TError, TData>,
-      headers?: RequestInit['headers']
-    ) =>
-    useQuery<GlobalRewardsSnapshotsConnectionQuery, TError, TData>(
-      ['GlobalRewardsSnapshotsConnection', variables, client.url],
-      fetcher<GlobalRewardsSnapshotsConnectionQuery, GlobalRewardsSnapshotsConnectionQueryVariables>(client, GlobalRewardsSnapshotsConnectionDocument, variables, headers),
-      options
-    );
-export const useInfiniteGlobalRewardsSnapshotsConnectionQuery = <
-      TData = GlobalRewardsSnapshotsConnectionQuery,
-      TError = unknown
-    >(
-      pageParamKey: keyof GlobalRewardsSnapshotsConnectionQueryVariables,
-      client: GraphQLClient,
-      variables: GlobalRewardsSnapshotsConnectionQueryVariables,
-      options?: UseInfiniteQueryOptions<GlobalRewardsSnapshotsConnectionQuery, TError, TData>,
-      headers?: RequestInit['headers']
-    ) =>
-    useInfiniteQuery<GlobalRewardsSnapshotsConnectionQuery, TError, TData>(
-      ['GlobalRewardsSnapshotsConnection.infinite', variables, client.url],
-      (metaData) => fetcher<GlobalRewardsSnapshotsConnectionQuery, GlobalRewardsSnapshotsConnectionQueryVariables>(client, GlobalRewardsSnapshotsConnectionDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
       options
     );
 
@@ -3811,11 +3893,13 @@ export const GlobalStateDocument = `
   }
   globalStateById(id: "0") {
     averageBlockTime
+    averageApr
     averageAprMultiplier
-    height
     totalValue
     idleWorkerShares
+    idleWorkerCount
     budgetPerBlock
+    budgetPerShare
     k
     phaRate
     re
@@ -3835,7 +3919,7 @@ export const useGlobalStateQuery = <
       headers?: RequestInit['headers']
     ) =>
     useQuery<GlobalStateQuery, TError, TData>(
-      variables === undefined ? ['GlobalState', client.url] : ['GlobalState', variables, client.url],
+      variables === undefined ? ['GlobalState', client.url] : ['GlobalState', variables],
       fetcher<GlobalStateQuery, GlobalStateQueryVariables>(client, GlobalStateDocument, variables, headers),
       options
     );
@@ -3850,45 +3934,49 @@ export const useInfiniteGlobalStateQuery = <
       headers?: RequestInit['headers']
     ) =>
     useInfiniteQuery<GlobalStateQuery, TError, TData>(
-      variables === undefined ? ['GlobalState.infinite', client.url] : ['GlobalState.infinite', variables, client.url],
+      variables === undefined ? ['GlobalState.infinite'] : ['GlobalState.infinite', variables],
       (metaData) => fetcher<GlobalStateQuery, GlobalStateQueryVariables>(client, GlobalStateDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
       options
     );
 
-export const IdleWorkerCountDocument = `
-    query IdleWorkerCount {
-  sessionsConnection(orderBy: id_ASC, where: {state_eq: WorkerIdle}) {
-    totalCount
+export const GlobalStateSnapshotsConnectionDocument = `
+    query GlobalStateSnapshotsConnection($orderBy: [GlobalStateSnapshotOrderByInput!]!, $first: Int, $where: GlobalStateSnapshotWhereInput) {
+  globalStateSnapshotsConnection(orderBy: $orderBy, first: $first, where: $where) {
+    edges {
+      node {
+        cumulativeRewards
+      }
+    }
   }
 }
     `;
-export const useIdleWorkerCountQuery = <
-      TData = IdleWorkerCountQuery,
+export const useGlobalStateSnapshotsConnectionQuery = <
+      TData = GlobalStateSnapshotsConnectionQuery,
       TError = unknown
     >(
       client: GraphQLClient,
-      variables?: IdleWorkerCountQueryVariables,
-      options?: UseQueryOptions<IdleWorkerCountQuery, TError, TData>,
+      variables: GlobalStateSnapshotsConnectionQueryVariables,
+      options?: UseQueryOptions<GlobalStateSnapshotsConnectionQuery, TError, TData>,
       headers?: RequestInit['headers']
     ) =>
-    useQuery<IdleWorkerCountQuery, TError, TData>(
-      variables === undefined ? ['IdleWorkerCount', client.url] : ['IdleWorkerCount', variables, client.url],
-      fetcher<IdleWorkerCountQuery, IdleWorkerCountQueryVariables>(client, IdleWorkerCountDocument, variables, headers),
+    useQuery<GlobalStateSnapshotsConnectionQuery, TError, TData>(
+      ['GlobalStateSnapshotsConnection', client.url, variables],
+      fetcher<GlobalStateSnapshotsConnectionQuery, GlobalStateSnapshotsConnectionQueryVariables>(client, GlobalStateSnapshotsConnectionDocument, variables, headers),
       options
     );
-export const useInfiniteIdleWorkerCountQuery = <
-      TData = IdleWorkerCountQuery,
+export const useInfiniteGlobalStateSnapshotsConnectionQuery = <
+      TData = GlobalStateSnapshotsConnectionQuery,
       TError = unknown
     >(
-      pageParamKey: keyof IdleWorkerCountQueryVariables,
+      pageParamKey: keyof GlobalStateSnapshotsConnectionQueryVariables,
       client: GraphQLClient,
-      variables?: IdleWorkerCountQueryVariables,
-      options?: UseInfiniteQueryOptions<IdleWorkerCountQuery, TError, TData>,
+      variables: GlobalStateSnapshotsConnectionQueryVariables,
+      options?: UseInfiniteQueryOptions<GlobalStateSnapshotsConnectionQuery, TError, TData>,
       headers?: RequestInit['headers']
     ) =>
-    useInfiniteQuery<IdleWorkerCountQuery, TError, TData>(
-      variables === undefined ? ['IdleWorkerCount.infinite', client.url] : ['IdleWorkerCount.infinite', variables, client.url],
-      (metaData) => fetcher<IdleWorkerCountQuery, IdleWorkerCountQueryVariables>(client, IdleWorkerCountDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
+    useInfiniteQuery<GlobalStateSnapshotsConnectionQuery, TError, TData>(
+      ['GlobalStateSnapshotsConnection.infinite', variables],
+      (metaData) => fetcher<GlobalStateSnapshotsConnectionQuery, GlobalStateSnapshotsConnectionQueryVariables>(client, GlobalStateSnapshotsConnectionDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
       options
     );
 
@@ -3934,7 +4022,7 @@ export const useNftsConnectionQuery = <
       headers?: RequestInit['headers']
     ) =>
     useQuery<NftsConnectionQuery, TError, TData>(
-      ['NftsConnection', variables, client.url],
+      ['NftsConnection', variables],
       fetcher<NftsConnectionQuery, NftsConnectionQueryVariables>(client, NftsConnectionDocument, variables, headers),
       options
     );
@@ -3949,7 +4037,7 @@ export const useInfiniteNftsConnectionQuery = <
       headers?: RequestInit['headers']
     ) =>
     useInfiniteQuery<NftsConnectionQuery, TError, TData>(
-      ['NftsConnection.infinite', variables, client.url],
+      ['NftsConnection.infinite', variables],
       (metaData) => fetcher<NftsConnectionQuery, NftsConnectionQueryVariables>(client, NftsConnectionDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
       options
     );
@@ -3994,7 +4082,7 @@ export const useBasePoolWhitelistsConnectionQuery = <
       headers?: RequestInit['headers']
     ) =>
     useQuery<BasePoolWhitelistsConnectionQuery, TError, TData>(
-      ['BasePoolWhitelistsConnection', variables, client.url],
+      ['BasePoolWhitelistsConnection', variables],
       fetcher<BasePoolWhitelistsConnectionQuery, BasePoolWhitelistsConnectionQueryVariables>(client, BasePoolWhitelistsConnectionDocument, variables, headers),
       options
     );
@@ -4009,7 +4097,7 @@ export const useInfiniteBasePoolWhitelistsConnectionQuery = <
       headers?: RequestInit['headers']
     ) =>
     useInfiniteQuery<BasePoolWhitelistsConnectionQuery, TError, TData>(
-      ['BasePoolWhitelistsConnection.infinite', variables, client.url],
+      ['BasePoolWhitelistsConnection.infinite', variables],
       (metaData) => fetcher<BasePoolWhitelistsConnectionQuery, BasePoolWhitelistsConnectionQueryVariables>(client, BasePoolWhitelistsConnectionDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
       options
     );
@@ -4067,7 +4155,7 @@ export const useWorkersConnectionQuery = <
       headers?: RequestInit['headers']
     ) =>
     useQuery<WorkersConnectionQuery, TError, TData>(
-      ['WorkersConnection', variables, client.url],
+      ['WorkersConnection', variables],
       fetcher<WorkersConnectionQuery, WorkersConnectionQueryVariables>(client, WorkersConnectionDocument, variables, headers),
       options
     );
@@ -4082,7 +4170,7 @@ export const useInfiniteWorkersConnectionQuery = <
       headers?: RequestInit['headers']
     ) =>
     useInfiniteQuery<WorkersConnectionQuery, TError, TData>(
-      ['WorkersConnection.infinite', variables, client.url],
+      ['WorkersConnection.infinite', variables],
       (metaData) => fetcher<WorkersConnectionQuery, WorkersConnectionQueryVariables>(client, WorkersConnectionDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
       options
     );
@@ -4115,7 +4203,7 @@ export const useReclaimableWorkersConnectionQuery = <
       headers?: RequestInit['headers']
     ) =>
     useQuery<ReclaimableWorkersConnectionQuery, TError, TData>(
-      ['ReclaimableWorkersConnection', variables, client.url],
+      ['ReclaimableWorkersConnection', variables],
       fetcher<ReclaimableWorkersConnectionQuery, ReclaimableWorkersConnectionQueryVariables>(client, ReclaimableWorkersConnectionDocument, variables, headers),
       options
     );
@@ -4130,7 +4218,7 @@ export const useInfiniteReclaimableWorkersConnectionQuery = <
       headers?: RequestInit['headers']
     ) =>
     useInfiniteQuery<ReclaimableWorkersConnectionQuery, TError, TData>(
-      ['ReclaimableWorkersConnection.infinite', variables, client.url],
+      ['ReclaimableWorkersConnection.infinite', variables],
       (metaData) => fetcher<ReclaimableWorkersConnectionQuery, ReclaimableWorkersConnectionQueryVariables>(client, ReclaimableWorkersConnectionDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
       options
     );
