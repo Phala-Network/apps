@@ -1,21 +1,15 @@
 <script lang="ts">
   import {toPercentage} from '@phala/util'
   import type {ChartData} from 'chart.js'
-  import {onDestroy} from 'svelte'
   import {Line} from 'svelte-chartjs'
-  import {globalStateStore} from '~/stores'
+  import {derived} from 'svelte/store'
+  import {getGlobalState} from '~/stores'
 
-  let displayValue: string
-
-  let unsubscribe = globalStateStore.subscribe((data) => {
-    const percentage = toPercentage(data.summary?.averageApr)
+  const displayValue = derived(getGlobalState(), ({data}) => {
+    const percentage = toPercentage(data?.summary?.averageApr)
     if (percentage != null) {
-      displayValue = percentage
+      return percentage
     }
-  })
-
-  onDestroy(() => {
-    unsubscribe()
   })
 
   let data: ChartData<'line', number[]>
@@ -24,7 +18,7 @@
 <div class="flex flex-col h-full">
   <div>
     <h1 class="data-label">Average APR</h1>
-    <div class="data-value mt-1">{displayValue ?? ''}</div>
+    <div class="data-value mt-1">{$displayValue ?? ''}</div>
   </div>
 
   <div class="mt-4 flex-1">

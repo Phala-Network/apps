@@ -24,16 +24,16 @@
   <!-- <section
     class="card col-span-2 grid gap-4 md:grid-cols-4 grid-cols-2 divide-x-2"
   /> -->
-  <section class="card h-28">
+  <section class="card h-24">
     <DelegationValueChart />
   </section>
-  <section class="card h-28">
+  <section class="card h-24">
     <AverageAprChart />
   </section>
-  <section class="card h-28">
+  <section class="card h-24">
     <OnlineWorkerChart />
   </section>
-  <section class="card h-28">
+  <section class="card h-24">
     <DelegatorChart />
   </section>
   <section class="card h-80">

@@ -53,7 +53,7 @@ const transform = (data: Data) => {
   }
 }
 
-const fetchGlobalState = async (): Promise<GlobalState> => {
+const fetchGlobalStateSnapshot = async (): Promise<GlobalState> => {
   const document = gql`
     {
       globalStateById(id: "0") {
@@ -108,4 +108,4 @@ const fetchGlobalState = async (): Promise<GlobalState> => {
 }
 
 export const getGlobalState = () =>
-  createQuery(['globalState'], fetchGlobalState)
+  createQuery(['globalState'], fetchGlobalStateSnapshot)

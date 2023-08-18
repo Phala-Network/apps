@@ -3486,6 +3486,7 @@ __metadata:
     "@sveltejs/adapter-auto": ^2.0.0
     "@sveltejs/adapter-static": ^2.0.3
     "@sveltejs/kit": ^1.20.4
+    "@tanstack/svelte-query": ^4.32.6
     autoprefixer: ^10.4.14
     chart.js: ^4.3.3
     chartjs-adapter-date-fns: ^3.0.0
@@ -5184,6 +5185,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tanstack/query-core@npm:4.32.6":
+  version: 4.32.6
+  resolution: "@tanstack/query-core@npm:4.32.6"
+  checksum: c06f4b8d7edfc237d34da14c4ff2c71f4e6de662f123914419e9c2fbb9dccb7c1d3f46afd66ca5fea40687c5a99e514750a32a05e809d0db76343a90a45c76a8
+  languageName: node
+  linkType: hard
+
 "@tanstack/react-query-devtools@npm:^4.29.19":
   version: 4.29.19
   resolution: "@tanstack/react-query-devtools@npm:4.29.19"
@@ -5215,6 +5223,17 @@ __metadata:
     react-native:
       optional: true
   checksum: 2780ac35b4d1dabcd3e708b95891376e7e609109270d40442b33f4747c508c23e46bcadc692f997f81d38f62b5ab31f8e42bc9a785dfa4afe0c390adb6f37e52
+  languageName: node
+  linkType: hard
+
+"@tanstack/svelte-query@npm:^4.32.6":
+  version: 4.32.6
+  resolution: "@tanstack/svelte-query@npm:4.32.6"
+  dependencies:
+    "@tanstack/query-core": 4.32.6
+  peerDependencies:
+    svelte: ">=3 <5"
+  checksum: e8e418e2844ee949403f3c4341e80ff6b2ac0515b71129dd733263fc42607bd531a94f4cc03b886378887862d6f5f7707a226bff5f563bf021af9f9dca296cc8
   languageName: node
   linkType: hard
 
