@@ -114,7 +114,7 @@ const DelegationList: FC<{
         enabled,
         getNextPageParam: (lastPage) =>
           lastPage.delegationsConnection.pageInfo.hasNextPage
-            ? lastPage.delegationsConnection.pageInfo.endCursor
+            ? {after: lastPage.delegationsConnection.pageInfo.endCursor}
             : undefined,
         select: (data) => {
           return create(data, (draft) => {
