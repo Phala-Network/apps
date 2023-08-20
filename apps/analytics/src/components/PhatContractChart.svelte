@@ -4,7 +4,7 @@
   import {addDays} from 'date-fns'
   import {gql} from 'graphql-request'
   import {onMount} from 'svelte'
-  import {Line} from 'svelte-chartjs'
+  import {Bar} from 'svelte-chartjs'
   import {phatClient} from '~/lib/graphql'
 
   interface ExecutionData {
@@ -13,11 +13,11 @@
     userCount: number
   }
 
-  let data: ChartData<'line', number[]>
+  let data: ChartData<'bar', number[]>
   let latestExecutionCount: string
 
   onMount(() => {
-    const days = 7
+    const days = 9
     const startTime = addDays(new Date(), -days).toISOString()
     const document = gql`
       {
@@ -63,7 +63,7 @@
 
   <div class="mt-4 flex-1">
     {#if data != null}
-      <Line
+      <Bar
         {data}
         options={{
           scales: {

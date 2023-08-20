@@ -1,4 +1,7 @@
 import {
+  BarController,
+  BarElement,
+  CategoryScale,
   Chart,
   LineController,
   LineElement,
@@ -17,6 +20,9 @@ export const initChartJS = () => {
     PointElement,
     TimeScale,
     LinearScale,
+    CategoryScale,
+    BarController,
+    BarElement,
   )
 
   Chart.defaults.elements.line.tension = 0.5
@@ -28,8 +34,10 @@ export const initChartJS = () => {
   Chart.defaults.interaction.intersect = false
   Chart.defaults.plugins.tooltip.displayColors = false
   Chart.defaults.scale.grid.display = false
-  Chart.defaults.scales.time.time.tooltipFormat = 'PP'
+  Chart.defaults.scales.time.time.tooltipFormat = 'Pp'
   Chart.defaults.borderColor = 'transparent'
   Chart.defaults.animation = false
   Chart.defaults.datasets.line.borderColor = '#C5FF46'
+  Chart.defaults.datasets.bar.backgroundColor = '#C5FF46'
+  Chart.defaults.datasets.bar.barPercentage = 0.4
 }

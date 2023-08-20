@@ -3,7 +3,7 @@
   import type {ChartData} from 'chart.js'
   import {Line} from 'svelte-chartjs'
   import {derived} from 'svelte/store'
-  import {getGlobalState} from '~/stores'
+  import {getGlobalState, getGlobalStateSnapshot} from '~/stores'
 
   const displayValue = derived(getGlobalState(), ({data}) => {
     const value = data?.summary?.workerCount
@@ -12,7 +12,23 @@
     }
   })
 
-  let data: ChartData<'line', number[]>
+  const data = derived(
+    getGlobalStateSnapshot(),
+    ({data}): ChartData<'line', number[]> | undefined => {
+      if (data != null) {
+        const {summary} = data
+        return {
+          labels: summary.map((e) => e.updatedTime),
+          datasets: [
+            {
+              label: 'Online workers',
+              data: summary.map((e) => e.idleWorkerCount),
+            },
+          ],
+        }
+      }
+    }
+  )
 </script>
 
 <div class="flex flex-col h-full">
@@ -22,9 +38,9 @@
   </div>
 
   <div class="mt-4 flex-1">
-    {#if data != null}
+    {#if $data != null}
       <Line
-        {data}
+        data={$data}
         options={{
           scales: {
             x: {type: 'time'},

@@ -6,7 +6,7 @@ export const KHALA_ENDPOINTS = [
   'wss://khala.api.onfinality.io/public-ws',
 ]
 export const KHALA_SUBSQUID_URL =
-  'https://squid.subsquid.io/khala-computation/v/v3/graphql'
+  'https://squid.subsquid.io/khala-computation/graphql'
 export const khalaSubsquidClient = new GraphQLClient(KHALA_SUBSQUID_URL)
 export const PHALA_ENDPOINTS = [
   'wss://phala-rpc.dwellir.com',
@@ -14,6 +14,6 @@ export const PHALA_ENDPOINTS = [
   'wss://phala.api.onfinality.io/public-ws',
 ]
 export const PHALA_SUBSQUID_URL =
-  'https://squid.subsquid.io/phala-computation/v/v3/graphql'
+  'https://squid.subsquid.io/phala-computation/graphql'
 export const phalaSubsquidClient = new GraphQLClient(PHALA_SUBSQUID_URL)
 export const WPHA_ASSET_ID = 10000

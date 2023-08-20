@@ -3,7 +3,7 @@
   import type {ChartData} from 'chart.js'
   import {Line} from 'svelte-chartjs'
   import {derived} from 'svelte/store'
-  import {getGlobalState} from '~/stores'
+  import {getGlobalState, getGlobalStateSnapshot} from '~/stores'
 
   const displayValue = derived(getGlobalState(), ({data}) => {
     const percentage = toPercentage(data?.summary?.averageApr)
@@ -12,7 +12,23 @@
     }
   })
 
-  let data: ChartData<'line', number[]>
+  const data = derived(
+    getGlobalStateSnapshot(),
+    ({data}): ChartData<'line', number[]> | undefined => {
+      if (data != null) {
+        const {summary} = data
+        return {
+          labels: summary.map((e) => e.updatedTime),
+          datasets: [
+            {
+              label: 'Average APR',
+              data: summary.map((e) => e.averageApr.times(100).toNumber()),
+            },
+          ],
+        }
+      }
+    }
+  )
 </script>
 
 <div class="flex flex-col h-full">
@@ -22,13 +38,25 @@
   </div>
 
   <div class="mt-4 flex-1">
-    {#if data != null}
+    {#if $data != null}
       <Line
-        {data}
+        data={$data}
         options={{
           scales: {
             x: {type: 'time'},
-            y: {ticks: {display: false}},
+            y: {ticks: {display: false}, min: 0},
+          },
+          plugins: {
+            tooltip: {
+              callbacks: {
+                label: (chart) => {
+                  const value = chart.dataset.data[chart.dataIndex]
+                  if (typeof value === 'number') {
+                    return `${chart.dataset.label}: ${value.toFixed(2)}%`
+                  }
+                },
+              },
+            },
           },
         }}
       />
