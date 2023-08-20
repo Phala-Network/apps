@@ -1,12 +1,10 @@
 import {weightedAverage} from '@phala/util'
+import {createQuery} from '@tanstack/svelte-query'
 import Decimal from 'decimal.js'
 import {gql} from 'graphql-request'
-import {readable} from 'svelte/store'
 import {khalaSquidClient, phalaSquidClient} from '~/lib/graphql'
 
-const noop = () => {}
-
-type GlobalStateData = {
+type Data = {
   globalStateById: {
     totalValue: string
     averageApr: string
@@ -23,7 +21,7 @@ type GlobalStateData = {
   }
 }
 
-type GlobalState = {
+type State = {
   totalValue: Decimal
   averageApr: Decimal
   averageBlockTime: number
@@ -36,13 +34,13 @@ type GlobalState = {
   height: number
 }
 
-export type GlobalStateStore = {
-  phala: GlobalState | null
-  khala: GlobalState | null
-  summary: Omit<GlobalState, 'height' | 'averageBlockTime'> | null
+type GlobalState = {
+  phala: State
+  khala: State
+  summary: Omit<State, 'height' | 'averageBlockTime'>
 }
 
-const transform = (data: GlobalStateData) => {
+const transform = (data: Data) => {
   const {globalStateById, squidStatus} = data
   return {
     ...globalStateById,
@@ -55,7 +53,7 @@ const transform = (data: GlobalStateData) => {
   }
 }
 
-const fetchGlobalState = async (): Promise<GlobalStateStore> => {
+const fetchGlobalState = async (): Promise<GlobalState> => {
   const document = gql`
     {
       globalStateById(id: "0") {
@@ -76,8 +74,8 @@ const fetchGlobalState = async (): Promise<GlobalStateStore> => {
   `
 
   const [phalaData, khalaData] = await Promise.all([
-    phalaSquidClient.request<GlobalStateData>(document),
-    khalaSquidClient.request<GlobalStateData>(document),
+    phalaSquidClient.request<Data>(document),
+    khalaSquidClient.request<Data>(document),
   ])
 
   const phala = transform(phalaData)
@@ -109,15 +107,5 @@ const fetchGlobalState = async (): Promise<GlobalStateStore> => {
   return {phala, khala, summary}
 }
 
-export const globalStateStore = readable<GlobalStateStore>(
-  {
-    phala: null,
-    khala: null,
-    summary: null,
-  },
-  (set) => {
-    fetchGlobalState().then(set)
-
-    return noop
-  },
-)
+export const getGlobalState = () =>
+  createQuery(['globalState'], fetchGlobalState)

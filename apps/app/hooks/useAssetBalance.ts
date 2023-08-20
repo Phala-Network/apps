@@ -30,9 +30,8 @@ const useAssetBalance = (
           Decimal.pow(10, assetMetadata.decimals),
         )
       } else {
-        const {availableBalance, freeBalance} = await api.derive.balances.all(
-          account,
-        )
+        const {availableBalance, freeBalance} =
+          await api.derive.balances.all(account)
         return new Decimal(
           (assetId === 'available' ? availableBalance : freeBalance).toHex(),
         ).div(1e12)

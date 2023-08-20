@@ -1,36 +1,46 @@
 <script lang="ts">
   import {compactFormat} from '@phala/util'
   import type {ChartData} from 'chart.js'
-  import {onDestroy} from 'svelte'
   import {Line} from 'svelte-chartjs'
-  import {globalStateStore} from '~/stores'
+  import {derived} from 'svelte/store'
+  import {getGlobalState, getGlobalStateSnapshot} from '~/stores'
 
-  let displayValue: string
-
-  let unsubscribe = globalStateStore.subscribe((data) => {
-    const value = data.summary?.delegatorCount
+  const displayValue = derived(getGlobalState(), ({data}) => {
+    const value = data?.summary?.delegatorCount
     if (value != null) {
-      displayValue = compactFormat(value)
+      return compactFormat(value)
     }
   })
 
-  onDestroy(() => {
-    unsubscribe()
-  })
-
-  let data: ChartData<'line', number[]>
+  const data = derived(
+    getGlobalStateSnapshot(),
+    ({data}): ChartData<'line', number[]> | undefined => {
+      if (data != null) {
+        const {summary} = data
+        return {
+          labels: summary.map((e) => e.updatedTime),
+          datasets: [
+            {
+              label: 'Delegator',
+              data: summary.map((e) => e.delegatorCount),
+            },
+          ],
+        }
+      }
+    }
+  )
 </script>
 
 <div class="flex flex-col h-full">
   <div>
     <h1 class="data-label">Delegator</h1>
-    <div class="data-value mt-1">{displayValue ?? ''}</div>
+    <div class="data-value mt-1">{$displayValue ?? ''}</div>
   </div>
 
   <div class="mt-4 flex-1">
-    {#if data != null}
+    {#if $data != null}
       <Line
-        {data}
+        data={$data}
         options={{
           scales: {
             x: {type: 'time'},

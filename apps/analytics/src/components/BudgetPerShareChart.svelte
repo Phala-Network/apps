@@ -1,14 +1,13 @@
 <script lang="ts">
-  import {compactFormat} from '@phala/util'
   import type {ChartData} from 'chart.js'
   import {Line} from 'svelte-chartjs'
   import {derived} from 'svelte/store'
   import {getGlobalState, getGlobalStateSnapshot} from '~/stores'
 
   const displayValue = derived(getGlobalState(), ({data}) => {
-    const value = data?.summary?.totalValue
+    const value = data?.summary?.budgetPerShare
     if (value != null) {
-      return compactFormat(value)
+      return value.toDP(2).toString()
     }
   })
 
@@ -21,8 +20,8 @@
           labels: summary.map((e) => e.updatedTime),
           datasets: [
             {
-              label: 'Delegation value',
-              data: summary.map((e) => e.totalValue.toNumber()),
+              label: 'Budget per share',
+              data: summary.map((e) => e.budgetPerShare.toDP(2).toNumber()),
             },
           ],
         }
@@ -33,7 +32,7 @@
 
 <div class="flex flex-col h-full">
   <div>
-    <h1 class="data-label">Delegation value</h1>
+    <h1 class="data-label">Budget per share</h1>
     <div class="data-value mt-1">{$displayValue ?? ''}</div>
   </div>
 

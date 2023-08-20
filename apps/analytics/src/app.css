@@ -5,14 +5,14 @@
 
 @layer components {
   .card {
-    @apply bg-gray-700 rounded-3xl px-6 py-6 shadow-xl;
+    @apply bg-gray-700 rounded-3xl px-6 py-5 shadow-xl;
   }
 
   .data-value {
-    @apply font-montserrat font-bold text-4xl;
+    @apply font-montserrat font-bold text-3xl;
   }
 
   .data-label {
-    @apply font-montserrat text-sm text-gray-400;
+    @apply font-montserrat text-sm text-gray-300;
   }
 }

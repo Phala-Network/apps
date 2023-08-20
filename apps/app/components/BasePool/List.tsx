@@ -218,7 +218,7 @@ const BasePoolList: FC<{
         },
         getNextPageParam: (lastPage) =>
           lastPage.basePoolsConnection.pageInfo.hasNextPage
-            ? lastPage.basePoolsConnection.pageInfo.endCursor
+            ? {after: lastPage.basePoolsConnection.pageInfo.endCursor}
             : undefined,
       },
     )
