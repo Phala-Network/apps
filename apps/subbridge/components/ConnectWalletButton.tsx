@@ -25,7 +25,7 @@ const ConnectEvmWalletButton: FC<ButtonProps> = (props) => {
       return
     }
     setLoading(true)
-    ethereum
+    void ethereum
       .request({method: 'eth_requestAccounts'})
       .then((accounts) => {
         if (Array.isArray(accounts) && accounts.length > 0) {

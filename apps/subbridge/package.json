@@ -20,7 +20,7 @@
     "@mui/icons-material": "^5.14.3",
     "@mui/lab": "5.0.0-alpha.140",
     "@mui/material": "^5.14.5",
-    "@next/bundle-analyzer": "^13.4.18",
+    "@next/bundle-analyzer": "^13.4.19",
     "@phala/lib": "workspace:^",
     "@phala/store": "workspace:^",
     "@phala/util": "workspace:^",
@@ -33,8 +33,8 @@
     "decimal.js": "^10.4.3",
     "ethers": "^5.7.2",
     "jotai": "^2.3.1",
-    "jotai-devtools": "^0.6.1",
-    "next": "^13.4.18",
+    "jotai-devtools": "^0.6.2",
+    "next": "^13.4.19",
     "next-images": "^1.8.5",
     "notistack": "^3.0.1",
     "react": "^18.2.0",
@@ -44,11 +44,11 @@
   "devDependencies": {
     "@phala/eslint-config": "workspace:^",
     "@svgr/webpack": "^8.1.0",
-    "@types/node": "^18.17.5",
+    "@types/node": "^18.17.6",
     "@types/react": "^18.2.20",
     "@types/react-dom": "^18.2.7",
     "eslint": "^8.47.0",
-    "eslint-config-next": "^13.4.18",
+    "eslint-config-next": "^13.4.19",
     "typescript": "^5.1.6"
   }
 }
