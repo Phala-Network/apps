@@ -57,84 +57,70 @@ export const transferByPolkadotXTokens = ({
   } else if (
     fromChainId === 'parallel' ||
     fromChainId === 'parallel-heiko' ||
-    fromChainId === 'basilisk'
+    fromChainId === 'basilisk' ||
+    fromChainId === 'astar' ||
+    fromChainId === 'shiden' ||
+    fromChainId === 'turing'
   ) {
     currencyId = palletAssetId
-  } else if (fromChainId === 'turing') {
-    currencyId = asset.palletAssetId?.turing
   } else {
     currencyId = {
       [isTransferringBNCFromBifrost ? 'Native' : 'Token']: asset.ormlToken,
     }
   }
 
-  return polkadotApi.tx.xTokens.transfer(
+  const isXcmV3 = new Set<ChainId>([
+    'bifrost-kusama',
+    'bifrost-test',
+    'karura',
+    'karura-test',
+    'parallel-heiko',
+    'astar',
+    'shiden',
+    'turing',
+  ]).has(fromChainId)
+
+  const palletName =
+    fromChainId === 'astar' || fromChainId === 'shiden' ? 'xtokens' : 'xTokens'
+
+  return polkadotApi.tx[palletName].transfer(
     currencyId,
     amount,
-    fromChainId === 'bifrost-kusama' ||
-      fromChainId === 'bifrost-test' ||
-      fromChainId === 'karura' ||
-      fromChainId === 'karura-test'
-      ? {
-          V3: {
-            parents: 1,
-            interior:
-              proxy != null
-                ? {
-                    X4: [
-                      {Parachain: CHAINS[proxy].paraId},
-                      ...createPhalaMultilocation(
-                        'cb',
-                        generalIndex as number,
-                        destinationAccount as Hex,
-                      ),
-                    ],
-                  }
-                : {
-                    X2: [
-                      {Parachain: toChain.paraId},
-                      {
-                        AccountId32: {
-                          id: u8aToHex(decodeAddress(destinationAccount)),
-                        },
-                      },
-                    ],
+    {
+      [isXcmV3 ? 'V3' : 'V1']: {
+        parents: 1,
+        interior:
+          proxy != null
+            ? {
+                X4: [
+                  {Parachain: CHAINS[proxy].paraId},
+                  ...createPhalaMultilocation(
+                    'cb',
+                    generalIndex as number,
+                    destinationAccount as Hex,
+                  ),
+                ],
+              }
+            : {
+                X2: [
+                  {Parachain: toChain.paraId},
+                  {
+                    AccountId32: {
+                      id: u8aToHex(decodeAddress(destinationAccount)),
+                      network: isXcmV3 ? undefined : 'Any',
+                    },
                   },
-          },
-        }
-      : {
-          V1: {
-            parents: 1,
-            interior:
-              proxy != null
-                ? {
-                    X4: [
-                      {Parachain: CHAINS[proxy].paraId},
-                      ...createPhalaMultilocation(
-                        'cb',
-                        generalIndex as number,
-                        destinationAccount as Hex,
-                      ),
-                    ],
-                  }
-                : {
-                    X2: [
-                      {Parachain: toChain.paraId},
-                      {
-                        AccountId32: {
-                          network: 'Any',
-                          id: u8aToHex(decodeAddress(destinationAccount)),
-                        },
-                      },
-                    ],
-                  },
-          },
-        },
+                ],
+              },
+      },
+    },
     fromChainId === 'bifrost-kusama' || fromChainId === 'bifrost-test'
       ? {Limited: {refTime: '6000000000', proofSize: '1000000'}}
       : fromChainId === 'parallel' ||
         fromChainId === 'parallel-heiko' ||
-        fromChainId === 'karura'
+        fromChainId === 'karura' ||
+        fromChainId === 'shiden' ||
+        fromChainId === 'astar'
       ? {Unlimited: null}
       : '6000000000',
   )

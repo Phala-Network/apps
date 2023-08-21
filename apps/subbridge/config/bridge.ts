@@ -341,8 +341,8 @@ export const BRIDGES: Readonly<Bridge[]> = [
       {
         id: 'khala',
         assets: [
-          {assetId: 'sdn', estimatedTime: '< 1 min', kind: 'polkadotXcm'},
-          {assetId: 'pha', estimatedTime: '< 1 min', kind: 'polkadotXcm'},
+          {assetId: 'sdn', estimatedTime: '< 1 min', kind: 'polkadotXTokens'},
+          {assetId: 'pha', estimatedTime: '< 1 min', kind: 'polkadotXTokens'},
         ],
       },
     ],
