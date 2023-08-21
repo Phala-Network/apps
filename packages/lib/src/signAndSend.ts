@@ -64,7 +64,7 @@ export const waitSignAndSend = async ({
           },
         )
         .then((unsubscribe) => {
-          extrinsicResultPromise.finally(() => {
+          void extrinsicResultPromise.finally(() => {
             unsubscribe()
           })
         }, reject)

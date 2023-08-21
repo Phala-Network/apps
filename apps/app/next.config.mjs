@@ -36,7 +36,7 @@ const nextConfig = {
       {
         source: '/',
         destination: '/khala',
-        permanent: true,
+        permanent: false,
       },
       {
         source: '/delegate',
@@ -57,8 +57,8 @@ const nextConfig = {
   },
   experimental: {
     swcPlugins: [
-      // ['@swc-jotai/debug-label', {}],
-      // ['@swc-jotai/react-refresh', {}],
+      ['@swc-jotai/debug-label', {}],
+      ['@swc-jotai/react-refresh', {}],
     ],
   },
 }

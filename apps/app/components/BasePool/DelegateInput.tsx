@@ -68,7 +68,7 @@ const DelegateInput: FC<{basePool: BasePoolCommonFragment; sx?: SxProps}> = ({
           asAccount ? null : selectedVaultState.id,
         )
 
-    signAndSend(
+    void signAndSend(
       asAccount && wrapAmount.gt(0)
         ? api.tx.utility.batchAll([
             api.tx.phalaWrappedBalances.wrap(wrapAmount.toHex()),

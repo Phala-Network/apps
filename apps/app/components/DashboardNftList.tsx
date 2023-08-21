@@ -91,15 +91,11 @@ const NftCard: FC<{nft: Nft}> = ({nft}) => {
       </Box>
       <Stack p={1.5} justifyContent="space-between" flex="1" minHeight={90}>
         <Typography variant="subtitle2" component="div">
-          {isDelegationNft ? (
-            `${delegationNftPrefix} Delegation NFT - #${
-              nft.delegation?.basePool.id ?? ''
-            } - ${nft.nftId}`
-          ) : name === undefined ? (
-            <Skeleton width="100%" />
-          ) : (
-            name
-          )}
+          {isDelegationNft
+            ? `${delegationNftPrefix} Delegation NFT - #${
+                nft.delegation?.basePool.id ?? ''
+              } - ${nft.nftId}`
+            : name ?? <Skeleton width="100%" />}
         </Typography>
         <Typography
           variant="caption"
@@ -107,13 +103,9 @@ const NftCard: FC<{nft: Nft}> = ({nft}) => {
           color="text.secondary"
           mt={1}
         >
-          {isDelegationNft ? (
-            `${delegationNftPrefix} - #${nft.delegation?.basePool.id ?? ''}`
-          ) : collectionSymbol === undefined ? (
-            <Skeleton width="30%" />
-          ) : (
-            collectionSymbol
-          )}
+          {isDelegationNft
+            ? `${delegationNftPrefix} - #${nft.delegation?.basePool.id ?? ''}`
+            : collectionSymbol ?? <Skeleton width="30%" />}
         </Typography>
       </Stack>
     </Paper>

@@ -63,7 +63,7 @@ const OwnerSettings: FC<{
       ? api.tx.phalaVault.setPayoutPref(basePool.id, commission)
       : api.tx.phalaStakePoolv2.setPayoutPref(basePool.id, commission)
     setCommissionLoading(true)
-    signAndSend(extrinsic).finally(() => {
+    void signAndSend(extrinsic).finally(() => {
       setCommissionLoading(false)
     })
   }
@@ -73,7 +73,7 @@ const OwnerSettings: FC<{
     const capacity = new Decimal(capacityString).times(1e12).toHex()
     const extrinsic = api.tx.phalaStakePoolv2.setCap(basePool.id, capacity)
     setCapacityLoading(true)
-    signAndSend(extrinsic).finally(() => {
+    void signAndSend(extrinsic).finally(() => {
       setCapacityLoading(false)
     })
   }

@@ -142,7 +142,7 @@ const EvmAction: FC<{onConfirm: () => void}> = ({onConfirm}) => {
         disabled={(!approved && needApproval) || bridgeErrorMessage != null}
         onClick={onConfirm}
       >
-        {bridgeErrorMessage != null ? bridgeErrorMessage : 'Transfer'}
+        {bridgeErrorMessage ?? 'Transfer'}
       </Button>
     </Stack>
   )

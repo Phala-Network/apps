@@ -13,7 +13,7 @@ const PromiseButton: FC<
   const handleClick: LoadingButtonProps['onClick'] = (e) => {
     if (onClick != null) {
       setLoading(true)
-      onClick(e).finally(() => {
+      void onClick(e).finally(() => {
         setLoading(false)
       })
     }

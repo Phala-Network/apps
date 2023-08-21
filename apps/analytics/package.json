@@ -15,7 +15,7 @@
     "@sveltejs/kit": "^1.22.6",
     "svelte": "^4.2.0",
     "svelte-check": "^3.5.0",
-    "tslib": "^2.6.1",
+    "tslib": "^2.6.2",
     "typescript": "^5.1.6",
     "vite": "^4.4.9"
   },
@@ -24,7 +24,7 @@
     "@phala/util": "workspace:^",
     "@rgossiaux/svelte-headlessui": "^2.0.0",
     "@rgossiaux/svelte-heroicons": "^0.1.2",
-    "@tanstack/svelte-query": "^4.32.6",
+    "@tanstack/svelte-query": "^4.33.0",
     "autoprefixer": "^10.4.15",
     "chart.js": "^4.3.3",
     "chartjs-adapter-date-fns": "^3.0.0",
