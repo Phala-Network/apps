@@ -3,6 +3,13 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  html {
+    background-color: #171923;
+    background: linear-gradient(180deg, #171923 0%, #1a202c 100%);
+  }
+}
+
 @layer components {
   .card {
     @apply bg-gray-700 rounded-3xl px-6 py-5 shadow-xl;
@@ -13,6 +20,6 @@
   }
 
   .data-label {
-    @apply font-montserrat text-sm text-gray-300;
+    @apply font-montserrat text-sm text-gray-400;
   }
 }
