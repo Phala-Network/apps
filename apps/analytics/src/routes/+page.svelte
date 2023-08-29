@@ -1,7 +1,7 @@
 <script lang="ts">
   import AverageAprChart from '~/components/AverageAprChart.svelte'
   import BudgetPerShareChart from '~/components/BudgetPerShareChart.svelte'
-  import DailyRewardsChart from '~/components/DailyRewardsChart.svelte'
+  import DailyRewards from '~/components/DailyRewards.svelte'
   import DelegationValueChart from '~/components/DelegationValueChart.svelte'
   import DelegatorChart from '~/components/DelegatorChart.svelte'
   import Nav from '~/components/Nav.svelte'
@@ -22,11 +22,17 @@
 </header>
 
 <main
-  class="grid gap-4 grid-cols-1 md:grid-cols-2 max-w-5xl mx-auto mt-6 md:mt-14 px-4 md:px-6"
+  class="grid gap-4 grid-cols-1 md:grid-cols-2 max-w-5xl mx-auto mt-6 md:mt-14 px-4 md:px-6 mb-6"
 >
   <!-- <section
     class="card col-span-2 grid gap-4 md:grid-cols-4 grid-cols-2 divide-x-2"
   /> -->
+  <section class="card h-24">
+    <DailyRewards />
+  </section>
+  <section class="card h-24">
+    <StakeRatio />
+  </section>
   <section class="card h-80">
     <DelegationValueChart />
   </section>
@@ -39,16 +45,11 @@
   <section class="card h-80">
     <DelegatorChart />
   </section>
-  <section class="card h-80">
-    <DailyRewardsChart />
-  </section>
+
   <section class="card h-80">
     <BudgetPerShareChart />
   </section>
   <section class="card h-80">
     <PhatContractChart />
-  </section>
-  <section class="card h-24">
-    <StakeRatio />
   </section>
 </main>

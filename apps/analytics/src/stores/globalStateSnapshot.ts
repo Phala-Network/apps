@@ -1,6 +1,6 @@
 import {weightedAverage} from '@phala/util'
 import {createQuery} from '@tanstack/svelte-query'
-import {addDays} from 'date-fns'
+import {addDays, addHours} from 'date-fns'
 import Decimal from 'decimal.js'
 import {gql} from 'graphql-request'
 import {khalaSquidClient, phalaSquidClient} from '~/lib/graphql'
@@ -66,13 +66,18 @@ const transform = (data: Data): StateSnapshot[] => {
 
 const fetchGlobalStateSnapshot = async (): Promise<GlobalStateSnapshot> => {
   const days = 7
-  const startTime = addDays(new Date(), -days).toISOString()
+  const intervalHours = 6
+  const startTime = addDays(new Date(), -days)
+  startTime.setUTCMinutes(0, 0, 0)
+  const updatedTime: string[] = []
+  for (let i = 0; i < days * intervalHours; i++) {
+    updatedTime.push(addHours(startTime, i * intervalHours).toISOString())
+  }
   const document = gql`
     {
       globalStateSnapshotsConnection(
-        first: 200
         orderBy: updatedTime_ASC
-        where: {updatedTime_gt: "${startTime}"}
+        where: {updatedTime_in: ${JSON.stringify(updatedTime)}}
       ) {
         edges {
           node {

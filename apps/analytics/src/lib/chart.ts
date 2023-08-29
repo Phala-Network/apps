@@ -39,5 +39,5 @@ export const initChartJS = () => {
   Chart.defaults.animation = false
   Chart.defaults.datasets.line.borderColor = '#C5FF46'
   Chart.defaults.datasets.bar.backgroundColor = '#C5FF46'
-  Chart.defaults.datasets.bar.barPercentage = 0.4
+  Chart.defaults.datasets.bar.barPercentage = 0.6
 }
