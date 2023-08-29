@@ -17,7 +17,7 @@
   let latestExecutionCount: string
 
   onMount(() => {
-    const days = 9
+    const days = 14
     const startTime = addDays(new Date(), -days).toISOString()
     const document = gql`
       {
