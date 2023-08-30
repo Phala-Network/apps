@@ -384,7 +384,7 @@ export const BRIDGES: Readonly<Bridge[]> = [
     toChains: [
       {
         id: 'rhala',
-        assets: [{assetId: 'pha', estimatedTime: '', kind: 'evmSygma'}],
+        assets: [{assetId: 'gpha', estimatedTime: '', kind: 'evmSygma'}],
       },
     ],
   },

@@ -34,6 +34,7 @@ export type AssetId =
   | 'glmr'
   | 'sdn'
   | 'astr'
+  | 'gpha'
 
 export type OrmlToken =
   | 'PHA'
@@ -82,7 +83,6 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
       ethereum: '0x6c5bA91642F10282b576d91922Ae6448C9d52f4E',
       moonbeam: '0xFFFfFfFf63d24eCc8eB8a7b5D0803e900F7b6cED',
       moonriver: '0xffFfFFff8E6b63d9e447B6d4C45BDA8AF9dc9603',
-      goerli: '0xB376b0Ee6d8202721838e76376e81eEc0e2FE864',
     },
     chainBridgeResourceId: {
       phala:
@@ -132,6 +132,19 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
     },
     sygmaResourceId:
       '0x0000000000000000000000000000000000000000000000000000000000000001',
+  },
+  gpha: {
+    id: 'gpha',
+    symbol: 'GPHA',
+    icon: phaIcon,
+    erc20TokenContractAddress: {
+      goerli: '0xB376b0Ee6d8202721838e76376e81eEc0e2FE864',
+    },
+    decimals: {goerli: 18, default: 12},
+    sygmaResourceId:
+      '0x0000000000000000000000000000000000000000000000000000000000001000',
+    destChainTransactionFee: {},
+    existentialDeposit: {},
   },
   movr: {
     id: 'movr',
