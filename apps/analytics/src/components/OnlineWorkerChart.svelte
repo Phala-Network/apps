@@ -6,7 +6,7 @@
   import {getGlobalState, getGlobalStateSnapshot} from '~/stores'
 
   const displayValue = derived(getGlobalState(), ({data}) => {
-    const value = data?.summary?.workerCount
+    const value = data?.summary?.idleWorkerCount
     if (value != null) {
       return compactFormat(value)
     }
