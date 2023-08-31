@@ -11,7 +11,7 @@
       const length = summary.length
       return compactFormat(
         summary[length - 1].cumulativeRewards.minus(
-          summary[length - 25].cumulativeRewards
+          summary[length - 5].cumulativeRewards
         )
       )
     }
