@@ -1,5 +1,4 @@
 import useDeposit from '@/hooks/useDeposit'
-import {ChainType} from '@/lib/fetchConfig'
 import {isWalletConnectAtom} from '@/store/common'
 import {fromChainAtom} from '@/store/core'
 import {useAtom} from 'jotai'
@@ -31,10 +30,10 @@ const Action: FC = () => {
       {!isWalletConnected && (
         <ConnectWalletButton size="large" variant="contained" fullWidth />
       )}
-      {isWalletConnected && fromChain.chainType === ChainType.EVM && (
+      {isWalletConnected && fromChain?.chainType === 'Evm' && (
         <EvmAction onConfirm={onConfirm} loading={loading} />
       )}
-      {isWalletConnected && fromChain.chainType === ChainType.Substrate && (
+      {isWalletConnected && fromChain?.chainType === 'Sub' && (
         <PolkadotAction onConfirm={onConfirm} loading={loading} />
       )}
     </>

@@ -47,27 +47,26 @@ const fetcher = async ([provider, address, abiKind]: [
 //   return data
 // }
 
-export const useEthersHandlerContract = (
-  provider: ethers.BrowserProvider | ethers.JsonRpcProvider | undefined,
-  address?: string,
-): ethers.Contract | undefined => {
-  const {data} = useSWRImmutable(
-    provider != null && address != null && [provider, address, 'handler'],
-    fetcher,
-  )
+// export const useEthersHandlerContract = (
+//   provider: ethers.BrowserProvider | ethers.JsonRpcProvider | undefined,
+//   address?: string,
+// ): ethers.Contract | undefined => {
+//   const {data} = useSWRImmutable(
+//     provider != null && address != null && [provider, address, 'handler'],
+//     fetcher,
+//   )
 
-  return data
-}
+//   return data
+// }
 
 export const useCurrentEthersAssetContract = ():
   | ethers.Contract
   | undefined => {
   const [fromAsset] = useAtom(fromAssetAtom)
-  const address = fromAsset.location
   const provider = useEthersBrowserProvider()
   const {data} = useSWRImmutable(
-    provider != null && address != null
-      ? [provider, address, 'tokenStandard']
+    provider != null && fromAsset != null
+      ? [provider, fromAsset.location, 'tokenStandard']
       : null,
     fetcher,
   )

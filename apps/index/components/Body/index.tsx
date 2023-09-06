@@ -1,8 +1,7 @@
 import {useBalance} from '@/hooks/useBalance'
-import {ChainType} from '@/lib/fetchConfig'
 import {isWalletConnectAtom} from '@/store/common'
 import {
-  configAtom,
+  clientAtom,
   fromAmountAtom,
   fromAssetAtom,
   fromAssetsAtom,
@@ -34,11 +33,11 @@ import Action from './Action'
 import AssetInput from './AssetInput'
 import ChainSelect from './ChainSelect'
 import DestinationAccountInput from './DestinationAccountInput'
-import Solutions from './Solutions'
+import Solution from './Solution'
 
 const Body: FC<BoxProps> = (props) => {
   const theme = useTheme()
-  const [config] = useAtom(configAtom)
+  const [client] = useAtom(clientAtom)
   const [fromChain, setFromChain] = useAtom(fromChainAtom)
   const [fromAmount, setFromAmount] = useAtom(fromAmountAtom)
   const [fromAsset, setFromAsset] = useAtom(fromAssetAtom)
@@ -58,13 +57,23 @@ const Body: FC<BoxProps> = (props) => {
       (fromAmount.length === 0 || !balance.eq(fromAmount)),
   )
 
+  if (
+    client == null ||
+    fromChain == null ||
+    toChain == null ||
+    fromAsset == null ||
+    toAsset == null
+  ) {
+    return null
+  }
+
   const fromNativeChain =
-    fromChain.chainType === ChainType.Substrate &&
-    fromChain.nativeAsset === fromAsset.id
+    fromChain.chainType === 'Sub' &&
+    fromChain.nativeAsset === fromAsset.location
 
   const handleSwitchChain = (): void => {
-    setFromChain(toChain.id)
-    setToChain(fromChain.id)
+    setFromChain(toChain.name)
+    setToChain(fromChain.name)
     setFromAsset(toAsset.id)
     setToAsset(fromAsset.id)
     // setFromAmount(toAmount)
@@ -90,7 +99,7 @@ const Body: FC<BoxProps> = (props) => {
                 fullWidth
                 label="From"
                 chain={fromChain}
-                chains={config.chains}
+                chains={client.chains}
                 onChange={(e) => {
                   setFromChain(e.target.value)
                 }}
@@ -167,7 +176,7 @@ const Body: FC<BoxProps> = (props) => {
                 fullWidth
                 label="To"
                 chain={toChain}
-                chains={config.chains}
+                chains={client.chains}
                 onChange={(e) => {
                   setToChain(e.target.value)
                 }}
@@ -187,7 +196,7 @@ const Body: FC<BoxProps> = (props) => {
           <Box sx={{width: 1}}>
             <Action />
             <Collapse in={Boolean(fromAmount)}>
-              <Solutions sx={{mt: 3}} />
+              <Solution sx={{mt: 3}} />
             </Collapse>
           </Box>
         </Stack>

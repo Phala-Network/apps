@@ -1,4 +1,5 @@
 import evmChainsData from '@/assets/evm_chains_data.json'
+import {evmChainIdMap} from '@/config/common'
 import {fromChainAtom} from '@/store/core'
 import {ethereumProviderAtom} from '@/store/ethers'
 import {useAtom} from 'jotai'
@@ -9,18 +10,19 @@ export const useSwitchNetwork = (): (() => Promise<void>) => {
   const [ethereum] = useAtom(ethereumProviderAtom)
 
   const switchNetwork = useCallback(async () => {
-    if (ethereum == null || fromChain.evmChainId == null) return
+    if (ethereum == null || fromChain == null) return
+    const targetEvmChainId = evmChainIdMap[fromChain.name]
     try {
       await ethereum.request({
         method: 'wallet_switchEthereumChain',
-        params: [{chainId: `0x${fromChain.evmChainId.toString(16)}`}],
+        params: [{chainId: `0x${targetEvmChainId.toString(16)}`}],
       })
     } catch (switchError) {
       if ((switchError as {code: number}).code === 4902) {
         await ethereum.request({
           method: 'wallet_addEthereumChain',
           params: [
-            (evmChainsData as Record<number, unknown>)[fromChain.evmChainId],
+            (evmChainsData as Record<number, unknown>)[targetEvmChainId],
           ],
         })
       }

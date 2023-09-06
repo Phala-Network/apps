@@ -1,5 +1,5 @@
-import {type Chain} from '@/lib/fetchConfig'
 import {MenuItem, TextField, type TextFieldProps} from '@mui/material'
+import {type Chain} from '@phala/index'
 import {type FC} from 'react'
 
 // const shouldShowTest =
@@ -15,7 +15,7 @@ const ChainSelect: FC<
 > = ({chain, chains, ...props}) => {
   return (
     <TextField
-      value={chain.id}
+      value={chain.name}
       select
       InputLabelProps={{
         shrink: true,
@@ -27,9 +27,9 @@ const ChainSelect: FC<
       }}
       {...props}
     >
-      {chains.map(({id, name}) => {
+      {chains.map(({name}) => {
         return (
-          <MenuItem key={id} value={id} sx={{py: 2}}>
+          <MenuItem key={name} value={name} sx={{py: 2}}>
             {/* <Box sx={{display: 'flex', alignItems: 'center', height: '100%'}}>
               <Typography
                 variant="body1"

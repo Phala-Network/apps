@@ -18,7 +18,7 @@ const PolkadotAction: FC<{onConfirm: () => void; loading: boolean}> = ({
       disabled={Boolean(errorMessage)}
       onClick={onConfirm}
     >
-      {errorMessage ?? 'Deposit'}
+      {errorMessage ?? 'Transfer'}
     </LoadingButton>
   )
 }

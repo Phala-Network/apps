@@ -1,5 +1,4 @@
 import ConnectWalletButton from '@/components/ConnectWalletButton'
-import {ChainType} from '@/lib/fetchConfig'
 import {isWalletConnectAtom} from '@/store/common'
 import {fromChainAtom} from '@/store/core'
 import {useAtom} from 'jotai'
@@ -14,11 +13,11 @@ const Account: FC = () => {
     return <ConnectWalletButton />
   }
 
-  if (fromChain.chainType === ChainType.EVM) {
+  if (fromChain?.chainType === 'Evm') {
     return <EvmAccount />
   }
 
-  if (fromChain.chainType === ChainType.Substrate) {
+  if (fromChain?.chainType === 'Sub') {
     return <PolkadotAccount />
   }
 

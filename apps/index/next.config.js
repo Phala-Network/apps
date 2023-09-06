@@ -14,6 +14,12 @@ const nextConfig = {
     ignoreDuringBuilds: true,
     dirs: ['pages', 'components', 'lib', 'hooks', 'store', 'types'],
   },
+  experimental: {
+    swcPlugins: [
+      ['@swc-jotai/debug-label', {}],
+      ['@swc-jotai/react-refresh', {}],
+    ],
+  },
   webpack(config) {
     for (const rule of config.module.rules) {
       if (rule.test instanceof RegExp && rule.test.test('.svg')) {

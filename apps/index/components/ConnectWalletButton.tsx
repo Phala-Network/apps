@@ -1,6 +1,6 @@
-import {fromChainAtom} from '@/store/bridge'
+import {polkadotWalletModalOpenAtom} from '@/store/common'
+import {fromChainAtom} from '@/store/core'
 import {ethereumProviderAtom, evmAccountAtom} from '@/store/ethers'
-import {polkadotWalletModalOpenAtom} from '@/store/polkadotWalletModal'
 import {LoadingButton} from '@mui/lab'
 import {
   Button,
@@ -29,7 +29,7 @@ const ConnectEvmWalletButton: FC<ButtonProps> = (props) => {
       .request({method: 'eth_requestAccounts'})
       .then((accounts) => {
         if (Array.isArray(accounts) && accounts.length > 0) {
-          setEvmAccount(accounts[0] as string)
+          setEvmAccount(accounts[0])
         } else {
           setEvmAccount(null)
         }
@@ -105,11 +105,11 @@ const ConnectPolkadotButton: FC<ButtonProps> = (props) => {
 const ConnectWalletButton: FC<ButtonProps> = (props) => {
   const [fromChain] = useAtom(fromChainAtom)
 
-  if (fromChain.kind === 'evm') {
+  if (fromChain?.chainType === 'Evm') {
     return <ConnectEvmWalletButton {...props} />
   }
 
-  if (fromChain.kind === 'polkadot') {
+  if (fromChain?.chainType === 'Sub') {
     return <ConnectPolkadotButton {...props} />
   }
 

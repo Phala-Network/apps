@@ -1,5 +1,4 @@
 import {createPolkadotApi} from '@/lib/createPolkadotApi'
-import {ChainType} from '@/lib/fetchConfig'
 import {fromChainAtom} from '@/store/core'
 import {type ApiPromise} from '@polkadot/api'
 import {useAtom} from 'jotai'
@@ -16,7 +15,7 @@ export const usePolkadotApi = (
 export const useCurrentPolkadotApi = (): ApiPromise | undefined => {
   const [fromChain] = useAtom(fromChainAtom)
   const polkadotApi = usePolkadotApi(
-    fromChain.chainType === ChainType.Substrate && fromChain.wsEndpoint,
+    fromChain?.chainType === 'Sub' && fromChain.endpoint,
   )
 
   return polkadotApi

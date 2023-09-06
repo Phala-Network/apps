@@ -1,5 +1,4 @@
 import {type Error} from '@/config/error'
-import {ChainType} from '@/lib/fetchConfig'
 import {
   destinationAccountAtom,
   errorAtom,
@@ -13,7 +12,7 @@ import {validateAddress} from '@phala/util'
 import {useAtom} from 'jotai'
 import {useEffect} from 'react'
 import {useBalance} from './useBalance'
-import useSolutions from './useSolutions'
+import useSolution from './useSolution'
 
 export const useValidation = (): void => {
   const [fromChain] = useAtom(fromChainAtom)
@@ -22,7 +21,7 @@ export const useValidation = (): void => {
   const [toAsset] = useAtom(toAssetAtom)
   const [, setBridgeError] = useAtom(errorAtom)
   const [amount] = useAtom(fromAmountAtom)
-  const {data: solutions} = useSolutions()
+  const {data: solutions} = useSolution()
 
   const [destinationAccount] = useAtom(destinationAccountAtom)
   const balance = useBalance()
@@ -39,15 +38,15 @@ export const useValidation = (): void => {
         return 'NoSolutions'
       }
 
-      if (fromAsset.id === toAsset.id && fromChain.id === toChain.id) {
+      if (fromAsset?.id === toAsset?.id && fromChain?.id === toChain?.id) {
         return 'InvalidRoute'
       }
 
       if (
         destinationAccount.length === 0 ||
-        (toChain.chainType === ChainType.Substrate &&
+        (toChain?.chainType === 'Sub' &&
           !validateAddress(destinationAccount)) ||
-        (toChain.chainType === ChainType.EVM &&
+        (toChain?.chainType === 'Evm' &&
           !(
             (await import('ethers')).isAddress(destinationAccount) &&
             destinationAccount.startsWith('0x')
@@ -93,10 +92,10 @@ export const useValidation = (): void => {
     amount,
     balance,
     solutions,
-    toChain.chainType,
-    fromAsset.id,
-    toAsset.id,
-    fromChain.id,
-    toChain.id,
+    fromAsset?.id,
+    toAsset?.id,
+    fromChain?.id,
+    toChain?.id,
+    toChain?.chainType,
   ])
 }

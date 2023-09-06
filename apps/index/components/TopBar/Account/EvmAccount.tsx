@@ -1,21 +1,20 @@
+import {assets} from '@/config/common'
 import {useEthersBrowserProvider} from '@/hooks/useEthersProvider'
 import {useSwitchNetwork} from '@/hooks/useSwitchNetwork'
 import {ethersBalanceFetcher} from '@/lib/ethersFetcher'
-import {ChainType} from '@/lib/fetchConfig'
-import {configAtom, fromChainAtom} from '@/store/core'
+import {fromChainAtom} from '@/store/core'
 import {evmAccountAtom, isNetworkWrongAtom} from '@/store/ethers'
 import {Button} from '@mui/material'
 import {toCurrency, trimAddress} from '@phala/util'
 import {useAtom} from 'jotai'
 import {useSnackbar} from 'notistack'
-import {type FC} from 'react'
+import {useMemo, type FC} from 'react'
 import useSWR from 'swr'
 import AccountTemplate from './AccountTemplate'
 
 const EvmAccount: FC = () => {
   const {enqueueSnackbar} = useSnackbar()
   const [fromChain] = useAtom(fromChainAtom)
-  const [config] = useAtom(configAtom)
   const [evmAccount] = useAtom(evmAccountAtom)
   const ethersBrowserProvider = useEthersBrowserProvider()
   const [isNetworkWrong] = useAtom(isNetworkWrongAtom)
@@ -27,13 +26,22 @@ const EvmAccount: FC = () => {
     {refreshInterval: 12000},
   )
 
+  const symbol = useMemo(
+    () =>
+      assets.find(
+        (x) =>
+          x.chainId === fromChain?.name && x.location === fromChain.nativeAsset,
+      )?.symbol,
+    [fromChain],
+  )
+
   if (evmAccount == null) return null
 
   return (
     <AccountTemplate
       account={trimAddress(evmAccount)}
       balance={
-        fromChain.chainType === ChainType.EVM &&
+        fromChain?.chainType === 'Evm' &&
         (isNetworkWrong ? (
           <Button
             variant="text"
@@ -46,8 +54,8 @@ const EvmAccount: FC = () => {
             Wrong Network
           </Button>
         ) : (
-          data != null &&
-          `${toCurrency(data)} ${config.assetMap[fromChain.nativeAsset].symbol}`
+          // FIXME: remove hardcode
+          data != null && `${toCurrency(data)} ${symbol ?? 'GLMR'}`
         ))
       }
       ButtonProps={{

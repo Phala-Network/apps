@@ -1,8 +1,7 @@
 import Body from '@/components/Body'
 import Footer from '@/components/Footer'
-import {fetchConfig, type Config} from '@/lib/fetchConfig'
 import {Box, Container, useTheme} from '@mui/material'
-import type {GetServerSideProps, NextPage} from 'next'
+import type {NextPage} from 'next'
 import dynamic from 'next/dynamic'
 
 const PolkadotWalletDialog = dynamic(
@@ -10,17 +9,7 @@ const PolkadotWalletDialog = dynamic(
   {ssr: false},
 )
 
-export interface Props {
-  config: Config
-}
-
-export const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
-  const config = await fetchConfig()
-
-  return {props: {config}}
-}
-
-const Home: NextPage<Props> = ({config}) => {
+const Home: NextPage = () => {
   const theme = useTheme()
   return (
     <Container

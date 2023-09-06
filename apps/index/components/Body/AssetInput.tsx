@@ -1,4 +1,4 @@
-import {type Asset} from '@/lib/fetchConfig'
+import {type Asset} from '@/config/common'
 import {TextField, type TextFieldProps} from '@mui/material'
 import {type FC} from 'react'
 import AssetSelect from './AssetSelect'
@@ -12,7 +12,7 @@ const AssetInput: FC<
     asset: Asset
     amount: string
     setAmount?: (value: string) => void
-    setAsset: (id: number | string) => void
+    setAsset: (id: string) => void
   }
 > = ({assets, asset, amount, setAmount, setAsset, ...props}) => {
   return (

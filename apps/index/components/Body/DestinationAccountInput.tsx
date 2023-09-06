@@ -1,4 +1,3 @@
-import {ChainType} from '@/lib/fetchConfig'
 import {isWalletConnectAtom} from '@/store/common'
 import {destinationAccountAtom, fromChainAtom, toChainAtom} from '@/store/core'
 import {evmAccountAtom} from '@/store/ethers'
@@ -32,19 +31,19 @@ const DestinationAccountInput: FC<BoxProps> = (props) => {
   const [polkadotAccount] = useAtom(polkadotAccountAtom)
   const [isWalletConnected] = useAtom(isWalletConnectAtom)
   const useSameAccountAvailable =
-    isWalletConnected && fromChain.chainType === toChain.chainType
+    isWalletConnected && fromChain?.chainType === toChain?.chainType
   const useSameAccountEnabled = useSameAccountAvailable && !manually
 
   useIsomorphicLayoutEffect(() => {
     if (useSameAccountEnabled) {
       if (
-        fromChain.chainType === ChainType.EVM &&
+        fromChain?.chainType === 'Evm' &&
         evmAccount != null &&
         evmAccount.length > 0
       ) {
         setDestinationAccount(evmAccount)
       } else if (
-        fromChain.chainType === ChainType.Substrate &&
+        fromChain?.chainType === 'Sub' &&
         polkadotAccount?.address != null
       ) {
         setDestinationAccount(polkadotAccount.address)
@@ -54,7 +53,7 @@ const DestinationAccountInput: FC<BoxProps> = (props) => {
     }
   }, [
     useSameAccountEnabled,
-    fromChain.chainType,
+    fromChain?.chainType,
     evmAccount,
     polkadotAccount?.address,
     setDestinationAccount,
@@ -68,7 +67,7 @@ const DestinationAccountInput: FC<BoxProps> = (props) => {
 
   const displayValue = useMemo(() => {
     if (
-      toChain.chainType === ChainType.Substrate &&
+      toChain?.chainType === 'Sub' &&
       useSameAccountEnabled &&
       polkadotAccount != null &&
       polkadotAccount.address === destinationAccount
@@ -86,7 +85,7 @@ const DestinationAccountInput: FC<BoxProps> = (props) => {
   return (
     <Box {...props}>
       <TextField
-        placeholder={toChain.chainType === ChainType.EVM ? '0x' : ''}
+        placeholder={toChain?.chainType === 'Evm' ? '0x' : ''}
         disabled={useSameAccountEnabled && Boolean(destinationAccount)}
         label="Destination Account"
         fullWidth

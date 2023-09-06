@@ -1,89 +1,85 @@
+import {assetMap, assets, type Asset} from '@/config/common'
 import {ERROR_MESSAGES, type Error} from '@/config/error'
-import {ChainType, type Config} from '@/lib/fetchConfig'
+import {type Client, type EvmChain, type SubstrateChain} from '@phala/index'
 import {polkadotAccountAtom} from '@phala/store'
 import {atom} from 'jotai'
 import {atomWithReset, atomWithStorage} from 'jotai/utils'
 import {evmAccountAtom} from './ethers'
 
-export const configAtom = atom<Config>({
-  chains: [],
-  assets: [],
-  chainMap: {},
-  assetMap: {},
-})
-configAtom.debugLabel = 'config'
+const getAssets = (chainId: string): Asset[] => {
+  return assets.filter((x) => x.chainId === chainId)
+}
 
-const fromChainIdAtom = atomWithStorage('jotai:from_chain_id', 2)
-export const fromChainAtom = atom(
-  (get) => get(configAtom).chainMap[get(fromChainIdAtom)],
-  (get, set, update: number | string) => {
-    const chainId = Number(update)
-    set(fromChainIdAtom, chainId)
-    if (get(fromAssetAtom).chainId !== chainId) {
-      set(fromAssetAtom, get(fromAssetsAtom)[0].id)
+export const clientAtom = atom<Client | undefined>(undefined)
+export const chainInstanceAtom = atom<EvmChain | SubstrateChain | undefined>(
+  (get) => {
+    const client = get(clientAtom)
+    const fromChain = get(fromChainAtom)
+    if (client != null && fromChain != null) {
+      if (fromChain.chainType === 'Evm') {
+        return client.createEvmChain(fromChain.name)
+      }
     }
   },
 )
-fromChainAtom.debugLabel = 'fromChain'
+export const currentTaskAtom = atom<
+  {id: string; fromChainId: string; hash: string} | undefined
+>(undefined)
 
-const fromAssetIdAtom = atomWithStorage('jotai:from_asset_id', 4)
-export const fromAssetAtom = atom(
-  (get) => get(configAtom).assetMap[get(fromAssetIdAtom)],
-  (get, set, update: number | string) => {
-    const assetId = Number(update)
-    set(fromAssetIdAtom, assetId)
+const fromChainIdAtom = atomWithStorage('jotai:from_chain_id', 'Moonbeam')
+export const fromChainAtom = atom(
+  (get) => get(clientAtom)?.chainMap.get(get(fromChainIdAtom)),
+  (get, set, update: string) => {
+    set(fromChainIdAtom, update)
+    if (get(fromAssetAtom)?.chainId !== update) {
+      set(fromAssetAtom, getAssets(update)[0]?.id)
+    }
   },
 )
-fromAssetAtom.debugLabel = 'fromAsset'
 
-export const fromAssetsAtom = atom((get) =>
-  get(configAtom).assets.filter(
-    (asset) => asset.chainId === get(fromChainIdAtom),
-  ),
+const fromAssetIdAtom = atomWithStorage('jotai:from_asset_id', 'Moonbeam-WGLMR')
+export const fromAssetAtom = atom(
+  (get) => assetMap.get(get(fromAssetIdAtom)),
+  (get, set, update: string) => {
+    set(fromAssetIdAtom, update)
+  },
 )
+
+export const fromAssetsAtom = atom((get) => getAssets(get(fromChainIdAtom)))
 
 export const fromAmountAtom = atomWithReset('')
-fromAmountAtom.debugLabel = 'fromAmount'
 
-const toChainIdAtom = atomWithStorage('jotai:to_chain_id', 1)
+const toChainIdAtom = atomWithStorage('jotai:to_chain_id', 'AstarEvm')
 export const toChainAtom = atom(
-  (get) => get(configAtom).chainMap[get(toChainIdAtom)],
-  (get, set, update: number | string) => {
-    const chainId = Number(update)
-    set(toChainIdAtom, chainId)
-    if (get(toAssetAtom).chainId !== chainId) {
-      set(toAssetAtom, get(toAssetsAtom)[0].id)
+  (get) => get(clientAtom)?.chainMap.get(get(toChainIdAtom)),
+  (get, set, update: string) => {
+    set(toChainIdAtom, update)
+    if (get(toAssetAtom)?.chainId !== update) {
+      set(toAssetAtom, getAssets(update)[0]?.id)
     }
   },
 )
-toChainAtom.debugLabel = 'toChain'
 
-const toAssetIdAtom = atomWithStorage('jotai:to_asset_id', 7)
+const toAssetIdAtom = atomWithStorage('jotai:to_asset_id', 'AstarEvm-xcGLMR')
 export const toAssetAtom = atom(
-  (get) => get(configAtom).assetMap[get(toAssetIdAtom)],
-  (get, set, update: number | string) => {
-    set(toAssetIdAtom, Number(update))
+  (get) => assetMap.get(get(toAssetIdAtom)),
+  (get, set, update: string) => {
+    set(toAssetIdAtom, update)
   },
 )
-toAssetAtom.debugLabel = 'toAsset'
 
-export const toAssetsAtom = atom((get) =>
-  get(configAtom).assets.filter(
-    (asset) => asset.chainId === get(toChainIdAtom),
-  ),
-)
+export const toAssetsAtom = atom((get) => getAssets(get(toChainIdAtom)))
 
 export const toAmountAtom = atomWithReset('')
-toAmountAtom.debugLabel = 'toAmount'
 
 export const fromAccountAtom = atom<string | null>((get) => {
   const fromChain = get(fromChainAtom)
   const polkadotAccount = get(polkadotAccountAtom)
   const evmAccount = get(evmAccountAtom)
-  if (fromChain.chainType === ChainType.EVM) {
+  if (fromChain?.chainType === 'Evm') {
     return evmAccount
   }
-  if (fromChain.chainType === ChainType.Substrate && polkadotAccount != null) {
+  if (fromChain?.chainType === 'Sub' && polkadotAccount != null) {
     return polkadotAccount.address
   }
   return null
@@ -98,55 +94,3 @@ export const errorMessageAtom = atom<string | null>((get) => {
   if (error === null) return null
   return ERROR_MESSAGES[error]
 })
-
-// export const existentialDepositAtom = atom((get) => {
-//   const toChain = get(toChainAtom)
-//   const asset = get(fromAssetAtom)
-//   const existentialDeposit = asset.existentialDeposit[toChain.id]
-
-//   if (existentialDeposit == null) {
-//     return new Decimal(0)
-//   }
-
-//   return existentialDeposit
-// })
-
-// export const infoAtom = atom((get) => {
-//   const fromChain = get(fromChainAtom)
-//   const toChain = get(toChainAtom)
-//   const asset = get(fromAssetAtom)
-//   const toChainConfig = BRIDGES.find(
-//     (bridge) => bridge.fromChain === fromChain.id
-//   )?.toChains.find((x) => x.id === toChain.id)
-//   const bridge = toChainConfig?.assets.find(
-//     (assetConfig) => assetConfig.assetId === asset.id
-//   )
-
-//   return {
-//     kind: bridge?.kind ?? null,
-//     estimatedTime: bridge?.estimatedTime ?? null,
-//     isThroughKhala: bridge?.isThroughKhala ?? false,
-//     disabled: toChainConfig?.disabled ?? bridge?.disabled ?? false,
-//   }
-// })
-
-// export const destChainTransactionFeeAtom = atom((get) => {
-//   const {kind, isThroughKhala} = get(infoAtom)
-//   const toChain = get(toChainAtom)
-//   const asset = get(fromAssetAtom)
-//   const destChainTransactionFee = asset.destChainTransactionFee[toChain.id]
-//   const khalaFee = asset.destChainTransactionFee.khala ?? new Decimal(0)
-
-//   if (kind !== 'evmChainBridge' && isThroughKhala) {
-//     return khalaFee.add(destChainTransactionFee ?? 0)
-//   }
-
-//   if (
-//     (kind === 'evmChainBridge' && !isThroughKhala) ||
-//     destChainTransactionFee == null
-//   ) {
-//     return new Decimal(0)
-//   }
-
-//   return destChainTransactionFee
-// })

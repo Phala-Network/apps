@@ -1,4 +1,5 @@
 import {useEthereumProviderInitialization} from '@/hooks/useEthereumProviderInitialization'
+import {useIndexClientInitialization} from '@/hooks/useIndexClientInitialization'
 import {useValidation} from '@/hooks/useValidation'
 import {useConnectPolkadotWallet} from '@phala/lib'
 import {type FC, type ReactNode} from 'react'
@@ -8,6 +9,7 @@ const Layout: FC<{children: ReactNode}> = ({children}) => {
   useEthereumProviderInitialization()
   useConnectPolkadotWallet('inDEX')
   useValidation()
+  useIndexClientInitialization()
 
   return (
     <>

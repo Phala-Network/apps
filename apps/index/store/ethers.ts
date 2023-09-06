@@ -1,4 +1,4 @@
-import {ChainType} from '@/lib/fetchConfig'
+import {evmChainIdMap} from '@/config/common'
 import {type ethers} from 'ethers'
 import {atom} from 'jotai'
 import {atomWithStorage} from 'jotai/utils'
@@ -16,7 +16,8 @@ export const isNetworkWrongAtom = atom<boolean>((get) => {
   const fromChain = get(fromChainAtom)
   return (
     evmChainId !== undefined &&
-    fromChain.chainType === ChainType.EVM &&
-    fromChain.evmChainId !== evmChainId
+    fromChain != null &&
+    fromChain.chainType === 'Evm' &&
+    evmChainIdMap[fromChain.name] !== evmChainId
   )
 })

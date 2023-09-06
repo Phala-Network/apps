@@ -1,11 +1,11 @@
-import {type Asset} from '@/lib/fetchConfig'
+import {type Asset} from '@/config/common'
 import {MenuItem, TextField, type TextFieldProps} from '@mui/material'
 import {type FC} from 'react'
 
 const AssetSelect: FC<
   TextFieldProps & {
     asset: Asset
-    setAsset: (id: number | string) => void
+    setAsset: (id: string) => void
     assets: Asset[]
   }
 > = ({asset, setAsset, assets, ...props}) => {

@@ -4,8 +4,6 @@ import {
   evmChainIdAtom,
   isEvmWalletAuthorizedAtom,
 } from '@/store/ethers'
-import {type MetaMaskInpageProvider} from '@metamask/providers'
-import {type Eip1193Provider} from 'ethers'
 import {useAtom} from 'jotai'
 import {useEffect} from 'react'
 
@@ -21,12 +19,8 @@ export const useEthereumProviderInitialization = (): void => {
   useEffect(() => {
     if (ethereumProvider != null) return
     const init = async (): Promise<void> => {
-      const {default: detectEthereumProvider} = await import(
-        '@metamask/detect-provider'
-      )
-      const provider = await detectEthereumProvider({silent: true})
-      if (provider == null) return
-      const ethereum = provider as Eip1193Provider & MetaMaskInpageProvider
+      const ethereum = window.ethereum
+      if (ethereum == null) return
       setEthereumProvider(ethereum)
       const updateAccounts = (accounts: unknown): void => {
         const account = (accounts as string[])[0]
