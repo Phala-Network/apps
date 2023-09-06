@@ -1,6 +1,6 @@
 import {weightedAverage} from '@phala/util'
 import {createQuery} from '@tanstack/svelte-query'
-import {addDays, addHours} from 'date-fns'
+import {addDays, addHours, isBefore, isEqual} from 'date-fns'
 import Decimal from 'decimal.js'
 import {gql} from 'graphql-request'
 import {khalaSquidClient, phalaSquidClient} from '~/lib/graphql'
@@ -45,11 +45,11 @@ type GlobalStateSnapshot = {
   summary: Summary[]
 }
 
-const transform = (data: Data): StateSnapshot[] => {
+const transform = (data: Data, updatedTimeArray: string[]): StateSnapshot[] => {
   const {
     globalStateSnapshotsConnection: {edges},
   } = data
-  const result: StateSnapshot[] = edges.map(({node}) => {
+  const raw: StateSnapshot[] = edges.map(({node}) => {
     return {
       ...node,
       updatedTime: new Date(node.updatedTime),
@@ -61,23 +61,29 @@ const transform = (data: Data): StateSnapshot[] => {
     }
   })
 
-  return result
+  return updatedTimeArray.map((dateString) => {
+    const date = new Date(dateString)
+    const node = raw.findLast(({updatedTime}) => {
+      return isEqual(updatedTime, date) || isBefore(updatedTime, date)
+    }) as StateSnapshot
+    return {...node, updatedTime: date}
+  })
 }
 
 const fetchGlobalStateSnapshot = async (): Promise<GlobalStateSnapshot> => {
   const days = 7
   const intervalHours = 6
   const startTime = addDays(new Date(), -days)
-  startTime.setUTCMinutes(0, 0, 0)
-  const updatedTime: string[] = []
-  for (let i = 0; i < days * intervalHours; i++) {
-    updatedTime.push(addHours(startTime, i * intervalHours).toISOString())
+  startTime.setUTCHours(0, 0, 0, 0)
+  const updatedTimeArray: string[] = []
+  for (let i = 0; i < days * (24 / intervalHours); i++) {
+    updatedTimeArray.push(addHours(startTime, i * intervalHours).toISOString())
   }
   const document = gql`
     {
       globalStateSnapshotsConnection(
         orderBy: updatedTime_ASC
-        where: {updatedTime_in: ${JSON.stringify(updatedTime)}}
+        where: {updatedTime_in: ${JSON.stringify(updatedTimeArray)}}
       ) {
         edges {
           node {
@@ -102,8 +108,8 @@ const fetchGlobalStateSnapshot = async (): Promise<GlobalStateSnapshot> => {
     khalaSquidClient.request<Data>(document),
   ])
 
-  const phala = transform(phalaData)
-  const khala = transform(khalaData)
+  const phala = transform(phalaData, updatedTimeArray)
+  const khala = transform(khalaData, updatedTimeArray)
   const summary: Summary[] = []
 
   for (let i = 0; i < phala.length; i++) {

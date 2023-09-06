@@ -43,7 +43,7 @@
         options={{
           scales: {
             x: {type: 'time'},
-            y: {ticks: {display: false}},
+            y: {ticks: {display: false}, min: 0},
           },
         }}
       />
