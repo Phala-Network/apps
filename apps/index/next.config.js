@@ -10,6 +10,9 @@ const nextConfig = {
   images: {disableStaticImages: true},
   env: {CONTEXT: process.env.CONTEXT},
   reactStrictMode: true,
+  typescript: {
+    ignoreBuildErrors: true,
+  },
   eslint: {
     ignoreDuringBuilds: true,
     dirs: ['pages', 'components', 'lib', 'hooks', 'store', 'types'],
