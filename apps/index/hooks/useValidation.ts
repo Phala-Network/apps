@@ -5,6 +5,7 @@ import {
   fromAmountAtom,
   fromAssetAtom,
   fromChainAtom,
+  solutionAtom,
   toAssetAtom,
   toChainAtom,
 } from '@/store/core'
@@ -12,7 +13,6 @@ import {validateAddress} from '@phala/util'
 import {useAtom} from 'jotai'
 import {useEffect} from 'react'
 import {useBalance} from './useBalance'
-import useSolution from './useSolution'
 
 export const useValidation = (): void => {
   const [fromChain] = useAtom(fromChainAtom)
@@ -21,7 +21,7 @@ export const useValidation = (): void => {
   const [toAsset] = useAtom(toAssetAtom)
   const [, setBridgeError] = useAtom(errorAtom)
   const [amount] = useAtom(fromAmountAtom)
-  const {data: solutions} = useSolution()
+  const [solution] = useAtom(solutionAtom)
 
   const [destinationAccount] = useAtom(destinationAccountAtom)
   const balance = useBalance()
@@ -34,7 +34,7 @@ export const useValidation = (): void => {
         return 'InvalidAmount'
       }
 
-      if (solutions == null) {
+      if (solution == null) {
         return 'NoSolutions'
       }
 
@@ -91,7 +91,7 @@ export const useValidation = (): void => {
     destinationAccount,
     amount,
     balance,
-    solutions,
+    solution,
     fromAsset?.id,
     toAsset?.id,
     fromChain?.id,

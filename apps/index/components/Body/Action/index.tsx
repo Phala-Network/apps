@@ -12,10 +12,10 @@ const Action: FC = () => {
   const [loading, setLoading] = useState(false)
   const [isWalletConnected] = useAtom(isWalletConnectAtom)
   const deposit = useDeposit()
-  const onConfirm = (): void => {
+  const onConfirm = async (): Promise<void> => {
     setLoading(true)
     try {
-      void deposit({
+      await deposit({
         onReady: () => {
           setLoading(false)
         },
@@ -31,10 +31,20 @@ const Action: FC = () => {
         <ConnectWalletButton size="large" variant="contained" fullWidth />
       )}
       {isWalletConnected && fromChain?.chainType === 'Evm' && (
-        <EvmAction onConfirm={onConfirm} loading={loading} />
+        <EvmAction
+          onConfirm={() => {
+            void onConfirm()
+          }}
+          loading={loading}
+        />
       )}
       {isWalletConnected && fromChain?.chainType === 'Sub' && (
-        <PolkadotAction onConfirm={onConfirm} loading={loading} />
+        <PolkadotAction
+          onConfirm={() => {
+            void onConfirm()
+          }}
+          loading={loading}
+        />
       )}
     </>
   )

@@ -5,6 +5,7 @@ import {
   fromAmountAtom,
   fromAssetAtom,
   fromChainAtom,
+  solutionAtom,
 } from '@/store/core'
 import {EvmChain, SubstrateChain} from '@phala/index'
 import {polkadotAccountAtom} from '@phala/store'
@@ -13,7 +14,6 @@ import {decodeAddress} from '@polkadot/util-crypto'
 import Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
 import {useEthersBrowserProvider} from './useEthersProvider'
-import useSolution from './useSolution'
 
 const useDeposit = (): (({
   onReady,
@@ -23,7 +23,7 @@ const useDeposit = (): (({
   const [fromChain] = useAtom(fromChainAtom)
   const [fromAsset] = useAtom(fromAssetAtom)
   const [fromAmount] = useAtom(fromAmountAtom)
-  const {data: solution} = useSolution()
+  const [solution] = useAtom(solutionAtom)
   const [destinationAccount] = useAtom(destinationAccountAtom)
   const ethersProvider = useEthersBrowserProvider()
   const [polkadotAccount] = useAtom(polkadotAccountAtom)
@@ -31,10 +31,15 @@ const useDeposit = (): (({
   const [, setCurrentTask] = useAtom(currentTaskAtom)
 
   return async ({onReady}) => {
-    if (fromAmount.length === 0 || solution == null) {
+    if (
+      fromAmount.length === 0 ||
+      solution == null ||
+      chainInstance == null ||
+      fromChain == null ||
+      fromAsset == null
+    ) {
       throw new Error('Deposit missing required parameters')
     }
-    if (chainInstance == null || fromChain == null || fromAsset == null) return
 
     const hexAddress = isHex(destinationAccount)
       ? destinationAccount
@@ -54,19 +59,17 @@ const useDeposit = (): (({
         solution,
       )
 
-      try {
-        if (ethersProvider != null) {
-          const signer = await ethersProvider.getSigner()
-          const tx = await signer.sendTransaction(deposit.tx)
-          setCurrentTask({
-            id: deposit.id,
-            fromChainId: fromChain.name,
-            hash: tx.hash,
-          })
-          onReady?.()
-          await tx.wait()
-        }
-      } catch (err) {}
+      if (ethersProvider != null) {
+        const signer = await ethersProvider.getSigner()
+        const tx = await signer.sendTransaction(deposit.tx)
+        setCurrentTask({
+          id: deposit.id,
+          fromChainId: fromChain.name,
+          hash: tx.hash,
+        })
+        onReady?.()
+        await tx.wait()
+      }
     } else if (
       chainInstance instanceof SubstrateChain &&
       polkadotAccount?.wallet != null

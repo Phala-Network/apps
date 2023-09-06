@@ -13,6 +13,7 @@
     "@emotion/react": "^11.10.6",
     "@emotion/server": "^11.10.0",
     "@emotion/styled": "^11.10.6",
+    "@metamask/detect-provider": "^2.0.0",
     "@mui/icons-material": "^5.11.16",
     "@mui/lab": "5.0.0-alpha.142",
     "@mui/material": "^5.12.1",

@@ -4,6 +4,8 @@ import {
   evmChainIdAtom,
   isEvmWalletAuthorizedAtom,
 } from '@/store/ethers'
+import detectEthereumProvider from '@metamask/detect-provider'
+import {type Eip1193Provider} from 'ethers'
 import {useAtom} from 'jotai'
 import {useEffect} from 'react'
 
@@ -19,9 +21,9 @@ export const useEthereumProviderInitialization = (): void => {
   useEffect(() => {
     if (ethereumProvider != null) return
     const init = async (): Promise<void> => {
-      const ethereum = window.ethereum
+      const ethereum = await detectEthereumProvider()
       if (ethereum == null) return
-      setEthereumProvider(ethereum)
+      setEthereumProvider(ethereum as unknown as Eip1193Provider)
       const updateAccounts = (accounts: unknown): void => {
         const account = (accounts as string[])[0]
         setEvmAccount(account ?? null)
@@ -32,9 +34,11 @@ export const useEthereumProviderInitialization = (): void => {
 
       ethereum.on('accountsChanged', updateAccounts)
       ethereum.on('chainChanged', updateChainId)
-      await ethereum.request({method: 'eth_chainId'}).then(updateChainId)
+      await (ethereum as unknown as Eip1193Provider)
+        .request({method: 'eth_chainId'})
+        .then(updateChainId)
       if (isEvmWalletAuthorized) {
-        ethereum
+        ;(ethereum as unknown as Eip1193Provider)
           .request({method: 'eth_requestAccounts'})
           .then((accounts) => {
             const account = (accounts as string[])[0]

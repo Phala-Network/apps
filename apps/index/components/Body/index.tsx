@@ -33,7 +33,8 @@ import Action from './Action'
 import AssetInput from './AssetInput'
 import ChainSelect from './ChainSelect'
 import DestinationAccountInput from './DestinationAccountInput'
-import Solution from './Solution'
+import Progress from './Progress'
+import SolutionInput from './SolutionInput'
 
 const Body: FC<BoxProps> = (props) => {
   const theme = useTheme()
@@ -193,10 +194,12 @@ const Body: FC<BoxProps> = (props) => {
 
           <DestinationAccountInput />
 
+          <SolutionInput />
+
           <Box sx={{width: 1}}>
             <Action />
             <Collapse in={Boolean(fromAmount)}>
-              <Solution sx={{mt: 3}} />
+              <Progress sx={{mt: 3}} />
             </Collapse>
           </Box>
         </Stack>
