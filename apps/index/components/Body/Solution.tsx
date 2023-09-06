@@ -6,6 +6,7 @@ import {
   Box,
   Chip,
   CircularProgress,
+  Link,
   Paper,
   Stack,
   Step,
@@ -16,6 +17,18 @@ import {
   type PaperProps,
 } from '@mui/material'
 import {useMemo, type FC} from 'react'
+
+const getUrl = (chain: string, hash: string): string => {
+  let url = ''
+  if (chain === 'Moonbeam') {
+    url = 'https://moonbeam.moonscan.io/'
+  } else if (chain === 'Phala') {
+    url = 'https://phala.subscan.io/'
+  } else if (chain === 'Astar' || chain === 'AstarEvm') {
+    url = 'https://astar.subscan.io/'
+  }
+  return `${url}tx/${hash}`
+}
 
 const Solution: FC<PaperProps> = ({sx, ...props}) => {
   const theme = useTheme()
@@ -104,6 +117,17 @@ const Solution: FC<PaperProps> = ({sx, ...props}) => {
                       <Box whiteSpace="pre">{label}</Box>
                     </Stack>
                   ))}
+                  {taskStatus?.executeTxs[index] != null && (
+                    <Link
+                      target="_blank"
+                      href={getUrl(
+                        step.sourceChain,
+                        taskStatus.executeTxs[index],
+                      )}
+                    >
+                      View on explorer
+                    </Link>
+                  )}
                 </Stack>
               </StepLabel>
             </Step>
