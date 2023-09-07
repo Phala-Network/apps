@@ -16,7 +16,6 @@ import ArrowDownward from '@mui/icons-material/ArrowDownward'
 import ArrowForward from '@mui/icons-material/ArrowForward'
 import {
   Box,
-  Collapse,
   IconButton,
   Link,
   Paper,
@@ -33,7 +32,6 @@ import Action from './Action'
 import AssetInput from './AssetInput'
 import ChainSelect from './ChainSelect'
 import DestinationAccountInput from './DestinationAccountInput'
-import Progress from './Progress'
 import SolutionInput from './SolutionInput'
 
 const Body: FC<BoxProps> = (props) => {
@@ -198,9 +196,6 @@ const Body: FC<BoxProps> = (props) => {
 
           <Box sx={{width: 1}}>
             <Action />
-            <Collapse in={Boolean(fromAmount)}>
-              <Progress sx={{mt: 3}} />
-            </Collapse>
           </Box>
         </Stack>
       </Paper>

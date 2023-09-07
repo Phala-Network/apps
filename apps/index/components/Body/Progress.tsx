@@ -138,7 +138,7 @@ const Progress: FC<PaperProps> = ({sx, ...props}) => {
             <StepLabel
               {...(activeStep === 0 && currentTask != null && activeProps)}
             >
-              <Stack gap={1} direction="row" alignItems="baseline">
+              <Stack spacing={1} direction="row" alignItems="baseline">
                 <Chip
                   label="Initialize"
                   size="small"
@@ -157,7 +157,7 @@ const Progress: FC<PaperProps> = ({sx, ...props}) => {
             return (
               <Step key={index} expanded>
                 <StepLabel {...(isActive && activeProps)}>
-                  <Stack gap={1} direction="row" alignItems="baseline">
+                  <Stack spacing={1} direction="row" alignItems="baseline">
                     <Chip
                       label={step.sourceChain}
                       size="small"
