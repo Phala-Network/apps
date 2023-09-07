@@ -46,8 +46,7 @@ const ExplorerLink: FC<{chain?: string; hash?: string}> = ({chain, hash}) => {
 }
 
 const activeProps = {
-  StepIconComponent: CircularProgress,
-  StepIconProps: {size: 24} as any,
+  StepIconComponent: () => <CircularProgress size={24} />,
 }
 
 const Progress: FC<PaperProps> = ({sx, ...props}) => {
@@ -56,7 +55,16 @@ const Progress: FC<PaperProps> = ({sx, ...props}) => {
   const [currentTask] = useAtom(currentTaskAtom)
   const {data: taskStatus} = useCurrentTask()
 
-  const activeStep = taskStatus != null ? taskStatus.executeIndex + 1 : 0
+  const activeStep = useMemo(() => {
+    let value = 0
+    if (taskStatus != null) {
+      value = taskStatus.executeIndex + 1
+      if (taskStatus.status.completed === null) {
+        value++
+      }
+    }
+    return value
+  }, [taskStatus])
 
   const steps = useMemo(() => {
     if (solution == null) return null
@@ -123,7 +131,7 @@ const Progress: FC<PaperProps> = ({sx, ...props}) => {
             <StepLabel
               {...(activeStep === 0 && currentTask != null && activeProps)}
             >
-              <Stack gap={1}>
+              <Stack gap={1} alignItems="flex-start">
                 <Chip
                   label="Initialize"
                   size="small"
@@ -142,7 +150,7 @@ const Progress: FC<PaperProps> = ({sx, ...props}) => {
             return (
               <Step key={index}>
                 <StepLabel {...(isActive && activeProps)}>
-                  <Stack gap={1}>
+                  <Stack gap={1} alignItems="flex-start">
                     {step.batch.map(({kind, label}) => (
                       <Stack direction="row" alignItems="center" key={label}>
                         <Chip

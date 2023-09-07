@@ -6,7 +6,7 @@ import {fromChainAtom} from './core'
 
 export const isEvmWalletAuthorizedAtom = atomWithStorage(
   'jotai:is_evm_wallet_authorized',
-  false,
+  true,
 )
 export const ethereumProviderAtom = atom<ethers.Eip1193Provider | null>(null)
 export const evmAccountAtom = atom<string | null>(null)

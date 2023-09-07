@@ -7,11 +7,19 @@ const useCurrentTask = (): SWRResponse<Task> => {
   const [client] = useAtom(clientAtom)
   const [currentTask] = useAtom(currentTaskAtom)
   const swr = useSWR(
-    currentTask != null && client != null && [currentTask.id, client],
+    currentTask != null &&
+      client != null && [currentTask.id, client, 'taskStatus'],
     async ([taskId, client]) => {
       return await client.getTask(taskId)
     },
-    {refreshInterval: 3000},
+    {
+      refreshInterval: (latestData) => {
+        if (latestData != null && latestData.status.completed === null) {
+          return 0
+        }
+        return 3000
+      },
+    },
   )
 
   return swr

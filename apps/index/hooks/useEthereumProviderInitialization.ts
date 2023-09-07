@@ -38,7 +38,7 @@ export const useEthereumProviderInitialization = (): void => {
         .request({method: 'eth_chainId'})
         .then(updateChainId)
       if (isEvmWalletAuthorized) {
-        ;(ethereum as unknown as Eip1193Provider)
+        await (ethereum as unknown as Eip1193Provider)
           .request({method: 'eth_requestAccounts'})
           .then((accounts) => {
             const account = (accounts as string[])[0]

@@ -34,10 +34,16 @@ const MyApp: FC<MyAppProps> = (props) => {
 
       <SWRConfig
         value={{
+          onSuccess(data, key) {
+            if (process.env.NODE_ENV === 'development') {
+              // eslint-disable-next-line no-console
+              console.debug(key, data)
+            }
+          },
           onError: (error, key) => {
             if (process.env.NODE_ENV === 'development') {
               // eslint-disable-next-line no-console
-              console.error(key, error)
+              console.debug(key, error)
             }
           },
         }}

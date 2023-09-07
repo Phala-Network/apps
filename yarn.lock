@@ -3745,22 +3745,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@phala/index@npm:^1.0.11":
-  version: 1.0.11
-  resolution: "@phala/index@npm:1.0.11"
-  dependencies:
-    "@phala/sdk": ^0.5.1-nightly-20230905
-    "@polkadot/api": ^10.9.1
-    "@polkadot/keyring": ^12.4.2
-    ajv: ^8.12.0
-    ethers: ^6.7.1
-  checksum: 7046d81398235d55c07a6b6bc2f06ff7dfcb25ae68eb7f373768babe66e901910824c429bdb90914212086be453f3eddf6d772107eaee02b268763d52a8c699b
-  languageName: node
-  linkType: hard
-
-"@phala/index@workspace:apps/index":
+"@phala/index-ui@workspace:apps/index":
   version: 0.0.0-use.local
-  resolution: "@phala/index@workspace:apps/index"
+  resolution: "@phala/index-ui@workspace:apps/index"
   dependencies:
     "@emotion/react": ^11.10.6
     "@emotion/server": ^11.10.0
@@ -3771,7 +3758,7 @@ __metadata:
     "@mui/material": ^5.12.1
     "@next/bundle-analyzer": ^13.3.1
     "@phala/eslint-config": "workspace:^"
-    "@phala/index": ^1.0.11
+    "@phala/index": ^1.0.16
     "@phala/lib": "workspace:^"
     "@phala/store": "workspace:^"
     "@phala/util": "workspace:^"
@@ -3804,6 +3791,19 @@ __metadata:
     typescript: ^5.0.4
   languageName: unknown
   linkType: soft
+
+"@phala/index@npm:^1.0.16":
+  version: 1.0.16
+  resolution: "@phala/index@npm:1.0.16"
+  dependencies:
+    "@phala/sdk": ^0.5.1-nightly-20230905
+    "@polkadot/api": ^10.9.1
+    "@polkadot/keyring": ^12.4.2
+    ajv: ^8.12.0
+    ethers: ^6.7.1
+  checksum: 0f2b19e51d1c4de65475854a0d6f1f3d0c6fbaf1025b50df2f7e34fb853dc8accdf8c4cb640dcca56b1e5f8a13fc5275b04b682fe185f6cb43a1173c7dc15b17
+  languageName: node
+  linkType: hard
 
 "@phala/lib@workspace:^, @phala/lib@workspace:packages/lib":
   version: 0.0.0-use.local
