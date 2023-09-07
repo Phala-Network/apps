@@ -16,9 +16,9 @@ import {useAtom} from 'jotai'
 import {useEthersBrowserProvider} from './useEthersProvider'
 
 const useDeposit = (): (({
-  onReady,
+  onSubmitted,
 }: {
-  onReady?: () => void
+  onSubmitted?: () => void
 }) => Promise<void>) => {
   const [fromChain] = useAtom(fromChainAtom)
   const [fromAsset] = useAtom(fromAssetAtom)
@@ -30,7 +30,7 @@ const useDeposit = (): (({
   const [chainInstance] = useAtom(chainInstanceAtom)
   const [, setCurrentTask] = useAtom(currentTaskAtom)
 
-  return async ({onReady}) => {
+  return async ({onSubmitted}) => {
     if (
       fromAmount.length === 0 ||
       solution == null ||
@@ -67,7 +67,7 @@ const useDeposit = (): (({
           fromChainId: fromChain.name,
           hash: tx.hash,
         })
-        onReady?.()
+        onSubmitted?.()
         await tx.wait()
       }
     } else if (
@@ -80,14 +80,30 @@ const useDeposit = (): (({
         hexAddress,
         solution,
       )
-      const hash = await deposit.tx.signAndSend(polkadotAccount.address, {
-        signer: polkadotAccount.wallet.signer,
-      })
-      setCurrentTask({
-        id: deposit.id,
-        fromChainId: fromChain.name,
-        hash: hash.toHex(),
-      })
+      const waitFinalized = async (): Promise<void> => {
+        await new Promise((resolve, reject) => {
+          void deposit.tx.signAndSend(
+            polkadotAccount.address,
+            {
+              signer: polkadotAccount.wallet.signer,
+            },
+            ({txHash, status}) => {
+              if (status.isReady) {
+                onSubmitted?.()
+                setCurrentTask({
+                  id: deposit.id,
+                  fromChainId: fromChain.name,
+                  hash: txHash.toHex(),
+                })
+              } else if (status.isInBlock) {
+                resolve()
+              }
+            },
+          )
+        })
+      }
+
+      await waitFinalized()
     } else {
       throw new Error('Deposit not ready')
     }

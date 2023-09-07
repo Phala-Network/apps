@@ -16,7 +16,7 @@ const Action: FC = () => {
     setLoading(true)
     try {
       await deposit({
-        onReady: () => {
+        onSubmitted: () => {
           setLoading(false)
         },
       })
