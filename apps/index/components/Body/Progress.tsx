@@ -2,14 +2,15 @@
 import {assets} from '@/config/common'
 import useCurrentTask from '@/hooks/useTaskStatus'
 import {currentTaskAtom, solutionAtom} from '@/store/core'
+import OpenInNewIcon from '@mui/icons-material/OpenInNew'
 import {
-  Box,
   Chip,
   CircularProgress,
   Link,
   Paper,
   Stack,
   Step,
+  StepContent,
   StepLabel,
   Stepper,
   Typography,
@@ -40,7 +41,10 @@ const ExplorerLink: FC<{chain?: string; hash?: string}> = ({chain, hash}) => {
       href={getUrl(chain, hash)}
       fontSize="caption.fontSize"
     >
-      View on explorer
+      <Stack direction="row" alignItems="center" gap={0.5}>
+        <span>View</span>
+        <OpenInNewIcon fontSize="inherit" />
+      </Stack>
     </Link>
   )
 }
@@ -59,8 +63,8 @@ const Progress: FC<PaperProps> = ({sx, ...props}) => {
     let value = 0
     if (taskStatus != null) {
       value = taskStatus.executeIndex + 1
-      if (taskStatus.status.completed === null) {
-        value++
+      if ('completed' in taskStatus.status) {
+        value += 2
       }
     }
     return value
@@ -91,9 +95,12 @@ const Progress: FC<PaperProps> = ({sx, ...props}) => {
       const spendSymbol = getSymbol(source_chain, spend_asset)
       const receiveSymbol = getSymbol(dest_chain, receive_asset)
       if (exe_type === 'bridge') {
-        label = `${source_chain} ${spendSymbol} -> ${dest_chain} ${receiveSymbol}`
+        label = `${spendSymbol} -> ${dest_chain} ${receiveSymbol}`
       } else if (exe_type === 'swap') {
-        label = `${spendSymbol} -> ${receiveSymbol} on ${exe}`
+        label = `${spendSymbol} -> ${receiveSymbol} on ${exe.replaceAll(
+          '_',
+          ' ',
+        )}`
       }
 
       const step = {kind: exe_type, label}
@@ -131,11 +138,11 @@ const Progress: FC<PaperProps> = ({sx, ...props}) => {
             <StepLabel
               {...(activeStep === 0 && currentTask != null && activeProps)}
             >
-              <Stack gap={1} alignItems="flex-start">
+              <Stack gap={1} direction="row" alignItems="center">
                 <Chip
                   label="Initialize"
                   size="small"
-                  sx={{mr: 1.5, textTransform: 'capitalize', width: 90}}
+                  sx={{textTransform: 'capitalize', width: 90}}
                   color={activeStep === 0 ? 'primary' : 'default'}
                 />
                 <ExplorerLink
@@ -148,26 +155,38 @@ const Progress: FC<PaperProps> = ({sx, ...props}) => {
           {steps.map((step, index) => {
             const isActive = activeStep === index + 1
             return (
-              <Step key={index}>
+              <Step key={index} expanded>
                 <StepLabel {...(isActive && activeProps)}>
-                  <Stack gap={1} alignItems="flex-start">
-                    {step.batch.map(({kind, label}) => (
-                      <Stack direction="row" alignItems="center" key={label}>
-                        <Chip
-                          label={kind}
-                          size="small"
-                          sx={{mr: 1.5, textTransform: 'capitalize', width: 90}}
-                          color={isActive ? 'primary' : 'default'}
-                        />
-                        <Box whiteSpace="pre">{label}</Box>
-                      </Stack>
-                    ))}
+                  <Stack gap={1} direction="row" alignItems="center">
+                    <Chip
+                      label={step.sourceChain}
+                      size="small"
+                      sx={{textTransform: 'capitalize', width: 90}}
+                      color={isActive ? 'primary' : 'default'}
+                    />
+
                     <ExplorerLink
                       chain={step.sourceChain}
                       hash={taskStatus?.executeTxs[index]}
                     />
                   </Stack>
                 </StepLabel>
+                <StepContent>
+                  {step.batch.map(({kind, label}) => (
+                    <Stack direction="row" alignItems="center" key={label}>
+                      <Typography
+                        width={60}
+                        variant="subtitle2"
+                        textTransform="capitalize"
+                      >
+                        {kind}
+                      </Typography>
+                      <Typography variant="caption" whiteSpace="pre">
+                        {label}
+                      </Typography>
+                    </Stack>
+                  ))}
+                </StepContent>
               </Step>
             )
           })}
@@ -176,8 +195,8 @@ const Progress: FC<PaperProps> = ({sx, ...props}) => {
               <Chip
                 label="Completed"
                 size="small"
-                sx={{mr: 1.5, textTransform: 'capitalize', width: 90}}
-                color={activeStep === steps.length + 1 ? 'primary' : 'default'}
+                sx={{textTransform: 'capitalize', width: 90}}
+                color={activeStep > steps.length ? 'primary' : 'default'}
               />
             </StepLabel>
           </Step>

@@ -14,7 +14,7 @@ const useCurrentTask = (): SWRResponse<Task> => {
     },
     {
       refreshInterval: (latestData) => {
-        if (latestData != null && latestData.status.completed === null) {
+        if (latestData != null && 'completed' in latestData.status) {
           return 0
         }
         return 3000

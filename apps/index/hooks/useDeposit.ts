@@ -85,7 +85,7 @@ const useDeposit = (): (({
           void deposit.tx.signAndSend(
             polkadotAccount.address,
             {
-              signer: polkadotAccount.wallet.signer,
+              signer: polkadotAccount.wallet?.signer,
             },
             ({txHash, status}) => {
               if (status.isReady) {
@@ -96,7 +96,7 @@ const useDeposit = (): (({
                   hash: txHash.toHex(),
                 })
               } else if (status.isInBlock) {
-                resolve()
+                resolve(undefined)
               }
             },
           )
