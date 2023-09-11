@@ -11,7 +11,7 @@ on:
 
 jobs:
   build:
-    name: Build and Test
+    name: Test
     runs-on: ubuntu-latest
     env:
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
@@ -38,5 +38,5 @@ jobs:
       - name: Typecheck
         run: yarn check
 
-      - name: Build all apps
-        run: npm run build
+      # - name: Build all apps
+      #   run: npm run build

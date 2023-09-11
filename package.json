@@ -26,7 +26,7 @@
     "@total-typescript/ts-reset": "^0.5.1",
     "@types/node": "^18.17.6",
     "husky": "^8.0.3",
-    "turbo": "^1.10.12",
+    "turbo": "latest",
     "typescript": "^5.1.6"
   },
   "packageManager": "yarn@3.5.0"
