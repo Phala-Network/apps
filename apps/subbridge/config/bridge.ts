@@ -91,8 +91,7 @@ export const BRIDGES: Readonly<Bridge[]> = [
           {
             assetId: 'pha',
             estimatedTime: '~ 5 mins',
-            kind: 'evmSygma',
-            disabled: true,
+            kind: 'evmChainBridge',
           },
         ],
       },
