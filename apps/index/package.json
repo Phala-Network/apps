@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 3003",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -18,7 +18,7 @@
     "@mui/lab": "5.0.0-alpha.142",
     "@mui/material": "^5.12.1",
     "@next/bundle-analyzer": "^13.3.1",
-    "@phala/index": "^1.0.16",
+    "@phala/index": "^1.0.20",
     "@phala/lib": "workspace:^",
     "@phala/store": "workspace:^",
     "@phala/util": "workspace:^",

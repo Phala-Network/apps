@@ -77,38 +77,27 @@ const Progress: FC<PaperProps> = ({sx, ...props}) => {
       sourceChain: string
     }> = []
     for (let i = 0; i < solution.length; i++) {
-      const {
-        exe_type,
-        exe,
-        source_chain,
-        dest_chain,
-        spend_asset,
-        receive_asset,
-      } = solution[i]
+      const {exe, sourceChain, destChain, spendAsset, receiveAsset} =
+        solution[i]
       const prevStep = result.at(-1)
+      const isSwap = sourceChain === destChain
 
-      let label = ''
       const getSymbol = (chain: string, location: string): string =>
         assets.find((x) => x.chainId === chain && x.location === location)
           ?.symbol ?? ''
 
-      const spendSymbol = getSymbol(source_chain, spend_asset)
-      const receiveSymbol = getSymbol(dest_chain, receive_asset)
-      if (exe_type === 'bridge') {
-        label = `${spendSymbol} -> ${dest_chain} ${receiveSymbol}`
-      } else if (exe_type === 'swap') {
-        label = `${spendSymbol} -> ${receiveSymbol} on ${exe.replaceAll(
-          '_',
-          ' ',
-        )}`
-      }
+      const spendSymbol = getSymbol(sourceChain, spendAsset)
+      const receiveSymbol = getSymbol(destChain, receiveAsset)
+      const label = isSwap
+        ? `${spendSymbol} -> ${receiveSymbol} on ${exe.replaceAll('_', ' ')}`
+        : `${spendSymbol} -> ${destChain} ${receiveSymbol}`
 
-      const step = {kind: exe_type, label}
-      if (prevStep != null && prevStep.sourceChain === source_chain) {
+      const step = {kind: isSwap ? 'swap' : 'bridge', label}
+      if (prevStep != null && prevStep.sourceChain === sourceChain) {
         prevStep.batch.push(step)
       } else {
         result.push({
-          sourceChain: source_chain,
+          sourceChain,
           batch: [step],
         })
       }
