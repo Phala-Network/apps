@@ -6,12 +6,13 @@ export default {
       colors: {
         gray: {
           700: '#2D3748',
-          400: '#A0AEC0',
+          // 400: '#A0AEC0',
         },
       },
     },
     fontFamily: {
       montserrat: ['Montserrat', 'sans-serif'],
+      mono: ['IBM Plex Mono', 'monospace'],
     },
   },
   plugins: [],

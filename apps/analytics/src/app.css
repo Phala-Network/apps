@@ -1,25 +1,47 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Montserrat:wght@400;500;700;900&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   html {
+    min-height: 100vh;
     background-color: #171923;
     background: linear-gradient(180deg, #171923 0%, #1a202c 100%);
+  }
+
+  body {
+    overflow-x: hidden;
   }
 }
 
 @layer components {
-  .card {
-    @apply bg-gray-700 rounded-3xl px-6 py-5 shadow-xl;
+  .numeric {
+    @apply font-mono font-bold;
   }
+}
 
-  .data-value {
-    @apply font-montserrat font-bold text-3xl;
-  }
+.card {
+  @apply bg-gray-700 rounded-3xl px-6 py-5 shadow-xl;
+}
 
-  .data-label {
-    @apply font-montserrat text-sm text-gray-400;
-  }
+.data-value {
+  @apply numeric font-bold text-3xl;
+}
+
+.data-label {
+  @apply font-montserrat text-gray-300;
+}
+
+.help {
+  @apply cursor-help underline decoration-dotted decoration-gray-500 hover:decoration-inherit;
+}
+
+.tooltip {
+  @apply absolute top-0 left-0 md:ml-4 bg-gray-600 rounded-xl p-3 text-sm font-montserrat w-80;
+}
+
+sub {
+  bottom: 0;
+  position: unset;
 }

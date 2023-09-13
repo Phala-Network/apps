@@ -24,7 +24,7 @@ type Data = {
   }
 }
 
-type StateSnapshot = {
+type Snapshot = {
   averageApr: Decimal
   delegatorCount: number
   idleWorkerCount: number
@@ -37,19 +37,19 @@ type StateSnapshot = {
   workerCount: number
 }
 
-type Summary = Omit<StateSnapshot, 'averageBlockTime'>
+type Summary = Omit<Snapshot, 'averageBlockTime'>
 
-type GlobalStateSnapshot = {
-  phala: StateSnapshot[]
-  khala: StateSnapshot[]
+type ComputationSnapshot = {
+  phala: Snapshot[]
+  khala: Snapshot[]
   summary: Summary[]
 }
 
-const transform = (data: Data, updatedTimeArray: string[]): StateSnapshot[] => {
+const transform = (data: Data, updatedTimeArray: string[]): Snapshot[] => {
   const {
     globalStateSnapshotsConnection: {edges},
   } = data
-  const raw: StateSnapshot[] = edges.map(({node}) => {
+  const raw: Snapshot[] = edges.map(({node}) => {
     return {
       ...node,
       updatedTime: new Date(node.updatedTime),
@@ -65,18 +65,18 @@ const transform = (data: Data, updatedTimeArray: string[]): StateSnapshot[] => {
     const date = new Date(dateString)
     const node = raw.findLast(({updatedTime}) => {
       return isEqual(updatedTime, date) || isBefore(updatedTime, date)
-    }) as StateSnapshot
+    }) as Snapshot
     return {...node, updatedTime: date}
   })
 }
 
-const fetchGlobalStateSnapshot = async (): Promise<GlobalStateSnapshot> => {
-  const days = 7
-  const intervalHours = 6
+const fetchComputationSnapshot = async (): Promise<ComputationSnapshot> => {
+  const days = 30
+  const intervalHours = 12
   const startTime = addDays(new Date(), -days)
   startTime.setUTCHours(0, 0, 0, 0)
   const updatedTimeArray: string[] = []
-  for (let i = 0; i < days * (24 / intervalHours); i++) {
+  for (let i = 0; i < Math.floor((days * 24) / intervalHours); i++) {
     updatedTimeArray.push(addHours(startTime, i * intervalHours).toISOString())
   }
   const document = gql`
@@ -145,5 +145,5 @@ const fetchGlobalStateSnapshot = async (): Promise<GlobalStateSnapshot> => {
   return {phala, khala, summary}
 }
 
-export const getGlobalStateSnapshot = () =>
-  createQuery(['globalStateSnapshot'], fetchGlobalStateSnapshot)
+export const getComputationSnapshot = () =>
+  createQuery(['computationSnapshot'], fetchComputationSnapshot)

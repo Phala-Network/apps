@@ -1,7 +1,11 @@
 import {GraphQLClient} from 'graphql-request'
 
-export const phatClient = new GraphQLClient(
+export const phatOffchainClient = new GraphQLClient(
   'https://offchain-metrics.phala.network/v1/graphql',
+)
+
+export const phatSquidClient = new GraphQLClient(
+  'https://squid.subsquid.io/phat-contract-squid/graphql',
 )
 
 export const phalaSquidClient = new GraphQLClient(
