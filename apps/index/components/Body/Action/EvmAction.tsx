@@ -65,7 +65,10 @@ const EvmAction: FC<{onConfirm: () => void; loading: boolean}> = ({
       )
       return tx
     },
-    {refreshInterval: (latestData) => (latestData == null ? 0 : 3000)},
+    {
+      refreshInterval: (latestData) =>
+        latestData == null || !needApproval ? 0 : 3000,
+    },
   )
 
   const approved =
