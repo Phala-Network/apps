@@ -18,7 +18,7 @@
     "@mui/lab": "5.0.0-alpha.142",
     "@mui/material": "^5.12.1",
     "@next/bundle-analyzer": "^13.3.1",
-    "@phala/index": "^1.0.27",
+    "@phala/index": "^1.0.28",
     "@phala/lib": "workspace:^",
     "@phala/store": "workspace:^",
     "@phala/util": "workspace:^",
