@@ -12,7 +12,7 @@ const LargeAmountWarning: FC<AlertProps> = ({sx, ...props}) => {
       <Typography variant="body2" component="span">
         Please use{' '}
         <Link
-          href="https://648987d1c3d977000849be75--subbridge.netlify.app/"
+          href="https://64a28bb6cb46bd0008b6b1eb--subbridge.netlify.app/"
           target="_blank"
         >
           <b>the old version</b>
