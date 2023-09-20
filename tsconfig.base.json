@@ -1,17 +1,27 @@
 {
   "compilerOptions": {
-    "allowJs": true,
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "incremental": true,
-    "isolatedModules": true,
-    "jsx": "react-jsx",
-    "module": "ESNext",
-    "moduleResolution": "node",
+    "types": ["bun-types"],
+
+    // enable latest features
+    "lib": ["esnext"],
+    "module": "esnext",
+    "target": "esnext",
+
+    // if TS 5.x+
+    "moduleResolution": "bundler",
     "noEmit": true,
-    "resolveJsonModule": true,
-    "skipLibCheck": true,
+    "allowImportingTsExtensions": true,
+    "moduleDetection": "force",
+
+    "allowJs": true, // allow importing `.js` from `.ts`
+    "esModuleInterop": true, // allow default imports for CommonJS modules
+
+    // best practices
     "strict": true,
-    "target": "ESNext"
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "composite": true,
+    "downlevelIteration": true,
+    "allowSyntheticDefaultImports": true
   }
 }

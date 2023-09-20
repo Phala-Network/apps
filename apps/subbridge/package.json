@@ -21,9 +21,9 @@
     "@mui/lab": "5.0.0-alpha.140",
     "@mui/material": "^5.14.5",
     "@next/bundle-analyzer": "^13.4.19",
-    "@phala/lib": "workspace:^",
-    "@phala/store": "workspace:^",
-    "@phala/util": "workspace:^",
+    "@phala/lib": "workspace:*",
+    "@phala/store": "workspace:*",
+    "@phala/util": "workspace:*",
     "@polkadot/api": "^10.9.1",
     "@polkadot/util": "^12.4.1",
     "@polkadot/util-crypto": "^12.4.1",
@@ -42,9 +42,8 @@
     "swr": "^2.2.1"
   },
   "devDependencies": {
-    "@phala/eslint-config": "workspace:^",
+    "@phala/eslint-config": "workspace:*",
     "@svgr/webpack": "^8.1.0",
-    "@types/node": "^18.17.6",
     "@types/react": "^18.2.20",
     "@types/react-dom": "^18.2.7",
     "eslint": "^8.47.0",

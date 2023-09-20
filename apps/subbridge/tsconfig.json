@@ -13,11 +13,10 @@
       "@/assets/*": ["assets/*"],
       "@/store/*": ["store/*"]
     },
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ]
+    "plugins": [{"name": "next"}],
+    "incremental": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]

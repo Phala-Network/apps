@@ -16,18 +16,17 @@
     "packages/*"
   ],
   "scripts": {
-    "prepare": "husky install",
     "build": "turbo run build",
+    "check": "turbo run check",
     "lint": "turbo run lint",
     "lint:fix": "turbo run lint:fix",
-    "check": "turbo run check"
+    "prepare": "husky install"
   },
   "devDependencies": {
     "@total-typescript/ts-reset": "^0.5.1",
-    "@types/node": "^18.17.6",
+    "bun-types": "^1.0.2",
     "husky": "^8.0.3",
     "turbo": "latest",
-    "typescript": "^5.1.6"
-  },
-  "packageManager": "yarn@3.5.0"
+    "typescript": "^5.2.2"
+  }
 }
