@@ -34,7 +34,7 @@ type State = {
   height: number
 }
 
-type GlobalState = {
+type ComputationData = {
   phala: State
   khala: State
   summary: Omit<State, 'height' | 'averageBlockTime'>
@@ -53,7 +53,7 @@ const transform = (data: Data) => {
   }
 }
 
-const fetchGlobalState = async (): Promise<GlobalState> => {
+const fetchComputationData = async (): Promise<ComputationData> => {
   const document = gql`
     {
       globalStateById(id: "0") {
@@ -107,5 +107,5 @@ const fetchGlobalState = async (): Promise<GlobalState> => {
   return {phala, khala, summary}
 }
 
-export const getGlobalState = () =>
-  createQuery(['globalState'], fetchGlobalState)
+export const getComputationData = () =>
+  createQuery(['computation'], fetchComputationData)
