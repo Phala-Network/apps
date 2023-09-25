@@ -51,7 +51,7 @@ export const getEvmSygmaTransfer = async (
     throw new Error('Chain or asset not supported')
   }
 
-  const transfer = assetTransfer.createFungibleTransfer(
+  const transfer = await assetTransfer.createFungibleTransfer(
     sender,
     destinationChainId,
     destinationAccount,

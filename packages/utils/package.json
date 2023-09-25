@@ -10,8 +10,8 @@
     "check": "tsc --project ./tsconfig.json --noEmit"
   },
   "dependencies": {
-    "@polkadot/keyring": "^12.4.1",
-    "@polkadot/util": "^12.4.1",
+    "@polkadot/keyring": "^12.5.1",
+    "@polkadot/util": "^12.5.1",
     "decimal.js": "^10.4.3"
   },
   "devDependencies": {
