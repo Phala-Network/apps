@@ -94,6 +94,7 @@ const TopBar: FC = () => {
       ],
     },
     {label: 'SubBridge', href: 'https://subbridge.io'},
+    {label: 'Analytics', href: 'https://analytics.phala.network'},
     {
       label: 'DAO',
       sub: [

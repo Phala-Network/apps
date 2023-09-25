@@ -21,7 +21,7 @@ const PageHeader: FC<{
           variant="h3"
           component="h1"
           display={{xs: 'none', sm: 'block'}}
-          my={{sm: 2, md: 3}}
+          py={{sm: 2, md: 3}}
         >
           {pageTitle ?? title}
         </Typography>
