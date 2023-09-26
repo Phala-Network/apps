@@ -18,6 +18,8 @@ export const chainInstanceAtom = atom<EvmChain | SubstrateChain | undefined>(
     if (client != null && fromChain != null) {
       if (fromChain.chainType === 'Evm') {
         return client.createEvmChain(fromChain.name)
+      } else if (fromChain.name === 'Phala' || fromChain.name === 'Khala') {
+        return client.createPhalaChain(fromChain.name)
       }
     }
   },

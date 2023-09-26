@@ -22,6 +22,7 @@ const Action: FC = () => {
       })
     } catch (error) {
       setLoading(false)
+      throw error
     }
   }
 
