@@ -22,7 +22,7 @@ export const assets: Asset[] = Object.entries(ASSETS)
         chainId,
         location,
         symbol,
-        decimals: 18,
+        decimals: new Set(['Phala', 'Khala', 'Astar']).has(chainId) ? 12 : 18,
       }
     })
   })
