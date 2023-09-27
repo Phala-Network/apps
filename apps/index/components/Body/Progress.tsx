@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import {assets} from '@/config/common'
 import useCurrentTask from '@/hooks/useTaskStatus'
-import {currentTaskAtom, solutionAtom} from '@/store/core'
+import {currentTaskAtom, fromChainAtom, solutionAtom} from '@/store/core'
 import OpenInNewIcon from '@mui/icons-material/OpenInNew'
 import {
   Chip,
@@ -58,17 +58,20 @@ const Progress: FC<PaperProps> = ({sx, ...props}) => {
   const [solution] = useAtom(solutionAtom)
   const [currentTask] = useAtom(currentTaskAtom)
   const {data: taskStatus} = useCurrentTask()
+  const [fromChain] = useAtom(fromChainAtom)
+
+  const stepOffset = fromChain?.chainType === 'Sub' ? 2 : 1
 
   const activeStep = useMemo(() => {
     let value = 0
     if (taskStatus != null) {
-      value = taskStatus.executeIndex + 1
+      value = taskStatus.executeIndex + stepOffset
       if ('completed' in taskStatus.status) {
         value += 2
       }
     }
     return value
-  }, [taskStatus])
+  }, [taskStatus, stepOffset])
 
   const steps = useMemo(() => {
     if (solution == null) return null
@@ -141,8 +144,28 @@ const Progress: FC<PaperProps> = ({sx, ...props}) => {
               </Stack>
             </StepLabel>
           </Step>
+          {fromChain?.chainType === 'Sub' && (
+            <Step>
+              <StepLabel
+                {...(activeStep === 1 && currentTask != null && activeProps)}
+              >
+                <Stack spacing={1} direction="row" alignItems="baseline">
+                  <Chip
+                    label="Claim"
+                    size="small"
+                    sx={{textTransform: 'capitalize', width: 90}}
+                    color={activeStep === 1 ? 'primary' : 'default'}
+                  />
+                  <ExplorerLink
+                    chain={fromChain.name}
+                    hash={taskStatus?.claimTx}
+                  />
+                </Stack>
+              </StepLabel>
+            </Step>
+          )}
           {steps.map((step, index) => {
-            const isActive = activeStep === index + 1
+            const isActive = activeStep === index + stepOffset
             return (
               <Step key={index} expanded>
                 <StepLabel {...(isActive && activeProps)}>
