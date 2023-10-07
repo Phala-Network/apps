@@ -5,8 +5,8 @@ import {type IconProp} from '@fortawesome/fontawesome-svg-core'
 import {
   faDiscord,
   faTelegram,
-  faTwitter,
   faWeixin,
+  faXTwitter,
 } from '@fortawesome/free-brands-svg-icons'
 import {faEnvelope, faMessage} from '@fortawesome/free-solid-svg-icons'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
@@ -19,7 +19,7 @@ import Identity from './Identity'
 const iconMap = {
   discord: faDiscord,
   telegram: faTelegram,
-  twitter: faTwitter,
+  twitter: faXTwitter,
   wechat: faWeixin,
   email: faEnvelope,
   forum: faMessage,
@@ -56,7 +56,7 @@ const Intro: FC<{
             if (label === 'telegram') {
               href = `https://t.me/${value.replace(/^@/, '')}`
             } else if (label === 'twitter') {
-              href = `https://twitter.com/${value}`
+              href = `https://x.com/${value}`
             } else if (label === 'email') {
               href = `mailto:${value}`
             } else if (label === 'forum') {

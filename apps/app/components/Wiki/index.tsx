@@ -20,10 +20,10 @@ const Content: FC<{children: string}> = ({children}) => {
   return (
     <Markdown
       components={{
-        p: ({node, ...props}) => (
+        p: ({node, ref, ...props}) => (
           <Typography variant="body1" mt={2} {...props} />
         ),
-        a: ({node, ...props}) => <Link target="_blank" {...props} />,
+        a: ({node, ref, ...props}) => <Link target="_blank" {...props} />,
       }}
     >
       {children}
