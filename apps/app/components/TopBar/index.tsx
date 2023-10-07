@@ -1,7 +1,7 @@
 import PhalaLogo from '@/assets/phala_logo.svg'
 import {montserrat} from '@/lib/theme'
 import {chainAtom} from '@/store/common'
-import {faDiscord, faTwitter} from '@fortawesome/free-brands-svg-icons'
+import {faDiscord, faXTwitter} from '@fortawesome/free-brands-svg-icons'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import Language from '@mui/icons-material/Language'
 import Menu from '@mui/icons-material/Menu'
@@ -127,7 +127,7 @@ const TopBar: FC = () => {
         target="_blank"
       >
         <FontAwesomeIcon
-          icon={faTwitter}
+          icon={faXTwitter}
           color={theme.palette.text.secondary}
         />
       </IconButton>

@@ -12,7 +12,7 @@ import Property from '../Property'
 
 const ChainSelect: FC = () => {
   const api = usePolkadotApi()
-  const [chain, setChain] = useAtom(chainAtom)
+  const [chain] = useAtom(chainAtom)
   const isKhala = chain === 'khala'
 
   const color = `${isKhala ? '#03ffff' : colors.main[400]} !important`
@@ -64,7 +64,7 @@ const ChainSelect: FC = () => {
       inputProps={{sx: {py: '6.5px'}}}
       onChange={(e) => {
         const nextValue = e.target.value as Chain
-        setChain(nextValue)
+        location.replace(`/${nextValue}`)
       }}
     >
       {['khala', 'phala'].map((value) => (
