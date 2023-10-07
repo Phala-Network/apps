@@ -6,7 +6,7 @@ export const KHALA_ENDPOINTS = [
   'wss://khala.api.onfinality.io/public-ws',
 ]
 export const KHALA_SUBSQUID_URL =
-  'https://squid.subsquid.io/khala-computation/graphql'
+  'https://subsquid.phala.network/khala-computation/graphql'
 export const khalaSubsquidClient = new GraphQLClient(KHALA_SUBSQUID_URL)
 export const PHALA_ENDPOINTS = [
   'wss://phala-rpc.dwellir.com',
