@@ -22,7 +22,7 @@ import {
 } from 'recharts'
 import RechartsTooltip from '../RechartsTooltip'
 
-const days = 7
+const days = 14
 
 const DelegationChart: FC<{
   delegation: DelegationCommonFragment
