@@ -102,7 +102,6 @@ const DelegationList: FC<{
   const [subsquidClient] = useAtom(subsquidClientAtom)
   const {data, isLoading, fetchNextPage, hasNextPage} =
     useInfiniteDelegationsConnectionQuery(
-      'after',
       subsquidClient,
       {
         first: 20,

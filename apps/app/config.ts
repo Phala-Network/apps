@@ -14,6 +14,6 @@ export const PHALA_ENDPOINTS = [
   'wss://phala.api.onfinality.io/public-ws',
 ]
 export const PHALA_SUBSQUID_URL =
-  'https://squid.subsquid.io/phala-computation/graphql'
+  'https://subsquid.phala.network/phala-computation/graphql'
 export const phalaSubsquidClient = new GraphQLClient(PHALA_SUBSQUID_URL)
 export const WPHA_ASSET_ID = 10000

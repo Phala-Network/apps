@@ -197,7 +197,6 @@ const BasePoolList: FC<{
   const [subsquidClient] = useAtom(subsquidClientAtom)
   const {data, isLoading, fetchNextPage, hasNextPage} =
     useInfiniteBasePoolsConnectionQuery(
-      'after',
       subsquidClient,
       {
         first: 20,

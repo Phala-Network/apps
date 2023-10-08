@@ -1,5 +1,6 @@
 import {type Account} from '@/lib/subsquidQuery'
 import {chainAtom} from '@/store/common'
+import ErrorOutline from '@mui/icons-material/ErrorOutline'
 import RemoveCircleOutline from '@mui/icons-material/RemoveCircleOutline'
 import VerifiedOutlined from '@mui/icons-material/VerifiedOutlined'
 import {alpha, Link, Stack, Tooltip, Typography, useTheme} from '@mui/material'
@@ -17,6 +18,7 @@ const Identity: FC<
   const verified =
     identityLevel === 'KnownGood' || identityLevel === 'Reasonable'
 
+  const lowQuality = identityLevel === 'LowQuality'
   const link = (
     <Link
       variant={detail ? 'h6' : 'caption'}
@@ -67,6 +69,11 @@ const Identity: FC<
             {verified ? (
               <VerifiedOutlined
                 color="success"
+                sx={{width: detail ? 22 : 16, flexShrink: 0}}
+              />
+            ) : lowQuality ? (
+              <ErrorOutline
+                color="error"
                 sx={{width: detail ? 22 : 16, flexShrink: 0}}
               />
             ) : (
