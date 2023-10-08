@@ -129,6 +129,7 @@ export const transferByPhalaXTransfer = ({
     (toChainId === 'moonriver' || toChainId === 'moonbase-alpha') &&
     assetId === 'zlk'
   const isSygma = kind === 'phalaSygma'
+  const isToEthereum = toChainId === 'ethereum'
   const generalIndex = toChain.kind === 'evm' ? toChain.generalIndex : null
 
   const concrete = assetConcrete[fromChainId]?.[assetId]
@@ -136,7 +137,7 @@ export const transferByPhalaXTransfer = ({
     throw new Error(`Unsupported asset: ${assetId}`)
   }
 
-  const isChainBridge = isTransferringZLKToMoonriver
+  const isChainBridge = isTransferringZLKToMoonriver || isToEthereum
 
   if ((isChainBridge || isSygma) && typeof generalIndex !== 'number') {
     throw new Error('Transfer missing required parameters')
