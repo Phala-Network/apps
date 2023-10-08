@@ -129,6 +129,7 @@ export const transferByPhalaXTransfer = ({
     (toChainId === 'moonriver' || toChainId === 'moonbase-alpha') &&
     assetId === 'zlk'
   const isSygma = kind === 'phalaSygma'
+  const isToEthereum = toChainId === 'ethereum'
   const generalIndex = toChain.kind === 'evm' ? toChain.generalIndex : null
 
   const concrete = assetConcrete[fromChainId]?.[assetId]
@@ -136,7 +137,7 @@ export const transferByPhalaXTransfer = ({
     throw new Error(`Unsupported asset: ${assetId}`)
   }
 
-  const isChainBridge = isTransferringZLKToMoonriver
+  const isChainBridge = isTransferringZLKToMoonriver || isToEthereum
 
   if ((isChainBridge || isSygma) && typeof generalIndex !== 'number') {
     throw new Error('Transfer missing required parameters')
@@ -158,7 +159,7 @@ export const transferByPhalaXTransfer = ({
                     ? getGeneralKey('0x7379676d61') // string "sygma"
                     : getGeneralKey('0x6362'), // string "cb"
                 },
-                {GeneralIndex: generalIndex},
+                {GeneralIndex: isToEthereum && !isSygma ? 0 : generalIndex},
                 {GeneralKey: getGeneralKey(destinationAccount as Hex)},
               ],
             }

@@ -37,6 +37,14 @@ export const assetPalletBalanceFetcher = async ([
   )
 }
 
+export const chainBridgeEthereumFeeFetcher = async (
+  phalaApi: ApiPromise,
+): Promise<Decimal> => {
+  const fee = await phalaApi.query.chainBridge.bridgeFee(0)
+
+  return new Decimal(fee.toJSON() as number).div(Decimal.pow(10, 12))
+}
+
 export const ormlTokenBalanceFetcher = async ([
   polkadotApi,
   address,

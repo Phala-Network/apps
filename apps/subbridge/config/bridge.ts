@@ -87,11 +87,15 @@ export const BRIDGES: Readonly<Bridge[]> = [
     toChains: [
       {
         id: 'phala',
-        assets: [{assetId: 'pha', estimatedTime: '~ 5 mins', kind: 'evmSygma'}],
+        assets: [
+          {assetId: 'pha', estimatedTime: '~ 5 mins', kind: 'evmChainBridge'},
+        ],
       },
       {
         id: 'khala',
-        assets: [{assetId: 'pha', estimatedTime: '~ 5 mins', kind: 'evmSygma'}],
+        assets: [
+          {assetId: 'pha', estimatedTime: '~ 5 mins', kind: 'evmChainBridge'},
+        ],
       },
       {
         id: 'astar',
@@ -115,7 +119,7 @@ export const BRIDGES: Readonly<Bridge[]> = [
           {
             assetId: 'pha',
             estimatedTime: '~ 10 mins',
-            kind: 'phalaSygma',
+            kind: 'phalaChainBridge',
           },
         ],
       },
@@ -155,7 +159,11 @@ export const BRIDGES: Readonly<Bridge[]> = [
       {
         id: 'ethereum',
         assets: [
-          {assetId: 'pha', estimatedTime: '~ 10 mins', kind: 'phalaSygma'},
+          {
+            assetId: 'pha',
+            estimatedTime: '~ 10 mins',
+            kind: 'phalaChainBridge',
+          },
         ],
       },
       {id: 'karura', assets: khalaToKaruraAssets},

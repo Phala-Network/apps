@@ -1,4 +1,5 @@
 import {getEvmSygmaTransfer} from '@/lib/evmSygma'
+import {chainBridgeEthereumFeeFetcher} from '@/lib/polkadotFetcher'
 import {
   assetAtom,
   bridgeInfoAtom,
@@ -24,6 +25,9 @@ export const useBridgeFee = (): Decimal | undefined => {
   const phalaApi = usePolkadotApi('phala')
   const provider = useEthersWeb3Provider()
   const evmAccount = useAtomValue(evmAccountAtom)
+  const isFromPhalaToEthereum =
+    (fromChain.id === 'phala' && toChain.id === 'ethereum') ||
+    (fromChain.id === 'khala' && toChain.id === 'ethereum')
   const isTransferringZlkProxiedByChainBridge =
     fromChain.kind === 'polkadot' &&
     toChain.kind === 'evm' &&
@@ -82,6 +86,15 @@ export const useBridgeFee = (): Decimal | undefined => {
       return new Decimal(fee.toString()).div(Decimal.pow(10, 12))
     },
   )
+
+  const {data: chainBridgeEthereumFee} = useSWR(
+    isFromPhalaToEthereum && api,
+    chainBridgeEthereumFeeFetcher,
+  )
+
+  if (isFromPhalaToEthereum) {
+    return chainBridgeEthereumFee
+  }
 
   if (isProxiedByPhalaSygma) {
     return phalaProxySygmaFee
