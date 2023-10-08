@@ -12,7 +12,7 @@ const LargeAmountWarning: FC<AlertProps> = ({sx, ...props}) => {
       <Typography variant="body2" component="span">
         Please use{' '}
         <Link
-          href="https://subbridge-p970182hu-phala.vercel.app/"
+          href="https://subbridge-293nhwvpk-phala.vercel.app/"
           target="_blank"
         >
           <b>the old version</b>
