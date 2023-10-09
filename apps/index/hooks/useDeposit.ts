@@ -74,6 +74,7 @@ const useDeposit = (): (({
       chainInstance instanceof SubstrateChain &&
       polkadotAccount?.wallet != null
     ) {
+      await chainInstance.isReady
       const deposit = await chainInstance.getDeposit(
         fromAsset.location,
         amount,
@@ -82,24 +83,26 @@ const useDeposit = (): (({
       )
       const waitFinalized = async (): Promise<void> => {
         await new Promise((resolve, reject) => {
-          void deposit.tx.signAndSend(
-            polkadotAccount.address,
-            {
-              signer: polkadotAccount.wallet?.signer,
-            },
-            ({txHash, status}) => {
-              if (status.isReady) {
-                onSubmitted?.()
-                setCurrentTask({
-                  id: deposit.id,
-                  fromChainId: fromChain.name,
-                  hash: txHash.toHex(),
-                })
-              } else if (status.isInBlock) {
-                resolve(undefined)
-              }
-            },
-          )
+          void deposit.tx
+            .signAndSend(
+              polkadotAccount.address,
+              {
+                signer: polkadotAccount.wallet?.signer,
+              },
+              ({txHash, status}) => {
+                if (status.isReady) {
+                  onSubmitted?.()
+                  setCurrentTask({
+                    id: deposit.id,
+                    fromChainId: fromChain.name,
+                    hash: txHash.toHex(),
+                  })
+                } else if (status.isInBlock) {
+                  resolve(undefined)
+                }
+              },
+            )
+            .catch(reject)
         })
       }
 
