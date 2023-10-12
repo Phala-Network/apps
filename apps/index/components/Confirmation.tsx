@@ -137,7 +137,6 @@ const Confirmation: FC<BoxProps> = (props) => {
   const [destinationAccount] = useAtom(destinationAccountAtom)
 
   if (
-    fromAccount == null ||
     fromChain == null ||
     fromAsset == null ||
     toChain == null ||

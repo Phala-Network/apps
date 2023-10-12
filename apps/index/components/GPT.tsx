@@ -67,7 +67,7 @@ async function apiFetcher(
   return res as any
 }
 
-const Intent: FC = () => {
+const GPT: FC = () => {
   const [fromChain, setFromChain] = useAtom(fromChainAtom)
   const [toChain, setToChain] = useAtom(toChainAtom)
   const [, setFromAmount] = useAtom(fromAmountAtom)
@@ -252,4 +252,4 @@ const Intent: FC = () => {
   )
 }
 
-export default Intent
+export default GPT
