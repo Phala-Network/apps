@@ -1,3 +1,4 @@
+import Intent from '@/components/Intent'
 import {clientAtom} from '@/store/core'
 import {CircularProgress, Container, Stack} from '@mui/material'
 import {useAtom} from 'jotai'
@@ -17,7 +18,9 @@ const Home: NextPage = () => {
         <Stack alignItems="center">
           <CircularProgress />
         </Stack>
-      ) : null}
+      ) : (
+        <Intent />
+      )}
 
       <PolkadotWalletDialog />
     </Container>

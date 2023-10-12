@@ -1,11 +1,13 @@
 import {useBalance} from '@/hooks/useBalance'
 import {isWalletConnectAtom} from '@/store/common'
 import {
+  DEFAULT_SOLUTION_STRING,
   clientAtom,
   fromAmountAtom,
   fromAssetAtom,
   fromAssetsAtom,
   fromChainAtom,
+  solutionStringAtom,
   toAmountAtom,
   toAssetAtom,
   toAssetsAtom,
@@ -16,6 +18,7 @@ import ArrowDownward from '@mui/icons-material/ArrowDownward'
 import ArrowForward from '@mui/icons-material/ArrowForward'
 import {
   Box,
+  Button,
   IconButton,
   Link,
   Paper,
@@ -45,6 +48,7 @@ const Body: FC<BoxProps> = (props) => {
   const [toAmount] = useAtom(toAmountAtom)
   const [toAsset, setToAsset] = useAtom(toAssetAtom)
   const [toAssets] = useAtom(toAssetsAtom)
+  const [, setSolutionString] = useAtom(solutionStringAtom)
 
   const balance = useBalance()
   const [isWalletConnected] = useAtom(isWalletConnectAtom)
@@ -63,7 +67,19 @@ const Body: FC<BoxProps> = (props) => {
     fromAsset == null ||
     toAsset == null
   ) {
-    return null
+    return (
+      <Button
+        onClick={() => {
+          setFromChain('Moonbeam')
+          setToChain('AstarEvm')
+          setFromAsset('Moonbeam-WGLMR')
+          setToAsset('AstarEvm-xcGLMR')
+          setSolutionString(DEFAULT_SOLUTION_STRING)
+        }}
+      >
+        Reset
+      </Button>
+    )
   }
 
   const fromNativeChain =

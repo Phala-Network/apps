@@ -18,7 +18,7 @@
     "@mui/lab": "5.0.0-alpha.147",
     "@mui/material": "^5.14.12",
     "@next/bundle-analyzer": "^13.5.4",
-    "@phala/index": "^1.0.34",
+    "@phala/index": "^1.0.36",
     "@phala/lib": "workspace:^",
     "@phala/store": "workspace:^",
     "@phala/util": "workspace:^",
@@ -38,7 +38,8 @@
     "notistack": "^3.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "swr": "2.2.2"
+    "swr": "2.2.2",
+    "wretch": "^2.7.0"
   },
   "devDependencies": {
     "@phala/eslint-config": "workspace:^",

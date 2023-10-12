@@ -1,6 +1,6 @@
 import Body from '@/components/Body'
-import Progress from '@/components/Body/Progress'
 import Footer from '@/components/Footer'
+import Progress from '@/components/Progress'
 import {clientAtom} from '@/store/core'
 import {Box, CircularProgress, Container, Stack, useTheme} from '@mui/material'
 import {useAtom} from 'jotai'
