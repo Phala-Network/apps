@@ -82,7 +82,7 @@ const GPT: FC = () => {
     '/api/extract-params',
     apiFetcher,
   )
-  const {data: remoteSolution} = useSWR(
+  const {data: remoteSolution, isLoading: isSolutionLoading} = useSWR(
     fromChain != null &&
       fromAsset != null &&
       toChain != null &&
@@ -171,7 +171,7 @@ const GPT: FC = () => {
             reset()
           }
         }}
-        disabled={isMutating}
+        disabled={isMutating || isSolutionLoading}
         name="message"
         autoFocus
         placeholder="What can I do for you?"
@@ -186,8 +186,8 @@ const GPT: FC = () => {
               }}
               variant="text"
               type="submit"
-              disabled={isMutating || message === ''}
-              loading={isMutating}
+              disabled={isMutating || message === '' || isSolutionLoading}
+              loading={isMutating || isSolutionLoading}
             >
               <Send />
             </LoadingButton>
@@ -218,7 +218,10 @@ const GPT: FC = () => {
         </Grid>
       )}
 
-      <Collapse sx={{width: '100%', mt: 6}} in={data != null}>
+      <Collapse
+        sx={{width: '100%', mt: 6}}
+        in={data != null && !isSolutionLoading}
+      >
         <Stack
           direction={{sm: 'column', md: 'row'}}
           alignItems={{sm: 'center', md: 'flex-start'}}
