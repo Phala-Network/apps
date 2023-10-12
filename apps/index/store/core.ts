@@ -10,6 +10,9 @@ const getAssets = (chainId: string): Asset[] => {
   return assets.filter((x) => x.chainId === chainId)
 }
 
+export const DEFAULT_SOLUTION_STRING =
+  '[\n  {\n    "exe": "moonbeam_stellaswap",\n    "sourceChain": "Moonbeam",\n    "destChain": "Moonbeam",\n    "spendAsset": "0xAcc15dC74880C9944775448304B263D191c6077F",\n    "receiveAsset": "0xFfFFfFff1FcaCBd218EDc0EbA20Fc2308C778080"\n  },\n  {\n    "exe": "moonbeam_stellaswap",\n    "sourceChain": "Moonbeam",\n    "destChain": "Moonbeam",\n    "spendAsset": "0xFfFFfFff1FcaCBd218EDc0EbA20Fc2308C778080",\n    "receiveAsset": "0xFFFfFfFf63d24eCc8eB8a7b5D0803e900F7b6cED"\n  },\n  {\n    "exe": "moonbeam_bridge_to_phala",\n    "sourceChain": "Moonbeam",\n    "destChain": "Phala",\n    "spendAsset": "0xFFFfFfFf63d24eCc8eB8a7b5D0803e900F7b6cED",\n    "receiveAsset": "0x0000"\n  },\n  {\n    "exe": "phala_bridge_to_astar",\n    "sourceChain": "Phala",\n    "destChain": "Astar",\n    "spendAsset": "0x0000",\n    "receiveAsset": "0x010100cd1f"\n  },\n  {\n    "exe": "astar_bridge_to_astarevm",\n    "sourceChain": "Astar",\n    "destChain": "AstarEvm",\n    "spendAsset": "0x010100cd1f",\n    "receiveAsset": "0xFFFFFFFF00000000000000010000000000000006"\n  },\n  {\n    "exe": "astar_evm_arthswap",\n    "sourceChain": "AstarEvm",\n    "destChain": "AstarEvm",\n    "spendAsset": "0xFFFFFFFF00000000000000010000000000000006",\n    "receiveAsset": "0xaeaaf0e2c81af264101b9129c00f4440ccf0f720"\n  },\n  {\n    "exe": "astar_evm_arthswap",\n    "sourceChain": "AstarEvm",\n    "destChain": "AstarEvm",\n    "spendAsset": "0xaeaaf0e2c81af264101b9129c00f4440ccf0f720",\n    "receiveAsset": "0xFFFFFFFF00000000000000010000000000000003"\n  }\n]'
+
 export const clientAtom = atom<Client | undefined>(undefined)
 export const chainInstanceAtom = atom<EvmChain | SubstrateChain | undefined>(
   (get) => {
@@ -29,7 +32,7 @@ export const currentTaskAtom = atom<
 >(undefined)
 export const solutionStringAtom = atomWithStorage(
   'jotai:solution-v2',
-  '[\n  {\n    "exe": "moonbeam_stellaswap",\n    "sourceChain": "Moonbeam",\n    "destChain": "Moonbeam",\n    "spendAsset": "0xAcc15dC74880C9944775448304B263D191c6077F",\n    "receiveAsset": "0xFfFFfFff1FcaCBd218EDc0EbA20Fc2308C778080"\n  },\n  {\n    "exe": "moonbeam_stellaswap",\n    "sourceChain": "Moonbeam",\n    "destChain": "Moonbeam",\n    "spendAsset": "0xFfFFfFff1FcaCBd218EDc0EbA20Fc2308C778080",\n    "receiveAsset": "0xFFFfFfFf63d24eCc8eB8a7b5D0803e900F7b6cED"\n  },\n  {\n    "exe": "moonbeam_bridge_to_phala",\n    "sourceChain": "Moonbeam",\n    "destChain": "Phala",\n    "spendAsset": "0xFFFfFfFf63d24eCc8eB8a7b5D0803e900F7b6cED",\n    "receiveAsset": "0x0000"\n  },\n  {\n    "exe": "phala_bridge_to_astar",\n    "sourceChain": "Phala",\n    "destChain": "Astar",\n    "spendAsset": "0x0000",\n    "receiveAsset": "0x010100cd1f"\n  },\n  {\n    "exe": "astar_bridge_to_astarevm",\n    "sourceChain": "Astar",\n    "destChain": "AstarEvm",\n    "spendAsset": "0x010100cd1f",\n    "receiveAsset": "0xFFFFFFFF00000000000000010000000000000006"\n  },\n  {\n    "exe": "astar_evm_arthswap",\n    "sourceChain": "AstarEvm",\n    "destChain": "AstarEvm",\n    "spendAsset": "0xFFFFFFFF00000000000000010000000000000006",\n    "receiveAsset": "0xaeaaf0e2c81af264101b9129c00f4440ccf0f720"\n  },\n  {\n    "exe": "astar_evm_arthswap",\n    "sourceChain": "AstarEvm",\n    "destChain": "AstarEvm",\n    "spendAsset": "0xaeaaf0e2c81af264101b9129c00f4440ccf0f720",\n    "receiveAsset": "0xFFFFFFFF00000000000000010000000000000003"\n  }\n]',
+  DEFAULT_SOLUTION_STRING,
 )
 export const solutionAtom = atom((get) => {
   try {

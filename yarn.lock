@@ -3820,7 +3820,7 @@ __metadata:
     "@mui/material": ^5.14.12
     "@next/bundle-analyzer": ^13.5.4
     "@phala/eslint-config": "workspace:^"
-    "@phala/index": ^1.0.34
+    "@phala/index": ^1.0.36
     "@phala/lib": "workspace:^"
     "@phala/store": "workspace:^"
     "@phala/util": "workspace:^"
@@ -3851,12 +3851,13 @@ __metadata:
     react-dom: ^18.2.0
     swr: 2.2.2
     typescript: ^5.2.2
+    wretch: ^2.7.0
   languageName: unknown
   linkType: soft
 
-"@phala/index@npm:^1.0.34":
-  version: 1.0.34
-  resolution: "@phala/index@npm:1.0.34"
+"@phala/index@npm:^1.0.36":
+  version: 1.0.36
+  resolution: "@phala/index@npm:1.0.36"
   dependencies:
     "@phala/sdk": ^0.5.2
     "@polkadot/api": ^10.9.1
@@ -3865,7 +3866,7 @@ __metadata:
     ajv: ^8.12.0
     ethers: ^6.7.1
     subshape: ^0.14.0
-  checksum: 7fc245937044da7e0c4d1b5a85d2062324885dd8cdb1e739ca4c3b137af3f85bfb1bce59c17fc4695f75ec32ebfc4ee319dba976fda4e6c48bfe6761d0be8461
+  checksum: adf1a69c2456ea4d68a6ca1e428b7dacd77f73440803678cf3a41490c4a372a9692e3a146976d8133e260249c19d7445e29e94b534c39c36622d915e95a39a5d
   languageName: node
   linkType: hard
 
@@ -18948,6 +18949,13 @@ __metadata:
   version: 1.0.2
   resolution: "wrappy@npm:1.0.2"
   checksum: 159da4805f7e84a3d003d8841557196034155008f817172d4e986bd591f74aa82aa7db55929a54222309e01079a65a92a9e6414da5a6aa4b01ee44a511ac3ee5
+  languageName: node
+  linkType: hard
+
+"wretch@npm:^2.7.0":
+  version: 2.7.0
+  resolution: "wretch@npm:2.7.0"
+  checksum: d62858dcc813dad9f1a6a51b428d3c8edcc7c6bfc47609704bf02f3e5c459a7a090e48006d94d0e1473fd47b0ef0ec354c4033008f62d6fd7e8bc07b4b504280
   languageName: node
   linkType: hard
 

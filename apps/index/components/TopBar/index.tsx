@@ -16,11 +16,7 @@ const TopBar: FC = () => {
         background: alpha(theme.palette.background.default, 0.6),
       }}
     >
-      <Toolbar
-        sx={{
-          justifyContent: 'space-between',
-        }}
-      >
+      <Toolbar sx={{justifyContent: 'space-between'}}>
         <Logo />
         <Stack direction="row" spacing={{xs: 1, sm: 2}}>
           <Account />
