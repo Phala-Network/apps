@@ -62,7 +62,7 @@ const Detail: FC<
   PaperProps & {
     kind: 'From' | 'To'
     chain: Chain
-    account: string
+    account?: string | null
     asset: Asset
     amount?: string
   }
