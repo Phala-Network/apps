@@ -15,6 +15,7 @@
   const display = derived(
     [getComputationData(), getComputationSnapshot(), getCirculation()],
     ([{data}, {data: snapshot}, {data: circulation}]) => {
+      let circulatingSupply = 'ㅤ'
       let delegationValue = 'ㅤ'
       let dailyRewards = 'ㅤ'
       let averageApr = 'ㅤ'
@@ -28,6 +29,10 @@
         style: 'percent',
         maximumFractionDigits: 2,
       }).format
+
+      if (circulation != null) {
+        circulatingSupply = `${compactFormat(circulation)} PHA`
+      }
 
       if (snapshot != null) {
         const {summary} = snapshot
@@ -71,6 +76,7 @@
           averageApr,
           'The average annual percentage rate of return for all delegations across the Phala & Khala network. (no consideration of compound interest)',
         ],
+        ['Circulating Supply', circulatingSupply],
         [
           'Stake ratio',
           stakeRatio,
@@ -141,7 +147,7 @@
 
 <h1 class="font-montserrat text-4xl font-bold my-8">Computation</h1>
 <div class="flex flex-wrap gap-4">
-  <section class="card h-80 min-w-[340px] max-md:w-full">
+  <section class="card h-[22rem] min-w-[340px] max-md:w-full">
     {#each $display as item, i}
       {#if i === 0}
         <Tooltip title={item[2]}>
@@ -150,18 +156,23 @@
           </span>
         </Tooltip>
         <div class="data-value mt-1 mb-5">{@html item[1]}</div>
-      {:else}
+      {:else if item[2] != null}
         <div class="flex items-baseline justify-between mt-1">
           <Tooltip title={item[2]}>
             <span class="data-label">{item[0]}</span>
           </Tooltip>
           <span class="numeric">{item[1]}</span>
         </div>
+      {:else}
+        <div class="flex items-baseline justify-between mt-1">
+          <span class="data-label">{item[0]}</span>
+          <span class="numeric">{item[1]}</span>
+        </div>
       {/if}
     {/each}
   </section>
   <section
-    class="card h-80 flex-1 max-md:w-full overflow-hidden flex flex-col gap-3"
+    class="card h-[22rem] flex-1 max-md:w-full overflow-hidden flex flex-col gap-3"
   >
     <RadioGroup
       bind:value={$currentChart}
