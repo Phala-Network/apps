@@ -26,7 +26,6 @@ import {polkadotAccountAtom} from '@phala/store'
 import {toCurrency} from '@phala/util'
 import {useAtom} from 'jotai'
 import {useCallback, useEffect, useState, type FC} from 'react'
-import useSWR from 'swr'
 import useSWRMutation from 'swr/mutation'
 import wretch from 'wretch'
 import Action from './Body/Action'
@@ -36,13 +35,6 @@ import Progress from './Progress'
 const api = wretch('https://index-gpt-server.vercel.app', {mode: 'cors'})
   .errorType('json')
   .resolve(async (r) => await r.json())
-
-const solutionFetcher = async (id: string): Promise<string> =>
-  await wretch(
-    `https://raw.githubusercontent.com/tolak/awesome-index/main/solutions/${id}.json`,
-  )
-    .get()
-    .text()
 
 const tips: string[] = [
   'Send 100 PHA from Khala to Phala',
@@ -62,6 +54,7 @@ async function apiFetcher(
     amount: string
     recipient: string
   }
+  solution: any[]
 }> {
   const res = await api.url(url).post({message: arg})
   return res as any
@@ -72,7 +65,7 @@ const GPT: FC = () => {
   const [toChain, setToChain] = useAtom(toChainAtom)
   const [, setFromAmount] = useAtom(fromAmountAtom)
   const [fromAsset, setFromAsset] = useAtom(fromAssetAtom)
-  const [toAsset, setToAsset] = useAtom(toAssetAtom)
+  const [, setToAsset] = useAtom(toAssetAtom)
   const [, setSolutionString] = useAtom(solutionStringAtom)
   const [message, setMessage] = useState('')
   const [evmAccount] = useAtom(evmAccountAtom)
@@ -82,14 +75,7 @@ const GPT: FC = () => {
     '/api/extract-params',
     apiFetcher,
   )
-  const {data: remoteSolution, isLoading: isSolutionLoading} = useSWR(
-    fromChain != null &&
-      fromAsset != null &&
-      toChain != null &&
-      toAsset != null &&
-      `${fromChain.name}_${fromAsset.symbol}_${toChain.name}_${toAsset.symbol}`,
-    solutionFetcher,
-  )
+
   const balance = useBalance()
 
   const resetStore = useCallback(() => {
@@ -113,8 +99,10 @@ const GPT: FC = () => {
   }, [resetStore])
 
   useEffect(() => {
-    setSolutionString(remoteSolution ?? '')
-  }, [remoteSolution, setSolutionString])
+    setSolutionString(
+      data?.solution == null ? '' : JSON.stringify(data?.solution),
+    )
+  }, [data, setSolutionString])
 
   const fromNativeChain =
     fromChain?.chainType === 'Sub' &&
@@ -171,7 +159,7 @@ const GPT: FC = () => {
             reset()
           }
         }}
-        disabled={isMutating || isSolutionLoading}
+        disabled={isMutating}
         name="message"
         autoFocus
         placeholder="What can I do for you?"
@@ -186,8 +174,8 @@ const GPT: FC = () => {
               }}
               variant="text"
               type="submit"
-              disabled={isMutating || message === '' || isSolutionLoading}
-              loading={isMutating || isSolutionLoading}
+              disabled={isMutating || message === ''}
+              loading={isMutating}
             >
               <Send />
             </LoadingButton>
@@ -218,10 +206,7 @@ const GPT: FC = () => {
         </Grid>
       )}
 
-      <Collapse
-        sx={{width: '100%', mt: 6}}
-        in={data != null && !isSolutionLoading}
-      >
+      <Collapse sx={{width: '100%', mt: 6}} in={data != null}>
         <Stack
           direction={{sm: 'column', md: 'row'}}
           alignItems={{sm: 'center', md: 'flex-start'}}
