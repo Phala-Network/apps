@@ -75,7 +75,7 @@ const Detail: FC<
             <img
               css={{width: 16, height: 16}}
               src={`/icons/${chain.name.toLowerCase()}_chain_icon.png`}
-              alt={chain.name}
+              alt=""
             />
             <Typography variant="body2" component="span" sx={{ml: 1}}>
               {chain.name}
@@ -114,7 +114,7 @@ const Detail: FC<
               <img
                 css={{width: 16, height: 16}}
                 src={`/icons/${asset.symbol.toLowerCase()}_asset_icon.png`}
-                alt={asset.symbol}
+                alt=""
               />
               <Typography variant="body2" sx={{ml: 1}}>
                 {asset.symbol}

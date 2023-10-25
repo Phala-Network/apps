@@ -99,9 +99,15 @@ const GPT: FC = () => {
   }, [resetStore])
 
   useEffect(() => {
-    setSolutionString(
-      data?.solution == null ? '' : JSON.stringify(data?.solution),
-    )
+    if (data?.solution == null) {
+      setSolutionString('')
+    } else {
+      const x = []
+      for (const {from, to, ...rest} of data.solution) {
+        x.push({...rest})
+      }
+      setSolutionString(JSON.stringify(x))
+    }
   }, [data, setSolutionString])
 
   const fromNativeChain =
