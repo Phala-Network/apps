@@ -78,7 +78,7 @@ export const toChainAtom = atom(
   },
 )
 
-const toAssetIdAtom = atomWithStorage('jotai:to_asset_id', 'AstarEvm-xcGLMR')
+const toAssetIdAtom = atomWithStorage('jotai:to_asset_id', 'AstarEvm-GLMR')
 export const toAssetAtom = atom(
   (get) => assetMap.get(get(toAssetIdAtom)),
   (get, set, update: string) => {

@@ -30,7 +30,7 @@ jobs:
           cache: 'yarn'
 
       - name: Install dependencies
-        run: yarn --immutable
+        run: corepack enable && yarn --immutable
 
       - name: Linter
         run: npm run lint

@@ -73,7 +73,7 @@ const Body: FC<BoxProps> = (props) => {
           setFromChain('Moonbeam')
           setToChain('AstarEvm')
           setFromAsset('Moonbeam-WGLMR')
-          setToAsset('AstarEvm-xcGLMR')
+          setToAsset('AstarEvm-GLMR')
           setSolutionString(DEFAULT_SOLUTION_STRING)
         }}
       >
