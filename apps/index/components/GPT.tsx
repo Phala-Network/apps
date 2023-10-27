@@ -130,10 +130,11 @@ const GPT: FC = () => {
       data != null &&
       fromChain != null &&
       toChain != null &&
-      data.params.recipient == null &&
       fromChain.chainType === toChain.chainType
     ) {
-      if (fromChain.chainType === 'Evm' && evmAccount != null) {
+      if (data.params.recipient != null) {
+        setDestinationAccount(data.params.recipient)
+      } else if (fromChain.chainType === 'Evm' && evmAccount != null) {
         setDestinationAccount(evmAccount)
       } else if (fromChain.chainType === 'Sub' && polkadotAccount != null) {
         setDestinationAccount(polkadotAccount.address)

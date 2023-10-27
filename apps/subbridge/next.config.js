@@ -6,6 +6,7 @@ const withImages = require('next-images')
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: 'export',
   transpilePackages: ['jotai-devtools'],
   images: {disableStaticImages: true},
   env: {CONTEXT: process.env.CONTEXT},
