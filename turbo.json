@@ -10,7 +10,7 @@
         ".svelte-kit/**",
         ".vercel/**"
       ],
-      "env": ["CONTEXT", "NODE_ENV"]
+      "env": ["CONTEXT", "NODE_ENV", "VERCEL_ENV"]
     },
     "lint": {
       "outputs": [],

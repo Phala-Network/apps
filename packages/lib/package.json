@@ -10,11 +10,11 @@
     "check": "tsc --project ./tsconfig.json --noEmit"
   },
   "dependencies": {
-    "@phala/util": "workspace:^",
+    "@phala/util": "workspace:*",
     "decimal.js": "^10.4.3"
   },
   "peerDependencies": {
-    "@phala/store": "workspace:^",
+    "@phala/store": "workspace:*",
     "@polkadot/api": "^10",
     "@polkadot/types": "^10",
     "@talismn/connect-wallets": "^1.1.3",
@@ -22,6 +22,6 @@
     "react": ">=17"
   },
   "devDependencies": {
-    "@phala/eslint-config": "workspace:^"
+    "@phala/eslint-config": "workspace:*"
   }
 }
