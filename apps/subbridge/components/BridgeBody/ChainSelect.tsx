@@ -11,8 +11,8 @@ import {useEffect, type FC} from 'react'
 
 const shouldShowTest =
   process.env.NODE_ENV === 'development' ||
-  process.env.CONTEXT === 'branch-deploy' ||
-  process.env.CONTEXT === 'deploy-preview'
+  process.env.VERCEL_ENV === 'preview' ||
+  process.env.VERCEL_ENV === 'development'
 
 const ChainSelect: FC<
   {

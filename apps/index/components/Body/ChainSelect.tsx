@@ -2,11 +2,6 @@ import {MenuItem, TextField, type TextFieldProps} from '@mui/material'
 import {type Chain} from '@phala/index'
 import {type FC} from 'react'
 
-// const shouldShowTest =
-//   process.env.NODE_ENV === 'development' ||
-//   process.env.CONTEXT === 'branch-deploy' ||
-//   process.env.CONTEXT === 'deploy-preview'
-
 const ChainSelect: FC<
   {
     chain: Chain
