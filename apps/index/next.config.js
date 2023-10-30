@@ -8,7 +8,6 @@ const withImages = require('next-images')
 const nextConfig = {
   transpilePackages: ['jotai-devtools'],
   images: {disableStaticImages: true},
-  env: {CONTEXT: process.env.CONTEXT},
   reactStrictMode: true,
   eslint: {
     ignoreDuringBuilds: true,

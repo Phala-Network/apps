@@ -126,18 +126,19 @@ const GPT: FC = () => {
   }, [data, setFromChain, setFromAmount, setFromAsset, setToChain, setToAsset])
 
   useEffect(() => {
-    if (
-      data != null &&
-      fromChain != null &&
-      toChain != null &&
-      fromChain.chainType === toChain.chainType
-    ) {
+    if (data != null) {
       if (data.params.recipient != null) {
         setDestinationAccount(data.params.recipient)
-      } else if (fromChain.chainType === 'Evm' && evmAccount != null) {
-        setDestinationAccount(evmAccount)
-      } else if (fromChain.chainType === 'Sub' && polkadotAccount != null) {
-        setDestinationAccount(polkadotAccount.address)
+      } else if (
+        fromChain != null &&
+        toChain != null &&
+        fromChain.chainType === toChain.chainType
+      ) {
+        if (fromChain.chainType === 'Evm' && evmAccount != null) {
+          setDestinationAccount(evmAccount)
+        } else if (fromChain.chainType === 'Sub' && polkadotAccount != null) {
+          setDestinationAccount(polkadotAccount.address)
+        }
       }
     }
   }, [

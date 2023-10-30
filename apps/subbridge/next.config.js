@@ -9,7 +9,6 @@ const nextConfig = {
   output: 'export',
   transpilePackages: ['jotai-devtools'],
   images: {disableStaticImages: true},
-  env: {CONTEXT: process.env.CONTEXT},
   eslint: {
     ignoreDuringBuilds: true,
     dirs: ['pages', 'components', 'lib', 'hooks', 'store', 'types'],

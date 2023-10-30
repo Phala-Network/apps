@@ -21,7 +21,7 @@
     "@mui/icons-material": "^5.14.15",
     "@mui/lab": "5.0.0-alpha.150",
     "@mui/material": "^5.14.15",
-    "@mui/x-data-grid": "^6.16.3",
+    "@mui/x-data-grid": "^6.17.0",
     "@phala/lib": "workspace:^",
     "@phala/store": "workspace:^",
     "@phala/util": "workspace:^",
@@ -55,7 +55,7 @@
     "react-intersection-observer": "^9.5.2",
     "react-markdown": "^9.0.0",
     "react-snap-carousel": "^0.3.2",
-    "recharts": "^2.9.0",
+    "recharts": "^2.9.1",
     "sharp": "^0.32.6",
     "swr": "2.2.2",
     "typescript": "^5.2.2"
