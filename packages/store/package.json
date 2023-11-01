@@ -20,6 +20,6 @@
     }
   },
   "devDependencies": {
-    "@phala/eslint-config": "workspace:^"
+    "@phala/eslint-config": "workspace:*"
   }
 }

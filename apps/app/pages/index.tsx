@@ -1,13 +1,4 @@
-import type {GetServerSideProps, NextPage} from 'next'
-
-export const getServerSideProps: GetServerSideProps = async () => {
-  return {
-    redirect: {
-      destination: '/khala',
-      permanent: false,
-    },
-  }
-}
+import type {NextPage} from 'next'
 
 const Page: NextPage = () => null
 

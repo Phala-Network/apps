@@ -15,6 +15,6 @@
     "decimal.js": "^10.4.3"
   },
   "devDependencies": {
-    "@phala/eslint-config": "workspace:^"
+    "@phala/eslint-config": "workspace:*"
   }
 }
