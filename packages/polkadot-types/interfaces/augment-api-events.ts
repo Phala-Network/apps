@@ -9,7 +9,7 @@ import type { ApiTypes, AugmentedEvent } from '@polkadot/api-base/types';
 import type { Bytes, Null, Option, Result, U256, U8aFixed, Vec, bool, u128, u16, u32, u64, u8 } from '@polkadot/types-codec';
 import type { ITuple } from '@polkadot/types-codec/types';
 import type { AccountId32, H256 } from '@polkadot/types/interfaces/runtime';
-import type { FrameSupportDispatchDispatchInfo, FrameSupportTokensMiscBalanceStatus, PalletDemocracyMetadataOwner, PalletDemocracyVoteAccountVote, PalletDemocracyVoteThreshold, PalletIndexDepositInfo, PalletMultisigTimepoint, PhalaParachainRuntimeProxyType, PhalaTypesAttestationProvider, RmrkTraitsNftAccountIdOrCollectionNftTuple, SpCoreSr25519Public, SpRuntimeDispatchError, SpWeightsWeightV2Weight, SygmaFeeHandlerRouterFeeHandlerType, SygmaTraitsTransferType, XcmV3MultiAsset, XcmV3MultiLocation, XcmV3MultiassetAssetId, XcmV3MultiassetMultiAssets, XcmV3Response, XcmV3TraitsError, XcmV3TraitsOutcome, XcmV3Xcm, XcmVersionedMultiAssets, XcmVersionedMultiLocation } from '@polkadot/types/lookup';
+import type { FrameSupportDispatchDispatchInfo, FrameSupportTokensMiscBalanceStatus, PalletDemocracyMetadataOwner, PalletDemocracyVoteAccountVote, PalletDemocracyVoteThreshold, PalletIndexDepositInfo, PalletMultisigTimepoint, PhalaPalletsComputeVaultPalletForceShutdownReason, PhalaParachainRuntimeProxyType, PhalaTypesAttestationProvider, RmrkTraitsNftAccountIdOrCollectionNftTuple, SpCoreSr25519Public, SpRuntimeDispatchError, SpWeightsWeightV2Weight, SygmaFeeHandlerRouterFeeHandlerType, SygmaTraitsTransferType, XcmV3MultiAsset, XcmV3MultiLocation, XcmV3MultiassetAssetId, XcmV3MultiassetMultiAssets, XcmV3Response, XcmV3TraitsError, XcmV3TraitsOutcome, XcmV3Xcm, XcmVersionedMultiAssets, XcmVersionedMultiLocation } from '@polkadot/types/lookup';
 
 export type __AugmentedEvent<ApiType extends ApiTypes> = AugmentedEvent<ApiType>;
 
@@ -713,7 +713,7 @@ declare module '@polkadot/api-base/types/events' {
        * - the stake related fields in [`Pools`]
        * - the user staking asset account
        **/
-      Withdrawal: AugmentedEvent<ApiType, [pid: u64, user: AccountId32, amount: u128, shares: u128], { pid: u64, user: AccountId32, amount: u128, shares: u128 }>;
+      Withdrawal: AugmentedEvent<ApiType, [pid: u64, user: AccountId32, amount: u128, shares: u128, burntShares: u128], { pid: u64, user: AccountId32, amount: u128, shares: u128, burntShares: u128 }>;
       /**
        * A withdrawal request is inserted to a queue
        * 
@@ -721,7 +721,7 @@ declare module '@polkadot/api-base/types/events' {
        * - a new item is inserted to or an old item is being replaced by the new item in the
        * withdraw queue in [`Pools`]
        **/
-      WithdrawalQueued: AugmentedEvent<ApiType, [pid: u64, user: AccountId32, shares: u128, nftId: u32, asVault: Option<u64>], { pid: u64, user: AccountId32, shares: u128, nftId: u32, asVault: Option<u64> }>;
+      WithdrawalQueued: AugmentedEvent<ApiType, [pid: u64, user: AccountId32, shares: u128, nftId: u32, asVault: Option<u64>, withdrawingNftId: u32], { pid: u64, user: AccountId32, shares: u128, nftId: u32, asVault: Option<u64>, withdrawingNftId: u32 }>;
       /**
        * Generic event
        **/
@@ -1015,6 +1015,7 @@ declare module '@polkadot/api-base/types/events' {
        * ([`Withdrawal`](#variant.Withdrawal) event)
        **/
       Contribution: AugmentedEvent<ApiType, [pid: u64, user: AccountId32, amount: u128, shares: u128], { pid: u64, user: AccountId32, amount: u128, shares: u128 }>;
+      ForceShutdown: AugmentedEvent<ApiType, [pid: u64, reason: PhalaPalletsComputeVaultPalletForceShutdownReason], { pid: u64, reason: PhalaPalletsComputeVaultPalletForceShutdownReason }>;
       /**
        * Owner shares is claimed by pool owner
        * Affected states:

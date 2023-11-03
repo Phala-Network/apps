@@ -3,7 +3,6 @@ import {transferEvmSygma} from '@/lib/transferByEvmSygma'
 import {transferByEvmXTokens} from '@/lib/transferByEvmXTokens'
 import {transferByPhalaXTransfer} from '@/lib/transferByPhalaXTransfer'
 import {transferByPolkadotXTokens} from '@/lib/transferByPolkadotXTokens'
-import {transferByPolkadotXcm} from '@/lib/transferByPolkadotXcm'
 import {
   amountAtom,
   assetAtom,
@@ -47,9 +46,7 @@ export const useTransfer = (): (({
   const evmAccount = useAtomValue(evmAccountAtom)
   const polkadotAccount = useAtomValue(polkadotAccountAtom)
   const bridge = useAtomValue(bridgeInfoAtom)
-  const khalaApi = usePolkadotApi(
-    toChain.id === 'phala' || toChain.id === 'thala' ? toChain.id : 'khala',
-  )
+  const khalaApi = usePolkadotApi(toChain.id === 'phala' ? 'phala' : 'khala')
   const polkadotApi = useCurrentPolkadotApi()
 
   const rawAmount = useMemo(
@@ -141,28 +138,6 @@ export const useTransfer = (): (({
       }).then((transaction) => {
         onReady()
         return transaction
-      })
-    }
-
-    if (bridge.kind === 'polkadotXcm') {
-      if (polkadotApi == null || polkadotAccount?.wallet?.signer == null) {
-        throw new Error('Transfer missing required parameters')
-      }
-      const extrinsic = transferByPolkadotXcm({
-        polkadotApi,
-        assetId: asset.id,
-        amount: rawAmount,
-        fromChainId: fromChain.id,
-        toChainId: toChain.id,
-        destinationAccount,
-        proxy: bridge.proxy,
-      })
-      return await waitSignAndSend({
-        api: polkadotApi,
-        extrinsic,
-        account: polkadotAccount.address,
-        signer: polkadotAccount.wallet.signer,
-        onReady,
       })
     }
 

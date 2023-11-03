@@ -48,7 +48,7 @@ const DestinationAccountInput: FC<BoxProps> = (props) => {
       ) {
         setDestinationAccount(evmAccount)
       } else if (
-        fromChain.kind === 'polkadot' &&
+        fromChain.kind === 'substrate' &&
         polkadotAccount?.address != null
       ) {
         setDestinationAccount(polkadotAccount.address)
@@ -72,7 +72,7 @@ const DestinationAccountInput: FC<BoxProps> = (props) => {
 
   const displayValue = useMemo(() => {
     if (
-      toChain.kind === 'polkadot' &&
+      toChain.kind === 'substrate' &&
       useSameAccountEnabled &&
       polkadotAccount != null &&
       polkadotAccount.address === destinationAccount

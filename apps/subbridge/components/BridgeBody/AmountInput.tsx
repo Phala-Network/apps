@@ -44,7 +44,7 @@ const AmountInput: FC<BoxProps & Pick<InputProps, 'endAdornment'>> = ({
   )
 
   const fromNativeChain =
-    fromChain.kind === 'polkadot' && fromChain.nativeAsset === asset.id
+    fromChain.kind === 'substrate' && fromChain.nativeAsset === asset.id
 
   return (
     <Box {...props}>

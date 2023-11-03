@@ -3,7 +3,6 @@ import astarIcon from '@/assets/astar_chain_icon.png'
 import basiliskIcon from '@/assets/basilisk_chain_icon.png'
 import bifrostIcon from '@/assets/bifrost_chain_icon.svg'
 import calamariIcon from '@/assets/calamari_chain_icon.png'
-import crabChainIcon from '@/assets/crab_chain_icon.svg'
 import ethereumIcon from '@/assets/ethereum_chain_icon.jpg'
 import karuraIcon from '@/assets/karura_chain_icon.png'
 import khalaIcon from '@/assets/khala_chain_icon.svg'
@@ -23,12 +22,11 @@ export type EvmChainId =
   | 'moonriver'
   | 'moonbase-alpha'
   | 'goerli'
-export type PolkadotChainId =
+export type SubstrateChainId =
   | 'phala'
   | 'khala'
   | 'acala'
   | 'karura'
-  | 'thala'
   | 'rhala'
   | 'karura-test'
   | 'bifrost-kusama'
@@ -38,11 +36,10 @@ export type PolkadotChainId =
   | 'basilisk'
   | 'turing'
   | 'calamari'
-  | 'crab'
   | 'shiden'
   | 'astar'
-export type ChainId = EvmChainId | PolkadotChainId
-export type ChainKind = 'evm' | 'polkadot'
+export type ChainId = EvmChainId | SubstrateChainId
+export type ChainKind = 'evm' | 'substrate'
 
 interface BaseChain {
   name: string
@@ -71,24 +68,25 @@ export interface EvmChain extends BaseChain {
   sygmaHandler?: string
 }
 
-export interface PolkadotChain extends BaseChain {
-  id: PolkadotChainId
-  kind: 'polkadot'
+export interface SubstrateChain extends BaseChain {
+  id: SubstrateChainId
+  kind: 'substrate'
   endpoint: string | string[]
   ss58Format: number
   paraId: number
+  relayChain: 'polkadot' | 'kusama'
 }
 
-export type Chain = EvmChain | PolkadotChain
+export type Chain = EvmChain | SubstrateChain
 
 export const CHAINS: Readonly<
-  Record<PolkadotChainId, PolkadotChain> & Record<EvmChainId, EvmChain>
+  Record<SubstrateChainId, SubstrateChain> & Record<EvmChainId, EvmChain>
 > = {
   phala: {
     id: 'phala',
     name: 'Phala',
     icon: phalaIcon,
-    kind: 'polkadot',
+    kind: 'substrate',
     endpoint: [
       'wss://phala-rpc.dwellir.com',
       'wss://api.phala.network/ws',
@@ -99,12 +97,13 @@ export const CHAINS: Readonly<
     nativeAsset: 'pha',
     explorerURL: 'https://phala.subscan.io/',
     sygmaChainId: 5233,
+    relayChain: 'polkadot',
   },
   khala: {
     id: 'khala',
     name: 'Khala',
     icon: khalaIcon,
-    kind: 'polkadot',
+    kind: 'substrate',
     endpoint: [
       'wss://khala-rpc.dwellir.com',
       'wss://khala.api.onfinality.io/public-ws',
@@ -115,12 +114,13 @@ export const CHAINS: Readonly<
     nativeAsset: 'pha',
     explorerURL: 'https://khala.subscan.io/',
     sygmaChainId: 5232,
+    relayChain: 'kusama',
   },
   acala: {
     id: 'acala',
     name: 'Acala',
     icon: acalaIcon,
-    kind: 'polkadot',
+    kind: 'substrate',
     endpoint: [
       'wss://acala-rpc-0.aca-api.network',
       'wss://acala-rpc-1.aca-api.network',
@@ -133,12 +133,13 @@ export const CHAINS: Readonly<
     paraId: 2000,
     nativeAsset: 'aca',
     explorerURL: 'https://acala.subscan.io/',
+    relayChain: 'polkadot',
   },
   karura: {
     id: 'karura',
     name: 'Karura',
     icon: karuraIcon,
-    kind: 'polkadot',
+    kind: 'substrate',
     endpoint: [
       'wss://karura-rpc-0.aca-api.network',
       'wss://karura-rpc-1.aca-api.network',
@@ -152,6 +153,7 @@ export const CHAINS: Readonly<
     paraId: 2000,
     nativeAsset: 'kar',
     explorerURL: 'https://karura.subscan.io/',
+    relayChain: 'kusama',
   },
   ethereum: {
     id: 'ethereum',
@@ -185,39 +187,30 @@ export const CHAINS: Readonly<
     sygmaChainId: 5,
     sygmaHandler: '0x7Ed4B14a82B2F2C4DfB13DC4Eac00205EDEff6C2',
   },
-  thala: {
-    id: 'thala',
-    name: 'Thala',
-    icon: khalaIcon,
-    kind: 'polkadot',
-    endpoint: 'wss://bridge-testnet-api.phala.network/thala/ws',
-    ss58Format: 30,
-    isTest: true,
-    paraId: 2004,
-    nativeAsset: 'pha',
-  },
   rhala: {
     id: 'rhala',
     name: 'Rhala',
     icon: khalaIcon,
-    kind: 'polkadot',
+    kind: 'substrate',
     endpoint: 'wss://subbridge-test.phala.network/rhala/ws',
     ss58Format: 30,
     isTest: true,
     paraId: 2004,
     nativeAsset: 'pha',
     sygmaChainId: 5231,
+    relayChain: 'kusama',
   },
   'karura-test': {
     id: 'karura-test',
     name: 'Karura Test',
     icon: karuraIcon,
-    kind: 'polkadot',
+    kind: 'substrate',
     endpoint: 'wss://bridge-testnet-api.phala.network/karura/ws',
     ss58Format: 8,
     isTest: true,
     paraId: 2000,
     nativeAsset: 'kar',
+    relayChain: 'kusama',
   },
   moonbeam: {
     id: 'moonbeam',
@@ -267,7 +260,7 @@ export const CHAINS: Readonly<
     id: 'bifrost-kusama',
     name: 'Bifrost Kusama',
     icon: bifrostIcon,
-    kind: 'polkadot',
+    kind: 'substrate',
     endpoint: [
       'wss://bifrost-rpc.liebi.com/ws',
       'wss://us.bifrost-rpc.liebi.com/ws',
@@ -279,22 +272,24 @@ export const CHAINS: Readonly<
     paraId: 2001,
     nativeAsset: 'bnc',
     explorerURL: 'https://bifrost-kusama.subscan.io',
+    relayChain: 'kusama',
   },
   'bifrost-test': {
     id: 'bifrost-test',
     name: 'Bifrost Test',
     icon: bifrostIcon,
-    kind: 'polkadot',
+    kind: 'substrate',
     endpoint: 'wss://bridge-testnet-api.phala.network/bifrost/ws',
     ss58Format: 6,
     paraId: 2001,
     nativeAsset: 'bnc',
     isTest: true,
+    relayChain: 'kusama',
   },
   parallel: {
     id: 'parallel',
     name: 'Parallel',
-    kind: 'polkadot',
+    kind: 'substrate',
     icon: parallelIcon,
     paraId: 2012,
     endpoint: [
@@ -304,11 +299,12 @@ export const CHAINS: Readonly<
     ss58Format: 172,
     nativeAsset: 'para',
     explorerURL: 'https://parallel.subscan.io/',
+    relayChain: 'polkadot',
   },
   'parallel-heiko': {
     id: 'parallel-heiko',
     name: 'Parallel Heiko',
-    kind: 'polkadot',
+    kind: 'substrate',
     icon: parallelHeikoIcon,
     paraId: 2085,
     endpoint: [
@@ -319,12 +315,13 @@ export const CHAINS: Readonly<
     ss58Format: 110,
     nativeAsset: 'hko',
     explorerURL: 'https://parallel-heiko.subscan.io/',
+    relayChain: 'kusama',
   },
   basilisk: {
     id: 'basilisk',
     name: 'Basilisk',
     icon: basiliskIcon,
-    kind: 'polkadot',
+    kind: 'substrate',
     paraId: 2090,
     endpoint: [
       'wss://rpc-01.basilisk.hydradx.io',
@@ -334,12 +331,13 @@ export const CHAINS: Readonly<
     ss58Format: 10041,
     nativeAsset: 'bsx',
     explorerURL: 'https://basilisk.subscan.io/',
+    relayChain: 'kusama',
   },
   turing: {
     id: 'turing',
     name: 'Turing',
     icon: turingIcon,
-    kind: 'polkadot',
+    kind: 'substrate',
     paraId: 2114,
     endpoint: [
       'wss://rpc.turing.oak.tech',
@@ -349,12 +347,13 @@ export const CHAINS: Readonly<
     ss58Format: 51,
     nativeAsset: 'tur',
     explorerURL: 'https://turing.subscan.io/',
+    relayChain: 'kusama',
   },
   calamari: {
     id: 'calamari',
     name: 'Calamari',
     icon: calamariIcon,
-    kind: 'polkadot',
+    kind: 'substrate',
     paraId: 2084,
     endpoint: [
       'wss://ws.calamari.systems/',
@@ -363,23 +362,13 @@ export const CHAINS: Readonly<
     ss58Format: 78,
     nativeAsset: 'kma',
     explorerURL: 'https://calamari.subscan.io/',
-  },
-  crab: {
-    id: 'crab',
-    name: 'Crab',
-    icon: crabChainIcon,
-    kind: 'polkadot',
-    paraId: 2105,
-    endpoint: ['wss://crab-parachain-rpc.darwinia.network/'],
-    ss58Format: 42,
-    nativeAsset: 'crab',
-    explorerURL: 'https://crab.subscan.io/',
+    relayChain: 'kusama',
   },
   shiden: {
     id: 'shiden',
     name: 'Shiden',
     icon: shidenIcon,
-    kind: 'polkadot',
+    kind: 'substrate',
     paraId: 2007,
     endpoint: [
       'wss://rpc.shiden.astar.network',
@@ -390,12 +379,13 @@ export const CHAINS: Readonly<
     ss58Format: 5,
     nativeAsset: 'sdn',
     explorerURL: 'https://shiden.subscan.io/',
+    relayChain: 'kusama',
   },
   astar: {
     id: 'astar',
     name: 'Astar',
     icon: astarIcon,
-    kind: 'polkadot',
+    kind: 'substrate',
     paraId: 2006,
     endpoint: [
       'wss://rpc.astar.network',
@@ -407,5 +397,6 @@ export const CHAINS: Readonly<
     ss58Format: 5,
     nativeAsset: 'astr',
     explorerURL: 'https://astar.subscan.io/',
+    relayChain: 'polkadot',
   },
 }

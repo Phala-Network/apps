@@ -42,7 +42,8 @@ export const useValidation = (): void => {
       }
       if (
         destinationAccount.length === 0 ||
-        (toChain.kind === 'polkadot' && !validateAddress(destinationAccount)) ||
+        (toChain.kind === 'substrate' &&
+          !validateAddress(destinationAccount)) ||
         (toChain.kind === 'evm' &&
           !(
             (await import('ethers')).utils.isAddress(destinationAccount) &&

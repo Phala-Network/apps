@@ -1,5 +1,5 @@
-import {ASSETS, type AssetId} from '@/config/asset'
-import {CHAINS, type ChainId} from '@/config/chain'
+import {ASSETS, nativeLocation, type AssetId} from '@/config/asset'
+import {CHAINS, type ChainId, type SubstrateChain} from '@/config/chain'
 import type {ApiPromise} from '@polkadot/api'
 import type {SubmittableExtrinsic} from '@polkadot/api/types'
 import type {ISubmittableResult} from '@polkadot/types/types'
@@ -26,68 +26,31 @@ export const transferByPolkadotXTokens = ({
   proxy?: ChainId
 }): SubmittableExtrinsic<'promise', ISubmittableResult> => {
   const asset = ASSETS[assetId]
+  const fromChain = CHAINS[fromChainId] as SubstrateChain
   const toChain = CHAINS[toChainId]
-  const shouldUsePalletAssetId =
-    fromChainId === 'parallel' ||
-    fromChainId === 'parallel-heiko' ||
-    fromChainId === 'calamari' ||
-    fromChainId === 'basilisk'
-  const palletAssetId = asset.palletAssetId?.[fromChainId]
-  const isTransferringBNCFromBifrost =
-    (fromChainId === 'bifrost-kusama' || fromChainId === 'bifrost-test') &&
-    assetId === 'bnc'
+  const isNativeAsset = fromChain.nativeAsset === assetId
+  const location = isNativeAsset
+    ? nativeLocation
+    : asset.location?.[fromChain.relayChain]
   const generalIndex = toChain.kind === 'evm' ? toChain.generalIndex : null
+  const xcmVersion = fromChainId === 'calamari' ? 'V1' : 'V3'
+  const palletName = new Set<ChainId>(['astar', 'shiden']).has(fromChainId)
+    ? 'xtokens'
+    : 'xTokens'
 
-  if (
-    (shouldUsePalletAssetId
-      ? palletAssetId === undefined
-      : asset.ormlToken === undefined) ||
-    toChain.paraId == null ||
-    (proxy != null && typeof generalIndex !== 'number')
-  ) {
+  if (location == null || (proxy != null && typeof generalIndex !== 'number')) {
     throw new Error('Transfer missing required parameters')
   }
 
-  let currencyId
-
-  if (fromChainId === 'calamari') {
-    currencyId = {
-      MantaCurrency: palletAssetId,
-    }
-  } else if (
-    fromChainId === 'parallel' ||
-    fromChainId === 'parallel-heiko' ||
-    fromChainId === 'basilisk' ||
-    fromChainId === 'astar' ||
-    fromChainId === 'shiden' ||
-    fromChainId === 'turing'
-  ) {
-    currencyId = palletAssetId
-  } else {
-    currencyId = {
-      [isTransferringBNCFromBifrost ? 'Native' : 'Token']: asset.ormlToken,
-    }
-  }
-
-  const isXcmV3 = new Set<ChainId>([
-    'bifrost-kusama',
-    'bifrost-test',
-    'karura',
-    'karura-test',
-    'parallel-heiko',
-    'astar',
-    'shiden',
-    'turing',
-  ]).has(fromChainId)
-
-  const palletName =
-    fromChainId === 'astar' || fromChainId === 'shiden' ? 'xtokens' : 'xTokens'
-
-  return polkadotApi.tx[palletName].transfer(
-    currencyId,
-    amount,
+  return polkadotApi.tx[palletName].transferMultiasset(
     {
-      [isXcmV3 ? 'V3' : 'V1']: {
+      [xcmVersion]: {
+        id: {Concrete: location},
+        fun: {Fungible: amount},
+      },
+    },
+    {
+      [xcmVersion]: {
         parents: 1,
         interior:
           proxy != null
@@ -107,21 +70,13 @@ export const transferByPolkadotXTokens = ({
                   {
                     AccountId32: {
                       id: u8aToHex(decodeAddress(destinationAccount)),
-                      network: isXcmV3 ? undefined : 'Any',
+                      network: xcmVersion === 'V1' ? 'Any' : undefined,
                     },
                   },
                 ],
               },
       },
     },
-    fromChainId === 'bifrost-kusama' || fromChainId === 'bifrost-test'
-      ? {Limited: {refTime: '6000000000', proofSize: '1000000'}}
-      : fromChainId === 'parallel' ||
-        fromChainId === 'parallel-heiko' ||
-        fromChainId === 'karura' ||
-        fromChainId === 'shiden' ||
-        fromChainId === 'astar'
-      ? {Unlimited: null}
-      : '6000000000',
+    'Unlimited',
   )
 }

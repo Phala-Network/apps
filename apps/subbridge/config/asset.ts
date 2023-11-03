@@ -3,7 +3,6 @@ import astrIcon from '@/assets/astr_asset_icon.png'
 import ausdIcon from '@/assets/ausd_asset_icon.png'
 import bncIcon from '@/assets/bnc_asset_icon.png'
 import bsxIcon from '@/assets/bsx_asset_icon.png'
-import crabIcon from '@/assets/crab_asset_icon.png'
 import glmrIcon from '@/assets/glmr_asset_icon.png'
 import hkoIcon from '@/assets/hko_asset_icon.svg'
 import karIcon from '@/assets/kar_asset_icon.png'
@@ -14,8 +13,11 @@ import phaIcon from '@/assets/pha_asset_icon.png'
 import sdnIcon from '@/assets/sdn_asset_icon.png'
 import turIcon from '@/assets/tur_asset_icon.png'
 import zlkIcon from '@/assets/zlk_asset_icon.png'
+import getGeneralKey from '@/lib/getGeneralKey'
 import Decimal from 'decimal.js'
-import {type ChainId, type EvmChainId} from './chain'
+import {CHAINS, type ChainId, type EvmChainId} from './chain'
+
+export const nativeLocation = {parents: 0, interior: 'Here'}
 
 export type AssetId =
   | 'pha'
@@ -30,13 +32,12 @@ export type AssetId =
   | 'bsx'
   | 'tur'
   | 'kma'
-  | 'crab'
   | 'glmr'
   | 'sdn'
   | 'astr'
   | 'gpha'
 
-export type OrmlToken =
+export type CurrencyTokenSymbol =
   | 'PHA'
   | 'KAR'
   | 'ZLK'
@@ -51,7 +52,7 @@ export interface Asset {
   icon: string
   decimals: Partial<Record<ChainId, number>> & {default: number}
   xc20Address?: Partial<Record<ChainId, `0x${string}`>>
-  ormlToken?: OrmlToken
+  currencyTokenSymbol?: CurrencyTokenSymbol
   palletAssetId?: Partial<Record<ChainId, number | string>>
   erc20TokenContractAddress?: {
     [chainId in EvmChainId]?: `0x${string}`
@@ -67,6 +68,10 @@ export interface Asset {
   destChainTransactionFee: Partial<Record<ChainId, Decimal>>
   existentialDeposit: Partial<Record<ChainId, Decimal>>
   sygmaResourceId?: string
+  location?: {
+    polkadot?: any
+    kusama?: any
+  }
 }
 
 export const ASSETS: Readonly<Record<AssetId, Asset>> = {
@@ -74,7 +79,7 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
     id: 'pha',
     symbol: 'PHA',
     icon: phaIcon,
-    ormlToken: 'PHA',
+    currencyTokenSymbol: 'PHA',
     xc20Address: {
       moonbeam: '0xffffffff63d24ecc8eb8a7b5d0803e900f7b6ced',
       moonriver: '0xffffffff8e6b63d9e447b6d4c45bda8af9dc9603',
@@ -94,7 +99,6 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
     destChainTransactionFee: {
       phala: new Decimal('0.092696'),
       khala: new Decimal('0.092696'),
-      thala: new Decimal('0.092696'),
       'bifrost-kusama': new Decimal('0.0256'),
       'bifrost-test': new Decimal('0.0256'),
       karura: new Decimal('0.0512'),
@@ -111,7 +115,6 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
     existentialDeposit: {
       phala: new Decimal('0.01'),
       khala: new Decimal('0.01'),
-      thala: new Decimal('0.01'),
       karura: new Decimal('0.04'),
       'karura-test': new Decimal('0.04'),
       'bifrost-kusama': new Decimal('0.04'),
@@ -132,6 +135,10 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
     },
     sygmaResourceId:
       '0x0000000000000000000000000000000000000000000000000000000000000001',
+    location: {
+      polkadot: {parents: 1, interior: {X1: {Parachain: CHAINS.phala.paraId}}},
+      kusama: {parents: 1, interior: {X1: {Parachain: CHAINS.khala.paraId}}},
+    },
   },
   gpha: {
     id: 'gpha',
@@ -153,21 +160,27 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
     decimals: {default: 18},
     palletAssetId: {
       khala: 6,
-      thala: 6,
     },
     xc20Address: {moonriver: '0x0000000000000000000000000000000000000802'},
     destChainTransactionFee: {
       moonriver: new Decimal('0.00008'),
       khala: new Decimal('0.000000000266666666'),
-      thala: new Decimal('0.000000000266666666'),
     },
     existentialDeposit: {},
+    location: {
+      kusama: {
+        parents: 1,
+        interior: {
+          X2: [{Parachain: CHAINS.moonriver.paraId}, {PalletInstance: 10}],
+        },
+      },
+    },
   },
   aca: {
     id: 'aca',
     symbol: 'ACA',
     icon: acaIcon,
-    ormlToken: 'ACA',
+    currencyTokenSymbol: 'ACA',
     decimals: {default: 12},
     palletAssetId: {phala: 5},
     destChainTransactionFee: {
@@ -177,28 +190,49 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
       acala: new Decimal('0.01'),
       phala: new Decimal('0.01'),
     },
+    location: {
+      polkadot: {
+        parents: 1,
+        interior: {
+          X2: [
+            {
+              Parachain: CHAINS.acala.paraId,
+              GeneralKey: getGeneralKey('0x0003'),
+            },
+          ],
+        },
+      },
+    },
   },
   kar: {
     id: 'kar',
     symbol: 'KAR',
     icon: karIcon,
-    ormlToken: 'KAR',
+    currencyTokenSymbol: 'KAR',
     decimals: {default: 12},
     palletAssetId: {
       khala: 1,
-      thala: 1,
     },
     destChainTransactionFee: {
       karura: new Decimal('0.0064'),
       'karura-test': new Decimal('0.0064'),
       khala: new Decimal('0.008'),
-      thala: new Decimal('0.008'),
     },
     existentialDeposit: {
       karura: new Decimal('0.01'),
       'karura-test': new Decimal('0.01'),
       khala: new Decimal('0.01'),
-      thala: new Decimal('0.01'),
+    },
+    location: {
+      kusama: {
+        parents: 1,
+        interior: {
+          X2: [
+            {Parachain: CHAINS.karura.paraId},
+            {GeneralKey: getGeneralKey('0x0080')},
+          ],
+        },
+      },
     },
   },
   zlk: {
@@ -207,12 +241,10 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
     icon: zlkIcon,
     palletAssetId: {
       khala: 3,
-      thala: 3,
     },
-    ormlToken: 'ZLK',
+    currencyTokenSymbol: 'ZLK',
     destChainTransactionFee: {
       khala: new Decimal('0.000000016'),
-      thala: new Decimal('0.000000016'),
       'bifrost-kusama': new Decimal('0.0096'),
       'bifrost-test': new Decimal('0.0096'),
     },
@@ -231,6 +263,17 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
       moonriver: '0xf88337a0db6e24Dff0fCD7F92ab0655B97A68d38',
       khala: '441RSFVuGcTybwYi7NPKAqYzEkDwnGDwLdTYrViNXr8RXVfG',
     },
+    location: {
+      kusama: {
+        parents: 1,
+        interior: {
+          X2: [
+            {Parachain: CHAINS['bifrost-kusama'].paraId},
+            {GeneralKey: getGeneralKey('0x0207')},
+          ],
+        },
+      },
+    },
   },
   bnc: {
     id: 'bnc',
@@ -238,44 +281,60 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
     icon: bncIcon,
     palletAssetId: {
       khala: 2,
-      thala: 2,
     },
-    ormlToken: 'BNC',
+    currencyTokenSymbol: 'BNC',
     decimals: {default: 12},
     destChainTransactionFee: {
       'bifrost-kusama': new Decimal('0.0051'),
       'bifrost-test': new Decimal('0.0051'),
       khala: new Decimal('0.016'),
-      thala: new Decimal('0.016'),
     },
     existentialDeposit: {
       'bifrost-kusama': new Decimal('0.01'),
       'bifrost-test': new Decimal('0.01'),
       khala: new Decimal('0.01'),
-      thala: new Decimal('0.01'),
+    },
+    location: {
+      kusama: {
+        parents: 1,
+        interior: {
+          X2: [
+            {Parachain: CHAINS['bifrost-kusama'].paraId},
+            {GeneralKey: getGeneralKey('0x0001')},
+          ],
+        },
+      },
     },
   },
   ausd: {
     id: 'ausd',
     symbol: 'aUSD',
     icon: ausdIcon,
-    ormlToken: 'KUSD', // TODO: change this to AUSD when karura finished migration
+    currencyTokenSymbol: 'KUSD', // TODO: change this to AUSD when karura finished migration
     decimals: {default: 12},
     palletAssetId: {
       khala: 4,
-      thala: 4,
     },
     destChainTransactionFee: {
       karura: new Decimal('0.003481902463'),
       'karura-test': new Decimal('0.003481902463'),
       khala: new Decimal('0.016'),
-      thala: new Decimal('0.016'),
     },
     existentialDeposit: {
       karura: new Decimal('0.01'),
       'karura-test': new Decimal('0.01'),
       khala: new Decimal('0.01'),
-      thala: new Decimal('0.01'),
+    },
+    location: {
+      kusama: {
+        parents: 1,
+        interior: {
+          X2: [
+            {Parachain: CHAINS.karura.paraId},
+            {GeneralKey: getGeneralKey('0x0081')},
+          ],
+        },
+      },
     },
   },
   para: {
@@ -292,6 +351,17 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
       parallel: new Decimal('0.0139044'),
     },
     existentialDeposit: {parallel: new Decimal('0.01')},
+    location: {
+      polkadot: {
+        parents: 1,
+        interior: {
+          X2: [
+            {Parachain: CHAINS.parallel.paraId},
+            {GeneralKey: getGeneralKey('0x50415241')}, // string "PARA"
+          ],
+        },
+      },
+    },
   },
   hko: {
     id: 'hko',
@@ -300,16 +370,25 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
     decimals: {default: 12},
     palletAssetId: {
       khala: 7,
-      thala: 7,
       'parallel-heiko': 0,
     },
     destChainTransactionFee: {
       'parallel-heiko': new Decimal('0.0029'),
       khala: new Decimal('0.064'),
-      thala: new Decimal('0.064'),
     },
     existentialDeposit: {
       'parallel-heiko': new Decimal('0.01'),
+    },
+    location: {
+      kusama: {
+        parents: 1,
+        interior: {
+          X2: [
+            {Parachain: CHAINS['parallel-heiko'].paraId},
+            {GeneralKey: getGeneralKey('0x484b4f')}, // string "HKO"
+          ],
+        },
+      },
     },
   },
   bsx: {
@@ -319,15 +398,21 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
     decimals: {default: 12},
     palletAssetId: {
       khala: 9,
-      thala: 9,
       basilisk: 0,
     },
     destChainTransactionFee: {
       khala: new Decimal('0.064'),
-      thala: new Decimal('0.064'),
       basilisk: new Decimal('22'),
     },
     existentialDeposit: {},
+    location: {
+      kusama: {
+        parents: 1,
+        interior: {
+          X2: [{Parachain: CHAINS.basilisk.paraId}, {GeneralIndex: 0}],
+        },
+      },
+    },
   },
   tur: {
     id: 'tur',
@@ -336,16 +421,17 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
     decimals: {default: 10},
     palletAssetId: {
       khala: 10,
-      thala: 10,
       turing: 0,
     },
-    ormlToken: 'TUR',
+    currencyTokenSymbol: 'TUR',
     destChainTransactionFee: {
       khala: new Decimal('0.064'),
-      thala: new Decimal('0.064'),
       turing: new Decimal('0.1664'),
     },
     existentialDeposit: {},
+    location: {
+      kusama: {parents: 1, interior: {X1: {Parachain: CHAINS.turing.paraId}}},
+    },
   },
   kma: {
     id: 'kma',
@@ -355,26 +441,15 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
     palletAssetId: {
       calamari: 1,
       khala: 8,
-      thala: 8,
     },
     destChainTransactionFee: {
       khala: new Decimal('6.4'),
-      thala: new Decimal('6.4'),
       calamari: new Decimal('0.000004'),
     },
     existentialDeposit: {},
-  },
-  crab: {
-    id: 'crab',
-    symbol: 'CRAB',
-    icon: crabIcon,
-    decimals: {default: 18},
-    palletAssetId: {khala: 11, thala: 11},
-    destChainTransactionFee: {
-      crab: new Decimal('3.2'),
-      khala: new Decimal('0.064'),
+    location: {
+      kusama: {parents: 1, interior: {X1: {Parachain: CHAINS.calamari.paraId}}},
     },
-    existentialDeposit: {},
   },
   glmr: {
     id: 'glmr',
@@ -390,18 +465,29 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
     existentialDeposit: {
       moonbeam: new Decimal('0.01'),
     },
+    location: {
+      polkadot: {
+        parents: 1,
+        interior: {
+          X2: [{Parachain: CHAINS.moonbeam.paraId}, {PalletInstance: 10}],
+        },
+      },
+    },
   },
   sdn: {
     id: 'sdn',
     symbol: 'SDN',
     icon: sdnIcon,
     decimals: {default: 18},
-    palletAssetId: {khala: 12, thala: 12},
+    palletAssetId: {khala: 12},
     destChainTransactionFee: {
       shiden: new Decimal('0.004635101624603116'),
       khala: new Decimal('0.016'),
     },
     existentialDeposit: {},
+    location: {
+      kusama: {parents: 1, interior: {X1: {Parachain: CHAINS.shiden.paraId}}},
+    },
   },
   astr: {
     id: 'astr',
@@ -414,5 +500,8 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
       phala: new Decimal('0.032'),
     },
     existentialDeposit: {},
+    location: {
+      polkadot: {parents: 1, interior: {X1: {Parachain: CHAINS.astar.paraId}}},
+    },
   },
 }

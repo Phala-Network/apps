@@ -1193,6 +1193,10 @@ declare module '@polkadot/api-base/types/errors' {
        **/
       AssetAccountNotExist: AugmentedError<ApiType>;
       /**
+       * The commission is not changed
+       **/
+      CommissionNotChanged: AugmentedError<ApiType>;
+      /**
        * Trying to contribute more than the available balance
        **/
       InsufficientBalance: AugmentedError<ApiType>;

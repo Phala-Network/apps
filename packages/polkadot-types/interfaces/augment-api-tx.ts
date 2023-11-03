@@ -2249,7 +2249,6 @@ declare module '@polkadot/api-base/types/submittable' {
        * 
        * If the shutdown condition is met, all shares owned by the vault will be forced withdraw.
        * Note: This function doesn't guarantee no-op when there's error.
-       * TODO(mingxuan): add more detail comment later.
        **/
       checkAndMaybeForceWithdraw: AugmentedSubmittable<(vaultPid: u64 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u64]>;
       /**

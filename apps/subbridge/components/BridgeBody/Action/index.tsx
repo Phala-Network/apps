@@ -28,7 +28,7 @@ const Action: FC = () => {
       {isWalletConnected && fromChain.kind === 'evm' && (
         <EvmAction onConfirm={onConfirm} />
       )}
-      {isWalletConnected && fromChain.kind === 'polkadot' && (
+      {isWalletConnected && fromChain.kind === 'substrate' && (
         <PolkadotAction onConfirm={onConfirm} />
       )}
 

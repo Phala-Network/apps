@@ -17,7 +17,7 @@ const Account: FC = () => {
     return <EvmAccount />
   }
 
-  if (fromChain.kind === 'polkadot') {
+  if (fromChain.kind === 'substrate') {
     return <PolkadotAccount />
   }
 
