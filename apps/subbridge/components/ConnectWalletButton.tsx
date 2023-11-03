@@ -109,7 +109,7 @@ const ConnectWalletButton: FC<ButtonProps> = (props) => {
     return <ConnectEvmWalletButton {...props} />
   }
 
-  if (fromChain.kind === 'polkadot') {
+  if (fromChain.kind === 'substrate') {
     return <ConnectPolkadotButton {...props} />
   }
 

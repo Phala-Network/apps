@@ -46,13 +46,12 @@ export const useBalance = (): Decimal | undefined => {
       fromChain.id === 'bifrost-test' ||
       fromChain.id === 'turing') &&
     asset.id !== fromChain.nativeAsset &&
-    asset.ormlToken !== undefined
+    asset.currencyTokenSymbol !== undefined
   ) {
     balanceSource = 'ormlToken'
   } else if (
     (fromChain.id === 'phala' ||
       fromChain.id === 'khala' ||
-      fromChain.id === 'thala' ||
       fromChain.id === 'parallel' ||
       fromChain.id === 'parallel-heiko' ||
       fromChain.id === 'calamari' ||
@@ -63,7 +62,7 @@ export const useBalance = (): Decimal | undefined => {
   ) {
     balanceSource = 'palletAsset'
   } else if (
-    fromChain.kind === 'polkadot' &&
+    fromChain.kind === 'substrate' &&
     fromChain.nativeAsset === asset.id
   ) {
     balanceSource = 'polkadotNative'
@@ -77,17 +76,17 @@ export const useBalance = (): Decimal | undefined => {
     balanceSource === 'ormlToken' &&
       polkadotApi != null &&
       polkadotAccount != null &&
-      (fromChain.id === 'turing' || asset.ormlToken != null) && [
+      (fromChain.id === 'turing' || asset.currencyTokenSymbol != null) && [
         polkadotApi,
         polkadotAccount.address,
         fromChain.id === 'karura' ||
         fromChain.id === 'karura-test' ||
         fromChain.id === 'bifrost-kusama' ||
         fromChain.id === 'bifrost-test'
-          ? {Token: asset.ormlToken}
+          ? {Token: asset.currencyTokenSymbol}
           : fromChain.id === 'turing'
           ? asset.palletAssetId?.[fromChain.id]
-          : asset.ormlToken,
+          : asset.currencyTokenSymbol,
         decimals,
       ],
     ormlTokenBalanceFetcher,

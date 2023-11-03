@@ -25,7 +25,7 @@ export const useBridgeFee = (): Decimal | undefined => {
   const provider = useEthersWeb3Provider()
   const evmAccount = useAtomValue(evmAccountAtom)
   const isTransferringZlkProxiedByChainBridge =
-    fromChain.kind === 'polkadot' &&
+    fromChain.kind === 'substrate' &&
     toChain.kind === 'evm' &&
     asset.id === 'zlk'
 

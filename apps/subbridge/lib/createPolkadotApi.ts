@@ -1,8 +1,8 @@
-import {CHAINS, type PolkadotChainId} from '@/config/chain'
+import {CHAINS, type SubstrateChainId} from '@/config/chain'
 import {type ApiPromise} from '@polkadot/api'
 
 export const createPolkadotApi = async (
-  chainId: PolkadotChainId,
+  chainId: SubstrateChainId,
 ): Promise<ApiPromise> => {
   const endpoint = CHAINS[chainId].endpoint
   const {ApiPromise, WsProvider} = await import('@polkadot/api')

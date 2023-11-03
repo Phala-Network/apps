@@ -45,7 +45,7 @@ export const fromAccountAtom = atom<string | null>((get) => {
   if (fromChain.kind === 'evm') {
     return evmAccount
   }
-  if (fromChain.kind === 'polkadot' && polkadotAccount != null) {
+  if (fromChain.kind === 'substrate' && polkadotAccount != null) {
     return polkadotAccount.address
   }
   return null

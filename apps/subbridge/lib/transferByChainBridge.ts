@@ -12,8 +12,7 @@ export const createChainBridgeData = async (
   toChainId: ChainId,
 ): Promise<string> => {
   const {ethers, BigNumber} = await import('ethers')
-  const isToKhala =
-    toChainId === 'phala' || toChainId === 'khala' || toChainId === 'thala'
+  const isToKhala = toChainId === 'phala' || toChainId === 'khala'
   const toChain = CHAINS[toChainId]
   const accountId = u8aToHex(decodeAddress(destinationAccount))
   let dest

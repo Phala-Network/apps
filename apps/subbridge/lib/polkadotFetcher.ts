@@ -1,11 +1,10 @@
-import {type AssetId, type OrmlToken} from '@/config/asset'
+import {type AssetId, type CurrencyTokenSymbol} from '@/config/asset'
 import {type BridgeKind} from '@/config/bridge'
 import {CHAINS, type ChainId} from '@/config/chain'
 import type {ApiPromise} from '@polkadot/api'
 import Decimal from 'decimal.js'
 import {transferByPhalaXTransfer} from './transferByPhalaXTransfer'
 import {transferByPolkadotXTokens} from './transferByPolkadotXTokens'
-import {transferByPolkadotXcm} from './transferByPolkadotXcm'
 
 const ALICE = '5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY'
 const BLACK_HOLE = '0x0000000000000000000000000000000000000000'
@@ -45,7 +44,7 @@ export const ormlTokenBalanceFetcher = async ([
 ]: [
   ApiPromise,
   string,
-  OrmlToken | {Token: OrmlToken} | number,
+  CurrencyTokenSymbol | {Token: CurrencyTokenSymbol} | number,
   number,
 ]): Promise<Decimal> => {
   const balance = await polkadotApi.query.tokens.accounts(address, token)
@@ -88,35 +87,13 @@ export const phalaXTransferPartialFeeFetcher = async ([
   const extrinsic = transferByPhalaXTransfer({
     api,
     amount: '1',
-    destinationAccount: toChain.kind === 'polkadot' ? ALICE : BLACK_HOLE,
+    destinationAccount: toChain.kind === 'substrate' ? ALICE : BLACK_HOLE,
     fromChainId,
     toChainId,
     assetId,
     kind,
   })
   const decimals = api.registry.chainDecimals[0]
-  const {partialFee} = await extrinsic.paymentInfo(ALICE)
-  return new Decimal(partialFee.toString()).div(Decimal.pow(10, decimals))
-}
-
-export const polkadotXcmTransferPartialFeeFetcher = async ([
-  polkadotApi,
-  fromChainId,
-  toChainId,
-  assetId,
-  proxy,
-]: [ApiPromise, ChainId, ChainId, AssetId, ChainId]): Promise<Decimal> => {
-  const toChain = CHAINS[toChainId]
-  const extrinsic = transferByPolkadotXcm({
-    polkadotApi,
-    amount: '1',
-    destinationAccount: toChain.kind === 'polkadot' ? ALICE : BLACK_HOLE,
-    fromChainId,
-    toChainId,
-    assetId,
-    proxy,
-  })
-  const decimals = polkadotApi.registry.chainDecimals[0]
   const {partialFee} = await extrinsic.paymentInfo(ALICE)
   return new Decimal(partialFee.toString()).div(Decimal.pow(10, decimals))
 }

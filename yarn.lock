@@ -3707,7 +3707,7 @@ __metadata:
     "@tanstack/react-query": "npm:^4.36.1"
     "@tanstack/react-query-devtools": "npm:^4.36.1"
     "@types/lodash-es": "npm:^4.17.10"
-    "@types/react": "npm:^18.2.33"
+    "@types/react": "npm:^18.2.34"
     "@types/react-dom": "npm:^18.2.14"
     "@types/sharp": "npm:^0.32.0"
     ajv: "npm:^8.12.0"
@@ -3768,7 +3768,7 @@ __metadata:
     "@mui/material": "npm:^5.14.16"
     "@next/bundle-analyzer": "npm:^14.0.1"
     "@phala/eslint-config": "workspace:*"
-    "@phala/index": "npm:^1.0.40"
+    "@phala/index": "npm:^1.0.39"
     "@phala/lib": "workspace:*"
     "@phala/store": "workspace:*"
     "@phala/util": "workspace:*"
@@ -3783,12 +3783,12 @@ __metadata:
     "@talismn/connect-wallets": "npm:^1.2.3"
     "@types/lodash-es": "npm:^4.17.10"
     "@types/node": "npm:^18.18.8"
-    "@types/react": "npm:^18.2.33"
+    "@types/react": "npm:^18.2.34"
     "@types/react-dom": "npm:^18.2.14"
     decimal.js: "npm:^10.4.3"
     eslint: "npm:^8.52.0"
     eslint-config-next: "npm:^14.0.1"
-    ethers: "npm:^6.8.0"
+    ethers: "npm:^6.8.1"
     jotai: "npm:^2.5.0"
     jotai-devtools: "npm:^0.7.0"
     lodash-es: "npm:^4.17.21"
@@ -3803,9 +3803,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@phala/index@npm:^1.0.40":
-  version: 1.0.40
-  resolution: "@phala/index@npm:1.0.40"
+"@phala/index@npm:^1.0.39":
+  version: 1.0.39
+  resolution: "@phala/index@npm:1.0.39"
   dependencies:
     "@phala/sdk": "npm:^0.5.4-nightly-20231020"
     "@polkadot/api": "npm:^10.9.1"
@@ -3814,7 +3814,7 @@ __metadata:
     ajv: "npm:^8.12.0"
     ethers: "npm:^6.8.0"
     subshape: "npm:^0.14.0"
-  checksum: a3283576e07cfd39fd79322bcff4c164d0fca6ac68cad8e97b89e03a9b02ca21a81914ac863504bc549f962c9181e67578e0d19ab3209220c68ddcd1badad05b
+  checksum: 078616787a5bb404aadbe2fa2a6e3c31c1c9e0e0396f621b2e0566df157a188533c9d6f88b61379accedef8d90199fac3179f6425e849f62b6da3eb36f489983
   languageName: node
   linkType: hard
 
@@ -3839,7 +3839,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@phala/polkadot-types@workspace:packages/polkadot-types"
   dependencies:
-    "@phala/typedefs": "npm:^0.2.33"
     "@polkadot/api": "npm:^10.10.1"
     "@polkadot/typegen": "npm:^10.10.1"
     "@types/node": "npm:^18.18.8"
@@ -3911,7 +3910,7 @@ __metadata:
     "@talismn/connect-ui": "npm:^1.1.2"
     "@talismn/connect-wallets": "npm:^1.2.3"
     "@types/node": "npm:^18.18.8"
-    "@types/react": "npm:^18.2.33"
+    "@types/react": "npm:^18.2.34"
     "@types/react-dom": "npm:^18.2.14"
     decimal.js: "npm:^10.4.3"
     eslint: "npm:^8.52.0"
@@ -3928,13 +3927,6 @@ __metadata:
     typescript: "npm:^5.2.2"
   languageName: unknown
   linkType: soft
-
-"@phala/typedefs@npm:^0.2.33":
-  version: 0.2.33
-  resolution: "@phala/typedefs@npm:0.2.33"
-  checksum: a547ed7d59f254d897f2b1c0dc66c544f94289ec5548a1b20b763473015fbd2e86bc505ace0e261a137168f3fc811ec41fe3d749bd9aa82673b5630b942472f9
-  languageName: node
-  linkType: hard
 
 "@phala/util@workspace:*, @phala/util@workspace:packages/utils":
   version: 0.0.0-use.local
@@ -6044,7 +6036,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:*, @types/react@npm:^18.0.18, @types/react@npm:^18.2.33":
+"@types/react@npm:*, @types/react@npm:^18.0.18":
   version: 18.2.33
   resolution: "@types/react@npm:18.2.33"
   dependencies:
@@ -6052,6 +6044,17 @@ __metadata:
     "@types/scheduler": "npm:*"
     csstype: "npm:^3.0.2"
   checksum: d3392785660d78121541403a5d1da57dc79e8ce402769251a626aa06a6886a6aaead868a01ee473661380ddd4ac79743de78853d69f652544da191d435f78afb
+  languageName: node
+  linkType: hard
+
+"@types/react@npm:^18.2.34":
+  version: 18.2.34
+  resolution: "@types/react@npm:18.2.34"
+  dependencies:
+    "@types/prop-types": "npm:*"
+    "@types/scheduler": "npm:*"
+    csstype: "npm:^3.0.2"
+  checksum: 42a357e3ec8943fe433f647e60e1506ec7657e12a72847ca801f97a128778dff6011e57ae2eb53f6363cf4515cab60f6a47eca2f916bab27a85bd88c94ab72d3
   languageName: node
   linkType: hard
 
@@ -10096,6 +10099,21 @@ __metadata:
     tslib: "npm:2.4.0"
     ws: "npm:8.5.0"
   checksum: 1beb568c1044ab446249982a7a14584f0e7b6aa0db70d9875d25c5c9c3f6355dde33a3d35e3fd47728b2af0084f2f77309c09b8ed378927e3d6cc02a3f19d6aa
+  languageName: node
+  linkType: hard
+
+"ethers@npm:^6.8.1":
+  version: 6.8.1
+  resolution: "ethers@npm:6.8.1"
+  dependencies:
+    "@adraffy/ens-normalize": "npm:1.10.0"
+    "@noble/curves": "npm:1.2.0"
+    "@noble/hashes": "npm:1.3.2"
+    "@types/node": "npm:18.15.13"
+    aes-js: "npm:4.0.0-beta.5"
+    tslib: "npm:2.4.0"
+    ws: "npm:8.5.0"
+  checksum: 2fb05a0377c7d251ef160ddb5ab8553311c81fd1b7931426d6492d2652704a6ac5c4ff277a5aa6b2e64fe8bbfeec0b0e98263049d2ce44bf2286a72cefc3204b
   languageName: node
   linkType: hard
 

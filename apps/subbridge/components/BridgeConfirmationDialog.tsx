@@ -105,7 +105,7 @@ const Detail: FC<
   }
 > = ({kind, chain, account, asset, amount, ...paperProps}) => {
   const displayAccount = useMemo(() => {
-    if (chain.kind === 'polkadot' && account.length > 0) {
+    if (chain.kind === 'substrate' && account.length > 0) {
       const {ss58Format} = chain
       return encodeAddress(account, ss58Format)
     }
