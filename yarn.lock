@@ -1858,9 +1858,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@eslint/eslintrc@npm:^2.1.2":
-  version: 2.1.2
-  resolution: "@eslint/eslintrc@npm:2.1.2"
+"@eslint/eslintrc@npm:^2.1.3":
+  version: 2.1.3
+  resolution: "@eslint/eslintrc@npm:2.1.3"
   dependencies:
     ajv: "npm:^6.12.4"
     debug: "npm:^4.3.2"
@@ -1871,14 +1871,14 @@ __metadata:
     js-yaml: "npm:^4.1.0"
     minimatch: "npm:^3.1.2"
     strip-json-comments: "npm:^3.1.1"
-  checksum: 00efdc3797e6f05518060522b7788e5f5aff02f13facbd0c83b176c3dee86554023283a5f68542df379c5137685d2d29745c87f62bf2406a1d38d95471f44ce6
+  checksum: f4103f4346126292eb15581c5a1d12bef03410fd3719dedbdb92e1f7031d46a5a2d60de8566790445d5d4b70b75ba050876799a11f5fff8265a91ee3fa77dab0
   languageName: node
   linkType: hard
 
-"@eslint/js@npm:8.52.0":
-  version: 8.52.0
-  resolution: "@eslint/js@npm:8.52.0"
-  checksum: cdcf8f9b54994fe1a5dc086c714a75dca5fe5899f9b362986abd12b3b5bec9c9755f7608e663ce072edd3fa3910cc752afef8d149fda0288a477652b65865a1c
+"@eslint/js@npm:8.53.0":
+  version: 8.53.0
+  resolution: "@eslint/js@npm:8.53.0"
+  checksum: d29f6c207b2f6dc4ef174d16a3c07b0d3a17ca3d805680496ff267edd773e3bac41db4e7dcab622ca1970d892535bd19671e2a756d4eac75e96fd8c8dcdb619b
   languageName: node
   linkType: hard
 
@@ -3370,25 +3370,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mui/utils@npm:^5.14.14, @mui/utils@npm:^5.14.3":
-  version: 5.14.15
-  resolution: "@mui/utils@npm:5.14.15"
-  dependencies:
-    "@babel/runtime": "npm:^7.23.2"
-    "@types/prop-types": "npm:^15.7.8"
-    prop-types: "npm:^15.8.1"
-    react-is: "npm:^18.2.0"
-  peerDependencies:
-    "@types/react": ^17.0.0 || ^18.0.0
-    react: ^17.0.0 || ^18.0.0
-  peerDependenciesMeta:
-    "@types/react":
-      optional: true
-  checksum: 7419f3b8b0b86cbc3d2f8a7fe17b7b0b84e67c92278991d1ecfc79c8590c873ef79f92fffd4ccfaf15336f1615c207252b073e4aa9cdbaa75c3fbd4078abbf2c
-  languageName: node
-  linkType: hard
-
-"@mui/utils@npm:^5.14.16":
+"@mui/utils@npm:^5.14.16, @mui/utils@npm:^5.14.3":
   version: 5.14.16
   resolution: "@mui/utils@npm:5.14.16"
   dependencies:
@@ -3406,12 +3388,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mui/x-data-grid@npm:^6.17.0":
-  version: 6.17.0
-  resolution: "@mui/x-data-grid@npm:6.17.0"
+"@mui/x-data-grid@npm:^6.18.0":
+  version: 6.18.0
+  resolution: "@mui/x-data-grid@npm:6.18.0"
   dependencies:
     "@babel/runtime": "npm:^7.23.2"
-    "@mui/utils": "npm:^5.14.14"
+    "@mui/utils": "npm:^5.14.16"
     clsx: "npm:^2.0.0"
     prop-types: "npm:^15.8.1"
     reselect: "npm:^4.1.8"
@@ -3420,7 +3402,7 @@ __metadata:
     "@mui/system": ^5.4.1
     react: ^17.0.0 || ^18.0.0
     react-dom: ^17.0.0 || ^18.0.0
-  checksum: 35bf3495eaabae5717de36dd1676e355201af80cbe2b4d3d25b63051b93e78bb5a4b4e81f26048d38658a11483beb0a0fd4281f8ee543667ea63ec478e29c31b
+  checksum: 2929c38f2b926c62574b476b8d6beea3b95d1ab10042feabd211f843a50dc70c9343a77c9e8cfff46cce83b85818c0c4fae42f60acf7a47a29eab1b9b2192fe2
   languageName: node
   linkType: hard
 
@@ -3654,7 +3636,7 @@ __metadata:
     "@rgossiaux/svelte-headlessui": "npm:^2.0.0"
     "@rgossiaux/svelte-heroicons": "npm:^0.1.2"
     "@sveltejs/adapter-vercel": "npm:^3.0.3"
-    "@sveltejs/kit": "npm:^1.27.2"
+    "@sveltejs/kit": "npm:^1.27.3"
     "@tanstack/svelte-query": "npm:^4.36.1"
     autoprefixer: "npm:^10.4.16"
     chart.js: "npm:^4.4.0"
@@ -3689,7 +3671,7 @@ __metadata:
     "@mui/icons-material": "npm:^5.14.16"
     "@mui/lab": "npm:5.0.0-alpha.151"
     "@mui/material": "npm:^5.14.16"
-    "@mui/x-data-grid": "npm:^6.17.0"
+    "@mui/x-data-grid": "npm:^6.18.0"
     "@next/bundle-analyzer": "npm:^14.0.1"
     "@phala/lib": "workspace:*"
     "@phala/store": "workspace:*"
@@ -3707,18 +3689,18 @@ __metadata:
     "@tanstack/react-query": "npm:^4.36.1"
     "@tanstack/react-query-devtools": "npm:^4.36.1"
     "@types/lodash-es": "npm:^4.17.10"
-    "@types/react": "npm:^18.2.34"
+    "@types/react": "npm:^18.2.35"
     "@types/react-dom": "npm:^18.2.14"
     "@types/sharp": "npm:^0.32.0"
     ajv: "npm:^8.12.0"
     date-fns: "npm:^2.30.0"
     decimal.js: "npm:^10.4.3"
-    eslint: "npm:^8.52.0"
+    eslint: "npm:^8.53.0"
     eslint-config-next: "npm:^14.0.1"
     graphql: "npm:^16.8.1"
     graphql-request: "npm:^6.1.0"
     graphql-tag: "npm:^2.12.6"
-    jotai: "npm:^2.5.0"
+    jotai: "npm:^2.5.1"
     jotai-devtools: "npm:^0.7.0"
     lodash-es: "npm:^4.17.21"
     mutative: "npm:^0.6.0"
@@ -3741,7 +3723,7 @@ __metadata:
   resolution: "@phala/eslint-config@workspace:packages/eslint-config"
   dependencies:
     "@typescript-eslint/eslint-plugin": "npm:^6.9.1"
-    eslint: "npm:^8.52.0"
+    eslint: "npm:^8.53.0"
     eslint-config-prettier: "npm:^9.0.0"
     eslint-config-standard-with-typescript: "npm:^39.1.1"
     eslint-plugin-import: "npm:^2.29.0"
@@ -3783,13 +3765,13 @@ __metadata:
     "@talismn/connect-wallets": "npm:^1.2.3"
     "@types/lodash-es": "npm:^4.17.10"
     "@types/node": "npm:^18.18.8"
-    "@types/react": "npm:^18.2.34"
+    "@types/react": "npm:^18.2.35"
     "@types/react-dom": "npm:^18.2.14"
     decimal.js: "npm:^10.4.3"
-    eslint: "npm:^8.52.0"
+    eslint: "npm:^8.53.0"
     eslint-config-next: "npm:^14.0.1"
     ethers: "npm:^6.8.1"
-    jotai: "npm:^2.5.0"
+    jotai: "npm:^2.5.1"
     jotai-devtools: "npm:^0.7.0"
     lodash-es: "npm:^4.17.21"
     next: "npm:^14.0.1"
@@ -3910,13 +3892,13 @@ __metadata:
     "@talismn/connect-ui": "npm:^1.1.2"
     "@talismn/connect-wallets": "npm:^1.2.3"
     "@types/node": "npm:^18.18.8"
-    "@types/react": "npm:^18.2.34"
+    "@types/react": "npm:^18.2.35"
     "@types/react-dom": "npm:^18.2.14"
     decimal.js: "npm:^10.4.3"
-    eslint: "npm:^8.52.0"
+    eslint: "npm:^8.53.0"
     eslint-config-next: "npm:^14.0.1"
     ethers: "npm:^5.7.2"
-    jotai: "npm:^2.5.0"
+    jotai: "npm:^2.5.1"
     jotai-devtools: "npm:^0.7.0"
     next: "npm:^14.0.1"
     next-images: "npm:^1.8.5"
@@ -5236,9 +5218,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sveltejs/kit@npm:^1.27.2":
-  version: 1.27.2
-  resolution: "@sveltejs/kit@npm:1.27.2"
+"@sveltejs/kit@npm:^1.27.3":
+  version: 1.27.3
+  resolution: "@sveltejs/kit@npm:1.27.3"
   dependencies:
     "@sveltejs/vite-plugin-svelte": "npm:^2.4.1"
     "@types/cookie": "npm:^0.5.1"
@@ -5258,7 +5240,7 @@ __metadata:
     vite: ^4.0.0
   bin:
     svelte-kit: svelte-kit.js
-  checksum: c87c517899f6e200e8cd1ecffc87aed86ffdad19c42ba4cb07cb5444ea8bc9f7dea107068774de9615ee4d2f88ca5c4ea939ee715b7376f4839086918e25de92
+  checksum: 04817d197520b99694d57c7f058aec3afa7cf777e4a444a1e3df47a16dc4861f875cf900764ecc112f39e6fa7c7879484c39e2282d23e349006c0b440607d700
   languageName: node
   linkType: hard
 
@@ -6004,7 +5986,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/prop-types@npm:*, @types/prop-types@npm:^15.7.8, @types/prop-types@npm:^15.7.9":
+"@types/prop-types@npm:*, @types/prop-types@npm:^15.7.9":
   version: 15.7.9
   resolution: "@types/prop-types@npm:15.7.9"
   checksum: e2a7373b91a8eb30cb4e399ef5b3a14baa7d72eed1667ef5e3cb1e9400edfca9b60c20b845fefdcf7562773829f6ff60ba350b09f6313a8093e70c15b2b88f00
@@ -6036,25 +6018,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:*, @types/react@npm:^18.0.18":
-  version: 18.2.33
-  resolution: "@types/react@npm:18.2.33"
+"@types/react@npm:*, @types/react@npm:^18.0.18, @types/react@npm:^18.2.35":
+  version: 18.2.35
+  resolution: "@types/react@npm:18.2.35"
   dependencies:
     "@types/prop-types": "npm:*"
     "@types/scheduler": "npm:*"
     csstype: "npm:^3.0.2"
-  checksum: d3392785660d78121541403a5d1da57dc79e8ce402769251a626aa06a6886a6aaead868a01ee473661380ddd4ac79743de78853d69f652544da191d435f78afb
-  languageName: node
-  linkType: hard
-
-"@types/react@npm:^18.2.34":
-  version: 18.2.34
-  resolution: "@types/react@npm:18.2.34"
-  dependencies:
-    "@types/prop-types": "npm:*"
-    "@types/scheduler": "npm:*"
-    csstype: "npm:^3.0.2"
-  checksum: 42a357e3ec8943fe433f647e60e1506ec7657e12a72847ca801f97a128778dff6011e57ae2eb53f6363cf4515cab60f6a47eca2f916bab27a85bd88c94ab72d3
+  checksum: dbc19612ab404f06c3c9f150954a377ab223db5724905d39e3468a61e2be0a9fd9240e935af5c13cb5b3307a13bbaf2e8c09a810d720118120a8d0ac5aa9ff10
   languageName: node
   linkType: hard
 
@@ -9519,14 +9490,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint@npm:^8.52.0":
-  version: 8.52.0
-  resolution: "eslint@npm:8.52.0"
+"eslint@npm:^8.53.0":
+  version: 8.53.0
+  resolution: "eslint@npm:8.53.0"
   dependencies:
     "@eslint-community/eslint-utils": "npm:^4.2.0"
     "@eslint-community/regexpp": "npm:^4.6.1"
-    "@eslint/eslintrc": "npm:^2.1.2"
-    "@eslint/js": "npm:8.52.0"
+    "@eslint/eslintrc": "npm:^2.1.3"
+    "@eslint/js": "npm:8.53.0"
     "@humanwhocodes/config-array": "npm:^0.11.13"
     "@humanwhocodes/module-importer": "npm:^1.0.1"
     "@nodelib/fs.walk": "npm:^1.2.8"
@@ -9563,7 +9534,7 @@ __metadata:
     text-table: "npm:^0.2.0"
   bin:
     eslint: bin/eslint.js
-  checksum: 9269b32ccf6e9947d994f871888d5b541da4a8539160ee19d80ecac0c70c51a7d3a7c111a58cf1adf81f093a7c1b5564edefa5c6dbe29b1df9c9f3e30700af30
+  checksum: c5cd0049488c0463dab7d97466767ca5a1d0b3b59d0a223122683dc8039ecea30b27867fb9e38906b4c1ab9d09ece8a802a6c540d8905016f1cc4b4bb27329af
   languageName: node
   linkType: hard
 
@@ -10087,22 +10058,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ethers@npm:^6.8.0":
-  version: 6.8.0
-  resolution: "ethers@npm:6.8.0"
-  dependencies:
-    "@adraffy/ens-normalize": "npm:1.10.0"
-    "@noble/curves": "npm:1.2.0"
-    "@noble/hashes": "npm:1.3.2"
-    "@types/node": "npm:18.15.13"
-    aes-js: "npm:4.0.0-beta.5"
-    tslib: "npm:2.4.0"
-    ws: "npm:8.5.0"
-  checksum: 1beb568c1044ab446249982a7a14584f0e7b6aa0db70d9875d25c5c9c3f6355dde33a3d35e3fd47728b2af0084f2f77309c09b8ed378927e3d6cc02a3f19d6aa
-  languageName: node
-  linkType: hard
-
-"ethers@npm:^6.8.1":
+"ethers@npm:^6.8.0, ethers@npm:^6.8.1":
   version: 6.8.1
   resolution: "ethers@npm:6.8.1"
   dependencies:
@@ -12055,9 +12011,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jotai@npm:^2.5.0":
-  version: 2.5.0
-  resolution: "jotai@npm:2.5.0"
+"jotai@npm:^2.5.1":
+  version: 2.5.1
+  resolution: "jotai@npm:2.5.1"
   peerDependencies:
     "@types/react": ">=17.0.0"
     react: ">=17.0.0"
@@ -12066,7 +12022,7 @@ __metadata:
       optional: true
     react:
       optional: true
-  checksum: fc23be659cace48bab26a1ecfc5f2200ffec5c5734c47f333cdcbadabd4221c22a014eb950823ab09da7470bd0757192c9d404a32592296b5eafea0c3bbe89e0
+  checksum: af2c86e16e4dd4baad31e8ad5127db8ee07712a6f852c86049f915efc71c6a099661f28a910ecef2e7da0b7868f74477712161e3717d050c1131bd521754c562
   languageName: node
   linkType: hard
 
