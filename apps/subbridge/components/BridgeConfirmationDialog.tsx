@@ -300,7 +300,6 @@ const BridgeConfirmationDialog: FC<DialogProps> = ({onClose, ...props}) => {
           )
         }
       }
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       setConfirming(false)
       if (key != null) {
