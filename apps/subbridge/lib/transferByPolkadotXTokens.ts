@@ -34,15 +34,11 @@ export const transferByPolkadotXTokens = ({
     : asset.location?.[fromChain.relayChain]
   const generalIndex = toChain.kind === 'evm' ? toChain.generalIndex : null
   const xcmVersion = fromChainId === 'calamari' ? 'V1' : 'V3'
-  const palletName = new Set<ChainId>(['astar', 'shiden']).has(fromChainId)
-    ? 'xtokens'
-    : 'xTokens'
-
   if (location == null || (proxy != null && typeof generalIndex !== 'number')) {
     throw new Error('Transfer missing required parameters')
   }
 
-  return polkadotApi.tx[palletName].transferMultiasset(
+  return polkadotApi.tx.xTokens.transferMultiasset(
     {
       [xcmVersion]: {
         id: {Concrete: location},
