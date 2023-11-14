@@ -85,8 +85,8 @@ export const useBalance = (): Decimal | undefined => {
         fromChain.id === 'bifrost-test'
           ? {Token: asset.currencyTokenSymbol}
           : fromChain.id === 'turing'
-          ? asset.palletAssetId?.[fromChain.id]
-          : asset.currencyTokenSymbol,
+            ? asset.palletAssetId?.[fromChain.id]
+            : asset.currencyTokenSymbol,
         decimals,
       ],
     ormlTokenBalanceFetcher,
