@@ -15,8 +15,8 @@ const useGetApr = (
     chain == null
       ? subsquidClient
       : chain === 'phala'
-      ? phalaSubsquidClient
-      : khalaSubsquidClient,
+        ? phalaSubsquidClient
+        : khalaSubsquidClient,
     undefined,
     {select: (data) => data.globalStateById},
   )
