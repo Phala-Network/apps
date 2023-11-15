@@ -3613,7 +3613,7 @@ __metadata:
     "@rgossiaux/svelte-headlessui": "npm:^2.0.0"
     "@rgossiaux/svelte-heroicons": "npm:^0.1.2"
     "@sveltejs/adapter-vercel": "npm:^3.0.3"
-    "@sveltejs/kit": "npm:^1.27.5"
+    "@sveltejs/kit": "npm:^1.27.6"
     "@tanstack/svelte-query": "npm:^4.36.1"
     autoprefixer: "npm:^10.4.16"
     chart.js: "npm:^4.4.0"
@@ -5197,9 +5197,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sveltejs/kit@npm:^1.27.5":
-  version: 1.27.5
-  resolution: "@sveltejs/kit@npm:1.27.5"
+"@sveltejs/kit@npm:^1.27.6":
+  version: 1.27.6
+  resolution: "@sveltejs/kit@npm:1.27.6"
   dependencies:
     "@sveltejs/vite-plugin-svelte": "npm:^2.5.0"
     "@types/cookie": "npm:^0.5.1"
@@ -5219,7 +5219,7 @@ __metadata:
     vite: ^4.0.0
   bin:
     svelte-kit: svelte-kit.js
-  checksum: 17cb6db2c36e7e40b459eabeb07f16993ca9157b2b9c5c737f25b7a095059eaa7bebc855455da2c1d0bf3f305f8592996cab427dee3a32c28c505e74b2ad9678
+  checksum: b948713283432cccfe120b4af439242d9be488833114e87d413baafaa60e2cc80bea39e54cad8177e75428d111ff0ea3a2b0257f8abdfbe9093bb4a647047c58
   languageName: node
   linkType: hard
 

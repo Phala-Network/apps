@@ -8,6 +8,11 @@ const withImages = require('next-images')
 const nextConfig = {
   transpilePackages: ['jotai-devtools'],
   images: {disableStaticImages: true},
+  modularizeImports: {
+    '@mui/icons-material': {
+      transform: '@mui/icons-material/{{member}}',
+    },
+  },
   reactStrictMode: true,
   eslint: {
     ignoreDuringBuilds: true,

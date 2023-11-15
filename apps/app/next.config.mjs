@@ -11,6 +11,11 @@ const nextConfig = {
     ignoreDuringBuilds: true,
     dirs: ['pages', 'components', 'lib', 'hooks', 'store', 'types'],
   },
+  modularizeImports: {
+    '@mui/icons-material': {
+      transform: '@mui/icons-material/{{member}}',
+    },
+  },
   reactStrictMode: true,
   images: {
     remotePatterns: [
@@ -40,17 +45,17 @@ const nextConfig = {
       {
         source: '/delegate',
         destination: '/khala/delegate/vault',
-        permanent: true,
+        permanent: false,
       },
       {
         source: '/farm',
         destination: '/khala/farm/stake-pool',
-        permanent: true,
+        permanent: false,
       },
       {
         source: '/:root(delegate|farm|vault|stake-pool)/:path*',
         destination: '/khala/:root/:path*',
-        permanent: true,
+        permanent: false,
       },
     ]
   },
