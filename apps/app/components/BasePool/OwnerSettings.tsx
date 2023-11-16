@@ -12,7 +12,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material'
-import {getDecimalPattern} from '@phala/util'
+import {getDecimalPattern} from '@phala/utils'
 import {stringToHex} from '@polkadot/util'
 import Decimal from 'decimal.js'
 import {useEffect, useMemo, useState, type FC} from 'react'

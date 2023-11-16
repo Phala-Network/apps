@@ -6,6 +6,7 @@ import {Box, CircularProgress, Container, Stack, useTheme} from '@mui/material'
 import {useAtom} from 'jotai'
 import type {NextPage} from 'next'
 import dynamic from 'next/dynamic'
+import Confirmation from '@/components/Confirmation'
 
 const PolkadotWalletDialog = dynamic(
   async () => await import('@/components/PolkadotWalletDialog'),
@@ -45,6 +46,8 @@ const Home: NextPage = () => {
           <Progress sx={{flex: 1}} />
         </Stack>
       )}
+
+      <Confirmation></Confirmation>
 
       <PolkadotWalletDialog />
     </Container>

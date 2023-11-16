@@ -1,5 +1,5 @@
 import {khalaSubsquidClient, phalaSubsquidClient} from '@/config'
-import {sleep} from '@phala/util'
+import {sleep} from '@phala/utils'
 import {type GetServerSideProps} from 'next'
 import {type BasePoolByIdQuery, type BasePoolKind} from './subsquidQuery'
 import {getSdk} from './subsquidSdk'

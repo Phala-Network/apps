@@ -15,7 +15,7 @@ import {
   useTheme,
 } from '@mui/material'
 import {polkadotAccountAtom} from '@phala/store'
-import {toCurrency} from '@phala/util'
+import {toCurrency} from '@phala/utils'
 import {useAtom} from 'jotai'
 import Image from 'next/image'
 import {useMemo, type FC} from 'react'

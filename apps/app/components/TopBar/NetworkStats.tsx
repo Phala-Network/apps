@@ -7,8 +7,12 @@ import {
 } from '@/lib/subsquidQuery'
 import {chainAtom} from '@/store/common'
 import {Skeleton, Stack, Tooltip, useMediaQuery, useTheme} from '@mui/material'
-import {useInterval} from '@phala/lib'
-import {compactFormat, toPercentage, weightedAverage} from '@phala/util'
+import {
+  compactFormat,
+  toPercentage,
+  useInterval,
+  weightedAverage,
+} from '@phala/utils'
 import {useQuery} from '@tanstack/react-query'
 import {addDays} from 'date-fns'
 import Decimal from 'decimal.js'

@@ -27,7 +27,7 @@ import {
   Typography,
 } from '@mui/material'
 import {polkadotAccountAtom} from '@phala/store'
-import {toCurrency, validateAddress} from '@phala/util'
+import {toCurrency, validateAddress} from '@phala/utils'
 import {type SubmittableExtrinsic} from '@polkadot/api/types'
 import {type ISubmittableResult} from '@polkadot/types/types'
 import {useQuery} from '@tanstack/react-query'

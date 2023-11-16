@@ -7,7 +7,7 @@ import {
   DialogTitle,
   TextField,
 } from '@mui/material'
-import {validateAddress} from '@phala/util'
+import {validateAddress} from '@phala/utils'
 import {useMemo, useState, type FC} from 'react'
 
 const AddWhitelist: FC<{

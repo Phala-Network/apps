@@ -1,5 +1,5 @@
 import {Paper, Typography} from '@mui/material'
-import {toCurrency} from '@phala/util'
+import {toCurrency} from '@phala/utils'
 import {type ReactElement} from 'react'
 import Property from './Property'
 

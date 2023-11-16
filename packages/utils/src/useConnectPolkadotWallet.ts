@@ -1,5 +1,5 @@
 import {polkadotAccountsAtom, walletAtom, walletNameAtom} from '@phala/store'
-import {transformAddress} from '@phala/util'
+import {transformAddress} from '@phala/utils'
 import type {WalletAccount} from '@talismn/connect-wallets'
 import {useAtom} from 'jotai'
 import {useEffect} from 'react'

@@ -3,11 +3,11 @@
   "version": "2.0.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "dev": "next dev",
     "lint": "next lint",
-    "lint:fix": "next lint --fix"
+    "lint:fix": "next lint --fix",
+    "start": "next start"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
@@ -22,9 +22,8 @@
     "@mui/lab": "5.0.0-alpha.153",
     "@mui/material": "^5.14.18",
     "@mui/x-data-grid": "^6.18.1",
-    "@phala/lib": "workspace:*",
     "@phala/store": "workspace:*",
-    "@phala/util": "workspace:*",
+    "@phala/utils": "workspace:*",
     "@polkadot/api": "^10.10.1",
     "@polkadot/extension-inject": "^0.46.5",
     "@polkadot/keyring": "^12.5.1",
@@ -40,7 +39,7 @@
     "date-fns": "^2.30.0",
     "decimal.js": "^10.4.3",
     "eslint": "^8.53.0",
-    "eslint-config-next": "^14.0.2",
+    "eslint-config-next": "^14.0.3",
     "graphql": "^16.8.1",
     "graphql-request": "^6.1.0",
     "graphql-tag": "^2.12.6",
@@ -48,7 +47,7 @@
     "jotai-devtools": "^0.7.0",
     "lodash-es": "^4.17.21",
     "mutative": "^0.7.1",
-    "next": "^14.0.2",
+    "next": "^14.0.3",
     "notistack": "^3.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -61,7 +60,7 @@
     "typescript": "^5.2.2"
   },
   "devDependencies": {
-    "@next/bundle-analyzer": "^14.0.2",
+    "@next/bundle-analyzer": "^14.0.3",
     "@svgr/webpack": "^8.1.0",
     "@swc-jotai/debug-label": "^0.1.0",
     "@swc-jotai/react-refresh": "^0.1.0",

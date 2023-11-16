@@ -1,7 +1,7 @@
 import {useEthereumProviderInitialization} from '@/hooks/useEthereumProviderInitialization'
 import {useIndexClientInitialization} from '@/hooks/useIndexClientInitialization'
 import {useValidation} from '@/hooks/useValidation'
-import {useConnectPolkadotWallet} from '@phala/lib'
+import {useConnectPolkadotWallet} from '@phala/utils'
 import {type FC, type ReactNode} from 'react'
 import TopBar from './TopBar'
 

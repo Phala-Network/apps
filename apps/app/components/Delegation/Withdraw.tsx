@@ -12,7 +12,7 @@ import {
   Stack,
   TextField,
 } from '@mui/material'
-import {getDecimalPattern, toCurrency} from '@phala/util'
+import {getDecimalPattern, toCurrency} from '@phala/utils'
 import Decimal from 'decimal.js'
 import {useMemo, useState, type FC} from 'react'
 import Property from '../Property'

@@ -2,12 +2,12 @@
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 })
-const withImages = require('next-images')
+// const withImages = require('next-images')
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   transpilePackages: ['jotai-devtools'],
-  images: {disableStaticImages: true},
+  // images: {disableStaticImages: true},
   modularizeImports: {
     '@mui/icons-material': {
       transform: '@mui/icons-material/{{member}}',
@@ -47,4 +47,4 @@ const nextConfig = {
   },
 }
 
-module.exports = withBundleAnalyzer(withImages(nextConfig))
+module.exports = withBundleAnalyzer(nextConfig)

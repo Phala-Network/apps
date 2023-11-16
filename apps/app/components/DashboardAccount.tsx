@@ -21,7 +21,7 @@ import {
   styled,
 } from '@mui/material'
 import {polkadotAccountAtom} from '@phala/store'
-import {toCurrency, trimAddress} from '@phala/util'
+import {toCurrency, trimAddress} from '@phala/utils'
 import Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
 import dynamic from 'next/dynamic'

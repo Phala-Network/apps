@@ -1,0 +1,21 @@
+{
+  "name": "@phala/ui",
+  "version": "0.0.1",
+  "sideEffects": false,
+  "main": "index.ts",
+  "scripts": {
+    "check": "tsc --project ./tsconfig.json --noEmit",
+    "lint": "eslint --cache --ext .ts,.tsx .",
+    "lint:fix": "eslint --fix --cache --ext .ts,.tsx ."
+  },
+  "devDependencies": {
+    "@phala/eslint-config": "workspace:*"
+  },
+  "peerDependencies": {
+    "react": ">=17"
+  },
+  "files": [
+    "components",
+    "icons"
+  ]
+}

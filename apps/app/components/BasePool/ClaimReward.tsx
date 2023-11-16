@@ -9,7 +9,7 @@ import {
   TextField,
 } from '@mui/material'
 import {polkadotAccountAtom} from '@phala/store'
-import {validateAddress} from '@phala/util'
+import {validateAddress} from '@phala/utils'
 import {type SubmittableExtrinsic} from '@polkadot/api/types'
 import {decodeAddress, encodeAddress} from '@polkadot/keyring'
 import {type ISubmittableResult} from '@polkadot/types/types'

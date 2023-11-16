@@ -8,7 +8,7 @@ import {
   Stack,
 } from '@mui/material'
 import {polkadotAccountAtom} from '@phala/store'
-import {toCurrency} from '@phala/util'
+import {toCurrency} from '@phala/utils'
 import {type DeriveBalancesAll} from '@polkadot/api-derive/types'
 import BN from 'bn.js'
 import Decimal from 'decimal.js'

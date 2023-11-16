@@ -20,7 +20,7 @@
   },
   "type": "module",
   "dependencies": {
-    "@phala/util": "workspace:*",
+    "@phala/utils": "workspace:*",
     "@rgossiaux/svelte-headlessui": "^2.0.0",
     "@rgossiaux/svelte-heroicons": "^0.1.2",
     "@tanstack/svelte-query": "^4.36.1",
