@@ -17,7 +17,7 @@ import {
   type InputProps,
 } from '@mui/material'
 import {type BoxProps} from '@mui/system'
-import {toCurrency} from '@phala/util'
+import {toCurrency} from '@phala/utils'
 import {useAtom} from 'jotai'
 import {type FC} from 'react'
 

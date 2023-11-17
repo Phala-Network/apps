@@ -4,7 +4,7 @@ import {evmAccountAtom} from '@/store/ethers'
 import HighlightOff from '@mui/icons-material/HighlightOff'
 import {Box, IconButton, Link, TextField, type BoxProps} from '@mui/material'
 import {polkadotAccountAtom} from '@phala/store'
-import {trimAddress} from '@phala/util'
+import {trimAddress} from '@phala/utils'
 import {useAtom} from 'jotai'
 import {RESET} from 'jotai/utils'
 import {

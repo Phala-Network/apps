@@ -14,7 +14,7 @@ import {
 } from '@/store/bridge'
 import {evmAccountAtom} from '@/store/ethers'
 import {type DepositEvent} from '@buildwithsygma/sygma-contracts/dist/ethers/Bridge'
-import {waitSignAndSend, type ExtrinsicResult} from '@phala/lib'
+import {waitSignAndSend, type ExtrinsicResult} from '@phala/utils'
 import {polkadotAccountAtom} from '@phala/store'
 import Decimal from 'decimal.js'
 import {type ContractTransaction} from 'ethers'

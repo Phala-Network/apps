@@ -23,7 +23,7 @@ import {
   Typography,
 } from '@mui/material'
 import {polkadotAccountAtom} from '@phala/store'
-import {toCurrency} from '@phala/util'
+import {toCurrency} from '@phala/utils'
 import {useAtom} from 'jotai'
 import {useCallback, useEffect, useState, type FC} from 'react'
 import useSWRMutation from 'swr/mutation'

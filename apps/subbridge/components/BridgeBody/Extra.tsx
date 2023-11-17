@@ -20,7 +20,7 @@ import {
   type BoxProps,
   type PaperProps,
 } from '@mui/material'
-import {toCurrency} from '@phala/util'
+import {toCurrency} from '@phala/utils'
 import {useAtomValue} from 'jotai'
 import {type FC, type ReactNode} from 'react'
 

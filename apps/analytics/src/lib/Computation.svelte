@@ -1,5 +1,5 @@
 <script lang="ts">
-  import {compactFormat} from '@phala/util'
+  import {compactFormat} from '@phala/utils'
   import {
     RadioGroup,
     RadioGroupLabel,

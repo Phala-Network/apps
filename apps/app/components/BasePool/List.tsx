@@ -38,7 +38,7 @@ import {
   type SxProps,
 } from '@mui/material'
 import {polkadotAccountAtom} from '@phala/store'
-import {getDecimalPattern} from '@phala/util'
+import {getDecimalPattern} from '@phala/utils'
 import {useAtom} from 'jotai'
 import {create} from 'mutative'
 import {useCallback, useEffect, useState, type FC} from 'react'

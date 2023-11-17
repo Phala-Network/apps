@@ -9,7 +9,7 @@ import {
   toAssetAtom,
   toChainAtom,
 } from '@/store/core'
-import {validateAddress} from '@phala/util'
+import {validateAddress} from '@phala/utils'
 import {useAtom} from 'jotai'
 import {useEffect} from 'react'
 import {useBalance} from './useBalance'

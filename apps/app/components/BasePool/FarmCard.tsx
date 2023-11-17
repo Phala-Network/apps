@@ -27,7 +27,7 @@ import {
   Typography,
   useTheme,
 } from '@mui/material'
-import {toCurrency, toPercentage} from '@phala/util'
+import {toCurrency, toPercentage} from '@phala/utils'
 import Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
 import {useCallback, useMemo, type FC} from 'react'

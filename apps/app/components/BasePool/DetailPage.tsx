@@ -38,7 +38,7 @@ import {
   useTheme,
 } from '@mui/material'
 import {polkadotAccountAtom} from '@phala/store'
-import {toCurrency, toPercentage} from '@phala/util'
+import {toCurrency, toPercentage} from '@phala/utils'
 import {addDays} from 'date-fns'
 import Decimal from 'decimal.js'
 import {useAtom} from 'jotai'

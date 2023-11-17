@@ -12,7 +12,7 @@ import {
   Typography,
   useTheme,
 } from '@mui/material'
-import {toCurrency, toFixed} from '@phala/util'
+import {toCurrency, toFixed} from '@phala/utils'
 import {addDays, formatDuration, intervalToDuration, isAfter} from 'date-fns'
 import {useSnackbar} from 'notistack'
 import {useMemo, type FC, type ReactNode} from 'react'

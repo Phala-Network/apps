@@ -23,7 +23,7 @@ import {
   type SxProps,
 } from '@mui/material'
 import {polkadotAccountAtom} from '@phala/store'
-import {toCurrency, toPercentage} from '@phala/util'
+import {toCurrency, toPercentage} from '@phala/utils'
 import Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
 import {useMemo, type FC} from 'react'

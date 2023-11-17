@@ -1,0 +1,6 @@
+{
+  "extends": ["@phala/eslint-config"],
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  }
+}

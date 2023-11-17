@@ -1,4 +1,4 @@
-import {weightedAverage} from '@phala/util'
+import {weightedAverage} from '@phala/utils'
 import {createQuery} from '@tanstack/svelte-query'
 import Decimal from 'decimal.js'
 import {gql} from 'graphql-request'

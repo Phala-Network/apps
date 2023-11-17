@@ -27,7 +27,7 @@ import {
   useTheme,
 } from '@mui/material'
 import {polkadotAccountAtom} from '@phala/store'
-import {toCurrency, toPercentage} from '@phala/util'
+import {toCurrency, toPercentage} from '@phala/utils'
 import {useAtom} from 'jotai'
 import {type FC} from 'react'
 import BasePoolChart from './Chart'

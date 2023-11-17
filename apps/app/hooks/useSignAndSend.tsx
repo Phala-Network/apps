@@ -1,6 +1,6 @@
 import {Box, CircularProgress, Stack, Typography} from '@mui/material'
-import {waitSignAndSend} from '@phala/lib'
 import {polkadotAccountAtom} from '@phala/store'
+import {waitSignAndSend} from '@phala/utils'
 import {type SubmittableExtrinsic} from '@polkadot/api/types'
 import type {ISubmittableResult} from '@polkadot/types/types'
 import {useAtom} from 'jotai'

@@ -20,7 +20,7 @@ import {
 import {type BoxProps} from '@mui/system'
 import {type Chain} from '@phala/index'
 import {useAtom} from 'jotai'
-import {type FC, type ReactNode} from 'react'
+import {useEffect, useState, type FC, type ReactNode} from 'react'
 
 const Info: FC<{label: ReactNode; children: ReactNode} & BoxProps> = ({
   label,
@@ -67,16 +67,36 @@ const Detail: FC<
     amount?: string
   }
 > = ({kind, chain, account, asset, amount, ...paperProps}) => {
+  const [chainIconSrc, setChainIconSrc] = useState('')
+  const [assetIconSrc, setAssetIconSrc] = useState('')
+
+  const chainName = chain.name.toLowerCase()
+  const assetName = asset.symbol.toLowerCase()
+
+  useEffect(() => {
+    void import(`@phala/ui/icons/chain/${chainName}.png`)
+      .then((module) => {
+        setChainIconSrc(module.default.src)
+      })
+      .catch(() => {})
+  }, [chainName])
+
+  useEffect(() => {
+    void import(`@phala/ui/icons/asset/${assetName}.png`)
+      .then((module) => {
+        setAssetIconSrc(module.default.src)
+      })
+      .catch(() => {})
+  }, [assetName])
+
   return (
     <Paper sx={{p: 2, width: 1}} {...paperProps}>
       <Stack spacing={2}>
         <Info label={kind}>
           <Box sx={{display: 'flex', alignItems: 'center'}}>
-            <img
-              css={{width: 16, height: 16}}
-              src={`/icons/${chain.name.toLowerCase()}_chain_icon.png`}
-              alt=""
-            />
+            {chainIconSrc !== '' && (
+              <img css={{width: 16, height: 16}} src={chainIconSrc} alt="" />
+            )}
             <Typography variant="body2" component="span" sx={{ml: 1}}>
               {chain.name}
             </Typography>
@@ -110,12 +130,9 @@ const Detail: FC<
               </Typography>
             )}
             <Box sx={{display: 'flex', alignItems: 'center', ml: 1}}>
-              <source></source>
-              <img
-                css={{width: 16, height: 16}}
-                src={`/icons/${asset.symbol.toLowerCase()}_asset_icon.png`}
-                alt=""
-              />
+              {assetIconSrc !== '' && (
+                <img css={{width: 16, height: 16}} src={assetIconSrc} alt="" />
+              )}
               <Typography variant="body2" sx={{ml: 1}}>
                 {asset.symbol}
               </Typography>

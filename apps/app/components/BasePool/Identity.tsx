@@ -4,7 +4,7 @@ import ErrorOutline from '@mui/icons-material/ErrorOutline'
 import RemoveCircleOutline from '@mui/icons-material/RemoveCircleOutline'
 import VerifiedOutlined from '@mui/icons-material/VerifiedOutlined'
 import {alpha, Link, Stack, Tooltip, Typography, useTheme} from '@mui/material'
-import {trimAddress} from '@phala/util'
+import {trimAddress} from '@phala/utils'
 import {useAtom} from 'jotai'
 import {type FC} from 'react'
 

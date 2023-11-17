@@ -10,7 +10,7 @@ import {
   DialogTitle,
   TextField,
 } from '@mui/material'
-import {getDecimalPattern, toCurrency, validateAddress} from '@phala/util'
+import {getDecimalPattern, toCurrency, validateAddress} from '@phala/utils'
 import Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
 import {useMemo, useState, type FC} from 'react'
