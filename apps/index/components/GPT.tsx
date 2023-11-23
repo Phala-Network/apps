@@ -1,4 +1,5 @@
 import {useBalance} from '@/hooks/useBalance'
+import useSimulateResults from '@/hooks/useSimulateResults'
 import {
   destinationAccountAtom,
   fromAmountAtom,
@@ -24,8 +25,9 @@ import {
 } from '@mui/material'
 import {polkadotAccountAtom} from '@phala/store'
 import {toCurrency} from '@phala/utils'
+import Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
-import {useCallback, useEffect, useState, type FC} from 'react'
+import {useCallback, useEffect, useMemo, useState, type FC} from 'react'
 import useSWRMutation from 'swr/mutation'
 import wretch from 'wretch'
 import Action from './Body/Action'
@@ -75,6 +77,12 @@ const GPT: FC = () => {
     '/api/extract-params',
     apiFetcher,
   )
+  const {data: simulateResults} = useSimulateResults()
+  const totalFeeInUsd = useMemo(() => {
+    if (simulateResults == null) return null
+    const fee = simulateResults.reduce((acc, x) => acc + x.txFeeInUsd, 0)
+    return new Decimal(fee).div(1e6).toDP(2).toString()
+  }, [simulateResults])
 
   const balance = useBalance()
 
@@ -222,20 +230,24 @@ const GPT: FC = () => {
         >
           <Paper sx={{p: 3, flex: 1, width: {sm: '100%'}}}>
             <Confirmation></Confirmation>
-            <Typography
-              variant="caption"
-              textAlign="right"
-              fontWeight="500"
-              mt={2}
-              component="div"
-            >
-              {fromNativeChain ? 'Transferrable' : 'Balance'}:{' '}
-              {balance != null ? (
-                `${toCurrency(balance)} ${fromAsset?.symbol}`
-              ) : (
-                <Skeleton sx={{display: 'inline-block'}} width={64} />
-              )}
-            </Typography>
+            <Stack direction="row" mt={2} justifyContent="flex-end" spacing={2}>
+              <Typography variant="caption" fontWeight="500" component="div">
+                {'Total fee: '}
+                {totalFeeInUsd != null ? (
+                  `${totalFeeInUsd} USD`
+                ) : (
+                  <Skeleton sx={{display: 'inline-block'}} width={64} />
+                )}
+              </Typography>
+              <Typography variant="caption" fontWeight="500" component="div">
+                {fromNativeChain ? 'Transferrable' : 'Balance'}:{' '}
+                {balance != null ? (
+                  `${toCurrency(balance)} ${fromAsset?.symbol}`
+                ) : (
+                  <Skeleton sx={{display: 'inline-block'}} width={64} />
+                )}
+              </Typography>
+            </Stack>
 
             <Box mt={2}>
               <Action />

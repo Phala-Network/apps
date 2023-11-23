@@ -3,7 +3,7 @@ import {type Task} from '@phala/index'
 import {useAtom} from 'jotai'
 import useSWR, {type SWRResponse} from 'swr'
 
-const useCurrentTask = (): SWRResponse<Task> => {
+const useCurrentTaskStatus = (): SWRResponse<Task> => {
   const [client] = useAtom(clientAtom)
   const [currentTask] = useAtom(currentTaskAtom)
   const swr = useSWR(
@@ -25,4 +25,4 @@ const useCurrentTask = (): SWRResponse<Task> => {
   return swr
 }
 
-export default useCurrentTask
+export default useCurrentTaskStatus

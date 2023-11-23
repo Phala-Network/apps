@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import {assets} from '@/config/common'
-import useCurrentTask from '@/hooks/useTaskStatus'
+import useCurrentTaskStatus from '@/hooks/useCurrentTaskStatus'
+import useSimulateResults from '@/hooks/useSimulateResults'
 import {currentTaskAtom, fromChainAtom, solutionAtom} from '@/store/core'
 import OpenInNewIcon from '@mui/icons-material/OpenInNew'
 import {
@@ -8,6 +9,7 @@ import {
   CircularProgress,
   Link,
   Paper,
+  Skeleton,
   Stack,
   Step,
   StepContent,
@@ -17,6 +19,7 @@ import {
   useTheme,
   type PaperProps,
 } from '@mui/material'
+import Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
 import {useMemo, type FC} from 'react'
 
@@ -57,8 +60,9 @@ const Progress: FC<PaperProps> = ({sx, ...props}) => {
   const theme = useTheme()
   const [solution] = useAtom(solutionAtom)
   const [currentTask] = useAtom(currentTaskAtom)
-  const {data: taskStatus} = useCurrentTask()
+  const {data: taskStatus} = useCurrentTaskStatus()
   const [fromChain] = useAtom(fromChainAtom)
+  const {data: simulateResults} = useSimulateResults()
 
   const stepOffset = fromChain?.chainType === 'Sub' ? 2 : 1
 
@@ -78,6 +82,7 @@ const Progress: FC<PaperProps> = ({sx, ...props}) => {
     const result: Array<{
       batch: Array<{label: string; kind: string}>
       sourceChain: string
+      fee?: string
     }> = []
     for (let i = 0; i < solution.length; i++) {
       const {exe, sourceChain, destChain, spendAsset, receiveAsset} =
@@ -99,14 +104,20 @@ const Progress: FC<PaperProps> = ({sx, ...props}) => {
       if (prevStep != null && prevStep.sourceChain === sourceChain) {
         prevStep.batch.push(step)
       } else {
+        let fee
+        const txFeeInUsd = simulateResults?.[result.length]?.txFeeInUsd
+        if (txFeeInUsd != null) {
+          fee = new Decimal(txFeeInUsd).div(1e6).toDP(2).toString()
+        }
         result.push({
           sourceChain,
           batch: [step],
+          fee,
         })
       }
     }
     return result
-  }, [solution])
+  }, [solution, simulateResults])
 
   return (
     <Paper
@@ -198,6 +209,19 @@ const Progress: FC<PaperProps> = ({sx, ...props}) => {
                       </Typography>
                     </Stack>
                   ))}
+                  <Typography
+                    variant="caption"
+                    fontWeight="500"
+                    component="div"
+                    mt={1}
+                  >
+                    {'Fee: '}
+                    {step.fee != null ? (
+                      `${step.fee} USD`
+                    ) : (
+                      <Skeleton sx={{display: 'inline-block'}} width={64} />
+                    )}
+                  </Typography>
                 </StepContent>
               </Step>
             )
