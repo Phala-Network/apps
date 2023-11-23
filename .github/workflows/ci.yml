@@ -23,6 +23,8 @@ jobs:
         with:
           fetch-depth: 2
 
+      - run: corepack enable
+
       - name: Setup Node.js environment
         uses: actions/setup-node@v3
         with:
@@ -30,7 +32,7 @@ jobs:
           cache: 'yarn'
 
       - name: Install dependencies
-        run: corepack enable && yarn --immutable
+        run: yarn --immutable
 
       - name: Linter
         run: npm run lint
