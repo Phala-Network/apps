@@ -3387,9 +3387,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mui/x-data-grid@npm:^6.18.1":
-  version: 6.18.1
-  resolution: "@mui/x-data-grid@npm:6.18.1"
+"@mui/x-data-grid@npm:^6.18.2":
+  version: 6.18.2
+  resolution: "@mui/x-data-grid@npm:6.18.2"
   dependencies:
     "@babel/runtime": "npm:^7.23.2"
     "@mui/utils": "npm:^5.14.16"
@@ -3401,7 +3401,7 @@ __metadata:
     "@mui/system": ^5.4.1
     react: ^17.0.0 || ^18.0.0
     react-dom: ^17.0.0 || ^18.0.0
-  checksum: cfc156e848e74dadadbbe8f6d0ecfa1ae1e6a9600a420dde01aad3f63b2ab30d82de464120f488fae96f4453c71c6e5c5ec034dcec9c55d691df54b672dff2c5
+  checksum: 441328df15f1d82651612229bee42c74eda893837bc08edc7c171a85bb755a612395f5abf8b4d09ddf4f70a74914faff221b6001ee8975c0ebe439ab7a1b4be1
   languageName: node
   linkType: hard
 
@@ -3625,7 +3625,7 @@ __metadata:
     postcss: "npm:^8.4.31"
     svelte: "npm:^4.2.7"
     svelte-chartjs: "npm:^3.1.2"
-    svelte-check: "npm:^3.6.1"
+    svelte-check: "npm:^3.6.2"
     tailwindcss: "npm:^3.3.5"
     tslib: "npm:^2.6.2"
     typescript: "npm:^5.3.2"
@@ -3648,7 +3648,7 @@ __metadata:
     "@mui/icons-material": "npm:^5.14.18"
     "@mui/lab": "npm:5.0.0-alpha.153"
     "@mui/material": "npm:^5.14.18"
-    "@mui/x-data-grid": "npm:^6.18.1"
+    "@mui/x-data-grid": "npm:^6.18.2"
     "@next/bundle-analyzer": "npm:^14.0.3"
     "@phala/store": "workspace:*"
     "@phala/utils": "workspace:*"
@@ -3676,10 +3676,10 @@ __metadata:
     graphql: "npm:^16.8.1"
     graphql-request: "npm:^6.1.0"
     graphql-tag: "npm:^2.12.6"
-    jotai: "npm:^2.5.1"
+    jotai: "npm:^2.6.0"
     jotai-devtools: "npm:^0.7.0"
     lodash-es: "npm:^4.17.21"
-    mutative: "npm:^0.7.1"
+    mutative: "npm:^0.7.2"
     next: "npm:^14.0.3"
     notistack: "npm:^3.0.1"
     react: "npm:^18.2.0"
@@ -3739,16 +3739,18 @@ __metadata:
     "@talismn/connect-components": "npm:^1.1.7"
     "@talismn/connect-ui": "npm:^1.1.2"
     "@talismn/connect-wallets": "npm:^1.2.3"
+    "@types/js-cookie": "npm:^3.0.6"
     "@types/lodash-es": "npm:^4.17.12"
-    "@types/node": "npm:^18.18.12"
+    "@types/node": "npm:^18.18.13"
     "@types/react": "npm:^18.2.38"
     "@types/react-dom": "npm:^18.2.17"
     decimal.js: "npm:^10.4.3"
     eslint: "npm:^8.54.0"
     eslint-config-next: "npm:^14.0.3"
     ethers: "npm:^6.8.1"
-    jotai: "npm:^2.5.1"
+    jotai: "npm:^2.6.0"
     jotai-devtools: "npm:^0.7.0"
+    js-cookie: "npm:^3.0.5"
     lodash-es: "npm:^4.17.21"
     next: "npm:^14.0.3"
     notistack: "npm:^3.0.1"
@@ -3783,7 +3785,7 @@ __metadata:
   dependencies:
     "@polkadot/api": "npm:^10.11.1"
     "@polkadot/typegen": "npm:^10.11.1"
-    "@types/node": "npm:^18.18.12"
+    "@types/node": "npm:^18.18.13"
     ts-node: "npm:^10.9.1"
     typescript: "npm:^5.3.2"
   languageName: unknown
@@ -3851,14 +3853,14 @@ __metadata:
     "@talismn/connect-components": "npm:^1.1.7"
     "@talismn/connect-ui": "npm:^1.1.2"
     "@talismn/connect-wallets": "npm:^1.2.3"
-    "@types/node": "npm:^18.18.12"
+    "@types/node": "npm:^18.18.13"
     "@types/react": "npm:^18.2.38"
     "@types/react-dom": "npm:^18.2.17"
     decimal.js: "npm:^10.4.3"
     eslint: "npm:^8.54.0"
     eslint-config-next: "npm:^14.0.3"
     ethers: "npm:^5.7.2"
-    jotai: "npm:^2.5.1"
+    jotai: "npm:^2.6.0"
     jotai-devtools: "npm:^0.7.0"
     next: "npm:^14.0.3"
     next-images: "npm:^1.8.5"
@@ -5860,6 +5862,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/js-cookie@npm:^3.0.6":
+  version: 3.0.6
+  resolution: "@types/js-cookie@npm:3.0.6"
+  checksum: 173afaf5ea9d86c22395b9d2a00b6adb0006dcfef165d6dcb0395cdc32f5a5dcf9c3c60f97194119963a15849b8f85121e1ae730b03e40bc0c29b84396ba22f9
+  languageName: node
+  linkType: hard
+
 "@types/json-schema@npm:^7.0.12, @types/json-schema@npm:^7.0.8":
   version: 7.0.14
   resolution: "@types/json-schema@npm:7.0.14"
@@ -5938,12 +5947,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^18.18.12":
-  version: 18.18.12
-  resolution: "@types/node@npm:18.18.12"
+"@types/node@npm:^18.18.13":
+  version: 18.18.13
+  resolution: "@types/node@npm:18.18.13"
   dependencies:
     undici-types: "npm:~5.26.4"
-  checksum: f7c4b95173f4014841d331da5b005ab613351d61498c8dca373cd4365b721a73fd1161e91c965c0f786132594b46e68c92dc1c92d657a7942816f2ea185ae1ba
+  checksum: 5f1840f26b4c00e6b4945be678644a46e6689ef10d9d7795d587b76059045b99a14ca6075264296e6e91d73e098fe83df9580881278d9a6ce394b368d9c76700
   languageName: node
   linkType: hard
 
@@ -12025,9 +12034,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jotai@npm:^2.5.1":
-  version: 2.5.1
-  resolution: "jotai@npm:2.5.1"
+"jotai@npm:^2.6.0":
+  version: 2.6.0
+  resolution: "jotai@npm:2.6.0"
   peerDependencies:
     "@types/react": ">=17.0.0"
     react: ">=17.0.0"
@@ -12036,7 +12045,14 @@ __metadata:
       optional: true
     react:
       optional: true
-  checksum: af2c86e16e4dd4baad31e8ad5127db8ee07712a6f852c86049f915efc71c6a099661f28a910ecef2e7da0b7868f74477712161e3717d050c1131bd521754c562
+  checksum: 8e1687453c3713d227c8081291e286b51ca634657dc456303b3d9f9bf80d67b4a5e71481768675a8480789b432e3b0c0159521ac7794df8a0cce989713fdc7a4
+  languageName: node
+  linkType: hard
+
+"js-cookie@npm:^3.0.5":
+  version: 3.0.5
+  resolution: "js-cookie@npm:3.0.5"
+  checksum: 04a0e560407b4489daac3a63e231d35f4e86f78bff9d792011391b49c59f721b513411cd75714c418049c8dc9750b20fcddad1ca5a2ca616c3aca4874cce5b3a
   languageName: node
   linkType: hard
 
@@ -13420,10 +13436,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mutative@npm:^0.7.1":
-  version: 0.7.1
-  resolution: "mutative@npm:0.7.1"
-  checksum: 4fc04c12b468428eb18db7e9557743ed206a1756ce0161d0082c688288f4f37b695cbfa0c8ab36453d83c94e68e6bd31aaabe942ac1ef0e26683f89e04ddcb1a
+"mutative@npm:^0.7.2":
+  version: 0.7.2
+  resolution: "mutative@npm:0.7.2"
+  checksum: d67522c5f8c0d1f479998cf5925c639b497648f40f7bbc71c80a02adddc8f0d5a340fcda1e1ee6cbec0a8a191ac08c209077843a3fbb3d35eae2417db7a4f511
   languageName: node
   linkType: hard
 
@@ -14195,7 +14211,7 @@ __metadata:
   resolution: "phala-apps@workspace:."
   dependencies:
     "@total-typescript/ts-reset": "npm:^0.5.1"
-    "@types/node": "npm:^18.18.12"
+    "@types/node": "npm:^18.18.13"
     husky: "npm:^8.0.3"
     turbo: "npm:^1.10.16"
     typescript: "npm:^5.3.2"
@@ -16819,9 +16835,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"svelte-check@npm:^3.6.1":
-  version: 3.6.1
-  resolution: "svelte-check@npm:3.6.1"
+"svelte-check@npm:^3.6.2":
+  version: 3.6.2
+  resolution: "svelte-check@npm:3.6.2"
   dependencies:
     "@jridgewell/trace-mapping": "npm:^0.3.17"
     chokidar: "npm:^3.4.1"
@@ -16835,7 +16851,7 @@ __metadata:
     svelte: ^3.55.0 || ^4.0.0-next.0 || ^4.0.0 || ^5.0.0-next.0
   bin:
     svelte-check: bin/svelte-check
-  checksum: fc9ab42a93be3d62a59ec787b19345da7a6b1b1c1b4aa1842a4f3448d07121f1ed7064499557d6aae090f994fdf47627d154a0bdd98de977c0aa3a21976f1757
+  checksum: 3f389df29268d4df9b561d0b206566e827af84923c70150b2dadfd407bcbdaccbfd561bd8b93884597de62477d62826ff1a5108854641078b692130441a49a55
   languageName: node
   linkType: hard
 

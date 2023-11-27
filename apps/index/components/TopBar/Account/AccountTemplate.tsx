@@ -1,3 +1,4 @@
+'use client'
 import {
   Button,
   Paper,
@@ -31,7 +32,7 @@ const AccountTemplate: FC<{
         {...ButtonProps}
       >
         <span
-          css={{
+          style={{
             textOverflow: 'ellipsis',
             overflow: 'hidden',
             whiteSpace: 'nowrap',

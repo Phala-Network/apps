@@ -8,15 +8,12 @@ export type ColorSchemeSetting = PaletteMode | 'system'
 export const colorSchemeSettingAtom = atomWithStorage<ColorSchemeSetting>(
   'jotai:color_scheme_setting',
   'system',
+  undefined,
+  {getOnInit: true},
 )
 
 export const isWalletConnectAtom = atom<boolean>((get) =>
   Boolean(get(fromAccountAtom)),
-)
-
-export const moreButtonBadgeVersionAtom = atomWithStorage(
-  'jotai:more_button_badge_version',
-  0,
 )
 
 export const polkadotWalletModalOpenAtom = atom(false)

@@ -1,3 +1,4 @@
+'use client'
 import {polkadotWalletModalOpenAtom} from '@/store/common'
 import {fromChainAtom} from '@/store/core'
 import {ethereumProviderAtom, evmAccountAtom} from '@/store/ethers'
