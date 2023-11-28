@@ -40,7 +40,8 @@ export const useBalance = (): Decimal | undefined => {
   let balanceSource: BalanceSource = null
 
   if (
-    (fromChain.id === 'karura' ||
+    (fromChain.id === 'acala' ||
+      fromChain.id === 'karura' ||
       fromChain.id === 'karura-test' ||
       fromChain.id === 'bifrost-kusama' ||
       fromChain.id === 'bifrost-test' ||
@@ -79,6 +80,7 @@ export const useBalance = (): Decimal | undefined => {
       (fromChain.id === 'turing' || asset.currencyTokenSymbol != null) && [
         polkadotApi,
         polkadotAccount.address,
+        fromChain.id === 'acala' ||
         fromChain.id === 'karura' ||
         fromChain.id === 'karura-test' ||
         fromChain.id === 'bifrost-kusama' ||

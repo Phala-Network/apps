@@ -101,6 +101,7 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
       khala: new Decimal('0.092696'),
       'bifrost-kusama': new Decimal('0.0256'),
       'bifrost-test': new Decimal('0.0256'),
+      acala: new Decimal('0.0512'),
       karura: new Decimal('0.0512'),
       'karura-test': new Decimal('0.0512'),
       moonbeam: new Decimal('0.158722600511'),
@@ -115,6 +116,7 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
     existentialDeposit: {
       phala: new Decimal('0.01'),
       khala: new Decimal('0.01'),
+      acala: new Decimal('0.01'),
       karura: new Decimal('0.04'),
       'karura-test': new Decimal('0.04'),
       'bifrost-kusama': new Decimal('0.04'),

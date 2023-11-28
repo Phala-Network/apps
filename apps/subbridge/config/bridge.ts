@@ -182,6 +182,19 @@ export const BRIDGES: Readonly<Bridge[]> = [
     ],
   },
   {
+    fromChain: 'acala',
+    toChains: [
+      {
+        id: 'phala',
+        assets: [
+          {assetId: 'aca', estimatedTime: '< 1 min', kind: 'polkadotXTokens'},
+          {assetId: 'pha', estimatedTime: '< 1 min', kind: 'polkadotXTokens'},
+          // {assetId: 'ausd', estimatedTime: '< 1 min', kind: 'polkadotXTokens'},
+        ],
+      },
+    ],
+  },
+  {
     fromChain: 'karura',
     toChains: [
       {
