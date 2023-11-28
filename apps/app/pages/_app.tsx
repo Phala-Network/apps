@@ -7,6 +7,7 @@ import {theme} from '@/lib/theme'
 import {chainAtom} from '@/store/common'
 import {CacheProvider, css, type EmotionCache} from '@emotion/react'
 import {
+  Box,
   CssBaseline,
   GlobalStyles,
   ThemeProvider as MuiThemeProvider,
@@ -65,7 +66,11 @@ const App: FC<MyAppProps> = (props) => {
                 <Layout>
                   <Component {...pageProps} />
                   <ZendeskWidget />
-                  {process.env.NODE_ENV === 'development' && <JotaiDevTools />}
+                  {process.env.NODE_ENV === 'development' && (
+                    <Box position="fixed" ml={1} mb={8} bottom={0} left={0}>
+                      <JotaiDevTools />
+                    </Box>
+                  )}
                   <ReactQueryDevtools />
                 </Layout>
               </MuiThemeProvider>
