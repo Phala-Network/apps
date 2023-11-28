@@ -1,3 +1,4 @@
+'use client'
 import {polkadotAccountsAtom, walletAtom, walletNameAtom} from '@phala/store'
 import {transformAddress} from '@phala/utils'
 import type {WalletAccount} from '@talismn/connect-wallets'

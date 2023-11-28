@@ -1,3 +1,4 @@
+'use client'
 /* eslint-disable @typescript-eslint/naming-convention */
 import {assets} from '@/config/common'
 import useCurrentTaskStatus from '@/hooks/useCurrentTaskStatus'

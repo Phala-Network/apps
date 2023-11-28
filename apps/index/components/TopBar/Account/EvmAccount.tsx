@@ -1,3 +1,4 @@
+'use client'
 import {assets} from '@/config/common'
 import {useEthersBrowserProvider} from '@/hooks/useEthersProvider'
 import {useSwitchNetwork} from '@/hooks/useSwitchNetwork'

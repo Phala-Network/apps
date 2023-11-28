@@ -1,21 +1,25 @@
+'use client'
 import Body from '@/components/Body'
+import Confirmation from '@/components/Confirmation'
 import Footer from '@/components/Footer'
+import PolkadotWalletDialog from '@/components/PolkadotWalletDialog'
 import Progress from '@/components/Progress'
+import {useEthereumProviderInitialization} from '@/hooks/useEthereumProviderInitialization'
+import {useIndexClientInitialization} from '@/hooks/useIndexClientInitialization'
+import {useValidation} from '@/hooks/useValidation'
 import {clientAtom} from '@/store/core'
 import {Box, CircularProgress, Container, Stack, useTheme} from '@mui/material'
+import {useConnectPolkadotWallet} from '@phala/utils'
 import {useAtom} from 'jotai'
 import type {NextPage} from 'next'
-import dynamic from 'next/dynamic'
-import Confirmation from '@/components/Confirmation'
 
-const PolkadotWalletDialog = dynamic(
-  async () => await import('@/components/PolkadotWalletDialog'),
-  {ssr: false},
-)
-
-const Home: NextPage = () => {
+const ManualPage: NextPage = () => {
   const theme = useTheme()
   const [client] = useAtom(clientAtom)
+  useEthereumProviderInitialization()
+  useConnectPolkadotWallet('inDEX')
+  useValidation()
+  useIndexClientInitialization()
   return (
     <Container sx={{pt: {sm: 9, md: 12}}}>
       {client == null ? (
@@ -54,4 +58,4 @@ const Home: NextPage = () => {
   )
 }
 
-export default Home
+export default ManualPage

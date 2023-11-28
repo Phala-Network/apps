@@ -1,3 +1,4 @@
+'use client'
 import {useCurrentPolkadotApi} from '@/hooks/usePolkadotApi'
 import {polkadotAvailableBalanceFetcher} from '@/lib/polkadotFetcher'
 import {polkadotWalletModalOpenAtom} from '@/store/common'

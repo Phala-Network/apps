@@ -12,7 +12,7 @@
   },
   "devDependencies": {
     "@polkadot/typegen": "^10.11.1",
-    "@types/node": "^18.18.12",
+    "@types/node": "^18.18.13",
     "ts-node": "^10.9.1",
     "typescript": "^5.3.2"
   },

@@ -1,3 +1,4 @@
+'use client'
 import ConnectWalletButton from '@/components/ConnectWalletButton'
 import {isWalletConnectAtom} from '@/store/common'
 import {fromChainAtom} from '@/store/core'

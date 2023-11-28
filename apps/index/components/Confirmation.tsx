@@ -1,3 +1,4 @@
+'use client'
 import {type Asset} from '@/config/common'
 import {
   destinationAccountAtom,
@@ -95,7 +96,7 @@ const Detail: FC<
         <Info label={kind}>
           <Box sx={{display: 'flex', alignItems: 'center'}}>
             {chainIconSrc !== '' && (
-              <img css={{width: 16, height: 16}} src={chainIconSrc} alt="" />
+              <img style={{width: 16, height: 16}} src={chainIconSrc} alt="" />
             )}
             <Typography variant="body2" component="span" sx={{ml: 1}}>
               {chain.name}
@@ -131,7 +132,11 @@ const Detail: FC<
             )}
             <Box sx={{display: 'flex', alignItems: 'center', ml: 1}}>
               {assetIconSrc !== '' && (
-                <img css={{width: 16, height: 16}} src={assetIconSrc} alt="" />
+                <img
+                  style={{width: 16, height: 16}}
+                  src={assetIconSrc}
+                  alt=""
+                />
               )}
               <Typography variant="body2" sx={{ml: 1}}>
                 {asset.symbol}
