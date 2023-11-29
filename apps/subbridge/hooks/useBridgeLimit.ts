@@ -1,7 +1,8 @@
+import {CHAINS} from '@/config/chain'
 import {ethersContractBalanceFetcher} from '@/lib/ethersFetcher'
 import {
-  assetPalletBalanceFetcher,
-  polkadotAvailableBalanceFetcher,
+  polkadotBalanceFetcher,
+  polkadotNativeBalanceFetcher,
 } from '@/lib/polkadotFetcher'
 import {
   assetAtom,
@@ -69,10 +70,11 @@ export const useBridgeLimit = (): Decimal | undefined => {
       asset.id === 'zlk' && [
         khalaApi,
         asset.reservedAddress?.khala,
-        asset.palletAssetId?.khala,
+        asset.polkadotAssetId?.khala,
         asset.decimals.khala ?? asset.decimals.default,
+        CHAINS.khala.balanceSource,
       ],
-    assetPalletBalanceFetcher,
+    polkadotBalanceFetcher,
     {refreshInterval},
   )
 
@@ -96,7 +98,7 @@ export const useBridgeLimit = (): Decimal | undefined => {
       (toChain.id === 'phala' || bridge.proxy === 'phala') &&
       asset.id === 'pha' &&
       fromChain.id === 'ethereum' && [phalaApi, asset.reservedAddress?.phala],
-    polkadotAvailableBalanceFetcher,
+    polkadotNativeBalanceFetcher,
     {refreshInterval},
   )
 
@@ -105,7 +107,7 @@ export const useBridgeLimit = (): Decimal | undefined => {
       toChain.id === 'khala' &&
       asset.id === 'pha' &&
       fromChain.id === 'ethereum' && [khalaApi, asset.reservedAddress?.khala],
-    polkadotAvailableBalanceFetcher,
+    polkadotNativeBalanceFetcher,
     {refreshInterval},
   )
 

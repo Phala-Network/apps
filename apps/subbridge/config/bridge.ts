@@ -26,24 +26,6 @@ export interface Bridge {
   }>
 }
 
-const moonriverToBifrostAssets: AssetsConfig = [
-  {
-    assetId: 'zlk',
-    estimatedTime: '< 3 mins',
-    kind: 'evmChainBridge',
-    proxy: 'khala',
-  },
-]
-
-const bifrostToMoonriverAssets: AssetsConfig = [
-  {
-    assetId: 'zlk',
-    estimatedTime: '~ 5 mins',
-    kind: 'polkadotXTokens',
-    proxy: 'khala',
-  },
-]
-
 export const BRIDGES: Readonly<Bridge[]> = [
   {
     fromChain: 'ethereum',
@@ -230,12 +212,18 @@ export const BRIDGES: Readonly<Bridge[]> = [
           {assetId: 'zlk', estimatedTime: '< 3 mins', kind: 'evmChainBridge'},
         ],
       },
-      {id: 'bifrost-kusama', assets: moonriverToBifrostAssets},
+      {
+        id: 'bifrost-kusama',
+        assets: [
+          {
+            assetId: 'zlk',
+            estimatedTime: '< 3 mins',
+            kind: 'evmChainBridge',
+            proxy: 'khala',
+          },
+        ],
+      },
     ],
-  },
-  {
-    fromChain: 'moonbase-alpha',
-    toChains: [{id: 'bifrost-test', assets: moonriverToBifrostAssets}],
   },
   {
     fromChain: 'bifrost-kusama',
@@ -248,12 +236,18 @@ export const BRIDGES: Readonly<Bridge[]> = [
           {assetId: 'zlk', estimatedTime: '< 1 min', kind: 'polkadotXTokens'},
         ],
       },
-      {id: 'moonriver', assets: bifrostToMoonriverAssets},
+      {
+        id: 'moonriver',
+        assets: [
+          {
+            assetId: 'zlk',
+            estimatedTime: '~ 5 mins',
+            kind: 'polkadotXTokens',
+            proxy: 'khala',
+          },
+        ],
+      },
     ],
-  },
-  {
-    fromChain: 'bifrost-test',
-    toChains: [{id: 'moonbase-alpha', assets: bifrostToMoonriverAssets}],
   },
   {
     fromChain: 'parallel',

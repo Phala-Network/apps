@@ -1,5 +1,5 @@
 import {useCurrentPolkadotApi} from '@/hooks/usePolkadotApi'
-import {polkadotAvailableBalanceFetcher} from '@/lib/polkadotFetcher'
+import {polkadotNativeBalanceFetcher} from '@/lib/polkadotFetcher'
 import {polkadotWalletModalOpenAtom} from '@/store/polkadotWalletModal'
 import {polkadotAccountAtom} from '@phala/store'
 import {toCurrency} from '@phala/utils'
@@ -15,7 +15,7 @@ const PolkadotAccount: FC = () => {
   const {data} = useSWR(
     polkadotApi != null &&
       polkadotAccount != null && [polkadotApi, polkadotAccount.address],
-    polkadotAvailableBalanceFetcher,
+    polkadotNativeBalanceFetcher,
     {
       refreshInterval: 12000,
     },

@@ -3,9 +3,8 @@ import {
   ethersContractBalanceFetcher,
 } from '@/lib/ethersFetcher'
 import {
-  assetPalletBalanceFetcher,
-  ormlTokenBalanceFetcher,
-  polkadotAvailableBalanceFetcher,
+  polkadotBalanceFetcher,
+  polkadotNativeBalanceFetcher,
 } from '@/lib/polkadotFetcher'
 import {assetAtom, decimalsAtom, fromChainAtom} from '@/store/bridge'
 import {evmAccountAtom} from '@/store/ethers'
@@ -20,8 +19,8 @@ import {useCurrentPolkadotApi} from './usePolkadotApi'
 const refreshInterval = 12000
 
 type BalanceSource =
-  | 'ormlToken'
-  | 'palletAsset'
+  | 'tokensPallet'
+  | 'assetsPallet'
   | 'polkadotNative'
   | 'evmBalance'
   | 'evmContract'
@@ -39,79 +38,38 @@ export const useBalance = (): Decimal | undefined => {
 
   let balanceSource: BalanceSource = null
 
-  if (
-    (fromChain.id === 'acala' ||
-      fromChain.id === 'karura' ||
-      fromChain.id === 'karura-test' ||
-      fromChain.id === 'bifrost-kusama' ||
-      fromChain.id === 'bifrost-test' ||
-      fromChain.id === 'turing') &&
-    asset.id !== fromChain.nativeAsset &&
-    asset.currencyTokenSymbol !== undefined
-  ) {
-    balanceSource = 'ormlToken'
-  } else if (
-    (fromChain.id === 'phala' ||
-      fromChain.id === 'khala' ||
-      fromChain.id === 'parallel' ||
-      fromChain.id === 'parallel-heiko' ||
-      fromChain.id === 'calamari' ||
-      fromChain.id === 'shiden' ||
-      fromChain.id === 'astar') &&
-    asset.id !== fromChain.nativeAsset &&
-    asset.palletAssetId?.[fromChain.id] !== undefined
-  ) {
-    balanceSource = 'palletAsset'
-  } else if (
-    fromChain.kind === 'substrate' &&
-    fromChain.nativeAsset === asset.id
-  ) {
+  if (fromChain.kind === 'substrate' && fromChain.nativeAsset === asset.id) {
     balanceSource = 'polkadotNative'
-  } else if (fromChain.kind === 'evm' && fromChain.nativeAsset === asset.id) {
-    balanceSource = 'evmBalance'
   } else if (fromChain.kind === 'evm') {
-    balanceSource = 'evmContract'
+    if (fromChain.nativeAsset === asset.id) {
+      balanceSource = 'evmBalance'
+    } else {
+      balanceSource = 'evmContract'
+    }
+  } else {
+    balanceSource = fromChain.balanceSource
   }
 
-  const {data: ormlTokenBalance} = useSWR(
-    balanceSource === 'ormlToken' &&
+  const {data: polkadotBalance} = useSWR(
+    (balanceSource === 'assetsPallet' || balanceSource === 'tokensPallet') &&
       polkadotApi != null &&
       polkadotAccount != null &&
-      (fromChain.id === 'turing' || asset.currencyTokenSymbol != null) && [
+      fromChain.kind === 'substrate' &&
+      asset.polkadotAssetId?.[fromChain.id] != null && [
         polkadotApi,
         polkadotAccount.address,
-        fromChain.id === 'acala' ||
-        fromChain.id === 'karura' ||
-        fromChain.id === 'karura-test' ||
-        fromChain.id === 'bifrost-kusama' ||
-        fromChain.id === 'bifrost-test'
-          ? {Token: asset.currencyTokenSymbol}
-          : fromChain.id === 'turing'
-            ? asset.palletAssetId?.[fromChain.id]
-            : asset.currencyTokenSymbol,
+        asset.polkadotAssetId[fromChain.id],
         decimals,
+        balanceSource,
       ],
-    ormlTokenBalanceFetcher,
+    polkadotBalanceFetcher,
     {refreshInterval},
   )
-  const {data: palletAssetBalance} = useSWR(
-    balanceSource === 'palletAsset' &&
-      polkadotApi != null &&
-      polkadotAccount != null &&
-      asset.palletAssetId?.[fromChain.id] != null && [
-        polkadotApi,
-        polkadotAccount.address,
-        asset.palletAssetId[fromChain.id],
-        decimals,
-      ],
-    assetPalletBalanceFetcher,
-    {refreshInterval},
-  )
-  const {data: polkadotNativeChainBalance} = useSWR(
+  const {data: polkadotNativeBalance} = useSWR(
     balanceSource === 'polkadotNative' &&
       polkadotApi != null &&
       polkadotAccount != null && [polkadotApi, polkadotAccount.address],
-    polkadotAvailableBalanceFetcher,
+    polkadotNativeBalanceFetcher,
     {refreshInterval},
   )
   const {data: evmNativeBalance} = useSWR(
@@ -136,10 +94,9 @@ export const useBalance = (): Decimal | undefined => {
   )
 
   const balance: Decimal | undefined =
-    ormlTokenBalance ??
-    palletAssetBalance ??
+    polkadotBalance ??
+    polkadotNativeBalance ??
     evmNativeBalance ??
-    polkadotNativeChainBalance ??
     ethersContractBalance
 
   return balance
