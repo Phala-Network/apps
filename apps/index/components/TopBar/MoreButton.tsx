@@ -6,10 +6,7 @@ import {Box, Button, ButtonGroup, Menu, MenuItem} from '@mui/material'
 import {useAtom} from 'jotai'
 import {useState, type FC, type MouseEvent} from 'react'
 
-const externalLinks = [
-  ['Discord', 'https://discord.com/invite/phala'],
-  ['Phala App', 'https://app.phala.network'],
-]
+const externalLinks = [['Discord', 'https://discord.com/invite/phala']]
 
 const MoreButton: FC = () => {
   const [colorSchemeSetting, setColorSchemeSetting] = useAtom(
@@ -27,13 +24,7 @@ const MoreButton: FC = () => {
 
   return (
     <>
-      <Button
-        sx={{
-          minWidth: 0,
-          px: 1,
-        }}
-        onClick={handleClick}
-      >
+      <Button sx={{minWidth: 0, px: 1}} onClick={handleClick}>
         <MoreHoriz />
       </Button>
       <Menu

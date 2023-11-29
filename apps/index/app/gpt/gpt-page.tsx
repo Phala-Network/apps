@@ -9,7 +9,6 @@ import {CircularProgress, Container, Stack} from '@mui/material'
 import {useConnectPolkadotWallet} from '@phala/utils'
 import {useAtom} from 'jotai'
 import type {NextPage} from 'next'
-import Head from 'next/head'
 
 const GPTPage: NextPage = () => {
   const [client] = useAtom(clientAtom)
@@ -19,9 +18,6 @@ const GPTPage: NextPage = () => {
   useIndexClientInitialization()
   return (
     <Container sx={{pt: {sm: 9, md: 12}}}>
-      <Head>
-        <title>inDEX GPT</title>
-      </Head>
       {client == null ? (
         <Stack alignItems="center">
           <CircularProgress />

@@ -22,7 +22,7 @@ type BalanceSource =
   | 'tokensPallet'
   | 'assetsPallet'
   | 'polkadotNative'
-  | 'evmBalance'
+  | 'evmNative'
   | 'evmContract'
   | null
 
@@ -42,7 +42,7 @@ export const useBalance = (): Decimal | undefined => {
     balanceSource = 'polkadotNative'
   } else if (fromChain.kind === 'evm') {
     if (fromChain.nativeAsset === asset.id) {
-      balanceSource = 'evmBalance'
+      balanceSource = 'evmNative'
     } else {
       balanceSource = 'evmContract'
     }
@@ -73,22 +73,16 @@ export const useBalance = (): Decimal | undefined => {
     {refreshInterval},
   )
   const {data: evmNativeBalance} = useSWR(
-    balanceSource === 'evmBalance' &&
+    balanceSource === 'evmNative' &&
       ethersWeb3Provider != null &&
-      evmAccount != null &&
-      ethersWeb3Provider != null && [ethersWeb3Provider, evmAccount],
+      evmAccount != null && [ethersWeb3Provider, evmAccount],
     ethersBalanceFetcher,
     {refreshInterval},
   )
   const {data: ethersContractBalance} = useSWR(
     balanceSource === 'evmContract' &&
       ethersAssetContract != null &&
-      evmAccount != null &&
-      ethersAssetContract != null && [
-        ethersAssetContract,
-        evmAccount,
-        decimals,
-      ],
+      evmAccount != null && [ethersAssetContract, evmAccount, decimals],
     ethersContractBalanceFetcher,
     {refreshInterval},
   )

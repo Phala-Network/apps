@@ -1,11 +1,12 @@
 import ThemeRegistry from '@/components/ThemeRegistry/ThemeRegistry'
 import TopBar from '@/components/TopBar'
 import {Box, PaletteMode} from '@mui/material'
+import {Metadata} from 'next'
 import {cookies} from 'next/headers'
 import {FC, ReactNode} from 'react'
 import RootLayout from './RootLayout'
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'inDEX - Cross-Chain Intent Infrastructure',
   description: 'Leading the Intent-Centric Revolution in Cross-Chain Trading',
 }
@@ -21,7 +22,7 @@ const Layout: FC<{children: ReactNode}> = ({children}) => {
       <body>
         <ThemeRegistry colorScheme={colorScheme}>
           <TopBar />
-          <Box component="main" sx={{mt: ['48px', '56px', '64px']}}>
+          <Box component="main" mt={[2, 4, 8, 16]}>
             <RootLayout>{children}</RootLayout>
           </Box>
         </ThemeRegistry>
