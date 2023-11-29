@@ -1,4 +1,4 @@
-import {type AssetId, type CurrencyTokenSymbol} from '@/config/asset'
+import {type AssetId} from '@/config/asset'
 import {type BridgeKind} from '@/config/bridge'
 import {CHAINS, type ChainId} from '@/config/chain'
 import type {ApiPromise} from '@polkadot/api'
@@ -9,7 +9,7 @@ import {transferByPolkadotXTokens} from './transferByPolkadotXTokens'
 const ALICE = '5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY'
 const BLACK_HOLE = '0x0000000000000000000000000000000000000000'
 
-export const polkadotAvailableBalanceFetcher = async ([api, address]: [
+export const polkadotNativeBalanceFetcher = async ([api, address]: [
   ApiPromise,
   string,
 ]): Promise<Decimal> => {
@@ -20,38 +20,35 @@ export const polkadotAvailableBalanceFetcher = async ([api, address]: [
   )
 }
 
-export const assetPalletBalanceFetcher = async ([
+export const polkadotBalanceFetcher = async ([
   polkadotApi,
   address,
-  palletAssetId,
+  assetId,
   decimals,
-]: [ApiPromise, string, number, number]): Promise<Decimal> => {
-  const balance = await polkadotApi.query.assets.account(palletAssetId, address)
-  const balanceJson = balance.toJSON()
-  if (balanceJson == null) {
-    return new Decimal(0)
-  }
-  return new Decimal((balanceJson as {balance: number}).balance).div(
-    Decimal.pow(10, decimals),
-  )
-}
-
-export const ormlTokenBalanceFetcher = async ([
-  polkadotApi,
-  address,
-  token,
-  decimals,
+  balanceSource,
 ]: [
   ApiPromise,
   string,
-  CurrencyTokenSymbol | {Token: CurrencyTokenSymbol} | number,
   number,
+  number,
+  'assetsPallet' | 'tokensPallet',
 ]): Promise<Decimal> => {
-  const balance = await polkadotApi.query.tokens.accounts(address, token)
+  let value
+  if (balanceSource === 'assetsPallet') {
+    const balance = await polkadotApi.query.assets.account(assetId, address)
+    const balanceJson = balance.toJSON() as {balance: number} | null
+    value = balanceJson == null ? 0 : balanceJson.balance
+  } else if (balanceSource === 'tokensPallet') {
+    const balance = (
+      await polkadotApi.query.tokens.accounts(address, assetId)
+    ).toJSON() as {free: number}
 
-  return new Decimal((balance.toJSON() as {free: number}).free).div(
-    Decimal.pow(10, decimals),
-  )
+    value = balance.free
+  } else {
+    throw new Error('Invalid balance source')
+  }
+
+  return new Decimal(value).div(Decimal.pow(10, decimals))
 }
 
 export const xTokensPartialFeeFetcher = async ([

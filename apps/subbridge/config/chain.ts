@@ -28,9 +28,7 @@ export type SubstrateChainId =
   | 'acala'
   | 'karura'
   | 'rhala'
-  | 'karura-test'
   | 'bifrost-kusama'
-  | 'bifrost-test'
   | 'parallel'
   | 'parallel-heiko'
   | 'basilisk'
@@ -75,6 +73,7 @@ export interface SubstrateChain extends BaseChain {
   ss58Format: number
   paraId: number
   relayChain: 'polkadot' | 'kusama'
+  balanceSource: 'tokensPallet' | 'assetsPallet'
 }
 
 export type Chain = EvmChain | SubstrateChain
@@ -98,6 +97,7 @@ export const CHAINS: Readonly<
     explorerURL: 'https://phala.subscan.io/',
     sygmaChainId: 5233,
     relayChain: 'polkadot',
+    balanceSource: 'assetsPallet',
   },
   khala: {
     id: 'khala',
@@ -115,6 +115,7 @@ export const CHAINS: Readonly<
     explorerURL: 'https://khala.subscan.io/',
     sygmaChainId: 5232,
     relayChain: 'kusama',
+    balanceSource: 'assetsPallet',
   },
   acala: {
     id: 'acala',
@@ -134,6 +135,7 @@ export const CHAINS: Readonly<
     nativeAsset: 'aca',
     explorerURL: 'https://acala.subscan.io/',
     relayChain: 'polkadot',
+    balanceSource: 'tokensPallet',
   },
   karura: {
     id: 'karura',
@@ -154,6 +156,7 @@ export const CHAINS: Readonly<
     nativeAsset: 'kar',
     explorerURL: 'https://karura.subscan.io/',
     relayChain: 'kusama',
+    balanceSource: 'tokensPallet',
   },
   ethereum: {
     id: 'ethereum',
@@ -199,18 +202,7 @@ export const CHAINS: Readonly<
     nativeAsset: 'pha',
     sygmaChainId: 5231,
     relayChain: 'kusama',
-  },
-  'karura-test': {
-    id: 'karura-test',
-    name: 'Karura Test',
-    icon: karuraIcon,
-    kind: 'substrate',
-    endpoint: 'wss://bridge-testnet-api.phala.network/karura/ws',
-    ss58Format: 8,
-    isTest: true,
-    paraId: 2000,
-    nativeAsset: 'kar',
-    relayChain: 'kusama',
+    balanceSource: 'assetsPallet',
   },
   moonbeam: {
     id: 'moonbeam',
@@ -273,18 +265,7 @@ export const CHAINS: Readonly<
     nativeAsset: 'bnc',
     explorerURL: 'https://bifrost-kusama.subscan.io',
     relayChain: 'kusama',
-  },
-  'bifrost-test': {
-    id: 'bifrost-test',
-    name: 'Bifrost Test',
-    icon: bifrostIcon,
-    kind: 'substrate',
-    endpoint: 'wss://bridge-testnet-api.phala.network/bifrost/ws',
-    ss58Format: 6,
-    paraId: 2001,
-    nativeAsset: 'bnc',
-    isTest: true,
-    relayChain: 'kusama',
+    balanceSource: 'tokensPallet',
   },
   parallel: {
     id: 'parallel',
@@ -300,6 +281,7 @@ export const CHAINS: Readonly<
     nativeAsset: 'para',
     explorerURL: 'https://parallel.subscan.io/',
     relayChain: 'polkadot',
+    balanceSource: 'assetsPallet',
   },
   'parallel-heiko': {
     id: 'parallel-heiko',
@@ -316,6 +298,7 @@ export const CHAINS: Readonly<
     nativeAsset: 'hko',
     explorerURL: 'https://parallel-heiko.subscan.io/',
     relayChain: 'kusama',
+    balanceSource: 'assetsPallet',
   },
   basilisk: {
     id: 'basilisk',
@@ -332,6 +315,7 @@ export const CHAINS: Readonly<
     nativeAsset: 'bsx',
     explorerURL: 'https://basilisk.subscan.io/',
     relayChain: 'kusama',
+    balanceSource: 'tokensPallet',
   },
   turing: {
     id: 'turing',
@@ -348,6 +332,7 @@ export const CHAINS: Readonly<
     nativeAsset: 'tur',
     explorerURL: 'https://turing.subscan.io/',
     relayChain: 'kusama',
+    balanceSource: 'tokensPallet',
   },
   calamari: {
     id: 'calamari',
@@ -363,6 +348,7 @@ export const CHAINS: Readonly<
     nativeAsset: 'kma',
     explorerURL: 'https://calamari.subscan.io/',
     relayChain: 'kusama',
+    balanceSource: 'assetsPallet',
   },
   shiden: {
     id: 'shiden',
@@ -380,6 +366,7 @@ export const CHAINS: Readonly<
     nativeAsset: 'sdn',
     explorerURL: 'https://shiden.subscan.io/',
     relayChain: 'kusama',
+    balanceSource: 'assetsPallet',
   },
   astar: {
     id: 'astar',
@@ -398,5 +385,6 @@ export const CHAINS: Readonly<
     nativeAsset: 'astr',
     explorerURL: 'https://astar.subscan.io/',
     relayChain: 'polkadot',
+    balanceSource: 'assetsPallet',
   },
 }
