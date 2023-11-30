@@ -1,6 +1,7 @@
 'use client'
 import GPT from '@/components/GPT'
 import PolkadotWalletDialog from '@/components/PolkadotWalletDialog'
+import TopBar from '@/components/TopBar'
 import {useEthereumProviderInitialization} from '@/hooks/useEthereumProviderInitialization'
 import {useIndexClientInitialization} from '@/hooks/useIndexClientInitialization'
 import {useValidation} from '@/hooks/useValidation'
@@ -17,17 +18,20 @@ const GPTPage: NextPage = () => {
   useValidation()
   useIndexClientInitialization()
   return (
-    <Container sx={{pt: {sm: 9, md: 12}}}>
-      {client == null ? (
-        <Stack alignItems="center">
-          <CircularProgress />
-        </Stack>
-      ) : (
-        <GPT />
-      )}
+    <>
+      <TopBar />
+      <Container sx={{pt: {sm: 9, md: 12}}}>
+        {client == null ? (
+          <Stack alignItems="center">
+            <CircularProgress />
+          </Stack>
+        ) : (
+          <GPT />
+        )}
 
-      <PolkadotWalletDialog />
-    </Container>
+        <PolkadotWalletDialog />
+      </Container>
+    </>
   )
 }
 

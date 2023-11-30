@@ -1,12 +1,12 @@
 'use client'
-import {colorSchemeSettingAtom} from '@/store/common'
+// import {colorSchemeSettingAtom} from '@/store/common'
 import {
   CssBaseline,
   ThemeProvider,
   useMediaQuery,
   type PaletteMode,
 } from '@mui/material'
-import {useAtom} from 'jotai'
+// import {useAtom} from 'jotai'
 import Cookies from 'js-cookie'
 import {useEffect, useMemo, useState, type FC, type ReactNode} from 'react'
 import NextAppDirEmotionCacheProvider from './EmotionCache'
@@ -18,7 +18,8 @@ const ThemeRegistry: FC<{
 }> = ({children, colorScheme}) => {
   const [mode, setMode] = useState(colorScheme)
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)')
-  const [colorSchemeSetting] = useAtom(colorSchemeSettingAtom)
+  // const [colorSchemeSetting] = useAtom(colorSchemeSettingAtom)
+  const colorSchemeSetting = 'system'
 
   useEffect(() => {
     if (colorSchemeSetting != null) {

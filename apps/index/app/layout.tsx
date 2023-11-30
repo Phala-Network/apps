@@ -1,6 +1,5 @@
 import ThemeRegistry from '@/components/ThemeRegistry/ThemeRegistry'
-import TopBar from '@/components/TopBar'
-import {Box, PaletteMode} from '@mui/material'
+import {PaletteMode} from '@mui/material'
 import {Metadata} from 'next'
 import {cookies} from 'next/headers'
 import {FC, ReactNode} from 'react'
@@ -21,10 +20,7 @@ const Layout: FC<{children: ReactNode}> = ({children}) => {
     <html lang="en">
       <body>
         <ThemeRegistry colorScheme={colorScheme}>
-          <TopBar />
-          <Box component="main" mt={[2, 4, 8, 16]}>
-            <RootLayout>{children}</RootLayout>
-          </Box>
+          <RootLayout>{children}</RootLayout>
         </ThemeRegistry>
       </body>
     </html>
