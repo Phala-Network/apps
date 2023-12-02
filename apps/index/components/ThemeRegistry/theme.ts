@@ -3,14 +3,20 @@ import {createTheme, type PaletteMode, type Theme} from '@mui/material'
 
 export const createCustomTheme = (mode: PaletteMode): Theme =>
   createTheme({
-    palette: {mode, primary: {main: mode === 'dark' ? '#fff' : '#000'}},
-    breakpoints: {values: {xs: 0, sm: 576, md: 768, lg: 992, xl: 1200}},
+    palette: {
+      mode,
+      primary: {
+        main: mode === 'dark' ? '#f1f1f1' : '#0e0e0e',
+      },
+      background: {
+        default: mode === 'dark' ? '#17191b' : '#f7f9fb',
+        paper: mode === 'dark' ? '#17191b' : '#fefefe',
+      },
+    },
     shape: {borderRadius: 12},
     typography: {
-      h1: {fontWeight: 700},
-      h2: {fontWeight: 700},
-      h3: {fontWeight: 700},
       fontFamily: [
+        'Poppins',
         '-apple-system',
         'BlinkMacSystemFont',
         '"Segoe UI"',

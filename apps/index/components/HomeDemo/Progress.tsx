@@ -1,82 +1,40 @@
 'use client'
 /* eslint-disable @typescript-eslint/naming-convention */
-import {assets} from '@/config/common'
-import useCurrentTaskStatus from '@/hooks/useCurrentTaskStatus'
-import useSimulateResults from '@/hooks/useSimulateResults'
-import {currentTaskAtom, fromChainAtom, solutionAtom} from '@/store/core'
-import OpenInNewIcon from '@mui/icons-material/OpenInNew'
+import {currentTaskAtom, fromChainAtom} from '@/store/core'
 import {
   Chip,
   CircularProgress,
   Link,
   Paper,
-  Skeleton,
   Stack,
   Step,
   StepContent,
   StepLabel,
   Stepper,
   Typography,
-  useTheme,
+  alpha,
   type PaperProps,
 } from '@mui/material'
-import Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
 import {useMemo, type FC} from 'react'
-
-const getUrl = (chain: string, hash: string): string => {
-  const map: Record<string, string> = {
-    Moonbeam: 'https://moonbeam.moonscan.io',
-    Phala: 'https://phala.subscan.io',
-    Ethereum: 'https://etherscan.io',
-    Goerli: 'https://goerli.etherscan.io',
-    Astar: 'https://astar.subscan.io',
-    AstarEvm: 'https://astar.subscan.io',
-  }
-
-  return `${map[chain]}/tx/${hash}`
-}
-
-const ExplorerLink: FC<{chain?: string; hash?: string}> = ({chain, hash}) => {
-  if (hash == null || chain == null) return null
-  return (
-    <Link
-      target="_blank"
-      href={getUrl(chain, hash)}
-      fontSize="caption.fontSize"
-    >
-      <Stack direction="row" alignItems="center" gap={0.5}>
-        <span>View</span>
-        <OpenInNewIcon fontSize="inherit" />
-      </Stack>
-    </Link>
-  )
-}
+import {FORM_URL} from '../../constants'
 
 const activeProps = {
   StepIconComponent: () => <CircularProgress size={24} />,
 }
 
-const Progress: FC<PaperProps> = ({sx, ...props}) => {
-  const theme = useTheme()
-  const [solution] = useAtom(solutionAtom)
+const Progress: FC<PaperProps & {solution?: any}> = ({
+  sx,
+  solution,
+  ...props
+}) => {
   const [currentTask] = useAtom(currentTaskAtom)
-  const {data: taskStatus} = useCurrentTaskStatus()
   const [fromChain] = useAtom(fromChainAtom)
-  const {data: simulateResults} = useSimulateResults(solution)
+  // const {data: simulateResults} = useSimulateResults()
 
   const stepOffset = fromChain?.chainType === 'Sub' ? 2 : 1
 
-  const activeStep = useMemo(() => {
-    let value = 0
-    if (taskStatus != null) {
-      value = taskStatus.executeIndex + stepOffset
-      if ('completed' in taskStatus.status) {
-        value += 2
-      }
-    }
-    return value
-  }, [taskStatus, stepOffset])
+  const activeStep = 0
 
   const steps = useMemo(() => {
     if (solution == null) return null
@@ -86,55 +44,46 @@ const Progress: FC<PaperProps> = ({sx, ...props}) => {
       fee?: string
     }> = []
     for (let i = 0; i < solution.length; i++) {
-      const {exe, sourceChain, destChain, spendAsset, receiveAsset} =
-        solution[i]
+      const {exe, sourceChain, destChain, from, to} = solution[i]
       const prevStep = result.at(-1)
       const isSwap = sourceChain === destChain
 
-      const getSymbol = (chain: string, location: string): string =>
-        assets.find((x) => x.chainId === chain && x.location === location)
-          ?.symbol ?? ''
-
-      const spendSymbol = getSymbol(sourceChain, spendAsset)
-      const receiveSymbol = getSymbol(destChain, receiveAsset)
       const label = isSwap
-        ? `${spendSymbol} -> ${receiveSymbol} on ${exe.replaceAll('_', ' ')}`
-        : `${spendSymbol} -> ${destChain} ${receiveSymbol}`
+        ? `${from} -> ${to} on ${exe.replaceAll('_', ' ')}`
+        : `${from} -> ${to}`
 
       const step = {kind: isSwap ? 'swap' : 'bridge', label}
       if (prevStep != null && prevStep.sourceChain === sourceChain) {
         prevStep.batch.push(step)
       } else {
-        let fee
-        const txFeeInUsd = simulateResults?.[result.length]?.txFeeInUsd
-        if (txFeeInUsd != null) {
-          fee = new Decimal(txFeeInUsd).div(1e6).toDP(2).toString()
-        }
         result.push({
           sourceChain,
           batch: [step],
-          fee,
         })
       }
     }
     return result
-  }, [solution, simulateResults])
+  }, [solution])
 
   return (
     <Paper
-      sx={[
-        {
-          p: 2,
-          background: theme.palette.action.hover,
-          border: 'none',
-        },
-        ...(Array.isArray(sx) ? sx : [sx]),
-      ]}
+      sx={(theme) => ({
+        p: 2,
+        background: alpha(theme.palette.action.hover, 0.02),
+        border: 'none',
+        width: 1,
+        overflow: 'hidden',
+      })}
       {...props}
     >
       {steps == null ? (
         <Typography textAlign="center" variant="subtitle2">
-          Solution is invalid
+          Unfortunately, we are not able to process this route yet, <br />
+          but you can{' '}
+          <Link href={FORM_URL} target="_blank">
+            help us improve
+          </Link>
+          .
         </Typography>
       ) : (
         <Stepper activeStep={activeStep} orientation="vertical">
@@ -149,28 +98,17 @@ const Progress: FC<PaperProps> = ({sx, ...props}) => {
                   sx={{textTransform: 'capitalize', width: 90}}
                   color={activeStep === 0 ? 'primary' : 'default'}
                 />
-                <ExplorerLink
-                  chain={currentTask?.fromChainId}
-                  hash={currentTask?.hash}
-                />
               </Stack>
             </StepLabel>
           </Step>
           {fromChain?.chainType === 'Sub' && (
             <Step>
-              <StepLabel
-                {...(activeStep === 1 && currentTask != null && activeProps)}
-              >
+              <StepLabel>
                 <Stack spacing={1} direction="row" alignItems="baseline">
                   <Chip
                     label="Claim"
                     size="small"
                     sx={{textTransform: 'capitalize', width: 90}}
-                    color={activeStep === 1 ? 'primary' : 'default'}
-                  />
-                  <ExplorerLink
-                    chain={fromChain.name}
-                    hash={taskStatus?.claimTx}
                   />
                 </Stack>
               </StepLabel>
@@ -188,11 +126,6 @@ const Progress: FC<PaperProps> = ({sx, ...props}) => {
                       sx={{textTransform: 'capitalize', width: 90}}
                       color={isActive ? 'primary' : 'default'}
                     />
-
-                    <ExplorerLink
-                      chain={step.sourceChain}
-                      hash={taskStatus?.executeTxs[index]}
-                    />
                   </Stack>
                 </StepLabel>
                 <StepContent>
@@ -202,6 +135,7 @@ const Progress: FC<PaperProps> = ({sx, ...props}) => {
                         width={55}
                         variant="subtitle2"
                         textTransform="capitalize"
+                        flex="none"
                       >
                         {kind}
                       </Typography>
@@ -210,19 +144,6 @@ const Progress: FC<PaperProps> = ({sx, ...props}) => {
                       </Typography>
                     </Stack>
                   ))}
-                  <Typography
-                    variant="caption"
-                    fontWeight="500"
-                    component="div"
-                    mt={1}
-                  >
-                    {'Fee: '}
-                    {step.fee != null ? (
-                      `${step.fee} USD`
-                    ) : (
-                      <Skeleton sx={{display: 'inline-block'}} width={64} />
-                    )}
-                  </Typography>
                 </StepContent>
               </Step>
             )

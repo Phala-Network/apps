@@ -1,5 +1,13 @@
-import {css, Global, type SerializedStyles} from '@emotion/react'
-import {useTheme, type Theme} from '@mui/material'
+import {type SerializedStyles} from '@emotion/react'
+import {
+  GlobalStyles,
+  alpha,
+  css,
+  darken,
+  lighten,
+  useTheme,
+  type Theme,
+} from '@mui/material'
 import {useEffect, useState, type FC} from 'react'
 
 const talismanConnectStyles = (theme: Theme): SerializedStyles => css`
@@ -19,6 +27,7 @@ const talismanConnectStyles = (theme: Theme): SerializedStyles => css`
 `
 
 const commonStyles = css`
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
   input[type='number']::-webkit-inner-spin-button,
   input[type='number']::-webkit-outer-spin-button {
     -webkit-appearance: none;
@@ -26,17 +35,66 @@ const commonStyles = css`
   }
 `
 
-const background = (theme: Theme): SerializedStyles => css`
-  body {
-    ${theme.breakpoints.down('md')} {
-      background-size: 200% auto;
-    }
+const background = (theme: Theme): SerializedStyles => {
+  const defaultBackground = theme.palette.background.default
+  const line = alpha(theme.palette.action.disabled, 0.15)
+  const verticalGap = 80
+  const horizontalGap = 120
+  return css`
+    body {
+      overflow-x: hidden;
+      background: linear-gradient(
+          to bottom,
+          ${alpha(defaultBackground, 1)},
+          ${alpha(defaultBackground, 1)} 300px,
+          ${alpha(defaultBackground, 0)}
+        ),
+        repeating-linear-gradient(
+          to top,
+          transparent,
+          transparent ${verticalGap - 1}px,
+          ${line} ${verticalGap - 1}px,
+          ${line} ${verticalGap}px
+        ),
+        repeating-linear-gradient(
+          to left,
+          transparent,
+          transparent ${horizontalGap - 1}px,
+          ${line} ${horizontalGap - 1}px,
+          ${line} ${horizontalGap}px
+        ),
+        ${defaultBackground};
 
-    ${theme.breakpoints.up('xl')} {
-      background-position: bottom -100px center;
+      ${theme.breakpoints.up('md')} {
+        overflow: hidden;
+        height: 100vh;
+        background: linear-gradient(
+            to right,
+            ${alpha(defaultBackground, 1)},
+            ${alpha(defaultBackground, 1)} 30%,
+            ${alpha(defaultBackground, 0)}
+          ),
+          repeating-linear-gradient(
+            to bottom,
+            transparent,
+            transparent ${verticalGap - 1}px,
+            ${line} ${verticalGap - 1}px,
+            ${line} ${verticalGap}px
+          ),
+          repeating-linear-gradient(
+            to left,
+            transparent,
+            transparent ${horizontalGap - 1}px,
+            ${line} ${horizontalGap - 1}px,
+            ${line} ${horizontalGap}px
+          ),
+          ${theme.palette.mode === 'dark'
+            ? lighten(defaultBackground, 0.08)
+            : darken(defaultBackground, 0.08)};
+      }
     }
-  }
-`
+  `
+}
 
 const snackbarStyles = css`
   .SnackbarContent-root.SnackbarItem-contentRoot {
@@ -44,7 +102,7 @@ const snackbarStyles = css`
   }
 `
 
-const GlobalStyles: FC = () => {
+const CustomGlobalStyles: FC = () => {
   const theme = useTheme()
   const [mounted, setMounted] = useState(false)
 
@@ -53,10 +111,10 @@ const GlobalStyles: FC = () => {
   }, [])
 
   return (
-    <Global
+    <GlobalStyles
       styles={[
-        talismanConnectStyles(theme),
         commonStyles,
+        talismanConnectStyles(theme),
         snackbarStyles,
         mounted && background(theme),
       ]}
@@ -64,4 +122,4 @@ const GlobalStyles: FC = () => {
   )
 }
 
-export default GlobalStyles
+export default CustomGlobalStyles

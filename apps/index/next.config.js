@@ -7,7 +7,7 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   env: {
-    GA_MEASUREMENT_ID: process.env.GA_MEASUREMENT_ID,
+    GTM_ID: process.env.GTM_ID,
   },
   transpilePackages: ['jotai-devtools'],
   // images: {disableStaticImages: true},
