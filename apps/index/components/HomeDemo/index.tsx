@@ -144,7 +144,7 @@ const HomeDemo: FC = () => {
               justifyContent="center"
               mt={2}
             >
-              <Tooltip title="Coming soon">
+              <Tooltip title="Currently in closed beta, will be available soon">
                 <span>
                   <Button disabled startIcon={<PlayArrow />}>
                     Execute
