@@ -1,4 +1,5 @@
 'use client'
+import Footer from '@/components/Footer'
 import HomeDemo from '@/components/HomeDemo'
 import {
   Box,
@@ -10,7 +11,7 @@ import {
   keyframes,
 } from '@mui/material'
 import {NextPage} from 'next'
-import {FORM_URL} from '../constants'
+import {FORM_URL, LITEPAPER_URL} from '../constants'
 import HomeBar from './home-bar'
 
 const textOpen = keyframes`
@@ -24,21 +25,31 @@ const textOpen = keyframes`
 
 const Page: NextPage = () => {
   return (
-    <>
+    <Stack height={[, , 1]}>
       <HomeBar />
-      <Container maxWidth="xl" sx={{mt: 3}}>
+      <Container
+        maxWidth="xl"
+        sx={{
+          mt: 3,
+          mb: [3, 3, 8],
+          flex: [, , 1],
+          maxHeight: [, , 900],
+          minHeight: 700,
+        }}
+      >
         <Stack
           component="main"
           direction={['column', 'column', 'row']}
-          justifyContent={[null, null, 'space-between']}
+          justifyContent={[, , 'space-between']}
+          height={[, , 1]}
         >
           <Stack
             alignItems="flex-start"
-            maxWidth={380}
+            maxWidth={420}
             ml={[1, 1, 1, 8]}
-            mb={12}
+            mb={[12, 12, 0]}
           >
-            <Typography variant="h3" component="h1" mt={[4, 4, 8, 12]}>
+            <Typography variant="h3" component="h1" mt={[4, 4, 12, 18]}>
               Cross-Chain
               <Box
                 sx={(theme) => ({
@@ -57,11 +68,10 @@ const Page: NextPage = () => {
               </Box>
               Infrastructure
             </Typography>
-            <Typography variant="body1" maxWidth={600} mt={5}>
-              inDEX serves as an intent-centric infrastructure in the blockchain
-              ecosystem, strictly dedicated to seeking out the best trading
-              prices across liquidity pools on multiple chains, ensuring MEV
-              protection, and preserving user privacy.
+            <Typography variant="body1" mt={5}>
+              Seeking out the best trading prices across liquidity pools on
+              multiple chains, ensuring MEV protection, and preserving user
+              privacy.
             </Typography>
             <Stack direction="row" spacing={3} mt={8}>
               <Button
@@ -72,48 +82,42 @@ const Page: NextPage = () => {
               >
                 Join Waitlist
               </Button>
-              <Button size="large" href="" target="_blank">
-                Read the Docs
+              <Button size="large" href={LITEPAPER_URL} target="_blank">
+                Read the Litepaper
               </Button>
             </Stack>
+            <Footer mt={[12, 12, 'auto']} />
           </Stack>
           <Box
             maxWidth={750}
-            maxHeight={800}
-            minHeight={600}
             ml={[0, 0, 8, 8]}
             mr={[0, 0, 0, 4]}
-            mb={[8, 8, 0, 0]}
             flex={['none', 'none', 1]}
-            height={[600, 600, '80vh']}
-            borderRadius={2}
-            p={3}
-            position="relative"
+            height={[600, 600, 1]}
+            borderRadius={3}
+            p={[0, 0, 2]}
             sx={(theme) => ({
-              background: theme.palette.background.paper,
+              backdropFilter: 'blur(2px)',
+              background: alpha(
+                theme.palette.background.paper,
+                theme.palette.mode === 'dark' ? 0.5 : 0.3,
+              ),
             })}
           >
-            <HomeDemo />
             <Box
+              height={1}
+              p={[2, 2, 3]}
+              borderRadius={2}
               sx={(theme) => ({
-                position: 'absolute',
-                top: -16,
-                left: -16,
-                bottom: -16,
-                right: -16,
-                backdropFilter: 'blur(2px)',
-                background: alpha(
-                  theme.palette.background.paper,
-                  theme.palette.mode === 'dark' ? 0.5 : 0.3,
-                ),
-                zIndex: -1,
-                borderRadius: 3,
+                background: theme.palette.background.paper,
               })}
-            ></Box>
+            >
+              <HomeDemo />
+            </Box>
           </Box>
         </Stack>
       </Container>
-    </>
+    </Stack>
   )
 }
 

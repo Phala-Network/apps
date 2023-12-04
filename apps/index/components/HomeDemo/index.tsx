@@ -1,20 +1,23 @@
 'use client'
-import {ArrowUpward, Replay} from '@mui/icons-material'
+import {ArrowUpward, PlayArrow, Replay} from '@mui/icons-material'
 import {LoadingButton} from '@mui/lab'
 import {
   Button,
   Collapse,
+  Link,
   List,
   ListItemButton,
   Paper,
   Stack,
   TextField,
+  Tooltip,
   Typography,
   alpha,
 } from '@mui/material'
 import {useEffect, useState, type FC} from 'react'
 import useSWRMutation from 'swr/mutation'
 import wretch from 'wretch'
+import {FORM_URL} from '../../constants'
 import Confirmation from './Confirmation'
 import Progress from './Progress'
 
@@ -32,13 +35,10 @@ const api = wretch('https://index-gpt-server.vercel.app', {mode: 'cors'})
   .resolve(async (r) => await r.json())
 
 const tips: string[] = [
-  'Ethereum/ETH -> Solana/SOL',
-  // 'I want to swap 10,000 USDT into UNI, DYDX, CRV tokens in one transaction',
-  // 'I want to find the best yield options for my Stable Coins',
-  // 'How can I maximize earnings by staking my UNI tokens?',
-  'Send 100 PHA from Khala to Phala',
-  'Swap 0.1 ETH on Ethereum to GLMR and send it to AstarEvm',
-  'Send 10 GLMR from Moonbeam to AstarEvm',
+  'Swap 10 ETH from Ethereum to SOL on Solana',
+  'Bridge 1 MATIC from Polygon back to Ethereum',
+  'Swap 1 ETH from Ethereum to DOT on Polkadot',
+  'Send PHA from Khala to Phala',
 ]
 
 async function apiFetcher(
@@ -89,7 +89,7 @@ const HomeDemo: FC = () => {
         <Collapse in={data == null && !isMutating}>
           <Stack>
             <Typography variant="h5" sx={{mb: 1, ml: 1.5}}>
-              Start with a preset
+              Start with a recommendation
             </Typography>
             <List>
               {tips.map((text, index) => (
@@ -115,37 +115,58 @@ const HomeDemo: FC = () => {
         </Collapse>
         <Collapse sx={{width: '100%'}} in={data != null}>
           <Stack alignItems="flex-start" spacing={3}>
-            <Paper sx={{p: 2, width: 1}}>
-              <Confirmation
-                fromChain={fromChain}
-                fromAmount={fromAmount}
-                fromAsset={fromAsset}
-                toChain={toChain}
-                toAsset={toAsset}
-                // destinationAccount={destinationAccount}
-                sx={{w: 1}}
-              ></Confirmation>
-            </Paper>
+            {data?.call === 'cross_chain_swap' && (
+              <Paper sx={{p: 2, width: 1}}>
+                <Confirmation
+                  fromChain={fromChain}
+                  fromAmount={fromAmount}
+                  fromAsset={fromAsset}
+                  toChain={toChain}
+                  toAsset={toAsset}
+                  // destinationAccount={destinationAccount}
+                  sx={{w: 1}}
+                ></Confirmation>
+              </Paper>
+            )}
             <Progress solution={data?.solution} />
           </Stack>
 
-          <Stack alignItems="center">
-            <Button
-              sx={{mt: 4, mx: 'auto'}}
-              onClick={() => {
-                setMessage('')
-                reset()
-              }}
-              startIcon={<Replay />}
+          <Stack alignItems="center" mt={2}>
+            <Link href={FORM_URL}>
+              <Typography variant="caption">
+                Share your thoughts on inDEX by taking a quick survey.
+              </Typography>
+            </Link>
+            <Stack
+              alignItems="center"
+              direction="row"
+              spacing={2}
+              justifyContent="center"
+              mt={2}
             >
-              Try another intent
-            </Button>
+              <Tooltip title="Coming soon">
+                <span>
+                  <Button disabled startIcon={<PlayArrow />}>
+                    Execute
+                  </Button>
+                </span>
+              </Tooltip>
+              <Button
+                onClick={() => {
+                  setMessage('')
+                  reset()
+                }}
+                startIcon={<Replay />}
+              >
+                Try another
+              </Button>
+            </Stack>
           </Stack>
         </Collapse>
       </Stack>
 
       <TextField
-        sx={{mt: 4}}
+        sx={{mt: 3}}
         onKeyDown={(e) => {
           if (e.key === 'Enter' && !e.shiftKey) {
             e.preventDefault()

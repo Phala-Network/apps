@@ -2,9 +2,10 @@
 import Logo from '@/assets/index_logo.svg'
 import {AppBar, Box, Button, Container, Stack, Toolbar} from '@mui/material'
 import {type FC} from 'react'
+import {LITEPAPER_URL} from '../constants'
 
 const pages: Array<[string, string]> = [
-  ['Docs', ''],
+  ['Litepaper', LITEPAPER_URL],
   ['Community', 'https://t.me/inDEXbyPhala/1'],
   ['Github', 'https://github.com/Phala-Network/index-contract'],
 ]

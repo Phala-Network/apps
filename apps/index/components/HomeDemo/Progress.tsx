@@ -78,10 +78,9 @@ const Progress: FC<PaperProps & {solution?: any}> = ({
     >
       {steps == null ? (
         <Typography textAlign="center" variant="subtitle2">
-          Unfortunately, we are not able to process this route yet, <br />
-          but you can{' '}
+          Oops, It’s currently not been supported yet,{' '}
           <Link href={FORM_URL} target="_blank">
-            help us improve
+            tell us what you want
           </Link>
           .
         </Typography>
@@ -95,7 +94,7 @@ const Progress: FC<PaperProps & {solution?: any}> = ({
                 <Chip
                   label="Initialize"
                   size="small"
-                  sx={{textTransform: 'capitalize', width: 90}}
+                  sx={{textTransform: 'capitalize', width: 120}}
                   color={activeStep === 0 ? 'primary' : 'default'}
                 />
               </Stack>
@@ -108,7 +107,7 @@ const Progress: FC<PaperProps & {solution?: any}> = ({
                   <Chip
                     label="Claim"
                     size="small"
-                    sx={{textTransform: 'capitalize', width: 90}}
+                    sx={{textTransform: 'capitalize', width: 120}}
                   />
                 </Stack>
               </StepLabel>
@@ -123,23 +122,30 @@ const Progress: FC<PaperProps & {solution?: any}> = ({
                     <Chip
                       label={step.sourceChain}
                       size="small"
-                      sx={{textTransform: 'capitalize', width: 90}}
+                      sx={{textTransform: 'capitalize', width: 120, ml: 2}}
                       color={isActive ? 'primary' : 'default'}
                     />
                   </Stack>
                 </StepLabel>
                 <StepContent>
                   {step.batch.map(({kind, label}) => (
-                    <Stack direction="row" alignItems="baseline" key={label}>
+                    <Stack
+                      direction="row"
+                      alignItems="baseline"
+                      key={label}
+                      width={1}
+                    >
                       <Typography
+                        component="div"
                         width={55}
-                        variant="subtitle2"
+                        variant="caption"
                         textTransform="capitalize"
                         flex="none"
+                        fontWeight="500"
                       >
                         {kind}
                       </Typography>
-                      <Typography variant="caption" whiteSpace="pre">
+                      <Typography component="div" variant="caption" flex={1}>
                         {label}
                       </Typography>
                     </Stack>
@@ -153,7 +159,7 @@ const Progress: FC<PaperProps & {solution?: any}> = ({
               <Chip
                 label="Completed"
                 size="small"
-                sx={{textTransform: 'capitalize', width: 90}}
+                sx={{textTransform: 'capitalize', width: 120}}
                 color={activeStep > steps.length ? 'primary' : 'default'}
               />
             </StepLabel>

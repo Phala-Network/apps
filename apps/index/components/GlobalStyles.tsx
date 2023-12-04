@@ -5,10 +5,9 @@ import {
   css,
   darken,
   lighten,
-  useTheme,
   type Theme,
 } from '@mui/material'
-import {useEffect, useState, type FC} from 'react'
+import {type FC} from 'react'
 
 const talismanConnectStyles = (theme: Theme): SerializedStyles => css`
   :root {
@@ -103,20 +102,13 @@ const snackbarStyles = css`
 `
 
 const CustomGlobalStyles: FC = () => {
-  const theme = useTheme()
-  const [mounted, setMounted] = useState(false)
-
-  useEffect(() => {
-    setMounted(true)
-  }, [])
-
   return (
     <GlobalStyles
-      styles={[
+      styles={(theme) => [
         commonStyles,
         talismanConnectStyles(theme),
         snackbarStyles,
-        mounted && background(theme),
+        background(theme),
       ]}
     />
   )
