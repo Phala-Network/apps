@@ -1,6 +1,6 @@
 'use client'
 /* eslint-disable @typescript-eslint/naming-convention */
-import {currentTaskAtom, fromChainAtom} from '@/store/core'
+import {currentTaskAtom, fromChainAtom, typeformAtom} from '@/store/core'
 import {
   Chip,
   CircularProgress,
@@ -17,7 +17,6 @@ import {
 } from '@mui/material'
 import {useAtom} from 'jotai'
 import {useMemo, type FC} from 'react'
-import {FORM_URL} from '../../constants'
 
 const activeProps = {
   StepIconComponent: () => <CircularProgress size={24} />,
@@ -28,6 +27,7 @@ const Progress: FC<PaperProps & {solution?: any}> = ({
   solution,
   ...props
 }) => {
+  const [typeform] = useAtom(typeformAtom)
   const [currentTask] = useAtom(currentTaskAtom)
   const [fromChain] = useAtom(fromChainAtom)
   // const {data: simulateResults} = useSimulateResults()
@@ -79,7 +79,13 @@ const Progress: FC<PaperProps & {solution?: any}> = ({
       {steps == null ? (
         <Typography textAlign="center" variant="subtitle2">
           Oops, It’s currently not been supported yet,{' '}
-          <Link href={FORM_URL} target="_blank">
+          <Link
+            component="span"
+            sx={{cursor: 'pointer'}}
+            onClick={() => {
+              typeform.survey.open()
+            }}
+          >
             tell us what you want
           </Link>
           .

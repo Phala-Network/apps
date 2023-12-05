@@ -2,8 +2,10 @@ import {assetMap, assets, type Asset} from '@/config/common'
 import {ERROR_MESSAGES, type Error} from '@/config/error'
 import {type Client, type EvmChain, type SubstrateChain} from '@phala/index'
 import {polkadotAccountAtom} from '@phala/store'
+import {createPopup} from '@typeform/embed'
 import {atom} from 'jotai'
 import {atomWithReset, atomWithStorage} from 'jotai/utils'
+import {SURVEY_FORM_ID, WAITLIST_FORM_ID} from '../constants'
 import {evmAccountAtom} from './ethers'
 
 const getAssets = (chainId: string): Asset[] => {
@@ -111,4 +113,9 @@ export const errorMessageAtom = atom<string | null>((get) => {
   const error = get(errorAtom)
   if (error === null) return null
   return ERROR_MESSAGES[error]
+})
+
+export const typeformAtom = atom({
+  waitlist: createPopup(WAITLIST_FORM_ID, {size: 70}),
+  survey: createPopup(SURVEY_FORM_ID, {size: 70}),
 })

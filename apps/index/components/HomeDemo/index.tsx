@@ -1,4 +1,5 @@
 'use client'
+import {typeformAtom} from '@/store/core'
 import {ArrowUpward, PlayArrow, Replay} from '@mui/icons-material'
 import {LoadingButton} from '@mui/lab'
 import {
@@ -14,10 +15,10 @@ import {
   Typography,
   alpha,
 } from '@mui/material'
+import {useAtom} from 'jotai'
 import {useEffect, useState, type FC} from 'react'
 import useSWRMutation from 'swr/mutation'
 import wretch from 'wretch'
-import {FORM_URL} from '../../constants'
 import Confirmation from './Confirmation'
 import Progress from './Progress'
 
@@ -61,6 +62,7 @@ async function apiFetcher(
 }
 
 const HomeDemo: FC = () => {
+  const [typefrom] = useAtom(typeformAtom)
   const [fromChain, setFromChain] = useState<string>()
   const [toChain, setToChain] = useState<string>()
   const [fromAmount, setFromAmount] = useState<string>()
@@ -132,7 +134,13 @@ const HomeDemo: FC = () => {
           </Stack>
 
           <Stack alignItems="center" mt={2}>
-            <Link href={FORM_URL}>
+            <Link
+              component="span"
+              sx={{cursor: 'pointer'}}
+              onClick={() => {
+                typefrom.survey.open()
+              }}
+            >
               <Typography variant="caption">
                 Share your thoughts on inDEX by taking a quick survey.
               </Typography>

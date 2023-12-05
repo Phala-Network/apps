@@ -7,6 +7,7 @@ import {
   lighten,
   type Theme,
 } from '@mui/material'
+import '@typeform/embed/build/css/popup.css'
 import {type FC} from 'react'
 
 const talismanConnectStyles = (theme: Theme): SerializedStyles => css`

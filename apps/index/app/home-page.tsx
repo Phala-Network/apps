@@ -1,6 +1,7 @@
 'use client'
 import Footer from '@/components/Footer'
 import HomeDemo from '@/components/HomeDemo'
+import {typeformAtom} from '@/store/core'
 import {
   Box,
   Button,
@@ -10,8 +11,9 @@ import {
   alpha,
   keyframes,
 } from '@mui/material'
+import {useAtom} from 'jotai'
 import {NextPage} from 'next'
-import {FORM_URL, LITEPAPER_URL} from '../constants'
+import {LITEPAPER_URL} from '../constants'
 import HomeBar from './home-bar'
 
 const textOpen = keyframes`
@@ -24,6 +26,7 @@ const textOpen = keyframes`
 `
 
 const Page: NextPage = () => {
+  const [typeform] = useAtom(typeformAtom)
   return (
     <Stack height={[, , 1]}>
       <HomeBar />
@@ -75,10 +78,11 @@ const Page: NextPage = () => {
             </Typography>
             <Stack direction="row" spacing={3} mt={8}>
               <Button
+                onClick={() => {
+                  typeform.waitlist.open()
+                }}
                 variant="contained"
                 size="large"
-                href={FORM_URL}
-                target="_blank"
               >
                 Join Waitlist
               </Button>
