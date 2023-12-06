@@ -90,14 +90,14 @@ const Page: NextPage = () => {
                 Read the Litepaper
               </Button>
             </Stack>
-            <Footer mt={[12, 12, 'auto']} />
+            <Footer mt={[16, 16, 'auto']} />
           </Stack>
           <Box
             maxWidth={750}
             ml={[0, 0, 8, 8]}
             mr={[0, 0, 0, 4]}
             flex={['none', 'none', 1]}
-            height={[600, 600, 1]}
+            height={[700, 700, 1]}
             borderRadius={3}
             p={[0, 0, 2]}
             sx={(theme) => ({

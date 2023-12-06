@@ -3,12 +3,14 @@ import {typeformAtom} from '@/store/core'
 import {ArrowUpward, PlayArrow, Replay} from '@mui/icons-material'
 import {LoadingButton} from '@mui/lab'
 import {
+  Box,
   Button,
-  Collapse,
+  Fade,
   Link,
   List,
   ListItemButton,
   Paper,
+  Slide,
   Stack,
   TextField,
   Tooltip,
@@ -86,13 +88,15 @@ const HomeDemo: FC = () => {
   }, [data])
 
   return (
-    <Stack alignItems="center" height="100%">
-      <Stack flex={1} justifyContent="flex-end" width={1} overflow="auto">
-        <Collapse in={data == null && !isMutating}>
-          <Stack>
-            <Typography variant="h5" sx={{mb: 1, ml: 1.5}}>
-              Start with a recommendation
-            </Typography>
+    <Stack alignItems="center" height={1}>
+      <Box flex={1} width={1} overflow="auto">
+        <Fade in={data == null && !isMutating} unmountOnExit>
+          <Stack height={1}>
+            <Stack flex={1}>
+              <Typography variant="h5" sx={{mt: 'auto', mb: 2, ml: 1.5}}>
+                Start with a recommendation
+              </Typography>
+            </Stack>
             <List>
               {tips.map((text, index) => (
                 <ListItemButton
@@ -114,9 +118,15 @@ const HomeDemo: FC = () => {
               ))}
             </List>
           </Stack>
-        </Collapse>
-        <Collapse sx={{width: '100%'}} in={data != null}>
-          <Stack alignItems="flex-start" spacing={3}>
+        </Fade>
+        <Slide
+          direction="up"
+          exit={false}
+          in={data != null}
+          unmountOnExit
+          mountOnEnter
+        >
+          <Stack alignItems="center" spacing={3}>
             {data?.call === 'cross_chain_swap' && (
               <Paper sx={{p: 2, width: 1}}>
                 <Confirmation
@@ -125,32 +135,17 @@ const HomeDemo: FC = () => {
                   fromAsset={fromAsset}
                   toChain={toChain}
                   toAsset={toAsset}
-                  // destinationAccount={destinationAccount}
                   sx={{w: 1}}
                 ></Confirmation>
               </Paper>
             )}
             <Progress solution={data?.solution} />
-          </Stack>
-
-          <Stack alignItems="center" mt={2}>
-            <Link
-              component="span"
-              sx={{cursor: 'pointer'}}
-              onClick={() => {
-                typefrom.survey.open()
-              }}
-            >
-              <Typography variant="caption">
-                Share your thoughts on inDEX by taking a quick survey.
-              </Typography>
-            </Link>
             <Stack
               alignItems="center"
               direction="row"
               spacing={2}
               justifyContent="center"
-              mt={2}
+              mt={3}
             >
               <Tooltip title="Currently in closed beta, will be available soon">
                 <span>
@@ -169,9 +164,23 @@ const HomeDemo: FC = () => {
                 Try another
               </Button>
             </Stack>
+            <Typography variant="body2" color="text.secondary">
+              {`Share your thoughts on inDEX by `}
+              <Link
+                color="inherit"
+                component="span"
+                sx={{cursor: 'pointer'}}
+                onClick={() => {
+                  typefrom.survey.open()
+                }}
+              >
+                taking a quick survey
+              </Link>
+              .
+            </Typography>
           </Stack>
-        </Collapse>
-      </Stack>
+        </Slide>
+      </Box>
 
       <TextField
         sx={{mt: 3}}
