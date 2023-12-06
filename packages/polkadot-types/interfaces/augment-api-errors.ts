@@ -352,43 +352,39 @@ declare module '@polkadot/api-base/types/errors' {
     };
     collatorSelection: {
       /**
-       * User is already a candidate
+       * Account is already a candidate.
        **/
       AlreadyCandidate: AugmentedError<ApiType>;
       /**
-       * User is already an Invulnerable
+       * Account is already an Invulnerable.
        **/
       AlreadyInvulnerable: AugmentedError<ApiType>;
       /**
-       * Account has no associated validator ID
+       * Account has no associated validator ID.
        **/
       NoAssociatedValidatorId: AugmentedError<ApiType>;
       /**
-       * User is not a candidate
+       * Account is not a candidate.
        **/
       NotCandidate: AugmentedError<ApiType>;
       /**
-       * Permission issue
+       * Account is not an Invulnerable.
        **/
-      Permission: AugmentedError<ApiType>;
+      NotInvulnerable: AugmentedError<ApiType>;
       /**
-       * Too few candidates
+       * Leaving would result in too few candidates.
        **/
-      TooFewCandidates: AugmentedError<ApiType>;
+      TooFewEligibleCollators: AugmentedError<ApiType>;
       /**
-       * Too many candidates
+       * The pallet has too many candidates.
        **/
       TooManyCandidates: AugmentedError<ApiType>;
       /**
-       * Too many invulnerables
+       * There are too many Invulnerables.
        **/
       TooManyInvulnerables: AugmentedError<ApiType>;
       /**
-       * Unknown error
-       **/
-      Unknown: AugmentedError<ApiType>;
-      /**
-       * Validator ID is not yet registered
+       * Validator ID is not yet registered.
        **/
       ValidatorNotRegistered: AugmentedError<ApiType>;
       /**
@@ -413,6 +409,10 @@ declare module '@polkadot/api-base/types/errors' {
        * Account is not a member
        **/
       NotMember: AugmentedError<ApiType>;
+      /**
+       * Prime account is not a member
+       **/
+      PrimeAccountNotMember: AugmentedError<ApiType>;
       /**
        * Proposal must exist
        **/
@@ -805,6 +805,7 @@ declare module '@polkadot/api-base/types/errors' {
        * Burn nft failed
        **/
       BurnNftFailed: AugmentedError<ApiType>;
+      DeprecatedTransferSharesAmountInvalid: AugmentedError<ApiType>;
       /**
        * Too long for pool description length
        **/
@@ -813,6 +814,7 @@ declare module '@polkadot/api-base/types/errors' {
        * Too many stakers in contribution whitelist that exceed the limit
        **/
       ExceedWhitelistMaxLen: AugmentedError<ApiType>;
+      InternalSubsidyPoolCannotWithdraw: AugmentedError<ApiType>;
       /**
        * Occurs when pool's shares is zero
        **/
@@ -833,6 +835,10 @@ declare module '@polkadot/api-base/types/errors' {
        * NftId does not match any nft
        **/
       NftIdNotFound: AugmentedError<ApiType>;
+      /**
+       * No reimbursement to claim
+       **/
+      NoReimbursementToClaim: AugmentedError<ApiType>;
       /**
        * Invalid staker to contribute because origin isn't in Pool's contribution whitelist.
        **/
@@ -866,7 +872,6 @@ declare module '@polkadot/api-base/types/errors' {
        * RMRK errors
        **/
       RmrkError: AugmentedError<ApiType>;
-      TransferSharesAmountInvalid: AugmentedError<ApiType>;
       /**
        * The caller is not the owner of the pool
        **/
@@ -1372,7 +1377,7 @@ declare module '@polkadot/api-base/types/errors' {
        **/
       Filtered: AugmentedError<ApiType>;
       /**
-       * The unlock operation cannot succeed because there are still users of the lock.
+       * The unlock operation cannot succeed because there are still consumers of the lock.
        **/
       InUse: AugmentedError<ApiType>;
       /**
@@ -1396,8 +1401,8 @@ declare module '@polkadot/api-base/types/errors' {
        **/
       NoSubscription: AugmentedError<ApiType>;
       /**
-       * There was some other issue (i.e. not to do with routing) in sending the message. Perhaps
-       * a lack of space for buffering the message.
+       * There was some other issue (i.e. not to do with routing) in sending the message.
+       * Perhaps a lack of space for buffering the message.
        **/
       SendFailure: AugmentedError<ApiType>;
       /**
@@ -1447,6 +1452,14 @@ declare module '@polkadot/api-base/types/errors' {
        * Preimage is too large to store on-chain.
        **/
       TooBig: AugmentedError<ApiType>;
+      /**
+       * Too few hashes were requested to be upgraded (i.e. zero).
+       **/
+      TooFew: AugmentedError<ApiType>;
+      /**
+       * More than `MAX_HASH_UPGRADE_BULK_COUNT` hashes were requested to be upgraded at once.
+       **/
+      TooMany: AugmentedError<ApiType>;
       /**
        * Generic error
        **/
@@ -1750,7 +1763,7 @@ declare module '@polkadot/api-base/types/errors' {
        **/
       DecimalConversionFail: AugmentedError<ApiType>;
       /**
-       * Deposit nonce has reached max integer qvalue
+       * Deposit nonce has reached max integer value
        **/
       DepositNonceOverflow: AugmentedError<ApiType>;
       /**
@@ -1794,6 +1807,10 @@ declare module '@polkadot/api-base/types/errors' {
        **/
       MpcAddrNotUpdatable: AugmentedError<ApiType>;
       /**
+       * Asset not bound to a liquidity holder account
+       **/
+      NoLiquidityHolderAccountBound: AugmentedError<ApiType>;
+      /**
        * Proposal has either failed or succeeded
        **/
       ProposalAlreadyComplete: AugmentedError<ApiType>;
@@ -1819,6 +1836,28 @@ declare module '@polkadot/api-base/types/errors' {
        * Account has not gained access permission
        **/
       AccessDenied: AugmentedError<ApiType>;
+      /**
+       * Function unimplemented
+       **/
+      Unimplemented: AugmentedError<ApiType>;
+      /**
+       * Generic error
+       **/
+      [key: string]: AugmentedError<ApiType>;
+    };
+    sygmaPercentageFeeHandler: {
+      /**
+       * Account has not gained access permission
+       **/
+      AccessDenied: AugmentedError<ApiType>;
+      /**
+       * Fee rate is out of range [0, 10000)
+       **/
+      FeeRateOutOfRange: AugmentedError<ApiType>;
+      /**
+       * Percentage fee bound is invalid
+       **/
+      InvalidFeeBound: AugmentedError<ApiType>;
       /**
        * Function unimplemented
        **/
@@ -1893,6 +1932,10 @@ declare module '@polkadot/api-base/types/errors' {
        * Account is not a member
        **/
       NotMember: AugmentedError<ApiType>;
+      /**
+       * Prime account is not a member
+       **/
+      PrimeAccountNotMember: AugmentedError<ApiType>;
       /**
        * Proposal must exist
        **/

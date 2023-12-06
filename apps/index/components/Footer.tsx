@@ -5,34 +5,29 @@ import {type FC} from 'react'
 
 const Footer: FC<StackProps> = (props) => {
   return (
-    <Stack
-      component="footer"
-      color="InactiveCaptionText"
-      spacing={2}
-      {...props}
-    >
+    <Stack component="footer" spacing={2} color="text.secondary" {...props}>
       <Stack direction="row" alignItems="center" spacing={3}>
         <Box
+          color="text.primary"
           component="a"
-          color="CaptionText"
           href="https://phala.network"
           target="_blank"
-          width={60}
+          width={90}
         >
           <PhalaBrandLogo display="block" />
         </Box>
         <Box
+          color="text.primary"
           component="a"
-          color="CaptionText"
           href="https://bricks.phala.network"
           target="_blank"
-          width={50}
+          width={75}
         >
           <PhatLogo display="block" />
         </Box>
       </Stack>
       <Typography variant="caption" flex="none">
-        inDEX is a Phala Network project built off Phat Contract.
+        Built by Phala Network with Phat Contract.
       </Typography>
     </Stack>
   )
