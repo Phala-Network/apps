@@ -41,7 +41,7 @@ const tips: string[] = [
   'Swap 10 ETH from Ethereum to SOL on Solana',
   'Bridge 1 MATIC from Polygon back to Ethereum',
   'Swap 1 ETH from Ethereum to DOT on Polkadot',
-  'Send PHA from Khala to Phala',
+  'Send 100 PHA from Khala to Phala',
 ]
 
 async function apiFetcher(

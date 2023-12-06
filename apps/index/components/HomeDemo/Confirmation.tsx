@@ -59,7 +59,7 @@ const Detail: FC<
     setChainIconSrc('')
     void import(`@phala/ui/icons/chain/${chainName}.png`)
       .then((module) => {
-        setChainIconSrc(module.default.src)
+        // setChainIconSrc(module.default.src)
       })
       .catch(() => {})
   }, [chainName])
@@ -68,7 +68,7 @@ const Detail: FC<
     setAssetIconSrc('')
     void import(`@phala/ui/icons/asset/${assetName}.png`)
       .then((module) => {
-        setAssetIconSrc(module.default.src)
+        // setAssetIconSrc(module.default.src)
       })
       .catch(() => {})
   }, [assetName])
