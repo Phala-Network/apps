@@ -244,38 +244,49 @@ const ClaimMissingDelegatorRewards: NextPage = () => {
         variant="outlined"
         sx={{p: 3, background: 'transparent', 'p + p': {mt: '1em'}}}
       >
-        <Typography variant="body1">Hey Phamily,</Typography>
         <Typography variant="body1">
-          As highlighted in a recent forum post, a StakePool v2 delegation{' '}
+          Hi Phamliy! This page is used to claim subsidies for on-chain issues
+          related to staking. You can find information about past subsidy
+          distribution events through the links below:
+        </Typography>
+        <Typography variant="body1">
+          A.{' '}
           <Link
-            target="_blank"
             href="https://forum.phala.network/t/bug-report-v2-delegation-claimable-rewards-error-30-12-2022/3817"
-          >
-            bug
-          </Link>{' '}
-          was discovered on 30/12/22.
-        </Typography>
-        <Typography variant="body1">
-          We have added a page in Phala App for users to claim their missing
-          delegation rewards. All affected addresses are listed{' '}
-          <Link
             target="_blank"
-            href="https://docs.google.com/spreadsheets/d/1jI0LGTpZ8VlSX0EwYzNkJIYz40bJV7aH4ktSN1O-Gro/edit?usp=sharing"
           >
-            here
+            V2 delegation bug on 30/12/2022
           </Link>
-          .
         </Typography>
         <Typography variant="body1">
-          Please contact us if you have any questions. We deeply value our
-          community so we want to be as helpful as possible. We apologize for
-          any inconvenience caused by this bug. Thank you for your patience,
-          understanding and support Pham!
+          B.{' '}
+          <Link
+            href="https://forum.phala.network/t/vault-owner-misconduct-disclosure-and-solutions/3889/12"
+            target="_blank"
+          >
+            Vault commission issue on 07/06/2023
+          </Link>
         </Typography>
         <Typography variant="body1">
-          Best,
-          <br />
-          Phala team
+          {
+            'Funds can only be claimed once, and subsidies that have been claimed will be marked as "claimed".'
+          }
+        </Typography>
+        <Typography variant="body1">
+          Multisignature addresses cannot claim funds through this page. After
+          checking the amount of rewards you should receive and the source PID
+          from the reports above, please go to{' '}
+          <Link
+            href="https://polkadot.js.org/apps/?rpc=wss%3A%2F%2Fkhala.api.onfinality.io%2Fpublic-ws#/extrinsics"
+            target="_blank"
+          >
+            polkadot.js app
+          </Link>{' '}
+          to claim your rewards. Here is the{' '}
+          <Link href="" target="_blank">
+            tutorial
+          </Link>{' '}
+          for Multisig.
         </Typography>
       </Paper>
 
@@ -359,7 +370,7 @@ const ClaimMissingDelegatorRewards: NextPage = () => {
                 >
                   <TableCell component="th" scope="row">
                     <Typography variant="body1">
-                      {row.kind === 'legacy' ? '2023-01-13' : '2023-11-28'}
+                      {row.kind === 'legacy' ? '13/01/2023' : '28/11/2023'}
                     </Typography>
                   </TableCell>
                   <TableCell component="th" scope="row">
