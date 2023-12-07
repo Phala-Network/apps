@@ -6,6 +6,9 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  env: {
+    GTM_ID: process.env.GTM_ID,
+  },
   transpilePackages: ['jotai-devtools'],
   // images: {disableStaticImages: true},
   modularizeImports: {

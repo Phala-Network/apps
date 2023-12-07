@@ -4,6 +4,7 @@ import Confirmation from '@/components/Confirmation'
 import Footer from '@/components/Footer'
 import PolkadotWalletDialog from '@/components/PolkadotWalletDialog'
 import Progress from '@/components/Progress'
+import TopBar from '@/components/TopBar'
 import {useEthereumProviderInitialization} from '@/hooks/useEthereumProviderInitialization'
 import {useIndexClientInitialization} from '@/hooks/useIndexClientInitialization'
 import {useValidation} from '@/hooks/useValidation'
@@ -21,40 +22,43 @@ const ManualPage: NextPage = () => {
   useValidation()
   useIndexClientInitialization()
   return (
-    <Container sx={{pt: {sm: 9, md: 12}}}>
-      {client == null ? (
-        <Stack alignItems="center">
-          <CircularProgress />
-        </Stack>
-      ) : (
-        <Stack
-          direction={{sm: 'column', lg: 'row'}}
-          alignItems={{sm: 'center', lg: 'flex-start'}}
-          spacing={3}
-        >
-          <Box
-            sx={{
-              maxWidth: `calc(${
-                theme.breakpoints.values.sm
-              }px - ${theme.spacing(3)} * 2)`,
-              flexShrink: 0,
-            }}
+    <>
+      <TopBar />
+      <Container sx={{pt: {sm: 9, md: 12}}}>
+        {client == null ? (
+          <Stack alignItems="center">
+            <CircularProgress />
+          </Stack>
+        ) : (
+          <Stack
+            direction={{sm: 'column', lg: 'row'}}
+            alignItems={{sm: 'center', lg: 'flex-start'}}
+            spacing={3}
           >
-            <Body />
+            <Box
+              sx={{
+                maxWidth: `calc(${
+                  theme.breakpoints.values.sm
+                }px - ${theme.spacing(3)} * 2)`,
+                flexShrink: 0,
+              }}
+            >
+              <Body />
 
-            <Box sx={{my: 4}}>
-              <Footer />
+              <Box sx={{my: 4}}>
+                <Footer />
+              </Box>
             </Box>
-          </Box>
 
-          <Progress sx={{flex: 1}} />
-        </Stack>
-      )}
+            <Progress sx={{flex: 1}} />
+          </Stack>
+        )}
 
-      <Confirmation></Confirmation>
+        <Confirmation></Confirmation>
 
-      <PolkadotWalletDialog />
-    </Container>
+        <PolkadotWalletDialog />
+      </Container>
+    </>
   )
 }
 

@@ -63,7 +63,7 @@ const Progress: FC<PaperProps> = ({sx, ...props}) => {
   const [currentTask] = useAtom(currentTaskAtom)
   const {data: taskStatus} = useCurrentTaskStatus()
   const [fromChain] = useAtom(fromChainAtom)
-  const {data: simulateResults} = useSimulateResults()
+  const {data: simulateResults} = useSimulateResults(solution)
 
   const stepOffset = fromChain?.chainType === 'Sub' ? 2 : 1
 

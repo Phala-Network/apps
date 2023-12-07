@@ -1,3 +1,4 @@
+'use client'
 import {useBalance} from '@/hooks/useBalance'
 import useSimulateResults from '@/hooks/useSimulateResults'
 import {
@@ -5,6 +6,7 @@ import {
   fromAmountAtom,
   fromAssetAtom,
   fromChainAtom,
+  solutionAtom,
   solutionStringAtom,
   toAssetAtom,
   toChainAtom,
@@ -68,6 +70,7 @@ const GPT: FC = () => {
   const [, setFromAmount] = useAtom(fromAmountAtom)
   const [fromAsset, setFromAsset] = useAtom(fromAssetAtom)
   const [, setToAsset] = useAtom(toAssetAtom)
+  const [solution] = useAtom(solutionAtom)
   const [, setSolutionString] = useAtom(solutionStringAtom)
   const [message, setMessage] = useState('')
   const [evmAccount] = useAtom(evmAccountAtom)
@@ -77,7 +80,7 @@ const GPT: FC = () => {
     '/api/extract-params',
     apiFetcher,
   )
-  const {data: simulateResults} = useSimulateResults()
+  const {data: simulateResults} = useSimulateResults(solution)
   const totalFeeInUsd = useMemo(() => {
     if (simulateResults == null) return null
     const fee = simulateResults.reduce((acc, x) => acc + x.txFeeInUsd, 0)

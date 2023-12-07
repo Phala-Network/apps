@@ -1,6 +1,7 @@
 'use client'
 import GPT from '@/components/GPT'
 import PolkadotWalletDialog from '@/components/PolkadotWalletDialog'
+import TopBar from '@/components/TopBar'
 import {useEthereumProviderInitialization} from '@/hooks/useEthereumProviderInitialization'
 import {useIndexClientInitialization} from '@/hooks/useIndexClientInitialization'
 import {useValidation} from '@/hooks/useValidation'
@@ -9,7 +10,6 @@ import {CircularProgress, Container, Stack} from '@mui/material'
 import {useConnectPolkadotWallet} from '@phala/utils'
 import {useAtom} from 'jotai'
 import type {NextPage} from 'next'
-import Head from 'next/head'
 
 const GPTPage: NextPage = () => {
   const [client] = useAtom(clientAtom)
@@ -18,20 +18,20 @@ const GPTPage: NextPage = () => {
   useValidation()
   useIndexClientInitialization()
   return (
-    <Container sx={{pt: {sm: 9, md: 12}}}>
-      <Head>
-        <title>inDEX GPT</title>
-      </Head>
-      {client == null ? (
-        <Stack alignItems="center">
-          <CircularProgress />
-        </Stack>
-      ) : (
-        <GPT />
-      )}
+    <>
+      <TopBar />
+      <Container sx={{pt: {sm: 9, md: 12}}}>
+        {client == null ? (
+          <Stack alignItems="center">
+            <CircularProgress />
+          </Stack>
+        ) : (
+          <GPT />
+        )}
 
-      <PolkadotWalletDialog />
-    </Container>
+        <PolkadotWalletDialog />
+      </Container>
+    </>
   )
 }
 

@@ -10,7 +10,7 @@ import type { Data } from '@polkadot/types';
 import type { Bytes, Compact, Option, U256, U8aFixed, Vec, bool, u128, u16, u32, u64, u8 } from '@polkadot/types-codec';
 import type { AnyNumber, IMethod, ITuple } from '@polkadot/types-codec/types';
 import type { AccountId32, Call, H256, MultiAddress, Permill } from '@polkadot/types/interfaces/runtime';
-import type { AssetsRegistryAssetProperties, CumulusPrimitivesParachainInherentParachainInherentData, FrameSupportPreimagesBounded, PalletDemocracyConviction, PalletDemocracyMetadataOwner, PalletDemocracyVoteAccountVote, PalletElectionsPhragmenRenouncing, PalletIdentityBitFlags, PalletIdentityIdentityInfo, PalletIdentityJudgement, PalletMultisigTimepoint, PalletUniquesDestroyWitness, PalletVestingVestingInfo, PhalaMqSignedMessage, PhalaPalletsUtilsAttestationLegacyAttestation, PhalaParachainRuntimeOpaqueSessionKeys, PhalaParachainRuntimeOriginCaller, PhalaParachainRuntimeProxyType, PhalaTypesAttestationReport, PhalaTypesContractClusterPermission, PhalaTypesContractCodeIndex, PhalaTypesContractMessagingResourceType, PhalaTypesMessagingTokenomicParameters, PhalaTypesWorkerEndpointPayload, PhalaTypesWorkerRegistrationInfo, PhalaTypesWorkerRegistrationInfoV2, RmrkTraitsNftAccountIdOrCollectionNftTuple, RmrkTraitsPartEquippableList, RmrkTraitsPartPartType, RmrkTraitsResourceBasicResource, RmrkTraitsResourceComposableResource, RmrkTraitsResourceResourceInfoMin, RmrkTraitsResourceResourceTypes, RmrkTraitsResourceSlotResource, RmrkTraitsTheme, SpCoreSr25519Public, SpWeightsWeightV2Weight, SygmaBridgeProposal, SygmaFeeHandlerRouterFeeHandlerType, SygmaTraitsMpcAddress, XcmV3MultiAsset, XcmV3MultiLocation, XcmV3MultiassetAssetId, XcmV3WeightLimit, XcmVersionedMultiAssets, XcmVersionedMultiLocation, XcmVersionedXcm } from '@polkadot/types/lookup';
+import type { AssetsRegistryAssetProperties, CumulusPrimitivesParachainInherentParachainInherentData, FrameSupportPreimagesBounded, PalletDemocracyConviction, PalletDemocracyMetadataOwner, PalletDemocracyVoteAccountVote, PalletElectionsPhragmenRenouncing, PalletIdentityBitFlags, PalletIdentityIdentityInfo, PalletIdentityJudgement, PalletMultisigTimepoint, PalletUniquesDestroyWitness, PalletVestingVestingInfo, PhalaMqSignedMessage, PhalaPalletsUtilsAttestationLegacyAttestation, PhalaParachainRuntimeOpaqueSessionKeys, PhalaParachainRuntimeOriginCaller, PhalaParachainRuntimeProxyType, PhalaTypesAttestationReport, PhalaTypesContractClusterPermission, PhalaTypesContractCodeIndex, PhalaTypesContractMessagingResourceType, PhalaTypesMessagingTokenomicParameters, PhalaTypesWorkerEndpointPayload, PhalaTypesWorkerRegistrationInfo, PhalaTypesWorkerRegistrationInfoV2, RmrkTraitsNftAccountIdOrCollectionNftTuple, RmrkTraitsPartEquippableList, RmrkTraitsPartPartType, RmrkTraitsResourceBasicResource, RmrkTraitsResourceComposableResource, RmrkTraitsResourceResourceInfoMin, RmrkTraitsResourceResourceTypes, RmrkTraitsResourceSlotResource, RmrkTraitsTheme, SpCoreSr25519Public, SpWeightsWeightV2Weight, StagingXcmV3MultiAsset, StagingXcmV3MultiLocation, StagingXcmV3MultiassetAssetId, StagingXcmV3WeightLimit, StagingXcmVersionedMultiAssets, StagingXcmVersionedMultiLocation, StagingXcmVersionedXcm, SygmaBridgeProposal, SygmaFeeHandlerRouterFeeHandlerType, SygmaTraitsMpcAddress } from '@polkadot/types/lookup';
 
 export type __AugmentedSubmittable = AugmentedSubmittable<() => unknown>;
 export type __SubmittableExtrinsic<ApiType extends ApiTypes> = SubmittableExtrinsic<ApiType>;
@@ -20,482 +20,131 @@ declare module '@polkadot/api-base/types/submittable' {
   interface AugmentedSubmittables<ApiType extends ApiTypes> {
     assets: {
       /**
-       * Approve an amount of asset for transfer by a delegated third-party account.
-       * 
-       * Origin must be Signed.
-       * 
-       * Ensures that `ApprovalDeposit` worth of `Currency` is reserved from signing account
-       * for the purpose of holding the approval. If some non-zero amount of assets is already
-       * approved from signing account to `delegate`, then it is topped up or unreserved to
-       * meet the right value.
-       * 
-       * NOTE: The signing account does not need to own `amount` of assets at the point of
-       * making this call.
-       * 
-       * - `id`: The identifier of the asset.
-       * - `delegate`: The account to delegate permission to transfer asset.
-       * - `amount`: The amount of asset that may be transferred by `delegate`. If there is
-       * already an approval in place, then this acts additively.
-       * 
-       * Emits `ApprovedTransfer` on success.
-       * 
-       * Weight: `O(1)`
+       * See [`Pallet::approve_transfer`].
        **/
       approveTransfer: AugmentedSubmittable<(id: Compact<u32> | AnyNumber | Uint8Array, delegate: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, amount: Compact<u128> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u32>, MultiAddress, Compact<u128>]>;
       /**
-       * Reduce the balance of `who` by as much as possible up to `amount` assets of `id`.
-       * 
-       * Origin must be Signed and the sender should be the Manager of the asset `id`.
-       * 
-       * Bails with `NoAccount` if the `who` is already dead.
-       * 
-       * - `id`: The identifier of the asset to have some amount burned.
-       * - `who`: The account to be debited from.
-       * - `amount`: The maximum amount by which `who`'s balance should be reduced.
-       * 
-       * Emits `Burned` with the actual amount burned. If this takes the balance to below the
-       * minimum for the asset, then the amount burned is increased to take it to zero.
-       * 
-       * Weight: `O(1)`
-       * Modes: Post-existence of `who`; Pre & post Zombie-status of `who`.
+       * See [`Pallet::block`].
+       **/
+      block: AugmentedSubmittable<(id: Compact<u32> | AnyNumber | Uint8Array, who: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u32>, MultiAddress]>;
+      /**
+       * See [`Pallet::burn`].
        **/
       burn: AugmentedSubmittable<(id: Compact<u32> | AnyNumber | Uint8Array, who: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, amount: Compact<u128> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u32>, MultiAddress, Compact<u128>]>;
       /**
-       * Cancel all of some asset approved for delegated transfer by a third-party account.
-       * 
-       * Origin must be Signed and there must be an approval in place between signer and
-       * `delegate`.
-       * 
-       * Unreserves any deposit previously reserved by `approve_transfer` for the approval.
-       * 
-       * - `id`: The identifier of the asset.
-       * - `delegate`: The account delegated permission to transfer asset.
-       * 
-       * Emits `ApprovalCancelled` on success.
-       * 
-       * Weight: `O(1)`
+       * See [`Pallet::cancel_approval`].
        **/
       cancelApproval: AugmentedSubmittable<(id: Compact<u32> | AnyNumber | Uint8Array, delegate: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u32>, MultiAddress]>;
       /**
-       * Clear the metadata for an asset.
-       * 
-       * Origin must be Signed and the sender should be the Owner of the asset `id`.
-       * 
-       * Any deposit is freed for the asset owner.
-       * 
-       * - `id`: The identifier of the asset to clear.
-       * 
-       * Emits `MetadataCleared`.
-       * 
-       * Weight: `O(1)`
+       * See [`Pallet::clear_metadata`].
        **/
       clearMetadata: AugmentedSubmittable<(id: Compact<u32> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u32>]>;
       /**
-       * Issue a new class of fungible assets from a public origin.
-       * 
-       * This new asset class has no assets initially and its owner is the origin.
-       * 
-       * The origin must conform to the configured `CreateOrigin` and have sufficient funds free.
-       * 
-       * Funds of sender are reserved by `AssetDeposit`.
-       * 
-       * Parameters:
-       * - `id`: The identifier of the new asset. This must not be currently in use to identify
-       * an existing asset.
-       * - `admin`: The admin of this class of assets. The admin is the initial address of each
-       * member of the asset class's admin team.
-       * - `min_balance`: The minimum balance of this new asset that any single account must
-       * have. If an account's balance is reduced below this, then it collapses to zero.
-       * 
-       * Emits `Created` event when successful.
-       * 
-       * Weight: `O(1)`
+       * See [`Pallet::create`].
        **/
       create: AugmentedSubmittable<(id: Compact<u32> | AnyNumber | Uint8Array, admin: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, minBalance: u128 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u32>, MultiAddress, u128]>;
       /**
-       * Destroy all accounts associated with a given asset.
-       * 
-       * `destroy_accounts` should only be called after `start_destroy` has been called, and the
-       * asset is in a `Destroying` state.
-       * 
-       * Due to weight restrictions, this function may need to be called multiple times to fully
-       * destroy all accounts. It will destroy `RemoveItemsLimit` accounts at a time.
-       * 
-       * - `id`: The identifier of the asset to be destroyed. This must identify an existing
-       * asset.
-       * 
-       * Each call emits the `Event::DestroyedAccounts` event.
+       * See [`Pallet::destroy_accounts`].
        **/
       destroyAccounts: AugmentedSubmittable<(id: Compact<u32> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u32>]>;
       /**
-       * Destroy all approvals associated with a given asset up to the max (T::RemoveItemsLimit).
-       * 
-       * `destroy_approvals` should only be called after `start_destroy` has been called, and the
-       * asset is in a `Destroying` state.
-       * 
-       * Due to weight restrictions, this function may need to be called multiple times to fully
-       * destroy all approvals. It will destroy `RemoveItemsLimit` approvals at a time.
-       * 
-       * - `id`: The identifier of the asset to be destroyed. This must identify an existing
-       * asset.
-       * 
-       * Each call emits the `Event::DestroyedApprovals` event.
+       * See [`Pallet::destroy_approvals`].
        **/
       destroyApprovals: AugmentedSubmittable<(id: Compact<u32> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u32>]>;
       /**
-       * Complete destroying asset and unreserve currency.
-       * 
-       * `finish_destroy` should only be called after `start_destroy` has been called, and the
-       * asset is in a `Destroying` state. All accounts or approvals should be destroyed before
-       * hand.
-       * 
-       * - `id`: The identifier of the asset to be destroyed. This must identify an existing
-       * asset.
-       * 
-       * Each successful call emits the `Event::Destroyed` event.
+       * See [`Pallet::finish_destroy`].
        **/
       finishDestroy: AugmentedSubmittable<(id: Compact<u32> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u32>]>;
       /**
-       * Alter the attributes of a given asset.
-       * 
-       * Origin must be `ForceOrigin`.
-       * 
-       * - `id`: The identifier of the asset.
-       * - `owner`: The new Owner of this asset.
-       * - `issuer`: The new Issuer of this asset.
-       * - `admin`: The new Admin of this asset.
-       * - `freezer`: The new Freezer of this asset.
-       * - `min_balance`: The minimum balance of this new asset that any single account must
-       * have. If an account's balance is reduced below this, then it collapses to zero.
-       * - `is_sufficient`: Whether a non-zero balance of this asset is deposit of sufficient
-       * value to account for the state bloat associated with its balance storage. If set to
-       * `true`, then non-zero balances may be stored without a `consumer` reference (and thus
-       * an ED in the Balances pallet or whatever else is used to control user-account state
-       * growth).
-       * - `is_frozen`: Whether this asset class is frozen except for permissioned/admin
-       * instructions.
-       * 
-       * Emits `AssetStatusChanged` with the identity of the asset.
-       * 
-       * Weight: `O(1)`
+       * See [`Pallet::force_asset_status`].
        **/
       forceAssetStatus: AugmentedSubmittable<(id: Compact<u32> | AnyNumber | Uint8Array, owner: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, issuer: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, admin: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, freezer: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, minBalance: Compact<u128> | AnyNumber | Uint8Array, isSufficient: bool | boolean | Uint8Array, isFrozen: bool | boolean | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u32>, MultiAddress, MultiAddress, MultiAddress, MultiAddress, Compact<u128>, bool, bool]>;
       /**
-       * Cancel all of some asset approved for delegated transfer by a third-party account.
-       * 
-       * Origin must be either ForceOrigin or Signed origin with the signer being the Admin
-       * account of the asset `id`.
-       * 
-       * Unreserves any deposit previously reserved by `approve_transfer` for the approval.
-       * 
-       * - `id`: The identifier of the asset.
-       * - `delegate`: The account delegated permission to transfer asset.
-       * 
-       * Emits `ApprovalCancelled` on success.
-       * 
-       * Weight: `O(1)`
+       * See [`Pallet::force_cancel_approval`].
        **/
       forceCancelApproval: AugmentedSubmittable<(id: Compact<u32> | AnyNumber | Uint8Array, owner: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, delegate: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u32>, MultiAddress, MultiAddress]>;
       /**
-       * Clear the metadata for an asset.
-       * 
-       * Origin must be ForceOrigin.
-       * 
-       * Any deposit is returned.
-       * 
-       * - `id`: The identifier of the asset to clear.
-       * 
-       * Emits `MetadataCleared`.
-       * 
-       * Weight: `O(1)`
+       * See [`Pallet::force_clear_metadata`].
        **/
       forceClearMetadata: AugmentedSubmittable<(id: Compact<u32> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u32>]>;
       /**
-       * Issue a new class of fungible assets from a privileged origin.
-       * 
-       * This new asset class has no assets initially.
-       * 
-       * The origin must conform to `ForceOrigin`.
-       * 
-       * Unlike `create`, no funds are reserved.
-       * 
-       * - `id`: The identifier of the new asset. This must not be currently in use to identify
-       * an existing asset.
-       * - `owner`: The owner of this class of assets. The owner has full superuser permissions
-       * over this asset, but may later change and configure the permissions using
-       * `transfer_ownership` and `set_team`.
-       * - `min_balance`: The minimum balance of this new asset that any single account must
-       * have. If an account's balance is reduced below this, then it collapses to zero.
-       * 
-       * Emits `ForceCreated` event when successful.
-       * 
-       * Weight: `O(1)`
+       * See [`Pallet::force_create`].
        **/
       forceCreate: AugmentedSubmittable<(id: Compact<u32> | AnyNumber | Uint8Array, owner: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, isSufficient: bool | boolean | Uint8Array, minBalance: Compact<u128> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u32>, MultiAddress, bool, Compact<u128>]>;
       /**
-       * Force the metadata for an asset to some value.
-       * 
-       * Origin must be ForceOrigin.
-       * 
-       * Any deposit is left alone.
-       * 
-       * - `id`: The identifier of the asset to update.
-       * - `name`: The user friendly name of this asset. Limited in length by `StringLimit`.
-       * - `symbol`: The exchange symbol for this asset. Limited in length by `StringLimit`.
-       * - `decimals`: The number of decimals this asset uses to represent one unit.
-       * 
-       * Emits `MetadataSet`.
-       * 
-       * Weight: `O(N + S)` where N and S are the length of the name and symbol respectively.
+       * See [`Pallet::force_set_metadata`].
        **/
       forceSetMetadata: AugmentedSubmittable<(id: Compact<u32> | AnyNumber | Uint8Array, name: Bytes | string | Uint8Array, symbol: Bytes | string | Uint8Array, decimals: u8 | AnyNumber | Uint8Array, isFrozen: bool | boolean | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u32>, Bytes, Bytes, u8, bool]>;
       /**
-       * Move some assets from one account to another.
-       * 
-       * Origin must be Signed and the sender should be the Admin of the asset `id`.
-       * 
-       * - `id`: The identifier of the asset to have some amount transferred.
-       * - `source`: The account to be debited.
-       * - `dest`: The account to be credited.
-       * - `amount`: The amount by which the `source`'s balance of assets should be reduced and
-       * `dest`'s balance increased. The amount actually transferred may be slightly greater in
-       * the case that the transfer would otherwise take the `source` balance above zero but
-       * below the minimum balance. Must be greater than zero.
-       * 
-       * Emits `Transferred` with the actual amount transferred. If this takes the source balance
-       * to below the minimum for the asset, then the amount transferred is increased to take it
-       * to zero.
-       * 
-       * Weight: `O(1)`
-       * Modes: Pre-existence of `dest`; Post-existence of `source`; Account pre-existence of
-       * `dest`.
+       * See [`Pallet::force_transfer`].
        **/
       forceTransfer: AugmentedSubmittable<(id: Compact<u32> | AnyNumber | Uint8Array, source: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, dest: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, amount: Compact<u128> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u32>, MultiAddress, MultiAddress, Compact<u128>]>;
       /**
-       * Disallow further unprivileged transfers from an account.
-       * 
-       * Origin must be Signed and the sender should be the Freezer of the asset `id`.
-       * 
-       * - `id`: The identifier of the asset to be frozen.
-       * - `who`: The account to be frozen.
-       * 
-       * Emits `Frozen`.
-       * 
-       * Weight: `O(1)`
+       * See [`Pallet::freeze`].
        **/
       freeze: AugmentedSubmittable<(id: Compact<u32> | AnyNumber | Uint8Array, who: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u32>, MultiAddress]>;
       /**
-       * Disallow further unprivileged transfers for the asset class.
-       * 
-       * Origin must be Signed and the sender should be the Freezer of the asset `id`.
-       * 
-       * - `id`: The identifier of the asset to be frozen.
-       * 
-       * Emits `Frozen`.
-       * 
-       * Weight: `O(1)`
+       * See [`Pallet::freeze_asset`].
        **/
       freezeAsset: AugmentedSubmittable<(id: Compact<u32> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u32>]>;
       /**
-       * Mint assets of a particular class.
-       * 
-       * The origin must be Signed and the sender must be the Issuer of the asset `id`.
-       * 
-       * - `id`: The identifier of the asset to have some amount minted.
-       * - `beneficiary`: The account to be credited with the minted assets.
-       * - `amount`: The amount of the asset to be minted.
-       * 
-       * Emits `Issued` event when successful.
-       * 
-       * Weight: `O(1)`
-       * Modes: Pre-existing balance of `beneficiary`; Account pre-existence of `beneficiary`.
+       * See [`Pallet::mint`].
        **/
       mint: AugmentedSubmittable<(id: Compact<u32> | AnyNumber | Uint8Array, beneficiary: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, amount: Compact<u128> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u32>, MultiAddress, Compact<u128>]>;
       /**
-       * Return the deposit (if any) of an asset account.
-       * 
-       * The origin must be Signed.
-       * 
-       * - `id`: The identifier of the asset for the account to be created.
-       * - `allow_burn`: If `true` then assets may be destroyed in order to complete the refund.
-       * 
-       * Emits `Refunded` event when successful.
+       * See [`Pallet::refund`].
        **/
       refund: AugmentedSubmittable<(id: Compact<u32> | AnyNumber | Uint8Array, allowBurn: bool | boolean | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u32>, bool]>;
       /**
-       * Set the metadata for an asset.
-       * 
-       * Origin must be Signed and the sender should be the Owner of the asset `id`.
-       * 
-       * Funds of sender are reserved according to the formula:
-       * `MetadataDepositBase + MetadataDepositPerByte * (name.len + symbol.len)` taking into
-       * account any already reserved funds.
-       * 
-       * - `id`: The identifier of the asset to update.
-       * - `name`: The user friendly name of this asset. Limited in length by `StringLimit`.
-       * - `symbol`: The exchange symbol for this asset. Limited in length by `StringLimit`.
-       * - `decimals`: The number of decimals this asset uses to represent one unit.
-       * 
-       * Emits `MetadataSet`.
-       * 
-       * Weight: `O(1)`
+       * See [`Pallet::refund_other`].
+       **/
+      refundOther: AugmentedSubmittable<(id: Compact<u32> | AnyNumber | Uint8Array, who: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u32>, MultiAddress]>;
+      /**
+       * See [`Pallet::set_metadata`].
        **/
       setMetadata: AugmentedSubmittable<(id: Compact<u32> | AnyNumber | Uint8Array, name: Bytes | string | Uint8Array, symbol: Bytes | string | Uint8Array, decimals: u8 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u32>, Bytes, Bytes, u8]>;
       /**
-       * Sets the minimum balance of an asset.
-       * 
-       * Only works if there aren't any accounts that are holding the asset or if
-       * the new value of `min_balance` is less than the old one.
-       * 
-       * Origin must be Signed and the sender has to be the Owner of the
-       * asset `id`.
-       * 
-       * - `id`: The identifier of the asset.
-       * - `min_balance`: The new value of `min_balance`.
-       * 
-       * Emits `AssetMinBalanceChanged` event when successful.
+       * See [`Pallet::set_min_balance`].
        **/
       setMinBalance: AugmentedSubmittable<(id: Compact<u32> | AnyNumber | Uint8Array, minBalance: u128 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u32>, u128]>;
       /**
-       * Change the Issuer, Admin and Freezer of an asset.
-       * 
-       * Origin must be Signed and the sender should be the Owner of the asset `id`.
-       * 
-       * - `id`: The identifier of the asset to be frozen.
-       * - `issuer`: The new Issuer of this asset.
-       * - `admin`: The new Admin of this asset.
-       * - `freezer`: The new Freezer of this asset.
-       * 
-       * Emits `TeamChanged`.
-       * 
-       * Weight: `O(1)`
+       * See [`Pallet::set_team`].
        **/
       setTeam: AugmentedSubmittable<(id: Compact<u32> | AnyNumber | Uint8Array, issuer: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, admin: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, freezer: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u32>, MultiAddress, MultiAddress, MultiAddress]>;
       /**
-       * Start the process of destroying a fungible asset class.
-       * 
-       * `start_destroy` is the first in a series of extrinsics that should be called, to allow
-       * destruction of an asset class.
-       * 
-       * The origin must conform to `ForceOrigin` or must be `Signed` by the asset's `owner`.
-       * 
-       * - `id`: The identifier of the asset to be destroyed. This must identify an existing
-       * asset.
-       * 
-       * The asset class must be frozen before calling `start_destroy`.
+       * See [`Pallet::start_destroy`].
        **/
       startDestroy: AugmentedSubmittable<(id: Compact<u32> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u32>]>;
       /**
-       * Allow unprivileged transfers from an account again.
-       * 
-       * Origin must be Signed and the sender should be the Admin of the asset `id`.
-       * 
-       * - `id`: The identifier of the asset to be frozen.
-       * - `who`: The account to be unfrozen.
-       * 
-       * Emits `Thawed`.
-       * 
-       * Weight: `O(1)`
+       * See [`Pallet::thaw`].
        **/
       thaw: AugmentedSubmittable<(id: Compact<u32> | AnyNumber | Uint8Array, who: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u32>, MultiAddress]>;
       /**
-       * Allow unprivileged transfers for the asset again.
-       * 
-       * Origin must be Signed and the sender should be the Admin of the asset `id`.
-       * 
-       * - `id`: The identifier of the asset to be thawed.
-       * 
-       * Emits `Thawed`.
-       * 
-       * Weight: `O(1)`
+       * See [`Pallet::thaw_asset`].
        **/
       thawAsset: AugmentedSubmittable<(id: Compact<u32> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u32>]>;
       /**
-       * Create an asset account for non-provider assets.
-       * 
-       * A deposit will be taken from the signer account.
-       * 
-       * - `origin`: Must be Signed; the signer account must have sufficient funds for a deposit
-       * to be taken.
-       * - `id`: The identifier of the asset for the account to be created.
-       * 
-       * Emits `Touched` event when successful.
+       * See [`Pallet::touch`].
        **/
       touch: AugmentedSubmittable<(id: Compact<u32> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u32>]>;
       /**
-       * Move some assets from the sender account to another.
-       * 
-       * Origin must be Signed.
-       * 
-       * - `id`: The identifier of the asset to have some amount transferred.
-       * - `target`: The account to be credited.
-       * - `amount`: The amount by which the sender's balance of assets should be reduced and
-       * `target`'s balance increased. The amount actually transferred may be slightly greater in
-       * the case that the transfer would otherwise take the sender balance above zero but below
-       * the minimum balance. Must be greater than zero.
-       * 
-       * Emits `Transferred` with the actual amount transferred. If this takes the source balance
-       * to below the minimum for the asset, then the amount transferred is increased to take it
-       * to zero.
-       * 
-       * Weight: `O(1)`
-       * Modes: Pre-existence of `target`; Post-existence of sender; Account pre-existence of
-       * `target`.
+       * See [`Pallet::touch_other`].
+       **/
+      touchOther: AugmentedSubmittable<(id: Compact<u32> | AnyNumber | Uint8Array, who: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u32>, MultiAddress]>;
+      /**
+       * See [`Pallet::transfer`].
        **/
       transfer: AugmentedSubmittable<(id: Compact<u32> | AnyNumber | Uint8Array, target: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, amount: Compact<u128> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u32>, MultiAddress, Compact<u128>]>;
       /**
-       * Transfer some asset balance from a previously delegated account to some third-party
-       * account.
-       * 
-       * Origin must be Signed and there must be an approval in place by the `owner` to the
-       * signer.
-       * 
-       * If the entire amount approved for transfer is transferred, then any deposit previously
-       * reserved by `approve_transfer` is unreserved.
-       * 
-       * - `id`: The identifier of the asset.
-       * - `owner`: The account which previously approved for a transfer of at least `amount` and
-       * from which the asset balance will be withdrawn.
-       * - `destination`: The account to which the asset balance of `amount` will be transferred.
-       * - `amount`: The amount of assets to transfer.
-       * 
-       * Emits `TransferredApproved` on success.
-       * 
-       * Weight: `O(1)`
+       * See [`Pallet::transfer_approved`].
        **/
       transferApproved: AugmentedSubmittable<(id: Compact<u32> | AnyNumber | Uint8Array, owner: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, destination: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, amount: Compact<u128> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u32>, MultiAddress, MultiAddress, Compact<u128>]>;
       /**
-       * Move some assets from the sender account to another, keeping the sender account alive.
-       * 
-       * Origin must be Signed.
-       * 
-       * - `id`: The identifier of the asset to have some amount transferred.
-       * - `target`: The account to be credited.
-       * - `amount`: The amount by which the sender's balance of assets should be reduced and
-       * `target`'s balance increased. The amount actually transferred may be slightly greater in
-       * the case that the transfer would otherwise take the sender balance above zero but below
-       * the minimum balance. Must be greater than zero.
-       * 
-       * Emits `Transferred` with the actual amount transferred. If this takes the source balance
-       * to below the minimum for the asset, then the amount transferred is increased to take it
-       * to zero.
-       * 
-       * Weight: `O(1)`
-       * Modes: Pre-existence of `target`; Post-existence of sender; Account pre-existence of
-       * `target`.
+       * See [`Pallet::transfer_keep_alive`].
        **/
       transferKeepAlive: AugmentedSubmittable<(id: Compact<u32> | AnyNumber | Uint8Array, target: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, amount: Compact<u128> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u32>, MultiAddress, Compact<u128>]>;
       /**
-       * Change the Owner of an asset.
-       * 
-       * Origin must be Signed and the sender should be the Owner of the asset `id`.
-       * 
-       * - `id`: The identifier of the asset.
-       * - `owner`: The new Owner of this asset.
-       * 
-       * Emits `OwnerChanged`.
-       * 
-       * Weight: `O(1)`
+       * See [`Pallet::transfer_ownership`].
        **/
       transferOwnership: AugmentedSubmittable<(id: Compact<u32> | AnyNumber | Uint8Array, owner: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u32>, MultiAddress]>;
       /**
@@ -504,26 +153,52 @@ declare module '@polkadot/api-base/types/submittable' {
       [key: string]: SubmittableExtrinsicFunction<ApiType>;
     };
     assetsRegistry: {
+      /**
+       * See [`Pallet::force_burn`].
+       **/
       forceBurn: AugmentedSubmittable<(assetId: u32 | AnyNumber | Uint8Array, who: AccountId32 | string | Uint8Array, amount: u128 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32, AccountId32, u128]>;
+      /**
+       * See [`Pallet::force_disable_chainbridge`].
+       **/
       forceDisableChainbridge: AugmentedSubmittable<(assetId: u32 | AnyNumber | Uint8Array, chainId: u8 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32, u8]>;
+      /**
+       * See [`Pallet::force_disable_sygmabridge`].
+       **/
       forceDisableSygmabridge: AugmentedSubmittable<(assetId: u32 | AnyNumber | Uint8Array, resourceId: U8aFixed | string | Uint8Array, domainId: u8 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32, U8aFixed, u8]>;
+      /**
+       * See [`Pallet::force_enable_chainbridge`].
+       **/
       forceEnableChainbridge: AugmentedSubmittable<(assetId: u32 | AnyNumber | Uint8Array, chainId: u8 | AnyNumber | Uint8Array, isMintable: bool | boolean | Uint8Array, metadata: Bytes | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32, u8, bool, Bytes]>;
+      /**
+       * See [`Pallet::force_enable_sygmabridge`].
+       **/
       forceEnableSygmabridge: AugmentedSubmittable<(assetId: u32 | AnyNumber | Uint8Array, resourceId: U8aFixed | string | Uint8Array, domainId: u8 | AnyNumber | Uint8Array, isMintable: bool | boolean | Uint8Array, metadata: Bytes | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32, U8aFixed, u8, bool, Bytes]>;
+      /**
+       * See [`Pallet::force_mint`].
+       **/
       forceMint: AugmentedSubmittable<(assetId: u32 | AnyNumber | Uint8Array, beneficiary: AccountId32 | string | Uint8Array, amount: u128 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32, AccountId32, u128]>;
-      forceRegisterAsset: AugmentedSubmittable<(location: XcmV3MultiLocation | { parents?: any; interior?: any } | string | Uint8Array, assetId: u32 | AnyNumber | Uint8Array, properties: AssetsRegistryAssetProperties | { name?: any; symbol?: any; decimals?: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [XcmV3MultiLocation, u32, AssetsRegistryAssetProperties]>;
-      forceSetLocation: AugmentedSubmittable<(assetId: u32 | AnyNumber | Uint8Array, location: XcmV3MultiLocation | { parents?: any; interior?: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32, XcmV3MultiLocation]>;
+      /**
+       * See [`Pallet::force_register_asset`].
+       **/
+      forceRegisterAsset: AugmentedSubmittable<(location: StagingXcmV3MultiLocation | { parents?: any; interior?: any } | string | Uint8Array, assetId: u32 | AnyNumber | Uint8Array, properties: AssetsRegistryAssetProperties | { name?: any; symbol?: any; decimals?: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [StagingXcmV3MultiLocation, u32, AssetsRegistryAssetProperties]>;
+      /**
+       * See [`Pallet::force_set_location`].
+       **/
+      forceSetLocation: AugmentedSubmittable<(assetId: u32 | AnyNumber | Uint8Array, location: StagingXcmV3MultiLocation | { parents?: any; interior?: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32, StagingXcmV3MultiLocation]>;
+      /**
+       * See [`Pallet::force_set_metadata`].
+       **/
       forceSetMetadata: AugmentedSubmittable<(assetId: u32 | AnyNumber | Uint8Array, properties: AssetsRegistryAssetProperties | { name?: any; symbol?: any; decimals?: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32, AssetsRegistryAssetProperties]>;
+      /**
+       * See [`Pallet::force_set_price`].
+       **/
       forceSetPrice: AugmentedSubmittable<(assetId: u32 | AnyNumber | Uint8Array, executionPrice: u128 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32, u128]>;
       /**
-       * Clean asset info stored in asset wrapper, not call pallet_assets::destory(),
-       * By cleaning them in current pallet, xcm and bridge transfering on this asset
-       * will not success anymore, we should call pallet_assets::destory() manually
-       * if we want to delete this asset from our chain
+       * See [`Pallet::force_unregister_asset`].
        **/
       forceUnregisterAsset: AugmentedSubmittable<(assetId: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32]>;
       /**
-       * Force withdraw some amount of assets from ASSETS_REGISTRY_ID, if the given asset_id is None,
-       * would performance withdraw PHA from this account
+       * See [`Pallet::force_withdraw_fund`].
        **/
       forceWithdrawFund: AugmentedSubmittable<(assetId: Option<u32> | null | Uint8Array | u32 | AnyNumber, recipient: AccountId32 | string | Uint8Array, amount: u128 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [Option<u32>, AccountId32, u128]>;
       /**
@@ -533,83 +208,31 @@ declare module '@polkadot/api-base/types/submittable' {
     };
     balances: {
       /**
-       * Set the regular balance of a given account.
-       * 
-       * The dispatch origin for this call is `root`.
+       * See [`Pallet::force_set_balance`].
        **/
       forceSetBalance: AugmentedSubmittable<(who: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, newFree: Compact<u128> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [MultiAddress, Compact<u128>]>;
       /**
-       * Exactly as `transfer_allow_death`, except the origin must be root and the source account
-       * may be specified.
+       * See [`Pallet::force_transfer`].
        **/
       forceTransfer: AugmentedSubmittable<(source: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, dest: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, value: Compact<u128> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [MultiAddress, MultiAddress, Compact<u128>]>;
       /**
-       * Unreserve some balance from a user by force.
-       * 
-       * Can only be called by ROOT.
+       * See [`Pallet::force_unreserve`].
        **/
       forceUnreserve: AugmentedSubmittable<(who: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, amount: u128 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [MultiAddress, u128]>;
       /**
-       * Set the regular balance of a given account; it also takes a reserved balance but this
-       * must be the same as the account's current reserved balance.
-       * 
-       * The dispatch origin for this call is `root`.
-       * 
-       * WARNING: This call is DEPRECATED! Use `force_set_balance` instead.
-       **/
-      setBalanceDeprecated: AugmentedSubmittable<(who: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, newFree: Compact<u128> | AnyNumber | Uint8Array, oldReserved: Compact<u128> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [MultiAddress, Compact<u128>, Compact<u128>]>;
-      /**
-       * Alias for `transfer_allow_death`, provided only for name-wise compatibility.
-       * 
-       * WARNING: DEPRECATED! Will be released in approximately 3 months.
-       **/
-      transfer: AugmentedSubmittable<(dest: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, value: Compact<u128> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [MultiAddress, Compact<u128>]>;
-      /**
-       * Transfer the entire transferable balance from the caller account.
-       * 
-       * NOTE: This function only attempts to transfer _transferable_ balances. This means that
-       * any locked, reserved, or existential deposits (when `keep_alive` is `true`), will not be
-       * transferred by this function. To ensure that this function results in a killed account,
-       * you might need to prepare the account by removing any reference counters, storage
-       * deposits, etc...
-       * 
-       * The dispatch origin of this call must be Signed.
-       * 
-       * - `dest`: The recipient of the transfer.
-       * - `keep_alive`: A boolean to determine if the `transfer_all` operation should send all
-       * of the funds the account has, causing the sender account to be killed (false), or
-       * transfer everything except at least the existential deposit, which will guarantee to
-       * keep the sender account alive (true).
+       * See [`Pallet::transfer_all`].
        **/
       transferAll: AugmentedSubmittable<(dest: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, keepAlive: bool | boolean | Uint8Array) => SubmittableExtrinsic<ApiType>, [MultiAddress, bool]>;
       /**
-       * Transfer some liquid free balance to another account.
-       * 
-       * `transfer_allow_death` will set the `FreeBalance` of the sender and receiver.
-       * If the sender's account is below the existential deposit as a result
-       * of the transfer, the account will be reaped.
-       * 
-       * The dispatch origin for this call must be `Signed` by the transactor.
+       * See [`Pallet::transfer_allow_death`].
        **/
       transferAllowDeath: AugmentedSubmittable<(dest: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, value: Compact<u128> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [MultiAddress, Compact<u128>]>;
       /**
-       * Same as the [`transfer_allow_death`] call, but with a check that the transfer will not
-       * kill the origin account.
-       * 
-       * 99% of the time you want [`transfer_allow_death`] instead.
-       * 
-       * [`transfer_allow_death`]: struct.Pallet.html#method.transfer
+       * See [`Pallet::transfer_keep_alive`].
        **/
       transferKeepAlive: AugmentedSubmittable<(dest: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, value: Compact<u128> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [MultiAddress, Compact<u128>]>;
       /**
-       * Upgrade a specified account.
-       * 
-       * - `origin`: Must be `Signed`.
-       * - `who`: The account to be upgraded.
-       * 
-       * This will waive the transaction fee if at least all but 10% of the accounts needed to
-       * be upgraded. (We let some not have to be upgraded just in order to allow for the
-       * possibililty of churn).
+       * See [`Pallet::upgrade_accounts`].
        **/
       upgradeAccounts: AugmentedSubmittable<(who: Vec<AccountId32> | (AccountId32 | string | Uint8Array)[]) => SubmittableExtrinsic<ApiType>, [Vec<AccountId32>]>;
       /**
@@ -619,115 +242,39 @@ declare module '@polkadot/api-base/types/submittable' {
     };
     bounties: {
       /**
-       * Accept the curator role for a bounty.
-       * A deposit will be reserved from curator and refund upon successful payout.
-       * 
-       * May only be called from the curator.
-       * 
-       * ## Complexity
-       * - O(1).
+       * See [`Pallet::accept_curator`].
        **/
       acceptCurator: AugmentedSubmittable<(bountyId: Compact<u32> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u32>]>;
       /**
-       * Approve a bounty proposal. At a later time, the bounty will be funded and become active
-       * and the original deposit will be returned.
-       * 
-       * May only be called from `T::SpendOrigin`.
-       * 
-       * ## Complexity
-       * - O(1).
+       * See [`Pallet::approve_bounty`].
        **/
       approveBounty: AugmentedSubmittable<(bountyId: Compact<u32> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u32>]>;
       /**
-       * Award bounty to a beneficiary account. The beneficiary will be able to claim the funds
-       * after a delay.
-       * 
-       * The dispatch origin for this call must be the curator of this bounty.
-       * 
-       * - `bounty_id`: Bounty ID to award.
-       * - `beneficiary`: The beneficiary account whom will receive the payout.
-       * 
-       * ## Complexity
-       * - O(1).
+       * See [`Pallet::award_bounty`].
        **/
       awardBounty: AugmentedSubmittable<(bountyId: Compact<u32> | AnyNumber | Uint8Array, beneficiary: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u32>, MultiAddress]>;
       /**
-       * Claim the payout from an awarded bounty after payout delay.
-       * 
-       * The dispatch origin for this call must be the beneficiary of this bounty.
-       * 
-       * - `bounty_id`: Bounty ID to claim.
-       * 
-       * ## Complexity
-       * - O(1).
+       * See [`Pallet::claim_bounty`].
        **/
       claimBounty: AugmentedSubmittable<(bountyId: Compact<u32> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u32>]>;
       /**
-       * Cancel a proposed or active bounty. All the funds will be sent to treasury and
-       * the curator deposit will be unreserved if possible.
-       * 
-       * Only `T::RejectOrigin` is able to cancel a bounty.
-       * 
-       * - `bounty_id`: Bounty ID to cancel.
-       * 
-       * ## Complexity
-       * - O(1).
+       * See [`Pallet::close_bounty`].
        **/
       closeBounty: AugmentedSubmittable<(bountyId: Compact<u32> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u32>]>;
       /**
-       * Extend the expiry time of an active bounty.
-       * 
-       * The dispatch origin for this call must be the curator of this bounty.
-       * 
-       * - `bounty_id`: Bounty ID to extend.
-       * - `remark`: additional information.
-       * 
-       * ## Complexity
-       * - O(1).
+       * See [`Pallet::extend_bounty_expiry`].
        **/
       extendBountyExpiry: AugmentedSubmittable<(bountyId: Compact<u32> | AnyNumber | Uint8Array, remark: Bytes | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u32>, Bytes]>;
       /**
-       * Propose a new bounty.
-       * 
-       * The dispatch origin for this call must be _Signed_.
-       * 
-       * Payment: `TipReportDepositBase` will be reserved from the origin account, as well as
-       * `DataDepositPerByte` for each byte in `reason`. It will be unreserved upon approval,
-       * or slashed when rejected.
-       * 
-       * - `curator`: The curator account whom will manage this bounty.
-       * - `fee`: The curator fee.
-       * - `value`: The total payment amount of this bounty, curator fee included.
-       * - `description`: The description of this bounty.
+       * See [`Pallet::propose_bounty`].
        **/
       proposeBounty: AugmentedSubmittable<(value: Compact<u128> | AnyNumber | Uint8Array, description: Bytes | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u128>, Bytes]>;
       /**
-       * Assign a curator to a funded bounty.
-       * 
-       * May only be called from `T::SpendOrigin`.
-       * 
-       * ## Complexity
-       * - O(1).
+       * See [`Pallet::propose_curator`].
        **/
       proposeCurator: AugmentedSubmittable<(bountyId: Compact<u32> | AnyNumber | Uint8Array, curator: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, fee: Compact<u128> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u32>, MultiAddress, Compact<u128>]>;
       /**
-       * Unassign curator from a bounty.
-       * 
-       * This function can only be called by the `RejectOrigin` a signed origin.
-       * 
-       * If this function is called by the `RejectOrigin`, we assume that the curator is
-       * malicious or inactive. As a result, we will slash the curator when possible.
-       * 
-       * If the origin is the curator, we take this as a sign they are unable to do their job and
-       * they willingly give up. We could slash them, but for now we allow them to recover their
-       * deposit and exit without issue. (We may want to change this if it is abused.)
-       * 
-       * Finally, the origin can be anyone if and only if the curator is "inactive". This allows
-       * anyone in the community to call out that a curator is not doing their due diligence, and
-       * we should pick a new curator. In this case the curator should also be slashed.
-       * 
-       * ## Complexity
-       * - O(1).
+       * See [`Pallet::unassign_curator`].
        **/
       unassignCurator: AugmentedSubmittable<(bountyId: Compact<u32> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u32>]>;
       /**
@@ -737,80 +284,39 @@ declare module '@polkadot/api-base/types/submittable' {
     };
     chainBridge: {
       /**
-       * Commits a vote in favour of the provided proposal.
-       * 
-       * If a proposal with the given nonce and source chain ID does not already exist, it will
-       * be created with an initial vote in favour from the caller.
-       * 
-       * # <weight>
-       * - weight of proposed call, regardless of whether execution is performed
-       * # </weight>
+       * See [`Pallet::acknowledge_proposal`].
        **/
       acknowledgeProposal: AugmentedSubmittable<(nonce: u64 | AnyNumber | Uint8Array, srcId: u8 | AnyNumber | Uint8Array, rId: U8aFixed | string | Uint8Array, call: Call | IMethod | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [u64, u8, U8aFixed, Call]>;
       /**
-       * Adds a new relayer to the relayer set.
-       * 
-       * # <weight>
-       * - O(1) lookup and insert
-       * # </weight>
+       * See [`Pallet::add_relayer`].
        **/
       addRelayer: AugmentedSubmittable<(v: AccountId32 | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [AccountId32]>;
       /**
-       * Evaluate the state of a proposal given the current vote threshold.
-       * 
-       * A proposal with enough votes will be either executed or cancelled, and the status
-       * will be updated accordingly.
-       * 
-       * # <weight>
-       * - weight of proposed call, regardless of whether execution is performed
-       * # </weight>
+       * See [`Pallet::eval_vote_state`].
        **/
       evalVoteState: AugmentedSubmittable<(nonce: u64 | AnyNumber | Uint8Array, srcId: u8 | AnyNumber | Uint8Array, prop: Call | IMethod | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [u64, u8, Call]>;
       /**
-       * Triggered by a initial transfer on source chain, executed by relayer when proposal was resolved.
+       * See [`Pallet::handle_fungible_transfer`].
        **/
       handleFungibleTransfer: AugmentedSubmittable<(dest: Bytes | string | Uint8Array, amount: u128 | AnyNumber | Uint8Array, rid: U8aFixed | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [Bytes, u128, U8aFixed]>;
       /**
-       * Commits a vote against a provided proposal.
-       * 
-       * # <weight>
-       * - Fixed, since execution of proposal should not be included
-       * # </weight>
+       * See [`Pallet::reject_proposal`].
        **/
       rejectProposal: AugmentedSubmittable<(nonce: u64 | AnyNumber | Uint8Array, srcId: u8 | AnyNumber | Uint8Array, rId: U8aFixed | string | Uint8Array, call: Call | IMethod | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [u64, u8, U8aFixed, Call]>;
       /**
-       * Removes an existing relayer from the set.
-       * 
-       * # <weight>
-       * - O(1) lookup and removal
-       * # </weight>
+       * See [`Pallet::remove_relayer`].
        **/
       removeRelayer: AugmentedSubmittable<(v: AccountId32 | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [AccountId32]>;
       /**
-       * Sets the vote threshold for proposals.
-       * 
-       * This threshold is used to determine how many votes are required
-       * before a proposal is executed.
-       * 
-       * # <weight>
-       * - O(1) lookup and insert
-       * # </weight>
+       * See [`Pallet::set_threshold`].
        **/
       setThreshold: AugmentedSubmittable<(threshold: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32]>;
       /**
-       * Change extra bridge transfer fee that user should pay
-       * 
-       * # <weight>
-       * - O(1) lookup and insert
-       * # </weight>
+       * See [`Pallet::update_fee`].
        **/
       updateFee: AugmentedSubmittable<(fee: u128 | AnyNumber | Uint8Array, destId: u8 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u128, u8]>;
       /**
-       * Enables a chain ID as a source or destination for a bridge transfer.
-       * 
-       * # <weight>
-       * - O(1) lookup and insert
-       * # </weight>
+       * See [`Pallet::whitelist_chain`].
        **/
       whitelistChain: AugmentedSubmittable<(id: u8 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u8]>;
       /**
@@ -820,166 +326,31 @@ declare module '@polkadot/api-base/types/submittable' {
     };
     childBounties: {
       /**
-       * Accept the curator role for the child-bounty.
-       * 
-       * The dispatch origin for this call must be the curator of this
-       * child-bounty.
-       * 
-       * A deposit will be reserved from the curator and refund upon
-       * successful payout or cancellation.
-       * 
-       * Fee for curator is deducted from curator fee of parent bounty.
-       * 
-       * Parent bounty must be in active state, for this child-bounty call to
-       * work.
-       * 
-       * Child-bounty must be in "CuratorProposed" state, for processing the
-       * call. And state of child-bounty is moved to "Active" on successful
-       * call completion.
-       * 
-       * - `parent_bounty_id`: Index of parent bounty.
-       * - `child_bounty_id`: Index of child bounty.
+       * See [`Pallet::accept_curator`].
        **/
       acceptCurator: AugmentedSubmittable<(parentBountyId: Compact<u32> | AnyNumber | Uint8Array, childBountyId: Compact<u32> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u32>, Compact<u32>]>;
       /**
-       * Add a new child-bounty.
-       * 
-       * The dispatch origin for this call must be the curator of parent
-       * bounty and the parent bounty must be in "active" state.
-       * 
-       * Child-bounty gets added successfully & fund gets transferred from
-       * parent bounty to child-bounty account, if parent bounty has enough
-       * funds, else the call fails.
-       * 
-       * Upper bound to maximum number of active  child bounties that can be
-       * added are managed via runtime trait config
-       * [`Config::MaxActiveChildBountyCount`].
-       * 
-       * If the call is success, the status of child-bounty is updated to
-       * "Added".
-       * 
-       * - `parent_bounty_id`: Index of parent bounty for which child-bounty is being added.
-       * - `value`: Value for executing the proposal.
-       * - `description`: Text description for the child-bounty.
+       * See [`Pallet::add_child_bounty`].
        **/
       addChildBounty: AugmentedSubmittable<(parentBountyId: Compact<u32> | AnyNumber | Uint8Array, value: Compact<u128> | AnyNumber | Uint8Array, description: Bytes | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u32>, Compact<u128>, Bytes]>;
       /**
-       * Award child-bounty to a beneficiary.
-       * 
-       * The beneficiary will be able to claim the funds after a delay.
-       * 
-       * The dispatch origin for this call must be the parent curator or
-       * curator of this child-bounty.
-       * 
-       * Parent bounty must be in active state, for this child-bounty call to
-       * work.
-       * 
-       * Child-bounty must be in active state, for processing the call. And
-       * state of child-bounty is moved to "PendingPayout" on successful call
-       * completion.
-       * 
-       * - `parent_bounty_id`: Index of parent bounty.
-       * - `child_bounty_id`: Index of child bounty.
-       * - `beneficiary`: Beneficiary account.
+       * See [`Pallet::award_child_bounty`].
        **/
       awardChildBounty: AugmentedSubmittable<(parentBountyId: Compact<u32> | AnyNumber | Uint8Array, childBountyId: Compact<u32> | AnyNumber | Uint8Array, beneficiary: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u32>, Compact<u32>, MultiAddress]>;
       /**
-       * Claim the payout from an awarded child-bounty after payout delay.
-       * 
-       * The dispatch origin for this call may be any signed origin.
-       * 
-       * Call works independent of parent bounty state, No need for parent
-       * bounty to be in active state.
-       * 
-       * The Beneficiary is paid out with agreed bounty value. Curator fee is
-       * paid & curator deposit is unreserved.
-       * 
-       * Child-bounty must be in "PendingPayout" state, for processing the
-       * call. And instance of child-bounty is removed from the state on
-       * successful call completion.
-       * 
-       * - `parent_bounty_id`: Index of parent bounty.
-       * - `child_bounty_id`: Index of child bounty.
+       * See [`Pallet::claim_child_bounty`].
        **/
       claimChildBounty: AugmentedSubmittable<(parentBountyId: Compact<u32> | AnyNumber | Uint8Array, childBountyId: Compact<u32> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u32>, Compact<u32>]>;
       /**
-       * Cancel a proposed or active child-bounty. Child-bounty account funds
-       * are transferred to parent bounty account. The child-bounty curator
-       * deposit may be unreserved if possible.
-       * 
-       * The dispatch origin for this call must be either parent curator or
-       * `T::RejectOrigin`.
-       * 
-       * If the state of child-bounty is `Active`, curator deposit is
-       * unreserved.
-       * 
-       * If the state of child-bounty is `PendingPayout`, call fails &
-       * returns `PendingPayout` error.
-       * 
-       * For the origin other than T::RejectOrigin, parent bounty must be in
-       * active state, for this child-bounty call to work. For origin
-       * T::RejectOrigin execution is forced.
-       * 
-       * Instance of child-bounty is removed from the state on successful
-       * call completion.
-       * 
-       * - `parent_bounty_id`: Index of parent bounty.
-       * - `child_bounty_id`: Index of child bounty.
+       * See [`Pallet::close_child_bounty`].
        **/
       closeChildBounty: AugmentedSubmittable<(parentBountyId: Compact<u32> | AnyNumber | Uint8Array, childBountyId: Compact<u32> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u32>, Compact<u32>]>;
       /**
-       * Propose curator for funded child-bounty.
-       * 
-       * The dispatch origin for this call must be curator of parent bounty.
-       * 
-       * Parent bounty must be in active state, for this child-bounty call to
-       * work.
-       * 
-       * Child-bounty must be in "Added" state, for processing the call. And
-       * state of child-bounty is moved to "CuratorProposed" on successful
-       * call completion.
-       * 
-       * - `parent_bounty_id`: Index of parent bounty.
-       * - `child_bounty_id`: Index of child bounty.
-       * - `curator`: Address of child-bounty curator.
-       * - `fee`: payment fee to child-bounty curator for execution.
+       * See [`Pallet::propose_curator`].
        **/
       proposeCurator: AugmentedSubmittable<(parentBountyId: Compact<u32> | AnyNumber | Uint8Array, childBountyId: Compact<u32> | AnyNumber | Uint8Array, curator: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, fee: Compact<u128> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u32>, Compact<u32>, MultiAddress, Compact<u128>]>;
       /**
-       * Unassign curator from a child-bounty.
-       * 
-       * The dispatch origin for this call can be either `RejectOrigin`, or
-       * the curator of the parent bounty, or any signed origin.
-       * 
-       * For the origin other than T::RejectOrigin and the child-bounty
-       * curator, parent bounty must be in active state, for this call to
-       * work. We allow child-bounty curator and T::RejectOrigin to execute
-       * this call irrespective of the parent bounty state.
-       * 
-       * If this function is called by the `RejectOrigin` or the
-       * parent bounty curator, we assume that the child-bounty curator is
-       * malicious or inactive. As a result, child-bounty curator deposit is
-       * slashed.
-       * 
-       * If the origin is the child-bounty curator, we take this as a sign
-       * that they are unable to do their job, and are willingly giving up.
-       * We could slash the deposit, but for now we allow them to unreserve
-       * their deposit and exit without issue. (We may want to change this if
-       * it is abused.)
-       * 
-       * Finally, the origin can be anyone iff the child-bounty curator is
-       * "inactive". Expiry update due of parent bounty is used to estimate
-       * inactive state of child-bounty curator.
-       * 
-       * This allows anyone in the community to call out that a child-bounty
-       * curator is not doing their due diligence, and we should pick a new
-       * one. In this case the child-bounty curator deposit is slashed.
-       * 
-       * State of child-bounty is moved to Added state on successful call
-       * completion.
-       * 
-       * - `parent_bounty_id`: Index of parent bounty.
-       * - `child_bounty_id`: Index of child bounty.
+       * See [`Pallet::unassign_curator`].
        **/
       unassignCurator: AugmentedSubmittable<(parentBountyId: Compact<u32> | AnyNumber | Uint8Array, childBountyId: Compact<u32> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u32>, Compact<u32>]>;
       /**
@@ -989,33 +360,31 @@ declare module '@polkadot/api-base/types/submittable' {
     };
     collatorSelection: {
       /**
-       * Deregister `origin` as a collator candidate. Note that the collator can only leave on
-       * session change. The `CandidacyBond` will be unreserved immediately.
-       * 
-       * This call will fail if the total number of candidates would drop below `MinCandidates`.
-       * 
-       * This call is not available to `Invulnerable` collators.
+       * See [`Pallet::add_invulnerable`].
+       **/
+      addInvulnerable: AugmentedSubmittable<(who: AccountId32 | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [AccountId32]>;
+      /**
+       * See [`Pallet::leave_intent`].
        **/
       leaveIntent: AugmentedSubmittable<() => SubmittableExtrinsic<ApiType>, []>;
       /**
-       * Register this account as a collator candidate. The account must (a) already have
-       * registered session keys and (b) be able to reserve the `CandidacyBond`.
-       * 
-       * This call is not available to `Invulnerable` collators.
+       * See [`Pallet::register_as_candidate`].
        **/
       registerAsCandidate: AugmentedSubmittable<() => SubmittableExtrinsic<ApiType>, []>;
       /**
-       * Set the candidacy bond amount.
+       * See [`Pallet::remove_invulnerable`].
+       **/
+      removeInvulnerable: AugmentedSubmittable<(who: AccountId32 | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [AccountId32]>;
+      /**
+       * See [`Pallet::set_candidacy_bond`].
        **/
       setCandidacyBond: AugmentedSubmittable<(bond: u128 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u128]>;
       /**
-       * Set the ideal number of collators (not including the invulnerables).
-       * If lowering this number, then the number of running collators could be higher than this figure.
-       * Aside from that edge case, there should be no other way to have more collators than the desired number.
+       * See [`Pallet::set_desired_candidates`].
        **/
       setDesiredCandidates: AugmentedSubmittable<(max: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32]>;
       /**
-       * Set the list of invulnerable (fixed) collators.
+       * See [`Pallet::set_invulnerables`].
        **/
       setInvulnerables: AugmentedSubmittable<(updated: Vec<AccountId32> | (AccountId32 | string | Uint8Array)[]) => SubmittableExtrinsic<ApiType>, [Vec<AccountId32>]>;
       /**
@@ -1025,111 +394,27 @@ declare module '@polkadot/api-base/types/submittable' {
     };
     council: {
       /**
-       * Close a vote that is either approved, disapproved or whose voting period has ended.
-       * 
-       * May be called by any signed account in order to finish voting and close the proposal.
-       * 
-       * If called before the end of the voting period it will only close the vote if it is
-       * has enough votes to be approved or disapproved.
-       * 
-       * If called after the end of the voting period abstentions are counted as rejections
-       * unless there is a prime member set and the prime member cast an approval.
-       * 
-       * If the close operation completes successfully with disapproval, the transaction fee will
-       * be waived. Otherwise execution of the approved operation will be charged to the caller.
-       * 
-       * + `proposal_weight_bound`: The maximum amount of weight consumed by executing the closed
-       * proposal.
-       * + `length_bound`: The upper bound for the length of the proposal in storage. Checked via
-       * `storage::read` so it is `size_of::<u32>() == 4` larger than the pure length.
-       * 
-       * ## Complexity
-       * - `O(B + M + P1 + P2)` where:
-       * - `B` is `proposal` size in bytes (length-fee-bounded)
-       * - `M` is members-count (code- and governance-bounded)
-       * - `P1` is the complexity of `proposal` preimage.
-       * - `P2` is proposal-count (code-bounded)
+       * See [`Pallet::close`].
        **/
       close: AugmentedSubmittable<(proposalHash: H256 | string | Uint8Array, index: Compact<u32> | AnyNumber | Uint8Array, proposalWeightBound: SpWeightsWeightV2Weight | { refTime?: any; proofSize?: any } | string | Uint8Array, lengthBound: Compact<u32> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [H256, Compact<u32>, SpWeightsWeightV2Weight, Compact<u32>]>;
       /**
-       * Disapprove a proposal, close, and remove it from the system, regardless of its current
-       * state.
-       * 
-       * Must be called by the Root origin.
-       * 
-       * Parameters:
-       * * `proposal_hash`: The hash of the proposal that should be disapproved.
-       * 
-       * ## Complexity
-       * O(P) where P is the number of max proposals
+       * See [`Pallet::disapprove_proposal`].
        **/
       disapproveProposal: AugmentedSubmittable<(proposalHash: H256 | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [H256]>;
       /**
-       * Dispatch a proposal from a member using the `Member` origin.
-       * 
-       * Origin must be a member of the collective.
-       * 
-       * ## Complexity:
-       * - `O(B + M + P)` where:
-       * - `B` is `proposal` size in bytes (length-fee-bounded)
-       * - `M` members-count (code-bounded)
-       * - `P` complexity of dispatching `proposal`
+       * See [`Pallet::execute`].
        **/
       execute: AugmentedSubmittable<(proposal: Call | IMethod | string | Uint8Array, lengthBound: Compact<u32> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [Call, Compact<u32>]>;
       /**
-       * Add a new proposal to either be voted on or executed directly.
-       * 
-       * Requires the sender to be member.
-       * 
-       * `threshold` determines whether `proposal` is executed directly (`threshold < 2`)
-       * or put up for voting.
-       * 
-       * ## Complexity
-       * - `O(B + M + P1)` or `O(B + M + P2)` where:
-       * - `B` is `proposal` size in bytes (length-fee-bounded)
-       * - `M` is members-count (code- and governance-bounded)
-       * - branching is influenced by `threshold` where:
-       * - `P1` is proposal execution complexity (`threshold < 2`)
-       * - `P2` is proposals-count (code-bounded) (`threshold >= 2`)
+       * See [`Pallet::propose`].
        **/
       propose: AugmentedSubmittable<(threshold: Compact<u32> | AnyNumber | Uint8Array, proposal: Call | IMethod | string | Uint8Array, lengthBound: Compact<u32> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u32>, Call, Compact<u32>]>;
       /**
-       * Set the collective's membership.
-       * 
-       * - `new_members`: The new member list. Be nice to the chain and provide it sorted.
-       * - `prime`: The prime member whose vote sets the default.
-       * - `old_count`: The upper bound for the previous number of members in storage. Used for
-       * weight estimation.
-       * 
-       * The dispatch of this call must be `SetMembersOrigin`.
-       * 
-       * NOTE: Does not enforce the expected `MaxMembers` limit on the amount of members, but
-       * the weight estimations rely on it to estimate dispatchable weight.
-       * 
-       * # WARNING:
-       * 
-       * The `pallet-collective` can also be managed by logic outside of the pallet through the
-       * implementation of the trait [`ChangeMembers`].
-       * Any call to `set_members` must be careful that the member set doesn't get out of sync
-       * with other logic managing the member set.
-       * 
-       * ## Complexity:
-       * - `O(MP + N)` where:
-       * - `M` old-members-count (code- and governance-bounded)
-       * - `N` new-members-count (code- and governance-bounded)
-       * - `P` proposals-count (code-bounded)
+       * See [`Pallet::set_members`].
        **/
       setMembers: AugmentedSubmittable<(newMembers: Vec<AccountId32> | (AccountId32 | string | Uint8Array)[], prime: Option<AccountId32> | null | Uint8Array | AccountId32 | string, oldCount: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [Vec<AccountId32>, Option<AccountId32>, u32]>;
       /**
-       * Add an aye or nay vote for the sender to the given proposal.
-       * 
-       * Requires the sender to be a member.
-       * 
-       * Transaction fees will be waived if the member is voting on any particular proposal
-       * for the first time and the call is successful. Subsequent vote changes will charge a
-       * fee.
-       * ## Complexity
-       * - `O(M)` where `M` is members-count (code- and governance-bounded)
+       * See [`Pallet::vote`].
        **/
       vote: AugmentedSubmittable<(proposal: H256 | string | Uint8Array, index: Compact<u32> | AnyNumber | Uint8Array, approve: bool | boolean | Uint8Array) => SubmittableExtrinsic<ApiType>, [H256, Compact<u32>, bool]>;
       /**
@@ -1139,273 +424,79 @@ declare module '@polkadot/api-base/types/submittable' {
     };
     democracy: {
       /**
-       * Permanently place a proposal into the blacklist. This prevents it from ever being
-       * proposed again.
-       * 
-       * If called on a queued public or external proposal, then this will result in it being
-       * removed. If the `ref_index` supplied is an active referendum with the proposal hash,
-       * then it will be cancelled.
-       * 
-       * The dispatch origin of this call must be `BlacklistOrigin`.
-       * 
-       * - `proposal_hash`: The proposal hash to blacklist permanently.
-       * - `ref_index`: An ongoing referendum whose hash is `proposal_hash`, which will be
-       * cancelled.
-       * 
-       * Weight: `O(p)` (though as this is an high-privilege dispatch, we assume it has a
-       * reasonable value).
+       * See [`Pallet::blacklist`].
        **/
       blacklist: AugmentedSubmittable<(proposalHash: H256 | string | Uint8Array, maybeRefIndex: Option<u32> | null | Uint8Array | u32 | AnyNumber) => SubmittableExtrinsic<ApiType>, [H256, Option<u32>]>;
       /**
-       * Remove a proposal.
-       * 
-       * The dispatch origin of this call must be `CancelProposalOrigin`.
-       * 
-       * - `prop_index`: The index of the proposal to cancel.
-       * 
-       * Weight: `O(p)` where `p = PublicProps::<T>::decode_len()`
+       * See [`Pallet::cancel_proposal`].
        **/
       cancelProposal: AugmentedSubmittable<(propIndex: Compact<u32> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u32>]>;
       /**
-       * Remove a referendum.
-       * 
-       * The dispatch origin of this call must be _Root_.
-       * 
-       * - `ref_index`: The index of the referendum to cancel.
-       * 
-       * # Weight: `O(1)`.
+       * See [`Pallet::cancel_referendum`].
        **/
       cancelReferendum: AugmentedSubmittable<(refIndex: Compact<u32> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u32>]>;
       /**
-       * Clears all public proposals.
-       * 
-       * The dispatch origin of this call must be _Root_.
-       * 
-       * Weight: `O(1)`.
+       * See [`Pallet::clear_public_proposals`].
        **/
       clearPublicProposals: AugmentedSubmittable<() => SubmittableExtrinsic<ApiType>, []>;
       /**
-       * Delegate the voting power (with some given conviction) of the sending account.
-       * 
-       * The balance delegated is locked for as long as it's delegated, and thereafter for the
-       * time appropriate for the conviction's lock period.
-       * 
-       * The dispatch origin of this call must be _Signed_, and the signing account must either:
-       * - be delegating already; or
-       * - have no voting activity (if there is, then it will need to be removed/consolidated
-       * through `reap_vote` or `unvote`).
-       * 
-       * - `to`: The account whose voting the `target` account's voting power will follow.
-       * - `conviction`: The conviction that will be attached to the delegated votes. When the
-       * account is undelegated, the funds will be locked for the corresponding period.
-       * - `balance`: The amount of the account's balance to be used in delegating. This must not
-       * be more than the account's current balance.
-       * 
-       * Emits `Delegated`.
-       * 
-       * Weight: `O(R)` where R is the number of referendums the voter delegating to has
-       * voted on. Weight is charged as if maximum votes.
+       * See [`Pallet::delegate`].
        **/
       delegate: AugmentedSubmittable<(to: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, conviction: PalletDemocracyConviction | 'None' | 'Locked1x' | 'Locked2x' | 'Locked3x' | 'Locked4x' | 'Locked5x' | 'Locked6x' | number | Uint8Array, balance: u128 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [MultiAddress, PalletDemocracyConviction, u128]>;
       /**
-       * Schedule an emergency cancellation of a referendum. Cannot happen twice to the same
-       * referendum.
-       * 
-       * The dispatch origin of this call must be `CancellationOrigin`.
-       * 
-       * -`ref_index`: The index of the referendum to cancel.
-       * 
-       * Weight: `O(1)`.
+       * See [`Pallet::emergency_cancel`].
        **/
       emergencyCancel: AugmentedSubmittable<(refIndex: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32]>;
       /**
-       * Schedule a referendum to be tabled once it is legal to schedule an external
-       * referendum.
-       * 
-       * The dispatch origin of this call must be `ExternalOrigin`.
-       * 
-       * - `proposal_hash`: The preimage hash of the proposal.
+       * See [`Pallet::external_propose`].
        **/
       externalPropose: AugmentedSubmittable<(proposal: FrameSupportPreimagesBounded | { Legacy: any } | { Inline: any } | { Lookup: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [FrameSupportPreimagesBounded]>;
       /**
-       * Schedule a negative-turnout-bias referendum to be tabled next once it is legal to
-       * schedule an external referendum.
-       * 
-       * The dispatch of this call must be `ExternalDefaultOrigin`.
-       * 
-       * - `proposal_hash`: The preimage hash of the proposal.
-       * 
-       * Unlike `external_propose`, blacklisting has no effect on this and it may replace a
-       * pre-scheduled `external_propose` call.
-       * 
-       * Weight: `O(1)`
+       * See [`Pallet::external_propose_default`].
        **/
       externalProposeDefault: AugmentedSubmittable<(proposal: FrameSupportPreimagesBounded | { Legacy: any } | { Inline: any } | { Lookup: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [FrameSupportPreimagesBounded]>;
       /**
-       * Schedule a majority-carries referendum to be tabled next once it is legal to schedule
-       * an external referendum.
-       * 
-       * The dispatch of this call must be `ExternalMajorityOrigin`.
-       * 
-       * - `proposal_hash`: The preimage hash of the proposal.
-       * 
-       * Unlike `external_propose`, blacklisting has no effect on this and it may replace a
-       * pre-scheduled `external_propose` call.
-       * 
-       * Weight: `O(1)`
+       * See [`Pallet::external_propose_majority`].
        **/
       externalProposeMajority: AugmentedSubmittable<(proposal: FrameSupportPreimagesBounded | { Legacy: any } | { Inline: any } | { Lookup: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [FrameSupportPreimagesBounded]>;
       /**
-       * Schedule the currently externally-proposed majority-carries referendum to be tabled
-       * immediately. If there is no externally-proposed referendum currently, or if there is one
-       * but it is not a majority-carries referendum then it fails.
-       * 
-       * The dispatch of this call must be `FastTrackOrigin`.
-       * 
-       * - `proposal_hash`: The hash of the current external proposal.
-       * - `voting_period`: The period that is allowed for voting on this proposal. Increased to
-       * Must be always greater than zero.
-       * For `FastTrackOrigin` must be equal or greater than `FastTrackVotingPeriod`.
-       * - `delay`: The number of block after voting has ended in approval and this should be
-       * enacted. This doesn't have a minimum amount.
-       * 
-       * Emits `Started`.
-       * 
-       * Weight: `O(1)`
+       * See [`Pallet::fast_track`].
        **/
       fastTrack: AugmentedSubmittable<(proposalHash: H256 | string | Uint8Array, votingPeriod: u32 | AnyNumber | Uint8Array, delay: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [H256, u32, u32]>;
       /**
-       * Propose a sensitive action to be taken.
-       * 
-       * The dispatch origin of this call must be _Signed_ and the sender must
-       * have funds to cover the deposit.
-       * 
-       * - `proposal_hash`: The hash of the proposal preimage.
-       * - `value`: The amount of deposit (must be at least `MinimumDeposit`).
-       * 
-       * Emits `Proposed`.
+       * See [`Pallet::propose`].
        **/
       propose: AugmentedSubmittable<(proposal: FrameSupportPreimagesBounded | { Legacy: any } | { Inline: any } | { Lookup: any } | string | Uint8Array, value: Compact<u128> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [FrameSupportPreimagesBounded, Compact<u128>]>;
       /**
-       * Remove a vote for a referendum.
-       * 
-       * If the `target` is equal to the signer, then this function is exactly equivalent to
-       * `remove_vote`. If not equal to the signer, then the vote must have expired,
-       * either because the referendum was cancelled, because the voter lost the referendum or
-       * because the conviction period is over.
-       * 
-       * The dispatch origin of this call must be _Signed_.
-       * 
-       * - `target`: The account of the vote to be removed; this account must have voted for
-       * referendum `index`.
-       * - `index`: The index of referendum of the vote to be removed.
-       * 
-       * Weight: `O(R + log R)` where R is the number of referenda that `target` has voted on.
-       * Weight is calculated for the maximum number of vote.
+       * See [`Pallet::remove_other_vote`].
        **/
       removeOtherVote: AugmentedSubmittable<(target: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, index: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [MultiAddress, u32]>;
       /**
-       * Remove a vote for a referendum.
-       * 
-       * If:
-       * - the referendum was cancelled, or
-       * - the referendum is ongoing, or
-       * - the referendum has ended such that
-       * - the vote of the account was in opposition to the result; or
-       * - there was no conviction to the account's vote; or
-       * - the account made a split vote
-       * ...then the vote is removed cleanly and a following call to `unlock` may result in more
-       * funds being available.
-       * 
-       * If, however, the referendum has ended and:
-       * - it finished corresponding to the vote of the account, and
-       * - the account made a standard vote with conviction, and
-       * - the lock period of the conviction is not over
-       * ...then the lock will be aggregated into the overall account's lock, which may involve
-       * *overlocking* (where the two locks are combined into a single lock that is the maximum
-       * of both the amount locked and the time is it locked for).
-       * 
-       * The dispatch origin of this call must be _Signed_, and the signer must have a vote
-       * registered for referendum `index`.
-       * 
-       * - `index`: The index of referendum of the vote to be removed.
-       * 
-       * Weight: `O(R + log R)` where R is the number of referenda that `target` has voted on.
-       * Weight is calculated for the maximum number of vote.
+       * See [`Pallet::remove_vote`].
        **/
       removeVote: AugmentedSubmittable<(index: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32]>;
       /**
-       * Signals agreement with a particular proposal.
-       * 
-       * The dispatch origin of this call must be _Signed_ and the sender
-       * must have funds to cover the deposit, equal to the original deposit.
-       * 
-       * - `proposal`: The index of the proposal to second.
+       * See [`Pallet::second`].
        **/
       second: AugmentedSubmittable<(proposal: Compact<u32> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u32>]>;
       /**
-       * Set or clear a metadata of a proposal or a referendum.
-       * 
-       * Parameters:
-       * - `origin`: Must correspond to the `MetadataOwner`.
-       * - `ExternalOrigin` for an external proposal with the `SuperMajorityApprove`
-       * threshold.
-       * - `ExternalDefaultOrigin` for an external proposal with the `SuperMajorityAgainst`
-       * threshold.
-       * - `ExternalMajorityOrigin` for an external proposal with the `SimpleMajority`
-       * threshold.
-       * - `Signed` by a creator for a public proposal.
-       * - `Signed` to clear a metadata for a finished referendum.
-       * - `Root` to set a metadata for an ongoing referendum.
-       * - `owner`: an identifier of a metadata owner.
-       * - `maybe_hash`: The hash of an on-chain stored preimage. `None` to clear a metadata.
+       * See [`Pallet::set_metadata`].
        **/
       setMetadata: AugmentedSubmittable<(owner: PalletDemocracyMetadataOwner | { External: any } | { Proposal: any } | { Referendum: any } | string | Uint8Array, maybeHash: Option<H256> | null | Uint8Array | H256 | string) => SubmittableExtrinsic<ApiType>, [PalletDemocracyMetadataOwner, Option<H256>]>;
       /**
-       * Undelegate the voting power of the sending account.
-       * 
-       * Tokens may be unlocked following once an amount of time consistent with the lock period
-       * of the conviction with which the delegation was issued.
-       * 
-       * The dispatch origin of this call must be _Signed_ and the signing account must be
-       * currently delegating.
-       * 
-       * Emits `Undelegated`.
-       * 
-       * Weight: `O(R)` where R is the number of referendums the voter delegating to has
-       * voted on. Weight is charged as if maximum votes.
+       * See [`Pallet::undelegate`].
        **/
       undelegate: AugmentedSubmittable<() => SubmittableExtrinsic<ApiType>, []>;
       /**
-       * Unlock tokens that have an expired lock.
-       * 
-       * The dispatch origin of this call must be _Signed_.
-       * 
-       * - `target`: The account to remove the lock on.
-       * 
-       * Weight: `O(R)` with R number of vote of target.
+       * See [`Pallet::unlock`].
        **/
       unlock: AugmentedSubmittable<(target: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [MultiAddress]>;
       /**
-       * Veto and blacklist the external proposal hash.
-       * 
-       * The dispatch origin of this call must be `VetoOrigin`.
-       * 
-       * - `proposal_hash`: The preimage hash of the proposal to veto and blacklist.
-       * 
-       * Emits `Vetoed`.
-       * 
-       * Weight: `O(V + log(V))` where V is number of `existing vetoers`
+       * See [`Pallet::veto_external`].
        **/
       vetoExternal: AugmentedSubmittable<(proposalHash: H256 | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [H256]>;
       /**
-       * Vote in a referendum. If `vote.is_aye()`, the vote is to enact the proposal;
-       * otherwise it is a vote to keep the status quo.
-       * 
-       * The dispatch origin of this call must be _Signed_.
-       * 
-       * - `ref_index`: The index of the referendum to vote for.
-       * - `vote`: The vote configuration.
+       * See [`Pallet::vote`].
        **/
       vote: AugmentedSubmittable<(refIndex: Compact<u32> | AnyNumber | Uint8Array, vote: PalletDemocracyVoteAccountVote | { Standard: any } | { Split: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u32>, PalletDemocracyVoteAccountVote]>;
       /**
@@ -1415,7 +506,7 @@ declare module '@polkadot/api-base/types/submittable' {
     };
     dmpQueue: {
       /**
-       * Service a single overweight message.
+       * See [`Pallet::service_overweight`].
        **/
       serviceOverweight: AugmentedSubmittable<(index: u64 | AnyNumber | Uint8Array, weightLimit: SpWeightsWeightV2Weight | { refTime?: any; proofSize?: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [u64, SpWeightsWeightV2Weight]>;
       /**
@@ -1425,233 +516,63 @@ declare module '@polkadot/api-base/types/submittable' {
     };
     identity: {
       /**
-       * Add a registrar to the system.
-       * 
-       * The dispatch origin for this call must be `T::RegistrarOrigin`.
-       * 
-       * - `account`: the account of the registrar.
-       * 
-       * Emits `RegistrarAdded` if successful.
-       * 
-       * ## Complexity
-       * - `O(R)` where `R` registrar-count (governance-bounded and code-bounded).
+       * See [`Pallet::add_registrar`].
        **/
       addRegistrar: AugmentedSubmittable<(account: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [MultiAddress]>;
       /**
-       * Add the given account to the sender's subs.
-       * 
-       * Payment: Balance reserved by a previous `set_subs` call for one sub will be repatriated
-       * to the sender.
-       * 
-       * The dispatch origin for this call must be _Signed_ and the sender must have a registered
-       * sub identity of `sub`.
+       * See [`Pallet::add_sub`].
        **/
       addSub: AugmentedSubmittable<(sub: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, data: Data | { None: any } | { Raw: any } | { BlakeTwo256: any } | { Sha256: any } | { Keccak256: any } | { ShaThree256: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [MultiAddress, Data]>;
       /**
-       * Cancel a previous request.
-       * 
-       * Payment: A previously reserved deposit is returned on success.
-       * 
-       * The dispatch origin for this call must be _Signed_ and the sender must have a
-       * registered identity.
-       * 
-       * - `reg_index`: The index of the registrar whose judgement is no longer requested.
-       * 
-       * Emits `JudgementUnrequested` if successful.
-       * 
-       * ## Complexity
-       * - `O(R + X)`.
-       * - where `R` registrar-count (governance-bounded).
-       * - where `X` additional-field-count (deposit-bounded and code-bounded).
+       * See [`Pallet::cancel_request`].
        **/
       cancelRequest: AugmentedSubmittable<(regIndex: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32]>;
       /**
-       * Clear an account's identity info and all sub-accounts and return all deposits.
-       * 
-       * Payment: All reserved balances on the account are returned.
-       * 
-       * The dispatch origin for this call must be _Signed_ and the sender must have a registered
-       * identity.
-       * 
-       * Emits `IdentityCleared` if successful.
-       * 
-       * ## Complexity
-       * - `O(R + S + X)`
-       * - where `R` registrar-count (governance-bounded).
-       * - where `S` subs-count (hard- and deposit-bounded).
-       * - where `X` additional-field-count (deposit-bounded and code-bounded).
+       * See [`Pallet::clear_identity`].
        **/
       clearIdentity: AugmentedSubmittable<() => SubmittableExtrinsic<ApiType>, []>;
       /**
-       * Remove an account's identity and sub-account information and slash the deposits.
-       * 
-       * Payment: Reserved balances from `set_subs` and `set_identity` are slashed and handled by
-       * `Slash`. Verification request deposits are not returned; they should be cancelled
-       * manually using `cancel_request`.
-       * 
-       * The dispatch origin for this call must match `T::ForceOrigin`.
-       * 
-       * - `target`: the account whose identity the judgement is upon. This must be an account
-       * with a registered identity.
-       * 
-       * Emits `IdentityKilled` if successful.
-       * 
-       * ## Complexity
-       * - `O(R + S + X)`
-       * - where `R` registrar-count (governance-bounded).
-       * - where `S` subs-count (hard- and deposit-bounded).
-       * - where `X` additional-field-count (deposit-bounded and code-bounded).
+       * See [`Pallet::kill_identity`].
        **/
       killIdentity: AugmentedSubmittable<(target: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [MultiAddress]>;
       /**
-       * Provide a judgement for an account's identity.
-       * 
-       * The dispatch origin for this call must be _Signed_ and the sender must be the account
-       * of the registrar whose index is `reg_index`.
-       * 
-       * - `reg_index`: the index of the registrar whose judgement is being made.
-       * - `target`: the account whose identity the judgement is upon. This must be an account
-       * with a registered identity.
-       * - `judgement`: the judgement of the registrar of index `reg_index` about `target`.
-       * - `identity`: The hash of the [`IdentityInfo`] for that the judgement is provided.
-       * 
-       * Emits `JudgementGiven` if successful.
-       * 
-       * ## Complexity
-       * - `O(R + X)`.
-       * - where `R` registrar-count (governance-bounded).
-       * - where `X` additional-field-count (deposit-bounded and code-bounded).
+       * See [`Pallet::provide_judgement`].
        **/
       provideJudgement: AugmentedSubmittable<(regIndex: Compact<u32> | AnyNumber | Uint8Array, target: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, judgement: PalletIdentityJudgement | { Unknown: any } | { FeePaid: any } | { Reasonable: any } | { KnownGood: any } | { OutOfDate: any } | { LowQuality: any } | { Erroneous: any } | string | Uint8Array, identity: H256 | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u32>, MultiAddress, PalletIdentityJudgement, H256]>;
       /**
-       * Remove the sender as a sub-account.
-       * 
-       * Payment: Balance reserved by a previous `set_subs` call for one sub will be repatriated
-       * to the sender (*not* the original depositor).
-       * 
-       * The dispatch origin for this call must be _Signed_ and the sender must have a registered
-       * super-identity.
-       * 
-       * NOTE: This should not normally be used, but is provided in the case that the non-
-       * controller of an account is maliciously registered as a sub-account.
+       * See [`Pallet::quit_sub`].
        **/
       quitSub: AugmentedSubmittable<() => SubmittableExtrinsic<ApiType>, []>;
       /**
-       * Remove the given account from the sender's subs.
-       * 
-       * Payment: Balance reserved by a previous `set_subs` call for one sub will be repatriated
-       * to the sender.
-       * 
-       * The dispatch origin for this call must be _Signed_ and the sender must have a registered
-       * sub identity of `sub`.
+       * See [`Pallet::remove_sub`].
        **/
       removeSub: AugmentedSubmittable<(sub: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [MultiAddress]>;
       /**
-       * Alter the associated name of the given sub-account.
-       * 
-       * The dispatch origin for this call must be _Signed_ and the sender must have a registered
-       * sub identity of `sub`.
+       * See [`Pallet::rename_sub`].
        **/
       renameSub: AugmentedSubmittable<(sub: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, data: Data | { None: any } | { Raw: any } | { BlakeTwo256: any } | { Sha256: any } | { Keccak256: any } | { ShaThree256: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [MultiAddress, Data]>;
       /**
-       * Request a judgement from a registrar.
-       * 
-       * Payment: At most `max_fee` will be reserved for payment to the registrar if judgement
-       * given.
-       * 
-       * The dispatch origin for this call must be _Signed_ and the sender must have a
-       * registered identity.
-       * 
-       * - `reg_index`: The index of the registrar whose judgement is requested.
-       * - `max_fee`: The maximum fee that may be paid. This should just be auto-populated as:
-       * 
-       * ```nocompile
-       * Self::registrars().get(reg_index).unwrap().fee
-       * ```
-       * 
-       * Emits `JudgementRequested` if successful.
-       * 
-       * ## Complexity
-       * - `O(R + X)`.
-       * - where `R` registrar-count (governance-bounded).
-       * - where `X` additional-field-count (deposit-bounded and code-bounded).
+       * See [`Pallet::request_judgement`].
        **/
       requestJudgement: AugmentedSubmittable<(regIndex: Compact<u32> | AnyNumber | Uint8Array, maxFee: Compact<u128> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u32>, Compact<u128>]>;
       /**
-       * Change the account associated with a registrar.
-       * 
-       * The dispatch origin for this call must be _Signed_ and the sender must be the account
-       * of the registrar whose index is `index`.
-       * 
-       * - `index`: the index of the registrar whose fee is to be set.
-       * - `new`: the new account ID.
-       * 
-       * ## Complexity
-       * - `O(R)`.
-       * - where `R` registrar-count (governance-bounded).
+       * See [`Pallet::set_account_id`].
        **/
       setAccountId: AugmentedSubmittable<(index: Compact<u32> | AnyNumber | Uint8Array, updated: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u32>, MultiAddress]>;
       /**
-       * Set the fee required for a judgement to be requested from a registrar.
-       * 
-       * The dispatch origin for this call must be _Signed_ and the sender must be the account
-       * of the registrar whose index is `index`.
-       * 
-       * - `index`: the index of the registrar whose fee is to be set.
-       * - `fee`: the new fee.
-       * 
-       * ## Complexity
-       * - `O(R)`.
-       * - where `R` registrar-count (governance-bounded).
+       * See [`Pallet::set_fee`].
        **/
       setFee: AugmentedSubmittable<(index: Compact<u32> | AnyNumber | Uint8Array, fee: Compact<u128> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u32>, Compact<u128>]>;
       /**
-       * Set the field information for a registrar.
-       * 
-       * The dispatch origin for this call must be _Signed_ and the sender must be the account
-       * of the registrar whose index is `index`.
-       * 
-       * - `index`: the index of the registrar whose fee is to be set.
-       * - `fields`: the fields that the registrar concerns themselves with.
-       * 
-       * ## Complexity
-       * - `O(R)`.
-       * - where `R` registrar-count (governance-bounded).
+       * See [`Pallet::set_fields`].
        **/
       setFields: AugmentedSubmittable<(index: Compact<u32> | AnyNumber | Uint8Array, fields: PalletIdentityBitFlags) => SubmittableExtrinsic<ApiType>, [Compact<u32>, PalletIdentityBitFlags]>;
       /**
-       * Set an account's identity information and reserve the appropriate deposit.
-       * 
-       * If the account already has identity information, the deposit is taken as part payment
-       * for the new deposit.
-       * 
-       * The dispatch origin for this call must be _Signed_.
-       * 
-       * - `info`: The identity information.
-       * 
-       * Emits `IdentitySet` if successful.
-       * 
-       * ## Complexity
-       * - `O(X + X' + R)`
-       * - where `X` additional-field-count (deposit-bounded and code-bounded)
-       * - where `R` judgements-count (registrar-count-bounded)
+       * See [`Pallet::set_identity`].
        **/
       setIdentity: AugmentedSubmittable<(info: PalletIdentityIdentityInfo | { additional?: any; display?: any; legal?: any; web?: any; riot?: any; email?: any; pgpFingerprint?: any; image?: any; twitter?: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [PalletIdentityIdentityInfo]>;
       /**
-       * Set the sub-accounts of the sender.
-       * 
-       * Payment: Any aggregate balance reserved by previous `set_subs` calls will be returned
-       * and an amount `SubAccountDeposit` will be reserved for each item in `subs`.
-       * 
-       * The dispatch origin for this call must be _Signed_ and the sender must have a registered
-       * identity.
-       * 
-       * - `subs`: The identity's (new) sub-accounts.
-       * 
-       * ## Complexity
-       * - `O(P + S)`
-       * - where `P` old-subs-count (hard- and deposit-bounded).
-       * - where `S` subs-count (hard- and deposit-bounded).
+       * See [`Pallet::set_subs`].
        **/
       setSubs: AugmentedSubmittable<(subs: Vec<ITuple<[AccountId32, Data]>> | ([AccountId32 | string | Uint8Array, Data | { None: any } | { Raw: any } | { BlakeTwo256: any } | { Sha256: any } | { Keccak256: any } | { ShaThree256: any } | string | Uint8Array])[]) => SubmittableExtrinsic<ApiType>, [Vec<ITuple<[AccountId32, Data]>>]>;
       /**
@@ -1661,46 +582,19 @@ declare module '@polkadot/api-base/types/submittable' {
     };
     lottery: {
       /**
-       * Buy a ticket to enter the lottery.
-       * 
-       * This extrinsic acts as a passthrough function for `call`. In all
-       * situations where `call` alone would succeed, this extrinsic should
-       * succeed.
-       * 
-       * If `call` is successful, then we will attempt to purchase a ticket,
-       * which may fail silently. To detect success of a ticket purchase, you
-       * should listen for the `TicketBought` event.
-       * 
-       * This extrinsic must be called by a signed origin.
+       * See [`Pallet::buy_ticket`].
        **/
       buyTicket: AugmentedSubmittable<(call: Call | IMethod | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [Call]>;
       /**
-       * Set calls in storage which can be used to purchase a lottery ticket.
-       * 
-       * This function only matters if you use the `ValidateCall` implementation
-       * provided by this pallet, which uses storage to determine the valid calls.
-       * 
-       * This extrinsic must be called by the Manager origin.
+       * See [`Pallet::set_calls`].
        **/
       setCalls: AugmentedSubmittable<(calls: Vec<Call> | (Call | IMethod | string | Uint8Array)[]) => SubmittableExtrinsic<ApiType>, [Vec<Call>]>;
       /**
-       * Start a lottery using the provided configuration.
-       * 
-       * This extrinsic must be called by the `ManagerOrigin`.
-       * 
-       * Parameters:
-       * 
-       * * `price`: The cost of a single ticket.
-       * * `length`: How long the lottery should run for starting at the current block.
-       * * `delay`: How long after the lottery end we should wait before picking a winner.
-       * * `repeat`: If the lottery should repeat when completed.
+       * See [`Pallet::start_lottery`].
        **/
       startLottery: AugmentedSubmittable<(price: u128 | AnyNumber | Uint8Array, length: u32 | AnyNumber | Uint8Array, delay: u32 | AnyNumber | Uint8Array, repeat: bool | boolean | Uint8Array) => SubmittableExtrinsic<ApiType>, [u128, u32, u32, bool]>;
       /**
-       * If a lottery is repeating, you can use this to stop the repeat.
-       * The lottery will continue to run to completion.
-       * 
-       * This extrinsic must be called by the `ManagerOrigin`.
+       * See [`Pallet::stop_repeat`].
        **/
       stopRepeat: AugmentedSubmittable<() => SubmittableExtrinsic<ApiType>, []>;
       /**
@@ -1710,117 +604,19 @@ declare module '@polkadot/api-base/types/submittable' {
     };
     multisig: {
       /**
-       * Register approval for a dispatch to be made from a deterministic composite account if
-       * approved by a total of `threshold - 1` of `other_signatories`.
-       * 
-       * Payment: `DepositBase` will be reserved if this is the first approval, plus
-       * `threshold` times `DepositFactor`. It is returned once this dispatch happens or
-       * is cancelled.
-       * 
-       * The dispatch origin for this call must be _Signed_.
-       * 
-       * - `threshold`: The total number of approvals for this dispatch before it is executed.
-       * - `other_signatories`: The accounts (other than the sender) who can approve this
-       * dispatch. May not be empty.
-       * - `maybe_timepoint`: If this is the first approval, then this must be `None`. If it is
-       * not the first approval, then it must be `Some`, with the timepoint (block number and
-       * transaction index) of the first approval transaction.
-       * - `call_hash`: The hash of the call to be executed.
-       * 
-       * NOTE: If this is the final approval, you will want to use `as_multi` instead.
-       * 
-       * ## Complexity
-       * - `O(S)`.
-       * - Up to one balance-reserve or unreserve operation.
-       * - One passthrough operation, one insert, both `O(S)` where `S` is the number of
-       * signatories. `S` is capped by `MaxSignatories`, with weight being proportional.
-       * - One encode & hash, both of complexity `O(S)`.
-       * - Up to one binary search and insert (`O(logS + S)`).
-       * - I/O: 1 read `O(S)`, up to 1 mutate `O(S)`. Up to one remove.
-       * - One event.
-       * - Storage: inserts one item, value size bounded by `MaxSignatories`, with a deposit
-       * taken for its lifetime of `DepositBase + threshold * DepositFactor`.
+       * See [`Pallet::approve_as_multi`].
        **/
       approveAsMulti: AugmentedSubmittable<(threshold: u16 | AnyNumber | Uint8Array, otherSignatories: Vec<AccountId32> | (AccountId32 | string | Uint8Array)[], maybeTimepoint: Option<PalletMultisigTimepoint> | null | Uint8Array | PalletMultisigTimepoint | { height?: any; index?: any } | string, callHash: U8aFixed | string | Uint8Array, maxWeight: SpWeightsWeightV2Weight | { refTime?: any; proofSize?: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [u16, Vec<AccountId32>, Option<PalletMultisigTimepoint>, U8aFixed, SpWeightsWeightV2Weight]>;
       /**
-       * Register approval for a dispatch to be made from a deterministic composite account if
-       * approved by a total of `threshold - 1` of `other_signatories`.
-       * 
-       * If there are enough, then dispatch the call.
-       * 
-       * Payment: `DepositBase` will be reserved if this is the first approval, plus
-       * `threshold` times `DepositFactor`. It is returned once this dispatch happens or
-       * is cancelled.
-       * 
-       * The dispatch origin for this call must be _Signed_.
-       * 
-       * - `threshold`: The total number of approvals for this dispatch before it is executed.
-       * - `other_signatories`: The accounts (other than the sender) who can approve this
-       * dispatch. May not be empty.
-       * - `maybe_timepoint`: If this is the first approval, then this must be `None`. If it is
-       * not the first approval, then it must be `Some`, with the timepoint (block number and
-       * transaction index) of the first approval transaction.
-       * - `call`: The call to be executed.
-       * 
-       * NOTE: Unless this is the final approval, you will generally want to use
-       * `approve_as_multi` instead, since it only requires a hash of the call.
-       * 
-       * Result is equivalent to the dispatched result if `threshold` is exactly `1`. Otherwise
-       * on success, result is `Ok` and the result from the interior call, if it was executed,
-       * may be found in the deposited `MultisigExecuted` event.
-       * 
-       * ## Complexity
-       * - `O(S + Z + Call)`.
-       * - Up to one balance-reserve or unreserve operation.
-       * - One passthrough operation, one insert, both `O(S)` where `S` is the number of
-       * signatories. `S` is capped by `MaxSignatories`, with weight being proportional.
-       * - One call encode & hash, both of complexity `O(Z)` where `Z` is tx-len.
-       * - One encode & hash, both of complexity `O(S)`.
-       * - Up to one binary search and insert (`O(logS + S)`).
-       * - I/O: 1 read `O(S)`, up to 1 mutate `O(S)`. Up to one remove.
-       * - One event.
-       * - The weight of the `call`.
-       * - Storage: inserts one item, value size bounded by `MaxSignatories`, with a deposit
-       * taken for its lifetime of `DepositBase + threshold * DepositFactor`.
+       * See [`Pallet::as_multi`].
        **/
       asMulti: AugmentedSubmittable<(threshold: u16 | AnyNumber | Uint8Array, otherSignatories: Vec<AccountId32> | (AccountId32 | string | Uint8Array)[], maybeTimepoint: Option<PalletMultisigTimepoint> | null | Uint8Array | PalletMultisigTimepoint | { height?: any; index?: any } | string, call: Call | IMethod | string | Uint8Array, maxWeight: SpWeightsWeightV2Weight | { refTime?: any; proofSize?: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [u16, Vec<AccountId32>, Option<PalletMultisigTimepoint>, Call, SpWeightsWeightV2Weight]>;
       /**
-       * Immediately dispatch a multi-signature call using a single approval from the caller.
-       * 
-       * The dispatch origin for this call must be _Signed_.
-       * 
-       * - `other_signatories`: The accounts (other than the sender) who are part of the
-       * multi-signature, but do not participate in the approval process.
-       * - `call`: The call to be executed.
-       * 
-       * Result is equivalent to the dispatched result.
-       * 
-       * ## Complexity
-       * O(Z + C) where Z is the length of the call and C its execution weight.
+       * See [`Pallet::as_multi_threshold_1`].
        **/
       asMultiThreshold1: AugmentedSubmittable<(otherSignatories: Vec<AccountId32> | (AccountId32 | string | Uint8Array)[], call: Call | IMethod | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [Vec<AccountId32>, Call]>;
       /**
-       * Cancel a pre-existing, on-going multisig transaction. Any deposit reserved previously
-       * for this operation will be unreserved on success.
-       * 
-       * The dispatch origin for this call must be _Signed_.
-       * 
-       * - `threshold`: The total number of approvals for this dispatch before it is executed.
-       * - `other_signatories`: The accounts (other than the sender) who can approve this
-       * dispatch. May not be empty.
-       * - `timepoint`: The timepoint (block number and transaction index) of the first approval
-       * transaction for this dispatch.
-       * - `call_hash`: The hash of the call to be executed.
-       * 
-       * ## Complexity
-       * - `O(S)`.
-       * - Up to one balance-reserve or unreserve operation.
-       * - One passthrough operation, one insert, both `O(S)` where `S` is the number of
-       * signatories. `S` is capped by `MaxSignatories`, with weight being proportional.
-       * - One encode & hash, both of complexity `O(S)`.
-       * - One event.
-       * - I/O: 1 read `O(S)`, one remove.
-       * - Storage: removes one item.
+       * See [`Pallet::cancel_as_multi`].
        **/
       cancelAsMulti: AugmentedSubmittable<(threshold: u16 | AnyNumber | Uint8Array, otherSignatories: Vec<AccountId32> | (AccountId32 | string | Uint8Array)[], timepoint: PalletMultisigTimepoint | { height?: any; index?: any } | string | Uint8Array, callHash: U8aFixed | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [u16, Vec<AccountId32>, PalletMultisigTimepoint, U8aFixed]>;
       /**
@@ -1829,13 +625,25 @@ declare module '@polkadot/api-base/types/submittable' {
       [key: string]: SubmittableExtrinsicFunction<ApiType>;
     };
     palletIndex: {
+      /**
+       * See [`Pallet::claim_all_task`].
+       **/
       claimAllTask: AugmentedSubmittable<() => SubmittableExtrinsic<ApiType>, []>;
       /**
-       * Claim the oldest task that saved in actived task queue
+       * See [`Pallet::claim_task`].
        **/
       claimTask: AugmentedSubmittable<(taskId: U8aFixed | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [U8aFixed]>;
-      depositTask: AugmentedSubmittable<(asset: XcmV3MultiassetAssetId | { Concrete: any } | { Abstract: any } | string | Uint8Array, amount: u128 | AnyNumber | Uint8Array, recipient: Bytes | string | Uint8Array, worker: AccountId32 | string | Uint8Array, taskId: U8aFixed | string | Uint8Array, task: Bytes | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [XcmV3MultiassetAssetId, u128, Bytes, AccountId32, U8aFixed, Bytes]>;
+      /**
+       * See [`Pallet::deposit_task`].
+       **/
+      depositTask: AugmentedSubmittable<(asset: StagingXcmV3MultiassetAssetId | { Concrete: any } | { Abstract: any } | string | Uint8Array, amount: u128 | AnyNumber | Uint8Array, recipient: Bytes | string | Uint8Array, worker: AccountId32 | string | Uint8Array, taskId: U8aFixed | string | Uint8Array, task: Bytes | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [StagingXcmV3MultiassetAssetId, u128, Bytes, AccountId32, U8aFixed, Bytes]>;
+      /**
+       * See [`Pallet::force_add_worker`].
+       **/
       forceAddWorker: AugmentedSubmittable<(worker: AccountId32 | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [AccountId32]>;
+      /**
+       * See [`Pallet::force_remove_worker`].
+       **/
       forceRemoveWorker: AugmentedSubmittable<(worker: AccountId32 | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [AccountId32]>;
       /**
        * Generic tx
@@ -1844,40 +652,20 @@ declare module '@polkadot/api-base/types/submittable' {
     };
     parachainSystem: {
       /**
-       * Authorize an upgrade to a given `code_hash` for the runtime. The runtime can be supplied
-       * later.
-       * 
-       * The `check_version` parameter sets a boolean flag for whether or not the runtime's spec
-       * version and name should be verified on upgrade. Since the authorization only has a hash,
-       * it cannot actually perform the verification.
-       * 
-       * This call requires Root origin.
+       * See [`Pallet::authorize_upgrade`].
        **/
       authorizeUpgrade: AugmentedSubmittable<(codeHash: H256 | string | Uint8Array, checkVersion: bool | boolean | Uint8Array) => SubmittableExtrinsic<ApiType>, [H256, bool]>;
       /**
-       * Provide the preimage (runtime binary) `code` for an upgrade that has been authorized.
-       * 
-       * If the authorization required a version check, this call will ensure the spec name
-       * remains unchanged and that the spec version has increased.
-       * 
-       * Note that this function will not apply the new `code`, but only attempt to schedule the
-       * upgrade with the Relay Chain.
-       * 
-       * All origins are allowed.
+       * See [`Pallet::enact_authorized_upgrade`].
        **/
       enactAuthorizedUpgrade: AugmentedSubmittable<(code: Bytes | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [Bytes]>;
       /**
-       * Set the current validation data.
-       * 
-       * This should be invoked exactly once per block. It will panic at the finalization
-       * phase if the call was not invoked.
-       * 
-       * The dispatch origin for this call must be `Inherent`
-       * 
-       * As a side effect, this function upgrades the current validation function
-       * if the appropriate time has come.
+       * See [`Pallet::set_validation_data`].
        **/
       setValidationData: AugmentedSubmittable<(data: CumulusPrimitivesParachainInherentParachainInherentData | { validationData?: any; relayChainState?: any; downwardMessages?: any; horizontalMessages?: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [CumulusPrimitivesParachainInherentParachainInherentData]>;
+      /**
+       * See [`Pallet::sudo_send_upward_message`].
+       **/
       sudoSendUpwardMessage: AugmentedSubmittable<(message: Bytes | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [Bytes]>;
       /**
        * Generic tx
@@ -1886,29 +674,25 @@ declare module '@polkadot/api-base/types/submittable' {
     };
     phalaBasePool: {
       /**
-       * Adds a staker accountid to contribution whitelist.
-       * 
-       * Calling this method will forbide stakers contribute who isn't in the whitelist.
-       * The caller must be the owner of the pool.
-       * If a pool hasn't registed in the wihtelist map, any staker could contribute as what they use to do.
-       * The whitelist has a lmit len of 100 stakers.
+       * See [`Pallet::add_staker_to_whitelist`].
        **/
       addStakerToWhitelist: AugmentedSubmittable<(pid: u64 | AnyNumber | Uint8Array, staker: AccountId32 | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [u64, AccountId32]>;
       /**
-       * Removes a staker accountid to contribution whitelist.
-       * 
-       * The caller must be the owner of the pool.
-       * If the last staker in the whitelist is removed, the pool will return back to a normal pool that allow anyone to contribute.
+       * See [`Pallet::claim_reimbursement`].
+       **/
+      claimReimbursement: AugmentedSubmittable<(pid: u64 | AnyNumber | Uint8Array, target: AccountId32 | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [u64, AccountId32]>;
+      /**
+       * See [`Pallet::remove_staker_from_whitelist`].
        **/
       removeStakerFromWhitelist: AugmentedSubmittable<(pid: u64 | AnyNumber | Uint8Array, staker: AccountId32 | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [u64, AccountId32]>;
-      removeUnusedLock: AugmentedSubmittable<(maxIterations: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32]>;
-      resetLockIterPos: AugmentedSubmittable<() => SubmittableExtrinsic<ApiType>, []>;
       /**
-       * Adds a description to the pool
-       * 
-       * The caller must be the owner of the pool.
+       * See [`Pallet::set_pool_description`].
        **/
       setPoolDescription: AugmentedSubmittable<(pid: u64 | AnyNumber | Uint8Array, description: Bytes | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [u64, Bytes]>;
+      /**
+       * See [`Pallet::set_reimbursements`].
+       **/
+      setReimbursements: AugmentedSubmittable<(input: Vec<ITuple<[AccountId32, u64, u128]>> | ([AccountId32 | string | Uint8Array, u64 | AnyNumber | Uint8Array, u128 | AnyNumber | Uint8Array])[]) => SubmittableExtrinsic<ApiType>, [Vec<ITuple<[AccountId32, u64, u128]>>]>;
       /**
        * Generic tx
        **/
@@ -1916,52 +700,39 @@ declare module '@polkadot/api-base/types/submittable' {
     };
     phalaComputation: {
       /**
-       * Triggers a force heartbeat request to all workers by sending a MAX pow target
-       * 
-       * Only for integration test.
+       * See [`Pallet::force_heartbeat`].
        **/
       forceHeartbeat: AugmentedSubmittable<() => SubmittableExtrinsic<ApiType>, []>;
       /**
-       * Start computing
-       * 
-       * Only for integration test.
+       * See [`Pallet::force_start_computing`].
        **/
       forceStartComputing: AugmentedSubmittable<(session: AccountId32 | string | Uint8Array, stake: u128 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [AccountId32, u128]>;
       /**
-       * Stop computing
-       * 
-       * Only for integration test.
+       * See [`Pallet::force_stop_computing`].
        **/
       forceStopComputing: AugmentedSubmittable<(session: AccountId32 | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [AccountId32]>;
+      /**
+       * See [`Pallet::set_budget_per_block`].
+       **/
       setBudgetPerBlock: AugmentedSubmittable<(nonce: u64 | AnyNumber | Uint8Array, blockNumber: u32 | AnyNumber | Uint8Array, budget: u128 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u64, u32, u128]>;
       /**
-       * Sets the cool down expiration time in seconds.
-       * 
-       * Can only be called by root.
+       * See [`Pallet::set_cool_down_expiration`].
        **/
       setCoolDownExpiration: AugmentedSubmittable<(period: u64 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u64]>;
       /**
-       * Pause or resume the heartbeat challenges.
-       * 
-       * This API is introduced to pause the computing rewards for a period while we upgrading
-       * StakePool v2. Worker's rewards would still be accumulated in GK in the pausing period
-       * but never be paid out until the heartbeat is resumed.
-       * 
-       * Can only be called by root.
+       * See [`Pallet::set_heartbeat_paused`].
        **/
       setHeartbeatPaused: AugmentedSubmittable<(paused: bool | boolean | Uint8Array) => SubmittableExtrinsic<ApiType>, [bool]>;
       /**
-       * Unbinds a worker from the given session (or pool sub-account).
-       * 
-       * It will trigger a force stop of computing if the worker is still in computing state. Anyone
-       * can call it.
+       * See [`Pallet::unbind`].
        **/
       unbind: AugmentedSubmittable<(session: AccountId32 | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [AccountId32]>;
+      /**
+       * See [`Pallet::update_contract_root`].
+       **/
       updateContractRoot: AugmentedSubmittable<(accountId: AccountId32 | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [AccountId32]>;
       /**
-       * Updates the tokenomic parameters at the end of this block.
-       * 
-       * Can only be called by the tokenomic admin.
+       * See [`Pallet::update_tokenomic`].
        **/
       updateTokenomic: AugmentedSubmittable<(newParams: PhalaTypesMessagingTokenomicParameters | { phaRate?: any; rho?: any; budgetPerBlock?: any; vMax?: any; costK?: any; costB?: any; slashRate?: any; treasuryRatio?: any; heartbeatWindow?: any; rigK?: any; rigB?: any; re?: any; k?: any; kappa?: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [PhalaTypesMessagingTokenomicParameters]>;
       /**
@@ -1970,10 +741,16 @@ declare module '@polkadot/api-base/types/submittable' {
       [key: string]: SubmittableExtrinsicFunction<ApiType>;
     };
     phalaMq: {
+      /**
+       * See [`Pallet::force_push_pallet_message`].
+       **/
       forcePushPalletMessage: AugmentedSubmittable<(destination: Bytes | string | Uint8Array, payload: Bytes | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [Bytes, Bytes]>;
+      /**
+       * See [`Pallet::push_message`].
+       **/
       pushMessage: AugmentedSubmittable<(destination: Bytes | string | Uint8Array, payload: Bytes | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [Bytes, Bytes]>;
       /**
-       * Syncs an unverified offchain message to the message queue
+       * See [`Pallet::sync_offchain_message`].
        **/
       syncOffchainMessage: AugmentedSubmittable<(signedMessage: PhalaMqSignedMessage | { message?: any; sequence?: any; signature?: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [PhalaMqSignedMessage]>;
       /**
@@ -1983,35 +760,47 @@ declare module '@polkadot/api-base/types/submittable' {
     };
     phalaPhatContracts: {
       /**
-       * Create a new cluster
-       * 
-       * # Arguments
-       * - `owner` - The owner of the cluster.
-       * - `permission` - Who can deploy contracts in the cluster.
-       * - `deploy_workers` - Workers included in the cluster.
-       * - `deposit` - Transfer amount of tokens from the owner on chain to the owner in cluster.
-       * - `gas_price` - Gas price for contract transactions.
-       * - `deposit_per_item` - Price for contract storage per item.
-       * - `deposit_per_byte` - Price for contract storage per byte.
-       * - `treasury_account` - The treasury account used to collect the gas and storage fee.
+       * See [`Pallet::add_cluster`].
        **/
       addCluster: AugmentedSubmittable<(owner: AccountId32 | string | Uint8Array, permission: PhalaTypesContractClusterPermission | { Public: any } | { OnlyOwner: any } | string | Uint8Array, deployWorkers: Vec<SpCoreSr25519Public> | (SpCoreSr25519Public | string | Uint8Array)[], deposit: u128 | AnyNumber | Uint8Array, gasPrice: u128 | AnyNumber | Uint8Array, depositPerItem: u128 | AnyNumber | Uint8Array, depositPerByte: u128 | AnyNumber | Uint8Array, treasuryAccount: AccountId32 | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [AccountId32, PhalaTypesContractClusterPermission, Vec<SpCoreSr25519Public>, u128, u128, u128, u128, AccountId32]>;
       /**
-       * Add a new worker to a cluster
+       * See [`Pallet::add_worker_to_cluster`].
        **/
       addWorkerToCluster: AugmentedSubmittable<(workerPubkey: SpCoreSr25519Public | string | Uint8Array, clusterId: H256 | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [SpCoreSr25519Public, H256]>;
+      /**
+       * See [`Pallet::cleanup_removed_workers`].
+       **/
+      cleanupRemovedWorkers: AugmentedSubmittable<(clusterId: H256 | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [H256]>;
+      /**
+       * See [`Pallet::cluster_destroy`].
+       **/
       clusterDestroy: AugmentedSubmittable<(cluster: H256 | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [H256]>;
+      /**
+       * See [`Pallet::cluster_upload_resource`].
+       **/
       clusterUploadResource: AugmentedSubmittable<(clusterId: H256 | string | Uint8Array, resourceType: PhalaTypesContractMessagingResourceType | 'InkCode' | 'SidevmCode' | 'IndeterministicInkCode' | number | Uint8Array, resourceData: Bytes | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [H256, PhalaTypesContractMessagingResourceType, Bytes]>;
+      /**
+       * See [`Pallet::instantiate_contract`].
+       **/
       instantiateContract: AugmentedSubmittable<(codeIndex: PhalaTypesContractCodeIndex | { WasmCode: any } | string | Uint8Array, data: Bytes | string | Uint8Array, salt: Bytes | string | Uint8Array, clusterId: H256 | string | Uint8Array, transfer: u128 | AnyNumber | Uint8Array, gasLimit: u64 | AnyNumber | Uint8Array, storageDepositLimit: Option<u128> | null | Uint8Array | u128 | AnyNumber, deposit: u128 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [PhalaTypesContractCodeIndex, Bytes, Bytes, H256, u128, u64, Option<u128>, u128]>;
+      /**
+       * See [`Pallet::push_contract_message`].
+       **/
       pushContractMessage: AugmentedSubmittable<(contractId: H256 | string | Uint8Array, payload: Bytes | string | Uint8Array, deposit: u128 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [H256, Bytes, u128]>;
       /**
-       * Remove a new worker from a cluster
+       * See [`Pallet::remove_worker_from_cluster`].
        **/
       removeWorkerFromCluster: AugmentedSubmittable<(workerPubkey: SpCoreSr25519Public | string | Uint8Array, clusterId: H256 | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [SpCoreSr25519Public, H256]>;
+      /**
+       * See [`Pallet::set_pink_runtime_version`].
+       **/
       setPinkRuntimeVersion: AugmentedSubmittable<(version: ITuple<[u32, u32]> | [u32 | AnyNumber | Uint8Array, u32 | AnyNumber | Uint8Array]) => SubmittableExtrinsic<ApiType>, [ITuple<[u32, u32]>]>;
+      /**
+       * See [`Pallet::set_pink_system_code`].
+       **/
       setPinkSystemCode: AugmentedSubmittable<(code: Bytes | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [Bytes]>;
       /**
-       * Transfer `amount` of on-chain token to the `dest_account` in the cluster of id `cluster_id`.
+       * See [`Pallet::transfer_to_cluster`].
        **/
       transferToCluster: AugmentedSubmittable<(amount: u128 | AnyNumber | Uint8Array, clusterId: H256 | string | Uint8Array, destAccount: AccountId32 | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [u128, H256, AccountId32]>;
       /**
@@ -2021,18 +810,7 @@ declare module '@polkadot/api-base/types/submittable' {
     };
     phalaPhatTokenomic: {
       /**
-       * Adjust stake to given contract.
-       * 
-       * Phat contracts accept depoits from accounts. The deposit info would be sent the cluster's
-       * system contract. Then the system contract would invoke the driver contract (if installed)
-       * to process the deposit info. A public good cluster usually would set the contracts' scheduling
-       * weights according to the total depoit on contracts. More weights means it would get more
-       * compute resource to run the contract. The weights are applied on contract query and Sidevm
-       * CPU round scheduling.
-       * 
-       * If users stake on a contract doesn't deployed yet. The deposit would send to the cluster
-       * even if the contract is deployed later. User can re-stake with or without changing the amount
-       * to sync the depoit the the cluster after the contract is actually deployed.
+       * See [`Pallet::adjust_stake`].
        **/
       adjustStake: AugmentedSubmittable<(contract: H256 | string | Uint8Array, amount: u128 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [H256, u128]>;
       /**
@@ -2042,92 +820,64 @@ declare module '@polkadot/api-base/types/submittable' {
     };
     phalaRegistry: {
       /**
-       * Registers a pruntime binary to [`PRuntimeAllowList`]
-       * 
-       * Can only be called by `GovernanceOrigin`.
+       * See [`Pallet::add_pruntime`].
        **/
       addPruntime: AugmentedSubmittable<(pruntimeHash: Bytes | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [Bytes]>;
       /**
-       * Adds an entry in [`RelaychainGenesisBlockHashAllowList`]
-       * 
-       * Can only be called by `GovernanceOrigin`.
+       * See [`Pallet::add_relaychain_genesis_block_hash`].
        **/
       addRelaychainGenesisBlockHash: AugmentedSubmittable<(genesisBlockHash: H256 | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [H256]>;
       /**
-       * Force register a topic pubkey
-       * 
-       * For test only.
+       * See [`Pallet::force_register_topic_pubkey`].
        **/
       forceRegisterTopicPubkey: AugmentedSubmittable<(topic: Bytes | string | Uint8Array, pubkey: Bytes | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [Bytes, Bytes]>;
       /**
-       * Force register a worker with the given pubkey with sudo permission
-       * 
-       * For test only.
+       * See [`Pallet::force_register_worker`].
        **/
       forceRegisterWorker: AugmentedSubmittable<(pubkey: SpCoreSr25519Public | string | Uint8Array, ecdhPubkey: SpCoreSr25519Public | string | Uint8Array, operator: Option<AccountId32> | null | Uint8Array | AccountId32 | string) => SubmittableExtrinsic<ApiType>, [SpCoreSr25519Public, SpCoreSr25519Public, Option<AccountId32>]>;
       /**
-       * Sets [`BenchmarkDuration`]
-       * 
-       * Can only be called by `GovernanceOrigin`.
+       * See [`Pallet::force_set_benchmark_duration`].
        **/
       forceSetBenchmarkDuration: AugmentedSubmittable<(value: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32]>;
       /**
-       * Register a gatekeeper.
-       * 
-       * Can only be called by `GovernanceOrigin`.
+       * See [`Pallet::register_gatekeeper`].
        **/
       registerGatekeeper: AugmentedSubmittable<(gatekeeper: SpCoreSr25519Public | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [SpCoreSr25519Public]>;
       /**
-       * Registers a worker on the blockchain
-       * This is the legacy version that support EPID attestation type only.
-       * 
-       * Usually called by a bridging relayer program (`pherry` and `prb`). Can be called by
-       * anyone on behalf of a worker.
+       * See [`Pallet::register_worker`].
        **/
       registerWorker: AugmentedSubmittable<(pruntimeInfo: PhalaTypesWorkerRegistrationInfo | { version?: any; machineId?: any; pubkey?: any; ecdhPubkey?: any; genesisBlockHash?: any; features?: any; operator?: any } | string | Uint8Array, attestation: PhalaPalletsUtilsAttestationLegacyAttestation | { SgxIas: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [PhalaTypesWorkerRegistrationInfo, PhalaPalletsUtilsAttestationLegacyAttestation]>;
       /**
-       * Registers a worker on the blockchain.
-       * This is the version 2 that both support DCAP attestation type.
-       * 
-       * Usually called by a bridging relayer program (`pherry` and `prb`). Can be called by
-       * anyone on behalf of a worker.
+       * See [`Pallet::register_worker_v2`].
        **/
       registerWorkerV2: AugmentedSubmittable<(pruntimeInfo: PhalaTypesWorkerRegistrationInfoV2 | { version?: any; machineId?: any; pubkey?: any; ecdhPubkey?: any; genesisBlockHash?: any; features?: any; operator?: any; paraId?: any; maxConsensusVersion?: any } | string | Uint8Array, attestation: Option<PhalaTypesAttestationReport> | null | Uint8Array | PhalaTypesAttestationReport | { SgxIas: any } | string) => SubmittableExtrinsic<ApiType>, [PhalaTypesWorkerRegistrationInfoV2, Option<PhalaTypesAttestationReport>]>;
       /**
-       * Removes a pruntime binary from [`PRuntimeAllowList`]
-       * 
-       * Can only be called by `GovernanceOrigin`.
+       * See [`Pallet::remove_pruntime`].
        **/
       removePruntime: AugmentedSubmittable<(pruntimeHash: Bytes | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [Bytes]>;
       /**
-       * Deletes an entry in [`RelaychainGenesisBlockHashAllowList`]
-       * 
-       * Can only be called by `GovernanceOrigin`.
+       * See [`Pallet::remove_relaychain_genesis_block_hash`].
        **/
       removeRelaychainGenesisBlockHash: AugmentedSubmittable<(genesisBlockHash: H256 | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [H256]>;
       /**
-       * Rotate the master key
+       * See [`Pallet::rotate_master_key`].
        **/
       rotateMasterKey: AugmentedSubmittable<() => SubmittableExtrinsic<ApiType>, []>;
       /**
-       * Set minimum pRuntime version. Versions less than MinimumPRuntimeVersion would be forced to quit.
-       * 
-       * Can only be called by `GovernanceOrigin`.
+       * See [`Pallet::set_minimum_pruntime_version`].
        **/
       setMinimumPruntimeVersion: AugmentedSubmittable<(major: u32 | AnyNumber | Uint8Array, minor: u32 | AnyNumber | Uint8Array, patch: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32, u32, u32]>;
       /**
-       * Set the consensus version used by pruntime. PRuntimes would switch some code path according
-       * the current consensus version.
-       * 
-       * Can only be called by `GovernanceOrigin`.
+       * See [`Pallet::set_pruntime_consensus_version`].
        **/
       setPruntimeConsensusVersion: AugmentedSubmittable<(version: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32]>;
       /**
-       * Unregister a gatekeeper
-       * 
-       * At least one gatekeeper should be available
+       * See [`Pallet::unregister_gatekeeper`].
        **/
       unregisterGatekeeper: AugmentedSubmittable<(gatekeeper: SpCoreSr25519Public | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [SpCoreSr25519Public]>;
+      /**
+       * See [`Pallet::update_worker_endpoint`].
+       **/
       updateWorkerEndpoint: AugmentedSubmittable<(endpointPayload: PhalaTypesWorkerEndpointPayload | { pubkey?: any; versionedEndpoints?: any; signingTime?: any } | string | Uint8Array, signature: Bytes | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [PhalaTypesWorkerEndpointPayload, Bytes]>;
       /**
        * Generic tx
@@ -2136,106 +886,59 @@ declare module '@polkadot/api-base/types/submittable' {
     };
     phalaStakePoolv2: {
       /**
-       * Adds a worker to a pool
-       * 
-       * This will bind a worker to the corresponding pool sub-account. The binding will not be
-       * released until the worker is removed gracefully by `remove_worker()`, or a force unbind
-       * by the worker operator via `Computation::unbind()`.
-       * 
-       * Requires:
-       * 1. The worker is registered and benchmarked
-       * 2. The worker is not bound a pool
+       * See [`Pallet::add_worker`].
        **/
       addWorker: AugmentedSubmittable<(pid: u64 | AnyNumber | Uint8Array, pubkey: SpCoreSr25519Public | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [u64, SpCoreSr25519Public]>;
-      backfillAddMissingReward: AugmentedSubmittable<(input: Vec<ITuple<[AccountId32, u64, u128]>> | ([AccountId32 | string | Uint8Array, u64 | AnyNumber | Uint8Array, u128 | AnyNumber | Uint8Array])[]) => SubmittableExtrinsic<ApiType>, [Vec<ITuple<[AccountId32, u64, u128]>>]>;
       /**
-       * Let any user to launch a stakepool withdraw. Then check if the pool need to be forced shutdown.
-       * 
-       * If the shutdown condition is met, all workers in the pool will be forced shutdown.
-       * Note: This function doesn't guarantee no-op when there's error.
-       * TODO(mingxuan): add more detail comment later.
+       * See [`Pallet::check_and_maybe_force_withdraw`].
        **/
       checkAndMaybeForceWithdraw: AugmentedSubmittable<(pid: u64 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u64]>;
+      /**
+       * See [`Pallet::claim_legacy_rewards`].
+       **/
       claimLegacyRewards: AugmentedSubmittable<(pid: u64 | AnyNumber | Uint8Array, target: AccountId32 | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [u64, AccountId32]>;
       /**
-       * Claims pool-owner's pending rewards of the sender and send to the `target`
-       * 
-       * The rewards associate to sender's "staker role" will not be claimed
-       * 
-       * Requires:
-       * 1. The sender is a pool owner
+       * See [`Pallet::claim_owner_rewards`].
        **/
       claimOwnerRewards: AugmentedSubmittable<(pid: u64 | AnyNumber | Uint8Array, target: AccountId32 | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [u64, AccountId32]>;
       /**
-       * Contributes some stake to a stakepool
-       * 
-       * Requires:
-       * 1. The pool exists
-       * 2. After the deposit, the pool doesn't reach the cap
+       * See [`Pallet::contribute`].
        **/
       contribute: AugmentedSubmittable<(pid: u64 | AnyNumber | Uint8Array, amount: u128 | AnyNumber | Uint8Array, asVault: Option<u64> | null | Uint8Array | u64 | AnyNumber) => SubmittableExtrinsic<ApiType>, [u64, u128, Option<u64>]>;
       /**
-       * Creates a new stake pool
+       * See [`Pallet::create`].
        **/
       create: AugmentedSubmittable<() => SubmittableExtrinsic<ApiType>, []>;
-      fixMissingWorkerLock: AugmentedSubmittable<(maxIterations: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32]>;
       /**
-       * Reclaims the releasing stake of a worker in a pool.
+       * See [`Pallet::reclaim_pool_worker`].
        **/
       reclaimPoolWorker: AugmentedSubmittable<(pid: u64 | AnyNumber | Uint8Array, worker: SpCoreSr25519Public | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [u64, SpCoreSr25519Public]>;
       /**
-       * Removes a worker from a pool
-       * 
-       * Requires:
-       * 1. The worker is registered
-       * 2. The worker is associated with a pool
-       * 3. The worker is removable (not in computing)
+       * See [`Pallet::remove_worker`].
        **/
       removeWorker: AugmentedSubmittable<(pid: u64 | AnyNumber | Uint8Array, worker: SpCoreSr25519Public | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [u64, SpCoreSr25519Public]>;
-      resetIterPos: AugmentedSubmittable<() => SubmittableExtrinsic<ApiType>, []>;
       /**
-       * Restarts the worker with a higher stake
+       * See [`Pallet::restart_computing`].
        **/
       restartComputing: AugmentedSubmittable<(pid: u64 | AnyNumber | Uint8Array, worker: SpCoreSr25519Public | string | Uint8Array, stake: u128 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u64, SpCoreSr25519Public, u128]>;
       /**
-       * Sets the hard cap of the pool
-       * 
-       * Note: a smaller cap than current total_value if not allowed.
-       * Requires:
-       * 1. The sender is the owner
+       * See [`Pallet::set_cap`].
        **/
       setCap: AugmentedSubmittable<(pid: u64 | AnyNumber | Uint8Array, cap: u128 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u64, u128]>;
       /**
-       * Changes the pool commission rate
-       * 
-       * Requires:
-       * 1. The sender is the owner
+       * See [`Pallet::set_payout_pref`].
        **/
       setPayoutPref: AugmentedSubmittable<(pid: u64 | AnyNumber | Uint8Array, payoutCommission: Option<Permill> | null | Uint8Array | Permill | AnyNumber) => SubmittableExtrinsic<ApiType>, [u64, Option<Permill>]>;
       /**
-       * Starts a worker on behalf of the stake pool
-       * 
-       * Requires:
-       * 1. The worker is bound to the pool and is in Ready state
-       * 2. The remaining stake in the pool can cover the minimal stake required
+       * See [`Pallet::start_computing`].
        **/
       startComputing: AugmentedSubmittable<(pid: u64 | AnyNumber | Uint8Array, worker: SpCoreSr25519Public | string | Uint8Array, stake: u128 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u64, SpCoreSr25519Public, u128]>;
       /**
-       * Stops a worker on behalf of the stake pool
-       * Note: this would let worker enter CoolingDown if everything is good
-       * 
-       * Requires:
-       * 1. There worker is bound to the pool and is in a stoppable state
+       * See [`Pallet::stop_computing`].
        **/
       stopComputing: AugmentedSubmittable<(pid: u64 | AnyNumber | Uint8Array, worker: SpCoreSr25519Public | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [u64, SpCoreSr25519Public]>;
       /**
-       * Demands the return of some stake from a pool.
-       * 
-       * Note: there are two scenarios people may meet
-       * 
-       * Once a withdraw request is proceeded successfully, The withdrawal would be queued and waiting to be dealed.
-       * Afer the withdrawal is queued, The withdraw queue will be automaticly consumed util there are not enough free stakes to fullfill withdrawals.
-       * Everytime the free stakes in the pools increases (except for rewards distributing), the withdraw queue will be consumed as it describes above.
+       * See [`Pallet::withdraw`].
        **/
       withdraw: AugmentedSubmittable<(pid: u64 | AnyNumber | Uint8Array, shares: u128 | AnyNumber | Uint8Array, asVault: Option<u64> | null | Uint8Array | u64 | AnyNumber) => SubmittableExtrinsic<ApiType>, [u64, u128, Option<u64>]>;
       /**
@@ -2245,54 +948,31 @@ declare module '@polkadot/api-base/types/submittable' {
     };
     phalaVault: {
       /**
-       * Let any user to launch a vault withdraw. Then check if the vault need to be forced withdraw all its contributions.
-       * 
-       * If the shutdown condition is met, all shares owned by the vault will be forced withdraw.
-       * Note: This function doesn't guarantee no-op when there's error.
+       * See [`Pallet::check_and_maybe_force_withdraw`].
        **/
       checkAndMaybeForceWithdraw: AugmentedSubmittable<(vaultPid: u64 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u64]>;
       /**
-       * Transfers some owner shares wrapped in a nft to the assigned account
-       * 
-       * Requires:
-       * 1. The sender is the owner
+       * See [`Pallet::claim_owner_shares`].
        **/
       claimOwnerShares: AugmentedSubmittable<(vaultPid: u64 | AnyNumber | Uint8Array, target: AccountId32 | string | Uint8Array, shares: u128 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u64, AccountId32, u128]>;
       /**
-       * Contributes some stake to a vault
-       * 
-       * Requires:
-       * 1. The pool exists
-       * 2. After the deposit, the pool doesn't reach the cap
+       * See [`Pallet::contribute`].
        **/
       contribute: AugmentedSubmittable<(pid: u64 | AnyNumber | Uint8Array, amount: u128 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u64, u128]>;
       /**
-       * Creates a new vault
+       * See [`Pallet::create`].
        **/
       create: AugmentedSubmittable<() => SubmittableExtrinsic<ApiType>, []>;
       /**
-       * Tries to settle owner shares if the vault profits
-       * 
-       * The mechanism of issuing shares to distribute owner reward is metioned in comments of struct `Vault` in poolproxy.rs
-       * 
-       * Requires:
-       * 1. The sender is the owner
+       * See [`Pallet::maybe_gain_owner_shares`].
        **/
       maybeGainOwnerShares: AugmentedSubmittable<(vaultPid: u64 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u64]>;
-      refreshVaultLockAndCheck: AugmentedSubmittable<(pid: u64 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u64]>;
       /**
-       * Changes the vault commission rate
-       * 
-       * Requires:
-       * 1. The sender is the owner
+       * See [`Pallet::set_payout_pref`].
        **/
       setPayoutPref: AugmentedSubmittable<(pid: u64 | AnyNumber | Uint8Array, payoutCommission: Option<Permill> | null | Uint8Array | Permill | AnyNumber) => SubmittableExtrinsic<ApiType>, [u64, Option<Permill>]>;
       /**
-       * Demands the return of some stake from a pool.
-       * 
-       * Once a withdraw request is proceeded successfully, The withdrawal would be queued and waiting to be dealed.
-       * Afer the withdrawal is queued, The withdraw queue will be automaticly consumed util there are not enough free stakes to fullfill withdrawals.
-       * Everytime the free stakes in the pools increases, the withdraw queue will be consumed as it describes above.
+       * See [`Pallet::withdraw`].
        **/
       withdraw: AugmentedSubmittable<(pid: u64 | AnyNumber | Uint8Array, shares: u128 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u64, u128]>;
       /**
@@ -2301,36 +981,24 @@ declare module '@polkadot/api-base/types/submittable' {
       [key: string]: SubmittableExtrinsicFunction<ApiType>;
     };
     phalaWrappedBalances: {
-      backfillVoteLock: AugmentedSubmittable<() => SubmittableExtrinsic<ApiType>, []>;
       /**
-       * Tries to unlock W-PHAs used in vote after the vote finished or canceled
-       * 
-       * Must assign the max iterations to avoid computing complexity overwhelm
+       * See [`Pallet::unlock`].
        **/
       unlock: AugmentedSubmittable<(voteId: u32 | AnyNumber | Uint8Array, maxIterations: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32, u32]>;
       /**
-       * Unwraps some pha by burning equal amount of W-PHA
-       * 
-       * The unwrapped pha is transfered from `WrappedBalancesAccountId` to the user's wallet
+       * See [`Pallet::unwrap`].
        **/
       unwrap: AugmentedSubmittable<(amount: u128 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u128]>;
       /**
-       * Burns the amount of all free W-PHA and unwraps equal amount of pha
-       * 
-       * The unwrapped pha is transfered from `WrappedBalancesAccountId` to the user's wallet
+       * See [`Pallet::unwrap_all`].
        **/
       unwrapAll: AugmentedSubmittable<() => SubmittableExtrinsic<ApiType>, []>;
       /**
-       * Uses some W-PHA to approve or oppose a vote
-       * 
-       * Can both approve and oppose a vote at the same time
-       * The W-PHA used in vote will be locked until the vote is finished or canceled
+       * See [`Pallet::vote`].
        **/
       vote: AugmentedSubmittable<(ayeAmount: u128 | AnyNumber | Uint8Array, nayAmount: u128 | AnyNumber | Uint8Array, voteId: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u128, u128, u32]>;
       /**
-       * Wraps some pha and gain equal amount of W-PHA
-       * 
-       * The wrapped pha is stored in `WrappedBalancesAccountId`'s wallet and can not be taken away
+       * See [`Pallet::wrap`].
        **/
       wrap: AugmentedSubmittable<(amount: u128 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u128]>;
       /**
@@ -2340,105 +1008,27 @@ declare module '@polkadot/api-base/types/submittable' {
     };
     phragmenElection: {
       /**
-       * Clean all voters who are defunct (i.e. they do not serve any purpose at all). The
-       * deposit of the removed voters are returned.
-       * 
-       * This is an root function to be used only for cleaning the state.
-       * 
-       * The dispatch origin of this call must be root.
-       * 
-       * ## Complexity
-       * - Check is_defunct_voter() details.
+       * See [`Pallet::clean_defunct_voters`].
        **/
       cleanDefunctVoters: AugmentedSubmittable<(numVoters: u32 | AnyNumber | Uint8Array, numDefunct: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32, u32]>;
       /**
-       * Remove a particular member from the set. This is effective immediately and the bond of
-       * the outgoing member is slashed.
-       * 
-       * If a runner-up is available, then the best runner-up will be removed and replaces the
-       * outgoing member. Otherwise, if `rerun_election` is `true`, a new phragmen election is
-       * started, else, nothing happens.
-       * 
-       * If `slash_bond` is set to true, the bond of the member being removed is slashed. Else,
-       * it is returned.
-       * 
-       * The dispatch origin of this call must be root.
-       * 
-       * Note that this does not affect the designated block number of the next election.
-       * 
-       * ## Complexity
-       * - Check details of remove_and_replace_member() and do_phragmen().
+       * See [`Pallet::remove_member`].
        **/
       removeMember: AugmentedSubmittable<(who: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, slashBond: bool | boolean | Uint8Array, rerunElection: bool | boolean | Uint8Array) => SubmittableExtrinsic<ApiType>, [MultiAddress, bool, bool]>;
       /**
-       * Remove `origin` as a voter.
-       * 
-       * This removes the lock and returns the deposit.
-       * 
-       * The dispatch origin of this call must be signed and be a voter.
+       * See [`Pallet::remove_voter`].
        **/
       removeVoter: AugmentedSubmittable<() => SubmittableExtrinsic<ApiType>, []>;
       /**
-       * Renounce one's intention to be a candidate for the next election round. 3 potential
-       * outcomes exist:
-       * 
-       * - `origin` is a candidate and not elected in any set. In this case, the deposit is
-       * unreserved, returned and origin is removed as a candidate.
-       * - `origin` is a current runner-up. In this case, the deposit is unreserved, returned and
-       * origin is removed as a runner-up.
-       * - `origin` is a current member. In this case, the deposit is unreserved and origin is
-       * removed as a member, consequently not being a candidate for the next round anymore.
-       * Similar to [`remove_member`](Self::remove_member), if replacement runners exists, they
-       * are immediately used. If the prime is renouncing, then no prime will exist until the
-       * next round.
-       * 
-       * The dispatch origin of this call must be signed, and have one of the above roles.
-       * The type of renouncing must be provided as witness data.
-       * 
-       * ## Complexity
-       * - Renouncing::Candidate(count): O(count + log(count))
-       * - Renouncing::Member: O(1)
-       * - Renouncing::RunnerUp: O(1)
+       * See [`Pallet::renounce_candidacy`].
        **/
       renounceCandidacy: AugmentedSubmittable<(renouncing: PalletElectionsPhragmenRenouncing | { Member: any } | { RunnerUp: any } | { Candidate: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [PalletElectionsPhragmenRenouncing]>;
       /**
-       * Submit oneself for candidacy. A fixed amount of deposit is recorded.
-       * 
-       * All candidates are wiped at the end of the term. They either become a member/runner-up,
-       * or leave the system while their deposit is slashed.
-       * 
-       * The dispatch origin of this call must be signed.
-       * 
-       * ### Warning
-       * 
-       * Even if a candidate ends up being a member, they must call [`Call::renounce_candidacy`]
-       * to get their deposit back. Losing the spot in an election will always lead to a slash.
-       * 
-       * The number of current candidates must be provided as witness data.
-       * ## Complexity
-       * O(C + log(C)) where C is candidate_count.
+       * See [`Pallet::submit_candidacy`].
        **/
       submitCandidacy: AugmentedSubmittable<(candidateCount: Compact<u32> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u32>]>;
       /**
-       * Vote for a set of candidates for the upcoming round of election. This can be called to
-       * set the initial votes, or update already existing votes.
-       * 
-       * Upon initial voting, `value` units of `who`'s balance is locked and a deposit amount is
-       * reserved. The deposit is based on the number of votes and can be updated over time.
-       * 
-       * The `votes` should:
-       * - not be empty.
-       * - be less than the number of possible candidates. Note that all current members and
-       * runners-up are also automatically candidates for the next round.
-       * 
-       * If `value` is more than `who`'s free balance, then the maximum of the two is used.
-       * 
-       * The dispatch origin of this call must be signed.
-       * 
-       * ### Warning
-       * 
-       * It is the responsibility of the caller to **NOT** place all of their balance into the
-       * lock and keep some for further operations.
+       * See [`Pallet::vote`].
        **/
       vote: AugmentedSubmittable<(votes: Vec<AccountId32> | (AccountId32 | string | Uint8Array)[], value: Compact<u128> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [Vec<AccountId32>, Compact<u128>]>;
       /**
@@ -2448,138 +1038,49 @@ declare module '@polkadot/api-base/types/submittable' {
     };
     polkadotXcm: {
       /**
-       * Execute an XCM message from a local, signed, origin.
-       * 
-       * An event is deposited indicating whether `msg` could be executed completely or only
-       * partially.
-       * 
-       * No more than `max_weight` will be used in its attempted execution. If this is less than the
-       * maximum amount of weight that the message could take to be executed, then no execution
-       * attempt will be made.
-       * 
-       * NOTE: A successful return to this does *not* imply that the `msg` was executed successfully
-       * to completion; only that *some* of it was executed.
+       * See [`Pallet::execute`].
        **/
-      execute: AugmentedSubmittable<(message: XcmVersionedXcm | { V2: any } | { V3: any } | string | Uint8Array, maxWeight: SpWeightsWeightV2Weight | { refTime?: any; proofSize?: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [XcmVersionedXcm, SpWeightsWeightV2Weight]>;
+      execute: AugmentedSubmittable<(message: StagingXcmVersionedXcm | { V2: any } | { V3: any } | string | Uint8Array, maxWeight: SpWeightsWeightV2Weight | { refTime?: any; proofSize?: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [StagingXcmVersionedXcm, SpWeightsWeightV2Weight]>;
       /**
-       * Set a safe XCM version (the version that XCM should be encoded with if the most recent
-       * version a destination can accept is unknown).
-       * 
-       * - `origin`: Must be an origin specified by AdminOrigin.
-       * - `maybe_xcm_version`: The default XCM encoding version, or `None` to disable.
+       * See [`Pallet::force_default_xcm_version`].
        **/
       forceDefaultXcmVersion: AugmentedSubmittable<(maybeXcmVersion: Option<u32> | null | Uint8Array | u32 | AnyNumber) => SubmittableExtrinsic<ApiType>, [Option<u32>]>;
       /**
-       * Ask a location to notify us regarding their XCM version and any changes to it.
-       * 
-       * - `origin`: Must be an origin specified by AdminOrigin.
-       * - `location`: The location to which we should subscribe for XCM version notifications.
+       * See [`Pallet::force_subscribe_version_notify`].
        **/
-      forceSubscribeVersionNotify: AugmentedSubmittable<(location: XcmVersionedMultiLocation | { V2: any } | { V3: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [XcmVersionedMultiLocation]>;
+      forceSubscribeVersionNotify: AugmentedSubmittable<(location: StagingXcmVersionedMultiLocation | { V2: any } | { V3: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [StagingXcmVersionedMultiLocation]>;
       /**
-       * Set or unset the global suspension state of the XCM executor.
-       * 
-       * - `origin`: Must be an origin specified by AdminOrigin.
-       * - `suspended`: `true` to suspend, `false` to resume.
+       * See [`Pallet::force_suspension`].
        **/
       forceSuspension: AugmentedSubmittable<(suspended: bool | boolean | Uint8Array) => SubmittableExtrinsic<ApiType>, [bool]>;
       /**
-       * Require that a particular destination should no longer notify us regarding any XCM
-       * version changes.
-       * 
-       * - `origin`: Must be an origin specified by AdminOrigin.
-       * - `location`: The location to which we are currently subscribed for XCM version
-       * notifications which we no longer desire.
+       * See [`Pallet::force_unsubscribe_version_notify`].
        **/
-      forceUnsubscribeVersionNotify: AugmentedSubmittable<(location: XcmVersionedMultiLocation | { V2: any } | { V3: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [XcmVersionedMultiLocation]>;
+      forceUnsubscribeVersionNotify: AugmentedSubmittable<(location: StagingXcmVersionedMultiLocation | { V2: any } | { V3: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [StagingXcmVersionedMultiLocation]>;
       /**
-       * Extoll that a particular destination can be communicated with through a particular
-       * version of XCM.
-       * 
-       * - `origin`: Must be an origin specified by AdminOrigin.
-       * - `location`: The destination that is being described.
-       * - `xcm_version`: The latest version of XCM that `location` supports.
+       * See [`Pallet::force_xcm_version`].
        **/
-      forceXcmVersion: AugmentedSubmittable<(location: XcmV3MultiLocation | { parents?: any; interior?: any } | string | Uint8Array, xcmVersion: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [XcmV3MultiLocation, u32]>;
+      forceXcmVersion: AugmentedSubmittable<(location: StagingXcmV3MultiLocation | { parents?: any; interior?: any } | string | Uint8Array, version: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [StagingXcmV3MultiLocation, u32]>;
       /**
-       * Transfer some assets from the local chain to the sovereign account of a destination
-       * chain and forward a notification XCM.
-       * 
-       * Fee payment on the destination side is made from the asset in the `assets` vector of
-       * index `fee_asset_item`, up to enough to pay for `weight_limit` of weight. If more weight
-       * is needed than `weight_limit`, then the operation will fail and the assets send may be
-       * at risk.
-       * 
-       * - `origin`: Must be capable of withdrawing the `assets` and executing XCM.
-       * - `dest`: Destination context for the assets. Will typically be `X2(Parent, Parachain(..))` to send
-       * from parachain to parachain, or `X1(Parachain(..))` to send from relay to parachain.
-       * - `beneficiary`: A beneficiary location for the assets in the context of `dest`. Will generally be
-       * an `AccountId32` value.
-       * - `assets`: The assets to be withdrawn. This should include the assets used to pay the fee on the
-       * `dest` side.
-       * - `fee_asset_item`: The index into `assets` of the item which should be used to pay
-       * fees.
-       * - `weight_limit`: The remote-side weight limit, if any, for the XCM fee purchase.
+       * See [`Pallet::limited_reserve_transfer_assets`].
        **/
-      limitedReserveTransferAssets: AugmentedSubmittable<(dest: XcmVersionedMultiLocation | { V2: any } | { V3: any } | string | Uint8Array, beneficiary: XcmVersionedMultiLocation | { V2: any } | { V3: any } | string | Uint8Array, assets: XcmVersionedMultiAssets | { V2: any } | { V3: any } | string | Uint8Array, feeAssetItem: u32 | AnyNumber | Uint8Array, weightLimit: XcmV3WeightLimit | { Unlimited: any } | { Limited: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [XcmVersionedMultiLocation, XcmVersionedMultiLocation, XcmVersionedMultiAssets, u32, XcmV3WeightLimit]>;
+      limitedReserveTransferAssets: AugmentedSubmittable<(dest: StagingXcmVersionedMultiLocation | { V2: any } | { V3: any } | string | Uint8Array, beneficiary: StagingXcmVersionedMultiLocation | { V2: any } | { V3: any } | string | Uint8Array, assets: StagingXcmVersionedMultiAssets | { V2: any } | { V3: any } | string | Uint8Array, feeAssetItem: u32 | AnyNumber | Uint8Array, weightLimit: StagingXcmV3WeightLimit | { Unlimited: any } | { Limited: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [StagingXcmVersionedMultiLocation, StagingXcmVersionedMultiLocation, StagingXcmVersionedMultiAssets, u32, StagingXcmV3WeightLimit]>;
       /**
-       * Teleport some assets from the local chain to some destination chain.
-       * 
-       * Fee payment on the destination side is made from the asset in the `assets` vector of
-       * index `fee_asset_item`, up to enough to pay for `weight_limit` of weight. If more weight
-       * is needed than `weight_limit`, then the operation will fail and the assets send may be
-       * at risk.
-       * 
-       * - `origin`: Must be capable of withdrawing the `assets` and executing XCM.
-       * - `dest`: Destination context for the assets. Will typically be `X2(Parent, Parachain(..))` to send
-       * from parachain to parachain, or `X1(Parachain(..))` to send from relay to parachain.
-       * - `beneficiary`: A beneficiary location for the assets in the context of `dest`. Will generally be
-       * an `AccountId32` value.
-       * - `assets`: The assets to be withdrawn. The first item should be the currency used to to pay the fee on the
-       * `dest` side. May not be empty.
-       * - `fee_asset_item`: The index into `assets` of the item which should be used to pay
-       * fees.
-       * - `weight_limit`: The remote-side weight limit, if any, for the XCM fee purchase.
+       * See [`Pallet::limited_teleport_assets`].
        **/
-      limitedTeleportAssets: AugmentedSubmittable<(dest: XcmVersionedMultiLocation | { V2: any } | { V3: any } | string | Uint8Array, beneficiary: XcmVersionedMultiLocation | { V2: any } | { V3: any } | string | Uint8Array, assets: XcmVersionedMultiAssets | { V2: any } | { V3: any } | string | Uint8Array, feeAssetItem: u32 | AnyNumber | Uint8Array, weightLimit: XcmV3WeightLimit | { Unlimited: any } | { Limited: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [XcmVersionedMultiLocation, XcmVersionedMultiLocation, XcmVersionedMultiAssets, u32, XcmV3WeightLimit]>;
+      limitedTeleportAssets: AugmentedSubmittable<(dest: StagingXcmVersionedMultiLocation | { V2: any } | { V3: any } | string | Uint8Array, beneficiary: StagingXcmVersionedMultiLocation | { V2: any } | { V3: any } | string | Uint8Array, assets: StagingXcmVersionedMultiAssets | { V2: any } | { V3: any } | string | Uint8Array, feeAssetItem: u32 | AnyNumber | Uint8Array, weightLimit: StagingXcmV3WeightLimit | { Unlimited: any } | { Limited: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [StagingXcmVersionedMultiLocation, StagingXcmVersionedMultiLocation, StagingXcmVersionedMultiAssets, u32, StagingXcmV3WeightLimit]>;
       /**
-       * Transfer some assets from the local chain to the sovereign account of a destination
-       * chain and forward a notification XCM.
-       * 
-       * Fee payment on the destination side is made from the asset in the `assets` vector of
-       * index `fee_asset_item`. The weight limit for fees is not provided and thus is unlimited,
-       * with all fees taken as needed from the asset.
-       * 
-       * - `origin`: Must be capable of withdrawing the `assets` and executing XCM.
-       * - `dest`: Destination context for the assets. Will typically be `X2(Parent, Parachain(..))` to send
-       * from parachain to parachain, or `X1(Parachain(..))` to send from relay to parachain.
-       * - `beneficiary`: A beneficiary location for the assets in the context of `dest`. Will generally be
-       * an `AccountId32` value.
-       * - `assets`: The assets to be withdrawn. This should include the assets used to pay the fee on the
-       * `dest` side.
-       * - `fee_asset_item`: The index into `assets` of the item which should be used to pay
-       * fees.
+       * See [`Pallet::reserve_transfer_assets`].
        **/
-      reserveTransferAssets: AugmentedSubmittable<(dest: XcmVersionedMultiLocation | { V2: any } | { V3: any } | string | Uint8Array, beneficiary: XcmVersionedMultiLocation | { V2: any } | { V3: any } | string | Uint8Array, assets: XcmVersionedMultiAssets | { V2: any } | { V3: any } | string | Uint8Array, feeAssetItem: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [XcmVersionedMultiLocation, XcmVersionedMultiLocation, XcmVersionedMultiAssets, u32]>;
-      send: AugmentedSubmittable<(dest: XcmVersionedMultiLocation | { V2: any } | { V3: any } | string | Uint8Array, message: XcmVersionedXcm | { V2: any } | { V3: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [XcmVersionedMultiLocation, XcmVersionedXcm]>;
+      reserveTransferAssets: AugmentedSubmittable<(dest: StagingXcmVersionedMultiLocation | { V2: any } | { V3: any } | string | Uint8Array, beneficiary: StagingXcmVersionedMultiLocation | { V2: any } | { V3: any } | string | Uint8Array, assets: StagingXcmVersionedMultiAssets | { V2: any } | { V3: any } | string | Uint8Array, feeAssetItem: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [StagingXcmVersionedMultiLocation, StagingXcmVersionedMultiLocation, StagingXcmVersionedMultiAssets, u32]>;
       /**
-       * Teleport some assets from the local chain to some destination chain.
-       * 
-       * Fee payment on the destination side is made from the asset in the `assets` vector of
-       * index `fee_asset_item`. The weight limit for fees is not provided and thus is unlimited,
-       * with all fees taken as needed from the asset.
-       * 
-       * - `origin`: Must be capable of withdrawing the `assets` and executing XCM.
-       * - `dest`: Destination context for the assets. Will typically be `X2(Parent, Parachain(..))` to send
-       * from parachain to parachain, or `X1(Parachain(..))` to send from relay to parachain.
-       * - `beneficiary`: A beneficiary location for the assets in the context of `dest`. Will generally be
-       * an `AccountId32` value.
-       * - `assets`: The assets to be withdrawn. The first item should be the currency used to to pay the fee on the
-       * `dest` side. May not be empty.
-       * - `fee_asset_item`: The index into `assets` of the item which should be used to pay
-       * fees.
+       * See [`Pallet::send`].
        **/
-      teleportAssets: AugmentedSubmittable<(dest: XcmVersionedMultiLocation | { V2: any } | { V3: any } | string | Uint8Array, beneficiary: XcmVersionedMultiLocation | { V2: any } | { V3: any } | string | Uint8Array, assets: XcmVersionedMultiAssets | { V2: any } | { V3: any } | string | Uint8Array, feeAssetItem: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [XcmVersionedMultiLocation, XcmVersionedMultiLocation, XcmVersionedMultiAssets, u32]>;
+      send: AugmentedSubmittable<(dest: StagingXcmVersionedMultiLocation | { V2: any } | { V3: any } | string | Uint8Array, message: StagingXcmVersionedXcm | { V2: any } | { V3: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [StagingXcmVersionedMultiLocation, StagingXcmVersionedXcm]>;
+      /**
+       * See [`Pallet::teleport_assets`].
+       **/
+      teleportAssets: AugmentedSubmittable<(dest: StagingXcmVersionedMultiLocation | { V2: any } | { V3: any } | string | Uint8Array, beneficiary: StagingXcmVersionedMultiLocation | { V2: any } | { V3: any } | string | Uint8Array, assets: StagingXcmVersionedMultiAssets | { V2: any } | { V3: any } | string | Uint8Array, feeAssetItem: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [StagingXcmVersionedMultiLocation, StagingXcmVersionedMultiLocation, StagingXcmVersionedMultiAssets, u32]>;
       /**
        * Generic tx
        **/
@@ -2587,32 +1088,23 @@ declare module '@polkadot/api-base/types/submittable' {
     };
     preimage: {
       /**
-       * Register a preimage on-chain.
-       * 
-       * If the preimage was previously requested, no fees or deposits are taken for providing
-       * the preimage. Otherwise, a deposit is taken proportional to the size of the preimage.
+       * See [`Pallet::ensure_updated`].
+       **/
+      ensureUpdated: AugmentedSubmittable<(hashes: Vec<H256> | (H256 | string | Uint8Array)[]) => SubmittableExtrinsic<ApiType>, [Vec<H256>]>;
+      /**
+       * See [`Pallet::note_preimage`].
        **/
       notePreimage: AugmentedSubmittable<(bytes: Bytes | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [Bytes]>;
       /**
-       * Request a preimage be uploaded to the chain without paying any fees or deposits.
-       * 
-       * If the preimage requests has already been provided on-chain, we unreserve any deposit
-       * a user may have paid, and take the control of the preimage out of their hands.
+       * See [`Pallet::request_preimage`].
        **/
       requestPreimage: AugmentedSubmittable<(hash: H256 | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [H256]>;
       /**
-       * Clear an unrequested preimage from the runtime storage.
-       * 
-       * If `len` is provided, then it will be a much cheaper operation.
-       * 
-       * - `hash`: The hash of the preimage to be removed from the store.
-       * - `len`: The length of the preimage of `hash`.
+       * See [`Pallet::unnote_preimage`].
        **/
       unnotePreimage: AugmentedSubmittable<(hash: H256 | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [H256]>;
       /**
-       * Clear a previously made request for a preimage.
-       * 
-       * NOTE: THIS MUST NOT BE CALLED ON `hash` MORE TIMES THAN `request_preimage`.
+       * See [`Pallet::unrequest_preimage`].
        **/
       unrequestPreimage: AugmentedSubmittable<(hash: H256 | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [H256]>;
       /**
@@ -2622,144 +1114,43 @@ declare module '@polkadot/api-base/types/submittable' {
     };
     proxy: {
       /**
-       * Register a proxy account for the sender that is able to make calls on its behalf.
-       * 
-       * The dispatch origin for this call must be _Signed_.
-       * 
-       * Parameters:
-       * - `proxy`: The account that the `caller` would like to make a proxy.
-       * - `proxy_type`: The permissions allowed for this proxy account.
-       * - `delay`: The announcement period required of the initial proxy. Will generally be
-       * zero.
+       * See [`Pallet::add_proxy`].
        **/
       addProxy: AugmentedSubmittable<(delegate: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, proxyType: PhalaParachainRuntimeProxyType | 'Any' | 'NonTransfer' | 'CancelProxy' | 'Governance' | 'Collator' | 'StakePoolManager' | number | Uint8Array, delay: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [MultiAddress, PhalaParachainRuntimeProxyType, u32]>;
       /**
-       * Publish the hash of a proxy-call that will be made in the future.
-       * 
-       * This must be called some number of blocks before the corresponding `proxy` is attempted
-       * if the delay associated with the proxy relationship is greater than zero.
-       * 
-       * No more than `MaxPending` announcements may be made at any one time.
-       * 
-       * This will take a deposit of `AnnouncementDepositFactor` as well as
-       * `AnnouncementDepositBase` if there are no other pending announcements.
-       * 
-       * The dispatch origin for this call must be _Signed_ and a proxy of `real`.
-       * 
-       * Parameters:
-       * - `real`: The account that the proxy will make a call on behalf of.
-       * - `call_hash`: The hash of the call to be made by the `real` account.
+       * See [`Pallet::announce`].
        **/
       announce: AugmentedSubmittable<(real: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, callHash: H256 | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [MultiAddress, H256]>;
       /**
-       * Spawn a fresh new account that is guaranteed to be otherwise inaccessible, and
-       * initialize it with a proxy of `proxy_type` for `origin` sender.
-       * 
-       * Requires a `Signed` origin.
-       * 
-       * - `proxy_type`: The type of the proxy that the sender will be registered as over the
-       * new account. This will almost always be the most permissive `ProxyType` possible to
-       * allow for maximum flexibility.
-       * - `index`: A disambiguation index, in case this is called multiple times in the same
-       * transaction (e.g. with `utility::batch`). Unless you're using `batch` you probably just
-       * want to use `0`.
-       * - `delay`: The announcement period required of the initial proxy. Will generally be
-       * zero.
-       * 
-       * Fails with `Duplicate` if this has already been called in this transaction, from the
-       * same sender, with the same parameters.
-       * 
-       * Fails if there are insufficient funds to pay for deposit.
+       * See [`Pallet::create_pure`].
        **/
       createPure: AugmentedSubmittable<(proxyType: PhalaParachainRuntimeProxyType | 'Any' | 'NonTransfer' | 'CancelProxy' | 'Governance' | 'Collator' | 'StakePoolManager' | number | Uint8Array, delay: u32 | AnyNumber | Uint8Array, index: u16 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [PhalaParachainRuntimeProxyType, u32, u16]>;
       /**
-       * Removes a previously spawned pure proxy.
-       * 
-       * WARNING: **All access to this account will be lost.** Any funds held in it will be
-       * inaccessible.
-       * 
-       * Requires a `Signed` origin, and the sender account must have been created by a call to
-       * `pure` with corresponding parameters.
-       * 
-       * - `spawner`: The account that originally called `pure` to create this account.
-       * - `index`: The disambiguation index originally passed to `pure`. Probably `0`.
-       * - `proxy_type`: The proxy type originally passed to `pure`.
-       * - `height`: The height of the chain when the call to `pure` was processed.
-       * - `ext_index`: The extrinsic index in which the call to `pure` was processed.
-       * 
-       * Fails with `NoPermission` in case the caller is not a previously created pure
-       * account whose `pure` call has corresponding parameters.
+       * See [`Pallet::kill_pure`].
        **/
       killPure: AugmentedSubmittable<(spawner: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, proxyType: PhalaParachainRuntimeProxyType | 'Any' | 'NonTransfer' | 'CancelProxy' | 'Governance' | 'Collator' | 'StakePoolManager' | number | Uint8Array, index: u16 | AnyNumber | Uint8Array, height: Compact<u32> | AnyNumber | Uint8Array, extIndex: Compact<u32> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [MultiAddress, PhalaParachainRuntimeProxyType, u16, Compact<u32>, Compact<u32>]>;
       /**
-       * Dispatch the given `call` from an account that the sender is authorised for through
-       * `add_proxy`.
-       * 
-       * The dispatch origin for this call must be _Signed_.
-       * 
-       * Parameters:
-       * - `real`: The account that the proxy will make a call on behalf of.
-       * - `force_proxy_type`: Specify the exact proxy type to be used and checked for this call.
-       * - `call`: The call to be made by the `real` account.
+       * See [`Pallet::proxy`].
        **/
       proxy: AugmentedSubmittable<(real: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, forceProxyType: Option<PhalaParachainRuntimeProxyType> | null | Uint8Array | PhalaParachainRuntimeProxyType | 'Any' | 'NonTransfer' | 'CancelProxy' | 'Governance' | 'Collator' | 'StakePoolManager' | number, call: Call | IMethod | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [MultiAddress, Option<PhalaParachainRuntimeProxyType>, Call]>;
       /**
-       * Dispatch the given `call` from an account that the sender is authorized for through
-       * `add_proxy`.
-       * 
-       * Removes any corresponding announcement(s).
-       * 
-       * The dispatch origin for this call must be _Signed_.
-       * 
-       * Parameters:
-       * - `real`: The account that the proxy will make a call on behalf of.
-       * - `force_proxy_type`: Specify the exact proxy type to be used and checked for this call.
-       * - `call`: The call to be made by the `real` account.
+       * See [`Pallet::proxy_announced`].
        **/
       proxyAnnounced: AugmentedSubmittable<(delegate: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, real: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, forceProxyType: Option<PhalaParachainRuntimeProxyType> | null | Uint8Array | PhalaParachainRuntimeProxyType | 'Any' | 'NonTransfer' | 'CancelProxy' | 'Governance' | 'Collator' | 'StakePoolManager' | number, call: Call | IMethod | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [MultiAddress, MultiAddress, Option<PhalaParachainRuntimeProxyType>, Call]>;
       /**
-       * Remove the given announcement of a delegate.
-       * 
-       * May be called by a target (proxied) account to remove a call that one of their delegates
-       * (`delegate`) has announced they want to execute. The deposit is returned.
-       * 
-       * The dispatch origin for this call must be _Signed_.
-       * 
-       * Parameters:
-       * - `delegate`: The account that previously announced the call.
-       * - `call_hash`: The hash of the call to be made.
+       * See [`Pallet::reject_announcement`].
        **/
       rejectAnnouncement: AugmentedSubmittable<(delegate: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, callHash: H256 | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [MultiAddress, H256]>;
       /**
-       * Remove a given announcement.
-       * 
-       * May be called by a proxy account to remove a call they previously announced and return
-       * the deposit.
-       * 
-       * The dispatch origin for this call must be _Signed_.
-       * 
-       * Parameters:
-       * - `real`: The account that the proxy will make a call on behalf of.
-       * - `call_hash`: The hash of the call to be made by the `real` account.
+       * See [`Pallet::remove_announcement`].
        **/
       removeAnnouncement: AugmentedSubmittable<(real: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, callHash: H256 | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [MultiAddress, H256]>;
       /**
-       * Unregister all proxy accounts for the sender.
-       * 
-       * The dispatch origin for this call must be _Signed_.
-       * 
-       * WARNING: This may be called on accounts created by `pure`, however if done, then
-       * the unreserved fees will be inaccessible. **All access to this account will be lost.**
+       * See [`Pallet::remove_proxies`].
        **/
       removeProxies: AugmentedSubmittable<() => SubmittableExtrinsic<ApiType>, []>;
       /**
-       * Unregister a proxy account for the sender.
-       * 
-       * The dispatch origin for this call must be _Signed_.
-       * 
-       * Parameters:
-       * - `proxy`: The account that the `caller` would like to remove as a proxy.
-       * - `proxy_type`: The permissions currently enabled for the removed proxy account.
+       * See [`Pallet::remove_proxy`].
        **/
       removeProxy: AugmentedSubmittable<(delegate: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, proxyType: PhalaParachainRuntimeProxyType | 'Any' | 'NonTransfer' | 'CancelProxy' | 'Governance' | 'Collator' | 'StakePoolManager' | number | Uint8Array, delay: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [MultiAddress, PhalaParachainRuntimeProxyType, u32]>;
       /**
@@ -2769,118 +1160,79 @@ declare module '@polkadot/api-base/types/submittable' {
     };
     rmrkCore: {
       /**
-       * Accepts an NFT sent from another account to self or owned NFT
-       * 
-       * Parameters:
-       * - `origin`: sender of the transaction
-       * - `collection_id`: collection id of the nft to be accepted
-       * - `nft_id`: nft id of the nft to be accepted
-       * - `new_owner`: either origin's account ID or origin-owned NFT, whichever the NFT was
-       * sent to
+       * See [`Pallet::accept_nft`].
        **/
       acceptNft: AugmentedSubmittable<(collectionId: u32 | AnyNumber | Uint8Array, nftId: u32 | AnyNumber | Uint8Array, newOwner: RmrkTraitsNftAccountIdOrCollectionNftTuple | { AccountId: any } | { CollectionAndNftTuple: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32, u32, RmrkTraitsNftAccountIdOrCollectionNftTuple]>;
       /**
-       * accept the addition of a new resource to an existing NFT
+       * See [`Pallet::accept_resource`].
        **/
       acceptResource: AugmentedSubmittable<(collectionId: u32 | AnyNumber | Uint8Array, nftId: u32 | AnyNumber | Uint8Array, resourceId: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32, u32, u32]>;
       /**
-       * accept the removal of a resource of an existing NFT
+       * See [`Pallet::accept_resource_removal`].
        **/
       acceptResourceRemoval: AugmentedSubmittable<(collectionId: u32 | AnyNumber | Uint8Array, nftId: u32 | AnyNumber | Uint8Array, resourceId: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32, u32, u32]>;
       /**
-       * Create basic resource
+       * See [`Pallet::add_basic_resource`].
        **/
       addBasicResource: AugmentedSubmittable<(collectionId: u32 | AnyNumber | Uint8Array, nftId: u32 | AnyNumber | Uint8Array, resource: RmrkTraitsResourceBasicResource | { metadata?: any } | string | Uint8Array, resourceId: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32, u32, RmrkTraitsResourceBasicResource, u32]>;
       /**
-       * Create composable resource
+       * See [`Pallet::add_composable_resource`].
        **/
       addComposableResource: AugmentedSubmittable<(collectionId: u32 | AnyNumber | Uint8Array, nftId: u32 | AnyNumber | Uint8Array, resource: RmrkTraitsResourceComposableResource | { parts?: any; base?: any; metadata?: any; slot?: any } | string | Uint8Array, resourceId: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32, u32, RmrkTraitsResourceComposableResource, u32]>;
       /**
-       * Create slot resource
+       * See [`Pallet::add_slot_resource`].
        **/
       addSlotResource: AugmentedSubmittable<(collectionId: u32 | AnyNumber | Uint8Array, nftId: u32 | AnyNumber | Uint8Array, resource: RmrkTraitsResourceSlotResource | { base?: any; metadata?: any; slot?: any } | string | Uint8Array, resourceId: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32, u32, RmrkTraitsResourceSlotResource, u32]>;
       /**
-       * burn nft
+       * See [`Pallet::burn_nft`].
        **/
       burnNft: AugmentedSubmittable<(collectionId: u32 | AnyNumber | Uint8Array, nftId: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32, u32]>;
       /**
-       * Change the issuer of a collection
-       * 
-       * Parameters:
-       * - `origin`: sender of the transaction
-       * - `collection_id`: collection id of the nft to change issuer of
-       * - `new_issuer`: Collection's new issuer
+       * See [`Pallet::change_collection_issuer`].
        **/
       changeCollectionIssuer: AugmentedSubmittable<(collectionId: u32 | AnyNumber | Uint8Array, newIssuer: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32, MultiAddress]>;
       /**
-       * Create a collection
+       * See [`Pallet::create_collection`].
        **/
       createCollection: AugmentedSubmittable<(collectionId: u32 | AnyNumber | Uint8Array, metadata: Bytes | string | Uint8Array, max: Option<u32> | null | Uint8Array | u32 | AnyNumber, symbol: Bytes | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32, Bytes, Option<u32>, Bytes]>;
       /**
-       * destroy collection
+       * See [`Pallet::destroy_collection`].
        **/
       destroyCollection: AugmentedSubmittable<(collectionId: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32]>;
       /**
-       * lock collection
+       * See [`Pallet::lock_collection`].
        **/
       lockCollection: AugmentedSubmittable<(collectionId: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32]>;
       /**
-       * Mints an NFT in the specified collection
-       * Sets metadata and the royalty attribute
-       * 
-       * Parameters:
-       * - `collection_id`: The collection of the asset to be minted.
-       * - `nft_id`: The nft value of the asset to be minted.
-       * - `recipient`: Receiver of the royalty
-       * - `royalty`: Permillage reward from each trade for the Recipient
-       * - `metadata`: Arbitrary data about an nft, e.g. IPFS hash
+       * See [`Pallet::mint_nft`].
        **/
       mintNft: AugmentedSubmittable<(owner: Option<AccountId32> | null | Uint8Array | AccountId32 | string, nftId: u32 | AnyNumber | Uint8Array, collectionId: u32 | AnyNumber | Uint8Array, royaltyRecipient: Option<AccountId32> | null | Uint8Array | AccountId32 | string, royalty: Option<Permill> | null | Uint8Array | Permill | AnyNumber, metadata: Bytes | string | Uint8Array, transferable: bool | boolean | Uint8Array, resources: Option<Vec<RmrkTraitsResourceResourceInfoMin>> | null | Uint8Array | Vec<RmrkTraitsResourceResourceInfoMin> | (RmrkTraitsResourceResourceInfoMin | { id?: any; resource?: any } | string | Uint8Array)[]) => SubmittableExtrinsic<ApiType>, [Option<AccountId32>, u32, u32, Option<AccountId32>, Option<Permill>, Bytes, bool, Option<Vec<RmrkTraitsResourceResourceInfoMin>>]>;
       /**
-       * Mints an NFT in the specified collection directly to another NFT
-       * Sets metadata and the royalty attribute
-       * 
-       * Parameters:
-       * - `collection_id`: The class of the asset to be minted.
-       * - `nft_id`: The nft value of the asset to be minted.
-       * - `recipient`: Receiver of the royalty
-       * - `royalty`: Permillage reward from each trade for the Recipient
-       * - `metadata`: Arbitrary data about an nft, e.g. IPFS hash
+       * See [`Pallet::mint_nft_directly_to_nft`].
        **/
       mintNftDirectlyToNft: AugmentedSubmittable<(owner: ITuple<[u32, u32]> | [u32 | AnyNumber | Uint8Array, u32 | AnyNumber | Uint8Array], nftId: u32 | AnyNumber | Uint8Array, collectionId: u32 | AnyNumber | Uint8Array, royaltyRecipient: Option<AccountId32> | null | Uint8Array | AccountId32 | string, royalty: Option<Permill> | null | Uint8Array | Permill | AnyNumber, metadata: Bytes | string | Uint8Array, transferable: bool | boolean | Uint8Array, resources: Option<Vec<RmrkTraitsResourceResourceInfoMin>> | null | Uint8Array | Vec<RmrkTraitsResourceResourceInfoMin> | (RmrkTraitsResourceResourceInfoMin | { id?: any; resource?: any } | string | Uint8Array)[]) => SubmittableExtrinsic<ApiType>, [ITuple<[u32, u32]>, u32, u32, Option<AccountId32>, Option<Permill>, Bytes, bool, Option<Vec<RmrkTraitsResourceResourceInfoMin>>]>;
       /**
-       * Rejects an NFT sent from another account to self or owned NFT
-       * 
-       * Parameters:
-       * - `origin`: sender of the transaction
-       * - `collection_id`: collection id of the nft to be accepted
-       * - `nft_id`: nft id of the nft to be accepted
+       * See [`Pallet::reject_nft`].
        **/
       rejectNft: AugmentedSubmittable<(collectionId: u32 | AnyNumber | Uint8Array, nftId: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32, u32]>;
       /**
-       * remove resource
+       * See [`Pallet::remove_resource`].
        **/
       removeResource: AugmentedSubmittable<(collectionId: u32 | AnyNumber | Uint8Array, nftId: u32 | AnyNumber | Uint8Array, resourceId: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32, u32, u32]>;
       /**
-       * Replace resource by id
+       * See [`Pallet::replace_resource`].
        **/
       replaceResource: AugmentedSubmittable<(collectionId: u32 | AnyNumber | Uint8Array, nftId: u32 | AnyNumber | Uint8Array, resource: RmrkTraitsResourceResourceTypes | { Basic: any } | { Composable: any } | { Slot: any } | string | Uint8Array, resourceId: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32, u32, RmrkTraitsResourceResourceTypes, u32]>;
       /**
-       * Transfers a NFT from an Account or NFT A to another Account or NFT B
-       * 
-       * Parameters:
-       * - `origin`: sender of the transaction
-       * - `collection_id`: collection id of the nft to be transferred
-       * - `nft_id`: nft id of the nft to be transferred
-       * - `new_owner`: new owner of the nft which can be either an account or a NFT
+       * See [`Pallet::send`].
        **/
       send: AugmentedSubmittable<(collectionId: u32 | AnyNumber | Uint8Array, nftId: u32 | AnyNumber | Uint8Array, newOwner: RmrkTraitsNftAccountIdOrCollectionNftTuple | { AccountId: any } | { CollectionAndNftTuple: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32, u32, RmrkTraitsNftAccountIdOrCollectionNftTuple]>;
       /**
-       * set a different order of resource priority
+       * See [`Pallet::set_priority`].
        **/
       setPriority: AugmentedSubmittable<(collectionId: u32 | AnyNumber | Uint8Array, nftId: u32 | AnyNumber | Uint8Array, priorities: Vec<u32> | (u32 | AnyNumber | Uint8Array)[]) => SubmittableExtrinsic<ApiType>, [u32, u32, Vec<u32>]>;
       /**
-       * set a custom value on an NFT
+       * See [`Pallet::set_property`].
        **/
       setProperty: AugmentedSubmittable<(collectionId: u32 | AnyNumber | Uint8Array, maybeNftId: Option<u32> | null | Uint8Array | u32 | AnyNumber, key: Bytes | string | Uint8Array, value: Bytes | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32, Option<u32>, Bytes, Bytes]>;
       /**
@@ -2890,101 +1242,35 @@ declare module '@polkadot/api-base/types/submittable' {
     };
     rmrkEquip: {
       /**
-       * Change the issuer of a Base
-       * 
-       * Parameters:
-       * - `origin`: sender of the transaction
-       * - `base_id`: base_id to change issuer of
-       * - `new_issuer`: Base's new issuer
+       * See [`Pallet::change_base_issuer`].
        **/
       changeBaseIssuer: AugmentedSubmittable<(baseId: u32 | AnyNumber | Uint8Array, newIssuer: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32, MultiAddress]>;
       /**
-       * Creates a new Base.
-       * Modeled after [base interaction](https://github.com/rmrk-team/rmrk-spec/blob/master/standards/rmrk2.0.0/interactions/base.md)
-       * 
-       * Parameters:
-       * - origin: Caller, will be assigned as the issuer of the Base
-       * - base_type: media type, e.g. "svg"
-       * - symbol: arbitrary client-chosen symbol, e.g. "kanaria_superbird"
-       * - parts: array of Fixed and Slot parts composing the base, confined in length by
-       * PartsLimit
+       * See [`Pallet::create_base`].
        **/
       createBase: AugmentedSubmittable<(baseType: Bytes | string | Uint8Array, symbol: Bytes | string | Uint8Array, parts: Vec<RmrkTraitsPartPartType> | (RmrkTraitsPartPartType | { FixedPart: any } | { SlotPart: any } | string | Uint8Array)[]) => SubmittableExtrinsic<ApiType>, [Bytes, Bytes, Vec<RmrkTraitsPartPartType>]>;
       /**
-       * Equips a child NFT's resource to a parent's slot, if all are available.
-       * Equipping operations are maintained inside the Equippings storage.
-       * Modeled after [equip interaction](https://github.com/rmrk-team/rmrk-spec/blob/master/standards/rmrk2.0.0/interactions/equip.md)
-       * 
-       * Parameters:
-       * - origin: The caller of the function, not necessarily anything else
-       * - item: Child NFT being equipped
-       * - equipper: Parent NFT which will equip the item
-       * - base: ID of the base which the item and equipper must each have a resource referencing
-       * - slot: ID of the slot which the item and equipper must each have a resource referencing
+       * See [`Pallet::equip`].
        **/
       equip: AugmentedSubmittable<(item: ITuple<[u32, u32]> | [u32 | AnyNumber | Uint8Array, u32 | AnyNumber | Uint8Array], equipper: ITuple<[u32, u32]> | [u32 | AnyNumber | Uint8Array, u32 | AnyNumber | Uint8Array], resourceId: u32 | AnyNumber | Uint8Array, base: u32 | AnyNumber | Uint8Array, slot: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [ITuple<[u32, u32]>, ITuple<[u32, u32]>, u32, u32, u32]>;
       /**
-       * Updates the array of Collections allowed to be equipped to a Base's specified Slot Part.
-       * Modeled after [equippable interaction](https://github.com/rmrk-team/rmrk-spec/blob/master/standards/rmrk2.0.0/interactions/equippable.md)
-       * 
-       * Parameters:
-       * - origin: The caller of the function, must be issuer of the base
-       * - base_id: The Base containing the Slot Part to be updated
-       * - part_id: The Slot Part whose Equippable List is being updated
-       * - equippables: The list of equippables that will override the current Equippaables list
+       * See [`Pallet::equippable`].
        **/
       equippable: AugmentedSubmittable<(baseId: u32 | AnyNumber | Uint8Array, slotId: u32 | AnyNumber | Uint8Array, equippables: RmrkTraitsPartEquippableList | { All: any } | { Empty: any } | { Custom: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32, u32, RmrkTraitsPartEquippableList]>;
       /**
-       * Adds a new collection that is allowed to be equipped to a Base's specified Slot Part.
-       * 
-       * Parameters:
-       * - origin: The caller of the function, must be issuer of the base
-       * - base_id: The Base containing the Slot Part to be updated
-       * - part_id: The Slot Part whose Equippable List is being updated
-       * - equippable: The equippable that will be added to the current Equippaables list
+       * See [`Pallet::equippable_add`].
        **/
       equippableAdd: AugmentedSubmittable<(baseId: u32 | AnyNumber | Uint8Array, slotId: u32 | AnyNumber | Uint8Array, equippable: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32, u32, u32]>;
       /**
-       * Remove a collection from the equippables list.
-       * 
-       * Parameters:
-       * - origin: The caller of the function, must be issuer of the base
-       * - base_id: The Base containing the Slot Part to be updated
-       * - part_id: The Slot Part whose Equippable List is being updated
-       * - equippable: The equippable that will be removed from the current Equippaables list
+       * See [`Pallet::equippable_remove`].
        **/
       equippableRemove: AugmentedSubmittable<(baseId: u32 | AnyNumber | Uint8Array, slotId: u32 | AnyNumber | Uint8Array, equippable: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32, u32, u32]>;
       /**
-       * Adds a Theme to a Base.
-       * Modeled after [themeadd interaction](https://github.com/rmrk-team/rmrk-spec/blob/master/standards/rmrk2.0.0/interactions/themeadd.md)
-       * Themes are stored in the Themes storage
-       * A Theme named "default" is required prior to adding other Themes.
-       * 
-       * Parameters:
-       * - origin: The caller of the function, must be issuer of the base
-       * - base_id: The Base containing the Theme to be updated
-       * - theme: The Theme to add to the Base.  A Theme has a name and properties, which are an
-       * array of [key, value, inherit].  This array is bounded by MaxPropertiesPerTheme.
-       * - key: arbitrary BoundedString, defined by client
-       * - value: arbitrary BoundedString, defined by client
-       * - inherit: optional bool
+       * See [`Pallet::theme_add`].
        **/
       themeAdd: AugmentedSubmittable<(baseId: u32 | AnyNumber | Uint8Array, theme: RmrkTraitsTheme | { name?: any; properties?: any; inherit?: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32, RmrkTraitsTheme]>;
       /**
-       * Unequips a child NFT's resource from its parent's slot.
-       * Can be successful if
-       * - Item has beeen burned
-       * - Item is equipped and extrinsic called by equipping item owner
-       * - Item is equipped and extrinsic called by equipper NFT owner
-       * Equipping operations are maintained inside the Equippings storage.
-       * Modeled after [equip interaction](https://github.com/rmrk-team/rmrk-spec/blob/master/standards/rmrk2.0.0/interactions/equip.md)
-       * 
-       * Parameters:
-       * - origin: The caller of the function, not necessarily anything else
-       * - item: Child NFT being unequipped
-       * - unequipper: Parent NFT which will unequip the item
-       * - base: ID of the base which the item and equipper must each have a resource referencing
-       * - slot: ID of the slot which the item and equipper must each have a resource referencing
+       * See [`Pallet::unequip`].
        **/
       unequip: AugmentedSubmittable<(item: ITuple<[u32, u32]> | [u32 | AnyNumber | Uint8Array, u32 | AnyNumber | Uint8Array], unequipper: ITuple<[u32, u32]> | [u32 | AnyNumber | Uint8Array, u32 | AnyNumber | Uint8Array], base: u32 | AnyNumber | Uint8Array, slot: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [ITuple<[u32, u32]>, ITuple<[u32, u32]>, u32, u32]>;
       /**
@@ -2994,69 +1280,27 @@ declare module '@polkadot/api-base/types/submittable' {
     };
     rmrkMarket: {
       /**
-       * Accept an offer on a RMRK NFT from a potential buyer.
-       * 
-       * Parameters:
-       * - `origin` - Account of the current owner that is accepting the offerer's offer
-       * - `collection_id` - Collection id of the RMRK NFT
-       * - `nft_id` - NFT id of the RMRK NFT
-       * - `offerer` - Account that made the offer
+       * See [`Pallet::accept_offer`].
        **/
       acceptOffer: AugmentedSubmittable<(collectionId: u32 | AnyNumber | Uint8Array, nftId: u32 | AnyNumber | Uint8Array, offerer: AccountId32 | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32, u32, AccountId32]>;
       /**
-       * Buy a listed NFT. Ensure that the NFT is available for purchase and has not recently
-       * been purchased, sent, or burned.
-       * 
-       * Parameters:
-       * - `origin` - Account of the potential buyer
-       * - `collection_id` - Collection id of the RMRK NFT
-       * - `nft_id` - NFT id of the RMRK NFT
-       * - `amount` - Optional price at which buyer purchased at
+       * See [`Pallet::buy`].
        **/
       buy: AugmentedSubmittable<(collectionId: u32 | AnyNumber | Uint8Array, nftId: u32 | AnyNumber | Uint8Array, amount: Option<u128> | null | Uint8Array | u128 | AnyNumber) => SubmittableExtrinsic<ApiType>, [u32, u32, Option<u128>]>;
       /**
-       * List a RMRK NFT on the Marketplace for purchase. A listing can be cancelled, and is
-       * automatically considered cancelled when a `buy` is executed on top of a given listing.
-       * An NFT that has another NFT as its owner CANNOT be listed. An NFT owned by a NFT must
-       * first be sent to an account before being listed.
-       * 
-       * Parameters:
-       * - `origin` - Account of owner of the RMRK NFT to be listed
-       * - `collection_id` - Collection id of the RMRK NFT
-       * - `nft_id` - NFT id of the RMRK NFT
-       * - `amount` - Price of the RMRK NFT
-       * - `expires` - Optional BlockNumber for when the listing expires
+       * See [`Pallet::list`].
        **/
       list: AugmentedSubmittable<(collectionId: u32 | AnyNumber | Uint8Array, nftId: u32 | AnyNumber | Uint8Array, amount: u128 | AnyNumber | Uint8Array, expires: Option<u32> | null | Uint8Array | u32 | AnyNumber) => SubmittableExtrinsic<ApiType>, [u32, u32, u128, Option<u32>]>;
       /**
-       * Make an offer on a RMRK NFT for purchase. An offer can be set with an expiration where
-       * the offer can no longer be accepted by the RMRK NFT owner
-       * 
-       * Parameters:
-       * - `origin` - Account of the potential buyer
-       * - `collection_id` - Collection id of the RMRK NFT
-       * - `nft_id` - NFT id of the RMRK NFT
-       * - `amount` - Price of the RMRK NFT
-       * - `expiration` - Expiration of the offer
+       * See [`Pallet::make_offer`].
        **/
       makeOffer: AugmentedSubmittable<(collectionId: u32 | AnyNumber | Uint8Array, nftId: u32 | AnyNumber | Uint8Array, amount: u128 | AnyNumber | Uint8Array, expires: Option<u32> | null | Uint8Array | u32 | AnyNumber) => SubmittableExtrinsic<ApiType>, [u32, u32, u128, Option<u32>]>;
       /**
-       * Unlist a RMRK NFT on the Marketplace and remove from storage in `Listings`.
-       * 
-       * Parameters:
-       * - `origin` - Account owner of the listed RMRK NFT
-       * - `collection_id` - Collection id of the RMRK NFT
-       * - `nft_id` - NFT id of the RMRK NFT
+       * See [`Pallet::unlist`].
        **/
       unlist: AugmentedSubmittable<(collectionId: u32 | AnyNumber | Uint8Array, nftId: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32, u32]>;
       /**
-       * Withdraw an offer on a RMRK NFT, such that it is no longer available to be accepted by
-       * the NFT owner
-       * 
-       * Parameters:
-       * - `origin` - Account that wants to withdraw their offer
-       * - `collection_id` - Collection id of the RMRK NFT
-       * - `nft_id` - NFT id of the RMRK NFT
+       * See [`Pallet::withdraw_offer`].
        **/
       withdrawOffer: AugmentedSubmittable<(collectionId: u32 | AnyNumber | Uint8Array, nftId: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32, u32]>;
       /**
@@ -3066,27 +1310,27 @@ declare module '@polkadot/api-base/types/submittable' {
     };
     scheduler: {
       /**
-       * Cancel an anonymously scheduled task.
+       * See [`Pallet::cancel`].
        **/
       cancel: AugmentedSubmittable<(when: u32 | AnyNumber | Uint8Array, index: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32, u32]>;
       /**
-       * Cancel a named scheduled task.
+       * See [`Pallet::cancel_named`].
        **/
       cancelNamed: AugmentedSubmittable<(id: U8aFixed | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [U8aFixed]>;
       /**
-       * Anonymously schedule a task.
+       * See [`Pallet::schedule`].
        **/
       schedule: AugmentedSubmittable<(when: u32 | AnyNumber | Uint8Array, maybePeriodic: Option<ITuple<[u32, u32]>> | null | Uint8Array | ITuple<[u32, u32]> | [u32 | AnyNumber | Uint8Array, u32 | AnyNumber | Uint8Array], priority: u8 | AnyNumber | Uint8Array, call: Call | IMethod | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32, Option<ITuple<[u32, u32]>>, u8, Call]>;
       /**
-       * Anonymously schedule a task after a delay.
+       * See [`Pallet::schedule_after`].
        **/
       scheduleAfter: AugmentedSubmittable<(after: u32 | AnyNumber | Uint8Array, maybePeriodic: Option<ITuple<[u32, u32]>> | null | Uint8Array | ITuple<[u32, u32]> | [u32 | AnyNumber | Uint8Array, u32 | AnyNumber | Uint8Array], priority: u8 | AnyNumber | Uint8Array, call: Call | IMethod | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32, Option<ITuple<[u32, u32]>>, u8, Call]>;
       /**
-       * Schedule a named task.
+       * See [`Pallet::schedule_named`].
        **/
       scheduleNamed: AugmentedSubmittable<(id: U8aFixed | string | Uint8Array, when: u32 | AnyNumber | Uint8Array, maybePeriodic: Option<ITuple<[u32, u32]>> | null | Uint8Array | ITuple<[u32, u32]> | [u32 | AnyNumber | Uint8Array, u32 | AnyNumber | Uint8Array], priority: u8 | AnyNumber | Uint8Array, call: Call | IMethod | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [U8aFixed, u32, Option<ITuple<[u32, u32]>>, u8, Call]>;
       /**
-       * Schedule a named task after a delay.
+       * See [`Pallet::schedule_named_after`].
        **/
       scheduleNamedAfter: AugmentedSubmittable<(id: U8aFixed | string | Uint8Array, after: u32 | AnyNumber | Uint8Array, maybePeriodic: Option<ITuple<[u32, u32]>> | null | Uint8Array | ITuple<[u32, u32]> | [u32 | AnyNumber | Uint8Array, u32 | AnyNumber | Uint8Array], priority: u8 | AnyNumber | Uint8Array, call: Call | IMethod | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [U8aFixed, u32, Option<ITuple<[u32, u32]>>, u8, Call]>;
       /**
@@ -3096,30 +1340,11 @@ declare module '@polkadot/api-base/types/submittable' {
     };
     session: {
       /**
-       * Removes any session key(s) of the function caller.
-       * 
-       * This doesn't take effect until the next session.
-       * 
-       * The dispatch origin of this function must be Signed and the account must be either be
-       * convertible to a validator ID using the chain's typical addressing system (this usually
-       * means being a controller account) or directly convertible into a validator ID (which
-       * usually means being a stash account).
-       * 
-       * ## Complexity
-       * - `O(1)` in number of key types. Actual cost depends on the number of length of
-       * `T::Keys::key_ids()` which is fixed.
+       * See [`Pallet::purge_keys`].
        **/
       purgeKeys: AugmentedSubmittable<() => SubmittableExtrinsic<ApiType>, []>;
       /**
-       * Sets the session key(s) of the function caller to `keys`.
-       * Allows an account to set its session key prior to becoming a validator.
-       * This doesn't take effect until the next session.
-       * 
-       * The dispatch origin of this function must be signed.
-       * 
-       * ## Complexity
-       * - `O(1)`. Actual cost depends on the number of length of `T::Keys::key_ids()` which is
-       * fixed.
+       * See [`Pallet::set_keys`].
        **/
       setKeys: AugmentedSubmittable<(keys: PhalaParachainRuntimeOpaqueSessionKeys | { aura?: any } | string | Uint8Array, proof: Bytes | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [PhalaParachainRuntimeOpaqueSessionKeys, Bytes]>;
       /**
@@ -3129,7 +1354,7 @@ declare module '@polkadot/api-base/types/submittable' {
     };
     sygmaAccessSegregator: {
       /**
-       * Grants access to an account for a extrinsic.
+       * See [`Pallet::grant_access`].
        **/
       grantAccess: AugmentedSubmittable<(palletIndex: u8 | AnyNumber | Uint8Array, extrinsicName: Bytes | string | Uint8Array, who: AccountId32 | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [u8, Bytes, AccountId32]>;
       /**
@@ -3139,9 +1364,9 @@ declare module '@polkadot/api-base/types/submittable' {
     };
     sygmaBasicFeeHandler: {
       /**
-       * Set bridge fee for a specific asset
+       * See [`Pallet::set_fee`].
        **/
-      setFee: AugmentedSubmittable<(domain: u8 | AnyNumber | Uint8Array, asset: XcmV3MultiassetAssetId | { Concrete: any } | { Abstract: any } | string | Uint8Array, amount: u128 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u8, XcmV3MultiassetAssetId, u128]>;
+      setFee: AugmentedSubmittable<(domain: u8 | AnyNumber | Uint8Array, asset: StagingXcmV3MultiassetAssetId | { Concrete: any } | { Abstract: any } | string | Uint8Array, amount: u128 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u8, StagingXcmV3MultiassetAssetId, u128]>;
       /**
        * Generic tx
        **/
@@ -3149,35 +1374,43 @@ declare module '@polkadot/api-base/types/submittable' {
     };
     sygmaBridge: {
       /**
-       * Initiates a transfer.
+       * See [`Pallet::deposit`].
        **/
-      deposit: AugmentedSubmittable<(asset: XcmV3MultiAsset | { id?: any; fun?: any } | string | Uint8Array, dest: XcmV3MultiLocation | { parents?: any; interior?: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [XcmV3MultiAsset, XcmV3MultiLocation]>;
+      deposit: AugmentedSubmittable<(asset: StagingXcmV3MultiAsset | { id?: any; fun?: any } | string | Uint8Array, dest: StagingXcmV3MultiLocation | { parents?: any; interior?: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [StagingXcmV3MultiAsset, StagingXcmV3MultiLocation]>;
       /**
-       * Executes a batch of deposit proposals (only if signature is signed by MPC).
+       * See [`Pallet::execute_proposal`].
        **/
       executeProposal: AugmentedSubmittable<(proposals: Vec<SygmaBridgeProposal> | (SygmaBridgeProposal | { originDomainId?: any; depositNonce?: any; resourceId?: any; data?: any } | string | Uint8Array)[], signature: Bytes | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [Vec<SygmaBridgeProposal>, Bytes]>;
       /**
-       * Pause bridge, this would lead to bridge transfer failure before it being unpaused.
+       * See [`Pallet::pause_all_bridges`].
+       **/
+      pauseAllBridges: AugmentedSubmittable<() => SubmittableExtrinsic<ApiType>, []>;
+      /**
+       * See [`Pallet::pause_bridge`].
        **/
       pauseBridge: AugmentedSubmittable<(destDomainId: u8 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u8]>;
       /**
-       * Mark the give dest domainID with chainID to be enabled
+       * See [`Pallet::register_domain`].
        **/
       registerDomain: AugmentedSubmittable<(destDomainId: u8 | AnyNumber | Uint8Array, destChainId: U256 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u8, U256]>;
       /**
-       * This method is used to trigger the process for retrying failed deposits on the MPC side.
+       * See [`Pallet::retry`].
        **/
       retry: AugmentedSubmittable<(depositOnBlockHeight: u128 | AnyNumber | Uint8Array, destDomainId: u8 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u128, u8]>;
       /**
-       * Mark an ECDSA address as a MPC account.
+       * See [`Pallet::set_mpc_address`].
        **/
       setMpcAddress: AugmentedSubmittable<(addr: SygmaTraitsMpcAddress | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [SygmaTraitsMpcAddress]>;
       /**
-       * Unpause bridge.
+       * See [`Pallet::unpause_all_bridges`].
+       **/
+      unpauseAllBridges: AugmentedSubmittable<() => SubmittableExtrinsic<ApiType>, []>;
+      /**
+       * See [`Pallet::unpause_bridge`].
        **/
       unpauseBridge: AugmentedSubmittable<(destDomainId: u8 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u8]>;
       /**
-       * Mark the give dest domainID with chainID to be disabled
+       * See [`Pallet::unregister_domain`].
        **/
       unregisterDomain: AugmentedSubmittable<(destDomainId: u8 | AnyNumber | Uint8Array, destChainId: U256 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u8, U256]>;
       /**
@@ -3187,9 +1420,19 @@ declare module '@polkadot/api-base/types/submittable' {
     };
     sygmaFeeHandlerRouter: {
       /**
-       * Set fee handler specific (domain, asset) pair
+       * See [`Pallet::set_fee_handler`].
        **/
-      setFeeHandler: AugmentedSubmittable<(domain: u8 | AnyNumber | Uint8Array, asset: XcmV3MultiassetAssetId | { Concrete: any } | { Abstract: any } | string | Uint8Array, handlerType: SygmaFeeHandlerRouterFeeHandlerType | 'BasicFeeHandler' | 'DynamicFeeHandler' | number | Uint8Array) => SubmittableExtrinsic<ApiType>, [u8, XcmV3MultiassetAssetId, SygmaFeeHandlerRouterFeeHandlerType]>;
+      setFeeHandler: AugmentedSubmittable<(domain: u8 | AnyNumber | Uint8Array, asset: StagingXcmV3MultiassetAssetId | { Concrete: any } | { Abstract: any } | string | Uint8Array, handlerType: SygmaFeeHandlerRouterFeeHandlerType | 'BasicFeeHandler' | 'PercentageFeeHandler' | 'DynamicFeeHandler' | number | Uint8Array) => SubmittableExtrinsic<ApiType>, [u8, StagingXcmV3MultiassetAssetId, SygmaFeeHandlerRouterFeeHandlerType]>;
+      /**
+       * Generic tx
+       **/
+      [key: string]: SubmittableExtrinsicFunction<ApiType>;
+    };
+    sygmaPercentageFeeHandler: {
+      /**
+       * See [`Pallet::set_fee_rate`].
+       **/
+      setFeeRate: AugmentedSubmittable<(domain: u8 | AnyNumber | Uint8Array, asset: StagingXcmV3MultiassetAssetId | { Concrete: any } | { Abstract: any } | string | Uint8Array, feeRateBasisPoint: u32 | AnyNumber | Uint8Array, feeLowerBound: u128 | AnyNumber | Uint8Array, feeUpperBound: u128 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u8, StagingXcmV3MultiassetAssetId, u32, u128, u128]>;
       /**
        * Generic tx
        **/
@@ -3197,47 +1440,35 @@ declare module '@polkadot/api-base/types/submittable' {
     };
     system: {
       /**
-       * Kill all storage items with a key that starts with the given prefix.
-       * 
-       * **NOTE:** We rely on the Root origin to provide us the number of subkeys under
-       * the prefix we are removing to accurately calculate the weight of this function.
+       * See [`Pallet::kill_prefix`].
        **/
       killPrefix: AugmentedSubmittable<(prefix: Bytes | string | Uint8Array, subkeys: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [Bytes, u32]>;
       /**
-       * Kill some items from storage.
+       * See [`Pallet::kill_storage`].
        **/
       killStorage: AugmentedSubmittable<(keys: Vec<Bytes> | (Bytes | string | Uint8Array)[]) => SubmittableExtrinsic<ApiType>, [Vec<Bytes>]>;
       /**
-       * Make some on-chain remark.
-       * 
-       * ## Complexity
-       * - `O(1)`
+       * See [`Pallet::remark`].
        **/
       remark: AugmentedSubmittable<(remark: Bytes | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [Bytes]>;
       /**
-       * Make some on-chain remark and emit event.
+       * See [`Pallet::remark_with_event`].
        **/
       remarkWithEvent: AugmentedSubmittable<(remark: Bytes | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [Bytes]>;
       /**
-       * Set the new runtime code.
-       * 
-       * ## Complexity
-       * - `O(C + S)` where `C` length of `code` and `S` complexity of `can_set_code`
+       * See [`Pallet::set_code`].
        **/
       setCode: AugmentedSubmittable<(code: Bytes | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [Bytes]>;
       /**
-       * Set the new runtime code without doing any checks of the given `code`.
-       * 
-       * ## Complexity
-       * - `O(C)` where `C` length of `code`
+       * See [`Pallet::set_code_without_checks`].
        **/
       setCodeWithoutChecks: AugmentedSubmittable<(code: Bytes | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [Bytes]>;
       /**
-       * Set the number of pages in the WebAssembly environment's heap.
+       * See [`Pallet::set_heap_pages`].
        **/
       setHeapPages: AugmentedSubmittable<(pages: u64 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u64]>;
       /**
-       * Set some items of storage.
+       * See [`Pallet::set_storage`].
        **/
       setStorage: AugmentedSubmittable<(items: Vec<ITuple<[Bytes, Bytes]>> | ([Bytes | string | Uint8Array, Bytes | string | Uint8Array])[]) => SubmittableExtrinsic<ApiType>, [Vec<ITuple<[Bytes, Bytes]>>]>;
       /**
@@ -3247,111 +1478,27 @@ declare module '@polkadot/api-base/types/submittable' {
     };
     technicalCommittee: {
       /**
-       * Close a vote that is either approved, disapproved or whose voting period has ended.
-       * 
-       * May be called by any signed account in order to finish voting and close the proposal.
-       * 
-       * If called before the end of the voting period it will only close the vote if it is
-       * has enough votes to be approved or disapproved.
-       * 
-       * If called after the end of the voting period abstentions are counted as rejections
-       * unless there is a prime member set and the prime member cast an approval.
-       * 
-       * If the close operation completes successfully with disapproval, the transaction fee will
-       * be waived. Otherwise execution of the approved operation will be charged to the caller.
-       * 
-       * + `proposal_weight_bound`: The maximum amount of weight consumed by executing the closed
-       * proposal.
-       * + `length_bound`: The upper bound for the length of the proposal in storage. Checked via
-       * `storage::read` so it is `size_of::<u32>() == 4` larger than the pure length.
-       * 
-       * ## Complexity
-       * - `O(B + M + P1 + P2)` where:
-       * - `B` is `proposal` size in bytes (length-fee-bounded)
-       * - `M` is members-count (code- and governance-bounded)
-       * - `P1` is the complexity of `proposal` preimage.
-       * - `P2` is proposal-count (code-bounded)
+       * See [`Pallet::close`].
        **/
       close: AugmentedSubmittable<(proposalHash: H256 | string | Uint8Array, index: Compact<u32> | AnyNumber | Uint8Array, proposalWeightBound: SpWeightsWeightV2Weight | { refTime?: any; proofSize?: any } | string | Uint8Array, lengthBound: Compact<u32> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [H256, Compact<u32>, SpWeightsWeightV2Weight, Compact<u32>]>;
       /**
-       * Disapprove a proposal, close, and remove it from the system, regardless of its current
-       * state.
-       * 
-       * Must be called by the Root origin.
-       * 
-       * Parameters:
-       * * `proposal_hash`: The hash of the proposal that should be disapproved.
-       * 
-       * ## Complexity
-       * O(P) where P is the number of max proposals
+       * See [`Pallet::disapprove_proposal`].
        **/
       disapproveProposal: AugmentedSubmittable<(proposalHash: H256 | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [H256]>;
       /**
-       * Dispatch a proposal from a member using the `Member` origin.
-       * 
-       * Origin must be a member of the collective.
-       * 
-       * ## Complexity:
-       * - `O(B + M + P)` where:
-       * - `B` is `proposal` size in bytes (length-fee-bounded)
-       * - `M` members-count (code-bounded)
-       * - `P` complexity of dispatching `proposal`
+       * See [`Pallet::execute`].
        **/
       execute: AugmentedSubmittable<(proposal: Call | IMethod | string | Uint8Array, lengthBound: Compact<u32> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [Call, Compact<u32>]>;
       /**
-       * Add a new proposal to either be voted on or executed directly.
-       * 
-       * Requires the sender to be member.
-       * 
-       * `threshold` determines whether `proposal` is executed directly (`threshold < 2`)
-       * or put up for voting.
-       * 
-       * ## Complexity
-       * - `O(B + M + P1)` or `O(B + M + P2)` where:
-       * - `B` is `proposal` size in bytes (length-fee-bounded)
-       * - `M` is members-count (code- and governance-bounded)
-       * - branching is influenced by `threshold` where:
-       * - `P1` is proposal execution complexity (`threshold < 2`)
-       * - `P2` is proposals-count (code-bounded) (`threshold >= 2`)
+       * See [`Pallet::propose`].
        **/
       propose: AugmentedSubmittable<(threshold: Compact<u32> | AnyNumber | Uint8Array, proposal: Call | IMethod | string | Uint8Array, lengthBound: Compact<u32> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u32>, Call, Compact<u32>]>;
       /**
-       * Set the collective's membership.
-       * 
-       * - `new_members`: The new member list. Be nice to the chain and provide it sorted.
-       * - `prime`: The prime member whose vote sets the default.
-       * - `old_count`: The upper bound for the previous number of members in storage. Used for
-       * weight estimation.
-       * 
-       * The dispatch of this call must be `SetMembersOrigin`.
-       * 
-       * NOTE: Does not enforce the expected `MaxMembers` limit on the amount of members, but
-       * the weight estimations rely on it to estimate dispatchable weight.
-       * 
-       * # WARNING:
-       * 
-       * The `pallet-collective` can also be managed by logic outside of the pallet through the
-       * implementation of the trait [`ChangeMembers`].
-       * Any call to `set_members` must be careful that the member set doesn't get out of sync
-       * with other logic managing the member set.
-       * 
-       * ## Complexity:
-       * - `O(MP + N)` where:
-       * - `M` old-members-count (code- and governance-bounded)
-       * - `N` new-members-count (code- and governance-bounded)
-       * - `P` proposals-count (code-bounded)
+       * See [`Pallet::set_members`].
        **/
       setMembers: AugmentedSubmittable<(newMembers: Vec<AccountId32> | (AccountId32 | string | Uint8Array)[], prime: Option<AccountId32> | null | Uint8Array | AccountId32 | string, oldCount: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [Vec<AccountId32>, Option<AccountId32>, u32]>;
       /**
-       * Add an aye or nay vote for the sender to the given proposal.
-       * 
-       * Requires the sender to be a member.
-       * 
-       * Transaction fees will be waived if the member is voting on any particular proposal
-       * for the first time and the call is successful. Subsequent vote changes will charge a
-       * fee.
-       * ## Complexity
-       * - `O(M)` where `M` is members-count (code- and governance-bounded)
+       * See [`Pallet::vote`].
        **/
       vote: AugmentedSubmittable<(proposal: H256 | string | Uint8Array, index: Compact<u32> | AnyNumber | Uint8Array, approve: bool | boolean | Uint8Array) => SubmittableExtrinsic<ApiType>, [H256, Compact<u32>, bool]>;
       /**
@@ -3361,50 +1508,31 @@ declare module '@polkadot/api-base/types/submittable' {
     };
     technicalMembership: {
       /**
-       * Add a member `who` to the set.
-       * 
-       * May only be called from `T::AddOrigin`.
+       * See [`Pallet::add_member`].
        **/
       addMember: AugmentedSubmittable<(who: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [MultiAddress]>;
       /**
-       * Swap out the sending member for some other key `new`.
-       * 
-       * May only be called from `Signed` origin of a current member.
-       * 
-       * Prime membership is passed from the origin account to `new`, if extant.
+       * See [`Pallet::change_key`].
        **/
       changeKey: AugmentedSubmittable<(updated: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [MultiAddress]>;
       /**
-       * Remove the prime member if it exists.
-       * 
-       * May only be called from `T::PrimeOrigin`.
+       * See [`Pallet::clear_prime`].
        **/
       clearPrime: AugmentedSubmittable<() => SubmittableExtrinsic<ApiType>, []>;
       /**
-       * Remove a member `who` from the set.
-       * 
-       * May only be called from `T::RemoveOrigin`.
+       * See [`Pallet::remove_member`].
        **/
       removeMember: AugmentedSubmittable<(who: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [MultiAddress]>;
       /**
-       * Change the membership to a new set, disregarding the existing membership. Be nice and
-       * pass `members` pre-sorted.
-       * 
-       * May only be called from `T::ResetOrigin`.
+       * See [`Pallet::reset_members`].
        **/
       resetMembers: AugmentedSubmittable<(members: Vec<AccountId32> | (AccountId32 | string | Uint8Array)[]) => SubmittableExtrinsic<ApiType>, [Vec<AccountId32>]>;
       /**
-       * Set the prime member. Must be a current member.
-       * 
-       * May only be called from `T::PrimeOrigin`.
+       * See [`Pallet::set_prime`].
        **/
       setPrime: AugmentedSubmittable<(who: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [MultiAddress]>;
       /**
-       * Swap out one member `remove` for another `add`.
-       * 
-       * May only be called from `T::SwapOrigin`.
-       * 
-       * Prime membership is *not* passed from `remove` to `add`, if extant.
+       * See [`Pallet::swap_member`].
        **/
       swapMember: AugmentedSubmittable<(remove: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, add: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [MultiAddress, MultiAddress]>;
       /**
@@ -3414,21 +1542,7 @@ declare module '@polkadot/api-base/types/submittable' {
     };
     timestamp: {
       /**
-       * Set the current time.
-       * 
-       * This call should be invoked exactly once per block. It will panic at the finalization
-       * phase, if this call hasn't been invoked by that time.
-       * 
-       * The timestamp should be greater than the previous one by the amount specified by
-       * `MinimumPeriod`.
-       * 
-       * The dispatch origin for this call must be `Inherent`.
-       * 
-       * ## Complexity
-       * - `O(1)` (Note that implementations of `OnTimestampSet` must also be `O(1)`)
-       * - 1 storage read and 1 storage mutation (codec `O(1)`). (because of `DidUpdate::take` in
-       * `on_finalize`)
-       * - 1 event handler `on_timestamp_set`. Must be `O(1)`.
+       * See [`Pallet::set`].
        **/
       set: AugmentedSubmittable<(now: Compact<u64> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u64>]>;
       /**
@@ -3438,116 +1552,27 @@ declare module '@polkadot/api-base/types/submittable' {
     };
     tips: {
       /**
-       * Close and payout a tip.
-       * 
-       * The dispatch origin for this call must be _Signed_.
-       * 
-       * The tip identified by `hash` must have finished its countdown period.
-       * 
-       * - `hash`: The identity of the open tip for which a tip value is declared. This is formed
-       * as the hash of the tuple of the original tip `reason` and the beneficiary account ID.
-       * 
-       * ## Complexity
-       * - : `O(T)` where `T` is the number of tippers. decoding `Tipper` vec of length `T`. `T`
-       * is charged as upper bound given by `ContainsLengthBound`. The actual cost depends on
-       * the implementation of `T::Tippers`.
+       * See [`Pallet::close_tip`].
        **/
       closeTip: AugmentedSubmittable<(hash: H256 | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [H256]>;
       /**
-       * Report something `reason` that deserves a tip and claim any eventual the finder's fee.
-       * 
-       * The dispatch origin for this call must be _Signed_.
-       * 
-       * Payment: `TipReportDepositBase` will be reserved from the origin account, as well as
-       * `DataDepositPerByte` for each byte in `reason`.
-       * 
-       * - `reason`: The reason for, or the thing that deserves, the tip; generally this will be
-       * a UTF-8-encoded URL.
-       * - `who`: The account which should be credited for the tip.
-       * 
-       * Emits `NewTip` if successful.
-       * 
-       * ## Complexity
-       * - `O(R)` where `R` length of `reason`.
-       * - encoding and hashing of 'reason'
+       * See [`Pallet::report_awesome`].
        **/
       reportAwesome: AugmentedSubmittable<(reason: Bytes | string | Uint8Array, who: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [Bytes, MultiAddress]>;
       /**
-       * Retract a prior tip-report from `report_awesome`, and cancel the process of tipping.
-       * 
-       * If successful, the original deposit will be unreserved.
-       * 
-       * The dispatch origin for this call must be _Signed_ and the tip identified by `hash`
-       * must have been reported by the signing account through `report_awesome` (and not
-       * through `tip_new`).
-       * 
-       * - `hash`: The identity of the open tip for which a tip value is declared. This is formed
-       * as the hash of the tuple of the original tip `reason` and the beneficiary account ID.
-       * 
-       * Emits `TipRetracted` if successful.
-       * 
-       * ## Complexity
-       * - `O(1)`
-       * - Depends on the length of `T::Hash` which is fixed.
+       * See [`Pallet::retract_tip`].
        **/
       retractTip: AugmentedSubmittable<(hash: H256 | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [H256]>;
       /**
-       * Remove and slash an already-open tip.
-       * 
-       * May only be called from `T::RejectOrigin`.
-       * 
-       * As a result, the finder is slashed and the deposits are lost.
-       * 
-       * Emits `TipSlashed` if successful.
-       * 
-       * ## Complexity
-       * - O(1).
+       * See [`Pallet::slash_tip`].
        **/
       slashTip: AugmentedSubmittable<(hash: H256 | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [H256]>;
       /**
-       * Declare a tip value for an already-open tip.
-       * 
-       * The dispatch origin for this call must be _Signed_ and the signing account must be a
-       * member of the `Tippers` set.
-       * 
-       * - `hash`: The identity of the open tip for which a tip value is declared. This is formed
-       * as the hash of the tuple of the hash of the original tip `reason` and the beneficiary
-       * account ID.
-       * - `tip_value`: The amount of tip that the sender would like to give. The median tip
-       * value of active tippers will be given to the `who`.
-       * 
-       * Emits `TipClosing` if the threshold of tippers has been reached and the countdown period
-       * has started.
-       * 
-       * ## Complexity
-       * - `O(T)` where `T` is the number of tippers. decoding `Tipper` vec of length `T`, insert
-       * tip and check closing, `T` is charged as upper bound given by `ContainsLengthBound`.
-       * The actual cost depends on the implementation of `T::Tippers`.
-       * 
-       * Actually weight could be lower as it depends on how many tips are in `OpenTip` but it
-       * is weighted as if almost full i.e of length `T-1`.
+       * See [`Pallet::tip`].
        **/
       tip: AugmentedSubmittable<(hash: H256 | string | Uint8Array, tipValue: Compact<u128> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [H256, Compact<u128>]>;
       /**
-       * Give a tip for something new; no finder's fee will be taken.
-       * 
-       * The dispatch origin for this call must be _Signed_ and the signing account must be a
-       * member of the `Tippers` set.
-       * 
-       * - `reason`: The reason for, or the thing that deserves, the tip; generally this will be
-       * a UTF-8-encoded URL.
-       * - `who`: The account which should be credited for the tip.
-       * - `tip_value`: The amount of tip that the sender would like to give. The median tip
-       * value of active tippers will be given to the `who`.
-       * 
-       * Emits `NewTip` if successful.
-       * 
-       * ## Complexity
-       * - `O(R + T)` where `R` length of `reason`, `T` is the number of tippers.
-       * - `O(T)`: decoding `Tipper` vec of length `T`. `T` is charged as upper bound given by
-       * `ContainsLengthBound`. The actual cost depends on the implementation of
-       * `T::Tippers`.
-       * - `O(R)`: hashing and encoding of reason of length `R`
+       * See [`Pallet::tip_new`].
        **/
       tipNew: AugmentedSubmittable<(reason: Bytes | string | Uint8Array, who: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, tipValue: Compact<u128> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [Bytes, MultiAddress, Compact<u128>]>;
       /**
@@ -3557,58 +1582,23 @@ declare module '@polkadot/api-base/types/submittable' {
     };
     treasury: {
       /**
-       * Approve a proposal. At a later time, the proposal will be allocated to the beneficiary
-       * and the original deposit will be returned.
-       * 
-       * May only be called from `T::ApproveOrigin`.
-       * 
-       * ## Complexity
-       * - O(1).
+       * See [`Pallet::approve_proposal`].
        **/
       approveProposal: AugmentedSubmittable<(proposalId: Compact<u32> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u32>]>;
       /**
-       * Put forward a suggestion for spending. A deposit proportional to the value
-       * is reserved and slashed if the proposal is rejected. It is returned once the
-       * proposal is awarded.
-       * 
-       * ## Complexity
-       * - O(1)
+       * See [`Pallet::propose_spend`].
        **/
       proposeSpend: AugmentedSubmittable<(value: Compact<u128> | AnyNumber | Uint8Array, beneficiary: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u128>, MultiAddress]>;
       /**
-       * Reject a proposed spend. The original deposit will be slashed.
-       * 
-       * May only be called from `T::RejectOrigin`.
-       * 
-       * ## Complexity
-       * - O(1)
+       * See [`Pallet::reject_proposal`].
        **/
       rejectProposal: AugmentedSubmittable<(proposalId: Compact<u32> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u32>]>;
       /**
-       * Force a previously approved proposal to be removed from the approval queue.
-       * The original deposit will no longer be returned.
-       * 
-       * May only be called from `T::RejectOrigin`.
-       * - `proposal_id`: The index of a proposal
-       * 
-       * ## Complexity
-       * - O(A) where `A` is the number of approvals
-       * 
-       * Errors:
-       * - `ProposalNotApproved`: The `proposal_id` supplied was not found in the approval queue,
-       * i.e., the proposal has not been approved. This could also mean the proposal does not
-       * exist altogether, thus there is no way it would have been approved in the first place.
+       * See [`Pallet::remove_approval`].
        **/
       removeApproval: AugmentedSubmittable<(proposalId: Compact<u32> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u32>]>;
       /**
-       * Propose and approve a spend of treasury funds.
-       * 
-       * - `origin`: Must be `SpendOrigin` with the `Success` value being at least `amount`.
-       * - `amount`: The amount to be transferred from the treasury to the `beneficiary`.
-       * - `beneficiary`: The destination account for the transfer.
-       * 
-       * NOTE: For record-keeping purposes, the proposer is deemed to be equivalent to the
-       * beneficiary.
+       * See [`Pallet::spend`].
        **/
       spend: AugmentedSubmittable<(amount: Compact<u128> | AnyNumber | Uint8Array, beneficiary: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u128>, MultiAddress]>;
       /**
@@ -3618,426 +1608,107 @@ declare module '@polkadot/api-base/types/submittable' {
     };
     uniques: {
       /**
-       * Approve an item to be transferred by a delegated third-party account.
-       * 
-       * The origin must conform to `ForceOrigin` or must be `Signed` and the sender must be
-       * either the owner of the `item` or the admin of the collection.
-       * 
-       * - `collection`: The collection of the item to be approved for delegated transfer.
-       * - `item`: The item of the item to be approved for delegated transfer.
-       * - `delegate`: The account to delegate permission to transfer the item.
-       * 
-       * Important NOTE: The `approved` account gets reset after each transfer.
-       * 
-       * Emits `ApprovedTransfer` on success.
-       * 
-       * Weight: `O(1)`
+       * See [`Pallet::approve_transfer`].
        **/
       approveTransfer: AugmentedSubmittable<(collection: u32 | AnyNumber | Uint8Array, item: u32 | AnyNumber | Uint8Array, delegate: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32, u32, MultiAddress]>;
       /**
-       * Destroy a single item.
-       * 
-       * Origin must be Signed and the signing account must be either:
-       * - the Admin of the `collection`;
-       * - the Owner of the `item`;
-       * 
-       * - `collection`: The collection of the item to be burned.
-       * - `item`: The item of the item to be burned.
-       * - `check_owner`: If `Some` then the operation will fail with `WrongOwner` unless the
-       * item is owned by this value.
-       * 
-       * Emits `Burned` with the actual amount burned.
-       * 
-       * Weight: `O(1)`
-       * Modes: `check_owner.is_some()`.
+       * See [`Pallet::burn`].
        **/
       burn: AugmentedSubmittable<(collection: u32 | AnyNumber | Uint8Array, item: u32 | AnyNumber | Uint8Array, checkOwner: Option<MultiAddress> | null | Uint8Array | MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string) => SubmittableExtrinsic<ApiType>, [u32, u32, Option<MultiAddress>]>;
       /**
-       * Allows to buy an item if it's up for sale.
-       * 
-       * Origin must be Signed and must not be the owner of the `item`.
-       * 
-       * - `collection`: The collection of the item.
-       * - `item`: The item the sender wants to buy.
-       * - `bid_price`: The price the sender is willing to pay.
-       * 
-       * Emits `ItemBought` on success.
+       * See [`Pallet::buy_item`].
        **/
       buyItem: AugmentedSubmittable<(collection: u32 | AnyNumber | Uint8Array, item: u32 | AnyNumber | Uint8Array, bidPrice: u128 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32, u32, u128]>;
       /**
-       * Cancel the prior approval for the transfer of an item by a delegate.
-       * 
-       * Origin must be either:
-       * - the `Force` origin;
-       * - `Signed` with the signer being the Admin of the `collection`;
-       * - `Signed` with the signer being the Owner of the `item`;
-       * 
-       * Arguments:
-       * - `collection`: The collection of the item of whose approval will be cancelled.
-       * - `item`: The item of the item of whose approval will be cancelled.
-       * - `maybe_check_delegate`: If `Some` will ensure that the given account is the one to
-       * which permission of transfer is delegated.
-       * 
-       * Emits `ApprovalCancelled` on success.
-       * 
-       * Weight: `O(1)`
+       * See [`Pallet::cancel_approval`].
        **/
       cancelApproval: AugmentedSubmittable<(collection: u32 | AnyNumber | Uint8Array, item: u32 | AnyNumber | Uint8Array, maybeCheckDelegate: Option<MultiAddress> | null | Uint8Array | MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string) => SubmittableExtrinsic<ApiType>, [u32, u32, Option<MultiAddress>]>;
       /**
-       * Clear an attribute for a collection or item.
-       * 
-       * Origin must be either `ForceOrigin` or Signed and the sender should be the Owner of the
-       * `collection`.
-       * 
-       * Any deposit is freed for the collection's owner.
-       * 
-       * - `collection`: The identifier of the collection whose item's metadata to clear.
-       * - `maybe_item`: The identifier of the item whose metadata to clear.
-       * - `key`: The key of the attribute.
-       * 
-       * Emits `AttributeCleared`.
-       * 
-       * Weight: `O(1)`
+       * See [`Pallet::clear_attribute`].
        **/
       clearAttribute: AugmentedSubmittable<(collection: u32 | AnyNumber | Uint8Array, maybeItem: Option<u32> | null | Uint8Array | u32 | AnyNumber, key: Bytes | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32, Option<u32>, Bytes]>;
       /**
-       * Clear the metadata for a collection.
-       * 
-       * Origin must be either `ForceOrigin` or `Signed` and the sender should be the Owner of
-       * the `collection`.
-       * 
-       * Any deposit is freed for the collection's owner.
-       * 
-       * - `collection`: The identifier of the collection whose metadata to clear.
-       * 
-       * Emits `CollectionMetadataCleared`.
-       * 
-       * Weight: `O(1)`
+       * See [`Pallet::clear_collection_metadata`].
        **/
       clearCollectionMetadata: AugmentedSubmittable<(collection: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32]>;
       /**
-       * Clear the metadata for an item.
-       * 
-       * Origin must be either `ForceOrigin` or Signed and the sender should be the Owner of the
-       * `item`.
-       * 
-       * Any deposit is freed for the collection's owner.
-       * 
-       * - `collection`: The identifier of the collection whose item's metadata to clear.
-       * - `item`: The identifier of the item whose metadata to clear.
-       * 
-       * Emits `MetadataCleared`.
-       * 
-       * Weight: `O(1)`
+       * See [`Pallet::clear_metadata`].
        **/
       clearMetadata: AugmentedSubmittable<(collection: u32 | AnyNumber | Uint8Array, item: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32, u32]>;
       /**
-       * Issue a new collection of non-fungible items from a public origin.
-       * 
-       * This new collection has no items initially and its owner is the origin.
-       * 
-       * The origin must conform to the configured `CreateOrigin` and have sufficient funds free.
-       * 
-       * `ItemDeposit` funds of sender are reserved.
-       * 
-       * Parameters:
-       * - `collection`: The identifier of the new collection. This must not be currently in use.
-       * - `admin`: The admin of this collection. The admin is the initial address of each
-       * member of the collection's admin team.
-       * 
-       * Emits `Created` event when successful.
-       * 
-       * Weight: `O(1)`
+       * See [`Pallet::create`].
        **/
       create: AugmentedSubmittable<(collection: u32 | AnyNumber | Uint8Array, admin: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32, MultiAddress]>;
       /**
-       * Destroy a collection of fungible items.
-       * 
-       * The origin must conform to `ForceOrigin` or must be `Signed` and the sender must be the
-       * owner of the `collection`.
-       * 
-       * - `collection`: The identifier of the collection to be destroyed.
-       * - `witness`: Information on the items minted in the collection. This must be
-       * correct.
-       * 
-       * Emits `Destroyed` event when successful.
-       * 
-       * Weight: `O(n + m)` where:
-       * - `n = witness.items`
-       * - `m = witness.item_metadatas`
-       * - `a = witness.attributes`
+       * See [`Pallet::destroy`].
        **/
       destroy: AugmentedSubmittable<(collection: u32 | AnyNumber | Uint8Array, witness: PalletUniquesDestroyWitness | { items?: any; itemMetadatas?: any; attributes?: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32, PalletUniquesDestroyWitness]>;
       /**
-       * Issue a new collection of non-fungible items from a privileged origin.
-       * 
-       * This new collection has no items initially.
-       * 
-       * The origin must conform to `ForceOrigin`.
-       * 
-       * Unlike `create`, no funds are reserved.
-       * 
-       * - `collection`: The identifier of the new item. This must not be currently in use.
-       * - `owner`: The owner of this collection of items. The owner has full superuser
-       * permissions
-       * over this item, but may later change and configure the permissions using
-       * `transfer_ownership` and `set_team`.
-       * 
-       * Emits `ForceCreated` event when successful.
-       * 
-       * Weight: `O(1)`
+       * See [`Pallet::force_create`].
        **/
       forceCreate: AugmentedSubmittable<(collection: u32 | AnyNumber | Uint8Array, owner: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, freeHolding: bool | boolean | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32, MultiAddress, bool]>;
       /**
-       * Alter the attributes of a given item.
-       * 
-       * Origin must be `ForceOrigin`.
-       * 
-       * - `collection`: The identifier of the item.
-       * - `owner`: The new Owner of this item.
-       * - `issuer`: The new Issuer of this item.
-       * - `admin`: The new Admin of this item.
-       * - `freezer`: The new Freezer of this item.
-       * - `free_holding`: Whether a deposit is taken for holding an item of this collection.
-       * - `is_frozen`: Whether this collection is frozen except for permissioned/admin
-       * instructions.
-       * 
-       * Emits `ItemStatusChanged` with the identity of the item.
-       * 
-       * Weight: `O(1)`
+       * See [`Pallet::force_item_status`].
        **/
       forceItemStatus: AugmentedSubmittable<(collection: u32 | AnyNumber | Uint8Array, owner: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, issuer: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, admin: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, freezer: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, freeHolding: bool | boolean | Uint8Array, isFrozen: bool | boolean | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32, MultiAddress, MultiAddress, MultiAddress, MultiAddress, bool, bool]>;
       /**
-       * Disallow further unprivileged transfer of an item.
-       * 
-       * Origin must be Signed and the sender should be the Freezer of the `collection`.
-       * 
-       * - `collection`: The collection of the item to be frozen.
-       * - `item`: The item of the item to be frozen.
-       * 
-       * Emits `Frozen`.
-       * 
-       * Weight: `O(1)`
+       * See [`Pallet::freeze`].
        **/
       freeze: AugmentedSubmittable<(collection: u32 | AnyNumber | Uint8Array, item: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32, u32]>;
       /**
-       * Disallow further unprivileged transfers for a whole collection.
-       * 
-       * Origin must be Signed and the sender should be the Freezer of the `collection`.
-       * 
-       * - `collection`: The collection to be frozen.
-       * 
-       * Emits `CollectionFrozen`.
-       * 
-       * Weight: `O(1)`
+       * See [`Pallet::freeze_collection`].
        **/
       freezeCollection: AugmentedSubmittable<(collection: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32]>;
       /**
-       * Mint an item of a particular collection.
-       * 
-       * The origin must be Signed and the sender must be the Issuer of the `collection`.
-       * 
-       * - `collection`: The collection of the item to be minted.
-       * - `item`: The item value of the item to be minted.
-       * - `beneficiary`: The initial owner of the minted item.
-       * 
-       * Emits `Issued` event when successful.
-       * 
-       * Weight: `O(1)`
+       * See [`Pallet::mint`].
        **/
       mint: AugmentedSubmittable<(collection: u32 | AnyNumber | Uint8Array, item: u32 | AnyNumber | Uint8Array, owner: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32, u32, MultiAddress]>;
       /**
-       * Reevaluate the deposits on some items.
-       * 
-       * Origin must be Signed and the sender should be the Owner of the `collection`.
-       * 
-       * - `collection`: The collection to be frozen.
-       * - `items`: The items of the collection whose deposits will be reevaluated.
-       * 
-       * NOTE: This exists as a best-effort function. Any items which are unknown or
-       * in the case that the owner account does not have reservable funds to pay for a
-       * deposit increase are ignored. Generally the owner isn't going to call this on items
-       * whose existing deposit is less than the refreshed deposit as it would only cost them,
-       * so it's of little consequence.
-       * 
-       * It will still return an error in the case that the collection is unknown of the signer
-       * is not permitted to call it.
-       * 
-       * Weight: `O(items.len())`
+       * See [`Pallet::redeposit`].
        **/
       redeposit: AugmentedSubmittable<(collection: u32 | AnyNumber | Uint8Array, items: Vec<u32> | (u32 | AnyNumber | Uint8Array)[]) => SubmittableExtrinsic<ApiType>, [u32, Vec<u32>]>;
       /**
-       * Set (or reset) the acceptance of ownership for a particular account.
-       * 
-       * Origin must be `Signed` and if `maybe_collection` is `Some`, then the signer must have a
-       * provider reference.
-       * 
-       * - `maybe_collection`: The identifier of the collection whose ownership the signer is
-       * willing to accept, or if `None`, an indication that the signer is willing to accept no
-       * ownership transferal.
-       * 
-       * Emits `OwnershipAcceptanceChanged`.
+       * See [`Pallet::set_accept_ownership`].
        **/
       setAcceptOwnership: AugmentedSubmittable<(maybeCollection: Option<u32> | null | Uint8Array | u32 | AnyNumber) => SubmittableExtrinsic<ApiType>, [Option<u32>]>;
       /**
-       * Set an attribute for a collection or item.
-       * 
-       * Origin must be either `ForceOrigin` or Signed and the sender should be the Owner of the
-       * `collection`.
-       * 
-       * If the origin is Signed, then funds of signer are reserved according to the formula:
-       * `MetadataDepositBase + DepositPerByte * (key.len + value.len)` taking into
-       * account any already reserved funds.
-       * 
-       * - `collection`: The identifier of the collection whose item's metadata to set.
-       * - `maybe_item`: The identifier of the item whose metadata to set.
-       * - `key`: The key of the attribute.
-       * - `value`: The value to which to set the attribute.
-       * 
-       * Emits `AttributeSet`.
-       * 
-       * Weight: `O(1)`
+       * See [`Pallet::set_attribute`].
        **/
       setAttribute: AugmentedSubmittable<(collection: u32 | AnyNumber | Uint8Array, maybeItem: Option<u32> | null | Uint8Array | u32 | AnyNumber, key: Bytes | string | Uint8Array, value: Bytes | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32, Option<u32>, Bytes, Bytes]>;
       /**
-       * Set the maximum amount of items a collection could have.
-       * 
-       * Origin must be either `ForceOrigin` or `Signed` and the sender should be the Owner of
-       * the `collection`.
-       * 
-       * Note: This function can only succeed once per collection.
-       * 
-       * - `collection`: The identifier of the collection to change.
-       * - `max_supply`: The maximum amount of items a collection could have.
-       * 
-       * Emits `CollectionMaxSupplySet` event when successful.
+       * See [`Pallet::set_collection_max_supply`].
        **/
       setCollectionMaxSupply: AugmentedSubmittable<(collection: u32 | AnyNumber | Uint8Array, maxSupply: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32, u32]>;
       /**
-       * Set the metadata for a collection.
-       * 
-       * Origin must be either `ForceOrigin` or `Signed` and the sender should be the Owner of
-       * the `collection`.
-       * 
-       * If the origin is `Signed`, then funds of signer are reserved according to the formula:
-       * `MetadataDepositBase + DepositPerByte * data.len` taking into
-       * account any already reserved funds.
-       * 
-       * - `collection`: The identifier of the item whose metadata to update.
-       * - `data`: The general information of this item. Limited in length by `StringLimit`.
-       * - `is_frozen`: Whether the metadata should be frozen against further changes.
-       * 
-       * Emits `CollectionMetadataSet`.
-       * 
-       * Weight: `O(1)`
+       * See [`Pallet::set_collection_metadata`].
        **/
       setCollectionMetadata: AugmentedSubmittable<(collection: u32 | AnyNumber | Uint8Array, data: Bytes | string | Uint8Array, isFrozen: bool | boolean | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32, Bytes, bool]>;
       /**
-       * Set the metadata for an item.
-       * 
-       * Origin must be either `ForceOrigin` or Signed and the sender should be the Owner of the
-       * `collection`.
-       * 
-       * If the origin is Signed, then funds of signer are reserved according to the formula:
-       * `MetadataDepositBase + DepositPerByte * data.len` taking into
-       * account any already reserved funds.
-       * 
-       * - `collection`: The identifier of the collection whose item's metadata to set.
-       * - `item`: The identifier of the item whose metadata to set.
-       * - `data`: The general information of this item. Limited in length by `StringLimit`.
-       * - `is_frozen`: Whether the metadata should be frozen against further changes.
-       * 
-       * Emits `MetadataSet`.
-       * 
-       * Weight: `O(1)`
+       * See [`Pallet::set_metadata`].
        **/
       setMetadata: AugmentedSubmittable<(collection: u32 | AnyNumber | Uint8Array, item: u32 | AnyNumber | Uint8Array, data: Bytes | string | Uint8Array, isFrozen: bool | boolean | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32, u32, Bytes, bool]>;
       /**
-       * Set (or reset) the price for an item.
-       * 
-       * Origin must be Signed and must be the owner of the asset `item`.
-       * 
-       * - `collection`: The collection of the item.
-       * - `item`: The item to set the price for.
-       * - `price`: The price for the item. Pass `None`, to reset the price.
-       * - `buyer`: Restricts the buy operation to a specific account.
-       * 
-       * Emits `ItemPriceSet` on success if the price is not `None`.
-       * Emits `ItemPriceRemoved` on success if the price is `None`.
+       * See [`Pallet::set_price`].
        **/
       setPrice: AugmentedSubmittable<(collection: u32 | AnyNumber | Uint8Array, item: u32 | AnyNumber | Uint8Array, price: Option<u128> | null | Uint8Array | u128 | AnyNumber, whitelistedBuyer: Option<MultiAddress> | null | Uint8Array | MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string) => SubmittableExtrinsic<ApiType>, [u32, u32, Option<u128>, Option<MultiAddress>]>;
       /**
-       * Change the Issuer, Admin and Freezer of a collection.
-       * 
-       * Origin must be Signed and the sender should be the Owner of the `collection`.
-       * 
-       * - `collection`: The collection whose team should be changed.
-       * - `issuer`: The new Issuer of this collection.
-       * - `admin`: The new Admin of this collection.
-       * - `freezer`: The new Freezer of this collection.
-       * 
-       * Emits `TeamChanged`.
-       * 
-       * Weight: `O(1)`
+       * See [`Pallet::set_team`].
        **/
       setTeam: AugmentedSubmittable<(collection: u32 | AnyNumber | Uint8Array, issuer: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, admin: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, freezer: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32, MultiAddress, MultiAddress, MultiAddress]>;
       /**
-       * Re-allow unprivileged transfer of an item.
-       * 
-       * Origin must be Signed and the sender should be the Freezer of the `collection`.
-       * 
-       * - `collection`: The collection of the item to be thawed.
-       * - `item`: The item of the item to be thawed.
-       * 
-       * Emits `Thawed`.
-       * 
-       * Weight: `O(1)`
+       * See [`Pallet::thaw`].
        **/
       thaw: AugmentedSubmittable<(collection: u32 | AnyNumber | Uint8Array, item: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32, u32]>;
       /**
-       * Re-allow unprivileged transfers for a whole collection.
-       * 
-       * Origin must be Signed and the sender should be the Admin of the `collection`.
-       * 
-       * - `collection`: The collection to be thawed.
-       * 
-       * Emits `CollectionThawed`.
-       * 
-       * Weight: `O(1)`
+       * See [`Pallet::thaw_collection`].
        **/
       thawCollection: AugmentedSubmittable<(collection: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32]>;
       /**
-       * Move an item from the sender account to another.
-       * 
-       * This resets the approved account of the item.
-       * 
-       * Origin must be Signed and the signing account must be either:
-       * - the Admin of the `collection`;
-       * - the Owner of the `item`;
-       * - the approved delegate for the `item` (in this case, the approval is reset).
-       * 
-       * Arguments:
-       * - `collection`: The collection of the item to be transferred.
-       * - `item`: The item of the item to be transferred.
-       * - `dest`: The account to receive ownership of the item.
-       * 
-       * Emits `Transferred`.
-       * 
-       * Weight: `O(1)`
+       * See [`Pallet::transfer`].
        **/
       transfer: AugmentedSubmittable<(collection: u32 | AnyNumber | Uint8Array, item: u32 | AnyNumber | Uint8Array, dest: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32, u32, MultiAddress]>;
       /**
-       * Change the Owner of a collection.
-       * 
-       * Origin must be Signed and the sender should be the Owner of the `collection`.
-       * 
-       * - `collection`: The collection whose owner should be changed.
-       * - `owner`: The new Owner of this collection. They must have called
-       * `set_accept_ownership` with `collection` in order for this operation to succeed.
-       * 
-       * Emits `OwnerChanged`.
-       * 
-       * Weight: `O(1)`
+       * See [`Pallet::transfer_ownership`].
        **/
       transferOwnership: AugmentedSubmittable<(collection: u32 | AnyNumber | Uint8Array, owner: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32, MultiAddress]>;
       /**
@@ -4047,90 +1718,27 @@ declare module '@polkadot/api-base/types/submittable' {
     };
     utility: {
       /**
-       * Send a call through an indexed pseudonym of the sender.
-       * 
-       * Filter from origin are passed along. The call will be dispatched with an origin which
-       * use the same filter as the origin of this call.
-       * 
-       * NOTE: If you need to ensure that any account-based filtering is not honored (i.e.
-       * because you expect `proxy` to have been used prior in the call stack and you do not want
-       * the call restrictions to apply to any sub-accounts), then use `as_multi_threshold_1`
-       * in the Multisig pallet instead.
-       * 
-       * NOTE: Prior to version *12, this was called `as_limited_sub`.
-       * 
-       * The dispatch origin for this call must be _Signed_.
+       * See [`Pallet::as_derivative`].
        **/
       asDerivative: AugmentedSubmittable<(index: u16 | AnyNumber | Uint8Array, call: Call | IMethod | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [u16, Call]>;
       /**
-       * Send a batch of dispatch calls.
-       * 
-       * May be called from any origin except `None`.
-       * 
-       * - `calls`: The calls to be dispatched from the same origin. The number of call must not
-       * exceed the constant: `batched_calls_limit` (available in constant metadata).
-       * 
-       * If origin is root then the calls are dispatched without checking origin filter. (This
-       * includes bypassing `frame_system::Config::BaseCallFilter`).
-       * 
-       * ## Complexity
-       * - O(C) where C is the number of calls to be batched.
-       * 
-       * This will return `Ok` in all circumstances. To determine the success of the batch, an
-       * event is deposited. If a call failed and the batch was interrupted, then the
-       * `BatchInterrupted` event is deposited, along with the number of successful calls made
-       * and the error of the failed call. If all were successful, then the `BatchCompleted`
-       * event is deposited.
+       * See [`Pallet::batch`].
        **/
       batch: AugmentedSubmittable<(calls: Vec<Call> | (Call | IMethod | string | Uint8Array)[]) => SubmittableExtrinsic<ApiType>, [Vec<Call>]>;
       /**
-       * Send a batch of dispatch calls and atomically execute them.
-       * The whole transaction will rollback and fail if any of the calls failed.
-       * 
-       * May be called from any origin except `None`.
-       * 
-       * - `calls`: The calls to be dispatched from the same origin. The number of call must not
-       * exceed the constant: `batched_calls_limit` (available in constant metadata).
-       * 
-       * If origin is root then the calls are dispatched without checking origin filter. (This
-       * includes bypassing `frame_system::Config::BaseCallFilter`).
-       * 
-       * ## Complexity
-       * - O(C) where C is the number of calls to be batched.
+       * See [`Pallet::batch_all`].
        **/
       batchAll: AugmentedSubmittable<(calls: Vec<Call> | (Call | IMethod | string | Uint8Array)[]) => SubmittableExtrinsic<ApiType>, [Vec<Call>]>;
       /**
-       * Dispatches a function call with a provided origin.
-       * 
-       * The dispatch origin for this call must be _Root_.
-       * 
-       * ## Complexity
-       * - O(1).
+       * See [`Pallet::dispatch_as`].
        **/
       dispatchAs: AugmentedSubmittable<(asOrigin: PhalaParachainRuntimeOriginCaller | { system: any } | { Void: any } | { CumulusXcm: any } | { PolkadotXcm: any } | { Council: any } | { TechnicalCommittee: any } | string | Uint8Array, call: Call | IMethod | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [PhalaParachainRuntimeOriginCaller, Call]>;
       /**
-       * Send a batch of dispatch calls.
-       * Unlike `batch`, it allows errors and won't interrupt.
-       * 
-       * May be called from any origin except `None`.
-       * 
-       * - `calls`: The calls to be dispatched from the same origin. The number of call must not
-       * exceed the constant: `batched_calls_limit` (available in constant metadata).
-       * 
-       * If origin is root then the calls are dispatch without checking origin filter. (This
-       * includes bypassing `frame_system::Config::BaseCallFilter`).
-       * 
-       * ## Complexity
-       * - O(C) where C is the number of calls to be batched.
+       * See [`Pallet::force_batch`].
        **/
       forceBatch: AugmentedSubmittable<(calls: Vec<Call> | (Call | IMethod | string | Uint8Array)[]) => SubmittableExtrinsic<ApiType>, [Vec<Call>]>;
       /**
-       * Dispatch a function call with a specified weight.
-       * 
-       * This function does not check the weight of the call, and instead allows the
-       * Root origin to specify the weight of the call.
-       * 
-       * The dispatch origin for this call must be _Root_.
+       * See [`Pallet::with_weight`].
        **/
       withWeight: AugmentedSubmittable<(call: Call | IMethod | string | Uint8Array, weight: SpWeightsWeightV2Weight | { refTime?: any; proofSize?: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [Call, SpWeightsWeightV2Weight]>;
       /**
@@ -4140,86 +1748,23 @@ declare module '@polkadot/api-base/types/submittable' {
     };
     vesting: {
       /**
-       * Force a vested transfer.
-       * 
-       * The dispatch origin for this call must be _Root_.
-       * 
-       * - `source`: The account whose funds should be transferred.
-       * - `target`: The account that should be transferred the vested funds.
-       * - `schedule`: The vesting schedule attached to the transfer.
-       * 
-       * Emits `VestingCreated`.
-       * 
-       * NOTE: This will unlock all schedules through the current block.
-       * 
-       * ## Complexity
-       * - `O(1)`.
+       * See [`Pallet::force_vested_transfer`].
        **/
       forceVestedTransfer: AugmentedSubmittable<(source: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, target: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, schedule: PalletVestingVestingInfo | { locked?: any; perBlock?: any; startingBlock?: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [MultiAddress, MultiAddress, PalletVestingVestingInfo]>;
       /**
-       * Merge two vesting schedules together, creating a new vesting schedule that unlocks over
-       * the highest possible start and end blocks. If both schedules have already started the
-       * current block will be used as the schedule start; with the caveat that if one schedule
-       * is finished by the current block, the other will be treated as the new merged schedule,
-       * unmodified.
-       * 
-       * NOTE: If `schedule1_index == schedule2_index` this is a no-op.
-       * NOTE: This will unlock all schedules through the current block prior to merging.
-       * NOTE: If both schedules have ended by the current block, no new schedule will be created
-       * and both will be removed.
-       * 
-       * Merged schedule attributes:
-       * - `starting_block`: `MAX(schedule1.starting_block, scheduled2.starting_block,
-       * current_block)`.
-       * - `ending_block`: `MAX(schedule1.ending_block, schedule2.ending_block)`.
-       * - `locked`: `schedule1.locked_at(current_block) + schedule2.locked_at(current_block)`.
-       * 
-       * The dispatch origin for this call must be _Signed_.
-       * 
-       * - `schedule1_index`: index of the first schedule to merge.
-       * - `schedule2_index`: index of the second schedule to merge.
+       * See [`Pallet::merge_schedules`].
        **/
       mergeSchedules: AugmentedSubmittable<(schedule1Index: u32 | AnyNumber | Uint8Array, schedule2Index: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32, u32]>;
       /**
-       * Unlock any vested funds of the sender account.
-       * 
-       * The dispatch origin for this call must be _Signed_ and the sender must have funds still
-       * locked under this pallet.
-       * 
-       * Emits either `VestingCompleted` or `VestingUpdated`.
-       * 
-       * ## Complexity
-       * - `O(1)`.
+       * See [`Pallet::vest`].
        **/
       vest: AugmentedSubmittable<() => SubmittableExtrinsic<ApiType>, []>;
       /**
-       * Create a vested transfer.
-       * 
-       * The dispatch origin for this call must be _Signed_.
-       * 
-       * - `target`: The account receiving the vested funds.
-       * - `schedule`: The vesting schedule attached to the transfer.
-       * 
-       * Emits `VestingCreated`.
-       * 
-       * NOTE: This will unlock all schedules through the current block.
-       * 
-       * ## Complexity
-       * - `O(1)`.
+       * See [`Pallet::vested_transfer`].
        **/
       vestedTransfer: AugmentedSubmittable<(target: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, schedule: PalletVestingVestingInfo | { locked?: any; perBlock?: any; startingBlock?: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [MultiAddress, PalletVestingVestingInfo]>;
       /**
-       * Unlock any vested funds of a `target` account.
-       * 
-       * The dispatch origin for this call must be _Signed_.
-       * 
-       * - `target`: The account whose vested funds should be unlocked. Must have funds still
-       * locked under this pallet.
-       * 
-       * Emits either `VestingCompleted` or `VestingUpdated`.
-       * 
-       * ## Complexity
-       * - `O(1)`.
+       * See [`Pallet::vest_other`].
        **/
       vestOther: AugmentedSubmittable<(target: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [MultiAddress]>;
       /**
@@ -4229,80 +1774,39 @@ declare module '@polkadot/api-base/types/submittable' {
     };
     xcmpQueue: {
       /**
-       * Resumes all XCM executions for the XCMP queue.
-       * 
-       * Note that this function doesn't change the status of the in/out bound channels.
-       * 
-       * - `origin`: Must pass `ControllerOrigin`.
+       * See [`Pallet::resume_xcm_execution`].
        **/
       resumeXcmExecution: AugmentedSubmittable<() => SubmittableExtrinsic<ApiType>, []>;
       /**
-       * Services a single overweight XCM.
-       * 
-       * - `origin`: Must pass `ExecuteOverweightOrigin`.
-       * - `index`: The index of the overweight XCM to service
-       * - `weight_limit`: The amount of weight that XCM execution may take.
-       * 
-       * Errors:
-       * - `BadOverweightIndex`: XCM under `index` is not found in the `Overweight` storage map.
-       * - `BadXcm`: XCM under `index` cannot be properly decoded into a valid XCM format.
-       * - `WeightOverLimit`: XCM execution may use greater `weight_limit`.
-       * 
-       * Events:
-       * - `OverweightServiced`: On success.
+       * See [`Pallet::service_overweight`].
        **/
       serviceOverweight: AugmentedSubmittable<(index: u64 | AnyNumber | Uint8Array, weightLimit: SpWeightsWeightV2Weight | { refTime?: any; proofSize?: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [u64, SpWeightsWeightV2Weight]>;
       /**
-       * Suspends all XCM executions for the XCMP queue, regardless of the sender's origin.
-       * 
-       * - `origin`: Must pass `ControllerOrigin`.
+       * See [`Pallet::suspend_xcm_execution`].
        **/
       suspendXcmExecution: AugmentedSubmittable<() => SubmittableExtrinsic<ApiType>, []>;
       /**
-       * Overwrites the number of pages of messages which must be in the queue after which we drop any further
-       * messages from the channel.
-       * 
-       * - `origin`: Must pass `Root`.
-       * - `new`: Desired value for `QueueConfigData.drop_threshold`
+       * See [`Pallet::update_drop_threshold`].
        **/
       updateDropThreshold: AugmentedSubmittable<(updated: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32]>;
       /**
-       * Overwrites the number of pages of messages which the queue must be reduced to before it signals that
-       * message sending may recommence after it has been suspended.
-       * 
-       * - `origin`: Must pass `Root`.
-       * - `new`: Desired value for `QueueConfigData.resume_threshold`
+       * See [`Pallet::update_resume_threshold`].
        **/
       updateResumeThreshold: AugmentedSubmittable<(updated: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32]>;
       /**
-       * Overwrites the number of pages of messages which must be in the queue for the other side to be told to
-       * suspend their sending.
-       * 
-       * - `origin`: Must pass `Root`.
-       * - `new`: Desired value for `QueueConfigData.suspend_value`
+       * See [`Pallet::update_suspend_threshold`].
        **/
       updateSuspendThreshold: AugmentedSubmittable<(updated: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32]>;
       /**
-       * Overwrites the amount of remaining weight under which we stop processing messages.
-       * 
-       * - `origin`: Must pass `Root`.
-       * - `new`: Desired value for `QueueConfigData.threshold_weight`
+       * See [`Pallet::update_threshold_weight`].
        **/
       updateThresholdWeight: AugmentedSubmittable<(updated: SpWeightsWeightV2Weight | { refTime?: any; proofSize?: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [SpWeightsWeightV2Weight]>;
       /**
-       * Overwrites the speed to which the available weight approaches the maximum weight.
-       * A lower number results in a faster progression. A value of 1 makes the entire weight available initially.
-       * 
-       * - `origin`: Must pass `Root`.
-       * - `new`: Desired value for `QueueConfigData.weight_restrict_decay`.
+       * See [`Pallet::update_weight_restrict_decay`].
        **/
       updateWeightRestrictDecay: AugmentedSubmittable<(updated: SpWeightsWeightV2Weight | { refTime?: any; proofSize?: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [SpWeightsWeightV2Weight]>;
       /**
-       * Overwrite the maximum amount of weight any individual message may consume.
-       * Messages above this weight go into the overweight queue and may only be serviced explicitly.
-       * 
-       * - `origin`: Must pass `Root`.
-       * - `new`: Desired value for `QueueConfigData.xcmp_max_individual_weight`.
+       * See [`Pallet::update_xcmp_max_individual_weight`].
        **/
       updateXcmpMaxIndividualWeight: AugmentedSubmittable<(updated: SpWeightsWeightV2Weight | { refTime?: any; proofSize?: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [SpWeightsWeightV2Weight]>;
       /**
@@ -4311,8 +1815,14 @@ declare module '@polkadot/api-base/types/submittable' {
       [key: string]: SubmittableExtrinsicFunction<ApiType>;
     };
     xTransfer: {
-      transfer: AugmentedSubmittable<(asset: XcmV3MultiAsset | { id?: any; fun?: any } | string | Uint8Array, dest: XcmV3MultiLocation | { parents?: any; interior?: any } | string | Uint8Array, destWeight: Option<SpWeightsWeightV2Weight> | null | Uint8Array | SpWeightsWeightV2Weight | { refTime?: any; proofSize?: any } | string) => SubmittableExtrinsic<ApiType>, [XcmV3MultiAsset, XcmV3MultiLocation, Option<SpWeightsWeightV2Weight>]>;
-      transferGeneric: AugmentedSubmittable<(data: Bytes | string | Uint8Array, dest: XcmV3MultiLocation | { parents?: any; interior?: any } | string | Uint8Array, destWeight: Option<SpWeightsWeightV2Weight> | null | Uint8Array | SpWeightsWeightV2Weight | { refTime?: any; proofSize?: any } | string) => SubmittableExtrinsic<ApiType>, [Bytes, XcmV3MultiLocation, Option<SpWeightsWeightV2Weight>]>;
+      /**
+       * See [`Pallet::transfer`].
+       **/
+      transfer: AugmentedSubmittable<(asset: StagingXcmV3MultiAsset | { id?: any; fun?: any } | string | Uint8Array, dest: StagingXcmV3MultiLocation | { parents?: any; interior?: any } | string | Uint8Array, destWeight: Option<SpWeightsWeightV2Weight> | null | Uint8Array | SpWeightsWeightV2Weight | { refTime?: any; proofSize?: any } | string) => SubmittableExtrinsic<ApiType>, [StagingXcmV3MultiAsset, StagingXcmV3MultiLocation, Option<SpWeightsWeightV2Weight>]>;
+      /**
+       * See [`Pallet::transfer_generic`].
+       **/
+      transferGeneric: AugmentedSubmittable<(data: Bytes | string | Uint8Array, dest: StagingXcmV3MultiLocation | { parents?: any; interior?: any } | string | Uint8Array, destWeight: Option<SpWeightsWeightV2Weight> | null | Uint8Array | SpWeightsWeightV2Weight | { refTime?: any; proofSize?: any } | string) => SubmittableExtrinsic<ApiType>, [Bytes, StagingXcmV3MultiLocation, Option<SpWeightsWeightV2Weight>]>;
       /**
        * Generic tx
        **/

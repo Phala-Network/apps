@@ -6,10 +6,10 @@
 import '@polkadot/api-base/types/consts';
 
 import type { ApiTypes, AugmentedConst } from '@polkadot/api-base/types';
-import type { Option, U256, U8aFixed, bool, u128, u16, u32, u64, u8 } from '@polkadot/types-codec';
+import type { BTreeMap, Option, U256, U8aFixed, bool, u128, u16, u32, u64, u8 } from '@polkadot/types-codec';
 import type { Codec } from '@polkadot/types-codec/types';
 import type { AccountId32, H160, Percent, Permill } from '@polkadot/types/interfaces/runtime';
-import type { FrameSupportPalletId, FrameSystemLimitsBlockLength, FrameSystemLimitsBlockWeights, SpVersionRuntimeVersion, SpWeightsRuntimeDbWeight, SpWeightsWeightV2Weight, XcmV3MultiLocation } from '@polkadot/types/lookup';
+import type { FrameSupportPalletId, FrameSystemLimitsBlockLength, FrameSystemLimitsBlockWeights, SpVersionRuntimeVersion, SpWeightsRuntimeDbWeight, SpWeightsWeightV2Weight, StagingXcmV3MultiLocation, StagingXcmV3MultiassetAssetId } from '@polkadot/types/lookup';
 
 export type __AugmentedConst<ApiType extends ApiTypes> = AugmentedConst<ApiType>;
 
@@ -55,7 +55,7 @@ declare module '@polkadot/api-base/types/consts' {
     };
     assetsRegistry: {
       minBalance: u128 & AugmentedConst<ApiType>;
-      nativeAssetLocation: XcmV3MultiLocation & AugmentedConst<ApiType>;
+      nativeAssetLocation: StagingXcmV3MultiLocation & AugmentedConst<ApiType>;
       nativeAssetSygmaResourceId: U8aFixed & AugmentedConst<ApiType>;
       nativeExecutionPrice: u128 & AugmentedConst<ApiType>;
       resourceIdGenerationSalt: Option<u128> & AugmentedConst<ApiType>;
@@ -588,9 +588,9 @@ declare module '@polkadot/api-base/types/consts' {
        **/
       feeReserveAccount: AccountId32 & AugmentedConst<ApiType>;
       /**
-       * Bridge transfer reserve account
+       * Bridge transfer reserve accounts mapping with designated assets
        **/
-      transferReserveAccount: AccountId32 & AugmentedConst<ApiType>;
+      transferReserveAccounts: BTreeMap<StagingXcmV3MultiassetAssetId, AccountId32> & AugmentedConst<ApiType>;
       /**
        * Generic const
        **/
@@ -642,10 +642,12 @@ declare module '@polkadot/api-base/types/consts' {
     };
     timestamp: {
       /**
-       * The minimum period between blocks. Beware that this is different to the *expected*
-       * period that the block production apparatus provides. Your chosen consensus system will
-       * generally work with this to determine a sensible block time. e.g. For Aura, it will be
-       * double this period on default settings.
+       * The minimum period between blocks.
+       * 
+       * Be aware that this is different to the *expected* period that the block production
+       * apparatus provides. Your chosen consensus system will generally work with this to
+       * determine a sensible block time. For example, in the Aura pallet it will be double this
+       * period on default settings.
        **/
       minimumPeriod: u64 & AugmentedConst<ApiType>;
       /**
