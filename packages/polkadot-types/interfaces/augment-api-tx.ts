@@ -677,7 +677,6 @@ declare module '@polkadot/api-base/types/submittable' {
        * See [`Pallet::add_staker_to_whitelist`].
        **/
       addStakerToWhitelist: AugmentedSubmittable<(pid: u64 | AnyNumber | Uint8Array, staker: AccountId32 | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [u64, AccountId32]>;
-      claimReimbursement: AugmentedSubmittable<(pid: u64 | AnyNumber | Uint8Array, target: AccountId32 | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [u64, AccountId32]>;
       /**
        * See [`Pallet::claim_reimbursement`].
        **/
@@ -690,7 +689,6 @@ declare module '@polkadot/api-base/types/submittable' {
        * See [`Pallet::set_pool_description`].
        **/
       setPoolDescription: AugmentedSubmittable<(pid: u64 | AnyNumber | Uint8Array, description: Bytes | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [u64, Bytes]>;
-      setReimbursements: AugmentedSubmittable<(input: Vec<ITuple<[AccountId32, u64, u128]>> | ([AccountId32 | string | Uint8Array, u64 | AnyNumber | Uint8Array, u128 | AnyNumber | Uint8Array])[]) => SubmittableExtrinsic<ApiType>, [Vec<ITuple<[AccountId32, u64, u128]>>]>;
       /**
        * See [`Pallet::set_reimbursements`].
        **/

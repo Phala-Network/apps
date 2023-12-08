@@ -5123,7 +5123,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'Create' | 'AddWorker' | 'RemoveWorker' | 'SetCap' | 'SetPayoutPref' | 'ClaimLegacyRewards' | 'ClaimOwnerRewards' | 'CheckAndMaybeForceWithdraw' | 'Contribute' | 'Withdraw' | 'StartComputing' | 'StopComputing' | 'ReclaimPoolWorker' | 'RestartComputing';
   }
 
-  /** @name PhalaPalletsComputeVaultPalletCall (330) */
+  /** @name PhalaPalletsComputeVaultPalletCall (332) */
   interface PhalaPalletsComputeVaultPalletCall extends Enum {
     readonly isCreate: boolean;
     readonly isSetPayoutPref: boolean;
@@ -5158,7 +5158,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'Create' | 'SetPayoutPref' | 'ClaimOwnerShares' | 'MaybeGainOwnerShares' | 'CheckAndMaybeForceWithdraw' | 'Contribute' | 'Withdraw';
   }
 
-  /** @name PhalaPalletsComputeWrappedBalancesPalletCall (331) */
+  /** @name PhalaPalletsComputeWrappedBalancesPalletCall (333) */
   interface PhalaPalletsComputeWrappedBalancesPalletCall extends Enum {
     readonly isWrap: boolean;
     readonly asWrap: {
@@ -5183,7 +5183,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'Wrap' | 'UnwrapAll' | 'Unwrap' | 'Vote' | 'Unlock';
   }
 
-  /** @name PhalaPalletsComputeBasePoolPalletCall (332) */
+  /** @name PhalaPalletsComputeBasePoolPalletCall (334) */
   interface PhalaPalletsComputeBasePoolPalletCall extends Enum {
     readonly isAddStakerToWhitelist: boolean;
     readonly asAddStakerToWhitelist: {

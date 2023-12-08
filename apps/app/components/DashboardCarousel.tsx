@@ -1,9 +1,9 @@
 import b2 from '@/assets/b2.png'
 import b3 from '@/assets/b3.png'
 import b4 from '@/assets/b4.png'
-import b5 from '@/assets/b5.png'
 import b6 from '@/assets/b6.png'
 import b7 from '@/assets/b7.png'
+import b8 from '@/assets/b8.jpg'
 import ArrowBackIos from '@mui/icons-material/ArrowBackIos'
 import ArrowForwardIos from '@mui/icons-material/ArrowForwardIos'
 import {Box, IconButton, LinearProgress, Stack} from '@mui/material'
@@ -14,6 +14,11 @@ import {useSnapCarousel} from 'react-snap-carousel'
 
 const contents: Array<{name: string; imageUrl: string; href: string}> = [
   {
+    name: 'Claim subsidies',
+    href: '/khala/subsidy',
+    imageUrl: b8.src,
+  },
+  {
     name: 'Launch Gemini Tokenomic on Phala',
     href: 'https://khala.subsquare.io/democracy/referendum/89',
     imageUrl: b7.src,
@@ -22,11 +27,6 @@ const contents: Array<{name: string; imageUrl: string; href: string}> = [
     name: 'Phala World Marketplace',
     href: 'https://phala.world/marketplace',
     imageUrl: b6.src,
-  },
-  {
-    name: 'Claim missing delegator rewards',
-    href: '/claim-missing-delegator-rewards',
-    imageUrl: b5.src,
   },
   {
     name: 'Vaults feature',

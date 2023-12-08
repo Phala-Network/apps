@@ -46,7 +46,7 @@ interface Row {
   kind: Kind
 }
 
-const ClaimMissingDelegatorRewards: NextPage = () => {
+const Subsidy: NextPage = () => {
   const [chain, setChain] = useAtom(chainAtom)
   const signAndSend = useSignAndSend()
   const [pid, setPid] = useState<string>()
@@ -239,7 +239,7 @@ const ClaimMissingDelegatorRewards: NextPage = () => {
 
   return (
     <>
-      <PageHeader title="Claim Missing Delegator Rewards" />
+      <PageHeader title="Claim Subsidies" />
       <Paper
         variant="outlined"
         sx={{p: 3, background: 'transparent', 'p + p': {mt: '1em'}}}
@@ -261,7 +261,7 @@ const ClaimMissingDelegatorRewards: NextPage = () => {
         <Typography variant="body1">
           B.{' '}
           <Link
-            href="https://forum.phala.network/t/vault-owner-misconduct-disclosure-and-solutions/3889/12"
+            href="https://forum.phala.network/t/solution-for-the-vault-owner-misconduct/3922"
             target="_blank"
           >
             Vault commission issue on 07/06/2023
@@ -283,7 +283,10 @@ const ClaimMissingDelegatorRewards: NextPage = () => {
             polkadot.js app
           </Link>{' '}
           to claim your rewards. Here is the{' '}
-          <Link href="" target="_blank">
+          <Link
+            href="https://forum.phala.network/t/how-to-claim-subsidy-via-polkadot-js-app/3921"
+            target="_blank"
+          >
             tutorial
           </Link>{' '}
           for Multisig.
@@ -404,7 +407,7 @@ const ClaimMissingDelegatorRewards: NextPage = () => {
       )}
 
       <Dialog open={dialogOpen} onClose={onClose}>
-        <DialogTitle>Claim Missing Delegator Reward</DialogTitle>
+        <DialogTitle>Claim Subsidies</DialogTitle>
         <DialogContent>
           <TextField
             autoFocus
@@ -459,4 +462,4 @@ const ClaimMissingDelegatorRewards: NextPage = () => {
   )
 }
 
-export default ClaimMissingDelegatorRewards
+export default Subsidy

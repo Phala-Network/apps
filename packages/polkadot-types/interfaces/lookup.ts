@@ -4903,7 +4903,7 @@ export default {
     }
   },
   /**
-   * Lookup330: phala_pallets::compute::vault::pallet::Call<T>
+   * Lookup332: phala_pallets::compute::vault::pallet::Call<T>
    **/
   PhalaPalletsComputeVaultPalletCall: {
     _enum: {
@@ -4934,7 +4934,7 @@ export default {
     }
   },
   /**
-   * Lookup331: phala_pallets::compute::wrapped_balances::pallet::Call<T>
+   * Lookup333: phala_pallets::compute::wrapped_balances::pallet::Call<T>
    **/
   PhalaPalletsComputeWrappedBalancesPalletCall: {
     _enum: {
@@ -4957,7 +4957,7 @@ export default {
     }
   },
   /**
-   * Lookup332: phala_pallets::compute::base_pool::pallet::Call<T>
+   * Lookup334: phala_pallets::compute::base_pool::pallet::Call<T>
    **/
   PhalaPalletsComputeBasePoolPalletCall: {
     _enum: {
