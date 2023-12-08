@@ -2,6 +2,7 @@ import Empty from '@/components/Empty'
 import PageHeader from '@/components/PageHeader'
 import usePolkadotApi from '@/hooks/usePolkadotApi'
 import useSignAndSend from '@/hooks/useSignAndSend'
+import {chainAtom} from '@/store/common'
 import {walletDialogOpenAtom} from '@/store/ui'
 import {LoadingButton} from '@mui/lab'
 import {
@@ -36,15 +37,20 @@ import {useAtom} from 'jotai'
 import {type NextPage} from 'next'
 import {useEffect, useMemo, useState} from 'react'
 
+type Kind = 'legacy' | 'reimbursement'
+
 interface Row {
   pid: string
   amount: Decimal
   claimed: boolean
+  kind: Kind
 }
 
-const ClaimMissingDelegatorRewards: NextPage = () => {
+const Subsidy: NextPage = () => {
+  const [chain, setChain] = useAtom(chainAtom)
   const signAndSend = useSignAndSend()
   const [pid, setPid] = useState<string>()
+  const [kind, setKind] = useState<Kind>()
   const [loading, setLoading] = useState(false)
   const [dialogOpen, setDialogOpen] = useState(false)
   const [targetAddress, setTargetAddress] = useState('')
@@ -53,21 +59,22 @@ const ClaimMissingDelegatorRewards: NextPage = () => {
   }
   const [account] = useAtom(polkadotAccountAtom)
   const [, setWalletDialogOpen] = useAtom(walletDialogOpenAtom)
-  const [list, setList] = useState<Row[]>()
+  const [legacyRewardsList, setLegacyRewardsList] = useState<Row[]>()
+  const [reimbursementsList, setReimbursementsList] = useState<Row[]>()
   const api = usePolkadotApi()
-  const {data} = useQuery(
-    ['legacyRewards', account?.address, list],
+  const {data: legacyRewardsData} = useQuery(
+    ['legacyRewards', account?.address, legacyRewardsList],
     async () => {
       if (
-        account?.address !== undefined &&
+        account?.address != null &&
         api != null &&
-        list !== undefined &&
-        list.length > 0
+        legacyRewardsList != null &&
+        legacyRewardsList.length > 0
       ) {
-        const result = list
+        const result = legacyRewardsList
         const legacyRewards =
           await api.query.phalaStakePoolv2.legacyRewards.multi(
-            list.map((x) => [account.address, x.pid]),
+            legacyRewardsList.map((x) => [account.address, x.pid]),
           )
         for (let i = 0; i < legacyRewards.length; i++) {
           if (legacyRewards[i].isNone) {
@@ -80,9 +87,43 @@ const ClaimMissingDelegatorRewards: NextPage = () => {
     },
     {
       enabled:
-        list !== undefined &&
-        account?.address !== undefined &&
-        api !== undefined,
+        chain === 'khala' &&
+        legacyRewardsList != null &&
+        account?.address != null &&
+        api != null,
+      refetchInterval: 12000,
+    },
+  )
+
+  const {data: reimbursementsData} = useQuery(
+    ['vaultCheatReimbursements', account?.address, reimbursementsList],
+    async () => {
+      if (
+        account?.address != null &&
+        api != null &&
+        reimbursementsList != null &&
+        reimbursementsList.length > 0
+      ) {
+        const result = reimbursementsList
+        const reimbursements =
+          await api.query.phalaBasePool.reimbursements.multi(
+            reimbursementsList.map((x) => [account.address, x.pid]),
+          )
+        for (let i = 0; i < reimbursements.length; i++) {
+          if (reimbursements[i].isNone) {
+            result[i].claimed = true
+          }
+        }
+        return result
+      }
+      return []
+    },
+    {
+      enabled:
+        chain === 'khala' &&
+        reimbursementsList != null &&
+        account?.address != null &&
+        api != null,
       refetchInterval: 12000,
     },
   )
@@ -93,20 +134,43 @@ const ClaimMissingDelegatorRewards: NextPage = () => {
       const legacyRewardsMap = res.default.legacyRewards
       if (
         !unmounted &&
-        account?.address !== undefined &&
+        account?.address != null &&
         account.address in legacyRewardsMap
       ) {
-        setList(
+        setLegacyRewardsList(
           res.default.legacyRewards[
             account.address as keyof typeof legacyRewardsMap
           ].map(([pid, amount]) => ({
             pid,
             amount: new Decimal(amount).div(1e12),
             claimed: false,
+            kind: 'legacy',
           })),
         )
       } else {
-        setList([])
+        setLegacyRewardsList([])
+      }
+    })
+
+    void import('@/assets/vault_cheat_reimbursements.json').then((res) => {
+      const reimbursementsMap = res.default
+      if (
+        !unmounted &&
+        account?.address != null &&
+        account.address in reimbursementsMap
+      ) {
+        setReimbursementsList(
+          res.default[account.address as keyof typeof reimbursementsMap].map(
+            ([pid, amount]) => ({
+              pid,
+              amount: new Decimal(amount).div(1e12),
+              claimed: false,
+              kind: 'reimbursement',
+            }),
+          ),
+        )
+      } else {
+        setReimbursementsList([])
       }
     })
     return () => {
@@ -114,11 +178,16 @@ const ClaimMissingDelegatorRewards: NextPage = () => {
     }
   }, [account?.address])
 
+  const rowData = useMemo(() => {
+    if (legacyRewardsData == null || reimbursementsData == null) return null
+    return [...legacyRewardsData, ...reimbursementsData]
+  }, [legacyRewardsData, reimbursementsData])
+
   const totalRewards = useMemo(() => {
-    return data
+    return rowData
       ?.filter((x) => !x.claimed)
       .reduce((acc, cur) => acc.add(cur.amount), new Decimal(0))
-  }, [data])
+  }, [rowData])
 
   const addressValid = useMemo(
     () => validateAddress(targetAddress),
@@ -126,17 +195,22 @@ const ClaimMissingDelegatorRewards: NextPage = () => {
   )
 
   const claim = async (): Promise<void> => {
-    if (api == null || data == null) return
+    if (api == null || rowData == null) return
     const getExtrinsic = (
       pid: string,
+      kind: Kind,
     ): SubmittableExtrinsic<'promise', ISubmittableResult> =>
-      api.tx.phalaStakePoolv2.claimLegacyRewards(pid, targetAddress)
+      kind === 'legacy'
+        ? api.tx.phalaStakePoolv2.claimLegacyRewards(pid, targetAddress)
+        : api.tx.phalaBasePool.claimReimbursement(pid, targetAddress)
     const calls = []
-    if (pid !== undefined) {
-      calls.push(getExtrinsic(pid))
+    if (pid != null && kind != null) {
+      calls.push(getExtrinsic(pid, kind))
     } else {
       calls.push(
-        ...data.filter((x) => !x.claimed).map(({pid}) => getExtrinsic(pid)),
+        ...rowData
+          .filter((x) => !x.claimed)
+          .map(({pid, kind}) => getExtrinsic(pid, kind)),
       )
     }
     setLoading(true)
@@ -149,45 +223,73 @@ const ClaimMissingDelegatorRewards: NextPage = () => {
       })
   }
 
+  if (chain !== 'khala') {
+    return (
+      <Stack
+        alignItems="center"
+        pt={4}
+        onClick={() => {
+          setChain('khala')
+        }}
+      >
+        <Button variant="contained">Switch to Khala</Button>
+      </Stack>
+    )
+  }
+
   return (
     <>
-      <PageHeader title="Claim Missing Delegator Rewards" />
+      <PageHeader title="Claim Subsidies" />
       <Paper
         variant="outlined"
         sx={{p: 3, background: 'transparent', 'p + p': {mt: '1em'}}}
       >
-        <Typography variant="body1">Hey Phamily,</Typography>
         <Typography variant="body1">
-          As highlighted in a recent forum post, a StakePool v2 delegation{' '}
+          Hi Phamliy! This page is used to claim subsidies for on-chain issues
+          related to staking. You can find information about past subsidy
+          distribution events through the links below:
+        </Typography>
+        <Typography variant="body1">
+          A.{' '}
           <Link
-            target="_blank"
             href="https://forum.phala.network/t/bug-report-v2-delegation-claimable-rewards-error-30-12-2022/3817"
-          >
-            bug
-          </Link>{' '}
-          was discovered on 30/12/22.
-        </Typography>
-        <Typography variant="body1">
-          We have added a page in Phala App for users to claim their missing
-          delegation rewards. All affected addresses are listed{' '}
-          <Link
             target="_blank"
-            href="https://docs.google.com/spreadsheets/d/1jI0LGTpZ8VlSX0EwYzNkJIYz40bJV7aH4ktSN1O-Gro/edit?usp=sharing"
           >
-            here
+            V2 delegation bug on 30/12/2022
           </Link>
-          .
         </Typography>
         <Typography variant="body1">
-          Please contact us if you have any questions. We deeply value our
-          community so we want to be as helpful as possible. We apologize for
-          any inconvenience caused by this bug. Thank you for your patience,
-          understanding and support Pham!
+          B.{' '}
+          <Link
+            href="https://forum.phala.network/t/solution-for-the-vault-owner-misconduct/3922"
+            target="_blank"
+          >
+            Vault commission issue on 07/06/2023
+          </Link>
         </Typography>
         <Typography variant="body1">
-          Best,
-          <br />
-          Phala team
+          {
+            'Funds can only be claimed once, and subsidies that have been claimed will be marked as "claimed".'
+          }
+        </Typography>
+        <Typography variant="body1">
+          Multisignature addresses cannot claim funds through this page. After
+          checking the amount of rewards you should receive and the source PID
+          from the reports above, please go to{' '}
+          <Link
+            href="https://polkadot.js.org/apps/?rpc=wss%3A%2F%2Fkhala.api.onfinality.io%2Fpublic-ws#/extrinsics"
+            target="_blank"
+          >
+            polkadot.js app
+          </Link>{' '}
+          to claim your rewards. Here is the{' '}
+          <Link
+            href="https://forum.phala.network/t/how-to-claim-subsidy-via-polkadot-js-app/3921"
+            target="_blank"
+          >
+            tutorial
+          </Link>{' '}
+          for Multisig.
         </Typography>
       </Paper>
 
@@ -210,6 +312,7 @@ const ClaimMissingDelegatorRewards: NextPage = () => {
               setTargetAddress('')
               setDialogOpen(true)
               setPid(undefined)
+              setKind(undefined)
             }}
           >
             Claim All
@@ -217,9 +320,9 @@ const ClaimMissingDelegatorRewards: NextPage = () => {
         </Stack>
       )}
 
-      {data != null && data.length === 0 && <Empty sx={{mt: 6}} />}
+      {rowData != null && rowData.length === 0 && <Empty sx={{mt: 6}} />}
 
-      {account !== null && data == null && (
+      {account !== null && legacyRewardsData == null && (
         <Box
           display="flex"
           alignItems="center"
@@ -247,7 +350,7 @@ const ClaimMissingDelegatorRewards: NextPage = () => {
         </Box>
       )}
 
-      {data != null && data.length > 0 && (
+      {rowData != null && rowData.length > 0 && (
         <TableContainer
           component={Paper}
           variant="outlined"
@@ -256,17 +359,23 @@ const ClaimMissingDelegatorRewards: NextPage = () => {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell width={200}>StakePool</TableCell>
+                <TableCell width={200}>Date</TableCell>
+                <TableCell width={200}>Vault/StakePool</TableCell>
                 <TableCell>Rewards</TableCell>
                 <TableCell></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {data.map((row) => (
+              {rowData.map((row) => (
                 <TableRow
                   key={row.pid}
                   sx={{'&:last-child td, &:last-child th': {border: 0}}}
                 >
+                  <TableCell component="th" scope="row">
+                    <Typography variant="body1">
+                      {row.kind === 'legacy' ? '13/01/2023' : '28/11/2023'}
+                    </Typography>
+                  </TableCell>
                   <TableCell component="th" scope="row">
                     <Typography variant="body1">{`#${row.pid}`}</Typography>
                   </TableCell>
@@ -284,6 +393,7 @@ const ClaimMissingDelegatorRewards: NextPage = () => {
                         setTargetAddress('')
                         setPid(row.pid)
                         setDialogOpen(true)
+                        setKind(row.kind)
                       }}
                     >
                       {row.claimed ? 'Claimed' : 'Claim'}
@@ -297,7 +407,7 @@ const ClaimMissingDelegatorRewards: NextPage = () => {
       )}
 
       <Dialog open={dialogOpen} onClose={onClose}>
-        <DialogTitle>Claim Missing Delegator Reward</DialogTitle>
+        <DialogTitle>Claim Subsidies</DialogTitle>
         <DialogContent>
           <TextField
             autoFocus
@@ -352,4 +462,4 @@ const ClaimMissingDelegatorRewards: NextPage = () => {
   )
 }
 
-export default ClaimMissingDelegatorRewards
+export default Subsidy
