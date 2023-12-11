@@ -14,8 +14,8 @@ import {
 } from '@/store/bridge'
 import {evmAccountAtom} from '@/store/ethers'
 import {type DepositEvent} from '@buildwithsygma/sygma-contracts/dist/ethers/Bridge'
-import {waitSignAndSend, type ExtrinsicResult} from '@phala/utils'
 import {polkadotAccountAtom} from '@phala/store'
+import {waitSignAndSend, type ExtrinsicResult} from '@phala/utils'
 import Decimal from 'decimal.js'
 import {type ContractTransaction} from 'ethers'
 import {useAtomValue} from 'jotai'
@@ -98,7 +98,7 @@ export const useTransfer = (): (({
       })
     }
 
-    if (bridge.kind === 'phalaChainBridge' || bridge.kind === 'phalaSygma') {
+    if (bridge.kind === 'phalaXTransfer' || bridge.kind === 'phalaSygma') {
       if (polkadotApi == null || polkadotAccount?.wallet?.signer == null) {
         throw new Error('Transfer missing required parameters')
       }

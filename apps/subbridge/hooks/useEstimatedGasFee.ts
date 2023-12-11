@@ -114,7 +114,7 @@ export const useEstimatedGasFee = (): Decimal | undefined => {
   )
 
   const {data: phalaPartialFee} = useSWR(
-    (bridge.kind === 'phalaChainBridge' || bridge.kind === 'phalaSygma') &&
+    (bridge.kind === 'phalaXTransfer' || bridge.kind === 'phalaSygma') &&
       polkadotApi != null && [
         polkadotApi,
         fromChain.id,
