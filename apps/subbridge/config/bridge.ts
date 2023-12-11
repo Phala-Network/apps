@@ -5,7 +5,7 @@ export type BridgeKind =
   | 'evmChainBridge'
   | 'evmXTokens'
   | 'polkadotXTokens'
-  | 'phalaChainBridge'
+  | 'phalaXTransfer'
   | 'phalaSygma'
   | 'evmSygma'
 
@@ -67,29 +67,29 @@ export const BRIDGES: Readonly<Bridge[]> = [
       {
         id: 'moonbeam',
         assets: [
-          {assetId: 'pha', estimatedTime: '< 1 min', kind: 'phalaChainBridge'},
-          {assetId: 'glmr', estimatedTime: '< 1 min', kind: 'phalaChainBridge'},
+          {assetId: 'pha', estimatedTime: '< 1 min', kind: 'phalaXTransfer'},
+          {assetId: 'glmr', estimatedTime: '< 1 min', kind: 'phalaXTransfer'},
         ],
       },
       {
         id: 'parallel',
         assets: [
-          {assetId: 'pha', estimatedTime: '< 1 min', kind: 'phalaChainBridge'},
-          {assetId: 'para', estimatedTime: '< 1 min', kind: 'phalaChainBridge'},
+          {assetId: 'pha', estimatedTime: '< 1 min', kind: 'phalaXTransfer'},
+          {assetId: 'para', estimatedTime: '< 1 min', kind: 'phalaXTransfer'},
         ],
       },
       {
         id: 'astar',
         assets: [
-          {assetId: 'pha', estimatedTime: '< 1 min', kind: 'phalaChainBridge'},
-          {assetId: 'astr', estimatedTime: '< 1 min', kind: 'phalaChainBridge'},
+          {assetId: 'pha', estimatedTime: '< 1 min', kind: 'phalaXTransfer'},
+          {assetId: 'astr', estimatedTime: '< 1 min', kind: 'phalaXTransfer'},
         ],
       },
       {
         id: 'acala',
         assets: [
-          {assetId: 'pha', estimatedTime: '< 1 min', kind: 'phalaChainBridge'},
-          {assetId: 'aca', estimatedTime: '< 1 min', kind: 'phalaChainBridge'},
+          {assetId: 'pha', estimatedTime: '< 1 min', kind: 'phalaXTransfer'},
+          {assetId: 'aca', estimatedTime: '< 1 min', kind: 'phalaXTransfer'},
         ],
       },
     ],
@@ -106,59 +106,59 @@ export const BRIDGES: Readonly<Bridge[]> = [
       {
         id: 'karura',
         assets: [
-          {assetId: 'pha', estimatedTime: '< 1 min', kind: 'phalaChainBridge'},
-          {assetId: 'kar', estimatedTime: '< 1 min', kind: 'phalaChainBridge'},
-          // {assetId: 'ausd', estimatedTime: '< 1 min', kind: 'phalaChainBridge'},
+          {assetId: 'pha', estimatedTime: '< 1 min', kind: 'phalaXTransfer'},
+          {assetId: 'kar', estimatedTime: '< 1 min', kind: 'phalaXTransfer'},
+          // {assetId: 'ausd', estimatedTime: '< 1 min', kind: 'phalaXTransfer'},
         ],
       },
       {
         id: 'moonriver',
         assets: [
-          {assetId: 'pha', estimatedTime: '< 1 min', kind: 'phalaChainBridge'},
-          {assetId: 'movr', estimatedTime: '< 1 min', kind: 'phalaChainBridge'},
-          {assetId: 'zlk', estimatedTime: '~ 5 mins', kind: 'phalaChainBridge'},
+          {assetId: 'pha', estimatedTime: '< 1 min', kind: 'phalaXTransfer'},
+          {assetId: 'movr', estimatedTime: '< 1 min', kind: 'phalaXTransfer'},
+          {assetId: 'zlk', estimatedTime: '~ 5 mins', kind: 'phalaXTransfer'},
         ],
       },
       {
         id: 'bifrost-kusama',
         assets: [
-          {assetId: 'pha', estimatedTime: '< 1 min', kind: 'phalaChainBridge'},
-          {assetId: 'bnc', estimatedTime: '< 1 min', kind: 'phalaChainBridge'},
-          {assetId: 'zlk', estimatedTime: '< 1 min', kind: 'phalaChainBridge'},
+          {assetId: 'pha', estimatedTime: '< 1 min', kind: 'phalaXTransfer'},
+          {assetId: 'bnc', estimatedTime: '< 1 min', kind: 'phalaXTransfer'},
+          {assetId: 'zlk', estimatedTime: '< 1 min', kind: 'phalaXTransfer'},
         ],
       },
       {
         id: 'parallel-heiko',
         assets: [
-          {assetId: 'pha', estimatedTime: '< 1 min', kind: 'phalaChainBridge'},
-          {assetId: 'hko', estimatedTime: '< 1 min', kind: 'phalaChainBridge'},
+          {assetId: 'pha', estimatedTime: '< 1 min', kind: 'phalaXTransfer'},
+          {assetId: 'hko', estimatedTime: '< 1 min', kind: 'phalaXTransfer'},
         ],
       },
       {
         id: 'basilisk',
         assets: [
-          {assetId: 'bsx', estimatedTime: '< 1 min', kind: 'phalaChainBridge'},
+          {assetId: 'bsx', estimatedTime: '< 1 min', kind: 'phalaXTransfer'},
         ],
       },
       {
         id: 'turing',
         assets: [
-          {assetId: 'pha', estimatedTime: '< 1 min', kind: 'phalaChainBridge'},
-          {assetId: 'tur', estimatedTime: '< 1 min', kind: 'phalaChainBridge'},
+          {assetId: 'pha', estimatedTime: '< 1 min', kind: 'phalaXTransfer'},
+          {assetId: 'tur', estimatedTime: '< 1 min', kind: 'phalaXTransfer'},
         ],
       },
       {
         id: 'calamari',
         assets: [
-          {assetId: 'pha', estimatedTime: '< 1 min', kind: 'phalaChainBridge'},
-          {assetId: 'kma', estimatedTime: '< 1 min', kind: 'phalaChainBridge'},
+          {assetId: 'pha', estimatedTime: '< 1 min', kind: 'phalaXTransfer'},
+          {assetId: 'kma', estimatedTime: '< 1 min', kind: 'phalaXTransfer'},
         ],
       },
       {
         id: 'shiden',
         assets: [
-          {assetId: 'pha', estimatedTime: '< 1 min', kind: 'phalaChainBridge'},
-          {assetId: 'sdn', estimatedTime: '< 1 min', kind: 'phalaChainBridge'},
+          {assetId: 'pha', estimatedTime: '< 1 min', kind: 'phalaXTransfer'},
+          {assetId: 'sdn', estimatedTime: '< 1 min', kind: 'phalaXTransfer'},
         ],
       },
     ],

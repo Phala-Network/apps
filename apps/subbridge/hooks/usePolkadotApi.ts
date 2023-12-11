@@ -1,14 +1,22 @@
-import {type SubstrateChainId} from '@/config/chain'
-import {createPolkadotApi} from '@/lib/createPolkadotApi'
+import {CHAINS, type SubstrateChainId} from '@/config/chain'
 import {fromChainAtom} from '@/store/bridge'
+import {createPolkadotApi} from '@phala/utils'
 import {type ApiPromise} from '@polkadot/api'
 import {useAtomValue} from 'jotai'
 import useSWRImmutable from 'swr/immutable'
 
+const create = async ([chainId]: [SubstrateChainId]): Promise<ApiPromise> => {
+  const endpoint = CHAINS[chainId].endpoint
+  const api = await createPolkadotApi(
+    typeof endpoint === 'string' ? endpoint : endpoint[0],
+  )
+  return api
+}
+
 export const usePolkadotApi = (
   chainId: SubstrateChainId | null,
 ): ApiPromise | undefined => {
-  const {data: polkadotApi} = useSWRImmutable(chainId, createPolkadotApi)
+  const {data: polkadotApi} = useSWRImmutable([chainId], create)
 
   return polkadotApi
 }

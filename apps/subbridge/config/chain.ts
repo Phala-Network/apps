@@ -6,7 +6,6 @@ import calamariIcon from '@phala/ui/icons/chain/calamari.png'
 import ethereumIcon from '@phala/ui/icons/chain/ethereum.png'
 import karuraIcon from '@phala/ui/icons/chain/karura.png'
 import khalaIcon from '@phala/ui/icons/chain/khala.png'
-import moonbaseAlphaIcon from '@phala/ui/icons/chain/moonbase_alpha.png'
 import moonbeamIcon from '@phala/ui/icons/chain/moonbeam.png'
 import moonriverIcon from '@phala/ui/icons/chain/moonriver.png'
 import parallelIcon from '@phala/ui/icons/chain/parallel.png'
@@ -16,12 +15,7 @@ import shidenIcon from '@phala/ui/icons/chain/shiden.png'
 import turingIcon from '@phala/ui/icons/chain/turing.png'
 import {type AssetId} from './asset'
 
-export type EvmChainId =
-  | 'ethereum'
-  | 'moonbeam'
-  | 'moonriver'
-  | 'moonbase-alpha'
-  | 'goerli'
+export type EvmChainId = 'ethereum' | 'moonbeam' | 'moonriver' | 'goerli'
 export type SubstrateChainId =
   | 'phala'
   | 'khala'
@@ -232,21 +226,6 @@ export const CHAINS: Readonly<
     xTokensContractAddress: '0x0000000000000000000000000000000000000804',
     generalIndex: 2,
     explorerURL: 'https://moonriver.moonscan.io/',
-  },
-  'moonbase-alpha': {
-    id: 'moonbase-alpha',
-    name: 'Moonbase Alpha',
-    icon: moonbaseAlphaIcon,
-    kind: 'evm',
-    evmChainId: 1287,
-    currencySymbol: 'DEV',
-    chainBridgeContract: {
-      address: '0x1e4ED6d37685D2FB254e47C5b58Cf95173326E4c',
-      spender: {default: '0x0B674CC89F54a47Be4Eb6C1A125bB8f04A529181'},
-    },
-    isTest: true,
-    generalIndex: 2,
-    explorerURL: 'https://moonbase.moonscan.io/',
   },
   'bifrost-kusama': {
     id: 'bifrost-kusama',
