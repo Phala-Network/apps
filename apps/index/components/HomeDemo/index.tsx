@@ -1,6 +1,6 @@
 'use client'
 import {typeformAtom} from '@/store/core'
-import {ArrowUpward, PlayArrow, Replay} from '@mui/icons-material'
+import {ArrowUpward, Replay} from '@mui/icons-material'
 import {LoadingButton} from '@mui/lab'
 import {
   Box,
@@ -13,7 +13,6 @@ import {
   Slide,
   Stack,
   TextField,
-  Tooltip,
   Typography,
   alpha,
 } from '@mui/material'
@@ -64,7 +63,7 @@ async function apiFetcher(
 }
 
 const HomeDemo: FC = () => {
-  const [typefrom] = useAtom(typeformAtom)
+  const [typeform] = useAtom(typeformAtom)
   const [fromChain, setFromChain] = useState<string>()
   const [toChain, setToChain] = useState<string>()
   const [fromAmount, setFromAmount] = useState<string>()
@@ -147,13 +146,21 @@ const HomeDemo: FC = () => {
               justifyContent="center"
               mt={3}
             >
-              <Tooltip title="Currently in closed beta, will be available soon">
+              {/* <Tooltip title="Currently in closed beta, will be available soon">
                 <span>
                   <Button disabled startIcon={<PlayArrow />}>
                     Execute
                   </Button>
                 </span>
-              </Tooltip>
+              </Tooltip> */}
+              <Button
+                onClick={() => {
+                  typeform.waitlist.open()
+                }}
+                variant="contained"
+              >
+                Join Waitlist
+              </Button>
               <Button
                 onClick={() => {
                   setMessage('')
@@ -171,7 +178,7 @@ const HomeDemo: FC = () => {
                 component="span"
                 sx={{cursor: 'pointer'}}
                 onClick={() => {
-                  typefrom.survey.open()
+                  typeform.survey.open()
                 }}
               >
                 taking a quick survey
