@@ -3910,7 +3910,7 @@ __metadata:
     "@mui/material": "npm:^5.14.19"
     "@next/bundle-analyzer": "npm:^14.0.3"
     "@phala/eslint-config": "workspace:*"
-    "@phala/index": "npm:^1.0.45"
+    "@phala/index": "npm:^1.0.48"
     "@phala/store": "workspace:*"
     "@phala/ui": "workspace:*"
     "@phala/utils": "workspace:*"
@@ -3948,20 +3948,20 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@phala/index@npm:^1.0.45":
-  version: 1.0.45
-  resolution: "@phala/index@npm:1.0.45"
+"@phala/index@npm:^1.0.48":
+  version: 1.0.48
+  resolution: "@phala/index@npm:1.0.48"
   dependencies:
-    "@phala/sdk": "npm:^0.5.5"
+    "@phala/sdk": "npm:^0.5.7"
     "@polkadot/api": "npm:^10.11.1"
     "@polkadot/api-contract": "npm:^10.11.1"
     "@polkadot/keyring": "npm:^12.6.1"
     "@polkadot/types": "npm:^10.11.1"
     "@polkadot/util": "npm:^12.6.1"
     ajv: "npm:^8.12.0"
-    ethers: "npm:^6.8.1"
+    ethers: "npm:^6.9.0"
     subshape: "npm:^0.14.0"
-  checksum: 4a23552e19a14d8f81e99956e41b941a73d2284aef48e20226ba30c4fcea1d9fb25094780b5798f3d368d779364790299583d7dff6559a388de30bba7b29d2f0
+  checksum: 2c580c9e457e9de208213eefa7f29411ab0dea707de7363ee5075f620554808b7c291a6d54a7859fc0c1012a81845700112d49469f38015f69db748cf1af1dc0
   languageName: node
   linkType: hard
 
@@ -3977,9 +3977,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@phala/sdk@npm:^0.5.5":
-  version: 0.5.5
-  resolution: "@phala/sdk@npm:0.5.5"
+"@phala/sdk@npm:^0.5.7":
+  version: 0.5.7
+  resolution: "@phala/sdk@npm:0.5.7"
   dependencies:
     "@polkadot/api": "npm:^10.9.1"
     "@polkadot/api-contract": "npm:^10.9.1"
@@ -3994,7 +3994,7 @@ __metadata:
     randombytes: "npm:^2.1.0"
     rxjs: "npm:^7.8.1"
     viem: "npm:^1.5.0"
-  checksum: 61b8ba8a427ae24b283c374f685ef949b46b89df109ac2c166e9d0d781657e9e323d39f96de625e41f7e35640b1b6f89f839e06783fa76b4ef6a36190839b2d1
+  checksum: b3ca876827733fc58fd80e750b03d899ac5b901f972da4c53ad1d7f15f1c05e0ff6fe2c98ec519701d510798f2a0dad78364b2941276961a37237094db571d04
   languageName: node
   linkType: hard
 
@@ -10232,7 +10232,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ethers@npm:^6.8.1, ethers@npm:^6.9.0":
+"ethers@npm:^6.9.0":
   version: 6.9.0
   resolution: "ethers@npm:6.9.0"
   dependencies:
