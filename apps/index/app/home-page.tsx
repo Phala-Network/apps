@@ -2,19 +2,86 @@
 import Footer from '@/components/Footer'
 import HomeDemo from '@/components/HomeDemo'
 import {typeformAtom} from '@/store/core'
+import {SerializedStyles} from '@emotion/react'
 import {
   Box,
   Button,
   Container,
+  GlobalStyles,
   Stack,
+  Theme,
   Typography,
   alpha,
+  css,
+  darken,
   keyframes,
+  lighten,
 } from '@mui/material'
 import {useAtom} from 'jotai'
 import {NextPage} from 'next'
 import {LITEPAPER_URL} from '../constants'
 import HomeBar from './home-bar'
+
+const background = (theme: Theme): SerializedStyles => {
+  const defaultBackground = theme.palette.background.default
+  const line = alpha(theme.palette.action.disabled, 0.15)
+  const verticalGap = 80
+  const horizontalGap = 120
+  return css`
+    body {
+      overflow-x: hidden;
+      background: linear-gradient(
+          to bottom,
+          ${alpha(defaultBackground, 1)},
+          ${alpha(defaultBackground, 1)} 300px,
+          ${alpha(defaultBackground, 0)}
+        ),
+        repeating-linear-gradient(
+          to top,
+          transparent,
+          transparent ${verticalGap - 1}px,
+          ${line} ${verticalGap - 1}px,
+          ${line} ${verticalGap}px
+        ),
+        repeating-linear-gradient(
+          to left,
+          transparent,
+          transparent ${horizontalGap - 1}px,
+          ${line} ${horizontalGap - 1}px,
+          ${line} ${horizontalGap}px
+        ),
+        ${defaultBackground};
+
+      ${theme.breakpoints.up('md')} {
+        overflow: hidden;
+        height: 100vh;
+        background: linear-gradient(
+            to right,
+            ${alpha(defaultBackground, 1)},
+            ${alpha(defaultBackground, 1)} 30%,
+            ${alpha(defaultBackground, 0)}
+          ),
+          repeating-linear-gradient(
+            to bottom,
+            transparent,
+            transparent ${verticalGap - 1}px,
+            ${line} ${verticalGap - 1}px,
+            ${line} ${verticalGap}px
+          ),
+          repeating-linear-gradient(
+            to left,
+            transparent,
+            transparent ${horizontalGap - 1}px,
+            ${line} ${horizontalGap - 1}px,
+            ${line} ${horizontalGap}px
+          ),
+          ${theme.palette.mode === 'dark'
+            ? lighten(defaultBackground, 0.08)
+            : darken(defaultBackground, 0.08)};
+      }
+    }
+  `
+}
 
 const textOpen = keyframes`
   0% {
@@ -29,6 +96,7 @@ const Page: NextPage = () => {
   const [typeform] = useAtom(typeformAtom)
   return (
     <Stack height={[, , 1]}>
+      <GlobalStyles styles={(theme) => [background(theme)]} />
       <HomeBar />
       <Container
         maxWidth="xl"
