@@ -16,8 +16,7 @@ import {evmAccountAtom} from '@/store/ethers'
 import {type DepositEvent} from '@buildwithsygma/sygma-contracts/dist/ethers/Bridge'
 import {polkadotAccountAtom} from '@phala/store'
 import {waitSignAndSend, type ExtrinsicResult} from '@phala/utils'
-import Decimal from 'decimal.js'
-import {type ContractTransaction} from 'ethers'
+import {ethers, type ContractTransaction} from 'ethers'
 import {useAtomValue} from 'jotai'
 import {useMemo} from 'react'
 import {
@@ -49,10 +48,10 @@ export const useTransfer = (): (({
   const khalaApi = usePolkadotApi(toChain.id === 'phala' ? 'phala' : 'khala')
   const polkadotApi = useCurrentPolkadotApi()
 
-  const rawAmount = useMemo(
+  const atomicUnitAmount = useMemo(
     () =>
       amount !== ''
-        ? new Decimal(amount).times(Decimal.pow(10, decimals)).toFixed()
+        ? ethers.utils.parseUnits(amount, decimals).toString()
         : '0',
     [amount, decimals],
   )
@@ -68,7 +67,7 @@ export const useTransfer = (): (({
         khalaApi,
         assetId: asset.id,
         destinationAccount,
-        amount: rawAmount,
+        amount: atomicUnitAmount,
         toChainId: toChain.id,
       }).then((transaction) => {
         onReady()
@@ -83,7 +82,7 @@ export const useTransfer = (): (({
       const extrinsic = transferByPolkadotXTokens({
         polkadotApi,
         assetId: asset.id,
-        amount: rawAmount,
+        amount: atomicUnitAmount,
         fromChainId: fromChain.id,
         toChainId: toChain.id,
         destinationAccount,
@@ -107,7 +106,7 @@ export const useTransfer = (): (({
         api: polkadotApi,
         fromChainId: fromChain.id,
         toChainId: toChain.id,
-        amount: rawAmount,
+        amount: atomicUnitAmount,
         destinationAccount,
         assetId: asset.id,
         kind: bridge.kind,
@@ -130,7 +129,7 @@ export const useTransfer = (): (({
       return await transferByEvmXTokens({
         contract: ethersXTokensBridgeContract,
         assetId: asset.id,
-        amount: rawAmount,
+        amount: atomicUnitAmount,
         destinationAccount,
         fromChainId: fromChain.id,
         toChainId: toChain.id,
@@ -148,7 +147,7 @@ export const useTransfer = (): (({
       return await transferEvmSygma({
         provider: ethersWeb3Provider,
         sender: evmAccount,
-        amount: rawAmount,
+        amount: atomicUnitAmount,
         fromChainId: fromChain.id,
         toChainId: toChain.id,
         destinationAccount,

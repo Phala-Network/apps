@@ -3,7 +3,8 @@ import {CHAINS, type ChainId} from '@/config/chain'
 import {hexStripPrefix, u8aToHex} from '@polkadot/util'
 import {decodeAddress} from '@polkadot/util-crypto'
 import Decimal from 'decimal.js'
-import type {ContractTransaction, ethers} from 'ethers'
+import type {ContractTransaction} from 'ethers'
+import {ethers} from 'ethers'
 
 export const transferByEvmXTokens = async ({
   contract,
@@ -22,7 +23,6 @@ export const transferByEvmXTokens = async ({
   toChainId: ChainId
   decimals: number
 }): Promise<ContractTransaction> => {
-  const {ethers} = await import('ethers')
   const asset = ASSETS[assetId]
   const toChain = CHAINS[toChainId]
 

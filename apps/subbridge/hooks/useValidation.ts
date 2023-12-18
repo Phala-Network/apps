@@ -11,6 +11,7 @@ import {
   toChainAtom,
 } from '@/store/bridge'
 import {validateAddress} from '@phala/utils'
+import {ethers} from 'ethers'
 import {useAtom, useAtomValue} from 'jotai'
 import {useEffect} from 'react'
 import {useBalance} from './useBalance'
@@ -46,7 +47,7 @@ export const useValidation = (): void => {
           !validateAddress(destinationAccount)) ||
         (toChain.kind === 'evm' &&
           !(
-            (await import('ethers')).utils.isAddress(destinationAccount) &&
+            ethers.utils.isAddress(destinationAccount) &&
             destinationAccount.startsWith('0x')
           ))
       ) {

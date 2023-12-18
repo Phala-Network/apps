@@ -7,9 +7,7 @@ export const createPolkadotApi = async (
 ): Promise<ApiPromise> => {
   let metadata
   try {
-    const url = `https://phala.network/api/rpc-metadata?rpc=${
-      typeof endpoint === 'string' ? endpoint : endpoint[0]
-    }`
+    const url = `https://phala.network/api/rpc-metadata?rpc=${endpoint}`
     metadata = (await fetch(url).then(
       async (res) => await res.json(),
     )) as Record<string, `0x${string}`>

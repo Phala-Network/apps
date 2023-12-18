@@ -1,13 +1,12 @@
 import {fromChainAtom} from '@/store/bridge'
 import {ethereumProviderAtom, evmChainIdAtom} from '@/store/ethers'
-import type {ethers} from 'ethers'
+import {ethers} from 'ethers'
 import {useAtomValue} from 'jotai'
 import useSWRImmutable from 'swr/immutable'
 
 const ethersWeb3ProviderFetcher = async ([ethereumProvider]: [
   ethers.providers.ExternalProvider,
 ]): Promise<ethers.providers.Web3Provider> => {
-  const {ethers} = await import('ethers')
   const provider = new ethers.providers.Web3Provider(ethereumProvider)
   return provider
 }
@@ -31,7 +30,6 @@ export const useEthersWeb3Provider = ():
 const ethersJsonRpcProviderFetcher = async (
   url: string,
 ): Promise<ethers.providers.StaticJsonRpcProvider> => {
-  const {ethers} = await import('ethers')
   return new ethers.providers.StaticJsonRpcProvider(url)
 }
 

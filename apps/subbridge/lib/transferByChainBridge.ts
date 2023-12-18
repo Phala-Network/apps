@@ -3,7 +3,8 @@ import {CHAINS, type ChainId} from '@/config/chain'
 import type {ApiPromise} from '@polkadot/api'
 import {u8aToHex} from '@polkadot/util'
 import {decodeAddress} from '@polkadot/util-crypto'
-import type {ContractTransaction, ethers} from 'ethers'
+import type {ContractTransaction} from 'ethers'
+import {BigNumber, ethers} from 'ethers'
 
 export const createChainBridgeData = async (
   khalaApi: ApiPromise,
@@ -11,7 +12,6 @@ export const createChainBridgeData = async (
   amount: string,
   toChainId: ChainId,
 ): Promise<string> => {
-  const {ethers, BigNumber} = await import('ethers')
   const isToKhala = toChainId === 'phala' || toChainId === 'khala'
   const toChain = CHAINS[toChainId]
   const accountId = u8aToHex(decodeAddress(destinationAccount))
