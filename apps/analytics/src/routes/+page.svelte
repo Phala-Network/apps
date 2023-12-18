@@ -2,9 +2,6 @@
   import Computation from '~/lib/Computation.svelte'
   import Nav from '~/lib/Nav.svelte'
   import PhatContract from '~/lib/PhatContract.svelte'
-  import {initChartJS} from '~/lib/chart'
-
-  initChartJS()
 </script>
 
 <svelte:head>

@@ -3,14 +3,13 @@ import {type ApiPromise} from '@polkadot/api'
 import {hexStripPrefix, u8aToHex} from '@polkadot/util'
 import {decodeAddress} from '@polkadot/util-crypto'
 import Decimal from 'decimal.js'
-import type {BigNumber, ethers} from 'ethers'
+import {ethers, type BigNumber} from 'ethers'
 import {createChainBridgeData} from './transferByChainBridge'
 
 export const ethersBalanceFetcher = async ([provider, address]: [
   ethers.providers.Web3Provider,
   `0x${string}`,
 ]): Promise<Decimal> => {
-  const {ethers} = await import('ethers')
   const balance = await provider.getBalance(address)
   return new Decimal(ethers.utils.formatEther(balance))
 }
@@ -20,7 +19,6 @@ export const ethersContractBalanceFetcher = async ([
   account,
   decimals,
 ]: [ethers.Contract, `0x${string}`, number]): Promise<Decimal> => {
-  const {ethers} = await import('ethers')
   const balance = (await contract.balanceOf(account)) as BigNumber
 
   return new Decimal(ethers.utils.formatUnits(balance, decimals))
@@ -39,7 +37,6 @@ export const ethersContractAllowanceFetcher = async ([
 export const ethersGasPriceFetcher = async (
   provider: ethers.providers.Web3Provider,
 ): Promise<Decimal> => {
-  const {ethers} = await import('ethers')
   return new Decimal(ethers.utils.formatEther(await provider.getGasPrice()))
 }
 
@@ -72,7 +69,6 @@ export const evmXTokensEstimatedGasFetcher = async ([
   paraId,
   decimals,
 ]: [ethers.Contract, `0x${string}`, number, number]): Promise<Decimal> => {
-  const {ethers} = await import('ethers')
   const estimateGas = await contract.estimateGas.transfer(
     xc20Address,
     '0',

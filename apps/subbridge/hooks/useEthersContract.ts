@@ -4,7 +4,7 @@ import tokenStandardAbi from '@/assets/token_standard_abi.json'
 import {ASSETS, type AssetId} from '@/config/asset'
 import {type EvmChainId} from '@/config/chain'
 import {assetAtom, fromChainAtom} from '@/store/bridge'
-import type {ethers} from 'ethers'
+import {ethers} from 'ethers'
 import {useAtomValue} from 'jotai'
 import useSWRImmutable from 'swr/immutable'
 import {useEthersWeb3Provider} from './useEthersProvider'
@@ -21,7 +21,6 @@ const fetcher = async ([provider, address, abiKind]: [
   string,
   AbiKind,
 ]): Promise<ethers.Contract> => {
-  const {ethers} = await import('ethers')
   return new ethers.Contract(
     address,
     abi[abiKind],

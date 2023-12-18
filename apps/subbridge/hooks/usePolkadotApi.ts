@@ -16,7 +16,10 @@ const create = async ([chainId]: [SubstrateChainId]): Promise<ApiPromise> => {
 export const usePolkadotApi = (
   chainId: SubstrateChainId | null,
 ): ApiPromise | undefined => {
-  const {data: polkadotApi} = useSWRImmutable([chainId], create)
+  const {data: polkadotApi} = useSWRImmutable(
+    chainId != null && [chainId],
+    create,
+  )
 
   return polkadotApi
 }
