@@ -10,8 +10,8 @@
     "lint:fix": "eslint --fix --cache --ext .ts,.tsx src"
   },
   "dependencies": {
-    "@polkadot/keyring": "^12.6.1",
-    "@polkadot/util": "^12.6.1",
+    "@polkadot/keyring": "^12.6.2",
+    "@polkadot/util": "^12.6.2",
     "decimal.js": "^10.4.3"
   },
   "devDependencies": {

@@ -33,7 +33,7 @@ const RootLayout: FC<{children: ReactNode}> = ({children}) => {
         >
           {children}
           {process.env.NODE_ENV === 'development' && (
-            <Box position="fixed" bottom={20} left={20}>
+            <Box position="fixed" ml={1} mb={1} bottom={0} left={0}>
               <JotaiDevTools />
             </Box>
           )}

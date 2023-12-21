@@ -84,7 +84,7 @@ const GPT: FC = () => {
   const totalFeeInUsd = useMemo(() => {
     if (simulateResults == null) return null
     const fee = simulateResults.reduce((acc, x) => acc + x.txFeeInUsd, 0)
-    return new Decimal(fee).div(1e6).toDP(2).toString()
+    return toCurrency(new Decimal(fee).div(1e6))
   }, [simulateResults])
 
   const balance = useBalance()
