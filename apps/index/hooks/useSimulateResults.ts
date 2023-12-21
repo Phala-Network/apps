@@ -20,6 +20,7 @@ const useSimulateResults = (
           : u8aToHex(decodeAddress(destinationAccount)),
     [destinationAccount],
   )
+
   const swr = useSWR(
     solution != null &&
       client != null &&

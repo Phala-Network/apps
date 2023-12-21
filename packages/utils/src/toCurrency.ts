@@ -3,7 +3,7 @@ import {toFixed} from './toFixed'
 
 export function toCurrency(
   value: Decimal | string | number,
-  fractionDigits = 2,
+  fractionDigits = 4,
 ): string {
   const fixedValue = toFixed(
     typeof value === 'string' ? new Decimal(value) : value,

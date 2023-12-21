@@ -10,7 +10,10 @@ const create = async ([endpoint]: [string]): Promise<ApiPromise> =>
 export const usePolkadotApi = (
   endpoint: string | false | undefined,
 ): ApiPromise | undefined => {
-  const {data: polkadotApi} = useSWRImmutable([endpoint], create)
+  const {data: polkadotApi} = useSWRImmutable(
+    typeof endpoint === 'string' && [endpoint],
+    create,
+  )
 
   return polkadotApi
 }

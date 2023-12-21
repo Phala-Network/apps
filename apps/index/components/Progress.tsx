@@ -20,6 +20,7 @@ import {
   useTheme,
   type PaperProps,
 } from '@mui/material'
+import {toCurrency} from '@phala/utils'
 import Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
 import {useMemo, type FC} from 'react'
@@ -108,7 +109,7 @@ const Progress: FC<PaperProps> = ({sx, ...props}) => {
         let fee
         const txFeeInUsd = simulateResults?.[result.length]?.txFeeInUsd
         if (txFeeInUsd != null) {
-          fee = new Decimal(txFeeInUsd).div(1e6).toDP(2).toString()
+          fee = toCurrency(new Decimal(txFeeInUsd).div(1e6))
         }
         result.push({
           sourceChain,
