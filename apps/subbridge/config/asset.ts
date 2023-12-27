@@ -243,7 +243,7 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
     },
     location: {
       kusama: {
-        parents: 1,
+        parents: 0,
         interior: {
           X2: [
             {Parachain: CHAINS['bifrost-kusama'].paraId},
@@ -271,7 +271,7 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
     },
     location: {
       kusama: {
-        parents: 1,
+        parents: 0,
         interior: {
           X2: [
             {Parachain: CHAINS['bifrost-kusama'].paraId},
