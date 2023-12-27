@@ -216,6 +216,7 @@ const GPT: FC = () => {
                 sx={{py: 1}}
                 onClick={() => {
                   setMessage(text)
+                  void trigger(text)
                 }}
               >
                 {text}
