@@ -55,7 +55,7 @@ export const transferByPolkadotXTokens = ({
                   {Parachain: CHAINS[proxy].paraId},
                   ...createPhalaMultilocation(
                     'cb',
-                    generalIndex as number,
+                    generalIndex as unknown as number,
                     destinationAccount as Hex,
                   ),
                 ],

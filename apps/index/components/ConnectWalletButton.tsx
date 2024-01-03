@@ -30,7 +30,7 @@ const ConnectEvmWalletButton: FC<ButtonProps> = (props) => {
       .request({method: 'eth_requestAccounts'})
       .then((accounts) => {
         if (Array.isArray(accounts) && accounts.length > 0) {
-          setEvmAccount(accounts[0])
+          setEvmAccount(accounts[0] as string)
         } else {
           setEvmAccount(null)
         }

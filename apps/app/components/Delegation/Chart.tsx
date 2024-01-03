@@ -100,7 +100,7 @@ const DelegationChart: FC<{
           tickLine={false}
           name="Value"
           domain={['auto', 'auto']}
-          tickFormatter={(value) => compactFormat(value, 1)}
+          tickFormatter={(value) => compactFormat(value as number, 1)}
         />
         <YAxis
           width={45}
@@ -110,7 +110,7 @@ const DelegationChart: FC<{
           dataKey="reward"
           name="Reward"
           tickLine={false}
-          tickFormatter={(value) => compactFormat(value, 0)}
+          tickFormatter={(value) => compactFormat(value as number, 0)}
         />
         <Bar
           yAxisId="right"

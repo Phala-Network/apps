@@ -210,7 +210,7 @@ const BasePoolChart: FC<{
           tickFormatter={
             isPercentage || isInteger
               ? undefined
-              : (value) => compactFormat(value, 1)
+              : (value) => compactFormat(value as number, 1)
           }
         />
         <Tooltip isAnimationActive={false} content={<RechartsTooltip />} />

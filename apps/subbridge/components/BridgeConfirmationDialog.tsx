@@ -325,7 +325,7 @@ const BridgeConfirmationDialog: FC<DialogProps> = ({onClose, ...props}) => {
           {variant: 'error'},
         )
       } else if (err.message != null) {
-        enqueueSnackbar(err.message, {variant: 'error'})
+        enqueueSnackbar(err.message as unknown as string, {variant: 'error'})
       }
 
       throw err
