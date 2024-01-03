@@ -62,6 +62,7 @@ export interface Asset {
   location?: {
     polkadot?: any
     kusama?: any
+    bifrost?: any
   }
 }
 
@@ -243,13 +244,17 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
     },
     location: {
       kusama: {
-        parents: 0,
+        parents: 1,
         interior: {
           X2: [
             {Parachain: CHAINS['bifrost-kusama'].paraId},
             {GeneralKey: getGeneralKey('0x0207')},
           ],
         },
+      },
+      bifrost: {
+        parents: 0,
+        interior: {X1: {GeneralKey: getGeneralKey('0x0207')}},
       },
     },
   },
@@ -270,8 +275,12 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
       khala: new Decimal('0.01'),
     },
     location: {
-      kusama: {
+      bifrost: {
         parents: 0,
+        interior: {X1: {GeneralKey: getGeneralKey('0x0001')}},
+      },
+      kusama: {
+        parents: 1,
         interior: {
           X2: [
             {Parachain: CHAINS['bifrost-kusama'].paraId},
