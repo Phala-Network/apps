@@ -60,7 +60,7 @@ async function apiFetcher(
   }
   solution: any[]
 }> {
-  const res = await api.url(url).post({message: arg})
+  const res = await api.url(url).post({message: arg, isTest: true})
   return res as any
 }
 

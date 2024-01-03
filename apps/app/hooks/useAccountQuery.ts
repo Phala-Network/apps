@@ -12,7 +12,7 @@ const useAccountQuery = (): UseQueryResult<
   const [subsquidClient] = useAtom(subsquidClientAtom)
   const query = useAccountByIdQuery(
     subsquidClient,
-    {accountId: account?.address as string},
+    {accountId: account?.address as unknown as string},
     {enabled: account !== null, select: (data) => data.accountById},
   )
   return query

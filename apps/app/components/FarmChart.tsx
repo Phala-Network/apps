@@ -108,7 +108,7 @@ const FarmChart: FC<{
           // name={label}
           tickLine={false}
           domain={[0, 'auto']}
-          tickFormatter={(value) => compactFormat(value, 1)}
+          tickFormatter={(value) => compactFormat(value as number, 1)}
         />
         <Tooltip isAnimationActive={false} content={<RechartsTooltip />} />
         <Bar

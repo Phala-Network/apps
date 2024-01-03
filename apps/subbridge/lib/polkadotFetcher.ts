@@ -15,7 +15,7 @@ export const polkadotNativeBalanceFetcher = async ([api, address]: [
 ]): Promise<Decimal> => {
   const allBalance = await api.derive.balances.all(address)
 
-  return new Decimal(allBalance.availableBalance.toJSON()).div(
+  return new Decimal(allBalance.availableBalance.toJSON() as string).div(
     Decimal.pow(10, api.registry.chainDecimals[0]),
   )
 }

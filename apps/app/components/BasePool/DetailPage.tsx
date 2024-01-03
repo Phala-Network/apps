@@ -299,7 +299,7 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
                   indicatorColor={color}
                   textColor={color}
                   onChange={(e, newValue) => {
-                    setChartTab(newValue)
+                    setChartTab(newValue as BasePoolChartKind)
                   }}
                 >
                   {charts.map(([label, value]) => (

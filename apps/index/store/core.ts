@@ -1,6 +1,11 @@
 import {assetMap, assets, type Asset} from '@/config/common'
 import {ERROR_MESSAGES, type Error} from '@/config/error'
-import {type Client, type EvmChain, type SubstrateChain} from '@phala/index'
+import {
+  type Client,
+  type EvmChain,
+  type Solution,
+  type SubstrateChain,
+} from '@phala/index'
 import {polkadotAccountAtom} from '@phala/store'
 import {createPopup} from '@typeform/embed'
 import {atom} from 'jotai'
@@ -36,7 +41,7 @@ export const solutionStringAtom = atomWithStorage(
   'jotai:solution-v2',
   DEFAULT_SOLUTION_STRING,
 )
-export const solutionAtom = atom((get) => {
+export const solutionAtom = atom<Solution | undefined>((get) => {
   try {
     const value = JSON.parse(get(solutionStringAtom))
     if (get(clientAtom)?.validateSolution(value) === true) {

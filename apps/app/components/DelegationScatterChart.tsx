@@ -83,7 +83,7 @@ const DelegationScatterChart: FC<{address?: string}> = ({address}) => {
               name="Value"
               unit=" PHA"
               tickLine={false}
-              tickFormatter={(value) => compactFormat(value, 0)}
+              tickFormatter={(value) => compactFormat(value as number, 0)}
             />
             <YAxis
               type="number"

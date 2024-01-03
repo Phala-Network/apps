@@ -144,7 +144,7 @@ const Delegate: NextPage = () => {
                 value={chartDays}
                 onChange={(_, value) => {
                   if (value != null) {
-                    setChartDays(value)
+                    setChartDays(value as number)
                   }
                 }}
               >

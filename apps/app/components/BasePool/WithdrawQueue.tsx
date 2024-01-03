@@ -54,7 +54,7 @@ const columns: Array<GridColDef<RowModel>> = [
     field: 'value',
     headerName: 'Value',
     width: 200,
-    valueFormatter: ({value}) => `${toCurrency(value)} PHA`,
+    valueFormatter: ({value}) => `${toCurrency(value as number)} PHA`,
   },
   {
     field: 'countdown',
@@ -63,7 +63,7 @@ const columns: Array<GridColDef<RowModel>> = [
     valueGetter: ({row}) => row.startTime != null && new Date(row.startTime),
     valueFormatter: ({value}) => {
       const start = new Date()
-      const end = addDays(new Date(value), 7)
+      const end = addDays(new Date(value as number), 7)
       if (isAfter(start, end)) return 'Ended'
       return formatDuration(intervalToDuration({start, end}), {
         format: ['days', 'hours', 'minutes'],
@@ -76,7 +76,7 @@ const columns: Array<GridColDef<RowModel>> = [
     width: 200,
     valueGetter: ({row}) => row.startTime != null && new Date(row.startTime),
     valueFormatter: ({value}) =>
-      addDays(new Date(value), 14).toLocaleDateString(),
+      addDays(new Date(value as number), 14).toLocaleDateString(),
   },
 ]
 
@@ -234,7 +234,7 @@ const WithdrawQueue: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
                   dataKey="value"
                   name="Value"
                   tickLine={false}
-                  tickFormatter={(value) => compactFormat(value, 0)}
+                  tickFormatter={(value) => compactFormat(value as number, 0)}
                 />
                 <RechartsTooltip
                   isAnimationActive={false}

@@ -77,7 +77,7 @@ const Detail: FC<
   useEffect(() => {
     void import(`@phala/ui/icons/chain/${chainName}.png`)
       .then((module) => {
-        setChainIconSrc(module.default.src)
+        setChainIconSrc(module.default.src as string)
       })
       .catch(() => {})
   }, [chainName])
@@ -85,7 +85,7 @@ const Detail: FC<
   useEffect(() => {
     void import(`@phala/ui/icons/asset/${assetName}.png`)
       .then((module) => {
-        setAssetIconSrc(module.default.src)
+        setAssetIconSrc(module.default.src as string)
       })
       .catch(() => {})
   }, [assetName])
