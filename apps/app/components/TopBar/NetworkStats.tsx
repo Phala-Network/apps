@@ -19,9 +19,6 @@ import Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
 import {useMemo, useState, type FC} from 'react'
 import Property from '../Property'
-interface CirculationData {
-  data?: {circulations?: {nodes?: [{amount: string}?]}}
-}
 
 const NetworkStats: FC = () => {
   const theme = useTheme()
@@ -44,19 +41,17 @@ const NetworkStats: FC = () => {
       where: {updatedTime_gte: yesterday},
       first: 1,
     })
-  const {data: circulationData} = useQuery<CirculationData>(
+  const {data: circulationValue} = useQuery(
     ['circulations', chain],
     async () => {
       const res = await fetch(
-        'https://api.subquery.network/sq/Phala-Network/khala-chainbridge__UGhhb?query=%7Bcirculations(first:1,orderBy:BLOCK_HEIGHT_DESC)%7Bnodes%7Bamount%7D%7D%7D',
+        'https://pha-circulation-server.vercel.app/api/circulation',
       )
-      return (await res.json()) as CirculationData
+      return await res.text()
     },
   )
   const {data: phalaGlobalStateData} = useGlobalStateQuery(phalaSubsquidClient)
   const {data: khalaGlobalStateData} = useGlobalStateQuery(khalaSubsquidClient)
-  const circulationValue =
-    circulationData?.data?.circulations?.nodes?.[0]?.amount
   const {
     totalValue: phalaTotalValue,
     idleWorkerShares: phalaIdleWorkerShares,
@@ -106,19 +101,15 @@ const NetworkStats: FC = () => {
   }, [phalaTotalValueDecimal, khalaTotalValueDecimal])
   const phalaStakeRatio = useMemo(() => {
     if (phalaTotalValueDecimal == null || circulationValue == null) return null
-    return toPercentage(
-      phalaTotalValueDecimal.times(1e12).div(circulationValue),
-    )
+    return toPercentage(phalaTotalValueDecimal.div(circulationValue))
   }, [circulationValue, phalaTotalValueDecimal])
   const khalaStakeRatio = useMemo(() => {
     if (khalaTotalValueDecimal == null || circulationValue == null) return null
-    return toPercentage(
-      khalaTotalValueDecimal.times(1e12).div(circulationValue),
-    )
+    return toPercentage(khalaTotalValueDecimal.div(circulationValue))
   }, [circulationValue, khalaTotalValueDecimal])
   const totalStakeRatio = useMemo(() => {
     if (circulationValue == null || totalValueDecimal == null) return null
-    return toPercentage(totalValueDecimal.times(1e12).div(circulationValue))
+    return toPercentage(totalValueDecimal.div(circulationValue))
   }, [circulationValue, totalValueDecimal])
   const phalaDailyRewards = useMemo(() => {
     const prevRewards =
