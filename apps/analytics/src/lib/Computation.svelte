@@ -41,18 +41,18 @@
           summary[length - 1].cumulativeRewards
             .minus(summary[length - 3].cumulativeRewards)
             .toDP(0)
-            .toNumber()
+            .toNumber(),
         )} PHA`
       }
 
       if (data != null) {
         delegationValue = `${compactFormat(
-          data.summary.totalValue
+          data.summary.totalValue,
         )} <sub>PHA</sub>`
         averageApr = formatPercentage(data.summary.averageApr.toNumber())
         if (circulation != null) {
           stakeRatio = formatPercentage(
-            data.summary.totalValue.div(circulation).toNumber()
+            data.summary.totalValue.div(circulation).toNumber(),
           )
         }
         onlineWorkers = format(data.summary.idleWorkerCount)
@@ -98,7 +98,7 @@
           `It's roughly equal to the daily income of a 10,000V worker before the 20% take away to the Treasury.`,
         ],
       ]
-    }
+    },
   )
 
   const charts = [
@@ -141,7 +141,7 @@
           ],
         }
       }
-    }
+    },
   )
 </script>
 

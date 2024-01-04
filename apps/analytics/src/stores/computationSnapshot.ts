@@ -118,9 +118,11 @@ const fetchComputationSnapshot = async (): Promise<ComputationSnapshot> => {
     if (
       p == null ||
       k == null ||
-      p.updatedTime.getTime() !== k.updatedTime.getTime()
+      p.updatedTime.getTime() !== k.updatedTime.getTime() ||
+      Object.keys(p).length < 10 ||
+      Object.keys(k).length < 10
     ) {
-      break
+      continue
     }
     const totalValue = Decimal.sum(p.totalValue, k.totalValue)
     summary.push({
