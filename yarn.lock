@@ -3926,7 +3926,7 @@ __metadata:
     "@mui/material": "npm:^5.15.3"
     "@next/bundle-analyzer": "npm:^14.0.4"
     "@phala/eslint-config": "workspace:*"
-    "@phala/index": "npm:^1.0.56"
+    "@phala/index": "npm:^1.0.57"
     "@phala/store": "workspace:*"
     "@phala/ui": "workspace:*"
     "@phala/utils": "workspace:*"
@@ -3964,9 +3964,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@phala/index@npm:^1.0.56":
-  version: 1.0.56
-  resolution: "@phala/index@npm:1.0.56"
+"@phala/index@npm:^1.0.57":
+  version: 1.0.57
+  resolution: "@phala/index@npm:1.0.57"
   dependencies:
     "@phala/sdk": "npm:^0.5.7"
     "@polkadot/api": "npm:^10.11.2"
@@ -3977,7 +3977,7 @@ __metadata:
     ajv: "npm:^8.12.0"
     ethers: "npm:^6.9.0"
     subshape: "npm:^0.14.0"
-  checksum: 240029c80a9eee8ab7f21b8c2ecb8229ec3137605e3b42fa7c128d2841b295bc11370c6db590cc338403861ba19917ee3f83ecbd8812a4b49520f12017363598
+  checksum: 46de47b8c5a6392c9000e62f94773f406d5283aad2714b973467aef40aa059eee25e20a21a874297b2cd427db862a13cf8c12aee5eb867f1f8909ef93e5cd6f9
   languageName: node
   linkType: hard
 
