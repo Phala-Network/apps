@@ -44,9 +44,7 @@ const NetworkStats: FC = () => {
   const {data: circulationValue} = useQuery(
     ['circulations', chain],
     async () => {
-      const res = await fetch(
-        'https://pha-circulation-server.vercel.app/api/circulation',
-      )
+      const res = await fetch('/api/circulation')
       return await res.text()
     },
   )
