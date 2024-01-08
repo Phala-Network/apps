@@ -148,4 +148,7 @@ const fetchComputationSnapshot = async (): Promise<ComputationSnapshot> => {
 }
 
 export const getComputationSnapshot = () =>
-  createQuery(['computationSnapshot'], fetchComputationSnapshot)
+  createQuery({
+    queryKey: ['computationSnapshot'],
+    queryFn: fetchComputationSnapshot,
+  })

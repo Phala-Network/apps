@@ -62,4 +62,4 @@ const fetchPhatData = async (): Promise<PhatData> => {
 }
 
 export const getPhatContractData = () =>
-  createQuery(['phatContract'], fetchPhatData)
+  createQuery({queryKey: ['phatContract'], queryFn: fetchPhatData})

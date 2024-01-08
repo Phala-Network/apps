@@ -5,19 +5,18 @@
   import {derived} from 'svelte/store'
   import {getPhatContractData} from '~/stores/phat'
   import {getPhatOffchainData} from '~/stores/phatOffchain'
+  import {format} from './utils'
 
   const display = derived(
     [getPhatContractData(), getPhatOffchainData()],
     ([{data}, {data: offchainData}]) => {
       let dailyExecution = 'ㅤ'
-      let staking = 'ㅤ'
-      let clusterWorkers = 'ㅤ'
-      let contracts = 'ㅤ'
-      let users = 'ㅤ'
+      let staking = ''
+      let clusterWorkers = ''
+      let contracts = ''
+      let users = ''
 
       let chartData: ChartData<'bar', number[]> | null = null
-
-      const format = new Intl.NumberFormat('en-US').format
 
       if (data != null) {
         staking = `${format(data.stake.toDP(0).toNumber())} PHA`
@@ -53,7 +52,7 @@
           ['Users', users],
         ],
       }
-    }
+    },
   )
 </script>
 
@@ -73,7 +72,7 @@
       {/if}
     {/each}
   </section>
-  <section class="card h-80 flex-1 max-md:w-full overflow-hidden">
+  <section class="card h-80 md:flex-1 max-md:w-full overflow-hidden">
     {#if $display.chartData != null}
       <Bar data={$display.chartData} options={{scales: {x: {type: 'time'}}}} />
     {/if}

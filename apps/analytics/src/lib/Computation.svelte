@@ -1,37 +1,35 @@
 <script lang="ts">
-  import {compactFormat} from '@phala/utils'
+  import {compactFormat, toCurrency} from '@phala/utils'
   import {
     RadioGroup,
     RadioGroupLabel,
     RadioGroupOption,
   } from '@rgossiaux/svelte-headlessui'
   import type {ChartData} from 'chart.js'
+  import Decimal from 'decimal.js'
   import {Line} from 'svelte-chartjs'
   import {derived, writable} from 'svelte/store'
   import {getComputationData, getComputationSnapshot} from '~/stores'
   import {getCirculation} from '~/stores/circulation'
   import Tooltip from './Tooltip.svelte'
+  import {format, formatPercentage} from './utils'
 
   const display = derived(
     [getComputationData(), getComputationSnapshot(), getCirculation()],
     ([{data}, {data: snapshot}, {data: circulation}]) => {
-      let circulatingSupply = 'ㅤ'
+      let circulatingSupply = ''
       let delegationValue = 'ㅤ'
-      let dailyRewards = 'ㅤ'
-      let averageApr = 'ㅤ'
-      let stakeRatio = 'ㅤ'
-      let onlineWorkers = 'ㅤ'
-      let delegator = 'ㅤ'
-      let budgetPerShare = 'ㅤ'
-
-      const format = new Intl.NumberFormat('en-US').format
-      const formatPercentage = new Intl.NumberFormat('en-US', {
-        style: 'percent',
-        maximumFractionDigits: 2,
-      }).format
+      let dailyRewards = ''
+      let averageApr = ''
+      let stakeRatio = ''
+      let onlineWorkers = ''
+      let delegator = ''
+      let budgetPerShare = ''
 
       if (circulation != null) {
-        circulatingSupply = `${compactFormat(circulation)} PHA`
+        circulatingSupply = `${compactFormat(
+          new Decimal(circulation.totalCirculation),
+        )} PHA`
       }
 
       if (snapshot != null) {
@@ -46,13 +44,16 @@
       }
 
       if (data != null) {
-        delegationValue = `${compactFormat(
+        delegationValue = `${toCurrency(
           data.summary.totalValue,
+          0,
         )} <sub>PHA</sub>`
         averageApr = formatPercentage(data.summary.averageApr.toNumber())
         if (circulation != null) {
           stakeRatio = formatPercentage(
-            data.summary.totalValue.div(circulation).toNumber(),
+            data.summary.totalValue
+              .div(circulation.totalCirculation)
+              .toNumber(),
           )
         }
         onlineWorkers = format(data.summary.idleWorkerCount)
@@ -76,7 +77,7 @@
           averageApr,
           'The average annual percentage rate of return for all delegations across the Phala & Khala network. (no consideration of compound interest)',
         ],
-        ['Circulating Supply', circulatingSupply],
+        ['Circulating supply', circulatingSupply],
         [
           'Stake ratio',
           stakeRatio,
@@ -172,11 +173,11 @@
     {/each}
   </section>
   <section
-    class="card h-[22rem] flex-1 max-md:w-full overflow-hidden flex flex-col gap-3"
+    class="card h-[22rem] md:flex-1 max-md:w-full overflow-hidden flex flex-col gap-3"
   >
     <RadioGroup
       bind:value={$currentChart}
-      class="flex font-montserrat flex-wrap gap-2"
+      class="flex font-montserrat flex-wrap gap-2 font-medium"
     >
       {#each charts as chart}
         <RadioGroupOption

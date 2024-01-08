@@ -10,29 +10,30 @@
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
   },
   "devDependencies": {
-    "@sveltejs/adapter-vercel": "^3.1.0",
-    "@sveltejs/kit": "^1.30.3",
-    "svelte": "^4.2.8",
-    "svelte-check": "^3.6.2",
+    "@sveltejs/adapter-vercel": "^4.0.5",
+    "@sveltejs/kit": "^2.5.0",
+    "@sveltejs/vite-plugin-svelte": "^3.0.2",
+    "svelte": "^4.2.9",
+    "svelte-check": "^3.6.3",
     "tslib": "^2.6.2",
     "typescript": "^5.3.3",
-    "vite": "^4.5.1"
+    "vite": "^5.0.12"
   },
   "type": "module",
   "dependencies": {
     "@phala/utils": "workspace:*",
     "@rgossiaux/svelte-headlessui": "^2.0.0",
     "@rgossiaux/svelte-heroicons": "^0.1.2",
-    "@tanstack/svelte-query": "^4.36.1",
-    "autoprefixer": "^10.4.16",
+    "@tanstack/svelte-query": "^5.17.19",
+    "autoprefixer": "^10.4.17",
     "chart.js": "^4.4.1",
     "chartjs-adapter-date-fns": "^3.0.0",
-    "date-fns": "^3.0.6",
+    "date-fns": "^3.3.1",
     "decimal.js": "^10.4.3",
     "graphql": "^16.8.1",
     "graphql-request": "^6.1.0",
-    "postcss": "^8.4.32",
+    "postcss": "^8.4.33",
     "svelte-chartjs": "^3.1.2",
-    "tailwindcss": "^3.4.0"
+    "tailwindcss": "^3.4.1"
   }
 }
