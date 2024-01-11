@@ -38,7 +38,7 @@ export const useValidation = (): void => {
         return 'NoSolutions'
       }
 
-      if (fromAsset?.id === toAsset?.id && fromChain?.id === toChain?.id) {
+      if (fromAsset?.name === toAsset?.name && fromChain?.id === toChain?.id) {
         return 'InvalidRoute'
       }
 
@@ -92,8 +92,8 @@ export const useValidation = (): void => {
     amount,
     balance,
     solution,
-    fromAsset?.id,
-    toAsset?.id,
+    fromAsset?.name,
+    toAsset?.name,
     fromChain?.id,
     toChain?.id,
     toChain?.chainType,
