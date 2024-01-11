@@ -1,6 +1,5 @@
 'use client'
 /* eslint-disable @typescript-eslint/naming-convention */
-import {assets} from '@/config/common'
 import useCurrentTaskStatus from '@/hooks/useCurrentTaskStatus'
 import useSimulateResults from '@/hooks/useSimulateResults'
 import {currentTaskAtom, fromChainAtom, solutionAtom} from '@/store/core'
@@ -20,6 +19,7 @@ import {
   useTheme,
   type PaperProps,
 } from '@mui/material'
+import {lookupAsset} from '@phala/index'
 import {toCurrency} from '@phala/utils'
 import Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
@@ -92,12 +92,8 @@ const Progress: FC<PaperProps> = ({sx, ...props}) => {
       const prevStep = result.at(-1)
       const isSwap = sourceChain === destChain
 
-      const getSymbol = (chain: string, location: string): string =>
-        assets.find((x) => x.chainId === chain && x.location === location)
-          ?.symbol ?? ''
-
-      const spendSymbol = getSymbol(sourceChain, spendAsset)
-      const receiveSymbol = getSymbol(destChain, receiveAsset)
+      const spendSymbol = lookupAsset(sourceChain, spendAsset)?.symbol ?? ''
+      const receiveSymbol = lookupAsset(destChain, receiveAsset)?.symbol ?? ''
       const label = isSwap
         ? `${spendSymbol} -> ${receiveSymbol} on ${exe.replaceAll('_', ' ')}`
         : `${spendSymbol} -> ${destChain} ${receiveSymbol}`

@@ -1,11 +1,11 @@
 'use client'
-import {assets} from '@/config/common'
 import {useEthersBrowserProvider} from '@/hooks/useEthersProvider'
 import {useSwitchNetwork} from '@/hooks/useSwitchNetwork'
 import {ethersBalanceFetcher} from '@/lib/ethersFetcher'
 import {fromChainAtom} from '@/store/core'
 import {evmAccountAtom, isNetworkWrongAtom} from '@/store/ethers'
 import {Button} from '@mui/material'
+import {lookupAsset} from '@phala/index'
 import {toCurrency, trimAddress} from '@phala/utils'
 import {useAtom} from 'jotai'
 import {useSnackbar} from 'notistack'
@@ -27,14 +27,12 @@ const EvmAccount: FC = () => {
     {refreshInterval: 12000},
   )
 
-  const symbol = useMemo(
-    () =>
-      assets.find(
-        (x) =>
-          x.chainId === fromChain?.name && x.location === fromChain.nativeAsset,
-      )?.symbol,
-    [fromChain],
-  )
+  const symbol = useMemo(() => {
+    if (fromChain != null) {
+      return lookupAsset(fromChain.name, fromChain.nativeAsset)?.symbol
+    }
+    return ''
+  }, [fromChain])
 
   if (evmAccount == null) return null
 

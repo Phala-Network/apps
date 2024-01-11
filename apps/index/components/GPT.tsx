@@ -130,8 +130,8 @@ const GPT: FC = () => {
       const {params} = data
       setFromChain(params.sourceChain)
       setToChain(params.destChain)
-      setFromAsset(`${params.sourceChain}-${params.spendAsset}`)
-      setToAsset(`${params.destChain}-${params.receiveAsset}`)
+      setFromAsset(params.spendAsset)
+      setToAsset(params.receiveAsset)
       setFromAmount(params.amount)
     }
   }, [data, setFromChain, setFromAmount, setFromAsset, setToChain, setToAsset])

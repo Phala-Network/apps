@@ -1,5 +1,4 @@
 'use client'
-import {type Asset} from '@/config/common'
 import {
   destinationAccountAtom,
   fromAccountAtom,
@@ -19,7 +18,7 @@ import {
   type PaperProps,
 } from '@mui/material'
 import {type BoxProps} from '@mui/system'
-import {type Chain} from '@phala/index'
+import {type Asset, type Chain} from '@phala/index'
 import {useAtom} from 'jotai'
 import {useEffect, useState, type FC, type ReactNode} from 'react'
 
