@@ -5,11 +5,9 @@ import ausdIcon from '@phala/ui/icons/asset/ausd.png'
 import bncIcon from '@phala/ui/icons/asset/bnc.png'
 import bsxIcon from '@phala/ui/icons/asset/bsx.png'
 import glmrIcon from '@phala/ui/icons/asset/glmr.png'
-import hkoIcon from '@phala/ui/icons/asset/hko.png'
 import karIcon from '@phala/ui/icons/asset/kar.png'
 import kmaIcon from '@phala/ui/icons/asset/kma.png'
 import movrIcon from '@phala/ui/icons/asset/movr.png'
-import paraIcon from '@phala/ui/icons/asset/para.png'
 import phaIcon from '@phala/ui/icons/asset/pha.png'
 import sdnIcon from '@phala/ui/icons/asset/sdn.png'
 import turIcon from '@phala/ui/icons/asset/tur.png'
@@ -32,8 +30,6 @@ export type AssetId =
   | 'zlk'
   | 'bnc'
   | 'ausd'
-  | 'para'
-  | 'hko'
   | 'bsx'
   | 'tur'
   | 'kma'
@@ -89,8 +85,6 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
       karura: new Decimal('0.0512'),
       moonbeam: new Decimal('0.158722600511'),
       moonriver: new Decimal('0.05868512'),
-      parallel: new Decimal('0.0556176'),
-      'parallel-heiko': new Decimal('0.0384'),
       turing: new Decimal('0.256'),
       calamari: new Decimal('0.9523809524'),
       shiden: new Decimal('0.024464'),
@@ -104,8 +98,6 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
       'bifrost-kusama': new Decimal('0.04'),
     },
     polkadotAssetId: {
-      parallel: 115,
-      'parallel-heiko': 115,
       calamari: 13,
       shiden: '18446744073709551623',
       astar: '18446744073709551622',
@@ -315,60 +307,6 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
           X2: [
             {Parachain: CHAINS.karura.paraId},
             {GeneralKey: getGeneralKey('0x0081')},
-          ],
-        },
-      },
-    },
-  },
-  para: {
-    id: 'para',
-    symbol: 'PARA',
-    icon: paraIcon,
-    decimals: {default: 12},
-    polkadotAssetId: {
-      parallel: 1,
-      phala: 2,
-    },
-    destChainTransactionFee: {
-      phala: new Decimal('0.064'),
-      parallel: new Decimal('0.0139044'),
-    },
-    existentialDeposit: {parallel: new Decimal('0.01')},
-    location: {
-      polkadot: {
-        parents: 1,
-        interior: {
-          X2: [
-            {Parachain: CHAINS.parallel.paraId},
-            {GeneralKey: getGeneralKey('0x50415241')}, // string "PARA"
-          ],
-        },
-      },
-    },
-  },
-  hko: {
-    id: 'hko',
-    symbol: 'HKO',
-    icon: hkoIcon,
-    decimals: {default: 12},
-    polkadotAssetId: {
-      khala: 7,
-      'parallel-heiko': 0,
-    },
-    destChainTransactionFee: {
-      'parallel-heiko': new Decimal('0.0029'),
-      khala: new Decimal('0.064'),
-    },
-    existentialDeposit: {
-      'parallel-heiko': new Decimal('0.01'),
-    },
-    location: {
-      kusama: {
-        parents: 1,
-        interior: {
-          X2: [
-            {Parachain: CHAINS['parallel-heiko'].paraId},
-            {GeneralKey: getGeneralKey('0x484b4f')}, // string "HKO"
           ],
         },
       },
