@@ -72,13 +72,6 @@ export const BRIDGES: Readonly<Bridge[]> = [
         ],
       },
       {
-        id: 'parallel',
-        assets: [
-          {assetId: 'pha', estimatedTime: '< 1 min', kind: 'phalaXTransfer'},
-          {assetId: 'para', estimatedTime: '< 1 min', kind: 'phalaXTransfer'},
-        ],
-      },
-      {
         id: 'astar',
         assets: [
           {assetId: 'pha', estimatedTime: '< 1 min', kind: 'phalaXTransfer'},
@@ -125,13 +118,6 @@ export const BRIDGES: Readonly<Bridge[]> = [
           {assetId: 'pha', estimatedTime: '< 1 min', kind: 'phalaXTransfer'},
           {assetId: 'bnc', estimatedTime: '< 1 min', kind: 'phalaXTransfer'},
           {assetId: 'zlk', estimatedTime: '< 1 min', kind: 'phalaXTransfer'},
-        ],
-      },
-      {
-        id: 'parallel-heiko',
-        assets: [
-          {assetId: 'pha', estimatedTime: '< 1 min', kind: 'phalaXTransfer'},
-          {assetId: 'hko', estimatedTime: '< 1 min', kind: 'phalaXTransfer'},
         ],
       },
       {
@@ -245,30 +231,6 @@ export const BRIDGES: Readonly<Bridge[]> = [
             kind: 'polkadotXTokens',
             proxy: 'khala',
           },
-        ],
-      },
-    ],
-  },
-  {
-    fromChain: 'parallel',
-    toChains: [
-      {
-        id: 'phala',
-        assets: [
-          {assetId: 'para', estimatedTime: '< 1 min', kind: 'polkadotXTokens'},
-          {assetId: 'pha', estimatedTime: '< 1 min', kind: 'polkadotXTokens'},
-        ],
-      },
-    ],
-  },
-  {
-    fromChain: 'parallel-heiko',
-    toChains: [
-      {
-        id: 'khala',
-        assets: [
-          {assetId: 'hko', estimatedTime: '< 1 min', kind: 'polkadotXTokens'},
-          {assetId: 'pha', estimatedTime: '< 1 min', kind: 'polkadotXTokens'},
         ],
       },
     ],

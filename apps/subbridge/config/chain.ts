@@ -8,8 +8,6 @@ import karuraIcon from '@phala/ui/icons/chain/karura.png'
 import khalaIcon from '@phala/ui/icons/chain/khala.png'
 import moonbeamIcon from '@phala/ui/icons/chain/moonbeam.png'
 import moonriverIcon from '@phala/ui/icons/chain/moonriver.png'
-import parallelIcon from '@phala/ui/icons/chain/parallel.png'
-import parallelHeikoIcon from '@phala/ui/icons/chain/parallel_heiko.png'
 import phalaIcon from '@phala/ui/icons/chain/phala.png'
 import shidenIcon from '@phala/ui/icons/chain/shiden.png'
 import turingIcon from '@phala/ui/icons/chain/turing.png'
@@ -23,8 +21,6 @@ export type SubstrateChainId =
   | 'karura'
   | 'rhala'
   | 'bifrost-kusama'
-  | 'parallel'
-  | 'parallel-heiko'
   | 'basilisk'
   | 'turing'
   | 'calamari'
@@ -245,39 +241,6 @@ export const CHAINS: Readonly<
     explorerURL: 'https://bifrost-kusama.subscan.io',
     relayChain: 'kusama',
     balanceSource: 'tokensPallet',
-  },
-  parallel: {
-    id: 'parallel',
-    name: 'Parallel',
-    kind: 'substrate',
-    icon: parallelIcon,
-    paraId: 2012,
-    endpoint: [
-      'wss://rpc.parallel.fi',
-      'wss://parallel.api.onfinality.io/public-ws',
-    ],
-    ss58Format: 172,
-    nativeAsset: 'para',
-    explorerURL: 'https://parallel.subscan.io/',
-    relayChain: 'polkadot',
-    balanceSource: 'assetsPallet',
-  },
-  'parallel-heiko': {
-    id: 'parallel-heiko',
-    name: 'Parallel Heiko',
-    kind: 'substrate',
-    icon: parallelHeikoIcon,
-    paraId: 2085,
-    endpoint: [
-      'wss://heiko-rpc.parallel.fi',
-      'wss://parallel-heiko.api.onfinality.io/public-ws',
-      'wss://heiko-rpc.dwellir.com',
-    ],
-    ss58Format: 110,
-    nativeAsset: 'hko',
-    explorerURL: 'https://parallel-heiko.subscan.io/',
-    relayChain: 'kusama',
-    balanceSource: 'assetsPallet',
   },
   basilisk: {
     id: 'basilisk',
