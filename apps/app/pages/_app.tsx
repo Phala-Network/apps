@@ -5,7 +5,7 @@ import {createEmotionCache} from '@/lib/createEmotionCache'
 import {globalStyles} from '@/lib/styles'
 import {theme} from '@/lib/theme'
 import {chainAtom} from '@/store/common'
-import {CacheProvider, css, type EmotionCache} from '@emotion/react'
+import {CacheProvider, type EmotionCache} from '@emotion/react'
 import {
   Box,
   CssBaseline,
@@ -65,7 +65,7 @@ const App: FC<MyAppProps> = (props) => {
             <CacheProvider value={emotionCache}>
               <MuiThemeProvider theme={theme}>
                 <CssBaseline />
-                <GlobalStyles styles={css([globalStyles])} />
+                <GlobalStyles styles={[globalStyles]} />
                 <Layout>
                   <Component {...pageProps} />
                   <ZendeskWidget />

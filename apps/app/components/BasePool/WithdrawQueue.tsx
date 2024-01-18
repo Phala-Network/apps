@@ -9,8 +9,17 @@ import {colors} from '@/lib/theme'
 import {subsquidClientAtom} from '@/store/common'
 import Check from '@mui/icons-material/Check'
 import WarningAmber from '@mui/icons-material/WarningAmber'
-import {Box, Paper, Stack, Tooltip, Typography, useTheme} from '@mui/material'
+import {
+  Box,
+  Chip,
+  Paper,
+  Stack,
+  Tooltip,
+  Typography,
+  useTheme,
+} from '@mui/material'
 import {DataGrid, type GridColDef, type GridSortModel} from '@mui/x-data-grid'
+import {polkadotAccountAtom} from '@phala/store'
 import {compactFormat, toCurrency} from '@phala/utils'
 import {
   addDays,
@@ -42,46 +51,9 @@ interface RowModel {
   startTime?: string | null
 }
 
-const columns: Array<GridColDef<RowModel>> = [
-  {
-    field: 'delegator',
-    headerName: 'Delegator',
-    flex: 1,
-    sortable: false,
-    minWidth: 420,
-  },
-  {
-    field: 'value',
-    headerName: 'Value',
-    width: 200,
-    valueFormatter: ({value}) => `${toCurrency(value as number)} PHA`,
-  },
-  {
-    field: 'countdown',
-    headerName: 'Countdown',
-    width: 200,
-    valueGetter: ({row}) => row.startTime != null && new Date(row.startTime),
-    valueFormatter: ({value}) => {
-      const start = new Date()
-      const end = addDays(new Date(value as number), 7)
-      if (isAfter(start, end)) return 'Ended'
-      return formatDuration(intervalToDuration({start, end}), {
-        format: ['days', 'hours', 'minutes'],
-      })
-    },
-  },
-  {
-    field: 'latestWithdrawal',
-    headerName: 'Latest Withdrawal',
-    width: 200,
-    valueGetter: ({row}) => row.startTime != null && new Date(row.startTime),
-    valueFormatter: ({value}) =>
-      addDays(new Date(value as number), 14).toLocaleDateString(),
-  },
-]
-
 const WithdrawQueue: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
   const theme = useTheme()
+  const [account] = useAtom(polkadotAccountAtom)
   const [sortModal, setSortModal] = useState<GridSortModel>([
     {field: 'countdown', sort: 'asc'},
   ])
@@ -106,6 +78,65 @@ const WithdrawQueue: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
       }) ?? []
     )
   }, [data])
+
+  const columns = useMemo<Array<GridColDef<RowModel>>>(
+    () => [
+      {
+        field: 'delegator',
+        headerName: 'Delegator',
+        flex: 1,
+        sortable: false,
+        minWidth: 420,
+        renderCell: ({value}) => {
+          if (value === account?.address) {
+            return (
+              <>
+                {value}
+                <Chip
+                  label="You"
+                  sx={{ml: 1}}
+                  size="small"
+                  color={basePool.kind === 'Vault' ? 'secondary' : 'primary'}
+                />
+              </>
+            )
+          }
+          return value
+        },
+      },
+      {
+        field: 'value',
+        headerName: 'Value',
+        width: 200,
+        valueFormatter: ({value}) => `${toCurrency(value as number)} PHA`,
+      },
+      {
+        field: 'countdown',
+        headerName: 'Countdown',
+        width: 200,
+        valueGetter: ({row}) =>
+          row.startTime != null && new Date(row.startTime),
+        valueFormatter: ({value}) => {
+          const start = new Date()
+          const end = addDays(new Date(value as number), 7)
+          if (isAfter(start, end)) return 'Ended'
+          return formatDuration(intervalToDuration({start, end}), {
+            format: ['days', 'hours', 'minutes'],
+          })
+        },
+      },
+      {
+        field: 'latestWithdrawal',
+        headerName: 'Latest Withdrawal',
+        width: 200,
+        valueGetter: ({row}) =>
+          row.startTime != null && new Date(row.startTime),
+        valueFormatter: ({value}) =>
+          addDays(new Date(value as number), 14).toLocaleDateString(),
+      },
+    ],
+    [account?.address, basePool.kind],
+  )
 
   const gapValue = useMemo(() => {
     const {withdrawingValue, freeValue, releasingValue} = basePool
@@ -273,9 +304,7 @@ const WithdrawQueue: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
         </Stack>
       </Paper>
       <DataGrid
-        components={{
-          NoRowsOverlay: () => <Empty />,
-        }}
+        slots={{noRowsOverlay: () => <Empty />}}
         sx={{
           '&,.MuiDataGrid-columnHeaders,.MuiDataGrid-cell,.MuiDataGrid-footerContainer':
             {borderColor: theme.palette.divider},

@@ -1,7 +1,12 @@
-import {css} from '@mui/material'
-import {barlow, theme} from './theme'
+import {type SerializedStyles} from '@emotion/react'
+import {css, type Theme} from '@mui/material'
+import {barlow} from './theme'
 
-export const globalStyles = css`
+export const globalStyles = (theme: Theme): SerializedStyles => css`
+  * {
+    min-width: 0;
+  }
+
   body {
     min-height: 100vh;
     background-image: linear-gradient(
