@@ -28,6 +28,7 @@ import {useAtom} from 'jotai'
 import {type FC} from 'react'
 import Identity from '../BasePool/Identity'
 import PromiseButton from '../PromiseButton'
+import WrapDecimal from '../WrapDecimal'
 import {type OnAction} from './List'
 
 const HorizonCard: FC<{
@@ -135,7 +136,7 @@ const HorizonCard: FC<{
                 />
 
                 <Typography variant="num5">
-                  {`${toCurrency(profit)} PHA`}
+                  <WrapDecimal>{`${toCurrency(profit)} PHA`}</WrapDecimal>
                 </Typography>
               </Stack>
             </Property>

@@ -45,7 +45,11 @@ const NetworkStats: FC = () => {
     ['circulations', chain],
     async () => {
       const res = await fetch('/api/circulation')
-      return await res.text()
+      if (res.ok) {
+        return await res.text()
+      } else {
+        return null
+      }
     },
   )
   const {data: phalaGlobalStateData} = useGlobalStateQuery(phalaSubsquidClient)

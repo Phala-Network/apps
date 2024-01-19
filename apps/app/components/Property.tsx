@@ -2,6 +2,7 @@ import {type WikiEntry} from '@/assets/wikiData'
 import {Stack, Typography, type SxProps} from '@mui/material'
 import {type FC, type ReactNode} from 'react'
 import WikiButton from './Wiki/Button'
+import WrapDecimal from './WrapDecimal'
 
 const Property: FC<{
   size?: 'large' | 'medium' | 'small'
@@ -22,6 +23,9 @@ const Property: FC<{
       {label}
     </Typography>
   )
+
+  const value = <WrapDecimal>{children}</WrapDecimal>
+
   return (
     <Stack
       sx={sx}
@@ -41,7 +45,7 @@ const Property: FC<{
           component="div"
           whiteSpace="nowrap"
         >
-          {children}
+          {value}
         </Typography>
       )}
       {size === 'medium' && (
@@ -52,7 +56,7 @@ const Property: FC<{
           mt={0.25}
           whiteSpace="nowrap"
         >
-          {children}
+          {value}
         </Typography>
       )}
       {size === 'small' && (
@@ -64,7 +68,7 @@ const Property: FC<{
           whiteSpace="nowrap"
           sx={{wordBreak: 'break-all'}}
         >
-          {children}
+          {value}
         </Typography>
       )}
     </Stack>

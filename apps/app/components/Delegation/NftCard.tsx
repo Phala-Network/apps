@@ -31,6 +31,7 @@ import Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
 import {useRef, useState, type FC} from 'react'
 import Identity from '../BasePool/Identity'
+import WrapDecimal from '../WrapDecimal'
 import {type OnAction} from './List'
 
 const NftCard: FC<{
@@ -133,7 +134,7 @@ const NftCard: FC<{
           </Stack>
         )}
         <Typography variant="num2" mt={1}>
-          {toCurrency(value)}
+          <WrapDecimal>{toCurrency(value)}</WrapDecimal>
           <sub>PHA</sub>
         </Typography>
         {profit != null && (
@@ -151,7 +152,7 @@ const NftCard: FC<{
             />
 
             <Typography variant="num5">
-              {`${toCurrency(profit)} PHA / 24h`}
+              <WrapDecimal>{`${toCurrency(profit)} PHA / 24h`}</WrapDecimal>
             </Typography>
           </Stack>
         )}

@@ -31,6 +31,7 @@ import DelegatorSelect from './DelegatorSelect'
 import PromiseButton from './PromiseButton'
 import Property from './Property'
 import WikiButton from './Wiki/Button'
+import WrapDecimal from './WrapDecimal'
 
 const DelegationDataCard: FC<{
   kind: BasePoolKind
@@ -62,7 +63,7 @@ const DelegationDataCard: FC<{
             ? '-'
             : typeof value === 'string' && (
                 <>
-                  {toCurrency(value)}
+                  <WrapDecimal>{toCurrency(value)}</WrapDecimal>
                   <sub>PHA</sub>
                 </>
               )}
@@ -165,7 +166,7 @@ const DelegationDetailCard: FC<{sx?: SxProps}> = ({sx}) => {
           <Property label="Delegation" wikiEntry="delegation" size="large">
             {typeof totalValue === 'string' ? (
               <>
-                {totalValue}
+                <WrapDecimal>{totalValue}</WrapDecimal>
                 <sub>PHA</sub>
               </>
             ) : (
