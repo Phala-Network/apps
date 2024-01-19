@@ -4,6 +4,8 @@ import {type DelegationCommonFragment} from '@/lib/subsquidQuery'
 import {barlow} from '@/lib/theme'
 import {LoadingButton} from '@mui/lab'
 import {
+  Alert,
+  AlertTitle,
   Button,
   ButtonGroup,
   DialogActions,
@@ -119,7 +121,16 @@ const Withdraw: FC<{
             {`${toCurrency(basePool.freeValue)} PHA`}
           </Property>
         </Stack>
+
+        {delegation.withdrawingShares !== '0' && (
+          <Alert severity="warning" sx={{mt: 2}} icon={false}>
+            <AlertTitle>You have a pending withdrawal</AlertTitle>
+            Submitting a new withdrawal will cancel the pending withdrawal and
+            rejoin the queue.
+          </Alert>
+        )}
       </DialogContent>
+
       <DialogActions>
         <LoadingButton
           loading={loading}

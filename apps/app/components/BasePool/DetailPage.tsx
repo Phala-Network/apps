@@ -345,7 +345,7 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
                   <Stack
                     direction={{xs: 'column', lg: 'row'}}
                     justifyContent="space-between"
-                    alignItems="flex-end"
+                    alignItems={{lg: 'flex-end'}}
                     mr={1}
                   >
                     <Box width="380px">
@@ -355,7 +355,11 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
                         profit={delegationProfit}
                       />
                     </Box>
-                    <Stack spacing={2} direction={{xs: 'row', lg: 'column'}}>
+                    <Stack
+                      spacing={2}
+                      direction={{xs: 'row', lg: 'column'}}
+                      mt={{xs: 2, lg: 0}}
+                    >
                       <WikiButton entry="reclaimPool">
                         <PromiseButton
                           color={color}

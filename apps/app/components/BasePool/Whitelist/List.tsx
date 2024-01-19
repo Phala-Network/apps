@@ -102,7 +102,7 @@ const WhitelistList: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
       </SectionHeader>
       <ThemeProvider theme={isVault ? vaultTheme : theme}>
         <DataGrid
-          components={{NoRowsOverlay: () => <Empty />}}
+          slots={{noRowsOverlay: () => <Empty />}}
           sx={{
             '&,.MuiDataGrid-columnHeaders,.MuiDataGrid-cell,.MuiDataGrid-footerContainer':
               {borderColor: theme.palette.divider},
