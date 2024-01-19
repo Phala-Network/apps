@@ -1,5 +1,6 @@
 import Empty from '@/components/Empty'
 import PageHeader from '@/components/PageHeader'
+import WrapDecimal from '@/components/WrapDecimal'
 import usePolkadotApi from '@/hooks/usePolkadotApi'
 import useSignAndSend from '@/hooks/useSignAndSend'
 import {chainAtom} from '@/store/common'
@@ -300,7 +301,7 @@ const Subsidy: NextPage = () => {
           </Typography>
           <Typography variant="num3">
             {totalRewards != null ? (
-              `${toCurrency(totalRewards)} PHA`
+              <WrapDecimal>{`${toCurrency(totalRewards)} PHA`}</WrapDecimal>
             ) : (
               <Skeleton width={100} />
             )}
@@ -381,7 +382,9 @@ const Subsidy: NextPage = () => {
                   </TableCell>
                   <TableCell>
                     <Typography variant="num5">
-                      {`${toCurrency(row.amount)} PHA`}
+                      <WrapDecimal>
+                        {`${toCurrency(row.amount)} PHA`}
+                      </WrapDecimal>
                     </Typography>
                   </TableCell>
                   <TableCell align="right">

@@ -17,7 +17,7 @@ export const montserrat = Montserrat({
 })
 
 export const barlow = Barlow({
-  weight: ['500', '600', '700'],
+  weight: ['300', '400', '500', '600', '700'],
   subsets: ['latin'],
   display: 'swap',
   fallback: ['Helvetica', 'Arial', 'sans-serif'],
@@ -69,32 +69,32 @@ export const theme = createTheme({
     subtitle2: {fontSize: '0.8rem'},
     num1: {
       fontFamily: barlow.style.fontFamily,
-      fontWeight: 700,
+      fontWeight: 600,
       fontSize: '2rem',
     },
     num2: {
       fontFamily: barlow.style.fontFamily,
-      fontWeight: 700,
+      fontWeight: 600,
       fontSize: '1.5rem',
     },
     num3: {
       fontFamily: barlow.style.fontFamily,
-      fontWeight: 700,
+      fontWeight: 600,
       fontSize: '1.25rem',
     },
     num4: {
       fontFamily: barlow.style.fontFamily,
-      fontWeight: 600,
+      fontWeight: 500,
       fontSize: '1.125rem',
     },
     num5: {
       fontFamily: barlow.style.fontFamily,
-      fontWeight: 600,
+      fontWeight: 500,
       fontSize: '1rem',
     },
     num6: {
       fontFamily: barlow.style.fontFamily,
-      fontWeight: 600,
+      fontWeight: 500,
       fontSize: '0.9rem',
     },
     fontFamily: roboto.style.fontFamily,

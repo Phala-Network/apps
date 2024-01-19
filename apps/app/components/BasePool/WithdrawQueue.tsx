@@ -43,6 +43,7 @@ import {
 import Property from '../Property'
 import CustomRechartsTooltip from '../RechartsTooltip'
 import WikiButton from '../Wiki/Button'
+import WrapDecimal from '../WrapDecimal'
 
 interface RowModel {
   id: string
@@ -108,7 +109,9 @@ const WithdrawQueue: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
         field: 'value',
         headerName: 'Value',
         width: 200,
-        valueFormatter: ({value}) => `${toCurrency(value as number)} PHA`,
+        renderCell: ({value}) => (
+          <WrapDecimal>{`${toCurrency(value as number)} PHA`}</WrapDecimal>
+        ),
       },
       {
         field: 'countdown',

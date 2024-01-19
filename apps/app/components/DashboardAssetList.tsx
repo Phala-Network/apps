@@ -34,6 +34,7 @@ import {useCallback, useState, type FC} from 'react'
 import AssetTransfer from './AssetTransfer'
 import SectionHeader from './SectionHeader'
 import Vest from './Vest'
+import WrapDecimal from './WrapDecimal'
 
 type AssetDialogAction = 'transfer' | 'buy' | 'claim'
 export type Asset = AssetMetadata & {balance: Decimal | undefined | null}
@@ -121,7 +122,9 @@ const AssetLine: FC<{asset: Asset; onAction: OnAction}> = ({
       )}
       <Typography variant="num5" ml="auto" flexShrink={0}>
         {asset.balance != null ? (
-          `${wrapAsset(toCurrency(asset.balance))} ${asset.symbol}`
+          <WrapDecimal>
+            {`${wrapAsset(toCurrency(asset.balance))} ${asset.symbol}`}
+          </WrapDecimal>
         ) : (
           <Skeleton width={32} />
         )}
