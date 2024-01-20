@@ -65,8 +65,7 @@ export const theme = createTheme({
       fontWeight: 500,
       fontSize: '2rem',
     },
-    subtitle1: {fontWeight: 500},
-    subtitle2: {fontSize: '0.8rem'},
+    subtitle2: {fontSize: '0.8rem', fontWeight: 400},
     num1: {
       fontFamily: barlow.style.fontFamily,
       fontWeight: 600,

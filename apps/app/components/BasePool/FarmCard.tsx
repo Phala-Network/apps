@@ -144,15 +144,15 @@ const FarmCard: FC<{
           width={1}
           sx={{
             pl: {xs: 0, md: 1},
-            py: {xs: 0, md: 1},
+            py: {xs: 0, md: 0.5},
           }}
         >
           <Stack direction="row" spacing={2} alignItems="center">
             {stakePool != null && (
-              <StakePoolIcon width={48} color={colors.main[300]} />
+              <StakePoolIcon width={30} color={colors.main[300]} />
             )}
             {vault != null && (
-              <VaultIcon width={48} color={colors.vault[400]} />
+              <VaultIcon width={30} color={colors.vault[400]} />
             )}
             <Box flex="1 0" width={108}>
               <Link

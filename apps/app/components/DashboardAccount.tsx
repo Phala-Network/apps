@@ -29,7 +29,6 @@ import {useRouter} from 'next/router'
 import {useSnackbar} from 'notistack'
 import {type FC} from 'react'
 import WikiButton from './Wiki/Button'
-import WrapDecimal from './WrapDecimal'
 
 const BalanceBox = styled(Box)(({theme}) =>
   theme.unstable_sx({
@@ -168,9 +167,7 @@ const DashboardAccount: FC = () => {
               {account != null ? (
                 freeBalance != null ? (
                   <>
-                    <WrapDecimal>
-                      {wrapAsset(toCurrency(freeBalance))}
-                    </WrapDecimal>
+                    {wrapAsset(toCurrency(freeBalance))}
                     <sub>PHA</sub>
                   </>
                 ) : (
@@ -208,15 +205,13 @@ const DashboardAccount: FC = () => {
                   {account != null ? (
                     accountData != null && wrapped != null ? (
                       <>
-                        <WrapDecimal>
-                          {wrapAsset(
-                            toCurrency(
-                              new Decimal(accountData.vaultValue)
-                                .plus(accountData.stakePoolValue)
-                                .plus(wrapped),
-                            ),
-                          )}
-                        </WrapDecimal>
+                        {wrapAsset(
+                          toCurrency(
+                            new Decimal(accountData.vaultValue)
+                              .plus(accountData.stakePoolValue)
+                              .plus(wrapped),
+                          ),
+                        )}
                         <sub>PHA</sub>
                       </>
                     ) : (
