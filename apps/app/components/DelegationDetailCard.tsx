@@ -63,7 +63,7 @@ const DelegationDataCard: FC<{
             ? '-'
             : typeof value === 'string' && (
                 <>
-                  <WrapDecimal>{toCurrency(value)}</WrapDecimal>
+                  {toCurrency(value)}
                   <sub>PHA</sub>
                 </>
               )}

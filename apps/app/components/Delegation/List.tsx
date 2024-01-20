@@ -201,7 +201,7 @@ const DelegationList: FC<{
         <SectionHeader icon={<NftsIcon />} title="Delegation NFTs" />
       )}
       <Stack direction="row">
-        <Box width={256} display={{xs: 'none', xl: 'block'}}>
+        <Box width={200} display={{xs: 'none', xl: 'block'}}>
           {filters}
         </Box>
         <Box flex="1 0">

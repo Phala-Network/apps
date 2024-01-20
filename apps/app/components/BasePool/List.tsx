@@ -413,7 +413,7 @@ const BasePoolList: FC<{
       <Stack direction="row" sx={sx} alignItems="flex-start" minHeight="100vh">
         {variant === 'delegate' && (
           <Box
-            width={256}
+            width={200}
             display={{xs: 'none', xl: 'block'}}
             position="sticky"
             top="80px"

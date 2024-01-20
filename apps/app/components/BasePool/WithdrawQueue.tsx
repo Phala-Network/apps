@@ -221,24 +221,26 @@ const WithdrawQueue: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
               flexWrap="wrap"
             >
               <Property label="Total Withdraw">
-                {toCurrency(basePool.withdrawingValue)} PHA
+                {`${toCurrency(basePool.withdrawingValue)} PHA`}
               </Property>
               <Typography variant="body1" component="div">
                 -
               </Typography>
               <Property label="Releasing Value">
-                {toCurrency(basePool.releasingValue)} PHA
+                {`${toCurrency(basePool.releasingValue)} PHA`}
               </Property>
               <Typography variant="body1" component="div">
                 -
               </Typography>
               <Property label="Free Value">
-                {toCurrency(basePool.freeValue)} PHA
+                {`${toCurrency(basePool.freeValue)} PHA`}
               </Property>
               <Typography variant="body1" component="div">
                 =
               </Typography>
-              <Property label="Gap Value">{toCurrency(gapValue)} PHA</Property>
+              <Property label="Gap Value">{`${toCurrency(
+                gapValue,
+              )} PHA`}</Property>
             </Stack>
             {criticalTime != null && (
               <Stack direction="row" spacing={1}>

@@ -82,13 +82,13 @@ const HorizonCard: FC<{
     <Paper
       sx={{
         background: colors.cardBackground,
-        py: 2,
-        px: {xs: 2, md: 3},
+        py: 1.5,
+        px: 2,
       }}
     >
-      <Stack direction="row" spacing={2} alignItems="center">
-        <Stack direction="row" spacing={1} alignItems="center">
-          <Box flex="none" width={40} height={40}>
+      <Stack direction="row" spacing={1.5} alignItems="center">
+        <Stack direction="row" spacing={1.5} alignItems="center">
+          <Box flex="none" width={30} height={30}>
             {basePool.kind === 'StakePool' && (
               <StakePoolIcon color={colors.main[300]} />
             )}
@@ -96,7 +96,7 @@ const HorizonCard: FC<{
               <VaultIcon color={colors.vault[400]} />
             )}
           </Box>
-          <Stack flex="1 0" width={140}>
+          <Stack flex="1 0" width={120}>
             <Link
               lineHeight={1.3}
               onClick={(e) => {
@@ -121,7 +121,7 @@ const HorizonCard: FC<{
             wikiEntry="nftValue"
           >{`${toCurrency(value)} PHA`}</Property>
           {profit != null && (
-            <Property label="24h" sx={{width: 120}} wikiEntry="oneDayRewards">
+            <Property label="24h" sx={{width: 100}} wikiEntry="oneDayRewards">
               <Stack
                 direction="row"
                 alignItems="center"
@@ -159,7 +159,7 @@ const HorizonCard: FC<{
           </Property>
           <Property
             label="Pool free"
-            sx={{width: 120}}
+            sx={{width: 100}}
             wikiEntry="freeValue"
           >{`${toCurrency(delegation.basePool.freeValue)} PHA`}</Property>
           {hasWithdrawal && (

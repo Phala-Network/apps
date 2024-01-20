@@ -105,7 +105,6 @@ const FarmChart: FC<{
           width={45}
           type="number"
           dataKey="value"
-          // name={label}
           tickLine={false}
           domain={[0, 'auto']}
           tickFormatter={(value) => compactFormat(value as number, 1)}

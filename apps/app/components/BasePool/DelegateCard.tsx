@@ -81,10 +81,9 @@ const DelegateCard: FC<{
         }}
       >
         <Stack
-          spacing={3}
+          spacing={2}
           direction={{xs: 'column', md: 'row'}}
           alignItems={{xs: 'flex-start', md: 'center'}}
-          py={{xs: 0, md: 0.5}}
           flex={{xs: 1, md: 'none'}}
           pr={{xs: 2, md: 0}}
         >
@@ -103,10 +102,10 @@ const DelegateCard: FC<{
               )}
             </IconButton>
             {stakePool != null && (
-              <StakePoolIcon width={40} color={colors.main[300]} />
+              <StakePoolIcon width={30} color={colors.main[300]} />
             )}
             {vault != null && (
-              <VaultIcon width={40} color={colors.vault[400]} />
+              <VaultIcon width={30} color={colors.vault[400]} />
             )}
             <Stack width={{xs: 'auto', md: 150}} flex="1 0">
               <Link
