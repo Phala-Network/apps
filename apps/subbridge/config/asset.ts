@@ -11,7 +11,6 @@ import movrIcon from '@phala/ui/icons/asset/movr.png'
 import phaIcon from '@phala/ui/icons/asset/pha.png'
 import sdnIcon from '@phala/ui/icons/asset/sdn.png'
 import turIcon from '@phala/ui/icons/asset/tur.png'
-import zlkIcon from '@phala/ui/icons/asset/zlk.png'
 import Decimal from 'decimal.js'
 import {
   CHAINS,
@@ -27,7 +26,6 @@ export type AssetId =
   | 'movr'
   | 'aca'
   | 'kar'
-  | 'zlk'
   | 'bnc'
   | 'ausd'
   | 'bsx'
@@ -206,47 +204,6 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
             {GeneralKey: getGeneralKey('0x0080')},
           ],
         },
-      },
-    },
-  },
-  zlk: {
-    id: 'zlk',
-    symbol: 'ZLK',
-    icon: zlkIcon,
-    polkadotAssetId: {
-      khala: 3,
-      'bifrost-kusama': {Token: 'ZLK'},
-    },
-    destChainTransactionFee: {
-      khala: new Decimal('0.000000016'),
-      'bifrost-kusama': new Decimal('0.0096'),
-    },
-    decimals: {default: 18},
-    erc20TokenContractAddress: {
-      moonriver: '0x0f47ba9d9Bde3442b42175e51d6A367928A1173B',
-    },
-    chainBridgeResourceId:
-      '0x0261dbbb2bbd171398896bc686aa9656e537532fa9fe72fc7666dc2f8dcd2f38',
-    existentialDeposit: {
-      'bifrost-kusama': new Decimal('0.01'),
-    },
-    reservedAddress: {
-      moonriver: '0xf88337a0db6e24Dff0fCD7F92ab0655B97A68d38',
-      khala: '441RSFVuGcTybwYi7NPKAqYzEkDwnGDwLdTYrViNXr8RXVfG',
-    },
-    location: {
-      kusama: {
-        parents: 1,
-        interior: {
-          X2: [
-            {Parachain: CHAINS['bifrost-kusama'].paraId},
-            {GeneralKey: getGeneralKey('0x0207')},
-          ],
-        },
-      },
-      bifrost: {
-        parents: 0,
-        interior: {X1: {GeneralKey: getGeneralKey('0x0207')}},
       },
     },
   },

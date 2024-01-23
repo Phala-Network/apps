@@ -1,9 +1,5 @@
-import {CHAINS} from '@/config/chain'
 import {ethersContractBalanceFetcher} from '@/lib/ethersFetcher'
-import {
-  polkadotBalanceFetcher,
-  polkadotNativeBalanceFetcher,
-} from '@/lib/polkadotFetcher'
+import {polkadotNativeBalanceFetcher} from '@/lib/polkadotFetcher'
 import {
   assetAtom,
   bridgeInfoAtom,
@@ -27,14 +23,7 @@ export const useBridgeLimit = (): Decimal | undefined => {
   const ethereumJsonRpcProvider = useEthersJsonRpcProvider(
     'https://rpc.ankr.com/eth',
   )
-  const moonriverJsonRpcProvider = useEthersJsonRpcProvider(
-    'https://rpc.api.moonriver.moonbeam.network',
-  )
-  const moonriverZlkContract = useEthersAssetContract(
-    moonriverJsonRpcProvider,
-    'moonriver',
-    'zlk',
-  )
+
   const ethereumPhaContract = useEthersAssetContract(
     ethereumJsonRpcProvider,
     'ethereum',
@@ -45,38 +34,10 @@ export const useBridgeLimit = (): Decimal | undefined => {
 
   const hasLimit =
     fromChain.isTest !== true &&
-    (((fromChain.id === 'moonriver' || toChain.id === 'moonriver') &&
-      asset.id === 'zlk') ||
-      bridge.kind === 'evmSygma' ||
+    (bridge.kind === 'evmSygma' ||
       bridge.kind === 'phalaSygma' ||
       (toChain.id === 'ethereum' &&
         (bridge.proxy === 'phala' || bridge.proxy === 'khala')))
-
-  const {data: moonriverReservedZlk} = useSWR(
-    toChain.id === 'moonriver' &&
-      asset.id === 'zlk' &&
-      moonriverZlkContract != null && [
-        moonriverZlkContract,
-        asset.reservedAddress?.moonriver,
-        asset.decimals.moonriver ?? asset.decimals.default,
-      ],
-    ethersContractBalanceFetcher,
-    {refreshInterval},
-  )
-
-  const {data: khalaReservedZlk} = useSWR(
-    khalaApi != null &&
-      fromChain.id === 'moonriver' &&
-      asset.id === 'zlk' && [
-        khalaApi,
-        asset.reservedAddress?.khala,
-        asset.polkadotAssetId?.khala,
-        asset.decimals.khala ?? asset.decimals.default,
-        CHAINS.khala.balanceSource,
-      ],
-    polkadotBalanceFetcher,
-    {refreshInterval},
-  )
 
   const {data: ethereumReservedPha} = useSWR(
     ethereumPhaContract != null &&
@@ -112,10 +73,6 @@ export const useBridgeLimit = (): Decimal | undefined => {
   )
 
   return hasLimit
-    ? moonriverReservedZlk ??
-        khalaReservedZlk ??
-        phalaReservedPha ??
-        khalaReservedPha ??
-        ethereumReservedPha
+    ? phalaReservedPha ?? khalaReservedPha ?? ethereumReservedPha
     : new Decimal(Infinity)
 }

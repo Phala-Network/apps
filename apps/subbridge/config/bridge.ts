@@ -109,7 +109,6 @@ export const BRIDGES: Readonly<Bridge[]> = [
         assets: [
           {assetId: 'pha', estimatedTime: '< 1 min', kind: 'phalaXTransfer'},
           {assetId: 'movr', estimatedTime: '< 1 min', kind: 'phalaXTransfer'},
-          {assetId: 'zlk', estimatedTime: '~ 5 mins', kind: 'phalaXTransfer'},
         ],
       },
       {
@@ -117,7 +116,6 @@ export const BRIDGES: Readonly<Bridge[]> = [
         assets: [
           {assetId: 'pha', estimatedTime: '< 1 min', kind: 'phalaXTransfer'},
           {assetId: 'bnc', estimatedTime: '< 1 min', kind: 'phalaXTransfer'},
-          {assetId: 'zlk', estimatedTime: '< 1 min', kind: 'phalaXTransfer'},
         ],
       },
       {
@@ -195,18 +193,6 @@ export const BRIDGES: Readonly<Bridge[]> = [
         assets: [
           {assetId: 'movr', estimatedTime: '< 1 min', kind: 'evmXTokens'},
           {assetId: 'pha', estimatedTime: '< 1 min', kind: 'evmXTokens'},
-          {assetId: 'zlk', estimatedTime: '< 3 mins', kind: 'evmChainBridge'},
-        ],
-      },
-      {
-        id: 'bifrost-kusama',
-        assets: [
-          {
-            assetId: 'zlk',
-            estimatedTime: '< 3 mins',
-            kind: 'evmChainBridge',
-            proxy: 'khala',
-          },
         ],
       },
     ],
@@ -219,18 +205,6 @@ export const BRIDGES: Readonly<Bridge[]> = [
         assets: [
           {assetId: 'bnc', estimatedTime: '< 1 min', kind: 'polkadotXTokens'},
           {assetId: 'pha', estimatedTime: '< 1 min', kind: 'polkadotXTokens'},
-          {assetId: 'zlk', estimatedTime: '< 1 min', kind: 'polkadotXTokens'},
-        ],
-      },
-      {
-        id: 'moonriver',
-        assets: [
-          {
-            assetId: 'zlk',
-            estimatedTime: '~ 5 mins',
-            kind: 'polkadotXTokens',
-            proxy: 'khala',
-          },
         ],
       },
     ],

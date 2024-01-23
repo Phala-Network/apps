@@ -27,7 +27,6 @@ export const transferByPhalaXTransfer = ({
   const asset = ASSETS[assetId]
   const fromChain = CHAINS[fromChainId] as SubstrateChain
   const toChain = CHAINS[toChainId]
-  const isChainBridge = toChainId === 'moonriver' && assetId === 'zlk'
   const isSygma = kind === 'phalaSygma'
   const generalIndex = toChain.kind === 'evm' ? toChain.generalIndex : null
 
@@ -40,7 +39,7 @@ export const transferByPhalaXTransfer = ({
     throw new Error(`Unsupported asset: ${assetId}`)
   }
 
-  if ((isChainBridge || isSygma) && typeof generalIndex !== 'number') {
+  if (isSygma && typeof generalIndex !== 'number') {
     throw new Error('Transfer missing required parameters')
   }
 
@@ -50,34 +49,33 @@ export const transferByPhalaXTransfer = ({
       fun: {Fungible: amount},
     },
     {
-      parents: isChainBridge || isSygma ? 0 : 1,
-      interior:
-        isChainBridge || isSygma
-          ? {
-              X3: [
-                {
-                  GeneralKey: isSygma
-                    ? getGeneralKey('0x7379676d61') // string "sygma"
-                    : getGeneralKey('0x6362'), // string "cb"
-                },
-                {GeneralIndex: generalIndex},
-                {GeneralKey: getGeneralKey(destinationAccount as Hex)},
-              ],
-            }
-          : {
-              X2: [
-                {Parachain: toChain.paraId},
-                toChain.kind === 'evm'
-                  ? {AccountKey20: {key: destinationAccount}}
-                  : {
-                      AccountId32: {
-                        id: u8aToHex(decodeAddress(destinationAccount)),
-                      },
+      parents: isSygma ? 0 : 1,
+      interior: isSygma
+        ? {
+            X3: [
+              {
+                GeneralKey: isSygma
+                  ? getGeneralKey('0x7379676d61') // string "sygma"
+                  : getGeneralKey('0x6362'), // string "cb"
+              },
+              {GeneralIndex: generalIndex},
+              {GeneralKey: getGeneralKey(destinationAccount as Hex)},
+            ],
+          }
+        : {
+            X2: [
+              {Parachain: toChain.paraId},
+              toChain.kind === 'evm'
+                ? {AccountKey20: {key: destinationAccount}}
+                : {
+                    AccountId32: {
+                      id: u8aToHex(decodeAddress(destinationAccount)),
                     },
-              ],
-            },
+                  },
+            ],
+          },
     },
-    isChainBridge || isSygma
+    isSygma
       ? null // No need to specify a certain weight if transfer will not through XCM
       : {refTime: '6000000000', proofSize: '1000000'},
   )
