@@ -1,16 +1,16 @@
 import {GraphQLClient} from 'graphql-request'
 
 export const KHALA_ENDPOINTS = [
-  'wss://khala-rpc.dwellir.com',
   'wss://khala-api.phala.network/ws',
+  'wss://khala-rpc.dwellir.com',
   'wss://khala.api.onfinality.io/public-ws',
 ]
 export const KHALA_SUBSQUID_URL =
   'https://subsquid.phala.network/khala-computation/graphql'
 export const khalaSubsquidClient = new GraphQLClient(KHALA_SUBSQUID_URL)
 export const PHALA_ENDPOINTS = [
-  'wss://phala-rpc.dwellir.com',
   'wss://api.phala.network/ws',
+  'wss://phala-rpc.dwellir.com',
   'wss://phala.api.onfinality.io/public-ws',
 ]
 export const PHALA_SUBSQUID_URL =

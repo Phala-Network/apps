@@ -13,7 +13,6 @@ import {useEthersWeb3Provider} from './useEthersProvider'
 import {useCurrentPolkadotApi, usePolkadotApi} from './usePolkadotApi'
 
 const ALICE = '5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY'
-const zlkChainBridgeFee = new Decimal('0.25')
 
 export const useBridgeFee = (): Decimal | undefined => {
   const fromChain = useAtomValue(fromChainAtom)
@@ -24,10 +23,6 @@ export const useBridgeFee = (): Decimal | undefined => {
   const phalaApi = usePolkadotApi('phala')
   const provider = useEthersWeb3Provider()
   const evmAccount = useAtomValue(evmAccountAtom)
-  const isTransferringZlkProxiedByChainBridge =
-    fromChain.kind === 'substrate' &&
-    toChain.kind === 'evm' &&
-    asset.id === 'zlk'
 
   const isProxiedByPhalaSygma =
     bridge.proxy === 'phala' && toChain.id === 'ethereum'
@@ -93,10 +88,6 @@ export const useBridgeFee = (): Decimal | undefined => {
 
   if (bridge.kind === 'evmSygma') {
     return evmSygmaFee
-  }
-
-  if (isTransferringZlkProxiedByChainBridge) {
-    return zlkChainBridgeFee
   }
 
   return new Decimal(0)
