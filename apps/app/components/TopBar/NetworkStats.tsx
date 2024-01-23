@@ -46,7 +46,11 @@ const NetworkStats: FC = () => {
     async () => {
       const res = await fetch('/api/circulation')
       if (res.ok) {
-        return await res.text()
+        try {
+          return new Decimal(await res.text())
+        } catch (error) {
+          return null
+        }
       } else {
         return null
       }
