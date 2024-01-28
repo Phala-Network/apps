@@ -77,8 +77,8 @@ export const CHAINS: Readonly<
     icon: phalaIcon,
     kind: 'substrate',
     endpoint: [
-      'wss://api.phala.network/ws',
       'wss://phala-rpc.dwellir.com',
+      'wss://api.phala.network/ws',
       'wss://phala.api.onfinality.io/public-ws',
     ],
     ss58Format: 30,
@@ -95,8 +95,8 @@ export const CHAINS: Readonly<
     icon: khalaIcon,
     kind: 'substrate',
     endpoint: [
-      'wss://khala-api.phala.network/ws',
       'wss://khala-rpc.dwellir.com',
+      'wss://khala-api.phala.network/ws',
       'wss://khala.api.onfinality.io/public-ws',
     ],
     ss58Format: 30,
