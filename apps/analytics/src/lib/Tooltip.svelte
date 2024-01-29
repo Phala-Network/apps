@@ -42,7 +42,7 @@
         on:mouseenter={onmouseenter(open)}
         on:mouseleave={onmouseleave(open, close)}
       >
-        {title ?? ''}
+        {@html title ?? ''}
       </PopoverPanel>
     </div>
   {/if}

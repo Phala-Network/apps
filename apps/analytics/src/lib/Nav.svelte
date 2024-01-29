@@ -29,7 +29,7 @@
     class="absolute top-1 left-1 h-12 font-black font-montserrat text-base"
   >
     <MenuButton class="flex items-center bg-black/20 rounded-full pr-4">
-      <img class="block w-12 mr-4" src="logo.svg" alt="Phala logo" />
+      <img class="block w-12 h-12 mr-4" src="logo.svg" alt="Phala logo" />
       <h1>Analytics</h1>
       <ChevronDownIcon class="w-5 h-5 ml-8 text-gray-600" aria-hidden="true" />
     </MenuButton>
@@ -52,7 +52,12 @@
     {/if}
   </Menu>
 
-  <ul class="font-montserrat hidden md:block text-sm">
-    <li>Overview</li>
+  <ul class="font-montserrat hidden md:flex text-sm gap-8">
+    <li>
+      <a href="/">Overview</a>
+    </li>
+    <li>
+      <a href="/token">Token</a>
+    </li>
   </ul>
 </nav>

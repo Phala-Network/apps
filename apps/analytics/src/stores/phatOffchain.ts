@@ -36,4 +36,7 @@ const fetchPhatOffchainData = async () => {
 }
 
 export const getPhatOffchainData = () =>
-  createQuery(['phatContractOffchain'], fetchPhatOffchainData)
+  createQuery({
+    queryKey: ['phatContractOffchain'],
+    queryFn: fetchPhatOffchainData,
+  })
