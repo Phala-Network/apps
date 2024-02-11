@@ -1,4 +1,4 @@
-import {type AssetId, ASSETS} from '@/config/asset'
+import {ASSETS, type AssetId} from '@/config/asset'
 import {assetAtom} from '@/store/bridge'
 import {
   Box,

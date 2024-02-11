@@ -334,6 +334,16 @@ declare module '@polkadot/api-base/types/consts' {
        **/
       [key: string]: Codec;
     };
+    palletIndex: {
+      /**
+       * Fee reserve account
+       **/
+      feeReserveAccount: AccountId32 & AugmentedConst<ApiType>;
+      /**
+       * Generic const
+       **/
+      [key: string]: Codec;
+    };
     phalaRegistry: {
       /**
        * Enable None Attestation, SHOULD BE SET TO FALSE ON PRODUCTION !!!

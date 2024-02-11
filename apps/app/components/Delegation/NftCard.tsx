@@ -14,7 +14,6 @@ import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp'
 import MoreVert from '@mui/icons-material/MoreVert'
 import {
   Alert,
-  alpha,
   Box,
   IconButton,
   Link,
@@ -24,12 +23,13 @@ import {
   Skeleton,
   Stack,
   Typography,
+  alpha,
   useTheme,
 } from '@mui/material'
-import {toCurrency, toPercentage} from '@phala/utils'
+import {toCurrency, toPercentage} from '@phala/lib'
 import Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
-import {useRef, useState, type FC} from 'react'
+import {type FC, useRef, useState} from 'react'
 import Identity from '../BasePool/Identity'
 import WrapDecimal from '../WrapDecimal'
 import {type OnAction} from './List'

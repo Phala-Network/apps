@@ -8,13 +8,13 @@ import {
   DialogTitle,
   TextField,
 } from '@mui/material'
+import {validateAddress} from '@phala/lib'
 import {polkadotAccountAtom} from '@phala/store'
-import {validateAddress} from '@phala/utils'
 import {type SubmittableExtrinsic} from '@polkadot/api/types'
 import {type ISubmittableResult} from '@polkadot/types/types'
 import Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
-import {useMemo, useState, type FC} from 'react'
+import {type FC, useMemo, useState} from 'react'
 
 interface ClaimablePool {
   id: string

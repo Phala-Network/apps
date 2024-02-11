@@ -5,12 +5,12 @@ import useGetAprMultiplier from '@/hooks/useGetAprMultiplier'
 import useSelectedVaultState from '@/hooks/useSelectedVaultState'
 import fixBasePoolFree from '@/lib/fixBasePoolFree'
 import {
-  IdentityLevel,
-  useInfiniteBasePoolsConnectionQuery,
   type BasePoolCommonFragment,
   type BasePoolKind,
   type BasePoolOrderByInput,
   type BasePoolWhereInput,
+  IdentityLevel,
+  useInfiniteBasePoolsConnectionQuery,
 } from '@/lib/subsquidQuery'
 import {barlow} from '@/lib/theme'
 import {
@@ -33,15 +33,15 @@ import {
   MenuItem,
   NoSsr,
   Stack,
+  type SxProps,
   TextField,
   Typography,
-  type SxProps,
 } from '@mui/material'
+import {getDecimalPattern} from '@phala/lib'
 import {polkadotAccountAtom} from '@phala/store'
-import {getDecimalPattern} from '@phala/utils'
 import {useAtom} from 'jotai'
 import {create} from 'mutative'
-import {useCallback, useEffect, useState, type FC} from 'react'
+import {type FC, useCallback, useEffect, useState} from 'react'
 import {useInView} from 'react-intersection-observer'
 import WikiButton from '../Wiki/Button'
 import ClaimDelegation from './ClaimDelegation'

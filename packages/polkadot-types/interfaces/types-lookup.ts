@@ -3132,6 +3132,7 @@ declare module '@polkadot/types/lookup' {
     readonly isClaimed: boolean;
     readonly asClaimed: {
       readonly tasks: Vec<U8aFixed>;
+      readonly fee: u128;
     } & Struct;
     readonly type: 'WorkerAdd' | 'WorkerRemove' | 'NewTask' | 'Claimed';
   }
@@ -5905,9 +5906,9 @@ declare module '@polkadot/types/lookup' {
     readonly isClaimTask: boolean;
     readonly asClaimTask: {
       readonly taskId: U8aFixed;
+      readonly fee: u128;
     } & Struct;
-    readonly isClaimAllTask: boolean;
-    readonly type: 'ForceAddWorker' | 'ForceRemoveWorker' | 'DepositTask' | 'ClaimTask' | 'ClaimAllTask';
+    readonly type: 'ForceAddWorker' | 'ForceRemoveWorker' | 'DepositTask' | 'ClaimTask';
   }
 
   /** @name PhalaParachainRuntimeOriginCaller (383) */
@@ -7678,7 +7679,8 @@ declare module '@polkadot/types/lookup' {
     readonly isNotFoundInTaskQueue: boolean;
     readonly isTaskQueueEmpty: boolean;
     readonly isTransactFailed: boolean;
-    readonly type: 'AssetNotFound' | 'WorkerAlreadySet' | 'WorkerNotSet' | 'WorkerMismatch' | 'TaskAlreadyExist' | 'NotFoundInTaskQueue' | 'TaskQueueEmpty' | 'TransactFailed';
+    readonly isFeeTooExpensive: boolean;
+    readonly type: 'AssetNotFound' | 'WorkerAlreadySet' | 'WorkerNotSet' | 'WorkerMismatch' | 'TaskAlreadyExist' | 'NotFoundInTaskQueue' | 'TaskQueueEmpty' | 'TransactFailed' | 'FeeTooExpensive';
   }
 
   /** @name SpRuntimeMultiSignature (696) */

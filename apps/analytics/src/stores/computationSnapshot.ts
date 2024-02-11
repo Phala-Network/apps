@@ -1,4 +1,4 @@
-import {weightedAverage} from '@phala/utils'
+import {weightedAverage} from '@phala/lib'
 import {createQuery} from '@tanstack/svelte-query'
 import {addDays, addHours, isBefore, isEqual} from 'date-fns'
 import Decimal from 'decimal.js'

@@ -1,13 +1,13 @@
 import usePolkadotApi from '@/hooks/usePolkadotApi'
 import {useGlobalStateQuery} from '@/lib/subsquidQuery'
 import {colors, montserrat} from '@/lib/theme'
-import {chainAtom, subsquidClientAtom, type Chain} from '@/store/common'
+import {type Chain, chainAtom, subsquidClientAtom} from '@/store/common'
 import CircleIcon from '@mui/icons-material/Circle'
 import {MenuItem, Select, Stack, Tooltip} from '@mui/material'
-import {toCurrency} from '@phala/utils'
+import {toCurrency} from '@phala/lib'
 import {useQuery} from '@tanstack/react-query'
 import {useAtom} from 'jotai'
-import {useMemo, type FC} from 'react'
+import {type FC, useMemo} from 'react'
 import Property from '../Property'
 
 const ChainSelect: FC = () => {

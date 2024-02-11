@@ -1,6 +1,0 @@
-#!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
-
-export PATH="$PATH:/opt/homebrew/bin"
-
-npm run lint

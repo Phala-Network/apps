@@ -626,13 +626,9 @@ declare module '@polkadot/api-base/types/submittable' {
     };
     palletIndex: {
       /**
-       * See [`Pallet::claim_all_task`].
-       **/
-      claimAllTask: AugmentedSubmittable<() => SubmittableExtrinsic<ApiType>, []>;
-      /**
        * See [`Pallet::claim_task`].
        **/
-      claimTask: AugmentedSubmittable<(taskId: U8aFixed | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [U8aFixed]>;
+      claimTask: AugmentedSubmittable<(taskId: U8aFixed | string | Uint8Array, fee: u128 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [U8aFixed, u128]>;
       /**
        * See [`Pallet::deposit_task`].
        **/

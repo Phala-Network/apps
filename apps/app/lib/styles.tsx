@@ -1,5 +1,5 @@
 import {type SerializedStyles} from '@emotion/react'
-import {css, type Theme} from '@mui/material'
+import {type Theme, css} from '@mui/material'
 import {barlow} from './theme'
 
 export const globalStyles = (theme: Theme): SerializedStyles => css`

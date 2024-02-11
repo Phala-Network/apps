@@ -4,14 +4,14 @@ import {polkadotWalletModalOpenAtom} from '@/store/polkadotWalletModal'
 import {LoadingButton} from '@mui/lab'
 import {
   Button,
+  type ButtonProps,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
-  type ButtonProps,
 } from '@mui/material'
 import {useAtom} from 'jotai'
-import {useState, type FC} from 'react'
+import {type FC, useState} from 'react'
 
 const ConnectEvmWalletButton: FC<ButtonProps> = (props) => {
   const [open, setOpen] = useState(false)

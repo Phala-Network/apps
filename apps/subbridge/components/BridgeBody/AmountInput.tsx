@@ -10,14 +10,14 @@ import {isWalletConnectAtom} from '@/store/common'
 import {isNetworkWrongAtom} from '@/store/ethers'
 import {
   Box,
+  type InputProps,
   Link,
   Skeleton,
   TextField,
   Typography,
-  type InputProps,
 } from '@mui/material'
 import {type BoxProps} from '@mui/system'
-import {toCurrency} from '@phala/utils'
+import {toCurrency} from '@phala/lib'
 import {useAtom} from 'jotai'
 import {type FC} from 'react'
 

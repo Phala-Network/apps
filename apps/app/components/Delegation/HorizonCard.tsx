@@ -11,7 +11,6 @@ import {colors} from '@/lib/theme'
 import {chainAtom} from '@/store/common'
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp'
 import {
-  alpha,
   Box,
   Button,
   Chip,
@@ -20,9 +19,10 @@ import {
   Skeleton,
   Stack,
   Typography,
+  alpha,
   useTheme,
 } from '@mui/material'
-import {toCurrency, toPercentage} from '@phala/utils'
+import {toCurrency, toPercentage} from '@phala/lib'
 import type Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
 import {type FC} from 'react'

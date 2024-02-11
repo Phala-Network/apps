@@ -3,7 +3,7 @@ import {type ApiPromise} from '@polkadot/api'
 import {hexStripPrefix, u8aToHex} from '@polkadot/util'
 import {decodeAddress} from '@polkadot/util-crypto'
 import Decimal from 'decimal.js'
-import {ethers, type BigNumber} from 'ethers'
+import {type BigNumber, ethers} from 'ethers'
 import {createChainBridgeData} from './transferByChainBridge'
 
 export const ethersBalanceFetcher = async ([provider, address]: [

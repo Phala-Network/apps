@@ -14,9 +14,9 @@ import {
 } from '@/store/bridge'
 import {evmAccountAtom} from '@/store/ethers'
 import {type DepositEvent} from '@buildwithsygma/sygma-contracts/dist/ethers/Bridge'
+import {type ExtrinsicResult, waitSignAndSend} from '@phala/lib'
 import {polkadotAccountAtom} from '@phala/store'
-import {waitSignAndSend, type ExtrinsicResult} from '@phala/utils'
-import {ethers, type ContractTransaction} from 'ethers'
+import {type ContractTransaction, ethers} from 'ethers'
 import {useAtomValue} from 'jotai'
 import {useMemo} from 'react'
 import {

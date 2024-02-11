@@ -1,5 +1,4 @@
-import {Skeleton, Stack} from '@mui/material'
-import {type StackProps} from '@mui/system'
+import {Skeleton, Stack, StackProps} from '@mui/material'
 import {type FC} from 'react'
 
 const TextSkeleton: FC<StackProps> = (props) => {

@@ -2,9 +2,9 @@ import {type WikiEntry} from '@/assets/wikiData'
 import Property from '@/components/Property'
 import {type BasePoolCommonFragment} from '@/lib/subsquidQuery'
 import {Box, Stack, type SxProps} from '@mui/material'
-import {toCurrency, toPercentage} from '@phala/utils'
+import {toCurrency, toPercentage} from '@phala/lib'
 import Decimal from 'decimal.js'
-import {useMemo, type FC, type ReactNode} from 'react'
+import {type FC, type ReactNode, useMemo} from 'react'
 
 const ExtraProperties: FC<{basePool: BasePoolCommonFragment; sx?: SxProps}> = ({
   basePool,

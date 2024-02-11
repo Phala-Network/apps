@@ -1,5 +1,5 @@
 import {type WikiEntry} from '@/assets/wikiData'
-import {Stack, Typography, type SxProps} from '@mui/material'
+import {Stack, type SxProps, Typography} from '@mui/material'
 import {type FC, type ReactNode} from 'react'
 import WikiButton from './Wiki/Button'
 import WrapDecimal from './WrapDecimal'

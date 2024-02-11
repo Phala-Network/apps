@@ -1,21 +1,16 @@
 {
-  "name": "@phala/utils",
+  "name": "@phala/lib",
   "version": "0.0.1",
   "sideEffects": false,
   "type": "module",
   "main": "src/index.ts",
   "scripts": {
-    "check": "tsc --project ./tsconfig.json --noEmit",
-    "lint": "eslint --cache --ext .ts,.tsx src",
-    "lint:fix": "eslint --fix --cache --ext .ts,.tsx src"
+    "check": "tsc --project ./tsconfig.json --noEmit"
   },
   "dependencies": {
     "@polkadot/keyring": "^12.6.2",
     "@polkadot/util": "^12.6.2",
     "decimal.js": "^10.4.3"
-  },
-  "devDependencies": {
-    "@phala/eslint-config": "workspace:*"
   },
   "peerDependencies": {
     "@phala/store": "workspace:*",

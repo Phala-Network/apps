@@ -7,7 +7,7 @@ import {
   DialogTitle,
   TextField,
 } from '@mui/material'
-import {useMemo, useState, type FC} from 'react'
+import {type FC, useMemo, useState} from 'react'
 
 const AddWorker: FC<{
   pid: string

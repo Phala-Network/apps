@@ -16,7 +16,6 @@ import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
-  alpha,
   Box,
   Chip,
   IconButton,
@@ -24,10 +23,11 @@ import {
   Skeleton,
   Stack,
   Typography,
+  alpha,
   useTheme,
 } from '@mui/material'
+import {toCurrency, toPercentage} from '@phala/lib'
 import {polkadotAccountAtom} from '@phala/store'
-import {toCurrency, toPercentage} from '@phala/utils'
 import {useAtom} from 'jotai'
 import {type FC} from 'react'
 import BasePoolChart from './Chart'

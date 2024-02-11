@@ -7,12 +7,12 @@ import useDebounced from '@/hooks/useDebounced'
 import usePolkadotApi from '@/hooks/usePolkadotApi'
 import useSignAndSend from '@/hooks/useSignAndSend'
 import {
-  useReclaimableWorkersConnectionQuery,
-  useWorkersConnectionQuery,
   type BasePoolCommonFragment,
   type WorkerOrderByInput,
   type WorkerState,
   type WorkersConnectionQuery,
+  useReclaimableWorkersConnectionQuery,
+  useWorkersConnectionQuery,
 } from '@/lib/subsquidQuery'
 import {subsquidClientAtom} from '@/store/common'
 import Search from '@mui/icons-material/Search'
@@ -27,7 +27,7 @@ import {
 import {polkadotAccountAtom} from '@phala/store'
 import {addDays} from 'date-fns'
 import {useAtom} from 'jotai'
-import {useCallback, useEffect, useState, type FC} from 'react'
+import {type FC, useCallback, useEffect, useState} from 'react'
 import AddWorker from './AddWorker'
 import WorkerCard from './Card'
 import ChangeStake from './ChangeStake'

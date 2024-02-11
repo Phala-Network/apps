@@ -3,11 +3,11 @@ import {
   Box,
   MenuItem,
   TextField,
+  type TextFieldProps,
   Typography,
   useTheme,
-  type TextFieldProps,
 } from '@mui/material'
-import {useEffect, type FC} from 'react'
+import {type FC, useEffect} from 'react'
 
 const shouldShowTest =
   process.env.NODE_ENV === 'development' ||

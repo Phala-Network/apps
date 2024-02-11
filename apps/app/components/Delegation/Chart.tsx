@@ -1,16 +1,16 @@
 import useSWRValue from '@/hooks/useSWRValue'
 import getDelegationProfit from '@/lib/getDelegationProfit'
 import {
-  useDelegationSnapshotsConnectionQuery,
   type DelegationCommonFragment,
+  useDelegationSnapshotsConnectionQuery,
 } from '@/lib/subsquidQuery'
 import {colors} from '@/lib/theme'
 import {subsquidClientAtom} from '@/store/common'
-import {compactFormat} from '@phala/utils'
+import {compactFormat} from '@phala/lib'
 import {addDays} from 'date-fns'
 import Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
-import {useMemo, type FC} from 'react'
+import {type FC, useMemo} from 'react'
 import {
   Bar,
   ComposedChart,

@@ -10,16 +10,7 @@
         ".svelte-kit/**",
         ".vercel/**"
       ],
-      "env": ["CONTEXT", "NODE_ENV", "VERCEL_ENV"]
-    },
-    "lint": {
-      "outputs": [],
-      "inputs": ["./**", "../../.prettierrc", "../../packages/eslint-config/**"]
-    },
-    "lint:fix": {
-      "outputs": [],
-      "inputs": ["./**", "../../.prettierrc", "../../packages/eslint-config/**"]
-    },
-    "check": {"outputs": []}
+      "env": ["NODE_ENV", "VERCEL_ENV"]
+    }
   }
 }

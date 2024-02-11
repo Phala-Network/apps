@@ -1,17 +1,19 @@
-import type {ApiPromise} from '@polkadot/api'
-import type {ApiOptions} from '@polkadot/api/types'
+import {type ApiPromise} from '@polkadot/api'
+import {type ApiOptions} from '@polkadot/api/types'
+import {type HexString} from '@polkadot/util/types'
 
 export const createPolkadotApi = async (
   endpoint: string,
   options?: ApiOptions,
 ): Promise<ApiPromise> => {
-  let metadata
-  try {
-    const url = `https://phala.network/api/rpc-metadata?rpc=${endpoint}`
-    metadata = (await fetch(url).then(
-      async (res) => await res.json(),
-    )) as Record<string, `0x${string}`>
-  } catch (err) {}
+  const metadata = await fetch(
+    `https://phala.network/api/rpc-metadata?rpc=${endpoint}`,
+  ).then(
+    (res) => res.json() as unknown as Record<string, HexString>,
+    () => {
+      return undefined
+    },
+  )
   const {ApiPromise, WsProvider, HttpProvider} = await import('@polkadot/api')
   const provider = endpoint.startsWith('ws')
     ? new WsProvider(endpoint)

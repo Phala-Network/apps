@@ -1,5 +1,5 @@
 import {Box} from '@mui/material'
-import {useMemo, type FC, type ReactNode} from 'react'
+import {type FC, type ReactNode, useMemo} from 'react'
 
 const regex = /(\d+\.\d+)/g
 const WrapDecimal: FC<{children: ReactNode}> = ({children}) => {

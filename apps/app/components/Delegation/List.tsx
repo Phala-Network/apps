@@ -7,11 +7,11 @@ import useSWRValue from '@/hooks/useSWRValue'
 import fixBasePoolFree from '@/lib/fixBasePoolFree'
 import getDelegationProfit from '@/lib/getDelegationProfit'
 import {
-  useInfiniteDelegationsConnectionQuery,
   type BasePoolKind,
   type DelegationCommonFragment,
   type DelegationOrderByInput,
   type DelegationWhereInput,
+  useInfiniteDelegationsConnectionQuery,
 } from '@/lib/subsquidQuery'
 import {subsquidClientAtom} from '@/store/common'
 import FilterList from '@mui/icons-material/FilterList'
@@ -24,7 +24,6 @@ import {
   Dialog,
   Drawer,
   FormControlLabel,
-  Unstable_Grid2 as Grid,
   IconButton,
   MenuItem,
   NoSsr,
@@ -34,12 +33,13 @@ import {
   ToggleButton,
   ToggleButtonGroup,
   Typography,
+  Unstable_Grid2 as Grid,
 } from '@mui/material'
 import {addDays} from 'date-fns'
 import Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
 import {create} from 'mutative'
-import {useCallback, useEffect, useState, type FC} from 'react'
+import {type FC, useCallback, useEffect, useState} from 'react'
 import {useInView} from 'react-intersection-observer'
 import HorizonCard from './HorizonCard'
 import NftCard from './NftCard'

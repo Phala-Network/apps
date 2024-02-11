@@ -10,6 +10,7 @@ import {
   Backdrop,
   Box,
   Button,
+  type ButtonProps,
   Collapse,
   Divider,
   IconButton,
@@ -18,11 +19,10 @@ import {
   Toolbar,
   Tooltip,
   useTheme,
-  type ButtonProps,
 } from '@mui/material'
 import {useAtom} from 'jotai'
 import NextLink from 'next/link'
-import {useState, type FC} from 'react'
+import {type FC, useState} from 'react'
 import Account from './Account'
 import ChainSelect from './Chain'
 import NetworkStats from './NetworkStats'

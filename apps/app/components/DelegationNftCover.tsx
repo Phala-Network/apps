@@ -1,7 +1,7 @@
 import {type BasePoolKind} from '@/lib/subsquidQuery'
 import {addMonths, addWeeks, addYears, isBefore} from 'date-fns'
 import Decimal from 'decimal.js'
-import {useMemo, useRef, useState, type FC} from 'react'
+import {type FC, useMemo, useRef, useState} from 'react'
 
 type CoverVariant = 'dashboard' | 'delegation'
 

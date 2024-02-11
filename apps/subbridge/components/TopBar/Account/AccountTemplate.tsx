@@ -1,9 +1,9 @@
 import {
   Button,
+  type ButtonProps as MuiButtonProps,
   Paper,
   Skeleton,
   Typography,
-  type ButtonProps as MuiButtonProps,
 } from '@mui/material'
 import {type FC, type ReactNode} from 'react'
 

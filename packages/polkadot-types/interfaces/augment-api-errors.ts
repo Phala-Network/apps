@@ -741,6 +741,7 @@ declare module '@polkadot/api-base/types/errors' {
     };
     palletIndex: {
       AssetNotFound: AugmentedError<ApiType>;
+      FeeTooExpensive: AugmentedError<ApiType>;
       NotFoundInTaskQueue: AugmentedError<ApiType>;
       TaskAlreadyExist: AugmentedError<ApiType>;
       TaskQueueEmpty: AugmentedError<ApiType>;

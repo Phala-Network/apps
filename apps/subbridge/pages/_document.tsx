@@ -17,7 +17,7 @@ export default class MyDocument extends Document {
           />
           <link rel="manifest" href="/site.webmanifest" />
 
-          {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+          {/* biome-ignore lint/suspicious/noExplicitAny: <explanation> */}
           {(this.props as any).emotionStyleTags}
         </Head>
         <body>
@@ -61,12 +61,11 @@ MyDocument.getInitialProps = async (ctx) => {
   // You can consider sharing the same emotion cache between all the SSR requests to speed up performance.
   // However, be aware that it can have global side effects.
   const cache = createEmotionCache()
-  // eslint-disable-next-line @typescript-eslint/unbound-method
   const {extractCriticalToChunks} = createEmotionServer(cache)
 
   ctx.renderPage = async () =>
     await originalRenderPage({
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // biome-ignore lint/suspicious/noExplicitAny: <explanation>
       enhanceApp: (App: any) =>
         function EnhanceApp(props) {
           return <App emotionCache={cache} {...props} />
@@ -81,7 +80,7 @@ MyDocument.getInitialProps = async (ctx) => {
     <style
       data-emotion={`${style.key} ${style.ids.join(' ')}`}
       key={style.key}
-      // eslint-disable-next-line react/no-danger
+      // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
       dangerouslySetInnerHTML={{__html: style.css}}
     />
   ))

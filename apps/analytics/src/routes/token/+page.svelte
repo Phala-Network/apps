@@ -1,5 +1,5 @@
 <script lang="ts">
-  import {toCurrency, toPercentage} from '@phala/utils'
+  import {toCurrency, toPercentage} from '@phala/lib'
   import Decimal from 'decimal.js'
   import {Bar} from 'svelte-chartjs'
   import {derived} from 'svelte/store'
@@ -23,12 +23,25 @@
         khalaMiningRewards,
         ethereumMiningRewards,
       } = circulation
-      circulatingSupply = `${toCurrency(new Decimal(totalCirculation), 0)} <sub>PHA</sub>`
+      circulatingSupply = `${toCurrency(
+        new Decimal(totalCirculation),
+        0
+      )} <sub>PHA</sub>`
       percentage =
         toPercentage(new Decimal(totalCirculation).div(totalSupply)) ?? ''
 
-      crowdloanRewards = `${toCurrency(Decimal.sum(phalaCrowdloan, khalaCrowdloan), 0)} PHA`
-      computationRewards = `${toCurrency(Decimal.sum(phalaMiningRewards, khalaMiningRewards, ethereumMiningRewards), 0)} PHA`
+      crowdloanRewards = `${toCurrency(
+        Decimal.sum(phalaCrowdloan, khalaCrowdloan),
+        0
+      )} PHA`
+      computationRewards = `${toCurrency(
+        Decimal.sum(
+          phalaMiningRewards,
+          khalaMiningRewards,
+          ethereumMiningRewards
+        ),
+        0
+      )} PHA`
     }
 
     return [

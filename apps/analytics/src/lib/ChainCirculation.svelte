@@ -1,5 +1,5 @@
 <script lang="ts">
-  import {toCurrency, toPercentage} from '@phala/utils'
+  import {toCurrency, toPercentage} from '@phala/lib'
   import Decimal from 'decimal.js'
   import {derived} from 'svelte/store'
   import {getCirculation} from '~/stores/circulation'
@@ -36,10 +36,16 @@
         } = circulation
         let percentage =
           toPercentage(
-            new Decimal(ethereumCirculation).div(totalCirculation),
+            new Decimal(ethereumCirculation).div(totalCirculation)
           ) ?? ''
-        circulatingSupply = `${percentage} / ${toCurrency(new Decimal(ethereumCirculation), 0)} PHA`
-        sygmaBridgeLocked = `${toCurrency(new Decimal(ethereumSygmaBridge), 0)} PHA`
+        circulatingSupply = `${percentage} / ${toCurrency(
+          new Decimal(ethereumCirculation),
+          0
+        )} PHA`
+        sygmaBridgeLocked = `${toCurrency(
+          new Decimal(ethereumSygmaBridge),
+          0
+        )} PHA`
         totalSupply = `${toCurrency(new Decimal(ethereumTotalSupply), 0)} PHA`
       }
       return [
@@ -71,16 +77,16 @@
           ''
         circulatingSupply = `${percentage} / ${toCurrency(
           new Decimal(phalaCirculation),
-          0,
+          0
         )} PHA`
         sygmaBridgeLocked = `${toCurrency(
           new Decimal(phalaSygmaBridge),
-          0,
+          0
         )} PHA`
         crowdloanLocked = `${toCurrency(new Decimal(phalaCrowdloan), 0)} PHA`
         computationLocked = `${toCurrency(
           new Decimal(phalaMiningRewards),
-          0,
+          0
         )} PHA`
         totalIssuance = `${toCurrency(new Decimal(phalaTotalIssuance), 0)} PHA`
       }
@@ -121,15 +127,15 @@
           ''
         circulatingSupply = `${percentage} / ${toCurrency(
           new Decimal(khalaCirculation),
-          0,
+          0
         )} PHA`
         sygmaBridgeLocked = `${toCurrency(
           new Decimal(khalaSygmaBridge),
-          0,
+          0
         )} PHA`
         computationLocked = `${toCurrency(
           new Decimal(khalaMiningRewards),
-          0,
+          0
         )} PHA`
         totalIssuance = `${toCurrency(new Decimal(khalaTotalIssuance), 0)} PHA`
       }

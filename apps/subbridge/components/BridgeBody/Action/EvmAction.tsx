@@ -16,7 +16,7 @@ import {Button, Stack} from '@mui/material'
 import Decimal from 'decimal.js'
 import {useAtom, useAtomValue} from 'jotai'
 import {useSnackbar} from 'notistack'
-import {useEffect, useState, type FC} from 'react'
+import {type FC, useEffect, useState} from 'react'
 import useSWR from 'swr'
 
 const EvmAction: FC<{onConfirm: () => void}> = ({onConfirm}) => {

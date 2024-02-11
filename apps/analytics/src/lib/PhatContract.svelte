@@ -1,5 +1,5 @@
 <script lang="ts">
-  import {compactFormat} from '@phala/utils'
+  import {compactFormat} from '@phala/lib'
   import type {ChartData} from 'chart.js'
   import {Bar} from 'svelte-chartjs'
   import {derived} from 'svelte/store'

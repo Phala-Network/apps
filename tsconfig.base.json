@@ -12,7 +12,7 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": true,
-    "target": "ESNext",
-    "strictNullChecks": true
+    "strictNullChecks": true,
+    "target": "ESNext"
   }
 }

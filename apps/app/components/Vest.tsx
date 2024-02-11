@@ -7,13 +7,13 @@ import {
   Skeleton,
   Stack,
 } from '@mui/material'
+import {toCurrency} from '@phala/lib'
 import {polkadotAccountAtom} from '@phala/store'
-import {toCurrency} from '@phala/utils'
 import {type DeriveBalancesAll} from '@polkadot/api-derive/types'
 import BN from 'bn.js'
 import Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
-import {useEffect, useState, type FC, type ReactElement} from 'react'
+import {type FC, type ReactElement, useEffect, useState} from 'react'
 import PromiseButton from './PromiseButton'
 import Property from './Property'
 

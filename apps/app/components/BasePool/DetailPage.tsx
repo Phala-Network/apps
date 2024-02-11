@@ -7,17 +7,17 @@ import PageHeader from '@/components/PageHeader'
 import Property from '@/components/Property'
 import useGetApr from '@/hooks/useGetApr'
 import usePolkadotApi from '@/hooks/usePolkadotApi'
+import useSWRValue from '@/hooks/useSWRValue'
 import useSelectedVaultState from '@/hooks/useSelectedVaultState'
 import useSignAndSend from '@/hooks/useSignAndSend'
-import useSWRValue from '@/hooks/useSWRValue'
 import {aprToApy} from '@/lib/apr'
 import fixBasePoolFree from '@/lib/fixBasePoolFree'
 import getDelegationProfit from '@/lib/getDelegationProfit'
 import {create} from 'mutative'
 
 import {
-  useDelegationByIdQuery,
   type BasePoolCommonFragment,
+  useDelegationByIdQuery,
 } from '@/lib/subsquidQuery'
 import {colors} from '@/lib/theme'
 import Settings from '@mui/icons-material/Settings'
@@ -37,12 +37,12 @@ import {
   Typography,
   useTheme,
 } from '@mui/material'
+import {toCurrency, toPercentage} from '@phala/lib'
 import {polkadotAccountAtom} from '@phala/store'
-import {toCurrency, toPercentage} from '@phala/utils'
 import {addDays} from 'date-fns'
 import Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
-import {useCallback, useMemo, useState, type FC} from 'react'
+import {type FC, useCallback, useMemo, useState} from 'react'
 import DelegationChart from '../Delegation/Chart'
 import Withdraw from '../Delegation/Withdraw'
 import Empty from '../Empty'

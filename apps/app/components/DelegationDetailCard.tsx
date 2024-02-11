@@ -18,15 +18,15 @@ import {
   Paper,
   Skeleton,
   Stack,
+  type SxProps,
   Typography,
   useTheme,
-  type SxProps,
 } from '@mui/material'
+import {toCurrency, toPercentage} from '@phala/lib'
 import {polkadotAccountAtom} from '@phala/store'
-import {toCurrency, toPercentage} from '@phala/utils'
 import Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
-import {useMemo, type FC} from 'react'
+import {type FC, useMemo} from 'react'
 import DelegatorSelect from './DelegatorSelect'
 import PromiseButton from './PromiseButton'
 import Property from './Property'

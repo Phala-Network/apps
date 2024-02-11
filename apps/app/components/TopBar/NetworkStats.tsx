@@ -12,12 +12,12 @@ import {
   toPercentage,
   useInterval,
   weightedAverage,
-} from '@phala/utils'
+} from '@phala/lib'
 import {useQuery} from '@tanstack/react-query'
 import {addDays} from 'date-fns'
 import Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
-import {useMemo, useState, type FC} from 'react'
+import {type FC, useMemo, useState} from 'react'
 import Property from '../Property'
 
 const NetworkStats: FC = () => {

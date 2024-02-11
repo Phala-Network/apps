@@ -1,12 +1,58 @@
 {
+  "[javascript]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "cSpell.words": [
+    "biomejs",
+    "bunx",
+    "fontawesome",
+    "fortawesome",
+    "karura",
+    "khala",
+    "moonbase",
+    "moonriver",
+    "movr",
+    "orml",
+    "parachain",
+    "phala",
+    "polkadot",
+    "readystate",
+    "roboto",
+    "staker",
+    "stakers",
+    "subbridge",
+    "subsquid",
+    "svgs",
+    "sygma",
+    "talismn",
+    "tanstack",
+    "tokenomic",
+    "unsub",
+    "xtokens"
+  ],
   "editor.codeActionsOnSave": {
-    "source.addMissingImports": "explicit",
-    "source.fixAll.eslint": "explicit",
-    "source.organizeImports": "explicit"
+    "quickfix.biome": "explicit",
+    "source.organizeImports.biome": "explicit"
   },
   "editor.formatOnSave": true,
-  "eslint.workingDirectories": [{"mode": "auto"}],
-  "files.associations": {"*.css": "tailwindcss"},
+  "files.associations": {
+    "*.css": "tailwindcss"
+  },
   "javascript.format.insertSpaceAfterOpeningAndBeforeClosingEmptyBraces": false,
   "javascript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": false,
   "typescript.format.insertSpaceAfterOpeningAndBeforeClosingEmptyBraces": false,

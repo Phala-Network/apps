@@ -6,19 +6,19 @@ import {
 import {isWalletConnectAtom} from '@/store/common'
 import {evmAccountAtom} from '@/store/ethers'
 import HighlightOff from '@mui/icons-material/HighlightOff'
-import {Box, IconButton, Link, TextField, type BoxProps} from '@mui/material'
+import {Box, type BoxProps, IconButton, Link, TextField} from '@mui/material'
+import {trimAddress} from '@phala/lib'
 import {polkadotAccountAtom} from '@phala/store'
-import {trimAddress} from '@phala/utils'
 import {encodeAddress} from '@polkadot/util-crypto'
 import {useAtom} from 'jotai'
 import {RESET} from 'jotai/utils'
 import {
+  type FC,
   useEffect,
   useLayoutEffect,
   useMemo,
   useRef,
   useState,
-  type FC,
 } from 'react'
 
 const useIsomorphicLayoutEffect =

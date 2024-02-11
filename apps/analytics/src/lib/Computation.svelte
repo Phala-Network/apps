@@ -1,5 +1,5 @@
 <script lang="ts">
-  import {compactFormat, toCurrency} from '@phala/utils'
+  import {compactFormat, toCurrency} from '@phala/lib'
   import {
     RadioGroup,
     RadioGroupLabel,
@@ -28,7 +28,7 @@
 
       if (circulation != null) {
         circulatingSupply = `${compactFormat(
-          new Decimal(circulation.totalCirculation),
+          new Decimal(circulation.totalCirculation)
         )} PHA`
       }
 
@@ -39,21 +39,19 @@
           summary[length - 1].cumulativeRewards
             .minus(summary[length - 3].cumulativeRewards)
             .toDP(0)
-            .toNumber(),
+            .toNumber()
         )} PHA`
       }
 
       if (data != null) {
         delegationValue = `${toCurrency(
           data.summary.totalValue,
-          0,
+          0
         )} <sub>PHA</sub>`
         averageApr = formatPercentage(data.summary.averageApr.toNumber())
         if (circulation != null) {
           stakeRatio = formatPercentage(
-            data.summary.totalValue
-              .div(circulation.totalCirculation)
-              .toNumber(),
+            data.summary.totalValue.div(circulation.totalCirculation).toNumber()
           )
         }
         onlineWorkers = format(data.summary.idleWorkerCount)
@@ -99,7 +97,7 @@
           `It's roughly equal to the daily income of a 10,000V worker before the 20% take away to the Treasury.`,
         ],
       ]
-    },
+    }
   )
 
   const charts = [
@@ -142,7 +140,7 @@
           ],
         }
       }
-    },
+    }
   )
 </script>
 

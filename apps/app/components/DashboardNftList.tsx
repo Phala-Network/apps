@@ -1,24 +1,24 @@
 import NftsIcon from '@/assets/nfts.svg'
 import usePolkadotApi from '@/hooks/usePolkadotApi'
 import {
-  useNftsConnectionQuery,
   type NftsConnectionQuery,
+  useNftsConnectionQuery,
 } from '@/lib/subsquidQuery'
 import {chainAtom, subsquidClientAtom} from '@/store/common'
 import {
   Box,
   Chip,
-  Unstable_Grid2 as Grid,
   Pagination,
   Paper,
   Skeleton,
   Stack,
   Typography,
+  Unstable_Grid2 as Grid,
 } from '@mui/material'
 import {polkadotAccountAtom} from '@phala/store'
 import {type ApiPromise} from '@polkadot/api'
 import {useAtom} from 'jotai'
-import {useState, type FC} from 'react'
+import {type FC, useState} from 'react'
 import useSWRImmutable from 'swr/immutable'
 import DelegationNftCover from './DelegationNftCover'
 import Empty from './Empty'
@@ -26,10 +26,11 @@ import SectionHeader from './SectionHeader'
 
 type Nft = NftsConnectionQuery['nftsConnection']['edges'][number]['node']
 
-const nftNameFetcher = async ([api, cid, nftId]: [
+const nftNameFetcher = async ([api, cid, nftId, _]: [
   ApiPromise,
   number,
   number,
+  string,
 ]): Promise<string | undefined> => {
   const property = await api.query.rmrkCore.properties(cid, nftId, 'name')
   try {
@@ -39,9 +40,10 @@ const nftNameFetcher = async ([api, cid, nftId]: [
   }
 }
 
-const collectionSymbolFetcher = async ([api, cid]: [
+const collectionSymbolFetcher = async ([api, cid, _]: [
   ApiPromise,
   number,
+  string,
 ]): Promise<string | undefined> => {
   const collection = await api.query.rmrkCore.collections(cid)
   try {

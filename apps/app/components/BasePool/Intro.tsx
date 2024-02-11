@@ -10,9 +10,9 @@ import {
 } from '@fortawesome/free-brands-svg-icons'
 import {faEnvelope, faMessage} from '@fortawesome/free-solid-svg-icons'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {Box, Chip, Stack, Typography, type SxProps} from '@mui/material'
+import {Box, Chip, Stack, type SxProps, Typography} from '@mui/material'
 import {useSnackbar} from 'notistack'
-import {useMemo, type FC} from 'react'
+import {type FC, useMemo} from 'react'
 import TextSkeleton from '../TextSkeleton'
 import Identity from './Identity'
 

@@ -5,16 +5,16 @@ import WikiButton from '@/components/Wiki/Button'
 import usePolkadotApi from '@/hooks/usePolkadotApi'
 import useSignAndSend from '@/hooks/useSignAndSend'
 import {
-  useBasePoolWhitelistsConnectionQuery,
   type BasePoolCommonFragment,
+  useBasePoolWhitelistsConnectionQuery,
 } from '@/lib/subsquidQuery'
 import {theme} from '@/lib/theme'
 import {subsquidClientAtom} from '@/store/common'
-import {Button, Dialog, Stack, ThemeProvider, type Theme} from '@mui/material'
+import {Button, Dialog, Stack, type Theme, ThemeProvider} from '@mui/material'
 import {DataGrid, type GridColDef} from '@mui/x-data-grid'
 import {polkadotAccountAtom} from '@phala/store'
 import {useAtom} from 'jotai'
-import {useCallback, useMemo, useState, type FC} from 'react'
+import {type FC, useCallback, useMemo, useState} from 'react'
 import AddWhitelist from './AddWhitelist'
 
 interface RowModel {

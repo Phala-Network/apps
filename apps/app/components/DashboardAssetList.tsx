@@ -25,12 +25,12 @@ import {
   Stack,
   Typography,
 } from '@mui/material'
+import {toCurrency} from '@phala/lib'
 import {polkadotAccountAtom} from '@phala/store'
-import {toCurrency} from '@phala/utils'
 import type Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
 import Image from 'next/image'
-import {useCallback, useState, type FC} from 'react'
+import {type FC, useCallback, useState} from 'react'
 import AssetTransfer from './AssetTransfer'
 import SectionHeader from './SectionHeader'
 import Vest from './Vest'
@@ -166,7 +166,6 @@ const Assets: FC<{
     const assetId = Number(stringAssetId)
     if (assetId === WPHA_ASSET_ID) continue
     // MEMO: because assetsMetadata is immutable, we can safely disable the rule
-    // eslint-disable-next-line react-hooks/rules-of-hooks
     const balance = useAssetBalance(account?.address, assetId)
     allAssets[assetId] = {...assetsMetadata[assetId], balance}
   }
