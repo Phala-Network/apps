@@ -57,7 +57,13 @@ export const xTokensPartialFeeFetcher = async ([
   toChainId,
   assetId,
   proxy,
-]: [ApiPromise, ChainId, ChainId, AssetId, ChainId]): Promise<Decimal> => {
+]: [
+  ApiPromise,
+  ChainId,
+  ChainId,
+  AssetId,
+  ChainId | undefined,
+]): Promise<Decimal> => {
   const {partialFee} = await transferByPolkadotXTokens({
     polkadotApi,
     assetId,

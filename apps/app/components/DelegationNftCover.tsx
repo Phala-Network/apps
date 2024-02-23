@@ -51,7 +51,7 @@ const getNftCover = (
 const DelegationNftCover: FC<{
   variant: CoverVariant
   delegation: {basePool: {kind: BasePoolKind}; value: string}
-  nft: {mintTime?: string | null}
+  nft?: {mintTime?: string | null} | null
 }> = ({variant, delegation, nft}) => {
   const [loop, setLoop] = useState(false)
   const ref = useRef<HTMLVideoElement>(null)
@@ -61,9 +61,9 @@ const DelegationNftCover: FC<{
         variant,
         delegation.basePool.kind,
         delegation.value,
-        nft.mintTime,
+        nft?.mintTime,
       ),
-    [variant, delegation.basePool.kind, delegation.value, nft.mintTime],
+    [variant, delegation.basePool.kind, delegation.value, nft?.mintTime],
   )
   return (
     <video

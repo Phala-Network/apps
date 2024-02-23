@@ -10,16 +10,14 @@ import usePolkadotApi from '@/hooks/usePolkadotApi'
 import useSelectedVaultState from '@/hooks/useSelectedVaultState'
 import useSignAndSend from '@/hooks/useSignAndSend'
 import {aprToApy} from '@/lib/apr'
-
 import {
   type BasePoolCommonFragment,
   useDelegationByIdQuery,
 } from '@/lib/subsquidQuery'
 import {colors} from '@/lib/theme'
+import {subsquidClientAtom} from '@/store/common'
 import Settings from '@mui/icons-material/Settings'
 import {TabContext, TabList, TabPanel} from '@mui/lab'
-
-import {subsquidClientAtom} from '@/store/common'
 import {
   Box,
   Button,
@@ -35,8 +33,6 @@ import {
 } from '@mui/material'
 import {toCurrency, toPercentage} from '@phala/lib'
 import {polkadotAccountAtom} from '@phala/store'
-import {addDays} from 'date-fns'
-import Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
 import {type FC, useCallback, useMemo, useState} from 'react'
 import DelegationChart from '../Delegation/Chart'
@@ -278,7 +274,7 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
                 <TabList
                   indicatorColor={color}
                   textColor={color}
-                  onChange={(e, newValue) => {
+                  onChange={(_, newValue) => {
                     setChartTab(newValue as BasePoolChartKind)
                   }}
                 >
@@ -286,7 +282,7 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
                     <Tab label={label} value={value} key={value} />
                   ))}
                 </TabList>
-                {charts.map(([label, value]) => (
+                {charts.map(([, value]) => (
                   <TabPanel
                     value={value}
                     sx={{px: 0, pb: 0, flex: 1}}

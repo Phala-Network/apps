@@ -19,12 +19,7 @@ const WrapDecimal: FC<{children: ReactNode}> = ({children}) => {
               return (
                 <>
                   {integer}.
-                  <Box
-                    component="span"
-                    sx={(theme) => ({
-                      filter: 'brightness(0.5)',
-                    })}
-                  >
+                  <Box component="span" sx={{filter: 'brightness(0.5)'}}>
                     {decimal}
                   </Box>
                 </>

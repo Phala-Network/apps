@@ -1,4 +1,3 @@
-import chainBridgeAbi from '@/assets/chainbridge_abi.json'
 import moonriverXTokensAbi from '@/assets/moonriver_xtokens_abi.json'
 import tokenStandardAbi from '@/assets/token_standard_abi.json'
 import {ASSETS, type AssetId} from '@/config/asset'
@@ -9,9 +8,8 @@ import {useAtomValue} from 'jotai'
 import useSWRImmutable from 'swr/immutable'
 import {useEthersWeb3Provider} from './useEthersProvider'
 
-type AbiKind = 'chainBridge' | 'moonriverXTokens' | 'tokenStandard'
+type AbiKind = 'moonriverXTokens' | 'tokenStandard'
 const abi: Record<AbiKind, ethers.ContractInterface> = {
-  chainBridge: chainBridgeAbi,
   moonriverXTokens: moonriverXTokensAbi,
   tokenStandard: tokenStandardAbi,
 }
@@ -42,7 +40,7 @@ export function useEthersAssetContract(
 
   const {data} = useSWRImmutable(
     provider != null && address != null
-      ? [provider, address, 'tokenStandard']
+      ? [provider, address, 'tokenStandard' as AbiKind]
       : null,
     fetcher,
   )
@@ -62,7 +60,7 @@ export const useCurrentEthersAssetContract = ():
   const provider = useEthersWeb3Provider()
   const {data} = useSWRImmutable(
     provider != null && address != null
-      ? [provider, address, 'tokenStandard']
+      ? [provider, address, 'tokenStandard' as AbiKind]
       : null,
     fetcher,
   )
@@ -78,24 +76,7 @@ export const useEthersXTokensContract = (): ethers.Contract | undefined => {
 
   const {data} = useSWRImmutable(
     provider != null && address != null
-      ? [provider, address, 'moonriverXTokens']
-      : null,
-    fetcher,
-  )
-
-  return data
-}
-
-export const useEthersChainBridgeContract = (): ethers.Contract | undefined => {
-  const fromChain = useAtomValue(fromChainAtom)
-  const provider = useEthersWeb3Provider()
-  const address =
-    fromChain.kind === 'evm'
-      ? fromChain.chainBridgeContract?.address
-      : undefined
-  const {data} = useSWRImmutable(
-    provider != null && address != null
-      ? [provider, address, 'chainBridge']
+      ? [provider, address, 'moonriverXTokens' as AbiKind]
       : null,
     fetcher,
   )

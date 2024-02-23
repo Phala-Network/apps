@@ -21,7 +21,7 @@ export const polkadotAccountAtom = atom(
       ) ?? null
     )
   },
-  (get, set, account: string | null) => {
+  (_get, set, account: string | null) => {
     set(polkadotAccountAddressAtom, account)
   },
 )

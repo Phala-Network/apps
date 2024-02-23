@@ -2,7 +2,6 @@ import {type AssetId} from './asset'
 import {type ChainId} from './chain'
 
 export type BridgeKind =
-  | 'evmChainBridge'
   | 'evmXTokens'
   | 'polkadotXTokens'
   | 'phalaXTransfer'

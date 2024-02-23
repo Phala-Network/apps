@@ -1,4 +1,3 @@
-import {transferByChainBridge} from '@/lib/transferByChainBridge'
 import {transferEvmSygma} from '@/lib/transferByEvmSygma'
 import {transferByEvmXTokens} from '@/lib/transferByEvmXTokens'
 import {transferByPhalaXTransfer} from '@/lib/transferByPhalaXTransfer'
@@ -19,12 +18,9 @@ import {polkadotAccountAtom} from '@phala/store'
 import {type ContractTransaction, ethers} from 'ethers'
 import {useAtomValue} from 'jotai'
 import {useMemo} from 'react'
-import {
-  useEthersChainBridgeContract,
-  useEthersXTokensContract,
-} from './useEthersContract'
+import {useEthersXTokensContract} from './useEthersContract'
 import {useEthersWeb3Provider} from './useEthersProvider'
-import {useCurrentPolkadotApi, usePolkadotApi} from './usePolkadotApi'
+import {useCurrentPolkadotApi} from './usePolkadotApi'
 
 export const useTransfer = (): (({
   onReady,
@@ -34,7 +30,6 @@ export const useTransfer = (): (({
   ContractTransaction | ExtrinsicResult | DepositEvent | undefined
 >) => {
   const ethersWeb3Provider = useEthersWeb3Provider()
-  const ethersChainBridgeContract = useEthersChainBridgeContract()
   const ethersXTokensBridgeContract = useEthersXTokensContract()
   const asset = useAtomValue(assetAtom)
   const fromChain = useAtomValue(fromChainAtom)
@@ -45,7 +40,6 @@ export const useTransfer = (): (({
   const evmAccount = useAtomValue(evmAccountAtom)
   const polkadotAccount = useAtomValue(polkadotAccountAtom)
   const bridge = useAtomValue(bridgeInfoAtom)
-  const khalaApi = usePolkadotApi(toChain.id === 'phala' ? 'phala' : 'khala')
   const polkadotApi = useCurrentPolkadotApi()
 
   const atomicUnitAmount = useMemo(
@@ -57,24 +51,6 @@ export const useTransfer = (): (({
   )
 
   return async ({onReady}: {onReady: () => void}) => {
-    if (bridge.kind === 'evmChainBridge') {
-      if (ethersChainBridgeContract == null || khalaApi == null) {
-        throw new Error('Transfer missing required parameters')
-      }
-
-      return await transferByChainBridge({
-        contract: ethersChainBridgeContract,
-        khalaApi,
-        assetId: asset.id,
-        destinationAccount,
-        amount: atomicUnitAmount,
-        toChainId: toChain.id,
-      }).then((transaction) => {
-        onReady()
-        return transaction
-      })
-    }
-
     if (bridge.kind === 'polkadotXTokens') {
       if (polkadotApi == null || polkadotAccount?.wallet?.signer == null) {
         throw new Error('Transfer missing required parameters')

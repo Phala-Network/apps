@@ -1,6 +1,5 @@
 import {
   ethersGasPriceFetcher,
-  evmChainBridgeEstimatedGasFetcher,
   evmXTokensEstimatedGasFetcher,
 } from '@/lib/ethersFetcher'
 import {getEvmSygmaTransfer} from '@/lib/evmSygma'
@@ -19,15 +18,11 @@ import {evmAccountAtom} from '@/store/ethers'
 import Decimal from 'decimal.js'
 import {useAtomValue} from 'jotai'
 import useSWR from 'swr'
-import {
-  useEthersChainBridgeContract,
-  useEthersXTokensContract,
-} from './useEthersContract'
+import {useEthersXTokensContract} from './useEthersContract'
 import {useEthersWeb3Provider} from './useEthersProvider'
-import {useCurrentPolkadotApi, usePolkadotApi} from './usePolkadotApi'
+import {useCurrentPolkadotApi} from './usePolkadotApi'
 
 export const useEstimatedGasFee = (): Decimal | undefined => {
-  const ethersChainBridgeContract = useEthersChainBridgeContract()
   const ethersXTokensContract = useEthersXTokensContract()
   const fromChain = useAtomValue(fromChainAtom)
   const toChain = useAtomValue(toChainAtom)
@@ -35,38 +30,21 @@ export const useEstimatedGasFee = (): Decimal | undefined => {
   const ethersWeb3Provider = useEthersWeb3Provider()
   const evmAccount = useAtomValue(evmAccountAtom)
   const decimals = useAtomValue(decimalsAtom)
-  const khalaApi = usePolkadotApi(toChain.id === 'phala' ? 'phala' : 'khala')
   const polkadotApi = useCurrentPolkadotApi()
   const bridge = useAtomValue(bridgeInfoAtom)
-  const resourceId =
-    typeof asset.chainBridgeResourceId === 'string'
-      ? asset.chainBridgeResourceId
-      : asset.chainBridgeResourceId?.[toChain.id]
 
   const {data: ethersGasPrice} = useSWR(
     ethersWeb3Provider,
     ethersGasPriceFetcher,
   )
-  const {data: evmChainBridgeEstimatedGas} = useSWR(
-    bridge.kind === 'evmChainBridge' &&
-      ethersChainBridgeContract != null &&
-      khalaApi != null &&
-      resourceId != null && [
-        ethersChainBridgeContract,
-        khalaApi,
-        resourceId,
-        toChain.id,
-      ],
-    evmChainBridgeEstimatedGasFetcher,
-  )
-
+  const xc20Address = asset.xc20Address?.[fromChain.id]
   const {data: evmXTokensEstimatedGas} = useSWR(
     bridge.kind === 'evmXTokens' &&
       ethersXTokensContract != null &&
       toChain.paraId != null &&
-      asset.xc20Address?.[fromChain.id] != null && [
+      xc20Address != null && [
         ethersXTokensContract,
-        asset.xc20Address[fromChain.id],
+        xc20Address,
         toChain.paraId,
         decimals,
       ],
@@ -127,10 +105,7 @@ export const useEstimatedGasFee = (): Decimal | undefined => {
 
   return (
     (ethersGasPrice != null
-      ? (evmChainBridgeEstimatedGas != null
-          ? ethersGasPrice.times(evmChainBridgeEstimatedGas)
-          : undefined) ??
-        (evmXTokensEstimatedGas != null
+      ? (evmXTokensEstimatedGas != null
           ? ethersGasPrice.times(evmXTokensEstimatedGas)
           : undefined) ??
         (evmSygmaEstimatedGas != null
