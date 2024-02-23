@@ -16,20 +16,16 @@ import {
 } from 'recharts'
 import RechartsTooltip from './RechartsTooltip'
 
-const DelegationValueChart: FC<{address?: string; days: number}> = ({
-  address,
-  days,
-}) => {
+const days = 30
+
+const DelegationValueChart: FC<{address?: string}> = ({address}) => {
   const [subsquidClient] = useAtom(subsquidClientAtom)
   const today = useToday()
-  const startTime = useMemo(() => {
-    const date = new Date(today)
-    return addDays(date, -days).toISOString()
-  }, [today, days])
+  const startTime = useMemo(() => addDays(today, -days).toISOString(), [today])
   const {data} = useAccountSnapshotsConnectionQuery(
     subsquidClient,
     {
-      orderBy: 'updatedTime_DESC',
+      orderBy: 'updatedTime_ASC',
       where: {
         account_eq: address,
         updatedTime_gte: startTime,
@@ -46,32 +42,21 @@ const DelegationValueChart: FC<{address?: string; days: number}> = ({
 
   const chartData = useMemo(() => {
     if (data == null) return []
-    const result: Array<{date: Date; dateString: string; value?: number}> =
-      Array.from({length: days}).map((_, i) => {
-        const date = addDays(new Date(startTime), i)
-        return {dateString: date.toLocaleDateString(), date}
-      })
-
+    const result: Array<{date: Date; dateString: string; value?: number}> = []
     for (const {node} of data.accountSnapshotsConnection.edges) {
       const date = new Date(node.updatedTime)
-      const index = result.findIndex((r) => r.date.getTime() >= date.getTime())
-      if (index !== -1 && node.delegationValue != null) {
-        result[index].value = new Decimal(node.delegationValue)
-          .floor()
-          .toNumber()
-      }
-    }
-
-    for (const r of result) {
-      if (r.value === undefined) {
-        r.value = 0
-      } else {
-        break
-      }
+      result.push({
+        date,
+        dateString: date.toLocaleDateString(),
+        value:
+          node.delegationValue != null
+            ? new Decimal(node.delegationValue).floor().toNumber()
+            : undefined,
+      })
     }
 
     return result
-  }, [data, days, startTime])
+  }, [data])
 
   if (chartData.length === 0) {
     return null

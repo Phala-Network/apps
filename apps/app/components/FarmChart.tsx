@@ -29,21 +29,15 @@ const FarmChart: FC<{
   const isVault = kind === 'Vault'
   const color = isVault ? colors.vault[500] : colors.main[400]
   const today = useToday()
-  const duration = useMemo(() => {
-    const date = new Date(today)
-    return Array.from({length: days + 1}).map((_, i) =>
-      addDays(date, i - days).toISOString(),
-    )
-  }, [today])
+  const startTime = useMemo(() => addDays(today, -days).toISOString(), [today])
   const [subsquidClient] = useAtom(subsquidClientAtom)
   const {data} = useAccountSnapshotsConnectionQuery(
     subsquidClient,
     {
       orderBy: 'updatedTime_ASC',
-      first: days + 1,
       where: {
         account_eq: account,
-        updatedTime_in: duration,
+        updatedTime_gte: startTime,
       },
       withCumulativeStakePoolOwnerRewards: kind === 'StakePool',
       withCumulativeVaultOwnerRewards: kind === 'Vault',

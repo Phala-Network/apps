@@ -71,8 +71,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
   }
 }
 
-const CHART_DAY = 30
-
 const Delegate: NextPage = () => {
   const {
     query: {kind},
@@ -134,7 +132,6 @@ const Delegate: NextPage = () => {
 
             <Box flex={1} ml={{xs: -1, sm: -1.5}}>
               <DelegationValueChart
-                days={CHART_DAY}
                 address={
                   selectedVaultState === null
                     ? account?.address

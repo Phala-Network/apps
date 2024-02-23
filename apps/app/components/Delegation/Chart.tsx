@@ -30,18 +30,13 @@ const DelegationChart: FC<{
   const isVault = delegation.basePool.kind === 'Vault'
   const color = isVault ? colors.vault[500] : colors.main[400]
   const today = useToday()
-  const duration = useMemo(() => {
-    const date = new Date(today)
-    return Array.from({length: days + 1}).map((_, i) =>
-      addDays(date, i - days).toISOString(),
-    )
-  }, [today])
+  const startTime = useMemo(() => addDays(today, -days).toISOString(), [today])
   const [subsquidClient] = useAtom(subsquidClientAtom)
   const {data} = useDelegationSnapshotsConnectionQuery(
     subsquidClient,
     {
       orderBy: 'updatedTime_ASC',
-      where: {delegation_eq: delegation.id, updatedTime_in: duration},
+      where: {delegation_eq: delegation.id, updatedTime_gte: startTime},
     },
     {
       refetchOnMount: false,
