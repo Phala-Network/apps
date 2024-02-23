@@ -3,6 +3,7 @@ import {useHydrateAtoms} from 'jotai/utils'
 import {type FC, type ReactNode} from 'react'
 
 const HydrateAtoms: FC<{
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   initialValues: Map<WritableAtom<unknown, any[], any>, any>
   children: ReactNode
 }> = ({initialValues, children}) => {

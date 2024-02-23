@@ -1,75 +1,75 @@
 <script lang="ts">
-  import {toCurrency, toPercentage} from '@phala/lib'
-  import Decimal from 'decimal.js'
-  import {Bar} from 'svelte-chartjs'
-  import {derived} from 'svelte/store'
-  import ChainCirculation from '~/lib/ChainCirculation.svelte'
-  import {getCirculation} from '~/stores/circulation'
+import {toCurrency, toPercentage} from '@phala/lib'
+import Decimal from 'decimal.js'
+import {Bar} from 'svelte-chartjs'
+import {derived} from 'svelte/store'
+import ChainCirculation from '~/lib/ChainCirculation.svelte'
+import {getCirculation} from '~/stores/circulation'
 
-  const totalSupply = new Decimal(1e9)
+const totalSupply = new Decimal(1e9)
 
-  const display = derived(getCirculation(), ({data: circulation}) => {
-    let circulatingSupply = 'ㅤ'
-    let percentage = 'ㅤ'
-    let crowdloanRewards = ''
-    let computationRewards = ''
+const display = derived(getCirculation(), ({data: circulation}) => {
+  let circulatingSupply = 'ㅤ'
+  let percentage = 'ㅤ'
+  let crowdloanRewards = ''
+  let computationRewards = ''
 
-    if (circulation != null) {
-      const {
-        totalCirculation,
-        phalaCrowdloan,
-        khalaCrowdloan,
+  if (circulation != null) {
+    const {
+      totalCirculation,
+      phalaCrowdloan,
+      khalaCrowdloan,
+      phalaMiningRewards,
+      khalaMiningRewards,
+      ethereumMiningRewards,
+    } = circulation
+    circulatingSupply = `${toCurrency(
+      new Decimal(totalCirculation),
+      0,
+    )} <sub>PHA</sub>`
+    percentage =
+      toPercentage(new Decimal(totalCirculation).div(totalSupply)) ?? ''
+
+    crowdloanRewards = `${toCurrency(
+      Decimal.sum(phalaCrowdloan, khalaCrowdloan),
+      0,
+    )} PHA`
+    computationRewards = `${toCurrency(
+      Decimal.sum(
         phalaMiningRewards,
         khalaMiningRewards,
         ethereumMiningRewards,
-      } = circulation
-      circulatingSupply = `${toCurrency(
-        new Decimal(totalCirculation),
-        0
-      )} <sub>PHA</sub>`
-      percentage =
-        toPercentage(new Decimal(totalCirculation).div(totalSupply)) ?? ''
+      ),
+      0,
+    )} PHA`
+  }
 
-      crowdloanRewards = `${toCurrency(
-        Decimal.sum(phalaCrowdloan, khalaCrowdloan),
-        0
-      )} PHA`
-      computationRewards = `${toCurrency(
-        Decimal.sum(
-          phalaMiningRewards,
-          khalaMiningRewards,
-          ethereumMiningRewards
-        ),
-        0
-      )} PHA`
-    }
+  return [
+    ['Circulating Supply', circulatingSupply],
+    ['Percentage', percentage],
+    ['Crowdloan locked', crowdloanRewards],
+    ['Computation locked', computationRewards],
+  ]
+})
 
-    return [
-      ['Circulating Supply', circulatingSupply],
-      ['Percentage', percentage],
-      ['Crowdloan locked', crowdloanRewards],
-      ['Computation locked', computationRewards],
-    ]
-  })
+const chartData = derived(getCirculation(), ({data: circulation}) => {
+  if (circulation == null) return null
 
-  const chartData = derived(getCirculation(), ({data: circulation}) => {
-    if (circulation == null) return null
-
-    return {
-      labels: ['Ethereum', 'Khala', 'Phala'],
-      datasets: [
-        {
-          label: 'Circulating Supply',
-          data: [
-            parseInt(circulation.ethereumCirculation),
-            parseInt(circulation.khalaCirculation),
-            parseInt(circulation.phalaCirculation),
-          ],
-          backgroundColor: ['#99a2cf', '#03ffff', '#c5ff46'],
-        },
-      ],
-    }
-  })
+  return {
+    labels: ['Ethereum', 'Khala', 'Phala'],
+    datasets: [
+      {
+        label: 'Circulating Supply',
+        data: [
+          parseInt(circulation.ethereumCirculation),
+          parseInt(circulation.khalaCirculation),
+          parseInt(circulation.phalaCirculation),
+        ],
+        backgroundColor: ['#99a2cf', '#03ffff', '#c5ff46'],
+      },
+    ],
+  }
+})
 </script>
 
 <svelte:head>

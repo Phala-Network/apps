@@ -33,7 +33,7 @@ export const polkadotBalanceFetcher = async ([
   number,
   'assetsPallet' | 'tokensPallet',
 ]): Promise<Decimal> => {
-  let value
+  let value: number
   if (balanceSource === 'assetsPallet') {
     const balance = await polkadotApi.query.assets.account(assetId, address)
     const balanceJson = balance.toJSON() as {balance: number} | null

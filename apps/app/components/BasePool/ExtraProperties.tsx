@@ -71,6 +71,7 @@ const ExtraProperties: FC<{basePool: BasePoolCommonFragment; sx?: SxProps}> = ({
       sx={sx}
     >
       {Array.from({length: groups}).map((_, i) => (
+        // biome-ignore lint/suspicious/noArrayIndexKey: static list
         <Stack flex="1 0" spacing={0.5} key={i}>
           {entries
             .slice(i * count, (i + 1) * count)

@@ -102,7 +102,6 @@ export const useValidation = (): void => {
     existentialDeposit,
     bridgeLimit,
     fromChain.id,
-    toChain.id,
     asset.id,
     bridge.disabled,
   ])

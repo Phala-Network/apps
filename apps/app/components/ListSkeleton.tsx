@@ -9,6 +9,7 @@ const ListSkeleton = forwardRef<
     {Array.from({length: count}).map((_, index) => (
       <Skeleton
         variant="rounded"
+        // biome-ignore lint/suspicious/noArrayIndexKey: static list
         key={index}
         {...(index === 0 && {ref})}
         {...props}

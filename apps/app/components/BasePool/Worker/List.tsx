@@ -25,9 +25,11 @@ import {
   TextField,
 } from '@mui/material'
 import {polkadotAccountAtom} from '@phala/store'
+import {SubmittableExtrinsic} from '@polkadot/api/types'
+import {ISubmittableResult} from '@polkadot/types/types'
 import {addDays} from 'date-fns'
 import {useAtom} from 'jotai'
-import {type FC, useCallback, useEffect, useState} from 'react'
+import {type FC, useCallback, useState} from 'react'
 import AddWorker from './AddWorker'
 import WorkerCard from './Card'
 import ChangeStake from './ChangeStake'
@@ -127,7 +129,9 @@ const WorkerList: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
       }
       if (api == null || worker.stakePool == null) return
       const pid = worker.stakePool.id
-      let extrinsic
+      let extrinsic:
+        | SubmittableExtrinsic<'promise', ISubmittableResult>
+        | undefined
       if (action === 'reclaim') {
         extrinsic = api.tx.phalaStakePoolv2.reclaimPoolWorker(pid, worker.id)
       } else if (action === 'stop') {
@@ -146,10 +150,6 @@ const WorkerList: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
   const onClose = useCallback(() => {
     setDialogOpen(false)
   }, [])
-
-  useEffect(() => {
-    setPage(1)
-  }, [orderBy, stateFilter, debouncedSearchString])
 
   const reclaimAll = async (): Promise<void> => {
     if (api == null || reclaimableData == null) return
@@ -174,6 +174,7 @@ const WorkerList: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
             }}
             onChange={(e) => {
               setSearchString(e.target.value)
+              setPage(1)
             }}
           />
           <TextField
@@ -183,6 +184,7 @@ const WorkerList: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
             value={orderBy}
             onChange={(e) => {
               setOrderBy(e.target.value as WorkerOrderByInput)
+              setPage(1)
             }}
           >
             {orderByEntries.map(([label, value]) => (
@@ -198,6 +200,7 @@ const WorkerList: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
             value={stateFilter}
             onChange={(e) => {
               setStateFilter(e.target.value as WorkerState | 'All')
+              setPage(1)
             }}
           >
             {stateEntries.map(([label, value]) => (

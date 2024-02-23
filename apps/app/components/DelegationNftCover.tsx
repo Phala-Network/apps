@@ -94,7 +94,7 @@ const DelegationNftCover: FC<{
         height: '100%',
       }}
     >
-      <source src={video} type="video/mp4"></source>
+      <source src={video} type="video/mp4" />
     </video>
   )
 }

@@ -105,7 +105,7 @@ const DashboardCarousel: FC = () => {
         }}
         ref={scrollRef}
       >
-        {contents.map((content, index) => {
+        {contents.map((content) => {
           const isExternal = content.href.startsWith('http')
           return (
             <Box
@@ -124,7 +124,7 @@ const DashboardCarousel: FC = () => {
                 backgroundPosition: 'center left',
                 scrollSnapAlign: 'start',
               }}
-              key={index}
+              key={content.name}
             />
           )
         })}

@@ -1,5 +1,5 @@
 import SygmaLogo from '@/assets/sygma_logo.svg?react'
-import {Stack, Typography, useTheme, type StackProps} from '@mui/material'
+import {Stack, type StackProps, Typography, useTheme} from '@mui/material'
 import {type FC} from 'react'
 
 const PoweredBySygma: FC<StackProps> = (props) => {
@@ -21,7 +21,7 @@ const PoweredBySygma: FC<StackProps> = (props) => {
       <a
         href="https://buildwithsygma.com/"
         target="_blank"
-        rel="noopener"
+        rel="noreferrer noopener"
         css={{color: 'inherit'}}
       >
         <SygmaLogo

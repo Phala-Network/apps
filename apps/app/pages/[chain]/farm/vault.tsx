@@ -20,6 +20,8 @@ import {
 } from '@mui/material'
 import {toCurrency} from '@phala/lib'
 import {polkadotAccountAtom} from '@phala/store'
+import {SubmittableExtrinsic} from '@polkadot/api/types'
+import {ISubmittableResult} from '@polkadot/types/types'
 import Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
 import {type FC, useCallback, useMemo, useState} from 'react'
@@ -79,7 +81,7 @@ const MyVaults: FC = () => {
 
   const mintAll = useCallback(async () => {
     if (api == null) return
-    let extrinsic
+    let extrinsic: SubmittableExtrinsic<'promise', ISubmittableResult>
     const calls = vaultsWithOwnerCut.map(([id]) =>
       api.tx.phalaVault.maybeGainOwnerShares(id),
     )

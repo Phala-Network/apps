@@ -16,7 +16,11 @@ const Footer: FC = () => {
         >
           Brought by
         </Typography>
-        <a href="https://phala.network" target="_blank" rel="noopener">
+        <a
+          href="https://phala.network"
+          target="_blank"
+          rel="noreferrer noopener"
+        >
           <PhalaBrandLogo
             fill={theme.palette.text.primary}
             width="80px"

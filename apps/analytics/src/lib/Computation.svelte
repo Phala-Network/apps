@@ -1,147 +1,147 @@
 <script lang="ts">
-  import {compactFormat, toCurrency} from '@phala/lib'
-  import {
-    RadioGroup,
-    RadioGroupLabel,
-    RadioGroupOption,
-  } from '@rgossiaux/svelte-headlessui'
-  import type {ChartData} from 'chart.js'
-  import Decimal from 'decimal.js'
-  import {Line} from 'svelte-chartjs'
-  import {derived, writable} from 'svelte/store'
-  import {getComputationData, getComputationSnapshot} from '~/stores'
-  import {getCirculation} from '~/stores/circulation'
-  import Tooltip from './Tooltip.svelte'
-  import {format, formatPercentage} from './utils'
+import {compactFormat, toCurrency} from '@phala/lib'
+import {
+  RadioGroup,
+  RadioGroupLabel,
+  RadioGroupOption,
+} from '@rgossiaux/svelte-headlessui'
+import type {ChartData} from 'chart.js'
+import Decimal from 'decimal.js'
+import {Line} from 'svelte-chartjs'
+import {derived, writable} from 'svelte/store'
+import {getComputationData, getComputationSnapshot} from '~/stores'
+import {getCirculation} from '~/stores/circulation'
+import Tooltip from './Tooltip.svelte'
+import {format, formatPercentage} from './utils'
 
-  const display = derived(
-    [getComputationData(), getComputationSnapshot(), getCirculation()],
-    ([{data}, {data: snapshot}, {data: circulation}]) => {
-      let circulatingSupply = ''
-      let delegationValue = 'ㅤ'
-      let dailyRewards = ''
-      let averageApr = ''
-      let stakeRatio = ''
-      let onlineWorkers = ''
-      let delegator = ''
-      let budgetPerShare = ''
+const display = derived(
+  [getComputationData(), getComputationSnapshot(), getCirculation()],
+  ([{data}, {data: snapshot}, {data: circulation}]) => {
+    let circulatingSupply = ''
+    let delegationValue = 'ㅤ'
+    let dailyRewards = ''
+    let averageApr = ''
+    let stakeRatio = ''
+    let onlineWorkers = ''
+    let delegator = ''
+    let budgetPerShare = ''
 
+    if (circulation != null) {
+      circulatingSupply = `${compactFormat(
+        new Decimal(circulation.totalCirculation),
+      )} PHA`
+    }
+
+    if (snapshot != null) {
+      const {summary} = snapshot
+      const length = summary.length
+      dailyRewards = `${format(
+        summary[length - 1].cumulativeRewards
+          .minus(summary[length - 3].cumulativeRewards)
+          .toDP(0)
+          .toNumber(),
+      )} PHA`
+    }
+
+    if (data != null) {
+      delegationValue = `${toCurrency(
+        data.summary.totalValue,
+        0,
+      )} <sub>PHA</sub>`
+      averageApr = formatPercentage(data.summary.averageApr.toNumber())
       if (circulation != null) {
-        circulatingSupply = `${compactFormat(
-          new Decimal(circulation.totalCirculation)
-        )} PHA`
+        stakeRatio = formatPercentage(
+          data.summary.totalValue.div(circulation.totalCirculation).toNumber(),
+        )
       }
-
-      if (snapshot != null) {
-        const {summary} = snapshot
-        const length = summary.length
-        dailyRewards = `${format(
-          summary[length - 1].cumulativeRewards
-            .minus(summary[length - 3].cumulativeRewards)
-            .toDP(0)
-            .toNumber()
-        )} PHA`
-      }
-
-      if (data != null) {
-        delegationValue = `${toCurrency(
-          data.summary.totalValue,
-          0
-        )} <sub>PHA</sub>`
-        averageApr = formatPercentage(data.summary.averageApr.toNumber())
-        if (circulation != null) {
-          stakeRatio = formatPercentage(
-            data.summary.totalValue.div(circulation.totalCirculation).toNumber()
-          )
-        }
-        onlineWorkers = format(data.summary.idleWorkerCount)
-        delegator = format(data.summary.delegatorCount)
-        budgetPerShare = data.summary.budgetPerShare.toDP(2).toString()
-      }
-
-      return [
-        [
-          'Delegation value',
-          delegationValue,
-          'All delegated PHA across the Phala & Khala network',
-        ],
-        [
-          'Daily rewards',
-          dailyRewards,
-          'The total amount of computation rewards distributed across the Phala & Khala network in the last day.',
-        ],
-        [
-          'Average APR',
-          averageApr,
-          'The average annual percentage rate of return for all delegations across the Phala & Khala network. (no consideration of compound interest)',
-        ],
-        ['Circulating supply', circulatingSupply],
-        [
-          'Stake ratio',
-          stakeRatio,
-          'Stake Ratio = All delegated PHA across the Phala & Khala network / All circulating PHA.',
-        ],
-        [
-          'Online workers',
-          onlineWorkers,
-          'The total number of online workers across the Phala & Khala network.',
-        ],
-        [
-          'Delegator',
-          delegator,
-          'All delegator count across the Phala & Khala network',
-        ],
-        [
-          'Daily budget/share',
-          budgetPerShare,
-          `It's roughly equal to the daily income of a 10,000V worker before the 20% take away to the Treasury.`,
-        ],
-      ]
+      onlineWorkers = format(data.summary.idleWorkerCount)
+      delegator = format(data.summary.delegatorCount)
+      budgetPerShare = data.summary.budgetPerShare.toDP(2).toString()
     }
-  )
 
-  const charts = [
-    'Delegation value',
-    'Average APR',
-    'Online workers',
-    'Delegator',
-    'Daily budge/share',
-  ] as const
+    return [
+      [
+        'Delegation value',
+        delegationValue,
+        'All delegated PHA across the Phala & Khala network',
+      ],
+      [
+        'Daily rewards',
+        dailyRewards,
+        'The total amount of computation rewards distributed across the Phala & Khala network in the last day.',
+      ],
+      [
+        'Average APR',
+        averageApr,
+        'The average annual percentage rate of return for all delegations across the Phala & Khala network. (no consideration of compound interest)',
+      ],
+      ['Circulating supply', circulatingSupply],
+      [
+        'Stake ratio',
+        stakeRatio,
+        'Stake Ratio = All delegated PHA across the Phala & Khala network / All circulating PHA.',
+      ],
+      [
+        'Online workers',
+        onlineWorkers,
+        'The total number of online workers across the Phala & Khala network.',
+      ],
+      [
+        'Delegator',
+        delegator,
+        'All delegator count across the Phala & Khala network',
+      ],
+      [
+        'Daily budget/share',
+        budgetPerShare,
+        `It's roughly equal to the daily income of a 10,000V worker before the 20% take away to the Treasury.`,
+      ],
+    ]
+  },
+)
 
-  const currentChart = writable<(typeof charts)[number]>(charts[0])
+const charts = [
+  'Delegation value',
+  'Average APR',
+  'Online workers',
+  'Delegator',
+  'Daily budge/share',
+] as const
 
-  $: isPercentage = $currentChart === 'Average APR'
+const currentChart = writable<(typeof charts)[number]>(charts[0])
 
-  const data = derived(
-    [getComputationSnapshot(), currentChart],
-    ([{data}, $currentChart]): ChartData<'line', number[]> | undefined => {
-      if (data != null) {
-        const {summary} = data
-        return {
-          labels: summary.map((e) => e.updatedTime),
-          datasets: [
-            {
-              label: $currentChart,
-              data: summary.map((e) => {
-                switch ($currentChart) {
-                  case 'Delegation value':
-                    return e.totalValue.toNumber()
-                  case 'Average APR':
-                    return e.averageApr.toDP(4).toNumber()
-                  case 'Online workers':
-                    return e.idleWorkerCount
-                  case 'Delegator':
-                    return e.delegatorCount
-                  case 'Daily budge/share':
-                    return e.budgetPerShare.toDP(2).toNumber()
-                }
-              }),
-            },
-          ],
-        }
+$: isPercentage = $currentChart === 'Average APR'
+
+const data = derived(
+  [getComputationSnapshot(), currentChart],
+  ([{data}, $currentChart]): ChartData<'line', number[]> | undefined => {
+    if (data != null) {
+      const {summary} = data
+      return {
+        labels: summary.map((e) => e.updatedTime),
+        datasets: [
+          {
+            label: $currentChart,
+            data: summary.map((e) => {
+              switch ($currentChart) {
+                case 'Delegation value':
+                  return e.totalValue.toNumber()
+                case 'Average APR':
+                  return e.averageApr.toDP(4).toNumber()
+                case 'Online workers':
+                  return e.idleWorkerCount
+                case 'Delegator':
+                  return e.delegatorCount
+                case 'Daily budge/share':
+                  return e.budgetPerShare.toDP(2).toNumber()
+              }
+            }),
+          },
+        ],
       }
     }
-  )
+  },
+)
 </script>
 
 <h1 class="font-montserrat text-4xl font-bold my-8">Computation</h1>

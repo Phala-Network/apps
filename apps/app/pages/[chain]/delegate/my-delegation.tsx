@@ -13,7 +13,7 @@ const MyDelegation: FC = () => {
   const selectedVaultState = useSelectedVaultState()
   return (
     <>
-      <PageHeader title="My Delegation"></PageHeader>
+      <PageHeader title="My Delegation" />
       <Stack direction={{xs: 'column', md: 'row'}} spacing={2}>
         <DelegationDetailCard sx={{flex: {xs: 'none', md: '1 0'}}} />
         <Paper

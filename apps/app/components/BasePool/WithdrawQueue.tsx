@@ -147,7 +147,7 @@ const WithdrawQueue: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
   }, [basePool])
 
   const criticalTime = useMemo(() => {
-    let time
+    let time: string | undefined
     const {freeValue, releasingValue} = basePool
     let baseValue = new Decimal(freeValue).plus(releasingValue)
     for (const row of rows) {
@@ -195,10 +195,7 @@ const WithdrawQueue: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
 
   return (
     <>
-      <SectionHeader
-        icon={<WithdrawalQueueIcon />}
-        title="Withdrawal Queue"
-      ></SectionHeader>
+      <SectionHeader icon={<WithdrawalQueueIcon />} title="Withdrawal Queue" />
       <Paper sx={{background: 'transparent', mb: 2, p: 2}}>
         <Stack direction={{xs: 'column', md: 'row'}} spacing={2}>
           <Stack spacing={3} flex={{xs: 'none', md: '1'}}>

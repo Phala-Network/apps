@@ -52,7 +52,7 @@ const Intro: FC<{
             const hasIcon = (x: string): x is keyof typeof iconMap =>
               x in iconMap
             const icon = hasIcon(label) && iconMap[label]
-            let href
+            let href: string | undefined
             if (label === 'telegram') {
               href = `https://t.me/${value.replace(/^@/, '')}`
             } else if (label === 'twitter') {

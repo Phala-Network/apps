@@ -31,8 +31,8 @@ export const getEvmSygmaTransfer = async (
     fromChain.isTest === true ? Environment.TESTNET : Environment.MAINNET,
   )
 
-  let destinationChainId
-  let parachainId
+  let destinationChainId: number | undefined
+  let parachainId: number | undefined
 
   if (
     toChain.id === 'phala' ||

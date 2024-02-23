@@ -91,6 +91,7 @@ const ExtraInfo: FC<PaperProps> = ({sx, ...props}) => {
           background: theme.palette.action.hover,
           border: 'none',
         },
+        // biome-ignore lint/suspicious/noExplicitAny: <explanation>
         ...(Array.isArray(sx) ? (sx as any) : [sx]),
       ]}
       {...props}

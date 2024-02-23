@@ -24,6 +24,7 @@ const MigrationAlert: FC<AlertProps> = ({sx, ...props}) => {
     <Alert
       icon={false}
       severity="info"
+      // biome-ignore lint/suspicious/noExplicitAny: <explanation>
       sx={[{border: 'none'}, ...(Array.isArray(sx) ? (sx as any) : [sx])]}
       onClose={() => {
         setOpen(false)

@@ -23,12 +23,12 @@ const ChainSelect: FC<
 
   useEffect(() => {
     // Preload chain icons
-    chainIds.forEach((chainId) => {
+    for (const chainId of chainIds) {
       const {icon, isTest} = CHAINS[chainId]
       if (!shouldShowTest && isTest === true) return
       const image = new Image()
       image.src = icon
-    })
+    }
   }, [chainIds])
 
   return (

@@ -153,7 +153,7 @@ const DelegationDetailCard: FC<{sx?: SxProps}> = ({sx}) => {
     <Paper
       sx={[
         {p: {xs: 1.5, sm: 2}, background: 'none'},
-        // pass isArray type check
+        // biome-ignore lint/suspicious/noExplicitAny: pass isArray type check
         ...(Array.isArray(sx) ? (sx as any[]) : [sx]),
       ]}
     >

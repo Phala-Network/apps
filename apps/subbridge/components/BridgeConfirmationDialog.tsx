@@ -37,7 +37,7 @@ import {encodeAddress} from '@polkadot/util-crypto'
 import Decimal from 'decimal.js'
 import {useAtom, useAtomValue} from 'jotai'
 import {RESET} from 'jotai/utils'
-import {useSnackbar} from 'notistack'
+import {SnackbarKey, useSnackbar} from 'notistack'
 import {
   type FC,
   type ReactNode,
@@ -234,7 +234,7 @@ const BridgeConfirmationDialog: FC<DialogProps> = ({onClose, ...props}) => {
   }
 
   const onSubmit = async (): Promise<void> => {
-    let key
+    let key: SnackbarKey | undefined = undefined
     setConfirming(true)
     try {
       const res = await transfer({
@@ -300,6 +300,7 @@ const BridgeConfirmationDialog: FC<DialogProps> = ({onClose, ...props}) => {
           )
         }
       }
+      // biome-ignore lint/suspicious/noExplicitAny:
     } catch (err: any) {
       setConfirming(false)
       if (key != null) {

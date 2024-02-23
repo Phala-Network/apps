@@ -88,6 +88,7 @@ const WorkerCard: FC<{
             spacing={{xs: 0.5, sm: 3}}
           >
             {Array.from({length: groups}).map((_, i) => (
+              // biome-ignore lint/suspicious/noArrayIndexKey: static list
               <Stack flex={i > 0 ? 1 : 2} spacing={0.5} key={i}>
                 {entries
                   .slice(i * count, (i + 1) * count)

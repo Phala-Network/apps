@@ -8,6 +8,7 @@ export const useSwitchNetwork = (): (() => Promise<void>) => {
   const [fromChain] = useAtom(fromChainAtom)
   const [ethereum] = useAtom(ethereumProviderAtom)
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: evmChainsData
   const switchNetwork = useCallback(async () => {
     if (ethereum == null || fromChain.kind !== 'evm') return
     try {
@@ -20,7 +21,9 @@ export const useSwitchNetwork = (): (() => Promise<void>) => {
         await ethereum.request({
           method: 'wallet_addEthereumChain',
           params: [
-            (evmChainsData as Record<number, unknown>)[fromChain.evmChainId],
+            (evmChainsData as Readonly<Record<number, unknown>>)[
+              fromChain.evmChainId
+            ],
           ],
         })
       }

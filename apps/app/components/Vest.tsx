@@ -20,10 +20,8 @@ import Property from './Property'
 const format = (bn?: BN): ReactElement => {
   if (bn !== undefined) {
     // HACK: derived vestedClaimable may be negative
-    if (bn.isNeg()) {
-      bn = new BN(0)
-    }
-    return <>{`${toCurrency(new Decimal(bn.toString()).div(1e12))} PHA`}</>
+    const value = bn.isNeg() ? new BN(0) : bn
+    return <>{`${toCurrency(new Decimal(value.toString()).div(1e12))} PHA`}</>
   }
   return <Skeleton width={32} variant="text" />
 }

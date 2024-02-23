@@ -54,8 +54,11 @@ export interface Asset {
   existentialDeposit: Partial<Record<ChainId, Decimal>>
   sygmaResourceId?: string
   location?: {
+    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
     polkadot?: any
+    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
     kusama?: any
+    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
     bifrost?: any
   }
 }

@@ -101,7 +101,7 @@ const MuiThemeProvider: FC<{children: ReactNode}> = ({children}) => {
 
   return (
     <>
-      {colorSchemeState == null && <style>{`body {visibility: hidden}`}</style>}
+      {colorSchemeState == null && <style>{'body {visibility: hidden}'}</style>}
       <ThemeProvider theme={theme}>{children}</ThemeProvider>
     </>
   )
