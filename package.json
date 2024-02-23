@@ -14,10 +14,11 @@
   "workspaces": ["apps/*", "packages/*"],
   "scripts": {
     "build": "turbo run build",
-    "check": "turbo run check"
+    "check": "turbo run check",
+    "preinstall": "lefthook install"
   },
   "devDependencies": {
-    "@biomejs/biome": "^1.5.3",
+    "@biomejs/biome": "nightly",
     "@total-typescript/ts-reset": "^0.5.1",
     "@types/node": "^20.11.20",
     "lefthook": "^1.6.1",

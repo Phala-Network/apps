@@ -1,4 +1,4 @@
-import useSWRValue from '@/hooks/useSWRValue'
+import useToday from '@/hooks/useToday'
 import {
   type BasePoolKind,
   useAccountSnapshotsConnectionQuery,
@@ -20,7 +20,7 @@ import {
 } from 'recharts'
 import RechartsTooltip from './RechartsTooltip'
 
-const days = 7
+const days = 30
 
 const FarmChart: FC<{
   account: string
@@ -28,13 +28,13 @@ const FarmChart: FC<{
 }> = ({kind, account}) => {
   const isVault = kind === 'Vault'
   const color = isVault ? colors.vault[500] : colors.main[400]
-  const duration = useSWRValue([days], () => {
-    const date = new Date()
-    date.setUTCHours(0, 0, 0, 0)
+  const today = useToday()
+  const duration = useMemo(() => {
+    const date = new Date(today)
     return Array.from({length: days + 1}).map((_, i) =>
       addDays(date, i - days).toISOString(),
     )
-  })
+  }, [today])
   const [subsquidClient] = useAtom(subsquidClientAtom)
   const {data} = useAccountSnapshotsConnectionQuery(
     subsquidClient,
@@ -42,7 +42,7 @@ const FarmChart: FC<{
       orderBy: 'updatedTime_ASC',
       first: days + 1,
       where: {
-        account: {id_eq: account},
+        account_eq: account,
         updatedTime_in: duration,
       },
       withCumulativeStakePoolOwnerRewards: kind === 'StakePool',

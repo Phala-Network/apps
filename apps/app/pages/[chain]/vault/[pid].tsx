@@ -1,6 +1,5 @@
 import DetailPage from '@/components/BasePool/DetailPage'
 import DelegationList from '@/components/Delegation/List'
-import fixBasePoolFree from '@/lib/fixBasePoolFree'
 import getBasePoolServerSideProps, {
   type BasePoolServerSideProps,
 } from '@/lib/getBasePoolServerSideProps'
@@ -9,7 +8,6 @@ import {subsquidClientAtom} from '@/store/common'
 import {Box} from '@mui/material'
 import {polkadotAccountAtom} from '@phala/store'
 import {useAtom} from 'jotai'
-import {create} from 'mutative'
 import {type NextPage} from 'next'
 
 export const getServerSideProps = getBasePoolServerSideProps('Vault')
@@ -27,11 +25,7 @@ const Vault: NextPage<BasePoolServerSideProps> = ({
     {
       initialData: initialData ?? undefined,
       initialDataUpdatedAt,
-      select: (data) => {
-        if (data.basePoolById != null) {
-          return create(data.basePoolById, fixBasePoolFree)
-        }
-      },
+      select: (data) => data.basePoolById,
     },
   )
 

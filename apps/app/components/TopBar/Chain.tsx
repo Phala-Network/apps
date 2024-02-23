@@ -19,9 +19,13 @@ const ChainSelect: FC = () => {
   const backgroundColor = isKhala ? '#1E565E' : colors.main[700]
 
   const [subsquidClient] = useAtom(subsquidClientAtom)
-  const {data: globalStateData} = useGlobalStateQuery(subsquidClient)
-  const subsquidHeight = globalStateData?.squidStatus?.height
-  const blockTime = globalStateData?.globalStateById?.averageBlockTime
+  const {data: globalStateData} = useGlobalStateQuery(
+    subsquidClient,
+    undefined,
+    {select: (data) => data.globalStateById},
+  )
+  const subsquidHeight = globalStateData?.height
+  const blockTime = globalStateData?.averageBlockTime
   const apiConnected = api?.isConnected
   const {data: chainHeight} = useQuery(
     ['chainHeight', chain],

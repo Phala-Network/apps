@@ -1,6 +1,6 @@
 import {type WikiEntry} from '@/assets/wikiData'
 import {khalaSubsquidClient, phalaSubsquidClient} from '@/config'
-import useSWRValue from '@/hooks/useSWRValue'
+import useToday from '@/hooks/useToday'
 import {
   useGlobalStateQuery,
   useGlobalStateSnapshotsConnectionQuery,
@@ -16,31 +16,45 @@ import {
 import {useQuery} from '@tanstack/react-query'
 import {addDays} from 'date-fns'
 import Decimal from 'decimal.js'
+import {type GraphQLClient} from 'graphql-request'
 import {useAtom} from 'jotai'
 import {type FC, useMemo, useState} from 'react'
 import Property from '../Property'
 
+const useDailyRewards = (client: GraphQLClient) => {
+  const today = useToday()
+  const pastTwoDays = useMemo(() => {
+    const date = new Date(today)
+    return [date.toISOString(), addDays(date, -1).toISOString()]
+  }, [today])
+  const {data} = useGlobalStateSnapshotsConnectionQuery(
+    client,
+    {
+      orderBy: 'updatedTime_ASC',
+      where: {updatedTime_in: pastTwoDays},
+    },
+    {
+      select: (data) => data.globalStateSnapshotsConnection.edges,
+    },
+  )
+  return useMemo(() => {
+    if (data?.length !== 2) return null
+    return new Decimal(data[1].node.cumulativeRewards).sub(
+      data[0].node.cumulativeRewards,
+    )
+  }, [data])
+}
+
+const useGlobalStateData = (client: GraphQLClient) =>
+  useGlobalStateQuery(client, undefined, {
+    select: (data) => data.globalStateById,
+  })
+
 const NetworkStats: FC = () => {
   const theme = useTheme()
   const match = useMediaQuery(theme.breakpoints.down('lg'))
-  const yesterday = useSWRValue([], () => {
-    const date = new Date()
-    date.setUTCMinutes(0, 0, 0)
-    return addDays(date, -1).toISOString()
-  })
+
   const [chain] = useAtom(chainAtom)
-  const {data: phalaGlobalStateSnapshotData} =
-    useGlobalStateSnapshotsConnectionQuery(phalaSubsquidClient, {
-      orderBy: 'updatedTime_ASC',
-      where: {updatedTime_gte: yesterday},
-      first: 1,
-    })
-  const {data: khalaGlobalStateSnapshotData} =
-    useGlobalStateSnapshotsConnectionQuery(khalaSubsquidClient, {
-      orderBy: 'updatedTime_ASC',
-      where: {updatedTime_gte: yesterday},
-      first: 1,
-    })
   const {data: circulationValue} = useQuery(
     ['circulations', chain],
     async () => {
@@ -56,22 +70,22 @@ const NetworkStats: FC = () => {
       }
     },
   )
-  const {data: phalaGlobalStateData} = useGlobalStateQuery(phalaSubsquidClient)
-  const {data: khalaGlobalStateData} = useGlobalStateQuery(khalaSubsquidClient)
+  const {data: phalaGlobalStateData} = useGlobalStateData(phalaSubsquidClient)
+  const {data: khalaGlobalStateData} = useGlobalStateData(khalaSubsquidClient)
   const {
     totalValue: phalaTotalValue,
     idleWorkerShares: phalaIdleWorkerShares,
     idleWorkerCount: phalaIdleWorkerCount,
     averageApr: phalaAverageApr,
     budgetPerShare: phalaBudgetPerShare,
-  } = phalaGlobalStateData?.globalStateById ?? {}
+  } = phalaGlobalStateData ?? {}
   const {
     totalValue: khalaTotalValue,
     idleWorkerShares: khalaIdleWorkerShares,
     idleWorkerCount: khalaIdleWorkerCount,
     averageApr: khalaAverageApr,
     budgetPerShare: khalaBudgetPerShare,
-  } = khalaGlobalStateData?.globalStateById ?? {}
+  } = khalaGlobalStateData ?? {}
   const phalaTotalValueDecimal = useMemo(() => {
     if (phalaTotalValue == null) return null
     return new Decimal(phalaTotalValue)
@@ -117,24 +131,8 @@ const NetworkStats: FC = () => {
     if (circulationValue == null || totalValueDecimal == null) return null
     return toPercentage(totalValueDecimal.div(circulationValue))
   }, [circulationValue, totalValueDecimal])
-  const phalaDailyRewards = useMemo(() => {
-    const prevRewards =
-      phalaGlobalStateSnapshotData?.globalStateSnapshotsConnection.edges[0]
-        ?.node.cumulativeRewards
-    const currentRewards =
-      phalaGlobalStateData?.globalStateById?.cumulativeRewards
-    if (prevRewards == null || currentRewards == null) return null
-    return new Decimal(currentRewards).minus(prevRewards)
-  }, [phalaGlobalStateSnapshotData, phalaGlobalStateData])
-  const khalaDailyRewards = useMemo(() => {
-    const prevRewards =
-      khalaGlobalStateSnapshotData?.globalStateSnapshotsConnection.edges[0]
-        ?.node.cumulativeRewards
-    const currentRewards =
-      khalaGlobalStateData?.globalStateById?.cumulativeRewards
-    if (prevRewards == null || currentRewards == null) return null
-    return new Decimal(currentRewards).minus(prevRewards)
-  }, [khalaGlobalStateSnapshotData, khalaGlobalStateData])
+  const phalaDailyRewards = useDailyRewards(phalaSubsquidClient)
+  const khalaDailyRewards = useDailyRewards(khalaSubsquidClient)
   const totalDailyRewards = useMemo(() => {
     if (phalaDailyRewards == null || khalaDailyRewards == null) {
       return null

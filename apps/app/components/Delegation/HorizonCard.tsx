@@ -1,6 +1,7 @@
 import StakePoolIcon from '@/assets/stake_pool_detailed.svg'
 import VaultIcon from '@/assets/vault_detailed.svg'
 import Property from '@/components/Property'
+import useDelegationOneDayProfit from '@/hooks/useDelegationOneDayProfit'
 import useGetApr from '@/hooks/useGetApr'
 import usePolkadotApi from '@/hooks/usePolkadotApi'
 import useSignAndSend from '@/hooks/useSignAndSend'
@@ -23,7 +24,6 @@ import {
   useTheme,
 } from '@mui/material'
 import {toCurrency, toPercentage} from '@phala/lib'
-import type Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
 import {type FC} from 'react'
 import Identity from '../BasePool/Identity'
@@ -35,8 +35,8 @@ const HorizonCard: FC<{
   delegation: DelegationCommonFragment
   onAction: OnAction
   isOwner?: boolean
-  profit?: Decimal
-}> = ({delegation, onAction, isOwner = false, profit}) => {
+}> = ({delegation, onAction, isOwner = false}) => {
+  const profit = useDelegationOneDayProfit(delegation.id)
   const api = usePolkadotApi()
   const signAndSend = useSignAndSend()
   const {value, basePool, withdrawingValue} = delegation
@@ -121,7 +121,7 @@ const HorizonCard: FC<{
             wikiEntry="nftValue"
           >{`${toCurrency(value)} PHA`}</Property>
           {profit != null && (
-            <Property label="24h" sx={{width: 100}} wikiEntry="oneDayRewards">
+            <Property label="1d" sx={{width: 100}} wikiEntry="oneDayRewards">
               <Stack
                 direction="row"
                 alignItems="center"
@@ -132,7 +132,7 @@ const HorizonCard: FC<{
                 }
               >
                 <ArrowDropUpIcon
-                  sx={{mx: '-3px', transform: `translate(0, 2px)`}}
+                  sx={{mx: '-3px', transform: 'translate(0, 2px)'}}
                 />
 
                 <Typography variant="num5">

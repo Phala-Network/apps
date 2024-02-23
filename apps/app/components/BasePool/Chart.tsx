@@ -1,4 +1,4 @@
-import useSWRValue from '@/hooks/useSWRValue'
+import useToday from '@/hooks/useToday'
 import {aprToApy} from '@/lib/apr'
 import {
   type BasePoolCommonFragment,
@@ -22,7 +22,7 @@ import {
 } from 'recharts'
 import RechartsTooltip from '../RechartsTooltip'
 
-const days = 7
+const days = 30
 
 export type BasePoolChartKind =
   | 'totalValue'
@@ -42,25 +42,23 @@ const BasePoolChart: FC<{
   const isVault = basePool.kind === 'Vault'
   const isInteger = kind === 'delegatorCount' || kind === 'workerCount'
   const color = isVault ? colors.vault[500] : colors.main[400]
-  const dimension = kind === 'ownerRewards' ? 'day' : 'hour'
-  const startTime = useSWRValue([days], () => {
-    const date = new Date()
-    date.setUTCMinutes(0, 0, 0)
+  const today = useToday()
+  const startTime = useMemo(() => {
+    const date = new Date(today)
     return addDays(date, -days).toISOString()
-  })
-  const duration = useSWRValue([days], () => {
-    const date = new Date()
-    date.setUTCHours(0, 0, 0, 0)
+  }, [today])
+  const duration = useMemo(() => {
+    const date = new Date(today)
     return Array.from({length: days + 1}).map((_, i) =>
       addDays(date, i - days).toISOString(),
     )
-  })
+  }, [today])
   const [subsquidClient] = useAtom(subsquidClientAtom)
   const {data} = useBasePoolSnapshotsConnectionQuery(
     subsquidClient,
     {
       orderBy: 'updatedTime_ASC',
-      first: dimension === 'day' ? days + 1 : days * 24 + 1,
+      first: days + 1,
       withApr: kind === 'apr',
       withCommission: kind === 'commission',
       withTotalValue: kind === 'totalValue',
@@ -69,10 +67,8 @@ const BasePoolChart: FC<{
       withStakePoolCount: kind === 'stakePoolCount',
       withCumulativeOwnerRewards: kind === 'ownerRewards',
       where: {
-        basePool: {id_eq: basePool.id},
-        ...(dimension === 'day'
-          ? {updatedTime_in: duration}
-          : {updatedTime_gte: startTime}),
+        basePool_eq: basePool.id,
+        updatedTime_in: duration,
       },
     },
     {
@@ -113,7 +109,7 @@ const BasePoolChart: FC<{
     }
 
     const result: ChartData = Array.from({
-      length: dimension === 'day' ? days : days * 24 + 1,
+      length: days,
     }).map((_, i) => {
       const date = addHours(new Date(startTime), i)
       return {dateString: date.toLocaleString(), date}
@@ -123,7 +119,7 @@ const BasePoolChart: FC<{
       const date = new Date(node.updatedTime)
       const index = result.findIndex((r) => r.date.getTime() >= date.getTime())
       if (index !== -1) {
-        let value
+        let value: Decimal | number | null | undefined
         if (kind === 'totalValue' && node.totalValue != null) {
           value = new Decimal(node.totalValue)
         } else if (kind === 'apr' && node.apr != null) {
@@ -159,7 +155,7 @@ const BasePoolChart: FC<{
     }
 
     return result
-  }, [data, kind, dimension, startTime, isPercentage, isVault])
+  }, [data, kind, startTime, isPercentage, isVault])
 
   const label = useMemo(() => {
     switch (kind) {

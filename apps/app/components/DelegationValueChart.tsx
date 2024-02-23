@@ -1,4 +1,4 @@
-import useSWRValue from '@/hooks/useSWRValue'
+import useToday from '@/hooks/useToday'
 import {useAccountSnapshotsConnectionQuery} from '@/lib/subsquidQuery'
 import {subsquidClientAtom} from '@/store/common'
 import {compactFormat} from '@phala/lib'
@@ -21,17 +21,17 @@ const DelegationValueChart: FC<{address?: string; days: number}> = ({
   days,
 }) => {
   const [subsquidClient] = useAtom(subsquidClientAtom)
-  const startTime = useSWRValue([days], () => {
-    const date = new Date()
-    date.setUTCHours(0, 0, 0, 0)
+  const today = useToday()
+  const startTime = useMemo(() => {
+    const date = new Date(today)
     return addDays(date, -days).toISOString()
-  })
+  }, [today, days])
   const {data} = useAccountSnapshotsConnectionQuery(
     subsquidClient,
     {
       orderBy: 'updatedTime_DESC',
       where: {
-        account: {id_eq: address},
+        account_eq: address,
         updatedTime_gte: startTime,
       },
       withDelegationValue: true,

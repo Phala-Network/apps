@@ -11,7 +11,16 @@ const Property: FC<{
   fullWidth?: boolean
   sx?: SxProps
   wikiEntry?: WikiEntry
-}> = ({size = 'medium', label, children, fullWidth = false, sx, wikiEntry}) => {
+  wrapDecimal?: boolean
+}> = ({
+  size = 'medium',
+  label,
+  children,
+  fullWidth = false,
+  sx,
+  wikiEntry,
+  wrapDecimal = false,
+}) => {
   const labelNode = (
     <Typography
       lineHeight={1.3}
@@ -24,7 +33,7 @@ const Property: FC<{
     </Typography>
   )
 
-  const value = <WrapDecimal>{children}</WrapDecimal>
+  const value = wrapDecimal ? <WrapDecimal>{children}</WrapDecimal> : children
 
   return (
     <Stack

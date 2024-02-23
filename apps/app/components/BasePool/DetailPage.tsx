@@ -7,13 +7,9 @@ import PageHeader from '@/components/PageHeader'
 import Property from '@/components/Property'
 import useGetApr from '@/hooks/useGetApr'
 import usePolkadotApi from '@/hooks/usePolkadotApi'
-import useSWRValue from '@/hooks/useSWRValue'
 import useSelectedVaultState from '@/hooks/useSelectedVaultState'
 import useSignAndSend from '@/hooks/useSignAndSend'
 import {aprToApy} from '@/lib/apr'
-import fixBasePoolFree from '@/lib/fixBasePoolFree'
-import getDelegationProfit from '@/lib/getDelegationProfit'
-import {create} from 'mutative'
 
 import {
   type BasePoolCommonFragment,
@@ -62,7 +58,6 @@ type DetailPageDialogAction = 'withdraw' | 'ownerSettings'
 const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
   const api = usePolkadotApi()
   const [chartTab, setChartTab] = useState<BasePoolChartKind>('apr')
-  const yesterday = useSWRValue([], () => addDays(new Date(), -1).toISOString())
   const signAndSend = useSignAndSend()
   const [dialogOpen, setDialogOpen] = useState(false)
   const [dialogAction, setDialogAction] = useState<DetailPageDialogAction>()
@@ -98,17 +93,10 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
         id: `${basePool.id}-${
           selectedVaultState?.account.id ?? account?.address ?? ''
         }`,
-        snapshotsWhere: {updatedTime_gte: yesterday},
       },
       {
         enabled: selectedVaultState != null || account !== null,
-        select: (data) => {
-          if (data.delegationById != null) {
-            return create(data.delegationById, (draft) => {
-              fixBasePoolFree(draft.basePool)
-            })
-          }
-        },
+        select: (data) => data.delegationById,
       },
     )
   const onClose = useCallback(() => {
@@ -125,15 +113,6 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
         : api.tx.phalaStakePoolv2.checkAndMaybeForceWithdraw(basePool.id),
     )
   }
-
-  const delegationProfit = useMemo(() => {
-    let profit = new Decimal(0)
-    const snapshot = delegation?.snapshots[0]
-    if (delegation != null && snapshot != null) {
-      profit = getDelegationProfit(delegation, snapshot)
-    }
-    return profit
-  }, [delegation])
 
   const charts = useMemo<Array<[string, BasePoolChartKind]>>(() => {
     return [
@@ -212,6 +191,7 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
                     label="Delegable"
                     sx={{width: 140}}
                     wikiEntry="delegable"
+                    wrapDecimal
                   >
                     {stakePool.delegable != null
                       ? `${toCurrency(stakePool.delegable)} PHA`
@@ -230,7 +210,7 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
                   </Property>
                 )}
                 {vault != null && (
-                  <Property label="TVL" sx={{width: 150}}>
+                  <Property label="TVL" sx={{width: 150}} wrapDecimal>
                     {`${toCurrency(basePool.totalValue)} PHA`}
                   </Property>
                 )}
@@ -349,11 +329,7 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
                     mr={1}
                   >
                     <Box width="380px">
-                      <NftCard
-                        compact
-                        delegation={delegation}
-                        profit={delegationProfit}
-                      />
+                      <NftCard compact delegation={delegation} />
                     </Box>
                     <Stack
                       spacing={2}

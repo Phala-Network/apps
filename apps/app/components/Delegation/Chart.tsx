@@ -1,4 +1,4 @@
-import useSWRValue from '@/hooks/useSWRValue'
+import useToday from '@/hooks/useToday'
 import getDelegationProfit from '@/lib/getDelegationProfit'
 import {
   type DelegationCommonFragment,
@@ -22,27 +22,26 @@ import {
 } from 'recharts'
 import RechartsTooltip from '../RechartsTooltip'
 
-const days = 14
+const days = 30
 
 const DelegationChart: FC<{
   delegation: DelegationCommonFragment
 }> = ({delegation}) => {
   const isVault = delegation.basePool.kind === 'Vault'
   const color = isVault ? colors.vault[500] : colors.main[400]
-
-  const duration = useSWRValue([], () => {
-    const date = new Date()
-    date.setUTCHours(0, 0, 0, 0)
+  const today = useToday()
+  const duration = useMemo(() => {
+    const date = new Date(today)
     return Array.from({length: days + 1}).map((_, i) =>
       addDays(date, i - days).toISOString(),
     )
-  })
+  }, [today])
   const [subsquidClient] = useAtom(subsquidClientAtom)
   const {data} = useDelegationSnapshotsConnectionQuery(
     subsquidClient,
     {
       orderBy: 'updatedTime_ASC',
-      where: {delegation: {id_eq: delegation.id}, updatedTime_in: duration},
+      where: {delegation_eq: delegation.id, updatedTime_in: duration},
     },
     {
       refetchOnMount: false,

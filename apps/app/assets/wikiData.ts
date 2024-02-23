@@ -25,7 +25,7 @@ const wikiData = {
   dailyRewards: {
     title: 'Daily Rewards',
     content:
-      'The total amount of computation rewards distributed across the Phala & Khala network in the past 24 hours (refreshed hourly).',
+      'The total amount of computation rewards distributed across the Phala & Khala network in the past day.',
   },
   avgApr: {
     title: 'Avg APR',
@@ -160,9 +160,9 @@ const wikiData = {
   },
 
   oneDayRewards: {
-    title: '24h Rewards',
+    title: '1d Rewards',
     content:
-      'The delegation rewards earned by this Delegation NFT in the past 24 hours, updated hourly. \nIt is calculated by: the current actual value - the actual value 24 hours ago. \nThis value may be affected by the irregularity of rewards collected by the Vault owner. Please check the pool details page for the daily rewards in the recent period to get more information.',
+      'The delegation rewards earned by this Delegation NFT in the past day. \nThis value may be affected by the irregularity of rewards collected by the Vault owner. Please check the pool details page for the daily rewards in the recent period to get more information.',
   },
 
   workerState: {

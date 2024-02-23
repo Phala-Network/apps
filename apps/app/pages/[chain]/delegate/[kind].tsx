@@ -14,8 +14,6 @@ import {
   Paper,
   Stack,
   Switch,
-  ToggleButton,
-  ToggleButtonGroup,
   Typography,
   styled,
 } from '@mui/material'
@@ -73,6 +71,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
   }
 }
 
+const CHART_DAY = 30
+
 const Delegate: NextPage = () => {
   const {
     query: {kind},
@@ -86,7 +86,6 @@ const Delegate: NextPage = () => {
   const [switchChecked, setSwitchChecked] = useState(!isVault)
   const selectedVaultState = useSelectedVaultState()
   const asAccount = selectedVaultState === null
-  const [chartDays, setChartDays] = useState(7)
 
   useEffect(() => {
     setSwitchChecked(kind === 'stake-pool')
@@ -115,7 +114,7 @@ const Delegate: NextPage = () => {
 
   return (
     <>
-      <PageHeader title="Delegate"></PageHeader>
+      <PageHeader title="Delegate" />
 
       <Stack direction={{xs: 'column', md: 'row'}} spacing={2}>
         <DelegationDetailCard sx={{flex: {xs: 'none', md: '1'}}} />
@@ -129,39 +128,13 @@ const Delegate: NextPage = () => {
           }}
         >
           <Stack height="100%">
-            <Stack
-              direction="row"
-              justifyContent="space-between"
-              alignItems="flex-start"
-            >
-              <WikiButton entry="delegationValue">
-                <Typography variant="h6">Delegation Value</Typography>
-              </WikiButton>
-              <ToggleButtonGroup
-                color="primary"
-                exclusive
-                size="small"
-                value={chartDays}
-                onChange={(_, value) => {
-                  if (value != null) {
-                    setChartDays(value as number)
-                  }
-                }}
-              >
-                <ToggleButton sx={{width: 40}} value={7}>
-                  7D
-                </ToggleButton>
-                <ToggleButton sx={{width: 40}} value={14}>
-                  14D
-                </ToggleButton>
-                <ToggleButton sx={{width: 40}} value={30}>
-                  1M
-                </ToggleButton>
-              </ToggleButtonGroup>
-            </Stack>
+            <WikiButton entry="delegationValue">
+              <Typography variant="h6">Delegation Value</Typography>
+            </WikiButton>
+
             <Box flex={1} ml={{xs: -1, sm: -1.5}}>
               <DelegationValueChart
-                days={chartDays}
+                days={CHART_DAY}
                 address={
                   selectedVaultState === null
                     ? account?.address

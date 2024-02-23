@@ -71,13 +71,12 @@ const transform = (data: Data, updatedTimeArray: string[]): Snapshot[] => {
 }
 
 const fetchComputationSnapshot = async (): Promise<ComputationSnapshot> => {
-  const days = 30
-  const intervalHours = 12
-  const startTime = addDays(new Date(), -days)
-  startTime.setUTCHours(0, 0, 0, 0)
+  const days = 90
+  const endTime = new Date()
+  endTime.setUTCHours(0, 0, 0, 0)
   const updatedTimeArray: string[] = []
-  for (let i = 0; i < Math.floor((days * 24) / intervalHours); i++) {
-    updatedTimeArray.push(addHours(startTime, i * intervalHours).toISOString())
+  for (let i = 0; i < days; i++) {
+    updatedTimeArray.push(addDays(endTime, i).toISOString())
   }
   const document = gql`
     {
