@@ -2,9 +2,9 @@ import {type WikiEntry} from '@/assets/wikiData'
 import Property from '@/components/Property'
 import {type BasePoolCommonFragment} from '@/lib/subsquidQuery'
 import {Box, Stack, type SxProps} from '@mui/material'
-import {toCurrency, toPercentage} from '@phala/utils'
+import {toCurrency, toPercentage} from '@phala/lib'
 import Decimal from 'decimal.js'
-import {useMemo, type FC, type ReactNode} from 'react'
+import {type FC, type ReactNode, useMemo} from 'react'
 
 const ExtraProperties: FC<{basePool: BasePoolCommonFragment; sx?: SxProps}> = ({
   basePool,
@@ -71,6 +71,7 @@ const ExtraProperties: FC<{basePool: BasePoolCommonFragment; sx?: SxProps}> = ({
       sx={sx}
     >
       {Array.from({length: groups}).map((_, i) => (
+        // biome-ignore lint/suspicious/noArrayIndexKey: static list
         <Stack flex="1 0" spacing={0.5} key={i}>
           {entries
             .slice(i * count, (i + 1) * count)

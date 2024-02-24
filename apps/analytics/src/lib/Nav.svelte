@@ -1,19 +1,19 @@
 <script lang="ts">
-  import {
-    Menu,
-    MenuButton,
-    MenuItem,
-    MenuItems,
-  } from '@rgossiaux/svelte-headlessui'
-  import {ChevronDownIcon} from '@rgossiaux/svelte-heroicons/solid'
-  import {fade} from 'svelte/transition'
+import {
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuItems,
+} from '@rgossiaux/svelte-headlessui'
+import {ChevronDownIcon} from '@rgossiaux/svelte-heroicons/solid'
+import {fade} from 'svelte/transition'
 
-  let links: {label: string; href: string}[] = [
-    {label: 'Official Website', href: 'https://phala.network'},
-    {label: 'Phala App', href: 'https://app.phala.network'},
-    {label: 'Phat Contract', href: 'https://phat.phala.network'},
-    {label: 'Phat Bricks', href: 'https://bricks.phala.network'},
-  ]
+let links: {label: string; href: string}[] = [
+  {label: 'Official Website', href: 'https://phala.network'},
+  {label: 'Phala App', href: 'https://app.phala.network'},
+  {label: 'Phat Contract', href: 'https://phat.phala.network'},
+  {label: 'Phat Bricks', href: 'https://bricks.phala.network'},
+]
 </script>
 
 <nav

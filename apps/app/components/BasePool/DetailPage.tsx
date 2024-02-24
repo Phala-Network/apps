@@ -9,21 +9,15 @@ import useGetApr from '@/hooks/useGetApr'
 import usePolkadotApi from '@/hooks/usePolkadotApi'
 import useSelectedVaultState from '@/hooks/useSelectedVaultState'
 import useSignAndSend from '@/hooks/useSignAndSend'
-import useSWRValue from '@/hooks/useSWRValue'
 import {aprToApy} from '@/lib/apr'
-import fixBasePoolFree from '@/lib/fixBasePoolFree'
-import getDelegationProfit from '@/lib/getDelegationProfit'
-import {create} from 'mutative'
-
 import {
-  useDelegationByIdQuery,
   type BasePoolCommonFragment,
+  useDelegationByIdQuery,
 } from '@/lib/subsquidQuery'
 import {colors} from '@/lib/theme'
+import {subsquidClientAtom} from '@/store/common'
 import Settings from '@mui/icons-material/Settings'
 import {TabContext, TabList, TabPanel} from '@mui/lab'
-
-import {subsquidClientAtom} from '@/store/common'
 import {
   Box,
   Button,
@@ -37,12 +31,10 @@ import {
   Typography,
   useTheme,
 } from '@mui/material'
+import {toCurrency, toPercentage} from '@phala/lib'
 import {polkadotAccountAtom} from '@phala/store'
-import {toCurrency, toPercentage} from '@phala/utils'
-import {addDays} from 'date-fns'
-import Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
-import {useCallback, useMemo, useState, type FC} from 'react'
+import {type FC, useCallback, useMemo, useState} from 'react'
 import DelegationChart from '../Delegation/Chart'
 import Withdraw from '../Delegation/Withdraw'
 import Empty from '../Empty'
@@ -62,7 +54,6 @@ type DetailPageDialogAction = 'withdraw' | 'ownerSettings'
 const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
   const api = usePolkadotApi()
   const [chartTab, setChartTab] = useState<BasePoolChartKind>('apr')
-  const yesterday = useSWRValue([], () => addDays(new Date(), -1).toISOString())
   const signAndSend = useSignAndSend()
   const [dialogOpen, setDialogOpen] = useState(false)
   const [dialogAction, setDialogAction] = useState<DetailPageDialogAction>()
@@ -98,17 +89,10 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
         id: `${basePool.id}-${
           selectedVaultState?.account.id ?? account?.address ?? ''
         }`,
-        snapshotsWhere: {updatedTime_gte: yesterday},
       },
       {
         enabled: selectedVaultState != null || account !== null,
-        select: (data) => {
-          if (data.delegationById != null) {
-            return create(data.delegationById, (draft) => {
-              fixBasePoolFree(draft.basePool)
-            })
-          }
-        },
+        select: (data) => data.delegationById,
       },
     )
   const onClose = useCallback(() => {
@@ -125,15 +109,6 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
         : api.tx.phalaStakePoolv2.checkAndMaybeForceWithdraw(basePool.id),
     )
   }
-
-  const delegationProfit = useMemo(() => {
-    let profit = new Decimal(0)
-    const snapshot = delegation?.snapshots[0]
-    if (delegation != null && snapshot != null) {
-      profit = getDelegationProfit(delegation, snapshot)
-    }
-    return profit
-  }, [delegation])
 
   const charts = useMemo<Array<[string, BasePoolChartKind]>>(() => {
     return [
@@ -212,6 +187,7 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
                     label="Delegable"
                     sx={{width: 140}}
                     wikiEntry="delegable"
+                    wrapDecimal
                   >
                     {stakePool.delegable != null
                       ? `${toCurrency(stakePool.delegable)} PHA`
@@ -230,7 +206,7 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
                   </Property>
                 )}
                 {vault != null && (
-                  <Property label="TVL" sx={{width: 150}}>
+                  <Property label="TVL" sx={{width: 150}} wrapDecimal>
                     {`${toCurrency(basePool.totalValue)} PHA`}
                   </Property>
                 )}
@@ -298,7 +274,7 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
                 <TabList
                   indicatorColor={color}
                   textColor={color}
-                  onChange={(e, newValue) => {
+                  onChange={(_, newValue) => {
                     setChartTab(newValue as BasePoolChartKind)
                   }}
                 >
@@ -306,7 +282,7 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
                     <Tab label={label} value={value} key={value} />
                   ))}
                 </TabList>
-                {charts.map(([label, value]) => (
+                {charts.map(([, value]) => (
                   <TabPanel
                     value={value}
                     sx={{px: 0, pb: 0, flex: 1}}
@@ -349,11 +325,7 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
                     mr={1}
                   >
                     <Box width="380px">
-                      <NftCard
-                        compact
-                        delegation={delegation}
-                        profit={delegationProfit}
-                      />
+                      <NftCard compact delegation={delegation} />
                     </Box>
                     <Stack
                       spacing={2}

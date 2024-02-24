@@ -42,7 +42,9 @@ const Entry: FC<{
       defaultExpanded={defaultExpanded}
       square
       disableGutters
-      TransitionProps={{mountOnEnter: true, unmountOnExit: true}}
+      slotProps={{
+        transition: {mountOnEnter: true, unmountOnExit: true},
+      }}
       sx={{
         '&:before': {display: 'none'},
         borderRadius: `${theme.shape.borderRadius}px`,

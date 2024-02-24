@@ -8,7 +8,6 @@ import {
   bridgeInfoAtom,
   decimalsAtom,
   fromChainAtom,
-  toChainAtom,
 } from '@/store/bridge'
 import {evmAccountAtom, isNetworkWrongAtom} from '@/store/ethers'
 import {LoadingButton} from '@mui/lab'
@@ -16,14 +15,13 @@ import {Button, Stack} from '@mui/material'
 import Decimal from 'decimal.js'
 import {useAtom, useAtomValue} from 'jotai'
 import {useSnackbar} from 'notistack'
-import {useEffect, useState, type FC} from 'react'
+import {type FC, useEffect, useState} from 'react'
 import useSWR from 'swr'
 
 const EvmAction: FC<{onConfirm: () => void}> = ({onConfirm}) => {
   const [approveLoading, setApproveLoading] = useState(false)
   const {enqueueSnackbar} = useSnackbar()
   const [fromChain] = useAtom(fromChainAtom)
-  const [toChain] = useAtom(toChainAtom)
   const [amount] = useAtom(amountAtom)
   const ethersAssetContract = useCurrentEthersAssetContract()
   const [evmAccount] = useAtom(evmAccountAtom)
@@ -32,20 +30,11 @@ const EvmAction: FC<{onConfirm: () => void}> = ({onConfirm}) => {
   const {kind: bridgeKind} = useAtomValue(bridgeInfoAtom)
   const switchNetwork = useSwitchNetwork()
   const decimals = useAtomValue(decimalsAtom)
-  const needApproval =
-    bridgeKind === 'evmChainBridge' || bridgeKind === 'evmSygma'
+  const needApproval = bridgeKind === 'evmSygma'
   let spender: string | undefined
   if (bridgeKind === 'evmSygma') {
     spender = (fromChain as EvmChain).sygmaHandler
-  } else if (
-    fromChain.kind === 'evm' &&
-    fromChain.chainBridgeContract != null
-  ) {
-    spender =
-      fromChain.chainBridgeContract.spender[toChain.id] ??
-      fromChain.chainBridgeContract.spender.default
   }
-
   const {data: allowance} = useSWR(
     needApproval &&
       ethersAssetContract != null &&

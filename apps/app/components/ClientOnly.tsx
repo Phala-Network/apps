@@ -1,4 +1,4 @@
-import {useEffect, useState, type FC, type ReactNode} from 'react'
+import {type FC, type ReactNode, useEffect, useState} from 'react'
 
 // MEMO: different from MUI <NoSsr />, fallback content will be also rendered when children is falsy
 const ClientOnly: FC<{children: ReactNode; fallback?: ReactNode}> = ({

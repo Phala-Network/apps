@@ -28,8 +28,8 @@ import {
   TextField,
   Typography,
 } from '@mui/material'
+import {toCurrency, validateAddress} from '@phala/lib'
 import {polkadotAccountAtom} from '@phala/store'
-import {toCurrency, validateAddress} from '@phala/utils'
 import {type SubmittableExtrinsic} from '@polkadot/api/types'
 import {type ISubmittableResult} from '@polkadot/types/types'
 import {useQuery} from '@tanstack/react-query'
@@ -363,7 +363,7 @@ const Subsidy: NextPage = () => {
                 <TableCell width={200}>Date</TableCell>
                 <TableCell width={200}>Vault/StakePool</TableCell>
                 <TableCell>Rewards</TableCell>
-                <TableCell></TableCell>
+                <TableCell />
               </TableRow>
             </TableHead>
             <TableBody>

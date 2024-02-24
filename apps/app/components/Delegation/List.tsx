@@ -3,15 +3,12 @@ import Empty from '@/components/Empty'
 import ListSkeleton from '@/components/ListSkeleton'
 import SectionHeader from '@/components/SectionHeader'
 import useDebounced from '@/hooks/useDebounced'
-import useSWRValue from '@/hooks/useSWRValue'
-import fixBasePoolFree from '@/lib/fixBasePoolFree'
-import getDelegationProfit from '@/lib/getDelegationProfit'
 import {
-  useInfiniteDelegationsConnectionQuery,
   type BasePoolKind,
   type DelegationCommonFragment,
   type DelegationOrderByInput,
   type DelegationWhereInput,
+  useInfiniteDelegationsConnectionQuery,
 } from '@/lib/subsquidQuery'
 import {subsquidClientAtom} from '@/store/common'
 import FilterList from '@mui/icons-material/FilterList'
@@ -24,7 +21,6 @@ import {
   Dialog,
   Drawer,
   FormControlLabel,
-  Unstable_Grid2 as Grid,
   IconButton,
   MenuItem,
   NoSsr,
@@ -34,12 +30,10 @@ import {
   ToggleButton,
   ToggleButtonGroup,
   Typography,
+  Unstable_Grid2 as Grid,
 } from '@mui/material'
-import {addDays} from 'date-fns'
-import Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
-import {create} from 'mutative'
-import {useCallback, useEffect, useState, type FC} from 'react'
+import {type FC, useCallback, useEffect, useState} from 'react'
 import {useInView} from 'react-intersection-observer'
 import HorizonCard from './HorizonCard'
 import NftCard from './NftCard'
@@ -67,7 +61,6 @@ const DelegationList: FC<{
   isVault?: boolean
   isOwner?: boolean
 }> = ({address, isVault = false, showHeader = false, isOwner = false}) => {
-  const yesterday = useSWRValue([], () => addDays(new Date(), -1).toISOString())
   const {ref, inView} = useInView()
   const [dialogOpen, setDialogOpen] = useState(false)
   const [dialogAction, setDialogAction] = useState<DelegationDialogAction>()
@@ -107,7 +100,6 @@ const DelegationList: FC<{
         first: 20,
         orderBy,
         where: {AND: where.filter(Boolean)},
-        snapshotsWhere: {updatedTime_gte: yesterday},
       },
       {
         enabled,
@@ -115,15 +107,6 @@ const DelegationList: FC<{
           lastPage.delegationsConnection.pageInfo.hasNextPage
             ? {after: lastPage.delegationsConnection.pageInfo.endCursor}
             : undefined,
-        select: (data) => {
-          return create(data, (draft) => {
-            draft.pages.forEach((page) => {
-              page.delegationsConnection.edges.forEach((edge) => {
-                fixBasePoolFree(edge.node.basePool)
-              })
-            })
-          })
-        },
       },
     )
 
@@ -246,7 +229,7 @@ const DelegationList: FC<{
               size="small"
               value={showNftCard}
               exclusive
-              onChange={(e, value: boolean) => {
+              onChange={(_, value: boolean) => {
                 if (value !== null) {
                   setShowNftCard(value)
                 }
@@ -264,15 +247,13 @@ const DelegationList: FC<{
             {isEmpty ? (
               <Empty sx={{minHeight: 400}} />
             ) : (
-              data?.pages.map((page, index) => (
-                <Grid container key={index} spacing={2}>
+              data?.pages.map((page) => (
+                <Grid
+                  container
+                  key={page.delegationsConnection.pageInfo.startCursor}
+                  spacing={2}
+                >
                   {page.delegationsConnection.edges.map((edge) => {
-                    const delegation = edge.node
-                    const snapshot = edge.node.snapshots[0]
-                    let profit = new Decimal(0)
-                    if (snapshot != null) {
-                      profit = getDelegationProfit(delegation, snapshot)
-                    }
                     return (
                       <Grid
                         key={edge.node.id}
@@ -284,14 +265,12 @@ const DelegationList: FC<{
                             delegation={edge.node}
                             onAction={onAction}
                             isOwner={isOwner}
-                            profit={profit}
                           />
                         ) : (
                           <HorizonCard
                             delegation={edge.node}
                             onAction={onAction}
                             isOwner={isOwner}
-                            profit={profit}
                           />
                         )}
                       </Grid>
@@ -305,7 +284,8 @@ const DelegationList: FC<{
               (showNftCard ? (
                 <Grid container spacing={2} ref={ref}>
                   {Array.from({length: 6}).map((_, index) => (
-                    <Grid xs={12} md={6} key={index}>
+                    // biome-ignore lint/suspicious/noArrayIndexKey: static list
+                    <Grid xs={12} md={6} key={`skeleton-${index}`}>
                       <Skeleton variant="rounded" height={240} />
                     </Grid>
                   ))}

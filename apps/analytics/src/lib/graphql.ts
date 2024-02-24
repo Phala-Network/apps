@@ -9,9 +9,9 @@ export const phatSquidClient = new GraphQLClient(
 )
 
 export const phalaSquidClient = new GraphQLClient(
-  'https://subsquid.phala.network/phala-computation/graphql',
+  'https://subsquid.phala.network/phala-computation-next/graphql',
 )
 
 export const khalaSquidClient = new GraphQLClient(
-  'https://subsquid.phala.network/khala-computation/graphql',
+  'https://subsquid.phala.network/khala-computation-next/graphql',
 )

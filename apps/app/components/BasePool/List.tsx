@@ -3,14 +3,13 @@ import ListSkeleton from '@/components/ListSkeleton'
 import useDebounced from '@/hooks/useDebounced'
 import useGetAprMultiplier from '@/hooks/useGetAprMultiplier'
 import useSelectedVaultState from '@/hooks/useSelectedVaultState'
-import fixBasePoolFree from '@/lib/fixBasePoolFree'
 import {
-  IdentityLevel,
-  useInfiniteBasePoolsConnectionQuery,
   type BasePoolCommonFragment,
   type BasePoolKind,
   type BasePoolOrderByInput,
   type BasePoolWhereInput,
+  IdentityJudgement,
+  useInfiniteBasePoolsConnectionQuery,
 } from '@/lib/subsquidQuery'
 import {barlow} from '@/lib/theme'
 import {
@@ -33,15 +32,14 @@ import {
   MenuItem,
   NoSsr,
   Stack,
+  type SxProps,
   TextField,
   Typography,
-  type SxProps,
 } from '@mui/material'
+import {getDecimalPattern} from '@phala/lib'
 import {polkadotAccountAtom} from '@phala/store'
-import {getDecimalPattern} from '@phala/utils'
 import {useAtom} from 'jotai'
-import {create} from 'mutative'
-import {useCallback, useEffect, useState, type FC} from 'react'
+import {type FC, useCallback, useEffect, useState} from 'react'
 import {useInView} from 'react-intersection-observer'
 import WikiButton from '../Wiki/Button'
 import ClaimDelegation from './ClaimDelegation'
@@ -144,7 +142,10 @@ const BasePoolList: FC<{
     variant === 'delegate' &&
       verifiedFilter && {
         owner: {
-          identityLevel_in: [IdentityLevel.KnownGood, IdentityLevel.Reasonable],
+          identityLevel_in: [
+            IdentityJudgement.KnownGood,
+            IdentityJudgement.Reasonable,
+          ],
         },
       },
     variant === 'delegate' && favoriteFilter && {id_in: favoritePools},
@@ -206,15 +207,6 @@ const BasePoolList: FC<{
       },
       {
         enabled,
-        select: (data) => {
-          return create(data, (draft) => {
-            draft.pages.forEach((page) => {
-              page.basePoolsConnection.edges.forEach((edge) => {
-                fixBasePoolFree(edge.node)
-              })
-            })
-          })
-        },
         getNextPageParam: (lastPage) =>
           lastPage.basePoolsConnection.pageInfo.hasNextPage
             ? {after: lastPage.basePoolsConnection.pageInfo.endCursor}
@@ -475,8 +467,11 @@ const BasePoolList: FC<{
             {isEmpty ? (
               <Empty sx={{minHeight: 400}} />
             ) : (
-              data?.pages.map((page, index) => (
-                <Stack key={index} spacing={2}>
+              data?.pages.map((page) => (
+                <Stack
+                  key={page.basePoolsConnection.pageInfo.startCursor}
+                  spacing={2}
+                >
                   {page.basePoolsConnection.edges.map((edge) =>
                     variant === 'farm' ? (
                       <FarmCard

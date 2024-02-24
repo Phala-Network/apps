@@ -1,7 +1,7 @@
 import backgroundWaves from '@/assets/background_waves.svg'
-import {css, Global, type SerializedStyles} from '@emotion/react'
-import {useTheme, type Theme} from '@mui/material'
-import {useEffect, useState, type FC} from 'react'
+import {Global, type SerializedStyles, css} from '@emotion/react'
+import {type Theme, useTheme} from '@mui/material'
+import {type FC, useEffect, useState} from 'react'
 
 const talismanConnectStyles = (theme: Theme): SerializedStyles => css`
   :root {

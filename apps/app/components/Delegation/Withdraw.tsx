@@ -14,9 +14,9 @@ import {
   Stack,
   TextField,
 } from '@mui/material'
-import {getDecimalPattern, toCurrency} from '@phala/utils'
+import {getDecimalPattern, toCurrency} from '@phala/lib'
 import Decimal from 'decimal.js'
-import {useMemo, useState, type FC} from 'react'
+import {type FC, useMemo, useState} from 'react'
 import Property from '../Property'
 
 const Withdraw: FC<{

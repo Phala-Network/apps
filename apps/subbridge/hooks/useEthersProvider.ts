@@ -4,8 +4,9 @@ import {ethers} from 'ethers'
 import {useAtomValue} from 'jotai'
 import useSWRImmutable from 'swr/immutable'
 
-const ethersWeb3ProviderFetcher = async ([ethereumProvider]: [
+const ethersWeb3ProviderFetcher = async ([ethereumProvider, _]: [
   ethers.providers.ExternalProvider,
+  number,
 ]): Promise<ethers.providers.Web3Provider> => {
   const provider = new ethers.providers.Web3Provider(ethereumProvider)
   return provider

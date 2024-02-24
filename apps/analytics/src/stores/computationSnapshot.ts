@@ -1,4 +1,4 @@
-import {weightedAverage} from '@phala/utils'
+import {weightedAverage} from '@phala/lib'
 import {createQuery} from '@tanstack/svelte-query'
 import {addDays, addHours, isBefore, isEqual} from 'date-fns'
 import Decimal from 'decimal.js'
@@ -45,11 +45,11 @@ type ComputationSnapshot = {
   summary: Summary[]
 }
 
-const transform = (data: Data, updatedTimeArray: string[]): Snapshot[] => {
+const transform = (data: Data): Snapshot[] => {
   const {
     globalStateSnapshotsConnection: {edges},
   } = data
-  const raw: Snapshot[] = edges.map(({node}) => {
+  return edges.map(({node}) => {
     return {
       ...node,
       updatedTime: new Date(node.updatedTime),
@@ -60,30 +60,16 @@ const transform = (data: Data, updatedTimeArray: string[]): Snapshot[] => {
       idleWorkerShares: new Decimal(node.idleWorkerShares),
     }
   })
-
-  return updatedTimeArray.map((dateString) => {
-    const date = new Date(dateString)
-    const node = raw.findLast(({updatedTime}) => {
-      return isEqual(updatedTime, date) || isBefore(updatedTime, date)
-    }) as Snapshot
-    return {...node, updatedTime: date}
-  })
 }
 
 const fetchComputationSnapshot = async (): Promise<ComputationSnapshot> => {
-  const days = 30
-  const intervalHours = 12
+  const days = 90
   const startTime = addDays(new Date(), -days)
-  startTime.setUTCHours(0, 0, 0, 0)
-  const updatedTimeArray: string[] = []
-  for (let i = 0; i < Math.floor((days * 24) / intervalHours); i++) {
-    updatedTimeArray.push(addHours(startTime, i * intervalHours).toISOString())
-  }
   const document = gql`
     {
       globalStateSnapshotsConnection(
         orderBy: updatedTime_ASC
-        where: {updatedTime_in: ${JSON.stringify(updatedTimeArray)}}
+        where: {updatedTime_gte: ${JSON.stringify(startTime.toISOString())}}
       ) {
         edges {
           node {
@@ -108,8 +94,8 @@ const fetchComputationSnapshot = async (): Promise<ComputationSnapshot> => {
     khalaSquidClient.request<Data>(document),
   ])
 
-  const phala = transform(phalaData, updatedTimeArray)
-  const khala = transform(khalaData, updatedTimeArray)
+  const phala = transform(phalaData)
+  const khala = transform(khalaData)
   const summary: Summary[] = []
 
   for (let i = 0; i < phala.length; i++) {

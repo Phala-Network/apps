@@ -1,13 +1,13 @@
 import usePolkadotApi from '@/hooks/usePolkadotApi'
 import {useGlobalStateQuery} from '@/lib/subsquidQuery'
 import {colors, montserrat} from '@/lib/theme'
-import {chainAtom, subsquidClientAtom, type Chain} from '@/store/common'
+import {type Chain, chainAtom, subsquidClientAtom} from '@/store/common'
 import CircleIcon from '@mui/icons-material/Circle'
 import {MenuItem, Select, Stack, Tooltip} from '@mui/material'
-import {toCurrency} from '@phala/utils'
+import {toCurrency} from '@phala/lib'
 import {useQuery} from '@tanstack/react-query'
 import {useAtom} from 'jotai'
-import {useMemo, type FC} from 'react'
+import {type FC, useMemo} from 'react'
 import Property from '../Property'
 
 const ChainSelect: FC = () => {
@@ -19,9 +19,13 @@ const ChainSelect: FC = () => {
   const backgroundColor = isKhala ? '#1E565E' : colors.main[700]
 
   const [subsquidClient] = useAtom(subsquidClientAtom)
-  const {data: globalStateData} = useGlobalStateQuery(subsquidClient)
-  const subsquidHeight = globalStateData?.squidStatus?.height
-  const blockTime = globalStateData?.globalStateById?.averageBlockTime
+  const {data: globalStateData} = useGlobalStateQuery(
+    subsquidClient,
+    undefined,
+    {select: (data) => data.globalStateById},
+  )
+  const subsquidHeight = globalStateData?.height
+  const blockTime = globalStateData?.averageBlockTime
   const apiConnected = api?.isConnected
   const {data: chainHeight} = useQuery(
     ['chainHeight', chain],

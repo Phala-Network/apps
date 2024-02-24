@@ -1,11 +1,12 @@
 import {Box} from '@mui/material'
-import {useMemo, type FC, type ReactNode} from 'react'
+import {uniqueId} from 'lodash-es'
+import {type FC, Fragment, type ReactNode, useMemo} from 'react'
 
 const regex = /(\d+\.\d+)/g
 const WrapDecimal: FC<{children: ReactNode}> = ({children}) => {
   const parts = useMemo(() => {
     if (typeof children === 'string') {
-      return children.split(regex)
+      return children.split(regex).map((part) => [part, uniqueId()])
     }
     return []
   }, [children])
@@ -13,21 +14,16 @@ const WrapDecimal: FC<{children: ReactNode}> = ({children}) => {
   return (
     <>
       {typeof children === 'string'
-        ? parts.map((part) => {
+        ? parts.map(([part, id]) => {
             if (part.match(regex) != null) {
               const [integer, decimal] = part.split('.')
               return (
-                <>
+                <Fragment key={id}>
                   {integer}.
-                  <Box
-                    component="span"
-                    sx={(theme) => ({
-                      filter: 'brightness(0.5)',
-                    })}
-                  >
+                  <Box component="span" sx={{filter: 'brightness(0.5)'}}>
                     {decimal}
                   </Box>
-                </>
+                </Fragment>
               )
             }
             return part

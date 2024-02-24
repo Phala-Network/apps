@@ -1,5 +1,5 @@
 import {LoadingButton, type LoadingButtonProps} from '@mui/lab'
-import {useState, type FC} from 'react'
+import {type FC, useState} from 'react'
 
 const PromiseButton: FC<
   Omit<LoadingButtonProps, 'onClick'> & {

@@ -1,6 +1,6 @@
 import {CHAINS, type SubstrateChainId} from '@/config/chain'
 import {fromChainAtom} from '@/store/bridge'
-import {createPolkadotApi} from '@phala/utils'
+import {createPolkadotApi} from '@phala/lib'
 import {type ApiPromise} from '@polkadot/api'
 import {useAtomValue} from 'jotai'
 import useSWRImmutable from 'swr/immutable'

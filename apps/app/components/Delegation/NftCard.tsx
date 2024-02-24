@@ -2,6 +2,7 @@ import StakePoolIcon from '@/assets/stake_pool_detailed.svg'
 import VaultIcon from '@/assets/vault_detailed.svg'
 import DelegationNftCover from '@/components/DelegationNftCover'
 import Property from '@/components/Property'
+import useDelegationOneDayProfit from '@/hooks/useDelegationOneDayProfit'
 import useGetApr from '@/hooks/useGetApr'
 import usePolkadotApi from '@/hooks/usePolkadotApi'
 import useSignAndSend from '@/hooks/useSignAndSend'
@@ -14,7 +15,6 @@ import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp'
 import MoreVert from '@mui/icons-material/MoreVert'
 import {
   Alert,
-  alpha,
   Box,
   IconButton,
   Link,
@@ -24,12 +24,13 @@ import {
   Skeleton,
   Stack,
   Typography,
+  alpha,
   useTheme,
 } from '@mui/material'
-import {toCurrency, toPercentage} from '@phala/utils'
+import {toCurrency, toPercentage} from '@phala/lib'
 import Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
-import {useRef, useState, type FC} from 'react'
+import {type FC, useRef, useState} from 'react'
 import Identity from '../BasePool/Identity'
 import WrapDecimal from '../WrapDecimal'
 import {type OnAction} from './List'
@@ -39,8 +40,8 @@ const NftCard: FC<{
   delegation: DelegationCommonFragment
   onAction?: OnAction
   isOwner?: boolean
-  profit?: Decimal
-}> = ({compact = false, delegation, onAction, isOwner = false, profit}) => {
+}> = ({compact = false, delegation, onAction, isOwner = false}) => {
+  const profit = useDelegationOneDayProfit(delegation.id)
   const api = usePolkadotApi()
   const signAndSend = useSignAndSend()
   const [chain] = useAtom(chainAtom)
@@ -148,11 +149,11 @@ const NftCard: FC<{
             }
           >
             <ArrowDropUpIcon
-              sx={{mx: '-3px', transform: `translate(0, 2px)`}}
+              sx={{mx: '-3px', transform: 'translate(0, 2px)'}}
             />
 
             <Typography variant="num5">
-              <WrapDecimal>{`${toCurrency(profit)} PHA / 24h`}</WrapDecimal>
+              <WrapDecimal>{`${toCurrency(profit)} PHA / 1d`}</WrapDecimal>
             </Typography>
           </Stack>
         )}

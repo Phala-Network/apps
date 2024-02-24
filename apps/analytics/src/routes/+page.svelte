@@ -1,6 +1,6 @@
 <script lang="ts">
-  import Computation from '~/lib/Computation.svelte'
-  import PhatContract from '~/lib/PhatContract.svelte'
+import Computation from '~/lib/Computation.svelte'
+import PhatContract from '~/lib/PhatContract.svelte'
 </script>
 
 <svelte:head>

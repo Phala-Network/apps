@@ -1,8 +1,8 @@
-import {colorSchemeSettingAtom, type ColorSchemeSetting} from '@/store/common'
+import {type ColorSchemeSetting, colorSchemeSettingAtom} from '@/store/common'
 import type {} from '@mui/lab/themeAugmentation'
 import {ThemeProvider, createTheme, useMediaQuery} from '@mui/material'
 import {useAtom} from 'jotai'
-import {useEffect, useMemo, useState, type FC, type ReactNode} from 'react'
+import {type FC, type ReactNode, useEffect, useMemo, useState} from 'react'
 
 const MuiThemeProvider: FC<{children: ReactNode}> = ({children}) => {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)')
@@ -101,7 +101,7 @@ const MuiThemeProvider: FC<{children: ReactNode}> = ({children}) => {
 
   return (
     <>
-      {colorSchemeState == null && <style>{`body {visibility: hidden}`}</style>}
+      {colorSchemeState == null && <style>{'body {visibility: hidden}'}</style>}
       <ThemeProvider theme={theme}>{children}</ThemeProvider>
     </>
   )

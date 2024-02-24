@@ -16,7 +16,6 @@ import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
-  alpha,
   Box,
   Button,
   Chip,
@@ -25,12 +24,13 @@ import {
   Skeleton,
   Stack,
   Typography,
+  alpha,
   useTheme,
 } from '@mui/material'
-import {toCurrency, toPercentage} from '@phala/utils'
+import {toCurrency, toPercentage} from '@phala/lib'
 import Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
-import {useCallback, useMemo, type FC} from 'react'
+import {type FC, useCallback, useMemo} from 'react'
 import PromiseButton from '../PromiseButton'
 import BasePoolChart from './Chart'
 import ExtraProperties from './ExtraProperties'
@@ -124,7 +124,9 @@ const FarmCard: FC<{
     <Accordion
       square
       disableGutters
-      TransitionProps={{mountOnEnter: true, unmountOnExit: true}}
+      slotProps={{
+        transition: {mountOnEnter: true, unmountOnExit: true},
+      }}
       sx={{
         '&:before': {display: 'none'},
         borderRadius: `${theme.shape.borderRadius}px`,

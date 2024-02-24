@@ -1,27 +1,26 @@
 <script lang="ts">
-  import {
-    Popover,
-    PopoverButton,
-    PopoverPanel,
-  } from '@rgossiaux/svelte-headlessui'
-  import {fade} from 'svelte/transition'
+import {
+  Popover,
+  PopoverButton,
+  PopoverPanel,
+} from '@rgossiaux/svelte-headlessui'
+import {fade} from 'svelte/transition'
 
-  let timeout: ReturnType<typeof setTimeout>
-  const onmouseenter = (open: boolean) => (e: any) => {
-    clearTimeout(timeout)
-    if (!open) {
-      e.currentTarget.click()
-    }
+let timeout: ReturnType<typeof setTimeout>
+const onmouseenter = (open: boolean) => (e: any) => {
+  clearTimeout(timeout)
+  if (!open) {
+    e.currentTarget.click()
   }
-  const onmouseleave =
-    (open: boolean, close: (el: null) => void) => (e: any) => {
-      if (open) {
-        timeout = setTimeout(() => {
-          close(null)
-        }, 100)
-      }
-    }
-  export let title: string | undefined = undefined
+}
+const onmouseleave = (open: boolean, close: (el: null) => void) => (e: any) => {
+  if (open) {
+    timeout = setTimeout(() => {
+      close(null)
+    }, 100)
+  }
+}
+export let title: string | undefined = undefined
 </script>
 
 <Popover let:open let:close as="span">

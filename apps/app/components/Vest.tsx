@@ -7,23 +7,21 @@ import {
   Skeleton,
   Stack,
 } from '@mui/material'
+import {toCurrency} from '@phala/lib'
 import {polkadotAccountAtom} from '@phala/store'
-import {toCurrency} from '@phala/utils'
 import {type DeriveBalancesAll} from '@polkadot/api-derive/types'
 import BN from 'bn.js'
 import Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
-import {useEffect, useState, type FC, type ReactElement} from 'react'
+import {type FC, type ReactElement, useEffect, useState} from 'react'
 import PromiseButton from './PromiseButton'
 import Property from './Property'
 
 const format = (bn?: BN): ReactElement => {
   if (bn !== undefined) {
     // HACK: derived vestedClaimable may be negative
-    if (bn.isNeg()) {
-      bn = new BN(0)
-    }
-    return <>{`${toCurrency(new Decimal(bn.toString()).div(1e12))} PHA`}</>
+    const value = bn.isNeg() ? new BN(0) : bn
+    return <>{`${toCurrency(new Decimal(value.toString()).div(1e12))} PHA`}</>
   }
   return <Skeleton width={32} variant="text" />
 }

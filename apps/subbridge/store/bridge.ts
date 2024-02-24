@@ -15,7 +15,7 @@ const assetIdAtom = atom<AssetId>('pha')
 assetIdAtom.debugLabel = 'assetId'
 export const assetAtom = atom(
   (get) => ASSETS[get(assetIdAtom)],
-  (get, set, update: AssetId) => {
+  (_get, set, update: AssetId) => {
     set(assetIdAtom, update)
   },
 )
@@ -24,7 +24,7 @@ const fromChainIdAtom = atom<ChainId>('ethereum')
 fromChainIdAtom.debugLabel = 'fromChainId'
 export const fromChainAtom = atom(
   (get) => CHAINS[get(fromChainIdAtom)],
-  (get, set, update: ChainId) => {
+  (_get, set, update: ChainId) => {
     set(fromChainIdAtom, update)
   },
 )
@@ -33,7 +33,7 @@ const toChainIdAtom = atom<ChainId>('phala')
 toChainIdAtom.debugLabel = 'toChain'
 export const toChainAtom = atom(
   (get) => CHAINS[get(toChainIdAtom)],
-  (get, set, update: ChainId) => {
+  (_get, set, update: ChainId) => {
     set(toChainIdAtom, update)
   },
 )
@@ -104,16 +104,12 @@ export const destChainTransactionFeeAtom = atom((get) => {
   const asset = get(assetAtom)
   const destChainTransactionFee = asset.destChainTransactionFee[toChain.id]
 
-  if (kind !== 'evmChainBridge' && proxy != null) {
+  if (proxy != null) {
     const proxyFee = asset.destChainTransactionFee[proxy] ?? new Decimal(0)
     return proxyFee.add(destChainTransactionFee ?? 0)
   }
 
-  if (
-    (kind === 'evmChainBridge' && proxy == null) ||
-    kind === 'evmSygma' ||
-    destChainTransactionFee == null
-  ) {
+  if (kind === 'evmSygma' || destChainTransactionFee == null) {
     return new Decimal(0)
   }
 

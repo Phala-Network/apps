@@ -51,7 +51,7 @@ export const phaMetadata: AssetMetadata = {
   iconSrc: iconMap.PHA,
 }
 
-const assetsMetadataFetcher = async ([api]: [ApiPromise]): Promise<
+const assetsMetadataFetcher = async ([api, _]: [ApiPromise, string]): Promise<
   Record<number, AssetMetadata>
 > => {
   const entries = await api.query.assets.metadata.entries()

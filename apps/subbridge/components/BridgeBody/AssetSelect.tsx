@@ -1,4 +1,4 @@
-import {type AssetId, ASSETS} from '@/config/asset'
+import {ASSETS, type AssetId} from '@/config/asset'
 import {assetAtom} from '@/store/bridge'
 import {
   Box,
@@ -17,11 +17,11 @@ const AssetSelect: FC<TextFieldProps & {assetIds: AssetId[]}> = ({
   const [asset, setAsset] = useAtom(assetAtom)
   useEffect(() => {
     // Preload asset icons
-    assetIds.forEach((assetId) => {
+    for (const assetId of assetIds) {
       const {icon} = ASSETS[assetId]
       const image = new Image()
       image.src = icon
-    })
+    }
   }, [assetIds])
 
   return (

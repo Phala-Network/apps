@@ -16,7 +16,6 @@ import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
-  alpha,
   Box,
   Chip,
   IconButton,
@@ -24,10 +23,11 @@ import {
   Skeleton,
   Stack,
   Typography,
+  alpha,
   useTheme,
 } from '@mui/material'
+import {toCurrency, toPercentage} from '@phala/lib'
 import {polkadotAccountAtom} from '@phala/store'
-import {toCurrency, toPercentage} from '@phala/utils'
 import {useAtom} from 'jotai'
 import {type FC} from 'react'
 import BasePoolChart from './Chart'
@@ -67,7 +67,9 @@ const DelegateCard: FC<{
     <Accordion
       square
       disableGutters
-      TransitionProps={{mountOnEnter: true, unmountOnExit: true}}
+      slotProps={{
+        transition: {mountOnEnter: true, unmountOnExit: true},
+      }}
       sx={{
         '&:before': {display: 'none'},
         borderRadius: `${theme.shape.borderRadius}px`,
@@ -146,6 +148,7 @@ const DelegateCard: FC<{
                 label="Delegable"
                 sx={{width: 140}}
                 wikiEntry="delegable"
+                wrapDecimal
               >
                 {stakePool.delegable != null
                   ? `${toCurrency(stakePool.delegable)} PHA`
@@ -168,12 +171,17 @@ const DelegateCard: FC<{
               </Property>
             )}
             {vault != null && (
-              <Property label="TVL" sx={{width: 150}} wikiEntry="tvl">
+              <Property
+                label="TVL"
+                sx={{width: 150}}
+                wikiEntry="tvl"
+                wrapDecimal
+              >
                 {`${toCurrency(basePool.totalValue)} PHA`}
               </Property>
             )}
             {hasDelegation && (
-              <Property label="Delegated" sx={{width: 140}}>
+              <Property label="Delegated" sx={{width: 140}} wrapDecimal>
                 {`${toCurrency(basePool.delegations[0].value)} PHA`}
               </Property>
             )}
@@ -201,6 +209,7 @@ const DelegateCard: FC<{
                 fullWidth
                 label="Delegable"
                 wikiEntry="delegable"
+                wrapDecimal
               >
                 {stakePool.delegable != null
                   ? `${toCurrency(stakePool.delegable)} PHA`
@@ -224,12 +233,18 @@ const DelegateCard: FC<{
               </Property>
             )}
             {vault != null && (
-              <Property size="small" fullWidth label="TVL" wikiEntry="tvl">
+              <Property
+                size="small"
+                fullWidth
+                label="TVL"
+                wikiEntry="tvl"
+                wrapDecimal
+              >
                 {`${toCurrency(basePool.totalValue)} PHA`}
               </Property>
             )}
             {hasDelegation && (
-              <Property size="small" fullWidth label="Delegated">
+              <Property size="small" fullWidth label="Delegated" wrapDecimal>
                 {`${toCurrency(basePool.delegations[0].value)} PHA`}
               </Property>
             )}

@@ -1,4 +1,4 @@
-import {ASSETS, nativeLocation, type AssetId} from '@/config/asset'
+import {ASSETS, type AssetId, nativeLocation} from '@/config/asset'
 import {type BridgeKind} from '@/config/bridge'
 import {CHAINS, type ChainId, type SubstrateChain} from '@/config/chain'
 import type {ApiPromise} from '@polkadot/api'

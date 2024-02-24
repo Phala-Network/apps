@@ -10,17 +10,17 @@ import {
 } from '@/store/bridge'
 import {
   Box,
+  type BoxProps,
   Divider,
   Paper,
+  type PaperProps,
   Skeleton,
   Stack,
   Tooltip,
   Typography,
   useTheme,
-  type BoxProps,
-  type PaperProps,
 } from '@mui/material'
-import {toCurrency} from '@phala/utils'
+import {toCurrency} from '@phala/lib'
 import {useAtomValue} from 'jotai'
 import {type FC, type ReactNode} from 'react'
 
@@ -91,6 +91,7 @@ const ExtraInfo: FC<PaperProps> = ({sx, ...props}) => {
           background: theme.palette.action.hover,
           border: 'none',
         },
+        // biome-ignore lint/suspicious/noExplicitAny: <explanation>
         ...(Array.isArray(sx) ? (sx as any) : [sx]),
       ]}
       {...props}

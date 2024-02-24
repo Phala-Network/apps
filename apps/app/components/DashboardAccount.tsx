@@ -20,8 +20,8 @@ import {
   Typography,
   styled,
 } from '@mui/material'
+import {toCurrency, trimAddress} from '@phala/lib'
 import {polkadotAccountAtom} from '@phala/store'
-import {toCurrency, trimAddress} from '@phala/utils'
 import Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
 import dynamic from 'next/dynamic'

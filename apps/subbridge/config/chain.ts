@@ -45,12 +45,6 @@ export interface EvmChain extends BaseChain {
   evmChainId: number
   currencySymbol: string
   paraId?: number // for compatible chains
-  chainBridgeContract?: {
-    address: `0x${string}`
-    spender: {
-      [toChainId in ChainId | 'default']?: `0x${string}`
-    }
-  }
   xTokensContractAddress?: `0x${string}`
   generalIndex?: number
   sygmaHandler?: string
@@ -155,13 +149,6 @@ export const CHAINS: Readonly<
     kind: 'evm',
     evmChainId: 1,
     currencySymbol: 'ETH',
-    chainBridgeContract: {
-      address: '0x8F92e7353b180937895E0C5937d616E8ea1A2Bb9',
-      spender: {
-        phala: '0xcd38b15a419491c7c1238b0659f65c755792e257',
-        khala: '0xEEc0fb4913119567cDfC0c5fc2Bf8f9F9B226c2d',
-      },
-    },
     generalIndex: 1,
     explorerURL: 'https://etherscan.io/',
     sygmaChainId: 1,
@@ -215,10 +202,6 @@ export const CHAINS: Readonly<
     currencySymbol: 'MOVR',
     paraId: 2023,
     nativeAsset: 'movr',
-    chainBridgeContract: {
-      address: '0xCe6652551A989C13B41f70cac504341A5F711c8d',
-      spender: {default: '0xf88337a0db6e24Dff0fCD7F92ab0655B97A68d38'},
-    },
     xTokensContractAddress: '0x0000000000000000000000000000000000000804',
     generalIndex: 2,
     explorerURL: 'https://moonriver.moonscan.io/',

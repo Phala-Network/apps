@@ -7,8 +7,8 @@ import {
   DialogTitle,
   TextField,
 } from '@mui/material'
-import {validateAddress} from '@phala/utils'
-import {useMemo, useState, type FC} from 'react'
+import {validateAddress} from '@phala/lib'
+import {type FC, useMemo, useState} from 'react'
 
 const AddWhitelist: FC<{
   pid: string

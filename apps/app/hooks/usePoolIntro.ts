@@ -35,8 +35,9 @@ const schema: JSONSchemaType<PoolIntro> = {
 const ajv = new Ajv()
 const validate = ajv.compile(schema)
 
-const poolIntroFetcher = async ([api, pid]: [
+const poolIntroFetcher = async ([api, pid, _]: [
   ApiPromise,
+  string,
   string,
 ]): Promise<PoolIntro> => {
   return await api.query.phalaBasePool.poolDescriptions(pid).then((bytes) => {

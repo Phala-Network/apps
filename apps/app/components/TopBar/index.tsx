@@ -10,6 +10,7 @@ import {
   Backdrop,
   Box,
   Button,
+  type ButtonProps,
   Collapse,
   Divider,
   IconButton,
@@ -18,11 +19,10 @@ import {
   Toolbar,
   Tooltip,
   useTheme,
-  type ButtonProps,
 } from '@mui/material'
 import {useAtom} from 'jotai'
 import NextLink from 'next/link'
-import {useState, type FC} from 'react'
+import {type FC, useState} from 'react'
 import Account from './Account'
 import ChainSelect from './Chain'
 import NetworkStats from './NetworkStats'
@@ -174,7 +174,7 @@ const TopBar: FC = () => {
           <NoSsr>
             <NetworkStats />
           </NoSsr>
-          <Box flex={1}></Box>
+          <Box flex={1} />
           {icons}
         </Stack>
         <Toolbar>
@@ -245,21 +245,20 @@ const TopBar: FC = () => {
                     item={item}
                   />
                 )
-              } else {
-                return item.sub.map((subItem) => (
-                  <NavItem
-                    onClick={toggleCollapse}
-                    key={subItem.label}
-                    item={{
-                      ...subItem,
-                      label:
-                        item.label === 'Delegate'
-                          ? subItem.label
-                          : `${item.label} - ${subItem.label}`,
-                    }}
-                  />
-                ))
               }
+              return item.sub.map((subItem) => (
+                <NavItem
+                  onClick={toggleCollapse}
+                  key={subItem.label}
+                  item={{
+                    ...subItem,
+                    label:
+                      item.label === 'Delegate'
+                        ? subItem.label
+                        : `${item.label} - ${subItem.label}`,
+                  }}
+                />
+              ))
             })}
           </Stack>
         </Collapse>

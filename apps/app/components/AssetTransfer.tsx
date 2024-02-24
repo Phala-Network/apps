@@ -10,10 +10,12 @@ import {
   DialogTitle,
   TextField,
 } from '@mui/material'
-import {getDecimalPattern, toCurrency, validateAddress} from '@phala/utils'
+import {getDecimalPattern, toCurrency, validateAddress} from '@phala/lib'
+import {SubmittableExtrinsic} from '@polkadot/api/types'
+import {ISubmittableResult} from '@polkadot/types/types'
 import Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
-import {useMemo, useState, type FC} from 'react'
+import {type FC, useMemo, useState} from 'react'
 import {type Asset} from './DashboardAssetList'
 import Property from './Property'
 
@@ -32,7 +34,9 @@ const AssetTransfer: FC<{asset: Asset; onClose: () => void}> = ({
     const amount = new Decimal(amountString)
       .times(Decimal.pow(10, asset.decimals))
       .toHex()
-    let extrinsic
+    let extrinsic:
+      | SubmittableExtrinsic<'promise', ISubmittableResult>
+      | undefined
     if (asset.symbol === 'PHA') {
       extrinsic = api.tx.balances.transferKeepAlive(address, amount)
     } else {

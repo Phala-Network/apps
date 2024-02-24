@@ -662,7 +662,7 @@ declare module '@polkadot/api-base/types/events' {
       /**
        * Task has been claimed.
        **/
-      Claimed: AugmentedEvent<ApiType, [tasks: Vec<U8aFixed>], { tasks: Vec<U8aFixed> }>;
+      Claimed: AugmentedEvent<ApiType, [tasks: Vec<U8aFixed>, fee: u128], { tasks: Vec<U8aFixed>, fee: u128 }>;
       /**
        * New task saved.
        **/

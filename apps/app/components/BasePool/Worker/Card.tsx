@@ -12,10 +12,10 @@ import {
   Typography,
   useTheme,
 } from '@mui/material'
-import {toCurrency, toFixed} from '@phala/utils'
+import {toCurrency, toFixed} from '@phala/lib'
 import {addDays, formatDuration, intervalToDuration, isAfter} from 'date-fns'
 import {useSnackbar} from 'notistack'
-import {useMemo, type FC, type ReactNode} from 'react'
+import {type FC, type ReactNode, useMemo} from 'react'
 import {type OnAction, type Worker} from './List'
 
 const workerStateColors = {
@@ -88,6 +88,7 @@ const WorkerCard: FC<{
             spacing={{xs: 0.5, sm: 3}}
           >
             {Array.from({length: groups}).map((_, i) => (
+              // biome-ignore lint/suspicious/noArrayIndexKey: static list
               <Stack flex={i > 0 ? 1 : 2} spacing={0.5} key={i}>
                 {entries
                   .slice(i * count, (i + 1) * count)

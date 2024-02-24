@@ -19,33 +19,33 @@ import {
   Button,
   CircularProgress,
   Dialog,
+  type DialogProps,
   DialogTitle,
   Paper,
+  type PaperProps,
   Skeleton,
   Slide,
   Stack,
   Typography,
   useMediaQuery,
   useTheme,
-  type DialogProps,
-  type PaperProps,
 } from '@mui/material'
 import {type TransitionProps} from '@mui/material/transitions'
 import {type BoxProps} from '@mui/system'
-import {sleep} from '@phala/utils'
+import {sleep} from '@phala/lib'
 import {encodeAddress} from '@polkadot/util-crypto'
 import Decimal from 'decimal.js'
 import {useAtom, useAtomValue} from 'jotai'
 import {RESET} from 'jotai/utils'
-import {useSnackbar} from 'notistack'
+import {SnackbarKey, useSnackbar} from 'notistack'
 import {
+  type FC,
+  type ReactNode,
+  type Ref,
   forwardRef,
   useMemo,
   useRef,
   useState,
-  type FC,
-  type ReactNode,
-  type Ref,
 } from 'react'
 import ExtraInfo from './BridgeBody/Extra'
 import ExplorerLink from './ExplorerLink'
@@ -234,7 +234,7 @@ const BridgeConfirmationDialog: FC<DialogProps> = ({onClose, ...props}) => {
   }
 
   const onSubmit = async (): Promise<void> => {
-    let key
+    let key: SnackbarKey | undefined = undefined
     setConfirming(true)
     try {
       const res = await transfer({
@@ -300,6 +300,7 @@ const BridgeConfirmationDialog: FC<DialogProps> = ({onClose, ...props}) => {
           )
         }
       }
+      // biome-ignore lint/suspicious/noExplicitAny:
     } catch (err: any) {
       setConfirming(false)
       if (key != null) {

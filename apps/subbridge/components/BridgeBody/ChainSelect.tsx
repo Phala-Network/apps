@@ -3,11 +3,11 @@ import {
   Box,
   MenuItem,
   TextField,
+  type TextFieldProps,
   Typography,
   useTheme,
-  type TextFieldProps,
 } from '@mui/material'
-import {useEffect, type FC} from 'react'
+import {type FC, useEffect} from 'react'
 
 const shouldShowTest =
   process.env.NODE_ENV === 'development' ||
@@ -23,12 +23,12 @@ const ChainSelect: FC<
 
   useEffect(() => {
     // Preload chain icons
-    chainIds.forEach((chainId) => {
+    for (const chainId of chainIds) {
       const {icon, isTest} = CHAINS[chainId]
       if (!shouldShowTest && isTest === true) return
       const image = new Image()
       image.src = icon
-    })
+    }
   }, [chainIds])
 
   return (

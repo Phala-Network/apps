@@ -1,7 +1,7 @@
 import {migrationAlertOpenAtom} from '@/store/common'
 import {Alert, type AlertProps} from '@mui/material'
 import {useAtom} from 'jotai'
-import {useEffect, useState, type FC} from 'react'
+import {type FC, useEffect, useState} from 'react'
 
 const MigrationAlert: FC<AlertProps> = ({sx, ...props}) => {
   const [open, setOpen] = useAtom(migrationAlertOpenAtom)
@@ -24,6 +24,7 @@ const MigrationAlert: FC<AlertProps> = ({sx, ...props}) => {
     <Alert
       icon={false}
       severity="info"
+      // biome-ignore lint/suspicious/noExplicitAny: <explanation>
       sx={[{border: 'none'}, ...(Array.isArray(sx) ? (sx as any) : [sx])]}
       onClose={() => {
         setOpen(false)

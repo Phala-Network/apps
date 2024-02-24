@@ -45,7 +45,6 @@ const App: FC<MyAppProps> = (props) => {
       value={{
         onError: (error, key) => {
           if (process.env.NODE_ENV === 'development') {
-            // eslint-disable-next-line no-console
             console.error(key, error)
           }
         },

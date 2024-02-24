@@ -29,13 +29,12 @@ const useAssetBalance = (
         return new Decimal(unwrapped.balance.toString()).div(
           Decimal.pow(10, assetMetadata.decimals),
         )
-      } else {
-        const {availableBalance, freeBalance} =
-          await api.derive.balances.all(account)
-        return new Decimal(
-          (assetId === 'available' ? availableBalance : freeBalance).toHex(),
-        ).div(1e12)
       }
+      const {availableBalance, freeBalance} =
+        await api.derive.balances.all(account)
+      return new Decimal(
+        (assetId === 'available' ? availableBalance : freeBalance).toHex(),
+      ).div(1e12)
     },
   )
 

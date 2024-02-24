@@ -2,8 +2,8 @@ import WithdrawalQueueIcon from '@/assets/withdraw_queue.svg'
 import Empty from '@/components/Empty'
 import SectionHeader from '@/components/SectionHeader'
 import {
-  useDelegationsConnectionQuery,
   type BasePoolCommonFragment,
+  useDelegationsConnectionQuery,
 } from '@/lib/subsquidQuery'
 import {colors} from '@/lib/theme'
 import {subsquidClientAtom} from '@/store/common'
@@ -19,8 +19,8 @@ import {
   useTheme,
 } from '@mui/material'
 import {DataGrid, type GridColDef, type GridSortModel} from '@mui/x-data-grid'
+import {compactFormat, toCurrency} from '@phala/lib'
 import {polkadotAccountAtom} from '@phala/store'
-import {compactFormat, toCurrency} from '@phala/utils'
 import {
   addDays,
   formatDuration,
@@ -30,13 +30,13 @@ import {
 } from 'date-fns'
 import Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
-import {useMemo, useState, type FC} from 'react'
+import {type FC, useMemo, useState} from 'react'
 import {
   Line,
   LineChart,
-  Tooltip as RechartsTooltip,
   ReferenceLine,
   ResponsiveContainer,
+  Tooltip as RechartsTooltip,
   XAxis,
   YAxis,
 } from 'recharts'
@@ -147,7 +147,7 @@ const WithdrawQueue: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
   }, [basePool])
 
   const criticalTime = useMemo(() => {
-    let time
+    let time: string | undefined
     const {freeValue, releasingValue} = basePool
     let baseValue = new Decimal(freeValue).plus(releasingValue)
     for (const row of rows) {
@@ -195,10 +195,7 @@ const WithdrawQueue: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
 
   return (
     <>
-      <SectionHeader
-        icon={<WithdrawalQueueIcon />}
-        title="Withdrawal Queue"
-      ></SectionHeader>
+      <SectionHeader icon={<WithdrawalQueueIcon />} title="Withdrawal Queue" />
       <Paper sx={{background: 'transparent', mb: 2, p: 2}}>
         <Stack direction={{xs: 'column', md: 'row'}} spacing={2}>
           <Stack spacing={3} flex={{xs: 'none', md: '1'}}>

@@ -49,13 +49,15 @@ export interface Asset {
   reservedAddress?: {
     [chainId in ChainId]?: string
   }
-  chainBridgeResourceId?: `0x${string}`
   destChainTransactionFee: Partial<Record<ChainId, Decimal>>
   existentialDeposit: Partial<Record<ChainId, Decimal>>
   sygmaResourceId?: string
   location?: {
+    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
     polkadot?: any
+    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
     kusama?: any
+    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
     bifrost?: any
   }
 }

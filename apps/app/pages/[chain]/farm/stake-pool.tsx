@@ -14,11 +14,11 @@ import {
   Stack,
   Typography,
 } from '@mui/material'
+import {toCurrency} from '@phala/lib'
 import {polkadotAccountAtom} from '@phala/store'
-import {toCurrency} from '@phala/utils'
 import Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
-import {useCallback, useMemo, useState, type FC} from 'react'
+import {type FC, useCallback, useMemo, useState} from 'react'
 
 const MyStakePools: FC = () => {
   const [account] = useAtom(polkadotAccountAtom)

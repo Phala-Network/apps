@@ -1,16 +1,16 @@
-import useSWRValue from '@/hooks/useSWRValue'
+import useToday from '@/hooks/useToday'
 import {aprToApy} from '@/lib/apr'
 import {
-  useBasePoolSnapshotsConnectionQuery,
   type BasePoolCommonFragment,
+  useBasePoolSnapshotsConnectionQuery,
 } from '@/lib/subsquidQuery'
 import {colors} from '@/lib/theme'
 import {subsquidClientAtom} from '@/store/common'
-import {compactFormat} from '@phala/utils'
-import {addDays, addHours} from 'date-fns'
+import {compactFormat} from '@phala/lib'
+import {addDays} from 'date-fns'
 import Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
-import {useMemo, type FC} from 'react'
+import {type FC, useMemo} from 'react'
 import {
   Area,
   Bar,
@@ -22,7 +22,7 @@ import {
 } from 'recharts'
 import RechartsTooltip from '../RechartsTooltip'
 
-const days = 7
+const days = 30
 
 export type BasePoolChartKind =
   | 'totalValue'
@@ -42,25 +42,13 @@ const BasePoolChart: FC<{
   const isVault = basePool.kind === 'Vault'
   const isInteger = kind === 'delegatorCount' || kind === 'workerCount'
   const color = isVault ? colors.vault[500] : colors.main[400]
-  const dimension = kind === 'ownerRewards' ? 'day' : 'hour'
-  const startTime = useSWRValue([days], () => {
-    const date = new Date()
-    date.setUTCMinutes(0, 0, 0)
-    return addDays(date, -days).toISOString()
-  })
-  const duration = useSWRValue([days], () => {
-    const date = new Date()
-    date.setUTCHours(0, 0, 0, 0)
-    return Array.from({length: days + 1}).map((_, i) =>
-      addDays(date, i - days).toISOString(),
-    )
-  })
+  const today = useToday()
+  const startTime = useMemo(() => addDays(today, -days).toISOString(), [today])
   const [subsquidClient] = useAtom(subsquidClientAtom)
   const {data} = useBasePoolSnapshotsConnectionQuery(
     subsquidClient,
     {
       orderBy: 'updatedTime_ASC',
-      first: dimension === 'day' ? days + 1 : days * 24 + 1,
       withApr: kind === 'apr',
       withCommission: kind === 'commission',
       withTotalValue: kind === 'totalValue',
@@ -69,10 +57,8 @@ const BasePoolChart: FC<{
       withStakePoolCount: kind === 'stakePoolCount',
       withCumulativeOwnerRewards: kind === 'ownerRewards',
       where: {
-        basePool: {id_eq: basePool.id},
-        ...(dimension === 'day'
-          ? {updatedTime_in: duration}
-          : {updatedTime_gte: startTime}),
+        basePool_eq: basePool.id,
+        updatedTime_gte: startTime,
       },
     },
     {
@@ -85,8 +71,8 @@ const BasePoolChart: FC<{
   const chartData = useMemo(() => {
     if (data == null) return []
     type ChartData = Array<{date: Date; dateString: string; value?: number}>
+    const result: ChartData = []
     if (kind === 'ownerRewards') {
-      const result: ChartData = []
       const edges = data.basePoolSnapshotsConnection.edges
 
       for (let i = 1; i < edges.length; i++) {
@@ -112,54 +98,42 @@ const BasePoolChart: FC<{
       return result
     }
 
-    const result: ChartData = Array.from({
-      length: dimension === 'day' ? days : days * 24 + 1,
-    }).map((_, i) => {
-      const date = addHours(new Date(startTime), i)
-      return {dateString: date.toLocaleString(), date}
-    })
-
     for (const {node} of data.basePoolSnapshotsConnection.edges) {
       const date = new Date(node.updatedTime)
-      const index = result.findIndex((r) => r.date.getTime() >= date.getTime())
-      if (index !== -1) {
-        let value
-        if (kind === 'totalValue' && node.totalValue != null) {
-          value = new Decimal(node.totalValue)
-        } else if (kind === 'apr' && node.apr != null) {
-          value = new Decimal(node.apr)
-          if (isVault) {
-            value = aprToApy(value)
-          }
-        } else if (kind === 'commission' && node.commission != null) {
-          value = new Decimal(node.commission)
-        } else if (kind === 'delegatorCount') {
-          value = node.delegatorCount
-        } else if (kind === 'workerCount') {
-          value = node.idleWorkerCount
-        } else if (kind === 'stakePoolCount') {
-          value = node.stakePoolCount
-        }
-        if (value == null) continue
-        if (isPercentage && Decimal.isDecimal(value)) {
-          value = value.times(100)
-        }
-        result[index].value = Decimal.isDecimal(value)
-          ? value.toDP(2, Decimal.ROUND_DOWN).toNumber()
-          : value
-      }
-    }
 
-    for (const r of result) {
-      if (r.value === undefined) {
-        r.value = 0
-      } else {
-        break
+      let value: Decimal | number | null | undefined
+      if (kind === 'totalValue' && node.totalValue != null) {
+        value = new Decimal(node.totalValue)
+      } else if (kind === 'apr' && node.apr != null) {
+        value = new Decimal(node.apr)
+        if (isVault) {
+          value = aprToApy(value)
+        }
+      } else if (kind === 'commission' && node.commission != null) {
+        value = new Decimal(node.commission)
+      } else if (kind === 'delegatorCount') {
+        value = node.delegatorCount
+      } else if (kind === 'workerCount') {
+        value = node.idleWorkerCount
+      } else if (kind === 'stakePoolCount') {
+        value = node.stakePoolCount
       }
+
+      if (isPercentage && Decimal.isDecimal(value)) {
+        value = value.times(100)
+      }
+
+      result.push({
+        date,
+        dateString: date.toLocaleDateString(),
+        value: Decimal.isDecimal(value)
+          ? value.toDP(2, Decimal.ROUND_DOWN).toNumber()
+          : value ?? undefined,
+      })
     }
 
     return result
-  }, [data, kind, dimension, startTime, isPercentage, isVault])
+  }, [data, kind, isPercentage, isVault])
 
   const label = useMemo(() => {
     switch (kind) {

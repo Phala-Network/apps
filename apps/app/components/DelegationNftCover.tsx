@@ -1,7 +1,7 @@
 import {type BasePoolKind} from '@/lib/subsquidQuery'
 import {addMonths, addWeeks, addYears, isBefore} from 'date-fns'
 import Decimal from 'decimal.js'
-import {useMemo, useRef, useState, type FC} from 'react'
+import {type FC, useMemo, useRef, useState} from 'react'
 
 type CoverVariant = 'dashboard' | 'delegation'
 
@@ -51,7 +51,7 @@ const getNftCover = (
 const DelegationNftCover: FC<{
   variant: CoverVariant
   delegation: {basePool: {kind: BasePoolKind}; value: string}
-  nft: {mintTime?: string | null}
+  nft?: {mintTime?: string | null} | null
 }> = ({variant, delegation, nft}) => {
   const [loop, setLoop] = useState(false)
   const ref = useRef<HTMLVideoElement>(null)
@@ -61,9 +61,9 @@ const DelegationNftCover: FC<{
         variant,
         delegation.basePool.kind,
         delegation.value,
-        nft.mintTime,
+        nft?.mintTime,
       ),
-    [variant, delegation.basePool.kind, delegation.value, nft.mintTime],
+    [variant, delegation.basePool.kind, delegation.value, nft?.mintTime],
   )
   return (
     <video
@@ -94,7 +94,7 @@ const DelegationNftCover: FC<{
         height: '100%',
       }}
     >
-      <source src={video} type="video/mp4"></source>
+      <source src={video} type="video/mp4" />
     </video>
   )
 }

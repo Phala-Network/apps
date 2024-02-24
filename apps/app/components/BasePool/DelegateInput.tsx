@@ -9,12 +9,12 @@ import {aprToApy} from '@/lib/apr'
 import {type BasePoolCommonFragment} from '@/lib/subsquidQuery'
 import {barlow} from '@/lib/theme'
 import {LoadingButton} from '@mui/lab'
-import {Skeleton, Stack, TextField, type SxProps} from '@mui/material'
+import {Skeleton, Stack, type SxProps, TextField} from '@mui/material'
+import {getDecimalPattern, toCurrency, toPercentage} from '@phala/lib'
 import {polkadotAccountAtom} from '@phala/store'
-import {getDecimalPattern, toCurrency, toPercentage} from '@phala/utils'
 import Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
-import {useMemo, useState, type FC} from 'react'
+import {type FC, useMemo, useState} from 'react'
 
 const DelegateInput: FC<{basePool: BasePoolCommonFragment; sx?: SxProps}> = ({
   basePool,

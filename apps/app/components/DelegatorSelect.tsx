@@ -14,11 +14,11 @@ import {
   Typography,
   useTheme,
 } from '@mui/material'
+import {toCurrency} from '@phala/lib'
 import {polkadotAccountAtom} from '@phala/store'
-import {toCurrency} from '@phala/utils'
 import {useAtom} from 'jotai'
 import Image from 'next/image'
-import {useMemo, type FC} from 'react'
+import {type FC, useMemo} from 'react'
 
 const ACCOUNT = 'account'
 

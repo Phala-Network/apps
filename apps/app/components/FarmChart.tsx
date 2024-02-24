@@ -1,15 +1,15 @@
-import useSWRValue from '@/hooks/useSWRValue'
+import useToday from '@/hooks/useToday'
 import {
-  useAccountSnapshotsConnectionQuery,
   type BasePoolKind,
+  useAccountSnapshotsConnectionQuery,
 } from '@/lib/subsquidQuery'
 import {colors} from '@/lib/theme'
 import {subsquidClientAtom} from '@/store/common'
-import {compactFormat} from '@phala/utils'
+import {compactFormat} from '@phala/lib'
 import {addDays} from 'date-fns'
 import Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
-import {useMemo, type FC} from 'react'
+import {type FC, useMemo} from 'react'
 import {
   Bar,
   ComposedChart,
@@ -20,7 +20,7 @@ import {
 } from 'recharts'
 import RechartsTooltip from './RechartsTooltip'
 
-const days = 7
+const days = 30
 
 const FarmChart: FC<{
   account: string
@@ -28,22 +28,16 @@ const FarmChart: FC<{
 }> = ({kind, account}) => {
   const isVault = kind === 'Vault'
   const color = isVault ? colors.vault[500] : colors.main[400]
-  const duration = useSWRValue([days], () => {
-    const date = new Date()
-    date.setUTCHours(0, 0, 0, 0)
-    return Array.from({length: days + 1}).map((_, i) =>
-      addDays(date, i - days).toISOString(),
-    )
-  })
+  const today = useToday()
+  const startTime = useMemo(() => addDays(today, -days).toISOString(), [today])
   const [subsquidClient] = useAtom(subsquidClientAtom)
   const {data} = useAccountSnapshotsConnectionQuery(
     subsquidClient,
     {
       orderBy: 'updatedTime_ASC',
-      first: days + 1,
       where: {
-        account: {id_eq: account},
-        updatedTime_in: duration,
+        account_eq: account,
+        updatedTime_gte: startTime,
       },
       withCumulativeStakePoolOwnerRewards: kind === 'StakePool',
       withCumulativeVaultOwnerRewards: kind === 'Vault',

@@ -1,7 +1,7 @@
 import type {NextApiRequest, NextApiResponse} from 'next'
 
 const handler = async (
-  req: NextApiRequest,
+  _req: NextApiRequest,
   res: NextApiResponse<string>,
 ): Promise<void> => {
   const circulation = await fetch(

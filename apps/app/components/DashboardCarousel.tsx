@@ -7,9 +7,9 @@ import b8 from '@/assets/b8.jpg'
 import ArrowBackIos from '@mui/icons-material/ArrowBackIos'
 import ArrowForwardIos from '@mui/icons-material/ArrowForwardIos'
 import {Box, IconButton, LinearProgress, Stack} from '@mui/material'
-import {useInterval} from '@phala/utils'
+import {useInterval} from '@phala/lib'
 import Link from 'next/link'
-import {useMemo, useState, type FC} from 'react'
+import {type FC, useMemo, useState} from 'react'
 import {useSnapCarousel} from 'react-snap-carousel'
 
 const contents: Array<{name: string; imageUrl: string; href: string}> = [
@@ -105,7 +105,7 @@ const DashboardCarousel: FC = () => {
         }}
         ref={scrollRef}
       >
-        {contents.map((content, index) => {
+        {contents.map((content) => {
           const isExternal = content.href.startsWith('http')
           return (
             <Box
@@ -124,7 +124,7 @@ const DashboardCarousel: FC = () => {
                 backgroundPosition: 'center left',
                 scrollSnapAlign: 'start',
               }}
-              key={index}
+              key={content.name}
             />
           )
         })}

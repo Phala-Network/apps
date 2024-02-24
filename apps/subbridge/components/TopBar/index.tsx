@@ -1,4 +1,4 @@
-import {alpha, AppBar, Stack, Toolbar, useTheme} from '@mui/material'
+import {AppBar, Stack, Toolbar, alpha, useTheme} from '@mui/material'
 import {type FC} from 'react'
 import Account from './Account'
 import MoreButton from './MoreButton'

@@ -7,15 +7,15 @@ import {LoadingButton} from '@mui/lab'
 import {
   DialogContent,
   DialogTitle,
-  Unstable_Grid2 as Grid,
   Stack,
   TextField,
   Typography,
+  Unstable_Grid2 as Grid,
 } from '@mui/material'
-import {getDecimalPattern} from '@phala/utils'
+import {getDecimalPattern} from '@phala/lib'
 import {stringToHex} from '@polkadot/util'
 import Decimal from 'decimal.js'
-import {useEffect, useMemo, useState, type FC} from 'react'
+import {type FC, useEffect, useMemo, useState} from 'react'
 
 const OwnerSettings: FC<{
   basePool: BasePoolCommonFragment

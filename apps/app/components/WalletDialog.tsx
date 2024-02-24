@@ -22,7 +22,7 @@ import {
 import type {Wallet} from '@talismn/connect-wallets'
 import {useAtom} from 'jotai'
 import Image from 'next/image'
-import {useEffect, useState, type FC} from 'react'
+import {type FC, useEffect, useState} from 'react'
 
 const walletsOrder = ['subwallet-js', 'talisman', 'polkadot-js']
 

@@ -19,7 +19,7 @@ const WikiDialog: FC = () => {
       PaperProps={{sx: {height: fullScreen ? undefined : '700px'}}}
     >
       <DialogContent>
-        <Wiki></Wiki>
+        <Wiki />
       </DialogContent>
     </Dialog>
   )

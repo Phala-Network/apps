@@ -1,6 +1,6 @@
 import {khalaSubsquidClient, phalaSubsquidClient} from '@/config'
 import {useGlobalStateQuery} from '@/lib/subsquidQuery'
-import {subsquidClientAtom, type Chain} from '@/store/common'
+import {type Chain, subsquidClientAtom} from '@/store/common'
 import Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
 import {useCallback} from 'react'

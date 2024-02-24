@@ -2787,7 +2787,8 @@ export default {
         depositInfo: 'PalletIndexDepositInfo',
       },
       Claimed: {
-        tasks: 'Vec<[u8;32]>'
+        tasks: 'Vec<[u8;32]>',
+        fee: 'u128'
       }
     }
   },
@@ -5626,8 +5627,8 @@ export default {
       },
       claim_task: {
         taskId: '[u8;32]',
-      },
-      claim_all_task: 'Null'
+        fee: 'u128'
+      }
     }
   },
   /**
@@ -7023,7 +7024,7 @@ export default {
    * Lookup694: pallet_index::pallet::Error<T>
    **/
   PalletIndexError: {
-    _enum: ['AssetNotFound', 'WorkerAlreadySet', 'WorkerNotSet', 'WorkerMismatch', 'TaskAlreadyExist', 'NotFoundInTaskQueue', 'TaskQueueEmpty', 'TransactFailed']
+    _enum: ['AssetNotFound', 'WorkerAlreadySet', 'WorkerNotSet', 'WorkerMismatch', 'TaskAlreadyExist', 'NotFoundInTaskQueue', 'TaskQueueEmpty', 'TransactFailed', 'FeeTooExpensive']
   },
   /**
    * Lookup696: sp_runtime::MultiSignature

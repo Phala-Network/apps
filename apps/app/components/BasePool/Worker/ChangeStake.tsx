@@ -1,7 +1,7 @@
 import Property from '@/components/Property'
 import usePolkadotApi from '@/hooks/usePolkadotApi'
 import useSignAndSend from '@/hooks/useSignAndSend'
-import {useGlobalStateQuery, type GlobalStateQuery} from '@/lib/subsquidQuery'
+import {type GlobalStateQuery, useGlobalStateQuery} from '@/lib/subsquidQuery'
 import {barlow} from '@/lib/theme'
 import {subsquidClientAtom} from '@/store/common'
 import {LoadingButton} from '@mui/lab'
@@ -13,10 +13,10 @@ import {
   Stack,
   TextField,
 } from '@mui/material'
-import {getDecimalPattern, toCurrency} from '@phala/utils'
+import {getDecimalPattern, toCurrency} from '@phala/lib'
 import Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
-import {useMemo, useState, type FC} from 'react'
+import {type FC, useMemo, useState} from 'react'
 import {type Worker} from './List'
 
 type ConfidenceLevel = 1 | 2 | 3 | 4 | 5
@@ -71,8 +71,9 @@ const ChangeStake: FC<{
   const [loading, setLoading] = useState(false)
   const [amountString, setAmountString] = useState('')
   const [subsquidClient] = useAtom(subsquidClientAtom)
-  const {data: globalStateData} = useGlobalStateQuery(subsquidClient)
-  const globalState = globalStateData?.globalStateById
+  const {data: globalState} = useGlobalStateQuery(subsquidClient, undefined, {
+    select: (data) => data.globalStateById,
+  })
   const sMin = useMemo(() => {
     if (worker != null && globalState != null) {
       return getSMin(worker, globalState)
