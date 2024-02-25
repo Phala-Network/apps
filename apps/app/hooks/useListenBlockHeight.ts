@@ -21,18 +21,26 @@ const useListenBlockHeight = (): void => {
   useEffect(() => {
     if (height != null) {
       if (enabled.current) {
-        void queryClient.invalidateQueries(['AccountById'])
-        void queryClient.invalidateQueries(['BasePoolById'])
-        void queryClient.invalidateQueries(['BasePoolsConnection.infinite'])
-        void queryClient.invalidateQueries(['BasePoolWhitelistsConnection'])
-        void queryClient.invalidateQueries(['DelegationById'])
-        void queryClient.invalidateQueries(['DelegationsConnection'])
-        void queryClient.invalidateQueries(['DelegationsConnection.infinite'])
-        void queryClient.invalidateQueries(['WorkersConnection'])
-        void queryClient.invalidateQueries(['OwnedVaults'])
-        void queryClient.invalidateQueries(['ClaimableStakePools'])
-        void queryClient.invalidateQueries(['lockedWrappedBalance'])
-        void queryClient.invalidateQueries(['assetBalance'])
+        void queryClient.invalidateQueries({queryKey: ['AccountById']})
+        void queryClient.invalidateQueries({queryKey: ['BasePoolById']})
+        void queryClient.invalidateQueries({
+          queryKey: ['BasePoolsConnection.infinite'],
+        })
+        void queryClient.invalidateQueries({
+          queryKey: ['BasePoolWhitelistsConnection'],
+        })
+        void queryClient.invalidateQueries({queryKey: ['DelegationById']})
+        void queryClient.invalidateQueries({
+          queryKey: ['DelegationsConnection'],
+        })
+        void queryClient.invalidateQueries({
+          queryKey: ['DelegationsConnection.infinite'],
+        })
+        void queryClient.invalidateQueries({queryKey: ['WorkersConnection']})
+        void queryClient.invalidateQueries({queryKey: ['OwnedVaults']})
+        void queryClient.invalidateQueries({queryKey: ['ClaimableStakePools']})
+        void queryClient.invalidateQueries({queryKey: ['lockedWrappedBalance']})
+        void queryClient.invalidateQueries({queryKey: ['assetBalance']})
       } else {
         // Skip the first time
         enabled.current = true

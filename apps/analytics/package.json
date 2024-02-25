@@ -24,7 +24,7 @@
     "@phala/lib": "workspace:*",
     "@rgossiaux/svelte-headlessui": "^2.0.0",
     "@rgossiaux/svelte-heroicons": "^0.1.2",
-    "@tanstack/svelte-query": "^5.22.2",
+    "@tanstack/svelte-query": "^5.24.1",
     "autoprefixer": "^10.4.17",
     "chart.js": "^4.4.1",
     "chartjs-adapter-date-fns": "^3.0.0",

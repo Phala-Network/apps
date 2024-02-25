@@ -27,6 +27,7 @@ import {
 import {polkadotAccountAtom} from '@phala/store'
 import {SubmittableExtrinsic} from '@polkadot/api/types'
 import {ISubmittableResult} from '@polkadot/types/types'
+import {keepPreviousData} from '@tanstack/react-query'
 import {addDays} from 'date-fns'
 import {useAtom} from 'jotai'
 import {type FC, useCallback, useState} from 'react'
@@ -99,7 +100,7 @@ const WorkerList: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
         ],
       },
     },
-    {keepPreviousData: true},
+    {placeholderData: keepPreviousData},
   )
   const {data: reclaimableData} = useReclaimableWorkersConnectionQuery(
     subsquidClient,

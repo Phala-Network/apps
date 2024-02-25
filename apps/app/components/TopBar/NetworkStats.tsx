@@ -55,9 +55,9 @@ const NetworkStats: FC = () => {
   const match = useMediaQuery(theme.breakpoints.down('lg'))
 
   const [chain] = useAtom(chainAtom)
-  const {data: circulationValue} = useQuery(
-    ['circulations', chain],
-    async () => {
+  const {data: circulationValue} = useQuery({
+    queryKey: ['circulations', chain],
+    queryFn: async () => {
       const res = await fetch('/api/circulation')
       if (res.ok) {
         try {
@@ -69,7 +69,7 @@ const NetworkStats: FC = () => {
         return null
       }
     },
-  )
+  })
   const {data: phalaGlobalStateData} = useGlobalStateData(phalaSubsquidClient)
   const {data: khalaGlobalStateData} = useGlobalStateData(khalaSubsquidClient)
   const {
