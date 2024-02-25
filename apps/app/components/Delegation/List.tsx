@@ -103,6 +103,7 @@ const DelegationList: FC<{
       },
       {
         enabled,
+        initialPageParam: undefined,
         getNextPageParam: (lastPage) =>
           lastPage.delegationsConnection.pageInfo.hasNextPage
             ? {after: lastPage.delegationsConnection.pageInfo.endCursor}

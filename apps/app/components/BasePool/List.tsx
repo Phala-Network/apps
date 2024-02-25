@@ -207,6 +207,7 @@ const BasePoolList: FC<{
       },
       {
         enabled,
+        initialPageParam: undefined,
         getNextPageParam: (lastPage) =>
           lastPage.basePoolsConnection.pageInfo.hasNextPage
             ? {after: lastPage.basePoolsConnection.pageInfo.endCursor}

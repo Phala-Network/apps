@@ -27,15 +27,15 @@ const ChainSelect: FC = () => {
   const subsquidHeight = globalStateData?.height
   const blockTime = globalStateData?.averageBlockTime
   const apiConnected = api?.isConnected
-  const {data: chainHeight} = useQuery(
-    ['chainHeight', chain],
-    async () => {
+  const {data: chainHeight} = useQuery({
+    queryKey: ['chainHeight', chain],
+    queryFn: async () => {
       if (api == null) return null
       const lastHeader = await api.rpc.chain.getHeader()
       return lastHeader.number.toNumber()
     },
-    {refetchInterval: 3000},
-  )
+    refetchInterval: 3000,
+  })
   const status: 'success' | 'warning' | 'error' = useMemo(() => {
     if (apiConnected === true) {
       if (

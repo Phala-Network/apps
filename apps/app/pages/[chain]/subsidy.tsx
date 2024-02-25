@@ -63,9 +63,9 @@ const Subsidy: NextPage = () => {
   const [legacyRewardsList, setLegacyRewardsList] = useState<Row[]>()
   const [reimbursementsList, setReimbursementsList] = useState<Row[]>()
   const api = usePolkadotApi()
-  const {data: legacyRewardsData} = useQuery(
-    ['legacyRewards', account?.address, legacyRewardsList],
-    async () => {
+  const {data: legacyRewardsData} = useQuery({
+    queryKey: ['legacyRewards', account?.address, legacyRewardsList],
+    queryFn: async () => {
       if (
         account?.address != null &&
         api != null &&
@@ -86,19 +86,21 @@ const Subsidy: NextPage = () => {
       }
       return []
     },
-    {
-      enabled:
-        chain === 'khala' &&
-        legacyRewardsList != null &&
-        account?.address != null &&
-        api != null,
-      refetchInterval: 12000,
-    },
-  )
+    enabled:
+      chain === 'khala' &&
+      legacyRewardsList != null &&
+      account?.address != null &&
+      api != null,
+    refetchInterval: 12000,
+  })
 
-  const {data: reimbursementsData} = useQuery(
-    ['vaultCheatReimbursements', account?.address, reimbursementsList],
-    async () => {
+  const {data: reimbursementsData} = useQuery({
+    queryKey: [
+      'vaultCheatReimbursements',
+      account?.address,
+      reimbursementsList,
+    ],
+    queryFn: async () => {
       if (
         account?.address != null &&
         api != null &&
@@ -119,15 +121,13 @@ const Subsidy: NextPage = () => {
       }
       return []
     },
-    {
-      enabled:
-        chain === 'khala' &&
-        reimbursementsList != null &&
-        account?.address != null &&
-        api != null,
-      refetchInterval: 12000,
-    },
-  )
+    enabled:
+      chain === 'khala' &&
+      reimbursementsList != null &&
+      account?.address != null &&
+      api != null,
+    refetchInterval: 12000,
+  })
 
   useEffect(() => {
     let unmounted = false

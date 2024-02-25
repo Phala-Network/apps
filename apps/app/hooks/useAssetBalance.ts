@@ -9,15 +9,15 @@ const useAssetBalance = (
 ): Decimal | null | undefined => {
   const api = usePolkadotApi()
   const assetsMetadata = useAssetsMetadata()
-  const {data} = useQuery(
-    [
+  const {data} = useQuery({
+    queryKey: [
       'assetBalance',
       api?.runtimeChain,
       assetsMetadata == null,
       account,
       assetId,
     ],
-    async () => {
+    queryFn: async () => {
       if (api == null || account == null) {
         return null
       }
@@ -36,7 +36,7 @@ const useAssetBalance = (
         (assetId === 'available' ? availableBalance : freeBalance).toHex(),
       ).div(1e12)
     },
-  )
+  })
 
   return data
 }
