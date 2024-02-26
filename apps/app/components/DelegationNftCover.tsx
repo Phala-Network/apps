@@ -5,7 +5,7 @@ import {type FC, useMemo, useRef, useState} from 'react'
 
 type CoverVariant = 'dashboard' | 'delegation'
 
-const PREFIX = 'https://nft-assets.phala.world/delegation_nft/Delegation_NFT_'
+const PREFIX = 'https://nft-assets2.phala.world/delegation_nft/Delegation_NFT_'
 
 const getNftCover = (
   variant: CoverVariant,
