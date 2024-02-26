@@ -73,7 +73,7 @@ const App: FC<MyAppProps> = (props) => {
                       <JotaiDevTools />
                     </Box>
                   )}
-                  <ReactQueryDevtools />
+                  <ReactQueryDevtools buttonPosition="bottom-left" />
                 </Layout>
               </MuiThemeProvider>
             </CacheProvider>
