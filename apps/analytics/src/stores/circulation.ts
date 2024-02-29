@@ -1,26 +1,29 @@
 import {createQuery} from '@tanstack/svelte-query'
 
+interface PhalaCirculation {
+  circulation: string
+  crowdloan: string
+  reward: string
+  sygmaBridge: string
+  timestamp: string
+  totalIssuance: string
+}
+
+interface EthereumCirculation {
+  circulation: string
+  phalaChainBridge: string
+  khalaChainBridge: string
+  reward: string
+  sygmaBridge: string
+  timestamp: string
+  totalSupply: string
+}
+
 interface CirculationData {
-  ethereumTotalSupply: string
-  ethereumMiningRewards: string
-  ethereumPhalaChainbridge: string
-  ethereumKhalaChainbridge: string
-  ethereumSygmaBridge: string
-  ethereumCirculation: string
-  phalaTotalIssuance: string
-  phalaMiningRewards: string
-  phalaCrowdloan: string
-  phalaChainbridge: string
-  phalaSygmaBridge: string
-  phalaCirculation: string
-  khalaTotalIssuance: string
-  khalaMiningRewards: string
-  khalaCrowdloan: string
-  khalaChainbridge: string
-  khalaSygmaBridge: string
-  khalaCirculation: string
+  phala: PhalaCirculation
+  khala: PhalaCirculation
+  ethereum: EthereumCirculation
   totalCirculation: string
-  lastUpdate: number
 }
 
 const fetchCirculationData = async () => {

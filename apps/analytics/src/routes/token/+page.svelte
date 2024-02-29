@@ -15,14 +15,7 @@ const display = derived(getCirculation(), ({data: circulation}) => {
   let computationRewards = ''
 
   if (circulation != null) {
-    const {
-      totalCirculation,
-      phalaCrowdloan,
-      khalaCrowdloan,
-      phalaMiningRewards,
-      khalaMiningRewards,
-      ethereumMiningRewards,
-    } = circulation
+    const {totalCirculation, phala, khala, ethereum} = circulation
     circulatingSupply = `${toCurrency(
       new Decimal(totalCirculation),
       0,
@@ -31,15 +24,11 @@ const display = derived(getCirculation(), ({data: circulation}) => {
       toPercentage(new Decimal(totalCirculation).div(totalSupply)) ?? ''
 
     crowdloanRewards = `${toCurrency(
-      Decimal.sum(phalaCrowdloan, khalaCrowdloan),
+      Decimal.sum(phala.crowdloan, khala.crowdloan),
       0,
     )} PHA`
     computationRewards = `${toCurrency(
-      Decimal.sum(
-        phalaMiningRewards,
-        khalaMiningRewards,
-        ethereumMiningRewards,
-      ),
+      Decimal.sum(phala.reward, khala.reward, ethereum.reward),
       0,
     )} PHA`
   }
@@ -61,9 +50,9 @@ const chartData = derived(getCirculation(), ({data: circulation}) => {
       {
         label: 'Circulating Supply',
         data: [
-          parseInt(circulation.ethereumCirculation),
-          parseInt(circulation.khalaCirculation),
-          parseInt(circulation.phalaCirculation),
+          parseInt(circulation.ethereum.circulation),
+          parseInt(circulation.khala.circulation),
+          parseInt(circulation.phala.circulation),
         ],
         backgroundColor: ['#99a2cf', '#03ffff', '#c5ff46'],
       },

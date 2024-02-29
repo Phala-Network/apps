@@ -27,24 +27,19 @@ const display = derived(getCirculation(), ({data: circulation}) => {
     let sygmaBridgeLocked = ''
     let totalSupply = ''
     if (circulation != null) {
-      const {
-        ethereumTotalSupply,
-        ethereumSygmaBridge,
-        ethereumCirculation,
-        totalCirculation,
-      } = circulation
+      const {ethereum, totalCirculation} = circulation
       let percentage =
-        toPercentage(new Decimal(ethereumCirculation).div(totalCirculation)) ??
+        toPercentage(new Decimal(ethereum.circulation).div(totalCirculation)) ??
         ''
       circulatingSupply = `${percentage} / ${toCurrency(
-        new Decimal(ethereumCirculation),
+        new Decimal(ethereum.circulation),
         0,
       )} PHA`
       sygmaBridgeLocked = `${toCurrency(
-        new Decimal(ethereumSygmaBridge),
+        new Decimal(ethereum.sygmaBridge),
         0,
       )} PHA`
-      totalSupply = `${toCurrency(new Decimal(ethereumTotalSupply), 0)} PHA`
+      totalSupply = `${toCurrency(new Decimal(ethereum.totalSupply), 0)} PHA`
     }
     return [
       ['Circulating Supply', circulatingSupply],
@@ -62,27 +57,17 @@ const display = derived(getCirculation(), ({data: circulation}) => {
     let computationLocked = ''
     let totalIssuance = ''
     if (circulation != null) {
-      const {
-        phalaCrowdloan,
-        phalaMiningRewards,
-        phalaCirculation,
-        phalaSygmaBridge,
-        phalaTotalIssuance,
-        totalCirculation,
-      } = circulation
+      const {phala, totalCirculation} = circulation
       let percentage =
-        toPercentage(new Decimal(phalaCirculation).div(totalCirculation)) ?? ''
+        toPercentage(new Decimal(phala.circulation).div(totalCirculation)) ?? ''
       circulatingSupply = `${percentage} / ${toCurrency(
-        new Decimal(phalaCirculation),
+        new Decimal(phala.circulation),
         0,
       )} PHA`
-      sygmaBridgeLocked = `${toCurrency(new Decimal(phalaSygmaBridge), 0)} PHA`
-      crowdloanLocked = `${toCurrency(new Decimal(phalaCrowdloan), 0)} PHA`
-      computationLocked = `${toCurrency(
-        new Decimal(phalaMiningRewards),
-        0,
-      )} PHA`
-      totalIssuance = `${toCurrency(new Decimal(phalaTotalIssuance), 0)} PHA`
+      sygmaBridgeLocked = `${toCurrency(new Decimal(phala.sygmaBridge), 0)} PHA`
+      crowdloanLocked = `${toCurrency(new Decimal(phala.crowdloan), 0)} PHA`
+      computationLocked = `${toCurrency(new Decimal(phala.reward), 0)} PHA`
+      totalIssuance = `${toCurrency(new Decimal(phala.totalIssuance), 0)} PHA`
     }
     return [
       ['Circulating Supply', circulatingSupply],
@@ -109,25 +94,16 @@ const display = derived(getCirculation(), ({data: circulation}) => {
     let computationLocked = ''
     let totalIssuance = ''
     if (circulation != null) {
-      const {
-        khalaMiningRewards,
-        khalaSygmaBridge,
-        khalaCirculation,
-        khalaTotalIssuance,
-        totalCirculation,
-      } = circulation
+      const {khala, totalCirculation} = circulation
       let percentage =
-        toPercentage(new Decimal(khalaCirculation).div(totalCirculation)) ?? ''
+        toPercentage(new Decimal(khala.circulation).div(totalCirculation)) ?? ''
       circulatingSupply = `${percentage} / ${toCurrency(
-        new Decimal(khalaCirculation),
+        new Decimal(khala.circulation),
         0,
       )} PHA`
-      sygmaBridgeLocked = `${toCurrency(new Decimal(khalaSygmaBridge), 0)} PHA`
-      computationLocked = `${toCurrency(
-        new Decimal(khalaMiningRewards),
-        0,
-      )} PHA`
-      totalIssuance = `${toCurrency(new Decimal(khalaTotalIssuance), 0)} PHA`
+      sygmaBridgeLocked = `${toCurrency(new Decimal(khala.sygmaBridge), 0)} PHA`
+      computationLocked = `${toCurrency(new Decimal(khala.reward), 0)} PHA`
+      totalIssuance = `${toCurrency(new Decimal(khala.totalIssuance), 0)} PHA`
     }
     return [
       ['Circulating Supply', circulatingSupply],
