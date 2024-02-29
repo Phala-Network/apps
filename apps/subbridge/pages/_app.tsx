@@ -2,9 +2,8 @@ import GlobalStyles from '@/components/GlobalStyles'
 import GtagScript from '@/components/GtagScript'
 import Layout from '@/components/Layout'
 import MuiThemeProvider from '@/components/MuiThemeProvider'
-import {createEmotionCache} from '@/lib/createEmotionCache'
-import {CacheProvider, type EmotionCache} from '@emotion/react'
 import {CssBaseline} from '@mui/material'
+import {AppCacheProvider} from '@mui/material-nextjs/v14-pagesRouter'
 import Decimal from 'decimal.js'
 import {Provider as JotaiProvider} from 'jotai'
 import {DevTools as JotaiDevTools} from 'jotai-devtools'
@@ -16,14 +15,8 @@ import {SWRConfig} from 'swr'
 
 Decimal.set({toExpNeg: -9e15, toExpPos: 9e15, precision: 50})
 
-const clientSideEmotionCache = createEmotionCache()
-
-interface MyAppProps extends AppProps {
-  emotionCache?: EmotionCache
-}
-
-const MyApp: FC<MyAppProps> = (props) => {
-  const {Component, emotionCache = clientSideEmotionCache, pageProps} = props
+const MyApp: FC<AppProps> = (props) => {
+  const {Component, pageProps} = props
 
   return (
     <>
@@ -48,7 +41,7 @@ const MyApp: FC<MyAppProps> = (props) => {
         }}
       >
         <JotaiProvider>
-          <CacheProvider value={emotionCache}>
+          <AppCacheProvider {...props}>
             <MuiThemeProvider>
               <SnackbarProvider
                 preventDuplicate
@@ -65,7 +58,7 @@ const MyApp: FC<MyAppProps> = (props) => {
                 </Layout>
               </SnackbarProvider>
             </MuiThemeProvider>
-          </CacheProvider>
+          </AppCacheProvider>
         </JotaiProvider>
       </SWRConfig>
     </>

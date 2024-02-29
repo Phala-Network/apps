@@ -1,17 +1,16 @@
 import HydrateAtoms from '@/components/HydrateAtoms'
 import Layout from '@/components/Layout'
 import ZendeskWidget from '@/components/ZendeskWidget'
-import {createEmotionCache} from '@/lib/createEmotionCache'
 import {globalStyles} from '@/lib/styles'
 import {theme} from '@/lib/theme'
 import {chainAtom} from '@/store/common'
-import {CacheProvider, type EmotionCache} from '@emotion/react'
 import {
   Box,
   CssBaseline,
   GlobalStyles,
   ThemeProvider as MuiThemeProvider,
 } from '@mui/material'
+import {AppCacheProvider} from '@mui/material-nextjs/v14-pagesRouter'
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query'
 import {ReactQueryDevtools} from '@tanstack/react-query-devtools'
 import Decimal from 'decimal.js'
@@ -23,22 +22,10 @@ import {SWRConfig} from 'swr'
 
 Decimal.set({toExpNeg: -9e15, toExpPos: 9e15, precision: 50})
 
-// Client-side cache, shared for the whole session of the user in the browser.
-const clientSideEmotionCache = createEmotionCache()
-
 const queryClient = new QueryClient({})
 
-interface MyAppProps extends AppProps {
-  emotionCache?: EmotionCache
-}
-
-const App: FC<MyAppProps> = (props) => {
-  const {
-    Component,
-    emotionCache = clientSideEmotionCache,
-    pageProps,
-    router,
-  } = props
+const App: FC<AppProps> = (props) => {
+  const {Component, pageProps, router} = props
 
   return (
     <SWRConfig
@@ -61,7 +48,7 @@ const App: FC<MyAppProps> = (props) => {
               )
             }
           >
-            <CacheProvider value={emotionCache}>
+            <AppCacheProvider {...props}>
               <MuiThemeProvider theme={theme}>
                 <CssBaseline />
                 <GlobalStyles styles={[globalStyles]} />
@@ -76,7 +63,7 @@ const App: FC<MyAppProps> = (props) => {
                   <ReactQueryDevtools buttonPosition="bottom-left" />
                 </Layout>
               </MuiThemeProvider>
-            </CacheProvider>
+            </AppCacheProvider>
           </HydrateAtoms>
         </JotaiProvider>
       </QueryClientProvider>
