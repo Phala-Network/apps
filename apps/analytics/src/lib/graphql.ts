@@ -5,7 +5,7 @@ export const phatOffchainClient = new GraphQLClient(
 )
 
 export const phatSquidClient = new GraphQLClient(
-  'https://squid.subsquid.io/phat-contract-squid/graphql',
+  'https://subsquid.phala.network/phat-contract-squid/graphql',
 )
 
 export const phalaSquidClient = new GraphQLClient(
