@@ -37,7 +37,7 @@ const display = derived(
       const length = summary.length
       dailyRewards = `${format(
         summary[length - 1].cumulativeRewards
-          .minus(summary[length - 3].cumulativeRewards)
+          .minus(summary[length - 2].cumulativeRewards)
           .toDP(0)
           .toNumber(),
       )} PHA`
