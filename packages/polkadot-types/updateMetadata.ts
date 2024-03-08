@@ -1,7 +1,6 @@
 import {writeFileSync} from 'node:fs'
 
-const address =
-  process.env.ADDRESS ?? 'https://phala.api.onfinality.io/public-ws'
+const address = process.env.ADDRESS ?? 'https://api.phala.network/ws'
 
 void fetch(address, {
   method: 'POST',

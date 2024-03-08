@@ -9,5 +9,3 @@ Monorepo for apps in phala.
 ### [Phala App](/apps/app)
 
 ### [SubBridge](/apps/subbridge)
-
-### [Analytics](/apps/analytics)

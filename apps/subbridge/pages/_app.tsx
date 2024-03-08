@@ -1,5 +1,4 @@
 import GlobalStyles from '@/components/GlobalStyles'
-import GtagScript from '@/components/GtagScript'
 import Layout from '@/components/Layout'
 import MuiThemeProvider from '@/components/MuiThemeProvider'
 import {CssBaseline} from '@mui/material'
@@ -28,8 +27,6 @@ const MyApp: FC<AppProps> = (props) => {
           content="Cross-chain Router, Bridging Parachain, EVM, and other chains."
         />
       </Head>
-
-      <GtagScript />
 
       <SWRConfig
         value={{

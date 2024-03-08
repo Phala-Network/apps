@@ -3,8 +3,8 @@
   "version": "0.0.1",
   "sideEffects": false,
   "main": "index.ts",
+  "files": ["icons"],
   "scripts": {
     "check": "tsc --project ./tsconfig.json --noEmit"
-  },
-  "files": ["icons"]
+  }
 }

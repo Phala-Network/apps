@@ -8,7 +8,7 @@
     "check": "tsc --project ./tsconfig.json --noEmit"
   },
   "peerDependencies": {
-    "@talismn/connect-wallets": "^1.1.3",
+    "@talismn/connect-wallets": "^1",
     "jotai": "^2",
     "react": ">=17"
   },
