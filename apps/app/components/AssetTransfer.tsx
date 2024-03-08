@@ -11,12 +11,12 @@ import {
   TextField,
 } from '@mui/material'
 import {getDecimalPattern, toCurrency, validateAddress} from '@phala/lib'
-import {SubmittableExtrinsic} from '@polkadot/api/types'
-import {ISubmittableResult} from '@polkadot/types/types'
+import type {SubmittableExtrinsic} from '@polkadot/api/types'
+import type {ISubmittableResult} from '@polkadot/types/types'
 import Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
 import {type FC, useMemo, useState} from 'react'
-import {type Asset} from './DashboardAssetList'
+import type {Asset} from './DashboardAssetList'
 import Property from './Property'
 
 const AssetTransfer: FC<{asset: Asset; onClose: () => void}> = ({

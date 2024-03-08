@@ -9,7 +9,7 @@ import {
 } from '@mui/material'
 import {toCurrency} from '@phala/lib'
 import {polkadotAccountAtom} from '@phala/store'
-import {type DeriveBalancesAll} from '@polkadot/api-derive/types'
+import type {DeriveBalancesAll} from '@polkadot/api-derive/types'
 import BN from 'bn.js'
 import Decimal from 'decimal.js'
 import {useAtom} from 'jotai'

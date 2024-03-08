@@ -7,7 +7,7 @@ import useSignAndSend from '@/hooks/useSignAndSend'
 import {aprToApy} from '@/lib/apr'
 import getPoolPath from '@/lib/getPoolPath'
 import getVaultOwnerCut from '@/lib/getVaultOwnerCut'
-import {type BasePoolCommonFragment} from '@/lib/subsquidQuery'
+import type {BasePoolCommonFragment} from '@/lib/subsquidQuery'
 import {colors} from '@/lib/theme'
 import {chainAtom} from '@/store/common'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
@@ -35,7 +35,7 @@ import PromiseButton from '../PromiseButton'
 import BasePoolChart from './Chart'
 import ExtraProperties from './ExtraProperties'
 import Intro from './Intro'
-import {type OnAction} from './List'
+import type {OnAction} from './List'
 
 const FarmCard: FC<{
   basePool: BasePoolCommonFragment

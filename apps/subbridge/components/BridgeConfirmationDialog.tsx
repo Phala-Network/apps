@@ -1,5 +1,5 @@
-import {type Asset} from '@/config/asset'
-import {type Chain} from '@/config/chain'
+import type {Asset} from '@/config/asset'
+import type {Chain} from '@/config/chain'
 import {useBridgeFee} from '@/hooks/useBridgeFee'
 import {useTransfer} from '@/hooks/useTransfer'
 import {
@@ -30,14 +30,14 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material'
-import {type TransitionProps} from '@mui/material/transitions'
-import {type BoxProps} from '@mui/system'
+import type {TransitionProps} from '@mui/material/transitions'
+import type {BoxProps} from '@mui/system'
 import {sleep} from '@phala/lib'
 import {encodeAddress} from '@polkadot/util-crypto'
 import Decimal from 'decimal.js'
 import {useAtom, useAtomValue} from 'jotai'
 import {RESET} from 'jotai/utils'
-import {SnackbarKey, useSnackbar} from 'notistack'
+import {type SnackbarKey, useSnackbar} from 'notistack'
 import {
   type FC,
   type ReactNode,

@@ -16,10 +16,10 @@ import {
   TextField,
   Typography,
 } from '@mui/material'
-import {type BoxProps} from '@mui/system'
+import type {BoxProps} from '@mui/system'
 import {toCurrency} from '@phala/lib'
 import {useAtom} from 'jotai'
-import {type FC} from 'react'
+import type {FC} from 'react'
 
 const getDecimalPattern = (decimals: number): string =>
   `^[0-9]+\\.?[0-9]{0,${decimals}}$`

@@ -1,4 +1,4 @@
-import {type EvmChain} from '@/config/chain'
+import type {EvmChain} from '@/config/chain'
 import {useCurrentEthersAssetContract} from '@/hooks/useEthersContract'
 import {useSwitchNetwork} from '@/hooks/useSwitchNetwork'
 import {ethersContractAllowanceFetcher} from '@/lib/ethersFetcher'

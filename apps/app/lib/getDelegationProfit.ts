@@ -1,5 +1,5 @@
 import Decimal from 'decimal.js'
-import {type DelegationSnapshot} from './subsquidQuery'
+import type {DelegationSnapshot} from './subsquidQuery'
 
 const getDelegationProfit = (
   current: Pick<DelegationSnapshot, 'cost' | 'value'>,

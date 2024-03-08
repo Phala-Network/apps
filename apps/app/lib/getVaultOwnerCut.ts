@@ -1,5 +1,5 @@
 import Decimal from 'decimal.js'
-import {type BasePool, type Vault} from './subsquidQuery'
+import type {BasePool, Vault} from './subsquidQuery'
 
 const getVaultOwnerCut = (
   basePool: Pick<BasePool, 'sharePrice' | 'commission' | 'totalShares'> & {

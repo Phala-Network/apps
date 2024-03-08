@@ -1,12 +1,12 @@
 import {theme} from '@/lib/theme'
 import {
   DocumentHeadTags,
-  DocumentHeadTagsProps,
+  type DocumentHeadTagsProps,
   documentGetInitialProps,
 } from '@mui/material-nextjs/v14-pagesRouter'
 import {
-  DocumentContext,
-  DocumentProps,
+  type DocumentContext,
+  type DocumentProps,
   Head,
   Html,
   Main,

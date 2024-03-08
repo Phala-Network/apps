@@ -1,4 +1,4 @@
-import {type BridgeError} from '@/config/error'
+import type {BridgeError} from '@/config/error'
 import {
   amountAtom,
   assetAtom,

@@ -8,7 +8,7 @@ import {subsquidClientAtom} from '@/store/common'
 import {Box} from '@mui/material'
 import {polkadotAccountAtom} from '@phala/store'
 import {useAtom} from 'jotai'
-import {type NextPage} from 'next'
+import type {NextPage} from 'next'
 
 export const getServerSideProps = getBasePoolServerSideProps('Vault')
 

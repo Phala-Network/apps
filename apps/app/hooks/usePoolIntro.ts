@@ -1,4 +1,4 @@
-import {type ApiPromise} from '@polkadot/api'
+import type {ApiPromise} from '@polkadot/api'
 import {hexToString} from '@polkadot/util'
 import Ajv, {type JSONSchemaType} from 'ajv'
 import useSWR from 'swr'

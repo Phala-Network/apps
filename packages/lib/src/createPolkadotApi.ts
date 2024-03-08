@@ -1,6 +1,6 @@
-import {type ApiPromise} from '@polkadot/api'
-import {type ApiOptions} from '@polkadot/api/types'
-import {type HexString} from '@polkadot/util/types'
+import type {ApiPromise} from '@polkadot/api'
+import type {ApiOptions} from '@polkadot/api/types'
+import type {HexString} from '@polkadot/util/types'
 
 export const createPolkadotApi = async (
   endpoint: string,

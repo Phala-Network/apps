@@ -1,6 +1,6 @@
-import {type AssetId} from '@/config/asset'
+import type {AssetId} from '@/config/asset'
 import {ALL_FROM_CHAINS, BRIDGES} from '@/config/bridge'
-import {type ChainId} from '@/config/chain'
+import type {ChainId} from '@/config/chain'
 import {
   amountAtom,
   assetAtom,
@@ -12,7 +12,7 @@ import {
 import ArrowDownward from '@mui/icons-material/ArrowDownward'
 import ArrowForward from '@mui/icons-material/ArrowForward'
 import {Box, Collapse, IconButton, Paper, Stack, useTheme} from '@mui/material'
-import {type BoxProps} from '@mui/system'
+import type {BoxProps} from '@mui/system'
 import {useAtom, useAtomValue} from 'jotai'
 import {type FC, useState} from 'react'
 import Action from './Action'

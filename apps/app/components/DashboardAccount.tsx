@@ -27,7 +27,7 @@ import {useAtom} from 'jotai'
 import dynamic from 'next/dynamic'
 import {useRouter} from 'next/router'
 import {useSnackbar} from 'notistack'
-import {type FC} from 'react'
+import type {FC} from 'react'
 import WikiButton from './Wiki/Button'
 
 const BalanceBox = styled(Box)(({theme}) =>

@@ -1,7 +1,7 @@
 import {KHALA_ENDPOINTS, PHALA_ENDPOINTS} from '@/config'
 import {chainAtom} from '@/store/common'
 import {createPolkadotApi} from '@phala/lib'
-import {type ApiPromise} from '@polkadot/api'
+import type {ApiPromise} from '@polkadot/api'
 import {useAtom} from 'jotai'
 import useSWRImmutable from 'swr/immutable'
 

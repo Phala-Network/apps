@@ -13,7 +13,7 @@ import {
   useTheme,
 } from '@mui/material'
 import {useAtom} from 'jotai'
-import {type FC, type ReactNode} from 'react'
+import type {FC, ReactNode} from 'react'
 import Markdown from 'react-markdown'
 
 const Content: FC<{children: string}> = ({children}) => {

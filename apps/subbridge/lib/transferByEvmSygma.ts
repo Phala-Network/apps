@@ -1,7 +1,7 @@
 import {ASSETS, type AssetId} from '@/config/asset'
 import {CHAINS, type ChainId} from '@/config/chain'
-import {type TransactionResponse} from '@ethersproject/abstract-provider'
-import {type ethers} from 'ethers'
+import type {TransactionResponse} from '@ethersproject/abstract-provider'
+import type {ethers} from 'ethers'
 import {getEvmSygmaTransfer} from './evmSygma'
 
 export const transferEvmSygma = async ({

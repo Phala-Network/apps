@@ -1,5 +1,5 @@
 import Script from 'next/script'
-import {type FC} from 'react'
+import type {FC} from 'react'
 
 declare global {
   interface Window {

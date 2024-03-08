@@ -2,7 +2,7 @@ import WorkerIcon from '@/assets/worker.svg'
 import PromiseButton from '@/components/PromiseButton'
 import Property from '@/components/Property'
 import WikiButton from '@/components/Wiki/Button'
-import {type WorkerState} from '@/lib/subsquidQuery'
+import type {WorkerState} from '@/lib/subsquidQuery'
 import {
   Box,
   Button,
@@ -16,7 +16,7 @@ import {toCurrency, toFixed} from '@phala/lib'
 import {addDays, formatDuration, intervalToDuration, isAfter} from 'date-fns'
 import {useSnackbar} from 'notistack'
 import {type FC, type ReactNode, useMemo} from 'react'
-import {type OnAction, type Worker} from './List'
+import type {OnAction, Worker} from './List'
 
 const workerStateColors = {
   Ready: '#5988FF',

@@ -12,6 +12,12 @@
   "formatter": {
     "indentStyle": "space"
   },
+  "json": {
+    "parser": {
+      "allowComments": true,
+      "allowTrailingCommas": true
+    }
+  },
   "javascript": {
     "formatter": {
       "bracketSpacing": false,
@@ -24,15 +30,5 @@
     "defaultBranch": "main",
     "enabled": true,
     "useIgnoreFile": true
-  },
-  "overrides": [
-    {
-      "include": ["tsconfig.base.json"],
-      "json": {
-        "parser": {
-          "allowComments": true
-        }
-      }
-    }
-  ]
+  }
 }

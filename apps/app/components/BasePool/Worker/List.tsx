@@ -25,8 +25,8 @@ import {
   TextField,
 } from '@mui/material'
 import {polkadotAccountAtom} from '@phala/store'
-import {SubmittableExtrinsic} from '@polkadot/api/types'
-import {ISubmittableResult} from '@polkadot/types/types'
+import type {SubmittableExtrinsic} from '@polkadot/api/types'
+import type {ISubmittableResult} from '@polkadot/types/types'
 import {keepPreviousData} from '@tanstack/react-query'
 import {addDays} from 'date-fns'
 import {useAtom} from 'jotai'

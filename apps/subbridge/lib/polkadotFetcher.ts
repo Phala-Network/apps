@@ -1,5 +1,5 @@
-import {type AssetId} from '@/config/asset'
-import {type BridgeKind} from '@/config/bridge'
+import type {AssetId} from '@/config/asset'
+import type {BridgeKind} from '@/config/bridge'
 import {CHAINS, type ChainId} from '@/config/chain'
 import type {ApiPromise} from '@polkadot/api'
 import Decimal from 'decimal.js'

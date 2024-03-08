@@ -17,7 +17,7 @@ import {getDecimalPattern, toCurrency} from '@phala/lib'
 import Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
 import {type FC, useMemo, useState} from 'react'
-import {type Worker} from './List'
+import type {Worker} from './List'
 
 type ConfidenceLevel = 1 | 2 | 3 | 4 | 5
 const confidenceScoreMap = {

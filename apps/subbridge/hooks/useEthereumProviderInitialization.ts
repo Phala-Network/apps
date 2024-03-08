@@ -32,7 +32,7 @@ export const useEthereumProviderInitialization = (): void => {
         setEvmAccount(account ?? null)
       }
       const updateChainId = (chainId: unknown): void => {
-        setEvmChainId(parseInt(chainId as string, 16))
+        setEvmChainId(Number.parseInt(chainId as string, 16))
       }
 
       ethereum.on('accountsChanged', updateAccounts)

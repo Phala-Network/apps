@@ -1,4 +1,4 @@
-import {type WikiEntry} from '@/assets/wikiData'
+import type {WikiEntry} from '@/assets/wikiData'
 import {khalaSubsquidClient, phalaSubsquidClient} from '@/config'
 import useToday from '@/hooks/useToday'
 import {
@@ -16,7 +16,7 @@ import {
 import {useQuery} from '@tanstack/react-query'
 import {addDays} from 'date-fns'
 import Decimal from 'decimal.js'
-import {type GraphQLClient} from 'graphql-request'
+import type {GraphQLClient} from 'graphql-request'
 import {useAtom} from 'jotai'
 import {type FC, useMemo, useState} from 'react'
 import Property from '../Property'

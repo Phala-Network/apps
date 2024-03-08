@@ -7,7 +7,7 @@ import {Button} from '@mui/material'
 import {toCurrency, trimAddress} from '@phala/lib'
 import {useAtom} from 'jotai'
 import {useSnackbar} from 'notistack'
-import {type FC} from 'react'
+import type {FC} from 'react'
 import useSWR from 'swr'
 import AccountTemplate from './AccountTemplate'
 

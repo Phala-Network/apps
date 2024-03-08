@@ -1,5 +1,5 @@
-import {type AssetId} from './asset'
-import {type ChainId} from './chain'
+import type {AssetId} from './asset'
+import type {ChainId} from './chain'
 
 export type BridgeKind =
   | 'evmXTokens'

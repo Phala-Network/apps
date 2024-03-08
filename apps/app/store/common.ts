@@ -1,4 +1,4 @@
-import {type WikiEntry} from '@/assets/wikiData'
+import type {WikiEntry} from '@/assets/wikiData'
 import {khalaSubsquidClient, phalaSubsquidClient} from '@/config'
 import {atom} from 'jotai'
 import {atomWithStorage} from 'jotai/utils'

@@ -19,7 +19,7 @@ import {
 } from '@mui/material'
 import {polkadotAccountAtom} from '@phala/store'
 import {useAtom} from 'jotai'
-import {type GetStaticPaths, type GetStaticProps, type NextPage} from 'next'
+import type {GetStaticPaths, GetStaticProps, NextPage} from 'next'
 import {useRouter} from 'next/router'
 import {useCallback, useEffect, useState} from 'react'
 
