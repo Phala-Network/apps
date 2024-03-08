@@ -1,4 +1,4 @@
-import {type AccountByIdQuery} from '@/lib/subsquidQuery'
+import type {AccountByIdQuery} from '@/lib/subsquidQuery'
 import {vaultIdAtom} from '@/store/common'
 import {useAtom} from 'jotai'
 import {useMemo} from 'react'

@@ -16,8 +16,8 @@ import {ReactQueryDevtools} from '@tanstack/react-query-devtools'
 import Decimal from 'decimal.js'
 import {Provider as JotaiProvider} from 'jotai'
 import {DevTools as JotaiDevTools} from 'jotai-devtools'
-import {type AppProps} from 'next/app'
-import {type FC} from 'react'
+import type {AppProps} from 'next/app'
+import type {FC} from 'react'
 import {SWRConfig} from 'swr'
 
 Decimal.set({toExpNeg: -9e15, toExpPos: 9e15, precision: 50})

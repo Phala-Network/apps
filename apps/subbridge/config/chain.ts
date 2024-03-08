@@ -11,7 +11,7 @@ import moonriverIcon from '@phala/ui/icons/chain/moonriver.png'
 import phalaIcon from '@phala/ui/icons/chain/phala.png'
 import shidenIcon from '@phala/ui/icons/chain/shiden.png'
 import turingIcon from '@phala/ui/icons/chain/turing.png'
-import {type AssetId} from './asset'
+import type {AssetId} from './asset'
 
 export type EvmChainId = 'ethereum' | 'moonbeam' | 'moonriver' | 'goerli'
 export type SubstrateChainId =

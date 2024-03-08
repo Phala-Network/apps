@@ -8,7 +8,6 @@ export const useSwitchNetwork = (): (() => Promise<void>) => {
   const [fromChain] = useAtom(fromChainAtom)
   const [ethereum] = useAtom(ethereumProviderAtom)
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: evmChainsData
   const switchNetwork = useCallback(async () => {
     if (ethereum == null || fromChain.kind !== 'evm') return
     try {

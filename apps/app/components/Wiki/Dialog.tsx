@@ -1,7 +1,7 @@
 import {wikiDialogOpenAtom} from '@/store/ui'
 import {Dialog, DialogContent, useMediaQuery, useTheme} from '@mui/material'
 import {useAtom} from 'jotai'
-import {type FC} from 'react'
+import type {FC} from 'react'
 import Wiki from '.'
 
 const WikiDialog: FC = () => {

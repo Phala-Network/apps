@@ -1,5 +1,5 @@
 import * as Sentry from '@sentry/nextjs'
-import {type NextPage} from 'next'
+import type {NextPage} from 'next'
 import NextError, {type ErrorProps} from 'next/error'
 
 const CustomErrorComponent: NextPage<ErrorProps> = (props) => {

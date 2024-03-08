@@ -1,6 +1,6 @@
-import {type WikiEntry} from '@/assets/wikiData'
+import type {WikiEntry} from '@/assets/wikiData'
 import Property from '@/components/Property'
-import {type BasePoolCommonFragment} from '@/lib/subsquidQuery'
+import type {BasePoolCommonFragment} from '@/lib/subsquidQuery'
 import {Box, Stack, type SxProps} from '@mui/material'
 import {toCurrency, toPercentage} from '@phala/lib'
 import Decimal from 'decimal.js'

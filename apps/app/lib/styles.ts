@@ -1,4 +1,4 @@
-import {type SerializedStyles} from '@emotion/react'
+import type {SerializedStyles} from '@emotion/react'
 import {type Theme, css} from '@mui/material'
 import {barlow} from './theme'
 

@@ -12,7 +12,7 @@ import {
   toChainAtom,
 } from '@/store/bridge'
 import {evmAccountAtom} from '@/store/ethers'
-import {type DepositEvent} from '@buildwithsygma/sygma-contracts/dist/ethers/Bridge'
+import type {DepositEvent} from '@buildwithsygma/sygma-contracts/dist/ethers/Bridge'
 import {type ExtrinsicResult, waitSignAndSend} from '@phala/lib'
 import {polkadotAccountAtom} from '@phala/store'
 import {type ContractTransaction, ethers} from 'ethers'

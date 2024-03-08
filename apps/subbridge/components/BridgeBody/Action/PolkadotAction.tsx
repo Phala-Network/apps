@@ -1,7 +1,7 @@
 import {bridgeErrorMessageAtom} from '@/store/bridge'
 import {Button} from '@mui/material'
 import {useAtom} from 'jotai'
-import {type FC} from 'react'
+import type {FC} from 'react'
 
 const PolkadotAction: FC<{onConfirm: () => void}> = ({onConfirm}) => {
   const [bridgeErrorMessage] = useAtom(bridgeErrorMessageAtom)

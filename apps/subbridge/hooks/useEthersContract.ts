@@ -1,7 +1,7 @@
 import moonriverXTokensAbi from '@/assets/moonriver_xtokens_abi.json'
 import tokenStandardAbi from '@/assets/token_standard_abi.json'
 import {ASSETS, type AssetId} from '@/config/asset'
-import {type EvmChainId} from '@/config/chain'
+import type {EvmChainId} from '@/config/chain'
 import {assetAtom, fromChainAtom} from '@/store/bridge'
 import {ethers} from 'ethers'
 import {useAtomValue} from 'jotai'

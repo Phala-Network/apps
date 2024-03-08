@@ -1,5 +1,5 @@
 import {AppBar, Stack, Toolbar, alpha, useTheme} from '@mui/material'
-import {type FC} from 'react'
+import type {FC} from 'react'
 import Account from './Account'
 import MoreButton from './MoreButton'
 import SubbridgeLogo from './SubbridgeLogo'

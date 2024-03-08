@@ -1,16 +1,16 @@
 import usePolkadotApi from '@/hooks/usePolkadotApi'
 import usePoolIntro, {type PoolIntro} from '@/hooks/usePoolIntro'
 import useSignAndSend from '@/hooks/useSignAndSend'
-import {type BasePoolCommonFragment} from '@/lib/subsquidQuery'
+import type {BasePoolCommonFragment} from '@/lib/subsquidQuery'
 import {barlow} from '@/lib/theme'
 import {LoadingButton} from '@mui/lab'
 import {
   DialogContent,
   DialogTitle,
+  Unstable_Grid2 as Grid,
   Stack,
   TextField,
   Typography,
-  Unstable_Grid2 as Grid,
 } from '@mui/material'
 import {getDecimalPattern} from '@phala/lib'
 import {stringToHex} from '@polkadot/util'

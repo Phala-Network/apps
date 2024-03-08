@@ -1,7 +1,7 @@
 import {khalaSubsquidClient, phalaSubsquidClient} from '@/config'
 import {sleep} from '@phala/lib'
-import {type GetServerSideProps} from 'next'
-import {type BasePoolByIdQuery, type BasePoolKind} from './subsquidQuery'
+import type {GetServerSideProps} from 'next'
+import type {BasePoolByIdQuery, BasePoolKind} from './subsquidQuery'
 import {getSdk} from './subsquidSdk'
 
 export interface BasePoolServerSideProps {

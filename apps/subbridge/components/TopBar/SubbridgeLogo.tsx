@@ -2,7 +2,7 @@ import SubbridgeLogoIcon from '@/assets/subbridge_logo_icon.svg?react'
 import SubbridgeLogoText from '@/assets/subbridge_logo_text.svg?react'
 import {Box} from '@mui/material'
 import {useTheme} from '@mui/system'
-import {type FC} from 'react'
+import type {FC} from 'react'
 
 const SubbridgeLogo: FC<{className?: string}> = ({className}) => {
   const theme = useTheme()

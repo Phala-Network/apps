@@ -3,7 +3,7 @@ import {Box, Button, useTheme} from '@mui/material'
 import {polkadotAccountAtom, walletAtom} from '@phala/store'
 import {useAtom} from 'jotai'
 import Image from 'next/image'
-import {type FC} from 'react'
+import type {FC} from 'react'
 
 const Account: FC = () => {
   const theme = useTheme()

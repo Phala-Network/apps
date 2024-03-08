@@ -3,18 +3,18 @@
   "version": "0.0.1",
   "type": "module",
   "scripts": {
-    "updateMetadata": "bun updateMetadata.ts",
     "generate": "npm run generate:defs && npm run generate:meta",
-    "generate:defs": "node --loader ts-node/esm  ../../node_modules/.bin/polkadot-types-from-defs --package @phala/polkadot-types/interfaces  --endpoint metadata.json --input ./interfaces",
-    "generate:meta": "node --loader ts-node/esm  ../../node_modules/.bin/polkadot-types-from-chain --package @phala/polkadot-types/interfaces --endpoint metadata.json --output ./interfaces"
-  },
-  "devDependencies": {
-    "@polkadot/typegen": "^10.11.2",
-    "@types/node": "^20.11.20",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.3.3"
+    "generate:defs": "tsx ../../node_modules/.bin/polkadot-types-from-defs --package @phala/polkadot-types/interfaces  --endpoint metadata.json --input ./interfaces",
+    "generate:meta": "tsx ../../node_modules/.bin/polkadot-types-from-chain --package @phala/polkadot-types/interfaces --endpoint metadata.json --output ./interfaces",
+    "updateMetadata": "bun updateMetadata.ts"
   },
   "dependencies": {
-    "@polkadot/api": "^10.11.2"
+    "@polkadot/api": "^10.12.1"
+  },
+  "devDependencies": {
+    "@polkadot/typegen": "^10.12.1",
+    "@types/node": "^20.11.25",
+    "tsx": "^4.7.1",
+    "typescript": "^5.4.2"
   }
 }

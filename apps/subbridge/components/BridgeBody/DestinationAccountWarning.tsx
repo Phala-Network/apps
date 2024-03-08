@@ -1,5 +1,5 @@
 import {Alert, type AlertProps, Typography} from '@mui/material'
-import {type FC} from 'react'
+import type {FC} from 'react'
 
 const DestinationAccountWarning: FC<AlertProps> = ({sx, ...props}) => {
   return (

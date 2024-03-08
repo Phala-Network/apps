@@ -7,7 +7,7 @@ import usePolkadotApi from '@/hooks/usePolkadotApi'
 import useSignAndSend from '@/hooks/useSignAndSend'
 import {aprToApy} from '@/lib/apr'
 import getPoolPath from '@/lib/getPoolPath'
-import {type DelegationCommonFragment} from '@/lib/subsquidQuery'
+import type {DelegationCommonFragment} from '@/lib/subsquidQuery'
 import {colors} from '@/lib/theme'
 import {chainAtom} from '@/store/common'
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp'
@@ -25,11 +25,11 @@ import {
 } from '@mui/material'
 import {toCurrency, toPercentage} from '@phala/lib'
 import {useAtom} from 'jotai'
-import {type FC} from 'react'
+import type {FC} from 'react'
 import Identity from '../BasePool/Identity'
 import PromiseButton from '../PromiseButton'
 import WrapDecimal from '../WrapDecimal'
-import {type OnAction} from './List'
+import type {OnAction} from './List'
 
 const HorizonCard: FC<{
   delegation: DelegationCommonFragment

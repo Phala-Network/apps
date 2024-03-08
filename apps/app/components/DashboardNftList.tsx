@@ -8,15 +8,15 @@ import {chainAtom, subsquidClientAtom} from '@/store/common'
 import {
   Box,
   Chip,
+  Unstable_Grid2 as Grid,
   Pagination,
   Paper,
   Skeleton,
   Stack,
   Typography,
-  Unstable_Grid2 as Grid,
 } from '@mui/material'
 import {polkadotAccountAtom} from '@phala/store'
-import {type ApiPromise} from '@polkadot/api'
+import type {ApiPromise} from '@polkadot/api'
 import {keepPreviousData} from '@tanstack/react-query'
 import {useAtom} from 'jotai'
 import {type FC, useState} from 'react'

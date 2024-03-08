@@ -34,9 +34,9 @@ import {type FC, useMemo, useState} from 'react'
 import {
   Line,
   LineChart,
+  Tooltip as RechartsTooltip,
   ReferenceLine,
   ResponsiveContainer,
-  Tooltip as RechartsTooltip,
   XAxis,
   YAxis,
 } from 'recharts'

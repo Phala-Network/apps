@@ -6,7 +6,7 @@ import type {ISubmittableResult} from '@polkadot/types/types'
 import {u8aToHex} from '@polkadot/util'
 import {decodeAddress} from '@polkadot/util-crypto'
 import {createPhalaMultilocation} from './createPhalaMultilocation'
-import {type Hex} from './getGeneralKey'
+import type {Hex} from './getGeneralKey'
 
 export const transferByPolkadotXTokens = ({
   polkadotApi,

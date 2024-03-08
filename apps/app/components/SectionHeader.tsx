@@ -1,5 +1,5 @@
 import {Stack, type SxProps, Typography} from '@mui/material'
-import {type FC, type ReactNode} from 'react'
+import type {FC, ReactNode} from 'react'
 
 const SectionHeader: FC<{
   icon: ReactNode

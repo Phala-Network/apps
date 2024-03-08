@@ -1,12 +1,12 @@
-import {type Asset} from '@/config/asset'
+import type {Asset} from '@/config/asset'
 import {CHAINS, type Chain} from '@/config/chain'
-import {
-  type EVMAssetTransfer,
-  type EvmFee,
-  type Fungible,
-  type Transfer,
+import type {
+  EVMAssetTransfer,
+  EvmFee,
+  Fungible,
+  Transfer,
 } from '@buildwithsygma/sygma-sdk-core'
-import {type PopulatedTransaction, type ethers} from 'ethers'
+import type {PopulatedTransaction, ethers} from 'ethers'
 
 export const getEvmSygmaTransfer = async (
   provider: ethers.providers.Web3Provider,

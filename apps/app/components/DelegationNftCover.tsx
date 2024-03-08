@@ -1,4 +1,4 @@
-import {type BasePoolKind} from '@/lib/subsquidQuery'
+import type {BasePoolKind} from '@/lib/subsquidQuery'
 import {addMonths, addWeeks, addYears, isBefore} from 'date-fns'
 import Decimal from 'decimal.js'
 import {type FC, useMemo, useRef, useState} from 'react'

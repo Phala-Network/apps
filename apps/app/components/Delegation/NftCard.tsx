@@ -8,7 +8,7 @@ import usePolkadotApi from '@/hooks/usePolkadotApi'
 import useSignAndSend from '@/hooks/useSignAndSend'
 import {aprToApy} from '@/lib/apr'
 import getPoolPath from '@/lib/getPoolPath'
-import {type DelegationCommonFragment} from '@/lib/subsquidQuery'
+import type {DelegationCommonFragment} from '@/lib/subsquidQuery'
 import {colors} from '@/lib/theme'
 import {chainAtom} from '@/store/common'
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp'
@@ -33,7 +33,7 @@ import {useAtom} from 'jotai'
 import {type FC, useRef, useState} from 'react'
 import Identity from '../BasePool/Identity'
 import WrapDecimal from '../WrapDecimal'
-import {type OnAction} from './List'
+import type {OnAction} from './List'
 
 const NftCard: FC<{
   compact?: boolean

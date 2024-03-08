@@ -4,7 +4,7 @@ import {polkadotWalletModalOpenAtom} from '@/store/polkadotWalletModal'
 import {toCurrency} from '@phala/lib'
 import {polkadotAccountAtom} from '@phala/store'
 import {useAtom} from 'jotai'
-import {type FC} from 'react'
+import type {FC} from 'react'
 import useSWR from 'swr'
 import AccountTemplate from './AccountTemplate'
 

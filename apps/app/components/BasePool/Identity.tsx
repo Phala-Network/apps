@@ -1,4 +1,4 @@
-import {type Account} from '@/lib/subsquidQuery'
+import type {Account} from '@/lib/subsquidQuery'
 import {chainAtom} from '@/store/common'
 import ErrorOutline from '@mui/icons-material/ErrorOutline'
 import RemoveCircleOutline from '@mui/icons-material/RemoveCircleOutline'
@@ -6,7 +6,7 @@ import VerifiedOutlined from '@mui/icons-material/VerifiedOutlined'
 import {Link, Stack, Tooltip, Typography, alpha, useTheme} from '@mui/material'
 import {trimAddress} from '@phala/lib'
 import {useAtom} from 'jotai'
-import {type FC} from 'react'
+import type {FC} from 'react'
 
 const Identity: FC<
   Pick<Account, 'id' | 'identityDisplay' | 'identityLevel'> & {

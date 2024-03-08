@@ -1,4 +1,4 @@
-import {type EvmChain} from '@/config/chain'
+import type {EvmChain} from '@/config/chain'
 import {useBridgeFee} from '@/hooks/useBridgeFee'
 import {useEstimatedGasFee} from '@/hooks/useEstimatedGasFee'
 import {useCurrentPolkadotApi} from '@/hooks/usePolkadotApi'
@@ -22,7 +22,7 @@ import {
 } from '@mui/material'
 import {toCurrency} from '@phala/lib'
 import {useAtomValue} from 'jotai'
-import {type FC, type ReactNode} from 'react'
+import type {FC, ReactNode} from 'react'
 
 const Info: FC<
   {label: string; tooltip?: string; children: ReactNode} & BoxProps

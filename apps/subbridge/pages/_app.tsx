@@ -1,5 +1,4 @@
 import GlobalStyles from '@/components/GlobalStyles'
-import GtagScript from '@/components/GtagScript'
 import Layout from '@/components/Layout'
 import MuiThemeProvider from '@/components/MuiThemeProvider'
 import {CssBaseline} from '@mui/material'
@@ -7,10 +6,10 @@ import {AppCacheProvider} from '@mui/material-nextjs/v14-pagesRouter'
 import Decimal from 'decimal.js'
 import {Provider as JotaiProvider} from 'jotai'
 import {DevTools as JotaiDevTools} from 'jotai-devtools'
-import {type AppProps} from 'next/app'
+import type {AppProps} from 'next/app'
 import Head from 'next/head'
 import {SnackbarProvider} from 'notistack'
-import {type FC} from 'react'
+import type {FC} from 'react'
 import {SWRConfig} from 'swr'
 
 Decimal.set({toExpNeg: -9e15, toExpPos: 9e15, precision: 50})
@@ -28,8 +27,6 @@ const MyApp: FC<AppProps> = (props) => {
           content="Cross-chain Router, Bridging Parachain, EVM, and other chains."
         />
       </Head>
-
-      <GtagScript />
 
       <SWRConfig
         value={{

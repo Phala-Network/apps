@@ -1,7 +1,7 @@
 import Empty from '@/components/Empty'
 import usePoolIntro from '@/hooks/usePoolIntro'
-import {type BasePoolCommonFragment} from '@/lib/subsquidQuery'
-import {type IconProp} from '@fortawesome/fontawesome-svg-core'
+import type {BasePoolCommonFragment} from '@/lib/subsquidQuery'
+import type {IconProp} from '@fortawesome/fontawesome-svg-core'
 import {
   faDiscord,
   faTelegram,

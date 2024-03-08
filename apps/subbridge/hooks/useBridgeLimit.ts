@@ -74,5 +74,5 @@ export const useBridgeLimit = (): Decimal | undefined => {
 
   return hasLimit
     ? phalaReservedPha ?? khalaReservedPha ?? ethereumReservedPha
-    : new Decimal(Infinity)
+    : new Decimal(Number.POSITIVE_INFINITY)
 }

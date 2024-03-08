@@ -6,7 +6,7 @@ import {
 } from '@phala/store'
 import {WalletSelect} from '@talismn/connect-components'
 import {useAtom} from 'jotai'
-import {type FC} from 'react'
+import type {FC} from 'react'
 
 const PolkadotWalletDialog: FC = () => {
   const [open, setOpen] = useAtom(polkadotWalletModalOpenAtom)

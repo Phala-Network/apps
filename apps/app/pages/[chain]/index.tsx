@@ -4,8 +4,8 @@ import DashboardCarousel from '@/components/DashboardCarousel'
 import DashboardNftList from '@/components/DashboardNftList'
 import Title from '@/components/Title'
 import {Box, Paper, Stack} from '@mui/material'
-import {type GetStaticPaths, type GetStaticProps} from 'next'
-import {type FC} from 'react'
+import type {GetStaticPaths, GetStaticProps} from 'next'
+import type {FC} from 'react'
 
 export const getStaticProps: GetStaticProps = async () => {
   return {props: {}}

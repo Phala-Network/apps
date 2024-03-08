@@ -1,4 +1,4 @@
-import {type Chain} from '@/store/common'
+import type {Chain} from '@/store/common'
 import type {BasePoolKind} from './subsquidQuery'
 
 const getPoolPath = (chain: Chain, kind: BasePoolKind, pid: string): string =>

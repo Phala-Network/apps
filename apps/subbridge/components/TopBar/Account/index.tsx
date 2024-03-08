@@ -2,7 +2,7 @@ import ConnectWalletButton from '@/components/ConnectWalletButton'
 import {fromChainAtom} from '@/store/bridge'
 import {isWalletConnectAtom} from '@/store/common'
 import {useAtom} from 'jotai'
-import {type FC} from 'react'
+import type {FC} from 'react'
 import EvmAccount from './EvmAccount'
 import PolkadotAccount from './PolkadotAccount'
 
