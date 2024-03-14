@@ -74,13 +74,24 @@ const DelegationList: FC<{
   const [withdrawingFilter, setWithdrawingFilterFilter] = useState(false)
   const [drawerOpen, setDrawerOpen] = useState(false)
   const [searchString, setSearchString] = useState('')
+  const isSearchingPid = /^[0-9]+$/.test(searchString)
   const debouncedSearchString = useDebounced(searchString, 500)
   const where: Array<DelegationWhereInput | false> = [
     {account: {id_eq: address}},
     {shares_gt: '0'},
-    debouncedSearchString !== '' && {
-      OR: [{basePool: {id_startsWith: debouncedSearchString}}],
-    },
+    debouncedSearchString !== '' &&
+      (isSearchingPid
+        ? {basePool: {id_startsWith: debouncedSearchString}}
+        : {
+            basePool: {
+              owner: {
+                OR: [
+                  {id_containsInsensitive: debouncedSearchString},
+                  {identityDisplay_containsInsensitive: debouncedSearchString},
+                ],
+              },
+            },
+          }),
     !isVault && {
       basePool: {
         kind_in: [

@@ -9,11 +9,10 @@
     "updateMetadata": "bun updateMetadata.ts"
   },
   "dependencies": {
-    "@polkadot/api": "^10.12.1"
+    "@polkadot/api": "^10.12.2"
   },
   "devDependencies": {
-    "@polkadot/typegen": "^10.12.1",
-    "@types/node": "^20.11.25",
+    "@polkadot/typegen": "^10.12.2",
     "tsx": "^4.7.1",
     "typescript": "^5.4.2"
   }

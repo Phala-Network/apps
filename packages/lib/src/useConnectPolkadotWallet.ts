@@ -3,7 +3,7 @@ import {polkadotAccountsAtom, walletAtom, walletNameAtom} from '@phala/store'
 import type {WalletAccount} from '@talismn/connect-wallets'
 import {useAtom} from 'jotai'
 import {useEffect} from 'react'
-import transformAddress from './transformAddress'
+import transformSs58Format from './transformSs58Format'
 
 export const useConnectPolkadotWallet = (
   dappName: string,
@@ -48,7 +48,7 @@ export const useConnectPolkadotWallet = (
           accounts.map((a) => {
             return {
               ...a,
-              address: transformAddress(a.address, ss58Format),
+              address: transformSs58Format(a.address, ss58Format),
             }
           }),
         )
