@@ -6,7 +6,14 @@ import {
   useGlobalStateSnapshotsConnectionQuery,
 } from '@/lib/subsquidQuery'
 import {chainAtom} from '@/store/common'
-import {Skeleton, Stack, Tooltip, useMediaQuery, useTheme} from '@mui/material'
+import {
+  Box,
+  Skeleton,
+  Stack,
+  Tooltip,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material'
 import {
   compactFormat,
   toPercentage,
@@ -289,14 +296,19 @@ const NetworkStats: FC = () => {
               {value == null ? (
                 <Skeleton width={40} />
               ) : (
-                <span
-                  css={{
+                <Box
+                  component="a"
+                  href="https://analytics.phala.network/"
+                  target="_blank"
+                  sx={{
+                    color: 'inherit',
                     textDecoration: 'underline dotted',
                     textDecorationColor: theme.palette.text.secondary,
                   }}
+                  rel="noreferrer"
                 >
                   {value}
-                </span>
+                </Box>
               )}
             </Tooltip>
           </Property>
