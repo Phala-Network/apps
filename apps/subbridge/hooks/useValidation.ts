@@ -16,7 +16,6 @@ import {useAtom, useAtomValue} from 'jotai'
 import {useEffect} from 'react'
 import {useBalance} from './useBalance'
 import {useBridgeFee} from './useBridgeFee'
-import {useBridgeLimit} from './useBridgeLimit'
 
 export const useValidation = (): void => {
   const [, setBridgeError] = useAtom(bridgeErrorAtom)
@@ -29,7 +28,6 @@ export const useValidation = (): void => {
   const bridgeFee = useBridgeFee()
   const destChainTransactionFee = useAtomValue(destChainTransactionFeeAtom)
   const existentialDeposit = useAtomValue(existentialDepositAtom)
-  const bridgeLimit = useBridgeLimit()
   const [bridge] = useAtom(bridgeInfoAtom)
 
   useEffect(() => {
@@ -66,10 +64,6 @@ export const useValidation = (): void => {
         return 'AmountTooSmall'
       }
 
-      if (bridgeLimit == null || bridgeLimit.lt(amount)) {
-        return 'InsufficientReserve'
-      }
-
       if (
         (fromChain.id === 'astar' || fromChain.id === 'shiden') &&
         asset.id === 'pha' &&
@@ -100,7 +94,6 @@ export const useValidation = (): void => {
     bridgeFee,
     destChainTransactionFee,
     existentialDeposit,
-    bridgeLimit,
     fromChain.id,
     asset.id,
     bridge.disabled,

@@ -3,13 +3,11 @@ import {atom} from 'jotai'
 import {atomWithStorage} from 'jotai/utils'
 
 export const polkadotAccountsAtom = atom<WalletAccount[] | null>(null)
-polkadotAccountsAtom.debugLabel = 'polkadotAccounts'
 
 const polkadotAccountAddressAtom = atomWithStorage<string | null>(
   'jotai:polkadot_account_address',
   null,
 )
-polkadotAccountAddressAtom.debugLabel = 'polkadotAccountAddress'
 
 export const polkadotAccountAtom = atom(
   (get) => {
@@ -25,4 +23,3 @@ export const polkadotAccountAtom = atom(
     set(polkadotAccountAddressAtom, account)
   },
 )
-polkadotAccountAtom.debugLabel = 'polkadotAccount'

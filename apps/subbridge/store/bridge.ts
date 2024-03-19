@@ -9,10 +9,8 @@ import {atomWithReset} from 'jotai/utils'
 import {evmAccountAtom} from './ethers'
 
 export const amountAtom = atomWithReset('')
-amountAtom.debugLabel = 'amount'
 
 const assetIdAtom = atom<AssetId>('pha')
-assetIdAtom.debugLabel = 'assetId'
 export const assetAtom = atom(
   (get) => ASSETS[get(assetIdAtom)],
   (_get, set, update: AssetId) => {
@@ -21,7 +19,6 @@ export const assetAtom = atom(
 )
 
 const fromChainIdAtom = atom<ChainId>('ethereum')
-fromChainIdAtom.debugLabel = 'fromChainId'
 export const fromChainAtom = atom(
   (get) => CHAINS[get(fromChainIdAtom)],
   (_get, set, update: ChainId) => {
@@ -30,7 +27,6 @@ export const fromChainAtom = atom(
 )
 
 const toChainIdAtom = atom<ChainId>('phala')
-toChainIdAtom.debugLabel = 'toChain'
 export const toChainAtom = atom(
   (get) => CHAINS[get(toChainIdAtom)],
   (_get, set, update: ChainId) => {
