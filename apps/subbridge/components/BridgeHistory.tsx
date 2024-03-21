@@ -1,12 +1,18 @@
 import {ASSETS} from '@/config/asset'
 import {CHAINS, type Chain} from '@/config/chain'
-import {assetAtom, bridgeInfoAtom, fromChainAtom} from '@/store/bridge'
+import {
+  assetAtom,
+  bridgeInfoAtom,
+  fromChainAtom,
+  toChainAtom,
+} from '@/store/bridge'
 import {evmAccountAtom} from '@/store/ethers'
 import {
   AccessTime,
   ArrowForward,
   CheckCircleOutline,
   ErrorOutline,
+  OpenInNew,
 } from '@mui/icons-material'
 import {
   Box,
@@ -20,7 +26,7 @@ import {
 } from '@mui/material'
 import {toCurrency, transformSs58Format} from '@phala/lib'
 import {polkadotAccountAtom} from '@phala/store'
-import {formatDistanceToNowStrict} from 'date-fns'
+import {formatDistanceToNow} from 'date-fns'
 import {useAtom} from 'jotai'
 import {type FC, useMemo} from 'react'
 import useSWR from 'swr'
@@ -112,11 +118,14 @@ const ChainLabel: FC<{chain: Chain}> = ({chain: {icon, name}}) => {
   )
 }
 
+const validChains = new Set(['ethereum', 'phala', 'khala'])
+
 const BridgeHistory: FC<BoxProps> = (props) => {
   const [polkadotAccount] = useAtom(polkadotAccountAtom)
   const [evmAccount] = useAtom(evmAccountAtom)
   const [bridgeInfo] = useAtom(bridgeInfoAtom)
   const [fromChain] = useAtom(fromChainAtom)
+  const [toChain] = useAtom(toChainAtom)
   const [asset] = useAtom(assetAtom)
 
   const account = useMemo(() => {
@@ -144,8 +153,7 @@ const BridgeHistory: FC<BoxProps> = (props) => {
       return json.map((transfer) => {
         const timestamp = transfer.deposit?.timestamp
         const distance =
-          timestamp &&
-          formatDistanceToNowStrict(timestamp, {addSuffix: true, unit: 'day'})
+          timestamp && formatDistanceToNow(timestamp, {addSuffix: true})
         const amount = transfer.amount && toCurrency(transfer.amount, 12)
 
         return {
@@ -159,8 +167,8 @@ const BridgeHistory: FC<BoxProps> = (props) => {
   )
 
   if (
-    bridgeInfo.kind !== 'evmSygma' &&
-    bridgeInfo.kind !== 'phalaSygma' &&
+    !validChains.has(fromChain.id) ||
+    !validChains.has(toChain.id) ||
     asset.id !== 'pha'
   ) {
     return null
@@ -172,9 +180,27 @@ const BridgeHistory: FC<BoxProps> = (props) => {
 
   return (
     <Box {...props}>
-      <Paper sx={{mx: 'auto', p: 3}}>
-        {/* <Typography variant="subtitle1">Recent transactions</Typography> */}
-        <Stack spacing={2} divider={<Divider flexItem />}>
+      <Paper sx={{mx: 'auto', px: 3, pt: 2, pb: 3}}>
+        <Stack
+          direction="row"
+          justifyContent="space-between"
+          alignItems="center"
+        >
+          <Typography variant="subtitle1">Recent transactions</Typography>
+          <Link
+            color="inherit"
+            href="https://analytics.phala.network/public-dashboards/346284964a334ee3a5cc72e1523eccea?orgId=1"
+            target="_blank"
+            rel="noopener"
+            display="flex"
+            alignItems="center"
+            fontSize="0.875rem"
+          >
+            View on explorer
+            <OpenInNew fontSize="inherit" sx={{ml: 1}} />
+          </Link>
+        </Stack>
+        <Stack mt={2} spacing={2} divider={<Divider flexItem />}>
           {data.map((transfer) => {
             const txHash = transfer.deposit?.txHash
             const fromChain = CHAINS[transfer.fromDomain.name]
