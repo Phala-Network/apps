@@ -1,4 +1,5 @@
 import BridgeBody from '@/components/BridgeBody'
+import BridgeHistory from '@/components/BridgeHistory'
 import {ClientOnly} from '@/components/ClientOnly'
 import Footer from '@/components/Footer'
 import MigrationAlert from '@/components/MigrationAlert'
@@ -35,6 +36,8 @@ const Home: NextPage = () => {
         </ClientOnly>
 
         <BridgeBody />
+
+        <BridgeHistory pt={3} />
 
         <Box sx={{my: 4}}>
           <Footer />

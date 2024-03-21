@@ -8,7 +8,6 @@ export const walletNameAtom = atomWithStorage<string | null>(
 )
 
 const originalWalletAtom = atom<Wallet | null>(null)
-originalWalletAtom.debugLabel = 'wallet'
 export const walletAtom = atom(
   (get) => get(originalWalletAtom),
   (_get, set, newWallet: Wallet | null) => {
