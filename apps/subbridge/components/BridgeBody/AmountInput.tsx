@@ -20,6 +20,8 @@ import {toCurrency} from '@phala/lib'
 import {useAtom} from 'jotai'
 import type {FC} from 'react'
 
+const GAS = '0.01'
+
 const getDecimalPattern = (decimals: number): string =>
   `^[0-9]+\\.?[0-9]{0,${decimals}}$`
 
@@ -35,11 +37,10 @@ const AmountInput: FC<BoxProps & Pick<InputProps, 'endAdornment'>> = ({
   const [isWalletConnected] = useAtom(isWalletConnectAtom)
   const [isNetworkWrong] = useAtom(isNetworkWrongAtom)
 
-  const showMax = Boolean(
+  const showMax =
     balance != null &&
-      !balance.eq(0) &&
-      (amount.length === 0 || !balance.eq(amount)),
-  )
+    !balance.eq(0) &&
+    (amount.length === 0 || !balance.eq(amount))
 
   const fromNativeChain =
     fromChain.kind === 'substrate' && fromChain.nativeAsset === asset.id
@@ -87,7 +88,11 @@ const AmountInput: FC<BoxProps & Pick<InputProps, 'endAdornment'>> = ({
             }}
             onClick={() => {
               if (showMax && balance != null) {
-                setAmount(balance.toString())
+                setAmount(
+                  fromNativeChain
+                    ? balance.minus(GAS).toString()
+                    : balance.toString(),
+                )
               }
             }}
           >
