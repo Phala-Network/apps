@@ -154,6 +154,7 @@ const WithdrawQueue: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
       baseValue = baseValue.minus(row.value)
       if (baseValue.lt(0) && row.startTime != null) {
         time = row.startTime
+        break
       }
     }
     if (time != null) {
