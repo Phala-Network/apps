@@ -298,7 +298,7 @@ const NetworkStats: FC = () => {
               ) : (
                 <Box
                   component="a"
-                  href="https://analytics.phala.network/"
+                  href="https://dune.com/phala_network/phala-analytics"
                   target="_blank"
                   sx={{
                     color: 'inherit',
