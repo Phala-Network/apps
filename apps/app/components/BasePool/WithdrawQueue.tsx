@@ -117,9 +117,9 @@ const WithdrawQueue: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
         field: 'countdown',
         headerName: 'Countdown',
         width: 200,
-        valueGetter: ({row}) =>
+        valueGetter: (_, row) =>
           row.startTime != null && new Date(row.startTime),
-        valueFormatter: ({value}) => {
+        valueFormatter: (value) => {
           const start = new Date()
           const end = addDays(new Date(value as number), 7)
           if (isAfter(start, end)) return 'Ended'
@@ -132,9 +132,9 @@ const WithdrawQueue: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
         field: 'latestWithdrawal',
         headerName: 'Latest Withdrawal',
         width: 200,
-        valueGetter: ({row}) =>
+        valueGetter: (_, row) =>
           row.startTime != null && new Date(row.startTime),
-        valueFormatter: ({value}) =>
+        valueFormatter: (value) =>
           addDays(new Date(value as number), 14).toLocaleDateString(),
       },
     ],
