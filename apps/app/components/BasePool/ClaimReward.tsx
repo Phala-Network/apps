@@ -8,10 +8,9 @@ import {
   DialogTitle,
   TextField,
 } from '@mui/material'
-import {validateAddress} from '@phala/lib'
+import {transformSs58Format, validateAddress} from '@phala/lib'
 import {polkadotAccountAtom} from '@phala/store'
 import type {SubmittableExtrinsic} from '@polkadot/api/types'
-import {decodeAddress, encodeAddress} from '@polkadot/keyring'
 import type {ISubmittableResult} from '@polkadot/types/types'
 import Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
@@ -61,7 +60,7 @@ const ClaimReward: FC<{
     try {
       if (
         account?.address !== undefined &&
-        encodeAddress(decodeAddress(address), 30) === account.address
+        transformSs58Format(address, 30) === account.address
       ) {
         calls.push(
           api.tx.phalaWrappedBalances.unwrap(totalReward.times(1e12).toHex()),

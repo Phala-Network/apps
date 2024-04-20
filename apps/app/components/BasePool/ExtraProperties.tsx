@@ -28,6 +28,7 @@ const ExtraProperties: FC<{basePool: BasePoolCommonFragment; sx?: SxProps}> = ({
       ['Commission', toPercentage(basePool.commission), 'commission'],
       stakePool != null && [
         'Workers',
+        // biome-ignore lint/correctness/useJsxKeyInIterable: <explanation>
         <>
           {`${stakePool.idleWorkerCount} Idle`}
           <Box component="span" color="text.secondary">

@@ -32,8 +32,7 @@ import {
 } from '@mui/material'
 import type {TransitionProps} from '@mui/material/transitions'
 import type {BoxProps} from '@mui/system'
-import {sleep} from '@phala/lib'
-import {encodeAddress} from '@polkadot/util-crypto'
+import {sleep, transformSs58Format} from '@phala/lib'
 import Decimal from 'decimal.js'
 import {useAtom, useAtomValue} from 'jotai'
 import {RESET} from 'jotai/utils'
@@ -107,7 +106,7 @@ const Detail: FC<
   const displayAccount = useMemo(() => {
     if (chain.kind === 'substrate' && account.length > 0) {
       const {ss58Format} = chain
-      return encodeAddress(account, ss58Format)
+      return transformSs58Format(account, ss58Format)
     }
 
     return account

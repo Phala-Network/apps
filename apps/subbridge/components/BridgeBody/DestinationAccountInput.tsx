@@ -7,9 +7,8 @@ import {isWalletConnectAtom} from '@/store/common'
 import {evmAccountAtom} from '@/store/ethers'
 import HighlightOff from '@mui/icons-material/HighlightOff'
 import {Box, type BoxProps, IconButton, Link, TextField} from '@mui/material'
-import {trimAddress} from '@phala/lib'
+import {transformSs58Format, trimAddress} from '@phala/lib'
 import {polkadotAccountAtom} from '@phala/store'
-import {encodeAddress} from '@polkadot/util-crypto'
 import {useAtom} from 'jotai'
 import {RESET} from 'jotai/utils'
 import {
@@ -80,7 +79,7 @@ const DestinationAccountInput: FC<BoxProps> = (props) => {
       const {name, address} = polkadotAccount
 
       return `${name ?? ''} (${trimAddress(
-        encodeAddress(address, toChain.ss58Format),
+        transformSs58Format(address, toChain.ss58Format),
       )})`
     }
     return destinationAccount
