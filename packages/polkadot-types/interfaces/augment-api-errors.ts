@@ -1015,6 +1015,7 @@ declare module '@polkadot/api-base/types/errors' {
       GenesisBlockHashRejected: AugmentedError<ApiType>;
       InvalidBenchReport: AugmentedError<ApiType>;
       InvalidConsensusVersion: AugmentedError<ApiType>;
+      InvalidDCAPQuote: AugmentedError<ApiType>;
       InvalidEndpointSigningTime: AugmentedError<ApiType>;
       InvalidGatekeeper: AugmentedError<ApiType>;
       InvalidIASSigningCert: AugmentedError<ApiType>;
@@ -1047,6 +1048,7 @@ declare module '@polkadot/api-base/types/errors' {
       UnknownCluster: AugmentedError<ApiType>;
       UnknownContract: AugmentedError<ApiType>;
       UnknownQuoteBodyFormat: AugmentedError<ApiType>;
+      UnsupportedAttestationType: AugmentedError<ApiType>;
       WorkerNotFound: AugmentedError<ApiType>;
       /**
        * Generic error

@@ -4,6 +4,7 @@ import type {WalletAccount} from '@talismn/connect-wallets'
 import {useAtom} from 'jotai'
 import {useEffect} from 'react'
 import transformSs58Format from './transformSs58Format'
+import {validateAddress} from './validateAddress'
 
 export const useConnectPolkadotWallet = (
   dappName: string,
@@ -57,7 +58,10 @@ export const useConnectPolkadotWallet = (
     const updateAccounts = async (): Promise<void> => {
       if (wallet != null) {
         // Some wallets don't implement subscribeAccounts correctly, so call getAccounts anyway
-        const accounts = await wallet.getAccounts()
+        const walletAccounts = await wallet.getAccounts()
+        const accounts = walletAccounts.filter((account) =>
+          validateAddress(account.address),
+        )
         saveAccounts(accounts)
         if (!unmounted) {
           unsub = (await wallet.subscribeAccounts(saveAccounts)) as () => void

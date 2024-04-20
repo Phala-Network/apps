@@ -474,6 +474,7 @@ const BasePoolList: FC<{
                   spacing={2}
                 >
                   {page.basePoolsConnection.edges.map((edge) =>
+                    // biome-ignore lint/correctness/useJsxKeyInIterable: <explanation>
                     variant === 'farm' ? (
                       <FarmCard
                         key={edge.node.id}
