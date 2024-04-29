@@ -99,6 +99,7 @@ const TopBar: FC = () => {
       sub: [
         {label: 'Dune', href: 'https://dune.com/phala_network/phala-analytics'},
         {label: 'Dashboard', href: 'https://analytics.phala.network'},
+        {label: 'Map', href: 'https://analytics.phala.network/map'},
       ],
     },
     {
