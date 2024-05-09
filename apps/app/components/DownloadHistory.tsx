@@ -17,7 +17,7 @@ const DownloadHistory: FC<
       href={`/api/${chain}/snapshots/${kind}/${id}`}
       {...props}
     >
-      Download history data
+      Download historical data
     </Button>
   )
 }

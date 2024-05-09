@@ -77,7 +77,7 @@ const DelegationMenu: FC<{
             setMenuOpen(false)
           }}
         >
-          Download history data
+          Download historical data
         </MenuItem>
       </Menu>
     </>
