@@ -3,8 +3,6 @@ import VaultIcon from '@/assets/vault_detailed.svg'
 import Property from '@/components/Property'
 import useDelegationOneDayProfit from '@/hooks/useDelegationOneDayProfit'
 import useGetApr from '@/hooks/useGetApr'
-import usePolkadotApi from '@/hooks/usePolkadotApi'
-import useSignAndSend from '@/hooks/useSignAndSend'
 import {aprToApy} from '@/lib/apr'
 import getPoolPath from '@/lib/getPoolPath'
 import type {DelegationCommonFragment} from '@/lib/subsquidQuery'
@@ -13,8 +11,6 @@ import {chainAtom} from '@/store/common'
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp'
 import {
   Box,
-  Button,
-  Chip,
   Link,
   Paper,
   Skeleton,
@@ -27,9 +23,9 @@ import {toCurrency, toPercentage} from '@phala/lib'
 import {useAtom} from 'jotai'
 import type {FC} from 'react'
 import Identity from '../BasePool/Identity'
-import PromiseButton from '../PromiseButton'
 import WrapDecimal from '../WrapDecimal'
 import type {OnAction} from './List'
+import DelegationMenu from './Menu'
 
 const HorizonCard: FC<{
   delegation: DelegationCommonFragment
@@ -37,8 +33,6 @@ const HorizonCard: FC<{
   isOwner?: boolean
 }> = ({delegation, onAction, isOwner = false}) => {
   const profit = useDelegationOneDayProfit(delegation.id)
-  const api = usePolkadotApi()
-  const signAndSend = useSignAndSend()
   const {value, basePool, withdrawingValue} = delegation
   const isVault = basePool.kind === 'Vault'
   const [chain] = useAtom(chainAtom)
@@ -46,37 +40,6 @@ const HorizonCard: FC<{
   const getApr = useGetApr()
   const apr = getApr(basePool.aprMultiplier)
   const hasWithdrawal = withdrawingValue !== '0'
-  const poolHasWithdrawal = delegation.basePool.withdrawingShares !== '0'
-  const reclaim = async (): Promise<void> => {
-    if (api == null) return
-    await signAndSend(
-      isVault
-        ? api.tx.phalaVault.checkAndMaybeForceWithdraw(basePool.id)
-        : api.tx.phalaStakePoolv2.checkAndMaybeForceWithdraw(basePool.id),
-    )
-  }
-
-  const actions = isOwner && (
-    <Stack direction="row" alignItems="center">
-      <Button
-        size="small"
-        variant="text"
-        onClick={() => {
-          onAction(delegation, 'withdraw')
-        }}
-      >
-        Withdraw
-      </Button>
-      <PromiseButton
-        size="small"
-        variant="text"
-        onClick={reclaim}
-        disabled={!poolHasWithdrawal}
-      >
-        Reclaim
-      </PromiseButton>
-    </Stack>
-  )
 
   return (
     <Paper
@@ -96,7 +59,7 @@ const HorizonCard: FC<{
               <VaultIcon color={colors.vault[400]} />
             )}
           </Box>
-          <Stack flex="1 0" width={120}>
+          <Stack flex="1 0" width={130}>
             <Link
               lineHeight={1.3}
               onClick={(e) => {
@@ -114,14 +77,19 @@ const HorizonCard: FC<{
             <Identity {...basePool.owner} />
           </Stack>
         </Stack>
-        <Stack direction="row" spacing={{xs: 1, md: 2}} alignItems="center">
+        <Stack
+          direction="row"
+          spacing={{xs: 1, md: 2}}
+          alignItems="center"
+          flex={1}
+        >
           <Property
             label="Value"
             sx={{width: 130}}
             wikiEntry="nftValue"
           >{`${toCurrency(value)} PHA`}</Property>
           {profit != null && (
-            <Property label="1d" sx={{width: 100}} wikiEntry="oneDayRewards">
+            <Property label="1d" sx={{width: 110}} wikiEntry="oneDayRewards">
               <Stack
                 direction="row"
                 alignItems="center"
@@ -143,7 +111,7 @@ const HorizonCard: FC<{
           )}
           <Property
             label={`Est. ${isVault ? 'APY' : 'APR'}`}
-            sx={{width: 80}}
+            sx={{width: 90}}
             wikiEntry="estApr"
           >
             {apr != null ? (
@@ -164,24 +132,25 @@ const HorizonCard: FC<{
           >{`${toCurrency(delegation.basePool.freeValue)} PHA`}</Property>
           {hasWithdrawal && (
             <Property
-              label="Withdrawing"
+              label={
+                <Box
+                  component="span"
+                  sx={(theme) => ({color: theme.palette.warning.dark})}
+                >
+                  Withdrawing
+                </Box>
+              }
               sx={{width: 120}}
               wikiEntry="withdrawing"
             >{`${toCurrency(withdrawingValue)} PHA`}</Property>
           )}
-        </Stack>
-
-        <Stack flex="1" alignItems="flex-end" justifyContent="space-between">
-          <Stack direction="row" height="24px">
-            {hasWithdrawal && (
-              <Chip
-                label="Withdrawing"
-                size="small"
-                sx={{color: theme.palette.warning.dark}}
-              />
-            )}
-          </Stack>
-          {actions}
+          {isOwner && (
+            <DelegationMenu
+              delegation={delegation}
+              onAction={onAction}
+              sx={{ml: 'auto!important'}}
+            />
+          )}
         </Stack>
       </Stack>
     </Paper>

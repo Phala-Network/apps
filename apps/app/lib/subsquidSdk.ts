@@ -1703,6 +1703,7 @@ type GlobalState = {
   phaRate: Scalars['BigDecimal']['output'];
   re: Scalars['BigDecimal']['output'];
   snapshotUpdatedTime: Scalars['DateTime']['output'];
+  tokenomicUpdatedTime: Scalars['DateTime']['output'];
   totalValue: Scalars['BigDecimal']['output'];
   treasuryRatio: Scalars['BigDecimal']['output'];
   vMax: Scalars['BigDecimal']['output'];
@@ -1784,6 +1785,10 @@ const GlobalStateOrderByInput = {
   SnapshotUpdatedTimeAscNullsFirst: 'snapshotUpdatedTime_ASC_NULLS_FIRST',
   SnapshotUpdatedTimeDesc: 'snapshotUpdatedTime_DESC',
   SnapshotUpdatedTimeDescNullsLast: 'snapshotUpdatedTime_DESC_NULLS_LAST',
+  TokenomicUpdatedTimeAsc: 'tokenomicUpdatedTime_ASC',
+  TokenomicUpdatedTimeAscNullsFirst: 'tokenomicUpdatedTime_ASC_NULLS_FIRST',
+  TokenomicUpdatedTimeDesc: 'tokenomicUpdatedTime_DESC',
+  TokenomicUpdatedTimeDescNullsLast: 'tokenomicUpdatedTime_DESC_NULLS_LAST',
   TotalValueAsc: 'totalValue_ASC',
   TotalValueAscNullsFirst: 'totalValue_ASC_NULLS_FIRST',
   TotalValueDesc: 'totalValue_DESC',
@@ -2185,6 +2190,15 @@ type GlobalStateWhereInput = {
   snapshotUpdatedTime_lte?: InputMaybe<Scalars['DateTime']['input']>;
   snapshotUpdatedTime_not_eq?: InputMaybe<Scalars['DateTime']['input']>;
   snapshotUpdatedTime_not_in?: InputMaybe<Array<Scalars['DateTime']['input']>>;
+  tokenomicUpdatedTime_eq?: InputMaybe<Scalars['DateTime']['input']>;
+  tokenomicUpdatedTime_gt?: InputMaybe<Scalars['DateTime']['input']>;
+  tokenomicUpdatedTime_gte?: InputMaybe<Scalars['DateTime']['input']>;
+  tokenomicUpdatedTime_in?: InputMaybe<Array<Scalars['DateTime']['input']>>;
+  tokenomicUpdatedTime_isNull?: InputMaybe<Scalars['Boolean']['input']>;
+  tokenomicUpdatedTime_lt?: InputMaybe<Scalars['DateTime']['input']>;
+  tokenomicUpdatedTime_lte?: InputMaybe<Scalars['DateTime']['input']>;
+  tokenomicUpdatedTime_not_eq?: InputMaybe<Scalars['DateTime']['input']>;
+  tokenomicUpdatedTime_not_in?: InputMaybe<Array<Scalars['DateTime']['input']>>;
   totalValue_eq?: InputMaybe<Scalars['BigDecimal']['input']>;
   totalValue_gt?: InputMaybe<Scalars['BigDecimal']['input']>;
   totalValue_gte?: InputMaybe<Scalars['BigDecimal']['input']>;
@@ -3902,10 +3916,12 @@ type BasePoolSnapshotsConnectionQueryVariables = Exact<{
   withWorkerCount?: InputMaybe<Scalars['Boolean']['input']>;
   withStakePoolCount?: InputMaybe<Scalars['Boolean']['input']>;
   withCumulativeOwnerRewards?: InputMaybe<Scalars['Boolean']['input']>;
+  withTotalShares?: InputMaybe<Scalars['Boolean']['input']>;
+  withSharePrice?: InputMaybe<Scalars['Boolean']['input']>;
 }>;
 
 
-type BasePoolSnapshotsConnectionQuery = { basePoolSnapshotsConnection: { totalCount: number, edges: Array<{ cursor: string, node: { updatedTime: string, apr?: string, commission?: string, totalValue?: string, delegatorCount?: number, workerCount?: number | null, idleWorkerCount?: number | null, stakePoolCount?: number | null, cumulativeOwnerRewards?: string } }> } };
+type BasePoolSnapshotsConnectionQuery = { basePoolSnapshotsConnection: { totalCount: number, edges: Array<{ cursor: string, node: { updatedTime: string, apr?: string, commission?: string, totalValue?: string, delegatorCount?: number, workerCount?: number | null, idleWorkerCount?: number | null, stakePoolCount?: number | null, cumulativeOwnerRewards?: string, totalShares?: string, sharePrice?: string } }> } };
 
 type DelegationCommonFragment = { id: string, shares: string, value: string, cost: string, withdrawalStartTime?: string | null, withdrawingShares: string, withdrawingValue: string, basePool: { id: string, kind: BasePoolKind, freeValue: string, sharePrice: string, aprMultiplier: string, withdrawingShares: string, owner: { id: string, identityDisplay?: string | null, identityLevel?: IdentityJudgement | null } }, delegationNft?: { cid: number, nftId: number, mintTime?: string | null } | null, withdrawalNft?: { cid: number, nftId: number } | null, account: { id: string, identityDisplay?: string | null, identityLevel?: IdentityJudgement | null, basePool?: { id: string } | null } };
 
@@ -4195,7 +4211,7 @@ export const DelegationCommonFragmentDoc = gql`
 }
     `;
  const BasePoolSnapshotsConnectionDocument = gql`
-    query BasePoolSnapshotsConnection($orderBy: [BasePoolSnapshotOrderByInput!]!, $after: String, $first: Int, $where: BasePoolSnapshotWhereInput, $withApr: Boolean = false, $withCommission: Boolean = false, $withTotalValue: Boolean = false, $withDelegatorCount: Boolean = false, $withWorkerCount: Boolean = false, $withStakePoolCount: Boolean = false, $withCumulativeOwnerRewards: Boolean = false) {
+    query BasePoolSnapshotsConnection($orderBy: [BasePoolSnapshotOrderByInput!]!, $after: String, $first: Int, $where: BasePoolSnapshotWhereInput, $withApr: Boolean = false, $withCommission: Boolean = false, $withTotalValue: Boolean = false, $withDelegatorCount: Boolean = false, $withWorkerCount: Boolean = false, $withStakePoolCount: Boolean = false, $withCumulativeOwnerRewards: Boolean = false, $withTotalShares: Boolean = false, $withSharePrice: Boolean = false) {
   basePoolSnapshotsConnection(
     orderBy: $orderBy
     after: $after
@@ -4213,6 +4229,8 @@ export const DelegationCommonFragmentDoc = gql`
         idleWorkerCount @include(if: $withWorkerCount)
         stakePoolCount @include(if: $withStakePoolCount)
         cumulativeOwnerRewards @include(if: $withCumulativeOwnerRewards)
+        totalShares @include(if: $withTotalShares)
+        sharePrice @include(if: $withSharePrice)
       }
       cursor
     }
