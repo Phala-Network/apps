@@ -1,14 +1,12 @@
 import type {WikiEntry} from '@/assets/wikiData'
-import {khalaSubsquidClient, phalaSubsquidClient} from '@/config'
+import {subsquidClient} from '@/config'
 import {atom} from 'jotai'
 import {atomWithStorage} from 'jotai/utils'
 
 export type Chain = 'khala' | 'phala'
 
 export const chainAtom = atom<Chain>('khala')
-export const subsquidClientAtom = atom((get) =>
-  get(chainAtom) === 'khala' ? khalaSubsquidClient : phalaSubsquidClient,
-)
+export const subsquidClientAtom = atom((get) => subsquidClient[get(chainAtom)])
 export const khalaVaultIdAtom = atomWithStorage<string | null>(
   'jotai:khala_vault',
   null,

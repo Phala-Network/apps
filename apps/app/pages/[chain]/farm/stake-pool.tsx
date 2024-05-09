@@ -1,5 +1,6 @@
 import ClaimReward from '@/components/BasePool/ClaimReward'
 import BasePoolList from '@/components/BasePool/List'
+import DownloadHistory from '@/components/DownloadHistory'
 import FarmChart from '@/components/FarmChart'
 import PageHeader from '@/components/PageHeader'
 import Property from '@/components/Property'
@@ -85,9 +86,19 @@ const MyStakePools: FC = () => {
           </Stack>
         </Stack>
         <Paper sx={{background: 'transparent', flex: {xs: 0, md: 1}}}>
-          <Typography variant="h6" lineHeight={1} m={2}>
-            Total Daily Owner Rewards
-          </Typography>
+          <Stack
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
+            m={2}
+          >
+            <Typography variant="h6" lineHeight={1}>
+              Total Daily Owner Rewards
+            </Typography>
+            {account != null && (
+              <DownloadHistory kind="account" id={account.address} />
+            )}
+          </Stack>
           <Box height={140}>
             {account != null && (
               <FarmChart account={account.address} kind="StakePool" />

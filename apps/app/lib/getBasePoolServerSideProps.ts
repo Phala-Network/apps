@@ -1,4 +1,4 @@
-import {khalaSubsquidClient, phalaSubsquidClient} from '@/config'
+import {subsquidClient} from '@/config'
 import {sleep} from '@phala/lib'
 import type {GetServerSideProps} from 'next'
 import type {BasePoolByIdQuery, BasePoolKind} from './subsquidQuery'
@@ -17,9 +17,7 @@ const getBasePoolServerSideProps =
     if (typeof pid !== 'string' || (chain !== 'khala' && chain !== 'phala')) {
       throw new Error('Invalid params')
     }
-    const subsquidSdk = getSdk(
-      chain === 'phala' ? phalaSubsquidClient : khalaSubsquidClient,
-    )
+    const subsquidSdk = getSdk(subsquidClient[chain])
     const initialData = await Promise.race([
       subsquidSdk.BasePoolById({id: pid}),
       sleep(3000),

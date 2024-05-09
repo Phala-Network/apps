@@ -4,22 +4,16 @@ import DelegationNftCover from '@/components/DelegationNftCover'
 import Property from '@/components/Property'
 import useDelegationOneDayProfit from '@/hooks/useDelegationOneDayProfit'
 import useGetApr from '@/hooks/useGetApr'
-import usePolkadotApi from '@/hooks/usePolkadotApi'
-import useSignAndSend from '@/hooks/useSignAndSend'
 import {aprToApy} from '@/lib/apr'
 import getPoolPath from '@/lib/getPoolPath'
 import type {DelegationCommonFragment} from '@/lib/subsquidQuery'
 import {colors} from '@/lib/theme'
 import {chainAtom} from '@/store/common'
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp'
-import MoreVert from '@mui/icons-material/MoreVert'
 import {
   Alert,
   Box,
-  IconButton,
   Link,
-  Menu,
-  MenuItem,
   Paper,
   Skeleton,
   Stack,
@@ -30,10 +24,11 @@ import {
 import {toCurrency, toPercentage} from '@phala/lib'
 import Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
-import {type FC, useRef, useState} from 'react'
+import type {FC} from 'react'
 import Identity from '../BasePool/Identity'
 import WrapDecimal from '../WrapDecimal'
 import type {OnAction} from './List'
+import DelegationMenu from './Menu'
 
 const NftCard: FC<{
   compact?: boolean
@@ -42,26 +37,14 @@ const NftCard: FC<{
   isOwner?: boolean
 }> = ({compact = false, delegation, onAction, isOwner = false}) => {
   const profit = useDelegationOneDayProfit(delegation.id)
-  const api = usePolkadotApi()
-  const signAndSend = useSignAndSend()
+
   const [chain] = useAtom(chainAtom)
-  const [menuOpen, setMenuOpen] = useState(false)
-  const moreRef = useRef(null)
   const {value, shares, basePool, delegationNft, withdrawingValue} = delegation
   const isVault = basePool.kind === 'Vault'
   const theme = useTheme()
   const getApr = useGetApr()
   const apr = getApr(basePool.aprMultiplier)
   const hasWithdrawal = withdrawingValue !== '0'
-  const poolHasWithdrawal = delegation.basePool.withdrawingShares !== '0'
-  const reclaim = async (): Promise<void> => {
-    if (api == null) return
-    await signAndSend(
-      isVault
-        ? api.tx.phalaVault.checkAndMaybeForceWithdraw(basePool.id)
-        : api.tx.phalaStakePoolv2.checkAndMaybeForceWithdraw(basePool.id),
-    )
-  }
 
   return (
     <Paper
@@ -200,42 +183,11 @@ const NftCard: FC<{
           </Property>
         </Stack>
         {!compact && isOwner && (
-          <>
-            <IconButton
-              ref={moreRef}
-              onClick={() => {
-                setMenuOpen(true)
-              }}
-              sx={{position: 'absolute', top: 5, right: 5}}
-            >
-              <MoreVert />
-            </IconButton>
-            <Menu
-              open={menuOpen}
-              anchorEl={moreRef.current}
-              onClose={() => {
-                setMenuOpen(false)
-              }}
-            >
-              <MenuItem
-                onClick={() => {
-                  onAction?.(delegation, 'withdraw')
-                  setMenuOpen(false)
-                }}
-              >
-                Withdraw
-              </MenuItem>
-              <MenuItem
-                disabled={!poolHasWithdrawal}
-                onClick={() => {
-                  void reclaim()
-                  setMenuOpen(false)
-                }}
-              >
-                Reclaim
-              </MenuItem>
-            </Menu>
-          </>
+          <DelegationMenu
+            delegation={delegation}
+            onAction={onAction}
+            sx={{position: 'absolute', top: 5, right: 5}}
+          />
         )}
       </Stack>
     </Paper>

@@ -5,7 +5,6 @@ import {globalStyles} from '@/lib/styles'
 import {theme} from '@/lib/theme'
 import {chainAtom} from '@/store/common'
 import {
-  Box,
   CssBaseline,
   GlobalStyles,
   ThemeProvider as MuiThemeProvider,
@@ -15,14 +14,16 @@ import {QueryClient, QueryClientProvider} from '@tanstack/react-query'
 import {ReactQueryDevtools} from '@tanstack/react-query-devtools'
 import Decimal from 'decimal.js'
 import {Provider as JotaiProvider} from 'jotai'
-import {DevTools as JotaiDevTools} from 'jotai-devtools'
 import type {AppProps} from 'next/app'
+import dynamic from 'next/dynamic'
 import type {FC} from 'react'
 import {SWRConfig} from 'swr'
 
 Decimal.set({toExpNeg: -9e15, toExpPos: 9e15, precision: 50})
 
 const queryClient = new QueryClient({})
+
+const JotaiDevTools = dynamic(() => import('@/components/JotaiDevTools'))
 
 const App: FC<AppProps> = (props) => {
   const {Component, pageProps, router} = props
@@ -55,11 +56,7 @@ const App: FC<AppProps> = (props) => {
                 <Layout>
                   <Component {...pageProps} />
                   <ZendeskWidget />
-                  {process.env.NODE_ENV === 'development' && (
-                    <Box position="fixed" ml={1} mb={8} bottom={0} left={0}>
-                      <JotaiDevTools />
-                    </Box>
-                  )}
+                  {process.env.NODE_ENV === 'development' && <JotaiDevTools />}
                   <ReactQueryDevtools buttonPosition="bottom-left" />
                 </Layout>
               </MuiThemeProvider>

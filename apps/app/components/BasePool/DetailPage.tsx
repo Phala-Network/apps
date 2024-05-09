@@ -37,6 +37,7 @@ import {useAtom} from 'jotai'
 import {type FC, useCallback, useMemo, useState} from 'react'
 import DelegationChart from '../Delegation/Chart'
 import Withdraw from '../Delegation/Withdraw'
+import DownloadHistory from '../DownloadHistory'
 import Empty from '../Empty'
 import PromiseButton from '../PromiseButton'
 import SectionHeader from '../SectionHeader'
@@ -292,6 +293,12 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
                   </TabPanel>
                 ))}
               </TabContext>
+              <DownloadHistory
+                kind="pool"
+                id={basePool.pid}
+                sx={{alignSelf: 'flex-end'}}
+                color={color}
+              />
             </Stack>
           </Paper>
         </Stack>
@@ -364,6 +371,14 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
                     <DelegationChart delegation={delegation} />
                   )}
                 </Box>
+                {delegation != null && (
+                  <DownloadHistory
+                    sx={{alignSelf: 'flex-end'}}
+                    kind="delegation"
+                    id={delegation.id}
+                    color={color}
+                  />
+                )}
                 <DelegateInput basePool={basePool} sx={{mt: 1}} />
               </Stack>
             </Stack>

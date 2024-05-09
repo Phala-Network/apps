@@ -3,6 +3,7 @@ import VaultIcon from '@/assets/vault.svg'
 import BasePoolList from '@/components/BasePool/List'
 import DelegationDetailCard from '@/components/DelegationDetailCard'
 import DelegationValueChart from '@/components/DelegationValueChart'
+import DownloadHistory from '@/components/DownloadHistory'
 import PageHeader from '@/components/PageHeader'
 import WikiButton from '@/components/Wiki/Button'
 import useSelectedVaultState from '@/hooks/useSelectedVaultState'
@@ -126,9 +127,18 @@ const Delegate: NextPage = () => {
           }}
         >
           <Stack height="100%">
-            <WikiButton entry="delegationValue">
-              <Typography variant="h6">Delegation Value</Typography>
-            </WikiButton>
+            <Stack
+              direction="row"
+              justifyContent="space-between"
+              alignItems="center"
+            >
+              <WikiButton entry="delegationValue">
+                <Typography variant="h6">Delegation Value</Typography>
+              </WikiButton>
+              {account != null && (
+                <DownloadHistory kind="account" id={account.address} />
+              )}
+            </Stack>
 
             <Box flex={1} ml={{xs: -1, sm: -1.5}}>
               <DelegationValueChart
