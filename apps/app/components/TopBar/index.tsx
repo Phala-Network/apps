@@ -121,7 +121,7 @@ const TopBar: FC = () => {
 
   const icons = (
     <Stack direction="row" spacing={1} alignItems="center">
-      <IconButton size="small" href="https://discord.gg/phala" target="_blank">
+      <IconButton size="small" href="https://discord.gg/phala-network" target="_blank">
         <FontAwesomeIcon
           icon={faDiscord}
           width={18}
