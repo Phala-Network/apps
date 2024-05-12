@@ -17,7 +17,7 @@ const externalLinks = [
     'https://analytics.phala.network/public-dashboards/346284964a334ee3a5cc72e1523eccea?orgId=1',
   ],
   ['Wiki', 'https://wiki.phala.network/en-us/general/subbridge/intro/'],
-  ['Discord', 'https://discord.com/invite/phala'],
+  ['Discord', 'https://discord.gg/phala-network'],
   ['Forum', 'https://forum.phala.network/c/mai/73-category/73'],
   ['Phala App', 'https://app.phala.network'],
 ]
