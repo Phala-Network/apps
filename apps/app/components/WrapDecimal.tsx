@@ -1,12 +1,11 @@
 import {Box} from '@mui/material'
-import {uniqueId} from 'lodash-es'
 import {type FC, Fragment, type ReactNode, useMemo} from 'react'
 
 const regex = /(\d+\.\d+)/g
 const WrapDecimal: FC<{children: ReactNode}> = ({children}) => {
   const parts = useMemo(() => {
     if (typeof children === 'string') {
-      return children.split(regex).map((part) => [part, uniqueId()])
+      return children.split(regex)
     }
     return []
   }, [children])
@@ -14,11 +13,12 @@ const WrapDecimal: FC<{children: ReactNode}> = ({children}) => {
   return (
     <>
       {typeof children === 'string'
-        ? parts.map(([part, id]) => {
+        ? parts.map((part, index) => {
             if (part.match(regex) != null) {
               const [integer, decimal] = part.split('.')
               return (
-                <Fragment key={id}>
+                // biome-ignore lint/suspicious/noArrayIndexKey: the order of parts will not change
+                <Fragment key={index}>
                   {integer}.
                   <Box component="span" sx={{filter: 'brightness(0.5)'}}>
                     {decimal}
