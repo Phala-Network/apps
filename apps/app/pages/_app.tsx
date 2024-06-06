@@ -23,7 +23,9 @@ Decimal.set({toExpNeg: -9e15, toExpPos: 9e15, precision: 50})
 
 const queryClient = new QueryClient({})
 
-const JotaiDevTools = dynamic(() => import('@/components/JotaiDevTools'))
+const JotaiDevTools = dynamic(() =>
+  import('@phala/lib').then((lib) => lib.JotaiDevTools),
+)
 
 const App: FC<AppProps> = (props) => {
   const {Component, pageProps, router} = props

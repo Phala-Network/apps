@@ -1,5 +1,6 @@
 import acalaIcon from '@phala/ui/icons/chain/acala.png'
 import astarIcon from '@phala/ui/icons/chain/astar.png'
+import baseIcon from '@phala/ui/icons/chain/base.png'
 import basiliskIcon from '@phala/ui/icons/chain/basilisk.png'
 import bifrostIcon from '@phala/ui/icons/chain/bifrost.png'
 import calamariIcon from '@phala/ui/icons/chain/calamari.png'
@@ -13,7 +14,12 @@ import shidenIcon from '@phala/ui/icons/chain/shiden.png'
 import turingIcon from '@phala/ui/icons/chain/turing.png'
 import type {AssetId} from './asset'
 
-export type EvmChainId = 'ethereum' | 'moonbeam' | 'moonriver' | 'goerli'
+export type EvmChainId =
+  | 'ethereum'
+  | 'moonbeam'
+  | 'moonriver'
+  | 'goerli'
+  | 'base'
 export type SubstrateChainId =
   | 'phala'
   | 'khala'
@@ -153,6 +159,14 @@ export const CHAINS: Readonly<
     explorerURL: 'https://etherscan.io/',
     sygmaChainId: 1,
     sygmaHandler: '0xC832588193cd5ED2185daDA4A531e0B26eC5B830',
+  },
+  base: {
+    id: 'base',
+    name: 'Base',
+    icon: baseIcon,
+    kind: 'evm',
+    evmChainId: 8453,
+    currencySymbol: 'ETH',
   },
   goerli: {
     id: 'goerli',

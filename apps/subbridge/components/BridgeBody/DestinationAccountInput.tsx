@@ -1,4 +1,5 @@
 import {
+  bridgeInfoAtom,
   destinationAccountAtom,
   fromChainAtom,
   toChainAtom,
@@ -26,6 +27,7 @@ const useIsomorphicLayoutEffect =
 const DestinationAccountInput: FC<BoxProps> = (props) => {
   const inputRef = useRef<HTMLInputElement>()
   const [manually, setManually] = useState(false)
+  const [bridgeInfo] = useAtom(bridgeInfoAtom)
   const [fromChain] = useAtom(fromChainAtom)
   const [toChain] = useAtom(toChainAtom)
   const [evmAccount] = useAtom(evmAccountAtom)
@@ -35,7 +37,9 @@ const DestinationAccountInput: FC<BoxProps> = (props) => {
   const [polkadotAccount] = useAtom(polkadotAccountAtom)
   const [isWalletConnected] = useAtom(isWalletConnectAtom)
   const useSameAccountAvailable =
-    isWalletConnected && fromChain.kind === toChain.kind
+    bridgeInfo.kind !== 'placeholder' &&
+    isWalletConnected &&
+    fromChain.kind === toChain.kind
   const useSameAccountEnabled = useSameAccountAvailable && !manually
 
   useIsomorphicLayoutEffect(() => {
@@ -89,7 +93,10 @@ const DestinationAccountInput: FC<BoxProps> = (props) => {
     <Box {...props}>
       <TextField
         placeholder={toChain.kind === 'evm' ? '0x' : ''}
-        disabled={useSameAccountEnabled && Boolean(destinationAccount)}
+        disabled={
+          bridgeInfo.kind === 'placeholder' ||
+          (useSameAccountEnabled && Boolean(destinationAccount))
+        }
         label="Destination Account"
         fullWidth
         spellCheck={false}

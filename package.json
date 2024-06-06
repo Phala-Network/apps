@@ -18,16 +18,17 @@
     "preinstall": "lefthook install"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.7.3",
+    "@biomejs/biome": "1.8.0",
     "@total-typescript/ts-reset": "^0.5.1",
-    "@types/node": "^20.12.12",
-    "lefthook": "^1.6.12",
-    "tsx": "^4.10.5",
-    "turbo": "^1.13.3",
+    "@types/node": "^20.14.2",
+    "lefthook": "^1.6.15",
+    "tsx": "^4.12.0",
+    "turbo": "^2.0.1",
     "typescript": "^5.4.5"
   },
   "dependencies": {
     "@json2csv/plainjs": "^7.0.6",
     "date-fns": "^3.6.0"
-  }
+  },
+  "packageManager": "bun@1.1.12"
 }
