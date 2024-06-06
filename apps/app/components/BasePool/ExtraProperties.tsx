@@ -4,7 +4,7 @@ import type {BasePoolCommonFragment} from '@/lib/subsquidQuery'
 import {Box, Stack, type SxProps} from '@mui/material'
 import {toCurrency, toPercentage} from '@phala/lib'
 import Decimal from 'decimal.js'
-import {type FC, type ReactNode, useMemo} from 'react'
+import {type FC, Fragment, type ReactNode, useMemo} from 'react'
 
 const ExtraProperties: FC<{basePool: BasePoolCommonFragment; sx?: SxProps}> = ({
   basePool,
@@ -28,13 +28,13 @@ const ExtraProperties: FC<{basePool: BasePoolCommonFragment; sx?: SxProps}> = ({
       ['Commission', toPercentage(basePool.commission), 'commission'],
       stakePool != null && [
         'Workers',
-        // biome-ignore lint/correctness/useJsxKeyInIterable: <explanation>
-        <>
+        // biome-ignore lint/correctness/useJsxKeyInIterable:
+        <Fragment>
           {`${stakePool.idleWorkerCount} Idle`}
           <Box component="span" color="text.secondary">
             {` / ${stakePool.workerCount}`}
           </Box>
-        </>,
+        </Fragment>,
       ],
       vault != null && ['StakePools', basePool.account.stakePoolNftCount],
       ['Delegators', basePool.delegatorCount],

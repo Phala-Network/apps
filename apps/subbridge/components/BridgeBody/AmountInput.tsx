@@ -2,6 +2,7 @@ import {useBalance} from '@/hooks/useBalance'
 import {
   amountAtom,
   assetAtom,
+  bridgeInfoAtom,
   decimalsAtom,
   fromChainAtom,
 } from '@/store/bridge'
@@ -36,6 +37,7 @@ const AmountInput: FC<BoxProps & Pick<InputProps, 'endAdornment'>> = ({
   const [decimals] = useAtom(decimalsAtom)
   const [isWalletConnected] = useAtom(isWalletConnectAtom)
   const [isNetworkWrong] = useAtom(isNetworkWrongAtom)
+  const [bridgeInfo] = useAtom(bridgeInfoAtom)
 
   const showMax =
     balance != null &&
@@ -48,6 +50,7 @@ const AmountInput: FC<BoxProps & Pick<InputProps, 'endAdornment'>> = ({
   return (
     <Box {...props}>
       <TextField
+        disabled={bridgeInfo.kind === 'placeholder'}
         spellCheck={false}
         label="Amount"
         fullWidth

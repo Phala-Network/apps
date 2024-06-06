@@ -7,6 +7,7 @@ export type BridgeKind =
   | 'phalaXTransfer'
   | 'phalaSygma'
   | 'evmSygma'
+  | 'placeholder' // use as a placeholder, bridge feature is not supported
 
 type AssetsConfig = Array<{
   assetId: AssetId
@@ -47,6 +48,10 @@ export const BRIDGES: Readonly<Bridge[]> = [
             proxy: 'phala',
           },
         ],
+      },
+      {
+        id: 'base',
+        assets: [{assetId: 'pha', estimatedTime: '', kind: 'placeholder'}],
       },
     ],
   },
