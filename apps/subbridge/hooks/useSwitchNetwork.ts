@@ -11,13 +11,13 @@ export const useSwitchNetwork = (): (() => Promise<void>) => {
   const switchNetwork = useCallback(async () => {
     if (ethereum == null || fromChain.kind !== 'evm') return
     try {
-      await ethereum.request({
+      await ethereum.request?.({
         method: 'wallet_switchEthereumChain',
         params: [{chainId: `0x${fromChain.evmChainId.toString(16)}`}],
       })
     } catch (switchError) {
       if ((switchError as {code: number}).code === 4902) {
-        await ethereum.request({
+        await ethereum.request?.({
           method: 'wallet_addEthereumChain',
           params: [
             (evmChainsData as Readonly<Record<number, unknown>>)[

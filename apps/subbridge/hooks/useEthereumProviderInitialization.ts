@@ -34,13 +34,14 @@ export const useEthereumProviderInitialization = (): void => {
       const updateChainId = (chainId: unknown): void => {
         setEvmChainId(Number.parseInt(chainId as string, 16))
       }
-
-      ethereum.on('accountsChanged', updateAccounts)
-      ethereum.on('chainChanged', updateChainId)
-      void ethereum.request({method: 'eth_chainId'}).then(updateChainId)
+      // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+      ;(ethereum as any).on('accountsChanged', updateAccounts)
+      // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+      ;(ethereum as any).on('chainChanged', updateChainId)
+      void ethereum.request?.({method: 'eth_chainId'}).then(updateChainId)
       if (isEvmWalletAuthorized) {
         ethereum
-          .request({method: 'eth_requestAccounts'})
+          .request?.({method: 'eth_requestAccounts'})
           .then((accounts) => {
             const account = (accounts as string[])[0]
             setEvmAccount(account ?? null)

@@ -123,17 +123,15 @@ const ExtraInfo: FC<PaperProps> = ({sx, ...props}) => {
 
         <Info label="Estimated time">{estimatedTime}</Info>
 
-        <Info label="Estimated gas fee">
-          {estimatedGas != null ? (
-            `${toCurrency(estimatedGas, 8)} ${
+        {estimatedGas != null && (
+          <Info label="Estimated gas fee">
+            {`${toCurrency(estimatedGas, 8)} ${
               fromChain.kind === 'evm'
                 ? fromChain.currencySymbol
                 : polkadotApi?.registry.chainTokens[0] ?? ''
-            }`
-          ) : (
-            <Skeleton width={80} />
-          )}
-        </Info>
+            }`}
+          </Info>
+        )}
       </Stack>
     </Paper>
   )
