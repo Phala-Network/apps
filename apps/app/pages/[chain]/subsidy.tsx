@@ -294,7 +294,7 @@ const Subsidy: NextPage = () => {
         </Typography>
       </Paper>
 
-      {account !== null && (
+      {account != null && (
         <Stack spacing={2} direction="row" alignItems="center" mt={4}>
           <Typography variant="h6" component="h2" color="text.secondary">
             Total Rewards
@@ -323,7 +323,7 @@ const Subsidy: NextPage = () => {
 
       {rowData != null && rowData.length === 0 && <Empty sx={{mt: 6}} />}
 
-      {account !== null && legacyRewardsData == null && (
+      {account != null && legacyRewardsData == null && (
         <Box
           display="flex"
           alignItems="center"

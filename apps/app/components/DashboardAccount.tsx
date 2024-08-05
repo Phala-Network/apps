@@ -122,7 +122,7 @@ const DashboardAccount: FC = () => {
                   ? trimAddress(account.address)
                   : 'To host, connect, and gain in the world of Web3'}
               </Typography>
-              {account !== null && (
+              {account != null && (
                 <ContentCopy sx={{ml: 1, width: 16}} color="disabled" />
               )}
             </Stack>

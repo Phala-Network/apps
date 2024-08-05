@@ -242,7 +242,7 @@ const DelegationList: FC<{
               value={showNftCard}
               exclusive
               onChange={(_, value: boolean) => {
-                if (value !== null) {
+                if (value != null) {
                   setShowNftCard(value)
                 }
               }}

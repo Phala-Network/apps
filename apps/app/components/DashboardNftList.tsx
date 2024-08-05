@@ -5,8 +5,10 @@ import {
   useNftsConnectionQuery,
 } from '@/lib/subsquidQuery'
 import {chainAtom, subsquidClientAtom} from '@/store/common'
+import {walletDialogOpenAtom} from '@/store/ui'
 import {
   Box,
+  Button,
   Chip,
   Unstable_Grid2 as Grid,
   Pagination,
@@ -121,6 +123,8 @@ const DashboardNftList: FC = () => {
   const [page, setPage] = useState(1)
   const [account] = useAtom(polkadotAccountAtom)
   const [subsquidClient] = useAtom(subsquidClientAtom)
+  const [, setWalletDialogOpen] = useAtom(walletDialogOpenAtom)
+  const [polkadotAccount] = useAtom(polkadotAccountAtom)
   const {data} = useNftsConnectionQuery(
     subsquidClient,
     {
@@ -135,8 +139,8 @@ const DashboardNftList: FC = () => {
       },
     },
     {
-      enabled: account !== null,
-      placeholderData: keepPreviousData,
+      enabled: account != null,
+      placeholderData: account != null ? keepPreviousData : undefined,
     },
   )
   const isEmpty = data?.nftsConnection.totalCount === 0
@@ -152,6 +156,18 @@ const DashboardNftList: FC = () => {
           />
         )}
       </SectionHeader>
+
+      {polkadotAccount == null && (
+        <Stack alignItems="center" py={4}>
+          <Button
+            onClick={() => {
+              setWalletDialogOpen(true)
+            }}
+          >
+            Connect Wallet
+          </Button>
+        </Stack>
+      )}
 
       <Grid container spacing={{xs: 1, sm: 2, md: 3}}>
         {data?.nftsConnection.edges.map((edge) => {

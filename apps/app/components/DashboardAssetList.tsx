@@ -7,7 +7,7 @@ import useAssetsMetadata, {
 } from '@/hooks/useAssetsMetadata'
 import useWrapAsset from '@/hooks/useWrapAsset'
 import {chainAtom} from '@/store/common'
-import {hideSmallBalanceAtom} from '@/store/ui'
+import {hideSmallBalanceAtom, walletDialogOpenAtom} from '@/store/ui'
 import {
   Box,
   Button,
@@ -217,7 +217,9 @@ const Assets: FC<{
 const DashboardAssetList: FC = () => {
   const [chain] = useAtom(chainAtom)
   const assetsMetadata = useAssetsMetadata()
+  const [polkadotAccount] = useAtom(polkadotAccountAtom)
   const [hideSmallBalance, setHideSmallBalance] = useAtom(hideSmallBalanceAtom)
+  const [, setWalletDialogOpen] = useAtom(walletDialogOpenAtom)
 
   return (
     <>
@@ -237,13 +239,25 @@ const DashboardAssetList: FC = () => {
           />
         </NoSsr>
       </SectionHeader>
-      <Paper sx={{background: 'transparent', overflow: 'hidden'}}>
-        {assetsMetadata != null ? (
-          <Assets assetsMetadata={assetsMetadata} key={chain} />
-        ) : (
-          <Skeleton variant="rectangular" height={240} />
-        )}
-      </Paper>
+      {polkadotAccount == null ? (
+        <Stack alignItems="center" py={4}>
+          <Button
+            onClick={() => {
+              setWalletDialogOpen(true)
+            }}
+          >
+            Connect Wallet
+          </Button>
+        </Stack>
+      ) : (
+        <Paper sx={{background: 'transparent', overflow: 'hidden'}}>
+          {assetsMetadata != null ? (
+            <Assets assetsMetadata={assetsMetadata} key={chain} />
+          ) : (
+            <Skeleton variant="rectangular" height={240} />
+          )}
+        </Paper>
+      )}
     </>
   )
 }

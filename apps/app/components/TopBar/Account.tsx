@@ -10,7 +10,7 @@ const Account: FC = () => {
   const [wallet] = useAtom(walletAtom)
   const [polkadotAccount] = useAtom(polkadotAccountAtom)
   const [, setWalletDialogOpen] = useAtom(walletDialogOpenAtom)
-  const isConnected = wallet !== null && polkadotAccount !== null
+  const isConnected = wallet != null && polkadotAccount != null
   return (
     <Button
       color={polkadotAccount != null ? 'inherit' : 'primary'}

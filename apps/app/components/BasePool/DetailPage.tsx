@@ -92,7 +92,7 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
         }`,
       },
       {
-        enabled: selectedVaultState != null || account !== null,
+        enabled: selectedVaultState != null || account != null,
         select: (data) => data.delegationById,
       },
     )
