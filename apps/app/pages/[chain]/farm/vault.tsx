@@ -40,7 +40,7 @@ const MyVaults: FC = () => {
     subsquidClient,
     {accountId: account?.address},
     {
-      enabled: account !== null,
+      enabled: account != null,
       select: (data) => data.basePoolsConnection.edges,
     },
   )

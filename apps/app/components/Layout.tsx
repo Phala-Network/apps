@@ -1,5 +1,6 @@
 import useListenBlockHeight from '@/hooks/useListenBlockHeight'
 import useResetVault from '@/hooks/useResetVault'
+import useShowWalletDialog from '@/hooks/useShowWalletDialog'
 import useSyncPath from '@/hooks/useSyncPath'
 import {Container, useMediaQuery, useTheme} from '@mui/material'
 import {useConnectPolkadotWallet} from '@phala/lib'
@@ -18,6 +19,7 @@ const Layout: FC<{children: ReactNode}> = ({children}) => {
   useListenBlockHeight()
   useResetVault()
   useSyncPath()
+  useShowWalletDialog()
 
   return (
     <SnackbarProvider

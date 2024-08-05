@@ -39,7 +39,7 @@ const MyDelegation: FC = () => {
       <Box mt={{xs: 2, md: 5}} component="section">
         <DelegationList
           isOwner
-          isVault={selectedVaultState !== null}
+          isVault={selectedVaultState != null}
           address={
             selectedVaultState === null
               ? polkadotAccount?.address

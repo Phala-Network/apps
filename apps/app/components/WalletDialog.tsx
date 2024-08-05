@@ -35,7 +35,7 @@ const WalletDialog: FC = () => {
   const [wallets, setWallets] = useState<Wallet[]>([])
   const isMobile = useMediaQuery(theme.breakpoints.down('md'))
 
-  const connected = polkadotAccounts !== null
+  const connected = polkadotAccounts != null
 
   useEffect(() => {
     let unmounted = false

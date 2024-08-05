@@ -30,7 +30,7 @@ export const useBridgeFee = (): Decimal | undefined => {
   const {data: evmSygmaFee} = useSWR(
     bridge.kind === 'evmSygma' &&
       provider != null &&
-      evmAccount !== null && [
+      evmAccount != null && [
         provider,
         evmAccount,
         fromChain,
