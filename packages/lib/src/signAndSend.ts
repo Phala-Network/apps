@@ -26,6 +26,8 @@ export const waitSignAndSend = async ({
   signer,
   onReady,
 }: SignAndSendProps): Promise<ExtrinsicResult> => {
+  const nonce = await api.rpc.system.accountNextIndex(account.toString())
+
   const extrinsicResultPromise = new Promise<ExtrinsicResult>(
     (resolve, reject) => {
       const {section, method} = extrinsic.method.toHuman() as {
@@ -35,7 +37,7 @@ export const waitSignAndSend = async ({
       extrinsic
         .signAndSend(
           account,
-          {signer, nonce: -1},
+          {signer, nonce},
           ({status, isCompleted, txHash, dispatchError}) => {
             if (isCompleted) {
               if (dispatchError != null) {
