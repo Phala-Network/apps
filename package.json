@@ -20,15 +20,11 @@
   "devDependencies": {
     "@biomejs/biome": "^1.8.3",
     "@total-typescript/ts-reset": "^0.5.1",
-    "@types/node": "^20.14.14",
-    "lefthook": "^1.7.11",
-    "tsx": "^4.16.5",
-    "turbo": "^2.0.11",
+    "@types/node": "^20.16.2",
+    "lefthook": "^1.7.14",
+    "tsx": "^4.19.0",
+    "turbo": "^2.1.0",
     "typescript": "^5.5.4"
   },
-  "dependencies": {
-    "@json2csv/plainjs": "^7.0.6",
-    "date-fns": "^3.6.0"
-  },
-  "packageManager": "bun@1.1.21"
+  "packageManager": "bun@1.1.26"
 }
