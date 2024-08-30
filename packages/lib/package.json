@@ -14,10 +14,10 @@
   },
   "peerDependencies": {
     "@phala/store": "workspace:*",
-    "@polkadot/api": ">=11",
-    "@polkadot/types": ">=11",
+    "@polkadot/api": ">=12",
+    "@polkadot/types": ">=12",
     "@talismn/connect-wallets": "^1",
     "jotai": "^2",
-    "react": ">=17"
+    "react": ">=18"
   }
 }
