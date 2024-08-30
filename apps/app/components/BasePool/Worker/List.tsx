@@ -86,7 +86,7 @@ const WorkerList: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
     subsquidClient,
     {
       after: page === 1 ? undefined : String((page - 1) * pageSize),
-      orderBy,
+      orderBy: [orderBy, 'id_ASC'],
       first: pageSize,
       where: {
         AND: [
