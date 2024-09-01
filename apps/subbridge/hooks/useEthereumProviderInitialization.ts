@@ -1,32 +1,27 @@
 import {
-  ethereumProviderAtom,
+  ethersWeb3ProviderAtom,
   evmAccountAtom,
   evmChainIdAtom,
-  isEvmWalletAuthorizedAtom,
 } from '@/store/ethers'
-import type {ethers} from 'ethers'
+import detectEthereumProvider from '@metamask/detect-provider'
+import {ethers} from 'ethers'
 import {useAtom} from 'jotai'
-import {useEffect} from 'react'
+import {useEffect, useRef} from 'react'
 
 export const useEthereumProviderInitialization = (): void => {
-  const [evmAccount] = useAtom(evmAccountAtom)
-  const [ethereumProvider, setEthereumProvider] = useAtom(ethereumProviderAtom)
+  const [, setEthersWeb3Provider] = useAtom(ethersWeb3ProviderAtom)
   const [, setEvmAccount] = useAtom(evmAccountAtom)
   const [, setEvmChainId] = useAtom(evmChainIdAtom)
-  const [isEvmWalletAuthorized, setIsEvmWalletAuthorized] = useAtom(
-    isEvmWalletAuthorizedAtom,
-  )
+  const runRef = useRef(false)
 
   useEffect(() => {
-    if (ethereumProvider != null) return
+    if (runRef.current) return
+    runRef.current = true
     const init = async (): Promise<void> => {
-      const {default: detectEthereumProvider} = await import(
-        '@metamask/detect-provider'
-      )
-      const provider = await detectEthereumProvider({silent: true})
-      if (provider == null) return
-      const ethereum = provider as ethers.providers.ExternalProvider
-      setEthereumProvider(ethereum)
+      const ethereum = await detectEthereumProvider({silent: true})
+      if (ethereum == null) return
+      const provider = new ethers.providers.Web3Provider(ethereum)
+      setEthersWeb3Provider(provider)
       const updateAccounts = (accounts: unknown): void => {
         const account = (accounts as string[])[0]
         setEvmAccount(account ?? null)
@@ -34,42 +29,14 @@ export const useEthereumProviderInitialization = (): void => {
       const updateChainId = (chainId: unknown): void => {
         setEvmChainId(Number.parseInt(chainId as string, 16))
       }
-      // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-      ;(ethereum as any).on('accountsChanged', updateAccounts)
-      // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-      ;(ethereum as any).on('chainChanged', updateChainId)
-      void ethereum.request?.({method: 'eth_chainId'}).then(updateChainId)
-      if (isEvmWalletAuthorized) {
-        ethereum
-          .request?.({method: 'eth_requestAccounts'})
-          .then((accounts) => {
-            const account = (accounts as string[])[0]
-            setEvmAccount(account ?? null)
-          })
-          .catch((error) => {
-            // User rejected
-            if (error.code === 4001) {
-              setIsEvmWalletAuthorized(false)
-            } else {
-              throw error
-            }
-          })
-      }
+      await provider.listAccounts().then(updateAccounts)
+      ethereum.on('accountsChanged', updateAccounts)
+      ethereum.on('chainChanged', updateChainId)
+      await provider.provider
+        .request?.({method: 'eth_chainId'})
+        .then(updateChainId)
     }
 
     void init()
-  }, [
-    ethereumProvider,
-    isEvmWalletAuthorized,
-    setEthereumProvider,
-    setIsEvmWalletAuthorized,
-    setEvmAccount,
-    setEvmChainId,
-  ])
-
-  useEffect(() => {
-    if (evmAccount != null) {
-      setIsEvmWalletAuthorized(true)
-    }
-  }, [evmAccount, setIsEvmWalletAuthorized])
+  }, [setEthersWeb3Provider, setEvmAccount, setEvmChainId])
 }
