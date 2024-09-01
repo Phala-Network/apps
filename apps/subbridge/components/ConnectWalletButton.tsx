@@ -1,5 +1,6 @@
+import {useEthersWeb3Provider} from '@/hooks/useEthersProvider'
 import {fromChainAtom} from '@/store/bridge'
-import {ethereumProviderAtom, evmAccountAtom} from '@/store/ethers'
+import {evmAccountAtom} from '@/store/ethers'
 import {polkadotWalletModalOpenAtom} from '@/store/polkadotWalletModal'
 import {LoadingButton} from '@mui/lab'
 import {
@@ -15,17 +16,17 @@ import {type FC, useState} from 'react'
 
 const ConnectEvmWalletButton: FC<ButtonProps> = (props) => {
   const [open, setOpen] = useState(false)
-  const [ethereum] = useAtom(ethereumProviderAtom)
+  const ethersWeb3Provider = useEthersWeb3Provider()
   const [, setEvmAccount] = useAtom(evmAccountAtom)
   const [loading, setLoading] = useState(false)
 
   const handleClick = (): void => {
-    if (ethereum == null) {
+    if (ethersWeb3Provider == null) {
       setOpen(true)
       return
     }
     setLoading(true)
-    void ethereum
+    void ethersWeb3Provider.provider
       .request?.({method: 'eth_requestAccounts'})
       .then((accounts) => {
         if (Array.isArray(accounts) && accounts.length > 0) {
