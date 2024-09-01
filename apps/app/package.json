@@ -39,7 +39,7 @@
     "date-fns": "^3.6.0",
     "decimal.js": "^10.4.3",
     "graphql": "^16.9.0",
-    "graphql-request": "^6.1.0",
+    "graphql-request": "^7.1.0",
     "graphql-tag": "^2.12.6",
     "jotai": "^2.9.3",
     "jotai-devtools": "^0.10.1",
