@@ -26,7 +26,7 @@
     "@phala/lib": "workspace:*",
     "@phala/store": "workspace:*",
     "@polkadot/api": "^12.4.2",
-    "@polkadot/extension-inject": "^0.50.1",
+    "@polkadot/extension-inject": "^0.52.3",
     "@polkadot/keyring": "^13.0.2",
     "@polkadot/react-identicon": "^3.9.1",
     "@polkadot/types": "^12.4.2",
