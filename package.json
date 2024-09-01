@@ -23,8 +23,11 @@
     "@types/node": "^20.16.2",
     "lefthook": "^1.7.14",
     "tsx": "^4.19.0",
-    "turbo": "^2.1.0",
+    "turbo": "^2.1.1",
     "typescript": "^5.5.4"
+  },
+  "overrides": {
+    "@emotion/serialize": "1.2.0"
   },
   "packageManager": "bun@1.1.26"
 }
