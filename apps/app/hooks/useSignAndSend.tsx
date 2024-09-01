@@ -62,7 +62,11 @@ const useSignAndSend = (): ((
           .catch((err) => {
             reject(err)
             closeSnackbar(snackbarKey)
-            if (err.message != null && err.message !== 'Cancelled') {
+            if (
+              err instanceof Error &&
+              err.message != null &&
+              err.message !== 'Cancelled'
+            ) {
               enqueueSnackbar(
                 <Box>
                   <Box>{name}</Box>
