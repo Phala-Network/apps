@@ -68,7 +68,6 @@ const HorizonCard: FC<{
               color="inherit"
               variant="num3"
               href={getPoolPath(chain, basePool.kind, basePool.id)}
-              target="_blank"
               rel="noopener"
               sx={{
                 textDecorationColor: alpha(theme.palette.text.primary, 0.4),

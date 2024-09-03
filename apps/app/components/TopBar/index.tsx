@@ -134,7 +134,7 @@ const TopBar: FC = () => {
       </IconButton>
       <IconButton
         size="small"
-        href="https://twitter.com/PhalaNetwork"
+        href="https://x.com/PhalaNetwork"
         target="_blank"
       >
         <FontAwesomeIcon
