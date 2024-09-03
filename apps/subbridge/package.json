@@ -46,6 +46,6 @@
     "@next/bundle-analyzer": "^14.2.7",
     "@svgr/webpack": "^8.1.0",
     "@swc-jotai/debug-label": "^0.1.1",
-    "@swc-jotai/react-refresh": "^0.1.1"
+    "@swc-jotai/react-refresh": "^0.2.0"
   }
 }

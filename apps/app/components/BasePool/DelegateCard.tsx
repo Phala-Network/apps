@@ -118,7 +118,6 @@ const DelegateCard: FC<{
                 lineHeight={1.3}
                 variant="num3"
                 href={getPoolPath(chain, basePool.kind, basePool.id)}
-                target="_blank"
                 rel="noopener"
                 sx={{
                   textDecorationColor: alpha(theme.palette.text.primary, 0.4),

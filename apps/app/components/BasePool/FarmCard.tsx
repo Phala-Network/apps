@@ -164,7 +164,6 @@ const FarmCard: FC<{
                 color="inherit"
                 variant="num2"
                 href={getPoolPath(chain, basePool.kind, basePool.id)}
-                target="_blank"
                 rel="noopener"
                 sx={{
                   textDecorationColor: alpha(theme.palette.text.primary, 0.4),
