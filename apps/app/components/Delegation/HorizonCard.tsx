@@ -21,6 +21,7 @@ import {
 } from '@mui/material'
 import {toCurrency, toPercentage} from '@phala/lib'
 import {useAtom} from 'jotai'
+import NextLink from 'next/link'
 import type {FC} from 'react'
 import Identity from '../BasePool/Identity'
 import WrapDecimal from '../WrapDecimal'
@@ -61,6 +62,7 @@ const HorizonCard: FC<{
           </Box>
           <Stack flex="1 0" width={130}>
             <Link
+              component={NextLink}
               lineHeight={1.3}
               onClick={(e) => {
                 e.stopPropagation()

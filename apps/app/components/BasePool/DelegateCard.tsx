@@ -29,6 +29,7 @@ import {
 import {toCurrency, toPercentage} from '@phala/lib'
 import {polkadotAccountAtom} from '@phala/store'
 import {useAtom} from 'jotai'
+import NextLink from 'next/link'
 import type {FC} from 'react'
 import BasePoolChart from './Chart'
 import DelegateInput from './DelegateInput'
@@ -111,6 +112,7 @@ const DelegateCard: FC<{
             )}
             <Stack width={{xs: 'auto', md: 150}} flex="1 0">
               <Link
+                component={NextLink}
                 onClick={(e) => {
                   e.stopPropagation()
                 }}
