@@ -30,6 +30,7 @@ import {
 import {toCurrency, toPercentage} from '@phala/lib'
 import Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
+import NextLink from 'next/link'
 import {type FC, useCallback, useMemo} from 'react'
 import PromiseButton from '../PromiseButton'
 import BasePoolChart from './Chart'
@@ -158,6 +159,7 @@ const FarmCard: FC<{
             )}
             <Box flex="1 0" width={108}>
               <Link
+                component={NextLink}
                 onClick={(e) => {
                   e.stopPropagation()
                 }}
