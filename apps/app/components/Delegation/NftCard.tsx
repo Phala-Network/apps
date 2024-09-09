@@ -24,7 +24,6 @@ import {
 import {toCurrency, toPercentage} from '@phala/lib'
 import Decimal from 'decimal.js'
 import {useAtom} from 'jotai'
-import NextLink from 'next/link'
 import type {FC} from 'react'
 import Identity from '../BasePool/Identity'
 import WrapDecimal from '../WrapDecimal'
@@ -101,7 +100,6 @@ const NftCard: FC<{
             </Box>
             <Stack flex="1 0">
               <Link
-                component={NextLink}
                 lineHeight={1.2}
                 onClick={(e) => {
                   e.stopPropagation()
@@ -109,6 +107,7 @@ const NftCard: FC<{
                 color="inherit"
                 variant="num3"
                 href={getPoolPath(chain, basePool.kind, basePool.id)}
+                target="_blank"
                 rel="noopener"
                 sx={{
                   textDecorationColor: alpha(theme.palette.text.primary, 0.4),
