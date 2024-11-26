@@ -128,7 +128,7 @@ const BasePoolChart: FC<{
         dateString: date.toLocaleDateString(),
         value: Decimal.isDecimal(value)
           ? value.toDP(2, Decimal.ROUND_DOWN).toNumber()
-          : value ?? undefined,
+          : (value ?? undefined),
       })
     }
 

@@ -10,24 +10,38 @@ import {
   ThemeProvider as MuiThemeProvider,
 } from '@mui/material'
 import {AppCacheProvider} from '@mui/material-nextjs/v14-pagesRouter'
-import {QueryClient, QueryClientProvider} from '@tanstack/react-query'
+import {
+  QueryCache,
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query'
 import {ReactQueryDevtools} from '@tanstack/react-query-devtools'
 import Decimal from 'decimal.js'
 import {Provider as JotaiProvider} from 'jotai'
 import type {AppProps} from 'next/app'
 import dynamic from 'next/dynamic'
-import type {FC} from 'react'
 import {SWRConfig} from 'swr'
 
 Decimal.set({toExpNeg: -9e15, toExpPos: 9e15, precision: 50})
 
-const queryClient = new QueryClient({})
+// @ts-ignore
+BigInt.prototype.toJSON = function () {
+  return this.toString()
+}
+
+const queryClient = new QueryClient({
+  queryCache: new QueryCache({
+    onError: (error) => {
+      console.error(error)
+    },
+  }),
+})
 
 const JotaiDevTools = dynamic(() =>
   import('@phala/lib').then((lib) => lib.JotaiDevTools),
 )
 
-const App: FC<AppProps> = (props) => {
+const MyApp = (props: AppProps) => {
   const {Component, pageProps, router} = props
 
   return (
@@ -55,6 +69,7 @@ const App: FC<AppProps> = (props) => {
               <MuiThemeProvider theme={theme}>
                 <CssBaseline />
                 <GlobalStyles styles={[globalStyles]} />
+
                 <Layout>
                   <Component {...pageProps} />
                   <ZendeskWidget />
@@ -70,4 +85,4 @@ const App: FC<AppProps> = (props) => {
   )
 }
 
-export default App
+export default MyApp

@@ -8,8 +8,8 @@
     "check": "tsc --project ./tsconfig.json --noEmit"
   },
   "dependencies": {
-    "@polkadot/keyring": "^13.0.2",
-    "@polkadot/util": "^13.0.2",
+    "@polkadot/keyring": "^13.2.3",
+    "@polkadot/util": "^13.2.3",
     "decimal.js": "^10.4.3"
   },
   "peerDependencies": {

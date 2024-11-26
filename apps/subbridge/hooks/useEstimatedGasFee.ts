@@ -105,12 +105,12 @@ export const useEstimatedGasFee = (): Decimal | undefined => {
 
   return (
     (ethersGasPrice != null
-      ? (evmXTokensEstimatedGas != null
+      ? ((evmXTokensEstimatedGas != null
           ? ethersGasPrice.times(evmXTokensEstimatedGas)
           : undefined) ??
         (evmSygmaEstimatedGas != null
           ? ethersGasPrice.times(evmSygmaEstimatedGas)
-          : undefined)
+          : undefined))
       : undefined) ??
     xTokensPartialFee ??
     phalaPartialFee

@@ -22,6 +22,7 @@ import {
 } from '@mui/material'
 import {useAtom} from 'jotai'
 import NextLink from 'next/link'
+import {useRouter} from 'next/router'
 import {type FC, useState} from 'react'
 import Account from './Account'
 import ChainSelect from './Chain'
@@ -32,6 +33,7 @@ interface INavItem {
   href?: string
   disabled?: boolean
   sub?: INavItem[]
+  hide?: boolean
 }
 
 const NavItem: FC<{item: INavItem; onClick?: ButtonProps['onClick']}> = ({
@@ -66,7 +68,12 @@ const NavItem: FC<{item: INavItem; onClick?: ButtonProps['onClick']}> = ({
   }
 
   return (
-    <NextLink href={`/${chain}${href}`} passHref legacyBehavior shallow>
+    <NextLink
+      href={href === '/staking' ? href : `/${chain}${href}`}
+      passHref
+      legacyBehavior
+      shallow
+    >
       {link}
     </NextLink>
   )
@@ -75,10 +82,17 @@ const NavItem: FC<{item: INavItem; onClick?: ButtonProps['onClick']}> = ({
 NavItem.displayName = 'NavItem'
 
 const TopBar: FC = () => {
+  const router = useRouter()
+  const isPolkadot = !router.pathname.startsWith('/staking')
   const theme = useTheme()
   const [collapseIn, setCollapseIn] = useState(false)
   const navItems: INavItem[] = [
     {label: 'Dashboard', href: '/'},
+    {
+      label: 'Staking',
+      href: '/staking',
+      hide: process.env.VERCEL_ENV !== 'production',
+    },
     {
       label: 'Delegate',
       sub: [
@@ -181,7 +195,6 @@ const TopBar: FC = () => {
           px={[2, 3]}
           spacing={2}
         >
-          {/* <Typography></Typography> */}
           <NoSsr>
             <NetworkStats />
           </NoSsr>
@@ -225,9 +238,14 @@ const TopBar: FC = () => {
               )
             })}
           </Stack>
+
           <Stack direction="row" ml="auto" spacing={2} alignItems="center">
-            <ChainSelect />
-            <Account />
+            {isPolkadot && (
+              <>
+                <ChainSelect />
+                <Account />
+              </>
+            )}
             <IconButton
               sx={{display: {sx: 'inline-flex', md: 'none'}}}
               onClick={toggleCollapse}

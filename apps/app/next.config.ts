@@ -1,0 +1,74 @@
+import withBundleAnalyzer from '@next/bundle-analyzer'
+import type {NextConfig} from 'next'
+
+const bundleAnalyzer = withBundleAnalyzer({
+  enabled: process.env.ANALYZE === 'true',
+})
+
+const nextConfig: NextConfig = {
+  transpilePackages: [
+    'jotai-devtools',
+    '@polkadot/api',
+    '@polkadot/types-codec',
+  ],
+  eslint: {
+    ignoreDuringBuilds: true,
+    dirs: ['pages', 'components', 'lib', 'hooks', 'store', 'types'],
+  },
+  modularizeImports: {
+    '@mui/icons-material': {
+      transform: '@mui/icons-material/{{member}}',
+    },
+  },
+  reactStrictMode: true,
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '*.coinmarketcap.com',
+        pathname: '/static/img/coins/**',
+      },
+    ],
+  },
+  webpack(config) {
+    config.module.rules.push({
+      test: /\.svg$/i,
+      issuer: /\.[jt]sx?$/,
+      use: [{loader: '@svgr/webpack', options: {dimensions: false}}],
+    })
+
+    return config
+  },
+  async redirects() {
+    return [
+      {
+        source: '/',
+        destination: '/phala',
+        permanent: false,
+      },
+      {
+        source: '/delegate',
+        destination: '/phala/delegate/vault',
+        permanent: false,
+      },
+      {
+        source: '/farm',
+        destination: '/phala/farm/stake-pool',
+        permanent: false,
+      },
+      {
+        source: '/:root(delegate|farm|vault|stake-pool)/:path*',
+        destination: '/phala/:root/:path*',
+        permanent: false,
+      },
+    ]
+  },
+  experimental: {
+    swcPlugins: [
+      // ['@swc-jotai/debug-label', {}],
+      // ['@swc-jotai/react-refresh', {}],
+    ],
+  },
+}
+
+export default bundleAnalyzer(nextConfig)

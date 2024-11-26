@@ -21,7 +21,7 @@ import {
   Dialog,
   Drawer,
   FormControlLabel,
-  Unstable_Grid2 as Grid,
+  Grid2 as Grid,
   IconButton,
   MenuItem,
   NoSsr,
@@ -269,8 +269,7 @@ const DelegationList: FC<{
                     return (
                       <Grid
                         key={edge.node.id}
-                        xs={12}
-                        md={showNftCard ? 6 : 12}
+                        size={[12, showNftCard ? 6 : 12]}
                       >
                         {showNftCard ? (
                           <NftCard
@@ -297,7 +296,7 @@ const DelegationList: FC<{
                 <Grid container spacing={2} ref={ref}>
                   {Array.from({length: 6}).map((_, index) => (
                     // biome-ignore lint/suspicious/noArrayIndexKey: static list
-                    <Grid xs={12} md={6} key={`skeleton-${index}`}>
+                    <Grid size={[12, 6]} key={`skeleton-${index}`}>
                       <Skeleton variant="rounded" height={240} />
                     </Grid>
                   ))}
@@ -310,12 +309,8 @@ const DelegationList: FC<{
       </Stack>
 
       <Dialog open={dialogOpen} onClose={onClose}>
-        {operatingDelegation != null && (
-          <>
-            {dialogAction === 'withdraw' && (
-              <Withdraw onClose={onClose} delegation={operatingDelegation} />
-            )}
-          </>
+        {operatingDelegation != null && dialogAction === 'withdraw' && (
+          <Withdraw onClose={onClose} delegation={operatingDelegation} />
         )}
       </Dialog>
 
