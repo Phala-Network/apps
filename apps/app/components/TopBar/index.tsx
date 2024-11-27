@@ -214,6 +214,9 @@ const TopBar: FC = () => {
               if (item.sub == null) {
                 return <NavItem key={item.label} item={item} />
               }
+              if (item.hide) {
+                return null
+              }
               return (
                 <Tooltip
                   disableFocusListener={item.disabled}
@@ -266,6 +269,9 @@ const TopBar: FC = () => {
         >
           <Stack divider={<Divider flexItem />} spacing={1} p={2}>
             {navItems.map((item) => {
+              if (item.hide) {
+                return null
+              }
               if (item.sub == null) {
                 return (
                   <NavItem
