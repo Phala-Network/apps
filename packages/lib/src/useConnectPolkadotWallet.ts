@@ -18,8 +18,9 @@ export const useConnectPolkadotWallet = (
     if (wallet != null || walletName == null) return
     let unmounted = false
     const connect = async (): Promise<void> => {
-      const {getWalletBySource} = await import('@talismn/connect-wallets')
-      const newWallet = getWalletBySource(walletName)
+      const {getWallets} = await import('@talismn/connect-wallets')
+      const wallets = getWallets()
+      const newWallet = wallets.find((w) => w.title === walletName)
       if (newWallet != null) {
         try {
           await newWallet.enable(dappName)

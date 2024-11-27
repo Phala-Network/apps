@@ -7,7 +7,7 @@ import {LoadingButton} from '@mui/lab'
 import {
   DialogContent,
   DialogTitle,
-  Unstable_Grid2 as Grid,
+  Grid2 as Grid,
   Stack,
   TextField,
   Typography,
@@ -192,7 +192,7 @@ const OwnerSettings: FC<{
           Intro
         </Typography>
         <Grid container rowSpacing={3} columnSpacing={2} mt={0.5}>
-          <Grid xs={6}>
+          <Grid size={6}>
             <TextField
               disabled={!introLoaded || saveIntroLoading}
               fullWidth
@@ -207,7 +207,7 @@ const OwnerSettings: FC<{
               }}
             />
           </Grid>
-          <Grid xs={6}>
+          <Grid size={6}>
             <TextField
               disabled={!introLoaded || saveIntroLoading}
               fullWidth
@@ -221,7 +221,7 @@ const OwnerSettings: FC<{
               }}
             />
           </Grid>
-          <Grid xs={6}>
+          <Grid size={6}>
             <TextField
               disabled={!introLoaded || saveIntroLoading}
               fullWidth
@@ -235,7 +235,7 @@ const OwnerSettings: FC<{
               }}
             />
           </Grid>
-          <Grid xs={6}>
+          <Grid size={6}>
             <TextField
               disabled={!introLoaded || saveIntroLoading}
               fullWidth
@@ -250,7 +250,7 @@ const OwnerSettings: FC<{
               }}
             />
           </Grid>
-          <Grid xs={6}>
+          <Grid size={6}>
             <TextField
               disabled={!introLoaded || saveIntroLoading}
               fullWidth
@@ -264,7 +264,7 @@ const OwnerSettings: FC<{
               }}
             />
           </Grid>
-          <Grid xs={6}>
+          <Grid size={6}>
             <TextField
               disabled={!introLoaded || saveIntroLoading}
               fullWidth
@@ -278,7 +278,7 @@ const OwnerSettings: FC<{
               }}
             />
           </Grid>
-          <Grid xs={12}>
+          <Grid size={12}>
             <TextField
               disabled={!introLoaded || saveIntroLoading}
               fullWidth

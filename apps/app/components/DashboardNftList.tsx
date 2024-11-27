@@ -10,7 +10,7 @@ import {
   Box,
   Button,
   Chip,
-  Unstable_Grid2 as Grid,
+  Grid2 as Grid,
   Pagination,
   Paper,
   Skeleton,
@@ -100,7 +100,7 @@ const NftCard: FC<{nft: Nft}> = ({nft}) => {
             ? `${delegationNftPrefix} Delegation NFT - #${
                 nft.delegation?.basePool.id ?? ''
               } - ${nft.nftId}`
-            : name ?? <Skeleton width="100%" />}
+            : (name ?? <Skeleton width="100%" />)}
         </Typography>
         <Typography
           variant="caption"
@@ -110,7 +110,7 @@ const NftCard: FC<{nft: Nft}> = ({nft}) => {
         >
           {isDelegationNft
             ? `${delegationNftPrefix} - #${nft.delegation?.basePool.id ?? ''}`
-            : collectionSymbol ?? <Skeleton width="30%" />}
+            : (collectionSymbol ?? <Skeleton width="30%" />)}
         </Typography>
       </Stack>
     </Paper>
@@ -172,7 +172,7 @@ const DashboardNftList: FC = () => {
       <Grid container spacing={{xs: 1, sm: 2, md: 3}}>
         {data?.nftsConnection.edges.map((edge) => {
           return (
-            <Grid key={edge.cursor} xs={6} md={4} lg={3}>
+            <Grid key={edge.cursor} size={[6, 4, 3]}>
               <NftCard nft={edge.node} />
             </Grid>
           )

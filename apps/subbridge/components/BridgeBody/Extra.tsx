@@ -128,7 +128,7 @@ const ExtraInfo: FC<PaperProps> = ({sx, ...props}) => {
             {`${toCurrency(estimatedGas, 8)} ${
               fromChain.kind === 'evm'
                 ? fromChain.currencySymbol
-                : polkadotApi?.registry.chainTokens[0] ?? ''
+                : (polkadotApi?.registry.chainTokens[0] ?? '')
             }`}
           </Info>
         )}

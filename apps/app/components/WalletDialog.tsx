@@ -1,5 +1,3 @@
-import novaLogo from '@/assets/nova_logo.png'
-import subwalletLogo from '@/assets/subwallet_logo.png'
 import {walletDialogOpenAtom} from '@/store/ui'
 import {jsx} from '@emotion/react'
 import ArrowForwardIos from '@mui/icons-material/ArrowForwardIos'
@@ -24,7 +22,7 @@ import {useAtom} from 'jotai'
 import Image from 'next/image'
 import {type FC, useEffect, useState} from 'react'
 
-const walletsOrder = ['subwallet-js', 'talisman', 'polkadot-js']
+const walletsOrder = ['SubWallet', 'Talisman', 'Polkadot.js']
 
 const WalletDialog: FC = () => {
   const theme = useTheme()
@@ -40,47 +38,33 @@ const WalletDialog: FC = () => {
   useEffect(() => {
     let unmounted = false
     void import('@talismn/connect-wallets').then(({getWallets}) => {
-      let sortedWallets = getWallets()
-        .filter((x) => walletsOrder.includes(x.extensionName))
+      let wallets = getWallets()
+        .filter((x) => walletsOrder.includes(x.title))
         .sort((a, b) => {
-          return (
-            walletsOrder.indexOf(a.extensionName) -
-            walletsOrder.indexOf(b.extensionName)
-          )
+          return walletsOrder.indexOf(a.title) - walletsOrder.indexOf(b.title)
         })
-      const subwalletWallet = sortedWallets.find(
-        (w) => w.extensionName === 'subwallet-js',
-      )
-      if (subwalletWallet != null) {
-        subwalletWallet.logo.src = subwalletLogo.src
-        if (isMobile) {
-          subwalletWallet.installUrl =
-            'https://mobile.subwallet.app/browser?url=https%3A%2F%2Fapp.phala.network'
-        }
+      const subwalletWallet = wallets.find((w) => w.title === 'SubWallet')
+      if (subwalletWallet != null && isMobile) {
+        subwalletWallet.installUrl =
+          'https://mobile.subwallet.app/browser?url=https%3A%2F%2Fapp.phala.network'
       }
-      const polkadotJsWallet = sortedWallets.find(
-        (w) => w.extensionName === 'polkadot-js',
-      )
+      const polkadotJsWallet = wallets.find((w) => w.title === 'Polkadot.js')
       if (polkadotJsWallet != null && isMobile) {
         if (
           (window as {SubWallet?: {isSubWallet?: boolean}}).SubWallet
             ?.isSubWallet === true
         ) {
-          polkadotJsWallet.title = 'SubWallet'
-          polkadotJsWallet.logo = {src: subwalletLogo.src, alt: 'SubWallet'}
-          sortedWallets = [polkadotJsWallet]
+          wallets = wallets.filter((x) => x.title === 'SubWallet')
         } else if (
           (window as {walletExtension?: {isNovaWallet?: boolean}})
             .walletExtension?.isNovaWallet === true
         ) {
-          polkadotJsWallet.title = 'Nova Wallet'
-          polkadotJsWallet.logo = {src: novaLogo.src, alt: 'Nova Wallet'}
-          sortedWallets = [polkadotJsWallet]
+          wallets = wallets.filter((x) => x.title === 'Nova Wallet')
         }
       }
 
       if (!unmounted) {
-        setWallets(sortedWallets)
+        setWallets(wallets)
       }
     })
     return () => {
@@ -168,7 +152,7 @@ const WalletDialog: FC = () => {
           {wallets.map((w) => (
             <Button
               color="inherit"
-              key={w.extensionName}
+              key={w.title}
               sx={{
                 width: 1,
                 py: 2.5,
@@ -189,13 +173,12 @@ const WalletDialog: FC = () => {
               <Image src={w.logo.src} alt={w.logo.alt} width={24} height={24} />
               <Typography ml={2} color="text.primary">
                 {w.installed !== true &&
-                  !(w.extensionName === 'subwallet-js' && isMobile) &&
+                  !(w.title === 'SubWallet' && isMobile) &&
                   'Install '}
                 {w.title}
               </Typography>
               {jsx(
-                w.installed === true ||
-                  (w.extensionName === 'subwallet-js' && isMobile)
+                w.installed === true || (w.title === 'SubWallet' && isMobile)
                   ? ArrowForwardIos
                   : Download,
                 {

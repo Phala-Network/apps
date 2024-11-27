@@ -5,7 +5,7 @@ import {atomWithStorage} from 'jotai/utils'
 
 export type Chain = 'khala' | 'phala'
 
-export const chainAtom = atom<Chain>('khala')
+export const chainAtom = atom<Chain>('phala')
 export const subsquidClientAtom = atom((get) => subsquidClient[get(chainAtom)])
 export const khalaVaultIdAtom = atomWithStorage<string | null>(
   'jotai:khala_vault',

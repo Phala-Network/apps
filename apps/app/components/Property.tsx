@@ -1,18 +1,20 @@
 import type {WikiEntry} from '@/assets/wikiData'
-import {Stack, type SxProps, Typography} from '@mui/material'
+import {Stack, type StackProps, type SxProps, Typography} from '@mui/material'
 import type {FC, ReactNode} from 'react'
 import WikiButton from './Wiki/Button'
 import WrapDecimal from './WrapDecimal'
 
-const Property: FC<{
-  size?: 'large' | 'medium' | 'small'
-  label: ReactNode
-  children: ReactNode
-  fullWidth?: boolean
-  sx?: SxProps
-  wikiEntry?: WikiEntry
-  wrapDecimal?: boolean
-}> = ({
+const Property: FC<
+  {
+    size?: 'large' | 'medium' | 'small'
+    label: ReactNode
+    children: ReactNode
+    fullWidth?: boolean
+    sx?: SxProps
+    wikiEntry?: WikiEntry
+    wrapDecimal?: boolean
+  } & StackProps
+> = ({
   size = 'medium',
   label,
   children,
@@ -20,6 +22,7 @@ const Property: FC<{
   sx,
   wikiEntry,
   wrapDecimal = false,
+  ...stackProps
 }) => {
   const labelNode = (
     <Typography
@@ -41,6 +44,7 @@ const Property: FC<{
       direction={size === 'small' ? 'row' : 'column'}
       alignItems={size === 'small' ? 'baseline' : 'flex-start'}
       {...(fullWidth && {justifyContent: 'space-between'})}
+      {...stackProps}
     >
       {wikiEntry == null ? (
         labelNode

@@ -2,16 +2,16 @@ import {walletDialogOpenAtom} from '@/store/ui'
 import {useTimeout} from '@phala/lib'
 import {polkadotAccountAtom} from '@phala/store'
 import {useAtom} from 'jotai'
-import {usePathname} from 'next/navigation'
+import {useRouter} from 'next/router'
 
-const whiteListPathnames = ['/phala', '/khala', '/wiki']
+const whiteListPathnames = ['/[chain]', '/wiki', '/staking']
 
 const useShowWalletDialog = (): void => {
-  const pathname = usePathname()
+  const router = useRouter()
   const [polkadotAccount] = useAtom(polkadotAccountAtom)
   const [, setWalletDialogOpen] = useAtom(walletDialogOpenAtom)
   useTimeout(() => {
-    if (!whiteListPathnames.includes(pathname) && !polkadotAccount) {
+    if (!whiteListPathnames.includes(router.pathname) && !polkadotAccount) {
       setWalletDialogOpen(true)
     }
   }, 5000)

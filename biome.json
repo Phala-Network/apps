@@ -12,6 +12,13 @@
   "formatter": {
     "indentStyle": "space"
   },
+  "linter": {
+    "rules": {
+      "correctness": {
+        "noUnusedImports": "error"
+      }
+    }
+  },
   "json": {
     "parser": {
       "allowComments": true,

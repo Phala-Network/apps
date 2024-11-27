@@ -9,9 +9,9 @@
     "updateMetadata": "bun updateMetadata.ts"
   },
   "dependencies": {
-    "@polkadot/api": "^12.4.2"
+    "@polkadot/api": "^14.3.1"
   },
   "devDependencies": {
-    "@polkadot/typegen": "^12.4.2"
+    "@polkadot/typegen": "^14.3.1"
   }
 }

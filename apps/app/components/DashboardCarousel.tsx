@@ -1,7 +1,6 @@
 import b2 from '@/assets/b2.png'
 import b3 from '@/assets/b3.png'
 import b4 from '@/assets/b4.png'
-import b6 from '@/assets/b6.png'
 import b7 from '@/assets/b7.png'
 import b8 from '@/assets/b8.jpg'
 import ArrowBackIos from '@mui/icons-material/ArrowBackIos'
@@ -23,11 +22,11 @@ const contents: Array<{name: string; imageUrl: string; href: string}> = [
     href: 'https://khala.subsquare.io/democracy/referendum/89',
     imageUrl: b7.src,
   },
-  {
-    name: 'Phala World Marketplace',
-    href: 'https://phala.world/marketplace',
-    imageUrl: b6.src,
-  },
+  // {
+  //   name: 'Phala World Marketplace',
+  //   href: 'https://phala.world/marketplace',
+  //   imageUrl: b6.src,
+  // },
   {
     name: 'Vaults feature',
     href: 'https://medium.com/phala-network/vaults-simplifying-and-optimizing-your-phala-delegations-368469608ea7',
