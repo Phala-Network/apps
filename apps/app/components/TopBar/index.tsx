@@ -211,11 +211,11 @@ const TopBar: FC = () => {
             display={{xs: 'none', md: 'flex'}}
           >
             {navItems.map((item) => {
-              if (item.sub == null) {
-                return <NavItem key={item.label} item={item} />
-              }
               if (item.hide) {
                 return null
+              }
+              if (item.sub == null) {
+                return <NavItem key={item.label} item={item} />
               }
               return (
                 <Tooltip
