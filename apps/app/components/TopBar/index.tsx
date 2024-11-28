@@ -91,7 +91,7 @@ const TopBar: FC = () => {
     {
       label: 'Staking',
       href: '/staking',
-      hide: process.env.VERCEL_ENV !== 'production',
+      hide: process.env.NODE_ENV === 'production',
     },
     {
       label: 'Delegate',

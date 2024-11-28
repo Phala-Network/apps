@@ -38,7 +38,8 @@ const WalletDialog: FC = () => {
   useEffect(() => {
     let unmounted = false
     void import('@talismn/connect-wallets').then(({getWallets}) => {
-      let wallets = getWallets()
+      const allWallets = getWallets()
+      let wallets = allWallets
         .filter((x) => walletsOrder.includes(x.title))
         .sort((a, b) => {
           return walletsOrder.indexOf(a.title) - walletsOrder.indexOf(b.title)
@@ -54,12 +55,12 @@ const WalletDialog: FC = () => {
           (window as {SubWallet?: {isSubWallet?: boolean}}).SubWallet
             ?.isSubWallet === true
         ) {
-          wallets = wallets.filter((x) => x.title === 'SubWallet')
+          wallets = allWallets.filter((x) => x.title === 'SubWallet')
         } else if (
           (window as {walletExtension?: {isNovaWallet?: boolean}})
             .walletExtension?.isNovaWallet === true
         ) {
-          wallets = wallets.filter((x) => x.title === 'Nova Wallet')
+          wallets = allWallets.filter((x) => x.title === 'Nova Wallet')
         }
       }
 
