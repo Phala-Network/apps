@@ -12,7 +12,7 @@ import TopBar from './TopBar'
 import WalletDialog from './WalletDialog'
 import WikiDialog from './Wiki/Dialog'
 
-const lgWidthPathnames = ['/staking', '/wiki']
+const lgWidthPathnames = ['/staking', '/wiki', '/claim-khala-assets']
 
 const Layout: FC<{children: ReactNode}> = ({children}) => {
   const theme = useTheme()

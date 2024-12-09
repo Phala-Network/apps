@@ -48,7 +48,10 @@
     "tanstack",
     "tokenomic",
     "unsub",
-    "xtokens"
+    "xtokens",
+    "connectkit",
+    "wagmi",
+    "walletconnect"
   ],
   "editor.codeActionsOnSave": {
     "quickfix.biome": "explicit",

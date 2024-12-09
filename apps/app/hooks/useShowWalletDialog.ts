@@ -4,7 +4,12 @@ import {polkadotAccountAtom} from '@phala/store'
 import {useAtom} from 'jotai'
 import {useRouter} from 'next/router'
 
-const whiteListPathnames = ['/[chain]', '/wiki', '/staking']
+const whiteListPathnames = [
+  '/[chain]',
+  '/wiki',
+  '/staking',
+  '/claim-khala-assets',
+]
 
 const useShowWalletDialog = (): void => {
   const router = useRouter()
