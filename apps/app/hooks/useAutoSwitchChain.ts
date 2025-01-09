@@ -4,11 +4,11 @@ import {useSwitchChain} from 'wagmi'
 import {useAccount} from 'wagmi'
 
 export const useAutoSwitchChain = () => {
-  const {chain} = useAccount()
+  const {isConnected, chainId} = useAccount()
   const {switchChain} = useSwitchChain()
   useEffect(() => {
-    if (chain?.id !== ethChain.id) {
+    if (isConnected && chainId !== ethChain.id) {
       switchChain({chainId: ethChain.id})
     }
-  }, [chain, switchChain])
+  }, [chainId, switchChain, isConnected])
 }

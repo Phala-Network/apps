@@ -3,9 +3,9 @@ import {LoadingButton} from '@mui/lab'
 import {useAccount, useSwitchChain} from 'wagmi'
 
 const SwitchChainButton = ({children}: {children: React.ReactNode}) => {
-  const {chain} = useAccount()
+  const {isConnected, chainId} = useAccount()
   const {switchChain, isPending} = useSwitchChain()
-  if (chain?.id === ethChain.id) {
+  if (!isConnected || chainId === ethChain.id) {
     return children
   }
   return (
