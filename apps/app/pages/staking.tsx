@@ -27,7 +27,7 @@ const Page = ({
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   return {
-    notFound: process.env.NODE_ENV === 'production',
+    // notFound: process.env.NODE_ENV === 'production',
     props: {
       cookie: ctx.req.headers.cookie,
     },
