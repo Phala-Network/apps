@@ -38,7 +38,13 @@ export const Web3Provider = ({
   const initialState = cookieToInitialState(config, cookie)
   return (
     <WagmiProvider config={config} initialState={initialState}>
-      <RainbowKitProvider modalSize="compact" theme={darkTheme()}>
+      <RainbowKitProvider
+        modalSize="compact"
+        theme={darkTheme({
+          accentColor: '#c5ff46',
+          accentColorForeground: '#333',
+        })}
+      >
         {children}
       </RainbowKitProvider>
     </WagmiProvider>
