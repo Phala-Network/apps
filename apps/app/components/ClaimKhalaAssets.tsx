@@ -31,7 +31,7 @@ import {decodeAddress} from '@polkadot/keyring'
 import Identicon from '@polkadot/react-identicon'
 import type {Signer} from '@polkadot/types/types'
 import {stringToHex, u8aToHex} from '@polkadot/util'
-import {ConnectKitButton} from 'connectkit'
+import {ConnectButton} from '@rainbow-me/rainbowkit'
 import Decimal from 'decimal.js'
 import {useAtom, useSetAtom} from 'jotai'
 import NextLink from 'next/link'
@@ -352,7 +352,7 @@ const ClaimKhalaAssets = () => {
                   justifyContent="space-between"
                 >
                   <Typography variant="subtitle1">Ethereum wallet</Typography>
-                  <ConnectKitButton />
+                  <ConnectButton showBalance={false} />
                 </Box>
 
                 <Box component="form" onSubmit={handleSubmit}>

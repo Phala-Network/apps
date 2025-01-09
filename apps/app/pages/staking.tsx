@@ -2,7 +2,7 @@ import PageHeader from '@/components/PageHeader'
 import Staking from '@/components/Staking'
 import {Web3Provider} from '@/components/Web3Provider'
 import {Chip} from '@mui/material'
-import {ConnectKitButton} from 'connectkit'
+import {ConnectButton} from '@rainbow-me/rainbowkit'
 import type {GetServerSideProps, InferGetServerSidePropsType} from 'next'
 
 const Page = ({
@@ -18,7 +18,7 @@ const Page = ({
           </>
         }
       >
-        <ConnectKitButton showBalance />
+        <ConnectButton />
       </PageHeader>
       <Staking />
     </Web3Provider>

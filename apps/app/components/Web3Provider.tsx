@@ -1,31 +1,32 @@
 import {ethChain} from '@/config'
-import {ConnectKitProvider, getDefaultConfig} from 'connectkit'
+import {
+  RainbowKitProvider,
+  darkTheme,
+  getDefaultConfig,
+} from '@rainbow-me/rainbowkit'
 import type {ReactNode} from 'react'
 import type {Chain} from 'viem'
 import {
   WagmiProvider,
   cookieStorage,
   cookieToInitialState,
-  createConfig,
   createStorage,
 } from 'wagmi'
+import '@rainbow-me/rainbowkit/styles.css'
 
 const chains: [Chain, ...Chain[]] = [ethChain]
 
-const config = createConfig(
-  getDefaultConfig({
-    chains,
-    walletConnectProjectId: process.env
-      .NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID as string,
-    appName: 'Phala App',
-    appUrl: 'https://app.phala.network',
-    appIcon: 'https://app.phala.network/apple-touch-icon.png',
-    ssr: true,
-    storage: createStorage({
-      storage: cookieStorage,
-    }),
+const config = getDefaultConfig({
+  chains,
+  projectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID as string,
+  appName: 'Phala App',
+  appUrl: 'https://app.phala.network',
+  appIcon: 'https://app.phala.network/apple-touch-icon.png',
+  ssr: true,
+  storage: createStorage({
+    storage: cookieStorage,
   }),
-)
+})
 
 export const Web3Provider = ({
   children,
@@ -37,7 +38,9 @@ export const Web3Provider = ({
   const initialState = cookieToInitialState(config, cookie)
   return (
     <WagmiProvider config={config} initialState={initialState}>
-      <ConnectKitProvider theme="midnight">{children}</ConnectKitProvider>
+      <RainbowKitProvider modalSize="compact" theme={darkTheme()}>
+        {children}
+      </RainbowKitProvider>
     </WagmiProvider>
   )
 }
