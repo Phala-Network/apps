@@ -6,7 +6,6 @@ import bifrostIcon from '@phala/ui/icons/chain/bifrost.png'
 import calamariIcon from '@phala/ui/icons/chain/calamari.png'
 import ethereumIcon from '@phala/ui/icons/chain/ethereum.png'
 import karuraIcon from '@phala/ui/icons/chain/karura.png'
-import khalaIcon from '@phala/ui/icons/chain/khala.png'
 import moonbeamIcon from '@phala/ui/icons/chain/moonbeam.png'
 import moonriverIcon from '@phala/ui/icons/chain/moonriver.png'
 import phalaIcon from '@phala/ui/icons/chain/phala.png'
@@ -22,7 +21,6 @@ export type EvmChainId =
   | 'base'
 export type SubstrateChainId =
   | 'phala'
-  | 'khala'
   | 'acala'
   | 'karura'
   | 'rhala'
@@ -87,24 +85,6 @@ export const CHAINS: Readonly<
     explorerURL: 'https://phala.subscan.io/',
     sygmaChainId: 5233,
     relayChain: 'polkadot',
-    balanceSource: 'assetsPallet',
-  },
-  khala: {
-    id: 'khala',
-    name: 'Khala',
-    icon: khalaIcon,
-    kind: 'substrate',
-    endpoint: [
-      'wss://khala-rpc.dwellir.com',
-      'wss://khala-api.phala.network/ws',
-      'wss://khala.api.onfinality.io/public-ws',
-    ],
-    ss58Format: 30,
-    paraId: 2004,
-    nativeAsset: 'pha',
-    explorerURL: 'https://khala.subscan.io/',
-    sygmaChainId: 5232,
-    relayChain: 'kusama',
     balanceSource: 'assetsPallet',
   },
   acala: {
@@ -184,7 +164,7 @@ export const CHAINS: Readonly<
   rhala: {
     id: 'rhala',
     name: 'Rhala',
-    icon: khalaIcon,
+    icon: phalaIcon,
     kind: 'substrate',
     endpoint: 'wss://subbridge-test.phala.network/rhala/ws',
     ss58Format: 30,

@@ -1,9 +1,9 @@
 import Property from '@/components/Property'
+import {subsquidClient} from '@/config'
 import usePolkadotApi from '@/hooks/usePolkadotApi'
 import useSignAndSend from '@/hooks/useSignAndSend'
 import {type GlobalStateQuery, useGlobalStateQuery} from '@/lib/subsquidQuery'
 import {barlow} from '@/lib/theme'
-import {subsquidClientAtom} from '@/store/common'
 import {LoadingButton} from '@mui/lab'
 import {
   DialogActions,
@@ -15,7 +15,6 @@ import {
 } from '@mui/material'
 import {getDecimalPattern, toCurrency} from '@phala/lib'
 import Decimal from 'decimal.js'
-import {useAtom} from 'jotai'
 import {type FC, useMemo, useState} from 'react'
 import type {Worker} from './List'
 
@@ -70,7 +69,6 @@ const ChangeStake: FC<{
   const signAndSend = useSignAndSend()
   const [loading, setLoading] = useState(false)
   const [amountString, setAmountString] = useState('')
-  const [subsquidClient] = useAtom(subsquidClientAtom)
   const {data: globalState} = useGlobalStateQuery(subsquidClient, undefined, {
     select: (data) => data.globalStateById,
   })

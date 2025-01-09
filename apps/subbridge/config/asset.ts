@@ -79,7 +79,6 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
     decimals: {ethereum: 18, goerli: 18, default: 12},
     destChainTransactionFee: {
       phala: new Decimal('0.092696'),
-      khala: new Decimal('0.092696'),
       'bifrost-kusama': new Decimal('0.0256'),
       acala: new Decimal('0.0512'),
       karura: new Decimal('0.0512'),
@@ -92,7 +91,6 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
     },
     existentialDeposit: {
       phala: new Decimal('0.01'),
-      khala: new Decimal('0.01'),
       acala: new Decimal('0.01'),
       karura: new Decimal('0.04'),
       'bifrost-kusama': new Decimal('0.04'),
@@ -109,13 +107,11 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
     reservedAddress: {
       ethereum: '0xC832588193cd5ED2185daDA4A531e0B26eC5B830',
       phala: '5EYCAe5jLbHcAAMKvLFSXgCTbPrLgBJusvPwfKcaKzuf5X5e',
-      khala: '5EYCAe5jLbHcAAMKvLFSXgCTbPrLgBJusvPwfKcaKzuf5X5e',
     },
     sygmaResourceId:
       '0x0000000000000000000000000000000000000000000000000000000000000001',
     location: {
       polkadot: {parents: 1, interior: {X1: {Parachain: CHAINS.phala.paraId}}},
-      kusama: {parents: 1, interior: {X1: {Parachain: CHAINS.khala.paraId}}},
     },
   },
   gpha: {
@@ -136,13 +132,9 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
     symbol: 'MOVR',
     icon: movrIcon,
     decimals: {default: 18},
-    polkadotAssetId: {
-      khala: 6,
-    },
     xc20Address: {moonriver: '0x0000000000000000000000000000000000000802'},
     destChainTransactionFee: {
       moonriver: new Decimal('0.00008'),
-      khala: new Decimal('0.000000000266666666'),
     },
     existentialDeposit: {},
     location: {
@@ -186,16 +178,11 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
     symbol: 'KAR',
     icon: karIcon,
     decimals: {default: 12},
-    polkadotAssetId: {
-      khala: 1,
-    },
     destChainTransactionFee: {
       karura: new Decimal('0.0064'),
-      khala: new Decimal('0.008'),
     },
     existentialDeposit: {
       karura: new Decimal('0.01'),
-      khala: new Decimal('0.01'),
     },
     location: {
       kusama: {
@@ -213,17 +200,12 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
     id: 'bnc',
     symbol: 'BNC',
     icon: bncIcon,
-    polkadotAssetId: {
-      khala: 2,
-    },
     decimals: {default: 12},
     destChainTransactionFee: {
       'bifrost-kusama': new Decimal('0.0051'),
-      khala: new Decimal('0.016'),
     },
     existentialDeposit: {
       'bifrost-kusama': new Decimal('0.01'),
-      khala: new Decimal('0.01'),
     },
     location: {
       bifrost: {
@@ -247,17 +229,14 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
     icon: ausdIcon,
     decimals: {default: 12},
     polkadotAssetId: {
-      khala: 4,
       acala: {Token: 'AUSD'},
       karura: {Token: 'KUSD'},
     },
     destChainTransactionFee: {
       karura: new Decimal('0.003481902463'),
-      khala: new Decimal('0.016'),
     },
     existentialDeposit: {
       karura: new Decimal('0.01'),
-      khala: new Decimal('0.01'),
     },
     location: {
       kusama: {
@@ -277,11 +256,9 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
     icon: bsxIcon,
     decimals: {default: 12},
     polkadotAssetId: {
-      khala: 9,
       basilisk: 0,
     },
     destChainTransactionFee: {
-      khala: new Decimal('0.064'),
       basilisk: new Decimal('22'),
     },
     existentialDeposit: {},
@@ -300,11 +277,9 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
     icon: turIcon,
     decimals: {default: 10},
     polkadotAssetId: {
-      khala: 10,
       turing: 0,
     },
     destChainTransactionFee: {
-      khala: new Decimal('0.064'),
       turing: new Decimal('0.1664'),
     },
     existentialDeposit: {},
@@ -319,10 +294,8 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
     decimals: {default: 12},
     polkadotAssetId: {
       calamari: 1,
-      khala: 8,
     },
     destChainTransactionFee: {
-      khala: new Decimal('6.4'),
       calamari: new Decimal('0.000004'),
     },
     existentialDeposit: {},
@@ -358,10 +331,8 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
     symbol: 'SDN',
     icon: sdnIcon,
     decimals: {default: 18},
-    polkadotAssetId: {khala: 12},
     destChainTransactionFee: {
       shiden: new Decimal('0.004635101624603116'),
-      khala: new Decimal('0.016'),
     },
     existentialDeposit: {},
     location: {

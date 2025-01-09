@@ -34,11 +34,7 @@ export const getEvmSygmaTransfer = async (
   let destinationChainId: number | undefined
   let parachainId: number | undefined
 
-  if (
-    toChain.id === 'phala' ||
-    toChain.id === 'khala' ||
-    toChain.id === 'rhala'
-  ) {
+  if (toChain.id === 'phala' || toChain.id === 'rhala') {
     destinationChainId = toChain.sygmaChainId
   } else {
     parachainId = toChain.paraId

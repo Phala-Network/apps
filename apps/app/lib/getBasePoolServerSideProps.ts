@@ -17,7 +17,7 @@ const getBasePoolServerSideProps =
     if (typeof pid !== 'string' || (chain !== 'khala' && chain !== 'phala')) {
       throw new Error('Invalid params')
     }
-    const subsquidSdk = getSdk(subsquidClient[chain])
+    const subsquidSdk = getSdk(subsquidClient)
     const initialData = await Promise.race([
       subsquidSdk.BasePoolById({id: pid}),
       sleep(3000),

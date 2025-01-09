@@ -5,11 +5,11 @@ import FarmChart from '@/components/FarmChart'
 import PageHeader from '@/components/PageHeader'
 import PromiseButton from '@/components/PromiseButton'
 import Property from '@/components/Property'
+import {subsquidClient} from '@/config'
 import usePolkadotApi from '@/hooks/usePolkadotApi'
 import useSignAndSend from '@/hooks/useSignAndSend'
 import getVaultOwnerCut from '@/lib/getVaultOwnerCut'
 import {useOwnedVaultsQuery} from '@/lib/subsquidQuery'
-import {subsquidClientAtom} from '@/store/common'
 import {
   Box,
   Button,
@@ -35,7 +35,6 @@ const MyVaults: FC = () => {
   }, [])
   const [account] = useAtom(polkadotAccountAtom)
   const signAndSend = useSignAndSend()
-  const [subsquidClient] = useAtom(subsquidClientAtom)
   const {data: edges, isLoading} = useOwnedVaultsQuery(
     subsquidClient,
     {accountId: account?.address},

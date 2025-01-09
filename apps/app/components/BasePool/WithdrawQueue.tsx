@@ -1,12 +1,12 @@
 import WithdrawalQueueIcon from '@/assets/withdraw_queue.svg'
 import Empty from '@/components/Empty'
 import SectionHeader from '@/components/SectionHeader'
+import {subsquidClient} from '@/config'
 import {
   type BasePoolCommonFragment,
   useDelegationsConnectionQuery,
 } from '@/lib/subsquidQuery'
 import {colors} from '@/lib/theme'
-import {subsquidClientAtom} from '@/store/common'
 import Check from '@mui/icons-material/Check'
 import WarningAmber from '@mui/icons-material/WarningAmber'
 import {
@@ -58,7 +58,6 @@ const WithdrawQueue: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
   const [sortModal, setSortModal] = useState<GridSortModel>([
     {field: 'countdown', sort: 'asc'},
   ])
-  const [subsquidClient] = useAtom(subsquidClientAtom)
   const {data, isLoading} = useDelegationsConnectionQuery(subsquidClient, {
     orderBy: 'withdrawalStartTime_ASC',
     where: {

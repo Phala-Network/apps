@@ -85,7 +85,7 @@ const WalletDialog: FC = () => {
         justifyContent="space-between"
         alignItems="center"
       >
-        {connected ? 'Select Account' : 'Connect Wallet'}
+        {connected ? 'Select Account' : 'Connect wallet'}
         {connected && (
           <Button
             variant="text"

@@ -1,10 +1,10 @@
 import NftsIcon from '@/assets/nfts.svg'
+import {subsquidClient} from '@/config'
 import usePolkadotApi from '@/hooks/usePolkadotApi'
 import {
   type NftsConnectionQuery,
   useNftsConnectionQuery,
 } from '@/lib/subsquidQuery'
-import {chainAtom, subsquidClientAtom} from '@/store/common'
 import {walletDialogOpenAtom} from '@/store/ui'
 import {
   Box,
@@ -58,7 +58,6 @@ const collectionSymbolFetcher = async ([api, cid, _]: [
 
 const NftCard: FC<{nft: Nft}> = ({nft}) => {
   const api = usePolkadotApi()
-  const [chain] = useAtom(chainAtom)
   const isDelegationNft = nft.delegation != null
   const {data: name} = useSWRImmutable(
     api != null && isDelegationNft
@@ -70,9 +69,7 @@ const NftCard: FC<{nft: Nft}> = ({nft}) => {
     api != null && isDelegationNft && [api, nft.cid, 'nftCollection'],
     collectionSymbolFetcher,
   )
-  const delegationNftPrefix = `${chain === 'khala' ? 'Khala' : 'Phala'} - ${
-    nft.delegation?.basePool.kind ?? ''
-  }`
+  const delegationNftPrefix = nft.delegation?.basePool.kind ?? ''
 
   return (
     <Paper
@@ -122,7 +119,6 @@ const pageSize = 8
 const DashboardNftList: FC = () => {
   const [page, setPage] = useState(1)
   const [account] = useAtom(polkadotAccountAtom)
-  const [subsquidClient] = useAtom(subsquidClientAtom)
   const [, setWalletDialogOpen] = useAtom(walletDialogOpenAtom)
   const [polkadotAccount] = useAtom(polkadotAccountAtom)
   const {data} = useNftsConnectionQuery(
@@ -164,7 +160,7 @@ const DashboardNftList: FC = () => {
               setWalletDialogOpen(true)
             }}
           >
-            Connect Wallet
+            Connect wallet
           </Button>
         </Stack>
       )}

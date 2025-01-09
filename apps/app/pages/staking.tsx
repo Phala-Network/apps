@@ -1,6 +1,7 @@
 import PageHeader from '@/components/PageHeader'
 import Staking from '@/components/Staking'
 import {Web3Provider} from '@/components/Web3Provider'
+import {Chip} from '@mui/material'
 import {ConnectKitButton} from 'connectkit'
 import type {GetServerSideProps, InferGetServerSidePropsType} from 'next'
 
@@ -9,7 +10,14 @@ const Page = ({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   return (
     <Web3Provider cookie={cookie}>
-      <PageHeader title="Staking">
+      <PageHeader
+        title="Staking"
+        pageTitle={
+          <>
+            Staking <Chip label="Ethereum" color="info" variant="outlined" />
+          </>
+        }
+      >
         <ConnectKitButton showBalance />
       </PageHeader>
       <Staking />

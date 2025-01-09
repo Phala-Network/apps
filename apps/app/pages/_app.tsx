@@ -1,9 +1,7 @@
-import HydrateAtoms from '@/components/HydrateAtoms'
 import Layout from '@/components/Layout'
 import ZendeskWidget from '@/components/ZendeskWidget'
 import {globalStyles} from '@/lib/styles'
 import {theme} from '@/lib/theme'
-import {chainAtom} from '@/store/common'
 import {
   CssBaseline,
   GlobalStyles,
@@ -56,29 +54,19 @@ const MyApp = (props: AppProps) => {
     >
       <QueryClientProvider client={queryClient}>
         <JotaiProvider>
-          <HydrateAtoms
-            initialValues={
-              new Map(
-                typeof router.query.chain === 'string'
-                  ? [[chainAtom, router.query.chain]]
-                  : [],
-              )
-            }
-          >
-            <AppCacheProvider {...props}>
-              <MuiThemeProvider theme={theme}>
-                <CssBaseline />
-                <GlobalStyles styles={[globalStyles]} />
+          <AppCacheProvider {...props}>
+            <MuiThemeProvider theme={theme}>
+              <CssBaseline />
+              <GlobalStyles styles={[globalStyles]} />
 
-                <Layout>
-                  <Component {...pageProps} />
-                  <ZendeskWidget />
-                  {process.env.NODE_ENV === 'development' && <JotaiDevTools />}
-                  <ReactQueryDevtools buttonPosition="bottom-left" />
-                </Layout>
-              </MuiThemeProvider>
-            </AppCacheProvider>
-          </HydrateAtoms>
+              <Layout>
+                <Component {...pageProps} />
+                <ZendeskWidget />
+                {process.env.NODE_ENV === 'development' && <JotaiDevTools />}
+                <ReactQueryDevtools buttonPosition="bottom-left" />
+              </Layout>
+            </MuiThemeProvider>
+          </AppCacheProvider>
         </JotaiProvider>
       </QueryClientProvider>
     </SWRConfig>

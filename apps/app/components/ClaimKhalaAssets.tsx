@@ -1,86 +1,157 @@
 import khalaClaimerAbi from '@/assets/khala_claimer_abi'
-import {khalaClaimerAddress, useClaimStatus} from '@/hooks/claimKhalaAssets'
+import {
+  khalaAssetsApi,
+  khalaClaimerAddress,
+  useClaimStatus,
+  useKhalaAssetsQuery,
+} from '@/hooks/khalaAssets'
 import {walletDialogOpenAtom} from '@/store/ui'
-import {ContentCopy} from '@mui/icons-material'
+import {CheckCircleOutline, ContentCopy} from '@mui/icons-material'
 import {LoadingButton} from '@mui/lab'
 import {
   Box,
   Button,
-  Checkbox,
   Divider,
-  FormControlLabel,
+  Link,
   Paper,
   Skeleton,
   Stack,
   TextField,
   Typography,
 } from '@mui/material'
-import {toCurrency, trimAddress} from '@phala/lib'
+import {toCurrency, trimAddress, validateAddress} from '@phala/lib'
 import {polkadotAccountAtom} from '@phala/store'
-import phaIcon from '@phala/ui/icons/asset/pha.png'
 import {decodeAddress} from '@polkadot/keyring'
 import Identicon from '@polkadot/react-identicon'
 import type {Signer} from '@polkadot/types/types'
 import {stringToHex, u8aToHex} from '@polkadot/util'
-import {useQuery} from '@tanstack/react-query'
 import {ConnectKitButton} from 'connectkit'
-import {useAtom} from 'jotai'
-import Image from 'next/image'
+import Decimal from 'decimal.js'
+import {useAtom, useSetAtom} from 'jotai'
+import NextLink from 'next/link'
 import {useSnackbar} from 'notistack'
-import {useMemo, useState} from 'react'
-import {type Hex, formatUnits, isAddress} from 'viem'
+import {useEffect, useMemo, useState} from 'react'
+import type {Hex} from 'viem'
+import {mainnet, sepolia} from 'viem/chains'
 import {useAccount, useWaitForTransactionReceipt, useWriteContract} from 'wagmi'
-import wretch from 'wretch'
 import Property from './Property'
+import SwitchChainButton from './SwitchChainButton'
 
-const api = wretch('http://localhost:4004')
+const targetChain = process.env.VERCEL_ENV === 'production' ? mainnet : sepolia
+
+export const CheckKhalaAssets = ({
+  onCheck,
+}: {
+  onCheck: (address: string) => void
+}) => {
+  const {enqueueSnackbar} = useSnackbar()
+  const [checkAddressInput, setCheckAddressInput] = useState('')
+
+  const handleCheck = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    if (validateAddress(checkAddressInput)) {
+      onCheck(checkAddressInput)
+    } else {
+      enqueueSnackbar('Invalid Khala address', {variant: 'error'})
+    }
+  }
+  return (
+    <>
+      <Stack
+        component="form"
+        display="flex"
+        maxWidth={600}
+        width="100%"
+        alignItems="center"
+        gap={2}
+        onSubmit={handleCheck}
+      >
+        <TextField
+          placeholder="Khala account"
+          value={checkAddressInput}
+          fullWidth
+          size="small"
+          onChange={(e) => {
+            setCheckAddressInput(e.target.value)
+          }}
+        />
+        <Button type="submit" sx={{width: 120}}>
+          Check
+        </Button>
+      </Stack>
+    </>
+  )
+}
 
 const ClaimKhalaAssets = () => {
-  const [, setWalletDialogOpen] = useAtom(walletDialogOpenAtom)
   const {enqueueSnackbar} = useSnackbar()
+  const setWalletDialogOpen = useSetAtom(walletDialogOpenAtom)
   const [loading, setLoading] = useState(false)
-  const [customReceiver, setCustomReceiver] = useState('')
-  const [useCustomReceiver, setUseCustomReceiver] = useState(false)
-  const account = useAccount()
+  const [checkAddress, setCheckAddress] = useState<string | undefined>(
+    undefined,
+  )
+  const [selected, setSelected] = useState(false)
+  const [accepted, setAccepted] = useState(false)
+  const {address: ethAddress, chain: ethChain} = useAccount()
   const [polkadotAccount] = useAtom(polkadotAccountAtom)
-  const {data} = useQuery({
-    queryKey: ['claim-khala-assets', 'balance', polkadotAccount?.address],
-    queryFn: () =>
-      api
-        .get(`/balance/${polkadotAccount?.address}`)
-        .json<{free: string; staked: string}>(),
-    enabled: polkadotAccount != null,
-  })
+  const address = checkAddress ?? polkadotAccount?.address
+  const {data} = useKhalaAssetsQuery(address)
   const h160Address = useMemo(() => {
-    if (polkadotAccount == null) {
+    if (address == null) {
       return undefined
     }
-    const publicKey = decodeAddress(polkadotAccount.address)
+    const publicKey = decodeAddress(address)
     const h160 = u8aToHex(publicKey).slice(0, 42) as Hex
     return h160
-  }, [polkadotAccount])
+  }, [address])
   const {claimed, logs} = useClaimStatus(h160Address)
+  const tx = useMemo(() => {
+    if (
+      ethChain?.blockExplorers?.default == null ||
+      logs?.[0]?.transactionHash == null
+    ) {
+      return undefined
+    }
+
+    const txHash = logs[0].transactionHash
+    return {
+      url: `https://${ethChain.blockExplorers.default.url}/tx/${txHash}`,
+      hash: txHash,
+      trimmedHash: trimAddress(txHash, 6, 6),
+    }
+  }, [ethChain, logs])
   const total = useMemo(() => {
-    return data && BigInt(data.free) + BigInt(data.staked)
+    return data && Decimal.add(data.free, data.staked)
   }, [data])
 
-  const receiver = useMemo(() => {
-    if (useCustomReceiver) {
-      return customReceiver
-    }
-    return account.address
-  }, [useCustomReceiver, customReceiver, account.address])
-
   const {data: hash, writeContract} = useWriteContract()
-  const {isLoading: isConfirming, isSuccess: isConfirmed} =
-    useWaitForTransactionReceipt({hash})
+  const {
+    isLoading: isConfirming,
+    isSuccess: isConfirmed,
+    isError,
+  } = useWaitForTransactionReceipt({hash})
+
+  useEffect(() => {
+    if (isConfirmed) {
+      setLoading(false)
+      enqueueSnackbar('Claimed successfully', {variant: 'success'})
+    }
+  }, [isConfirmed, enqueueSnackbar])
+
+  useEffect(() => {
+    if (isError) {
+      setLoading(false)
+      enqueueSnackbar('Failed to claim', {variant: 'error'})
+    }
+  }, [isError, enqueueSnackbar])
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    if (!receiver || !isAddress(receiver)) {
-      setLoading(false)
-      return enqueueSnackbar('Invalid receiver address', {variant: 'error'})
+
+    if (!ethAddress) {
+      return
     }
+    const receiver = ethAddress
     const {signRaw} = polkadotAccount?.signer as Signer
     if (signRaw == null || polkadotAccount == null || h160Address == null) {
       return
@@ -100,8 +171,8 @@ const ClaimKhalaAssets = () => {
     }
 
     try {
-      const {h160, free, staked, signature} = await api
-        .url('/verify')
+      const {h160, free, staked, signature} = await khalaAssetsApi
+        .url('/claim')
         .post({
           address: polkadotAccount.address,
           signature: polkadotSignature,
@@ -115,178 +186,172 @@ const ClaimKhalaAssets = () => {
         functionName: 'claim',
         args: [h160, BigInt(free), BigInt(staked), receiver, signature],
       })
-      setLoading(false)
-      enqueueSnackbar('Claimed successfully', {variant: 'success'})
     } catch (e) {
       setLoading(false)
       return enqueueSnackbar('Failed to claim', {variant: 'error'})
     }
   }
 
-  if (polkadotAccount == null) {
+  const onSwitchAccount = () => {
+    if (polkadotAccount == null) {
+      setCheckAddress(undefined)
+    } else {
+      setWalletDialogOpen(true)
+    }
+  }
+
+  if (address == null) {
     return (
-      <Stack alignItems="center" justifyContent="center">
-        <Button
-          onClick={() => {
-            setWalletDialogOpen(true)
-          }}
-        >
-          Connect Wallet
-        </Button>
-      </Stack>
+      <Box>
+        <Stack alignItems="center" gap={2} py={6}>
+          <Typography variant="body1">Connect wallet to claim</Typography>
+          <Button
+            onClick={() => {
+              setWalletDialogOpen(true)
+            }}
+          >
+            Connect wallet
+          </Button>
+        </Stack>
+
+        <Divider flexItem />
+
+        <Stack alignItems="center" py={4} gap={2}>
+          <Typography variant="body1">Check your Khala account</Typography>
+          <CheckKhalaAssets onCheck={setCheckAddress} />
+        </Stack>
+      </Box>
     )
   }
 
   return (
     <>
-      <Paper sx={{background: 'transparent', p: 2}}>
-        <Box
-          display="flex"
-          flexWrap="wrap"
-          gap={2}
-          flexDirection={{xs: 'column', md: 'row'}}
-        >
-          <Box display="flex" flex={1} alignItems="center" gap={2}>
-            <Identicon
-              value={polkadotAccount.address}
-              theme="polkadot"
-              size={36}
-            />
-            <Stack>
-              <Typography
-                variant="subtitle1"
-                component="div"
-                overflow="hidden"
-                textOverflow="ellipsis"
-                whiteSpace="nowrap"
-                minWidth={0}
-              >
-                {polkadotAccount.name}
-              </Typography>
-              <Stack
-                direction="row"
-                alignItems="center"
-                sx={{cursor: 'pointer'}}
-                onClick={() => {
-                  navigator.clipboard.writeText(polkadotAccount.address)
-                  enqueueSnackbar('Copied to clipboard')
-                }}
-              >
-                <Typography
-                  variant="subtitle2"
-                  color="text.secondary"
-                  component="div"
-                >
-                  {trimAddress(polkadotAccount.address, 6, 6)}
-                </Typography>
-                <ContentCopy sx={{ml: 1, width: 16}} color="disabled" />
-              </Stack>
-            </Stack>
-            <Button
-              variant="text"
-              sx={{ml: 'auto'}}
-              size="small"
-              onClick={() => {
-                setWalletDialogOpen(true)
-              }}
-            >
-              Switch account
-            </Button>
-          </Box>
-          <Divider
-            orientation="vertical"
-            flexItem
-            sx={{display: {xs: 'none', md: 'block'}}}
-          />
-          <Divider
-            orientation="horizontal"
-            flexItem
-            sx={{display: {xs: 'block', md: 'none'}}}
-          />
-          <Box
-            flex={1}
-            display="flex"
-            gap={2}
-            alignItems="center"
-            flexWrap="wrap"
+      <Stack alignItems="center" gap={1}>
+        <Typography variant="h6">Total PHA Claimable</Typography>
+        {total == null ? (
+          <Skeleton width={150} height={36} />
+        ) : (
+          <Typography variant="num1">{toCurrency(total)}</Typography>
+        )}
+      </Stack>
+      <Paper sx={{p: 2, bgcolor: 'transparent', mt: 2}}>
+        <Stack gap={1}>
+          <Property label="Free" size="small" fullWidth>
+            {data ? (
+              toCurrency(data.free)
+            ) : (
+              <Skeleton width={100} height={24} />
+            )}
+          </Property>
+          <Property label="Staked" size="small" fullWidth>
+            {data ? (
+              toCurrency(data.staked)
+            ) : (
+              <Skeleton width={100} height={24} />
+            )}
+          </Property>
+        </Stack>
+      </Paper>
+
+      <Box display="flex" alignItems="center" gap={2} height={52} px={2} my={2}>
+        <Identicon value={address} theme="polkadot" size={30} />
+        <Stack>
+          <Typography
+            variant="subtitle1"
+            component="div"
+            overflow="hidden"
+            textOverflow="ellipsis"
+            whiteSpace="nowrap"
+            minWidth={0}
           >
-            <Image src={phaIcon} width={36} height={36} alt="PHA" />
-
-            <Property label="Khala PHA" flex={1}>
-              {total != null ? (
-                toCurrency(formatUnits(total, 12))
-              ) : (
-                <Skeleton width={100} height={24} />
-              )}
-            </Property>
-            <Box flex={1}>
-              <Property label="Free" size="small" fullWidth>
-                {data ? (
-                  toCurrency(formatUnits(BigInt(data.free), 12))
-                ) : (
-                  <Skeleton width={100} height={24} />
-                )}
-              </Property>
-              <Property label="Staked" size="small" fullWidth>
-                {data ? (
-                  toCurrency(formatUnits(BigInt(data.staked), 12))
-                ) : (
-                  <Skeleton width={100} height={24} />
-                )}
-              </Property>
-            </Box>
-          </Box>
-        </Box>
-      </Paper>
-      <Paper sx={{background: 'transparent', p: 2, mt: 2}}>
-        <Box display="flex" flexDirection={{xs: 'column', md: 'row'}} gap={4}>
-          <Box flex={1}>
-            <Typography variant="body1">Some docs</Typography>
-          </Box>
-          <Box flex={1} display="flex" flexDirection="column" gap={2}>
-            <Typography variant="h6">Claim</Typography>
-            <Typography variant="body1">
-              Claimed: {claimed ? 'Yes' : 'No'}
+            {polkadotAccount?.name ?? 'Khala account'}
+          </Typography>
+          <Stack
+            direction="row"
+            alignItems="center"
+            sx={{cursor: 'pointer'}}
+            onClick={() => {
+              navigator.clipboard.writeText(address)
+              enqueueSnackbar('Copied to clipboard')
+            }}
+          >
+            <Typography
+              variant="subtitle2"
+              color="text.secondary"
+              component="div"
+            >
+              {trimAddress(address, 6, 6)}
             </Typography>
-            <Typography variant="body1" sx={{wordBreak: 'break-all'}}>
-              Tx: {logs?.[0]?.transactionHash}
-            </Typography>
+            <ContentCopy sx={{ml: 1, width: 16}} color="disabled" />
+          </Stack>
+        </Stack>
+        <Button
+          variant="text"
+          sx={{ml: 'auto'}}
+          size="small"
+          onClick={onSwitchAccount}
+        >
+          Switch account
+        </Button>
+      </Box>
 
-            <ConnectKitButton showBalance />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={useCustomReceiver}
-                  onChange={(e) => setUseCustomReceiver(e.target.checked)}
+      {polkadotAccount != null && (
+        <>
+          <Divider sx={{my: 2}} />
+
+          <Stack gap={4} mt={4}>
+            {claimed ? (
+              <Stack alignItems="center" height="100%" justifyContent="center">
+                <CheckCircleOutline
+                  sx={{width: 48, height: 48}}
+                  color="success"
                 />
-              }
-              label="Use custom receiver"
-            />
-            <Box component="form" onSubmit={handleSubmit}>
-              <TextField
-                placeholder="0x..."
-                disabled={loading || !useCustomReceiver}
-                value={useCustomReceiver ? customReceiver : account.address}
-                fullWidth
-                size="small"
-                onChange={(e) => {
-                  setCustomReceiver(e.target.value)
-                }}
-              />
+                <Typography variant="h5" mt={4}>
+                  Claimed successfully
+                </Typography>
+                <Typography variant="body2" mt={1}>
+                  Staked PHA can be found on{' '}
+                  <Link href="/staking" component={NextLink}>
+                    staking page
+                  </Link>
+                </Typography>
+                {tx != null && (
+                  <Typography variant="body2" mt={1}>
+                    Claim tx:{' '}
+                    <Link href={tx.url} target="_blank">
+                      {tx.trimmedHash}
+                    </Link>
+                  </Typography>
+                )}
+              </Stack>
+            ) : (
+              <>
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="space-between"
+                >
+                  <Typography variant="subtitle1">Ethereum wallet</Typography>
+                  <ConnectKitButton />
+                </Box>
 
-              <LoadingButton
-                fullWidth
-                sx={{mt: 2}}
-                type="submit"
-                loading={loading}
-                variant="contained"
-              >
-                Claim
-              </LoadingButton>
-            </Box>
-          </Box>
-        </Box>
-      </Paper>
+                <Box component="form" onSubmit={handleSubmit}>
+                  <SwitchChainButton>
+                    <LoadingButton
+                      disabled={!ethAddress}
+                      fullWidth
+                      type="submit"
+                      loading={loading}
+                    >
+                      Claim
+                    </LoadingButton>
+                  </SwitchChainButton>
+                </Box>
+              </>
+            )}
+          </Stack>
+        </>
+      )}
     </>
   )
 }

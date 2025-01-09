@@ -38,7 +38,7 @@ const Account: FC = () => {
           {polkadotAccount.name}
         </Box>
       ) : (
-        'Connect Wallet'
+        'Connect wallet'
       )}
     </Button>
   )

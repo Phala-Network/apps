@@ -7,7 +7,7 @@ const getToday = () => {
 }
 
 const useToday = () => {
-  const {data} = useSWR('now', getToday, {
+  const {data} = useSWR('today', getToday, {
     fallbackData: getToday(),
     refreshInterval: 60 * 1000,
     revalidateIfStale: true,

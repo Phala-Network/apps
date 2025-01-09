@@ -1,7 +1,6 @@
 import useListenBlockHeight from '@/hooks/useListenBlockHeight'
 import useResetVault from '@/hooks/useResetVault'
 import useShowWalletDialog from '@/hooks/useShowWalletDialog'
-import useSyncPath from '@/hooks/useSyncPath'
 import {Container, useMediaQuery, useTheme} from '@mui/material'
 import {useConnectPolkadotWallet} from '@phala/lib'
 import {useRouter} from 'next/router'
@@ -12,7 +11,7 @@ import TopBar from './TopBar'
 import WalletDialog from './WalletDialog'
 import WikiDialog from './Wiki/Dialog'
 
-const lgWidthPathnames = ['/staking', '/wiki', '/claim-khala-assets']
+const lgWidthPathnames = ['/staking', '/wiki']
 
 const Layout: FC<{children: ReactNode}> = ({children}) => {
   const theme = useTheme()
@@ -22,7 +21,6 @@ const Layout: FC<{children: ReactNode}> = ({children}) => {
   useConnectPolkadotWallet('Phala App', 30)
   useListenBlockHeight()
   useResetVault()
-  useSyncPath()
   useShowWalletDialog()
 
   return (
@@ -37,16 +35,18 @@ const Layout: FC<{children: ReactNode}> = ({children}) => {
         horizontal: matches ? 'right' : 'center',
       }}
     >
-      <TopBar />
-      <Container
-        maxWidth={lgWidthPathnames.includes(router.pathname) ? 'lg' : 'xl'}
-        sx={{pb: 4, px: {xs: 1, sm: 2, lg: 3}}}
-      >
-        {children}
-      </Container>
-      <WalletDialog />
-      <WikiDialog />
-      <ScrollTop />
+      <>
+        <TopBar />
+        <Container
+          maxWidth={lgWidthPathnames.includes(router.pathname) ? 'lg' : 'xl'}
+          sx={{pb: 4, px: {xs: 1, sm: 2, lg: 3}}}
+        >
+          {children}
+        </Container>
+        <WalletDialog />
+        <WikiDialog />
+        <ScrollTop />
+      </>
     </SnackbarProvider>
   )
 }

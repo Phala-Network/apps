@@ -38,7 +38,7 @@ type Resource = {
 
 type Domain = {
   id: number
-  name: 'ethereum' | 'phala' | 'khala'
+  name: 'ethereum' | 'phala'
   lastIndexedBlock: string
 }
 
@@ -118,7 +118,7 @@ const ChainLabel: FC<{chain: Chain}> = ({chain: {icon, name}}) => {
   )
 }
 
-const validChains = new Set(['ethereum', 'phala', 'khala'])
+const validChains = new Set(['ethereum', 'phala'])
 
 const BridgeHistory: FC<BoxProps> = (props) => {
   const [polkadotAccount] = useAtom(polkadotAccountAtom)

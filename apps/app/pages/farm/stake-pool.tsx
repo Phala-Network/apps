@@ -4,8 +4,8 @@ import DownloadHistory from '@/components/DownloadHistory'
 import FarmChart from '@/components/FarmChart'
 import PageHeader from '@/components/PageHeader'
 import Property from '@/components/Property'
+import {subsquidClient} from '@/config'
 import {useClaimableStakePoolsQuery} from '@/lib/subsquidQuery'
-import {subsquidClientAtom} from '@/store/common'
 import {
   Box,
   Button,
@@ -24,7 +24,6 @@ import {type FC, useCallback, useMemo, useState} from 'react'
 const MyStakePools: FC = () => {
   const [account] = useAtom(polkadotAccountAtom)
   const [dialogOpen, setDialogOpen] = useState(false)
-  const [subsquidClient] = useAtom(subsquidClientAtom)
   const {data: edges} = useClaimableStakePoolsQuery(
     subsquidClient,
     {accountId: account?.address, gt: '0'},

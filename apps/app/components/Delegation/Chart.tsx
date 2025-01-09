@@ -1,3 +1,4 @@
+import {subsquidClient} from '@/config'
 import useToday from '@/hooks/useToday'
 import getDelegationProfit from '@/lib/getDelegationProfit'
 import {
@@ -5,11 +6,9 @@ import {
   useDelegationSnapshotsConnectionQuery,
 } from '@/lib/subsquidQuery'
 import {colors} from '@/lib/theme'
-import {subsquidClientAtom} from '@/store/common'
 import {compactFormat} from '@phala/lib'
 import {addDays} from 'date-fns'
 import Decimal from 'decimal.js'
-import {useAtom} from 'jotai'
 import {type FC, useMemo} from 'react'
 import {
   Bar,
@@ -31,7 +30,6 @@ const DelegationChart: FC<{
   const color = isVault ? colors.vault[500] : colors.main[400]
   const today = useToday()
   const startTime = useMemo(() => addDays(today, -days).toISOString(), [today])
-  const [subsquidClient] = useAtom(subsquidClientAtom)
   const {data} = useDelegationSnapshotsConnectionQuery(
     subsquidClient,
     {

@@ -15,27 +15,27 @@ const wikiData = {
 
   totalValue: {
     title: 'Total Value',
-    content: 'All delegated PHA across the Phala & Khala network',
+    content: 'All delegated PHA',
   },
   stakeRatio: {
     title: 'Stake Ratio',
     content:
-      'Stake Ratio = All delegated PHA across the Phala & Khala network / All circulating PHA.',
+      'Stake Ratio = All delegated PHA / All circulating PHA.',
   },
   dailyRewards: {
     title: 'Daily Rewards',
     content:
-      'The total amount of computation rewards distributed across the Phala & Khala network in the past day.',
+      'The total amount of computation rewards distributed in the past day.',
   },
   avgApr: {
     title: 'Avg APR',
     content:
-      'The average annual percentage rate of return for all delegations across the Phala & Khala network. (no consideration of compound interest)',
+      'The average annual percentage rate of return for all delegations. (no consideration of compound interest)',
   },
   onlineWorkers: {
     title: 'Online Workers',
     content:
-      'The total number of online workers across the Phala & Khala network.',
+      'The total number of online workers.',
   },
 
   delegationValue: {
@@ -68,7 +68,7 @@ const wikiData = {
   basePoolStatus: {
     title: 'Pool Status',
     content:
-      "Verified\nKhala's on-chain verification function. Each user can set a nickname for their address, The address with a check mark after the nickname is the address confirmed by the Khala registrar, including its email, Twitter, and other related contacts. This does not mean that the verified address is more advanced or more credible; please note that certification does not represent any financial recommendation.\n\nFavorite\nClick the star on the left side of the pool card to add the pool to your favorites. Note that this is stored locally and will not be inherited if you change browsers or devices.\n\nDelegated\nPools where you currently hold Delegation NFTs.\n\nHide closed\nIf selected, you will not be able to see pools that have been whitelisted (if you are not on the whitelist).",
+      "Verified\nPhala's on-chain verification function. Each user can set a nickname for their address, The address with a check mark after the nickname is the address confirmed by the Phala registrar, including its email, Twitter, and other related contacts. This does not mean that the verified address is more advanced or more credible; please note that certification does not represent any financial recommendation.\n\nFavorite\nClick the star on the left side of the pool card to add the pool to your favorites. Note that this is stored locally and will not be inherited if you change browsers or devices.\n\nDelegated\nPools where you currently hold Delegation NFTs.\n\nHide closed\nIf selected, you will not be able to see pools that have been whitelisted (if you are not on the whitelist).",
   },
 
   tvl: {
@@ -185,12 +185,9 @@ Daily budget per share means the reward budget for each unit of computing power 
     
 The calculation formula is:
 
-Daily budget per share = (Phala budget per share * Phala total share + Khala budget per share * Khala total share)  / (Phala total share + Khala total share)
+Daily budget per share = Phala budget per share * Phala total share  / Phala total share
 
 - Phala budget per share = Phala budget * 24 * 60 * 60 / Phala block speed / (Phala total share/10000)
-- Khala budget per share = Khala budget * 24 * 60 * 60 / Khala block speed / (Khala total share/10000)
-
-This budget is adjusted by the budget balancer at UTC 0 o'clock every day, to ensure that the unit computing power earnings between Phala and Khala networks are as similar as possible.
 
 The adjustment calculation logic is based on days, and the key factors for allocation are: 
 
@@ -203,7 +200,7 @@ Here is detailed intro for Budget Balancer which includes the specific formula:
 
 [https://docs.phala.network/v1/compute-providers/basic-info/budget-balancer](https://docs.phala.network/v1/compute-providers/basic-info/budget-balancer)
 
-**If you find that the result on Phala/Khala are inconsistent, it's normal. Because we will use the block time of the previous day to calculate the budget allocation for the new day, this is reasonable, as the "losses" from the previous day will be compensated in the new day.**
+**If you find that the result on Phala are inconsistent, it's normal. Because we will use the block time of the previous day to calculate the budget allocation for the new day, this is reasonable, as the "losses" from the previous day will be compensated in the new day.**
 
 In addition, the unit of share in the current indicator here is 10,000 real shares, which can more intuitively show the income of the workers. 
 

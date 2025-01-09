@@ -2,7 +2,7 @@ import khalaClaimerAbi from '@/assets/khala_claimer_abi'
 import {useQuery} from '@tanstack/react-query'
 import {type Hex, isHex} from 'viem'
 import {usePublicClient, useReadContract} from 'wagmi'
-import {} from './staking'
+import wretch from 'wretch'
 
 const assertIsHex = (value?: string) => {
   if (isHex(value)) {
@@ -14,6 +14,20 @@ const assertIsHex = (value?: string) => {
 export const khalaClaimerAddress = assertIsHex(
   process.env.NEXT_PUBLIC_KHALA_CLAIMER_CONTRACT,
 )
+export const khalaAssetsApi = wretch(
+  'https://7948d0788774349da5ba360e5862f42e4dc7528a-8080.dstack-prod4.phala.network',
+)
+
+export const useKhalaAssetsQuery = (address?: string) => {
+  return useQuery({
+    queryKey: ['khala-assets', address],
+    queryFn: () =>
+      khalaAssetsApi
+        .get(`/account/${address}`)
+        .json<{free: string; staked: string}>(),
+    enabled: address != null,
+  })
+}
 
 export const useClaimStatus = (address?: Hex) => {
   const {data: claimed} = useReadContract({
@@ -36,7 +50,7 @@ export const useClaimStatus = (address?: Hex) => {
       })
       return logs
     },
-    enabled: claimed === true && publicClient?.chain.name === 'ethereum',
+    enabled: claimed === true,
   })
   return {
     claimed,

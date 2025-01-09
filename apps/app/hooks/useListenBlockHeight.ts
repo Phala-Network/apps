@@ -1,12 +1,10 @@
+import {subsquidClient} from '@/config'
 import {useGlobalStateQuery} from '@/lib/subsquidQuery'
-import {subsquidClientAtom} from '@/store/common'
 import {useQueryClient} from '@tanstack/react-query'
-import {useAtom} from 'jotai'
 import {useEffect, useRef} from 'react'
 
 const useListenBlockHeight = (): void => {
   const enabled = useRef(false)
-  const [subsquidClient] = useAtom(subsquidClientAtom)
   const {data: globalStateData} = useGlobalStateQuery(
     subsquidClient,
     undefined,

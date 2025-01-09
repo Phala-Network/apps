@@ -1,6 +1,4 @@
-import {chainAtom} from '@/store/common'
 import {Button, type ButtonProps} from '@mui/material'
-import {useAtom} from 'jotai'
 import type {FC} from 'react'
 
 const DownloadHistory: FC<
@@ -9,12 +7,11 @@ const DownloadHistory: FC<
     id: string
   } & ButtonProps
 > = ({kind, id, ...props}) => {
-  const [chain] = useAtom(chainAtom)
   return (
     <Button
       variant="text"
       size="small"
-      href={`/api/${chain}/snapshots/${kind}/${id}`}
+      href={`/api/phala/snapshots/${kind}/${id}`}
       {...props}
     >
       Download historical data

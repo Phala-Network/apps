@@ -1,6 +1,7 @@
 import ClaimKhalaAssets from '@/components/ClaimKhalaAssets'
-import PageHeader from '@/components/PageHeader'
+import Title from '@/components/Title'
 import {Web3Provider} from '@/components/Web3Provider'
+import {Paper, Stack, Typography} from '@mui/material'
 import type {GetServerSideProps} from 'next'
 import type {InferGetServerSidePropsType} from 'next'
 
@@ -9,8 +10,13 @@ const Page = ({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   return (
     <Web3Provider cookie={cookie}>
-      <PageHeader title="Claim Khala Assets" />
-      <ClaimKhalaAssets />
+      <Title>Claim Khala Assets</Title>
+      <Stack maxWidth={400} mx="auto" alignItems="center" mt={6} gap={4}>
+        <Typography variant="h4">Claim Khala Assets</Typography>
+        <Paper sx={{background: 'transparent', p: 2, width: '100%'}}>
+          <ClaimKhalaAssets />
+        </Paper>
+      </Stack>
     </Web3Provider>
   )
 }

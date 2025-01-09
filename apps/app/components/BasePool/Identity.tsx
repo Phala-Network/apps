@@ -1,11 +1,9 @@
 import type {Account} from '@/lib/subsquidQuery'
-import {chainAtom} from '@/store/common'
 import ErrorOutline from '@mui/icons-material/ErrorOutline'
 import RemoveCircleOutline from '@mui/icons-material/RemoveCircleOutline'
 import VerifiedOutlined from '@mui/icons-material/VerifiedOutlined'
 import {Link, Stack, Tooltip, Typography, alpha, useTheme} from '@mui/material'
 import {trimAddress} from '@phala/lib'
-import {useAtom} from 'jotai'
 import type {FC} from 'react'
 
 const Identity: FC<
@@ -14,7 +12,6 @@ const Identity: FC<
   }
 > = ({id, identityDisplay, identityLevel, detail = false}) => {
   const theme = useTheme()
-  const [chain] = useAtom(chainAtom)
   const verified =
     identityLevel === 'KnownGood' || identityLevel === 'Reasonable'
 
@@ -23,7 +20,7 @@ const Identity: FC<
     <Link
       variant={detail ? 'h6' : 'caption'}
       color={detail ? 'inherit' : 'text.secondary'}
-      href={`https://${chain}.subscan.io/account/${id}`}
+      href={`https://phala.subscan.io/account/${id}`}
       target="_blank"
       rel="noopener"
       overflow="hidden"

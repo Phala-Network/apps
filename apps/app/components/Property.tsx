@@ -13,6 +13,7 @@ const Property: FC<
     sx?: SxProps
     wikiEntry?: WikiEntry
     wrapDecimal?: boolean
+    center?: boolean
   } & StackProps
 > = ({
   size = 'medium',
@@ -22,6 +23,7 @@ const Property: FC<
   sx,
   wikiEntry,
   wrapDecimal = false,
+  center = false,
   ...stackProps
 }) => {
   const labelNode = (
@@ -42,7 +44,9 @@ const Property: FC<
     <Stack
       sx={sx}
       direction={size === 'small' ? 'row' : 'column'}
-      alignItems={size === 'small' ? 'baseline' : 'flex-start'}
+      alignItems={
+        center ? 'center' : size === 'small' ? 'baseline' : 'flex-start'
+      }
       {...(fullWidth && {justifyContent: 'space-between'})}
       {...stackProps}
     >
@@ -54,7 +58,7 @@ const Property: FC<
       {size === 'large' && (
         <Typography
           lineHeight={1.3}
-          variant="num1"
+          variant="num2"
           component="div"
           whiteSpace="nowrap"
         >

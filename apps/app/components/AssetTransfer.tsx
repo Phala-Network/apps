@@ -1,7 +1,6 @@
 import usePolkadotApi from '@/hooks/usePolkadotApi'
 import useSignAndSend from '@/hooks/useSignAndSend'
 import {barlow} from '@/lib/theme'
-import {chainAtom} from '@/store/common'
 import {LoadingButton} from '@mui/lab'
 import {
   Alert,
@@ -14,7 +13,6 @@ import {getDecimalPattern, toCurrency, validateAddress} from '@phala/lib'
 import type {SubmittableExtrinsic} from '@polkadot/api/types'
 import type {ISubmittableResult} from '@polkadot/types/types'
 import Decimal from 'decimal.js'
-import {useAtom} from 'jotai'
 import {type FC, useMemo, useState} from 'react'
 import type {Asset} from './DashboardAssetList'
 import Property from './Property'
@@ -23,7 +21,6 @@ const AssetTransfer: FC<{asset: Asset; onClose: () => void}> = ({
   asset,
   onClose,
 }) => {
-  const [chain] = useAtom(chainAtom)
   const api = usePolkadotApi()
   const signAndSend = useSignAndSend()
   const [loading, setLoading] = useState(false)
@@ -109,9 +106,8 @@ const AssetTransfer: FC<{asset: Asset; onClose: () => void}> = ({
             `${toCurrency(asset.balance)} ${asset.symbol}`}
         </Property>
         <Alert severity="warning" sx={{mt: 2}} icon={false}>
-          You are transferring on{' '}
-          <b>{chain === 'khala' ? 'Khala' : 'Phala'} Network</b>. Do not
-          transfer to <b>hardware wallets</b>.
+          You are transferring on <b>Phala Network</b>. Do not transfer to{' '}
+          <b>hardware wallets</b>.
         </Alert>
       </DialogContent>
       <DialogActions>

@@ -1,6 +1,5 @@
 import PhalaLogo from '@/assets/phala_logo.svg'
 import {montserrat} from '@/lib/theme'
-import {chainAtom} from '@/store/common'
 import {faDiscord, faXTwitter} from '@fortawesome/free-brands-svg-icons'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import Language from '@mui/icons-material/Language'
@@ -14,18 +13,18 @@ import {
   Collapse,
   Divider,
   IconButton,
+  Link,
   NoSsr,
   Stack,
   Toolbar,
   Tooltip,
   useTheme,
 } from '@mui/material'
-import {useAtom} from 'jotai'
 import NextLink from 'next/link'
 import {useRouter} from 'next/router'
 import {type FC, useState} from 'react'
 import Account from './Account'
-import ChainSelect from './Chain'
+import ChainStatus from './ChainStatus'
 import NetworkStats from './NetworkStats'
 
 interface INavItem {
@@ -42,7 +41,6 @@ const NavItem: FC<{item: INavItem; onClick?: ButtonProps['onClick']}> = ({
 }) => {
   const isExternal = href === undefined || !href.startsWith('/')
   const theme = useTheme()
-  const [chain] = useAtom(chainAtom)
 
   const link = (
     <Button
@@ -68,12 +66,7 @@ const NavItem: FC<{item: INavItem; onClick?: ButtonProps['onClick']}> = ({
   }
 
   return (
-    <NextLink
-      href={href === '/staking' ? href : `/${chain}${href}`}
-      passHref
-      legacyBehavior
-      shallow
-    >
+    <NextLink href={href} passHref legacyBehavior shallow>
       {link}
     </NextLink>
   )
@@ -122,9 +115,9 @@ const TopBar: FC = () => {
         {label: 'Forum', href: 'https://forum.phala.network/'},
         {
           label: 'Governance',
-          href: 'https://polkadot.js.org/apps/?rpc=wss%3A%2F%2Fkhala-api.phala.network%2Fws#/democracy',
+          href: 'https://polkadot.js.org/apps/?rpc=wss%3A%2F%2Fapi.phala.network%2Fws#/democracy',
         },
-        {label: 'Subsquare.io', href: 'https://khala.subsquare.io/'},
+        {label: 'Subsquare.io', href: 'https://phala.subsquare.io/'},
       ],
     },
   ]
@@ -200,6 +193,7 @@ const TopBar: FC = () => {
           </NoSsr>
           <Box flex={1} />
           {icons}
+          <ChainStatus />
         </Stack>
         <Toolbar>
           <PhalaLogo width={30} css={{flexShrink: 0}} />
@@ -243,12 +237,10 @@ const TopBar: FC = () => {
           </Stack>
 
           <Stack direction="row" ml="auto" spacing={2} alignItems="center">
-            {isPolkadot && (
-              <>
-                <ChainSelect />
-                <Account />
-              </>
-            )}
+            <Link href="/khala-assets" component={NextLink}>
+              Claim Khala assets
+            </Link>
+            {isPolkadot && <Account />}
             <IconButton
               sx={{display: {sx: 'inline-flex', md: 'none'}}}
               onClick={toggleCollapse}

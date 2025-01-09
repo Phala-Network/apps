@@ -50,7 +50,7 @@ const ConnectEvmWalletButton: FC<ButtonProps> = (props) => {
           props.onClick?.(e)
         }}
       >
-        {props.children ?? 'Connect Wallet'}
+        {props.children ?? 'Connect wallet'}
       </LoadingButton>
       <Dialog
         open={open}
@@ -98,7 +98,7 @@ const ConnectPolkadotButton: FC<ButtonProps> = (props) => {
         props.onClick?.(e)
       }}
     >
-      {props.children ?? 'Connect Wallet'}
+      {props.children ?? 'Connect wallet'}
     </Button>
   )
 }
