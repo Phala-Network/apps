@@ -1,8 +1,7 @@
 import BridgeBody from '@/components/BridgeBody'
 import BridgeHistory from '@/components/BridgeHistory'
-import {ClientOnly} from '@/components/ClientOnly'
 import Footer from '@/components/Footer'
-import MigrationAlert from '@/components/MigrationAlert'
+import KhalaSunsetAlert from '@/components/KhalaSunsetAlert'
 import {Box, Container, useTheme} from '@mui/material'
 import type {NextPage} from 'next'
 import dynamic from 'next/dynamic'
@@ -31,9 +30,7 @@ const Home: NextPage = () => {
           mx: 'auto',
         }}
       >
-        <ClientOnly>
-          <MigrationAlert sx={{mb: 2}} />
-        </ClientOnly>
+        <KhalaSunsetAlert sx={{mb: 2}} />
 
         <BridgeBody />
 
