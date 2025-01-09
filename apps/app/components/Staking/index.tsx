@@ -51,24 +51,25 @@ const Staking = () => {
         </Paper>
 
         <Paper sx={{p: 2, background: 'transparent', flex: 1}}>
+          <Property size="large" label="My Staking" wrapDecimal center>
+            {assets != null ? toCurrency(formatUnits(assets, 18)) : '-'}
+          </Property>
+        </Paper>
+
+        <Paper sx={{p: 2, background: 'transparent', flex: 1}}>
           <Property size="large" label="Total Staking" wrapDecimal center>
             {totalAssets != null
               ? toCurrency(formatUnits(totalAssets, 18))
               : '-'}
           </Property>
         </Paper>
-        <Paper sx={{p: 2, background: 'transparent', flex: 1}}>
-          <Property size="large" label="My Staking" wrapDecimal center>
-            {assets != null ? toCurrency(formatUnits(assets, 18)) : '-'}
-          </Property>
-        </Paper>
       </Stack>
 
       <Stack direction={{xs: 'column', md: 'row'}} spacing={2} mt={2}>
-        <Paper sx={{flex: 1, background: 'transparent', height: 480}}>
+        <Paper sx={{flex: 1, background: 'transparent', height: 500}}>
           <Stake />
         </Paper>
-        <Paper sx={{flex: 1, background: 'transparent', height: 480}}>
+        <Paper sx={{flex: 1, background: 'transparent', height: 500}}>
           <Unstake />
         </Paper>
       </Stack>

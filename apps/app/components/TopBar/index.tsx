@@ -238,7 +238,7 @@ const TopBar: FC = () => {
 
           <Stack direction="row" ml="auto" spacing={2} alignItems="center">
             <Link href="/khala-assets" component={NextLink}>
-              Claim Khala assets
+              Claim Khala Assets
             </Link>
             {isPolkadot && <Account />}
             <IconButton

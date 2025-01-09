@@ -151,7 +151,7 @@ const Unstake = () => {
   }, [unlockRequests?.length])
 
   return (
-    <Box p={2}>
+    <Box p={3}>
       <Box display="flex" justifyContent="space-between" alignItems="center">
         <Typography variant="h6">Unlock Requests</Typography>
         {maxUnlockRequests != null && unlockRequests != null && (

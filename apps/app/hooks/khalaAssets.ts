@@ -30,30 +30,42 @@ export const useKhalaAssetsQuery = (address?: string) => {
 }
 
 export const useClaimStatus = (address?: Hex) => {
-  const {data: claimed} = useReadContract({
+  const {data: claimed, refetch} = useReadContract({
     address: khalaClaimerAddress,
     abi: khalaClaimerAbi,
     functionName: 'claimed',
     args: address && [address],
-    query: {enabled: Boolean(address)},
+    query: {
+      enabled: Boolean(address),
+      refetchInterval: (query) => (query.state.data ? false : 3000),
+    },
   })
   const publicClient = usePublicClient()
-  const {data: logs} = useQuery({
+  const {data: log} = useQuery({
     queryKey: ['khala-claim-logs', address, publicClient?.chain.id],
     queryFn: async () => {
-      const logs = await publicClient?.getLogs({
+      if (publicClient == null) {
+        return
+      }
+      const event = khalaClaimerAbi.find(
+        (item) => item.type === 'event' && item.name === 'Claimed',
+      )
+      if (event == null) {
+        return
+      }
+      const logs = await publicClient.getLogs({
         address: khalaClaimerAddress,
-        event: khalaClaimerAbi.find(
-          (item) => item.type === 'event' && item.name === 'Claimed',
-        ),
+        event,
         args: {user: address},
+        fromBlock: 0n,
       })
-      return logs
+      return logs[0]
     },
-    enabled: claimed === true,
+    enabled: claimed === true && publicClient != null && address != null,
   })
   return {
     claimed,
-    logs,
+    log,
+    refetch,
   }
 }

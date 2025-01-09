@@ -247,14 +247,23 @@ const Stake = () => {
     balance,
   ])
 
-  const dailyReward = useMemo(() => {
-    if (!isStake || rewardRate == null || totalAssets == null) {
+  const dailyRewards = useMemo(() => {
+    if (
+      !isStake ||
+      rewardRate == null ||
+      totalAssets == null ||
+      totalAssets === 0n ||
+      amount == null
+    ) {
       return null
     }
-    return Decimal.mul(rewardRate.toString(), 24 * 60 * 60).div(
-      totalAssets.toString(),
-    )
-  }, [isStake, rewardRate, totalAssets])
+    return Decimal.mul(rewardRate.toString(), 24 * 60 * 60)
+      .mul(amount.toString())
+      .div((totalAssets + amount).toString())
+      .toDP(0)
+      .div(1e18)
+      .toString()
+  }, [isStake, rewardRate, totalAssets, amount])
 
   return (
     <Box>
@@ -400,8 +409,18 @@ const Stake = () => {
           />
         </Box>
 
-        <Paper sx={{p: 2, width: 1}}>
+        <Paper sx={{p: 2, width: 1, height: 142}}>
           <Stack gap={1} width={1}>
+            {isStake && (
+              <Property
+                size="small"
+                fullWidth
+                label="Daily Rewards"
+                wrapDecimal
+              >
+                {dailyRewards != null ? toCurrency(dailyRewards) : '-'}
+              </Property>
+            )}
             <Property size="small" fullWidth label="Shares" wrapDecimal>
               {shares != null ? toCurrency(formatUnits(shares, 18)) : '-'}
             </Property>

@@ -1,10 +1,14 @@
 import khalaClaimerAbi from '@/assets/khala_claimer_abi'
+import Property from '@/components/Property'
+import SwitchChainButton from '@/components/SwitchChainButton'
 import {
   khalaAssetsApi,
   khalaClaimerAddress,
   useClaimStatus,
   useKhalaAssetsQuery,
 } from '@/hooks/khalaAssets'
+import {useSharePrice} from '@/hooks/staking'
+import {useAutoSwitchChain} from '@/hooks/useAutoSwitchChain'
 import {walletDialogOpenAtom} from '@/store/ui'
 import {CheckCircleOutline, ContentCopy} from '@mui/icons-material'
 import {LoadingButton} from '@mui/lab'
@@ -14,8 +18,10 @@ import {
   Divider,
   Link,
   Paper,
-  Skeleton,
   Stack,
+  Step,
+  StepLabel,
+  Stepper,
   TextField,
   Typography,
 } from '@mui/material'
@@ -32,12 +38,23 @@ import NextLink from 'next/link'
 import {useSnackbar} from 'notistack'
 import {useEffect, useMemo, useState} from 'react'
 import type {Hex} from 'viem'
-import {mainnet, sepolia} from 'viem/chains'
 import {useAccount, useWaitForTransactionReceipt, useWriteContract} from 'wagmi'
-import Property from './Property'
-import SwitchChainButton from './SwitchChainButton'
 
-const targetChain = process.env.VERCEL_ENV === 'production' ? mainnet : sepolia
+const Steps = () => {
+  return (
+    <Stepper alternativeLabel>
+      <Step active>
+        <StepLabel>Sign with Khala account</StepLabel>
+      </Step>
+      <Step active>
+        <StepLabel>Connect Ethereum wallet</StepLabel>
+      </Step>
+      <Step active>
+        <StepLabel>Claim PHA on Ethereum</StepLabel>
+      </Step>
+    </Stepper>
+  )
+}
 
 export const CheckKhalaAssets = ({
   onCheck,
@@ -57,10 +74,9 @@ export const CheckKhalaAssets = ({
   }
   return (
     <>
-      <Stack
+      <Box
         component="form"
         display="flex"
-        maxWidth={600}
         width="100%"
         alignItems="center"
         gap={2}
@@ -75,10 +91,10 @@ export const CheckKhalaAssets = ({
             setCheckAddressInput(e.target.value)
           }}
         />
-        <Button type="submit" sx={{width: 120}}>
+        <Button type="submit" sx={{width: 120, height: 40}}>
           Check
         </Button>
-      </Stack>
+      </Box>
     </>
   )
 }
@@ -86,12 +102,12 @@ export const CheckKhalaAssets = ({
 const ClaimKhalaAssets = () => {
   const {enqueueSnackbar} = useSnackbar()
   const setWalletDialogOpen = useSetAtom(walletDialogOpenAtom)
-  const [loading, setLoading] = useState(false)
+  const [isSigning, setIsSigning] = useState(false)
   const [checkAddress, setCheckAddress] = useState<string | undefined>(
     undefined,
   )
-  const [selected, setSelected] = useState(false)
-  const [accepted, setAccepted] = useState(false)
+  useAutoSwitchChain()
+  const sharePrice = useSharePrice()
   const {address: ethAddress, chain: ethChain} = useAccount()
   const [polkadotAccount] = useAtom(polkadotAccountAtom)
   const address = checkAddress ?? polkadotAccount?.address
@@ -104,50 +120,35 @@ const ClaimKhalaAssets = () => {
     const h160 = u8aToHex(publicKey).slice(0, 42) as Hex
     return h160
   }, [address])
-  const {claimed, logs} = useClaimStatus(h160Address)
+  const {claimed, log, refetch} = useClaimStatus(h160Address)
   const tx = useMemo(() => {
-    if (
-      ethChain?.blockExplorers?.default == null ||
-      logs?.[0]?.transactionHash == null
-    ) {
+    if (ethChain?.blockExplorers?.default == null || log == null) {
       return undefined
     }
 
-    const txHash = logs[0].transactionHash
+    const txHash = log.transactionHash
     return {
-      url: `https://${ethChain.blockExplorers.default.url}/tx/${txHash}`,
+      url: `${ethChain.blockExplorers.default.url}/tx/${txHash}`,
       hash: txHash,
       trimmedHash: trimAddress(txHash, 6, 6),
     }
-  }, [ethChain, logs])
-  const total = useMemo(() => {
-    return data && Decimal.add(data.free, data.staked)
-  }, [data])
+  }, [ethChain, log])
 
-  const {data: hash, writeContract} = useWriteContract()
-  const {
-    isLoading: isConfirming,
-    isSuccess: isConfirmed,
-    isError,
-  } = useWaitForTransactionReceipt({hash})
+  const {data: hash, writeContract, isPending, reset} = useWriteContract()
+  const claimResult = useWaitForTransactionReceipt({hash})
+
+  const isLoading = isPending || claimResult.isLoading || isSigning
 
   useEffect(() => {
-    if (isConfirmed) {
-      setLoading(false)
+    if (claimResult.data?.status === 'success') {
       enqueueSnackbar('Claimed successfully', {variant: 'success'})
+      reset()
+      refetch()
     }
-  }, [isConfirmed, enqueueSnackbar])
-
-  useEffect(() => {
-    if (isError) {
-      setLoading(false)
-      enqueueSnackbar('Failed to claim', {variant: 'error'})
-    }
-  }, [isError, enqueueSnackbar])
+  }, [claimResult.data?.status, enqueueSnackbar, reset, refetch])
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-
     if (!ethAddress) {
       return
     }
@@ -156,9 +157,9 @@ const ClaimKhalaAssets = () => {
     if (signRaw == null || polkadotAccount == null || h160Address == null) {
       return
     }
-    setLoading(true)
     let polkadotSignature: Hex
     try {
+      setIsSigning(true)
       const {signature} = await signRaw({
         address: polkadotAccount.address,
         data: stringToHex(`Khala Asset Receiver: ${receiver}`),
@@ -166,7 +167,7 @@ const ClaimKhalaAssets = () => {
       })
       polkadotSignature = signature
     } catch (e) {
-      setLoading(false)
+      setIsSigning(false)
       return
     }
 
@@ -187,8 +188,9 @@ const ClaimKhalaAssets = () => {
         args: [h160, BigInt(free), BigInt(staked), receiver, signature],
       })
     } catch (e) {
-      setLoading(false)
       return enqueueSnackbar('Failed to claim', {variant: 'error'})
+    } finally {
+      setIsSigning(false)
     }
   }
 
@@ -200,12 +202,30 @@ const ClaimKhalaAssets = () => {
     }
   }
 
+  const rewards = useMemo(() => {
+    if (sharePrice == null || data?.staked == null) {
+      return
+    }
+    return new Decimal(sharePrice.toString())
+      .div(1e18)
+      .minus(1)
+      .mul(data.staked)
+  }, [sharePrice, data?.staked])
+
+  const total = useMemo(() => {
+    if (data == null || rewards == null) {
+      return
+    }
+    return Decimal.add(data.free, data.staked).add(rewards)
+  }, [data, rewards])
+
   if (address == null) {
     return (
       <Box>
-        <Stack alignItems="center" gap={2} py={6}>
+        <Stack alignItems="center" gap={2} pt={6} pb={8}>
           <Typography variant="body1">Connect wallet to claim</Typography>
           <Button
+            variant="contained"
             onClick={() => {
               setWalletDialogOpen(true)
             }}
@@ -216,7 +236,7 @@ const ClaimKhalaAssets = () => {
 
         <Divider flexItem />
 
-        <Stack alignItems="center" py={4} gap={2}>
+        <Stack alignItems="center" pt={4} pb={2} gap={2}>
           <Typography variant="body1">Check your Khala account</Typography>
           <CheckKhalaAssets onCheck={setCheckAddress} />
         </Stack>
@@ -226,34 +246,30 @@ const ClaimKhalaAssets = () => {
 
   return (
     <>
-      <Stack alignItems="center" gap={1}>
-        <Typography variant="h6">Total PHA Claimable</Typography>
-        {total == null ? (
-          <Skeleton width={150} height={36} />
-        ) : (
-          <Typography variant="num1">{toCurrency(total)}</Typography>
-        )}
-      </Stack>
+      <Property
+        label="Total PHA Claimable"
+        size="large"
+        center
+        fullWidth
+        wrapDecimal
+      >
+        {total == null ? '-' : toCurrency(total)}
+      </Property>
       <Paper sx={{p: 2, bgcolor: 'transparent', mt: 2}}>
         <Stack gap={1}>
-          <Property label="Free" size="small" fullWidth>
-            {data ? (
-              toCurrency(data.free)
-            ) : (
-              <Skeleton width={100} height={24} />
-            )}
+          <Property label="Free" size="small" fullWidth wrapDecimal>
+            {data ? toCurrency(data.free) : '-'}
           </Property>
-          <Property label="Staked" size="small" fullWidth>
-            {data ? (
-              toCurrency(data.staked)
-            ) : (
-              <Skeleton width={100} height={24} />
-            )}
+          <Property label="Staked" size="small" fullWidth wrapDecimal>
+            {data ? toCurrency(data.staked) : '-'}
+          </Property>
+          <Property label="Staking Rewards" size="small" fullWidth wrapDecimal>
+            {rewards ? toCurrency(rewards) : '-'}
           </Property>
         </Stack>
       </Paper>
 
-      <Box display="flex" alignItems="center" gap={2} height={52} px={2} my={2}>
+      <Box display="flex" alignItems="center" gap={2} height={52} px={2} my={3}>
         <Identicon value={address} theme="polkadot" size={30} />
         <Stack>
           <Typography
@@ -306,26 +322,30 @@ const ClaimKhalaAssets = () => {
                   sx={{width: 48, height: 48}}
                   color="success"
                 />
-                <Typography variant="h5" mt={4}>
-                  Claimed successfully
+                <Typography variant="h5" mt={3}>
+                  Claimed Successfully
+                </Typography>
+                <Typography variant="body2" mt={1} color="text.secondary">
+                  Staked PHA and rewards are available on the staking page
                 </Typography>
                 <Typography variant="body2" mt={1}>
-                  Staked PHA can be found on{' '}
-                  <Link href="/staking" component={NextLink}>
-                    staking page
+                  Tx:{' '}
+                  <Link href={tx ? tx.url : ''} target="_blank">
+                    {tx ? tx.trimmedHash : ''}
                   </Link>
                 </Typography>
-                {tx != null && (
-                  <Typography variant="body2" mt={1}>
-                    Claim tx:{' '}
-                    <Link href={tx.url} target="_blank">
-                      {tx.trimmedHash}
-                    </Link>
-                  </Typography>
-                )}
+                <Button
+                  variant="contained"
+                  sx={{mt: 3}}
+                  LinkComponent={NextLink}
+                  href="/staking"
+                >
+                  Go to Staking
+                </Button>
               </Stack>
             ) : (
               <>
+                <Steps />
                 <Box
                   display="flex"
                   alignItems="center"
@@ -338,10 +358,11 @@ const ClaimKhalaAssets = () => {
                 <Box component="form" onSubmit={handleSubmit}>
                   <SwitchChainButton>
                     <LoadingButton
+                      variant="contained"
                       disabled={!ethAddress}
                       fullWidth
                       type="submit"
-                      loading={loading}
+                      loading={isLoading}
                     >
                       Claim
                     </LoadingButton>
