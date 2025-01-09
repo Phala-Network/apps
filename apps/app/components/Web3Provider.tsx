@@ -1,5 +1,7 @@
+import {ethChain} from '@/config'
 import {ConnectKitProvider, getDefaultConfig} from 'connectkit'
 import type {ReactNode} from 'react'
+import type {Chain} from 'viem'
 import {
   WagmiProvider,
   cookieStorage,
@@ -7,9 +9,8 @@ import {
   createConfig,
   createStorage,
 } from 'wagmi'
-import {type Chain, sepolia} from 'wagmi/chains'
 
-const chains: [Chain, ...Chain[]] = [sepolia]
+const chains: [Chain, ...Chain[]] = [ethChain]
 
 const config = createConfig(
   getDefaultConfig({
