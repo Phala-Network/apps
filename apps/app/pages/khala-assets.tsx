@@ -19,7 +19,7 @@ const Page = ({
         <Paper sx={{background: 'transparent', p: 3, width: '100%'}}>
           <Stack gap={1}>
             <Typography variant="h5">FAQ</Typography>
-            <Typography variant="body1">
+            <Typography variant="subtitle1" fontWeight={500}>
               How to claim with multisig account?
             </Typography>
             <Typography variant="body2" color="text.secondary">
@@ -27,14 +27,14 @@ const Page = ({
               please contact us on Discord, and we will assist you manually with
               the claim.
             </Typography>
-            <Typography variant="body1" sx={{mt: 2}}>
+            <Typography variant="subtitle1" fontWeight={500} sx={{mt: 2}}>
               How to claim with Ledger or other hardware wallets?
             </Typography>
             <Typography variant="body2" color="text.secondary">
               We are currently testing the Ledger hardware wallet, you can claim
               it anytime once it's ready.
             </Typography>
-            <Typography variant="body1" sx={{mt: 2}}>
+            <Typography variant="subtitle1" fontWeight={500} sx={{mt: 2}}>
               I can't connect my Khala wallet and Ethereum wallet at the same
               time.
             </Typography>
