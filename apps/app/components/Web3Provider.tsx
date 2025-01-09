@@ -7,21 +7,9 @@ import {
   createConfig,
   createStorage,
 } from 'wagmi'
-import {type Chain, anvil, mainnet, sepolia} from 'wagmi/chains'
+import {type Chain, sepolia} from 'wagmi/chains'
 
-const chains: [Chain, ...Chain[]] = [mainnet]
-
-if (
-  process.env.VERCEL_ENV === 'preview' ||
-  process.env.VERCEL_ENV === 'development' ||
-  process.env.NODE_ENV === 'development'
-) {
-  chains.push(sepolia)
-}
-
-if (process.env.NODE_ENV === 'development') {
-  chains.push(anvil)
-}
+const chains: [Chain, ...Chain[]] = [sepolia]
 
 const config = createConfig(
   getDefaultConfig({
