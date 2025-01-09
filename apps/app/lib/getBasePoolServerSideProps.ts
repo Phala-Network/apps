@@ -13,8 +13,8 @@ export interface BasePoolServerSideProps {
 const getBasePoolServerSideProps =
   (kind: BasePoolKind): GetServerSideProps<BasePoolServerSideProps> =>
   async (ctx) => {
-    const {pid, chain} = ctx.params ?? {}
-    if (typeof pid !== 'string' || (chain !== 'khala' && chain !== 'phala')) {
+    const {pid} = ctx.params ?? {}
+    if (typeof pid !== 'string') {
       throw new Error('Invalid params')
     }
     const subsquidSdk = getSdk(subsquidClient)
