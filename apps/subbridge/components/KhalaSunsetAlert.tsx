@@ -1,5 +1,5 @@
 import {khalaSunsetAlertOpenAtom} from '@/store/common'
-import {Alert, type AlertProps, Link} from '@mui/material'
+import {Alert, type AlertProps, AlertTitle, Link} from '@mui/material'
 import {useAtom} from 'jotai'
 import type {FC} from 'react'
 
@@ -9,7 +9,7 @@ const KhalaSunsetAlert: FC<AlertProps> = ({sx, ...props}) => {
 
   return (
     <Alert
-      icon={false}
+      // icon={false}
       severity="info"
       // biome-ignore lint/suspicious/noExplicitAny: <explanation>
       sx={[{border: 'none'}, ...(Array.isArray(sx) ? (sx as any) : [sx])]}
@@ -18,7 +18,10 @@ const KhalaSunsetAlert: FC<AlertProps> = ({sx, ...props}) => {
       }}
       {...props}
     >
-      Khala Network has officially closed.{' '}
+      <AlertTitle>Khala Sunset Notice</AlertTitle>
+      Due to the upcoming sunset of Khala, scheduled for January 10th at 22:00
+      UTC, we have disabled all Khala-related cross-chain transfer functions to
+      prevent unnecessary transaction errors. We appreciate your understanding.{' '}
       <Link
         href="https://x.com/PhalaNetwork/status/1876686031736414684"
         target="_blank"
