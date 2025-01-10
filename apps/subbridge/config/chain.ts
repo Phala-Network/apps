@@ -1,35 +1,13 @@
 import acalaIcon from '@phala/ui/icons/chain/acala.png'
 import astarIcon from '@phala/ui/icons/chain/astar.png'
 import baseIcon from '@phala/ui/icons/chain/base.png'
-import basiliskIcon from '@phala/ui/icons/chain/basilisk.png'
-import bifrostIcon from '@phala/ui/icons/chain/bifrost.png'
-import calamariIcon from '@phala/ui/icons/chain/calamari.png'
 import ethereumIcon from '@phala/ui/icons/chain/ethereum.png'
-import karuraIcon from '@phala/ui/icons/chain/karura.png'
 import moonbeamIcon from '@phala/ui/icons/chain/moonbeam.png'
-import moonriverIcon from '@phala/ui/icons/chain/moonriver.png'
 import phalaIcon from '@phala/ui/icons/chain/phala.png'
-import shidenIcon from '@phala/ui/icons/chain/shiden.png'
-import turingIcon from '@phala/ui/icons/chain/turing.png'
 import type {AssetId} from './asset'
 
-export type EvmChainId =
-  | 'ethereum'
-  | 'moonbeam'
-  | 'moonriver'
-  | 'goerli'
-  | 'base'
-export type SubstrateChainId =
-  | 'phala'
-  | 'acala'
-  | 'karura'
-  | 'rhala'
-  | 'bifrost-kusama'
-  | 'basilisk'
-  | 'turing'
-  | 'calamari'
-  | 'shiden'
-  | 'astar'
+export type EvmChainId = 'ethereum' | 'moonbeam' | 'goerli' | 'base'
+export type SubstrateChainId = 'phala' | 'acala' | 'rhala' | 'astar'
 export type ChainId = EvmChainId | SubstrateChainId
 export type ChainKind = 'evm' | 'substrate'
 
@@ -107,27 +85,6 @@ export const CHAINS: Readonly<
     relayChain: 'polkadot',
     balanceSource: 'tokensPallet',
   },
-  karura: {
-    id: 'karura',
-    name: 'Karura',
-    icon: karuraIcon,
-    kind: 'substrate',
-    endpoint: [
-      'wss://karura-rpc-0.aca-api.network',
-      'wss://karura-rpc-1.aca-api.network',
-      'wss://karura-rpc-2.aca-api.network',
-      'wss://karura-rpc-3.aca-api.network',
-      'wss://karura.polkawallet.io',
-      'wss://karura.api.onfinality.io/public-ws',
-      'wss://karura-rpc.dwellir.com',
-    ],
-    ss58Format: 8,
-    paraId: 2000,
-    nativeAsset: 'kar',
-    explorerURL: 'https://karura.subscan.io/',
-    relayChain: 'kusama',
-    balanceSource: 'tokensPallet',
-  },
   ethereum: {
     id: 'ethereum',
     name: 'Ethereum',
@@ -186,106 +143,6 @@ export const CHAINS: Readonly<
     nativeAsset: 'glmr',
     xTokensContractAddress: '0x0000000000000000000000000000000000000804',
     explorerURL: 'https://moonbeam.moonscan.io/',
-  },
-  moonriver: {
-    id: 'moonriver',
-    name: 'Moonriver',
-    icon: moonriverIcon,
-    kind: 'evm',
-    evmChainId: 1285,
-    currencySymbol: 'MOVR',
-    paraId: 2023,
-    nativeAsset: 'movr',
-    xTokensContractAddress: '0x0000000000000000000000000000000000000804',
-    generalIndex: 2,
-    explorerURL: 'https://moonriver.moonscan.io/',
-  },
-  'bifrost-kusama': {
-    id: 'bifrost-kusama',
-    name: 'Bifrost Kusama',
-    icon: bifrostIcon,
-    kind: 'substrate',
-    endpoint: [
-      'wss://bifrost-rpc.liebi.com/ws',
-      'wss://us.bifrost-rpc.liebi.com/ws',
-      'wss://eu.bifrost-rpc.liebi.com/ws',
-      'wss://bifrost-parachain.api.onfinality.io/public-ws',
-      'wss://bifrost-rpc.dwellir.com',
-    ],
-    ss58Format: 6,
-    paraId: 2001,
-    nativeAsset: 'bnc',
-    explorerURL: 'https://bifrost-kusama.subscan.io',
-    relayChain: 'kusama',
-    balanceSource: 'tokensPallet',
-  },
-  basilisk: {
-    id: 'basilisk',
-    name: 'Basilisk',
-    icon: basiliskIcon,
-    kind: 'substrate',
-    paraId: 2090,
-    endpoint: [
-      'wss://rpc-01.basilisk.hydradx.io',
-      'wss://basilisk.api.onfinality.io/public-ws',
-      'wss://basilisk-rpc.dwellir.com',
-    ],
-    ss58Format: 10041,
-    nativeAsset: 'bsx',
-    explorerURL: 'https://basilisk.subscan.io/',
-    relayChain: 'kusama',
-    balanceSource: 'tokensPallet',
-  },
-  turing: {
-    id: 'turing',
-    name: 'Turing',
-    icon: turingIcon,
-    kind: 'substrate',
-    paraId: 2114,
-    endpoint: [
-      'wss://rpc.turing.oak.tech',
-      'wss://turing.api.onfinality.io/public-ws',
-      'wss://turing-rpc.dwellir.com',
-    ],
-    ss58Format: 51,
-    nativeAsset: 'tur',
-    explorerURL: 'https://turing.subscan.io/',
-    relayChain: 'kusama',
-    balanceSource: 'tokensPallet',
-  },
-  calamari: {
-    id: 'calamari',
-    name: 'Calamari',
-    icon: calamariIcon,
-    kind: 'substrate',
-    paraId: 2084,
-    endpoint: [
-      'wss://ws.calamari.systems/',
-      'wss://calamari.api.onfinality.io/public-ws',
-    ],
-    ss58Format: 78,
-    nativeAsset: 'kma',
-    explorerURL: 'https://calamari.subscan.io/',
-    relayChain: 'kusama',
-    balanceSource: 'assetsPallet',
-  },
-  shiden: {
-    id: 'shiden',
-    name: 'Shiden',
-    icon: shidenIcon,
-    kind: 'substrate',
-    paraId: 2007,
-    endpoint: [
-      'wss://rpc.shiden.astar.network',
-      'wss://shiden.public.blastapi.io',
-      'wss://shiden-rpc.dwellir.com',
-      'wss://shiden.api.onfinality.io/public-ws',
-    ],
-    ss58Format: 5,
-    nativeAsset: 'sdn',
-    explorerURL: 'https://shiden.subscan.io/',
-    relayChain: 'kusama',
-    balanceSource: 'assetsPallet',
   },
   astar: {
     id: 'astar',

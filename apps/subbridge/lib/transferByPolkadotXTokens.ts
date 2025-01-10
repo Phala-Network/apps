@@ -29,14 +29,11 @@ export const transferByPolkadotXTokens = ({
   const fromChain = CHAINS[fromChainId] as SubstrateChain
   const toChain = CHAINS[toChainId]
   const isNativeAsset = fromChain.nativeAsset === assetId
-  const location =
-    fromChainId === 'bifrost-kusama'
-      ? asset.location?.bifrost
-      : isNativeAsset
-        ? nativeLocation
-        : asset.location?.[fromChain.relayChain]
+  const location = isNativeAsset
+    ? nativeLocation
+    : asset.location?.[fromChain.relayChain]
   const generalIndex = toChain.kind === 'evm' ? toChain.generalIndex : null
-  const xcmVersion = fromChainId === 'calamari' ? 'V1' : 'V3'
+  const xcmVersion = 'V3'
   if (location == null || (proxy != null && typeof generalIndex !== 'number')) {
     throw new Error('Transfer missing required parameters')
   }
@@ -69,7 +66,6 @@ export const transferByPolkadotXTokens = ({
                   {
                     AccountId32: {
                       id: u8aToHex(decodeAddress(destinationAccount)),
-                      network: xcmVersion === 'V1' ? 'Any' : undefined,
                     },
                   },
                 ],

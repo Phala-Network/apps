@@ -204,6 +204,9 @@ const BridgeHistory: FC<BoxProps> = (props) => {
           {data.map((transfer) => {
             const txHash = transfer.deposit?.txHash
             const fromChain = CHAINS[transfer.fromDomain.name]
+            if (fromChain == null) {
+              return null
+            }
             const toDomainName = transfer.toDomain?.name
             const toChain = toDomainName ? CHAINS[toDomainName] : null
             const explorerURL = fromChain.explorerURL
