@@ -65,7 +65,7 @@ export const useValidation = (): void => {
       }
 
       if (
-        (fromChain.id === 'astar' || fromChain.id === 'shiden') &&
+        fromChain.id === 'astar' &&
         asset.id === 'pha' &&
         amount.length > 0 &&
         balance.eq(amount)
