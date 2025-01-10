@@ -10,10 +10,10 @@ import {
   Box,
   Button,
   type ButtonProps,
+  Chip,
   Collapse,
   Divider,
   IconButton,
-  Link,
   NoSsr,
   Stack,
   Toolbar,
@@ -236,9 +236,15 @@ const TopBar: FC = () => {
           </Stack>
 
           <Stack direction="row" ml="auto" spacing={2} alignItems="center">
-            <Link href="/khala-assets" component={NextLink}>
-              Claim Khala Assets
-            </Link>
+            <Chip
+              variant="outlined"
+              color="primary"
+              size="small"
+              href="/khala-assets"
+              component={NextLink}
+              label="Claim Khala Assets"
+              onClick={() => {}}
+            />
             {isPolkadot && <Account />}
             <IconButton
               sx={{display: {sx: 'inline-flex', md: 'none'}}}

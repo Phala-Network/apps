@@ -153,7 +153,7 @@ const Unstake = () => {
   return (
     <Box p={3}>
       <Box display="flex" justifyContent="space-between" alignItems="center">
-        <Typography variant="h6">Unlock Requests</Typography>
+        <Typography variant="h6">Unstake Requests</Typography>
         {maxUnlockRequests != null && unlockRequests != null && (
           <Chip
             variant="outlined"
@@ -163,7 +163,7 @@ const Unstake = () => {
       </Box>
       <Box display="flex" gap={2} mt={2}>
         <Paper sx={{background: 'transparent', p: 2, flex: 1}}>
-          <Property label="Total Unlocking" center wrapDecimal>
+          <Property label="Total Unstaking" center wrapDecimal>
             {totalUnlocking == null
               ? '-'
               : toCurrency(formatUnits(totalUnlocking, 18))}
@@ -184,8 +184,8 @@ const Unstake = () => {
         <Table size="small">
           <TableHead>
             <TableRow>
-              <TableCell>Amount</TableCell>
               <TableCell>Countdown</TableCell>
+              <TableCell>Amount</TableCell>
               <TableCell width={100} />
             </TableRow>
           </TableHead>
@@ -197,27 +197,27 @@ const Unstake = () => {
                 sx={{'&:last-child td, &:last-child th': {border: 0}}}
               >
                 <TableCell component="th" scope="row">
-                  <Typography variant="num6">
-                    <WrapDecimal>
-                      {toCurrency(formatUnits(row.amount, 18))}
-                    </WrapDecimal>
-                  </Typography>
-                </TableCell>
-                <TableCell component="th" scope="row">
                   <Tooltip
                     title={new Date(row.unlockTime).toLocaleString()}
-                    placement="top-start"
+                    placement="right"
                   >
                     <Box>
                       {row.countdown == null ? (
                         <Typography variant="body2" color="text.secondary">
-                          Unlocked
+                          Ended
                         </Typography>
                       ) : (
                         row.countdown
                       )}
                     </Box>
                   </Tooltip>
+                </TableCell>
+                <TableCell component="th" scope="row" align="right">
+                  <Typography variant="num6">
+                    <WrapDecimal>
+                      {toCurrency(formatUnits(row.amount, 18))}
+                    </WrapDecimal>
+                  </Typography>
                 </TableCell>
                 <TableCell component="th" scope="row">
                   <LoadingButton
@@ -245,7 +245,7 @@ const Unstake = () => {
             height={200}
             color="text.secondary"
           >
-            <Typography variant="body2">No unlock request</Typography>
+            <Typography variant="body2">No unstake request</Typography>
           </Box>
         )}
       </TableContainer>
@@ -259,7 +259,7 @@ const Unstake = () => {
         onClick={claim}
         sx={{mt: 2}}
       >
-        Claim Unlocked
+        Claim Unstaked
       </LoadingButton>
     </Box>
   )

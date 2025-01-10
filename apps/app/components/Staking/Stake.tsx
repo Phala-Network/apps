@@ -307,6 +307,7 @@ const Stake = () => {
                     <OpenInNew sx={{width: 14, height: 14}} />
                   </Box>
                 }
+                onClick={() => {}}
                 component="a"
                 variant="outlined"
                 href={`${chain?.blockExplorers?.default.url}/address/${phaContract}`}
@@ -415,21 +416,25 @@ const Stake = () => {
               <Property
                 size="small"
                 fullWidth
-                label="Daily Rewards"
+                label="Estimated Daily Rewards"
                 wrapDecimal
               >
                 {dailyRewards != null ? toCurrency(dailyRewards) : '-'}
               </Property>
             )}
-            <Property size="small" fullWidth label="Shares" wrapDecimal>
+            {/* <Property size="small" fullWidth label="Shares" wrapDecimal>
               {shares != null ? toCurrency(formatUnits(shares, 18)) : '-'}
-            </Property>
-            <Property size="small" fullWidth label="Unlock Period">
-              {unlockPeriod != null
-                ? formatDuration(
+            </Property> */}
+            <Property size="small" fullWidth label="Unstake Period">
+              {unlockPeriod != null ? (
+                <Box component="span" sx={{textDecoration: 'underline dotted'}}>
+                  {formatDuration(
                     intervalToDuration({start: 0, end: unlockPeriod}),
-                  )
-                : '-'}
+                  )}
+                </Box>
+              ) : (
+                '-'
+              )}
             </Property>
           </Stack>
         </Paper>
