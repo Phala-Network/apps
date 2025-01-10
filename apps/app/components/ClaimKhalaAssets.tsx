@@ -1,9 +1,9 @@
 import khalaClaimerAbi from '@/assets/khala_claimer_abi'
 import Property from '@/components/Property'
 import SwitchChainButton from '@/components/SwitchChainButton'
+import {KHALA_CLAIMER_CONTRACT_ADDRESS} from '@/config'
 import {
   khalaAssetsApi,
-  khalaClaimerAddress,
   useClaimStatus,
   useKhalaAssetsQuery,
 } from '@/hooks/khalaAssets'
@@ -183,7 +183,7 @@ const ClaimKhalaAssets = () => {
 
       writeContract({
         abi: khalaClaimerAbi,
-        address: khalaClaimerAddress,
+        address: KHALA_CLAIMER_CONTRACT_ADDRESS,
         functionName: 'claim',
         args: [h160, BigInt(free), BigInt(staked), receiver, signature],
       })

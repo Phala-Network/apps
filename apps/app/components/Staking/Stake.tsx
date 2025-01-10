@@ -1,8 +1,8 @@
 import vaultAbi from '@/assets/pha_vault_abi'
 import Property from '@/components/Property'
 import SwitchChainButton from '@/components/SwitchChainButton'
+import {PHA_CONTRACT_ADDRESS, VAULT_CONTRACT_ADDRESS} from '@/config'
 import {
-  phaContract,
   useAllowance,
   useAssetsToShares,
   useBalance,
@@ -13,7 +13,6 @@ import {
   useTotalAssets,
   useUnlockPeriod,
   useUnlockRequests,
-  vaultContract,
 } from '@/hooks/staking'
 import {barlow} from '@/lib/theme'
 import {OpenInNew, Unarchive} from '@mui/icons-material'
@@ -141,10 +140,10 @@ const Stake = () => {
   const approve = async () => {
     if (amount != null) {
       executeApprove({
-        address: phaContract,
+        address: PHA_CONTRACT_ADDRESS,
         abi: erc20Abi,
         functionName: 'approve',
-        args: [vaultContract, amount],
+        args: [VAULT_CONTRACT_ADDRESS, amount],
       })
     }
   }
@@ -152,7 +151,7 @@ const Stake = () => {
   const deposit = useCallback(async () => {
     if (amount != null && address != null) {
       executeDeposit({
-        address: vaultContract,
+        address: VAULT_CONTRACT_ADDRESS,
         abi: vaultAbi,
         functionName: 'deposit',
         args: [amount, address],
@@ -211,7 +210,7 @@ const Stake = () => {
   const unstake = async () => {
     if (amount != null && address != null) {
       executeWithdraw({
-        address: vaultContract,
+        address: VAULT_CONTRACT_ADDRESS,
         abi: vaultAbi,
         functionName: 'withdraw',
         args: [amount, address, address],
@@ -303,14 +302,14 @@ const Stake = () => {
                 size="small"
                 label={
                   <Box display="flex" alignItems="center" gap={0.5}>
-                    {trimAddress(phaContract)}
+                    {trimAddress(PHA_CONTRACT_ADDRESS)}
                     <OpenInNew sx={{width: 14, height: 14}} />
                   </Box>
                 }
                 onClick={() => {}}
                 component="a"
                 variant="outlined"
-                href={`${chain?.blockExplorers?.default.url}/address/${phaContract}`}
+                href={`${chain?.blockExplorers?.default.url}/address/${PHA_CONTRACT_ADDRESS}`}
                 target="_blank"
               />
             </Stack>
