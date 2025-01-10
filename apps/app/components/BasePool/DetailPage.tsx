@@ -5,6 +5,7 @@ import NftCard from '@/components/Delegation/NftCard'
 import DelegatorSelect from '@/components/DelegatorSelect'
 import PageHeader from '@/components/PageHeader'
 import Property from '@/components/Property'
+import {subsquidClient} from '@/config'
 import useGetApr from '@/hooks/useGetApr'
 import usePolkadotApi from '@/hooks/usePolkadotApi'
 import useSelectedVaultState from '@/hooks/useSelectedVaultState'
@@ -15,7 +16,6 @@ import {
   useDelegationByIdQuery,
 } from '@/lib/subsquidQuery'
 import {colors} from '@/lib/theme'
-import {subsquidClientAtom} from '@/store/common'
 import Settings from '@mui/icons-material/Settings'
 import {TabContext, TabList, TabPanel} from '@mui/lab'
 import {
@@ -82,7 +82,6 @@ const DetailPage: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
     </>
   )
   const apr = getApr(basePool.aprMultiplier)
-  const [subsquidClient] = useAtom(subsquidClientAtom)
   const {data: delegation, isLoading: isDelegationLoading} =
     useDelegationByIdQuery(
       subsquidClient,

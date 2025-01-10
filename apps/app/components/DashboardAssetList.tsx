@@ -6,7 +6,6 @@ import useAssetsMetadata, {
   type AssetMetadata,
 } from '@/hooks/useAssetsMetadata'
 import useWrapAsset from '@/hooks/useWrapAsset'
-import {chainAtom} from '@/store/common'
 import {hideSmallBalanceAtom, walletDialogOpenAtom} from '@/store/ui'
 import {
   Box,
@@ -51,8 +50,8 @@ const BuyConfirmation: FC<{onClose: () => void}> = ({onClose}) => {
         <br />
         <DialogContentText>
           Please note that tokens you purchase on Binance will not be
-          automatically transferred to the Phala/Khala network. Pay attention to
-          the security of your funds.
+          automatically transferred to the Phala network. Pay attention to the
+          security of your funds.
         </DialogContentText>
       </DialogContent>
       <DialogActions>
@@ -215,7 +214,6 @@ const Assets: FC<{
 }
 
 const DashboardAssetList: FC = () => {
-  const [chain] = useAtom(chainAtom)
   const assetsMetadata = useAssetsMetadata()
   const [polkadotAccount] = useAtom(polkadotAccountAtom)
   const [hideSmallBalance, setHideSmallBalance] = useAtom(hideSmallBalanceAtom)
@@ -246,13 +244,13 @@ const DashboardAssetList: FC = () => {
               setWalletDialogOpen(true)
             }}
           >
-            Connect Wallet
+            Connect wallet
           </Button>
         </Stack>
       ) : (
         <Paper sx={{background: 'transparent', overflow: 'hidden'}}>
           {assetsMetadata != null ? (
-            <Assets assetsMetadata={assetsMetadata} key={chain} />
+            <Assets assetsMetadata={assetsMetadata} />
           ) : (
             <Skeleton variant="rectangular" height={240} />
           )}

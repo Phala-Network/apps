@@ -1,5 +1,6 @@
 import Empty from '@/components/Empty'
 import ListSkeleton from '@/components/ListSkeleton'
+import {subsquidClient} from '@/config'
 import useDebounced from '@/hooks/useDebounced'
 import useGetAprMultiplier from '@/hooks/useGetAprMultiplier'
 import useSelectedVaultState from '@/hooks/useSelectedVaultState'
@@ -17,7 +18,6 @@ import {
   basePoolMinDelegableAtom,
   basePoolMinTvlAtom,
   favoritePoolsAtom,
-  subsquidClientAtom,
 } from '@/store/common'
 import FilterList from '@mui/icons-material/FilterList'
 import Search from '@mui/icons-material/Search'
@@ -195,7 +195,6 @@ const BasePoolList: FC<{
   const enabled =
     variant === 'delegate' ||
     (polkadotAccount?.address !== undefined && variant === 'farm')
-  const [subsquidClient] = useAtom(subsquidClientAtom)
   const {data, isLoading, fetchNextPage, hasNextPage} =
     useInfiniteBasePoolsConnectionQuery(
       subsquidClient,

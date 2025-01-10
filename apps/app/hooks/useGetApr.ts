@@ -1,18 +1,15 @@
 import {subsquidClient} from '@/config'
 import {useGlobalStateQuery} from '@/lib/subsquidQuery'
-import {type Chain, subsquidClientAtom} from '@/store/common'
 import Decimal from 'decimal.js'
-import {useAtom} from 'jotai'
 import {useCallback} from 'react'
 
 const ONE_YEAR = 365 * 24 * 60 * 60 * 1000
 
-const useGetApr = (
-  chain?: Chain,
-): ((aprMultiplier: string | Decimal) => Decimal | undefined) => {
-  const [currentSubsquidClient] = useAtom(subsquidClientAtom)
+const useGetApr = (): ((
+  aprMultiplier: string | Decimal,
+) => Decimal | undefined) => {
   const {data: globalStateData} = useGlobalStateQuery(
-    chain == null ? currentSubsquidClient : subsquidClient[chain],
+    subsquidClient,
     undefined,
     {select: (data) => data.globalStateById},
   )

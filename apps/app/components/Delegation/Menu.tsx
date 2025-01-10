@@ -1,7 +1,6 @@
 import usePolkadotApi from '@/hooks/usePolkadotApi'
 import useSignAndSend from '@/hooks/useSignAndSend'
 import type {DelegationCommonFragment} from '@/lib/subsquidQuery'
-import {chainAtom} from '@/store/common'
 import MoreVert from '@mui/icons-material/MoreVert'
 import {
   IconButton,
@@ -10,7 +9,6 @@ import {
   type SxProps,
   type Theme,
 } from '@mui/material'
-import {useAtom} from 'jotai'
 import {type FC, useRef, useState} from 'react'
 import type {OnAction} from './List'
 
@@ -22,7 +20,6 @@ const DelegationMenu: FC<{
   const api = usePolkadotApi()
   const signAndSend = useSignAndSend()
   const {basePool} = delegation
-  const [chain] = useAtom(chainAtom)
   const [menuOpen, setMenuOpen] = useState(false)
   const moreRef = useRef(null)
   const poolHasWithdrawal = delegation.basePool.withdrawingShares !== '0'
@@ -73,7 +70,7 @@ const DelegationMenu: FC<{
         </MenuItem>
         <MenuItem
           onClick={() => {
-            location.href = `/api/${chain}/snapshots/delegation/${delegation.id}`
+            location.href = `/api/phala/snapshots/delegation/${delegation.id}`
             setMenuOpen(false)
           }}
         >

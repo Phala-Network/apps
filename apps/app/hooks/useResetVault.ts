@@ -6,7 +6,7 @@ import {useEffect, useRef} from 'react'
 const useResetVault = (): void => {
   const [, setVaultId] = useAtom(vaultIdAtom)
   const [account] = useAtom(polkadotAccountAtom)
-  const prevAccountAddress = useRef<string>()
+  const prevAccountAddress = useRef<string | undefined>(undefined)
   useEffect(() => {
     if (prevAccountAddress.current != null) {
       setVaultId(null)

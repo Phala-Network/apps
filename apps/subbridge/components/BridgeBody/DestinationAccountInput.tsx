@@ -25,7 +25,7 @@ const useIsomorphicLayoutEffect =
   typeof window !== 'undefined' ? useLayoutEffect : useEffect
 
 const DestinationAccountInput: FC<BoxProps> = (props) => {
-  const inputRef = useRef<HTMLInputElement>()
+  const inputRef = useRef<HTMLInputElement>(null)
   const [manually, setManually] = useState(false)
   const [bridgeInfo] = useAtom(bridgeInfoAtom)
   const [fromChain] = useAtom(fromChainAtom)

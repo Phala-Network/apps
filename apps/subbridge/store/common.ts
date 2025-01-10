@@ -14,8 +14,8 @@ export const isWalletConnectAtom = atom<boolean>((get) =>
   Boolean(get(fromAccountAtom)),
 )
 
-export const migrationAlertOpenAtom = atomWithStorage(
-  'jotai:migration_alert_open',
+export const khalaSunsetAlertOpenAtom = atomWithStorage(
+  'jotai:khala_sunset_alert_open',
   true,
 )
 

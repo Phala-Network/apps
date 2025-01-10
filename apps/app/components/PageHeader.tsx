@@ -4,15 +4,15 @@ import Title from './Title'
 
 const PageHeader: FC<{
   title: string
-  pageTitle?: string
+  pageTitle?: ReactNode
   children?: ReactNode
 }> = ({title, pageTitle, children}) => {
   return (
     <>
       <Title>{title}</Title>
       <Stack
-        direction={{md: 'row'}}
-        alignItems={{md: 'center'}}
+        direction={{sm: 'row'}}
+        alignItems={{sm: 'center'}}
         justifyContent="space-between"
         spacing={2}
         my={2}

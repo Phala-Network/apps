@@ -11,7 +11,7 @@ export default async function handler(
   if ((chain !== 'phala' && chain !== 'khala') || typeof id !== 'string') {
     res.status(500).send('Invalid params')
   } else {
-    const sdk = getSdk(subsquidClient[chain])
+    const sdk = getSdk(subsquidClient)
     const data = await sdk.DelegationSnapshotsConnection({
       orderBy: 'updatedTime_DESC',
       first: 2000,

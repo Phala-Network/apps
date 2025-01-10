@@ -42,31 +42,21 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       {
-        source: '/',
-        destination: '/phala',
+        source: '/khala/:path*',
+        destination: '/khala-assets',
         permanent: false,
       },
       {
-        source: '/delegate',
-        destination: '/phala/delegate/vault',
-        permanent: false,
-      },
-      {
-        source: '/farm',
-        destination: '/phala/farm/stake-pool',
-        permanent: false,
-      },
-      {
-        source: '/:root(delegate|farm|vault|stake-pool)/:path*',
-        destination: '/phala/:root/:path*',
+        source: '/phala/:path*',
+        destination: '/:path*',
         permanent: false,
       },
     ]
   },
   experimental: {
     swcPlugins: [
-      // ['@swc-jotai/debug-label', {}],
-      // ['@swc-jotai/react-refresh', {}],
+      ['@swc-jotai/debug-label', {}],
+      ['@swc-jotai/react-refresh', {}],
     ],
   },
 }

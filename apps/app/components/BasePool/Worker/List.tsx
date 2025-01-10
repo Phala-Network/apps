@@ -3,6 +3,7 @@ import Empty from '@/components/Empty'
 import ListSkeleton from '@/components/ListSkeleton'
 import PromiseButton from '@/components/PromiseButton'
 import SectionHeader from '@/components/SectionHeader'
+import {subsquidClient} from '@/config'
 import useDebounced from '@/hooks/useDebounced'
 import usePolkadotApi from '@/hooks/usePolkadotApi'
 import useSignAndSend from '@/hooks/useSignAndSend'
@@ -14,7 +15,6 @@ import {
   useReclaimableWorkersConnectionQuery,
   useWorkersConnectionQuery,
 } from '@/lib/subsquidQuery'
-import {subsquidClientAtom} from '@/store/common'
 import Search from '@mui/icons-material/Search'
 import {
   Button,
@@ -81,7 +81,6 @@ const WorkerList: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
   const api = usePolkadotApi()
   const [account] = useAtom(polkadotAccountAtom)
   const signAndSend = useSignAndSend()
-  const [subsquidClient] = useAtom(subsquidClientAtom)
   const {data, isLoading} = useWorkersConnectionQuery(
     subsquidClient,
     {

@@ -151,8 +151,9 @@ const BridgeBody: FC<BoxProps> = (props) => {
 
             {(bridge.kind === 'evmSygma' ||
               bridge.kind === 'phalaSygma' ||
-              ((bridge.proxy === 'phala' || bridge.proxy === 'khala') &&
-                toChain.id === 'ethereum')) && <PoweredBySygma sx={{mb: 3}} />}
+              (bridge.proxy === 'phala' && toChain.id === 'ethereum')) && (
+              <PoweredBySygma sx={{mb: 3}} />
+            )}
 
             <Action />
           </Box>

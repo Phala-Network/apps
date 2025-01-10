@@ -1,10 +1,9 @@
+import {subsquidClient} from '@/config'
 import useToday from '@/hooks/useToday'
 import {useAccountSnapshotsConnectionQuery} from '@/lib/subsquidQuery'
-import {subsquidClientAtom} from '@/store/common'
 import {compactFormat} from '@phala/lib'
 import {addDays} from 'date-fns'
 import Decimal from 'decimal.js'
-import {useAtom} from 'jotai'
 import {type FC, useMemo} from 'react'
 import {
   Area,
@@ -19,7 +18,6 @@ import RechartsTooltip from './RechartsTooltip'
 const days = 30
 
 const DelegationValueChart: FC<{address?: string}> = ({address}) => {
-  const [subsquidClient] = useAtom(subsquidClientAtom)
   const today = useToday()
   const startTime = useMemo(() => addDays(today, -days).toISOString(), [today])
   const {data} = useAccountSnapshotsConnectionQuery(

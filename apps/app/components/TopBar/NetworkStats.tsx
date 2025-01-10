@@ -1,30 +1,16 @@
 import type {WikiEntry} from '@/assets/wikiData'
-import {khalaSubsquidClient, phalaSubsquidClient} from '@/config'
+import {subsquidClient} from '@/config'
 import useToday from '@/hooks/useToday'
 import {
   useGlobalStateQuery,
   useGlobalStateSnapshotsConnectionQuery,
 } from '@/lib/subsquidQuery'
-import {chainAtom} from '@/store/common'
-import {
-  Box,
-  Skeleton,
-  Stack,
-  Tooltip,
-  useMediaQuery,
-  useTheme,
-} from '@mui/material'
-import {
-  compactFormat,
-  toPercentage,
-  useInterval,
-  weightedAverage,
-} from '@phala/lib'
+import {Box, Skeleton, Stack, useMediaQuery, useTheme} from '@mui/material'
+import {compactFormat, toPercentage, useInterval} from '@phala/lib'
 import {useQuery} from '@tanstack/react-query'
 import {addDays} from 'date-fns'
 import Decimal from 'decimal.js'
 import type {GraphQLClient} from 'graphql-request'
-import {useAtom} from 'jotai'
 import {type FC, useMemo, useState} from 'react'
 import Property from '../Property'
 
@@ -61,9 +47,8 @@ const NetworkStats: FC = () => {
   const theme = useTheme()
   const match = useMediaQuery(theme.breakpoints.down('lg'))
 
-  const [chain] = useAtom(chainAtom)
   const {data: circulationValue} = useQuery({
-    queryKey: ['circulations', chain],
+    queryKey: ['circulations'],
     queryFn: async () => {
       const res = await fetch('/api/circulation')
       if (res.ok) {
@@ -77,8 +62,7 @@ const NetworkStats: FC = () => {
       }
     },
   })
-  const {data: phalaGlobalStateData} = useGlobalStateData(phalaSubsquidClient)
-  const {data: khalaGlobalStateData} = useGlobalStateData(khalaSubsquidClient)
+  const {data: phalaGlobalStateData} = useGlobalStateData(subsquidClient)
   const {
     totalValue: phalaTotalValue,
     idleWorkerShares: phalaIdleWorkerShares,
@@ -86,100 +70,24 @@ const NetworkStats: FC = () => {
     averageApr: phalaAverageApr,
     budgetPerShare: phalaBudgetPerShare,
   } = phalaGlobalStateData ?? {}
-  const {
-    totalValue: khalaTotalValue,
-    idleWorkerShares: khalaIdleWorkerShares,
-    idleWorkerCount: khalaIdleWorkerCount,
-    averageApr: khalaAverageApr,
-    budgetPerShare: khalaBudgetPerShare,
-  } = khalaGlobalStateData ?? {}
+
   const phalaTotalValueDecimal = useMemo(() => {
     if (phalaTotalValue == null) return null
     return new Decimal(phalaTotalValue)
   }, [phalaTotalValue])
-  const khalaTotalValueDecimal = useMemo(() => {
-    if (khalaTotalValue == null) return null
-    return new Decimal(khalaTotalValue)
-  }, [khalaTotalValue])
 
-  const totalBudgetPerShare = useMemo(() => {
-    if (
-      phalaBudgetPerShare == null ||
-      phalaIdleWorkerShares == null ||
-      khalaBudgetPerShare == null ||
-      khalaIdleWorkerShares == null
-    )
-      return null
-
-    return weightedAverage([
-      [new Decimal(phalaBudgetPerShare), new Decimal(phalaIdleWorkerShares)],
-      [new Decimal(khalaBudgetPerShare), new Decimal(khalaIdleWorkerShares)],
-    ])
-  }, [
-    khalaBudgetPerShare,
-    khalaIdleWorkerShares,
-    phalaBudgetPerShare,
-    phalaIdleWorkerShares,
-  ])
-  const totalValueDecimal = useMemo(() => {
-    if (phalaTotalValueDecimal == null || khalaTotalValueDecimal == null)
-      return null
-    return phalaTotalValueDecimal.add(khalaTotalValueDecimal)
-  }, [phalaTotalValueDecimal, khalaTotalValueDecimal])
   const phalaStakeRatio = useMemo(() => {
     if (phalaTotalValueDecimal == null || circulationValue == null) return null
     return toPercentage(phalaTotalValueDecimal.div(circulationValue))
   }, [circulationValue, phalaTotalValueDecimal])
-  const khalaStakeRatio = useMemo(() => {
-    if (khalaTotalValueDecimal == null || circulationValue == null) return null
-    return toPercentage(khalaTotalValueDecimal.div(circulationValue))
-  }, [circulationValue, khalaTotalValueDecimal])
-  const totalStakeRatio = useMemo(() => {
-    if (circulationValue == null || totalValueDecimal == null) return null
-    return toPercentage(totalValueDecimal.div(circulationValue))
-  }, [circulationValue, totalValueDecimal])
-  const phalaDailyRewards = useDailyRewards(phalaSubsquidClient)
-  const khalaDailyRewards = useDailyRewards(khalaSubsquidClient)
-  const totalDailyRewards = useMemo(() => {
-    if (phalaDailyRewards == null || khalaDailyRewards == null) {
-      return null
-    }
-    return phalaDailyRewards.plus(khalaDailyRewards)
-  }, [phalaDailyRewards, khalaDailyRewards])
-  const totalAvgApr = useMemo(() => {
-    if (
-      phalaTotalValueDecimal == null ||
-      khalaTotalValueDecimal == null ||
-      phalaAverageApr == null ||
-      khalaAverageApr == null
-    ) {
-      return null
-    }
-    const apr = weightedAverage([
-      [new Decimal(phalaAverageApr), phalaTotalValueDecimal],
-      [new Decimal(khalaAverageApr), khalaTotalValueDecimal],
-    ])
-    return apr
-  }, [
-    khalaAverageApr,
-    khalaTotalValueDecimal,
-    phalaAverageApr,
-    phalaTotalValueDecimal,
-  ])
-  const idleWorkerCount = useMemo(() => {
-    return typeof phalaIdleWorkerCount === 'number' &&
-      typeof khalaIdleWorkerCount === 'number'
-      ? phalaIdleWorkerCount + khalaIdleWorkerCount
-      : undefined
-  }, [khalaIdleWorkerCount, phalaIdleWorkerCount])
+
+  const phalaDailyRewards = useDailyRewards(subsquidClient)
 
   type Value = string | undefined | null
   const items = useMemo<
     Array<{
       label: string
       value: Value
-      phalaValue: Value
-      khalaValue: Value
       wikiEntry: WikiEntry
     }>
   >(() => {
@@ -192,72 +100,44 @@ const NetworkStats: FC = () => {
     return [
       {
         label: 'Total Value',
-        value: format(totalValueDecimal),
+        value: format(phalaTotalValueDecimal),
         wikiEntry: 'totalValue',
-        phalaValue: format(phalaTotalValueDecimal),
-        khalaValue: format(khalaTotalValueDecimal),
       },
       {
         label: 'Stake Ratio',
-        value: totalStakeRatio,
+        value: phalaStakeRatio,
         wikiEntry: 'stakeRatio',
-        phalaValue: `${phalaStakeRatio ?? ''}/${totalStakeRatio ?? ''}`,
-        khalaValue: `${khalaStakeRatio ?? ''}/${totalStakeRatio ?? ''}`,
       },
       {
         label: 'Daily Rewards',
-        value: format(totalDailyRewards),
+        value: format(phalaDailyRewards),
         wikiEntry: 'dailyRewards',
-        phalaValue: format(phalaDailyRewards),
-        khalaValue: format(khalaDailyRewards),
       },
       {
         label: 'Online Workers',
-        value: format(idleWorkerCount),
+        value: format(phalaIdleWorkerCount),
         wikiEntry: 'onlineWorkers',
-        phalaValue: format(phalaIdleWorkerCount),
-        khalaValue: format(khalaIdleWorkerCount),
       },
       {
         label: 'Avg APR',
-        value: toPercentage(totalAvgApr),
+        value: toPercentage(phalaAverageApr),
         wikiEntry: 'avgApr',
-        phalaValue: toPercentage(phalaAverageApr),
-        khalaValue: toPercentage(khalaAverageApr),
       },
       {
         label: 'Daily budget/share',
-        value: totalBudgetPerShare?.toDP(2).toString(),
+        value: phalaBudgetPerShare
+          ? new Decimal(phalaBudgetPerShare).toDP(2).toString()
+          : null,
         wikiEntry: 'dailyBudgetPerShare',
-        phalaValue:
-          typeof phalaBudgetPerShare === 'string'
-            ? new Decimal(phalaBudgetPerShare).toDP(2).toString()
-            : undefined,
-        khalaValue:
-          typeof khalaBudgetPerShare === 'string'
-            ? new Decimal(khalaBudgetPerShare).toDP(2).toString()
-            : undefined,
       },
     ]
   }, [
-    idleWorkerCount,
-    khalaAverageApr,
-    khalaBudgetPerShare,
-    khalaDailyRewards,
-    khalaIdleWorkerCount,
-    khalaStakeRatio,
-    khalaTotalValueDecimal,
     phalaAverageApr,
     phalaBudgetPerShare,
     phalaDailyRewards,
     phalaIdleWorkerCount,
     phalaStakeRatio,
     phalaTotalValueDecimal,
-    totalAvgApr,
-    totalBudgetPerShare,
-    totalDailyRewards,
-    totalStakeRatio,
-    totalValueDecimal,
   ])
 
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -270,7 +150,7 @@ const NetworkStats: FC = () => {
 
   return (
     <Stack direction="row" spacing={{xs: 0, lg: 3}} flex="none">
-      {items.map(({label, value, wikiEntry, phalaValue, khalaValue}, index) => {
+      {items.map(({label, value, wikiEntry}, index) => {
         return (
           <Property
             key={label}
@@ -281,36 +161,23 @@ const NetworkStats: FC = () => {
               display: match && currentIndex !== index ? 'none' : undefined,
             }}
           >
-            <Tooltip
-              title={
-                <>
-                  <Property label="Phala" size="small">
-                    {phalaValue ?? <Skeleton width={40} />}
-                  </Property>
-                  <Property label="Khala" size="small">
-                    {khalaValue ?? <Skeleton width={40} />}
-                  </Property>
-                </>
-              }
-            >
-              {value == null ? (
-                <Skeleton width={40} />
-              ) : (
-                <Box
-                  component="a"
-                  href="https://dune.com/phala_network/phala-analytics"
-                  target="_blank"
-                  sx={{
-                    color: 'inherit',
-                    textDecoration: 'underline dotted',
-                    textDecorationColor: theme.palette.text.secondary,
-                  }}
-                  rel="noreferrer"
-                >
-                  {value}
-                </Box>
-              )}
-            </Tooltip>
+            {value == null ? (
+              <Skeleton width={40} />
+            ) : (
+              <Box
+                component="a"
+                href="https://dune.com/phala_network/phala-analytics"
+                target="_blank"
+                sx={{
+                  color: 'inherit',
+                  textDecoration: 'underline dotted',
+                  textDecorationColor: theme.palette.text.secondary,
+                }}
+                rel="noreferrer"
+              >
+                {value}
+              </Box>
+            )}
           </Property>
         )
       })}

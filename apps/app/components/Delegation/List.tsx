@@ -2,6 +2,7 @@ import NftsIcon from '@/assets/nfts.svg'
 import Empty from '@/components/Empty'
 import ListSkeleton from '@/components/ListSkeleton'
 import SectionHeader from '@/components/SectionHeader'
+import {subsquidClient} from '@/config'
 import useDebounced from '@/hooks/useDebounced'
 import {
   type BasePoolKind,
@@ -10,7 +11,6 @@ import {
   type DelegationWhereInput,
   useInfiniteDelegationsConnectionQuery,
 } from '@/lib/subsquidQuery'
-import {subsquidClientAtom} from '@/store/common'
 import FilterList from '@mui/icons-material/FilterList'
 import FormatListBulleted from '@mui/icons-material/FormatListBulleted'
 import GridView from '@mui/icons-material/GridView'
@@ -32,7 +32,6 @@ import {
   ToggleButtonGroup,
   Typography,
 } from '@mui/material'
-import {useAtom} from 'jotai'
 import {type FC, useCallback, useEffect, useState} from 'react'
 import {useInView} from 'react-intersection-observer'
 import HorizonCard from './HorizonCard'
@@ -103,7 +102,6 @@ const DelegationList: FC<{
     withdrawingFilter && {withdrawingValue_gt: '0'},
   ]
   const enabled = address !== undefined
-  const [subsquidClient] = useAtom(subsquidClientAtom)
   const {data, isLoading, fetchNextPage, hasNextPage} =
     useInfiniteDelegationsConnectionQuery(
       subsquidClient,

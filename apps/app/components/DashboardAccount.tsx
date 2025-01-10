@@ -1,10 +1,9 @@
 import PhalaLogo from '@/assets/phala_logo.svg'
-import {WPHA_ASSET_ID} from '@/config'
+import {WPHA_ASSET_ID, subsquidClient} from '@/config'
 import useAssetBalance from '@/hooks/useAssetBalance'
 import useWrapAsset from '@/hooks/useWrapAsset'
 import {useAccountByIdQuery} from '@/lib/subsquidQuery'
 import {colors} from '@/lib/theme'
-import {chainAtom, subsquidClientAtom} from '@/store/common'
 import {assetVisibleAtom, walletDialogOpenAtom} from '@/store/ui'
 import ContentCopy from '@mui/icons-material/ContentCopy'
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight'
@@ -27,6 +26,7 @@ import {useAtom} from 'jotai'
 import dynamic from 'next/dynamic'
 import {useRouter} from 'next/router'
 import {useSnackbar} from 'notistack'
+import {chain} from 'radash'
 import type {FC} from 'react'
 import WikiButton from './Wiki/Button'
 
@@ -48,7 +48,6 @@ const Identicon = dynamic(
 
 const DashboardAccount: FC = () => {
   const router = useRouter()
-  const [chain] = useAtom(chainAtom)
   const [, setWalletDialogOpen] = useAtom(walletDialogOpenAtom)
   const wrapAsset = useWrapAsset()
   const {enqueueSnackbar} = useSnackbar()
@@ -56,7 +55,6 @@ const DashboardAccount: FC = () => {
   const [account] = useAtom(polkadotAccountAtom)
   const freeBalance = useAssetBalance(account?.address, 'free')
   const wrapped = useAssetBalance(account?.address, WPHA_ASSET_ID)
-  const [subsquidClient] = useAtom(subsquidClientAtom)
   const {data: accountData} = useAccountByIdQuery(
     subsquidClient,
     {accountId: account?.address ?? ''},
@@ -146,7 +144,7 @@ const DashboardAccount: FC = () => {
                 setWalletDialogOpen(true)
               }}
             >
-              Connect Wallet
+              Connect wallet
             </Button>
           )}
         </Stack>

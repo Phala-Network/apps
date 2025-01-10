@@ -8,7 +8,6 @@ import {aprToApy} from '@/lib/apr'
 import getPoolPath from '@/lib/getPoolPath'
 import type {DelegationCommonFragment} from '@/lib/subsquidQuery'
 import {colors} from '@/lib/theme'
-import {chainAtom} from '@/store/common'
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp'
 import {
   Alert,
@@ -23,7 +22,6 @@ import {
 } from '@mui/material'
 import {toCurrency, toPercentage} from '@phala/lib'
 import Decimal from 'decimal.js'
-import {useAtom} from 'jotai'
 import type {FC} from 'react'
 import Identity from '../BasePool/Identity'
 import WrapDecimal from '../WrapDecimal'
@@ -38,7 +36,6 @@ const NftCard: FC<{
 }> = ({compact = false, delegation, onAction, isOwner = false}) => {
   const profit = useDelegationOneDayProfit(delegation.id)
 
-  const [chain] = useAtom(chainAtom)
   const {value, shares, basePool, delegationNft, withdrawingValue} = delegation
   const isVault = basePool.kind === 'Vault'
   const theme = useTheme()
@@ -106,7 +103,7 @@ const NftCard: FC<{
                 }}
                 color="inherit"
                 variant="num3"
-                href={getPoolPath(chain, basePool.kind, basePool.id)}
+                href={getPoolPath(basePool.kind, basePool.id)}
                 target="_blank"
                 rel="noopener"
                 sx={{
