@@ -15,7 +15,7 @@ export const useKhalaAssetsQuery = (address?: string) => {
     queryFn: () =>
       khalaAssetsApi
         .get(`/account/${address}`)
-        .json<{free: string; staked: string}>(),
+        .json<{free: string; staked: string; pwRefund: string}>(),
     enabled: address != null,
   })
 }

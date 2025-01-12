@@ -139,6 +139,13 @@ const ClaimKhalaAssets = () => {
 
   const isLoading = isPending || claimResult.isLoading || isSigning
 
+  const isClaimable = useMemo(() => {
+    if (data == null) {
+      return false
+    }
+    return new Decimal(data.free).minus(data.staked).gt(0)
+  }, [data])
+
   useEffect(() => {
     if (claimResult.data?.status === 'success') {
       enqueueSnackbar('Claimed successfully', {variant: 'success'})
@@ -258,13 +265,23 @@ const ClaimKhalaAssets = () => {
       <Paper sx={{p: 2, bgcolor: 'transparent', mt: 2}}>
         <Stack gap={1}>
           <Property label="Free" size="small" fullWidth wrapDecimal>
-            {data ? toCurrency(data.free) : '-'}
+            {data
+              ? toCurrency(new Decimal(data.free).minus(data.pwRefund))
+              : '-'}
           </Property>
-          <Property label="Staked" size="small" fullWidth wrapDecimal>
+          <Property label="Delegation" size="small" fullWidth wrapDecimal>
             {data ? toCurrency(data.staked) : '-'}
           </Property>
           <Property label="Staking Rewards" size="small" fullWidth wrapDecimal>
             {rewards ? toCurrency(rewards) : '-'}
+          </Property>
+          <Property
+            label="Phala World NFT Refund"
+            size="small"
+            fullWidth
+            wrapDecimal
+          >
+            {data ? toCurrency(data.pwRefund) : '-'}
           </Property>
         </Stack>
       </Paper>
@@ -359,7 +376,7 @@ const ClaimKhalaAssets = () => {
                   <SwitchChainButton>
                     <LoadingButton
                       variant="contained"
-                      disabled={!ethAddress}
+                      disabled={!ethAddress || !isClaimable}
                       fullWidth
                       type="submit"
                       loading={isLoading}
