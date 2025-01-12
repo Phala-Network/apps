@@ -1,19 +1,10 @@
 import khalaClaimerAbi from '@/assets/khala_claimer_abi'
+import {KHALA_CLAIMER_CONTRACT_ADDRESS} from '@/config'
 import {useQuery} from '@tanstack/react-query'
-import {type Hex, isHex} from 'viem'
+import type {Hex} from 'viem'
 import {usePublicClient, useReadContract} from 'wagmi'
 import wretch from 'wretch'
 
-const assertIsHex = (value?: string) => {
-  if (isHex(value)) {
-    return value
-  }
-  throw new Error('Invalid hex string')
-}
-
-export const khalaClaimerAddress = assertIsHex(
-  process.env.NEXT_PUBLIC_KHALA_CLAIMER_CONTRACT,
-)
 export const khalaAssetsApi = wretch(
   'https://7948d0788774349da5ba360e5862f42e4dc7528a-8080.dstack-prod4.phala.network',
 )
@@ -24,14 +15,14 @@ export const useKhalaAssetsQuery = (address?: string) => {
     queryFn: () =>
       khalaAssetsApi
         .get(`/account/${address}`)
-        .json<{free: string; staked: string}>(),
+        .json<{free: string; staked: string; pwRefund: string}>(),
     enabled: address != null,
   })
 }
 
 export const useClaimStatus = (address?: Hex) => {
   const {data: claimed, refetch} = useReadContract({
-    address: khalaClaimerAddress,
+    address: KHALA_CLAIMER_CONTRACT_ADDRESS,
     abi: khalaClaimerAbi,
     functionName: 'claimed',
     args: address && [address],
@@ -54,7 +45,7 @@ export const useClaimStatus = (address?: Hex) => {
         return
       }
       const logs = await publicClient.getLogs({
-        address: khalaClaimerAddress,
+        address: KHALA_CLAIMER_CONTRACT_ADDRESS,
         event,
         args: {user: address},
         fromBlock: 0n,

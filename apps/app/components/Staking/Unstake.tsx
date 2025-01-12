@@ -1,9 +1,11 @@
 import vaultAbi from '@/assets/pha_vault_abi'
 import Property from '@/components/Property'
+import WrapDecimal from '@/components/WrapDecimal'
+import {VAULT_CONTRACT_ADDRESS} from '@/config'
 import {
   useMaxUnlockRequests,
+  useUnlockPeriod,
   useUnlockRequests,
-  vaultContract,
 } from '@/hooks/staking'
 import {LoadingButton} from '@mui/lab'
 import {
@@ -23,24 +25,26 @@ import {toCurrency} from '@phala/lib'
 import {formatDuration, intervalToDuration, isAfter, isBefore} from 'date-fns'
 import {useSnackbar} from 'notistack'
 import {useEffect, useMemo, useState} from 'react'
-import useSWR from 'swr'
 import {formatUnits} from 'viem'
-import {useAccount, useTransactionReceipt, useWriteContract} from 'wagmi'
-import WrapDecimal from '../WrapDecimal'
+import {
+  useAccount,
+  useBlock,
+  useTransactionReceipt,
+  useWriteContract,
+} from 'wagmi'
 
 const Unstake = () => {
   const [cancelIndex, setCancelIndex] = useState<number | null>(null)
   const {enqueueSnackbar} = useSnackbar()
-  const {data: now} = useSWR('now', () => new Date().getTime(), {
-    fallbackData: new Date().getTime(),
-    refreshInterval: 60 * 1000,
-    revalidateIfStale: true,
-    refreshWhenHidden: true,
-    refreshWhenOffline: true,
-  })
+  const {data: block} = useBlock({watch: true})
+  const now = useMemo(() => {
+    if (block == null) return
+    return Number.parseInt(block.timestamp.toString()) * 1000
+  }, [block])
   const {address} = useAccount()
   const unlockRequests = useUnlockRequests(address)
   const maxUnlockRequests = useMaxUnlockRequests()
+  const unlockPeriod = useUnlockPeriod()
   const {
     writeContract: executeClaim,
     data: claimTx,
@@ -62,7 +66,7 @@ const Unstake = () => {
   const claim = () => {
     if (address != null) {
       executeClaim({
-        address: vaultContract,
+        address: VAULT_CONTRACT_ADDRESS,
         abi: vaultAbi,
         functionName: 'claim',
         args: [address],
@@ -73,7 +77,7 @@ const Unstake = () => {
   const cancel = (index: number) => {
     if (address != null) {
       executeCancel({
-        address: vaultContract,
+        address: VAULT_CONTRACT_ADDRESS,
         abi: vaultAbi,
         functionName: 'cancelUnlockRequest',
         args: [BigInt(index), address],
@@ -82,14 +86,15 @@ const Unstake = () => {
   }
 
   const rows = useMemo(() => {
-    if (!unlockRequests) return null
+    if (!unlockRequests || unlockPeriod == null || now == null) return null
     return unlockRequests.map((request, index) => {
       let countdown = null
-      if (isAfter(request.unlockTime, now)) {
+      const endTime = request.startTime + unlockPeriod
+      if (isAfter(endTime, now)) {
         countdown = formatDuration(
           intervalToDuration({
             start: now,
-            end: request.unlockTime,
+            end: endTime,
           }),
           {format: ['days', 'hours', 'minutes']},
         )
@@ -104,16 +109,17 @@ const Unstake = () => {
         id: index,
         index,
         amount: request.assets,
-        unlockTime: request.unlockTime,
+        startTime: request.startTime,
+        endTime,
         countdown,
       }
     })
-  }, [unlockRequests, now])
+  }, [unlockRequests, now, unlockPeriod])
 
   const totalUnlocking = useMemo(() => {
-    if (!rows) return null
+    if (!rows || now == null) return null
     return rows.reduce((acc, row) => {
-      if (isAfter(row.unlockTime, now)) {
+      if (isAfter(row.endTime, now)) {
         return acc + row.amount
       }
       return acc
@@ -121,9 +127,9 @@ const Unstake = () => {
   }, [rows, now])
 
   const totalClaimable = useMemo(() => {
-    if (!rows) return null
+    if (!rows || now == null) return null
     return rows.reduce((acc, row) => {
-      if (isBefore(row.unlockTime, now)) {
+      if (isBefore(row.endTime, now)) {
         return acc + row.amount
       }
       return acc
@@ -198,7 +204,7 @@ const Unstake = () => {
               >
                 <TableCell component="th" scope="row">
                   <Tooltip
-                    title={new Date(row.unlockTime).toLocaleString()}
+                    title={new Date(row.endTime).toLocaleString()}
                     placement="right"
                   >
                     <Box>

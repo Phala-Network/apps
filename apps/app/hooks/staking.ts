@@ -1,25 +1,17 @@
 import vaultAbi from '@/assets/pha_vault_abi'
+import {VAULT_CONTRACT_ADDRESS} from '@/config'
+import {PHA_CONTRACT_ADDRESS} from '@/config'
 import Decimal from 'decimal.js'
 import {useMemo} from 'react'
-import {type Hex, erc20Abi, isHex} from 'viem'
+import {type Hex, erc20Abi} from 'viem'
 import {useReadContract} from 'wagmi'
-
-const assertIsHex = (value?: string) => {
-  if (isHex(value)) {
-    return value
-  }
-  throw new Error('Invalid hex string')
-}
-
-export const phaContract = assertIsHex(process.env.NEXT_PUBLIC_PHA_CONTRACT)
-export const vaultContract = assertIsHex(process.env.NEXT_PUBLIC_VAULT_CONTRACT)
 
 export const useAllowance = (address?: Hex) => {
   const {data: allowance} = useReadContract({
-    address: phaContract,
+    address: PHA_CONTRACT_ADDRESS,
     abi: erc20Abi,
     functionName: 'allowance',
-    args: address && [address, vaultContract],
+    args: address && [address, VAULT_CONTRACT_ADDRESS],
     query: {enabled: Boolean(address), refetchInterval: 3_000},
   })
   return allowance
@@ -27,7 +19,7 @@ export const useAllowance = (address?: Hex) => {
 
 export const useBalance = (address?: Hex) => {
   const {data: balance} = useReadContract({
-    address: phaContract,
+    address: PHA_CONTRACT_ADDRESS,
     abi: erc20Abi,
     functionName: 'balanceOf',
     args: address && [address],
@@ -38,7 +30,7 @@ export const useBalance = (address?: Hex) => {
 
 export const useShares = (address?: Hex) => {
   const {data: shares} = useReadContract({
-    address: vaultContract,
+    address: VAULT_CONTRACT_ADDRESS,
     abi: vaultAbi,
     functionName: 'balanceOf',
     args: address && [address],
@@ -49,7 +41,7 @@ export const useShares = (address?: Hex) => {
 
 export const useTotalAssets = () => {
   const {data: totalAssets} = useReadContract({
-    address: vaultContract,
+    address: VAULT_CONTRACT_ADDRESS,
     abi: vaultAbi,
     functionName: 'totalAssets',
     query: {refetchInterval: 3_000},
@@ -59,7 +51,7 @@ export const useTotalAssets = () => {
 
 export const useRewardRate = () => {
   const {data: rewardRate} = useReadContract({
-    address: vaultContract,
+    address: VAULT_CONTRACT_ADDRESS,
     abi: vaultAbi,
     functionName: 'rewardRate',
     query: {refetchInterval: 3_000},
@@ -69,7 +61,7 @@ export const useRewardRate = () => {
 
 export const useSharePrice = () => {
   const {data: sharePrice} = useReadContract({
-    address: vaultContract,
+    address: VAULT_CONTRACT_ADDRESS,
     abi: vaultAbi,
     functionName: 'convertToAssets',
     args: [1_000_000_000_000_000_000n],
@@ -112,7 +104,7 @@ export const useAssetsToShares = (assets?: bigint | null) => {
 
 export const useUnlockRequests = (address?: Hex) => {
   const {data: unlockRequests} = useReadContract({
-    address: vaultContract,
+    address: VAULT_CONTRACT_ADDRESS,
     abi: vaultAbi,
     functionName: 'unlockRequests',
     args: address && [address],
@@ -121,14 +113,14 @@ export const useUnlockRequests = (address?: Hex) => {
   if (unlockRequests != null) {
     return unlockRequests.map((request) => ({
       ...request,
-      unlockTime: Number.parseInt(request.unlockTime.toString()) * 1000,
+      startTime: Number.parseInt(request.startTime.toString()) * 1000,
     }))
   }
 }
 
 export const useUnlockPeriod = () => {
   const {data: unlockPeriod} = useReadContract({
-    address: vaultContract,
+    address: VAULT_CONTRACT_ADDRESS,
     abi: vaultAbi,
     functionName: 'unlockPeriod',
   })
@@ -139,7 +131,7 @@ export const useUnlockPeriod = () => {
 
 export const useMaxUnlockRequests = () => {
   const {data: maxUnlockRequests} = useReadContract({
-    address: vaultContract,
+    address: VAULT_CONTRACT_ADDRESS,
     abi: vaultAbi,
     functionName: 'maxUnlockRequests',
   })
