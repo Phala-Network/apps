@@ -1,15 +1,11 @@
 import PageHeader from '@/components/PageHeader'
 import Staking from '@/components/Staking'
-import {Web3Provider} from '@/components/Web3Provider'
 import {Chip} from '@mui/material'
 import {ConnectButton} from '@rainbow-me/rainbowkit'
-import type {GetServerSideProps, InferGetServerSidePropsType} from 'next'
 
-const Page = ({
-  cookie,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+const Page = () => {
   return (
-    <Web3Provider cookie={cookie}>
+    <>
       <PageHeader
         title="Staking"
         pageTitle={
@@ -21,16 +17,7 @@ const Page = ({
         <ConnectButton />
       </PageHeader>
       <Staking />
-    </Web3Provider>
+    </>
   )
 }
-
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  return {
-    props: {
-      cookie: ctx.req.headers.cookie,
-    },
-  }
-}
-
 export default Page

@@ -1,4 +1,5 @@
 import Layout from '@/components/Layout'
+import {Web3Provider} from '@/components/Web3Provider'
 import ZendeskWidget from '@/components/ZendeskWidget'
 import {globalStyles} from '@/lib/styles'
 import {theme} from '@/lib/theme'
@@ -40,7 +41,7 @@ const JotaiDevTools = dynamic(() =>
 )
 
 const MyApp = (props: AppProps) => {
-  const {Component, pageProps, router} = props
+  const {Component, pageProps} = props
 
   return (
     <SWRConfig
@@ -54,19 +55,21 @@ const MyApp = (props: AppProps) => {
     >
       <QueryClientProvider client={queryClient}>
         <JotaiProvider>
-          <AppCacheProvider {...props}>
-            <MuiThemeProvider theme={theme}>
-              <CssBaseline />
-              <GlobalStyles styles={[globalStyles]} />
+          <Web3Provider>
+            <AppCacheProvider {...props}>
+              <MuiThemeProvider theme={theme}>
+                <CssBaseline />
+                <GlobalStyles styles={[globalStyles]} />
 
-              <Layout>
-                <Component {...pageProps} />
-                <ZendeskWidget />
-                {process.env.NODE_ENV === 'development' && <JotaiDevTools />}
-                <ReactQueryDevtools buttonPosition="bottom-left" />
-              </Layout>
-            </MuiThemeProvider>
-          </AppCacheProvider>
+                <Layout>
+                  <Component {...pageProps} />
+                  <ZendeskWidget />
+                  {process.env.NODE_ENV === 'development' && <JotaiDevTools />}
+                  <ReactQueryDevtools buttonPosition="bottom-left" />
+                </Layout>
+              </MuiThemeProvider>
+            </AppCacheProvider>
+          </Web3Provider>
         </JotaiProvider>
       </QueryClientProvider>
     </SWRConfig>

@@ -6,12 +6,7 @@ import {
 } from '@rainbow-me/rainbowkit'
 import type {ReactNode} from 'react'
 import type {Chain} from 'viem'
-import {
-  WagmiProvider,
-  cookieStorage,
-  cookieToInitialState,
-  createStorage,
-} from 'wagmi'
+import {WagmiProvider} from 'wagmi'
 import '@rainbow-me/rainbowkit/styles.css'
 
 const chains: [Chain, ...Chain[]] = [ethChain]
@@ -23,21 +18,15 @@ const config = getDefaultConfig({
   appUrl: 'https://app.phala.network',
   appIcon: 'https://app.phala.network/apple-touch-icon.png',
   ssr: true,
-  storage: createStorage({
-    storage: cookieStorage,
-  }),
 })
 
 export const Web3Provider = ({
   children,
-  cookie,
 }: {
   children: ReactNode
-  cookie?: string
 }) => {
-  const initialState = cookieToInitialState(config, cookie)
   return (
-    <WagmiProvider config={config} initialState={initialState}>
+    <WagmiProvider config={config}>
       <RainbowKitProvider
         modalSize="compact"
         theme={darkTheme({

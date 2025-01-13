@@ -49,7 +49,6 @@ export const useClaimStatus = (address?: Hex) => {
         event,
         args: {user: address},
         fromBlock: 21613791n,
-        toBlock: 'latest',
       })
       return logs[0]
     },
