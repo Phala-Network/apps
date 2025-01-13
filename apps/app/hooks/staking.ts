@@ -56,7 +56,7 @@ export const useRewardRate = () => {
     functionName: 'rewardRate',
     query: {refetchInterval: 3_000},
   })
-  return rewardRate
+  return rewardRate ? (rewardRate * 8n) / 10n : undefined
 }
 
 export const useSharePrice = () => {

@@ -1,6 +1,4 @@
-import b2 from '@/assets/b2.png'
-import b3 from '@/assets/b3.png'
-import b4 from '@/assets/b4.png'
+import b1 from '@/assets/b1.png'
 import ArrowBackIos from '@mui/icons-material/ArrowBackIos'
 import ArrowForwardIos from '@mui/icons-material/ArrowForwardIos'
 import {Box, IconButton, LinearProgress, Stack} from '@mui/material'
@@ -11,19 +9,9 @@ import {useSnapCarousel} from 'react-snap-carousel'
 
 const contents: Array<{name: string; imageUrl: string; href: string}> = [
   {
-    name: 'Vaults feature',
-    href: 'https://medium.com/phala-network/vaults-simplifying-and-optimizing-your-phala-delegations-368469608ea7',
-    imageUrl: b2.src,
-  },
-  {
-    name: `Phala App's Share`,
-    href: 'https://medium.com/phala-network/share-tracking-pool-ownership-9fdef274f3ae',
-    imageUrl: b3.src,
-  },
-  {
-    name: 'Phala App 2.0 Instructions',
-    href: 'https://forum.phala.network/t/phala-app-2-0-main-functions-instructions/3799',
-    imageUrl: b4.src,
+    name: 'Claim Khala Assets',
+    href: '/khala-assets',
+    imageUrl: b1.src,
   },
 ]
 
