@@ -143,7 +143,7 @@ const ClaimKhalaAssets = () => {
     if (data == null) {
       return false
     }
-    return new Decimal(data.free).minus(data.staked).gt(0)
+    return new Decimal(data.free).add(data.staked).gt(0)
   }, [data])
 
   useEffect(() => {
