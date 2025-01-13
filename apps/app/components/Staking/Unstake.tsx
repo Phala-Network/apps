@@ -98,11 +98,11 @@ const Unstake = () => {
           }),
           {format: ['days', 'hours', 'minutes']},
         )
-          .replace(/minute(s)?/g, 'm')
-          .replace(/hour(s)?/g, 'h')
-          .replace(/day(s)?/g, 'd')
+          .replace(/ minute(s)?/g, 'm')
+          .replace(/ hour(s)?/g, 'h')
+          .replace(/ day(s)?/g, 'd')
         if (countdown === '') {
-          countdown = '1 m'
+          countdown = '1m'
         }
       }
       return {
