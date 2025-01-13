@@ -48,11 +48,12 @@ export const useClaimStatus = (address?: Hex) => {
         address: KHALA_CLAIMER_CONTRACT_ADDRESS,
         event,
         args: {user: address},
-        fromBlock: 0n,
+        fromBlock: 21613791n,
       })
       return logs[0]
     },
     enabled: claimed === true && publicClient != null && address != null,
+    refetchInterval: (query) => (query.state.data ? false : 3000),
   })
   return {
     claimed,
