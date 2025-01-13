@@ -6,7 +6,7 @@ import {usePublicClient, useReadContract} from 'wagmi'
 import wretch from 'wretch'
 
 export const khalaAssetsApi = wretch(
-  'https://7948d0788774349da5ba360e5862f42e4dc7528a-8080.dstack-prod4.phala.network',
+  'https://dbcac8a0d67d837a93e8c1db0886c8f1acdc599d-8080.dstack-prod4.phala.network',
 )
 
 export const useKhalaAssetsQuery = (address?: string) => {
