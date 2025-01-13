@@ -56,7 +56,16 @@ export const useRewardRate = () => {
     functionName: 'rewardRate',
     query: {refetchInterval: 3_000},
   })
-  return rewardRate ? (rewardRate * 8n) / 10n : undefined
+  const {data: treasuryRatio} = useReadContract({
+    address: VAULT_CONTRACT_ADDRESS,
+    abi: vaultAbi,
+    functionName: 'treasuryRatio',
+    query: {refetchInterval: 3_000},
+  })
+  if (treasuryRatio == null || rewardRate == null) {
+    return
+  }
+  return (rewardRate * (10000n - treasuryRatio)) / 10000n
 }
 
 export const useSharePrice = () => {
