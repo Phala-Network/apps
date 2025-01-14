@@ -1,14 +1,17 @@
 import PhalaLogo from '@/assets/phala_logo.svg'
+import WikiButton from '@/components/Wiki/Button'
 import {WPHA_ASSET_ID, subsquidClient} from '@/config'
 import useAssetBalance from '@/hooks/useAssetBalance'
 import useWrapAsset from '@/hooks/useWrapAsset'
 import {useAccountByIdQuery} from '@/lib/subsquidQuery'
 import {colors} from '@/lib/theme'
 import {assetVisibleAtom, walletDialogOpenAtom} from '@/store/ui'
-import ContentCopy from '@mui/icons-material/ContentCopy'
-import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight'
-import RemoveRedEye from '@mui/icons-material/RemoveRedEye'
-import VisibilityOff from '@mui/icons-material/VisibilityOff'
+import {
+  ContentCopy,
+  KeyboardArrowRight,
+  RemoveRedEye,
+  VisibilityOff,
+} from '@mui/icons-material'
 import {
   Box,
   Button,
@@ -26,9 +29,7 @@ import {useAtom} from 'jotai'
 import dynamic from 'next/dynamic'
 import {useRouter} from 'next/router'
 import {useSnackbar} from 'notistack'
-import {chain} from 'radash'
 import type {FC} from 'react'
-import WikiButton from './Wiki/Button'
 
 const BalanceBox = styled(Box)(({theme}) =>
   theme.unstable_sx({
@@ -41,9 +42,7 @@ const BalanceBox = styled(Box)(({theme}) =>
 
 const Identicon = dynamic(
   async () => await import('@polkadot/react-identicon'),
-  {
-    ssr: false,
-  },
+  {ssr: false},
 )
 
 const DashboardAccount: FC = () => {
@@ -106,7 +105,7 @@ const DashboardAccount: FC = () => {
               sx={{cursor: account != null ? 'pointer' : 'auto'}}
               onClick={() => {
                 if (account != null) {
-                  void navigator.clipboard.writeText(account.address)
+                  navigator.clipboard.writeText(account.address)
                   enqueueSnackbar('Copied to clipboard')
                 }
               }}
@@ -178,10 +177,11 @@ const DashboardAccount: FC = () => {
           </BalanceBox>
           <BalanceBox
             onClick={() => {
-              void router.push(`/${chain}/delegate/my-delegation`, undefined, {
+              router.push('/delegate/my-delegation', undefined, {
                 shallow: true,
               })
             }}
+            sx={{cursor: 'pointer'}}
           >
             <Stack direction="row" alignItems="center">
               <Box>

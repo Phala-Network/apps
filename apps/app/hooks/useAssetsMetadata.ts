@@ -51,9 +51,9 @@ export const phaMetadata: AssetMetadata = {
   iconSrc: iconMap.PHA,
 }
 
-const assetsMetadataFetcher = async ([api, _]: [ApiPromise, string]): Promise<
-  Record<number, AssetMetadata>
-> => {
+const fetchAssetsMetadata = async (
+  api: ApiPromise,
+): Promise<Record<number, AssetMetadata>> => {
   const entries = await api.query.assets.metadata.entries()
   const assetsMetadata: Record<number, AssetMetadata> = {}
   for (const [key, value] of entries) {
@@ -76,8 +76,11 @@ const assetsMetadataFetcher = async ([api, _]: [ApiPromise, string]): Promise<
 const useAssetsMetadata = (): Record<number, AssetMetadata> | undefined => {
   const api = usePolkadotApi()
   const {data} = useSWRImmutable(
-    api != null && [api, 'assetsMetadata'],
-    assetsMetadataFetcher,
+    api != null && [api.runtimeChain.toString(), 'assetsMetadata'],
+    () => {
+      if (api == null) return
+      return fetchAssetsMetadata(api)
+    },
   )
   return data
 }

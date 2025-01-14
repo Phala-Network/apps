@@ -29,12 +29,11 @@ import SectionHeader from './SectionHeader'
 
 type Nft = NftsConnectionQuery['nftsConnection']['edges'][number]['node']
 
-const nftNameFetcher = async ([api, cid, nftId, _]: [
-  ApiPromise,
-  number,
-  number,
-  string,
-]): Promise<string | undefined> => {
+const fetchNftName = async (
+  api: ApiPromise,
+  cid: number,
+  nftId: number,
+): Promise<string | undefined> => {
   const property = await api.query.rmrkCore.properties(cid, nftId, 'name')
   try {
     return property.unwrap().toUtf8()
@@ -43,11 +42,10 @@ const nftNameFetcher = async ([api, cid, nftId, _]: [
   }
 }
 
-const collectionSymbolFetcher = async ([api, cid, _]: [
-  ApiPromise,
-  number,
-  string,
-]): Promise<string | undefined> => {
+const fetchCollectionSymbol = async (
+  api: ApiPromise,
+  cid: number,
+): Promise<string | undefined> => {
   const collection = await api.query.rmrkCore.collections(cid)
   try {
     return collection.unwrap().symbol.toUtf8()
@@ -61,13 +59,19 @@ const NftCard: FC<{nft: Nft}> = ({nft}) => {
   const isDelegationNft = nft.delegation != null
   const {data: name} = useSWRImmutable(
     api != null && isDelegationNft
-      ? [api, nft.cid, nft.nftId, 'nftName']
+      ? [api.runtimeChain.toString(), nft.cid, nft.nftId, 'nftName']
       : null,
-    nftNameFetcher,
+    ([_, cid, nftId]: [string, number, number]) => {
+      if (api == null) return
+      return fetchNftName(api, cid, nftId)
+    },
   )
   const {data: collectionSymbol} = useSWRImmutable(
-    api != null && isDelegationNft && [api, nft.cid, 'nftCollection'],
-    collectionSymbolFetcher,
+    api != null && isDelegationNft && [api.runtimeChain.toString(), nft.cid],
+    ([_, cid]: [string, number]) => {
+      if (api == null) return
+      return fetchCollectionSymbol(api, cid)
+    },
   )
   const delegationNftPrefix = nft.delegation?.basePool.kind ?? ''
 

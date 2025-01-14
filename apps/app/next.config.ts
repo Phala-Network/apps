@@ -6,11 +6,7 @@ const bundleAnalyzer = withBundleAnalyzer({
 })
 
 const nextConfig: NextConfig = {
-  transpilePackages: [
-    'jotai-devtools',
-    '@polkadot/api',
-    '@polkadot/types-codec',
-  ],
+  transpilePackages: ['jotai-devtools'],
   eslint: {
     ignoreDuringBuilds: true,
     dirs: ['pages', 'components', 'lib', 'hooks', 'store', 'types'],

@@ -8,7 +8,8 @@ import {
   GlobalStyles,
   ThemeProvider as MuiThemeProvider,
 } from '@mui/material'
-import {AppCacheProvider} from '@mui/material-nextjs/v14-pagesRouter'
+import {AppCacheProvider} from '@mui/material-nextjs/v15-pagesRouter'
+// import {JotaiDevTools} from '@phala/lib'
 import {
   QueryCache,
   QueryClient,
@@ -18,7 +19,6 @@ import {ReactQueryDevtools} from '@tanstack/react-query-devtools'
 import Decimal from 'decimal.js'
 import {Provider as JotaiProvider} from 'jotai'
 import type {AppProps} from 'next/app'
-import dynamic from 'next/dynamic'
 import {SWRConfig} from 'swr'
 
 Decimal.set({toExpNeg: -9e15, toExpPos: 9e15, precision: 50})
@@ -36,10 +36,6 @@ const queryClient = new QueryClient({
   }),
 })
 
-const JotaiDevTools = dynamic(() =>
-  import('@phala/lib').then((lib) => lib.JotaiDevTools),
-)
-
 const MyApp = (props: AppProps) => {
   const {Component, pageProps} = props
 
@@ -55,21 +51,21 @@ const MyApp = (props: AppProps) => {
     >
       <QueryClientProvider client={queryClient}>
         <JotaiProvider>
-          <Web3Provider>
-            <AppCacheProvider {...props}>
-              <MuiThemeProvider theme={theme}>
+          <AppCacheProvider {...props}>
+            <MuiThemeProvider theme={theme}>
+              <Web3Provider>
                 <CssBaseline />
                 <GlobalStyles styles={[globalStyles]} />
 
                 <Layout>
                   <Component {...pageProps} />
                   <ZendeskWidget />
-                  {process.env.NODE_ENV === 'development' && <JotaiDevTools />}
+                  {/* <JotaiDevTools /> */}
                   <ReactQueryDevtools buttonPosition="bottom-left" />
                 </Layout>
-              </MuiThemeProvider>
-            </AppCacheProvider>
-          </Web3Provider>
+              </Web3Provider>
+            </MuiThemeProvider>
+          </AppCacheProvider>
         </JotaiProvider>
       </QueryClientProvider>
     </SWRConfig>

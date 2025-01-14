@@ -2045,6 +2045,8 @@ type GlobalState = {
   /** constant 0 */
   id: Scalars['String']['output'];
   idleWorkerCount: Scalars['Int']['output'];
+  idleWorkerPInit: Scalars['Int']['output'];
+  idleWorkerPInstant: Scalars['Int']['output'];
   /** for apr calculation */
   idleWorkerShares: Scalars['BigDecimal']['output'];
   k: Scalars['BigDecimal']['output'];
@@ -2137,6 +2139,18 @@ const GlobalStateOrderByInput = {
   IdleWorkerCountDesc: 'idleWorkerCount_DESC',
   IdleWorkerCountDescNullsFirst: 'idleWorkerCount_DESC_NULLS_FIRST',
   IdleWorkerCountDescNullsLast: 'idleWorkerCount_DESC_NULLS_LAST',
+  IdleWorkerPInitAsc: 'idleWorkerPInit_ASC',
+  IdleWorkerPInitAscNullsFirst: 'idleWorkerPInit_ASC_NULLS_FIRST',
+  IdleWorkerPInitAscNullsLast: 'idleWorkerPInit_ASC_NULLS_LAST',
+  IdleWorkerPInitDesc: 'idleWorkerPInit_DESC',
+  IdleWorkerPInitDescNullsFirst: 'idleWorkerPInit_DESC_NULLS_FIRST',
+  IdleWorkerPInitDescNullsLast: 'idleWorkerPInit_DESC_NULLS_LAST',
+  IdleWorkerPInstantAsc: 'idleWorkerPInstant_ASC',
+  IdleWorkerPInstantAscNullsFirst: 'idleWorkerPInstant_ASC_NULLS_FIRST',
+  IdleWorkerPInstantAscNullsLast: 'idleWorkerPInstant_ASC_NULLS_LAST',
+  IdleWorkerPInstantDesc: 'idleWorkerPInstant_DESC',
+  IdleWorkerPInstantDescNullsFirst: 'idleWorkerPInstant_DESC_NULLS_FIRST',
+  IdleWorkerPInstantDescNullsLast: 'idleWorkerPInstant_DESC_NULLS_LAST',
   IdleWorkerSharesAsc: 'idleWorkerShares_ASC',
   IdleWorkerSharesAscNullsFirst: 'idleWorkerShares_ASC_NULLS_FIRST',
   IdleWorkerSharesAscNullsLast: 'idleWorkerShares_ASC_NULLS_LAST',
@@ -2565,6 +2579,24 @@ type GlobalStateWhereInput = {
   idleWorkerCount_lte?: InputMaybe<Scalars['Int']['input']>;
   idleWorkerCount_not_eq?: InputMaybe<Scalars['Int']['input']>;
   idleWorkerCount_not_in?: InputMaybe<Array<Scalars['Int']['input']>>;
+  idleWorkerPInit_eq?: InputMaybe<Scalars['Int']['input']>;
+  idleWorkerPInit_gt?: InputMaybe<Scalars['Int']['input']>;
+  idleWorkerPInit_gte?: InputMaybe<Scalars['Int']['input']>;
+  idleWorkerPInit_in?: InputMaybe<Array<Scalars['Int']['input']>>;
+  idleWorkerPInit_isNull?: InputMaybe<Scalars['Boolean']['input']>;
+  idleWorkerPInit_lt?: InputMaybe<Scalars['Int']['input']>;
+  idleWorkerPInit_lte?: InputMaybe<Scalars['Int']['input']>;
+  idleWorkerPInit_not_eq?: InputMaybe<Scalars['Int']['input']>;
+  idleWorkerPInit_not_in?: InputMaybe<Array<Scalars['Int']['input']>>;
+  idleWorkerPInstant_eq?: InputMaybe<Scalars['Int']['input']>;
+  idleWorkerPInstant_gt?: InputMaybe<Scalars['Int']['input']>;
+  idleWorkerPInstant_gte?: InputMaybe<Scalars['Int']['input']>;
+  idleWorkerPInstant_in?: InputMaybe<Array<Scalars['Int']['input']>>;
+  idleWorkerPInstant_isNull?: InputMaybe<Scalars['Boolean']['input']>;
+  idleWorkerPInstant_lt?: InputMaybe<Scalars['Int']['input']>;
+  idleWorkerPInstant_lte?: InputMaybe<Scalars['Int']['input']>;
+  idleWorkerPInstant_not_eq?: InputMaybe<Scalars['Int']['input']>;
+  idleWorkerPInstant_not_in?: InputMaybe<Array<Scalars['Int']['input']>>;
   idleWorkerShares_eq?: InputMaybe<Scalars['BigDecimal']['input']>;
   idleWorkerShares_gt?: InputMaybe<Scalars['BigDecimal']['input']>;
   idleWorkerShares_gte?: InputMaybe<Scalars['BigDecimal']['input']>;
@@ -2896,77 +2928,47 @@ type PageInfo = {
 
 type Query = {
   accountById?: Maybe<Account>;
-  /** @deprecated Use accountById */
-  accountByUniqueInput?: Maybe<Account>;
   accountSnapshotById?: Maybe<AccountSnapshot>;
-  /** @deprecated Use accountSnapshotById */
-  accountSnapshotByUniqueInput?: Maybe<AccountSnapshot>;
   accountSnapshots: Array<AccountSnapshot>;
   accountSnapshotsConnection: AccountSnapshotsConnection;
   accounts: Array<Account>;
   accountsConnection: AccountsConnection;
   basePoolById?: Maybe<BasePool>;
-  /** @deprecated Use basePoolById */
-  basePoolByUniqueInput?: Maybe<BasePool>;
   basePoolSnapshotById?: Maybe<BasePoolSnapshot>;
-  /** @deprecated Use basePoolSnapshotById */
-  basePoolSnapshotByUniqueInput?: Maybe<BasePoolSnapshot>;
   basePoolSnapshots: Array<BasePoolSnapshot>;
   basePoolSnapshotsConnection: BasePoolSnapshotsConnection;
   basePoolWhitelistById?: Maybe<BasePoolWhitelist>;
-  /** @deprecated Use basePoolWhitelistById */
-  basePoolWhitelistByUniqueInput?: Maybe<BasePoolWhitelist>;
   basePoolWhitelists: Array<BasePoolWhitelist>;
   basePoolWhitelistsConnection: BasePoolWhitelistsConnection;
   basePools: Array<BasePool>;
   basePoolsConnection: BasePoolsConnection;
   delegationById?: Maybe<Delegation>;
-  /** @deprecated Use delegationById */
-  delegationByUniqueInput?: Maybe<Delegation>;
   delegationSnapshotById?: Maybe<DelegationSnapshot>;
-  /** @deprecated Use delegationSnapshotById */
-  delegationSnapshotByUniqueInput?: Maybe<DelegationSnapshot>;
   delegationSnapshots: Array<DelegationSnapshot>;
   delegationSnapshotsConnection: DelegationSnapshotsConnection;
   delegations: Array<Delegation>;
   delegationsConnection: DelegationsConnection;
   globalStateById?: Maybe<GlobalState>;
-  /** @deprecated Use globalStateById */
-  globalStateByUniqueInput?: Maybe<GlobalState>;
   globalStateSnapshotById?: Maybe<GlobalStateSnapshot>;
-  /** @deprecated Use globalStateSnapshotById */
-  globalStateSnapshotByUniqueInput?: Maybe<GlobalStateSnapshot>;
   globalStateSnapshots: Array<GlobalStateSnapshot>;
   globalStateSnapshotsConnection: GlobalStateSnapshotsConnection;
   globalStates: Array<GlobalState>;
   globalStatesConnection: GlobalStatesConnection;
   nftById?: Maybe<Nft>;
-  /** @deprecated Use nftById */
-  nftByUniqueInput?: Maybe<Nft>;
   nfts: Array<Nft>;
   nftsConnection: NftsConnection;
   sessionById?: Maybe<Session>;
-  /** @deprecated Use sessionById */
-  sessionByUniqueInput?: Maybe<Session>;
   sessions: Array<Session>;
   sessionsConnection: SessionsConnection;
   squidStatus?: Maybe<SquidStatus>;
   stakePoolById?: Maybe<StakePool>;
-  /** @deprecated Use stakePoolById */
-  stakePoolByUniqueInput?: Maybe<StakePool>;
   stakePools: Array<StakePool>;
   stakePoolsConnection: StakePoolsConnection;
   vaultById?: Maybe<Vault>;
-  /** @deprecated Use vaultById */
-  vaultByUniqueInput?: Maybe<Vault>;
   vaults: Array<Vault>;
   vaultsConnection: VaultsConnection;
   workerById?: Maybe<Worker>;
-  /** @deprecated Use workerById */
-  workerByUniqueInput?: Maybe<Worker>;
   workerSnapshotById?: Maybe<WorkerSnapshot>;
-  /** @deprecated Use workerSnapshotById */
-  workerSnapshotByUniqueInput?: Maybe<WorkerSnapshot>;
   workerSnapshots: Array<WorkerSnapshot>;
   workerSnapshotsConnection: WorkerSnapshotsConnection;
   workers: Array<Worker>;
@@ -2979,18 +2981,8 @@ type QueryAccountByIdArgs = {
 };
 
 
-type QueryAccountByUniqueInputArgs = {
-  where: WhereIdInput;
-};
-
-
 type QueryAccountSnapshotByIdArgs = {
   id: Scalars['String']['input'];
-};
-
-
-type QueryAccountSnapshotByUniqueInputArgs = {
-  where: WhereIdInput;
 };
 
 
@@ -3031,18 +3023,8 @@ type QueryBasePoolByIdArgs = {
 };
 
 
-type QueryBasePoolByUniqueInputArgs = {
-  where: WhereIdInput;
-};
-
-
 type QueryBasePoolSnapshotByIdArgs = {
   id: Scalars['String']['input'];
-};
-
-
-type QueryBasePoolSnapshotByUniqueInputArgs = {
-  where: WhereIdInput;
 };
 
 
@@ -3064,11 +3046,6 @@ type QueryBasePoolSnapshotsConnectionArgs = {
 
 type QueryBasePoolWhitelistByIdArgs = {
   id: Scalars['String']['input'];
-};
-
-
-type QueryBasePoolWhitelistByUniqueInputArgs = {
-  where: WhereIdInput;
 };
 
 
@@ -3109,18 +3086,8 @@ type QueryDelegationByIdArgs = {
 };
 
 
-type QueryDelegationByUniqueInputArgs = {
-  where: WhereIdInput;
-};
-
-
 type QueryDelegationSnapshotByIdArgs = {
   id: Scalars['String']['input'];
-};
-
-
-type QueryDelegationSnapshotByUniqueInputArgs = {
-  where: WhereIdInput;
 };
 
 
@@ -3161,18 +3128,8 @@ type QueryGlobalStateByIdArgs = {
 };
 
 
-type QueryGlobalStateByUniqueInputArgs = {
-  where: WhereIdInput;
-};
-
-
 type QueryGlobalStateSnapshotByIdArgs = {
   id: Scalars['String']['input'];
-};
-
-
-type QueryGlobalStateSnapshotByUniqueInputArgs = {
-  where: WhereIdInput;
 };
 
 
@@ -3213,11 +3170,6 @@ type QueryNftByIdArgs = {
 };
 
 
-type QueryNftByUniqueInputArgs = {
-  where: WhereIdInput;
-};
-
-
 type QueryNftsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -3236,11 +3188,6 @@ type QueryNftsConnectionArgs = {
 
 type QuerySessionByIdArgs = {
   id: Scalars['String']['input'];
-};
-
-
-type QuerySessionByUniqueInputArgs = {
-  where: WhereIdInput;
 };
 
 
@@ -3265,11 +3212,6 @@ type QueryStakePoolByIdArgs = {
 };
 
 
-type QueryStakePoolByUniqueInputArgs = {
-  where: WhereIdInput;
-};
-
-
 type QueryStakePoolsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -3288,11 +3230,6 @@ type QueryStakePoolsConnectionArgs = {
 
 type QueryVaultByIdArgs = {
   id: Scalars['String']['input'];
-};
-
-
-type QueryVaultByUniqueInputArgs = {
-  where: WhereIdInput;
 };
 
 
@@ -3317,18 +3254,8 @@ type QueryWorkerByIdArgs = {
 };
 
 
-type QueryWorkerByUniqueInputArgs = {
-  where: WhereIdInput;
-};
-
-
 type QueryWorkerSnapshotByIdArgs = {
   id: Scalars['String']['input'];
-};
-
-
-type QueryWorkerSnapshotByUniqueInputArgs = {
-  where: WhereIdInput;
 };
 
 
@@ -3573,7 +3500,13 @@ type SessionsConnection = {
 };
 
 type SquidStatus = {
-  /** The height of the processed part of the chain */
+  /** The hash of the last processed finalized block */
+  finalizedHash?: Maybe<Scalars['String']['output']>;
+  /** The height of the last processed finalized block */
+  finalizedHeight?: Maybe<Scalars['Int']['output']>;
+  /** The hash of the last processed block */
+  hash?: Maybe<Scalars['String']['output']>;
+  /** The height of the last processed block */
   height?: Maybe<Scalars['Int']['output']>;
 };
 
@@ -4012,10 +3945,6 @@ type VaultsConnection = {
   edges: Array<VaultEdge>;
   pageInfo: PageInfo;
   totalCount: Scalars['Int']['output'];
-};
-
-type WhereIdInput = {
-  id: Scalars['String']['input'];
 };
 
 type Worker = {

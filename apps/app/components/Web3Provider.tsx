@@ -28,6 +28,7 @@ export const Web3Provider = ({
   return (
     <WagmiProvider config={config}>
       <RainbowKitProvider
+        locale="en-US"
         modalSize="compact"
         theme={darkTheme({
           accentColor: '#c5ff46',

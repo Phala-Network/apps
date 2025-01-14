@@ -2053,6 +2053,8 @@ export type GlobalState = {
   /** constant 0 */
   id: Scalars['String']['output'];
   idleWorkerCount: Scalars['Int']['output'];
+  idleWorkerPInit: Scalars['Int']['output'];
+  idleWorkerPInstant: Scalars['Int']['output'];
   /** for apr calculation */
   idleWorkerShares: Scalars['BigDecimal']['output'];
   k: Scalars['BigDecimal']['output'];
@@ -2145,6 +2147,18 @@ export const GlobalStateOrderByInput = {
   IdleWorkerCountDesc: 'idleWorkerCount_DESC',
   IdleWorkerCountDescNullsFirst: 'idleWorkerCount_DESC_NULLS_FIRST',
   IdleWorkerCountDescNullsLast: 'idleWorkerCount_DESC_NULLS_LAST',
+  IdleWorkerPInitAsc: 'idleWorkerPInit_ASC',
+  IdleWorkerPInitAscNullsFirst: 'idleWorkerPInit_ASC_NULLS_FIRST',
+  IdleWorkerPInitAscNullsLast: 'idleWorkerPInit_ASC_NULLS_LAST',
+  IdleWorkerPInitDesc: 'idleWorkerPInit_DESC',
+  IdleWorkerPInitDescNullsFirst: 'idleWorkerPInit_DESC_NULLS_FIRST',
+  IdleWorkerPInitDescNullsLast: 'idleWorkerPInit_DESC_NULLS_LAST',
+  IdleWorkerPInstantAsc: 'idleWorkerPInstant_ASC',
+  IdleWorkerPInstantAscNullsFirst: 'idleWorkerPInstant_ASC_NULLS_FIRST',
+  IdleWorkerPInstantAscNullsLast: 'idleWorkerPInstant_ASC_NULLS_LAST',
+  IdleWorkerPInstantDesc: 'idleWorkerPInstant_DESC',
+  IdleWorkerPInstantDescNullsFirst: 'idleWorkerPInstant_DESC_NULLS_FIRST',
+  IdleWorkerPInstantDescNullsLast: 'idleWorkerPInstant_DESC_NULLS_LAST',
   IdleWorkerSharesAsc: 'idleWorkerShares_ASC',
   IdleWorkerSharesAscNullsFirst: 'idleWorkerShares_ASC_NULLS_FIRST',
   IdleWorkerSharesAscNullsLast: 'idleWorkerShares_ASC_NULLS_LAST',
@@ -2573,6 +2587,24 @@ export type GlobalStateWhereInput = {
   idleWorkerCount_lte?: InputMaybe<Scalars['Int']['input']>;
   idleWorkerCount_not_eq?: InputMaybe<Scalars['Int']['input']>;
   idleWorkerCount_not_in?: InputMaybe<Array<Scalars['Int']['input']>>;
+  idleWorkerPInit_eq?: InputMaybe<Scalars['Int']['input']>;
+  idleWorkerPInit_gt?: InputMaybe<Scalars['Int']['input']>;
+  idleWorkerPInit_gte?: InputMaybe<Scalars['Int']['input']>;
+  idleWorkerPInit_in?: InputMaybe<Array<Scalars['Int']['input']>>;
+  idleWorkerPInit_isNull?: InputMaybe<Scalars['Boolean']['input']>;
+  idleWorkerPInit_lt?: InputMaybe<Scalars['Int']['input']>;
+  idleWorkerPInit_lte?: InputMaybe<Scalars['Int']['input']>;
+  idleWorkerPInit_not_eq?: InputMaybe<Scalars['Int']['input']>;
+  idleWorkerPInit_not_in?: InputMaybe<Array<Scalars['Int']['input']>>;
+  idleWorkerPInstant_eq?: InputMaybe<Scalars['Int']['input']>;
+  idleWorkerPInstant_gt?: InputMaybe<Scalars['Int']['input']>;
+  idleWorkerPInstant_gte?: InputMaybe<Scalars['Int']['input']>;
+  idleWorkerPInstant_in?: InputMaybe<Array<Scalars['Int']['input']>>;
+  idleWorkerPInstant_isNull?: InputMaybe<Scalars['Boolean']['input']>;
+  idleWorkerPInstant_lt?: InputMaybe<Scalars['Int']['input']>;
+  idleWorkerPInstant_lte?: InputMaybe<Scalars['Int']['input']>;
+  idleWorkerPInstant_not_eq?: InputMaybe<Scalars['Int']['input']>;
+  idleWorkerPInstant_not_in?: InputMaybe<Array<Scalars['Int']['input']>>;
   idleWorkerShares_eq?: InputMaybe<Scalars['BigDecimal']['input']>;
   idleWorkerShares_gt?: InputMaybe<Scalars['BigDecimal']['input']>;
   idleWorkerShares_gte?: InputMaybe<Scalars['BigDecimal']['input']>;
@@ -2904,77 +2936,47 @@ export type PageInfo = {
 
 export type Query = {
   accountById?: Maybe<Account>;
-  /** @deprecated Use accountById */
-  accountByUniqueInput?: Maybe<Account>;
   accountSnapshotById?: Maybe<AccountSnapshot>;
-  /** @deprecated Use accountSnapshotById */
-  accountSnapshotByUniqueInput?: Maybe<AccountSnapshot>;
   accountSnapshots: Array<AccountSnapshot>;
   accountSnapshotsConnection: AccountSnapshotsConnection;
   accounts: Array<Account>;
   accountsConnection: AccountsConnection;
   basePoolById?: Maybe<BasePool>;
-  /** @deprecated Use basePoolById */
-  basePoolByUniqueInput?: Maybe<BasePool>;
   basePoolSnapshotById?: Maybe<BasePoolSnapshot>;
-  /** @deprecated Use basePoolSnapshotById */
-  basePoolSnapshotByUniqueInput?: Maybe<BasePoolSnapshot>;
   basePoolSnapshots: Array<BasePoolSnapshot>;
   basePoolSnapshotsConnection: BasePoolSnapshotsConnection;
   basePoolWhitelistById?: Maybe<BasePoolWhitelist>;
-  /** @deprecated Use basePoolWhitelistById */
-  basePoolWhitelistByUniqueInput?: Maybe<BasePoolWhitelist>;
   basePoolWhitelists: Array<BasePoolWhitelist>;
   basePoolWhitelistsConnection: BasePoolWhitelistsConnection;
   basePools: Array<BasePool>;
   basePoolsConnection: BasePoolsConnection;
   delegationById?: Maybe<Delegation>;
-  /** @deprecated Use delegationById */
-  delegationByUniqueInput?: Maybe<Delegation>;
   delegationSnapshotById?: Maybe<DelegationSnapshot>;
-  /** @deprecated Use delegationSnapshotById */
-  delegationSnapshotByUniqueInput?: Maybe<DelegationSnapshot>;
   delegationSnapshots: Array<DelegationSnapshot>;
   delegationSnapshotsConnection: DelegationSnapshotsConnection;
   delegations: Array<Delegation>;
   delegationsConnection: DelegationsConnection;
   globalStateById?: Maybe<GlobalState>;
-  /** @deprecated Use globalStateById */
-  globalStateByUniqueInput?: Maybe<GlobalState>;
   globalStateSnapshotById?: Maybe<GlobalStateSnapshot>;
-  /** @deprecated Use globalStateSnapshotById */
-  globalStateSnapshotByUniqueInput?: Maybe<GlobalStateSnapshot>;
   globalStateSnapshots: Array<GlobalStateSnapshot>;
   globalStateSnapshotsConnection: GlobalStateSnapshotsConnection;
   globalStates: Array<GlobalState>;
   globalStatesConnection: GlobalStatesConnection;
   nftById?: Maybe<Nft>;
-  /** @deprecated Use nftById */
-  nftByUniqueInput?: Maybe<Nft>;
   nfts: Array<Nft>;
   nftsConnection: NftsConnection;
   sessionById?: Maybe<Session>;
-  /** @deprecated Use sessionById */
-  sessionByUniqueInput?: Maybe<Session>;
   sessions: Array<Session>;
   sessionsConnection: SessionsConnection;
   squidStatus?: Maybe<SquidStatus>;
   stakePoolById?: Maybe<StakePool>;
-  /** @deprecated Use stakePoolById */
-  stakePoolByUniqueInput?: Maybe<StakePool>;
   stakePools: Array<StakePool>;
   stakePoolsConnection: StakePoolsConnection;
   vaultById?: Maybe<Vault>;
-  /** @deprecated Use vaultById */
-  vaultByUniqueInput?: Maybe<Vault>;
   vaults: Array<Vault>;
   vaultsConnection: VaultsConnection;
   workerById?: Maybe<Worker>;
-  /** @deprecated Use workerById */
-  workerByUniqueInput?: Maybe<Worker>;
   workerSnapshotById?: Maybe<WorkerSnapshot>;
-  /** @deprecated Use workerSnapshotById */
-  workerSnapshotByUniqueInput?: Maybe<WorkerSnapshot>;
   workerSnapshots: Array<WorkerSnapshot>;
   workerSnapshotsConnection: WorkerSnapshotsConnection;
   workers: Array<Worker>;
@@ -2987,18 +2989,8 @@ export type QueryAccountByIdArgs = {
 };
 
 
-export type QueryAccountByUniqueInputArgs = {
-  where: WhereIdInput;
-};
-
-
 export type QueryAccountSnapshotByIdArgs = {
   id: Scalars['String']['input'];
-};
-
-
-export type QueryAccountSnapshotByUniqueInputArgs = {
-  where: WhereIdInput;
 };
 
 
@@ -3039,18 +3031,8 @@ export type QueryBasePoolByIdArgs = {
 };
 
 
-export type QueryBasePoolByUniqueInputArgs = {
-  where: WhereIdInput;
-};
-
-
 export type QueryBasePoolSnapshotByIdArgs = {
   id: Scalars['String']['input'];
-};
-
-
-export type QueryBasePoolSnapshotByUniqueInputArgs = {
-  where: WhereIdInput;
 };
 
 
@@ -3072,11 +3054,6 @@ export type QueryBasePoolSnapshotsConnectionArgs = {
 
 export type QueryBasePoolWhitelistByIdArgs = {
   id: Scalars['String']['input'];
-};
-
-
-export type QueryBasePoolWhitelistByUniqueInputArgs = {
-  where: WhereIdInput;
 };
 
 
@@ -3117,18 +3094,8 @@ export type QueryDelegationByIdArgs = {
 };
 
 
-export type QueryDelegationByUniqueInputArgs = {
-  where: WhereIdInput;
-};
-
-
 export type QueryDelegationSnapshotByIdArgs = {
   id: Scalars['String']['input'];
-};
-
-
-export type QueryDelegationSnapshotByUniqueInputArgs = {
-  where: WhereIdInput;
 };
 
 
@@ -3169,18 +3136,8 @@ export type QueryGlobalStateByIdArgs = {
 };
 
 
-export type QueryGlobalStateByUniqueInputArgs = {
-  where: WhereIdInput;
-};
-
-
 export type QueryGlobalStateSnapshotByIdArgs = {
   id: Scalars['String']['input'];
-};
-
-
-export type QueryGlobalStateSnapshotByUniqueInputArgs = {
-  where: WhereIdInput;
 };
 
 
@@ -3221,11 +3178,6 @@ export type QueryNftByIdArgs = {
 };
 
 
-export type QueryNftByUniqueInputArgs = {
-  where: WhereIdInput;
-};
-
-
 export type QueryNftsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -3244,11 +3196,6 @@ export type QueryNftsConnectionArgs = {
 
 export type QuerySessionByIdArgs = {
   id: Scalars['String']['input'];
-};
-
-
-export type QuerySessionByUniqueInputArgs = {
-  where: WhereIdInput;
 };
 
 
@@ -3273,11 +3220,6 @@ export type QueryStakePoolByIdArgs = {
 };
 
 
-export type QueryStakePoolByUniqueInputArgs = {
-  where: WhereIdInput;
-};
-
-
 export type QueryStakePoolsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -3296,11 +3238,6 @@ export type QueryStakePoolsConnectionArgs = {
 
 export type QueryVaultByIdArgs = {
   id: Scalars['String']['input'];
-};
-
-
-export type QueryVaultByUniqueInputArgs = {
-  where: WhereIdInput;
 };
 
 
@@ -3325,18 +3262,8 @@ export type QueryWorkerByIdArgs = {
 };
 
 
-export type QueryWorkerByUniqueInputArgs = {
-  where: WhereIdInput;
-};
-
-
 export type QueryWorkerSnapshotByIdArgs = {
   id: Scalars['String']['input'];
-};
-
-
-export type QueryWorkerSnapshotByUniqueInputArgs = {
-  where: WhereIdInput;
 };
 
 
@@ -3581,7 +3508,13 @@ export type SessionsConnection = {
 };
 
 export type SquidStatus = {
-  /** The height of the processed part of the chain */
+  /** The hash of the last processed finalized block */
+  finalizedHash?: Maybe<Scalars['String']['output']>;
+  /** The height of the last processed finalized block */
+  finalizedHeight?: Maybe<Scalars['Int']['output']>;
+  /** The hash of the last processed block */
+  hash?: Maybe<Scalars['String']['output']>;
+  /** The height of the last processed block */
   height?: Maybe<Scalars['Int']['output']>;
 };
 
@@ -4020,10 +3953,6 @@ export type VaultsConnection = {
   edges: Array<VaultEdge>;
   pageInfo: PageInfo;
   totalCount: Scalars['Int']['output'];
-};
-
-export type WhereIdInput = {
-  id: Scalars['String']['input'];
 };
 
 export type Worker = {
@@ -5377,7 +5306,7 @@ export const useGlobalStateQuery = <
     
     return useQuery<GlobalStateQuery, TError, TData>(
       {
-    queryKey: variables === undefined ? ['GlobalState', client.url] : ['GlobalState', client.url, variables],
+    queryKey: variables === undefined ? ['GlobalState'] : ['GlobalState', variables],
     queryFn: fetcher<GlobalStateQuery, GlobalStateQueryVariables>(client, GlobalStateDocument, variables, headers),
     ...options
   }
@@ -5428,7 +5357,7 @@ export const useGlobalStateSnapshotsConnectionQuery = <
     
     return useQuery<GlobalStateSnapshotsConnectionQuery, TError, TData>(
       {
-    queryKey: ['GlobalStateSnapshotsConnection', client.url, variables],
+    queryKey: ['GlobalStateSnapshotsConnection', variables],
     queryFn: fetcher<GlobalStateSnapshotsConnectionQuery, GlobalStateSnapshotsConnectionQueryVariables>(client, GlobalStateSnapshotsConnectionDocument, variables, headers),
     ...options
   }
