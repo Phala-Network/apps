@@ -1,18 +1,11 @@
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 })
-const withImages = require('next-images')
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'export',
-  transpilePackages: [
-    'jotai-devtools',
-    '@talismn/connect-components',
-    '@talismn/connect-ui',
-    '@talismn/connect-wallets',
-  ],
-  images: {disableStaticImages: true},
+  transpilePackages: ['jotai-devtools'],
   eslint: {
     ignoreDuringBuilds: true,
     dirs: ['pages', 'components', 'lib', 'hooks', 'store', 'types'],
@@ -23,13 +16,7 @@ const nextConfig = {
     },
   },
   reactStrictMode: true,
-  webpack(config) {
-    for (const rule of config.module.rules) {
-      if (rule.test instanceof RegExp && rule.test.test('.svg')) {
-        rule.resourceQuery = {not: /react/}
-      }
-    }
-
+  webpack: (config) => {
     config.module.rules.push({
       test: /\.svg$/i,
       resourceQuery: /react/,
@@ -42,11 +29,7 @@ const nextConfig = {
               plugins: [
                 {
                   name: 'preset-default',
-                  params: {
-                    overrides: {
-                      removeViewBox: false,
-                    },
-                  },
+                  params: {overrides: {removeViewBox: false}},
                 },
               ],
             },
@@ -54,7 +37,6 @@ const nextConfig = {
         },
       ],
     })
-
     return config
   },
   experimental: {
@@ -65,4 +47,4 @@ const nextConfig = {
   },
 }
 
-module.exports = withBundleAnalyzer(withImages(nextConfig))
+module.exports = withBundleAnalyzer(nextConfig)

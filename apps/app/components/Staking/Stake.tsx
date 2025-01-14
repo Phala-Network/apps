@@ -16,7 +16,6 @@ import {
 } from '@/hooks/staking'
 import {barlow} from '@/lib/theme'
 import {OpenInNew, Unarchive} from '@mui/icons-material'
-import {LoadingButton} from '@mui/lab'
 import {
   Box,
   Button,
@@ -439,7 +438,7 @@ const Stake = () => {
         </Paper>
 
         <SwitchChainButton>
-          <LoadingButton
+          <Button
             fullWidth
             sx={{mt: 2}}
             type="submit"
@@ -464,7 +463,7 @@ const Stake = () => {
               (needApprove ? 'Approve and Stake' : 'Stake')}
             {buttonErrorMessage == null && isUnstake && 'Unstake'}
             {buttonErrorMessage != null && buttonErrorMessage}
-          </LoadingButton>
+          </Button>
         </SwitchChainButton>
       </Stack>
     </Box>

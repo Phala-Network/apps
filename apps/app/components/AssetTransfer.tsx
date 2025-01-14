@@ -1,9 +1,9 @@
 import usePolkadotApi from '@/hooks/usePolkadotApi'
 import useSignAndSend from '@/hooks/useSignAndSend'
 import {barlow} from '@/lib/theme'
-import {LoadingButton} from '@mui/lab'
 import {
   Alert,
+  Button,
   DialogActions,
   DialogContent,
   DialogTitle,
@@ -111,14 +111,14 @@ const AssetTransfer: FC<{asset: Asset; onClose: () => void}> = ({
         </Alert>
       </DialogContent>
       <DialogActions>
-        <LoadingButton
+        <Button
           variant="text"
           loading={loading}
           disabled={!isValid}
           onClick={transfer}
         >
           Submit
-        </LoadingButton>
+        </Button>
       </DialogActions>
     </>
   )

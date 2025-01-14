@@ -45,7 +45,7 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
   pha: {
     id: 'pha',
     symbol: 'PHA',
-    icon: phaIcon,
+    icon: phaIcon.src,
     xc20Address: {
       moonbeam: '0xffffffff63d24ecc8eb8a7b5d0803e900f7b6ced',
     },
@@ -81,7 +81,7 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
   gpha: {
     id: 'gpha',
     symbol: 'GPHA',
-    icon: phaIcon,
+    icon: phaIcon.src,
     erc20TokenContractAddress: {
       goerli: '0xB376b0Ee6d8202721838e76376e81eEc0e2FE864',
     },
@@ -95,7 +95,7 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
   aca: {
     id: 'aca',
     symbol: 'ACA',
-    icon: acaIcon,
+    icon: acaIcon.src,
     decimals: {default: 12},
     polkadotAssetId: {phala: 5},
     destChainTransactionFee: {
@@ -123,7 +123,7 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
   glmr: {
     id: 'glmr',
     symbol: 'GLMR',
-    icon: glmrIcon,
+    icon: glmrIcon.src,
     decimals: {default: 18},
     polkadotAssetId: {phala: 1},
     xc20Address: {moonbeam: '0x0000000000000000000000000000000000000802'},
@@ -147,7 +147,7 @@ export const ASSETS: Readonly<Record<AssetId, Asset>> = {
   astr: {
     id: 'astr',
     symbol: 'ASTR',
-    icon: astrIcon,
+    icon: astrIcon.src,
     decimals: {default: 18},
     polkadotAssetId: {phala: '6'},
     destChainTransactionFee: {

@@ -1,5 +1,5 @@
 import {ethChain} from '@/config'
-import {LoadingButton} from '@mui/lab'
+import {Button} from '@mui/material'
 import {useAccount, useSwitchChain} from 'wagmi'
 
 const SwitchChainButton = ({children}: {children: React.ReactNode}) => {
@@ -9,14 +9,14 @@ const SwitchChainButton = ({children}: {children: React.ReactNode}) => {
     return children
   }
   return (
-    <LoadingButton
+    <Button
       loading={isPending}
       fullWidth
       color="warning"
       onClick={() => switchChain({chainId: ethChain.id})}
     >
       Switch to {ethChain.name}
-    </LoadingButton>
+    </Button>
   )
 }
 

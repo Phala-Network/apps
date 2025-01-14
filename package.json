@@ -20,17 +20,14 @@
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
     "@total-typescript/ts-reset": "^0.6.1",
-    "@types/node": "^22.10.5",
-    "lefthook": "^1.10.2",
+    "@types/node": "^22.10.6",
+    "lefthook": "^1.10.5",
     "tsx": "^4.19.2",
     "turbo": "^2.3.3",
     "typescript": "^5.7.3"
   },
   "packageManager": "bun@1.1.43",
   "patchedDependencies": {
-    "@buildwithsygma/sygma-sdk-core@2.11.2": "patches/@buildwithsygma%2Fsygma-sdk-core@2.11.2.patch",
-    "@talismn/connect-components@1.1.9": "patches/@talismn%2Fconnect-components@1.1.9.patch",
-    "@talismn/connect-ui@1.1.4": "patches/@talismn%2Fconnect-ui@1.1.4.patch",
-    "@talismn/connect-wallets@1.2.8": "patches/@talismn%2Fconnect-wallets@1.2.8.patch"
+    "@buildwithsygma/sygma-sdk-core@2.11.2": "patches/@buildwithsygma%2Fsygma-sdk-core@2.11.2.patch"
   }
 }

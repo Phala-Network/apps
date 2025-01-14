@@ -11,7 +11,6 @@ import {useSharePrice} from '@/hooks/staking'
 import {useAutoSwitchChain} from '@/hooks/useAutoSwitchChain'
 import {walletDialogOpenAtom} from '@/store/ui'
 import {CheckCircleOutline, ContentCopy} from '@mui/icons-material'
-import {LoadingButton} from '@mui/lab'
 import {
   Box,
   Button,
@@ -374,7 +373,7 @@ const ClaimKhalaAssets = () => {
 
                 <Box component="form" onSubmit={handleSubmit}>
                   <SwitchChainButton>
-                    <LoadingButton
+                    <Button
                       variant="contained"
                       disabled={!ethAddress || !isClaimable}
                       fullWidth
@@ -382,7 +381,7 @@ const ClaimKhalaAssets = () => {
                       loading={isLoading}
                     >
                       Claim
-                    </LoadingButton>
+                    </Button>
                   </SwitchChainButton>
                 </Box>
               </>

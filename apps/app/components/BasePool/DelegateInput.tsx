@@ -8,8 +8,7 @@ import useSignAndSend from '@/hooks/useSignAndSend'
 import {aprToApy} from '@/lib/apr'
 import type {BasePoolCommonFragment} from '@/lib/subsquidQuery'
 import {barlow} from '@/lib/theme'
-import {LoadingButton} from '@mui/lab'
-import {Skeleton, Stack, type SxProps, TextField} from '@mui/material'
+import {Button, Skeleton, Stack, type SxProps, TextField} from '@mui/material'
 import {getDecimalPattern, toCurrency, toPercentage} from '@phala/lib'
 import {polkadotAccountAtom} from '@phala/store'
 import Decimal from 'decimal.js'
@@ -125,7 +124,7 @@ const DelegateInput: FC<{basePool: BasePoolCommonFragment; sx?: SxProps}> = ({
             }
           }}
         />
-        <LoadingButton
+        <Button
           onClick={() => {
             delegate()
           }}
@@ -135,7 +134,7 @@ const DelegateInput: FC<{basePool: BasePoolCommonFragment; sx?: SxProps}> = ({
           variant="contained"
         >
           Delegate
-        </LoadingButton>
+        </Button>
       </Stack>
       <Property
         size="small"

@@ -2,7 +2,6 @@ import usePolkadotApi from '@/hooks/usePolkadotApi'
 import useSignAndSend from '@/hooks/useSignAndSend'
 import type {DelegationCommonFragment} from '@/lib/subsquidQuery'
 import {barlow} from '@/lib/theme'
-import {LoadingButton} from '@mui/lab'
 import {
   Alert,
   AlertTitle,
@@ -132,14 +131,14 @@ const Withdraw: FC<{
       </DialogContent>
 
       <DialogActions>
-        <LoadingButton
+        <Button
           loading={loading}
           variant="text"
           onClick={onClick}
           disabled={!isValid}
         >
           Submit
-        </LoadingButton>
+        </Button>
       </DialogActions>
     </>
   )
