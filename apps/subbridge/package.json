@@ -16,9 +16,9 @@
     "@emotion/server": "^11.11.0",
     "@emotion/styled": "^11.14.0",
     "@metamask/detect-provider": "^2.0.0",
-    "@mui/icons-material": "^6.3.1",
+    "@mui/icons-material": "^6.4.0",
     "@mui/lab": "latest",
-    "@mui/material": "^6.3.1",
+    "@mui/material": "^6.4.0",
     "@mui/material-nextjs": "^6.3.1",
     "@phala/lib": "workspace:*",
     "@phala/store": "workspace:*",
@@ -26,7 +26,7 @@
     "@polkadot/api": "^15.3.1",
     "@polkadot/util": "^13.3.1",
     "@polkadot/util-crypto": "^13.3.1",
-    "@talismn/connect-components": "^1.1.9",
+    "@talismn/connect-components": "1.1.9",
     "@talismn/connect-ui": "^1.1.4",
     "@talismn/connect-wallets": "^1.2.8",
     "date-fns": "^4.1.0",
@@ -46,6 +46,7 @@
     "@svgr/webpack": "^8.1.0",
     "@swc-jotai/debug-label": "^0.2.0",
     "@swc-jotai/react-refresh": "^0.3.0",
-    "@types/react": "^19.0.7"
+    "@types/react": "^19.0.7",
+    "@types/react-dom": "^19.0.3"
   }
 }

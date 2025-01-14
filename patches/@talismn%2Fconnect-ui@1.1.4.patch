@@ -1,0 +1,22 @@
+diff --git a/package.json b/package.json
+index efeb05d46ac127c1ec00a4a9265594ca6b995ba8..597c101a58f0f90db2a98ff703fd2267c86d0389 100644
+--- a/package.json
++++ b/package.json
+@@ -12,13 +12,12 @@
+     "access": "public"
+   },
+   "type": "module",
+-  "main": "./dist/connect-ui.cjs",
+-  "module": "./dist/connect-ui.js",
+-  "types": "./dist/connect-ui.d.ts",
++  "main": "./src/index.ts",
++  "module": "./src/index.ts",
+   "exports": {
+     ".": {
+-      "import": "./dist/connect-ui.js",
+-      "require": "./dist/connect-ui.cjs"
++      "import": "./src/index.ts",
++      "require": "./src/index.ts"
+     }
+   },
+   "sideEffects": [

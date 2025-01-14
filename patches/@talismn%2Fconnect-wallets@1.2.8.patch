@@ -1,0 +1,22 @@
+diff --git a/package.json b/package.json
+index ae27a1882e301cffe02865508846d3a8188eb5b1..76a05c72e487f89de1cab881a361b713e6c61a91 100644
+--- a/package.json
++++ b/package.json
+@@ -12,13 +12,12 @@
+     "access": "public"
+   },
+   "type": "module",
+-  "main": "./dist/connect-wallets.cjs",
+-  "module": "./dist/connect-wallets.js",
+-  "types": "./dist/connect-wallets.d.ts",
++  "main": "./src/index.ts",
++  "module": "./src/index.ts",
+   "exports": {
+     ".": {
+-      "import": "./dist/connect-wallets.js",
+-      "require": "./dist/connect-wallets.cjs"
++      "import": "./src/index.ts",
++      "require": "./src/index.ts"
+     }
+   },
+   "files": [

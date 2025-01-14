@@ -2,7 +2,6 @@ import {useEthersWeb3Provider} from '@/hooks/useEthersProvider'
 import {fromChainAtom} from '@/store/bridge'
 import {evmAccountAtom} from '@/store/ethers'
 import {polkadotWalletModalOpenAtom} from '@/store/polkadotWalletModal'
-import {LoadingButton} from '@mui/lab'
 import {
   Button,
   type ButtonProps,
@@ -42,7 +41,7 @@ const ConnectEvmWalletButton: FC<ButtonProps> = (props) => {
 
   return (
     <>
-      <LoadingButton
+      <Button
         loading={loading}
         {...props}
         onClick={(e) => {
@@ -51,7 +50,7 @@ const ConnectEvmWalletButton: FC<ButtonProps> = (props) => {
         }}
       >
         {props.children ?? 'Connect wallet'}
-      </LoadingButton>
+      </Button>
       <Dialog
         open={open}
         onClick={() => {

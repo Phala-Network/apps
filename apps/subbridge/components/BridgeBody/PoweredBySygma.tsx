@@ -25,8 +25,8 @@ const PoweredBySygma: FC<StackProps> = (props) => {
         css={{color: 'inherit'}}
       >
         <SygmaLogo
+          css={{width: '80px', height: 'auto'}}
           fill={theme.palette.text.primary}
-          width="80px"
           display="block"
         />
       </a>

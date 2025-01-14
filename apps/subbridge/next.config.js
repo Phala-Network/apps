@@ -6,7 +6,12 @@ const withImages = require('next-images')
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'export',
-  transpilePackages: ['jotai-devtools'],
+  transpilePackages: [
+    'jotai-devtools',
+    '@talismn/connect-components',
+    '@talismn/connect-ui',
+    '@talismn/connect-wallets',
+  ],
   images: {disableStaticImages: true},
   eslint: {
     ignoreDuringBuilds: true,
@@ -32,7 +37,20 @@ const nextConfig = {
       use: [
         {
           loader: '@svgr/webpack',
-          options: {dimensions: false},
+          options: {
+            svgoConfig: {
+              plugins: [
+                {
+                  name: 'preset-default',
+                  params: {
+                    overrides: {
+                      removeViewBox: false,
+                    },
+                  },
+                },
+              ],
+            },
+          },
         },
       ],
     })
@@ -41,8 +59,8 @@ const nextConfig = {
   },
   experimental: {
     swcPlugins: [
-      // ['@swc-jotai/debug-label', {}],
-      // ['@swc-jotai/react-refresh', {}],
+      ['@swc-jotai/debug-label', {}],
+      ['@swc-jotai/react-refresh', {}],
     ],
   },
 }
