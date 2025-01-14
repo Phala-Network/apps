@@ -56,8 +56,10 @@ export const useBridgeFee = (): Decimal | undefined => {
   )
 
   const {data: phalaSygmaFee} = useSWR(
-    bridge.kind === 'phalaSygma' && api != null && [api, 'substrateSygmaFee'],
-    async ([api]) => {
+    bridge.kind === 'phalaSygma' &&
+      api != null && [api.runtimeChain.toString(), 'substrateSygmaFee'],
+    async () => {
+      if (api == null) return
       const fee = await api.query.sygmaBasicFeeHandler.assetFees([
         1,
         {concrete: {parents: 0, interior: 'Here'}},
@@ -68,9 +70,13 @@ export const useBridgeFee = (): Decimal | undefined => {
 
   const {data: phalaProxySygmaFee} = useSWR(
     isProxiedByPhalaSygma &&
-      phalaApi != null && [phalaApi, 'phalaProxySygmaFee'],
-    async ([api]) => {
-      const fee = await api.query.sygmaBasicFeeHandler.assetFees([
+      phalaApi != null && [
+        phalaApi.runtimeChain.toString(),
+        'phalaProxySygmaFee',
+      ],
+    async () => {
+      if (phalaApi == null) return
+      const fee = await phalaApi.query.sygmaBasicFeeHandler.assetFees([
         1,
         {concrete: {parents: 0, interior: 'Here'}},
       ])

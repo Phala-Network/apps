@@ -13,7 +13,6 @@ import {
   toChainAtom,
 } from '@/store/bridge'
 import ArrowDownward from '@mui/icons-material/ArrowDownward'
-import {LoadingButton} from '@mui/lab'
 import {
   Box,
   Button,
@@ -355,7 +354,7 @@ const BridgeConfirmationDialog: FC<DialogProps> = ({onClose, ...props}) => {
       <DialogBody sx={[{px: 2}, !fullScreen && {width: 420}]} />
 
       <Stack spacing={2} sx={{px: 2, py: 3}}>
-        <LoadingButton
+        <Button
           loading={confirming}
           size="large"
           variant="contained"
@@ -365,7 +364,7 @@ const BridgeConfirmationDialog: FC<DialogProps> = ({onClose, ...props}) => {
           }}
         >
           Submit
-        </LoadingButton>
+        </Button>
         {fullScreen && (
           <Button size="large" fullWidth onClick={close}>
             Cancel

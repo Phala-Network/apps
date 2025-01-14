@@ -1,13 +1,34 @@
 import ClaimKhalaAssets from '@/components/ClaimKhalaAssets'
 import Title from '@/components/Title'
-import {Paper, Stack, Typography} from '@mui/material'
+import {Link, Paper, Stack, Typography} from '@mui/material'
 
 const Page = () => {
   return (
     <>
       <Title>Claim Khala Assets</Title>
-      <Stack maxWidth={450} mx="auto" alignItems="center" mt={6} gap={4}>
+      <Stack maxWidth={450} mx="auto" alignItems="center" mt={6} gap={3}>
         <Typography variant="h4">Claim Khala Assets</Typography>
+
+        <Paper sx={{background: 'transparent', p: 3, width: '100%'}}>
+          <Typography variant="body1" color="text.secondary">
+            Khala was terminated at block #7918688, and you can now claim your
+            assets on Ethereum. For more details, please refer to the{' '}
+            <Link
+              href="https://x.com/PhalaNetwork/status/1877822605660741916"
+              target="_blank"
+            >
+              announcement
+            </Link>{' '}
+            and{' '}
+            <Link
+              href="https://forum.phala.network/t/khala-asset-claim-system-is-now-live/3964"
+              target="_blank"
+            >
+              tutorial
+            </Link>
+            .
+          </Typography>
+        </Paper>
         <Paper sx={{background: 'transparent', p: 3, width: '100%'}}>
           <ClaimKhalaAssets />
         </Paper>

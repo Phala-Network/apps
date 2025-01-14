@@ -14,8 +14,11 @@ const PolkadotAccount: FC = () => {
   const polkadotApi = useCurrentPolkadotApi()
   const {data} = useSWR(
     polkadotApi != null &&
-      polkadotAccount != null && [polkadotApi, polkadotAccount.address],
-    polkadotNativeBalanceFetcher,
+      polkadotAccount != null && [
+        polkadotApi.runtimeChain.toString(),
+        polkadotAccount.address,
+      ],
+    polkadotNativeBalanceFetcher(polkadotApi),
     {
       refreshInterval: 12000,
     },

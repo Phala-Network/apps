@@ -1,6 +1,5 @@
 import usePolkadotApi from '@/hooks/usePolkadotApi'
 import useSignAndSend from '@/hooks/useSignAndSend'
-import {LoadingButton} from '@mui/lab'
 import {
   Button,
   DialogActions,
@@ -115,14 +114,14 @@ const ClaimReward: FC<{
         />
       </DialogContent>
       <DialogActions>
-        <LoadingButton
+        <Button
           variant="text"
           onClick={claimReward}
           disabled={!addressValid}
           loading={loading}
         >
           Submit
-        </LoadingButton>
+        </Button>
       </DialogActions>
     </>
   )

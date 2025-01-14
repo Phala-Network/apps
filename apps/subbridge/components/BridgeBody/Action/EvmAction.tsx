@@ -10,7 +10,6 @@ import {
   fromChainAtom,
 } from '@/store/bridge'
 import {evmAccountAtom, isNetworkWrongAtom} from '@/store/ethers'
-import {LoadingButton} from '@mui/lab'
 import {Button, Stack} from '@mui/material'
 import Decimal from 'decimal.js'
 import {useAtom, useAtomValue} from 'jotai'
@@ -110,7 +109,7 @@ const EvmAction: FC<{onConfirm: () => void}> = ({onConfirm}) => {
       }}
     >
       {needApproval && bridgeErrorMessage == null && (
-        <LoadingButton
+        <Button
           loading={!approved && approveLoading}
           size="large"
           sx={{flex: 1}}
@@ -122,7 +121,7 @@ const EvmAction: FC<{onConfirm: () => void}> = ({onConfirm}) => {
           }}
         >
           {approved ? 'Approved' : 'Approve'}
-        </LoadingButton>
+        </Button>
       )}
       <Button
         size="large"

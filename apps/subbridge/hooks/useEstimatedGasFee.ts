@@ -82,25 +82,25 @@ export const useEstimatedGasFee = (): Decimal | undefined => {
   const {data: xTokensPartialFee} = useSWR(
     bridge.kind === 'polkadotXTokens' &&
       polkadotApi != null && [
-        polkadotApi,
+        polkadotApi.runtimeChain.toString(),
         fromChain.id,
         toChain.id,
         asset.id,
         bridge.proxy,
       ],
-    xTokensPartialFeeFetcher,
+    xTokensPartialFeeFetcher(polkadotApi),
   )
 
   const {data: phalaPartialFee} = useSWR(
     (bridge.kind === 'phalaXTransfer' || bridge.kind === 'phalaSygma') &&
       polkadotApi != null && [
-        polkadotApi,
+        polkadotApi.runtimeChain.toString(),
         fromChain.id,
         toChain.id,
         asset.id,
         bridge.kind,
       ],
-    phalaXTransferPartialFeeFetcher,
+    phalaXTransferPartialFeeFetcher(polkadotApi),
   )
 
   return (

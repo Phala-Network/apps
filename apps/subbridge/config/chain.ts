@@ -50,7 +50,7 @@ export const CHAINS: Readonly<
   phala: {
     id: 'phala',
     name: 'Phala',
-    icon: phalaIcon,
+    icon: phalaIcon.src,
     kind: 'substrate',
     endpoint: [
       'wss://phala-rpc.dwellir.com',
@@ -68,7 +68,7 @@ export const CHAINS: Readonly<
   acala: {
     id: 'acala',
     name: 'Acala',
-    icon: acalaIcon,
+    icon: acalaIcon.src,
     kind: 'substrate',
     endpoint: [
       'wss://acala-rpc-0.aca-api.network',
@@ -88,7 +88,7 @@ export const CHAINS: Readonly<
   ethereum: {
     id: 'ethereum',
     name: 'Ethereum',
-    icon: ethereumIcon,
+    icon: ethereumIcon.src,
     kind: 'evm',
     evmChainId: 1,
     currencySymbol: 'ETH',
@@ -100,7 +100,7 @@ export const CHAINS: Readonly<
   base: {
     id: 'base',
     name: 'Base',
-    icon: baseIcon,
+    icon: baseIcon.src,
     kind: 'evm',
     evmChainId: 8453,
     currencySymbol: 'ETH',
@@ -108,7 +108,7 @@ export const CHAINS: Readonly<
   goerli: {
     id: 'goerli',
     name: 'Goerli',
-    icon: ethereumIcon,
+    icon: ethereumIcon.src,
     kind: 'evm',
     evmChainId: 5,
     currencySymbol: 'GoerliETH',
@@ -121,7 +121,7 @@ export const CHAINS: Readonly<
   rhala: {
     id: 'rhala',
     name: 'Rhala',
-    icon: phalaIcon,
+    icon: phalaIcon.src,
     kind: 'substrate',
     endpoint: 'wss://subbridge-test.phala.network/rhala/ws',
     ss58Format: 30,
@@ -135,7 +135,7 @@ export const CHAINS: Readonly<
   moonbeam: {
     id: 'moonbeam',
     name: 'Moonbeam',
-    icon: moonbeamIcon,
+    icon: moonbeamIcon.src,
     kind: 'evm',
     evmChainId: 1284,
     currencySymbol: 'GLMR',
@@ -147,7 +147,7 @@ export const CHAINS: Readonly<
   astar: {
     id: 'astar',
     name: 'Astar',
-    icon: astarIcon,
+    icon: astarIcon.src,
     kind: 'substrate',
     paraId: 2006,
     endpoint: [

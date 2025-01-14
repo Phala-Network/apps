@@ -1,16 +1,16 @@
-import {LoadingButton, type LoadingButtonProps} from '@mui/lab'
+import {Button, type ButtonProps} from '@mui/material'
 import {type FC, useState} from 'react'
 
 const PromiseButton: FC<
-  Omit<LoadingButtonProps, 'onClick'> & {
+  Omit<ButtonProps, 'onClick'> & {
     onClick?: (
-      ...args: Parameters<Exclude<LoadingButtonProps['onClick'], undefined>>
+      ...args: Parameters<Exclude<ButtonProps['onClick'], undefined>>
     ) => Promise<unknown>
   }
 > = ({onClick, ...props}) => {
   const [loading, setLoading] = useState(false)
 
-  const handleClick: LoadingButtonProps['onClick'] = (e) => {
+  const handleClick: ButtonProps['onClick'] = (e) => {
     if (onClick != null) {
       setLoading(true)
       void onClick(e).finally(() => {
@@ -19,7 +19,7 @@ const PromiseButton: FC<
     }
   }
 
-  return <LoadingButton {...props} loading={loading} onClick={handleClick} />
+  return <Button {...props} loading={loading} onClick={handleClick} />
 }
 
 export default PromiseButton

@@ -7,9 +7,9 @@ import {
   useUnlockPeriod,
   useUnlockRequests,
 } from '@/hooks/staking'
-import {LoadingButton} from '@mui/lab'
 import {
   Box,
+  Button,
   Chip,
   Paper,
   Table,
@@ -226,7 +226,7 @@ const Unstake = () => {
                   </Typography>
                 </TableCell>
                 <TableCell component="th" scope="row">
-                  <LoadingButton
+                  <Button
                     loading={isCancelLoading && cancelIndex === row.index}
                     variant="text"
                     size="small"
@@ -237,7 +237,7 @@ const Unstake = () => {
                     disabled={isCancelLoading}
                   >
                     Cancel
-                  </LoadingButton>
+                  </Button>
                 </TableCell>
               </TableRow>
             ))}
@@ -256,7 +256,7 @@ const Unstake = () => {
         )}
       </TableContainer>
 
-      <LoadingButton
+      <Button
         fullWidth
         loading={isClaimLoading}
         disabled={
@@ -266,7 +266,7 @@ const Unstake = () => {
         sx={{mt: 2}}
       >
         Claim Unstaked
-      </LoadingButton>
+      </Button>
     </Box>
   )
 }

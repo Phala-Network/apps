@@ -19,11 +19,10 @@ const KhalaSunsetAlert: FC<AlertProps> = ({sx, ...props}) => {
       {...props}
     >
       <AlertTitle>Khala Sunset Notice</AlertTitle>
-      Due to the upcoming sunset of Khala, scheduled for January 10th at 22:00
-      UTC, we have disabled all Khala-related cross-chain transfer functions to
-      prevent unnecessary transaction errors. We appreciate your understanding.{' '}
+      Due to the upcoming sunset of Khala, we have disabled all Khala-related
+      cross-chain transfer functions.{' '}
       <Link
-        href="https://x.com/PhalaNetwork/status/1876686031736414684"
+        href="https://x.com/PhalaNetwork/status/1878723034892448207"
         target="_blank"
       >
         Learn more

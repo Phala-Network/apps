@@ -18,6 +18,7 @@ const SubbridgeLogo: FC<{className?: string}> = ({className}) => {
         fill="currentColor"
         css={{
           flex: 'none',
+          height: 'auto',
           width: 36,
           [theme.breakpoints.down('sm')]: {
             width: 32,
@@ -29,6 +30,7 @@ const SubbridgeLogo: FC<{className?: string}> = ({className}) => {
         css={{
           flex: 'none',
           marginLeft: 13,
+          height: 'auto',
           width: 111,
           [theme.breakpoints.down('sm')]: {
             display: 'none',

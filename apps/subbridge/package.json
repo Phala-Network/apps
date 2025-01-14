@@ -16,9 +16,8 @@
     "@emotion/server": "^11.11.0",
     "@emotion/styled": "^11.14.0",
     "@metamask/detect-provider": "^2.0.0",
-    "@mui/icons-material": "^6.3.1",
-    "@mui/lab": "latest",
-    "@mui/material": "^6.3.1",
+    "@mui/icons-material": "^6.4.0",
+    "@mui/material": "^6.4.0",
     "@mui/material-nextjs": "^6.3.1",
     "@phala/lib": "workspace:*",
     "@phala/store": "workspace:*",
@@ -26,7 +25,7 @@
     "@polkadot/api": "^15.3.1",
     "@polkadot/util": "^13.3.1",
     "@polkadot/util-crypto": "^13.3.1",
-    "@talismn/connect-components": "^1.1.9",
+    "@talismn/connect-components": "1.1.9",
     "@talismn/connect-ui": "^1.1.4",
     "@talismn/connect-wallets": "^1.2.8",
     "date-fns": "^4.1.0",
@@ -35,10 +34,9 @@
     "jotai": "^2.11.0",
     "jotai-devtools": "^0.10.1",
     "next": "^15.1.4",
-    "next-images": "^1.8.5",
     "notistack": "^3.0.1",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "swr": "^2.3.0"
   },
   "devDependencies": {
@@ -46,6 +44,7 @@
     "@svgr/webpack": "^8.1.0",
     "@swc-jotai/debug-label": "^0.2.0",
     "@swc-jotai/react-refresh": "^0.3.0",
-    "@types/react": "^19.0.7"
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5"
   }
 }

@@ -1,5 +1,4 @@
 import {type ColorSchemeSetting, colorSchemeSettingAtom} from '@/store/common'
-import type {} from '@mui/lab/themeAugmentation'
 import {ThemeProvider, createTheme, useMediaQuery} from '@mui/material'
 import {useAtom} from 'jotai'
 import {type FC, type ReactNode, useEffect, useMemo, useState} from 'react'
@@ -84,9 +83,6 @@ const MuiThemeProvider: FC<{children: ReactNode}> = ({children}) => {
           },
           MuiOutlinedInput: {
             defaultProps: {notched: true},
-          },
-          MuiLoadingButton: {
-            defaultProps: {variant: 'outlined'},
           },
           MuiChip: {
             defaultProps: {variant: 'outlined'},

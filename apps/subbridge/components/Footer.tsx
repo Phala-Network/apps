@@ -22,8 +22,8 @@ const Footer: FC = () => {
           rel="noreferrer noopener"
         >
           <PhalaBrandLogo
+            css={{width: '80px', height: 'auto'}}
             fill={theme.palette.text.primary}
-            width="80px"
             display="block"
           />
         </a>

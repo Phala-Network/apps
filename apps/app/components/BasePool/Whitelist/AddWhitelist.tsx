@@ -1,7 +1,7 @@
 import usePolkadotApi from '@/hooks/usePolkadotApi'
 import useSignAndSend from '@/hooks/useSignAndSend'
-import {LoadingButton} from '@mui/lab'
 import {
+  Button,
   DialogActions,
   DialogContent,
   DialogTitle,
@@ -53,14 +53,14 @@ const AddWhitelist: FC<{
         />
       </DialogContent>
       <DialogActions>
-        <LoadingButton
+        <Button
           disabled={!isValid}
           loading={loading}
           variant="text"
           onClick={onClick}
         >
           Submit
-        </LoadingButton>
+        </Button>
       </DialogActions>
     </>
   )

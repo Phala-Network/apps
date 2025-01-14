@@ -1,4 +1,3 @@
-import backgroundWaves from '@/assets/background_waves.svg'
 import {Global, type SerializedStyles, css} from '@emotion/react'
 import {type Theme, useTheme} from '@mui/material'
 import {type FC, useEffect, useState} from 'react'
@@ -30,7 +29,7 @@ const commonStyles = css`
 
 const background = (theme: Theme): SerializedStyles => css`
   body {
-    background-image: url('${backgroundWaves}');
+    background-image: url('/background_waves.svg');
     background-position: bottom center;
     background-size: 100% auto;
     background-attachment: fixed;

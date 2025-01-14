@@ -3,8 +3,8 @@ import usePoolIntro, {type PoolIntro} from '@/hooks/usePoolIntro'
 import useSignAndSend from '@/hooks/useSignAndSend'
 import type {BasePoolCommonFragment} from '@/lib/subsquidQuery'
 import {barlow} from '@/lib/theme'
-import {LoadingButton} from '@mui/lab'
 import {
+  Button,
   DialogContent,
   DialogTitle,
   Grid2 as Grid,
@@ -140,7 +140,7 @@ const OwnerSettings: FC<{
                 }
               }}
             />
-            <LoadingButton
+            <Button
               onClick={setCommission}
               disabled={!commissionValid}
               loading={commissionLoading}
@@ -148,7 +148,7 @@ const OwnerSettings: FC<{
               variant="contained"
             >
               Save
-            </LoadingButton>
+            </Button>
           </Stack>
 
           {!isVault && (
@@ -175,7 +175,7 @@ const OwnerSettings: FC<{
                   }
                 }}
               />
-              <LoadingButton
+              <Button
                 onClick={setCapacity}
                 disabled={capacityString === ''}
                 loading={capacityLoading}
@@ -183,7 +183,7 @@ const OwnerSettings: FC<{
                 variant="contained"
               >
                 Save
-              </LoadingButton>
+              </Button>
             </Stack>
           )}
         </Stack>
@@ -298,7 +298,7 @@ const OwnerSettings: FC<{
         </Grid>
 
         <Stack direction="row" justifyContent="flex-end">
-          <LoadingButton
+          <Button
             disabled={!introLoaded}
             onClick={() => {
               void saveIntro()
@@ -308,7 +308,7 @@ const OwnerSettings: FC<{
             variant="contained"
           >
             Save Intro
-          </LoadingButton>
+          </Button>
         </Stack>
       </DialogContent>
     </>

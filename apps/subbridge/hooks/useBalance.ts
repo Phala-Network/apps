@@ -56,20 +56,23 @@ export const useBalance = (): Decimal | undefined => {
       polkadotAccount != null &&
       fromChain.kind === 'substrate' &&
       asset.polkadotAssetId?.[fromChain.id] != null && [
-        polkadotApi,
+        polkadotApi.runtimeChain.toString(),
         polkadotAccount.address,
         asset.polkadotAssetId[fromChain.id],
         decimals,
         balanceSource,
       ],
-    polkadotBalanceFetcher,
+    polkadotBalanceFetcher(polkadotApi),
     {refreshInterval},
   )
   const {data: polkadotNativeBalance} = useSWR(
     balanceSource === 'polkadotNative' &&
       polkadotApi != null &&
-      polkadotAccount != null && [polkadotApi, polkadotAccount.address],
-    polkadotNativeBalanceFetcher,
+      polkadotAccount != null && [
+        polkadotApi.runtimeChain.toString(),
+        polkadotAccount.address,
+      ],
+    polkadotNativeBalanceFetcher(polkadotApi),
     {refreshInterval},
   )
   const {data: evmNativeBalance} = useSWR(

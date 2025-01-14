@@ -1,7 +1,7 @@
 import usePolkadotApi from '@/hooks/usePolkadotApi'
 import useSignAndSend from '@/hooks/useSignAndSend'
-import {LoadingButton} from '@mui/lab'
 import {
+  Button,
   DialogActions,
   DialogContent,
   DialogTitle,
@@ -56,14 +56,14 @@ const AddWorker: FC<{
         />
       </DialogContent>
       <DialogActions>
-        <LoadingButton
+        <Button
           loading={loading}
           variant="text"
           onClick={onClick}
           disabled={!isValid}
         >
           Submit
-        </LoadingButton>
+        </Button>
       </DialogActions>
     </>
   )

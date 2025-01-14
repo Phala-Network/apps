@@ -1,13 +1,11 @@
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 })
-const withImages = require('next-images')
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'export',
   transpilePackages: ['jotai-devtools'],
-  images: {disableStaticImages: true},
   eslint: {
     ignoreDuringBuilds: true,
     dirs: ['pages', 'components', 'lib', 'hooks', 'store', 'types'],
@@ -18,13 +16,7 @@ const nextConfig = {
     },
   },
   reactStrictMode: true,
-  webpack(config) {
-    for (const rule of config.module.rules) {
-      if (rule.test instanceof RegExp && rule.test.test('.svg')) {
-        rule.resourceQuery = {not: /react/}
-      }
-    }
-
+  webpack: (config) => {
     config.module.rules.push({
       test: /\.svg$/i,
       resourceQuery: /react/,
@@ -32,19 +24,27 @@ const nextConfig = {
       use: [
         {
           loader: '@svgr/webpack',
-          options: {dimensions: false},
+          options: {
+            svgoConfig: {
+              plugins: [
+                {
+                  name: 'preset-default',
+                  params: {overrides: {removeViewBox: false}},
+                },
+              ],
+            },
+          },
         },
       ],
     })
-
     return config
   },
   experimental: {
     swcPlugins: [
-      // ['@swc-jotai/debug-label', {}],
-      // ['@swc-jotai/react-refresh', {}],
+      ['@swc-jotai/debug-label', {}],
+      ['@swc-jotai/react-refresh', {}],
     ],
   },
 }
 
-module.exports = withBundleAnalyzer(withImages(nextConfig))
+module.exports = withBundleAnalyzer(nextConfig)
