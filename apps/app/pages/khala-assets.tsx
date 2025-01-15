@@ -48,23 +48,26 @@ const Page = () => {
               Khala?
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              We are currently testing the Ledger hardware wallet, the function
-              will be launched with January. Ledger users please pay attention
-              to our next announcement.
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              Ethereum ledger users are not affected. You can use ledgers
-              ethereum address as claim address now.
+              Claiming Khala assets on Ledger wallet is supported.{' '}
+              <Link
+                href="https://forum.phala.network/t/special-cases-during-the-khala-assets-claim-process/3966#a-khala-network-ledger-users-1"
+                target="_blank"
+              >
+                Tutorial
+              </Link>
             </Typography>
             <Typography variant="subtitle1" fontWeight={500} sx={{mt: 2}}>
               I can't connect my Khala wallet and Ethereum wallet at the same
               time.
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              We are preparing a new version to facilitate claiming with
-              different devices. Please try to move both of your Khala and
-              Ethereum address into one device, or be patient for our next
-              upgrade.
+              Walletconnect is supported.{' '}
+              <Link
+                href="https://forum.phala.network/t/special-cases-during-the-khala-assets-claim-process/3966#b-how-to-claim-assets-across-multiple-devices-6"
+                target="_blank"
+              >
+                Tutorial
+              </Link>
             </Typography>
           </Stack>
         </Paper>
