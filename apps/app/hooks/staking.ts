@@ -29,13 +29,7 @@ export const useBalance = (tokenContractAddress: Hex, address?: Hex) => {
 }
 
 export const useShares = (address?: Hex) => {
-  const {data: shares} = useReadContract({
-    address: VAULT_CONTRACT_ADDRESS,
-    abi: vaultAbi,
-    functionName: 'balanceOf',
-    args: address && [address],
-    query: {enabled: Boolean(address), refetchInterval: 3_000},
-  })
+  const shares = useBalance(VAULT_CONTRACT_ADDRESS, address)
   return shares
 }
 

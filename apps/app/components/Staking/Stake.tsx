@@ -7,7 +7,6 @@ import {
   useAssetsToShares,
   useBalance,
   useMaxUnlockRequests,
-  useShares,
   useSharesToAssets,
   useUnlockPeriod,
   useUnlockRequests,
@@ -53,8 +52,6 @@ const Stake = () => {
   const shareRate = useSharesToAssets(oneUnit)
   const assetRate = useAssetsToShares(oneUnit)
   const {address, chain} = useAccount()
-  const userShares = useShares(address)
-  const userAssets = useSharesToAssets(userShares)
   const unlockRequests = useUnlockRequests(address)
   const maxUnlockRequests = useMaxUnlockRequests()
   const [amountString, setAmountString] = useState('')
@@ -97,17 +94,6 @@ const Stake = () => {
         depositResult.isLoading)) ||
     (isUnstake && (isWithdrawPending || withdrawResult.isLoading))
 
-  const maxAmount = useMemo(() => {
-    let value = undefined
-    if (isStake) {
-      value = balance
-    }
-    if (isUnstake) {
-      value = userAssets
-    }
-    return value
-  }, [balance, userAssets, isStake, isUnstake])
-
   const amount = useMemo(() => {
     if (amountString === '') {
       return null
@@ -126,20 +112,20 @@ const Stake = () => {
     return allowance < amount
   }, [allowance, amount])
 
-  const shares = useAssetsToShares(amount)
-  const assets = useSharesToAssets(amount)
+  const shares = useAssetsToShares(isStake ? amount : null)
+  const assets = useSharesToAssets(isUnstake ? amount : null)
 
   const percentage = useMemo(() => {
-    if (maxAmount == null || amount == null || maxAmount === 0n) {
+    if (amount == null || balance == null || balance === 0n) {
       return 0
     }
     return Decimal.min(
-      new Decimal(amount.toString()).div(maxAmount.toString()).mul(100),
+      new Decimal(amount.toString()).div(balance.toString()).mul(100),
       100,
     )
       .toDP(0)
       .toNumber()
-  }, [amount, maxAmount])
+  }, [amount, balance])
 
   const approve = async () => {
     if (amount != null) {
@@ -223,32 +209,19 @@ const Stake = () => {
   }
 
   const buttonErrorMessage = useMemo(() => {
-    if (isUnstake) {
-      if (
-        unlockRequests != null &&
-        maxUnlockRequests != null &&
-        unlockRequests.length >= maxUnlockRequests
-      ) {
-        return 'Exceed max unlock requests'
-      }
-      if (amount != null && userAssets != null && amount > userAssets) {
-        return 'Insufficient staking'
-      }
+    if (
+      isUnstake &&
+      unlockRequests != null &&
+      maxUnlockRequests != null &&
+      unlockRequests.length >= maxUnlockRequests
+    ) {
+      return 'Exceed max unlock requests'
     }
-    if (isStake) {
-      if (amount != null && balance != null && amount > balance) {
-        return 'Insufficient balance'
-      }
+
+    if (amount != null && balance != null && amount > balance) {
+      return 'Insufficient balance'
     }
-  }, [
-    isUnstake,
-    unlockRequests,
-    maxUnlockRequests,
-    amount,
-    userAssets,
-    isStake,
-    balance,
-  ])
+  }, [isUnstake, unlockRequests, maxUnlockRequests, amount, balance])
 
   return (
     <Box>
@@ -318,8 +291,8 @@ const Stake = () => {
               size="small"
               variant="text"
               onClick={() => {
-                if (maxAmount != null) {
-                  setAmountString(formatUnits(maxAmount, 18))
+                if (balance != null) {
+                  setAmountString(formatUnits(balance, 18))
                 }
               }}
             >
@@ -348,7 +321,7 @@ const Stake = () => {
 
         <Box px={1} width={1}>
           <Slider
-            disabled={isLoading || (isStake && balance == null)}
+            disabled={isLoading || balance == null}
             size="small"
             value={percentage}
             step={1}
@@ -365,11 +338,11 @@ const Stake = () => {
             valueLabelDisplay="auto"
             valueLabelFormat={(value) => `${value}%`}
             onChange={(_, value) => {
-              if (maxAmount != null && !Array.isArray(value)) {
+              if (balance != null && !Array.isArray(value)) {
                 setAmountString(
                   new Decimal(value)
                     .div(100)
-                    .mul(maxAmount.toString())
+                    .mul(balance.toString())
                     .div(1e18)
                     .toDP(18)
                     .toString(),
@@ -440,16 +413,10 @@ const Stake = () => {
             sx={{mt: 2}}
             type="submit"
             disabled={
-              (isStake &&
-                (amount == null ||
-                  balance == null ||
-                  amount === 0n ||
-                  amount > balance)) ||
-              (isUnstake &&
-                (amount == null ||
-                  amount === 0n ||
-                  userAssets == null ||
-                  amount > userAssets)) ||
+              amount == null ||
+              balance == null ||
+              amount === 0n ||
+              amount > balance ||
               buttonErrorMessage != null
             }
             loading={isLoading}
