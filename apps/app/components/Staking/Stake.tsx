@@ -216,7 +216,7 @@ const Stake = () => {
       executeWithdraw({
         address: VAULT_CONTRACT_ADDRESS,
         abi: vaultAbi,
-        functionName: 'withdraw',
+        functionName: 'redeem',
         args: [amount, address, address],
       })
     }
