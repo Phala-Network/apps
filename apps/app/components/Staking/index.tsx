@@ -5,7 +5,7 @@ import {
   useTotalAssets,
 } from '@/hooks/staking'
 import {useAutoSwitchChain} from '@/hooks/useAutoSwitchChain'
-import {Paper, Stack} from '@mui/material'
+import {Box, Grid2 as Grid, Paper, Stack} from '@mui/material'
 import {toCurrency, toPercentage} from '@phala/lib'
 import Decimal from 'decimal.js'
 import {useMemo} from 'react'
@@ -33,47 +33,49 @@ const Staking = () => {
   }, [rewardRate, totalAssets])
 
   return (
-    <div>
-      <Stack
-        direction={{xs: 'column', sm: 'row'}}
-        justifyContent="space-between"
-        gap={2}
-      >
-        <Paper sx={{p: 2, background: 'transparent', flex: 1}}>
-          <Property
-            center
-            size="large"
-            label="Staking APR"
-            sx={{color: 'primary.main'}}
-          >
-            {apr != null ? toPercentage(apr) : '-'}
-          </Property>
-        </Paper>
+    <Box pb={10}>
+      <Grid container spacing={2}>
+        <Grid size={{xs: 6, sm: 4}}>
+          <Paper sx={{p: 2, background: 'transparent', flex: 1}}>
+            <Property
+              center
+              size="large"
+              label="Staking APR"
+              sx={{color: 'primary.main'}}
+            >
+              {apr != null ? toPercentage(apr) : '-'}
+            </Property>
+          </Paper>
+        </Grid>
 
-        <Paper sx={{p: 2, background: 'transparent', flex: 1}}>
-          <Property size="large" label="My Staking" wrapDecimal center>
-            {assets != null ? toCurrency(formatUnits(assets, 18)) : '-'}
-          </Property>
-        </Paper>
+        <Grid size={{xs: 6, sm: 4}}>
+          <Paper sx={{p: 2, background: 'transparent', flex: 1}}>
+            <Property size="large" label="My staking" wrapDecimal center>
+              {assets != null ? toCurrency(formatUnits(assets, 18)) : '-'}
+            </Property>
+          </Paper>
+        </Grid>
 
-        <Paper sx={{p: 2, background: 'transparent', flex: 1}}>
-          <Property size="large" label="Total Staking" wrapDecimal center>
-            {totalAssets != null
-              ? toCurrency(formatUnits(totalAssets, 18))
-              : '-'}
-          </Property>
-        </Paper>
-      </Stack>
+        <Grid size={{xs: 12, sm: 4}}>
+          <Paper sx={{p: 2, background: 'transparent', flex: 1}}>
+            <Property size="large" label="Total staking" wrapDecimal center>
+              {totalAssets != null
+                ? toCurrency(formatUnits(totalAssets, 18))
+                : '-'}
+            </Property>
+          </Paper>{' '}
+        </Grid>
+      </Grid>
 
       <Stack direction={{xs: 'column', md: 'row'}} spacing={2} mt={2}>
-        <Paper sx={{flex: 1, background: 'transparent', height: 500}}>
+        <Paper sx={{flex: 1, background: 'transparent'}}>
           <Stake />
         </Paper>
-        <Paper sx={{flex: 1, background: 'transparent', height: 500}}>
+        <Paper sx={{flex: 1, background: 'transparent'}}>
           <Unstake />
         </Paper>
       </Stack>
-    </div>
+    </Box>
   )
 }
 
