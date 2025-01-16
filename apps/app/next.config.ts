@@ -54,6 +54,16 @@ const nextConfig: NextConfig = {
       ['@swc-jotai/debug-label', {}],
       ['@swc-jotai/react-refresh', {}],
     ],
+    turbo: {
+      rules: {
+        loaders: {
+          '*.svg': {
+            loaders: [{loader: '@svgr/webpack', options: {dimensions: false}}],
+            as: '*.js',
+          },
+        },
+      },
+    },
   },
 }
 

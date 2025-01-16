@@ -17,9 +17,9 @@ export const useAllowance = (address?: Hex) => {
   return allowance
 }
 
-export const useBalance = (address?: Hex) => {
+export const useBalance = (tokenContractAddress: Hex, address?: Hex) => {
   const {data: balance} = useReadContract({
-    address: PHA_CONTRACT_ADDRESS,
+    address: tokenContractAddress,
     abi: erc20Abi,
     functionName: 'balanceOf',
     args: address && [address],

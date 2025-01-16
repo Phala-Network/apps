@@ -10,7 +10,6 @@ import {
 import {
   Box,
   Button,
-  Chip,
   Paper,
   Table,
   TableBody,
@@ -157,31 +156,33 @@ const Unstake = () => {
   }, [unlockRequests?.length])
 
   return (
-    <Box p={3}>
-      <Box display="flex" justifyContent="space-between" alignItems="center">
-        <Typography variant="h6">Unstake Requests</Typography>
-        {maxUnlockRequests != null && unlockRequests != null && (
-          <Chip
-            variant="outlined"
-            label={`${unlockRequests?.length} / ${maxUnlockRequests} request${unlockRequests.length > 1 ? 's' : ''}`}
-          />
-        )}
-      </Box>
-      <Box display="flex" gap={2} mt={2}>
-        <Paper sx={{background: 'transparent', p: 2, flex: 1}}>
-          <Property label="Total Unstaking" center wrapDecimal>
+    <Box p={{xs: 2, md: 3}}>
+      <Typography variant="h6" lineHeight={1.2}>
+        Unstake Requests
+      </Typography>
+
+      <Box display="flex" gap={2} my={3}>
+        <Box flex={1}>
+          <Property label="Used requests" wrapDecimal>
+            {maxUnlockRequests == null
+              ? '-'
+              : `${unlockRequests?.length ?? 0} / ${maxUnlockRequests}`}
+          </Property>
+        </Box>
+        <Box flex={1}>
+          <Property label="Total unstaking" wrapDecimal>
             {totalUnlocking == null
               ? '-'
               : toCurrency(formatUnits(totalUnlocking, 18))}
           </Property>
-        </Paper>
-        <Paper sx={{background: 'transparent', p: 2, flex: 1}}>
-          <Property label="Total Claimable" center wrapDecimal>
+        </Box>
+        <Box flex={1}>
+          <Property label="Total claimable" wrapDecimal>
             {totalClaimable == null
               ? '-'
               : toCurrency(formatUnits(totalClaimable, 18))}
           </Property>
-        </Paper>
+        </Box>
       </Box>
       <TableContainer
         component={Paper}
@@ -210,7 +211,7 @@ const Unstake = () => {
                     <Box>
                       {row.countdown == null ? (
                         <Typography variant="body2" color="text.secondary">
-                          Ended
+                          Claimable
                         </Typography>
                       ) : (
                         row.countdown
@@ -265,7 +266,7 @@ const Unstake = () => {
         onClick={claim}
         sx={{mt: 2}}
       >
-        Claim Unstaked
+        Claim all
       </Button>
     </Box>
   )

@@ -7,15 +7,13 @@ import {
   useAssetsToShares,
   useBalance,
   useMaxUnlockRequests,
-  useRewardRate,
   useShares,
   useSharesToAssets,
-  useTotalAssets,
   useUnlockPeriod,
   useUnlockRequests,
 } from '@/hooks/staking'
 import {barlow} from '@/lib/theme'
-import {OpenInNew, Unarchive} from '@mui/icons-material'
+import {OpenInNew} from '@mui/icons-material'
 import {
   Box,
   Button,
@@ -30,6 +28,7 @@ import {
 } from '@mui/material'
 import {getDecimalPattern, toCurrency, trimAddress} from '@phala/lib'
 import phaIcon from '@phala/ui/icons/asset/pha.png'
+import vphaIcon from '@phala/ui/icons/asset/vpha.png'
 import {formatDuration, intervalToDuration} from 'date-fns'
 import Decimal from 'decimal.js'
 import Image from 'next/image'
@@ -38,35 +37,41 @@ import {useCallback, useEffect, useMemo, useState} from 'react'
 import {erc20Abi, formatUnits, parseUnits} from 'viem'
 import {useAccount, useWaitForTransactionReceipt, useWriteContract} from 'wagmi'
 
+const oneUnit = parseUnits('1', 18)
+
 const Stake = () => {
   const [tab, setTab] = useState(0)
   const isStake = tab === 0
   const isUnstake = tab === 1
+  const tokenContractAddress = useMemo(() => {
+    if (isStake) {
+      return PHA_CONTRACT_ADDRESS
+    }
+    return VAULT_CONTRACT_ADDRESS
+  }, [isStake])
   const {enqueueSnackbar} = useSnackbar()
+  const shareRate = useSharesToAssets(oneUnit)
+  const assetRate = useAssetsToShares(oneUnit)
   const {address, chain} = useAccount()
   const userShares = useShares(address)
   const userAssets = useSharesToAssets(userShares)
   const unlockRequests = useUnlockRequests(address)
   const maxUnlockRequests = useMaxUnlockRequests()
-  const totalAssets = useTotalAssets()
-  const rewardRate = useRewardRate()
   const [amountString, setAmountString] = useState('')
   const allowance = useAllowance(address)
-  const balance = useBalance(address)
+  const balance = useBalance(tokenContractAddress, address)
   const unlockPeriod = useUnlockPeriod()
   const {
     writeContract: executeApprove,
     data: approveTx,
     isPending: isApprovePending,
     reset: resetApprove,
-    failureReason: approveFailureReason,
   } = useWriteContract()
   const {
     writeContract: executeDeposit,
     data: depositTx,
     isPending: isDepositPending,
     reset: resetDeposit,
-    failureReason: depositFailureReason,
   } = useWriteContract({
     mutation: {
       onError: () => {
@@ -79,7 +84,6 @@ const Stake = () => {
     data: withdrawTx,
     isPending: isWithdrawPending,
     reset: resetWithdraw,
-    failureReason: withdrawFailureReason,
   } = useWriteContract()
   const approveResult = useWaitForTransactionReceipt({hash: approveTx})
   const depositResult = useWaitForTransactionReceipt({hash: depositTx})
@@ -123,6 +127,7 @@ const Stake = () => {
   }, [allowance, amount])
 
   const shares = useAssetsToShares(amount)
+  const assets = useSharesToAssets(amount)
 
   const percentage = useMemo(() => {
     if (maxAmount == null || amount == null || maxAmount === 0n) {
@@ -245,24 +250,6 @@ const Stake = () => {
     balance,
   ])
 
-  const dailyRewards = useMemo(() => {
-    if (
-      !isStake ||
-      rewardRate == null ||
-      totalAssets == null ||
-      totalAssets === 0n ||
-      amount == null
-    ) {
-      return null
-    }
-    return Decimal.mul(rewardRate.toString(), 24 * 60 * 60)
-      .mul(amount.toString())
-      .div((totalAssets + amount).toString())
-      .toDP(0)
-      .div(1e18)
-      .toString()
-  }, [isStake, rewardRate, totalAssets, amount])
-
   return (
     <Box>
       <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
@@ -283,60 +270,44 @@ const Stake = () => {
         alignItems="center"
         onSubmit={submit}
         spacing={2}
-        p={3}
+        p={{xs: 2, md: 3}}
       >
-        {isStake && (
-          <Stack
-            direction="row"
-            spacing={2}
-            width={1}
-            alignItems="center"
-            justifyContent="space-between"
-            height={68}
-          >
-            <Stack direction="row" alignItems="center" spacing={2} py={2}>
-              <Image src={phaIcon} width={36} height={36} alt="PHA" />
-              <Typography variant="h6">PHA</Typography>
-              <Chip
-                size="small"
-                label={
-                  <Box display="flex" alignItems="center" gap={0.5}>
-                    {trimAddress(PHA_CONTRACT_ADDRESS)}
-                    <OpenInNew sx={{width: 14, height: 14}} />
-                  </Box>
-                }
-                onClick={() => {}}
-                component="a"
-                variant="outlined"
-                href={`${chain?.blockExplorers?.default.url}/address/${PHA_CONTRACT_ADDRESS}`}
-                target="_blank"
-              />
-            </Stack>
-            <Property size="small" label="Balance" wrapDecimal>
-              {balance != null ? toCurrency(formatUnits(balance, 18)) : '-'}
-            </Property>
+        <Stack
+          direction="row"
+          spacing={2}
+          width={1}
+          alignItems="center"
+          justifyContent="space-between"
+          height={79}
+        >
+          <Stack direction="row" alignItems="center" spacing={2} py={2}>
+            <Image
+              src={isStake ? phaIcon : vphaIcon}
+              width={36}
+              height={36}
+              alt="PHA"
+            />
+            <Typography variant="h6">{isStake ? 'PHA' : 'vPHA'}</Typography>
+            <Chip
+              size="small"
+              label={
+                <Box display="flex" alignItems="center" gap={0.5}>
+                  {trimAddress(tokenContractAddress)}
+                  <OpenInNew sx={{width: 14, height: 14}} />
+                </Box>
+              }
+              onClick={() => {}}
+              component="a"
+              variant="outlined"
+              href={`${chain?.blockExplorers?.default.url}/address/${tokenContractAddress}`}
+              target="_blank"
+            />
           </Stack>
-        )}
-        {isUnstake && (
-          <Stack
-            direction="row"
-            spacing={2}
-            width={1}
-            alignItems="center"
-            justifyContent="space-between"
-            height={68}
-          >
-            <Stack direction="row" alignItems="center" spacing={2} py={2}>
-              <Unarchive sx={{width: 36, height: 36}} />
-              <Typography variant="h6">Unstake</Typography>
-            </Stack>
-            <Property size="small" label="My Staking" wrapDecimal>
-              {userAssets != null
-                ? toCurrency(formatUnits(userAssets, 18))
-                : '-'}
-            </Property>
-          </Stack>
-        )}
+          <Property size="small" label="Balance" wrapDecimal>
+            {balance != null ? toCurrency(formatUnits(balance, 18)) : '-'}
+          </Property>
+        </Stack>
+
         <OutlinedInput
           placeholder="0.00"
           disabled={isLoading}
@@ -408,22 +379,48 @@ const Stake = () => {
           />
         </Box>
 
-        <Paper sx={{p: 2, width: 1, height: 142}}>
+        <Paper
+          sx={(theme) => ({
+            p: 2,
+            width: 1,
+            background: theme.palette.action.hover,
+            border: 'none',
+            height: 106,
+          })}
+        >
           <Stack gap={1} width={1}>
             {isStake && (
-              <Property
-                size="small"
-                fullWidth
-                label="Estimated Daily Rewards"
-                wrapDecimal
-              >
-                {dailyRewards != null ? toCurrency(dailyRewards) : '-'}
+              <Property size="small" fullWidth label="You will receive">
+                {shares != null
+                  ? `${toCurrency(formatUnits(shares, 18))} vPHA`
+                  : '-'}
               </Property>
             )}
-            {/* <Property size="small" fullWidth label="Shares" wrapDecimal>
-              {shares != null ? toCurrency(formatUnits(shares, 18)) : '-'}
-            </Property> */}
-            <Property size="small" fullWidth label="Unstake Period">
+            {isUnstake && (
+              <Property size="small" fullWidth label="You will receive">
+                {assets != null
+                  ? `${toCurrency(formatUnits(assets, 18))} PHA`
+                  : '-'}
+              </Property>
+            )}
+
+            {isStake && (
+              <Property size="small" fullWidth label="Exchange rate">
+                {assetRate != null
+                  ? `1 PHA = ${toCurrency(formatUnits(assetRate, 18), 4)} vPHA`
+                  : '-'}
+              </Property>
+            )}
+
+            {isUnstake && (
+              <Property size="small" fullWidth label="Exchange rate">
+                {shareRate != null
+                  ? `1 vPHA = ${toCurrency(formatUnits(shareRate, 18), 4)} PHA`
+                  : '-'}
+              </Property>
+            )}
+
+            <Property size="small" fullWidth label="Unstake period">
               {unlockPeriod != null ? (
                 <Box component="span" sx={{textDecoration: 'underline dotted'}}>
                   {formatDuration(
@@ -460,8 +457,8 @@ const Stake = () => {
           >
             {buttonErrorMessage == null &&
               isStake &&
-              (needApprove ? 'Approve and Stake' : 'Stake')}
-            {buttonErrorMessage == null && isUnstake && 'Unstake'}
+              (needApprove ? 'Approve and stake' : 'Stake')}
+            {buttonErrorMessage == null && isUnstake && 'Request unstake'}
             {buttonErrorMessage != null && buttonErrorMessage}
           </Button>
         </SwitchChainButton>
