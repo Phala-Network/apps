@@ -1,7 +1,7 @@
 import vaultAbi from '@/assets/pha_vault_abi'
 import Property from '@/components/Property'
 import SwitchChainButton from '@/components/SwitchChainButton'
-import {PHA_CONTRACT_ADDRESS, VAULT_CONTRACT_ADDRESS} from '@/config'
+import {PHA_CONTRACT_ADDRESS, VAULT_CONTRACT_ADDRESS, ethChain} from '@/config'
 import {
   useAllowance,
   useAssetsToShares,
@@ -51,7 +51,7 @@ const Stake = () => {
   const {enqueueSnackbar} = useSnackbar()
   const shareRate = useSharesToAssets(oneUnit)
   const assetRate = useAssetsToShares(oneUnit)
-  const {address, chain} = useAccount()
+  const {address} = useAccount()
   const unlockRequests = useUnlockRequests(address)
   const maxUnlockRequests = useMaxUnlockRequests()
   const [amountString, setAmountString] = useState('')
@@ -272,7 +272,7 @@ const Stake = () => {
               onClick={() => {}}
               component="a"
               variant="outlined"
-              href={`${chain?.blockExplorers?.default.url}/address/${tokenContractAddress}`}
+              href={`${ethChain.blockExplorers.default.url}/address/${tokenContractAddress}`}
               target="_blank"
             />
           </Stack>
