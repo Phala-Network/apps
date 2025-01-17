@@ -409,6 +409,7 @@ const Stake = () => {
 
         <SwitchChainButton>
           <Button
+            size="large"
             fullWidth
             sx={{mt: 2}}
             type="submit"

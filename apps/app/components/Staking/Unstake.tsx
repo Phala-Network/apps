@@ -258,6 +258,7 @@ const Unstake = () => {
       </TableContainer>
 
       <Button
+        size="large"
         fullWidth
         loading={isClaimLoading}
         disabled={

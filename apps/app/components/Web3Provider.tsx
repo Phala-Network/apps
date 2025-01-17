@@ -31,6 +31,7 @@ export const Web3Provider = ({
         locale="en-US"
         modalSize="compact"
         theme={darkTheme({
+          borderRadius: 'medium',
           accentColor: '#c5ff46',
           accentColorForeground: '#333',
         })}
