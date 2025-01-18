@@ -164,9 +164,7 @@ const Unstake = () => {
       <Box display="flex" gap={2} my={3}>
         <Box flex={1}>
           <Property label="Used requests" wrapDecimal>
-            {maxUnlockRequests == null
-              ? '-'
-              : `${unlockRequests?.length ?? 0} / ${maxUnlockRequests}`}
+            {`${unlockRequests?.length ?? '-'} / ${maxUnlockRequests ?? '-'}`}
           </Property>
         </Box>
         <Box flex={1}>
