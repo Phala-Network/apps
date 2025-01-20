@@ -250,7 +250,7 @@ const Unstake = () => {
             height={200}
             color="text.secondary"
           >
-            <Typography variant="body2">No unstake request</Typography>
+            <Typography variant="body2">No unstake requests</Typography>
           </Box>
         )}
       </TableContainer>

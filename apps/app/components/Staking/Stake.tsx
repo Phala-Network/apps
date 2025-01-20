@@ -23,6 +23,8 @@ import {
   Stack,
   Tab,
   Tabs,
+  ToggleButton,
+  ToggleButtonGroup,
   Typography,
 } from '@mui/material'
 import {getDecimalPattern, toCurrency, trimAddress} from '@phala/lib'
@@ -42,6 +44,7 @@ const Stake = () => {
   const [tab, setTab] = useState(0)
   const isStake = tab === 0
   const isUnstake = tab === 1
+  const [useDex, setUseDex] = useState(false)
   const tokenContractAddress = useMemo(() => {
     if (isStake) {
       return PHA_CONTRACT_ADDRESS
@@ -242,7 +245,7 @@ const Stake = () => {
         component="form"
         alignItems="center"
         onSubmit={submit}
-        spacing={2}
+        gap={2}
         p={{xs: 2, md: 3}}
       >
         <Stack
@@ -251,7 +254,7 @@ const Stake = () => {
           width={1}
           alignItems="center"
           justifyContent="space-between"
-          height={79}
+          height={isStake ? 79 : 32}
         >
           <Stack direction="row" alignItems="center" spacing={2} py={2}>
             <Image
@@ -352,6 +355,23 @@ const Stake = () => {
           />
         </Box>
 
+        {isUnstake && (
+          <ToggleButtonGroup
+            fullWidth
+            size="small"
+            color="primary"
+            value={useDex ? 'dex' : 'unstake'}
+            exclusive
+            onChange={(_, value) => {
+              setUseDex(value === 'dex')
+            }}
+            sx={{marginTop: -1}}
+          >
+            <ToggleButton value="unstake">Unstake</ToggleButton>
+            <ToggleButton value="dex">Swap on DEX</ToggleButton>
+          </ToggleButtonGroup>
+        )}
+
         <Paper
           sx={(theme) => ({
             p: 2,
@@ -371,9 +391,11 @@ const Stake = () => {
             )}
             {isUnstake && (
               <Property size="small" fullWidth label="You will receive">
-                {assets != null
-                  ? `${toCurrency(formatUnits(assets, 18))} PHA`
-                  : '-'}
+                {useDex
+                  ? 'View on DEX'
+                  : assets != null
+                    ? `${toCurrency(formatUnits(assets, 18))} PHA`
+                    : '-'}
               </Property>
             )}
 
@@ -387,14 +409,18 @@ const Stake = () => {
 
             {isUnstake && (
               <Property size="small" fullWidth label="Exchange rate">
-                {shareRate != null
-                  ? `1 vPHA = ${toCurrency(formatUnits(shareRate, 18), 4)} PHA`
-                  : '-'}
+                {useDex
+                  ? 'View on DEX'
+                  : shareRate != null
+                    ? `1 vPHA = ${toCurrency(formatUnits(shareRate, 18), 4)} PHA`
+                    : '-'}
               </Property>
             )}
 
             <Property size="small" fullWidth label="Unstake period">
-              {unlockPeriod != null ? (
+              {isUnstake && useDex ? (
+                'Instant'
+              ) : unlockPeriod != null ? (
                 <Box component="span" sx={{textDecoration: 'underline dotted'}}>
                   {formatDuration(
                     intervalToDuration({start: 0, end: unlockPeriod}),
@@ -411,8 +437,6 @@ const Stake = () => {
           <Button
             size="large"
             fullWidth
-            sx={{mt: 2}}
-            type="submit"
             disabled={
               amount == null ||
               balance == null ||
@@ -422,11 +446,28 @@ const Stake = () => {
             }
             loading={isLoading}
             variant="contained"
+            {...(isUnstake && useDex
+              ? {
+                  href: `https://app.uniswap.org/swap?chain=mainnet&inputCurrency=${VAULT_CONTRACT_ADDRESS}&outputCurrency=${PHA_CONTRACT_ADDRESS}&value=${amountString}&field=input`,
+                  target: '_blank',
+                }
+              : {
+                  type: 'submit',
+                })}
           >
             {buttonErrorMessage == null &&
               isStake &&
               (needApprove ? 'Approve and stake' : 'Stake')}
-            {buttonErrorMessage == null && isUnstake && 'Request unstake'}
+            {buttonErrorMessage == null &&
+              isUnstake &&
+              (useDex ? (
+                <>
+                  Swap on DEX
+                  <OpenInNew sx={{width: 16, ml: 1}} />
+                </>
+              ) : (
+                'Request unstake'
+              ))}
             {buttonErrorMessage != null && buttonErrorMessage}
           </Button>
         </SwitchChainButton>
