@@ -9,6 +9,7 @@ import {
   ThemeProvider as MuiThemeProvider,
 } from '@mui/material'
 import {AppCacheProvider} from '@mui/material-nextjs/v15-pagesRouter'
+import {GoogleTagManager} from '@next/third-parties/google'
 // import {JotaiDevTools} from '@phala/lib'
 import {
   QueryCache,
@@ -62,6 +63,7 @@ const MyApp = (props: AppProps) => {
                   <ZendeskWidget />
                   {/* <JotaiDevTools /> */}
                   <ReactQueryDevtools buttonPosition="bottom-left" />
+                  <GoogleTagManager gtmId="G-E0PDMEJQ0T" />
                 </Layout>
               </Web3Provider>
             </MuiThemeProvider>
