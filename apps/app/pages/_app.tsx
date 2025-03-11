@@ -1,4 +1,5 @@
 import Layout from '@/components/Layout'
+import SnackbarProvider from '@/components/SnackbarProvider'
 import {Web3Provider} from '@/components/Web3Provider'
 import ZendeskWidget from '@/components/ZendeskWidget'
 import {globalStyles} from '@/lib/styles'
@@ -58,13 +59,15 @@ const MyApp = (props: AppProps) => {
                 <CssBaseline />
                 <GlobalStyles styles={[globalStyles]} />
 
-                <Layout>
-                  <Component {...pageProps} />
-                  <ZendeskWidget />
-                  {/* <JotaiDevTools /> */}
-                  <ReactQueryDevtools buttonPosition="bottom-left" />
-                  <GoogleAnalytics gaId="G-E0PDMEJQ0T" />
-                </Layout>
+                <SnackbarProvider>
+                  <Layout>
+                    <Component {...pageProps} />
+                    <ZendeskWidget />
+                    {/* <JotaiDevTools /> */}
+                    <ReactQueryDevtools buttonPosition="bottom-left" />
+                    <GoogleAnalytics gaId="G-E0PDMEJQ0T" />
+                  </Layout>
+                </SnackbarProvider>
               </Web3Provider>
             </MuiThemeProvider>
           </AppCacheProvider>
