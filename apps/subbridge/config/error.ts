@@ -13,6 +13,6 @@ export const BRIDGE_ERROR_MESSAGES: Record<BridgeError, string> = {
   InsufficientBalance: 'Insufficient balance',
   InsufficientReserve: 'Insufficient reserve',
   AmountTooSmall: 'Amount too small',
-  Disabled: 'Temporarily disabled',
+  Disabled: 'Under maintenance',
   MinBalanceLimit: 'Minimum balance limit not met',
 }
