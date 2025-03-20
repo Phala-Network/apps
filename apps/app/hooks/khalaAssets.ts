@@ -44,13 +44,19 @@ export const useClaimStatus = (address?: Hex) => {
       if (event == null) {
         return
       }
-      const logs = await publicClient.getLogs({
-        address: KHALA_CLAIMER_CONTRACT_ADDRESS,
-        event,
-        args: {user: address},
-        fromBlock: 21613791n,
-      })
-      return logs[0]
+      const latestBlock = await publicClient.getBlock()
+      for (let i = latestBlock.number; i > 21613791n; i -= 10000n) {
+        const logs = await publicClient.getLogs({
+          address: KHALA_CLAIMER_CONTRACT_ADDRESS,
+          event,
+          args: {user: address},
+          fromBlock: i - 10000n,
+          toBlock: i,
+        })
+        if (logs.length > 0) {
+          return logs[0]
+        }
+      }
     },
     enabled: claimed === true && publicClient != null && address != null,
     refetchInterval: (query) => (query.state.data ? false : 3000),

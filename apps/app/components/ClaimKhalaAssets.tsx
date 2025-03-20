@@ -17,6 +17,7 @@ import {
   Divider,
   Link,
   Paper,
+  Skeleton,
   Stack,
   Step,
   StepLabel,
@@ -344,11 +345,21 @@ const ClaimKhalaAssets = () => {
                 <Typography variant="body2" mt={1} color="text.secondary">
                   Staked PHA and rewards are available on the staking page
                 </Typography>
-                <Typography variant="body2" mt={1}>
+                <Typography
+                  variant="body2"
+                  mt={1}
+                  display="flex"
+                  gap={1}
+                  alignItems="center"
+                >
                   Tx:{' '}
-                  <Link href={tx ? tx.url : ''} target="_blank">
-                    {tx ? tx.trimmedHash : ''}
-                  </Link>
+                  {tx ? (
+                    <Link href={tx.url} target="_blank">
+                      {tx.trimmedHash}
+                    </Link>
+                  ) : (
+                    <Skeleton width={100} height={20} />
+                  )}
                 </Typography>
                 <Button
                   variant="contained"
