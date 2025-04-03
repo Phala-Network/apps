@@ -60,11 +60,9 @@ export function useNotice() {
     const sortedNotices = activeNotices.sort(
       (a, b) => (b.priority || 0) - (a.priority || 0),
     )
-    console.log(sortedNotices)
 
     setTimeout(() => {
       for (const notice of sortedNotices) {
-        console.log(notice)
         const snackbarId = enqueueSnackbar(
           <Box maxWidth={400}>
             <Typography variant="subtitle1" component="div">

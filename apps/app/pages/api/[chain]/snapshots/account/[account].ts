@@ -1,4 +1,4 @@
-import {subsquidClient} from '@/config'
+import {khalaSubsquidClient} from '@/config'
 import {getSdk} from '@/lib/subsquidSdk'
 import {Parser} from '@json2csv/plainjs'
 import type {NextApiRequest, NextApiResponse} from 'next'
@@ -11,7 +11,7 @@ export default async function handler(
   if ((chain !== 'phala' && chain !== 'khala') || typeof account !== 'string') {
     res.status(500).send('Invalid params')
   } else {
-    const sdk = getSdk(subsquidClient)
+    const sdk = getSdk(khalaSubsquidClient)
     const data = await sdk.AccountSnapshotsConnection({
       orderBy: 'updatedTime_DESC',
       first: 2000,
@@ -22,6 +22,8 @@ export default async function handler(
     })
 
     const result = data.accountSnapshotsConnection.edges.map(({node}) => node)
+
+    console.log(111, result)
     const csv = new Parser().parse(result)
     res.setHeader('Content-Type', 'text/csv')
     res.setHeader(

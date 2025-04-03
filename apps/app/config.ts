@@ -9,6 +9,9 @@ export const PHALA_ENDPOINTS = [
 export const subsquidClient = new GraphQLClient(
   'https://subsquid.phala.network/phala-computation/graphql',
 )
+export const khalaSubsquidClient = new GraphQLClient(
+  'https://subsquid.phala.network/khala-computation/graphql',
+)
 
 export const WPHA_ASSET_ID = 10000
 

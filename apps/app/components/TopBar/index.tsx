@@ -87,6 +87,7 @@ const TopBar: FC = () => {
     },
     {
       label: 'Delegate',
+      href: '/delegate/vault',
       sub: [
         {label: 'Delegate', href: '/delegate/vault'},
         {label: 'My Delegation', href: '/delegate/my-delegation'},
@@ -94,6 +95,7 @@ const TopBar: FC = () => {
     },
     {
       label: 'Farm',
+      href: '/farm/vault',
       sub: [
         {label: 'Vault', href: '/farm/vault'},
         {label: 'StakePool', href: '/farm/stake-pool'},
@@ -104,7 +106,6 @@ const TopBar: FC = () => {
       label: 'Analytics',
       sub: [
         {label: 'Dune', href: 'https://dune.com/phala_network/phala-analytics'},
-        {label: 'Dashboard', href: 'https://analytics.phala.network'},
         {label: 'Map', href: 'https://analytics.phala.network/map'},
       ],
     },

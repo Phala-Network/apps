@@ -1,4 +1,4 @@
-import {subsquidClient} from '@/config'
+import {khalaSubsquidClient} from '@/config'
 import {getSdk} from '@/lib/subsquidSdk'
 import {Parser} from '@json2csv/plainjs'
 import type {NextApiRequest, NextApiResponse} from 'next'
@@ -15,7 +15,7 @@ export default async function handler(
   ) {
     res.status(500).send('Invalid params')
   } else {
-    const sdk = getSdk(subsquidClient)
+    const sdk = getSdk(khalaSubsquidClient)
     const data = await sdk.BasePoolSnapshotsConnection({
       orderBy: 'updatedTime_DESC',
       first: 2000,
