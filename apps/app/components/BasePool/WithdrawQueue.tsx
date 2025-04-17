@@ -320,8 +320,8 @@ const WithdrawQueue: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
         loading={isLoading}
         rows={rows}
         columns={columns}
-        pageSizeOptions={[5]}
-        initialState={{pagination: {paginationModel: {pageSize: 5}}}}
+        pageSizeOptions={[10]}
+        initialState={{pagination: {paginationModel: {pageSize: 10}}}}
         disableColumnMenu
         disableColumnSelector
         disableColumnFilter

@@ -67,7 +67,7 @@ export type WorkerDialogAction =
   | 'addWorker'
 export type OnAction = (worker: Worker, action: WorkerAction) => Promise<void>
 
-const pageSize = 5
+const pageSize = 10
 
 const WorkerList: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
   const [reclaimableDate] = useState(() =>

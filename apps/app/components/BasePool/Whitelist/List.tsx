@@ -113,9 +113,9 @@ const WhitelistList: FC<{basePool: BasePoolCommonFragment}> = ({basePool}) => {
           }}
           loading={isLoading}
           rows={rows}
-          initialState={{pagination: {paginationModel: {pageSize: 5}}}}
+          initialState={{pagination: {paginationModel: {pageSize: 10}}}}
           columns={columns}
-          pageSizeOptions={[5]}
+          pageSizeOptions={[10]}
           checkboxSelection={isOwner}
           rowSelectionModel={selectedAddress}
           onRowSelectionModelChange={(selection) => {
