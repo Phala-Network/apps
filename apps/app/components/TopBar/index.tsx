@@ -66,7 +66,7 @@ const NavItem: FC<{item: INavItem; onClick?: ButtonProps['onClick']}> = ({
   }
 
   return (
-    <NextLink href={href} passHref legacyBehavior shallow>
+    <NextLink href={href} passHref shallow>
       {link}
     </NextLink>
   )

@@ -7108,7 +7108,19 @@ export default {
    **/
   PalletTransactionPaymentChargeTransactionPayment: 'Compact<u128>',
   /**
-   * Lookup716: phala_parachain_runtime::Runtime
+   * Lookup716: frame_metadata_hash_extension::CheckMetadataHash<T>
+   **/
+  FrameMetadataHashExtensionCheckMetadataHash: {
+    mode: 'FrameMetadataHashExtensionMode'
+  },
+  /**
+   * Lookup717: frame_metadata_hash_extension::Mode
+   **/
+  FrameMetadataHashExtensionMode: {
+    _enum: ['Disabled', 'Enabled']
+  },
+  /**
+   * Lookup718: phala_parachain_runtime::Runtime
    **/
   PhalaParachainRuntimeRuntime: 'Null'
 };

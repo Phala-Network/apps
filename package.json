@@ -20,13 +20,13 @@
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
     "@total-typescript/ts-reset": "^0.6.1",
-    "@types/node": "^22.14.1",
-    "lefthook": "^1.11.10",
-    "tsx": "^4.19.3",
-    "turbo": "^2.5.0",
+    "@types/node": "^22.15.33",
+    "lefthook": "^1.11.14",
+    "tsx": "^4.20.3",
+    "turbo": "^2.5.4",
     "typescript": "^5.8.3"
   },
-  "packageManager": "bun@1.1.43",
+  "packageManager": "bun@1.2.17",
   "patchedDependencies": {
     "@buildwithsygma/sygma-sdk-core@2.11.2": "patches/@buildwithsygma%2Fsygma-sdk-core@2.11.2.patch"
   }
