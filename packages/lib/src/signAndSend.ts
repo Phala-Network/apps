@@ -37,7 +37,7 @@ export const waitSignAndSend = async ({
       extrinsic
         .signAndSend(
           account,
-          {signer, nonce},
+          {signer, nonce, withSignedTransaction: true},
           ({status, isCompleted, txHash, dispatchError}) => {
             if (isCompleted) {
               if (dispatchError != null) {

@@ -49,21 +49,21 @@ const nextConfig: NextConfig = {
       },
     ]
   },
+  turbopack: {
+    rules: {
+      loaders: {
+        '*.svg': {
+          loaders: [{loader: '@svgr/webpack', options: {dimensions: false}}],
+          as: '*.js',
+        },
+      },
+    },
+  },
   experimental: {
     swcPlugins: [
       // ['@swc-jotai/debug-label', {}],
       // ['@swc-jotai/react-refresh', {}],
     ],
-    turbo: {
-      rules: {
-        loaders: {
-          '*.svg': {
-            loaders: [{loader: '@svgr/webpack', options: {dimensions: false}}],
-            as: '*.js',
-          },
-        },
-      },
-    },
   },
 }
 
