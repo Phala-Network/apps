@@ -1,34 +1,31 @@
 import DetailPage from '@/components/BasePool/DetailPage'
+import DetailPageSkeleton from '@/components/BasePool/DetailPageSkeleton'
 import DelegationList from '@/components/Delegation/List'
 import {subsquidClient} from '@/config'
-import getBasePoolServerSideProps, {
-  type BasePoolServerSideProps,
-} from '@/lib/getBasePoolServerSideProps'
 import {useBasePoolByIdQuery} from '@/lib/subsquidQuery'
 import {Box} from '@mui/material'
 import {polkadotAccountAtom} from '@phala/store'
 import {useAtom} from 'jotai'
 import type {NextPage} from 'next'
+import {useRouter} from 'next/router'
 
-export const getServerSideProps = getBasePoolServerSideProps('Vault')
-
-const Vault: NextPage<BasePoolServerSideProps> = ({
-  pid,
-  initialData,
-  initialDataUpdatedAt,
-}) => {
+const Vault: NextPage = () => {
+  const router = useRouter()
+  const {pid} = router.query
   const [account] = useAtom(polkadotAccountAtom)
-  const {data: basePool} = useBasePoolByIdQuery(
+
+  const {data: basePool, isLoading} = useBasePoolByIdQuery(
     subsquidClient,
-    {id: pid},
+    {id: pid as string},
     {
-      initialData: initialData ?? undefined,
-      initialDataUpdatedAt,
+      enabled: typeof pid === 'string',
       select: (data) => data.basePoolById,
     },
   )
 
-  if (basePool == null) return null
+  if (typeof pid !== 'string' || isLoading || basePool == null) {
+    return <DetailPageSkeleton />
+  }
 
   return (
     <>

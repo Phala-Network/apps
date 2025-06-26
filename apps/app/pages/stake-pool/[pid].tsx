@@ -1,34 +1,31 @@
 import DetailPage from '@/components/BasePool/DetailPage'
+import DetailPageSkeleton from '@/components/BasePool/DetailPageSkeleton'
 import WorkerList from '@/components/BasePool/Worker/List'
 import {subsquidClient} from '@/config'
-import getBasePoolServerSideProps, {
-  type BasePoolServerSideProps,
-} from '@/lib/getBasePoolServerSideProps'
 import {useBasePoolByIdQuery} from '@/lib/subsquidQuery'
 import {Box} from '@mui/material'
 import {polkadotAccountAtom} from '@phala/store'
 import {useAtom} from 'jotai'
 import type {NextPage} from 'next'
+import {useRouter} from 'next/router'
 
-export const getServerSideProps = getBasePoolServerSideProps('StakePool')
-
-const StakePool: NextPage<BasePoolServerSideProps> = ({
-  pid,
-  initialData,
-  initialDataUpdatedAt,
-}) => {
+const StakePool: NextPage = () => {
+  const router = useRouter()
+  const {pid} = router.query
   const [account] = useAtom(polkadotAccountAtom)
-  const {data: basePool} = useBasePoolByIdQuery(
+
+  const {data: basePool, isLoading} = useBasePoolByIdQuery(
     subsquidClient,
-    {id: pid, accountId: account?.address},
+    {id: pid as string, accountId: account?.address},
     {
-      initialData: initialData ?? undefined,
-      initialDataUpdatedAt,
+      enabled: typeof pid === 'string',
       select: (data) => data.basePoolById,
     },
   )
 
-  if (basePool == null) return null
+  if (typeof pid !== 'string' || isLoading || basePool == null) {
+    return <DetailPageSkeleton />
+  }
 
   return (
     <>
