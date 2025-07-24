@@ -2,11 +2,16 @@ import khalaClaimerAbi from '@/assets/khala_claimer_abi'
 import {KHALA_CLAIMER_CONTRACT_ADDRESS} from '@/config'
 import {useQuery} from '@tanstack/react-query'
 import type {Hex} from 'viem'
-import {usePublicClient, useReadContract} from 'wagmi'
+import {useReadContract} from 'wagmi'
 import wretch from 'wretch'
 
 export const khalaAssetsApi = wretch(
   'https://dbcac8a0d67d837a93e8c1db0886c8f1acdc599d-8080.dstack-prod4.phala.network',
+)
+
+// GraphQL client for Khala claimer subgraph
+export const khalaClaimerGraphQL = wretch(
+  'https://api.goldsky.com/api/public/project_cmdgxxcewrqdi01wx9e7md0ek/subgraphs/khala-claimer/1.0.0/gn',
 )
 
 export const useKhalaAssetsQuery = (address?: string) => {
@@ -31,39 +36,50 @@ export const useClaimStatus = (address?: Hex) => {
       refetchInterval: (query) => (query.state.data ? false : 3000),
     },
   })
-  const publicClient = usePublicClient()
-  const {data: log} = useQuery({
-    queryKey: ['khala-claim-logs', address, publicClient?.chain.id],
+
+  const {data: claimLog} = useQuery({
+    queryKey: ['khala-claim-logs', address],
     queryFn: async () => {
-      if (publicClient == null) {
-        return
+      if (!address) {
+        return null
       }
-      const event = khalaClaimerAbi.find(
-        (item) => item.type === 'event' && item.name === 'Claimed',
-      )
-      if (event == null) {
-        return
-      }
-      const latestBlock = await publicClient.getBlock()
-      for (let i = latestBlock.number; i > 21613791n; i -= 10000n) {
-        const logs = await publicClient.getLogs({
-          address: KHALA_CLAIMER_CONTRACT_ADDRESS,
-          event,
-          args: {user: address},
-          fromBlock: i - 10000n,
-          toBlock: i,
-        })
-        if (logs.length > 0) {
-          return logs[0]
+
+      const query = `
+        query GetClaimedLog($user: String!) {
+          claimeds(first: 1, where: {user: $user}) {
+            receiver
+            transactionHash_
+            timestamp_
+          }
         }
-      }
+      `
+
+      const response = await khalaClaimerGraphQL
+        .post({
+          query,
+          variables: {user: address.toLowerCase()},
+        })
+        .json<{
+          data: {
+            claimeds: Array<{
+              receiver: string
+              transactionHash_: string
+              timestamp_: string
+            }>
+          }
+        }>()
+
+      return response.data.claimeds.length > 0
+        ? response.data.claimeds[0]
+        : null
     },
-    enabled: claimed === true && publicClient != null && address != null,
+    enabled: claimed === true && address != null,
     refetchInterval: (query) => (query.state.data ? false : 3000),
   })
+
   return {
     claimed,
-    log,
+    log: claimLog,
     refetch,
   }
 }

@@ -121,16 +121,18 @@ const ClaimKhalaAssets = () => {
     return h160
   }, [address])
   const {claimed, log, refetch} = useClaimStatus(h160Address)
-  const tx = useMemo(() => {
+  const logData = useMemo(() => {
     if (ethChain?.blockExplorers?.default == null || log == null) {
       return undefined
     }
 
-    const txHash = log.transactionHash
+    const txHash = log.transactionHash_
     return {
       url: `${ethChain.blockExplorers.default.url}/tx/${txHash}`,
       hash: txHash,
       trimmedHash: trimAddress(txHash, 6, 6),
+      receiver: log.receiver,
+      timestamp: log.timestamp_,
     }
   }, [ethChain, log])
 
@@ -353,14 +355,45 @@ const ClaimKhalaAssets = () => {
                   alignItems="center"
                 >
                   Tx:{' '}
-                  {tx ? (
-                    <Link href={tx.url} target="_blank">
-                      {tx.trimmedHash}
+                  {logData ? (
+                    <Link href={logData.url} target="_blank">
+                      {logData.trimmedHash}
                     </Link>
                   ) : (
                     <Skeleton width={100} height={20} />
                   )}
                 </Typography>
+                {logData?.receiver && (
+                  <Typography
+                    variant="body2"
+                    mt={1}
+                    display="flex"
+                    gap={1}
+                    alignItems="center"
+                  >
+                    Receiver:{' '}
+                    <Link
+                      href={`${ethChain?.blockExplorers?.default?.url}/address/${logData.receiver}`}
+                      target="_blank"
+                    >
+                      {trimAddress(logData.receiver, 6, 6)}
+                    </Link>
+                  </Typography>
+                )}
+                {logData?.timestamp && (
+                  <Typography
+                    variant="body2"
+                    mt={1}
+                    display="flex"
+                    gap={1}
+                    alignItems="center"
+                  >
+                    Time:{' '}
+                    {new Date(
+                      Number.parseInt(logData.timestamp) * 1000,
+                    ).toLocaleString()}
+                  </Typography>
+                )}
                 <Button
                   variant="contained"
                   sx={{mt: 3}}
