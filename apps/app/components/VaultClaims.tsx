@@ -53,8 +53,7 @@ function TabPanel(props: TabPanelProps) {
 }
 
 const VaultClaims = () => {
-  const {address: raw} = useAccount()
-  const address = raw && '0xb29eaEA575bd4bae7d9a301446e6204C3A23AdF1'
+  const {address} = useAccount()
   const [tabValue, setTabValue] = useState(0)
   const pageSize = 20
 
