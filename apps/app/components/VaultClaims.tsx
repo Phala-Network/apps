@@ -70,7 +70,7 @@ const VaultClaims = () => {
     error: claimedsError,
   } = useClaimedsQuery(address, 1, pageSize)
 
-  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleTabChange = (_event: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue)
   }
 
