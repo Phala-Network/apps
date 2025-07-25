@@ -1,7 +1,7 @@
 import khalaClaimerAbi from '@/assets/khala_claimer_abi'
 import Property from '@/components/Property'
 import SwitchChainButton from '@/components/SwitchChainButton'
-import {KHALA_CLAIMER_CONTRACT_ADDRESS} from '@/config'
+import {KHALA_CLAIMER_CONTRACT_ADDRESS, explorerUrl} from '@/config'
 import {
   khalaAssetsApi,
   useClaimStatus,
@@ -122,19 +122,19 @@ const ClaimKhalaAssets = () => {
   }, [address])
   const {claimed, log, refetch} = useClaimStatus(h160Address)
   const logData = useMemo(() => {
-    if (ethChain?.blockExplorers?.default == null || log == null) {
+    if (log == null) {
       return undefined
     }
 
     const txHash = log.transactionHash_
     return {
-      url: `${ethChain.blockExplorers.default.url}/tx/${txHash}`,
+      url: `${explorerUrl}/tx/${txHash}`,
       hash: txHash,
       trimmedHash: trimAddress(txHash, 6, 6),
       receiver: log.receiver,
       timestamp: log.timestamp_,
     }
-  }, [ethChain, log])
+  }, [log])
 
   const {data: hash, writeContract, isPending, reset} = useWriteContract()
   const claimResult = useWaitForTransactionReceipt({hash})
@@ -373,7 +373,7 @@ const ClaimKhalaAssets = () => {
                   >
                     Receiver:{' '}
                     <Link
-                      href={`${ethChain?.blockExplorers?.default?.url}/address/${logData.receiver}`}
+                      href={`${explorerUrl}/address/${logData.receiver}`}
                       target="_blank"
                     >
                       {trimAddress(logData.receiver, 6, 6)}

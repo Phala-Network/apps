@@ -16,6 +16,7 @@ export const khalaSubsquidClient = new GraphQLClient(
 export const WPHA_ASSET_ID = 10000
 
 export const ethChain = mainnet
+export const explorerUrl = ethChain.blockExplorers.default.url
 
 export const PHA_CONTRACT_ADDRESS = '0x6c5bA91642F10282b576d91922Ae6448C9d52f4E'
 export const VAULT_CONTRACT_ADDRESS =

@@ -24,7 +24,6 @@ export default async function handler(
 
     const result = data.accountSnapshotsConnection.edges.map(({node}) => node)
 
-    console.log(111, result)
     const csv = new Parser().parse(result)
     res.setHeader('Content-Type', 'text/csv')
     res.setHeader(

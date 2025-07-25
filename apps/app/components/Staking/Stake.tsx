@@ -1,7 +1,11 @@
 import vaultAbi from '@/assets/pha_vault_abi'
 import Property from '@/components/Property'
 import SwitchChainButton from '@/components/SwitchChainButton'
-import {PHA_CONTRACT_ADDRESS, VAULT_CONTRACT_ADDRESS, ethChain} from '@/config'
+import {
+  PHA_CONTRACT_ADDRESS,
+  VAULT_CONTRACT_ADDRESS,
+  explorerUrl,
+} from '@/config'
 import {
   useAllowance,
   useAssetsToShares,
@@ -275,7 +279,7 @@ const Stake = () => {
               onClick={() => {}}
               component="a"
               variant="outlined"
-              href={`${ethChain.blockExplorers.default.url}/address/${tokenContractAddress}`}
+              href={`${explorerUrl}/address/${tokenContractAddress}`}
               target="_blank"
             />
           </Stack>
