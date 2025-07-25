@@ -12,6 +12,9 @@ export const subsquidClient = new GraphQLClient(
 export const khalaSubsquidClient = new GraphQLClient(
   'https://subsquid.phala.network/khala-computation/graphql',
 )
+export const goldskyClient = new GraphQLClient(
+  'https://api.goldsky.com/api/public/project_cmdgxxcewrqdi01wx9e7md0ek/subgraphs/phala-vault/1.0.0/gn',
+)
 
 export const WPHA_ASSET_ID = 10000
 
