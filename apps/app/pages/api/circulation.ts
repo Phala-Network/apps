@@ -6,6 +6,7 @@ const handler = async (
 ): Promise<void> => {
   const circulation = await fetch(
     'https://pha-circulation-server.vercel.app/api/circulation',
+    {next: {revalidate: 60}},
   ).then(async (res) => await res.text())
   res.setHeader('Cache-Control', 'public, max-age=60')
   res.status(200).send(circulation)
