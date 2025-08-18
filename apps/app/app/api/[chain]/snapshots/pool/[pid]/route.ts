@@ -4,10 +4,10 @@ import {Parser} from '@json2csv/plainjs'
 import {type NextRequest, NextResponse} from 'next/server'
 
 export async function GET(
-  request: NextRequest,
-  {params}: {params: {chain: string; pid: string}},
+  _request: NextRequest,
+  {params}: {params: Promise<{chain: string; pid: string}>},
 ) {
-  const {chain, pid} = params
+  const {chain, pid} = await params
 
   if (
     (chain !== 'phala' && chain !== 'khala') ||

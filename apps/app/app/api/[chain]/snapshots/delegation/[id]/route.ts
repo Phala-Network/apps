@@ -4,10 +4,10 @@ import {Parser} from '@json2csv/plainjs'
 import {type NextRequest, NextResponse} from 'next/server'
 
 export async function GET(
-  request: NextRequest,
-  {params}: {params: {chain: string; id: string}},
+  _request: NextRequest,
+  {params}: {params: Promise<{chain: string; id: string}>},
 ) {
-  const {chain, id} = params
+  const {chain, id} = await params
 
   if ((chain !== 'phala' && chain !== 'khala') || typeof id !== 'string') {
     return NextResponse.json('Invalid params', {status: 500})
