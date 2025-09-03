@@ -1,7 +1,6 @@
 import Layout from '@/components/Layout'
 import SnackbarProvider from '@/components/SnackbarProvider'
 import {Web3Provider} from '@/components/Web3Provider'
-import ZendeskWidget from '@/components/ZendeskWidget'
 import {globalStyles} from '@/lib/styles'
 import {theme} from '@/lib/theme'
 import {
@@ -10,7 +9,6 @@ import {
   ThemeProvider as MuiThemeProvider,
 } from '@mui/material'
 import {AppCacheProvider} from '@mui/material-nextjs/v15-pagesRouter'
-import {GoogleAnalytics} from '@next/third-parties/google'
 // import {JotaiDevTools} from '@phala/lib'
 import {
   QueryCache,
@@ -62,10 +60,8 @@ const MyApp = (props: AppProps) => {
                 <SnackbarProvider>
                   <Layout>
                     <Component {...pageProps} />
-                    <ZendeskWidget />
                     {/* <JotaiDevTools /> */}
                     <ReactQueryDevtools buttonPosition="bottom-left" />
-                    <GoogleAnalytics gaId="G-E0PDMEJQ0T" />
                   </Layout>
                 </SnackbarProvider>
               </Web3Provider>
