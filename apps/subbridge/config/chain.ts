@@ -53,7 +53,7 @@ export const CHAINS: Readonly<
     icon: phalaIcon.src,
     kind: 'substrate',
     endpoint: [
-      'wss://phala-rpc.dwellir.com',
+      'wss://phala-rpc.n.dwellir.com',
       'wss://api.phala.network/ws',
       'wss://phala.api.onfinality.io/public-ws',
     ],
@@ -74,7 +74,7 @@ export const CHAINS: Readonly<
       'wss://acala-rpc-0.aca-api.network',
       'wss://acala-rpc-1.aca-api.network',
       'wss://acala-rpc-3.aca-api.network/ws',
-      'wss://acala-rpc.dwellir.com',
+      'wss://acala-rpc.n.dwellir.com',
       'wss://acala-polkadot.api.onfinality.io/public-ws',
       'wss://acala.polkawallet.io',
     ],
@@ -153,7 +153,7 @@ export const CHAINS: Readonly<
     endpoint: [
       'wss://rpc.astar.network',
       'wss://astar.public.blastapi.io',
-      'wss://astar-rpc.dwellir.com',
+      'wss://astar-rpc.n.dwellir.com',
       'wss://astar.api.onfinality.io/public-ws',
       'wss://1rpc.io/astr',
     ],

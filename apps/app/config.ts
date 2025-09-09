@@ -2,7 +2,7 @@ import {GraphQLClient} from 'graphql-request'
 import {mainnet} from 'viem/chains'
 
 export const PHALA_ENDPOINTS = [
-  'wss://phala-rpc.dwellir.com',
+  'wss://phala-rpc.n.dwellir.com',
   'wss://api.phala.network/ws',
   'wss://phala.api.onfinality.io/public-ws',
 ]

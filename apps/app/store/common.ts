@@ -32,3 +32,8 @@ export const basePoolMinWorkersAtom = atomWithStorage<string>(
 )
 
 export const wikiExpandEntryAtom = atom<WikiEntry | null>(null)
+
+export const selectedEndpointAtom = atomWithStorage<string>(
+  'jotai:phala_selected_endpoint',
+  'wss://phala-rpc.n.dwellir.com',
+)
