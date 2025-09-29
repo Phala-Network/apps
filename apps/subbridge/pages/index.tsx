@@ -2,6 +2,7 @@ import BridgeBody from '@/components/BridgeBody'
 import BridgeHistory from '@/components/BridgeHistory'
 import Footer from '@/components/Footer'
 import KhalaSunsetAlert from '@/components/KhalaSunsetAlert'
+import MaintenanceAlert from '@/components/MaintenanceAlert'
 import {Box, Container, useTheme} from '@mui/material'
 import type {NextPage} from 'next'
 import dynamic from 'next/dynamic'
@@ -31,6 +32,8 @@ const Home: NextPage = () => {
         }}
       >
         <KhalaSunsetAlert sx={{mb: 2}} />
+
+        <MaintenanceAlert sx={{mb: 2}} />
 
         <BridgeBody />
 
