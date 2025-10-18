@@ -1,11 +1,20 @@
 import khalaClaimerAbi from '@/assets/khala_claimer_abi'
-import {KHALA_CLAIMER_CONTRACT_ADDRESS} from '@/config'
+import {
+  KHALA_CLAIMER_CONTRACT_ADDRESS,
+  PHALA_CLAIMER_CONTRACT_ADDRESS,
+} from '@/config'
 import {useQuery} from '@tanstack/react-query'
 import type {Hex} from 'viem'
 import {useReadContract} from 'wagmi'
 import wretch from 'wretch'
 
+export type ChainType = 'khala' | 'phala'
+
 export const khalaAssetsApi = wretch(
+  'https://dbcac8a0d67d837a93e8c1db0886c8f1acdc599d-8080.dstack-prod4.phala.network',
+)
+
+export const phalaAssetsApi = wretch(
   'https://dbcac8a0d67d837a93e8c1db0886c8f1acdc599d-8080.dstack-prod4.phala.network',
 )
 
@@ -14,20 +23,44 @@ export const khalaClaimerGraphQL = wretch(
   'https://api.goldsky.com/api/public/project_cmdgxxcewrqdi01wx9e7md0ek/subgraphs/khala-claimer/1.0.0/gn',
 )
 
-export const useKhalaAssetsQuery = (address?: string) => {
+// GraphQL client for Phala claimer subgraph
+export const phalaClaimerGraphQL = wretch(
+  'https://api.goldsky.com/api/public/project_cmdgxxcewrqdi01wx9e7md0ek/subgraphs/khala-claimer/1.0.0/gn',
+)
+
+export const useAssetsQuery = (
+  address?: string,
+  chain: ChainType = 'khala',
+) => {
+  const api = chain === 'khala' ? khalaAssetsApi : phalaAssetsApi
   return useQuery({
-    queryKey: ['khala-assets', address],
+    queryKey: [`${chain}-assets`, address],
     queryFn: () =>
-      khalaAssetsApi
+      api
         .get(`/account/${address}`)
         .json<{free: string; staked: string; pwRefund: string}>(),
     enabled: address != null,
   })
 }
 
-export const useClaimStatus = (address?: Hex) => {
+export const useKhalaAssetsQuery = (address?: string) => {
+  return useAssetsQuery(address, 'khala')
+}
+
+export const usePhalaAssetsQuery = (address?: string) => {
+  return useAssetsQuery(address, 'phala')
+}
+
+export const useClaimStatus = (address?: Hex, chain: ChainType = 'khala') => {
+  const contractAddress =
+    chain === 'khala'
+      ? KHALA_CLAIMER_CONTRACT_ADDRESS
+      : PHALA_CLAIMER_CONTRACT_ADDRESS
+  const graphqlClient =
+    chain === 'khala' ? khalaClaimerGraphQL : phalaClaimerGraphQL
+
   const {data: claimed, refetch} = useReadContract({
-    address: KHALA_CLAIMER_CONTRACT_ADDRESS,
+    address: contractAddress,
     abi: khalaClaimerAbi,
     functionName: 'claimed',
     args: address && [address],
@@ -38,7 +71,7 @@ export const useClaimStatus = (address?: Hex) => {
   })
 
   const {data: claimLog} = useQuery({
-    queryKey: ['khala-claim-logs', address],
+    queryKey: [`${chain}-claim-logs`, address],
     queryFn: async () => {
       if (!address) {
         return null
@@ -54,7 +87,7 @@ export const useClaimStatus = (address?: Hex) => {
         }
       `
 
-      const response = await khalaClaimerGraphQL
+      const response = await graphqlClient
         .post({
           query,
           variables: {user: address.toLowerCase()},

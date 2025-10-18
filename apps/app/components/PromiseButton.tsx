@@ -1,16 +1,15 @@
-import {Button, type ButtonProps} from '@mui/material'
+import {LoadingButton, type LoadingButtonProps} from '@mui/lab'
+import type {MouseEvent} from 'react'
 import {type FC, useState} from 'react'
 
 const PromiseButton: FC<
-  Omit<ButtonProps, 'onClick'> & {
-    onClick?: (
-      ...args: Parameters<Exclude<ButtonProps['onClick'], undefined>>
-    ) => Promise<unknown>
+  Omit<LoadingButtonProps, 'onClick' | 'loading'> & {
+    onClick?: (e: MouseEvent<HTMLButtonElement>) => Promise<unknown>
   }
 > = ({onClick, ...props}) => {
   const [loading, setLoading] = useState(false)
 
-  const handleClick: ButtonProps['onClick'] = (e) => {
+  const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
     if (onClick != null) {
       setLoading(true)
       void onClick(e).finally(() => {
@@ -19,7 +18,7 @@ const PromiseButton: FC<
     }
   }
 
-  return <Button {...props} loading={loading} onClick={handleClick} />
+  return <LoadingButton {...props} loading={loading} onClick={handleClick} />
 }
 
 export default PromiseButton

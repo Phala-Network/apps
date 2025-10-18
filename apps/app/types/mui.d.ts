@@ -31,3 +31,18 @@ declare module '@mui/material/Typography' {
     num6: true
   }
 }
+
+// Add loading prop to Button (extending from LoadingButton)
+declare module '@mui/material/Button' {
+  interface ButtonPropsVariantOverrides {}
+  interface ButtonPropsColorOverrides {}
+  interface ButtonPropsSizeOverrides {}
+}
+
+declare module '@mui/material' {
+  interface ButtonProps {
+    loading?: boolean
+    loadingIndicator?: React.ReactNode
+    loadingPosition?: 'start' | 'end' | 'center'
+  }
+}

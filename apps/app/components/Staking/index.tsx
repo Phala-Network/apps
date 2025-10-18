@@ -12,7 +12,6 @@ import {useMemo} from 'react'
 import {formatUnits} from 'viem'
 import {useAccount} from 'wagmi'
 import Property from '../Property'
-import VaultClaims from '../VaultClaims'
 import Stake from './Stake'
 import Unstake from './Unstake'
 
@@ -76,8 +75,6 @@ const Staking = () => {
           <Unstake />
         </Paper>
       </Stack>
-
-      <VaultClaims />
     </Box>
   )
 }

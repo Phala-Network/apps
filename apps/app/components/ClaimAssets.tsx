@@ -1,11 +1,17 @@
 import khalaClaimerAbi from '@/assets/khala_claimer_abi'
 import Property from '@/components/Property'
 import SwitchChainButton from '@/components/SwitchChainButton'
-import {KHALA_CLAIMER_CONTRACT_ADDRESS, explorerUrl} from '@/config'
 import {
+  KHALA_CLAIMER_CONTRACT_ADDRESS,
+  PHALA_CLAIMER_CONTRACT_ADDRESS,
+  explorerUrl,
+} from '@/config'
+import {
+  type ChainType,
   khalaAssetsApi,
+  phalaAssetsApi,
+  useAssetsQuery,
   useClaimStatus,
-  useKhalaAssetsQuery,
 } from '@/hooks/khalaAssets'
 import {useSharePrice} from '@/hooks/staking'
 import {useAutoSwitchChain} from '@/hooks/useAutoSwitchChain'
@@ -44,7 +50,7 @@ const Steps = () => {
   return (
     <Stepper alternativeLabel>
       <Step active>
-        <StepLabel>Sign with Khala account</StepLabel>
+        <StepLabel>Sign with account</StepLabel>
       </Step>
       <Step active>
         <StepLabel>Connect Ethereum wallet</StepLabel>
@@ -56,20 +62,23 @@ const Steps = () => {
   )
 }
 
-export const CheckKhalaAssets = ({
+export const CheckAssets = ({
   onCheck,
+  chain,
 }: {
   onCheck: (address: string) => void
+  chain: ChainType
 }) => {
   const {enqueueSnackbar} = useSnackbar()
   const [checkAddressInput, setCheckAddressInput] = useState('')
+  const chainLabel = chain.charAt(0).toUpperCase() + chain.slice(1)
 
   const handleCheck = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (validateAddress(checkAddressInput)) {
       onCheck(checkAddressInput)
     } else {
-      enqueueSnackbar('Invalid Khala address', {variant: 'error'})
+      enqueueSnackbar(`Invalid ${chainLabel} address`, {variant: 'error'})
     }
   }
   return (
@@ -83,7 +92,7 @@ export const CheckKhalaAssets = ({
         onSubmit={handleCheck}
       >
         <TextField
-          placeholder="Khala account"
+          placeholder={`${chainLabel} account`}
           value={checkAddressInput}
           fullWidth
           size="small"
@@ -99,7 +108,7 @@ export const CheckKhalaAssets = ({
   )
 }
 
-const ClaimKhalaAssets = () => {
+const ClaimAssets = ({chain}: {chain: ChainType}) => {
   const {enqueueSnackbar} = useSnackbar()
   const setWalletDialogOpen = useSetAtom(walletDialogOpenAtom)
   const [isSigning, setIsSigning] = useState(false)
@@ -111,7 +120,7 @@ const ClaimKhalaAssets = () => {
   const {address: ethAddress, chain: ethChain} = useAccount()
   const [polkadotAccount] = useAtom(polkadotAccountAtom)
   const address = checkAddress ?? polkadotAccount?.address
-  const {data} = useKhalaAssetsQuery(address)
+  const {data} = useAssetsQuery(address, chain)
   const h160Address = useMemo(() => {
     if (address == null) {
       return undefined
@@ -120,7 +129,7 @@ const ClaimKhalaAssets = () => {
     const h160 = u8aToHex(publicKey).slice(0, 42) as Hex
     return h160
   }, [address])
-  const {claimed, log, refetch} = useClaimStatus(h160Address)
+  const {claimed, log, refetch} = useClaimStatus(h160Address, chain)
   const logData = useMemo(() => {
     if (log == null) {
       return undefined
@@ -171,7 +180,9 @@ const ClaimKhalaAssets = () => {
       setIsSigning(true)
       const {signature} = await signRaw({
         address: polkadotAccount.address,
-        data: stringToHex(`Khala Asset Receiver: ${receiver}`),
+        data: stringToHex(
+          `${chain.charAt(0).toUpperCase() + chain.slice(1)} Asset Receiver: ${receiver}`,
+        ),
         type: 'bytes',
       })
       polkadotSignature = signature
@@ -181,7 +192,8 @@ const ClaimKhalaAssets = () => {
     }
 
     try {
-      const {h160, free, staked, signature} = await khalaAssetsApi
+      const api = chain === 'khala' ? khalaAssetsApi : phalaAssetsApi
+      const {h160, free, staked, signature} = await api
         .url('/claim')
         .post({
           address: polkadotAccount.address,
@@ -190,9 +202,14 @@ const ClaimKhalaAssets = () => {
         })
         .json<{h160: Hex; free: string; staked: string; signature: Hex}>()
 
+      const contractAddress =
+        chain === 'khala'
+          ? KHALA_CLAIMER_CONTRACT_ADDRESS
+          : PHALA_CLAIMER_CONTRACT_ADDRESS
+
       writeContract({
         abi: khalaClaimerAbi,
-        address: KHALA_CLAIMER_CONTRACT_ADDRESS,
+        address: contractAddress,
         functionName: 'claim',
         args: [h160, BigInt(free), BigInt(staked), receiver, signature],
       })
@@ -228,6 +245,8 @@ const ClaimKhalaAssets = () => {
     return Decimal.add(data.free, data.staked).add(rewards)
   }, [data, rewards])
 
+  const chainLabel = chain.charAt(0).toUpperCase() + chain.slice(1)
+
   if (address == null) {
     return (
       <Box>
@@ -246,8 +265,10 @@ const ClaimKhalaAssets = () => {
         <Divider flexItem />
 
         <Stack alignItems="center" pt={4} pb={2} gap={2}>
-          <Typography variant="body1">Check your Khala account</Typography>
-          <CheckKhalaAssets onCheck={setCheckAddress} />
+          <Typography variant="body1">
+            Check your {chainLabel} account
+          </Typography>
+          <CheckAssets onCheck={setCheckAddress} chain={chain} />
         </Stack>
       </Box>
     )
@@ -299,7 +320,7 @@ const ClaimKhalaAssets = () => {
             whiteSpace="nowrap"
             minWidth={0}
           >
-            {polkadotAccount?.name ?? 'Khala account'}
+            {polkadotAccount?.name ?? `${chainLabel} account`}
           </Typography>
           <Stack
             direction="row"
@@ -398,7 +419,7 @@ const ClaimKhalaAssets = () => {
                   variant="contained"
                   sx={{mt: 3}}
                   LinkComponent={NextLink}
-                  href="/staking"
+                  href="/"
                 >
                   Go to Staking
                 </Button>
@@ -437,4 +458,4 @@ const ClaimKhalaAssets = () => {
   )
 }
 
-export default ClaimKhalaAssets
+export default ClaimAssets

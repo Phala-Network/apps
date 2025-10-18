@@ -1,13 +1,13 @@
-import ClaimKhalaAssets from '@/components/ClaimKhalaAssets'
+import ClaimAssets from '@/components/ClaimAssets'
 import Title from '@/components/Title'
-import {Link, Paper, Stack, Typography} from '@mui/material'
+import {Divider, Link, Paper, Stack, Typography} from '@mui/material'
 
 const Page = () => {
   return (
     <>
-      <Title>Claim Khala Assets</Title>
-      <Stack maxWidth={450} mx="auto" alignItems="center" mt={6} gap={3}>
-        <Typography variant="h4">Claim Khala Assets</Typography>
+      <Title>Claim Phala/Khala Assets</Title>
+      <Stack maxWidth={900} mx="auto" alignItems="center" mt={6} gap={3}>
+        <Typography variant="h4">Claim Phala/Khala Assets</Typography>
 
         <Paper sx={{background: 'transparent', p: 3, width: '100%'}}>
           <Typography variant="body1" color="text.secondary">
@@ -29,9 +29,39 @@ const Page = () => {
             .
           </Typography>
         </Paper>
-        <Paper sx={{background: 'transparent', p: 3, width: '100%'}}>
-          <ClaimKhalaAssets />
-        </Paper>
+
+        <Stack
+          direction={{xs: 'column', md: 'row'}}
+          gap={3}
+          width="100%"
+          alignItems="flex-start"
+        >
+          <Paper sx={{background: 'transparent', p: 3, flex: 1}}>
+            <Typography variant="h5" mb={3} textAlign="center">
+              Claim Khala Assets
+            </Typography>
+            <ClaimAssets chain="khala" />
+          </Paper>
+
+          <Divider
+            orientation="vertical"
+            flexItem
+            sx={{display: {xs: 'none', md: 'block'}}}
+          />
+          <Divider
+            orientation="horizontal"
+            flexItem
+            sx={{display: {xs: 'block', md: 'none'}}}
+          />
+
+          <Paper sx={{background: 'transparent', p: 3, flex: 1}}>
+            <Typography variant="h5" mb={3} textAlign="center">
+              Claim Phala Assets
+            </Typography>
+            <ClaimAssets chain="phala" />
+          </Paper>
+        </Stack>
+
         <Paper sx={{background: 'transparent', p: 3, width: '100%'}}>
           <Typography variant="h6">Frequently Asked Questions</Typography>
           <Stack gap={1} mt={2}>
@@ -44,11 +74,10 @@ const Page = () => {
               assist you manually with the claim.
             </Typography>
             <Typography variant="subtitle1" fontWeight={500} sx={{mt: 2}}>
-              How to claim with Ledger or other hardware wallets address on
-              Khala?
+              How to claim with Ledger or other hardware wallets address?
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              Claiming Khala assets on Ledger wallet is supported.{' '}
+              Claiming assets on Ledger wallet is supported.{' '}
               <Link
                 href="https://forum.phala.network/t/special-cases-during-the-khala-assets-claim-process/3966#a-khala-network-ledger-users-1"
                 target="_blank"
@@ -57,8 +86,7 @@ const Page = () => {
               </Link>
             </Typography>
             <Typography variant="subtitle1" fontWeight={500} sx={{mt: 2}}>
-              I can't connect my Khala wallet and Ethereum wallet at the same
-              time.
+              I can't connect my wallet and Ethereum wallet at the same time.
             </Typography>
             <Typography variant="body2" color="text.secondary">
               Walletconnect is supported.{' '}

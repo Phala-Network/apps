@@ -1,42 +1,45 @@
-import DashboardAccount from '@/components/DashboardAccount'
-import DashboardAssetList from '@/components/DashboardAssetList'
-import DashboardCarousel from '@/components/DashboardCarousel'
-import DashboardNftList from '@/components/DashboardNftList'
-import Title from '@/components/Title'
-import {Box, Paper, Stack} from '@mui/material'
-import type {FC} from 'react'
+import poweredBySlpx from '@/assets/powered_by_slpx.png'
+import PageHeader from '@/components/PageHeader'
+import Staking from '@/components/Staking'
+import {Box, Chip} from '@mui/material'
+import {ConnectButton} from '@rainbow-me/rainbowkit'
+import Image from 'next/image'
 
-const Dashboard: FC = () => {
+const Page = () => {
   return (
     <>
-      <Title>Dashboard</Title>
-      <Stack
-        spacing={{xs: 2, md: 2.5}}
-        mt={{xs: 2, md: 5}}
-        direction={{xs: 'column', md: 'row'}}
+      <PageHeader
+        title="Staking"
+        pageTitle={
+          <Box
+            display="inline-flex"
+            alignItems="center"
+            gap={2}
+            flexWrap="wrap"
+          >
+            Staking
+            <Chip label="Ethereum" color="info" variant="outlined" />
+            <Box
+              component="a"
+              href="https://bifrost.io/slpx"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <Image
+                css={{display: 'block'}}
+                src={poweredBySlpx}
+                width={170}
+                height={40}
+                alt="Powered by SLPx"
+              />
+            </Box>
+          </Box>
+        }
       >
-        <DashboardAccount />
-
-        <Paper
-          sx={{
-            height: {xs: 200, md: 'auto'},
-            width: {xs: '100%', md: 300, lg: 370},
-            flexShrink: 0,
-            overflow: 'hidden',
-          }}
-        >
-          <DashboardCarousel />
-        </Paper>
-      </Stack>
-
-      <Box component="section" mt={4}>
-        <DashboardAssetList />
-      </Box>
-      <Box component="section" mt={4}>
-        <DashboardNftList />
-      </Box>
+        <ConnectButton />
+      </PageHeader>
+      <Staking />
     </>
   )
 }
-
-export default Dashboard
+export default Page
