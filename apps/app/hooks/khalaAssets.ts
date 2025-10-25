@@ -77,7 +77,19 @@ export const useClaimStatus = (address?: Hex, chain: ChainType = 'khala') => {
         return null
       }
 
-      const query = `
+      // For Phala, query ClaimedAndBridged event; for Khala, query Claimed event
+      const query =
+        chain === 'phala'
+          ? `
+        query GetClaimedAndBridgedLog($user: String!) {
+          claimedAndBridgeds(first: 1, where: {user: $user}) {
+            receiver
+            transactionHash_
+            timestamp_
+          }
+        }
+      `
+          : `
         query GetClaimedLog($user: String!) {
           claimeds(first: 1, where: {user: $user}) {
             receiver
@@ -94,7 +106,12 @@ export const useClaimStatus = (address?: Hex, chain: ChainType = 'khala') => {
         })
         .json<{
           data: {
-            claimeds: Array<{
+            claimeds?: Array<{
+              receiver: string
+              transactionHash_: string
+              timestamp_: string
+            }>
+            claimedAndBridgeds?: Array<{
               receiver: string
               transactionHash_: string
               timestamp_: string
@@ -102,9 +119,11 @@ export const useClaimStatus = (address?: Hex, chain: ChainType = 'khala') => {
           }
         }>()
 
-      return response.data.claimeds.length > 0
-        ? response.data.claimeds[0]
-        : null
+      const logs =
+        chain === 'phala'
+          ? response.data.claimedAndBridgeds
+          : response.data.claimeds
+      return logs && logs.length > 0 ? logs[0] : null
     },
     enabled: claimed === true && address != null,
     refetchInterval: (query) => (query.state.data ? false : 3000),

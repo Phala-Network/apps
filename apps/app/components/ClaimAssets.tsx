@@ -416,9 +416,22 @@ const ClaimAssets = ({chain}: {chain: ChainType}) => {
                 <Typography variant="h5" mt={3}>
                   Claimed Successfully
                 </Typography>
-                <Typography variant="body2" mt={1} color="text.secondary">
-                  Staked PHA and rewards are available on the staking page
-                </Typography>
+                {chain === 'phala' ? (
+                  <Typography variant="body2" mt={1} color="text.secondary">
+                    View your assets on{' '}
+                    <Link
+                      href={`https://explorer.phala.network/address/${logData?.receiver || ethAddress}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Phala L2
+                    </Link>
+                  </Typography>
+                ) : (
+                  <Typography variant="body2" mt={1} color="text.secondary">
+                    Staked PHA and rewards are available on the staking page
+                  </Typography>
+                )}
                 <Typography
                   variant="body2"
                   mt={1}
@@ -445,8 +458,13 @@ const ClaimAssets = ({chain}: {chain: ChainType}) => {
                   >
                     Receiver:{' '}
                     <Link
-                      href={`${explorerUrl}/address/${logData.receiver}`}
+                      href={
+                        chain === 'phala'
+                          ? `https://explorer.phala.network/address/${logData.receiver}`
+                          : `${explorerUrl}/address/${logData.receiver}`
+                      }
                       target="_blank"
+                      rel="noopener noreferrer"
                     >
                       {trimAddress(logData.receiver, 6, 6)}
                     </Link>
@@ -466,14 +484,16 @@ const ClaimAssets = ({chain}: {chain: ChainType}) => {
                     ).toLocaleString()}
                   </Typography>
                 )}
-                <Button
-                  variant="contained"
-                  sx={{mt: 3}}
-                  LinkComponent={NextLink}
-                  href="/"
-                >
-                  Go to Staking
-                </Button>
+                {chain === 'khala' && (
+                  <Button
+                    variant="contained"
+                    sx={{mt: 3}}
+                    LinkComponent={NextLink}
+                    href="/staking"
+                  >
+                    Go to Staking
+                  </Button>
+                )}
               </Stack>
             ) : (
               <>
