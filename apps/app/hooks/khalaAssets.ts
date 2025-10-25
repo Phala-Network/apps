@@ -83,7 +83,8 @@ export const useClaimStatus = (address?: Hex, chain: ChainType = 'khala') => {
           ? `
         query GetClaimedAndBridgedLog($user: String!) {
           claimedAndBridgeds(first: 1, where: {user: $user}) {
-            receiver
+            l1Receiver
+            l2Receiver
             transactionHash_
             timestamp_
           }
@@ -112,17 +113,28 @@ export const useClaimStatus = (address?: Hex, chain: ChainType = 'khala') => {
               timestamp_: string
             }>
             claimedAndBridgeds?: Array<{
-              receiver: string
+              l1Receiver: string
+              l2Receiver: string
               transactionHash_: string
               timestamp_: string
             }>
           }
         }>()
 
-      const logs =
-        chain === 'phala'
-          ? response.data.claimedAndBridgeds
-          : response.data.claimeds
+      // Normalize the response to have a consistent 'receiver' field
+      if (chain === 'phala' && response.data.claimedAndBridgeds) {
+        const logs = response.data.claimedAndBridgeds
+        return logs.length > 0
+          ? {
+              receiver: logs[0].l2Receiver, // Use l2Receiver as the main receiver
+              l1Receiver: logs[0].l1Receiver,
+              transactionHash_: logs[0].transactionHash_,
+              timestamp_: logs[0].timestamp_,
+            }
+          : null
+      }
+
+      const logs = response.data.claimeds
       return logs && logs.length > 0 ? logs[0] : null
     },
     enabled: claimed === true && address != null,
