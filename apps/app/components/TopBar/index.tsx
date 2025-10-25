@@ -4,6 +4,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import Language from '@mui/icons-material/Language'
 import {
   AppBar,
+  Button,
   Chip,
   IconButton,
   NoSsr,
@@ -33,15 +34,31 @@ const TopBar: FC = () => {
       >
         <Toolbar>
           <NoSsr>
-            <NextLink href="/">
+            <NextLink href="/" css={{display: 'flex', alignItems: 'center'}}>
               <PhalaLogo width={30} css={{flexShrink: 0, cursor: 'pointer'}} />
             </NextLink>
           </NoSsr>
 
+          <Stack direction="row" spacing={2} alignItems="center" sx={{ml: 3}}>
+            <Button
+              component={NextLink}
+              href="/staking"
+              variant="text"
+              sx={{
+                color: 'text.primary',
+                minHeight: 0,
+                py: 0,
+                fontWeight: 'medium',
+              }}
+            >
+              Staking
+            </Button>
+          </Stack>
+
           <Stack
             direction="row"
             ml="auto"
-            spacing={2}
+            spacing={1}
             alignItems="center"
             sx={{mr: 2}}
           >

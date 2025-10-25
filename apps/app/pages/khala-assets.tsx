@@ -1,6 +1,9 @@
 import ClaimAssets from '@/components/ClaimAssets'
 import Title from '@/components/Title'
-import {Divider, Link, Paper, Stack, Typography} from '@mui/material'
+import {Link, Paper, Stack, Typography} from '@mui/material'
+import khalaIcon from '@phala/ui/icons/chain/khala.png'
+import phalaIcon from '@phala/ui/icons/chain/phala.png'
+import Image from 'next/image'
 
 const Page = () => {
   return (
@@ -10,7 +13,7 @@ const Page = () => {
         <Typography variant="h4">Claim Phala/Khala Assets</Typography>
 
         <Paper sx={{background: 'transparent', p: 3, width: '100%'}}>
-          <Typography variant="body1" color="text.secondary">
+          <Typography variant="body1" color="text.secondary" paragraph>
             Khala was terminated at block #7918688, and you can now claim your
             assets on Ethereum. For more details, please refer to the{' '}
             <Link
@@ -28,36 +31,67 @@ const Page = () => {
             </Link>
             .
           </Typography>
+          <Typography variant="body1" color="text.secondary">
+            Phala was terminated at block #6067200, and you can now claim your
+            assets on{' '}
+            <Link
+              href="https://explorer.phala.network/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Phala L2
+            </Link>
+            , our new Ethereum Layer 2 network.
+          </Typography>
         </Paper>
 
         <Stack
           direction={{xs: 'column', md: 'row'}}
           gap={3}
           width="100%"
-          alignItems="flex-start"
+          alignItems="stretch"
         >
-          <Paper sx={{background: 'transparent', p: 3, flex: 1}}>
-            <Typography variant="h5" mb={3} textAlign="center">
-              Claim Khala Assets
-            </Typography>
+          <Paper
+            sx={{
+              background: 'transparent',
+              p: 3,
+              flex: 1,
+              display: 'flex',
+              flexDirection: 'column',
+            }}
+          >
+            <Stack
+              direction="row"
+              alignItems="center"
+              justifyContent="center"
+              gap={1}
+              mb={3}
+            >
+              <Image src={khalaIcon} width={32} height={32} alt="Khala" />
+              <Typography variant="h5">Khala</Typography>
+            </Stack>
             <ClaimAssets chain="khala" />
           </Paper>
 
-          <Divider
-            orientation="vertical"
-            flexItem
-            sx={{display: {xs: 'none', md: 'block'}}}
-          />
-          <Divider
-            orientation="horizontal"
-            flexItem
-            sx={{display: {xs: 'block', md: 'none'}}}
-          />
-
-          <Paper sx={{background: 'transparent', p: 3, flex: 1}}>
-            <Typography variant="h5" mb={3} textAlign="center">
-              Claim Phala Assets
-            </Typography>
+          <Paper
+            sx={{
+              background: 'transparent',
+              p: 3,
+              flex: 1,
+              display: 'flex',
+              flexDirection: 'column',
+            }}
+          >
+            <Stack
+              direction="row"
+              alignItems="center"
+              justifyContent="center"
+              gap={1}
+              mb={3}
+            >
+              <Image src={phalaIcon} width={32} height={32} alt="Phala" />
+              <Typography variant="h5">Phala</Typography>
+            </Stack>
             <ClaimAssets chain="phala" />
           </Paper>
         </Stack>

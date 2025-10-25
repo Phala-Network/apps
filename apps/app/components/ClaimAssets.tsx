@@ -18,6 +18,7 @@ import {useAutoSwitchChain} from '@/hooks/useAutoSwitchChain'
 import {walletDialogOpenAtom} from '@/store/ui'
 import {CheckCircleOutline, ContentCopy} from '@mui/icons-material'
 import {
+  Alert,
   Box,
   Button,
   Divider,
@@ -107,6 +108,10 @@ export const CheckAssets = ({
     </>
   )
 }
+
+// Phala staking rewards exchange rate (vPHA to PHA)
+// This rate is fixed at the snapshot when Phala chain stopped
+const PHALA_SHARE_PRICE = 1.183841818181818
 
 const ClaimAssets = ({chain}: {chain: ChainType}) => {
   const {enqueueSnackbar} = useSnackbar()
@@ -228,22 +233,48 @@ const ClaimAssets = ({chain}: {chain: ChainType}) => {
     }
   }
 
+  // Convert vPHA delegation to real PHA for Phala chain
+  const delegationInPHA = useMemo(() => {
+    if (chain !== 'phala' || data?.staked == null) {
+      return undefined
+    }
+    return new Decimal(data.staked).mul(PHALA_SHARE_PRICE)
+  }, [chain, data?.staked])
+
   const rewards = useMemo(() => {
-    if (sharePrice == null || data?.staked == null) {
+    if (data?.staked == null) {
       return
     }
-    return new Decimal(sharePrice.toString())
+    if (chain === 'phala') {
+      // For Phala, use current share price minus snapshot share price
+      if (sharePrice == null) {
+        return
+      }
+      const currentRate = new Decimal(sharePrice.toString()).div(1e18)
+      const reward = currentRate.minus(PHALA_SHARE_PRICE).mul(data.staked)
+      // Ensure rewards are non-negative (handle rounding errors)
+      return Decimal.max(0, reward)
+    }
+    // For Khala, use current share price minus 1
+    if (sharePrice == null) {
+      return
+    }
+    const reward = new Decimal(sharePrice.toString())
       .div(1e18)
       .minus(1)
       .mul(data.staked)
-  }, [sharePrice, data?.staked])
+    // Ensure rewards are non-negative (handle rounding errors)
+    return Decimal.max(0, reward)
+  }, [sharePrice, data?.staked, chain])
 
   const total = useMemo(() => {
     if (data == null || rewards == null) {
       return
     }
-    return Decimal.add(data.free, data.staked).add(rewards)
-  }, [data, rewards])
+    // For Phala, use converted delegation amount; for Khala, use staked amount as is
+    const stakedAmount = delegationInPHA ?? data.staked
+    return Decimal.add(data.free, stakedAmount).add(rewards)
+  }, [data, rewards, delegationInPHA])
 
   const chainLabel = chain.charAt(0).toUpperCase() + chain.slice(1)
 
@@ -288,26 +319,46 @@ const ClaimAssets = ({chain}: {chain: ChainType}) => {
       <Paper sx={{p: 2, bgcolor: 'transparent', mt: 2}}>
         <Stack gap={1}>
           <Property label="Free" size="small" fullWidth wrapDecimal>
-            {data
-              ? toCurrency(new Decimal(data.free).minus(data.pwRefund))
-              : '-'}
+            {data ? toCurrency(data.free) : '-'}
           </Property>
           <Property label="Delegation" size="small" fullWidth wrapDecimal>
-            {data ? toCurrency(data.staked) : '-'}
+            {delegationInPHA && data ? (
+              <Stack component="span" gap={0.5} alignItems="flex-end">
+                <Box component="span">{toCurrency(delegationInPHA)}</Box>
+                <Typography
+                  variant="caption"
+                  color="text.secondary"
+                  component="span"
+                >
+                  ({toCurrency(data.staked)} vPHA)
+                </Typography>
+              </Stack>
+            ) : data ? (
+              toCurrency(data.staked)
+            ) : (
+              '-'
+            )}
           </Property>
           <Property label="Staking Rewards" size="small" fullWidth wrapDecimal>
             {rewards ? toCurrency(rewards) : '-'}
           </Property>
-          <Property
-            label="Phala World NFT Refund"
-            size="small"
-            fullWidth
-            wrapDecimal
-          >
-            {data ? toCurrency(data.pwRefund) : '-'}
-          </Property>
         </Stack>
       </Paper>
+
+      {chain === 'phala' && (
+        <Alert severity="info" sx={{mt: 2}}>
+          <Typography variant="body2">
+            <strong>Notice:</strong> Staked PHA will be claimed to{' '}
+            <Link
+              href="https://explorer.phala.network/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Phala L2
+            </Link>
+          </Typography>
+        </Alert>
+      )}
 
       <Box display="flex" alignItems="center" gap={2} height={52} px={2} my={3}>
         <Identicon value={address} theme="polkadot" size={30} />

@@ -15,7 +15,7 @@ export const khalaAssetsApi = wretch(
 )
 
 export const phalaAssetsApi = wretch(
-  'https://dbcac8a0d67d837a93e8c1db0886c8f1acdc599d-8080.dstack-prod4.phala.network',
+  'https://19c1b60e7668801155c1ae3fb47701cdcc408298-8080.dstack-pha-prod7.phala.network',
 )
 
 // GraphQL client for Khala claimer subgraph
