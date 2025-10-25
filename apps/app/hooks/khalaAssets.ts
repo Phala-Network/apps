@@ -25,7 +25,7 @@ export const khalaClaimerGraphQL = wretch(
 
 // GraphQL client for Phala claimer subgraph
 export const phalaClaimerGraphQL = wretch(
-  'https://api.goldsky.com/api/public/project_cmdgxxcewrqdi01wx9e7md0ek/subgraphs/khala-claimer/1.0.0/gn',
+  'https://api.goldsky.com/api/public/project_cmdgxxcewrqdi01wx9e7md0ek/subgraphs/phala-claimer/1.0.0/gn',
 )
 
 export const useAssetsQuery = (
