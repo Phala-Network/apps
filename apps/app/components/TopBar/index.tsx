@@ -44,14 +44,19 @@ const TopBar: FC = () => {
               component={NextLink}
               href="/staking"
               variant="text"
-              sx={{
-                color: 'text.primary',
-                minHeight: 0,
-                py: 0,
-                fontWeight: 'medium',
-              }}
+              sx={{color: 'text.primary', minHeight: 0, py: 0}}
             >
               Staking
+            </Button>
+            <Button
+              component="a"
+              href="https://bridge.phala.network/"
+              target="_blank"
+              rel="noopener noreferrer"
+              variant="text"
+              sx={{color: 'text.primary', minHeight: 0, py: 0}}
+            >
+              Bridge
             </Button>
           </Stack>
 
