@@ -421,11 +421,19 @@ const ClaimAssets = ({chain}: {chain: ChainType}) => {
                   <Typography variant="body2" mt={1} color="text.secondary">
                     View your assets on{' '}
                     <Link
+                      href={`${explorerUrl}/address/${logData?.l1Receiver || ethAddress}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      L1
+                    </Link>
+                    {' or '}
+                    <Link
                       href={`https://explorer.phala.network/address/${logData?.receiver || ethAddress}?tab=tokens`}
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      Phala L2
+                      L2
                     </Link>
                   </Typography>
                 ) : (
