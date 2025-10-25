@@ -427,7 +427,7 @@ const ClaimAssets = ({chain}: {chain: ChainType}) => {
                     >
                       Ethereum
                     </Link>
-                    {' or '}
+                    {' and '}
                     <Link
                       href={`https://explorer.phala.network/address/${logData?.receiver || ethAddress}?tab=tokens`}
                       target="_blank"
