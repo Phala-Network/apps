@@ -131,6 +131,22 @@ const Page = () => {
                 Tutorial
               </Link>
             </Typography>
+            <Typography variant="subtitle1" fontWeight={500} sx={{mt: 2}}>
+              How to transfer PHA between Ethereum and Phala L2?
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              You can use{' '}
+              <Link
+                href="https://bridge.phala.network/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Phala Bridge
+              </Link>{' '}
+              to transfer PHA tokens between Ethereum (L1) and Phala L2. The
+              bridge supports bidirectional transfers, allowing you to move
+              assets freely between both networks.
+            </Typography>
           </Stack>
         </Paper>
       </Stack>
