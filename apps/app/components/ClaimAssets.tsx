@@ -425,7 +425,7 @@ const ClaimAssets = ({chain}: {chain: ChainType}) => {
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      L1
+                      Ethereum
                     </Link>
                     {' or '}
                     <Link
@@ -433,7 +433,7 @@ const ClaimAssets = ({chain}: {chain: ChainType}) => {
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      L2
+                      Phala L2
                     </Link>
                   </Typography>
                 ) : (
@@ -465,7 +465,7 @@ const ClaimAssets = ({chain}: {chain: ChainType}) => {
                     gap={1}
                     alignItems="center"
                   >
-                    L1 Receiver:{' '}
+                    Ethereum Receiver:{' '}
                     <Link
                       href={`${explorerUrl}/address/${logData.l1Receiver}`}
                       target="_blank"
@@ -483,7 +483,7 @@ const ClaimAssets = ({chain}: {chain: ChainType}) => {
                     gap={1}
                     alignItems="center"
                   >
-                    {chain === 'phala' ? 'L2 Receiver' : 'Receiver'}:{' '}
+                    {chain === 'phala' ? 'Phala L2 Receiver' : 'Receiver'}:{' '}
                     <Link
                       href={
                         chain === 'phala'
