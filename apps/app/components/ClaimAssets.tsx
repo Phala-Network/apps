@@ -146,6 +146,7 @@ const ClaimAssets = ({chain}: {chain: ChainType}) => {
       hash: txHash,
       trimmedHash: trimAddress(txHash, 6, 6),
       receiver: log.receiver,
+      l1Receiver: 'l1Receiver' in log ? log.l1Receiver : undefined,
       timestamp: log.timestamp_,
     }
   }, [log])
@@ -448,6 +449,24 @@ const ClaimAssets = ({chain}: {chain: ChainType}) => {
                     <Skeleton width={100} height={20} />
                   )}
                 </Typography>
+                {chain === 'phala' && logData?.l1Receiver && (
+                  <Typography
+                    variant="body2"
+                    mt={1}
+                    display="flex"
+                    gap={1}
+                    alignItems="center"
+                  >
+                    L1 Receiver:{' '}
+                    <Link
+                      href={`${explorerUrl}/address/${logData.l1Receiver}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {trimAddress(logData.l1Receiver, 6, 6)}
+                    </Link>
+                  </Typography>
+                )}
                 {logData?.receiver && (
                   <Typography
                     variant="body2"
@@ -456,7 +475,7 @@ const ClaimAssets = ({chain}: {chain: ChainType}) => {
                     gap={1}
                     alignItems="center"
                   >
-                    Receiver:{' '}
+                    {chain === 'phala' ? 'L2 Receiver' : 'Receiver'}:{' '}
                     <Link
                       href={
                         chain === 'phala'
