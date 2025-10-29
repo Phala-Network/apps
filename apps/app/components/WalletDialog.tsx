@@ -162,11 +162,13 @@ const WalletDialog: FC = () => {
               }}
               {...(w.installed === true
                 ? {
-                    onClick: () => {
-                      void (async () => {
+                    onClick: async () => {
+                      try {
                         await w.enable('Phala App')
                         setWallet(w)
-                      })()
+                      } catch (err) {
+                        console.error('Failed to enable wallet:', err)
+                      }
                     },
                   }
                 : {href: w.installUrl, target: '_blank'})}

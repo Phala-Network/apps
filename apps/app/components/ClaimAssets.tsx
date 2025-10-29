@@ -1,17 +1,24 @@
 import khalaClaimerAbi from '@/assets/khala_claimer_abi'
 import Property from '@/components/Property'
 import SwitchChainButton from '@/components/SwitchChainButton'
-import {KHALA_CLAIMER_CONTRACT_ADDRESS, explorerUrl} from '@/config'
 import {
+  KHALA_CLAIMER_CONTRACT_ADDRESS,
+  PHALA_CLAIMER_CONTRACT_ADDRESS,
+  explorerUrl,
+} from '@/config'
+import {
+  type ChainType,
   khalaAssetsApi,
+  phalaAssetsApi,
+  useAssetsQuery,
   useClaimStatus,
-  useKhalaAssetsQuery,
 } from '@/hooks/khalaAssets'
 import {useSharePrice} from '@/hooks/staking'
 import {useAutoSwitchChain} from '@/hooks/useAutoSwitchChain'
 import {walletDialogOpenAtom} from '@/store/ui'
 import {CheckCircleOutline, ContentCopy} from '@mui/icons-material'
 import {
+  Alert,
   Box,
   Button,
   Divider,
@@ -44,7 +51,7 @@ const Steps = () => {
   return (
     <Stepper alternativeLabel>
       <Step active>
-        <StepLabel>Sign with Khala account</StepLabel>
+        <StepLabel>Sign with account</StepLabel>
       </Step>
       <Step active>
         <StepLabel>Connect Ethereum wallet</StepLabel>
@@ -56,20 +63,23 @@ const Steps = () => {
   )
 }
 
-export const CheckKhalaAssets = ({
+export const CheckAssets = ({
   onCheck,
+  chain,
 }: {
   onCheck: (address: string) => void
+  chain: ChainType
 }) => {
   const {enqueueSnackbar} = useSnackbar()
   const [checkAddressInput, setCheckAddressInput] = useState('')
+  const chainLabel = chain.charAt(0).toUpperCase() + chain.slice(1)
 
   const handleCheck = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (validateAddress(checkAddressInput)) {
       onCheck(checkAddressInput)
     } else {
-      enqueueSnackbar('Invalid Khala address', {variant: 'error'})
+      enqueueSnackbar(`Invalid ${chainLabel} address`, {variant: 'error'})
     }
   }
   return (
@@ -83,7 +93,7 @@ export const CheckKhalaAssets = ({
         onSubmit={handleCheck}
       >
         <TextField
-          placeholder="Khala account"
+          placeholder={`${chainLabel} account`}
           value={checkAddressInput}
           fullWidth
           size="small"
@@ -99,7 +109,11 @@ export const CheckKhalaAssets = ({
   )
 }
 
-const ClaimKhalaAssets = () => {
+// Phala staking rewards exchange rate (vPHA to PHA)
+// This rate is fixed at the snapshot when Phala chain stopped
+const PHALA_SHARE_PRICE = 1.183841818181818
+
+const ClaimAssets = ({chain}: {chain: ChainType}) => {
   const {enqueueSnackbar} = useSnackbar()
   const setWalletDialogOpen = useSetAtom(walletDialogOpenAtom)
   const [isSigning, setIsSigning] = useState(false)
@@ -111,7 +125,7 @@ const ClaimKhalaAssets = () => {
   const {address: ethAddress, chain: ethChain} = useAccount()
   const [polkadotAccount] = useAtom(polkadotAccountAtom)
   const address = checkAddress ?? polkadotAccount?.address
-  const {data} = useKhalaAssetsQuery(address)
+  const {data} = useAssetsQuery(address, chain)
   const h160Address = useMemo(() => {
     if (address == null) {
       return undefined
@@ -120,7 +134,7 @@ const ClaimKhalaAssets = () => {
     const h160 = u8aToHex(publicKey).slice(0, 42) as Hex
     return h160
   }, [address])
-  const {claimed, log, refetch} = useClaimStatus(h160Address)
+  const {claimed, log, refetch} = useClaimStatus(h160Address, chain)
   const logData = useMemo(() => {
     if (log == null) {
       return undefined
@@ -132,6 +146,7 @@ const ClaimKhalaAssets = () => {
       hash: txHash,
       trimmedHash: trimAddress(txHash, 6, 6),
       receiver: log.receiver,
+      l1Receiver: 'l1Receiver' in log ? log.l1Receiver : undefined,
       timestamp: log.timestamp_,
     }
   }, [log])
@@ -171,7 +186,9 @@ const ClaimKhalaAssets = () => {
       setIsSigning(true)
       const {signature} = await signRaw({
         address: polkadotAccount.address,
-        data: stringToHex(`Khala Asset Receiver: ${receiver}`),
+        data: stringToHex(
+          `${chain.charAt(0).toUpperCase() + chain.slice(1)} Asset Receiver: ${receiver}`,
+        ),
         type: 'bytes',
       })
       polkadotSignature = signature
@@ -181,7 +198,8 @@ const ClaimKhalaAssets = () => {
     }
 
     try {
-      const {h160, free, staked, signature} = await khalaAssetsApi
+      const api = chain === 'khala' ? khalaAssetsApi : phalaAssetsApi
+      const {h160, free, staked, signature} = await api
         .url('/claim')
         .post({
           address: polkadotAccount.address,
@@ -190,9 +208,14 @@ const ClaimKhalaAssets = () => {
         })
         .json<{h160: Hex; free: string; staked: string; signature: Hex}>()
 
+      const contractAddress =
+        chain === 'khala'
+          ? KHALA_CLAIMER_CONTRACT_ADDRESS
+          : PHALA_CLAIMER_CONTRACT_ADDRESS
+
       writeContract({
         abi: khalaClaimerAbi,
-        address: KHALA_CLAIMER_CONTRACT_ADDRESS,
+        address: contractAddress,
         functionName: 'claim',
         args: [h160, BigInt(free), BigInt(staked), receiver, signature],
       })
@@ -211,22 +234,50 @@ const ClaimKhalaAssets = () => {
     }
   }
 
+  // Convert vPHA delegation to real PHA for Phala chain
+  const delegationInPHA = useMemo(() => {
+    if (chain !== 'phala' || data?.staked == null) {
+      return undefined
+    }
+    return new Decimal(data.staked).mul(PHALA_SHARE_PRICE)
+  }, [chain, data?.staked])
+
   const rewards = useMemo(() => {
-    if (sharePrice == null || data?.staked == null) {
+    if (data?.staked == null) {
       return
     }
-    return new Decimal(sharePrice.toString())
+    if (chain === 'phala') {
+      // For Phala, use current share price minus snapshot share price
+      if (sharePrice == null) {
+        return
+      }
+      const currentRate = new Decimal(sharePrice.toString()).div(1e18)
+      const reward = currentRate.minus(PHALA_SHARE_PRICE).mul(data.staked)
+      // Ensure rewards are non-negative (handle rounding errors)
+      return Decimal.max(0, reward)
+    }
+    // For Khala, use current share price minus 1
+    if (sharePrice == null) {
+      return
+    }
+    const reward = new Decimal(sharePrice.toString())
       .div(1e18)
       .minus(1)
       .mul(data.staked)
-  }, [sharePrice, data?.staked])
+    // Ensure rewards are non-negative (handle rounding errors)
+    return Decimal.max(0, reward)
+  }, [sharePrice, data?.staked, chain])
 
   const total = useMemo(() => {
     if (data == null || rewards == null) {
       return
     }
-    return Decimal.add(data.free, data.staked).add(rewards)
-  }, [data, rewards])
+    // For Phala, use converted delegation amount; for Khala, use staked amount as is
+    const stakedAmount = delegationInPHA ?? data.staked
+    return Decimal.add(data.free, stakedAmount).add(rewards)
+  }, [data, rewards, delegationInPHA])
+
+  const chainLabel = chain.charAt(0).toUpperCase() + chain.slice(1)
 
   if (address == null) {
     return (
@@ -246,8 +297,10 @@ const ClaimKhalaAssets = () => {
         <Divider flexItem />
 
         <Stack alignItems="center" pt={4} pb={2} gap={2}>
-          <Typography variant="body1">Check your Khala account</Typography>
-          <CheckKhalaAssets onCheck={setCheckAddress} />
+          <Typography variant="body1">
+            Check your {chainLabel} account
+          </Typography>
+          <CheckAssets onCheck={setCheckAddress} chain={chain} />
         </Stack>
       </Box>
     )
@@ -267,26 +320,46 @@ const ClaimKhalaAssets = () => {
       <Paper sx={{p: 2, bgcolor: 'transparent', mt: 2}}>
         <Stack gap={1}>
           <Property label="Free" size="small" fullWidth wrapDecimal>
-            {data
-              ? toCurrency(new Decimal(data.free).minus(data.pwRefund))
-              : '-'}
+            {data ? toCurrency(data.free) : '-'}
           </Property>
           <Property label="Delegation" size="small" fullWidth wrapDecimal>
-            {data ? toCurrency(data.staked) : '-'}
+            {delegationInPHA && data ? (
+              <Stack component="span" gap={0.5} alignItems="flex-end">
+                <Box component="span">{toCurrency(delegationInPHA)}</Box>
+                <Typography
+                  variant="caption"
+                  color="text.secondary"
+                  component="span"
+                >
+                  ({toCurrency(data.staked)} vPHA)
+                </Typography>
+              </Stack>
+            ) : data ? (
+              toCurrency(data.staked)
+            ) : (
+              '-'
+            )}
           </Property>
           <Property label="Staking Rewards" size="small" fullWidth wrapDecimal>
             {rewards ? toCurrency(rewards) : '-'}
           </Property>
-          <Property
-            label="Phala World NFT Refund"
-            size="small"
-            fullWidth
-            wrapDecimal
-          >
-            {data ? toCurrency(data.pwRefund) : '-'}
-          </Property>
         </Stack>
       </Paper>
+
+      {chain === 'phala' && (
+        <Alert severity="info" sx={{mt: 2}}>
+          <Typography variant="body2">
+            <strong>Notice:</strong> Staked PHA will be claimed to{' '}
+            <Link
+              href="https://explorer.phala.network/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Phala L2
+            </Link>
+          </Typography>
+        </Alert>
+      )}
 
       <Box display="flex" alignItems="center" gap={2} height={52} px={2} my={3}>
         <Identicon value={address} theme="polkadot" size={30} />
@@ -299,7 +372,7 @@ const ClaimKhalaAssets = () => {
             whiteSpace="nowrap"
             minWidth={0}
           >
-            {polkadotAccount?.name ?? 'Khala account'}
+            {polkadotAccount?.name ?? `${chainLabel} account`}
           </Typography>
           <Stack
             direction="row"
@@ -344,9 +417,30 @@ const ClaimKhalaAssets = () => {
                 <Typography variant="h5" mt={3}>
                   Claimed Successfully
                 </Typography>
-                <Typography variant="body2" mt={1} color="text.secondary">
-                  Staked PHA and rewards are available on the staking page
-                </Typography>
+                {chain === 'phala' ? (
+                  <Typography variant="body2" mt={1} color="text.secondary">
+                    View your assets on{' '}
+                    <Link
+                      href={`${explorerUrl}/address/${logData?.l1Receiver || ethAddress}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Ethereum
+                    </Link>
+                    {' and '}
+                    <Link
+                      href={`https://explorer.phala.network/address/${logData?.receiver || ethAddress}?tab=tokens`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Phala L2
+                    </Link>
+                  </Typography>
+                ) : (
+                  <Typography variant="body2" mt={1} color="text.secondary">
+                    Staked PHA and rewards are available on the staking page
+                  </Typography>
+                )}
                 <Typography
                   variant="body2"
                   mt={1}
@@ -363,6 +457,24 @@ const ClaimKhalaAssets = () => {
                     <Skeleton width={100} height={20} />
                   )}
                 </Typography>
+                {chain === 'phala' && logData?.l1Receiver && (
+                  <Typography
+                    variant="body2"
+                    mt={1}
+                    display="flex"
+                    gap={1}
+                    alignItems="center"
+                  >
+                    Ethereum Receiver:{' '}
+                    <Link
+                      href={`${explorerUrl}/address/${logData.l1Receiver}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {trimAddress(logData.l1Receiver, 6, 6)}
+                    </Link>
+                  </Typography>
+                )}
                 {logData?.receiver && (
                   <Typography
                     variant="body2"
@@ -371,10 +483,15 @@ const ClaimKhalaAssets = () => {
                     gap={1}
                     alignItems="center"
                   >
-                    Receiver:{' '}
+                    {chain === 'phala' ? 'Phala L2 Receiver' : 'Receiver'}:{' '}
                     <Link
-                      href={`${explorerUrl}/address/${logData.receiver}`}
+                      href={
+                        chain === 'phala'
+                          ? `https://explorer.phala.network/address/${logData.receiver}?tab=tokens`
+                          : `${explorerUrl}/address/${logData.receiver}`
+                      }
                       target="_blank"
+                      rel="noopener noreferrer"
                     >
                       {trimAddress(logData.receiver, 6, 6)}
                     </Link>
@@ -394,14 +511,16 @@ const ClaimKhalaAssets = () => {
                     ).toLocaleString()}
                   </Typography>
                 )}
-                <Button
-                  variant="contained"
-                  sx={{mt: 3}}
-                  LinkComponent={NextLink}
-                  href="/staking"
-                >
-                  Go to Staking
-                </Button>
+                {chain === 'khala' && (
+                  <Button
+                    variant="contained"
+                    sx={{mt: 3}}
+                    LinkComponent={NextLink}
+                    href="/staking"
+                  >
+                    Go to Staking
+                  </Button>
+                )}
               </Stack>
             ) : (
               <>
@@ -437,4 +556,4 @@ const ClaimKhalaAssets = () => {
   )
 }
 
-export default ClaimKhalaAssets
+export default ClaimAssets
