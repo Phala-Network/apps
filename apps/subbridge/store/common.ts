@@ -19,6 +19,11 @@ export const khalaSunsetAlertOpenAtom = atomWithStorage(
   true,
 )
 
+export const phalaSunsetAlertOpenAtom = atomWithStorage(
+  'jotai:phala_sunset_alert_open',
+  true,
+)
+
 export const moreButtonBadgeVersionAtom = atomWithStorage(
   'jotai:more_button_badge_version',
   0,
