@@ -71,13 +71,6 @@ export const BRIDGES: Readonly<Bridge[]> = [
         ],
       },
       {
-        id: 'moonbeam',
-        assets: [
-          {assetId: 'pha', estimatedTime: '< 1 min', kind: 'phalaXTransfer'},
-          {assetId: 'glmr', estimatedTime: '< 1 min', kind: 'phalaXTransfer'},
-        ],
-      },
-      {
         id: 'astar',
         assets: [
           {assetId: 'pha', estimatedTime: '< 1 min', kind: 'phalaXTransfer'},
