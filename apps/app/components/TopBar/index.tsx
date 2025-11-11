@@ -1,4 +1,4 @@
-import PhalaLogo from '@/assets/phala_logo.svg'
+import phalaLogo from '@/assets/phala_logo.svg'
 import {faDiscord, faXTwitter} from '@fortawesome/free-brands-svg-icons'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import Language from '@mui/icons-material/Language'
@@ -12,6 +12,7 @@ import {
   Toolbar,
   useTheme,
 } from '@mui/material'
+import Image from 'next/image'
 import NextLink from 'next/link'
 import type {FC} from 'react'
 
@@ -35,7 +36,13 @@ const TopBar: FC = () => {
         <Toolbar>
           <NoSsr>
             <NextLink href="/" css={{display: 'flex', alignItems: 'center'}}>
-              <PhalaLogo width={30} css={{flexShrink: 0, cursor: 'pointer'}} />
+              <Image
+                src={phalaLogo}
+                alt="Phala Network"
+                width={30}
+                height={30}
+                css={{flexShrink: 0, cursor: 'pointer'}}
+              />
             </NextLink>
           </NoSsr>
 

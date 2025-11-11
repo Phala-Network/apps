@@ -1,7 +1,6 @@
 export {default as compactFormat} from './compactFormat'
 export * from './createPolkadotApi'
 export {default as getDecimalPattern} from './getDecimalPattern'
-export * from './signAndSend'
 export * from './sleep'
 export * from './toCurrency'
 export * from './toFixed'
