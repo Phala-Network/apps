@@ -10,41 +10,12 @@
     "start": "next start"
   },
   "dependencies": {
-    "@buildwithsygma/sygma-sdk-core": "2.11.2",
-    "@emotion/cache": "^11.14.0",
-    "@emotion/react": "^11.14.0",
-    "@emotion/server": "^11.11.0",
-    "@emotion/styled": "^11.14.0",
-    "@metamask/detect-provider": "^2.0.0",
-    "@mui/icons-material": "^6.4.12",
-    "@mui/material": "^6.4.12",
-    "@mui/material-nextjs": "^6.4.12",
-    "@phala/lib": "workspace:*",
-    "@phala/store": "workspace:*",
-    "@phala/ui": "workspace:*",
-    "@polkadot/api": "^16.2.2",
-    "@polkadot/util": "^13.5.2",
-    "@polkadot/util-crypto": "^13.5.2",
-    "@talismn/connect-components": "1.1.9",
-    "@talismn/connect-ui": "^1.1.4",
-    "@talismn/connect-wallets": "^1.2.8",
-    "date-fns": "^4.1.0",
-    "decimal.js": "^10.5.0",
-    "ethers": "^5.8.0",
-    "jotai": "^2.12.5",
-    "jotai-devtools": "^0.12.0",
-    "next": "^15.3.4",
-    "notistack": "^3.0.2",
+    "next": "^15.5.6",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "swr": "^2.3.3"
+    "react-dom": "^18.3.1"
   },
   "devDependencies": {
-    "@next/bundle-analyzer": "^15.3.4",
-    "@svgr/webpack": "^8.1.0",
-    "@swc-jotai/debug-label": "^0.2.0",
-    "@swc-jotai/react-refresh": "^0.3.0",
-    "@types/react": "^18.3.23",
+    "@types/react": "^18.3.26",
     "@types/react-dom": "^18.3.7"
   }
 }
