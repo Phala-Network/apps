@@ -45,7 +45,6 @@
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^15.5.6",
-    "@svgr/webpack": "^8.1.0",
     "@swc-jotai/debug-label": "^0.2.0",
     "@swc-jotai/react-refresh": "^0.3.0",
     "@types/react": "^18.3.26",

@@ -17,24 +17,6 @@ const nextConfig: NextConfig = {
     },
   },
   reactStrictMode: true,
-  images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: '*.coinmarketcap.com',
-        pathname: '/static/img/coins/**',
-      },
-    ],
-  },
-  webpack(config) {
-    config.module.rules.push({
-      test: /\.svg$/i,
-      issuer: /\.[jt]sx?$/,
-      use: [{loader: '@svgr/webpack', options: {dimensions: false}}],
-    })
-
-    return config
-  },
   async redirects() {
     return [
       {
@@ -45,24 +27,14 @@ const nextConfig: NextConfig = {
       {
         source: '/khala/:path*',
         destination: '/khala-assets',
-        permanent: false,
+        permanent: true,
       },
       {
         source: '/phala/:path*',
-        destination: '/:path*',
-        permanent: false,
+        destination: '/khala-assets',
+        permanent: true,
       },
     ]
-  },
-  turbopack: {
-    rules: {
-      loaders: {
-        '*.svg': {
-          loaders: [{loader: '@svgr/webpack', options: {dimensions: false}}],
-          as: '*.js',
-        },
-      },
-    },
   },
   experimental: {
     swcPlugins: [
