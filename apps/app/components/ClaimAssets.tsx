@@ -1,4 +1,5 @@
 import khalaClaimerAbi from '@/assets/khala_claimer_abi'
+import phalaClaimerAbi from '@/assets/phala_claimer_abi'
 import Property from '@/components/Property'
 import SwitchChainButton from '@/components/SwitchChainButton'
 import {
@@ -213,8 +214,10 @@ const ClaimAssets = ({chain}: {chain: ChainType}) => {
           ? KHALA_CLAIMER_CONTRACT_ADDRESS
           : PHALA_CLAIMER_CONTRACT_ADDRESS
 
+      const contractAbi = chain === 'khala' ? khalaClaimerAbi : phalaClaimerAbi
+
       writeContract({
-        abi: khalaClaimerAbi,
+        abi: contractAbi,
         address: contractAddress,
         functionName: 'claim',
         args: [h160, BigInt(free), BigInt(staked), receiver, signature],
