@@ -36,6 +36,14 @@ const nextConfig: NextConfig = {
       },
     ]
   },
+  async rewrites() {
+    return [
+      {
+        source: '/phala-assets',
+        destination: '/khala-assets',
+      },
+    ]
+  },
   experimental: {
     swcPlugins: [
       // ['@swc-jotai/debug-label', {}],

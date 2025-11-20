@@ -26,8 +26,5 @@
     "turbo": "^2.5.8",
     "typescript": "^5.9.3"
   },
-  "packageManager": "bun@1.2.17",
-  "patchedDependencies": {
-    "@buildwithsygma/sygma-sdk-core@2.11.2": "patches/@buildwithsygma%2Fsygma-sdk-core@2.11.2.patch"
-  }
+  "packageManager": "bun@1.2.17"
 }

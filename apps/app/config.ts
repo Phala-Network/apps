@@ -1,12 +1,4 @@
-import {GraphQLClient} from 'graphql-request'
 import {mainnet} from 'viem/chains'
-
-export const subsquidClient = new GraphQLClient(
-  'https://subsquid.phala.network/phala-computation/graphql',
-)
-export const khalaSubsquidClient = new GraphQLClient(
-  'https://subsquid.phala.network/khala-computation/graphql',
-)
 
 export const ethChain = mainnet
 export const explorerUrl = ethChain.blockExplorers.default.url

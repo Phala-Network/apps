@@ -1,6 +1,4 @@
-import useListenBlockHeight from '@/hooks/useListenBlockHeight'
 import {useNotice} from '@/hooks/useNotice'
-import useShowWalletDialog from '@/hooks/useShowWalletDialog'
 import {Container} from '@mui/material'
 import {useConnectPolkadotWallet} from '@phala/lib'
 import type {FC, ReactNode} from 'react'
@@ -10,8 +8,6 @@ import WalletDialog from './WalletDialog'
 
 const Layout: FC<{children: ReactNode}> = ({children}) => {
   useConnectPolkadotWallet('Phala App', 30)
-  useListenBlockHeight()
-  useShowWalletDialog()
   useNotice()
 
   return (
