@@ -112,7 +112,9 @@ export const CheckAssets = ({
 
 // Phala staking rewards exchange rate (vPHA to PHA)
 // This rate is fixed at the snapshot when Phala chain stopped
-const PHALA_SHARE_PRICE = 1.183841818181818
+const PHALA_SHARE_PRICE = new Decimal('42148385.793480375048').div(
+  '35407137.584585511432035582',
+)
 
 const ClaimAssets = ({chain}: {chain: ChainType}) => {
   const {enqueueSnackbar} = useSnackbar()
