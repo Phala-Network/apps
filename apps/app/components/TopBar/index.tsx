@@ -51,7 +51,12 @@ const TopBar: FC = () => {
               component={NextLink}
               href="/staking"
               variant="text"
-              sx={{color: 'text.primary', minHeight: 0, py: 0}}
+              sx={{
+                color: 'text.primary',
+                fontWeight: 'bold',
+                minHeight: 0,
+                py: 0,
+              }}
             >
               Staking
             </Button>
@@ -61,9 +66,29 @@ const TopBar: FC = () => {
               target="_blank"
               rel="noopener noreferrer"
               variant="text"
-              sx={{color: 'text.primary', minHeight: 0, py: 0}}
+              sx={{
+                color: 'text.primary',
+                fontWeight: 'bold',
+                minHeight: 0,
+                py: 0,
+              }}
             >
               Bridge
+            </Button>
+            <Button
+              component="a"
+              href="https://snapshot.box/#/s:phala-network.eth"
+              target="_blank"
+              rel="noopener noreferrer"
+              variant="text"
+              sx={{
+                color: 'text.primary',
+                fontWeight: 'bold',
+                minHeight: 0,
+                py: 0,
+              }}
+            >
+              Governance
             </Button>
           </Stack>
 
