@@ -32,7 +32,7 @@ const Page = () => {
             .
           </Typography>
           <Typography variant="body1" color="text.secondary">
-            Phala was terminated at block #6067200, and you can now claim your
+            Phala was terminated at block #9064613, and you can now claim your
             assets on{' '}
             <Link
               href="https://explorer.phala.network/"
