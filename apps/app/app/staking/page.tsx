@@ -1,3 +1,5 @@
+'use client'
+
 import poweredBySlpx from '@/assets/powered_by_slpx.png'
 import PageHeader from '@/components/PageHeader'
 import Staking from '@/components/Staking'
@@ -5,7 +7,7 @@ import {Box, Chip} from '@mui/material'
 import {ConnectButton} from '@rainbow-me/rainbowkit'
 import Image from 'next/image'
 
-const Page = () => {
+export default function StakingPage() {
   return (
     <>
       <PageHeader
@@ -42,4 +44,3 @@ const Page = () => {
     </>
   )
 }
-export default Page

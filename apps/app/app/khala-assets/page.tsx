@@ -1,13 +1,16 @@
+'use client'
+
 import ClaimAssets from '@/components/ClaimAssets'
+import PolkadotProvider from '@/components/PolkadotProvider'
 import Title from '@/components/Title'
 import {Link, Paper, Stack, Typography} from '@mui/material'
 import khalaIcon from '@phala/ui/icons/chain/khala.png'
 import phalaIcon from '@phala/ui/icons/chain/phala.png'
 import Image from 'next/image'
 
-const Page = () => {
+export default function KhalaAssetsPage() {
   return (
-    <>
+    <PolkadotProvider>
       <Title>Claim Phala/Khala Assets</Title>
       <Stack maxWidth={900} mx="auto" alignItems="center" mt={6} gap={3}>
         <Typography variant="h4">Claim Phala/Khala Assets</Typography>
@@ -150,8 +153,6 @@ const Page = () => {
           </Stack>
         </Paper>
       </Stack>
-    </>
+    </PolkadotProvider>
   )
 }
-
-export default Page

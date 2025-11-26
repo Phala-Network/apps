@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build": "next build",
-    "dev": "next dev -p 3001",
+    "dev": "next dev -H phala-app.localhost",
     "start": "next start"
   },
   "dependencies": {
@@ -20,14 +20,14 @@
     "@mui/material-nextjs": "^6.5.0",
     "@phala/lib": "workspace:*",
     "@phala/store": "workspace:*",
-    "@polkadot/keyring": "^13.5.8",
-    "@polkadot/react-identicon": "^3.16.3",
-    "@polkadot/types": "^16.5.2",
-    "@polkadot/util": "^13.5.8",
+    "@polkadot/keyring": "^13.5.9",
+    "@polkadot/react-identicon": "^3.16.4",
+    "@polkadot/types": "^16.5.3",
+    "@polkadot/util": "^13.5.9",
     "@rainbow-me/rainbowkit": "^2.2.9",
     "@talismn/connect-wallets": "^1.2.8",
-    "@tanstack/react-query": "^5.90.10",
-    "@tanstack/react-query-devtools": "^5.90.2",
+    "@tanstack/react-query": "^5.90.11",
+    "@tanstack/react-query-devtools": "^5.91.1",
     "date-fns": "^4.1.0",
     "decimal.js": "^10.6.0",
     "jotai": "^2.15.1",
@@ -38,7 +38,7 @@
     "react-dom": "^18.3.1",
     "sharp": "^0.33.5",
     "swr": "^2.3.6",
-    "viem": "^2.39.3",
+    "viem": "^2.40.3",
     "wagmi": "^2.19.5",
     "wretch": "^2.11.1"
   },

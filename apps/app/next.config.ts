@@ -9,7 +9,6 @@ const nextConfig: NextConfig = {
   transpilePackages: ['jotai-devtools'],
   eslint: {
     ignoreDuringBuilds: true,
-    dirs: ['pages', 'components', 'lib', 'hooks', 'store', 'types'],
   },
   modularizeImports: {
     '@mui/icons-material': {
@@ -17,6 +16,15 @@ const nextConfig: NextConfig = {
     },
   },
   reactStrictMode: true,
+  webpack: (config) => {
+    config.externals.push('pino-pretty', 'lokijs', 'encoding')
+    config.resolve.fallback = {
+      ...config.resolve.fallback,
+      // https://github.com/MetaMask/metamask-sdk/issues/1376
+      '@react-native-async-storage/async-storage': false,
+    }
+    return config
+  },
   async redirects() {
     return [
       {

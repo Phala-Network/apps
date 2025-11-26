@@ -1,3 +1,5 @@
+'use client'
+
 import Layout from '@/components/Layout'
 import SnackbarProvider from '@/components/SnackbarProvider'
 import {Web3Provider} from '@/components/Web3Provider'
@@ -8,8 +10,7 @@ import {
   GlobalStyles,
   ThemeProvider as MuiThemeProvider,
 } from '@mui/material'
-import {AppCacheProvider} from '@mui/material-nextjs/v15-pagesRouter'
-// import {JotaiDevTools} from '@phala/lib'
+import {AppRouterCacheProvider} from '@mui/material-nextjs/v15-appRouter'
 import {
   QueryCache,
   QueryClient,
@@ -18,7 +19,8 @@ import {
 import {ReactQueryDevtools} from '@tanstack/react-query-devtools'
 import Decimal from 'decimal.js'
 import {Provider as JotaiProvider} from 'jotai'
-import type {AppProps} from 'next/app'
+import type {ReactNode} from 'react'
+import {useState} from 'react'
 import {SWRConfig} from 'swr'
 
 Decimal.set({toExpNeg: -9e15, toExpPos: 9e15, precision: 50})
@@ -28,16 +30,17 @@ BigInt.prototype.toJSON = function () {
   return this.toString()
 }
 
-const queryClient = new QueryClient({
-  queryCache: new QueryCache({
-    onError: (error) => {
-      console.error(error)
-    },
-  }),
-})
-
-const MyApp = (props: AppProps) => {
-  const {Component, pageProps} = props
+export default function Providers({children}: {children: ReactNode}) {
+  const [queryClient] = useState(
+    () =>
+      new QueryClient({
+        queryCache: new QueryCache({
+          onError: (error) => {
+            console.error(error)
+          },
+        }),
+      }),
+  )
 
   return (
     <SWRConfig
@@ -51,7 +54,7 @@ const MyApp = (props: AppProps) => {
     >
       <QueryClientProvider client={queryClient}>
         <JotaiProvider>
-          <AppCacheProvider {...props}>
+          <AppRouterCacheProvider>
             <MuiThemeProvider theme={theme}>
               <Web3Provider>
                 <CssBaseline />
@@ -59,18 +62,15 @@ const MyApp = (props: AppProps) => {
 
                 <SnackbarProvider>
                   <Layout>
-                    <Component {...pageProps} />
-                    {/* <JotaiDevTools /> */}
+                    {children}
                     <ReactQueryDevtools buttonPosition="bottom-left" />
                   </Layout>
                 </SnackbarProvider>
               </Web3Provider>
             </MuiThemeProvider>
-          </AppCacheProvider>
+          </AppRouterCacheProvider>
         </JotaiProvider>
       </QueryClientProvider>
     </SWRConfig>
   )
 }
-
-export default MyApp

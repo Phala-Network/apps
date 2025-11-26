@@ -90,6 +90,19 @@ const TopBar: FC = () => {
             >
               Governance
             </Button>
+            <Button
+              component={NextLink}
+              href="/gpu-mining"
+              variant="text"
+              sx={{
+                color: 'text.primary',
+                fontWeight: 'bold',
+                minHeight: 0,
+                py: 0,
+              }}
+            >
+              GPU Mining
+            </Button>
           </Stack>
 
           <Stack
