@@ -1,3 +1,5 @@
+'use client'
+
 import {ethChain} from '@/config'
 import {useEffect} from 'react'
 import {useSwitchChain} from 'wagmi'

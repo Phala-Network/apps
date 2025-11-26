@@ -1,12 +1,5 @@
-import vaultAbi from '@/assets/pha_vault_abi'
-import Property from '@/components/Property'
-import WrapDecimal from '@/components/WrapDecimal'
-import {VAULT_CONTRACT_ADDRESS} from '@/config'
-import {
-  useMaxUnlockRequests,
-  useUnlockPeriod,
-  useUnlockRequests,
-} from '@/hooks/staking'
+'use client'
+
 import {
   Box,
   Button,
@@ -31,6 +24,16 @@ import {
   useTransactionReceipt,
   useWriteContract,
 } from 'wagmi'
+
+import vaultAbi from '@/assets/pha_vault_abi'
+import Property from '@/components/Property'
+import WrapDecimal from '@/components/WrapDecimal'
+import {VAULT_CONTRACT_ADDRESS} from '@/config'
+import {
+  useMaxUnlockRequests,
+  useUnlockPeriod,
+  useUnlockRequests,
+} from '@/hooks/staking'
 
 const Unstake = () => {
   const [cancelIndex, setCancelIndex] = useState<number | null>(null)
@@ -218,7 +221,7 @@ const Unstake = () => {
                   </Tooltip>
                 </TableCell>
                 <TableCell component="th" scope="row" align="right">
-                  <Typography variant="num6">
+                  <Typography sx={{fontWeight: 500, fontSize: '0.9rem'}}>
                     <WrapDecimal>
                       {toCurrency(formatUnits(row.amount, 18))}
                     </WrapDecimal>

@@ -7,9 +7,6 @@ const bundleAnalyzer = withBundleAnalyzer({
 
 const nextConfig: NextConfig = {
   transpilePackages: ['jotai-devtools'],
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
   modularizeImports: {
     '@mui/icons-material': {
       transform: '@mui/icons-material/{{member}}',
@@ -20,7 +17,6 @@ const nextConfig: NextConfig = {
     config.externals.push('pino-pretty', 'lokijs', 'encoding')
     config.resolve.fallback = {
       ...config.resolve.fallback,
-      // https://github.com/MetaMask/metamask-sdk/issues/1376
       '@react-native-async-storage/async-storage': false,
     }
     return config
@@ -39,7 +35,7 @@ const nextConfig: NextConfig = {
       },
       {
         source: '/phala/:path*',
-        destination: '/khala-assets',
+        destination: '/phala-assets',
         permanent: true,
       },
     ]

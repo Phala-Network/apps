@@ -1,7 +1,9 @@
+'use client'
+
 import {Close} from '@mui/icons-material'
 import {Box, IconButton, Typography} from '@mui/material'
 import {isFuture, isPast} from 'date-fns'
-import {useRouter} from 'next/router'
+import {usePathname} from 'next/navigation'
 import {useSnackbar} from 'notistack'
 import {useEffect, useRef} from 'react'
 
@@ -34,7 +36,7 @@ const STORAGE_KEY = 'phala-app:notice-shown'
 
 export function useNotice() {
   const {enqueueSnackbar, closeSnackbar} = useSnackbar()
-  const {pathname} = useRouter()
+  const pathname = usePathname()
   const initialized = useRef(false)
 
   useEffect(() => {

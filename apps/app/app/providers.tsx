@@ -10,12 +10,8 @@ import {
   GlobalStyles,
   ThemeProvider as MuiThemeProvider,
 } from '@mui/material'
-import {AppRouterCacheProvider} from '@mui/material-nextjs/v15-appRouter'
-import {
-  QueryCache,
-  QueryClient,
-  QueryClientProvider,
-} from '@tanstack/react-query'
+import {AppRouterCacheProvider} from '@mui/material-nextjs/v16-appRouter'
+import {QueryCache, QueryClient} from '@tanstack/react-query'
 import {ReactQueryDevtools} from '@tanstack/react-query-devtools'
 import Decimal from 'decimal.js'
 import {Provider as JotaiProvider} from 'jotai'
@@ -30,7 +26,13 @@ BigInt.prototype.toJSON = function () {
   return this.toString()
 }
 
-export default function Providers({children}: {children: ReactNode}) {
+export default function Providers({
+  children,
+  cookies,
+}: {
+  children: ReactNode
+  cookies: string | null
+}) {
   const [queryClient] = useState(
     () =>
       new QueryClient({
@@ -52,25 +54,23 @@ export default function Providers({children}: {children: ReactNode}) {
         },
       }}
     >
-      <QueryClientProvider client={queryClient}>
-        <JotaiProvider>
-          <AppRouterCacheProvider>
-            <MuiThemeProvider theme={theme}>
-              <Web3Provider>
-                <CssBaseline />
-                <GlobalStyles styles={[globalStyles]} />
+      <JotaiProvider>
+        <AppRouterCacheProvider>
+          <MuiThemeProvider theme={theme}>
+            <Web3Provider queryClient={queryClient} cookies={cookies}>
+              <CssBaseline />
+              <GlobalStyles styles={[globalStyles]} />
 
-                <SnackbarProvider>
-                  <Layout>
-                    {children}
-                    <ReactQueryDevtools buttonPosition="bottom-left" />
-                  </Layout>
-                </SnackbarProvider>
-              </Web3Provider>
-            </MuiThemeProvider>
-          </AppRouterCacheProvider>
-        </JotaiProvider>
-      </QueryClientProvider>
+              <SnackbarProvider>
+                <Layout>
+                  {children}
+                  <ReactQueryDevtools buttonPosition="bottom-left" />
+                </Layout>
+              </SnackbarProvider>
+            </Web3Provider>
+          </MuiThemeProvider>
+        </AppRouterCacheProvider>
+      </JotaiProvider>
     </SWRConfig>
   )
 }

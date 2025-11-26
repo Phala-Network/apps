@@ -1,43 +1,61 @@
-import {ethChain} from '@/config'
-import {
-  RainbowKitProvider,
-  darkTheme,
-  getDefaultConfig,
-} from '@rainbow-me/rainbowkit'
+'use client'
+
+import {networks, wagmiAdapter} from '@/lib/wagmi'
+import type {AppKitNetwork} from '@reown/appkit/networks'
+import {createAppKit} from '@reown/appkit/react'
+import type {QueryClient} from '@tanstack/react-query'
+import {QueryClientProvider} from '@tanstack/react-query'
 import type {ReactNode} from 'react'
-import type {Chain} from 'viem'
-import {WagmiProvider} from 'wagmi'
-import '@rainbow-me/rainbowkit/styles.css'
+import {WagmiProvider, cookieToInitialState} from 'wagmi'
 
-const chains: [Chain, ...Chain[]] = [ethChain]
+const projectId = process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID as string
 
-const config = getDefaultConfig({
-  chains,
-  projectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID as string,
-  appName: 'Phala App',
-  appUrl: 'https://app.phala.network',
-  appIcon: 'https://app.phala.network/apple-touch-icon.png',
-  ssr: true,
+const metadata = {
+  name: 'Phala App',
+  description: 'Phala Network App - Staking, GPU Mining',
+  url: 'https://app.phala.network',
+  icons: ['https://app.phala.network/apple-touch-icon.png'],
+}
+
+// Create modal - must be outside component to prevent re-renders
+createAppKit({
+  adapters: [wagmiAdapter],
+  networks: networks as unknown as [AppKitNetwork, ...AppKitNetwork[]],
+  defaultNetwork: networks[0],
+  projectId,
+  metadata,
+  features: {
+    analytics: false,
+    email: false,
+    socials: false,
+  },
+  themeMode: 'dark',
+  themeVariables: {
+    '--apkt-accent': '#c5ff46',
+    '--apkt-color-mix': '#1f222e',
+    '--apkt-color-mix-strength': 40,
+    '--apkt-border-radius-master': '4px',
+    '--apkt-font-family': 'Montserrat, Helvetica, Arial, sans-serif',
+  },
 })
 
 export const Web3Provider = ({
   children,
+  queryClient,
+  cookies,
 }: {
   children: ReactNode
+  queryClient: QueryClient
+  cookies: string | null
 }) => {
+  const initialState = cookieToInitialState(wagmiAdapter.wagmiConfig, cookies)
+
   return (
-    <WagmiProvider config={config}>
-      <RainbowKitProvider
-        locale="en-US"
-        modalSize="compact"
-        theme={darkTheme({
-          borderRadius: 'medium',
-          accentColor: '#c5ff46',
-          accentColorForeground: '#333',
-        })}
-      >
-        {children}
-      </RainbowKitProvider>
+    <WagmiProvider
+      config={wagmiAdapter.wagmiConfig}
+      initialState={initialState}
+    >
+      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
     </WagmiProvider>
   )
 }

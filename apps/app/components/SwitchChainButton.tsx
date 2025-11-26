@@ -1,3 +1,5 @@
+'use client'
+
 import {ethChain} from '@/config'
 import {Button} from '@mui/material'
 import {useAccount, useSwitchChain} from 'wagmi'

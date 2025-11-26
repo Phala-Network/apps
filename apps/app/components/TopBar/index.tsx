@@ -1,4 +1,7 @@
+'use client'
+
 import phalaLogo from '@/assets/phala_logo.svg'
+import type {IconProp} from '@fortawesome/fontawesome-svg-core'
 import {faDiscord, faXTwitter} from '@fortawesome/free-brands-svg-icons'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import Language from '@mui/icons-material/Language'
@@ -35,13 +38,13 @@ const TopBar: FC = () => {
       >
         <Toolbar>
           <NoSsr>
-            <NextLink href="/" css={{display: 'flex', alignItems: 'center'}}>
+            <NextLink href="/" style={{display: 'flex', alignItems: 'center'}}>
               <Image
                 src={phalaLogo}
                 alt="Phala Network"
                 width={30}
                 height={30}
-                css={{flexShrink: 0, cursor: 'pointer'}}
+                style={{flexShrink: 0, cursor: 'pointer'}}
               />
             </NextLink>
           </NoSsr>
@@ -59,6 +62,19 @@ const TopBar: FC = () => {
               }}
             >
               Staking
+            </Button>
+            <Button
+              component={NextLink}
+              href="/gpu-mining"
+              variant="text"
+              sx={{
+                color: 'text.primary',
+                fontWeight: 'bold',
+                minHeight: 0,
+                py: 0,
+              }}
+            >
+              GPU Mining
             </Button>
             <Button
               component="a"
@@ -90,19 +106,6 @@ const TopBar: FC = () => {
             >
               Governance
             </Button>
-            <Button
-              component={NextLink}
-              href="/gpu-mining"
-              variant="text"
-              sx={{
-                color: 'text.primary',
-                fontWeight: 'bold',
-                minHeight: 0,
-                py: 0,
-              }}
-            >
-              GPU Mining
-            </Button>
           </Stack>
 
           <Stack
@@ -130,7 +133,7 @@ const TopBar: FC = () => {
               target="_blank"
             >
               <FontAwesomeIcon
-                icon={faDiscord}
+                icon={faDiscord as IconProp}
                 width={18}
                 color={theme.palette.text.secondary}
               />
@@ -141,7 +144,7 @@ const TopBar: FC = () => {
               target="_blank"
             >
               <FontAwesomeIcon
-                icon={faXTwitter}
+                icon={faXTwitter as IconProp}
                 color={theme.palette.text.secondary}
               />
             </IconButton>

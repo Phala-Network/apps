@@ -1,3 +1,5 @@
+'use client'
+
 import vaultAbi from '@/assets/pha_vault_abi'
 import {VAULT_CONTRACT_ADDRESS} from '@/config'
 import {PHA_CONTRACT_ADDRESS} from '@/config'

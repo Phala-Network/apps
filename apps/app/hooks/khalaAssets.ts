@@ -1,3 +1,5 @@
+'use client'
+
 import khalaClaimerAbi from '@/assets/khala_claimer_abi'
 import {
   KHALA_CLAIMER_CONTRACT_ADDRESS,

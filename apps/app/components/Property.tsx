@@ -1,5 +1,8 @@
+'use client'
+
 import {Stack, type StackProps, type SxProps, Typography} from '@mui/material'
 import type {FC, ReactNode} from 'react'
+
 import WrapDecimal from './WrapDecimal'
 
 const Property: FC<
@@ -50,9 +53,9 @@ const Property: FC<
       {size === 'large' && (
         <Typography
           lineHeight={1.3}
-          variant="num2"
           component="div"
           whiteSpace="nowrap"
+          sx={{fontWeight: 600, fontSize: '1.5rem'}}
         >
           {value}
         </Typography>
@@ -60,10 +63,10 @@ const Property: FC<
       {size === 'medium' && (
         <Typography
           lineHeight={1.3}
-          variant="num5"
           component="div"
           mt={0.25}
           whiteSpace="nowrap"
+          sx={{fontWeight: 500, fontSize: '1rem'}}
         >
           {value}
         </Typography>
@@ -71,11 +74,10 @@ const Property: FC<
       {size === 'small' && (
         <Typography
           lineHeight={1.3}
-          variant="num6"
           component="div"
           ml={0.5}
           whiteSpace="nowrap"
-          sx={{wordBreak: 'break-all'}}
+          sx={{fontWeight: 500, fontSize: '0.9rem', wordBreak: 'break-all'}}
         >
           {value}
         </Typography>

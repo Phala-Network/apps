@@ -1,3 +1,5 @@
+'use client'
+
 import {
   useRewardRate,
   useShares,
@@ -5,7 +7,7 @@ import {
   useTotalAssets,
 } from '@/hooks/staking'
 import {useAutoSwitchChain} from '@/hooks/useAutoSwitchChain'
-import {Box, Grid2 as Grid, Paper, Stack} from '@mui/material'
+import {Box, Grid, Paper, Stack} from '@mui/material'
 import {toCurrency, toPercentage} from '@phala/lib'
 import Decimal from 'decimal.js'
 import {useMemo} from 'react'

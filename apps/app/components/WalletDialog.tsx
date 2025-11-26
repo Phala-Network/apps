@@ -1,5 +1,6 @@
+'use client'
+
 import {walletDialogOpenAtom} from '@/store/ui'
-import {jsx} from '@emotion/react'
 import ArrowForwardIos from '@mui/icons-material/ArrowForwardIos'
 import Download from '@mui/icons-material/Download'
 import {
@@ -180,14 +181,16 @@ const WalletDialog: FC = () => {
                   'Install '}
                 {w.title}
               </Typography>
-              {jsx(
-                w.installed === true || (w.title === 'SubWallet' && isMobile)
-                  ? ArrowForwardIos
-                  : Download,
-                {
-                  fontSize: 'small',
-                  sx: {ml: 'auto', color: theme.palette.text.secondary},
-                },
+              {w.installed === true || (w.title === 'SubWallet' && isMobile) ? (
+                <ArrowForwardIos
+                  fontSize="small"
+                  sx={{ml: 'auto', color: theme.palette.text.secondary}}
+                />
+              ) : (
+                <Download
+                  fontSize="small"
+                  sx={{ml: 'auto', color: theme.palette.text.secondary}}
+                />
               )}
             </Button>
           ))}

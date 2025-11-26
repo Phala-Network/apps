@@ -1,3 +1,5 @@
+'use client'
+
 import vaultAbi from '@/assets/pha_vault_abi'
 import Property from '@/components/Property'
 import SwitchChainButton from '@/components/SwitchChainButton'
@@ -15,7 +17,6 @@ import {
   useUnlockPeriod,
   useUnlockRequests,
 } from '@/hooks/staking'
-import {barlow} from '@/lib/theme'
 import {OpenInNew} from '@mui/icons-material'
 import {
   Box,
@@ -307,7 +308,6 @@ const Stake = () => {
             </Button>
           }
           sx={{
-            fontFamily: barlow.style.fontFamily,
             fontWeight: 500,
             fontSize: '1.5rem',
           }}

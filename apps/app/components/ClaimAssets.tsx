@@ -1,22 +1,5 @@
-import khalaClaimerAbi from '@/assets/khala_claimer_abi'
-import phalaClaimerAbi from '@/assets/phala_claimer_abi'
-import Property from '@/components/Property'
-import SwitchChainButton from '@/components/SwitchChainButton'
-import {
-  KHALA_CLAIMER_CONTRACT_ADDRESS,
-  PHALA_CLAIMER_CONTRACT_ADDRESS,
-  explorerUrl,
-} from '@/config'
-import {
-  type ChainType,
-  khalaAssetsApi,
-  phalaAssetsApi,
-  useAssetsQuery,
-  useClaimStatus,
-} from '@/hooks/khalaAssets'
-import {useSharePrice} from '@/hooks/staking'
-import {useAutoSwitchChain} from '@/hooks/useAutoSwitchChain'
-import {walletDialogOpenAtom} from '@/store/ui'
+'use client'
+
 import {CheckCircleOutline, ContentCopy} from '@mui/icons-material'
 import {
   Alert,
@@ -39,7 +22,6 @@ import {decodeAddress} from '@polkadot/keyring'
 import Identicon from '@polkadot/react-identicon'
 import type {Signer} from '@polkadot/types/types'
 import {stringToHex, u8aToHex} from '@polkadot/util'
-import {ConnectButton} from '@rainbow-me/rainbowkit'
 import Decimal from 'decimal.js'
 import {useAtom, useSetAtom} from 'jotai'
 import NextLink from 'next/link'
@@ -47,6 +29,27 @@ import {useSnackbar} from 'notistack'
 import {useEffect, useMemo, useState} from 'react'
 import type {Hex} from 'viem'
 import {useAccount, useWaitForTransactionReceipt, useWriteContract} from 'wagmi'
+
+import khalaClaimerAbi from '@/assets/khala_claimer_abi'
+import phalaClaimerAbi from '@/assets/phala_claimer_abi'
+import AppKitButton from '@/components/AppKitButton'
+import Property from '@/components/Property'
+import SwitchChainButton from '@/components/SwitchChainButton'
+import {
+  explorerUrl,
+  KHALA_CLAIMER_CONTRACT_ADDRESS,
+  PHALA_CLAIMER_CONTRACT_ADDRESS,
+} from '@/config'
+import {
+  type ChainType,
+  khalaAssetsApi,
+  phalaAssetsApi,
+  useAssetsQuery,
+  useClaimStatus,
+} from '@/hooks/khalaAssets'
+import {useSharePrice} from '@/hooks/staking'
+import {useAutoSwitchChain} from '@/hooks/useAutoSwitchChain'
+import {walletDialogOpenAtom} from '@/store/ui'
 
 const Steps = () => {
   return (
@@ -536,7 +539,7 @@ const ClaimAssets = ({chain}: {chain: ChainType}) => {
                   justifyContent="space-between"
                 >
                   <Typography variant="subtitle1">Ethereum wallet</Typography>
-                  <ConnectButton showBalance={false} />
+                  <AppKitButton />
                 </Box>
 
                 <Box component="form" onSubmit={handleSubmit}>

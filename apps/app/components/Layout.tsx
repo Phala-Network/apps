@@ -1,3 +1,5 @@
+'use client'
+
 import {useNotice} from '@/hooks/useNotice'
 import {Container} from '@mui/material'
 import type {FC, ReactNode} from 'react'

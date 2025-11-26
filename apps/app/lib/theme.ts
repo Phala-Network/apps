@@ -1,27 +1,9 @@
-import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown'
-import {createTheme} from '@mui/material'
-import {Barlow, Montserrat, Roboto} from 'next/font/google'
+'use client'
 
-export const roboto = Roboto({
-  weight: ['300', '400', '500', '700'],
-  subsets: ['latin'],
-  display: 'swap',
-  fallback: ['Helvetica', 'Arial', 'sans-serif'],
-})
+import {createTheme} from '@mui/material/styles'
 
-export const montserrat = Montserrat({
-  weight: ['400', '500', '600', '700'],
-  subsets: ['latin'],
-  display: 'swap',
-  fallback: ['Helvetica', 'Arial', 'sans-serif'],
-})
-
-export const barlow = Barlow({
-  weight: ['300', '400', '500', '600', '700'],
-  subsets: ['latin'],
-  display: 'swap',
-  fallback: ['Helvetica', 'Arial', 'sans-serif'],
-})
+// Font family - Montserrat is loaded in layout.tsx
+const fontFamily = 'Montserrat, Helvetica, Arial, sans-serif'
 
 export const colors = {
   main: {
@@ -57,46 +39,16 @@ export const theme = createTheme({
   },
   shape: {borderRadius: 6},
   typography: {
-    h1: {fontFamily: montserrat.style.fontFamily},
-    h2: {fontFamily: montserrat.style.fontFamily},
-    h3: {fontFamily: montserrat.style.fontFamily, fontWeight: 600},
+    fontFamily,
+    h1: {fontFamily},
+    h2: {fontFamily},
+    h3: {fontFamily, fontWeight: 600},
     h4: {
-      fontFamily: montserrat.style.fontFamily,
+      fontFamily,
       fontWeight: 500,
       fontSize: '2rem',
     },
     subtitle2: {fontSize: '0.8rem', fontWeight: 400},
-    num1: {
-      fontFamily: barlow.style.fontFamily,
-      fontWeight: 600,
-      fontSize: '2rem',
-    },
-    num2: {
-      fontFamily: barlow.style.fontFamily,
-      fontWeight: 600,
-      fontSize: '1.5rem',
-    },
-    num3: {
-      fontFamily: barlow.style.fontFamily,
-      fontWeight: 600,
-      fontSize: '1.25rem',
-    },
-    num4: {
-      fontFamily: barlow.style.fontFamily,
-      fontWeight: 500,
-      fontSize: '1.125rem',
-    },
-    num5: {
-      fontFamily: barlow.style.fontFamily,
-      fontWeight: 500,
-      fontSize: '1rem',
-    },
-    num6: {
-      fontFamily: barlow.style.fontFamily,
-      fontWeight: 500,
-      fontSize: '0.9rem',
-    },
-    fontFamily: roboto.style.fontFamily,
   },
   components: {
     MuiButtonBase: {defaultProps: {disableRipple: true}},
@@ -107,14 +59,13 @@ export const theme = createTheme({
     MuiButton: {
       defaultProps: {disableElevation: true, variant: 'outlined'},
       styleOverrides: {
-        root: {textTransform: 'none', fontFamily: montserrat.style.fontFamily},
+        root: {textTransform: 'none', fontFamily},
       },
     },
     MuiTextField: {defaultProps: {variant: 'outlined'}},
     MuiInputLabel: {defaultProps: {shrink: true}},
     MuiOutlinedInput: {defaultProps: {notched: true}},
     MuiDialog: {defaultProps: {fullWidth: true, maxWidth: 'xs'}},
-    MuiSelect: {defaultProps: {IconComponent: KeyboardArrowDown}},
     MuiMenu: {styleOverrides: {list: {backgroundColor: colors.cardBackground}}},
     MuiSkeleton: {defaultProps: {animation: 'wave'}},
     MuiDialogContent: {styleOverrides: {root: {overflowY: 'initial'}}},

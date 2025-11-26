@@ -1,3 +1,5 @@
+'use client'
+
 import KeyboardArrowUp from '@mui/icons-material/KeyboardArrowUp'
 import {Box, Fab, Fade, useScrollTrigger} from '@mui/material'
 import type {FC} from 'react'
