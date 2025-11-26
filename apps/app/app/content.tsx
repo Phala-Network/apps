@@ -1,11 +1,12 @@
 'use client'
 
 import {Box, Divider, Grid, Stack, Typography} from '@mui/material'
+import {toCurrency} from '@phala/lib'
 import phaIcon from '@phala/ui/icons/asset/pha.png'
 import vphaIcon from '@phala/ui/icons/asset/vpha.png'
 import {useAppKitAccount, useAppKitNetwork} from '@reown/appkit/react'
 import Decimal from 'decimal.js'
-import {useMemo} from 'react'
+import {useCallback, useMemo} from 'react'
 import {erc20Abi, formatUnits} from 'viem'
 import {mainnet} from 'viem/chains'
 import {useReadContract} from 'wagmi'
@@ -20,6 +21,7 @@ import {
   VAULT_CONTRACT_ADDRESS,
 } from '@/config'
 import {useRewardRate, useSharePrice, useTotalAssets} from '@/hooks/staking'
+import {useAddTokenToWallet} from '@/hooks/use-add-token-to-wallet'
 import {phalaNetwork, toAddress} from '@/lib/wagmi'
 
 export default function HomeContent() {
@@ -29,6 +31,7 @@ export default function HomeContent() {
   const sharePrice = useSharePrice()
   const totalAssets = useTotalAssets()
   const rewardRate = useRewardRate()
+  const {addTokenToWallet, addNetwork} = useAddTokenToWallet()
 
   const isValidConnection = isConnected && chainId === ethChain.id
 
@@ -79,12 +82,16 @@ export default function HomeContent() {
 
   const l1VphaInPha = useMemo(() => {
     if (l1VphaBalance == null || sharePrice == null) return null
-    return (l1VphaBalance * sharePrice) / BigInt(1e18)
+    return new Decimal(formatUnits(l1VphaBalance, 18)).mul(
+      formatUnits(sharePrice, 18),
+    )
   }, [l1VphaBalance, sharePrice])
 
   const l2VphaInPha = useMemo(() => {
     if (l2VphaBalance == null || sharePrice == null) return null
-    return (l2VphaBalance * sharePrice) / BigInt(1e18)
+    return new Decimal(formatUnits(l2VphaBalance, 18)).mul(
+      formatUnits(sharePrice, 18),
+    )
   }, [l2VphaBalance, sharePrice])
 
   const totalVphaBalance = useMemo(() => {
@@ -94,15 +101,46 @@ export default function HomeContent() {
 
   const totalVphaInPha = useMemo(() => {
     if (l1VphaInPha == null && l2VphaInPha == null) return null
-    return (l1VphaInPha ?? 0n) + (l2VphaInPha ?? 0n)
+    return (l1VphaInPha ?? new Decimal(0)).add(l2VphaInPha ?? new Decimal(0))
   }, [l1VphaInPha, l2VphaInPha])
 
   const totalPhaValue = useMemo(() => {
     if (!isValidConnection) return null
-    const pha = l1PhaBalance ?? 0n
-    const vpha = totalVphaInPha ?? 0n
-    return pha + vpha
+    const pha = new Decimal(formatUnits(l1PhaBalance ?? 0n, 18))
+    const vpha = totalVphaInPha ?? new Decimal(0)
+    return pha.add(vpha)
   }, [isValidConnection, l1PhaBalance, totalVphaInPha])
+
+  const addPhaToWallet = useCallback(() => {
+    addTokenToWallet({
+      chainId: mainnet.id,
+      address: PHA_CONTRACT_ADDRESS,
+      symbol: 'PHA',
+      image: 'https://app.phala.network/icons/pha.png',
+    })
+  }, [addTokenToWallet])
+
+  const addL1VphaToWallet = useCallback(() => {
+    addTokenToWallet({
+      chainId: mainnet.id,
+      address: VAULT_CONTRACT_ADDRESS,
+      symbol: 'vPHA',
+      image: 'https://app.phala.network/icons/vpha.png',
+    })
+  }, [addTokenToWallet])
+
+  const addL2VphaToWallet = useCallback(() => {
+    addTokenToWallet({
+      chainId: phalaNetwork.id,
+      address: L2_VPHA_CONTRACT_ADDRESS,
+      symbol: 'vPHA',
+      image: 'https://app.phala.network/icons/vpha.png',
+    })
+  }, [addTokenToWallet])
+
+  const addPhalaNetworkToWallet = useCallback(() => {
+    addNetwork(phalaNetwork.id)
+  }, [addNetwork])
 
   return (
     <Box pb={10} pt={3}>
@@ -134,6 +172,7 @@ export default function HomeContent() {
                 contractAddress={PHA_CONTRACT_ADDRESS}
                 chainLabel="Ethereum"
                 highlight
+                onAddToWallet={addPhaToWallet}
                 actions={[
                   {
                     label: 'Stake',
@@ -164,13 +203,14 @@ export default function HomeContent() {
                 chainLabel="Ethereum"
                 subValue={
                   isValidConnection && l1VphaInPha != null
-                    ? `≈ ${formatUnits(l1VphaInPha, 18).slice(0, 12)} PHA`
+                    ? `≈ ${toCurrency(l1VphaInPha)} PHA`
                     : undefined
                 }
+                onAddToWallet={addL1VphaToWallet}
                 actions={[
                   {
                     label: 'Unstake',
-                    href: '/staking',
+                    href: '/staking?tab=unstake',
                     variant: 'outlined',
                   },
                   {
@@ -190,12 +230,15 @@ export default function HomeContent() {
                 balance={isValidConnection ? l2VphaBalance : null}
                 contractAddress={L2_VPHA_CONTRACT_ADDRESS}
                 contractExplorerUrl="https://explorer.phala.network"
-                chainLabel="Phala L2"
+                chainLabel="Phala Mainnet"
                 subValue={
                   isValidConnection && l2VphaInPha != null
-                    ? `≈ ${formatUnits(l2VphaInPha, 18).slice(0, 12)} PHA`
+                    ? `≈ ${toCurrency(l2VphaInPha)} PHA`
                     : undefined
                 }
+                onAddToWallet={addL2VphaToWallet}
+                addToWalletLabel="Add vPHA"
+                onAddNetwork={addPhalaNetworkToWallet}
                 actions={[
                   {
                     label: 'Bridge to L1',

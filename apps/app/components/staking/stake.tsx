@@ -5,6 +5,7 @@ import {
   Box,
   Button,
   Chip,
+  IconButton,
   OutlinedInput,
   Paper,
   Slider,
@@ -13,6 +14,7 @@ import {
   Tabs,
   ToggleButton,
   ToggleButtonGroup,
+  Tooltip,
   Typography,
 } from '@mui/material'
 import {getDecimalPattern, toCurrency, trimAddress} from '@phala/lib'
@@ -22,8 +24,10 @@ import {formatDuration, intervalToDuration} from 'date-fns'
 import Decimal from 'decimal.js'
 import Image from 'next/image'
 import {useSnackbar} from 'notistack'
+import {parseAsStringLiteral, useQueryState} from 'nuqs'
 import {useCallback, useEffect, useMemo, useState} from 'react'
 import {erc20Abi, formatUnits, parseUnits} from 'viem'
+import {mainnet} from 'viem/chains'
 import {useWaitForTransactionReceipt, useWriteContract} from 'wagmi'
 
 import vaultAbi from '@/assets/pha_vault_abi'
@@ -43,14 +47,20 @@ import {
   useUnlockPeriod,
   useUnlockRequests,
 } from '@/hooks/staking'
+import {useAddTokenToWallet} from '@/hooks/use-add-token-to-wallet'
 import {useValidConnection} from '@/hooks/use-valid-connection'
+import MetaMaskIcon from '../metamask-icon'
 
 const oneUnit = parseUnits('1', 18)
 
+const tabParser = parseAsStringLiteral(['stake', 'unstake']).withDefault(
+  'stake',
+)
+
 const Stake = () => {
-  const [tab, setTab] = useState(0)
-  const isStake = tab === 0
-  const isUnstake = tab === 1
+  const [tab, setTab] = useQueryState('tab', tabParser)
+  const isStake = tab === 'stake'
+  const isUnstake = tab === 'unstake'
   const [useDex, setUseDex] = useState(false)
   const tokenContractAddress = useMemo(() => {
     if (isStake) {
@@ -60,6 +70,18 @@ const Stake = () => {
   }, [isStake])
   const {enqueueSnackbar} = useSnackbar()
   const {address, isValidConnection} = useValidConnection()
+  const {addTokenToWallet: addToken} = useAddTokenToWallet()
+
+  const addTokenToWallet = useCallback(() => {
+    addToken({
+      chainId: mainnet.id,
+      address: tokenContractAddress,
+      symbol: isStake ? 'PHA' : 'vPHA',
+      image: isStake
+        ? 'https://app.phala.network/icons/pha.png'
+        : 'https://app.phala.network/icons/vpha.png',
+    })
+  }, [addToken, tokenContractAddress, isStake])
 
   const shareRate = useSharesToAssets(oneUnit)
   const assetRate = useAssetsToShares(oneUnit)
@@ -239,14 +261,14 @@ const Stake = () => {
       <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
         <Tabs
           value={tab}
-          onChange={(_, value) => {
+          onChange={(_, value: 'stake' | 'unstake') => {
             setTab(value)
             setAmountString('')
           }}
           sx={{width: 1}}
         >
-          <Tab label="Stake" sx={{flex: 1}} />
-          <Tab label="Unstake" sx={{flex: 1}} />
+          <Tab value="stake" label="Stake" sx={{flex: 1}} />
+          <Tab value="unstake" label="Unstake" sx={{flex: 1}} />
         </Tabs>
       </Box>
       <Stack
@@ -286,6 +308,18 @@ const Stake = () => {
               target="_blank"
               sx={{display: {xs: 'none', sm: 'inline-flex'}}}
             />
+            <Tooltip title={`Add ${isStake ? 'PHA' : 'vPHA'} to wallet`}>
+              <IconButton
+                size="small"
+                onClick={addTokenToWallet}
+                sx={{
+                  color: 'text.secondary',
+                  '&:hover': {color: 'text.primary'},
+                }}
+              >
+                <MetaMaskIcon />
+              </IconButton>
+            </Tooltip>
           </Stack>
           <Property size="small" label="Balance" wrapDecimal>
             {balance != null ? toCurrency(formatUnits(balance, 18)) : '-'}
