@@ -1,10 +1,5 @@
 'use client'
 
-import Layout from '@/components/Layout'
-import SnackbarProvider from '@/components/SnackbarProvider'
-import {Web3Provider} from '@/components/Web3Provider'
-import {globalStyles} from '@/lib/styles'
-import {theme} from '@/lib/theme'
 import {
   CssBaseline,
   GlobalStyles,
@@ -18,6 +13,12 @@ import {Provider as JotaiProvider} from 'jotai'
 import type {ReactNode} from 'react'
 import {useState} from 'react'
 import {SWRConfig} from 'swr'
+
+import Layout from '@/components/layout'
+import SnackbarProvider from '@/components/snackbar-provider'
+import {Web3Provider} from '@/components/web3-provider'
+import {globalStyles} from '@/lib/styles'
+import {theme} from '@/lib/theme'
 
 Decimal.set({toExpNeg: -9e15, toExpPos: 9e15, precision: 50})
 

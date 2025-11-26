@@ -14,20 +14,16 @@ import {
   Typography,
 } from '@mui/material'
 import {toCurrency} from '@phala/lib'
+import {useAppKitAccount} from '@reown/appkit/react'
 import {formatDuration, intervalToDuration, isAfter, isBefore} from 'date-fns'
 import {useSnackbar} from 'notistack'
 import {useEffect, useMemo, useState} from 'react'
 import {formatUnits} from 'viem'
-import {
-  useAccount,
-  useBlock,
-  useTransactionReceipt,
-  useWriteContract,
-} from 'wagmi'
+import {useBlock, useTransactionReceipt, useWriteContract} from 'wagmi'
 
 import vaultAbi from '@/assets/pha_vault_abi'
-import Property from '@/components/Property'
-import WrapDecimal from '@/components/WrapDecimal'
+import Property from '@/components/property'
+import WrapDecimal from '@/components/wrap-decimal'
 import {VAULT_CONTRACT_ADDRESS} from '@/config'
 import {
   useMaxUnlockRequests,
@@ -43,7 +39,7 @@ const Unstake = () => {
     if (block == null) return
     return Number.parseInt(block.timestamp.toString()) * 1000
   }, [block])
-  const {address} = useAccount()
+  const {address} = useAppKitAccount()
   const unlockRequests = useUnlockRequests(address)
   const maxUnlockRequests = useMaxUnlockRequests()
   const unlockPeriod = useUnlockPeriod()
@@ -164,7 +160,12 @@ const Unstake = () => {
         Unstake Requests
       </Typography>
 
-      <Box display="flex" gap={2} my={3}>
+      <Box
+        display="flex"
+        flexDirection={{xs: 'column', sm: 'row'}}
+        gap={2}
+        my={3}
+      >
         <Box flex={1}>
           <Property label="Used requests" wrapDecimal>
             {`${unlockRequests?.length ?? '-'} / ${maxUnlockRequests ?? '-'}`}

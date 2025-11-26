@@ -1,12 +1,13 @@
 'use client'
 
-import {networks, wagmiAdapter} from '@/lib/wagmi'
 import type {AppKitNetwork} from '@reown/appkit/networks'
 import {createAppKit} from '@reown/appkit/react'
 import type {QueryClient} from '@tanstack/react-query'
 import {QueryClientProvider} from '@tanstack/react-query'
 import type {ReactNode} from 'react'
-import {WagmiProvider, cookieToInitialState} from 'wagmi'
+import {cookieToInitialState, WagmiProvider} from 'wagmi'
+
+import {networks, wagmiAdapter} from '@/lib/wagmi'
 
 const projectId = process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID as string
 

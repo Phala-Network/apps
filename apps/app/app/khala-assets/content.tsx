@@ -1,11 +1,12 @@
 'use client'
 
-import ClaimAssets from '@/components/ClaimAssets'
-import PolkadotProvider from '@/components/PolkadotProvider'
 import {Link, Paper, Stack, Typography} from '@mui/material'
 import khalaIcon from '@phala/ui/icons/chain/khala.png'
 import phalaIcon from '@phala/ui/icons/chain/phala.png'
 import Image from 'next/image'
+
+import ClaimAssets from '@/components/claim-assets'
+import PolkadotProvider from '@/components/polkadot-provider'
 
 export default function KhalaAssetsContent() {
   return (

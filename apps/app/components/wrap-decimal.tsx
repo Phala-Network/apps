@@ -24,7 +24,7 @@ const WrapDecimal: FC<{children: ReactNode}> = ({children}) => {
           const [integer, decimal] = part.split('.')
           return (
             <Fragment
-              // biome-ignore lint/suspicious/noArrayIndexKey:
+              // biome-ignore lint/suspicious/noArrayIndexKey: stable key for static list
               key={`${part}-${index}`}
             >
               {integer}.
@@ -34,7 +34,7 @@ const WrapDecimal: FC<{children: ReactNode}> = ({children}) => {
             </Fragment>
           )
         }
-        // biome-ignore lint/suspicious/noArrayIndexKey:
+        // biome-ignore lint/suspicious/noArrayIndexKey: stable key for static list
         return <Fragment key={`${part}-${index}`}>{part}</Fragment>
       })}
     </>

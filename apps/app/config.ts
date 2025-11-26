@@ -1,4 +1,4 @@
-import {mainnet} from 'viem/chains'
+import {mainnet} from '@reown/appkit/networks'
 
 export const ethChain = mainnet
 export const explorerUrl = ethChain.blockExplorers.default.url

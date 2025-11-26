@@ -22,19 +22,20 @@ import {decodeAddress} from '@polkadot/keyring'
 import Identicon from '@polkadot/react-identicon'
 import type {Signer} from '@polkadot/types/types'
 import {stringToHex, u8aToHex} from '@polkadot/util'
+import {useAppKitAccount} from '@reown/appkit/react'
 import Decimal from 'decimal.js'
 import {useAtom, useSetAtom} from 'jotai'
 import NextLink from 'next/link'
 import {useSnackbar} from 'notistack'
 import {useEffect, useMemo, useState} from 'react'
 import type {Hex} from 'viem'
-import {useAccount, useWaitForTransactionReceipt, useWriteContract} from 'wagmi'
+import {useWaitForTransactionReceipt, useWriteContract} from 'wagmi'
 
 import khalaClaimerAbi from '@/assets/khala_claimer_abi'
 import phalaClaimerAbi from '@/assets/phala_claimer_abi'
-import AppKitButton from '@/components/AppKitButton'
-import Property from '@/components/Property'
-import SwitchChainButton from '@/components/SwitchChainButton'
+import AppKitButton from '@/components/app-kit-button'
+import Property from '@/components/property'
+import SwitchChainButton from '@/components/switch-chain-button'
 import {
   explorerUrl,
   KHALA_CLAIMER_CONTRACT_ADDRESS,
@@ -46,9 +47,9 @@ import {
   phalaAssetsApi,
   useAssetsQuery,
   useClaimStatus,
-} from '@/hooks/khalaAssets'
+} from '@/hooks/khala-assets'
 import {useSharePrice} from '@/hooks/staking'
-import {useAutoSwitchChain} from '@/hooks/useAutoSwitchChain'
+import {useAutoSwitchChain} from '@/hooks/use-auto-switch-chain'
 import {walletDialogOpenAtom} from '@/store/ui'
 
 const Steps = () => {
@@ -128,7 +129,7 @@ const ClaimAssets = ({chain}: {chain: ChainType}) => {
   )
   useAutoSwitchChain()
   const sharePrice = useSharePrice()
-  const {address: ethAddress, chain: ethChain} = useAccount()
+  const {address: ethAddress} = useAppKitAccount()
   const [polkadotAccount] = useAtom(polkadotAccountAtom)
   const address = checkAddress ?? polkadotAccount?.address
   const {data} = useAssetsQuery(address, chain)

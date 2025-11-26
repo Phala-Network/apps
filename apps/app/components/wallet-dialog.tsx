@@ -1,6 +1,5 @@
 'use client'
 
-import {walletDialogOpenAtom} from '@/store/ui'
 import ArrowForwardIos from '@mui/icons-material/ArrowForwardIos'
 import Download from '@mui/icons-material/Download'
 import {
@@ -22,6 +21,8 @@ import type {Wallet} from '@talismn/connect-wallets'
 import {useAtom} from 'jotai'
 import Image from 'next/image'
 import {type FC, useEffect, useState} from 'react'
+
+import {walletDialogOpenAtom} from '@/store/ui'
 
 const walletsOrder = ['SubWallet', 'Talisman', 'Polkadot.js']
 

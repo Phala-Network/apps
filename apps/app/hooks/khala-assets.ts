@@ -1,14 +1,15 @@
 'use client'
 
+import {useQuery} from '@tanstack/react-query'
+import type {Hex} from 'viem'
+import {useReadContract} from 'wagmi'
+import wretch from 'wretch'
+
 import khalaClaimerAbi from '@/assets/khala_claimer_abi'
 import {
   KHALA_CLAIMER_CONTRACT_ADDRESS,
   PHALA_CLAIMER_CONTRACT_ADDRESS,
 } from '@/config'
-import {useQuery} from '@tanstack/react-query'
-import type {Hex} from 'viem'
-import {useReadContract} from 'wagmi'
-import wretch from 'wretch'
 
 export type ChainType = 'khala' | 'phala'
 

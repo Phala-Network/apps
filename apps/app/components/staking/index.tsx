@@ -1,24 +1,25 @@
 'use client'
 
+import {Box, Grid, Paper, Stack} from '@mui/material'
+import {toCurrency, toPercentage} from '@phala/lib'
+import {useAppKitAccount} from '@reown/appkit/react'
+import Decimal from 'decimal.js'
+import {useMemo} from 'react'
+import {formatUnits} from 'viem'
+
 import {
   useRewardRate,
   useShares,
   useSharesToAssets,
   useTotalAssets,
 } from '@/hooks/staking'
-import {useAutoSwitchChain} from '@/hooks/useAutoSwitchChain'
-import {Box, Grid, Paper, Stack} from '@mui/material'
-import {toCurrency, toPercentage} from '@phala/lib'
-import Decimal from 'decimal.js'
-import {useMemo} from 'react'
-import {formatUnits} from 'viem'
-import {useAccount} from 'wagmi'
-import Property from '../Property'
-import Stake from './Stake'
-import Unstake from './Unstake'
+import {useAutoSwitchChain} from '@/hooks/use-auto-switch-chain'
+import Property from '../property'
+import Stake from './stake'
+import Unstake from './unstake'
 
 const Staking = () => {
-  const {address} = useAccount()
+  const {address} = useAppKitAccount()
   const shares = useShares(address)
   const assets = useSharesToAssets(shares)
   const totalAssets = useTotalAssets()

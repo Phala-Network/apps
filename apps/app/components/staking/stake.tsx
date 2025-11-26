@@ -1,22 +1,5 @@
 'use client'
 
-import vaultAbi from '@/assets/pha_vault_abi'
-import Property from '@/components/Property'
-import SwitchChainButton from '@/components/SwitchChainButton'
-import {
-  PHA_CONTRACT_ADDRESS,
-  VAULT_CONTRACT_ADDRESS,
-  explorerUrl,
-} from '@/config'
-import {
-  useAllowance,
-  useAssetsToShares,
-  useBalance,
-  useMaxUnlockRequests,
-  useSharesToAssets,
-  useUnlockPeriod,
-  useUnlockRequests,
-} from '@/hooks/staking'
 import {OpenInNew} from '@mui/icons-material'
 import {
   Box,
@@ -35,13 +18,32 @@ import {
 import {getDecimalPattern, toCurrency, trimAddress} from '@phala/lib'
 import phaIcon from '@phala/ui/icons/asset/pha.png'
 import vphaIcon from '@phala/ui/icons/asset/vpha.png'
+import {useAppKitAccount} from '@reown/appkit/react'
 import {formatDuration, intervalToDuration} from 'date-fns'
 import Decimal from 'decimal.js'
 import Image from 'next/image'
 import {useSnackbar} from 'notistack'
 import {useCallback, useEffect, useMemo, useState} from 'react'
 import {erc20Abi, formatUnits, parseUnits} from 'viem'
-import {useAccount, useWaitForTransactionReceipt, useWriteContract} from 'wagmi'
+import {useWaitForTransactionReceipt, useWriteContract} from 'wagmi'
+
+import vaultAbi from '@/assets/pha_vault_abi'
+import Property from '@/components/property'
+import SwitchChainButton from '@/components/switch-chain-button'
+import {
+  explorerUrl,
+  PHA_CONTRACT_ADDRESS,
+  VAULT_CONTRACT_ADDRESS,
+} from '@/config'
+import {
+  useAllowance,
+  useAssetsToShares,
+  useBalance,
+  useMaxUnlockRequests,
+  useSharesToAssets,
+  useUnlockPeriod,
+  useUnlockRequests,
+} from '@/hooks/staking'
 
 const oneUnit = parseUnits('1', 18)
 
@@ -59,7 +61,7 @@ const Stake = () => {
   const {enqueueSnackbar} = useSnackbar()
   const shareRate = useSharesToAssets(oneUnit)
   const assetRate = useAssetsToShares(oneUnit)
-  const {address} = useAccount()
+  const {address} = useAppKitAccount()
   const unlockRequests = useUnlockRequests(address)
   const maxUnlockRequests = useMaxUnlockRequests()
   const [amountString, setAmountString] = useState('')

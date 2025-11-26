@@ -3,7 +3,7 @@
 import {Stack, type StackProps, type SxProps, Typography} from '@mui/material'
 import type {FC, ReactNode} from 'react'
 
-import WrapDecimal from './WrapDecimal'
+import WrapDecimal from './wrap-decimal'
 
 const Property: FC<
   {
@@ -54,8 +54,11 @@ const Property: FC<
         <Typography
           lineHeight={1.3}
           component="div"
-          whiteSpace="nowrap"
-          sx={{fontWeight: 600, fontSize: '1.5rem'}}
+          sx={{
+            fontWeight: 600,
+            fontSize: {xs: '1.25rem', sm: '1.5rem'},
+            wordBreak: 'break-word',
+          }}
         >
           {value}
         </Typography>
@@ -65,8 +68,11 @@ const Property: FC<
           lineHeight={1.3}
           component="div"
           mt={0.25}
-          whiteSpace="nowrap"
-          sx={{fontWeight: 500, fontSize: '1rem'}}
+          sx={{
+            fontWeight: 500,
+            fontSize: {xs: '0.9rem', sm: '1rem'},
+            wordBreak: 'break-word',
+          }}
         >
           {value}
         </Typography>
@@ -76,8 +82,11 @@ const Property: FC<
           lineHeight={1.3}
           component="div"
           ml={0.5}
-          whiteSpace="nowrap"
-          sx={{fontWeight: 500, fontSize: '0.9rem', wordBreak: 'break-all'}}
+          sx={{
+            fontWeight: 500,
+            fontSize: {xs: '0.8rem', sm: '0.9rem'},
+            wordBreak: 'break-word',
+          }}
         >
           {value}
         </Typography>
