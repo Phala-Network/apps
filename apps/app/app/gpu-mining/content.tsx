@@ -1,9 +1,10 @@
 'use client'
 
-import dephyLogo from '@/assets/dephy.svg'
 import OpenInNew from '@mui/icons-material/OpenInNew'
 import {Box, Button, Link, Paper, Stack, Typography} from '@mui/material'
 import Image from 'next/image'
+
+import dephyLogo from '@/assets/dephy.svg'
 
 export default function GpuMiningContent() {
   return (

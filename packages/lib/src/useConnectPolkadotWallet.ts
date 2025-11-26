@@ -3,6 +3,7 @@ import {polkadotAccountsAtom, walletAtom, walletNameAtom} from '@phala/store'
 import type {WalletAccount} from '@talismn/connect-wallets'
 import {useAtom} from 'jotai'
 import {useEffect} from 'react'
+
 import transformSs58Format from './transformSs58Format'
 import {validateAddress} from './validateAddress'
 
