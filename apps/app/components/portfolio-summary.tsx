@@ -22,9 +22,9 @@ import {formatUnits} from 'viem'
 import {ethChain} from '@/config'
 
 interface PortfolioSummaryProps {
-  totalPhaValue: bigint | null
+  totalPhaValue: Decimal | null
   totalStakedVpha: bigint | null
-  totalStakedInPha: bigint | null
+  totalStakedInPha: Decimal | null
   stakingApr: Decimal | null
   isConnected: boolean
 }
@@ -124,9 +124,7 @@ const PortfolioSummary: FC<PortfolioSummaryProps> = ({
                 WebkitTextFillColor: 'transparent',
               }}
             >
-              {totalPhaValue != null
-                ? toCurrency(formatUnits(totalPhaValue, 18))
-                : '-'}
+              {totalPhaValue != null ? toCurrency(totalPhaValue) : '-'}
             </Typography>
             <Typography variant="h5" color="text.secondary" fontWeight={500}>
               PHA
@@ -152,7 +150,7 @@ const PortfolioSummary: FC<PortfolioSummaryProps> = ({
           <Stack direction="row" spacing={1} alignItems="center" mt={0.5}>
             <Typography variant="body2" color="text.secondary">
               {totalStakedInPha != null
-                ? `≈ ${toCurrency(formatUnits(totalStakedInPha, 18))} PHA`
+                ? `≈ ${toCurrency(totalStakedInPha)} PHA`
                 : '-'}
             </Typography>
             {stakingApr != null && (

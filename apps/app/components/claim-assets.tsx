@@ -35,6 +35,7 @@ import {useWaitForTransactionReceipt, useWriteContract} from 'wagmi'
 import khalaClaimerAbi from '@/assets/khala_claimer_abi'
 import phalaClaimerAbi from '@/assets/phala_claimer_abi'
 import AppKitButton from '@/components/app-kit-button'
+import ChainBadge from '@/components/chain-badge'
 import Property from '@/components/property'
 import SwitchChainButton from '@/components/switch-chain-button'
 import {
@@ -363,7 +364,7 @@ const ClaimAssets = ({chain}: {chain: ChainType}) => {
                   color="text.secondary"
                   component="span"
                 >
-                  ({toCurrency(data.staked)} vPHA on Phala L2)
+                  ({toCurrency(data.staked)} vPHA on Phala Mainnet)
                 </Typography>
               </Stack>
             ) : data ? (
@@ -492,23 +493,11 @@ const ClaimAssets = ({chain}: {chain: ChainType}) => {
                                 </Typography>
                               </Link>
                             </Stack>
-                            <Typography
-                              variant="caption"
-                              sx={{
-                                border: 1,
-                                borderColor: 'primary.main',
-                                color: 'primary.main',
-                                px: 1,
-                                py: 0.25,
-                                borderRadius: 1,
-                              }}
-                            >
-                              Ethereum
-                            </Typography>
+                            <ChainBadge chain="ethereum" />
                           </Stack>
                         )}
 
-                        {/* Staked vPHA to Phala L2 */}
+                        {/* Staked vPHA to Phala Mainnet */}
                         {logData.stakedVPHA.gt(0) && (
                           <Stack
                             direction="row"
@@ -541,19 +530,7 @@ const ClaimAssets = ({chain}: {chain: ChainType}) => {
                                 </Typography>
                               </Link>
                             </Stack>
-                            <Typography
-                              variant="caption"
-                              sx={{
-                                border: 1,
-                                borderColor: 'secondary.main',
-                                color: 'secondary.main',
-                                px: 1,
-                                py: 0.25,
-                                borderRadius: 1,
-                              }}
-                            >
-                              Phala L2
-                            </Typography>
+                            <ChainBadge chain="phala" />
                           </Stack>
                         )}
                       </>
@@ -592,19 +569,7 @@ const ClaimAssets = ({chain}: {chain: ChainType}) => {
                                 </Typography>
                               </Link>
                             </Stack>
-                            <Typography
-                              variant="caption"
-                              sx={{
-                                border: 1,
-                                borderColor: 'primary.main',
-                                color: 'primary.main',
-                                px: 1,
-                                py: 0.25,
-                                borderRadius: 1,
-                              }}
-                            >
-                              Ethereum
-                            </Typography>
+                            <ChainBadge chain="ethereum" />
                           </Stack>
                         )}
 
@@ -641,19 +606,7 @@ const ClaimAssets = ({chain}: {chain: ChainType}) => {
                                 </Typography>
                               </Link>
                             </Stack>
-                            <Typography
-                              variant="caption"
-                              sx={{
-                                border: 1,
-                                borderColor: 'primary.main',
-                                color: 'primary.main',
-                                px: 1,
-                                py: 0.25,
-                                borderRadius: 1,
-                              }}
-                            >
-                              Ethereum
-                            </Typography>
+                            <ChainBadge chain="ethereum" />
                           </Stack>
                         )}
                       </>

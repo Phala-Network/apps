@@ -41,7 +41,7 @@ export default function KhalaAssetsContent() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              Phala L2
+              Phala Mainnet
             </Link>
             , our new Ethereum Layer 2 network.
           </Typography>
@@ -134,7 +134,7 @@ export default function KhalaAssetsContent() {
               </Link>
             </Typography>
             <Typography variant="subtitle1" fontWeight={500} sx={{mt: 2}}>
-              How to transfer vPHA between Ethereum and Phala L2?
+              How to transfer vPHA between Ethereum and Phala Mainnet?
             </Typography>
             <Typography variant="body2" color="text.secondary">
               You can use{' '}
@@ -145,8 +145,8 @@ export default function KhalaAssetsContent() {
               >
                 Phala Bridge
               </Link>{' '}
-              to transfer vPHA tokens between Ethereum (L1) and Phala L2. The
-              bridge supports bidirectional transfers, allowing you to move
+              to transfer vPHA tokens between Ethereum (L1) and Phala Mainnet.
+              The bridge supports bidirectional transfers, allowing you to move
               assets freely between both networks.
             </Typography>
           </Stack>

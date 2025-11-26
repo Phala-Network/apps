@@ -17,6 +17,7 @@ import type {FC, ReactNode} from 'react'
 import {formatUnits} from 'viem'
 
 import {explorerUrl} from '@/config'
+import MetaMaskButton from './metamask-button'
 
 export interface AssetAction {
   label: string
@@ -37,6 +38,9 @@ interface AssetCardProps {
   subValue?: ReactNode
   actions?: AssetAction[]
   highlight?: boolean
+  onAddToWallet?: () => void
+  addToWalletLabel?: string
+  onAddNetwork?: () => void
 }
 
 const AssetCard: FC<AssetCardProps> = ({
@@ -50,6 +54,9 @@ const AssetCard: FC<AssetCardProps> = ({
   subValue,
   actions = [],
   highlight = false,
+  onAddToWallet,
+  addToWalletLabel,
+  onAddNetwork,
 }) => {
   const tokenExplorerUrl = contractExplorerUrl
     ? `${contractExplorerUrl}/token/${contractAddress}`
@@ -163,42 +170,44 @@ const AssetCard: FC<AssetCardProps> = ({
           </Box>
         </Box>
 
-        {actions.length > 0 && (
-          <Stack
-            direction="row"
-            spacing={1}
-            flexWrap="wrap"
-            useFlexGap
-            mt="auto"
-          >
-            {actions.map((action) => (
-              <Button
-                key={action.label}
-                size="small"
-                variant={action.variant || 'outlined'}
-                disabled={action.disabled}
-                component={action.external ? 'a' : NextLink}
-                href={action.href}
-                target={action.external ? '_blank' : undefined}
-                rel={action.external ? 'noopener noreferrer' : undefined}
-                endIcon={
-                  action.external ? (
-                    <OpenInNew sx={{width: 14, height: 14}} />
-                  ) : (
-                    <ArrowForward sx={{width: 14, height: 14}} />
-                  )
-                }
-                sx={{
-                  fontSize: '0.75rem',
-                  py: 0.5,
-                  px: 1.5,
-                }}
-              >
-                {action.label}
-              </Button>
-            ))}
-          </Stack>
-        )}
+        <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap mt="auto">
+          {actions.map((action) => (
+            <Button
+              key={action.label}
+              size="small"
+              variant={action.variant || 'outlined'}
+              disabled={action.disabled}
+              component={action.external ? 'a' : NextLink}
+              href={action.href}
+              target={action.external ? '_blank' : undefined}
+              rel={action.external ? 'noopener noreferrer' : undefined}
+              endIcon={
+                action.external ? (
+                  <OpenInNew sx={{width: 14, height: 14}} />
+                ) : (
+                  <ArrowForward sx={{width: 14, height: 14}} />
+                )
+              }
+              sx={{
+                fontSize: '0.75rem',
+                py: 0.5,
+                px: 1.5,
+              }}
+            >
+              {action.label}
+            </Button>
+          ))}
+          {onAddNetwork && (
+            <MetaMaskButton onClick={onAddNetwork}>
+              Add Phala Mainnet
+            </MetaMaskButton>
+          )}
+          {onAddToWallet && (
+            <MetaMaskButton onClick={onAddToWallet}>
+              {addToWalletLabel ?? `Add ${symbol}`}
+            </MetaMaskButton>
+          )}
+        </Stack>
       </Stack>
     </Paper>
   )
