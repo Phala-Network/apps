@@ -54,7 +54,11 @@ export const usePhalaAssetsQuery = (address?: string) => {
   return useAssetsQuery(address, 'phala')
 }
 
-export const useClaimStatus = (address?: Hex, chain: ChainType = 'khala') => {
+export const useClaimStatus = (
+  address?: Hex,
+  chain: ChainType = 'khala',
+  enabled = true,
+) => {
   const contractAddress =
     chain === 'khala'
       ? KHALA_CLAIMER_CONTRACT_ADDRESS
@@ -68,7 +72,7 @@ export const useClaimStatus = (address?: Hex, chain: ChainType = 'khala') => {
     functionName: 'claimed',
     args: address && [address],
     query: {
-      enabled: Boolean(address),
+      enabled: enabled && Boolean(address),
       refetchInterval: (query) => (query.state.data ? false : 3000),
     },
   })
@@ -86,6 +90,8 @@ export const useClaimStatus = (address?: Hex, chain: ChainType = 'khala') => {
           ? `
         query GetClaimedAndBridgedLog($user: String!) {
           claimedAndBridgeds(first: 1, where: {user: $user}) {
+            free
+            staked
             l1Receiver
             l2Receiver
             transactionHash_
@@ -96,6 +102,8 @@ export const useClaimStatus = (address?: Hex, chain: ChainType = 'khala') => {
           : `
         query GetClaimedLog($user: String!) {
           claimeds(first: 1, where: {user: $user}) {
+            free
+            staked
             receiver
             transactionHash_
             timestamp_
@@ -111,11 +119,15 @@ export const useClaimStatus = (address?: Hex, chain: ChainType = 'khala') => {
         .json<{
           data: {
             claimeds?: Array<{
+              free: string
+              staked: string
               receiver: string
               transactionHash_: string
               timestamp_: string
             }>
             claimedAndBridgeds?: Array<{
+              free: string
+              staked: string
               l1Receiver: string
               l2Receiver: string
               transactionHash_: string
@@ -129,6 +141,8 @@ export const useClaimStatus = (address?: Hex, chain: ChainType = 'khala') => {
         const logs = response.data.claimedAndBridgeds
         return logs.length > 0
           ? {
+              free: logs[0].free,
+              staked: logs[0].staked,
               receiver: logs[0].l2Receiver, // Use l2Receiver as the main receiver
               l1Receiver: logs[0].l1Receiver,
               transactionHash_: logs[0].transactionHash_,
@@ -138,7 +152,15 @@ export const useClaimStatus = (address?: Hex, chain: ChainType = 'khala') => {
       }
 
       const logs = response.data.claimeds
-      return logs && logs.length > 0 ? logs[0] : null
+      return logs && logs.length > 0
+        ? {
+            free: logs[0].free,
+            staked: logs[0].staked,
+            receiver: logs[0].receiver,
+            transactionHash_: logs[0].transactionHash_,
+            timestamp_: logs[0].timestamp_,
+          }
+        : null
     },
     enabled: claimed === true && address != null,
     refetchInterval: (query) => (query.state.data ? false : 3000),

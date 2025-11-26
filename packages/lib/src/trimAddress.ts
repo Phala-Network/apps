@@ -1,4 +1,4 @@
-const trimAddress = (str: string, start = 4, end = 4): string => {
+const trimAddress = (str: string, start = 4, end = 6): string => {
   if (str.length < start + end) return str
 
   return `${str.slice(0, start)}…${str.slice(-end)}`

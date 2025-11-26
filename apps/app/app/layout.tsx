@@ -15,7 +15,7 @@ const montserrat = Montserrat({
 export const metadata: Metadata = {
   title: {
     default: 'Phala Network App',
-    template: '%s - Phala Network App',
+    template: '%s | Phala Network App',
   },
   description: 'Phala Network App - Staking, GPU Mining',
 }

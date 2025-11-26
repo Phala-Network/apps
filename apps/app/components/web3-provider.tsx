@@ -33,9 +33,9 @@ createAppKit({
   themeMode: 'dark',
   themeVariables: {
     '--apkt-accent': '#c5ff46',
-    '--apkt-color-mix': '#1f222e',
-    '--apkt-color-mix-strength': 40,
-    '--apkt-border-radius-master': '4px',
+    // '--apkt-color-mix': '#1f222e',
+    // '--apkt-color-mix-strength': 40,
+    // '--apkt-border-radius-master': '4px',
     '--apkt-font-family': 'Montserrat, Helvetica, Arial, sans-serif',
   },
 })

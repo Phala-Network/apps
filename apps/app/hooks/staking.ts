@@ -1,37 +1,41 @@
 'use client'
 
-import vaultAbi from '@/assets/pha_vault_abi'
-import {VAULT_CONTRACT_ADDRESS} from '@/config'
-import {PHA_CONTRACT_ADDRESS} from '@/config'
 import Decimal from 'decimal.js'
 import {useMemo} from 'react'
-import {type Hex, erc20Abi} from 'viem'
+import {erc20Abi, type Hex} from 'viem'
 import {useReadContract} from 'wagmi'
 
-export const useAllowance = (address?: Hex) => {
+import vaultAbi from '@/assets/pha_vault_abi'
+import {PHA_CONTRACT_ADDRESS, VAULT_CONTRACT_ADDRESS} from '@/config'
+
+export const useAllowance = (address?: Hex, enabled = true) => {
   const {data: allowance} = useReadContract({
     address: PHA_CONTRACT_ADDRESS,
     abi: erc20Abi,
     functionName: 'allowance',
     args: address && [address, VAULT_CONTRACT_ADDRESS],
-    query: {enabled: Boolean(address), refetchInterval: 3_000},
+    query: {enabled: enabled && Boolean(address), refetchInterval: 3_000},
   })
   return allowance
 }
 
-export const useBalance = (tokenContractAddress: Hex, address?: Hex) => {
+export const useBalance = (
+  tokenContractAddress: Hex,
+  address?: Hex,
+  enabled = true,
+) => {
   const {data: balance} = useReadContract({
     address: tokenContractAddress,
     abi: erc20Abi,
     functionName: 'balanceOf',
     args: address && [address],
-    query: {enabled: Boolean(address), refetchInterval: 3_000},
+    query: {enabled: enabled && Boolean(address), refetchInterval: 3_000},
   })
   return balance
 }
 
-export const useShares = (address?: Hex) => {
-  const shares = useBalance(VAULT_CONTRACT_ADDRESS, address)
+export const useShares = (address?: Hex, enabled = true) => {
+  const shares = useBalance(VAULT_CONTRACT_ADDRESS, address, enabled)
   return shares
 }
 
@@ -107,13 +111,13 @@ export const useAssetsToShares = (assets?: bigint | null) => {
   return shares
 }
 
-export const useUnlockRequests = (address?: Hex) => {
+export const useUnlockRequests = (address?: Hex, enabled = true) => {
   const {data: unlockRequests} = useReadContract({
     address: VAULT_CONTRACT_ADDRESS,
     abi: vaultAbi,
     functionName: 'unlockRequests',
     args: address && [address],
-    query: {enabled: Boolean(address), refetchInterval: 3_000},
+    query: {enabled: enabled && Boolean(address), refetchInterval: 3_000},
   })
   if (unlockRequests != null) {
     return unlockRequests.map((request) => ({

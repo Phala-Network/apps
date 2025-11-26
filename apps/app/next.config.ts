@@ -23,11 +23,11 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
-      {
-        source: '/',
-        destination: '/staking',
-        permanent: false,
-      },
+      // {
+      //   source: '/',
+      //   destination: '/staking',
+      //   permanent: false,
+      // },
       {
         source: '/khala/:path*',
         destination: '/khala-assets',

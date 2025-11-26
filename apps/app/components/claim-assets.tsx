@@ -2,7 +2,6 @@
 
 import {CheckCircleOutline, ContentCopy} from '@mui/icons-material'
 import {
-  Alert,
   Box,
   Button,
   Divider,
@@ -18,6 +17,8 @@ import {
 } from '@mui/material'
 import {toCurrency, trimAddress, validateAddress} from '@phala/lib'
 import {polkadotAccountAtom} from '@phala/store'
+import phaIcon from '@phala/ui/icons/asset/pha.png'
+import vphaIcon from '@phala/ui/icons/asset/vpha.png'
 import {decodeAddress} from '@polkadot/keyring'
 import Identicon from '@polkadot/react-identicon'
 import type {Signer} from '@polkadot/types/types'
@@ -25,7 +26,7 @@ import {stringToHex, u8aToHex} from '@polkadot/util'
 import {useAppKitAccount} from '@reown/appkit/react'
 import Decimal from 'decimal.js'
 import {useAtom, useSetAtom} from 'jotai'
-import NextLink from 'next/link'
+import Image from 'next/image'
 import {useSnackbar} from 'notistack'
 import {useEffect, useMemo, useState} from 'react'
 import type {Hex} from 'viem'
@@ -150,15 +151,35 @@ const ClaimAssets = ({chain}: {chain: ChainType}) => {
     }
 
     const txHash = log.transactionHash_
+    const freeAmount = new Decimal(log.free).div(1e18)
+    // staked is in vPHA units
+    const stakedVPHA = new Decimal(log.staked).div(1e18)
+
+    // Convert vPHA to PHA based on chain
+    let stakedPHA: Decimal
+    if (chain === 'phala') {
+      // For Phala, use fixed snapshot rate
+      stakedPHA = stakedVPHA.mul(PHALA_SHARE_PRICE)
+    } else {
+      // For Khala, vPHA price is 1:1 (no conversion needed)
+      stakedPHA = stakedVPHA
+    }
+
+    const totalAmount = freeAmount.add(stakedPHA)
+
     return {
       url: `${explorerUrl}/tx/${txHash}`,
       hash: txHash,
-      trimmedHash: trimAddress(txHash, 6, 6),
+      trimmedHash: trimAddress(txHash),
       receiver: log.receiver,
       l1Receiver: 'l1Receiver' in log ? log.l1Receiver : undefined,
       timestamp: log.timestamp_,
+      free: freeAmount,
+      stakedVPHA, // Original vPHA amount
+      stakedPHA, // Converted PHA amount
+      total: totalAmount,
     }
-  }, [log])
+  }, [log, chain, sharePrice])
 
   const {data: hash, writeContract, isPending, reset} = useWriteContract()
   const claimResult = useWaitForTransactionReceipt({hash})
@@ -267,7 +288,7 @@ const ClaimAssets = ({chain}: {chain: ChainType}) => {
       // Ensure rewards are non-negative (handle rounding errors)
       return Decimal.max(0, reward)
     }
-    // For Khala, use current share price minus 1
+    // For Khala, vPHA price is 1:1, use current share price minus 1 for rewards
     if (sharePrice == null) {
       return
     }
@@ -328,8 +349,8 @@ const ClaimAssets = ({chain}: {chain: ChainType}) => {
       >
         {total == null ? '-' : toCurrency(total)}
       </Property>
-      <Paper sx={{p: 2, bgcolor: 'transparent', mt: 2}}>
-        <Stack gap={1}>
+      <Paper sx={{p: 3, bgcolor: 'transparent', mt: 3}}>
+        <Stack gap={1.5}>
           <Property label="Free" size="small" fullWidth wrapDecimal>
             {data ? toCurrency(data.free) : '-'}
           </Property>
@@ -342,7 +363,7 @@ const ClaimAssets = ({chain}: {chain: ChainType}) => {
                   color="text.secondary"
                   component="span"
                 >
-                  ({toCurrency(data.staked)} vPHA)
+                  ({toCurrency(data.staked)} vPHA on Phala L2)
                 </Typography>
               </Stack>
             ) : data ? (
@@ -357,22 +378,7 @@ const ClaimAssets = ({chain}: {chain: ChainType}) => {
         </Stack>
       </Paper>
 
-      {chain === 'phala' && (
-        <Alert severity="info" sx={{mt: 2}}>
-          <Typography variant="body2">
-            <strong>Notice:</strong> Staked PHA will be claimed to{' '}
-            <Link
-              href="https://explorer.phala.network/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Phala L2
-            </Link>
-          </Typography>
-        </Alert>
-      )}
-
-      <Box display="flex" alignItems="center" gap={2} height={52} px={2} my={3}>
+      <Box display="flex" alignItems="center" gap={2} height={52} px={2} my={4}>
         <Identicon value={address} theme="polkadot" size={30} />
         <Stack>
           <Typography
@@ -399,7 +405,7 @@ const ClaimAssets = ({chain}: {chain: ChainType}) => {
               color="text.secondary"
               component="div"
             >
-              {trimAddress(address, 6, 6)}
+              {trimAddress(address)}
             </Typography>
             <ContentCopy sx={{ml: 1, width: 16}} color="disabled" />
           </Stack>
@@ -416,121 +422,249 @@ const ClaimAssets = ({chain}: {chain: ChainType}) => {
 
       {polkadotAccount != null && (
         <>
-          <Divider sx={{my: 2}} />
+          <Divider sx={{my: 1}} />
 
           <Stack gap={4} mt={4}>
             {claimed ? (
-              <Stack alignItems="center" height="100%" justifyContent="center">
-                <CheckCircleOutline
-                  sx={{width: 48, height: 48}}
-                  color="success"
-                />
-                <Typography variant="h5" mt={3}>
-                  Claimed Successfully
-                </Typography>
-                {chain === 'phala' ? (
-                  <Typography variant="body2" mt={1} color="text.secondary">
-                    View your assets on{' '}
-                    <Link
-                      href={`${explorerUrl}/address/${logData?.l1Receiver || ethAddress}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      Ethereum
-                    </Link>
-                    {' and '}
-                    <Link
-                      href={`https://explorer.phala.network/address/${logData?.receiver || ethAddress}?tab=tokens`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      Phala L2
-                    </Link>
+              <Stack gap={3}>
+                {/* Header */}
+                <Stack direction="row" alignItems="center" gap={1.5}>
+                  <CheckCircleOutline
+                    sx={{width: 24, height: 24}}
+                    color="success"
+                  />
+                  <Typography variant="h6" fontWeight="medium">
+                    Claimed
                   </Typography>
-                ) : (
-                  <Typography variant="body2" mt={1} color="text.secondary">
-                    Staked PHA and rewards are available on the staking page
-                  </Typography>
-                )}
-                <Typography
-                  variant="body2"
-                  mt={1}
-                  display="flex"
-                  gap={1}
-                  alignItems="center"
-                >
-                  Tx:{' '}
-                  {logData ? (
-                    <Link href={logData.url} target="_blank">
-                      {logData.trimmedHash}
-                    </Link>
-                  ) : (
-                    <Skeleton width={100} height={20} />
+                  {logData && (
+                    <Stack sx={{ml: 'auto'}} alignItems="flex-end">
+                      <Link href={logData.url} target="_blank">
+                        <Typography variant="body2">
+                          {logData.trimmedHash}
+                        </Typography>
+                      </Link>
+                      {logData.timestamp && (
+                        <Typography variant="caption" color="text.secondary">
+                          {new Date(
+                            Number.parseInt(logData.timestamp) * 1000,
+                          ).toLocaleString()}
+                        </Typography>
+                      )}
+                    </Stack>
                   )}
-                </Typography>
-                {chain === 'phala' && logData?.l1Receiver && (
-                  <Typography
-                    variant="body2"
-                    mt={1}
-                    display="flex"
-                    gap={1}
-                    alignItems="center"
-                  >
-                    Ethereum Receiver:{' '}
-                    <Link
-                      href={`${explorerUrl}/address/${logData.l1Receiver}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {trimAddress(logData.l1Receiver, 6, 6)}
-                    </Link>
-                  </Typography>
-                )}
-                {logData?.receiver && (
-                  <Typography
-                    variant="body2"
-                    mt={1}
-                    display="flex"
-                    gap={1}
-                    alignItems="center"
-                  >
-                    {chain === 'phala' ? 'Phala L2 Receiver' : 'Receiver'}:{' '}
-                    <Link
-                      href={
-                        chain === 'phala'
-                          ? `https://explorer.phala.network/address/${logData.receiver}?tab=tokens`
-                          : `${explorerUrl}/address/${logData.receiver}`
-                      }
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {trimAddress(logData.receiver, 6, 6)}
-                    </Link>
-                  </Typography>
-                )}
-                {logData?.timestamp && (
-                  <Typography
-                    variant="body2"
-                    mt={1}
-                    display="flex"
-                    gap={1}
-                    alignItems="center"
-                  >
-                    Time:{' '}
-                    {new Date(
-                      Number.parseInt(logData.timestamp) * 1000,
-                    ).toLocaleString()}
-                  </Typography>
-                )}
-                {chain === 'khala' && (
-                  <Button
-                    variant="contained"
-                    sx={{mt: 3}}
-                    LinkComponent={NextLink}
-                    href="/staking"
-                  >
-                    Go to Staking
-                  </Button>
+                </Stack>
+
+                {/* Claim Details */}
+                {logData ? (
+                  <Stack gap={2}>
+                    {chain === 'phala' ? (
+                      <>
+                        {/* Free PHA to Ethereum */}
+                        {logData.free.gt(0) && (
+                          <Stack
+                            direction="row"
+                            alignItems="center"
+                            justifyContent="space-between"
+                          >
+                            <Stack direction="row" alignItems="center" gap={1}>
+                              <Image
+                                src={phaIcon}
+                                alt="PHA"
+                                width={20}
+                                height={20}
+                              />
+                              <Typography variant="body2">
+                                {toCurrency(logData.free)} PHA
+                              </Typography>
+                              <Typography
+                                variant="body2"
+                                color="text.secondary"
+                              >
+                                →
+                              </Typography>
+                              <Link
+                                href={`${explorerUrl}/address/${logData.l1Receiver}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                <Typography variant="body2">
+                                  {trimAddress(logData.l1Receiver ?? '')}
+                                </Typography>
+                              </Link>
+                            </Stack>
+                            <Typography
+                              variant="caption"
+                              sx={{
+                                border: 1,
+                                borderColor: 'primary.main',
+                                color: 'primary.main',
+                                px: 1,
+                                py: 0.25,
+                                borderRadius: 1,
+                              }}
+                            >
+                              Ethereum
+                            </Typography>
+                          </Stack>
+                        )}
+
+                        {/* Staked vPHA to Phala L2 */}
+                        {logData.stakedVPHA.gt(0) && (
+                          <Stack
+                            direction="row"
+                            alignItems="center"
+                            justifyContent="space-between"
+                          >
+                            <Stack direction="row" alignItems="center" gap={1}>
+                              <Image
+                                src={vphaIcon}
+                                alt="vPHA"
+                                width={20}
+                                height={20}
+                              />
+                              <Typography variant="body2">
+                                {toCurrency(logData.stakedVPHA)} vPHA
+                              </Typography>
+                              <Typography
+                                variant="body2"
+                                color="text.secondary"
+                              >
+                                →
+                              </Typography>
+                              <Link
+                                href={`https://explorer.phala.network/address/${logData.receiver}?tab=tokens`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                <Typography variant="body2">
+                                  {trimAddress(logData.receiver)}
+                                </Typography>
+                              </Link>
+                            </Stack>
+                            <Typography
+                              variant="caption"
+                              sx={{
+                                border: 1,
+                                borderColor: 'secondary.main',
+                                color: 'secondary.main',
+                                px: 1,
+                                py: 0.25,
+                                borderRadius: 1,
+                              }}
+                            >
+                              Phala L2
+                            </Typography>
+                          </Stack>
+                        )}
+                      </>
+                    ) : (
+                      <>
+                        {/* Khala: Free PHA to Ethereum */}
+                        {logData.free.gt(0) && (
+                          <Stack
+                            direction="row"
+                            alignItems="center"
+                            justifyContent="space-between"
+                          >
+                            <Stack direction="row" alignItems="center" gap={1}>
+                              <Image
+                                src={phaIcon}
+                                alt="PHA"
+                                width={20}
+                                height={20}
+                              />
+                              <Typography variant="body2">
+                                {toCurrency(logData.free)} PHA
+                              </Typography>
+                              <Typography
+                                variant="body2"
+                                color="text.secondary"
+                              >
+                                →
+                              </Typography>
+                              <Link
+                                href={`${explorerUrl}/address/${logData.receiver}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                <Typography variant="body2">
+                                  {trimAddress(logData.receiver)}
+                                </Typography>
+                              </Link>
+                            </Stack>
+                            <Typography
+                              variant="caption"
+                              sx={{
+                                border: 1,
+                                borderColor: 'primary.main',
+                                color: 'primary.main',
+                                px: 1,
+                                py: 0.25,
+                                borderRadius: 1,
+                              }}
+                            >
+                              Ethereum
+                            </Typography>
+                          </Stack>
+                        )}
+
+                        {/* Khala: Staked vPHA to Ethereum */}
+                        {logData.stakedVPHA.gt(0) && (
+                          <Stack
+                            direction="row"
+                            alignItems="center"
+                            justifyContent="space-between"
+                          >
+                            <Stack direction="row" alignItems="center" gap={1}>
+                              <Image
+                                src={vphaIcon}
+                                alt="vPHA"
+                                width={20}
+                                height={20}
+                              />
+                              <Typography variant="body2">
+                                {toCurrency(logData.stakedVPHA)} vPHA
+                              </Typography>
+                              <Typography
+                                variant="body2"
+                                color="text.secondary"
+                              >
+                                →
+                              </Typography>
+                              <Link
+                                href={`${explorerUrl}/address/${logData.receiver}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                <Typography variant="body2">
+                                  {trimAddress(logData.receiver)}
+                                </Typography>
+                              </Link>
+                            </Stack>
+                            <Typography
+                              variant="caption"
+                              sx={{
+                                border: 1,
+                                borderColor: 'primary.main',
+                                color: 'primary.main',
+                                px: 1,
+                                py: 0.25,
+                                borderRadius: 1,
+                              }}
+                            >
+                              Ethereum
+                            </Typography>
+                          </Stack>
+                        )}
+                      </>
+                    )}
+                  </Stack>
+                ) : (
+                  <Skeleton
+                    variant="rectangular"
+                    height={60}
+                    sx={{borderRadius: 1}}
+                  />
                 )}
               </Stack>
             ) : (

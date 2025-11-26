@@ -29,6 +29,7 @@ import phalaLogo from '@/assets/phala_logo.svg'
 import AppKitButton from '@/components/app-kit-button'
 
 const navItems = [
+  {label: 'Portfolio', href: '/', external: false},
   {label: 'Staking', href: '/staking', external: false},
   {label: 'GPU Mining', href: '/gpu-mining', external: false},
   {label: 'Bridge', href: 'https://bridge.phala.network/', external: true},
