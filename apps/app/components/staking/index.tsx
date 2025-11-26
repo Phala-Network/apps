@@ -14,12 +14,14 @@ import {
   useTotalAssets,
 } from '@/hooks/staking'
 import {useAutoSwitchChain} from '@/hooks/use-auto-switch-chain'
+import {toAddress} from '@/lib/wagmi'
 import Property from '../property'
 import Stake from './stake'
 import Unstake from './unstake'
 
 const Staking = () => {
-  const {address} = useAppKitAccount()
+  const {address: rawAddress} = useAppKitAccount()
+  const address = toAddress(rawAddress)
   const shares = useShares(address)
   const assets = useSharesToAssets(shares)
   const totalAssets = useTotalAssets()

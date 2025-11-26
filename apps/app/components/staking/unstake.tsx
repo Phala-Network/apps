@@ -30,6 +30,7 @@ import {
   useUnlockPeriod,
   useUnlockRequests,
 } from '@/hooks/staking'
+import {toAddress} from '@/lib/wagmi'
 
 const Unstake = () => {
   const [cancelIndex, setCancelIndex] = useState<number | null>(null)
@@ -39,7 +40,8 @@ const Unstake = () => {
     if (block == null) return
     return Number.parseInt(block.timestamp.toString()) * 1000
   }, [block])
-  const {address} = useAppKitAccount()
+  const {address: rawAddress} = useAppKitAccount()
+  const address = toAddress(rawAddress)
   const unlockRequests = useUnlockRequests(address)
   const maxUnlockRequests = useMaxUnlockRequests()
   const unlockPeriod = useUnlockPeriod()

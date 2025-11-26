@@ -50,6 +50,7 @@ import {
 } from '@/hooks/khala-assets'
 import {useSharePrice} from '@/hooks/staking'
 import {useAutoSwitchChain} from '@/hooks/use-auto-switch-chain'
+import {toAddress} from '@/lib/wagmi'
 import {walletDialogOpenAtom} from '@/store/ui'
 
 const Steps = () => {
@@ -129,7 +130,8 @@ const ClaimAssets = ({chain}: {chain: ChainType}) => {
   )
   useAutoSwitchChain()
   const sharePrice = useSharePrice()
-  const {address: ethAddress} = useAppKitAccount()
+  const {address: rawEthAddress} = useAppKitAccount()
+  const ethAddress = toAddress(rawEthAddress)
   const [polkadotAccount] = useAtom(polkadotAccountAtom)
   const address = checkAddress ?? polkadotAccount?.address
   const {data} = useAssetsQuery(address, chain)

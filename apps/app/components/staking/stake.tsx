@@ -44,6 +44,7 @@ import {
   useUnlockPeriod,
   useUnlockRequests,
 } from '@/hooks/staking'
+import {toAddress} from '@/lib/wagmi'
 
 const oneUnit = parseUnits('1', 18)
 
@@ -61,7 +62,8 @@ const Stake = () => {
   const {enqueueSnackbar} = useSnackbar()
   const shareRate = useSharesToAssets(oneUnit)
   const assetRate = useAssetsToShares(oneUnit)
-  const {address} = useAppKitAccount()
+  const {address: rawAddress} = useAppKitAccount()
+  const address = toAddress(rawAddress)
   const unlockRequests = useUnlockRequests(address)
   const maxUnlockRequests = useMaxUnlockRequests()
   const [amountString, setAmountString] = useState('')
