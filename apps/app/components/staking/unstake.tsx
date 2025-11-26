@@ -4,6 +4,7 @@ import {
   Box,
   Button,
   Paper,
+  Stack,
   Table,
   TableBody,
   TableCell,
@@ -14,7 +15,6 @@ import {
   Typography,
 } from '@mui/material'
 import {toCurrency} from '@phala/lib'
-import {useAppKitAccount} from '@reown/appkit/react'
 import {formatDuration, intervalToDuration, isAfter, isBefore} from 'date-fns'
 import {useSnackbar} from 'notistack'
 import {useEffect, useMemo, useState} from 'react'
@@ -30,7 +30,7 @@ import {
   useUnlockPeriod,
   useUnlockRequests,
 } from '@/hooks/staking'
-import {toAddress} from '@/lib/wagmi'
+import {useValidConnection} from '@/hooks/use-valid-connection'
 
 const Unstake = () => {
   const [cancelIndex, setCancelIndex] = useState<number | null>(null)
@@ -40,9 +40,9 @@ const Unstake = () => {
     if (block == null) return
     return Number.parseInt(block.timestamp.toString()) * 1000
   }, [block])
-  const {address: rawAddress} = useAppKitAccount()
-  const address = toAddress(rawAddress)
-  const unlockRequests = useUnlockRequests(address)
+  const {address, isValidConnection} = useValidConnection()
+
+  const unlockRequests = useUnlockRequests(address, isValidConnection)
   const maxUnlockRequests = useMaxUnlockRequests()
   const unlockPeriod = useUnlockPeriod()
   const {
@@ -138,14 +138,14 @@ const Unstake = () => {
 
   useEffect(() => {
     if (claimResult.data?.status === 'success') {
-      enqueueSnackbar('Claimed successfully', {variant: 'success'})
+      enqueueSnackbar('Successfully claimed', {variant: 'success'})
       resetClaim()
     }
   }, [claimResult.data?.status, enqueueSnackbar, resetClaim])
 
   useEffect(() => {
     if (cancelResult.data?.status === 'success') {
-      enqueueSnackbar('Canceled successfully', {variant: 'success'})
+      enqueueSnackbar('Request cancelled', {variant: 'success'})
       resetCancel()
     }
   }, [cancelResult.data?.status, enqueueSnackbar, resetCancel])
@@ -157,47 +157,36 @@ const Unstake = () => {
   }, [unlockRequests?.length])
 
   return (
-    <Box p={{xs: 2, md: 3}}>
-      <Typography variant="h6" lineHeight={1.2}>
-        Unstake Requests
+    <Stack p={3} height="100%">
+      <Typography variant="h6" lineHeight={1.2} mb={2}>
+        Withdrawal Requests
       </Typography>
 
-      <Box
-        display="flex"
-        flexDirection={{xs: 'column', sm: 'row'}}
-        gap={2}
-        my={3}
-      >
-        <Box flex={1}>
-          <Property label="Used requests" wrapDecimal>
-            {`${unlockRequests?.length ?? '-'} / ${maxUnlockRequests ?? '-'}`}
-          </Property>
-        </Box>
-        <Box flex={1}>
-          <Property label="Total unstaking" wrapDecimal>
-            {totalUnlocking == null
-              ? '-'
-              : toCurrency(formatUnits(totalUnlocking, 18))}
-          </Property>
-        </Box>
-        <Box flex={1}>
-          <Property label="Total claimable" wrapDecimal>
-            {totalClaimable == null
-              ? '-'
-              : toCurrency(formatUnits(totalClaimable, 18))}
-          </Property>
-        </Box>
-      </Box>
+      <Stack direction="row" spacing={4} mb={3} py={1}>
+        <Property label="Active Requests" wrapDecimal>
+          {`${unlockRequests?.length ?? '-'} / ${maxUnlockRequests ?? '-'}`}
+        </Property>
+        <Property label="Pending" wrapDecimal>
+          {totalUnlocking == null
+            ? '-'
+            : toCurrency(formatUnits(totalUnlocking, 18))}
+        </Property>
+        <Property label="Claimable" wrapDecimal>
+          {totalClaimable == null
+            ? '-'
+            : toCurrency(formatUnits(totalClaimable, 18))}
+        </Property>
+      </Stack>
       <TableContainer
         component={Paper}
-        sx={{background: 'transparent', mt: 2, minHeight: 256}}
+        sx={{background: 'transparent', flex: 1, minHeight: 0}}
       >
         <Table size="small">
           <TableHead>
             <TableRow>
-              <TableCell>Countdown</TableCell>
+              <TableCell>Time Remaining</TableCell>
               <TableCell>Amount</TableCell>
-              <TableCell width={100} />
+              <TableCell width={80} />
             </TableRow>
           </TableHead>
 
@@ -214,8 +203,8 @@ const Unstake = () => {
                   >
                     <Box>
                       {row.countdown == null ? (
-                        <Typography variant="body2" color="text.secondary">
-                          Claimable
+                        <Typography variant="body2" color="success.main">
+                          Ready
                         </Typography>
                       ) : (
                         row.countdown
@@ -253,10 +242,10 @@ const Unstake = () => {
             display="flex"
             alignItems="center"
             justifyContent="center"
-            height={200}
+            height={160}
             color="text.secondary"
           >
-            <Typography variant="body2">No unstake requests</Typography>
+            <Typography variant="body2">No pending withdrawals</Typography>
           </Box>
         )}
       </TableContainer>
@@ -269,11 +258,11 @@ const Unstake = () => {
           totalClaimable == null || totalClaimable === 0n || isCancelLoading
         }
         onClick={claim}
-        sx={{mt: 2}}
+        sx={{mt: 3}}
       >
-        Claim all
+        Claim All
       </Button>
-    </Box>
+    </Stack>
   )
 }
 
