@@ -225,7 +225,7 @@ export default function HomeContent() {
             <Grid size={{xs: 12, md: 6}}>
               <AssetCard
                 icon={vphaIcon}
-                name="Phala Vault (L2)"
+                name="Phala Vault (Phala Mainnet)"
                 symbol="vPHA"
                 balance={isValidConnection ? l2VphaBalance : null}
                 contractAddress={L2_VPHA_CONTRACT_ADDRESS}
@@ -241,7 +241,7 @@ export default function HomeContent() {
                 onAddNetwork={addPhalaNetworkToWallet}
                 actions={[
                   {
-                    label: 'Bridge to L1',
+                    label: 'Bridge to Ethereum',
                     href: 'https://bridge.phala.network/',
                     external: true,
                   },
