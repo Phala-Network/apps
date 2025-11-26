@@ -2,6 +2,7 @@ import type {Metadata} from 'next'
 import {Montserrat} from 'next/font/google'
 import {headers} from 'next/headers'
 import type {ReactNode} from 'react'
+
 import Providers from './providers'
 
 const montserrat = Montserrat({
@@ -17,9 +18,6 @@ export const metadata: Metadata = {
     template: '%s - Phala Network App',
   },
   description: 'Phala Network App - Staking, GPU Mining',
-  icons: {
-    icon: '/favicon.ico',
-  },
 }
 
 export default async function RootLayout({children}: {children: ReactNode}) {
