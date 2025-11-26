@@ -7,23 +7,27 @@ const bundleAnalyzer = withBundleAnalyzer({
 
 const nextConfig: NextConfig = {
   transpilePackages: ['jotai-devtools'],
-  eslint: {
-    ignoreDuringBuilds: true,
-    dirs: ['pages', 'components', 'lib', 'hooks', 'store', 'types'],
-  },
   modularizeImports: {
     '@mui/icons-material': {
       transform: '@mui/icons-material/{{member}}',
     },
   },
   reactStrictMode: true,
+  webpack: (config) => {
+    config.externals.push('pino-pretty', 'lokijs', 'encoding')
+    config.resolve.fallback = {
+      ...config.resolve.fallback,
+      '@react-native-async-storage/async-storage': false,
+    }
+    return config
+  },
   async redirects() {
     return [
-      {
-        source: '/',
-        destination: '/staking',
-        permanent: false,
-      },
+      // {
+      //   source: '/',
+      //   destination: '/staking',
+      //   permanent: false,
+      // },
       {
         source: '/khala/:path*',
         destination: '/khala-assets',
@@ -31,7 +35,7 @@ const nextConfig: NextConfig = {
       },
       {
         source: '/phala/:path*',
-        destination: '/khala-assets',
+        destination: '/phala-assets',
         permanent: true,
       },
     ]

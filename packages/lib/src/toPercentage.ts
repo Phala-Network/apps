@@ -1,4 +1,5 @@
 import Decimal from 'decimal.js'
+
 import {toFixed} from './toFixed'
 
 export function toPercentage(

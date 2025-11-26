@@ -1,23 +1,24 @@
 {
-  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.3.7/schema.json",
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true
+  },
   "files": {
-    "ignore": [
-      "packages/polkadot-types/interfaces",
-      "subsquid*.ts",
-      "metadata.json",
-      "assets"
-    ],
-    "ignoreUnknown": true
+    "ignoreUnknown": true,
+    "includes": [
+      "**",
+      "!**/*.test.js",
+      "**/special.test.js",
+      "!test",
+      "!**/components/ui",
+      "!**/assets"
+    ]
   },
   "formatter": {
+    "enabled": true,
     "indentStyle": "space"
-  },
-  "linter": {
-    "rules": {
-      "correctness": {
-        "noUnusedImports": "error"
-      }
-    }
   },
   "json": {
     "parser": {
@@ -25,17 +26,42 @@
       "allowTrailingCommas": true
     }
   },
+  "linter": {
+    "enabled": true,
+    "includes": ["!src/app/global.css"],
+    "rules": {
+      "recommended": true,
+      "correctness": {
+        "noUnusedImports": {
+          "level": "error",
+          "fix": "safe"
+        }
+      }
+    }
+  },
   "javascript": {
     "formatter": {
-      "bracketSpacing": false,
       "quoteStyle": "single",
+      "bracketSpacing": false,
       "semicolons": "asNeeded"
     }
   },
-  "vcs": {
-    "clientKind": "git",
-    "defaultBranch": "main",
+  "assist": {
     "enabled": true,
-    "useIgnoreFile": true
+    "actions": {
+      "source": {
+        "organizeImports": {
+          "level": "on",
+          "options": {
+            "groups": [
+              ":PACKAGE:",
+              ":PACKAGE_WITH_PROTOCOL:",
+              ":BLANK_LINE:",
+              "**"
+            ]
+          }
+        }
+      }
+    }
   }
 }
