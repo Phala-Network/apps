@@ -214,7 +214,12 @@ export default function HomeContent() {
                     variant: 'outlined',
                   },
                   {
-                    label: 'Swap on DEX',
+                    label: 'Bridge',
+                    href: `https://bridge.phala.network/?fromChainId=1&toChainId=2035&tokenAddress=${VAULT_CONTRACT_ADDRESS}`,
+                    external: true,
+                  },
+                  {
+                    label: 'Swap',
                     href: `https://app.uniswap.org/swap?chain=mainnet&inputCurrency=${VAULT_CONTRACT_ADDRESS}&outputCurrency=${PHA_CONTRACT_ADDRESS}`,
                     external: true,
                   },
@@ -242,7 +247,7 @@ export default function HomeContent() {
                 actions={[
                   {
                     label: 'Bridge',
-                    href: 'https://bridge.phala.network/',
+                    href: `https://bridge.phala.network/?fromChainId=2035&toChainId=1&tokenAddress=${L2_VPHA_CONTRACT_ADDRESS}`,
                     external: true,
                   },
                 ]}

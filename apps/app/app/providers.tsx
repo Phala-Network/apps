@@ -35,17 +35,6 @@ export default function Providers({
   children: ReactNode
   cookies: string | null
 }) {
-  const [queryClient] = useState(
-    () =>
-      new QueryClient({
-        queryCache: new QueryCache({
-          onError: (error) => {
-            console.error(error)
-          },
-        }),
-      }),
-  )
-
   return (
     <NuqsAdapter>
       <SWRConfig
@@ -60,7 +49,7 @@ export default function Providers({
         <JotaiProvider>
           <AppRouterCacheProvider>
             <MuiThemeProvider theme={theme}>
-              <Web3Provider queryClient={queryClient} cookies={cookies}>
+              <Web3Provider cookies={cookies}>
                 <CssBaseline />
                 <GlobalStyles styles={[globalStyles]} />
 
