@@ -241,7 +241,7 @@ export default function HomeContent() {
                 onAddNetwork={addPhalaNetworkToWallet}
                 actions={[
                   {
-                    label: 'Bridge to Ethereum',
+                    label: 'Bridge',
                     href: 'https://bridge.phala.network/',
                     external: true,
                   },
