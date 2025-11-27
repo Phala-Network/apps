@@ -9,6 +9,10 @@ const SnackbarProvider = ({children}: {children: React.ReactNode}) => {
 
   return (
     <NotistackSnackbarProvider
+      classes={{
+        containerAnchorOriginTopRight:
+          'notistack-containerAnchorOriginTopRight',
+      }}
       autoHideDuration={3000}
       anchorOrigin={{
         vertical: matches ? 'top' : 'bottom',

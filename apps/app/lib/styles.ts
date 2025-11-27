@@ -24,7 +24,7 @@ export const globalStyles = (theme: Theme) => ({
     },
   },
   '.notistack-containerAnchorOriginTopRight': {
-    top: '112px !important',
+    top: '90px !important',
   },
   sub: {
     fontSize: '62.5%',

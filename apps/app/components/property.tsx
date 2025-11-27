@@ -85,7 +85,6 @@ const Property: FC<
           sx={{
             fontWeight: 500,
             fontSize: {xs: '0.8rem', sm: '0.9rem'},
-            wordBreak: 'break-word',
           }}
         >
           {value}

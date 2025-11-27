@@ -279,13 +279,18 @@ const Stake = () => {
         p={3}
       >
         <Stack
-          direction={{xs: 'column', sm: 'row'}}
-          spacing={{xs: 1, sm: 2}}
+          direction="row"
+          spacing={2}
           width={1}
-          alignItems={{xs: 'stretch', sm: 'center'}}
+          alignItems="center"
           justifyContent="space-between"
         >
-          <Stack direction="row" alignItems="center" spacing={1.5} py={1}>
+          <Stack
+            direction="row"
+            alignItems="center"
+            spacing={1.5}
+            flexShrink={0}
+          >
             <Image
               src={isStake ? phaIcon : vphaIcon}
               width={32}
@@ -321,7 +326,7 @@ const Stake = () => {
               </IconButton>
             </Tooltip>
           </Stack>
-          <Property size="small" label="Balance" wrapDecimal>
+          <Property size="small" label="Balance" sx={{flexShrink: 0}}>
             {balance != null ? toCurrency(formatUnits(balance, 18)) : '-'}
           </Property>
         </Stack>
