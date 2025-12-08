@@ -11,15 +11,12 @@ import {
   Typography,
 } from '@mui/material'
 import {toCurrency, toPercentage} from '@phala/lib'
-import phaIcon from '@phala/ui/icons/asset/pha.png'
 import vphaIcon from '@phala/ui/icons/asset/vpha.png'
-import {useAppKit, useAppKitNetwork} from '@reown/appkit/react'
+import {ConnectButton} from '@rainbow-me/rainbowkit'
 import Decimal from 'decimal.js'
 import Image from 'next/image'
 import type {FC} from 'react'
 import {formatUnits} from 'viem'
-
-import {ethChain} from '@/config'
 
 interface PortfolioSummaryProps {
   totalPhaValue: Decimal | null
@@ -36,13 +33,6 @@ const PortfolioSummary: FC<PortfolioSummaryProps> = ({
   stakingApr,
   isConnected,
 }) => {
-  const {open} = useAppKit()
-  const {chainId, switchNetwork} = useAppKitNetwork()
-
-  const isWrongNetwork = isConnected && chainId !== ethChain.id
-
-  const showOverlay = !isConnected || isWrongNetwork
-
   return (
     <Paper
       sx={(theme) => ({
@@ -53,7 +43,7 @@ const PortfolioSummary: FC<PortfolioSummaryProps> = ({
         overflow: 'hidden',
       })}
     >
-      {showOverlay && (
+      {!isConnected && (
         <Box
           sx={{
             position: 'absolute',
@@ -68,18 +58,15 @@ const PortfolioSummary: FC<PortfolioSummaryProps> = ({
         >
           <Stack alignItems="center" spacing={1}>
             <Typography variant="body2" color="common.white">
-              {isWrongNetwork
-                ? 'Please switch to Ethereum Mainnet'
-                : 'Connect wallet to view portfolio'}
+              Connect wallet to view portfolio
             </Typography>
-            <Button
-              variant="contained"
-              onClick={() =>
-                isWrongNetwork ? switchNetwork(ethChain) : open()
-              }
-            >
-              {isWrongNetwork ? 'Switch Network' : 'Connect Wallet'}
-            </Button>
+            <ConnectButton.Custom>
+              {({openConnectModal}) => (
+                <Button variant="contained" onClick={openConnectModal}>
+                  Connect Wallet
+                </Button>
+              )}
+            </ConnectButton.Custom>
           </Stack>
         </Box>
       )}

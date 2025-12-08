@@ -23,21 +23,24 @@ import {decodeAddress} from '@polkadot/keyring'
 import Identicon from '@polkadot/react-identicon'
 import type {Signer} from '@polkadot/types/types'
 import {stringToHex, u8aToHex} from '@polkadot/util'
-import {useAppKitAccount} from '@reown/appkit/react'
 import Decimal from 'decimal.js'
 import {useAtom, useSetAtom} from 'jotai'
 import Image from 'next/image'
 import {useSnackbar} from 'notistack'
 import {useEffect, useMemo, useState} from 'react'
 import type {Hex} from 'viem'
-import {useWaitForTransactionReceipt, useWriteContract} from 'wagmi'
+import {
+  useConnection,
+  useWaitForTransactionReceipt,
+  useWriteContract,
+} from 'wagmi'
 
 import khalaClaimerAbi from '@/assets/khala_claimer_abi'
 import phalaClaimerAbi from '@/assets/phala_claimer_abi'
-import AppKitButton from '@/components/app-kit-button'
 import ChainBadge from '@/components/chain-badge'
 import Property from '@/components/property'
 import SwitchChainButton from '@/components/switch-chain-button'
+import WalletButton from '@/components/wallet-button'
 import {
   explorerUrl,
   KHALA_CLAIMER_CONTRACT_ADDRESS,
@@ -51,8 +54,6 @@ import {
   useClaimStatus,
 } from '@/hooks/khala-assets'
 import {useSharePrice} from '@/hooks/staking'
-import {useAutoSwitchChain} from '@/hooks/use-auto-switch-chain'
-import {toAddress} from '@/lib/wagmi'
 import {walletDialogOpenAtom} from '@/store/ui'
 
 const Steps = () => {
@@ -130,10 +131,8 @@ const ClaimAssets = ({chain}: {chain: ChainType}) => {
   const [checkAddress, setCheckAddress] = useState<string | undefined>(
     undefined,
   )
-  useAutoSwitchChain()
   const sharePrice = useSharePrice()
-  const {address: rawEthAddress} = useAppKitAccount()
-  const ethAddress = toAddress(rawEthAddress)
+  const {address: ethAddress} = useConnection()
   const [polkadotAccount] = useAtom(polkadotAccountAtom)
   const address = checkAddress ?? polkadotAccount?.address
   const {data} = useAssetsQuery(address, chain)
@@ -629,7 +628,7 @@ const ClaimAssets = ({chain}: {chain: ChainType}) => {
                   justifyContent="space-between"
                 >
                   <Typography variant="subtitle1">Ethereum wallet</Typography>
-                  <AppKitButton />
+                  <WalletButton />
                 </Box>
 
                 <Box component="form" onSubmit={handleSubmit}>

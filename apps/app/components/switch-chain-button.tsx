@@ -1,20 +1,16 @@
 'use client'
 
 import {Button} from '@mui/material'
-import {
-  useAppKit,
-  useAppKitAccount,
-  useAppKitNetwork,
-} from '@reown/appkit/react'
+import {ConnectButton} from '@rainbow-me/rainbowkit'
 import {useEffect, useState} from 'react'
+import {useConnection, useSwitchChain} from 'wagmi'
 
 import {ethChain} from '@/config'
 
 const SwitchChainButton = ({children}: {children: React.ReactNode}) => {
   const [isMounted, setIsMounted] = useState(false)
-  const {isConnected} = useAppKitAccount()
-  const {chainId, switchNetwork} = useAppKitNetwork()
-  const {open} = useAppKit()
+  const {isConnected, chainId} = useConnection()
+  const {mutate: switchChain} = useSwitchChain()
 
   useEffect(() => {
     setIsMounted(true)
@@ -27,9 +23,18 @@ const SwitchChainButton = ({children}: {children: React.ReactNode}) => {
 
   if (!isConnected) {
     return (
-      <Button fullWidth size="large" variant="contained" onClick={() => open()}>
-        Connect Wallet
-      </Button>
+      <ConnectButton.Custom>
+        {({openConnectModal}) => (
+          <Button
+            fullWidth
+            size="large"
+            variant="contained"
+            onClick={openConnectModal}
+          >
+            Connect Wallet
+          </Button>
+        )}
+      </ConnectButton.Custom>
     )
   }
 
@@ -40,7 +45,7 @@ const SwitchChainButton = ({children}: {children: React.ReactNode}) => {
         size="large"
         color="warning"
         variant="contained"
-        onClick={() => switchNetwork(ethChain)}
+        onClick={() => switchChain({chainId: ethChain.id})}
       >
         Switch to {ethChain.name}
       </Button>

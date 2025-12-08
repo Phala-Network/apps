@@ -26,7 +26,7 @@ import {usePathname} from 'next/navigation'
 import {type FC, useState} from 'react'
 
 import phalaLogo from '@/assets/phala_logo.svg'
-import AppKitButton from '@/components/app-kit-button'
+import WalletButton from '@/components/wallet-button'
 
 const navItems = [
   {label: 'Portfolio', href: '/', external: false},
@@ -202,7 +202,7 @@ const TopBar: FC = () => {
           )}
 
           <Box sx={{ml: isMobile ? 'auto' : 2}}>
-            <AppKitButton />
+            <WalletButton />
           </Box>
         </Toolbar>
       </AppBar>

@@ -1,4 +1,4 @@
-import {mainnet} from '@reown/appkit/networks'
+import {mainnet} from 'wagmi/chains'
 
 export const ethChain = mainnet
 export const explorerUrl = ethChain.blockExplorers.default.url
