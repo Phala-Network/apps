@@ -10,13 +10,13 @@ interface TokenInfo {
 }
 
 export function useAddTokenToWallet() {
-  const {switchChainAsync} = useSwitchChain()
-  const {watchAsset} = useWatchAsset()
+  const {mutateAsync: switchChain} = useSwitchChain()
+  const {mutate: watchAsset} = useWatchAsset()
 
   const addTokenToWallet = useCallback(
     async ({chainId, address, symbol, decimals = 18, image}: TokenInfo) => {
       try {
-        await switchChainAsync({chainId})
+        await switchChain({chainId})
       } catch (error) {
         console.error('Failed to switch network:', error)
         return false
@@ -38,20 +38,20 @@ export function useAddTokenToWallet() {
         return false
       }
     },
-    [switchChainAsync, watchAsset],
+    [switchChain, watchAsset],
   )
 
   const addNetwork = useCallback(
     async (chainId: number) => {
       try {
-        await switchChainAsync({chainId})
+        await switchChain({chainId})
         return true
       } catch (error) {
         console.error('Failed to add network to wallet:', error)
         return false
       }
     },
-    [switchChainAsync],
+    [switchChain],
   )
 
   return {addTokenToWallet, addNetwork}

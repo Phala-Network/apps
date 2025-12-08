@@ -4,12 +4,11 @@ import {Box, Divider, Grid, Stack, Typography} from '@mui/material'
 import {toCurrency} from '@phala/lib'
 import phaIcon from '@phala/ui/icons/asset/pha.png'
 import vphaIcon from '@phala/ui/icons/asset/vpha.png'
-import {useAppKitAccount, useAppKitNetwork} from '@reown/appkit/react'
 import Decimal from 'decimal.js'
 import {useCallback, useMemo} from 'react'
 import {erc20Abi, formatUnits} from 'viem'
 import {mainnet} from 'viem/chains'
-import {useReadContract} from 'wagmi'
+import {useConnection, useReadContract} from 'wagmi'
 
 import AssetCard from '@/components/asset-card'
 import PortfolioSummary from '@/components/portfolio-summary'
@@ -22,12 +21,10 @@ import {
 } from '@/config'
 import {useRewardRate, useSharePrice, useTotalAssets} from '@/hooks/staking'
 import {useAddTokenToWallet} from '@/hooks/use-add-token-to-wallet'
-import {phalaNetwork, toAddress} from '@/lib/wagmi'
+import {phalaNetwork} from '@/lib/wagmi'
 
 export default function HomeContent() {
-  const {address: rawAddress, isConnected} = useAppKitAccount()
-  const {chainId} = useAppKitNetwork()
-  const address = toAddress(rawAddress)
+  const {address, isConnected, chainId} = useConnection()
   const sharePrice = useSharePrice()
   const totalAssets = useTotalAssets()
   const rewardRate = useRewardRate()

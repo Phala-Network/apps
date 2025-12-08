@@ -1,5 +1,8 @@
 'use client'
 
+import '@rainbow-me/rainbowkit/styles.css'
+
+import {darkTheme, RainbowKitProvider} from '@rainbow-me/rainbowkit'
 import {
   QueryCache,
   QueryClient,
@@ -8,8 +11,7 @@ import {
 import {type ReactNode, useState} from 'react'
 import {cookieToInitialState, WagmiProvider} from 'wagmi'
 
-// Import to ensure AppKit is initialized
-import {wagmiAdapter} from '@/lib/wagmi'
+import {wagmiConfig} from '@/lib/wagmi'
 
 export const Web3Provider = ({
   children,
@@ -18,7 +20,7 @@ export const Web3Provider = ({
   children: ReactNode
   cookies: string | null
 }) => {
-  const initialState = cookieToInitialState(wagmiAdapter.wagmiConfig, cookies)
+  const initialState = cookieToInitialState(wagmiConfig, cookies)
 
   const [queryClient] = useState(
     () =>
@@ -32,11 +34,20 @@ export const Web3Provider = ({
   )
 
   return (
-    <WagmiProvider
-      config={wagmiAdapter.wagmiConfig}
-      initialState={initialState}
-    >
-      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    <WagmiProvider config={wagmiConfig} initialState={initialState}>
+      <QueryClientProvider client={queryClient}>
+        <RainbowKitProvider
+          initialChain={wagmiConfig.chains[0]}
+          modalSize="compact"
+          theme={darkTheme({
+            accentColor: '#c5ff46',
+            accentColorForeground: 'black',
+            fontStack: 'system',
+          })}
+        >
+          {children}
+        </RainbowKitProvider>
+      </QueryClientProvider>
     </WagmiProvider>
   )
 }
