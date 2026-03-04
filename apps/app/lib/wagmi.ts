@@ -2,7 +2,7 @@
 
 import type {Chain} from '@rainbow-me/rainbowkit'
 import {getDefaultConfig} from '@rainbow-me/rainbowkit'
-import {cookieStorage, createStorage} from 'wagmi'
+import {cookieStorage, createStorage, fallback, http} from 'wagmi'
 import {mainnet} from 'wagmi/chains'
 
 export const phalaNetwork = {
@@ -35,8 +35,18 @@ export const wagmiConfig = getDefaultConfig({
   appName: 'Phala App',
   projectId,
   chains: [mainnet, phalaNetwork],
+  transports: {
+    [mainnet.id]: fallback([
+      http('https://ethereum-rpc.publicnode.com'),
+      http('https://1rpc.io/eth'),
+      http('https://eth.drpc.org'),
+      http('https://rpc.ankr.com/eth'),
+      http('https://eth.llamarpc.com'),
+      http('https://cloudflare-eth.com'),
+    ]),
+    [phalaNetwork.id]: http('https://rpc.phala.network'),
+  },
   ssr: true,
-  storage: createStorage({
-    storage: cookieStorage,
-  }),
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  storage: createStorage({storage: cookieStorage}) as any,
 })
