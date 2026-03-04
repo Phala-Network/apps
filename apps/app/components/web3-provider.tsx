@@ -9,12 +9,9 @@ import {
   QueryClientProvider,
 } from '@tanstack/react-query'
 import {type ReactNode, useState} from 'react'
-import {type Config, cookieToInitialState, WagmiProvider} from 'wagmi'
+import {cookieToInitialState, WagmiProvider} from 'wagmi'
 
 import {wagmiConfig} from '@/lib/wagmi'
-
-// wagmi 3.x and rainbowkit 2.x have type incompatibility
-const config = wagmiConfig as unknown as Config
 
 export const Web3Provider = ({
   children,
@@ -23,7 +20,7 @@ export const Web3Provider = ({
   children: ReactNode
   cookies: string | null
 }) => {
-  const initialState = cookieToInitialState(config, cookies)
+  const initialState = cookieToInitialState(wagmiConfig, cookies)
 
   const [queryClient] = useState(
     () =>
@@ -37,7 +34,7 @@ export const Web3Provider = ({
   )
 
   return (
-    <WagmiProvider config={config} initialState={initialState}>
+    <WagmiProvider config={wagmiConfig} initialState={initialState}>
       <QueryClientProvider client={queryClient}>
         <RainbowKitProvider
           initialChain={wagmiConfig.chains[0]}
