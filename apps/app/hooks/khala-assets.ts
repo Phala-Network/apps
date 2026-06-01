@@ -13,13 +13,12 @@ import {
 
 export type ChainType = 'khala' | 'phala'
 
-export const khalaAssetsApi = wretch(
-  'https://dbcac8a0d67d837a93e8c1db0886c8f1acdc599d-8080.dstack-prod4.phala.network',
-)
+const assetsApiBaseUrl =
+  'https://b7fe57601c4f42de0f89a50c02f31de722146f5c-8080.dstack-pha-prod13.phala.network'
 
-export const phalaAssetsApi = wretch(
-  'https://19c1b60e7668801155c1ae3fb47701cdcc408298-8080.dstack-pha-prod7.phala.network',
-)
+export const khalaAssetsApi = wretch(`${assetsApiBaseUrl}/khala`)
+
+export const phalaAssetsApi = wretch(`${assetsApiBaseUrl}/phala`)
 
 // GraphQL client for Khala claimer subgraph
 export const khalaClaimerGraphQL = wretch(
