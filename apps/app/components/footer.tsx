@@ -41,7 +41,7 @@ const Footer: FC = () => {
           <Stack direction="row" spacing={1} alignItems="center">
             <IconButton
               size="small"
-              href="https://discord.gg/phala-network"
+              href="https://phala.com/discord"
               target="_blank"
             >
               <FontAwesomeIcon
@@ -50,11 +50,7 @@ const Footer: FC = () => {
                 color={theme.palette.text.secondary}
               />
             </IconButton>
-            <IconButton
-              size="small"
-              href="https://x.com/PhalaNetwork"
-              target="_blank"
-            >
+            <IconButton size="small" href="https://phala.com/x" target="_blank">
               <FontAwesomeIcon
                 icon={faXTwitter as IconProp}
                 color={theme.palette.text.secondary}
