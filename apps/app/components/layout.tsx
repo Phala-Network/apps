@@ -4,6 +4,7 @@ import {Box, Container} from '@mui/material'
 import type {FC, ReactNode} from 'react'
 
 import {useNotice} from '@/hooks/use-notice'
+import {ChatwootWidget} from './chatwoot-widget'
 import Footer from './footer'
 import ScrollTop from './scroll-top'
 import TopBar from './top-bar'
@@ -19,6 +20,7 @@ const Layout: FC<{children: ReactNode}> = ({children}) => {
       </Container>
       <Footer />
       <ScrollTop />
+      <ChatwootWidget />
     </Box>
   )
 }

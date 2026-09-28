@@ -19,7 +19,8 @@ const ScrollTop: FC = () => {
       <Box
         onClick={handleClick}
         role="presentation"
-        sx={{position: 'fixed', bottom: 70, right: 20}}
+        // Sits above the Chatwoot launcher (64px bubble at bottom/right 20px)
+        sx={{position: 'fixed', bottom: 100, right: 20}}
       >
         <Fab size="small" aria-label="scroll back to top">
           <KeyboardArrowUp />
