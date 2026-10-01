@@ -15,7 +15,7 @@ import {
 // See https://github.com/chatwoot/chatwoot/blob/develop/app/javascript/entrypoints/sdk.js
 declare global {
   interface Window {
-    chatwootSettings?: {darkMode: 'light' | 'auto'}
+    chatwootSettings?: {darkMode: 'light' | 'auto' | 'dark'}
     chatwootSDK?: {
       run: (config: {websiteToken: string; baseUrl: string}) => void
     }
@@ -88,8 +88,8 @@ const ChatwootLoader: FC<{config: ChatwootConfig}> = ({config}) => {
       src={`${config.baseUrl}/packs/js/sdk.js`}
       strategy="lazyOnload"
       onLoad={() => {
-        // The app is dark-only; Chatwoot offers "light" or "auto" (follows the OS setting).
-        window.chatwootSettings = {darkMode: 'auto'}
+        // The app is dark-only, so the widget is too, whatever the OS setting.
+        window.chatwootSettings = {darkMode: 'dark'}
         // run() is a no-op once the widget exists, so remounts are safe.
         window.chatwootSDK?.run(config)
       }}
