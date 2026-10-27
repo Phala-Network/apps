@@ -20,14 +20,8 @@ export const khalaAssetsApi = wretch(`${assetsApiBaseUrl}/khala`)
 
 export const phalaAssetsApi = wretch(`${assetsApiBaseUrl}/phala`)
 
-// GraphQL client for Khala claimer subgraph
-export const khalaClaimerGraphQL = wretch(
-  'https://api.goldsky.com/api/public/project_cmdgxxcewrqdi01wx9e7md0ek/subgraphs/khala-claimer/1.0.0/gn',
-)
-
-// GraphQL client for Phala claimer subgraph
-export const phalaClaimerGraphQL = wretch(
-  'https://api.goldsky.com/api/public/project_cmdgxxcewrqdi01wx9e7md0ek/subgraphs/phala-claimer/1.0.0/gn',
+const claimerGraphQL = wretch(
+  'https://api.goldsky.com/api/public/project_cmdgxxcewrqdi01wx9e7md0ek/subgraphs/phala-ethereum/prod/gn',
 )
 
 export const useAssetsQuery = (
@@ -62,9 +56,6 @@ export const useClaimStatus = (
     chain === 'khala'
       ? KHALA_CLAIMER_CONTRACT_ADDRESS
       : PHALA_CLAIMER_CONTRACT_ADDRESS
-  const graphqlClient =
-    chain === 'khala' ? khalaClaimerGraphQL : phalaClaimerGraphQL
-
   const {data: claimed, refetch} = useReadContract({
     address: contractAddress,
     abi: khalaClaimerAbi,
@@ -110,7 +101,7 @@ export const useClaimStatus = (
         }
       `
 
-      const response = await graphqlClient
+      const response = await claimerGraphQL
         .post({
           query,
           variables: {user: address.toLowerCase()},
