@@ -20,6 +20,7 @@ export const khalaAssetsApi = wretch(`${assetsApiBaseUrl}/khala`)
 
 export const phalaAssetsApi = wretch(`${assetsApiBaseUrl}/phala`)
 
+// GraphQL client for Khala and Phala claimer events (phala-ethereum subgraph)
 const claimerGraphQL = wretch(
   'https://api.goldsky.com/api/public/project_cmdgxxcewrqdi01wx9e7md0ek/subgraphs/phala-ethereum/prod/gn',
 )
