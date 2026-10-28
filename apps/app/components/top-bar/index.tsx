@@ -40,7 +40,7 @@ const navItems = [
   },
   {
     label: 'Analytics',
-    href: 'https://dune.com/phala_network/phala-analytics',
+    href: 'https://analytics.phala.network',
     external: true,
   },
   {
